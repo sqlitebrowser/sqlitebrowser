@@ -1,5 +1,6 @@
-#include <QSslCertificate>
+#include <QDesktopServices>
 #include <QFileInfo>
+#include <QUrl>
 
 #include "RemoteDock.h"
 #include "ui_RemoteDock.h"
@@ -8,6 +9,7 @@
 #include "RemoteModel.h"
 #include "MainWindow.h"
 #include "RemotePushDialog.h"
+#include "PreferencesDialog.h"
 
 RemoteDock::RemoteDock(MainWindow* parent)
     : QDialog(parent),
@@ -27,6 +29,19 @@ RemoteDock::RemoteDock(MainWindow* parent)
     // Whenever a new directory listing has been parsed, check if it was a new root dir and, if so, open the user's directory
     connect(remoteModel, &RemoteModel::directoryListingParsed, this, &RemoteDock::newDirectoryNode);
 
+    // When the Preferences link is clicked in the no-certificates-label, open the preferences dialog. For other links than the ones we know,
+    // just open them in a web browser
+    connect(ui->labelNoCert, &QLabel::linkActivated, [this](const QString& link) {
+        if(link == "#preferences")
+        {
+            PreferencesDialog dialog(mainWindow, PreferencesDialog::TabRemote);
+            if(dialog.exec())
+                mainWindow->reloadSettings();
+        } else {
+            QDesktopServices::openUrl(QUrl(link));
+        }
+    });
+
     // Initial setup
     reloadSettings();
 }
@@ -41,12 +56,15 @@ void RemoteDock::reloadSettings()
     // Load list of client certs
     ui->comboUser->clear();
     QStringList client_certs = Settings::getValue("remote", "client_certificates").toStringList();
-    foreach(const QString& file, client_certs)
+    for(const QString& file : client_certs)
     {
         auto certs = QSslCertificate::fromPath(file);
-        foreach(const QSslCertificate& cert, certs)
+        for(const QSslCertificate& cert : certs)
             ui->comboUser->addItem(cert.subjectInfo(QSslCertificate::CommonName).at(0), file);
     }
+
+    // If there are no client certs, just show a simple message instead of all the unusable widgets
+    ui->stack->setCurrentIndex(!ui->comboUser->count());
 }
 
 void RemoteDock::setNewIdentity()
@@ -111,7 +129,7 @@ void RemoteDock::pushDatabase()
 
     // Push database
     remoteDatabase.push(mainWindow->getDb().currentFile(), url, remoteModel->currentClientCertificate(), pushDialog.name(),
-                        pushDialog.commitMessage(), pushDialog.licence(), pushDialog.isPublic(), pushDialog.branch());
+                        pushDialog.commitMessage(), pushDialog.licence(), pushDialog.isPublic(), pushDialog.branch(), pushDialog.forcePush());
 }
 
 void RemoteDock::newDirectoryNode(const QModelIndex& parent)
@@ -131,4 +149,11 @@ void RemoteDock::newDirectoryNode(const QModelIndex& parent)
                 ui->treeStructure->expand(child);
         }
     }
+}
+
+void RemoteDock::reject()
+{
+    // We override this, to ensure the Escape key doesn't make this dialog
+    // dock go away
+    return;
 }

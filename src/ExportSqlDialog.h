@@ -14,11 +14,11 @@ class ExportSqlDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ExportSqlDialog(DBBrowserDB* db, QWidget* parent = 0, const QString& selection = "");
-    ~ExportSqlDialog();
+    explicit ExportSqlDialog(DBBrowserDB* db, QWidget* parent = nullptr, const QString& selection = "");
+    ~ExportSqlDialog() override;
 
 private slots:
-    virtual void accept();
+    void accept() override;
     void doSelectAll();
     void doDeselectAll();
     void whatChanged(int index);

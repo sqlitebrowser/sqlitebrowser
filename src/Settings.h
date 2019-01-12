@@ -1,9 +1,8 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-#include <QApplication>
-#include <QVariant>
 #include <QHash>
+#include <QVariant>
 
 class Settings
 {
@@ -12,6 +11,7 @@ class Settings
 public:
     static QVariant getValue(const QString& group, const QString& name);
     static void setValue(const QString& group, const QString& name, const QVariant& value, bool dont_save_to_disk = false);
+    static void restoreDefaults();
 
 private:
     Settings() { } // class is fully static

@@ -1,6 +1,6 @@
 // This module implements the "official" low-level API.
 //
-// Copyright (c) 2017 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2018 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 
@@ -38,6 +38,7 @@
 #include <QStyle>
 #include <QTextCodec>
 
+#include "SciAccessibility.h"
 #include "ScintillaQt.h"
 
 
@@ -89,6 +90,10 @@ QsciScintillaBase::QsciScintillaBase(QWidget *parent)
         , clickCausedFocus(false)
 #endif
 {
+#if !defined(QT_NO_ACCESSIBILITY)
+    QsciAccessibleScintillaBase::initialise();
+#endif
+
     connectVerticalScrollBar();
     connectHorizontalScrollBar();
 
@@ -295,6 +300,16 @@ void *QsciScintillaBase::SendScintillaPtrResult(unsigned int msg) const
 {
     return reinterpret_cast<void *>(sci->WndProc(msg, static_cast<uptr_t>(0),
             static_cast<sptr_t>(0)));
+}
+
+
+// Re-implemented to handle font changes
+void QsciScintillaBase::changeEvent(QEvent *e)
+{
+    if (e->type() == QEvent::FontChange || e->type() == QEvent::ApplicationFontChange)
+        sci->InvalidateStyleRedraw();
+
+    QAbstractScrollArea::changeEvent(e);
 }
 
 
@@ -826,4 +841,20 @@ void QsciScintillaBase::replaceHorizontalScrollBar(QScrollBar *scrollBar)
 {
     setHorizontalScrollBar(scrollBar);
     connectHorizontalScrollBar();
+}
+
+
+// Return true if a context menu should be displayed.  This is provided as a
+// helper to QsciScintilla::contextMenuEvent().  A proper design would break
+// backwards compatibility.
+bool QsciScintillaBase::contextMenuNeeded(int x, int y) const
+{
+    QSCI_SCI_NAMESPACE(Point) pt(x, y);
+
+    // Clear any selection if the mouse is outside.
+    if (!sci->PointInSelection(pt))
+        sci->SetEmptySelection(sci->PositionFromLocation(pt));
+
+    // Respect SC_POPUP_*.
+    return sci->ShouldDisplayPopup(pt);
 }

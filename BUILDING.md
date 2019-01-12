@@ -54,12 +54,13 @@ The same process works for building the code in any platform supported by Qt
 ### Ubuntu Linux
 
 ```bash
-$ sudo apt install build-essential git cmake libsqlite3-dev qt5-default qttools5-dev-tools
+$ sudo apt install build-essential git-core cmake libsqlite3-dev qt5-default qttools5-dev-tools \
+    libsqlcipher-dev qtbase5-dev libantlr-dev libqt5scintilla2-dev libqcustomplot-dev qttools5-dev
 $ git clone https://github.com/sqlitebrowser/sqlitebrowser
 $ cd sqlitebrowser
 $ mkdir build
 $ cd build
-$ cmake -Wno-dev ..
+$ cmake -Dsqlcipher=1 -Wno-dev ..
 $ make
 $ sudo make install
 ```
@@ -70,9 +71,10 @@ Done. :)
 
 ### CentOS / Fedora Linux
 
-**Note** - On CentOS or an older version of Fedora, you may need to use `yum` instead of `dnf`
+**Note** - On CentOS or an older version of Fedora, you may need to use `yum` instead of `dnf`.
 
-**Note 2** - On CentOS 7.x, you need to add `qt5-qtbase-devel` to the `dnf install` line below
+**Note 2** - On CentOS 7.x, you need to replace the `qwt-qt5-devel` package name with
+`qt5-qtbase-devel` in the `dnf install` line below.
 
 ```
 $ sudo dnf install ant-antlr antlr-C++ cmake gcc-c++ git qt-devel qt5-linguist qwt-qt5-devel \
@@ -85,6 +87,22 @@ $ sudo make install
 ```
 
 This should complete without errors, and `sqlitebrowser` should now be launch-able from the command line.
+
+### OpenSUSE
+
+```bash
+
+
+$ zypper in -y build git-core, libQt5Core5,  libQt5Core5-32bit,  libqt5-qtbase,  libqt5-qtbase-devel,  libqt5-qttools,  libqt5-qttools-devel,  build,  gcc-c++,  gcc,  sqlite3-devel,  libsqlite3-0,  cmake,  antlr-devel,  sqlcipher-devel
+$ git clone https://github.com/sqlitebrowser/sqlitebrowser
+$ cd sqlitebrowser
+$ mkdir build
+$ cd build
+$ cmake -Dsqlcipher=1 -Wno-dev   -DFORCE_INTERNAL_QSCINTILLA=ON ..
+$ make
+$ sudo make install
+```
+
 
 ### MacOS X
 

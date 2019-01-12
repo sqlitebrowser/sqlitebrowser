@@ -56,12 +56,26 @@ Application::Application(int& argc, char** argv) :
         // a language change when the user toggles settings for the first time.
         // (it also prevents the program from always looking for a translation on launch)
         Settings::setValue("General", "language", "en_US");
+
+        // Don't install a translator for Qt texts if no translator for DB4S texts could be loaded
+        m_translatorQt = nullptr;
     }
+
+    // On Windows, add the plugins subdirectory to the list of library directories. We need this
+    // for Qt to search for more image format plugins.
+#ifdef Q_WS_WIN
+    QApplication::addLibraryPath(QApplication::applicationDirPath() + "/plugins");
+#endif
+
+    // Work around a bug in QNetworkAccessManager which sporadically causes high pings for Wifi connections
+    // See https://bugreports.qt.io/browse/QTBUG-40332
+    qputenv("QT_BEARER_POLL_TIMEOUT", QByteArray::number(INT_MAX));
 
     // Parse command line
     QString fileToOpen;
     QString tableToBrowse;
     QStringList sqlToExecute;
+    bool readOnly = false;
     m_dontShowMainWindow = false;
     for(int i=1;i<arguments().size();i++)
     {
@@ -75,20 +89,13 @@ Application::Application(int& argc, char** argv) :
             qWarning() << qPrintable(tr("  -q, --quit\t\tExit application after running scripts"));
             qWarning() << qPrintable(tr("  -s, --sql [file]\tExecute this SQL file after opening the DB"));
             qWarning() << qPrintable(tr("  -t, --table [table]\tBrowse this table after opening the DB"));
+            qWarning() << qPrintable(tr("  -R, --read-only\tOpen database in read-only mode"));
+            qWarning() << qPrintable(tr("  -o, --option [group/setting=value]\tRun application with this setting temporarily set to value"));
             qWarning() << qPrintable(tr("  -v, --version\t\tDisplay the current version"));
             qWarning() << qPrintable(tr("  [file]\t\tOpen this SQLite database"));
             m_dontShowMainWindow = true;
         } else if(arguments().at(i) == "-v" || arguments().at(i) == "--version") {
-            // Distinguish between high and low patch version numbers. High numbers as in x.y.99 indicate nightly builds or
-            // beta releases. For these we want to include the build date. For the release versions we don't add the release
-            // date in order to avoid confusion about what is more important, version number or build date, and about different
-            // build dates for the same version. This also should help making release builds reproducible out of the box.
-#if PATCH_VERSION >= 99
-            QString build_date = QString(" (%1)").arg(__DATE__);
-#else
-            QString build_date;
-#endif
-            qWarning() << qPrintable(tr("This is DB Browser for SQLite version %1%2.").arg(APP_VERSION).arg(build_date));
+            qWarning() << qPrintable(tr("This is DB Browser for SQLite version %1.").arg(versionString()));
             m_dontShowMainWindow = true;
         } else if(arguments().at(i) == "-s" || arguments().at(i) == "--sql") {
             // Run SQL file: If file exists add it to list of scripts to execute
@@ -105,6 +112,24 @@ Application::Application(int& argc, char** argv) :
                 tableToBrowse = arguments().at(i);
         } else if(arguments().at(i) == "-q" || arguments().at(i) == "--quit") {
             m_dontShowMainWindow = true;
+        } else if(arguments().at(i) == "-R" || arguments().at(i) == "--read-only") {
+            readOnly = true;
+        } else if(arguments().at(i) == "-o" || arguments().at(i) == "--option") {
+            const QString optionWarning = tr("The -o/--option option requires an argument in the form group/setting=value");
+            if(++i >= arguments().size())
+                qWarning() << qPrintable(optionWarning);
+            else {
+                QStringList option = arguments().at(i).split("=");
+                if (option.size() != 2)
+                    qWarning() << qPrintable(optionWarning);
+                else {
+                    QStringList setting = option.at(0).split("/");
+                    if (setting.size() != 2)
+                        qWarning() << qPrintable(optionWarning);
+                    else
+                        Settings::setValue(setting.at(0), setting.at(1), option.at(1), /* dont_save_to_disk */ true);
+                }
+            }
         } else {
             // Other: Check if it's a valid file name
             if(QFile::exists(arguments().at(i)))
@@ -122,10 +147,10 @@ Application::Application(int& argc, char** argv) :
     // Open database if one was specified
     if(fileToOpen.size())
     {
-        if(m_mainWindow->fileOpen(fileToOpen))
+        if(m_mainWindow->fileOpen(fileToOpen, false, readOnly))
         {
             // If database could be opened run the SQL scripts
-            foreach(const QString& f, sqlToExecute)
+            for(const QString& f : sqlToExecute)
             {
                 QFile file(f);
                 if(file.open(QIODevice::ReadOnly))
@@ -159,4 +184,17 @@ bool Application::event(QEvent* event)
     default:
         return QApplication::event(event);
     }
+}
+
+QString Application::versionString()
+{
+    // Distinguish between high and low patch version numbers. High numbers as in x.y.99 indicate nightly builds or
+    // beta releases. For these we want to include the build date. For the release versions we don't add the release
+    // date in order to avoid confusion about what is more important, version number or build date, and about different
+    // build dates for the same version. This also should help making release builds reproducible out of the box.
+#if PATCH_VERSION >= 99
+    return QString("%1 (%2)").arg(APP_VERSION).arg(__DATE__);
+#else
+    return QString("%1").arg(APP_VERSION);
+#endif
 }

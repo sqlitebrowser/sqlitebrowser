@@ -1,5 +1,6 @@
 #include <QPushButton>
 #include <QUrlQuery>
+#include <QRegExpValidator>
 
 #include "RemotePushDialog.h"
 #include "ui_RemotePushDialog.h"
@@ -10,10 +11,14 @@ RemotePushDialog::RemotePushDialog(QWidget* parent, RemoteDatabase& remote, cons
     ui(new Ui::RemotePushDialog),
     m_host(host),
     m_clientCert(clientCert),
-    remoteDatabase(remote)
+    remoteDatabase(remote),
+    m_nameValidator(new QRegExpValidator(QRegExp("^[a-z,A-Z,0-9,\\.,\\-,\\_,\\(,\\),\\+,\\ ]+$"), this)),
+    m_branchValidator(new QRegExpValidator(QRegExp("^[a-z,A-Z,0-9,\\^,\\.,\\-,\\_,\\/,\\(,\\),\\:,\\&,\\ )]+$"), this))
 {
     // Create UI
     ui->setupUi(this);
+    ui->editName->setValidator(m_nameValidator);
+    ui->comboBranch->setValidator(m_branchValidator);
 
     // Set start values
     ui->editName->setText(name);
@@ -42,6 +47,12 @@ void RemotePushDialog::checkInput()
         ui->checkPublic->setText(tr("Database will be public. Everyone has read access to it."));
     else
         ui->checkPublic->setText(tr("Database will be private. Only you have access to it."));
+
+    // Update the foce push check box text
+    if(ui->checkForce->isChecked())
+        ui->checkForce->setText(tr("Use with care. This can cause remote commits to be deleted."));
+    else
+        ui->checkForce->setText(" ");   // The space character here is required to avoid annoying resizes when toggling the checkbox
 
     // Check input
     bool valid = true;
@@ -88,6 +99,11 @@ QString RemotePushDialog::branch() const
     return ui->comboBranch->currentText();
 }
 
+bool RemotePushDialog::forcePush() const
+{
+    return ui->checkForce->isChecked();
+}
+
 void RemotePushDialog::fillInLicences(const QMap<QString, QString>& licences)
 {
     // Clear licence list and add default item for unspecified licence
@@ -106,7 +122,7 @@ void RemotePushDialog::fillInBranches(const QStringList& branches, const QString
     ui->comboBranch->addItem(default_branch);
 
     // Add rest of the branch list to the combo box
-    foreach(const QString& branch, branches)
+    for(const QString& branch : branches)
     {
         if(branch != default_branch)
             ui->comboBranch->addItem(branch);

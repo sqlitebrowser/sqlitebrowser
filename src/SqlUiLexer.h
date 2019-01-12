@@ -12,7 +12,7 @@ class SqlUiLexer : public QsciLexerSQL
     Q_OBJECT
 
 public:
-    explicit SqlUiLexer(QObject *parent = 0);
+    explicit SqlUiLexer(QObject *parent = nullptr);
 
     enum ApiCompleterIconId
     {
@@ -20,16 +20,19 @@ public:
         ApiCompleterIconIdFunction,
         ApiCompleterIconIdTable,
         ApiCompleterIconIdColumn,
+        ApiCompleterIconIdSchema,
     };
 
     typedef QMap<QString, QList<QString> > TablesAndColumnsMap;
-    void setTableNames(const TablesAndColumnsMap& tables);
+    typedef QMap<QString, TablesAndColumnsMap > QualifiedTablesMap;
 
-    virtual const char* keywords(int set) const;
+    void setTableNames(const QualifiedTablesMap& tables);
 
-    virtual QStringList autoCompletionWordSeparators() const;
+    const char* keywords(int set) const override;
 
-    bool caseSensitive() const;
+    QStringList autoCompletionWordSeparators() const override;
+
+    bool caseSensitive() const override;
 
 private:
     QsciAPIs* autocompleteApi;

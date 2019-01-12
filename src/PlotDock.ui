@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>478</width>
+    <width>515</width>
     <height>553</height>
    </rect>
   </property>
@@ -26,11 +26,20 @@
         <verstretch>2</verstretch>
        </sizepolicy>
       </property>
+      <property name="whatsThis">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This pane shows the list of columns of the currently browsed table or the just executed query. You can select the columns that you want to be used as X or Y axis for the plot pane below. The table shows detected axis type that will affect the resulting plot. For the Y axis you can only select numeric columns, but for the X axis you will be able to select:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Date/Time&lt;/span&gt;: strings with format &amp;quot;yyyy-MM-dd hh:mm:ss&amp;quot; or &amp;quot;yyyy-MM-ddThh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Date&lt;/span&gt;: strings with format &amp;quot;yyyy-MM-dd&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Time&lt;/span&gt;: strings with format &amp;quot;hh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Label&lt;/span&gt;: other string formats. Selecting this column as X axis will produce a Bars plot with the column values as labels for the bars&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Numeric&lt;/span&gt;: integer or real values&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Double-clicking the Y cells you can change the used color for that graph.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="alternatingRowColors">
+       <bool>true</bool>
+      </property>
       <property name="columnCount">
        <number>4</number>
       </property>
       <attribute name="headerDefaultSectionSize">
        <number>100</number>
+      </attribute>
+      <attribute name="headerStretchLastSection">
+       <bool>false</bool>
       </attribute>
       <column>
        <property name="text">
@@ -49,7 +58,7 @@
       </column>
       <column>
        <property name="text">
-        <string>_</string>
+        <string>Axis Type</string>
        </property>
       </column>
      </widget>
@@ -59,6 +68,15 @@
         <horstretch>0</horstretch>
         <verstretch>8</verstretch>
        </sizepolicy>
+      </property>
+      <property name="whatsThis">
+       <string>Here is a plot drawn when you select the x and y values above.
+
+Click on points to select them in the plot and in the table. Ctrl+Click for selecting a range of points.
+
+Use mouse-wheel for zooming and mouse drag for changing the axis range.
+
+Select the axes or axes labels to drag and zoom only in that orientation.</string>
       </property>
      </widget>
     </widget>
@@ -245,7 +263,7 @@
           </property>
           <property name="icon">
            <iconset resource="icons/icons.qrc">
-            <normaloff>:/icons/save_table</normaloff>:/icons/save_table</iconset>
+            <normaloff>:/icons/image_save</normaloff>:/icons/image_save</iconset>
           </property>
           <property name="checkable">
            <bool>false</bool>
@@ -264,11 +282,11 @@
         <item>
          <widget class="QToolButton" name="buttonLoadAllData">
           <property name="toolTip">
-           <string>Load all data. This has only an effect if not all data has been fetched from the table yet due to the partial fetch mechanism.</string>
+           <string>Load all data and redraw plot</string>
           </property>
           <property name="icon">
            <iconset resource="icons/icons.qrc">
-            <normaloff>:/icons/keyword</normaloff>:/icons/keyword</iconset>
+            <normaloff>:/icons/refresh</normaloff>:/icons/refresh</iconset>
           </property>
          </widget>
         </item>

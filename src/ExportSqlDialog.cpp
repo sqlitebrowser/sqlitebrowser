@@ -2,15 +2,10 @@
 #include "ui_ExportSqlDialog.h"
 #include "sqlitedb.h"
 #include "FileDialog.h"
+#include "Settings.h"
 
 #include <QFile>
 #include <QMessageBox>
-#include <QSettings>
-
-static QString sSettingsGroup("exportsql");
-static QString sSettingsInsertColNames("insertcolnames");
-static QString sSettingsInsertMultiple("insertmultiple");
-static QString sSettingsOldSchema("oldschema");
 
 enum WhatComboEntries
 {
@@ -27,16 +22,15 @@ ExportSqlDialog::ExportSqlDialog(DBBrowserDB* db, QWidget* parent, const QString
     // Create UI
     ui->setupUi(this);
 
-    QSettings settings(QApplication::organizationName(), QApplication::organizationName());
-    settings.beginGroup(sSettingsGroup);
-    ui->checkColNames->setChecked(settings.value(sSettingsInsertColNames, false).toBool());
-    ui->checkMultiple->setChecked(settings.value(sSettingsInsertMultiple, false).toBool());
-    ui->comboOldSchema->setCurrentIndex(settings.value(sSettingsOldSchema, 0).toInt());
+    // Load settings
+    ui->checkColNames->setChecked(Settings::getValue("exportsql", "insertcolnames").toBool());
+    ui->checkMultiple->setChecked(Settings::getValue("exportsql", "insertmultiple").toBool());
+    ui->comboOldSchema->setCurrentIndex(Settings::getValue("exportsql", "oldschema").toInt());
 
     // Get list of tables to export
-    objectMap objects = pdb->getBrowsableObjects("main");
-    for(auto it=objects.constBegin();it!=objects.constEnd();++it)
-        ui->listTables->addItem(new QListWidgetItem(QIcon(QString(":icons/%1").arg((*it)->type())), (*it)->name()));
+    QList<sqlb::ObjectPtr> objects = pdb->schemata["main"].values("table");
+    for(const sqlb::ObjectPtr& it : objects)
+        ui->listTables->addItem(new QListWidgetItem(QIcon(QString(":icons/%1").arg(sqlb::Object::typeToString(it->type()))), it->name()));
 
     // Sort list of tables and select the table specified in the
     // selection parameter or all tables if table not specified
@@ -77,7 +71,7 @@ void ExportSqlDialog::accept()
     if(selectedItems.isEmpty())
     {
         QMessageBox::warning(this, QApplication::applicationName(),
-                             tr("Please select at least 1 table."));
+                             tr("Please select at least one table."));
         return;
     }
 
@@ -89,6 +83,7 @@ void ExportSqlDialog::accept()
         defaultFileName = pdb->currentFile() + ".sql";;
 
     QString fileName = FileDialog::getSaveFileName(
+                CreateSQLFile,
                 this,
                 tr("Choose a filename to export"),
                 tr("Text files(*.sql *.txt)"),
@@ -96,16 +91,13 @@ void ExportSqlDialog::accept()
     if(fileName.isEmpty())
         return;
 
-    // save settings
-    QSettings settings(QApplication::organizationName(), QApplication::organizationName());
-    settings.beginGroup(sSettingsGroup);
-    settings.setValue(sSettingsInsertColNames, ui->checkColNames->isChecked());
-    settings.setValue(sSettingsInsertMultiple, ui->checkMultiple->isChecked());
-    settings.setValue(sSettingsOldSchema, ui->comboOldSchema->currentIndex());
-    settings.endGroup();
+    // Save settings
+    Settings::setValue("exportsql", "insertcolnames", ui->checkColNames->isChecked());
+    Settings::setValue("exportsql", "insertmultiple", ui->checkMultiple->isChecked());
+    Settings::setValue("exportsql", "oldschema", ui->comboOldSchema->currentIndex());
 
     QStringList tables;
-    foreach (const QListWidgetItem * item, ui->listTables->selectedItems())
+    for(const QListWidgetItem* item : ui->listTables->selectedItems())
         tables.push_back(item->text());
 
     // Check what to export. The indices here depend on the order of the items in the combobox in the ui file

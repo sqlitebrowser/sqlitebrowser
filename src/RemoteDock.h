@@ -17,10 +17,13 @@ class RemoteDock : public QDialog
 
 public:
     explicit RemoteDock(MainWindow* parent);
-    ~RemoteDock();
+    ~RemoteDock() override;
 
     void reloadSettings();
     void enableButtons();
+
+public slots:
+    void reject() override;
 
 private slots:
     void setNewIdentity();

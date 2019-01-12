@@ -1,23 +1,24 @@
+#include "sql/sqlitetypes.h"
 #include "sqltextedit.h"
 #include "Settings.h"
 #include "SqlUiLexer.h"
 
-#include <QFile>
-#include <QDropEvent>
-#include <QUrl>
-#include <QMimeData>
-#include <cmath>
+#include <Qsci/qscicommandset.h>
+#include <Qsci/qscicommand.h>
 
-SqlUiLexer* SqlTextEdit::sqlLexer = 0;
+#include <QShortcut>
+#include <QRegExp>
+
+SqlUiLexer* SqlTextEdit::sqlLexer = nullptr;
 
 SqlTextEdit::SqlTextEdit(QWidget* parent) :
-    QsciScintilla(parent)
+    ExtendedScintilla(parent)
 {
     // Create lexer object if not done yet
-    if(sqlLexer == 0)
+    if(sqlLexer == nullptr)
         sqlLexer = new SqlUiLexer(this);
 
-    // Set the lexer
+    // Set the SQL lexer
     setLexer(sqlLexer);
 
     // Set icons for auto completion
@@ -25,77 +26,27 @@ SqlTextEdit::SqlTextEdit(QWidget* parent) :
     registerImage(SqlUiLexer::ApiCompleterIconIdFunction, QImage(":/icons/function"));
     registerImage(SqlUiLexer::ApiCompleterIconIdTable, QImage(":/icons/table"));
     registerImage(SqlUiLexer::ApiCompleterIconIdColumn, QImage(":/icons/field"));
+    registerImage(SqlUiLexer::ApiCompleterIconIdSchema, QImage(":/icons/database"));
 
-    // Enable UTF8
-    setUtf8(true);
+    // Remove command bindings that would interfere with our shortcutToggleComment
+    QsciCommand * command = standardCommands()->boundTo(Qt::ControlModifier+Qt::Key_Slash);
+    command->setKey(0);
+    command = standardCommands()->boundTo(Qt::ControlModifier+Qt::ShiftModifier+Qt::Key_Slash);
+    command->setKey(0);
 
-    // Enable brace matching
-    setBraceMatching(QsciScintilla::SloppyBraceMatch);
+    // Change command binding for Ctrl+T so it doesn't interfere with "Open tab"
+    command = standardCommands()->boundTo(Qt::ControlModifier+Qt::Key_T);
+    command->setKey(Qt::ControlModifier+Qt::ShiftModifier+Qt::Key_Up);
 
-    // Enable auto indentation
-    setAutoIndent(true);
-
-    // Enable folding
-    setFolding(QsciScintilla::BoxedTreeFoldStyle);
-
-    // Create error indicator
-    errorIndicatorNumber = indicatorDefine(QsciScintilla::SquiggleIndicator);
-    setIndicatorForegroundColor(Qt::red, errorIndicatorNumber);
+    QShortcut* shortcutToggleComment = new QShortcut(QKeySequence(tr("Ctrl+/")), this, nullptr, nullptr, Qt::WidgetShortcut);
+    connect(shortcutToggleComment, &QShortcut::activated, this, &SqlTextEdit::toggleBlockComment);
 
     // Do rest of initialisation
     reloadSettings();
-
-    // Connect signals
-    connect(this, SIGNAL(linesChanged()), this, SLOT(updateLineNumberAreaWidth()));
 }
 
 SqlTextEdit::~SqlTextEdit()
 {
-}
-
-void SqlTextEdit::updateLineNumberAreaWidth()
-{
-    // Calculate number of digits of the current number of lines
-    int digits = std::floor(std::log10(lines())) + 1;
-
-    // Calculate the width of this number if it was all zeros (this is because a 1 might require less space than a 0 and this could
-    // cause some flickering depending on the font) and set the new margin width.
-    QFont font = lexer()->font(QsciLexerSQL::Default);
-    setMarginWidth(0, QFontMetrics(font).width(QString("0").repeated(digits)) + 5);
-}
-
-void SqlTextEdit::dropEvent(QDropEvent* e)
-{
-    QList<QUrl> urls = e->mimeData()->urls();
-    if(urls.isEmpty())
-        return QsciScintilla::dropEvent(e);
-
-    QString file = urls.first().toLocalFile();
-    if(!QFile::exists(file))
-        return;
-
-    QFile f(file);
-    f.open(QIODevice::ReadOnly);
-    setText(f.readAll());
-    f.close();
-}
-
-void SqlTextEdit::setupSyntaxHighlightingFormat(const QString& settings_name, int style)
-{
-    sqlLexer->setColor(QColor(Settings::getValue("syntaxhighlighter", settings_name + "_colour").toString()), style);
-
-    QFont font(Settings::getValue("editor", "font").toString());
-    font.setPointSize(Settings::getValue("editor", "fontsize").toInt());
-    font.setBold(Settings::getValue("syntaxhighlighter", settings_name + "_bold").toBool());
-    font.setItalic(Settings::getValue("syntaxhighlighter", settings_name + "_italic").toBool());
-    font.setUnderline(Settings::getValue("syntaxhighlighter", settings_name + "_underline").toBool());
-    sqlLexer->setFont(font, style);
-}
-
-void SqlTextEdit::reloadKeywords()
-{
-    // Set lexer again to reload the updated keywords list
-    setLexer(lexer());
 }
 
 void SqlTextEdit::reloadSettings()
@@ -104,66 +55,82 @@ void SqlTextEdit::reloadSettings()
     if(Settings::getValue("editor", "auto_completion").toBool())
     {
         setAutoCompletionThreshold(3);
-        setAutoCompletionCaseSensitivity(false);
+        setAutoCompletionCaseSensitivity(true);
         setAutoCompletionShowSingle(true);
         setAutoCompletionSource(QsciScintilla::AcsAPIs);
     } else {
         setAutoCompletionThreshold(0);
     }
 
-    // Set syntax highlighting settings
-    QFont defaultfont(Settings::getValue("editor", "font").toString());
-    defaultfont.setStyleHint(QFont::TypeWriter);
-    defaultfont.setPointSize(Settings::getValue("editor", "fontsize").toInt());
-    sqlLexer->setColor(Qt::black, QsciLexerSQL::Default);
-    sqlLexer->setFont(defaultfont);
-    setupSyntaxHighlightingFormat("comment", QsciLexerSQL::Comment);
-    setupSyntaxHighlightingFormat("comment", QsciLexerSQL::CommentLine);
-    setupSyntaxHighlightingFormat("comment", QsciLexerSQL::CommentDoc);
-    setupSyntaxHighlightingFormat("keyword", QsciLexerSQL::Keyword);
-    setupSyntaxHighlightingFormat("table", QsciLexerSQL::KeywordSet6);
-    setupSyntaxHighlightingFormat("function", QsciLexerSQL::KeywordSet7);
-    setupSyntaxHighlightingFormat("string", QsciLexerSQL::DoubleQuotedString);
-    setupSyntaxHighlightingFormat("string", QsciLexerSQL::SingleQuotedString);
-    setupSyntaxHighlightingFormat("identifier", QsciLexerSQL::Identifier);
-    setupSyntaxHighlightingFormat("identifier", QsciLexerSQL::QuotedIdentifier);
+    ExtendedScintilla::reloadSettings();
 
-    // Set font
-    QFont font(Settings::getValue("editor", "font").toString());
-    font.setStyleHint(QFont::TypeWriter);
-    font.setPointSize(Settings::getValue("editor", "fontsize").toInt());
-    setFont(font);
+    setupSyntaxHighlightingFormat(sqlLexer, "comment", QsciLexerSQL::Comment);
+    setupSyntaxHighlightingFormat(sqlLexer, "comment", QsciLexerSQL::CommentLine);
+    setupSyntaxHighlightingFormat(sqlLexer, "comment", QsciLexerSQL::CommentDoc);
+    setupSyntaxHighlightingFormat(sqlLexer, "keyword", QsciLexerSQL::Keyword);
+    setupSyntaxHighlightingFormat(sqlLexer, "table", QsciLexerSQL::KeywordSet6);
+    setupSyntaxHighlightingFormat(sqlLexer, "function", QsciLexerSQL::KeywordSet7);
+    setupSyntaxHighlightingFormat(sqlLexer, "string", QsciLexerSQL::SingleQuotedString);
 
-    // Show line numbers
-    QFont marginsfont(QFont(Settings::getValue("editor", "font").toString()));
-    marginsfont.setPointSize(font.pointSize());
-    setMarginsFont(marginsfont);
-    setMarginLineNumbers(0, true);
-    setMarginsBackgroundColor(Qt::lightGray);
-    updateLineNumberAreaWidth();
-
-    // Highlight current line
-    setCaretLineVisible(true);
-    setCaretLineBackgroundColor(QColor(Settings::getValue("syntaxhighlighter", "currentline_colour").toString()));
-
-    // Set tab width
-    setTabWidth(Settings::getValue("editor", "tabsize").toInt());
-
-    // Check if error indicators are enabled and clear them if they just got disabled
-    showErrorIndicators = Settings::getValue("editor", "error_indicators").toBool();
-    if(!showErrorIndicators)
-        clearErrorIndicators();
+    // Highlight double quote strings as identifier or as literal string depending on user preference
+    switch(static_cast<sqlb::escapeQuoting>(Settings::getValue("editor", "identifier_quotes").toInt())) {
+    case sqlb::DoubleQuotes:
+        setupSyntaxHighlightingFormat(sqlLexer, "identifier", QsciLexerSQL::DoubleQuotedString);
+        sqlLexer->setQuotedIdentifiers(false);
+        break;
+    case sqlb::GraveAccents:
+        sqlLexer->setQuotedIdentifiers(true);
+        // Fall through, treat quoted string as literal string
+    case sqlb::SquareBrackets:
+        setupSyntaxHighlightingFormat(sqlLexer, "string", QsciLexerSQL::DoubleQuotedString);
+        break;
+    }
+    setupSyntaxHighlightingFormat(sqlLexer, "identifier", QsciLexerSQL::Identifier);
+    setupSyntaxHighlightingFormat(sqlLexer, "identifier", QsciLexerSQL::QuotedIdentifier);
 }
 
-void SqlTextEdit::clearErrorIndicators()
-{
-    // Clear any error indicators from position (0,0) to the last column of the last line
-    clearIndicatorRange(0, 0, lines(), lineLength(lines()), errorIndicatorNumber);
-}
 
-void SqlTextEdit::setErrorIndicator(int fromRow, int fromIndex, int toRow, int toIndex)
+void SqlTextEdit::toggleBlockComment()
 {
-    // Set error indicator for the specified range but only if they're enabled
-    if(showErrorIndicators)
-        fillIndicatorRange(fromRow, fromIndex, toRow, toIndex, errorIndicatorNumber);
+    int lineFrom, indexFrom, lineTo, indexTo;
+
+    // If there is no selection, select the current line
+    if (!hasSelectedText()) {
+        getCursorPosition(&lineFrom, &indexFrom);
+
+        // Windows lines requires an adjustment, otherwise the selection would
+        // end in the next line.
+        indexTo = text(lineFrom).endsWith("\r\n") ? lineLength(lineFrom)-1 : lineLength(lineFrom);
+
+        setSelection(lineFrom, 0, lineFrom, indexTo);
+    }
+
+    getSelection(&lineFrom, &indexFrom, &lineTo, &indexTo);
+
+    bool uncomment = text(lineFrom).contains(QRegExp("^[ \t]*--"));
+
+    // If the selection ends before the first character of a line, don't
+    // take this line into account for un/commenting.
+    if (indexTo==0)
+        lineTo--;
+
+    beginUndoAction();
+
+    // Iterate over the selected lines, get line text, make
+    // replacement depending on whether the first line was commented
+    // or uncommented, and replace the line text. All in a single undo action.
+    for (int line=lineFrom; line<=lineTo; line++) {
+        QString lineText = text(line);
+
+        if (uncomment)
+            lineText.replace(QRegExp("^([ \t]*)-- ?"), "\\1");
+        else
+            lineText.replace(QRegExp("^"), "-- ");
+
+        indexTo = lineText.endsWith("\r\n") ? lineLength(line)-1 : lineLength(line);
+
+        setSelection(line, 0, line, indexTo);
+        replaceSelectedText(lineText);
+    }
+    endUndoAction();
 }

@@ -12,14 +12,16 @@ class Application : public QApplication
 
 public:
     explicit Application(int& argc, char** argv);
-    virtual ~Application();
+    ~Application() override;
 
     bool dontShowMainWindow() { return m_dontShowMainWindow; }
 
     MainWindow* mainWindow() { return m_mainWindow; }
 
+    static QString versionString();
+
 protected:
-    bool event(QEvent* event);
+    bool event(QEvent* event) override;
 
 private:
     bool m_dontShowMainWindow;

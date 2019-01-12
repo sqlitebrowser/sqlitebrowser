@@ -1,7 +1,7 @@
 #ifndef EDITTABLEDIALOG_H
 #define EDITTABLEDIALOG_H
 
-#include "sqlitetypes.h"
+#include "sql/sqlitetypes.h"
 
 #include <QDialog>
 
@@ -18,11 +18,11 @@ class EditTableDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit EditTableDialog(DBBrowserDB& pdb, const sqlb::ObjectIdentifier& tableName, bool createTable, QWidget* parent = 0);
-    ~EditTableDialog();
+    explicit EditTableDialog(DBBrowserDB& pdb, const sqlb::ObjectIdentifier& tableName, bool createTable, QWidget* parent = nullptr);
+    ~EditTableDialog() override;
 
 protected:
-    void keyPressEvent(QKeyEvent *evt);
+    void keyPressEvent(QKeyEvent *evt) override;
 
 private:
     enum Columns {
@@ -47,10 +47,12 @@ private slots:
     void addField();
     void removeField();
     void fieldSelectionChanged();
-    virtual void accept();
-    virtual void reject();
+    void accept() override;
+    void reject() override;
     void checkInput();
     void itemChanged(QTreeWidgetItem* item, int column);
+    void updateTypes(QObject *object);
+    bool eventFilter(QObject *object, QEvent *event) override;
     void updateTypes();
     void moveUp();
     void moveDown();
@@ -62,9 +64,8 @@ private:
     DBBrowserDB& pdb;
     ForeignKeyEditorDelegate* m_fkEditorDelegate;
     sqlb::ObjectIdentifier curTable;
+    QMap<QString, QString> trackColumns;
     sqlb::Table m_table;
-    QStringList types;
-    QStringList fields;
     bool m_bNewTable;
     QString m_sRestorePointName;
 };

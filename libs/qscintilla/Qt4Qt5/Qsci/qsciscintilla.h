@@ -1,7 +1,7 @@
 // This module defines the "official" high-level API of the Qt port of
 // Scintilla.
 //
-// Copyright (c) 2017 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2018 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 
@@ -1155,6 +1155,16 @@ public:
     //! \sa setHotspotForegroundColor(), resetHotspotBackgroundColor()
     void resetHotspotForegroundColor();
 
+    //! Gets the assumed document width in pixels.
+    //!
+    //! \sa setScrollWidth(), setScrollWidthTracking()
+    int scrollWidth() const;
+
+    //! Returns true if scroll width tracking is enabled.
+    //!
+    //! \sa scrollWidth(), setScrollWidthTracking()
+    bool scrollWidthTracking() const;
+
     //! The fold margin may be drawn as a one pixel sized checkerboard pattern
     //! of two colours, \a fore and \a back.
     //!
@@ -1369,6 +1379,23 @@ public:
     //!
     //! \sa setMatchedBraceIndicator()
     void resetMatchedBraceIndicator();
+
+    //! For performance, QScintilla does not measure the display width of the
+    //! document to determine the properties of the horizontal scroll bar.
+    //! Instead, an assumed width is used.  This sets the document width in
+    //! pixels assumed by QScintilla to \a pixelWidth.  The default value is
+    //! 2000.
+    //!
+    //! \sa scrollWidth(), setScrollWidthTracking()
+    void setScrollWidth(int pixelWidth);
+
+    //! If scroll width tracking is enabled then the scroll width is adjusted
+    //! to ensure that all of the lines currently displayed can be completely
+    //! scrolled.  This mode never adjusts the scroll width to be narrower.
+    //! This sets the scroll width tracking to \a enabled.
+    //!
+    //! \sa setScrollWidth(), scrollWidthTracking()
+    void setScrollWidthTracking(bool enabled);
 
     //! Sets the mode used to draw tab characters when whitespace is visible to
     //! \a mode.  The default is to use an arrow.
@@ -2099,6 +2126,9 @@ protected:
 
     //! \reimp
     virtual void contextMenuEvent(QContextMenuEvent *e);
+
+    //! \reimp
+    virtual void wheelEvent(QWheelEvent *e);
 
 private slots:
     void handleCallTipClick(int dir);

@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>738</width>
-    <height>490</height>
+    <width>788</width>
+    <height>717</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Import CSV file</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_4">
+  <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
     <layout class="QFormLayout" name="formLayout">
      <property name="fieldGrowthPolicy">
@@ -22,7 +22,7 @@
      <item row="0" column="0">
       <widget class="QLabel" name="labelName">
        <property name="text">
-        <string>&amp;Table name</string>
+        <string>Table na&amp;me</string>
        </property>
        <property name="buddy">
         <cstring>editName</cstring>
@@ -49,7 +49,7 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
+     <item row="2" column="0">
       <widget class="QLabel" name="labelSeparator">
        <property name="text">
         <string>Field &amp;separator</string>
@@ -59,7 +59,7 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
+     <item row="2" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <widget class="QComboBox" name="comboSeparator">
@@ -112,7 +112,7 @@
        </item>
       </layout>
      </item>
-     <item row="4" column="0">
+     <item row="3" column="0">
       <widget class="QLabel" name="labelQuote">
        <property name="text">
         <string>&amp;Quote character</string>
@@ -122,7 +122,7 @@
        </property>
       </widget>
      </item>
-     <item row="4" column="1">
+     <item row="3" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
         <widget class="QComboBox" name="comboQuote">
@@ -170,7 +170,7 @@
        </item>
       </layout>
      </item>
-     <item row="5" column="0">
+     <item row="4" column="0">
       <widget class="QLabel" name="labelEncoding">
        <property name="text">
         <string>&amp;Encoding</string>
@@ -180,7 +180,7 @@
        </property>
       </widget>
      </item>
-     <item row="5" column="1">
+     <item row="4" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
         <widget class="QComboBox" name="comboEncoding">
@@ -224,14 +224,17 @@
        </item>
       </layout>
      </item>
-     <item row="6" column="0">
+     <item row="5" column="0">
       <widget class="QLabel" name="labelTrim">
        <property name="text">
         <string>Trim fields?</string>
        </property>
+       <property name="buddy">
+        <cstring>checkBoxTrimFields</cstring>
+       </property>
       </widget>
      </item>
-     <item row="6" column="1">
+     <item row="5" column="1">
       <widget class="QCheckBox" name="checkBoxTrimFields">
        <property name="text">
         <string/>
@@ -241,100 +244,203 @@
        </property>
       </widget>
      </item>
-     <item row="7" column="0">
-      <layout class="QVBoxLayout" name="verticalLayout_2"/>
-     </item>
-     <item row="8" column="0">
+     <item row="6" column="0">
       <widget class="QLabel" name="separateTables">
        <property name="text">
         <string>Separate tables</string>
        </property>
+       <property name="buddy">
+        <cstring>checkBoxSeparateTables</cstring>
+       </property>
       </widget>
      </item>
-     <item row="8" column="1">
+     <item row="6" column="1">
       <widget class="QCheckBox" name="checkBoxSeparateTables">
        <property name="text">
         <string/>
        </property>
       </widget>
      </item>
+     <item row="7" column="1">
+      <widget class="QPushButton" name="buttonAdvanced">
+       <property name="text">
+        <string>Advanced</string>
+       </property>
+       <property name="icon">
+        <iconset resource="icons/icons.qrc">
+         <normaloff>:/icons/down</normaloff>:/icons/down</iconset>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="1">
+      <widget class="QCheckBox" name="checkIgnoreDefaults">
+       <property name="toolTip">
+        <string>When importing an empty value from the CSV file into an existing table with a default value for this column, that default value is inserted. Activate this option to insert an empty value instead.</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="0">
+      <widget class="QLabel" name="labelIgnoreDefaults">
+       <property name="text">
+        <string>Ignore default &amp;values</string>
+       </property>
+       <property name="buddy">
+        <cstring>checkIgnoreDefaults</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="11" column="1">
+      <widget class="QCheckBox" name="checkFailOnMissing">
+       <property name="toolTip">
+        <string>Activate this option to stop the import when trying to import an empty value into a NOT NULL column without a default value.</string>
+       </property>
+      </widget>
+     </item>
+     <item row="11" column="0">
+      <widget class="QLabel" name="labelFailOnMissing">
+       <property name="text">
+        <string>Fail on missing values </string>
+       </property>
+       <property name="buddy">
+        <cstring>checkFailOnMissing</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="0">
+      <widget class="QLabel" name="labelNoTypeDetection">
+       <property name="text">
+        <string>Disable data type detection</string>
+       </property>
+       <property name="buddy">
+        <cstring>checkNoTypeDetection</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="1">
+      <widget class="QCheckBox" name="checkNoTypeDetection">
+       <property name="toolTip">
+        <string>Disable the automatic data type detection when creating a new table.</string>
+       </property>
+      </widget>
+     </item>
+     <item row="12" column="1">
+      <widget class="QComboBox" name="comboOnConflictStrategy">
+       <property name="toolTip">
+        <string>When importing into an existing table with a primary key, unique constraints or a unique index there is a chance for a conflict. This option allows you to select a strategy for that case: By default the import is aborted and rolled back but you can also choose to ignore and not import conflicting rows or to replace the existing row in the table.</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>Abort import</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Ignore row</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Replace existing row</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="12" column="0">
+      <widget class="QLabel" name="labelOnConflictStrategy">
+       <property name="text">
+        <string>Conflict strategy</string>
+       </property>
+       <property name="buddy">
+        <cstring>comboOnConflictStrategy</cstring>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
-    <widget class="QWidget" name="filePickerBlock" native="true">
-     <property name="enabled">
-      <bool>true</bool>
+    <widget class="QSplitter" name="splitter">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
      </property>
-     <layout class="QHBoxLayout" name="filePickerLayout">
-      <property name="leftMargin">
-       <number>0</number>
+     <property name="childrenCollapsible">
+      <bool>false</bool>
+     </property>
+     <widget class="QWidget" name="filePickerBlock" native="true">
+      <property name="enabled">
+       <bool>true</bool>
       </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <item>
-       <widget class="QListWidget" name="filePicker"/>
-      </item>
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout">
-        <property name="spacing">
-         <number>7</number>
-        </property>
-        <property name="sizeConstraint">
-         <enum>QLayout::SetDefaultConstraint</enum>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <item>
-         <widget class="QPushButton" name="toggleSelected">
-          <property name="text">
-           <string>Deselect All</string>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="matchSimilar">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="text">
-           <string>Match Similar</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </item>
-     </layout>
+      <layout class="QHBoxLayout" name="filePickerLayout">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QListWidget" name="filePicker"/>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <property name="spacing">
+          <number>7</number>
+         </property>
+         <property name="sizeConstraint">
+          <enum>QLayout::SetDefaultConstraint</enum>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="toggleSelected">
+           <property name="text">
+            <string>Deselect All</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="matchSimilar">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Match Similar</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QTableWidget" name="tablePreview"/>
     </widget>
-   </item>
-   <item>
-    <widget class="QTableWidget" name="tablePreview"/>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
@@ -359,12 +465,19 @@
   <tabstop>editCustomEncoding</tabstop>
   <tabstop>checkBoxTrimFields</tabstop>
   <tabstop>checkBoxSeparateTables</tabstop>
+  <tabstop>buttonAdvanced</tabstop>
+  <tabstop>checkIgnoreDefaults</tabstop>
+  <tabstop>checkNoTypeDetection</tabstop>
+  <tabstop>checkFailOnMissing</tabstop>
+  <tabstop>comboOnConflictStrategy</tabstop>
   <tabstop>filePicker</tabstop>
   <tabstop>toggleSelected</tabstop>
   <tabstop>matchSimilar</tabstop>
   <tabstop>tablePreview</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="icons/icons.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>comboSeparator</sender>
@@ -373,8 +486,8 @@
    <slot>updatePreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>232</x>
-     <y>99</y>
+     <x>245</x>
+     <y>92</y>
     </hint>
     <hint type="destinationlabel">
      <x>445</x>
@@ -405,8 +518,8 @@
    <slot>updatePreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>478</x>
-     <y>99</y>
+     <x>511</x>
+     <y>92</y>
     </hint>
     <hint type="destinationlabel">
      <x>577</x>
@@ -421,8 +534,8 @@
    <slot>updatePreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>478</x>
-     <y>132</y>
+     <x>511</x>
+     <y>126</y>
     </hint>
     <hint type="destinationlabel">
      <x>530</x>
@@ -437,8 +550,8 @@
    <slot>updatePreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>495</x>
-     <y>165</y>
+     <x>524</x>
+     <y>160</y>
     </hint>
     <hint type="destinationlabel">
      <x>540</x>
@@ -453,8 +566,8 @@
    <slot>updatePreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>184</x>
-     <y>191</y>
+     <x>192</x>
+     <y>182</y>
     </hint>
     <hint type="destinationlabel">
      <x>368</x>
@@ -469,8 +582,8 @@
    <slot>updatePreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>266</x>
-     <y>165</y>
+     <x>271</x>
+     <y>160</y>
     </hint>
     <hint type="destinationlabel">
      <x>572</x>
@@ -485,8 +598,8 @@
    <slot>updatePreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>184</x>
-     <y>60</y>
+     <x>192</x>
+     <y>56</y>
     </hint>
     <hint type="destinationlabel">
      <x>354</x>
@@ -501,8 +614,8 @@
    <slot>updateSelection(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>674</x>
-     <y>258</y>
+     <x>777</x>
+     <y>385</y>
     </hint>
     <hint type="destinationlabel">
      <x>368</x>
@@ -517,8 +630,8 @@
    <slot>updatePreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>232</x>
-     <y>132</y>
+     <x>245</x>
+     <y>126</y>
     </hint>
     <hint type="destinationlabel">
      <x>350</x>
@@ -533,8 +646,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>272</x>
-     <y>478</y>
+     <x>281</x>
+     <y>707</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -549,8 +662,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>340</x>
-     <y>478</y>
+     <x>349</x>
+     <y>707</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
@@ -565,8 +678,8 @@
    <slot>checkInput()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>176</x>
-     <y>216</y>
+     <x>192</x>
+     <y>206</y>
     </hint>
     <hint type="destinationlabel">
      <x>368</x>
@@ -581,12 +694,28 @@
    <slot>matchSimilar()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>682</x>
-     <y>279</y>
+     <x>777</x>
+     <y>418</y>
     </hint>
     <hint type="destinationlabel">
      <x>368</x>
      <y>244</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonAdvanced</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>ImportCsvDialog</receiver>
+   <slot>toggleAdvancedSection(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>265</x>
+     <y>241</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>393</x>
+     <y>358</y>
     </hint>
    </hints>
   </connection>
@@ -596,5 +725,6 @@
   <slot>checkInput()</slot>
   <slot>updateSelection(bool)</slot>
   <slot>matchSimilar()</slot>
+  <slot>toggleAdvancedSection(bool)</slot>
  </slots>
 </ui>

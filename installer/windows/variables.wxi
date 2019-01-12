@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+    <?define Name="DB Browser for SQLite" ?>
+    <?define Team="$(var.Name) Team" ?>
+    <?define Version="3.11.99" ?>
+
+    <!--
+    =============================================== Add/Remove Programs ================================================
+    https://www.firegiant.com/wix/tutorial/com-expression-syntax-miscellanea/add-or-remove-programs-entries/
+    
+    In the Programs and Features Control Panel tool, the application can have various entries like contact information.
+    -->
+
+    <?define AppIcon="..\..\src\iconwin.ico" ?>
+    <?define AppComments="$(var.Name) is a high quality, visual, open source tool to create, design, and edit database files compatible with SQLite." ?>
+    <?define AppContact="db4s-dev@sqlitebrowser.org" ?>
+    <?define AppReadme="https://github.com/sqlitebrowser/sqlitebrowser" ?>
+    <?define AppHelpLink="https://github.com/sqlitebrowser/sqlitebrowser/wiki" ?>
+    <?define AppSupportLink="https://github.com/sqlitebrowser/sqlitebrowser/issues" ?>
+    <?define AppUpdateInfoLink="https://github.com/sqlitebrowser/sqlitebrowser/releases" ?>
+
+    <!--
+    ================================================== Visual C++ CRT ==================================================
+    http://wixtoolset.org/documentation/manual/v3/howtos/redistributables_and_install_checks/install_vcredist.html
+
+    To use the application, we must also deploy the files that are required to support it. To deploy redistributable
+    Visual C++ files, we were using the Visual C++ Redistributable Package (VCRedist_x86.exe or VCRedist_x64.exe) and
+    silently installing it at the end of the installation. Unfortunately, this package is a self-extracting MSI.
+    A Windows Installer mutex will prevent us from installing this package from within our application MSI.
+
+    Another option is to use redistributable merge modules (.msm files). Merge modules enables the installation of
+    redistributable Visual C++ DLLs into the "%SYSTEMROOT%\system32\" folder.
+
+    VCRedistPath
+        The Visual C++ runtime merge modules are installed with Visual Studio and are located in this directory.
+    VCRedistFile
+        The Visual C++ runtime file. This file is usually named "Microsoft_[VERSION]_CRT_[ARCH].msm". "VERSION" is the
+        Visual Studio version the application is built with. Use VC120 (version 12.0) if the application is built with
+        Visual Studio 2013. The build "ARCH" will be set automatically.
+    -->
+
+    <?if $(sys.BUILDARCH)="x64"?>
+        <?define VCRedistPath="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Redist\MSVC\14.16.27012\MergeModules" ?>
+        <?define VCRedistFile="Microsoft_VC141_CRT_$(sys.BUILDARCH).msm" ?>
+    <?elseif $(sys.BUILDARCH)="x86"?>
+        <?define VCRedistPath="C:\Program Files (x86)\Common Files\Merge Modules" ?>
+        <?define VCRedistFile="Microsoft_VC120_CRT_$(sys.BUILDARCH).msm" ?>
+    <?endif?>
+
+    <!--
+    =================================================== Build System ===================================================
+
+    Paths for the various libraries the application needs to compile. Change these to match the build machine.
+    -->
+
+    <?if $(sys.BUILDARCH)="x64"?>
+        <?define QtPath="C:\dev\Qt\5.11.3\msvc2017_64" ?>
+        <?define SQLitePath="C:\dev\SQLite-Win64" ?>
+        <?define SQLCipherPath="C:\git_repos\SQLCipher-Win64" ?>
+        <?define OpenSSLPath="C:\dev\OpenSSL-Win64" ?>
+        <?define SQLiteExePath="C:\builds\release-sqlite-win64\Release" ?>
+        <?define SQLCipherExePath="C:\builds\release-sqlcipher-win64\Release" ?>
+    <?elseif $(sys.BUILDARCH)="x86"?>
+        <?define QtPath="C:\dev\Qt\5.7\msvc2013" ?>
+        <?define SQLitePath="C:\dev\SQLite-Win32" ?>
+        <?define SQLCipherPath="C:\git_repos\SQLCipher-Win32" ?>
+        <?define OpenSSLPath="C:\dev\OpenSSL-Win32" ?>
+        <?define SQLiteExePath="C:\builds\release-sqlite-win32\Release" ?>
+        <?define SQLCipherExePath="C:\builds\release-sqlcipher-win32\Release" ?>
+    <?endif?>
+
+</Include>

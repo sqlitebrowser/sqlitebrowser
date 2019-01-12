@@ -1,6 +1,7 @@
 TEMPLATE = app
 
-QT += core gui network widgets printsupport
+QT += core gui network widgets printsupport concurrent xml
+macx: QT += opengl
 
 TARGET = sqlitebrowser
 
@@ -14,8 +15,8 @@ QMAKE_CXXFLAGS += -std=c++11
 CONFIG(unittest) {
   QT += testlib
 
-  HEADERS += tests/testsqlobjects.h tests/TestImport.h tests/TestRegex.h
-  SOURCES += tests/testsqlobjects.cpp tests/TestImport.cpp tests/TestMain.cpp tests/TestRegex.cpp
+  HEADERS += tests/testsqlobjects.h tests/TestImport.h tests/TestRegex.h tests/TestRowCache.h
+  SOURCES += tests/testsqlobjects.cpp tests/TestImport.cpp tests/TestRegex.cpp tests/TestRowCache.cpp
 } else {
   SOURCES += main.cpp
 }
@@ -26,19 +27,22 @@ HEADERS += \
     EditIndexDialog.h \
     AboutDialog.h \
     EditTableDialog.h \
+    AddRecordDialog.h \
     Settings.h \
     PreferencesDialog.h \
     EditDialog.h \
     ExportDataDialog.h \
     ImportCsvDialog.h \
     sqltextedit.h \
-    sqlitetypes.h \
+    sql/sqlitetypes.h \
     csvparser.h \
     ExtendedTableWidget.h \
     grammar/Sqlite3Lexer.hpp \
     grammar/Sqlite3Parser.hpp \
     grammar/sqlite3TokenTypes.hpp \
     sqlitetablemodel.h \
+    RowCache.h \
+    RowLoader.h \
     FilterTableHeader.h \
     version.h \
     SqlExecutionArea.h \
@@ -57,13 +61,25 @@ HEADERS += \
     PlotDock.h \
     RemoteDock.h \
     RemoteModel.h \
-    RemotePushDialog.h
+    RemotePushDialog.h \
+    docktextedit.h \
+    FindReplaceDialog.h \
+    ExtendedScintilla.h \
+    FileExtensionManager.h \
+    Data.h \
+    CipherSettings.h \
+    DotenvFormat.h \
+    Palette.h \
+    CondFormat.h \
+    sql/Query.h \
+    RunSql.h
 
 SOURCES += \
     sqlitedb.cpp \
     MainWindow.cpp \
     EditIndexDialog.cpp \
     EditTableDialog.cpp \
+    AddRecordDialog.cpp \
     Settings.cpp \
     PreferencesDialog.cpp \
     AboutDialog.cpp \
@@ -71,12 +87,13 @@ SOURCES += \
     ExportDataDialog.cpp \
     ImportCsvDialog.cpp \
     sqltextedit.cpp \
-    sqlitetypes.cpp \
+    sql/sqlitetypes.cpp \
     csvparser.cpp \
     ExtendedTableWidget.cpp \
     grammar/Sqlite3Lexer.cpp \
     grammar/Sqlite3Parser.cpp \
     sqlitetablemodel.cpp \
+    RowLoader.cpp \
     FilterTableHeader.cpp \
     SqlExecutionArea.cpp \
     VacuumDialog.cpp \
@@ -93,7 +110,18 @@ SOURCES += \
     PlotDock.cpp \
     RemoteDock.cpp \
     RemoteModel.cpp \
-    RemotePushDialog.cpp
+    RemotePushDialog.cpp \
+    docktextedit.cpp \
+    FindReplaceDialog.cpp \
+    ExtendedScintilla.cpp \
+    FileExtensionManager.cpp \
+    Data.cpp \
+    CipherSettings.cpp \
+    DotenvFormat.cpp \
+    Palette.cpp \
+    CondFormat.cpp \
+    sql/Query.cpp \
+    RunSql.cpp
 
 RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc \
@@ -105,6 +133,7 @@ FORMS += \
     EditIndexDialog.ui \
     AboutDialog.ui \
     EditTableDialog.ui \
+    AddRecordDialog.ui \
     PreferencesDialog.ui \
     EditDialog.ui \
     ExportDataDialog.ui \
@@ -116,7 +145,9 @@ FORMS += \
     ColumnDisplayFormatDialog.ui \
     PlotDock.ui \
     RemoteDock.ui \
-    RemotePushDialog.ui
+    RemotePushDialog.ui \
+    FindReplaceDialog.ui \
+    FileExtensionManager.ui
 
 TRANSLATIONS += \
     translations/sqlb_ar_SA.ts \
@@ -127,11 +158,13 @@ TRANSLATIONS += \
     translations/sqlb_es_ES.ts \
     translations/sqlb_fr.ts \
     translations/sqlb_ru.ts \
+    translations/sqlb_pl.ts \
     translations/sqlb_pt_BR.ts \
     translations/sqlb_en_GB.ts \
     translations/sqlb_ko_KR.ts \
     translations/sqlb_tr.ts \
-    translations/sqlb_uk_UA.ts
+    translations/sqlb_uk_UA.ts \
+    translations/sqlb_it.ts
 
 # SQLite / SQLCipher switch pieces
 CONFIG(sqlcipher) {
@@ -196,26 +229,46 @@ mac {
     QMAKE_CXXFLAGS += -DCHECKNEWVERSION
 }
 
+CONFIG(all_warnings) {
+    QMAKE_CXXFLAGS += -Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wsign-conversion
+    QMAKE_CXXFLAGS += -Wnull-dereference -Wdouble-promotion -Wformat=2 -Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wuseless-cast
+}
+
 UI_DIR = .ui
 INCLUDEPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit $$PWD/../libs/qcustomplot-source $$PWD/../libs/qscintilla/Qt4Qt5 $$PWD/..
 LIBS += -L$$LIBPATH_QHEXEDIT -L$$LIBPATH_ANTLR -L$$LIBPATH_QCUSTOMPLOT -L$$LIBPATH_QSCINTILLA -lantlr -lqhexedit -lqcustomplot -lqscintilla2
 DEPENDPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit $$PWD/../libs/qcustomplot-source $$PWD/../libs/qscintilla/Qt4Qt5
 
 unix {
+    # Below, the user can specify where all generated file can be placed
+    # through a set of variables, being them:
+    #
+    # PREFIX        -> the root directory where the files will be placed
+    # BINDIR        -> where executables accessible by the user resides
+    # DATADIR       -> where data files and resources should be placed
+    #
+    # The values of each variable changes between supported platforms and are describe as follow
+
+    # Default configuration for package sqlitebrowser.
+    # The default prefix is /usr/local
+    !defined(PREFIX, var):        PREFIX = /usr/local
+    !defined(BINDIR, var):        BINDIR = $$PREFIX/bin
+    !defined(DATADIR, var):       DATADIR = $$PREFIX/share
+
     # The executable
-    target.path = /usr/local/bin/
+    target.path = $$BINDIR
     INSTALLS += target
 
     # Icon
-    icon.path = /usr/local/share/icons/hicolor/256x256/apps/
+    icon.path = $$DATADIR/icons/hicolor/256x256/apps/
     icon.files = icons/sqlitebrowser.png
     INSTALLS += icon
 
     # Desktop metadata
-    desktop.path = /usr/local/share/applications/
+    desktop.path = $$DATADIR/applications/
     desktop.files = ../distri/sqlitebrowser.desktop
     INSTALLS += desktop
-    appdata.path = /usr/local/share/appdata/
+    appdata.path = $$DATADIR/appdata/
     appdata.files = ../distri/sqlitebrowser.desktop.appdata.xml
     INSTALLS += appdata
 }

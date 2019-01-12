@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>597</width>
-    <height>614</height>
+    <width>755</width>
+    <height>594</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -123,13 +123,66 @@
         </widget>
        </item>
        <item row="2" column="0">
-        <widget class="QLabel" name="labelUseRemotes">
+        <widget class="QLabel" name="labelToolbarStyle">
          <property name="text">
-          <string>Show remote options</string>
+          <string>Toolbar style</string>
+         </property>
+         <property name="buddy">
+          <cstring>toolbarStyleComboBox</cstring>
          </property>
         </widget>
        </item>
        <item row="2" column="1">
+        <widget class="QComboBox" name="toolbarStyleComboBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="currentIndex">
+          <number>2</number>
+         </property>
+         <property name="sizeAdjustPolicy">
+          <enum>QComboBox::AdjustToContents</enum>
+         </property>
+         <property name="minimumContentsLength">
+          <number>35</number>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>15</height>
+          </size>
+         </property>
+         <item>
+          <property name="text">
+           <string>Only display the icon</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Only display the text</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>The text appears beside the icon</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>The text appears under the icon</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Follow the style</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="3" column="1">
         <widget class="QCheckBox" name="checkUseRemotes">
          <property name="text">
           <string>enabled</string>
@@ -139,7 +192,7 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
+       <item row="4" column="0">
         <widget class="QLabel" name="labelUpdates">
          <property name="text">
           <string>Automatic &amp;updates</string>
@@ -149,10 +202,37 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
+       <item row="4" column="1">
         <widget class="QCheckBox" name="checkUpdates">
          <property name="text">
           <string>enabled</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_16">
+         <property name="text">
+          <string>DB file extensions</string>
+         </property>
+         <property name="buddy">
+          <cstring>buttonManageFileExtension</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QPushButton" name="buttonManageFileExtension">
+         <property name="text">
+          <string>Manage</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="labelUseRemotes">
+         <property name="text">
+          <string>Show remote options</string>
+         </property>
+         <property name="buddy">
+          <cstring>checkUseRemotes</cstring>
          </property>
         </widget>
        </item>
@@ -165,12 +245,6 @@
       <layout class="QFormLayout" name="formLayout">
        <property name="fieldGrowthPolicy">
         <enum>QFormLayout::FieldsStayAtSizeHint</enum>
-       </property>
-       <property name="labelAlignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-       <property name="formAlignment">
-        <set>Qt::AlignHCenter|Qt::AlignTop</set>
        </property>
        <item row="0" column="0">
         <widget class="QLabel" name="label">
@@ -227,7 +301,14 @@
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QCheckBox" name="checkHideSchemaLinebreaks"/>
+        <widget class="QCheckBox" name="checkHideSchemaLinebreaks">
+         <property name="toolTip">
+          <string>When enabled, the line breaks in the Schema column of the DB Structure tab, dock and printed output are removed.</string>
+         </property>
+         <property name="text">
+          <string>enabled</string>
+         </property>
+        </widget>
        </item>
        <item row="3" column="0">
         <widget class="QLabel" name="label_2">
@@ -310,6 +391,9 @@
          <property name="text">
           <string>Default field type</string>
          </property>
+         <property name="buddy">
+          <cstring>defaultFieldTypeComboBox</cstring>
+         </property>
         </widget>
        </item>
       </layout>
@@ -343,7 +427,7 @@
             <item row="1" column="0">
              <widget class="QLabel" name="label_17">
               <property name="text">
-               <string>Font si&amp;ze:</string>
+               <string>Font si&amp;ze</string>
               </property>
               <property name="buddy">
                <cstring>spinDataBrowserFontSize</cstring>
@@ -367,6 +451,9 @@
               <property name="text">
                <string>Symbol limit in cell</string>
               </property>
+              <property name="buddy">
+               <cstring>spinSymbolLimit</cstring>
+              </property>
              </widget>
             </item>
             <item row="0" column="1">
@@ -385,38 +472,37 @@
               </property>
              </widget>
             </item>
-           </layout>
-          </widget>
-         </item>
-         <item>
-          <widget class="QGroupBox" name="groupBox">
-           <property name="title">
-            <string>NULL fields</string>
-           </property>
-           <layout class="QFormLayout" name="gridLayout">
-            <item row="0" column="1">
-             <widget class="QLineEdit" name="txtNull">
-              <property name="text">
-               <string notr="true"/>
+            <item row="1" column="1">
+             <widget class="QSpinBox" name="spinCompleteThreshold">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
               </property>
-              <property name="maxLength">
-               <number>15</number>
+              <property name="toolTip">
+               <string>This is the maximum number of rows in a table for enabling the value completion based on current values in the column.
+Can be set to 0 for disabling completion.</string>
               </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
+              <property name="whatsThis">
+               <string>This is the maximum number of rows in a table for enabling the value completion based on current values in the column.
+Can be set to 0 for disabling completion.</string>
+              </property>
+              <property name="minimum">
+               <number>0</number>
+              </property>
+              <property name="maximum">
+               <number>100000000</number>
               </property>
              </widget>
             </item>
-            <item row="0" column="0">
-             <widget class="QLabel" name="label_12">
+            <item row="1" column="0">
+             <widget class="QLabel" name="labelCompleteThreshold">
               <property name="text">
-               <string>&amp;Text</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               <string>Row count threshold for completion</string>
               </property>
               <property name="buddy">
-               <cstring>txtNull</cstring>
+               <cstring>spinCompleteThreshold</cstring>
               </property>
              </widget>
             </item>
@@ -426,9 +512,32 @@
          <item>
           <widget class="QGroupBox" name="groupBox_2">
            <property name="title">
-            <string>Field colors</string>
+            <string>Field display</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_3">
+            <item row="0" column="3">
+             <widget class="QLabel" name="label_12">
+              <property name="text">
+               <string>Displayed &amp;text</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="buddy">
+               <cstring>txtNull</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="lb_binary">
+              <property name="text">
+               <string>Binary</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
             <item row="2" column="0">
              <widget class="QLabel" name="lb_null">
               <property name="text">
@@ -446,13 +555,6 @@
               </property>
               <property name="alignment">
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0">
-             <widget class="QLabel" name="label_16">
-              <property name="text">
-               <string/>
               </property>
              </widget>
             </item>
@@ -475,20 +577,10 @@
             <item row="0" column="1">
              <widget class="QLabel" name="lb_text">
               <property name="text">
-               <string>Text</string>
+               <string>Text color</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="0">
-             <widget class="QLabel" name="lb_binary">
-              <property name="text">
-               <string>Binary</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
               </property>
              </widget>
             </item>
@@ -511,7 +603,7 @@
             <item row="0" column="2">
              <widget class="QLabel" name="lb_background">
               <property name="text">
-               <string>Background</string>
+               <string>Background color</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
@@ -579,6 +671,66 @@
               </property>
               <property name="frameShadow">
                <enum>QFrame::Raised</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="3">
+             <widget class="QLineEdit" name="txtNull">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <italic>true</italic>
+               </font>
+              </property>
+              <property name="text">
+               <string notr="true">NULL</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="3">
+             <widget class="QLineEdit" name="txtRegular">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <italic>false</italic>
+               </font>
+              </property>
+              <property name="text">
+               <string>Preview only (N/A)</string>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="3">
+             <widget class="QLineEdit" name="txtBlob">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <italic>true</italic>
+               </font>
+              </property>
+              <property name="text">
+               <string notr="true">BLOB</string>
+              </property>
+              <property name="readOnly">
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -700,7 +852,7 @@
          </item>
          <item>
           <property name="text">
-           <string>function</string>
+           <string notr="true">function</string>
           </property>
           <property name="text">
            <string>Function</string>
@@ -788,51 +940,87 @@
          </item>
          <item>
           <property name="text">
-           <string>currentline</string>
+           <string notr="true">currentline</string>
           </property>
           <property name="text">
            <string>Current line</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string notr="true">background</string>
+          </property>
+          <property name="text">
+           <string>Background</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string notr="true">foreground</string>
+          </property>
+          <property name="text">
+           <string>Foreground</string>
           </property>
          </item>
         </widget>
        </item>
        <item>
         <layout class="QFormLayout" name="formLayout_2">
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_6">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_14">
            <property name="text">
-            <string>SQL &amp;editor font size</string>
+            <string>SQL editor &amp;font</string>
            </property>
            <property name="buddy">
-            <cstring>spinEditorFontSize</cstring>
+            <cstring>comboEditorFont</cstring>
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
-          <widget class="QSpinBox" name="spinEditorFontSize">
-           <property name="minimum">
-            <number>1</number>
-           </property>
-          </widget>
+         <item row="0" column="1">
+          <layout class="QHBoxLayout" name="horizontalLayout_5">
+           <item>
+            <widget class="QFontComboBox" name="comboEditorFont"/>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_6">
+             <property name="text">
+              <string>SQL &amp;editor font size</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+             <property name="buddy">
+              <cstring>spinEditorFontSize</cstring>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="spinEditorFontSize">
+             <property name="minimum">
+              <number>1</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
-         <item row="2" column="0">
+         <item row="1" column="0">
           <widget class="QLabel" name="label_7">
            <property name="text">
-            <string>SQL &amp;log font size</string>
+            <string>SQL &amp;results font size</string>
            </property>
            <property name="buddy">
             <cstring>spinLogFontSize</cstring>
            </property>
           </widget>
          </item>
-         <item row="2" column="1">
+         <item row="1" column="1">
           <widget class="QSpinBox" name="spinLogFontSize">
            <property name="minimum">
             <number>1</number>
            </property>
           </widget>
          </item>
-         <item row="3" column="0">
+         <item row="2" column="0">
           <widget class="QLabel" name="label_13">
            <property name="text">
             <string>Tab size</string>
@@ -842,7 +1030,7 @@
            </property>
           </widget>
          </item>
-         <item row="3" column="1">
+         <item row="2" column="1">
           <widget class="QSpinBox" name="spinTabSize">
            <property name="minimum">
             <number>1</number>
@@ -855,60 +1043,76 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_14">
+         <item row="3" column="0">
+          <widget class="QLabel" name="wrapLabel">
            <property name="text">
-            <string>SQL editor &amp;font</string>
+            <string>&amp;Wrap lines</string>
            </property>
            <property name="buddy">
-            <cstring>comboEditorFont</cstring>
+            <cstring>wrapComboBox</cstring>
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
-          <widget class="QFontComboBox" name="comboEditorFont"/>
-         </item>
-         <item row="5" column="0">
-          <widget class="QLabel" name="label_15">
-           <property name="text">
-            <string>Error indicators</string>
-           </property>
-           <property name="buddy">
-            <cstring>checkErrorIndicators</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="1">
-          <widget class="QCheckBox" name="checkErrorIndicators">
-           <property name="toolTip">
-            <string>Enabling error indicators highlights the SQL code lines that caused errors during the last execution</string>
-           </property>
-           <property name="text">
-            <string>enabled</string>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="0">
-          <widget class="QLabel" name="label_10">
-           <property name="text">
-            <string>Hori&amp;zontal tiling</string>
-           </property>
-           <property name="buddy">
-            <cstring>checkHorizontalTiling</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="1">
-          <widget class="QCheckBox" name="checkHorizontalTiling">
-           <property name="toolTip">
-            <string>If enabled the SQL code editor and the result table view are shown side by side instead of one over the other.</string>
-           </property>
-           <property name="text">
-            <string>enabled</string>
-           </property>
+         <item row="3" column="1">
+          <widget class="QComboBox" name="wrapComboBox">
+           <item>
+            <property name="text">
+             <string>Never</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>At word boundaries</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>At character boundaries</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>At whitespace boundaries</string>
+            </property>
+           </item>
           </widget>
          </item>
          <item row="4" column="0">
+          <widget class="QLabel" name="label_25">
+           <property name="text">
+            <string>&amp;Quotes for identifiers</string>
+           </property>
+           <property name="buddy">
+            <cstring>quoteComboBox</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QComboBox" name="quoteComboBox">
+           <property name="toolTip">
+            <string>Choose the quoting mechanism used by the application for identifiers in SQL code.</string>
+           </property>
+           <property name="whatsThis">
+            <string/>
+           </property>
+           <item>
+            <property name="text">
+             <string>&quot;Double quotes&quot; - Standard SQL (recommended)</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>`Grave accents` - Traditional MySQL quotes</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>[Square brackets] - Traditional MS SQL Server quotes</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="5" column="0">
           <widget class="QLabel" name="label_20">
            <property name="text">
             <string>Code co&amp;mpletion</string>
@@ -918,8 +1122,68 @@
            </property>
           </widget>
          </item>
-         <item row="4" column="1">
+         <item row="5" column="1">
           <widget class="QCheckBox" name="checkAutoCompletion">
+           <property name="text">
+            <string>enabled</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="0">
+          <widget class="QLabel" name="label_24">
+           <property name="text">
+            <string>Keywords in &amp;UPPER CASE</string>
+           </property>
+           <property name="buddy">
+            <cstring>checkCompleteUpper</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="1">
+          <widget class="QCheckBox" name="checkCompleteUpper">
+           <property name="toolTip">
+            <string>When set, the SQL keywords are completed in UPPER CASE letters.</string>
+           </property>
+           <property name="text">
+            <string>enabled</string>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="0">
+          <widget class="QLabel" name="label_15">
+           <property name="text">
+            <string>Error indicators</string>
+           </property>
+           <property name="buddy">
+            <cstring>checkErrorIndicators</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="1">
+          <widget class="QCheckBox" name="checkErrorIndicators">
+           <property name="toolTip">
+            <string>When set, the SQL code lines that caused errors during the last execution are highlighted and the results frame indicates the error in the background</string>
+           </property>
+           <property name="text">
+            <string>enabled</string>
+           </property>
+          </widget>
+         </item>
+         <item row="8" column="0">
+          <widget class="QLabel" name="label_10">
+           <property name="text">
+            <string>Hori&amp;zontal tiling</string>
+           </property>
+           <property name="buddy">
+            <cstring>checkHorizontalTiling</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="8" column="1">
+          <widget class="QCheckBox" name="checkHorizontalTiling">
+           <property name="toolTip">
+            <string>If enabled the SQL code editor and the result table view are shown side by side instead of one over the other.</string>
+           </property>
            <property name="text">
             <string>enabled</string>
            </property>
@@ -1004,212 +1268,229 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QCheckBox" name="checkAllowLoadExtension">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite provides an SQL function for loading extensions from a shared library file. Activate this if you want to use the &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt; function from SQL code.&lt;/p&gt;&lt;p&gt;For security reasons, extension loading is turned off by default and must be enabled through this setting. You can always load extensions through the GUI, even though this option is disabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Allow loading extensions from SQL code</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="tabRemote">
       <attribute name="title">
        <string>Remote</string>
       </attribute>
-      <layout class="QFormLayout" name="formLayout_5">
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_21">
-         <property name="text">
-          <string>CA certificates</string>
+      <layout class="QVBoxLayout" name="verticalLayout_8">
+       <item>
+        <widget class="QTabWidget" name="tabCertificates">
+         <property name="currentIndex">
+          <number>0</number>
          </property>
+         <widget class="QWidget" name="tab_6">
+          <attribute name="title">
+           <string>Your certificates</string>
+          </attribute>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <widget class="QTableWidget" name="tableClientCerts">
+             <property name="minimumSize">
+              <size>
+               <width>550</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="selectionMode">
+              <enum>QAbstractItemView::ExtendedSelection</enum>
+             </property>
+             <property name="selectionBehavior">
+              <enum>QAbstractItemView::SelectRows</enum>
+             </property>
+             <property name="horizontalScrollMode">
+              <enum>QAbstractItemView::ScrollPerPixel</enum>
+             </property>
+             <attribute name="horizontalHeaderHighlightSections">
+              <bool>false</bool>
+             </attribute>
+             <column>
+              <property name="text">
+               <string>File</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Subject CN</string>
+              </property>
+              <property name="toolTip">
+               <string>Subject Common Name</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Issuer CN</string>
+              </property>
+              <property name="toolTip">
+               <string>Issuer Common Name</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Valid from</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Valid to</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Serial number</string>
+              </property>
+             </column>
+            </widget>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_7">
+             <item>
+              <widget class="QToolButton" name="buttonClientCertAdd">
+               <property name="icon">
+                <iconset resource="icons/icons.qrc">
+                 <normaloff>:/icons/trigger_create</normaloff>:/icons/trigger_create</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="buttonClientCertRemove">
+               <property name="text">
+                <string>...</string>
+               </property>
+               <property name="icon">
+                <iconset resource="icons/icons.qrc">
+                 <normaloff>:/icons/trigger_delete</normaloff>:/icons/trigger_delete</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tab_7">
+          <attribute name="title">
+           <string>CA certificates</string>
+          </attribute>
+          <layout class="QHBoxLayout" name="horizontalLayout_6">
+           <item>
+            <widget class="QTableWidget" name="tableCaCerts">
+             <property name="minimumSize">
+              <size>
+               <width>550</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="selectionMode">
+              <enum>QAbstractItemView::SingleSelection</enum>
+             </property>
+             <property name="selectionBehavior">
+              <enum>QAbstractItemView::SelectRows</enum>
+             </property>
+             <property name="horizontalScrollMode">
+              <enum>QAbstractItemView::ScrollPerPixel</enum>
+             </property>
+             <attribute name="horizontalHeaderHighlightSections">
+              <bool>false</bool>
+             </attribute>
+             <column>
+              <property name="text">
+               <string>Subject CN</string>
+              </property>
+              <property name="toolTip">
+               <string>Common Name</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Subject O</string>
+              </property>
+              <property name="toolTip">
+               <string>Organization</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Valid from</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Valid to</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Serial number</string>
+              </property>
+             </column>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </widget>
        </item>
-       <item row="1" column="1">
-        <widget class="QTableWidget" name="tableCaCerts">
-         <property name="minimumSize">
-          <size>
-           <width>550</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="selectionMode">
-          <enum>QAbstractItemView::SingleSelection</enum>
-         </property>
-         <property name="selectionBehavior">
-          <enum>QAbstractItemView::SelectRows</enum>
-         </property>
-         <property name="horizontalScrollMode">
-          <enum>QAbstractItemView::ScrollPerPixel</enum>
-         </property>
-         <attribute name="horizontalHeaderHighlightSections">
-          <bool>false</bool>
-         </attribute>
-         <column>
-          <property name="text">
-           <string>Subject CN</string>
-          </property>
-          <property name="toolTip">
-           <string>Common Name</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Subject O</string>
-          </property>
-          <property name="toolTip">
-           <string>Organization</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Valid from</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Valid to</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Serial number</string>
-          </property>
-         </column>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_22">
-         <property name="text">
-          <string>Your certificates</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
-         <item>
-          <widget class="QTableWidget" name="tableClientCerts">
-           <property name="minimumSize">
-            <size>
-             <width>550</width>
-             <height>0</height>
-            </size>
+       <item>
+        <layout class="QFormLayout" name="formLayout_5">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_23">
+           <property name="text">
+            <string>Clone databases into</string>
            </property>
-           <property name="selectionMode">
-            <enum>QAbstractItemView::ExtendedSelection</enum>
-           </property>
-           <property name="selectionBehavior">
-            <enum>QAbstractItemView::SelectRows</enum>
-           </property>
-           <property name="horizontalScrollMode">
-            <enum>QAbstractItemView::ScrollPerPixel</enum>
-           </property>
-           <attribute name="horizontalHeaderHighlightSections">
-            <bool>false</bool>
-           </attribute>
-           <column>
-            <property name="text">
-             <string>File</string>
-            </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>Subject CN</string>
-            </property>
-            <property name="toolTip">
-             <string>Subject Common Name</string>
-            </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>Issuer CN</string>
-            </property>
-            <property name="toolTip">
-             <string>Issuer Common Name</string>
-            </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>Valid from</string>
-            </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>Valid to</string>
-            </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>Serial number</string>
-            </property>
-           </column>
           </widget>
          </item>
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_7">
+         <item row="0" column="1">
+          <layout class="QHBoxLayout" name="horizontalLayout_4">
            <item>
-            <widget class="QToolButton" name="buttonClientCertAdd">
-             <property name="icon">
-              <iconset resource="icons/icons.qrc">
-               <normaloff>:/icons/trigger_create</normaloff>:/icons/trigger_create</iconset>
+            <widget class="QLineEdit" name="editRemoteCloneDirectory">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>316</width>
+               <height>0</height>
+              </size>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QToolButton" name="buttonClientCertRemove">
+            <widget class="QToolButton" name="buttonRemoteBrowseCloneDirectory">
              <property name="text">
               <string>...</string>
              </property>
-             <property name="icon">
-              <iconset resource="icons/icons.qrc">
-               <normaloff>:/icons/trigger_delete</normaloff>:/icons/trigger_delete</iconset>
-             </property>
             </widget>
            </item>
-           <item>
-            <spacer name="verticalSpacer_2">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
           </layout>
-         </item>
-        </layout>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_23">
-         <property name="text">
-          <string>Clone databases into</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <layout class="QHBoxLayout" name="horizontalLayout_4">
-         <item>
-          <widget class="QLineEdit" name="editRemoteCloneDirectory">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>316</width>
-             <height>0</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QToolButton" name="buttonRemoteBrowseCloneDirectory">
-           <property name="text">
-            <string>...</string>
-           </property>
-          </widget>
          </item>
         </layout>
        </item>
@@ -1223,7 +1504,7 @@
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Save</set>
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::RestoreDefaults|QDialogButtonBox::Save</set>
      </property>
     </widget>
    </item>
@@ -1242,6 +1523,7 @@
   <tabstop>locationEdit</tabstop>
   <tabstop>setLocationButton</tabstop>
   <tabstop>languageComboBox</tabstop>
+  <tabstop>toolbarStyleComboBox</tabstop>
   <tabstop>checkUseRemotes</tabstop>
   <tabstop>checkUpdates</tabstop>
   <tabstop>encodingComboBox</tabstop>
@@ -1253,14 +1535,15 @@
   <tabstop>editDatabaseDefaultSqlText</tabstop>
   <tabstop>comboDataBrowserFont</tabstop>
   <tabstop>spinDataBrowserFontSize</tabstop>
-  <tabstop>spinSymbolLimit</tabstop>
-  <tabstop>txtNull</tabstop>
   <tabstop>fr_null_fg</tabstop>
   <tabstop>fr_null_bg</tabstop>
+  <tabstop>txtNull</tabstop>
   <tabstop>fr_bin_fg</tabstop>
   <tabstop>fr_bin_bg</tabstop>
+  <tabstop>txtBlob</tabstop>
   <tabstop>fr_reg_fg</tabstop>
   <tabstop>fr_reg_bg</tabstop>
+  <tabstop>txtRegular</tabstop>
   <tabstop>spinFilterDelay</tabstop>
   <tabstop>editFilterEscape</tabstop>
   <tabstop>treeSyntaxHighlighting</tabstop>
@@ -1287,38 +1570,6 @@
   <include location="icons/icons.qrc"/>
  </resources>
  <connections>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>accepted()</signal>
-   <receiver>PreferencesDialog</receiver>
-   <slot>saveSettings()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>287</x>
-     <y>607</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>155</x>
-     <y>143</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>rejected()</signal>
-   <receiver>PreferencesDialog</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>355</x>
-     <y>607</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>286</x>
-     <y>144</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>buttonAddExtension</sender>
    <signal>clicked()</signal>
@@ -1476,6 +1727,38 @@
     <hint type="destinationlabel">
      <x>595</x>
      <y>41</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkAutoCompletion</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>checkCompleteUpper</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>474</x>
+     <y>464</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>474</x>
+     <y>492</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>clicked(QAbstractButton*)</signal>
+   <receiver>PreferencesDialog</receiver>
+   <slot>on_buttonBox_clicked(QAbstractButton*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>385</x>
+     <y>591</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>385</x>
+     <y>306</y>
     </hint>
    </hints>
   </connection>

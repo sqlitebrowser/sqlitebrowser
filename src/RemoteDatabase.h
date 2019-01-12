@@ -2,7 +2,7 @@
 #define REMOTEDATABASE_H
 
 #include <QObject>
-#include <QSslConfiguration>
+#include <QtNetwork/QSslConfiguration>
 
 class QNetworkAccessManager;
 class QString;
@@ -20,7 +20,7 @@ class RemoteDatabase : public QObject
 
 public:
     RemoteDatabase();
-    virtual ~RemoteDatabase();
+    ~RemoteDatabase() override;
 
     void reloadSettings();
 
@@ -46,7 +46,8 @@ public:
 
     void fetch(const QString& url, RequestType type, const QString& clientCert = QString(), QVariant userdata = QVariant());
     void push(const QString& filename, const QString& url, const QString& clientCert, const QString& remotename,
-              const QString& commitMessage = QString(), const QString& licence = QString(), bool isPublic = false, const QString& branch = QString("master"));
+              const QString& commitMessage = QString(), const QString& licence = QString(), bool isPublic = false,
+              const QString& branch = QString("master"), bool forcePush = false);
 
 signals:
     // The openFile signal is emitted whenever a remote database file shall be opened in the main window. This happens when the
@@ -73,9 +74,10 @@ private:
 
     // Helper functions for managing the list of locally available databases
     void localAssureOpened();
-    void localAdd(QString filename, QString identity, const QUrl& url);
+    QString localAdd(QString filename, QString identity, const QUrl& url, const QString& new_commit_id);
     QString localExists(const QUrl& url, QString identity);
     QString localCheckFile(const QString& local_file);
+    QString localLastCommitId(QString clientCert, const QUrl& url);
 
     // Helper functions for building multi-part HTTP requests
     void addPart(QHttpMultiPart* multipart, const QString& name, const QString& value);

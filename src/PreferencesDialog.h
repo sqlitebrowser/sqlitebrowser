@@ -7,8 +7,8 @@
 
 class QTreeWidgetItem;
 class QFrame;
-class QTableWidget;
 class QSslCertificate;
+class QAbstractButton;
 
 namespace Ui {
 class PreferencesDialog;
@@ -19,32 +19,49 @@ class PreferencesDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit PreferencesDialog(QWidget* parent = 0);
-    ~PreferencesDialog();
+    enum Tabs
+    {
+        TabGeneral,
+        TabDatabase,
+        TabDataBrowser,
+        TabSql,
+        TabExtensions,
+        TabRemote
+    };
+
+    explicit PreferencesDialog(QWidget* parent = nullptr, Tabs tab = TabGeneral);
+    ~PreferencesDialog() override;
 
 private slots:
-    virtual void loadSettings();
-    virtual void saveSettings();
+    void loadSettings();
+    void saveSettings();
 
-    virtual void chooseLocation();
-    virtual void showColourDialog(QTreeWidgetItem* item, int column);
-    virtual void addExtension();
-    virtual void removeExtension();
-    virtual void activateRemoteTab(bool active);
-    virtual void addClientCertificate();
-    virtual void removeClientCertificate();
+    void chooseLocation();
+    void showColourDialog(QTreeWidgetItem* item, int column);
+    void addExtension();
+    void removeExtension();
+    void activateRemoteTab(bool active);
+    void addClientCertificate();
+    void removeClientCertificate();
     void chooseRemoteCloneDirectory();
+    void updatePreviewFont();
+
+    void on_buttonManageFileExtension_clicked();
+    void on_buttonBox_clicked(QAbstractButton* button);
 
 private:
     Ui::PreferencesDialog *ui;
 
+    QStringList m_dbFileExtensions;
+
     void fillLanguageBox();
     void loadColorSetting(QFrame *frame, const QString &name);
+    void setColorSetting(QFrame *frame, const QColor &color);
     void saveColorSetting(QFrame *frame, const QString &name);
     void addClientCertToTable(const QString& path, const QSslCertificate& cert);
 
 protected:
-    bool eventFilter(QObject *obj, QEvent *event);
+    bool eventFilter(QObject *obj, QEvent *event) override;
 };
 
 #endif

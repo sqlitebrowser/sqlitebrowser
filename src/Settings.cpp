@@ -1,11 +1,13 @@
 #include "Settings.h"
 
+#include <QApplication>
 #include <QDir>
 #include <QSettings>
 #include <QColor>
 #include <QFontInfo>
 #include <QLocale>
 #include <QStandardPaths>
+#include <QPalette>
 
 QHash<QString, QVariant> Settings::m_hCache;
 
@@ -90,6 +92,32 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
     if(group == "exportcsv" && name == "quotecharacter")
         return '"';
 
+    // importcsv group?
+    if(group == "importcsv")
+    {
+        if(name == "firstrowheader")
+            return false;
+        if(name == "trimfields")
+            return true;
+        if(name == "separatetables")
+            return false;
+        if(name == "separator")
+            return ',';
+        if(name == "quotecharacter")
+            return '"';
+        if(name == "encoding")
+            return "UTF-8";
+    }
+
+    // exportsql group?
+    if(group == "exportsql")
+    {
+        if(name == "insertcolnames" || name == "insertmultiple")
+            return false;
+        if(name == "oldschema")
+            return 0;
+    }
+
     // newline character
     if (group == "exportcsv" && name == "newlinecharacters")
 #ifdef Q_OS_WIN
@@ -110,6 +138,10 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
     if(group == "MainWindow" && name == "windowState")
         return "";
 
+    // MainWindow/openTabs?
+    if(group == "MainWindow" && name == "openTabs")
+        return "";
+
     // SQLLogDock/Log?
     if(group == "SQLLogDock" && name == "Log")
         return "Application";
@@ -122,9 +154,23 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
     if(group == "General" && name == "language")
         return QLocale::system().name();
 
-    // checkversion/enabled
-    if(group == "checkversion" && name == "enabled")
-        return true;
+    // General/toolbarStyle
+    if(group == "General" && name == "toolbarStyle")
+        return static_cast<int>(Qt::ToolButtonTextBesideIcon);
+
+    if(group == "General" && name == "DBFileExtensions")
+        return QObject::tr("SQLite database files (*.db *.sqlite *.sqlite3 *.db3)");
+
+    // checkversion group?
+    if(group == "checkversion")
+    {
+        if(name == "enabled")
+            return true;
+        if(name == "ignmajor")
+            return 999;
+        if(name == "ignminor" || name == "ignpatch")
+            return 0;
+    }
 
     // Data Browser/NULL Fields
     if(group == "databrowser")
@@ -135,8 +181,16 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
             return 10;
         if(name == "symbol_limit")
             return 5000;
+        if(name == "complete_threshold")
+            return 1000;
+        if(name == "indent_compact")
+            return false;
+        if(name == "auto_switch_mode")
+            return true;
         if(name == "null_text")
             return "NULL";
+        if(name == "blob_text")
+            return "BLOB";
         if(name == "filter_escape")
             return "\\";
         if(name == "filter_delay")
@@ -144,15 +198,15 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
         if(name == "null_fg_colour")
             return QColor(Qt::lightGray).name();
         if(name == "null_bg_colour")
-            return QColor(Qt::white).name();
+            return QPalette().color(QPalette::Active, QPalette::Base).name();
         if(name == "reg_fg_colour")
-            return QColor(Qt::black).name();
+            return QPalette().color(QPalette::Active, QPalette::Text).name();
         if(name == "reg_bg_colour")
-            return QColor(Qt::white).name();
+            return QPalette().color(QPalette::Active, QPalette::Base).name();
         if(name == "bin_fg_colour")
             return QColor(Qt::lightGray).name();
         if(name == "bin_bg_colour")
-            return QColor(Qt::white).name();
+            return QPalette().color(QPalette::Active, QPalette::Base).name();
     }
 
     // syntaxhighlighter?
@@ -173,20 +227,50 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
         // Colour?
         if(name.right(6) == "colour")
         {
-            if(name == "keyword_colour")
-                return QColor(Qt::darkBlue).name();
-            else if(name == "function_colour")
-                return QColor(Qt::blue).name();
-            else if(name == "table_colour")
-                return QColor(Qt::darkCyan).name();
-            else if(name == "comment_colour")
-                return QColor(Qt::darkGreen).name();
-            else if(name == "identifier_colour")
-                return QColor(Qt::darkMagenta).name();
-            else if(name == "string_colour")
-                return QColor(Qt::red).name();
-            else if(name == "currentline_colour")
-                return QColor(236, 236, 245).name();
+            QColor backgroundColour = QPalette().color(QPalette::Active, QPalette::Base);
+            QColor foregroundColour = QPalette().color(QPalette::Active, QPalette::Text);
+
+            if(name == "foreground_colour")
+                return foregroundColour.name();
+            else if(name == "background_colour")
+                return backgroundColour.name();
+
+            // Detect and provide sensible defaults for dark themes
+            if (backgroundColour.value() < foregroundColour.value()) {
+                if(name == "keyword_colour")
+                  return QColor(82, 148, 226).name();
+                else if(name == "function_colour")
+                    return QColor(Qt::yellow).name();
+                else if(name == "table_colour")
+                    return QColor(Qt::cyan).name();
+                else if(name == "comment_colour")
+                    return QColor(Qt::green).name();
+                else if(name == "identifier_colour")
+                    return QColor(Qt::magenta).name();
+                else if(name == "string_colour")
+                    return QColor(Qt::lightGray).name();
+                else if(name == "currentline_colour")
+                    return backgroundColour.lighter(150).name();
+                else if(name == "background_colour")
+                    return backgroundColour.name();
+            } else {
+                if(name == "keyword_colour")
+                    return QColor(Qt::darkBlue).name();
+                else if(name == "function_colour")
+                    return QColor(Qt::blue).name();
+                else if(name == "table_colour")
+                    return QColor(Qt::darkCyan).name();
+                else if(name == "comment_colour")
+                    return QColor(Qt::darkGreen).name();
+                else if(name == "identifier_colour")
+                    return QColor(Qt::darkMagenta).name();
+                else if(name == "string_colour")
+                    return QColor(Qt::red).name();
+                else if(name == "currentline_colour")
+                    return QColor(236, 236, 245).name();
+                else if(name == "background_colour")
+                    return backgroundColour.name();
+            }
         }
     }
 
@@ -201,7 +285,7 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
     // editor/fontsize or log/fontsize?
     if((group == "editor" || group == "log") && name == "fontsize")
 #ifdef Q_OS_MAC
-	// Use 12 pt size as the default on OSX
+       // Use 12 pt size as the default on OSX
         return 12;
 #else
         return 9;
@@ -215,8 +299,20 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
         }
     }
 
+    // editor/wrap_lines
+    if(group == "editor" && name == "wrap_lines")
+        return 0; // QsciScintilla::WrapNone
+
+    // editor/identifier_quotes
+    if(group == "editor" && name == "identifier_quotes")
+        return 0; // sqlb::DoubleQuotes
+
     // editor/auto_completion?
     if(group == "editor" && name == "auto_completion")
+        return true;
+
+    // editor/upper_keywords?
+    if(group == "editor" && name == "upper_keywords")
         return true;
 
     // editor/error_indicators?
@@ -235,6 +331,10 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
     if(group == "extension" && name == "disableregex")
         return false;
 
+    // extensions/enable_load_extension?
+    if(group == "extension" && name == "enable_load_extension")
+        return false;
+
     // PlotDock/lineType or pointShape?
     if(group == "PlotDock")
     {
@@ -247,6 +347,17 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
             return 4;
     }
 
+
+    // SchemaDock Drag & drop settings
+    if(group == "SchemaDock")
+    {
+        if(name == "dropQualifiedNames")
+            return false;
+
+        if(name == "dropEnquotedNames")
+            return true;
+    }
+
     // Remote settings?
     if(group == "remote")
     {
@@ -256,9 +367,20 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
 
         // Clone directory
         if(name == "clonedirectory")
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
             return QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+#else
+            return QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
+#endif
     }
 
     // Unknown combination of group and name? Return an invalid QVariant!
     return QVariant();
+}
+
+void Settings::restoreDefaults ()
+{
+    QSettings settings(QApplication::organizationName(), QApplication::organizationName());
+    settings.clear();
+    m_hCache.clear();
 }

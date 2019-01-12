@@ -1,13 +1,14 @@
 #ifndef IMPORTCSVDIALOG_H
 #define IMPORTCSVDIALOG_H
 
-#include "sqlitetypes.h"
+#include "csvparser.h"
+#include "sql/sqlitetypes.h"
+
 #include <QDialog>
+#include <functional>
 
 class DBBrowserDB;
 class QCompleter;
-class CSVParser;
-class QListWidgetItem;
 
 namespace Ui {
 class ImportCsvDialog;
@@ -18,17 +19,18 @@ class ImportCsvDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ImportCsvDialog(const QStringList& filenames, DBBrowserDB* db, QWidget* parent = 0);
-    ~ImportCsvDialog();
+    explicit ImportCsvDialog(const QStringList& filenames, DBBrowserDB* db, QWidget* parent = nullptr);
+    ~ImportCsvDialog() override;
 
 private slots:
-    virtual void accept();
+    void accept() override;
     void updatePreview();
     void checkInput();
     void selectFiles();
-    void updateSelectedFilePreview(QListWidgetItem*);
+    void updateSelectedFilePreview();
     void updateSelection(bool);
     void matchSimilar();
+    void toggleAdvancedSection(bool show);
 
 private:
     Ui::ImportCsvDialog* ui;
@@ -36,11 +38,12 @@ private:
     QString selectedFile;
     DBBrowserDB* pdb;
     QCompleter* encodingCompleter;
+    QStringList dontAskForExistingTableAgain;
 
-    CSVParser parseCSV(const QString &f, qint64 count = -1);
-    sqlb::FieldVector generateFieldList(const CSVParser& parser);
+    CSVParser::ParserResult parseCSV(const QString& fileName, std::function<bool(size_t, CSVRow)> rowFunction, size_t count = 0);
+    sqlb::FieldVector generateFieldList(const QString& filename);
 
-    void importCsv(const QString& f, const QString &n = QString());
+    bool importCsv(const QString& f, const QString& n = QString());
 
     void setQuoteChar(const QChar& c);
     char currentQuoteChar() const;
@@ -50,6 +53,8 @@ private:
 
     void setEncoding(const QString& sEnc);
     QString currentEncoding() const;
+
+    QString currentOnConflictStrategy() const;
 };
 
 #endif

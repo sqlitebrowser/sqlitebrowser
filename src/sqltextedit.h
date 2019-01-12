@@ -1,41 +1,29 @@
 #ifndef SQLTEXTEDIT_H
 #define SQLTEXTEDIT_H
 
-#include "Qsci/qsciscintilla.h"
+#include "ExtendedScintilla.h"
 
+class FindReplaceDialog;
 class SqlUiLexer;
 
 /**
  * @brief The SqlTextEdit class
  * This class is based on the QScintilla widget
  */
-class SqlTextEdit : public QsciScintilla
+class SqlTextEdit : public ExtendedScintilla
 {
     Q_OBJECT
 
 public:
-    explicit SqlTextEdit(QWidget *parent = 0);
-    virtual ~SqlTextEdit();
+    explicit SqlTextEdit(QWidget *parent = nullptr);
+    ~SqlTextEdit() override;
 
     static SqlUiLexer* sqlLexer;
 
 public slots:
-    void reloadKeywords();
     void reloadSettings();
-    void clearErrorIndicators();
-    void setErrorIndicator(int fromRow, int fromIndex, int toRow, int toIndex);
+    void toggleBlockComment();
 
-protected:
-    void dropEvent(QDropEvent* e);
-
-private:
-    void setupSyntaxHighlightingFormat(const QString& settings_name, int style);
-
-    int errorIndicatorNumber;
-    bool showErrorIndicators;
-
-private slots:
-    void updateLineNumberAreaWidth();
 };
 
 #endif

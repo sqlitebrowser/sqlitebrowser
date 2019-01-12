@@ -5,6 +5,7 @@
 #include "Application.h"
 #include "MainWindow.h"
 #include "RemoteDatabase.h"
+#include "FileExtensionManager.h"
 
 #include <QDir>
 #include <QColorDialog>
@@ -12,9 +13,10 @@
 #include <QKeyEvent>
 #include <QStandardPaths>
 
-PreferencesDialog::PreferencesDialog(QWidget* parent)
+PreferencesDialog::PreferencesDialog(QWidget* parent, Tabs tab)
     : QDialog(parent),
-      ui(new Ui::PreferencesDialog)
+      ui(new Ui::PreferencesDialog),
+      m_dbFileExtensions(Settings::getValue("General", "DBFileExtensions").toString().split(";;"))
 {
     ui->setupUi(this);
     ui->treeSyntaxHighlighting->setColumnHidden(0, true);
@@ -29,12 +31,21 @@ PreferencesDialog::PreferencesDialog(QWidget* parent)
     ui->fr_null_bg->installEventFilter(this);
     ui->fr_null_fg->installEventFilter(this);
 
+    connect(ui->comboDataBrowserFont, SIGNAL(currentIndexChanged(int)), this, SLOT(updatePreviewFont()));
+    connect(ui->spinDataBrowserFontSize, SIGNAL(valueChanged(int)), this, SLOT(updatePreviewFont()));
+
 #ifndef CHECKNEWVERSION
     ui->labelUpdates->setVisible(false);
     ui->checkUpdates->setVisible(false);
 #endif
 
     loadSettings();
+
+    // Avoid different heights due to having check boxes or not
+    ui->treeSyntaxHighlighting->setUniformRowHeights(true);
+
+    // Set current tab
+    ui->tabWidget->setCurrentIndex(tab);
 }
 
 /*
@@ -48,6 +59,7 @@ PreferencesDialog::~PreferencesDialog()
 void PreferencesDialog::chooseLocation()
 {
     QString s = FileDialog::getExistingDirectory(
+                NoSpecificType,
                 this,
                 tr("Choose a directory"),
                 QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
@@ -68,11 +80,11 @@ void PreferencesDialog::loadSettings()
     ui->spinPrefetchSize->setValue(Settings::getValue("db", "prefetchsize").toInt());
     ui->editDatabaseDefaultSqlText->setText(Settings::getValue("db", "defaultsqltext").toString());
 
-    ui->defaultFieldTypeComboBox->addItems(sqlb::Field::Datatypes);
+    ui->defaultFieldTypeComboBox->addItems(DBBrowserDB::Datatypes);
 
     int defaultFieldTypeIndex = Settings::getValue("db", "defaultfieldtype").toInt();
 
-    if (defaultFieldTypeIndex < sqlb::Field::Datatypes.count())
+    if (defaultFieldTypeIndex < DBBrowserDB::Datatypes.count())
     {
         ui->defaultFieldTypeComboBox->setCurrentIndex(defaultFieldTypeIndex);
     }
@@ -86,13 +98,15 @@ void PreferencesDialog::loadSettings()
     ui->spinDataBrowserFontSize->setValue(Settings::getValue("databrowser", "fontsize").toInt());
     loadColorSetting(ui->fr_null_fg, "null_fg");
     loadColorSetting(ui->fr_null_bg, "null_bg");
-    loadColorSetting(ui->fr_reg_fg, "reg_fg");
-    loadColorSetting(ui->fr_reg_bg, "reg_bg");
     loadColorSetting(ui->fr_bin_fg, "bin_fg");
     loadColorSetting(ui->fr_bin_bg, "bin_bg");
+    loadColorSetting(ui->fr_reg_fg, "reg_fg");
+    loadColorSetting(ui->fr_reg_bg, "reg_bg");
 
     ui->spinSymbolLimit->setValue(Settings::getValue("databrowser", "symbol_limit").toInt());
+    ui->spinCompleteThreshold->setValue(Settings::getValue("databrowser", "complete_threshold").toInt());
     ui->txtNull->setText(Settings::getValue("databrowser", "null_text").toString());
+    ui->txtBlob->setText(Settings::getValue("databrowser", "blob_text").toString());
     ui->editFilterEscape->setText(Settings::getValue("databrowser", "filter_escape").toString());
     ui->spinFilterDelay->setValue(Settings::getValue("databrowser", "filter_delay").toInt());
 
@@ -104,7 +118,7 @@ void PreferencesDialog::loadSettings()
         ui->treeSyntaxHighlighting->topLevelItem(i)->setTextColor(2, color);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setBackgroundColor(2, color);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setText(2, colorname);
-        if (name != "null") {
+        if (name != "null" && name != "currentline"  && name != "background" && name != "foreground") {
             ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(3, Settings::getValue("syntaxhighlighter", name + "_bold").toBool() ? Qt::Checked : Qt::Unchecked);
             ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(4, Settings::getValue("syntaxhighlighter", name + "_italic").toBool() ? Qt::Checked : Qt::Unchecked);
             ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(5, Settings::getValue("syntaxhighlighter", name + "_underline").toBool() ? Qt::Checked : Qt::Unchecked);
@@ -143,10 +157,10 @@ void PreferencesDialog::loadSettings()
     }
     {
         QStringList client_certs = Settings::getValue("remote", "client_certificates").toStringList();
-        foreach(const QString& file, client_certs)
+        for(const QString& file : client_certs)
         {
             auto certs = QSslCertificate::fromPath(file);
-            foreach(const QSslCertificate& cert, certs)
+            for(const QSslCertificate& cert : certs)
                 addClientCertToTable(file, cert);
         }
     }
@@ -161,17 +175,25 @@ void PreferencesDialog::loadSettings()
     ui->spinEditorFontSize->setValue(Settings::getValue("editor", "fontsize").toInt());
     ui->spinTabSize->setValue(Settings::getValue("editor", "tabsize").toInt());
     ui->spinLogFontSize->setValue(Settings::getValue("log", "fontsize").toInt());
+    ui->wrapComboBox->setCurrentIndex(Settings::getValue("editor", "wrap_lines").toInt());
+    ui->quoteComboBox->setCurrentIndex(Settings::getValue("editor", "identifier_quotes").toInt());
     ui->checkAutoCompletion->setChecked(Settings::getValue("editor", "auto_completion").toBool());
+    ui->checkCompleteUpper->setEnabled(Settings::getValue("editor", "auto_completion").toBool());
+    ui->checkCompleteUpper->setChecked(Settings::getValue("editor", "upper_keywords").toBool());
     ui->checkErrorIndicators->setChecked(Settings::getValue("editor", "error_indicators").toBool());
     ui->checkHorizontalTiling->setChecked(Settings::getValue("editor", "horizontal_tiling").toBool());
 
     ui->listExtensions->addItems(Settings::getValue("extensions", "list").toStringList());
     ui->checkRegexDisabled->setChecked(Settings::getValue("extensions", "disableregex").toBool());
+    ui->checkAllowLoadExtension->setChecked(Settings::getValue("extensions", "enable_load_extension").toBool());
     fillLanguageBox();
+    ui->toolbarStyleComboBox->setCurrentIndex(Settings::getValue("General", "toolbarStyle").toInt());
 }
 
 void PreferencesDialog::saveSettings()
 {
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+
     Settings::setValue("db", "defaultencoding", ui->encodingComboBox->currentText());
     Settings::setValue("db", "defaultlocation", ui->locationEdit->text());
     Settings::setValue("db", "savedefaultlocation", ui->comboDefaultLocation->currentIndex());
@@ -193,7 +215,9 @@ void PreferencesDialog::saveSettings()
     saveColorSetting(ui->fr_bin_fg, "bin_fg");
     saveColorSetting(ui->fr_bin_bg, "bin_bg");
     Settings::setValue("databrowser", "symbol_limit", ui->spinSymbolLimit->value());
+    Settings::setValue("databrowser", "complete_threshold", ui->spinCompleteThreshold->value());
     Settings::setValue("databrowser", "null_text", ui->txtNull->text());
+    Settings::setValue("databrowser", "blob_text", ui->txtBlob->text());
     Settings::setValue("databrowser", "filter_escape", ui->editFilterEscape->text());
     Settings::setValue("databrowser", "filter_delay", ui->spinFilterDelay->value());
 
@@ -209,15 +233,19 @@ void PreferencesDialog::saveSettings()
     Settings::setValue("editor", "fontsize", ui->spinEditorFontSize->value());
     Settings::setValue("editor", "tabsize", ui->spinTabSize->value());
     Settings::setValue("log", "fontsize", ui->spinLogFontSize->value());
+    Settings::setValue("editor", "wrap_lines", ui->wrapComboBox->currentIndex());
+    Settings::setValue("editor", "identifier_quotes", ui->quoteComboBox->currentIndex());
     Settings::setValue("editor", "auto_completion", ui->checkAutoCompletion->isChecked());
+    Settings::setValue("editor", "upper_keywords", ui->checkCompleteUpper->isChecked());
     Settings::setValue("editor", "error_indicators", ui->checkErrorIndicators->isChecked());
     Settings::setValue("editor", "horizontal_tiling", ui->checkHorizontalTiling->isChecked());
 
     QStringList extList;
-    foreach(QListWidgetItem* item, ui->listExtensions->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard))
+    for(const QListWidgetItem* item : ui->listExtensions->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard))
         extList.append(item->text());
     Settings::setValue("extensions", "list", extList);
     Settings::setValue("extensions", "disableregex", ui->checkRegexDisabled->isChecked());
+    Settings::setValue("extensions", "enable_load_extension", ui->checkAllowLoadExtension->isChecked());
 
     // Save remote settings
     Settings::setValue("remote", "active", ui->checkUseRemotes->isChecked());
@@ -239,7 +267,13 @@ void PreferencesDialog::saveSettings()
             // This is a new certificate. Copy file to a safe place.
 
             // Generate unique destination file name
-            QString copy_to = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation).append("/").append(QFileInfo(path).fileName());
+            QString copy_to = QStandardPaths::writableLocation(
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+                        QStandardPaths::AppDataLocation
+#else
+                        QStandardPaths::GenericDataLocation
+#endif
+                        ).append("/").append(QFileInfo(path).fileName());
             int suffix = 0;
             do
             {
@@ -248,13 +282,19 @@ void PreferencesDialog::saveSettings()
 
             // Copy file
             copy_to.append(QString::number(suffix));
-            QDir().mkpath(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
+            QDir().mkpath(QStandardPaths::writableLocation(
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+                              QStandardPaths::AppDataLocation
+#else
+                              QStandardPaths::GenericDataLocation
+#endif
+                              ));
             QFile::copy(path, copy_to);
 
             new_client_certs.push_back(copy_to);
         }
     }
-    foreach(const QString& file, old_client_certs)
+    for(const QString& file : old_client_certs)
     {
         // Now only the deleted client certs are still in the old list. Delete the cert files associated with them.
         QFile::remove(file);
@@ -269,8 +309,12 @@ void PreferencesDialog::saveSettings()
                                  tr("The language will change after you restart the application."));
 
     Settings::setValue("General", "language", newLanguage);
+    Settings::setValue("General", "toolbarStyle", ui->toolbarStyleComboBox->currentIndex());
+    Settings::setValue("General", "DBFileExtensions", m_dbFileExtensions.join(";;") );
 
     accept();
+
+    QApplication::restoreOverrideCursor();
 }
 
 void PreferencesDialog::showColourDialog(QTreeWidgetItem* item, int column)
@@ -315,9 +359,7 @@ bool PreferencesDialog::eventFilter(QObject *obj, QEvent *event)
 
         if (colour.isValid())
         {
-            QPalette palette = frame->palette();
-            palette.setColor(frame->backgroundRole(), colour);
-            frame->setPalette(palette);
+            setColorSetting(frame, colour);
         }
         // Consume
         return true;
@@ -330,9 +372,10 @@ bool PreferencesDialog::eventFilter(QObject *obj, QEvent *event)
 void PreferencesDialog::addExtension()
 {
     QString file = FileDialog::getOpenFileName(
+                OpenExtensionFile,
                 this,
                 tr("Select extension file"),
-                tr("Extensions(*.so *.dll);;All files(*)"));
+                tr("Extensions(*.so *.dylib *.dll);;All files(*)"));
 
     if(QFile::exists(file))
         ui->listExtensions->addItem(file);
@@ -368,7 +411,7 @@ void PreferencesDialog::fillLanguageBox()
     // Get available *.qm files from translation dir near executable as well as from resources
     QFileInfoList file_infos = translationsDir.entryInfoList();
     file_infos += QDir(":/translations").entryInfoList();
-    foreach(const QFileInfo &file, file_infos)
+    for(const QFileInfo& file : file_infos)
     {
         QLocale locale(file.baseName().remove("sqlb_"));
 
@@ -411,10 +454,43 @@ void PreferencesDialog::fillLanguageBox()
 
 void PreferencesDialog::loadColorSetting(QFrame *frame, const QString & settingName)
 {
+    QColor color = QColor(Settings::getValue("databrowser", settingName + "_colour").toString());
+    setColorSetting(frame, color);
+}
+
+void PreferencesDialog::setColorSetting(QFrame *frame, const QColor &color)
+{
+    QPalette::ColorRole role;
+    QLineEdit *line;
+
+    if (frame == ui->fr_bin_bg) {
+        line = ui->txtBlob;
+        role = line->backgroundRole();
+    } else if (frame ==  ui->fr_bin_fg) {
+        line = ui->txtBlob;
+        role = line->foregroundRole();
+    } else if (frame ==  ui->fr_reg_bg) {
+        line = ui->txtRegular;
+        role = line->backgroundRole();
+    } else if (frame ==  ui->fr_reg_fg) {
+        line = ui->txtRegular;
+        role = line->foregroundRole();
+    } else if (frame ==  ui->fr_null_bg) {
+        line = ui->txtNull;
+        role = line->backgroundRole();
+    } else if (frame ==  ui->fr_null_fg) {
+        line = ui->txtNull;
+        role = line->foregroundRole();
+    } else
+        return;
+
     QPalette palette = frame->palette();
-    palette.setColor(frame->backgroundRole(),
-        QColor(Settings::getValue("databrowser", settingName + "_colour").toString()));
+    palette.setColor(frame->backgroundRole(), color);
     frame->setPalette(palette);
+
+    palette = line->palette();
+    palette.setColor(role, color);
+    line->setPalette(palette);
 }
 
 void PreferencesDialog::saveColorSetting(QFrame *frame, const QString & settingName)
@@ -432,7 +508,7 @@ void PreferencesDialog::addClientCertificate()
 {
     // Get certificate file to import and abort here if no file gets selected
     // NOTE: We assume here that this file contains both, certificate and private key!
-    QString path = FileDialog::getOpenFileName(this, tr("Import certificate file"), "*.pem");
+    QString path = FileDialog::getOpenFileName(OpenCertificateFile, this, tr("Import certificate file"), "*.pem");
     if(path.isEmpty())
         return;
 
@@ -504,10 +580,49 @@ void PreferencesDialog::addClientCertToTable(const QString& path, const QSslCert
 void PreferencesDialog::chooseRemoteCloneDirectory()
 {
     QString s = FileDialog::getExistingDirectory(
+                NoSpecificType,
                 this,
                 tr("Choose a directory"),
                 QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 
     if(!s.isEmpty())
         ui->editRemoteCloneDirectory->setText(s);
+}
+
+void PreferencesDialog::updatePreviewFont()
+{
+    if (ui->spinDataBrowserFontSize->value() != 0) {
+        QFont textFont(ui->comboDataBrowserFont->currentText());
+        textFont.setPointSize(ui->spinDataBrowserFontSize->value());
+        ui->txtRegular->setFont(textFont);
+        textFont.setItalic(true);
+        ui->txtNull->setFont(textFont);
+        ui->txtBlob->setFont(textFont);
+    }
+}
+
+void PreferencesDialog::on_buttonManageFileExtension_clicked()
+{
+    FileExtensionManager *manager = new FileExtensionManager(m_dbFileExtensions, this);
+
+    if(manager->exec() == QDialog::Accepted)
+    {
+        m_dbFileExtensions = manager->getDBFileExtensions();
+    }
+}
+
+void PreferencesDialog::on_buttonBox_clicked(QAbstractButton* button)
+{
+    if (button == ui->buttonBox->button(QDialogButtonBox::Cancel))
+        reject();
+    else if (button == ui->buttonBox->button(QDialogButtonBox::Save))
+        saveSettings();
+    else if (button == ui->buttonBox->button(QDialogButtonBox::RestoreDefaults)) {
+        if (QMessageBox::warning(this, QApplication::applicationName(), tr("Are you sure you want to clear all the saved settings?\nAll your preferences will be lost and default values will be used."),
+                                 QMessageBox::RestoreDefaults | QMessageBox::Cancel, QMessageBox::Cancel) == QMessageBox::RestoreDefaults)
+        {
+            Settings::restoreDefaults();
+            accept();
+        }
+    }
 }

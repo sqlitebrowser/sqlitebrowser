@@ -40,6 +40,6 @@
       <caption>DB Browser for SQLite, creating a table</caption>
     </screenshot>
   </screenshots>
-  <url type="homepage">http://sqlitebrowser.org/</url>
+  <url type="homepage">https://sqlitebrowser.org/</url>
   <url type="bugtracker">https://github.com/sqlitebrowser/sqlitebrowser/issues</url>
 </component>

@@ -1,6 +1,6 @@
 // The implementation of the Qt specific subclass of ScintillaBase.
 //
-// Copyright (c) 2017 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2018 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 
@@ -31,6 +31,9 @@
 
 #include "Qsci/qsciscintillabase.h"
 #include "ScintillaQt.h"
+#if !defined(QT_NO_ACCESSIBILITY)
+#include "SciAccessibility.h"
+#endif
 #include "SciClasses.h"
 
 
@@ -109,6 +112,11 @@ QsciScintillaQt::QsciScintillaQt(QsciScintillaBase *qsb_)
 
     // This is ignored.
     imeInteraction = imeInline;
+
+    // Using pixmaps screws things up when moving to a different display
+    // (although this could be because we haven't got the pixmap code right).
+    // However Qt shouldn't need buffered drawing anyway.
+    WndProc(SCI_SETBUFFEREDDRAW, 0, 0);
 
     for (int i = 0; i <= static_cast<int>(tickPlatform); ++i)
         timers[i] = 0;
@@ -192,10 +200,12 @@ sptr_t QsciScintillaQt::DefWndProc(unsigned int, uptr_t, sptr_t)
 void QsciScintillaQt::SetMouseCapture(bool on)
 {
     if (mouseDownCaptures)
+    {
         if (on)
             qsb->viewport()->grabMouse();
         else
             qsb->viewport()->releaseMouse();
+    }
 
     capturedMouse = on;
 }
@@ -383,8 +393,17 @@ void QsciScintillaQt::NotifyParent(SCNotification scn)
         {
             char *text;
 
+#if !defined(QT_NO_ACCESSIBILITY)
+            if ((scn.modificationType & SC_MOD_INSERTTEXT) != 0)
+                QsciAccessibleScintillaBase::textInserted(qsb, scn.position,
+                        scn.text, scn.length);
+            else if ((scn.modificationType & SC_MOD_DELETETEXT) != 0)
+                QsciAccessibleScintillaBase::textDeleted(qsb, scn.position,
+                        scn.text, scn.length);
+#endif
+
             // Give some protection to the Python bindings.
-            if (scn.text && (scn.modificationType & (SC_MOD_INSERTTEXT|SC_MOD_DELETETEXT) != 0))
+            if (scn.text && (scn.modificationType & (SC_MOD_INSERTTEXT|SC_MOD_DELETETEXT)) != 0)
             {
                 text = new char[scn.length + 1];
                 memcpy(text, scn.text, scn.length);
@@ -430,6 +449,9 @@ void QsciScintillaQt::NotifyParent(SCNotification scn)
         break;
 
     case SCN_UPDATEUI:
+#if !defined(QT_NO_ACCESSIBILITY)
+        QsciAccessibleScintillaBase::updated(qsb);
+#endif
         emit qsb->SCN_UPDATEUI(scn.updated);
         break;
 
@@ -566,6 +588,10 @@ void QsciScintillaQt::ClaimSelection()
     }
     else
         primarySelection = false;
+
+#if !defined(QT_NO_ACCESSIBILITY)
+    QsciAccessibleScintillaBase::selectionChanged(qsb, isSel);
+#endif
 
     emit qsb->QSCN_SELCHANGED(isSel);
 }

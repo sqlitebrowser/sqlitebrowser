@@ -3,20 +3,29 @@
 
 #include "sqlitedb.h"
 #include "PlotDock.h"
+#include "Palette.h"
+#include "CondFormat.h"
+#include "sql/Query.h"
+#include "RunSql.h"
 
+#include <memory>
 #include <QMainWindow>
 #include <QMap>
 
-class QDragEnterEvent;
 class EditDialog;
-class QIntValidator;
-class QLabel;
-class QModelIndex;
-class QPersistentModelIndex;
 class SqliteTableModel;
 class DbStructureModel;
 class RemoteDock;
 class RemoteDatabase;
+class FindReplaceDialog;
+class ExtendedTableWidget;
+
+class QDragEnterEvent;
+class QIntValidator;
+class QModelIndex;
+class QLabel;
+class QPersistentModelIndex;
+class QToolButton;
 
 namespace Ui {
 class MainWindow;
@@ -24,45 +33,29 @@ class MainWindow;
 
 struct BrowseDataTableSettings
 {
-    int sortOrderIndex;
-    Qt::SortOrder sortOrderMode;
+    sqlb::Query query;                              // NOTE: We only store the sort order in here (for now)
     QMap<int, int> columnWidths;
     QMap<int, QString> filterValues;
+    QMap<int, QVector<CondFormat>> condFormats;
     QMap<int, QString> displayFormats;
     bool showRowid;
     QString encoding;
     QString plotXAxis;
     QMap<QString, PlotDock::PlotSettings> plotYAxes;
     QString unlockViewPk;
+    QMap<int, bool> hiddenColumns;
 
     BrowseDataTableSettings() :
-        sortOrderIndex(0),
-        sortOrderMode(Qt::AscendingOrder),
         showRowid(false)
     {
     }
 
-    friend QDataStream& operator<<(QDataStream& stream, const BrowseDataTableSettings& object)
-    {
-        stream << object.sortOrderIndex;
-        stream << static_cast<int>(object.sortOrderMode);
-        stream << object.columnWidths;
-        stream << object.filterValues;
-        stream << object.displayFormats;
-        stream << object.showRowid;
-        stream << object.encoding;
-        stream << object.plotXAxis;
-        stream << object.plotYAxes;
-        stream << object.unlockViewPk;
-
-        return stream;
-    }
     friend QDataStream& operator>>(QDataStream& stream, BrowseDataTableSettings& object)
     {
-        stream >> object.sortOrderIndex;
-        int sortordermode;
-        stream >> sortordermode;
-        object.sortOrderMode = static_cast<Qt::SortOrder>(sortordermode);
+        int sortOrderIndex, sortOrderMode;
+        stream >> sortOrderIndex;
+        stream >> sortOrderMode;
+        object.query.orderBy().emplace_back(sortOrderIndex, sortOrderMode == Qt::AscendingOrder ? sqlb::Ascending : sqlb::Descending);
         stream >> object.columnWidths;
         stream >> object.filterValues;
         stream >> object.displayFormats;
@@ -74,10 +67,14 @@ struct BrowseDataTableSettings
         // those cases, check for the end of the stream here.
         if(stream.atEnd())
             return stream;
-
         stream >> object.plotXAxis;
         stream >> object.plotYAxes;
         stream >> object.unlockViewPk;
+
+        // Project files from versions before 3.11.0 didn't have these fields
+        if(stream.atEnd())
+            return stream;
+        stream >> object.hiddenColumns;
 
         return stream;
     }
@@ -88,19 +85,11 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget* parent = 0);
-    ~MainWindow();
+    explicit MainWindow(QWidget* parent = nullptr);
+    ~MainWindow() override;
 
     DBBrowserDB& getDb() { return db; }
     RemoteDatabase& getRemote() { return *m_remoteDb; }
-
-    enum Tabs
-    {
-        StructureTab,
-        BrowseTab,
-        PragmaTab,
-        ExecuteTab
-    };
 
 private:
     struct PragmaValues
@@ -122,25 +111,38 @@ private:
         int temp_store;
         int user_version;
         int wal_autocheckpoint;
+        int case_sensitive_like;
     } pragmaValues;
 
     Ui::MainWindow* ui;
 
+    DBBrowserDB db;
+
+    /// the table model used in the "Browse Data" page (re-used and
+    /// re-initialized when switching to another table)
     SqliteTableModel* m_browseTableModel;
+
     SqliteTableModel* m_currentTabTableModel;
 
-    QMenu *popupTableMenu;
-    QMenu *recentFilesMenu;
-    QMenu *popupSaveSqlFileMenu;
+    QMenu* popupTableMenu;
+    QMenu* popupSchemaDockMenu;
+    QMenu* recentFilesMenu;
+    QMenu* popupOpenDbMenu;
+    QMenu* popupNewRecordMenu;
+    QMenu* popupSaveSqlFileMenu;
+    QMenu* popupSaveSqlResultsMenu;
+    QMenu* popupSaveFilterAsMenu;
     QMenu* popupBrowseDataHeaderMenu;
 
     QLabel* statusEncodingLabel;
     QLabel* statusEncryptionLabel;
     QLabel* statusReadOnlyLabel;
+    QToolButton* statusStopButton;
+    QLabel* statusBusyLabel;
 
     DbStructureModel* dbStructureModel;
 
-    enum { MaxRecentFiles = 5 };
+    static const int MaxRecentFiles = 5;
     QAction *recentFileActs[MaxRecentFiles];
     QAction *recentSeparatorAct;
 
@@ -151,11 +153,20 @@ private:
     EditDialog* editDock;
     PlotDock* plotDock;
     RemoteDock* remoteDock;
+    FindReplaceDialog* findReplaceDialog;
 
     QIntValidator* gotoValidator;
 
-    DBBrowserDB db;
     QString defaultBrowseTableEncoding;
+
+    Palette m_condFormatPalette;
+
+    std::unique_ptr<RunSql> execute_sql_worker;
+
+    QString defaultOpenTabs;
+    QByteArray defaultWindowState;
+
+    QString currentProjectFilename;
 
     void init();
     void clearCompleterModelsFields();
@@ -164,17 +175,25 @@ private:
     void setCurrentFile(const QString& fileName);
     void addToRecentFilesMenu(const QString& filename);
     void activateFields(bool enable = true);
-    void enableEditing(bool enable_edit, bool enable_insertdelete);
-    void loadExtensionsFromSettings();
+    void enableEditing(bool enable_edit);
+    void saveAsView(QString query);
+    void duplicateRecord(int currentRow);
+    void selectTableLine(int lineToSelect);
+    void attachPlot(ExtendedTableWidget* tableWidget, SqliteTableModel* model, BrowseDataTableSettings* settings = nullptr, bool keepOrResetSelection = true);
 
     sqlb::ObjectIdentifier currentlyBrowsedTableName() const;
 
+    void applyBrowseTableSettings(BrowseDataTableSettings storedData, bool skipFilters = false);
+    void toggleTabVisible(QWidget* tabWidget, bool show);
+    void restoreOpenTabs(QString tabs);
+    QString saveOpenTabs();
+    QString saveProject(const QString& currentFilename);
+
 protected:
-    void closeEvent(QCloseEvent *);
-    void dragEnterEvent(QDragEnterEvent *event);
-    void dropEvent(QDropEvent *event);
-    void resizeEvent(QResizeEvent *event);
-    void keyPressEvent(QKeyEvent* event);
+    void closeEvent(QCloseEvent *) override;
+    void dragEnterEvent(QDragEnterEvent *event) override;
+    void dropEvent(QDropEvent *event) override;
+    void resizeEvent(QResizeEvent *event) override;
 
 public slots:
     bool fileOpen(const QString& fileName = QString(), bool dontAddToRecentFiles = false, bool readOnly = false);
@@ -183,18 +202,22 @@ public slots:
     void refresh();
     void jumpToRow(const sqlb::ObjectIdentifier& table, QString column, const QByteArray& value);
     void switchToBrowseDataTab(QString tableToBrowse = QString());
-    void populateStructure();
+    void populateStructure(const QString& old_table = QString());
+    void reloadSettings();
+
 
 private slots:
     void createTreeContextMenu(const QPoint & qPoint);
+    void createSchemaDockContextMenu(const QPoint & qPoint);
     void changeTreeSelection();
     void fileNew();
+    void fileNewInMemoryDatabase();
     void populateTable();
     void clearTableBrowser();
     bool fileClose();
     void addRecord();
+    void insertValues();
     void deleteRecord();
-    void selectTableLine( int lineToSelect );
     void navigatePrevious();
     void navigateNext();
     void navigateBegin();
@@ -220,7 +243,6 @@ private slots:
     void fileRevert();
     void exportDatabaseToSQL();
     void importDatabaseFromSQL();
-    void openPreferences();
     void openRecentFile();
     void loadPragmas();
     void updatePragmaUi();
@@ -229,32 +251,56 @@ private slots:
     void browseTableHeaderClicked(int logicalindex);
     unsigned int openSqlTab(bool resetCounter = false);
     void closeSqlTab(int index, bool force = false);
+    void changeSqlTab(int index);
     void openSqlFile();
     void saveSqlFile();
     void saveSqlFileAs();
+    void saveSqlResultsAsCsv();
+    void saveSqlResultsAsView();
     void loadExtension();
-    void reloadSettings();
     void checkNewVersion(const QString& versionstring, const QString& url);
     void on_actionWiki_triggered();
     void on_actionBug_report_triggered();
+    void on_actionFeature_Request_triggered();
     void on_actionSqlCipherFaq_triggered();
     void on_actionWebsite_triggered();
+    void on_actionDonatePatreon_triggered();
     void updateBrowseDataColumnWidth(int section, int /*old_size*/, int new_size);
     bool loadProject(QString filename = QString(), bool readOnly = false);
     void saveProject();
+    void saveProjectAs();
     void fileAttach();
     void updateFilter(int column, const QString& value);
+    void addCondFormat(int column, const QString& value);
+    void clearAllCondFormats(int column);
     void editEncryption();
     void on_buttonClearFilters_clicked();
     void copyCurrentCreateStatement();
     void showDataColumnPopupMenu(const QPoint& pos);
     void showRecordPopupMenu(const QPoint& pos);
     void editDataColumnDisplayFormat();
-    void showRowidColumn(bool show);
+    void showRowidColumn(bool show, bool skipFilters = false);
     void browseDataSetTableEncoding(bool forAllTables = false);
     void browseDataSetDefaultTableEncoding();
     void fileOpenReadOnly();
     void unlockViewEditing(bool unlock, QString pk = QString());
+    void hideColumns(int column = -1, bool hide = true);
+    void on_actionShowAllColumns_triggered();
+    void requestCollation(const QString& name, int eTextRep);
+    void renameSqlTab(int index);
+    void setFindFrameVisibility(bool show);
+    void openFindReplaceDialog();
+    void toggleSqlBlockComment();
+    void openSqlPrintDialog();
+    void saveFilterAsView();
+    void exportFilteredTable();
+    void updateInsertDeleteRecordButton();
+    void runSqlNewTab(const QString& query, const QString& title);
+    void printDbStructure();
+    void updateDatabaseBusyStatus(bool busy, const QString& user);
+    void openPreferences();
+    void closeTab(int index);
+    void showStatusMessage5s(QString message);
 };
 
 #endif

@@ -36,6 +36,8 @@ void FilterTableHeader::generateFilters(int number, bool showFirst)
         else
             l->setVisible(true);
         connect(l, SIGNAL(delayedTextChanged(QString)), this, SLOT(inputChanged(QString)));
+        connect(l, SIGNAL(addFilterAsCondFormat(QString)), this, SLOT(addFilterAsCondFormat(QString)));
+        connect(l, SIGNAL(clearAllCondFormats()), this, SLOT(clearAllCondFormats()));
         filterWidgets.push_back(l);
     }
 
@@ -86,9 +88,21 @@ void FilterTableHeader::inputChanged(const QString& new_value)
     emit filterChanged(sender()->property("column").toInt(), new_value);
 }
 
+void FilterTableHeader::addFilterAsCondFormat(const QString& filter)
+{
+    // Just get the column number and the new value and send them to anybody interested in new conditional formatting
+    emit addCondFormat(sender()->property("column").toInt(), filter);
+}
+
+void FilterTableHeader::clearAllCondFormats()
+{
+    // Just get the column number and send it to anybody responsible or interested in clearing conditional formatting
+    emit clearAllCondFormats(sender()->property("column").toInt());
+}
+
 void FilterTableHeader::clearFilters()
 {
-    foreach (FilterLineEdit* filterLineEdit, filterWidgets)
+    for(FilterLineEdit* filterLineEdit : filterWidgets)
         filterLineEdit->clear();
 }
 

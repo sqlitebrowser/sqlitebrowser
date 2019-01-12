@@ -1,52 +1,55 @@
 #include "FileDialog.h"
 #include "Settings.h"
 
-QString FileDialog::getOpenFileName(QWidget* parent, const QString& caption, const QString &filter, QString *selectedFilter, Options options)
+QString FileDialog::getOpenFileName(const FileDialogTypes dialogType, QWidget* parent, const QString& caption, const QString &filter, QString *selectedFilter, Options options)
 {
-    QString result = QFileDialog::getOpenFileName(parent, caption, getFileDialogPath(), filter, selectedFilter, options);
+    QString result = QFileDialog::getOpenFileName(parent, caption, getFileDialogPath(dialogType), filter, selectedFilter, options);
     if(!result.isEmpty())
-        setFileDialogPath(result);
+        setFileDialogPath(dialogType, result);
     return result;
 }
 
-QStringList FileDialog::getOpenFileNames(QWidget *parent, const QString &caption, const QString &filter, QString *selectedFilter, QFileDialog::Options options)
+QStringList FileDialog::getOpenFileNames(const FileDialogTypes dialogType, QWidget *parent, const QString &caption, const QString &filter, QString *selectedFilter, QFileDialog::Options options)
 {
-    QStringList result = QFileDialog::getOpenFileNames(parent, caption, getFileDialogPath(), filter, selectedFilter, options);
+    QStringList result = QFileDialog::getOpenFileNames(parent, caption, getFileDialogPath(dialogType), filter, selectedFilter, options);
     if(!result.isEmpty())
     {
         QFileInfo path = QFileInfo(result.first());
-        setFileDialogPath(path.absolutePath());
+        setFileDialogPath(dialogType, path.absolutePath());
     }
     return result;
 }
 
-QString FileDialog::getSaveFileName(QWidget* parent, const QString& caption, const QString& filter, const QString& defaultFileName, QString* selectedFilter, Options options)
+QString FileDialog::getSaveFileName(const FileDialogTypes dialogType, QWidget* parent, const QString& caption, const QString& filter, const QString& defaultFileName, QString* selectedFilter, Options options)
 {
-    QString dir = getFileDialogPath();
+    QString dir = getFileDialogPath(dialogType);
     if(!defaultFileName.isEmpty())
         dir += "/" + defaultFileName;
 
     QString result = QFileDialog::getSaveFileName(parent, caption, dir, filter, selectedFilter, options);
     if(!result.isEmpty())
-        setFileDialogPath(result);
+        setFileDialogPath(dialogType, result);
     return result;
 }
 
-QString FileDialog::getExistingDirectory(QWidget* parent, const QString& caption, Options options)
+QString FileDialog::getExistingDirectory(const FileDialogTypes dialogType, QWidget* parent, const QString& caption, Options options)
 {
-    QString result = QFileDialog::getExistingDirectory(parent, caption, getFileDialogPath(), options);
+    QString result = QFileDialog::getExistingDirectory(parent, caption, getFileDialogPath(dialogType), options);
     if(!result.isEmpty())
-        setFileDialogPath(result);
+        setFileDialogPath(dialogType, result);
     return result;
 }
 
-QString FileDialog::getFileDialogPath()
+QString FileDialog::getFileDialogPath(const FileDialogTypes dialogType)
 {
     switch(Settings::getValue("db", "savedefaultlocation").toInt())
     {
     case 0:     // Remember last location
-    case 2:     // Remember last location for current session only
-        return Settings::getValue("db", "lastlocation").toString();
+    case 2: {   // Remember last location for current session only
+        QHash<QString, QVariant> lastLocations = Settings::getValue("db", "lastlocations").toHash();
+
+        return lastLocations[QString(dialogType)].toString();
+    }
     case 1:     // Always use this locations
         return Settings::getValue("db", "defaultlocation").toString();
     default:
@@ -54,19 +57,27 @@ QString FileDialog::getFileDialogPath()
     }
 }
 
-void FileDialog::setFileDialogPath(const QString& new_path)
+void FileDialog::setFileDialogPath(const FileDialogTypes dialogType, const QString& new_path)
 {
     QString dir = QFileInfo(new_path).absolutePath();
+    QHash<QString, QVariant> lastLocations = Settings::getValue("db", "lastlocations").toHash();
+
+    lastLocations[QString(dialogType)] = dir;
 
     switch(Settings::getValue("db", "savedefaultlocation").toInt())
     {
     case 0:     // Remember last location
-        Settings::setValue("db", "lastlocation", dir);
+        Settings::setValue("db", "lastlocations", lastLocations);
         break;
     case 2:     // Remember last location for current session only
-        Settings::setValue("db", "lastlocation", dir, true);
+        Settings::setValue("db", "lastlocations", lastLocations, true);
         break;
     case 1:     // Always use this locations
         break;  // Do nothing
     }
+}
+
+QString FileDialog::getSqlDatabaseFileFilter()
+{
+    return Settings::getValue("General", "DBFileExtensions").toString() + ";;" + QObject::tr("All files (*)"); //Always add "All files (*)" to the available filters
 }

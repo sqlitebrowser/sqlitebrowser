@@ -9,6 +9,9 @@
  */
 
 #include <antlr/config.hpp>
+#ifdef __MINGW32__
+#include <cstring>
+#endif
 #include <string>
 
 #ifdef ANTLR_CXX_SUPPORTS_NAMESPACE

@@ -3,31 +3,49 @@
 
 #include <QFileDialog>
 
+enum FileDialogTypes {
+    NoSpecificType,
+
+    CreateProjectFile,
+    OpenProjectFile,
+
+    CreateDatabaseFile,
+    OpenDatabaseFile,
+
+    CreateSQLFile,
+    OpenSQLFile,
+
+    OpenCSVFile,
+
+    CreateDataFile,
+    OpenDataFile,
+
+    OpenExtensionFile,
+    OpenCertificateFile
+};
+
 class FileDialog : public QFileDialog
 {
     Q_OBJECT
 
 public:
-    static QString getOpenFileName(QWidget* parent = 0, const QString& caption = QString(),
-                                   const QString& filter = QString(), QString* selectedFilter = 0,
+    static QString getOpenFileName(const FileDialogTypes dialogType, QWidget* parent = nullptr, const QString& caption = QString(),
+                                   const QString& filter = QString(), QString* selectedFilter = nullptr,
                                    Options options = 0);
-    static QStringList getOpenFileNames(QWidget* parent = 0, const QString& caption = QString(),
-                                        const QString& filter = QString(), QString* selectedFilter = 0,
+    static QStringList getOpenFileNames(const FileDialogTypes dialogType, QWidget* parent = nullptr, const QString& caption = QString(),
+                                        const QString& filter = QString(), QString* selectedFilter = nullptr,
                                         Options options = 0);
-    static QString getSaveFileName(QWidget* parent = 0, const QString& caption = QString(),
-                                   const QString& filter = QString(), const QString& defaultFileName = QString(), QString* selectedFilter = 0,
+    static QString getSaveFileName(const FileDialogTypes dialogType, QWidget* parent = nullptr, const QString& caption = QString(),
+                                   const QString& filter = QString(), const QString& defaultFileName = QString(), QString* selectedFilter = nullptr,
                                    Options options = 0);
-    static QString getExistingDirectory(QWidget* parent = 0, const QString& caption = QString(),
+    static QString getExistingDirectory(const FileDialogTypes dialogType, QWidget* parent = nullptr, const QString& caption = QString(),
                                         Options options = 0);
 
-    static QString getSqlDatabaseFileFilter()
-    {
-        return QObject::tr("SQLite database files (*.db *.sqlite *.sqlite3 *.db3);;All files (*)");
-    }
+    static QString getSqlDatabaseFileFilter();
 
 private:
-    static QString getFileDialogPath();
-    static void setFileDialogPath(const QString& new_path);
+    static QString getFileDialogPath(const FileDialogTypes dialogType);
+    static void setFileDialogPath(const FileDialogTypes dialogType, const QString& new_path);
 };
 
 #endif
