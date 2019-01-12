@@ -190,7 +190,7 @@
     <message>
         <location filename="../Application.cpp" line="94"/>
         <source>  -v, --version		Display the current version</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">  -v, --version		Zobrazit aktuální verzi</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="95"/>
@@ -263,7 +263,7 @@
     <message>
         <location filename="../CipherDialog.ui" line="133"/>
         <source>Page si&amp;ze</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Velikost strany</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="146"/>
@@ -292,7 +292,7 @@
     </message>
     <message>
         <source>Page &amp;size</source>
-        <translation type="vanished">Strana &amp;velikost</translation>
+        <translation type="vanished">Velikost strany</translation>
     </message>
     <message>
         <location filename="../CipherDialog.cpp" line="35"/>
@@ -374,7 +374,7 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="27"/>
         <source>Date as dd/mm/yyyy</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Datum jako dd/mm/yyyy</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="29"/>
@@ -422,7 +422,7 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../sqlitedb.cpp" line="275"/>
         <source>Invalid file format</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Neplatný formát souboru</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="617"/>
@@ -473,7 +473,7 @@ Ruším provedení.</translation>
     <message>
         <location filename="../sqlitedb.cpp" line="669"/>
         <source>The database is currently busy: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Databáze je právě zaneprázdněná: </translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="670"/>
@@ -500,83 +500,93 @@ Aborting execution%3.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1223"/>
-        <source>Cannot delete this object</source>
+        <location filename="../sqlitedb.cpp" line="1055"/>
+        <source>didn&apos;t receive any output from %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1254"/>
+        <location filename="../sqlitedb.cpp" line="1061"/>
+        <source>could not execute command: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sqlitedb.cpp" line="1229"/>
+        <source>Cannot delete this object</source>
+        <translation type="unfinished">Nemohu smazat tento objekt</translation>
+    </message>
+    <message>
+        <location filename="../sqlitedb.cpp" line="1260"/>
         <source>Cannot set data on this object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1372"/>
+        <location filename="../sqlitedb.cpp" line="1378"/>
         <source>A table with the name &apos;%1&apos; already exists in schema &apos;%2&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1383"/>
+        <location filename="../sqlitedb.cpp" line="1389"/>
         <source>renameColumn: cannot find column %1.</source>
         <translation>renameColumn: nemohu nalézt sloupec %1.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1391"/>
+        <location filename="../sqlitedb.cpp" line="1397"/>
         <source>renameColumn: creating savepoint failed. DB says: %1</source>
         <translation>renameColumn: vytváření bodu obnovy selhalo. DB říká: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1437"/>
+        <location filename="../sqlitedb.cpp" line="1443"/>
         <source>renameColumn: creating new table failed. DB says: %1</source>
         <translation>renameColumn: vytváření nové tabulky selhalo. DB říká: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1450"/>
+        <location filename="../sqlitedb.cpp" line="1456"/>
         <source>renameColumn: copying data to new table failed. DB says:
 %1</source>
         <translation>renameColumn: kopírování dat do nové tabulky selhalo. DB říká:
 %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1507"/>
+        <location filename="../sqlitedb.cpp" line="1513"/>
         <source>renameColumn: deleting old table failed. DB says: %1</source>
         <translation>renameColumn: smazání staré tabulky selhalo. DB říká: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1532"/>
+        <location filename="../sqlitedb.cpp" line="1538"/>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1541"/>
+        <location filename="../sqlitedb.cpp" line="1547"/>
         <source>renameColumn: releasing savepoint failed. DB says: %1</source>
         <translation>renameColumn: uvolňování bodu obnovy selhalo. DB říká: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1580"/>
+        <location filename="../sqlitedb.cpp" line="1586"/>
         <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.Message from database engine:
 %3</source>
         <translation>Chyba při přejmenování tabulky &apos;%1&apos; to &apos;%2&apos;.Zpráva z databáze:
 %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1615"/>
+        <location filename="../sqlitedb.cpp" line="1621"/>
         <source>... &lt;string can not be logged, contains binary data&gt; ...</source>
         <translation>... &lt;string nemůže být zaznamenán, obsahuje binární data&gt; ...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1724"/>
+        <location filename="../sqlitedb.cpp" line="1730"/>
         <source>could not get list of databases: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1863"/>
+        <location filename="../sqlitedb.cpp" line="1869"/>
         <source>Error loading extension: %1</source>
         <translation type="unfinished">Chyba při načítání přípony: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1888"/>
+        <location filename="../sqlitedb.cpp" line="1894"/>
         <source>could not get column information</source>
         <translation type="unfinished"></translation>
     </message>
@@ -585,7 +595,7 @@ Aborting execution%3.</source>
         <translation type="vanished">neznámý typ objektu %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1718"/>
+        <location filename="../sqlitedb.cpp" line="1724"/>
         <source>could not get list of db objects: %1, %2</source>
         <translation>nemohu získat seznam objektů db: %1, %2</translation>
     </message>
@@ -594,22 +604,22 @@ Aborting execution%3.</source>
         <translation type="vanished">nemohu získat typy</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1754"/>
+        <location filename="../sqlitedb.cpp" line="1760"/>
         <source>didn&apos;t receive any output from pragma %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1758"/>
+        <location filename="../sqlitedb.cpp" line="1764"/>
         <source>could not execute pragma command: %1, %2</source>
         <translation>nemohu provést příkaz pragma: %1, %2</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1779"/>
+        <location filename="../sqlitedb.cpp" line="1785"/>
         <source>Error setting pragma %1 to %2: %3</source>
         <translation>Chyba při nastavování pragma %1 na %2: %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1825"/>
+        <location filename="../sqlitedb.cpp" line="1831"/>
         <source>File not found.</source>
         <translation>Soubor nebyl nalezen.</translation>
     </message>
@@ -643,7 +653,7 @@ Aborting execution%3.</source>
     <message>
         <location filename="../DbStructureModel.cpp" line="19"/>
         <source>Database</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Databáze</translation>
     </message>
     <message>
         <location filename="../DbStructureModel.cpp" line="154"/>
@@ -658,7 +668,7 @@ Aborting execution%3.</source>
     <message>
         <location filename="../DbStructureModel.cpp" line="168"/>
         <source>Temporary</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dočasný</translation>
     </message>
     <message>
         <location filename="../DbStructureModel.cpp" line="306"/>
@@ -735,11 +745,6 @@ Aborting execution%3.</source>
         <translation type="unfinished">Nastavit na &amp;NULL</translation>
     </message>
     <message>
-        <location filename="../EditDialog.ui" line="296"/>
-        <source>Apply data to cell [Ctrl+Return]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../EditDialog.ui" line="299"/>
         <source>This button saves the changes performed in the cell editor to the database cell.</source>
         <translation type="unfinished"></translation>
@@ -772,7 +777,7 @@ Aborting execution%3.</source>
     <message>
         <location filename="../EditDialog.ui" line="65"/>
         <source>XML</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">XML</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="73"/>
@@ -809,7 +814,7 @@ Aborting execution%3.</source>
     <message>
         <location filename="../EditDialog.ui" line="145"/>
         <source>Import from file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Importovat ze souboru</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="148"/>
@@ -819,7 +824,7 @@ Aborting execution%3.</source>
     <message>
         <location filename="../EditDialog.ui" line="164"/>
         <source>Export to file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Exportovat do souboru</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="167"/>
@@ -854,10 +859,15 @@ Errors are indicated with a red squiggle underline.</source>
         <translation>Současná velikost dat v tabulce</translation>
     </message>
     <message>
+        <location filename="../EditDialog.ui" line="296"/>
+        <source>Apply data to cell [Ctrl+Return]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../EditDialog.ui" line="318"/>
         <location filename="../EditDialog.ui" line="333"/>
         <source>Print...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tisk...</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="321"/>
@@ -888,7 +898,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditDialog.ui" line="354"/>
         <source>Ctrl+Shift+C</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+Shift+C</translation>
     </message>
     <message>
         <source>Choose a file</source>
@@ -958,7 +968,7 @@ Errors are indicated with a red squiggle underline.</source>
         <location filename="../EditDialog.cpp" line="280"/>
         <location filename="../EditDialog.cpp" line="289"/>
         <source>Try switching to Binary mode.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zkuste přepnout do binárního režimu.</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="312"/>
@@ -966,14 +976,14 @@ Errors are indicated with a red squiggle underline.</source>
         <location filename="../EditDialog.cpp" line="385"/>
         <location filename="../EditDialog.cpp" line="387"/>
         <source>Text files (*.txt)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Textové soubory (*.txt)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="313"/>
         <location filename="../EditDialog.cpp" line="335"/>
         <location filename="../EditDialog.cpp" line="390"/>
         <source>JSON files (*.json)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Soubory JSON (*.json)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="314"/>
@@ -981,26 +991,26 @@ Errors are indicated with a red squiggle underline.</source>
         <location filename="../EditDialog.cpp" line="385"/>
         <location filename="../EditDialog.cpp" line="387"/>
         <source>XML files (*.xml)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Soubory XML (*.xml)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="315"/>
         <location filename="../EditDialog.cpp" line="332"/>
         <source>Image files (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Soubory obrázků (%1)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="316"/>
         <location filename="../EditDialog.cpp" line="329"/>
         <location filename="../EditDialog.cpp" line="380"/>
         <source>Binary files (*.bin)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Binární soubory (*.bin)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="316"/>
         <location filename="../EditDialog.cpp" line="402"/>
         <source>All files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Všechny soubory (*)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="343"/>
@@ -1010,12 +1020,12 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditDialog.cpp" line="376"/>
         <source>%1 Image</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 Obrázek</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="393"/>
         <source>SVG files (*.svg)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Soubory SVG (*.svg)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="400"/>
@@ -1026,7 +1036,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditDialog.cpp" line="474"/>
         <source>Invalid data for this mode</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Neplatná data pro tento režim</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="475"/>
@@ -1074,11 +1084,11 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditIndexDialog.ui" line="26"/>
         <source>&amp;Name</source>
-        <translation>&amp;Název</translation>
+        <translation>Název</translation>
     </message>
     <message>
         <source>&amp;Columns</source>
-        <translation type="vanished">&amp;Sloupce</translation>
+        <translation type="vanished">Sloupce</translation>
     </message>
     <message>
         <source>Column</source>
@@ -1092,17 +1102,17 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditIndexDialog.ui" line="39"/>
         <source>&amp;Table</source>
-        <translation>&amp;Tabulka</translation>
+        <translation>Tabulka</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="14"/>
         <source>Edit Index Schema</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Upravit schéma indexů</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="52"/>
         <source>&amp;Unique</source>
-        <translation>&amp;Unikátní</translation>
+        <translation>Unikátní</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="69"/>
@@ -1117,12 +1127,12 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditIndexDialog.ui" line="85"/>
         <source>Colu&amp;mns</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sloupce</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="130"/>
         <source>Table column</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sloupec tabulky</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="135"/>
@@ -1137,7 +1147,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditIndexDialog.ui" line="232"/>
         <source>Index column</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Index sloupce</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.cpp" line="268"/>
@@ -1173,7 +1183,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditTableDialog.ui" line="62"/>
         <source>Database schema</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Schéma databáze</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="85"/>
@@ -1223,7 +1233,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditTableDialog.ui" line="246"/>
         <source>NN</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">NN</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="249"/>
@@ -1480,17 +1490,17 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportDataDialog.cpp" line="29"/>
         <source>Export data as JSON</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Exportovat data jako JSON</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.cpp" line="120"/>
         <source>exporting CSV</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">exportování CSV</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.cpp" line="204"/>
         <source>exporting JSON</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">exportování JSONu</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.cpp" line="301"/>
@@ -1568,7 +1578,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportSqlDialog.ui" line="140"/>
         <source>Overwrite old schema (DROP TABLE, then CREATE TABLE)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Přepsat staré schéma (DROP TABLE, then CREATE TABLE)</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="121"/>
@@ -1582,7 +1592,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportSqlDialog.cpp" line="74"/>
         <source>Please select at least one table.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vyberte prosím aspoň jednu tabulku.</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.cpp" line="87"/>
@@ -1611,7 +1621,7 @@ All data currently stored in this field will be lost.</source>
         <location filename="../ExtendedScintilla.cpp" line="58"/>
         <location filename="../ExtendedScintilla.cpp" line="232"/>
         <source>Ctrl+H</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+H</translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="61"/>
@@ -1622,12 +1632,12 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="231"/>
         <source>Find and Replace...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Najít a nahradit...</translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="235"/>
         <source>Print...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tisk...</translation>
     </message>
 </context>
 <context>
@@ -1656,57 +1666,57 @@ Chcete jej přesto vložit?</translation>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="198"/>
         <source>Greater than</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Větší než</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="199"/>
         <source>Less than</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Menší než</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="200"/>
         <source>Greater or equal</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Větší nebo rovno</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="201"/>
         <source>Less or equal</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Menší nebo rovno</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="202"/>
         <source>Between this and...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Mezi tímto a...</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="204"/>
         <source>Set to NULL</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nastavit na NULL</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="205"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kopírovat</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="206"/>
         <source>Copy with Headers</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kopírovat s hlavičkami</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="207"/>
         <source>Copy as SQL</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kopírovat jako SQL</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="208"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vložit</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="209"/>
         <source>Print...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tisk...</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="212"/>
@@ -1716,17 +1726,17 @@ Chcete jej přesto vložit?</translation>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="238"/>
         <source>Alt+Del</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Alt+Del</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="240"/>
         <source>Ctrl+Shift+C</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+Shift+C</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="241"/>
         <source>Ctrl+Alt+C</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+Alt+C</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="584"/>
@@ -1752,38 +1762,38 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../FileExtensionManager.ui" line="22"/>
         <source>&amp;Up</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nahoru</translation>
     </message>
     <message>
         <location filename="../FileExtensionManager.ui" line="33"/>
         <source>&amp;Down</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dolů</translation>
     </message>
     <message>
         <location filename="../FileExtensionManager.ui" line="57"/>
         <source>&amp;Add</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Přidat</translation>
     </message>
     <message>
         <location filename="../FileExtensionManager.ui" line="68"/>
         <source>&amp;Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Odstranit</translation>
     </message>
     <message>
         <location filename="../FileExtensionManager.ui" line="94"/>
         <location filename="../FileExtensionManager.cpp" line="41"/>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Popis</translation>
     </message>
     <message>
         <location filename="../FileExtensionManager.ui" line="99"/>
         <source>Extensions</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Rozšíření</translation>
     </message>
     <message>
         <location filename="../FileExtensionManager.cpp" line="42"/>
         <source>*.extension</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">*.extension</translation>
     </message>
 </context>
 <context>
@@ -1816,62 +1826,62 @@ x~y	Range: values between x and y</source>
     <message>
         <location filename="../FilterLineEdit.cpp" line="113"/>
         <source>What&apos;s This?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Co je toto?</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="118"/>
         <source>Is NULL</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">je NULL</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="123"/>
         <source>Is not NULL</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Není NULL</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="128"/>
         <source>Is empty</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Je prázdný</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="133"/>
         <source>Is not empty</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Není prázdný</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="138"/>
         <source>Equal to...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Rovný k...</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="142"/>
         <source>Not equal to...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Není rovný k...</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="146"/>
         <source>Greater than...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Větší než...</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="150"/>
         <source>Less than...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Menší než...</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="154"/>
         <source>Greater or equal...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Větší nebo rovno...</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="158"/>
         <source>Less or equal...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Menší nebo rovno...</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="162"/>
         <source>In range...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">V rozmezí...</translation>
     </message>
 </context>
 <context>
@@ -1879,17 +1889,17 @@ x~y	Range: values between x and y</source>
     <message>
         <location filename="../FindReplaceDialog.ui" line="14"/>
         <source>Find and Replace</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Najít a nahradit</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="43"/>
         <source>Fi&amp;nd text:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Najít text</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="56"/>
         <source>Re&amp;place with:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nahradit s:</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="69"/>
@@ -1939,12 +1949,12 @@ x~y	Range: values between x and y</source>
     <message>
         <location filename="../FindReplaceDialog.ui" line="132"/>
         <source>&amp;Find Next</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Najít další</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="139"/>
         <source>&amp;Replace</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nahradit</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="146"/>
@@ -1954,7 +1964,7 @@ x~y	Range: values between x and y</source>
     <message>
         <location filename="../FindReplaceDialog.ui" line="149"/>
         <source>F&amp;ind All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Najít vše</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="156"/>
@@ -1964,38 +1974,38 @@ x~y	Range: values between x and y</source>
     <message>
         <location filename="../FindReplaceDialog.ui" line="159"/>
         <source>Replace &amp;All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nahradit vše</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.cpp" line="50"/>
         <source>The searched text was not found</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hledaný text nebyl nalezen</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.cpp" line="97"/>
         <location filename="../FindReplaceDialog.cpp" line="131"/>
         <source>The searched text was not found.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hledaný text nebyl nalezen.</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.cpp" line="100"/>
         <source>The searched text was found one time.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hledaný text byl nalezen jednou.</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.cpp" line="103"/>
         <source>The searched text was found %1 times.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hledaný text byl nalezen %1 krát.</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.cpp" line="134"/>
         <source>The searched text was replaced one time.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hledaný text byl nahrazen jednou.</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.cpp" line="137"/>
         <source>The searched text was replaced %1 times.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hledaný text byl nahrazen %1 krát.</translation>
     </message>
 </context>
 <context>
@@ -2025,7 +2035,7 @@ x~y	Range: values between x and y</source>
     <message>
         <location filename="../ImportCsvDialog.ui" line="25"/>
         <source>Table na&amp;me</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Název tabulky</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="38"/>
@@ -2035,7 +2045,7 @@ x~y	Range: values between x and y</source>
     <message>
         <location filename="../ImportCsvDialog.ui" line="55"/>
         <source>Field &amp;separator</source>
-        <translation>Oddělovač &amp;pole</translation>
+        <translation>Oddělovač pole</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="68"/>
@@ -2083,7 +2093,7 @@ x~y	Range: values between x and y</source>
     <message>
         <location filename="../ImportCsvDialog.ui" line="176"/>
         <source>&amp;Encoding</source>
-        <translation>&amp;Kódování</translation>
+        <translation>Kódování</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="189"/>
@@ -2108,7 +2118,7 @@ x~y	Range: values between x and y</source>
     <message>
         <location filename="../ImportCsvDialog.ui" line="250"/>
         <source>Separate tables</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Oddělit tabulky</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="267"/>
@@ -2123,7 +2133,7 @@ x~y	Range: values between x and y</source>
     <message>
         <location filename="../ImportCsvDialog.ui" line="288"/>
         <source>Ignore default &amp;values</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ignorovat výchozí hodnoty</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="298"/>
@@ -2149,7 +2159,7 @@ x~y	Range: values between x and y</source>
         <location filename="../ImportCsvDialog.ui" line="370"/>
         <location filename="../ImportCsvDialog.cpp" line="337"/>
         <source>Deselect All</source>
-        <translation type="unfinished">Zrušit výběr</translation>
+        <translation type="unfinished">Zrušit celý výběr</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="386"/>
@@ -2205,7 +2215,7 @@ x~y	Range: values between x and y</source>
     <message>
         <location filename="../ImportCsvDialog.cpp" line="615"/>
         <source>importing CSV</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">importování CSV</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.cpp" line="698"/>
@@ -2255,7 +2265,7 @@ x~y	Range: values between x and y</source>
     </message>
     <message>
         <source>SQLCipher &amp;FAQ...</source>
-        <translation type="obsolete">SQLCipher &amp;FAQ...</translation>
+        <translation type="obsolete">SQLCipher FAQ...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2004"/>
@@ -2273,11 +2283,11 @@ x~y	Range: values between x and y</source>
     </message>
     <message>
         <source>Open from Remote</source>
-        <translation type="obsolete">Otevřít ze Vzdálena</translation>
+        <translation type="obsolete">Otevřít ze vzdálena</translation>
     </message>
     <message>
         <source>Save to Remote</source>
-        <translation type="obsolete">Uložit do Vzdálena</translation>
+        <translation type="obsolete">Uložit do vzdálena</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2020"/>
@@ -2310,7 +2320,7 @@ x~y	Range: values between x and y</source>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="230"/>
-        <location filename="../MainWindow.ui" line="2239"/>
+        <location filename="../MainWindow.ui" line="2236"/>
         <source>New Record</source>
         <translation>Nový záznam</translation>
     </message>
@@ -2554,12 +2564,12 @@ x~y	Range: values between x and y</source>
     <message>
         <location filename="../MainWindow.ui" line="1030"/>
         <source>&amp;View</source>
-        <translation>&amp;Pohled</translation>
+        <translation>Pohled</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1038"/>
         <source>&amp;Help</source>
-        <translation>&amp;Pomoc</translation>
+        <translation>Pomoc</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1075"/>
@@ -2569,7 +2579,7 @@ x~y	Range: values between x and y</source>
     <message>
         <location filename="../MainWindow.ui" line="1094"/>
         <source>Edit Database &amp;Cell</source>
-        <translation type="unfinished">Upravit databázovou &amp;buňku</translation>
+        <translation type="unfinished">Upravit databázovou buňku</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1233"/>
@@ -2577,17 +2587,18 @@ x~y	Range: values between x and y</source>
         <translation type="unfinished">DB Schéma</translation>
     </message>
     <message>
-        <source>Execute SQL [F5, Ctrl+Return, Ctrl+R]</source>
-        <translation type="obsolete">Proveďte SQL [F5, Ctrl+Return, Ctrl+R]</translation>
+        <location filename="../MainWindow.ui" line="929"/>
+        <source>Execute SQL</source>
+        <translation type="unfinished">Proveďte SQL</translation>
     </message>
     <message>
         <source>&amp;Load extension</source>
         <translation type="obsolete">Načíst rozšíření</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1754"/>
-        <source>Execute current line [Shift+F5]</source>
-        <translation type="unfinished">Provést aktuální řádek [Shift+F5]</translation>
+        <location filename="../MainWindow.ui" line="1751"/>
+        <source>Execute current line</source>
+        <translation type="unfinished">Provést aktuální řádek</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1757"/>
@@ -2605,7 +2616,7 @@ x~y	Range: values between x and y</source>
     </message>
     <message>
         <source>Open &amp;Project</source>
-        <translation type="obsolete">Otevřít &amp;Projekt</translation>
+        <translation type="obsolete">Otevřít projekt</translation>
     </message>
     <message>
         <source>&amp;Set Encryption</source>
@@ -2668,14 +2679,19 @@ x~y	Range: values between x and y</source>
         <translation type="unfinished">Prohlížet data</translation>
     </message>
     <message>
+        <location filename="../MainWindow.ui" line="146"/>
+        <source>Refresh the data in the selected table [F5, Ctrl+R]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="197"/>
+        <source>Print currently browsed table data [Ctrl+P]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../MainWindow.ui" line="414"/>
         <source>Edit Pragmas</source>
         <translation type="unfinished">Editovat Pragma</translation>
-    </message>
-    <message>
-        <location filename="../MainWindow.ui" line="929"/>
-        <source>Execute SQL</source>
-        <translation type="unfinished">Provést SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1146"/>
@@ -2812,7 +2828,6 @@ x~y	Range: values between x and y</source>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1366"/>
-        <location filename="../MainWindow.ui" line="2220"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
@@ -2877,7 +2892,7 @@ x~y	Range: values between x and y</source>
     <message>
         <location filename="../MainWindow.ui" line="1472"/>
         <source>E&amp;xit</source>
-        <translation>E&amp;xit</translation>
+        <translation>Exit</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1475"/>
@@ -2977,34 +2992,44 @@ x~y	Range: values between x and y</source>
         <translation>Shift+F1</translation>
     </message>
     <message>
+        <location filename="../MainWindow.ui" line="1703"/>
+        <source>Execute all/selected SQL [F5, Ctrl+Return, Ctrl+R]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="1754"/>
+        <source>Execute current line [Shift+F5]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../MainWindow.ui" line="1780"/>
         <source>&amp;Wiki</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Wiki</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1792"/>
         <source>Bug &amp;Report...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nahlásit chybu...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1804"/>
         <source>Feature Re&amp;quest...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Požadavek na funkci...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1816"/>
         <source>Web&amp;site</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Webová stránka</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1828"/>
         <source>&amp;Donate on Patreon...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Přispět na Patreon...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1840"/>
         <source>Sa&amp;ve Project...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Uložit projekt...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1870"/>
@@ -3014,7 +3039,7 @@ x~y	Range: values between x and y</source>
     <message>
         <location filename="../MainWindow.ui" line="1885"/>
         <source>&amp;Attach Database...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Přiložit databázi...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1888"/>
@@ -3030,17 +3055,17 @@ x~y	Range: values between x and y</source>
     <message>
         <location filename="../MainWindow.ui" line="1906"/>
         <source>&amp;Set Encryption...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nastavit šifrování...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2001"/>
         <source>SQLCipher &amp;FAQ</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">SQLCipher FAQ</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2009"/>
         <source>Table(&amp;s) to JSON...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tabulka(ky) do JSONu...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2032"/>
@@ -3050,7 +3075,7 @@ x~y	Range: values between x and y</source>
     <message>
         <location filename="../MainWindow.ui" line="2064"/>
         <source>Save results</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Uložit výsledky</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2067"/>
@@ -3065,7 +3090,7 @@ x~y	Range: values between x and y</source>
     <message>
         <location filename="../MainWindow.ui" line="2082"/>
         <source>Find text in SQL editor</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Najít text v SQL editoru</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2085"/>
@@ -3080,12 +3105,12 @@ x~y	Range: values between x and y</source>
     <message>
         <location filename="../MainWindow.ui" line="2091"/>
         <source>Ctrl+F</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+F</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2103"/>
         <source>Find or replace text in SQL editor</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Najít a nahradit text v SQL editoru</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2106"/>
@@ -3101,13 +3126,13 @@ x~y	Range: values between x and y</source>
         <location filename="../MainWindow.ui" line="2114"/>
         <location filename="../MainWindow.ui" line="2176"/>
         <source>Export to &amp;CSV</source>
-        <translation type="unfinished">Export do &amp;CSV</translation>
+        <translation type="unfinished">Export do CSV</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2119"/>
         <location filename="../MainWindow.ui" line="2190"/>
         <source>Save as &amp;view</source>
-        <translation type="unfinished">Uložit jako &amp;pohled</translation>
+        <translation type="unfinished">Uložit jako pohled</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2122"/>
@@ -3117,17 +3142,17 @@ x~y	Range: values between x and y</source>
     <message>
         <location filename="../MainWindow.ui" line="2127"/>
         <source>Hide column(s)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Skrýt sloupec(ce)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2130"/>
         <source>Hide selected column(s)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Skrýt vybraný sloupec(ce)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2135"/>
         <source>Show all columns</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zobrazit všechny sloupce</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2138"/>
@@ -3137,12 +3162,12 @@ x~y	Range: values between x and y</source>
     <message>
         <location filename="../MainWindow.ui" line="2156"/>
         <source>Shows or hides the Project toolbar.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zobrazit nebo skrýt lištu projektu</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2171"/>
         <source>Extra DB Toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Extra DB Toolbar</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2179"/>
@@ -3167,138 +3192,138 @@ x~y	Range: values between x and y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2228"/>
+        <location filename="../MainWindow.ui" line="2225"/>
         <source>Insert Values...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vložit hodnoty...</translation>
     </message>
     <message>
+        <location filename="../MainWindow.ui" line="2228"/>
         <location filename="../MainWindow.ui" line="2231"/>
-        <location filename="../MainWindow.ui" line="2234"/>
         <source>Open a dialog for inserting values in a new record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../MainWindow.ui" line="2239"/>
         <location filename="../MainWindow.ui" line="2242"/>
-        <location filename="../MainWindow.ui" line="2245"/>
         <source>Insert new record using default values in browsed table</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2250"/>
+        <location filename="../MainWindow.ui" line="2247"/>
         <source>New In-&amp;Memory Database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2258"/>
+        <location filename="../MainWindow.ui" line="2255"/>
         <source>Drag &amp;&amp; Drop Qualified Names</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../MainWindow.ui" line="2258"/>
         <location filename="../MainWindow.ui" line="2261"/>
-        <location filename="../MainWindow.ui" line="2264"/>
         <source>Use qualified names (e.g. &quot;Table&quot;.&quot;Field&quot;) when dragging the objects and dropping them into the editor </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2272"/>
+        <location filename="../MainWindow.ui" line="2269"/>
         <source>Drag &amp;&amp; Drop Enquoted Names</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../MainWindow.ui" line="2272"/>
         <location filename="../MainWindow.ui" line="2275"/>
-        <location filename="../MainWindow.ui" line="2278"/>
         <source>Use escaped identifiers (e.g. &quot;Table1&quot;) when dragging the objects and dropping them into the editor </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2283"/>
+        <location filename="../MainWindow.ui" line="2280"/>
         <source>&amp;Integrity Check</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2286"/>
+        <location filename="../MainWindow.ui" line="2283"/>
         <source>Runs the integrity_check pragma over the opened database and returns the results in the Execute SQL tab. This pragma does an integrity check of the entire database.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2291"/>
+        <location filename="../MainWindow.ui" line="2288"/>
         <source>&amp;Foreign-Key Check</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2294"/>
+        <location filename="../MainWindow.ui" line="2291"/>
         <source>Runs the foreign_key_check pragma over the opened database and returns the results in the Execute SQL tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2299"/>
+        <location filename="../MainWindow.ui" line="2296"/>
         <source>&amp;Quick Integrity Check</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2302"/>
+        <location filename="../MainWindow.ui" line="2299"/>
         <source>Run a quick integrity check over the open DB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2305"/>
+        <location filename="../MainWindow.ui" line="2302"/>
         <source>Runs the quick_check pragma over the opened database and returns the results in the Execute SQL tab. This command does most of the checking of PRAGMA integrity_check but runs much faster.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2310"/>
+        <location filename="../MainWindow.ui" line="2307"/>
         <source>&amp;Optimize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2313"/>
+        <location filename="../MainWindow.ui" line="2310"/>
         <source>Attempt to optimize the database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2316"/>
+        <location filename="../MainWindow.ui" line="2313"/>
         <source>Runs the optimize pragma over the opened database. This pragma might perform optimizations that will improve the performance of future queries.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2325"/>
-        <location filename="../MainWindow.ui" line="2349"/>
+        <location filename="../MainWindow.ui" line="2322"/>
+        <location filename="../MainWindow.ui" line="2346"/>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tisk</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2328"/>
+        <location filename="../MainWindow.ui" line="2325"/>
         <source>Print text from current SQL editor tab [Ctrl+P]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2334"/>
-        <source>Open a dialog for printing the text in the current SQL editor tab</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainWindow.ui" line="2352"/>
+        <location filename="../MainWindow.ui" line="2349"/>
         <source>Print the structure of the opened database [Ctrl+P]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2358"/>
+        <location filename="../MainWindow.ui" line="2331"/>
+        <source>Open a dialog for printing the text in the current SQL editor tab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="2355"/>
         <source>Open a dialog for printing the structure of the opened database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;About...</source>
-        <translation type="vanished">&amp;O...</translation>
+        <translation type="vanished">O...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1676"/>
         <source>&amp;Recently opened</source>
-        <translation>&amp;Nedávno otevřeno</translation>
+        <translation>&amp;Nedávno otevřené</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1685"/>
         <source>Open &amp;tab</source>
-        <translation>Otevřít &amp;kartu</translation>
+        <translation>Otevřít kartu</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1645"/>
@@ -3311,11 +3336,6 @@ x~y	Range: values between x and y</source>
         <source>This is the structure of the opened database.
 You can drag SQL statements from an object row and drop them into other applications or into another instance of &apos;DB Browser for SQLite&apos;.
 </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainWindow.ui" line="146"/>
-        <source>Refresh the data in the selected table [F5, Ctrl+R]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3339,9 +3359,8 @@ You can drag SQL statements from an object row and drop them into other applicat
         <translation type="unfinished">...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="197"/>
-        <source>Print currently browsed table data [Ctrl+P]</source>
-        <translation type="unfinished"></translation>
+        <source>Print currently browsed table data</source>
+        <translation type="obsolete">Tisk právě prohlížených dat tabulky</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="200"/>
@@ -3390,11 +3409,6 @@ You can drag SQL statements from an object row and drop them into other applicat
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="493"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_case_sensitive_like&quot;&gt;Case Sensitive Like&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="506"/>
         <source>Warning: this pragma is not readable and this value has been inferred. Writing the pragma might overwrite a redefined LIKE provided by an SQLite extension.</source>
         <translation type="unfinished"></translation>
@@ -3402,7 +3416,7 @@ You can drag SQL statements from an object row and drop them into other applicat
     <message>
         <location filename="../MainWindow.ui" line="1054"/>
         <source>&amp;Tools</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nástroje</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1106"/>
@@ -3440,7 +3454,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1279"/>
         <source>&amp;Remote</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vzdálené</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1288"/>
@@ -3451,7 +3465,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1307"/>
         <source>Extra DB toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Extra DB toolbar</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1310"/>
@@ -3463,27 +3477,27 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1408"/>
         <source>&amp;Revert Changes</source>
-        <translation type="unfinished">&amp;Vrátit Změny</translation>
+        <translation type="unfinished">Vrátit Změny</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1432"/>
         <source>&amp;Write Changes</source>
-        <translation type="unfinished">&amp;Zapsat Změny</translation>
+        <translation type="unfinished">Zapsat Změny</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1483"/>
         <source>&amp;Database from SQL file...</source>
-        <translation type="unfinished">&amp;Databáze z SQL souboru...</translation>
+        <translation type="unfinished">Databáze z SQL souboru...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1497"/>
         <source>&amp;Table from CSV file...</source>
-        <translation type="unfinished">&amp;Tabulka ze souboru CSV...</translation>
+        <translation type="unfinished">Tabulka ze souboru CSV...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1511"/>
         <source>&amp;Database to SQL file...</source>
-        <translation type="unfinished">&amp;Databáze do souboru SQL...</translation>
+        <translation type="unfinished">Databáze do souboru SQL...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1525"/>
@@ -3493,22 +3507,22 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1546"/>
         <source>&amp;Create Table...</source>
-        <translation type="unfinished">&amp;Vytvořit Tabulku...</translation>
+        <translation type="unfinished">Vytvořit Tabulku...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1564"/>
         <source>&amp;Delete Table...</source>
-        <translation type="unfinished">&amp;Smazat Tabulku...</translation>
+        <translation type="unfinished">Smazat Tabulku...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1585"/>
         <source>&amp;Modify Table...</source>
-        <translation type="unfinished">&amp;Upravit Tabulku...</translation>
+        <translation type="unfinished">Upravit Tabulku...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1603"/>
         <source>Create &amp;Index...</source>
-        <translation type="unfinished">Vytvořit &amp;Index...</translation>
+        <translation type="unfinished">Vytvořit Index...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1657"/>
@@ -3518,7 +3532,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1668"/>
         <source>&amp;About</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">O</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1688"/>
@@ -3531,9 +3545,8 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation>&amp;Provést příkaz SQL</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1703"/>
-        <source>Execute all/selected SQL [F5, Ctrl+Return, Ctrl+R]</source>
-        <translation type="unfinished"></translation>
+        <source>Execute all/selected SQL</source>
+        <translation type="obsolete">Provést všechny/vybrané SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1706"/>
@@ -3560,12 +3573,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1739"/>
         <source>&amp;Load Extension...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainWindow.ui" line="1751"/>
-        <source>Execute current line</source>
-        <translation>Vykonat aktuální řádek</translation>
+        <translation type="unfinished">Načíst rozšíření...</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="290"/>
@@ -3608,7 +3616,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1861"/>
         <source>Open &amp;Project...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Otevřít projekt...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1864"/>
@@ -3618,7 +3626,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <source>&amp;Attach Database</source>
-        <translation type="vanished">&amp;Přiložit Databázi</translation>
+        <translation type="vanished">&amp;Přiložit databázi</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1918"/>
@@ -3657,7 +3665,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation>Ctrl+L</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2361"/>
+        <location filename="../MainWindow.ui" line="2358"/>
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
@@ -3861,12 +3869,12 @@ If you answer no we will attempt to import the data in the SQL file to the curre
     <message>
         <location filename="../MainWindow.cpp" line="1780"/>
         <source>Modify Index</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Změnit Index</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1783"/>
         <source>Modify Table</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Změnit tabulku</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1838"/>
@@ -3881,7 +3889,7 @@ If you answer no we will attempt to import the data in the SQL file to the curre
     <message>
         <location filename="../MainWindow.cpp" line="2521"/>
         <source>Choose a project file to open</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vybrat soubor projektu k otevření</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2630"/>
@@ -3901,7 +3909,7 @@ If you answer no we will attempt to import the data in the SQL file to the curre
     <message>
         <location filename="../MainWindow.cpp" line="3095"/>
         <source>Ctrl+&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3265"/>
@@ -4042,7 +4050,7 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="1554"/>
         <source>Choose text files</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vybrat textové soubory</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1707"/>
@@ -4242,12 +4250,12 @@ Pro použití kódování databáze ponechte pole prázdné.</translation>
     <message>
         <location filename="../AddRecordDialog.cpp" line="39"/>
         <source>Set to NULL</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nastavit na NULL</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="43"/>
         <source>Alt+Del</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Alt+Del</translation>
     </message>
 </context>
 <context>
@@ -4438,17 +4446,17 @@ Select the axes or axes labels to drag and zoom only in that orientation.</sourc
     <message>
         <location filename="../PlotDock.cpp" line="54"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kopírovat</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="61"/>
         <source>Print...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tisk...</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="68"/>
         <source>Show legend</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zobrazit legendu</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="74"/>
@@ -4458,17 +4466,17 @@ Select the axes or axes labels to drag and zoom only in that orientation.</sourc
     <message>
         <location filename="../PlotDock.cpp" line="153"/>
         <source>Date/Time</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Datum/čas</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="156"/>
         <source>Date</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Datum</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="159"/>
         <source>Time</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Čas</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="162"/>
@@ -4479,7 +4487,7 @@ Select the axes or axes labels to drag and zoom only in that orientation.</sourc
     <message>
         <location filename="../PlotDock.cpp" line="165"/>
         <source>Label</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Štítek</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="169"/>
@@ -4495,7 +4503,7 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     <message>
         <location filename="../PlotDock.cpp" line="578"/>
         <source>Choose an axis color</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vyberte barvu osy</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="610"/>
@@ -4615,7 +4623,7 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     <message>
         <location filename="../PreferencesDialog.ui" line="403"/>
         <source>Data &amp;Browser</source>
-        <translation>Prohlížeč &amp;Dat</translation>
+        <translation>Prohlížeč Dat</translation>
     </message>
     <message>
         <source>NULL fields</source>
@@ -4623,7 +4631,7 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     </message>
     <message>
         <source>&amp;Text</source>
-        <translation type="vanished">&amp;Text</translation>
+        <translation type="vanished">Text</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="296"/>
@@ -4882,7 +4890,7 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     <message>
         <location filename="../PreferencesDialog.ui" line="430"/>
         <source>Font si&amp;ze</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Velikost písma</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="484"/>
@@ -4909,12 +4917,12 @@ Can be set to 0 for disabling completion.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="580"/>
         <source>Text color</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Barva textu</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="606"/>
         <source>Background color</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Barva pozadí</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="709"/>
@@ -4924,7 +4932,7 @@ Can be set to 0 for disabling completion.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="962"/>
         <source>Foreground</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Popředí</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1009"/>
@@ -4939,7 +4947,7 @@ Can be set to 0 for disabling completion.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="1060"/>
         <source>Never</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nikdy</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1065"/>
@@ -5206,7 +5214,7 @@ All your preferences will be lost and default values will be used.</source>
     <message>
         <location filename="../FileDialog.cpp" line="76"/>
         <source>All files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Všechny soubory (*)</translation>
     </message>
     <message>
         <location filename="../Settings.cpp" line="157"/>
@@ -5226,7 +5234,8 @@ All your preferences will be lost and default values will be used.</source>
         <location filename="../RemoteDatabase.cpp" line="107"/>
         <source>Error when connecting to %1.
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Chyba při připojování k %1.
+%2</translation>
     </message>
     <message>
         <location filename="../RemoteDatabase.cpp" line="268"/>
@@ -5352,17 +5361,17 @@ All your preferences will be lost and default values will be used.</source>
     <message>
         <location filename="../RemoteModel.cpp" line="100"/>
         <source>Last modified</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Poslední změněné</translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="100"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Velikost</translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="240"/>
         <source>bytes</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">bytů</translation>
     </message>
 </context>
 <context>
@@ -5399,12 +5408,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../RemotePushDialog.ui" line="83"/>
         <source>Public</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Veřejný</translation>
     </message>
     <message>
         <location filename="../RemotePushDialog.ui" line="96"/>
         <source>Branch</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Větev</translation>
     </message>
     <message>
         <location filename="../RemotePushDialog.ui" line="116"/>
@@ -5429,7 +5438,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../RemotePushDialog.cpp" line="111"/>
         <source>Unspecified</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nespecifikovaný</translation>
     </message>
 </context>
 <context>
@@ -5462,7 +5471,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="93"/>
         <source>Whole Words</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Celá slova</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="103"/>
@@ -5472,7 +5481,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="106"/>
         <source>Find in editor</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Najít v editoru</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="116"/>
@@ -5512,13 +5521,13 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="149"/>
         <source>Regular Expression</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Regulární výraz</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="169"/>
         <location filename="../SqlExecutionArea.ui" line="172"/>
         <source>Close Find Bar</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zavřít lištu pro hledání</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="217"/>
@@ -5533,11 +5542,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Export to &amp;CSV</source>
-        <translation type="vanished">Export do &amp;CSV</translation>
+        <translation type="vanished">Export do CSV</translation>
     </message>
     <message>
         <source>Save as &amp;view</source>
-        <translation type="vanished">Uložit jako &amp;pohled</translation>
+        <translation type="vanished">Uložit jako pohled</translation>
     </message>
     <message>
         <source>Save as view</source>
@@ -5885,12 +5894,12 @@ Use of this function must be authorized from Preferences.</source>
     <message>
         <location filename="../sqlitetablemodel.cpp" line="27"/>
         <source>reading rows</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">čtení sloupců</translation>
     </message>
     <message>
         <location filename="../sqlitetablemodel.cpp" line="265"/>
         <source>loading...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">načítání...</translation>
     </message>
     <message>
         <location filename="../sqlitetablemodel.cpp" line="307"/>
@@ -5913,7 +5922,7 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../sqlitetablemodel.cpp" line="959"/>
         <source>Fetching data...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Načítám data...</translation>
     </message>
     <message>
         <location filename="../sqlitetablemodel.cpp" line="960"/>
@@ -5926,17 +5935,17 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../VacuumDialog.ui" line="14"/>
         <source>Compact Database</source>
-        <translation></translation>
+        <translation>Compact Database</translation>
     </message>
     <message>
         <location filename="../VacuumDialog.ui" line="26"/>
         <source>Warning: Compacting the database will commit all of your changes.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Varování: Procesem &apos;compact the database&apos; budou aplikovány všechny vaše provedené změny.</translation>
     </message>
     <message>
         <location filename="../VacuumDialog.ui" line="39"/>
         <source>Please select the databases to co&amp;mpact:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prosím vyberte databázi pro proces &apos;compact&apos;:</translation>
     </message>
 </context>
 </TS>
