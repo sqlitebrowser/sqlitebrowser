@@ -228,7 +228,7 @@ p, li { white-space: pre-wrap; }
   </connection>
   <connection>
    <sender>editName</sender>
-   <signal>editingFinished()</signal>
+   <signal>textChanged(QString)</signal>
    <receiver>RemotePushDialog</receiver>
    <slot>reloadBranchList()</slot>
    <hints>
