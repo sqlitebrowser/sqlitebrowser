@@ -1470,10 +1470,16 @@ void MainWindow::executeQuery()
         sqlWidget->finishExecution(log_message, ok);
     };
 
+    // Get the statement(s) to execute. When in selection mode crop the query string at exactly the end of the selection to make sure SQLite has
+    // no chance to execute any further.
+    QString sql = sqlWidget->getSql();
+    if(mode == Selection)
+        sql = sql.left(execute_to_position);
+
     // Prepare the SQL worker to run the query. We set the context of each signal-slot connection to the current SQL execution area.
     // This means that if the tab is closed all these signals are automatically disconnected so the lambdas won't be called for a not
     // existing execution area.
-    execute_sql_worker.reset(new RunSql(db, sqlWidget->getSql(), execute_from_position, execute_to_position, true));
+    execute_sql_worker.reset(new RunSql(db, sql, execute_from_position, execute_to_position, true));
 
     connect(execute_sql_worker.get(), &RunSql::statementErrored, sqlWidget, [query_logger, this, sqlWidget](const QString& status_message, int from_position, int to_position) {
         sqlWidget->getModel()->reset();
