@@ -1250,6 +1250,8 @@ void MainWindow::executeQuery()
             editor->getSelection(&execute_from_line, &execute_from_index, &execute_to_line, &execute_to_index);
             execute_from_position = editor->positionFromLineIndex(execute_from_line, execute_from_index);
             execute_to_position = editor->positionFromLineIndex(execute_to_line, execute_to_index);
+
+            query = query.left(execute_to_position);
             db.logSQL(tr("-- EXECUTING SELECTION IN '%1'\n--").arg(tabName), kLogMsg_User);
         } break;
     case Line:
