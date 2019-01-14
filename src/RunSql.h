@@ -16,6 +16,14 @@ class RunSql : public QThread
     void run() override;
 
 public:
+    /**
+     * @param db Reference to the database connection to execute the statements with
+     * @param query The query to execute
+     * @param execute_from_position The index of the first character to execute in the query parameter
+     * @param execute_to_position The index of the last character to execute in the query parameter (see exact_execute_to_position)
+     * @param interrupt_after_statements Set to true to stop execution after each statement until startNextStatement() is called. Set to false to execute all statements
+     *        in one go.
+     */
     RunSql(DBBrowserDB& db, QString query, int execute_from_position, int execute_to_position, bool interrupt_after_statements = false);
     ~RunSql() override = default;
 
