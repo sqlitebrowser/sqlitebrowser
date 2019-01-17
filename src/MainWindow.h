@@ -188,6 +188,8 @@ private:
     void restoreOpenTabs(QString tabs);
     QString saveOpenTabs();
     QString saveProject(const QString& currentFilename);
+    bool closeFiles();
+    bool askSaveSqlTab(int index, bool& ignoreUnattachedBuffers);
 
 protected:
     void closeEvent(QCloseEvent *) override;
