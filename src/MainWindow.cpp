@@ -2156,10 +2156,6 @@ bool MainWindow::askSaveSqlTab(int index, bool& ignoreUnattachedBuffers)
                 break;
             }
         } else if(!sqlExecArea->fileName().isEmpty()) {
-            // Set the tab as current. This is both for user feedback as well as for saveSqlFile(),
-            // which requires the file to be saved to be in the current tab.
-            ui->tabSqlAreas->setCurrentIndex(index);
-
             QMessageBox::StandardButton reply =
                 QMessageBox::question(nullptr,
                                       QApplication::applicationName(),
@@ -2168,7 +2164,7 @@ bool MainWindow::askSaveSqlTab(int index, bool& ignoreUnattachedBuffers)
                                       QMessageBox::Save | QMessageBox::No | QMessageBox::Cancel);
             switch(reply) {
             case QMessageBox::Save:
-                saveSqlFile();
+                saveSqlFile(index);
                 break;
             case QMessageBox::Cancel:
                 return false;
@@ -2285,9 +2281,9 @@ void MainWindow::openSqlFile()
     }
 }
 
-void MainWindow::saveSqlFile()
+void MainWindow::saveSqlFile(int tabIndex)
 {
-    SqlExecutionArea* sqlarea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
+    SqlExecutionArea* sqlarea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(tabIndex));
     if(!sqlarea)
         return;
 
@@ -2308,6 +2304,11 @@ void MainWindow::saveSqlFile()
             QMessageBox::warning(this, qApp->applicationName(), tr("Couldn't save file: %1.").arg(f.errorString()));
         }
     }
+}
+
+void MainWindow::saveSqlFile()
+{
+    saveSqlFile(ui->tabSqlAreas->currentIndex());
 }
 
 void MainWindow::saveSqlFileAs()
@@ -3900,4 +3901,17 @@ QString MainWindow::saveOpenTabs()
 void MainWindow::showStatusMessage5s(QString message)
 {
     ui->statusbar->showMessage(message, 5000);
+}
+
+void MainWindow::saveAll()
+{
+    for(int i=0; i<ui->tabSqlAreas->count(); i++) {
+        SqlExecutionArea* sqlExecArea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i));
+        if(sqlExecArea->getEditor()->isModified() && !sqlExecArea->fileName().isEmpty())
+            saveSqlFile(i);
+    }
+    if(!currentProjectFilename.isEmpty())
+        saveProject();
+    fileSave();
+
 }

@@ -74,5 +74,6 @@
         <file alias="tab">tab.png</file>
         <file alias="project_save_as">package_rename.png</file>
         <file alias="field_fk">page_foreign_key.png</file>
+        <file alias="save_all">save_all.png</file>
     </qresource>
 </RCC>

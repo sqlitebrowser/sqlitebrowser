@@ -303,6 +303,8 @@ private slots:
     void openPreferences();
     void closeTab(int index);
     void showStatusMessage5s(QString message);
+    void saveSqlFile(int tabIndex);
+    void saveAll();
 };
 
 #endif

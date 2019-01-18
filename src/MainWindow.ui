@@ -1054,6 +1054,8 @@ You can drag SQL statements from an object row and drop them into other applicat
     <addaction name="actionSaveProject"/>
     <addaction name="actionSaveProjectAs"/>
     <addaction name="separator"/>
+    <addaction name="actionSaveAll"/>
+    <addaction name="separator"/>
     <addaction name="fileExitAction"/>
    </widget>
    <widget class="QMenu" name="editMenu">
@@ -2454,6 +2456,33 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    </property>
    <property name="toolTip">
     <string>Save the project in a file selected in a dialog</string>
+   </property>
+   <property name="statusTip">
+    <string>Save the project in a file selected in a dialog</string>
+   </property>
+   <property name="whatsThis">
+    <string>Save the project in a file selected in a dialog</string>
+   </property>
+  </action>
+  <action name="actionSaveAll">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/save_all</normaloff>:/icons/save_all</iconset>
+   </property>
+   <property name="text">
+    <string>Save A&amp;ll</string>
+   </property>
+   <property name="toolTip">
+    <string>Save DB file, project file and opened SQL files</string>
+   </property>
+   <property name="statusTip">
+    <string>Save DB file, project file and opened SQL files</string>
+   </property>
+   <property name="whatsThis">
+    <string>Save DB file, project file and opened SQL files</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
    </property>
   </action>
  </widget>
@@ -4194,6 +4223,22 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>saveProjectAs()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSaveAll</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>saveAll()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
