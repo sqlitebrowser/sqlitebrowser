@@ -590,6 +590,7 @@ bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles, bo
                 statusEncryptionLabel->setVisible(db.encrypted());
                 statusReadOnlyLabel->setVisible(db.readOnly());
                 setCurrentFile(wFile);
+                currentProjectFilename.clear();
                 if(!dontAddToRecentFiles)
                     addToRecentFilesMenu(wFile);
                 openSqlTab(true);
@@ -943,7 +944,7 @@ bool MainWindow::fileClose()
 
 void MainWindow::closeEvent( QCloseEvent* event )
 {
-    if(db.close())
+    if(closeFiles())
     {
         Settings::setValue("MainWindow", "geometry", saveGeometry());
         Settings::setValue("MainWindow", "windowState", saveState());
@@ -957,6 +958,17 @@ void MainWindow::closeEvent( QCloseEvent* event )
     } else {
         event->ignore();
     }
+}
+
+bool MainWindow::closeFiles()
+{
+    bool ignoreUnattachedBuffers = false;
+    // Ask for saving all modified open SQL files in their files and all the unattached tabs in a project file.
+    for(int i=0; i<ui->tabSqlAreas->count(); i++)
+        // Ask for saving and comply with cancel answer.
+        if(!askSaveSqlTab(i, ignoreUnattachedBuffers))
+            return false;
+    return db.close();
 }
 
 void MainWindow::addRecord()
@@ -1469,10 +1481,16 @@ void MainWindow::executeQuery()
         sqlWidget->finishExecution(log_message, ok);
     };
 
+    // Get the statement(s) to execute. When in selection mode crop the query string at exactly the end of the selection to make sure SQLite has
+    // no chance to execute any further.
+    QString sql = sqlWidget->getSql();
+    if(mode == Selection)
+        sql = sql.left(execute_to_position);
+
     // Prepare the SQL worker to run the query. We set the context of each signal-slot connection to the current SQL execution area.
     // This means that if the tab is closed all these signals are automatically disconnected so the lambdas won't be called for a not
     // existing execution area.
-    execute_sql_worker.reset(new RunSql(db, sqlWidget->getSql(), execute_from_position, execute_to_position, true));
+    execute_sql_worker.reset(new RunSql(db, sql, execute_from_position, execute_to_position, true));
 
     connect(execute_sql_worker.get(), &RunSql::statementErrored, sqlWidget, [query_logger, this, sqlWidget](const QString& status_message, int from_position, int to_position) {
         sqlWidget->getModel()->reset();
@@ -1961,6 +1979,7 @@ void MainWindow::activateFields(bool enable)
     ui->actionLoadExtension->setEnabled(enable);
     ui->actionSqlExecuteLine->setEnabled(enable);
     ui->actionSaveProject->setEnabled(enable && !tempDb);
+    ui->actionSaveProjectAs->setEnabled(enable && !tempDb);
     ui->actionEncryption->setEnabled(enable && write && !tempDb);
     ui->actionIntegrityCheck->setEnabled(enable);
     ui->actionQuickCheck->setEnabled(enable);
@@ -2108,6 +2127,59 @@ void MainWindow::logSql(const QString& sql, int msgtype)
     }
 }
 
+// Ask user to save the buffer in the specified tab index.
+// ignoreUnattachedBuffers is used to store answer about buffers not linked to files, so user is only asked once about them.
+// Return true unless user wants to cancel the invoking action.
+bool MainWindow::askSaveSqlTab(int index, bool& ignoreUnattachedBuffers)
+{
+    SqlExecutionArea* sqlExecArea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index));
+
+    if(sqlExecArea->getEditor()->isModified()) {
+        if(sqlExecArea->fileName().isEmpty() && !ignoreUnattachedBuffers) {
+            // Once the project is saved, remaining SQL tabs will not be modified, so this is only expected to be asked once.
+            QString message = currentProjectFilename.isEmpty() ?
+                tr("Do you want to save the changes made to SQL tabs in a new project file?") :
+                tr("Do you want to save the changes made to SQL tabs in the project file %1?").
+                arg(QFileInfo(currentProjectFilename).fileName());
+            QMessageBox::StandardButton reply = QMessageBox::question(nullptr,
+                                                                      QApplication::applicationName(),
+                                                                      message,
+                                                                      QMessageBox::Save | QMessageBox::No | QMessageBox::Cancel);
+            switch(reply) {
+            case QMessageBox::Save:
+                saveProject();
+                break;
+            case QMessageBox::Cancel:
+                return false;
+            default:
+                ignoreUnattachedBuffers = true;
+                break;
+            }
+        } else if(!sqlExecArea->fileName().isEmpty()) {
+            // Set the tab as current. This is both for user feedback as well as for saveSqlFile(),
+            // which requires the file to be saved to be in the current tab.
+            ui->tabSqlAreas->setCurrentIndex(index);
+
+            QMessageBox::StandardButton reply =
+                QMessageBox::question(nullptr,
+                                      QApplication::applicationName(),
+                                      tr("Do you want to save the changes made to the SQL file %1?").
+                                      arg(QFileInfo(sqlExecArea->fileName()).fileName()),
+                                      QMessageBox::Save | QMessageBox::No | QMessageBox::Cancel);
+            switch(reply) {
+            case QMessageBox::Save:
+                saveSqlFile();
+                break;
+            case QMessageBox::Cancel:
+                return false;
+            default:
+                break;
+            }
+        }
+    }
+    return true;
+}
+
 void MainWindow::closeSqlTab(int index, bool force)
 {
     // Don't close last tab
@@ -2127,7 +2199,10 @@ void MainWindow::closeSqlTab(int index, bool force)
         execute_sql_worker->stop();
         execute_sql_worker->wait();
     }
-
+    // Ask for saving and comply with cancel answer.
+    bool ignoreUnattachedBuffers = false;
+    if (!askSaveSqlTab(index, ignoreUnattachedBuffers))
+        return;
     // Remove the tab and delete the widget
     QWidget* w = ui->tabSqlAreas->widget(index);
     ui->tabSqlAreas->removeTab(index);
@@ -2203,6 +2278,7 @@ void MainWindow::openSqlFile()
 
         SqlExecutionArea* sqlarea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index));
         sqlarea->getEditor()->setText(f.readAll());
+        sqlarea->getEditor()->setModified(false);
         sqlarea->setFileName(file);
         QFileInfo fileinfo(file);
         ui->tabSqlAreas->setTabText(index, fileinfo.fileName());
@@ -2226,6 +2302,8 @@ void MainWindow::saveSqlFile()
         {
             QFileInfo fileinfo(sqlarea->fileName());
             ui->tabSqlAreas->setTabText(ui->tabSqlAreas->currentIndex(), fileinfo.fileName());
+            // Set modified to false so we can get control of unsaved changes when closing.
+            sqlarea->getEditor()->setModified(false);
         } else {
             QMessageBox::warning(this, qApp->applicationName(), tr("Couldn't save file: %1.").arg(f.errorString()));
         }
@@ -2757,7 +2835,9 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                             // SQL editor tab
                             unsigned int index = openSqlTab();
                             ui->tabSqlAreas->setTabText(index, xml.attributes().value("name").toString());
-                            qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index))->getEditor()->setText(xml.readElementText());
+                            SqlTextEdit* sqlEditor = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index))->getEditor();
+                            sqlEditor->setText(xml.readElementText());
+                            sqlEditor->setModified(false);
                         } else if(xml.name() == "current_tab") {
                             // Currently selected tab
                             ui->tabSqlAreas->setCurrentIndex(xml.attributes().value("id").toString().toInt());
@@ -2769,6 +2849,8 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
         }
 
         file.close();
+        currentProjectFilename = filename;
+
         return !xml.hasError();
     } else {
         // No project was opened
@@ -2868,14 +2950,22 @@ static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, Q
     xml.writeEndElement();
 }
 
-void MainWindow::saveProject()
+QString MainWindow::saveProject(const QString& currentFilename)
 {
-    QString filename = FileDialog::getSaveFileName(
+    QString filename;
+    if(currentFilename.isEmpty()) {
+        QString basePathName = db.currentFile();
+        // Remove database suffix
+        basePathName.chop(QFileInfo(basePathName).suffix().size()+1);
+        filename = FileDialog::getSaveFileName(
                            CreateProjectFile,
                            this,
                            tr("Choose a filename to save under"),
                            tr("DB Browser for SQLite project file (*.sqbpro)"),
-                           db.currentFile());
+                           basePathName);
+    } else
+        filename = currentFilename;
+
     if(!filename.isEmpty())
     {
         // Make sure the file has got a .sqbpro ending
@@ -2883,7 +2973,14 @@ void MainWindow::saveProject()
             filename.append(".sqbpro");
 
         QFile file(filename);
-        file.open(QFile::WriteOnly | QFile::Text);
+        bool opened = file.open(QFile::WriteOnly | QFile::Text);
+        if(!opened) {
+            QMessageBox::warning(this, qApp->applicationName(),
+                               tr("Could not open project file for writing.\nReason: %1").arg(file.errorString()));
+            return QString();
+        }
+        QApplication::setOverrideCursor(Qt::WaitCursor);
+
         QXmlStreamWriter xml(&file);
         xml.writeStartDocument();
         xml.writeStartElement("sqlb_project");
@@ -2969,9 +3066,11 @@ void MainWindow::saveProject()
         xml.writeStartElement("tab_sql");
         for(int i=0;i<ui->tabSqlAreas->count();i++)                                     // All SQL tabs content
         {
+            SqlExecutionArea* sqlArea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i));
             xml.writeStartElement("sql");
             xml.writeAttribute("name", ui->tabSqlAreas->tabText(i));
-            xml.writeCharacters(qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i))->getSql());
+            xml.writeCharacters(sqlArea->getSql());
+            sqlArea->getEditor()->setModified(false);
             xml.writeEndElement();
         }
         xml.writeStartElement("current_tab");                                           // Currently selected tab
@@ -2982,8 +3081,21 @@ void MainWindow::saveProject()
         xml.writeEndElement();
         xml.writeEndDocument();
         file.close();
+
         addToRecentFilesMenu(filename);
+        QApplication::restoreOverrideCursor();
     }
+    return filename;
+}
+
+void MainWindow::saveProject()
+{
+    currentProjectFilename = saveProject(currentProjectFilename);
+}
+
+void MainWindow::saveProjectAs()
+{
+    currentProjectFilename = saveProject(QString());
 }
 
 void MainWindow::fileAttach()

@@ -4,6 +4,10 @@
 
 #include "Qsci/qscilexer.h"
 #include "Qsci/qsciprinter.h"
+#ifdef Q_OS_MACX
+#include <Qsci/qscicommandset.h>
+#include <Qsci/qscicommand.h>
+#endif
 
 #include <QFile>
 #include <QDropEvent>
@@ -15,7 +19,6 @@
 #include <QPalette>
 #include <QPrintPreviewDialog>
 #include <cmath>
-
 
 ExtendedScintilla::ExtendedScintilla(QWidget* parent) :
     QsciScintilla(parent),
@@ -57,6 +60,16 @@ ExtendedScintilla::ExtendedScintilla(QWidget* parent) :
     // The shortcuts are constrained to the Widget context so they do not conflict with other SqlTextEdit widgets in the Main Window.
     QShortcut* shortcutFindReplace = new QShortcut(QKeySequence(tr("Ctrl+H")), this, nullptr, nullptr, Qt::WidgetShortcut);
     connect(shortcutFindReplace, SIGNAL(activated()), this, SLOT(openFindReplaceDialog()));
+
+#ifdef Q_OS_MACX
+    // Alt+Backspace on Mac is expected to delete one word to the left,
+    // instead of undoing (default Scintilla binding).
+    QsciCommand * command = standardCommands()->find(QsciCommand::DeleteWordLeft);
+    command->setKey(Qt::AltModifier+Qt::Key_Backspace);
+    // And Cmd+Backspace should delete from cursor to the beginning of line
+    command = standardCommands()->find(QsciCommand::DeleteLineLeft);
+    command->setKey(Qt::ControlModifier+Qt::Key_Backspace);
+#endif
 
     QShortcut* shortcutPrint = new QShortcut(QKeySequence(tr("Ctrl+P")), this, nullptr, nullptr, Qt::WidgetShortcut);
     connect(shortcutPrint, &QShortcut::activated, this, &ExtendedScintilla::openPrintDialog);

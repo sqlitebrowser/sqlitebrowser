@@ -166,6 +166,8 @@ private:
     QString defaultOpenTabs;
     QByteArray defaultWindowState;
 
+    QString currentProjectFilename;
+
     void init();
     void clearCompleterModelsFields();
 
@@ -185,6 +187,9 @@ private:
     void toggleTabVisible(QWidget* tabWidget, bool show);
     void restoreOpenTabs(QString tabs);
     QString saveOpenTabs();
+    QString saveProject(const QString& currentFilename);
+    bool closeFiles();
+    bool askSaveSqlTab(int index, bool& ignoreUnattachedBuffers);
 
 protected:
     void closeEvent(QCloseEvent *) override;
@@ -265,6 +270,7 @@ private slots:
     void updateBrowseDataColumnWidth(int section, int /*old_size*/, int new_size);
     bool loadProject(QString filename = QString(), bool readOnly = false);
     void saveProject();
+    void saveProjectAs();
     void fileAttach();
     void updateFilter(int column, const QString& value);
     void addCondFormat(int column, const QString& value);

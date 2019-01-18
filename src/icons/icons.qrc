@@ -76,5 +76,7 @@
         <file alias="set_to_null">textfield_delete.png</file>
         <file alias="filter">filter.png</file>
         <file alias="tab">tab.png</file>
+        <file alias="project_save_as">package_rename.png</file>
+        <file alias="field_fk">page_foreign_key.png</file>
     </qresource>
 </RCC>

@@ -942,6 +942,7 @@ You can drag SQL statements from an object row and drop them into other applicat
     <addaction name="separator"/>
     <addaction name="actionOpenProject"/>
     <addaction name="actionSaveProject"/>
+    <addaction name="actionSaveProjectAs"/>
     <addaction name="separator"/>
     <addaction name="fileExitAction"/>
    </widget>
@@ -1773,7 +1774,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
      <normaloff>:/icons/project_save</normaloff>:/icons/project_save</iconset>
    </property>
    <property name="text">
-    <string>Sa&amp;ve Project...</string>
+    <string>Sa&amp;ve Project</string>
    </property>
    <property name="toolTip">
     <string>Save the current session to a file</string>
@@ -2459,6 +2460,18 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    </property>
    <property name="whatsThis">
     <string>This button deletes the record or records currently selected in the table</string>
+   </property>
+  </action>
+  <action name="actionSaveProjectAs">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/project_save_as</normaloff>:/icons/project_save_as</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Save Project As...</string>
+   </property>
+   <property name="toolTip">
+    <string>Save the project in a file selected in a dialog</string>
    </property>
   </action>
  </widget>
@@ -4143,6 +4156,22 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <hint type="sourcelabel">
      <x>99</x>
      <y>345</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSaveProjectAs</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>saveProjectAs()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
     </hint>
     <hint type="destinationlabel">
      <x>518</x>
