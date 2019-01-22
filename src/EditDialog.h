@@ -74,7 +74,8 @@ private:
         Null,
         Text,
         JSON,
-        SVG
+        SVG,
+        Plist
     };
 
     // Edit modes and editor stack (this must be aligned with the UI)
@@ -84,7 +85,8 @@ private:
         HexEditor = 1,
         ImageViewer = 2,
         JsonEditor, SciEditor = 3,
-        XmlEditor = 4
+        XmlEditor = 4,
+        Base64Editor = 5
     };
 
     int checkDataType(const QByteArray& data);
