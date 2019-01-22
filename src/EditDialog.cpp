@@ -258,7 +258,7 @@ int readDictionary(CONFIG *cfg, unsigned char *ptr, int type, int length, OBJECT
   return ERROR_NONE;
 }
 
-int readObject(CONFIG *cfg, size_t offset, OBJECT **ptr2)
+int readObject(CONFIG *cfg, long offset, OBJECT **ptr2)
 {
   int i;
   int length;
@@ -268,7 +268,7 @@ int readObject(CONFIG *cfg, size_t offset, OBJECT **ptr2)
   unsigned char *ptr;
 
   *ptr2 = NULL;
-  if (offset >= cfg->bufferLength)
+  if ((size_t)offset >= cfg->bufferLength)
     return ERROR_INVALID_OFFSET;
   ptr = cfg->buffer + offset;
   type = *(ptr++);
