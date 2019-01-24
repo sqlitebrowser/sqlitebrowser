@@ -389,13 +389,13 @@ endif()
 set(QT_LIBS Qt5::Gui Qt5::Test Qt5::PrintSupport Qt5::Widgets Qt5::Network Qt5::Concurrent Qt5::Xml)
 
 target_link_libraries(${PROJECT_NAME}
-		qhexedit
-		qcustomplot
+    qhexedit
+    qcustomplot
     ${LPTHREAD}
     ${QT_LIBS}
-		${WIN32_STATIC_LINK}
-		${LIBSQLITE}
-		${ADDITIONAL_LIBS})
+    ${WIN32_STATIC_LINK}
+    ${LIBSQLITE}
+    ${ADDITIONAL_LIBS})
 if(ANTLR2_FOUND)
     target_link_libraries(${PROJECT_NAME} ${ANTLR2_LIBRARIES})
 else()
