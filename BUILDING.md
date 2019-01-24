@@ -166,21 +166,15 @@ Install Qt and SQLite as instructed in the previous section and clone the repo t
 
 Install CMake:
 
-```
-brew install cmake
-```
+    $ brew install cmake
 
-And building with these commands:
+And build with these commands:
 
-```bash
-cd sqlitebrowser
-mkdir build       # You can easily make a fresh build again by removing this directory
-cd build
-cmake -DCMAKE_PREFIX_PATH=/usr/local/opt/qt ..
-cmake --build .
-```
-
-The `-DCMAKE_PREFIX_PATH=/usr/local/opt/qt` argument tells CMake where to find Qt libraries. Run `brew info qt` to know where Qt is installed.
+    $ cd sqlitebrowser
+    $ mkdir build       # You can easily make a fresh build again by removing this directory
+    $ cd build
+    $ cmake -DCMAKE_PREFIX_PATH=/usr/local/opt/qt ..
+    $ cmake --build .
 
 ### Compiling on Windows with MSVC
 
