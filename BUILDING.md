@@ -104,7 +104,7 @@ $ sudo make install
 ```
 
 
-### MacOS X
+### macOS
 
 The application can be compiled to a single executable binary file, similar to
 other command line utilities.  Or it can be compiled to a .app bundle, suitable
@@ -159,6 +159,22 @@ or:
     $ qmake -spec macx-llvm
 
 (before the 'make' step)
+
+### Building with CMake
+
+Install Qt and SQLite as instructed in the previous section and clone the repo to a directory (it's `sqlitebrowser` as usual).
+
+Install CMake:
+
+    $ brew install cmake
+
+And build with these commands:
+
+    $ cd sqlitebrowser
+    $ mkdir build       # You can easily make a fresh build again by removing this directory
+    $ cd build
+    $ cmake -DCMAKE_PREFIX_PATH=/usr/local/opt/qt ..
+    $ cmake --build .
 
 ### Compiling on Windows with MSVC
 
