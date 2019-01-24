@@ -16,15 +16,15 @@
 #=============================================================================
 # Copyright 2010-2013, Julien Schueller
 # All rights reserved.
-# 
+#
 # Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions are met: 
-# 
+# modification, are permitted provided that the following conditions are met:
+#
 # 1. Redistributions of source code must retain the above copyright notice, this
-#    list of conditions and the following disclaimer. 
+#    list of conditions and the following disclaimer.
 # 2. Redistributions in binary form must reproduce the above copyright notice,
 #    this list of conditions and the following disclaimer in the documentation
-#    and/or other materials provided with the distribution. 
+#    and/or other materials provided with the distribution.
 #
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 # ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -38,21 +38,20 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 # The views and conclusions contained in the software and documentation are those
-# of the authors and should not be interpreted as representing official policies, 
+# of the authors and should not be interpreted as representing official policies,
 # either expressed or implied, of the FreeBSD Project.
 #=============================================================================
 
 
-find_path ( QSCINTILLA_INCLUDE_DIR
-  NAMES qsciscintilla.h
-  HINTS ${QT_INCLUDE_DIR}
-  PATH_SUFFIXES Qsci
+find_path ( QSCINTILLA_INCLUDE_DIR qsciscintilla.h
+  HINTS /usr/local/include/Qsci /usr/local/opt/qscintilla2/include/Qsci
 )
 
 set ( QSCINTILLA_INCLUDE_DIRS ${QSCINTILLA_INCLUDE_DIR} )
 
 # version
-set ( _VERSION_FILE ${QSCINTILLA_INCLUDE_DIR}/Qsci/qsciglobal.h )
+set ( _VERSION_FILE ${QSCINTILLA_INCLUDE_DIR}/qsciglobal.h )
+
 if ( EXISTS ${_VERSION_FILE} )
   file ( STRINGS ${_VERSION_FILE} _VERSION_LINE REGEX "define[ ]+QSCINTILLA_VERSION_STR" )
   if ( _VERSION_LINE )
@@ -63,9 +62,9 @@ if ( EXISTS ${_VERSION_FILE} )
   endif ()
 endif ()
 
-
 # check version
 set ( _QSCINTILLA_VERSION_MATCH TRUE )
+
 if ( QScintilla_FIND_VERSION AND QSCINTILLA_VERSION_STRING )
   if ( QScintilla_FIND_VERSION_EXACT )
     if ( NOT QScintilla_FIND_VERSION VERSION_EQUAL QSCINTILLA_VERSION_STRING )
@@ -78,14 +77,12 @@ if ( QScintilla_FIND_VERSION AND QSCINTILLA_VERSION_STRING )
   endif ()
 endif ()
 
-
 find_library ( QSCINTILLA_LIBRARY
-  NAMES qscintilla qscintilla2 libqscintilla2
-  HINTS ${QT_LIBRARY_DIR}
+  NAMES qscintilla2 qscintilla2_qt5
+  HINTS /usr/local/lib /usr/local/opt/qscintilla2/lib
 )
 
 set ( QSCINTILLA_LIBRARIES ${QSCINTILLA_LIBRARY} )
-
 
 # try to guess root dir from include dir
 if ( QSCINTILLA_INCLUDE_DIR )
@@ -94,7 +91,6 @@ if ( QSCINTILLA_INCLUDE_DIR )
 elseif ( QSCINTILLA_LIBRARY )
   string ( REGEX REPLACE "(.*)/lib[/|32|64].*" "\\1" QSCINTILLA_ROOT_DIR ${QSCINTILLA_LIBRARY} )
 endif ()
-
 
 # handle the QUIETLY and REQUIRED arguments
 include ( FindPackageHandleStandardArgs )
