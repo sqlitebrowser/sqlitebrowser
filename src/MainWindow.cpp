@@ -3352,7 +3352,7 @@ void MainWindow::editDataColumnDisplayFormat()
     QString current_displayformat = browseTableSettings[current_table].displayFormats[field_number];
 
     // Open the dialog
-    ColumnDisplayFormatDialog dialog(field_name, current_displayformat, this);
+    ColumnDisplayFormatDialog dialog(db, current_table, field_name, current_displayformat, this);
     if(dialog.exec())
     {
         // Set the newly selected display format
