@@ -371,7 +371,10 @@ add_executable(${PROJECT_NAME}
 # Warnings
 if (CMAKE_COMPILER_IS_GNUCC)
     target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wsign-conversion)
-    target_compile_options(${PROJECT_NAME} PRIVATE -Wnull-dereference -Wdouble-promotion -Wformat=2 -Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wuseless-cast)
+    target_compile_options(${PROJECT_NAME} PRIVATE -Wdouble-promotion -Wformat=2 -Wlogical-op -Wuseless-cast)
+    if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 7.0)
+        target_compile_options(${PROJECT_NAME} PRIVATE -Wnull-dereference -Wduplicated-cond -Wduplicated-branches)
+    endif()
 endif()
 
 add_dependencies(${PROJECT_NAME} qhexedit qcustomplot)
