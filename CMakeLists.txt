@@ -432,7 +432,7 @@ if(ENABLE_TESTING)
 	add_subdirectory(src/tests)
 endif()
 
-if(UNIX AND NOT APPLE)
+if(UNIX)
 	install(FILES src/icons/${PROJECT_NAME}.png
 		DESTINATION share/icons/hicolor/256x256/apps/)
 
@@ -441,7 +441,7 @@ if(UNIX AND NOT APPLE)
 
 	install(FILES distri/${PROJECT_NAME}.desktop.appdata.xml
 		DESTINATION share/appdata/)
-endif(UNIX AND NOT APPLE)
+endif(UNIX)
 
 if(WIN32 AND MSVC)
 	install(TARGETS ${PROJECT_NAME}
