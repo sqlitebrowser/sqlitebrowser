@@ -1,6 +1,10 @@
 /***  Extension-plist
  *
  *    This file adds Plist format support to SQLite.
+ *
+ *    Compile using:
+ *
+ *       gcc -g -fPIC -shared extension-plist.c -o extension-plist.so
  */
 
 #include <stdio.h>
@@ -531,7 +535,7 @@ int releaseObject(OBJECT *obj)
   return ERROR_NONE;
 }
 
-int parsePlist(char **result, const char *data)
+int parsePlist(char **result, const char *data, int dataLength)
 {
   CONFIG cfg;
   OBJECT *obj;
@@ -541,10 +545,9 @@ int parsePlist(char **result, const char *data)
   long length;
   char text[32];
 
-  puts(data);
   //  Determine the file size and save
   cfg.buffer = (unsigned char *)data;
-  cfg.bufferLength = strlen(data);
+  cfg.bufferLength = dataLength;
 
   //  Preset the output buffer
   cfg.outputBufferLength = 0;
@@ -617,7 +620,8 @@ static void plistFunc(sqlite3_context *context, int argc, sqlite3_value **argv){
     }
     default: {
       const char *data = sqlite3_value_text(argv[0]);
-      errno = parsePlist(&result, data);
+      const int dataLength = sqlite3_value_bytes(argv[0]);
+      errno = parsePlist(&result, data, dataLength);
       if (errno == ERROR_NONE) {
         resultLength = strlen(result);
         sqlite3_result_text(context, result, resultLength, &freeResult);

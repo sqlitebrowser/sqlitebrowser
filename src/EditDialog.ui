@@ -71,11 +71,6 @@
          <string>XML</string>
         </property>
        </item>
-       <item>
-        <property name="text">
-         <string>Base64</string>
-        </property>
-       </item>
       </widget>
      </item>
      <item>

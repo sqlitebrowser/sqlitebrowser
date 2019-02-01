@@ -111,7 +111,6 @@ void EditDialog::loadData(const QByteArray& data)
 {
     QImage img;
     QString textData;
-    QByteArray data2;
 
     // Clear previously removed BOM
     removedBom.clear();
@@ -119,7 +118,7 @@ void EditDialog::loadData(const QByteArray& data)
     // Determine the data type, saving that info in the class variable
     dataType = checkDataType(data);
 
-    // Get the current editor mode (eg text, hex, image, base64, json or xml mode)
+    // Get the current editor mode (eg text, hex, image, json or xml mode)
     int editMode = ui->comboMode->currentIndex();
 
     // Data type specific handling
@@ -296,7 +295,6 @@ void EditDialog::loadData(const QByteArray& data)
             // Clear any image from the image viewing widget
             ui->editorImage->setPixmap(QPixmap(0,0));
             break;
-
         }
     }
 }
@@ -663,7 +661,6 @@ void EditDialog::setDataInBuffer(const QByteArray& data, DataSources source)
 // Called when the user manually changes the "Mode" drop down combobox
 void EditDialog::editModeChanged(int newMode)
 {
-    QByteArray data2;
     ui->buttonIndent->setEnabled(newMode == JsonEditor || newMode == XmlEditor);
     setStackCurrentIndex(newMode);
 
