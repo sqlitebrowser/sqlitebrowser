@@ -75,10 +75,14 @@ int outputText(CONFIG *cfg, const char *text)
   size_t textLength = strlen(text);
   size_t availableSpace = cfg->outputBufferLength - cfg->outputBufferIn;
   while (textLength >= availableSpace) {
+    unsigned char *tmp = cfg->outputBuffer;
     cfg->outputBufferLength += textLength + 1024;
     cfg->outputBuffer = (unsigned char *)realloc(cfg->outputBuffer, cfg->outputBufferLength);
-    if (cfg->outputBuffer == NULL)
-      return 1;
+    if (cfg->outputBuffer == NULL) {
+      if (tmp != NULL)
+        free(tmp);
+      return ERROR_INSUFFICIENT_MEMORY;
+    }
     availableSpace = cfg->outputBufferLength - cfg->outputBufferIn;
   }
   strcpy((char *)(cfg->outputBuffer+cfg->outputBufferIn), text);
@@ -244,7 +248,7 @@ int readDictionary(CONFIG *cfg, unsigned char *ptr, int type, int length, OBJECT
   }
   if (err == ERROR_NONE)
     *dict2 = dict;
-  return ERROR_NONE;
+  return err;
 }
 
 int readObject(CONFIG *cfg, long offset, OBJECT **ptr2)
@@ -412,7 +416,7 @@ void displayHex(CONFIG *cfg, int data)
   return;
 }
 
-void displayObject(CONFIG *cfg, OBJECT *obj, int raw)
+int displayObject(CONFIG *cfg, OBJECT *obj, int raw)
 {
   char text[32];
   switch (obj->type) {
@@ -504,7 +508,7 @@ void displayObject(CONFIG *cfg, OBJECT *obj, int raw)
               outputText(cfg, text);
               break;
   }
-  return;
+  return ERROR_NONE;
 }
 
 int releaseObject(OBJECT *obj)
@@ -538,6 +542,7 @@ int releaseObject(OBJECT *obj)
 int parsePlist(char **result, const char *data, int dataLength)
 {
   CONFIG cfg;
+  char   *ptr;
   OBJECT *obj;
   int err = ERROR_NONE;
   int version;
@@ -557,7 +562,7 @@ int parsePlist(char **result, const char *data, int dataLength)
   //  Read the header
   err = readHeader(&cfg);
   if (err != ERROR_NONE)
-    return err;  //  err;
+    return err;
   version = (int)(cfg.buffer[7] - '0');
 
   //  Read the trailer
@@ -580,20 +585,21 @@ int parsePlist(char **result, const char *data, int dataLength)
 
   //  Create return data
   length = strlen((const char *)(cfg.outputBuffer));
-  *result = malloc(length + 1);
-  if (*result != NULL) {
-    char *ptr = *result;
+  ptr = malloc(length + 1);
+  *result = ptr;
+  if (ptr != NULL) {
     for (int i=0; i < length; i++)
       *(ptr++) = cfg.outputBuffer[i];
     *ptr = '\0';
   }
+  else
+    err = ERROR_INSUFFICIENT_MEMORY;
 
   //  Release assigned memory
   releaseObject(obj);
   free(cfg.offsetTable);
   free(cfg.outputBuffer);
-
-  return ERROR_NONE;
+  return err;
 }
 
 /**  Wrapper functions
@@ -614,11 +620,8 @@ static void plistFunc(sqlite3_context *context, int argc, sqlite3_value **argv){
   printf("plistFunc, argc = %d", argc);
   assert( argc==1 );
   switch( sqlite3_value_type(argv[0]) ){
-    case SQLITE_NULL: {
-      sqlite3_result_null(context);
-      break;
-    }
-    default: {
+    case SQLITE_TEXT:
+    case SQLITE_BLOB: {
       const char *data = sqlite3_value_text(argv[0]);
       const int dataLength = sqlite3_value_bytes(argv[0]);
       errno = parsePlist(&result, data, dataLength);
@@ -626,8 +629,12 @@ static void plistFunc(sqlite3_context *context, int argc, sqlite3_value **argv){
         resultLength = strlen(result);
         sqlite3_result_text(context, result, resultLength, &freeResult);
       } else {
-        sqlite3_result_error(context, strerror(errno), errno);
+        sqlite3_result_text(context, data, dataLength, NULL);
       }
+      break;
+    }
+    default: {
+      sqlite3_result_null(context);
       break;
     }
   }
