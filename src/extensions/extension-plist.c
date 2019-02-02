@@ -110,9 +110,9 @@ int printWithIndent(CONFIG *cfg, const char *text, int newline)
 
 int readHeader(CONFIG *cfg)
 {
-  if ((cfg->bufferLength > 40) &&
-     ((strncmp((const char *)(cfg->buffer), "bplist0", 7) != 0) ||
-     ((cfg->buffer[7] != '0') && (cfg->buffer[7] != '1'))))
+  if ((cfg->bufferLength < 400) ||
+      (strncmp((const char *)(cfg->buffer), "bplist0", 7) != 0) ||
+      ((cfg->buffer[7] != '0') && (cfg->buffer[7] != '1')))
     return ERROR_INVALID_HEADER;
   return ERROR_NONE;
 }
