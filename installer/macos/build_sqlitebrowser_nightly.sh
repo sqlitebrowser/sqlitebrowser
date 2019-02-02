@@ -64,7 +64,7 @@ $BREW remove `$BREW list` --force >>$LOG 2>&1
 
 # Install SQLite3 
 echo Install SQLite3 >>$LOG 2>&1
-$BREW install sqlite --with-functions --with-json1 --with-fts --with-fts5 >>$LOG 2>&1
+$BREW install sqlite >>$LOG 2>&1
 $BREW link sqlite3 --force >>$LOG 2>&1
 
 # Update the sqlitebrowser source
@@ -142,7 +142,7 @@ $BREW remove `$BREW list` --force >>$LOG 2>&1
 
 # Install SQLCipher
 echo Install SQLCipher >>$LOG 2>&1
-$BREW install sqlcipher --with-fts >>$LOG 2>&1
+$BREW install sqlcipher >>$LOG 2>&1
 
 # Clean the sqlitebrowser source
 echo Clean the sqlitebrowser source >>$LOG 2>&1
