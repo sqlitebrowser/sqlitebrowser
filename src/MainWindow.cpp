@@ -1981,6 +1981,7 @@ void MainWindow::activateFields(bool enable)
     ui->actionSqlExecuteLine->setEnabled(enable);
     ui->actionSaveProject->setEnabled(enable && !tempDb);
     ui->actionSaveProjectAs->setEnabled(enable && !tempDb);
+    ui->actionSaveAll->setEnabled(enable && !tempDb);
     ui->actionEncryption->setEnabled(enable && write && !tempDb);
     ui->actionIntegrityCheck->setEnabled(enable);
     ui->actionQuickCheck->setEnabled(enable);
