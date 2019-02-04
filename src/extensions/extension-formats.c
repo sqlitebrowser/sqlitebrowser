@@ -1,10 +1,13 @@
-/***  Extension-plist
+/***  Extension-formats
  *
- *    This file adds Plist format support to SQLite.
+ *    This file adds the following file format support to SQLite.
+ *
+ *    Plist      - An XML like encoding
+ *    Base64     - Standard binary to text conversion
  *
  *    Compile using:
  *
- *       gcc -g -fPIC -shared extension-plist.c -o extension-plist.so
+ *       gcc -g -fPIC -shared extension-formats.c -o extension-formats.so
  */
 
 #include <stdio.h>
@@ -28,6 +31,7 @@ SQLITE_EXTENSION_INIT1
 #define ERROR_INVALID_OFFSET         4
 #define ERROR_INVALID_OBJECT_LENGTH  5
 #define ERROR_INVALID_REFERENCE      6
+#define ERROR_INVALID_CHARACTER      7
 
 typedef struct KEY {
   struct OBJECT *key;
@@ -602,6 +606,151 @@ int parsePlist(char **result, const char *data, int dataLength)
   return err;
 }
 
+static char map[64] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+/**  Encode Base64
+ *
+ */
+
+int encodeBase64(char **result, unsigned char *data, int dataLength)
+{
+  unsigned char d;
+  int b;
+  int bitsLeft = 0;
+  int in = 0;
+  int out = 0;
+  int encodedLength = dataLength * 4 / 3 + 4;
+  char *encoded = malloc(encodedLength);
+  *result = encoded;
+  if (encoded == NULL)
+    return ERROR_INSUFFICIENT_MEMORY;
+ 
+  while (out < dataLength) {
+    d = data[out++];
+    if (d > 0x3F) {
+      if (d == 0x80)
+        continue;
+      free(encoded);
+      return ERROR_INVALID_CHARACTER;
+    }
+    switch (bitsLeft) {
+      case 0:
+             encoded[in++] = map[d >> 2];
+             b = d & 0x03;
+             bitsLeft = 2;
+             break;
+      case 2:
+             b = (b << 8) | d;
+             encoded[in++] = map[b >> 4];
+             b &= 0x0F;
+             bitsLeft = 4;
+             break;
+      case 4:
+             b = (b << 8) | d;
+             encoded[in++] = map[b >> 6];
+             encoded[in++] = map[b & 0x03F];
+             bitsLeft = 0;
+             break;
+    }
+  }
+  switch (bitsLeft) {
+    case 2:
+           encoded[in++] = map[b << 4];
+           break;
+    case 4:
+           encoded[in++] = map[b << 2];
+           break;
+    default:
+           break;
+  }
+  for (int i=0; i < (in & 0x03); i++)
+    encoded[in++] = '=';
+  encoded[in] == '\0';
+  return ERROR_NONE;
+}
+
+static unsigned char unmap[256] = { 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, // 00 - 07
+                                    0x81, 0x80, 0x81, 0x80, 0x80, 0x81, 0x80, 0x80, // 08 - 0F
+                                    0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, // 10 - 17
+                                    0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, // 18 - 1F
+                                    0x80, 0x81, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, // 20 - 27
+                                    0x80, 0x80, 0x80, 0x3E, 0x80, 0x80, 0x80, 0x3F, // 28 - 2F
+                                    0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x3A, 0x3B, // 30 - 37
+                                    0x3C, 0x3D, 0x80, 0x80, 0x80, 0x00, 0x80, 0x80, // 38 - 3F
+                                    0x80, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, // 40 - 47
+                                    0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, // 48 - 4F
+                                    0x0F, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, // 50 - 57
+                                    0x17, 0x18, 0x19, 0x80, 0x80, 0x80, 0x80, 0x80, // 58 - 5F
+                                    0x80, 0x1A, 0x1B, 0x1C, 0x1D, 0x1E, 0x1F, 0x20, // 60 - 67
+                                    0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27, 0x28, // 68 - 6F
+                                    0x29, 0x2A, 0x2B, 0x2C, 0x2D, 0x2E, 0x2F, 0x30, // 70 - 77
+                                    0x31, 0x32, 0x33, 0x80, 0x80, 0x80, 0x80, 0x80, // 78 - 7F
+                                    0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, // 80 - 87
+                                    0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, // 88 - 8F
+                                    0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, // 90 - 97
+                                    0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, // 98 - 9F
+                                    0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, // A0 - A7
+                                    0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, // A8 - AF
+                                    0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, // B0 - B7
+                                    0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, // B8 - BF
+                                    0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, // C0 - C7
+                                    0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, // C8 - CF
+                                    0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, // D0 - D7
+                                    0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, // D8 - DF
+                                    0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, // E0 - E7
+                                    0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, // E8 - EF
+                                    0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, // F0 - F7
+                                    0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, // F8 - FF
+};
+
+int decodeBase64(unsigned char **result, const char *data, int dataLength)
+{
+  int bitsLeft = 8;
+  int in = 0;
+  unsigned char b;
+  unsigned char d;
+  unsigned char *decoded = malloc(dataLength * 3 / 4 + 3);
+  *result = decoded;
+  if (decoded == NULL)
+    return ERROR_INSUFFICIENT_MEMORY;
+ 
+  while (*data != '\0') {
+    //  Get character and check valid
+    d = unmap[*(data++)];
+    if (d > 0x3F) {
+      if (d == 0x80) {
+        free(decoded);
+        return ERROR_INVALID_CHARACTER;
+      }
+      continue;        //  White space
+    }
+
+    switch (bitsLeft) {
+      case 8:
+             decoded[in] = d;
+             bitsLeft = 2;
+             break;
+      case 2:
+             decoded[in] = (decoded[in] << 2) | (d >> 4);
+             decoded[++in] = d & 0x0F;
+             bitsLeft = 4;
+             break;
+      case 4:
+             decoded[in] = (decoded[in] << 4) | (d >> 2);
+             decoded[++in] = d & 0x03;
+             bitsLeft = 6;
+             break;
+      case 6:
+             decoded[in] = (decoded[in] << 6) | d;
+             in++;
+             bitsLeft = 8;
+             break;
+    }
+  }
+  decoded[in] = '\0';
+  return ERROR_NONE;
+}
+
 /**  Wrapper functions
  *
  */
@@ -617,7 +766,6 @@ static void plistFunc(sqlite3_context *context, int argc, sqlite3_value **argv){
   int resultLength;
   int errno = 0;
   char *result = NULL;
-  printf("plistFunc, argc = %d", argc);
   assert( argc==1 );
   switch( sqlite3_value_type(argv[0]) ){
     case SQLITE_TEXT:
@@ -629,7 +777,10 @@ static void plistFunc(sqlite3_context *context, int argc, sqlite3_value **argv){
         resultLength = strlen(result);
         sqlite3_result_text(context, result, resultLength, &freeResult);
       } else {
-        sqlite3_result_text(context, data, dataLength, NULL);
+        if (sqlite3_value_type(argv[0]) == SQLITE_TEXT)
+          sqlite3_result_text(context, data, dataLength, NULL);
+        else
+          sqlite3_result_blob(context, data, dataLength, NULL);
       }
       break;
     }
@@ -640,14 +791,44 @@ static void plistFunc(sqlite3_context *context, int argc, sqlite3_value **argv){
   }
 }
 
-/**  RegisterExtensionPlist
+static void decodeBase64Func(sqlite3_context *context, int argc, sqlite3_value **argv){
+  int resultLength;
+  int errno = 0;
+  unsigned char *result = NULL;
+  assert( argc==1 );
+  switch( sqlite3_value_type(argv[0]) ){
+    case SQLITE_BLOB:
+    case SQLITE_TEXT: {
+      const char *data = sqlite3_value_text(argv[0]);
+      int dataLength = sqlite3_value_bytes(argv[0]);
+      errno = decodeBase64(&result, data, dataLength);
+      if (errno == ERROR_NONE) {
+        resultLength = strlen(result);
+        sqlite3_result_text(context,  result, resultLength, &freeResult);
+      } else {
+        if (sqlite3_value_type(argv[0]) == SQLITE_TEXT)
+          sqlite3_result_text(context, data, dataLength, NULL);
+        else
+          sqlite3_result_blob(context, data, dataLength, NULL);
+      }
+      break;
+    }
+    default: {
+      sqlite3_result_null(context);
+      break;
+    }
+  }
+}
+
+/**  RegisterExtensionFormats
  *
  *   Register the parsing functions with sqlite
  */
 
-int RegisterExtensionPlist(sqlite3 *db)
+int RegisterExtensionFormats(sqlite3 *db)
 {
   sqlite3_create_function(db, "plist", 1, 0, db, plistFunc, 0, 0);
+  sqlite3_create_function(db, "unBase64", 1, 0, db, decodeBase64Func, 0, 0);
 }
 
 #ifdef COMPILE_SQLITE_EXTENSIONS_AS_LOADABLE_MODULE
@@ -656,11 +837,11 @@ int RegisterExtensionPlist(sqlite3 *db)
 __declspec(dllexport)
 #endif
 
-int sqlite3_sqliteplist_init(sqlite3 *db, char **pzErrMsg, const sqlite3_api_routines *pApi)
+int sqlite3_sqliteformats_init(sqlite3 *db, char **pzErrMsg, const sqlite3_api_routines *pApi)
 {
   int rc = SQLITE_OK;
   SQLITE_EXTENSION_INIT2(pApi);
-  RegisterExtensionPlist(db);
+  RegisterExtensionFormats(db);
   return rc;
 }
 

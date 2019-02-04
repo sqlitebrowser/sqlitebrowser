@@ -1,5 +1,0 @@
-EXPORTS
-    RegisterExtensionPlist
-    sqlite3_api
-    sqlite3_sqliteplist_init
-    freeResult
