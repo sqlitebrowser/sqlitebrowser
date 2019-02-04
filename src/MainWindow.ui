@@ -2433,6 +2433,9 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    <property name="shortcut">
     <string>Ctrl+/</string>
    </property>
+   <property name="shortcutContext">
+    <enum>Qt::WidgetShortcut</enum>
+   </property>
   </action>
   <action name="actionSqlStop">
    <property name="icon">
