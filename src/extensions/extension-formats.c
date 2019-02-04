@@ -612,7 +612,7 @@ static char map[64] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01234
  *
  */
 
-int encodeBase64(char **result, unsigned char *data, int dataLength)
+int encodeBase64(char **result, const unsigned char *data, int dataLength)
 {
   unsigned char d;
   int b;
@@ -791,6 +791,35 @@ static void plistFunc(sqlite3_context *context, int argc, sqlite3_value **argv){
   }
 }
 
+static void encodeBase64Func(sqlite3_context *context, int argc, sqlite3_value **argv){
+  int resultLength;
+  int errno = 0;
+  char *result = NULL;
+  assert( argc==1 );
+  switch( sqlite3_value_type(argv[0]) ){
+    case SQLITE_BLOB:
+    case SQLITE_TEXT: {
+      const unsigned char *data = sqlite3_value_text(argv[0]);
+      int dataLength = sqlite3_value_bytes(argv[0]);
+      errno = encodeBase64(&result, data, dataLength);
+      if (errno == ERROR_NONE) {
+        resultLength = strlen(result);
+        sqlite3_result_text(context,  result, resultLength, &freeResult);
+      } else {
+        if (sqlite3_value_type(argv[0]) == SQLITE_TEXT)
+          sqlite3_result_text(context, data, dataLength, NULL);
+        else
+          sqlite3_result_blob(context, data, dataLength, NULL);
+      }
+      break;
+    }
+    default: {
+      sqlite3_result_null(context);
+      break;
+    }
+  }
+}
+
 static void decodeBase64Func(sqlite3_context *context, int argc, sqlite3_value **argv){
   int resultLength;
   int errno = 0;
@@ -829,6 +858,7 @@ int RegisterExtensionFormats(sqlite3 *db)
 {
   sqlite3_create_function(db, "plist", 1, 0, db, plistFunc, 0, 0);
   sqlite3_create_function(db, "unBase64", 1, 0, db, decodeBase64Func, 0, 0);
+  sqlite3_create_function(db, "toBase64", 1, 0, db, encodeBase64Func, 0, 0);
 }
 
 #ifdef COMPILE_SQLITE_EXTENSIONS_AS_LOADABLE_MODULE
