@@ -839,7 +839,7 @@ void PlotDock::adjustBars()
         if (bar) {
             if (m_stackedBars) {
                 // Ungroup if grouped
-                bar->setBarsGroup(barsGroup);
+                bar->setBarsGroup(nullptr);
                 if (previousBar)
                     bar->moveAbove(previousBar);
                 // Set width to ocuppy the full coordinate space, less padding
