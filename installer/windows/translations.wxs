@@ -8,18 +8,17 @@
         <DirectoryRef Id='INSTALLDIR'>
 
             <!--
-            Each language requires 6 *.qm files to work properly.
+            Each language requires 5 *.qm files to work properly.
             
             The list of the required files:
                 - qt_<language_code>.qm
                 - qtbase_<language_code>.qm
                 - qtmultimedia_<language_code>.qm
-                - qtquick1_<language_code>.qm
                 - qtscript_<language_code>.qm
                 - qtxmlpatterns_<language_code>.qm
 
             Notes:
-                - Arabic is missing "qtquick1_ar.qm" and "qtxmlpatterns_ar.qm" but seems to work without a problem.
+                - Arabic is missing "qtxmlpatterns_ar.qm" but seems to work without a problem.
 
                 - Chinese (China), Chinese (Taiwan), and Portuguese have only one file (qt_<language_code>.qm), so
                   the default buttons are not translated for these languages.
@@ -48,7 +47,6 @@
                 <Component><File Source="$(var.QtPath)\translations\qt_cs.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtbase_cs.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtmultimedia_cs.qm" /></Component>
-                <Component><File Source="$(var.QtPath)\translations\qtquick1_cs.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtscript_cs.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtxmlpatterns_cs.qm" /></Component>
 
@@ -56,7 +54,6 @@
                 <Component><File Source="$(var.QtPath)\translations\qt_en.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtbase_en.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtmultimedia_en.qm" /></Component>
-                <Component><File Source="$(var.QtPath)\translations\qtquick1_en.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtscript_en.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtxmlpatterns_en.qm" /></Component>
 
@@ -64,7 +61,6 @@
                 <Component><File Source="$(var.QtPath)\translations\qt_fr.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtbase_fr.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtmultimedia_fr.qm" /></Component>
-                <Component><File Source="$(var.QtPath)\translations\qtquick1_fr.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtscript_fr.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtxmlpatterns_fr.qm" /></Component>
 
@@ -72,7 +68,6 @@
                 <Component><File Source="$(var.QtPath)\translations\qt_de.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtbase_de.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtmultimedia_de.qm" /></Component>
-                <Component><File Source="$(var.QtPath)\translations\qtquick1_de.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtscript_de.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtxmlpatterns_de.qm" /></Component>
 
@@ -80,7 +75,6 @@
                 <Component><File Source="$(var.QtPath)\translations\qt_it.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtbase_it.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtmultimedia_it.qm" /></Component>
-                <Component><File Source="$(var.QtPath)\translations\qtquick1_it.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtscript_it.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtxmlpatterns_it.qm" /></Component>
 
@@ -88,7 +82,6 @@
                 <Component><File Source="$(var.QtPath)\translations\qt_ko.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtbase_ko.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtmultimedia_ko.qm" /></Component>
-                <Component><File Source="$(var.QtPath)\translations\qtquick1_ko.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtscript_ko.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtxmlpatterns_ko.qm" /></Component>
 
@@ -96,7 +89,6 @@
                 <Component><File Source="$(var.QtPath)\translations\qt_pl.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtbase_pl.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtmultimedia_pl.qm" /></Component>
-                <Component><File Source="$(var.QtPath)\translations\qtquick1_pl.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtscript_pl.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtxmlpatterns_pl.qm" /></Component>
 
@@ -107,7 +99,6 @@
                 <Component><File Source="$(var.QtPath)\translations\qt_ru.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtbase_ru.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtmultimedia_ru.qm" /></Component>
-                <Component><File Source="$(var.QtPath)\translations\qtquick1_ru.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtscript_ru.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtxmlpatterns_ru.qm" /></Component>
 
@@ -117,7 +108,6 @@
                 <?if $(sys.BUILDARCH)="x64"?>
                     <Component><File Source="$(var.QtPath)\translations\qtbase_es.qm" /></Component>
                     <Component><File Source="$(var.QtPath)\translations\qtmultimedia_es.qm" /></Component>
-                    <Component><File Source="$(var.QtPath)\translations\qtquick1_es.qm" /></Component>
                     <Component><File Source="$(var.QtPath)\translations\qtscript_es.qm" /></Component>
                     <Component><File Source="$(var.QtPath)\translations\qtxmlpatterns_es.qm" /></Component>
                 <?endif?>
@@ -128,7 +118,6 @@
                 <Component><File Source="$(var.QtPath)\translations\qt_uk.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtbase_uk.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtmultimedia_uk.qm" /></Component>
-                <Component><File Source="$(var.QtPath)\translations\qtquick1_uk.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtscript_uk.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtxmlpatterns_uk.qm" /></Component>
 
@@ -157,7 +146,6 @@
             <ComponentRef Id="qt_cs.qm" />
             <ComponentRef Id="qtbase_cs.qm" />
             <ComponentRef Id="qtmultimedia_cs.qm" />
-            <ComponentRef Id="qtquick1_cs.qm" />
             <ComponentRef Id="qtscript_cs.qm" />
             <ComponentRef Id="qtxmlpatterns_cs.qm" />
 
@@ -165,7 +153,6 @@
             <ComponentRef Id="qt_en.qm" />
             <ComponentRef Id="qtbase_en.qm" />
             <ComponentRef Id="qtmultimedia_en.qm" />
-            <ComponentRef Id="qtquick1_en.qm" />
             <ComponentRef Id="qtscript_en.qm" />
             <ComponentRef Id="qtxmlpatterns_en.qm" />
 
@@ -173,7 +160,6 @@
             <ComponentRef Id="qt_fr.qm" />
             <ComponentRef Id="qtbase_fr.qm" />
             <ComponentRef Id="qtmultimedia_fr.qm" />
-            <ComponentRef Id="qtquick1_fr.qm" />
             <ComponentRef Id="qtscript_fr.qm" />
             <ComponentRef Id="qtxmlpatterns_fr.qm" />
 
@@ -181,7 +167,6 @@
             <ComponentRef Id="qt_de.qm" />
             <ComponentRef Id="qtbase_de.qm" />
             <ComponentRef Id="qtmultimedia_de.qm" />
-            <ComponentRef Id="qtquick1_de.qm" />
             <ComponentRef Id="qtscript_de.qm" />
             <ComponentRef Id="qtxmlpatterns_de.qm" />
 
@@ -189,7 +174,6 @@
             <ComponentRef Id="qt_it.qm" />
             <ComponentRef Id="qtbase_it.qm" />
             <ComponentRef Id="qtmultimedia_it.qm" />
-            <ComponentRef Id="qtquick1_it.qm" />
             <ComponentRef Id="qtscript_it.qm" />
             <ComponentRef Id="qtxmlpatterns_it.qm" />
 
@@ -197,7 +181,6 @@
             <ComponentRef Id="qt_ko.qm" />
             <ComponentRef Id="qtbase_ko.qm" />
             <ComponentRef Id="qtmultimedia_ko.qm" />
-            <ComponentRef Id="qtquick1_ko.qm" />
             <ComponentRef Id="qtscript_ko.qm" />
             <ComponentRef Id="qtxmlpatterns_ko.qm" />
 
@@ -205,7 +188,6 @@
             <ComponentRef Id="qt_pl.qm" />
             <ComponentRef Id="qtbase_pl.qm" />
             <ComponentRef Id="qtmultimedia_pl.qm" />
-            <ComponentRef Id="qtquick1_pl.qm" />
             <ComponentRef Id="qtscript_pl.qm" />
             <ComponentRef Id="qtxmlpatterns_pl.qm" />
 
@@ -216,7 +198,6 @@
             <ComponentRef Id="qt_ru.qm" />
             <ComponentRef Id="qtbase_ru.qm" />
             <ComponentRef Id="qtmultimedia_ru.qm" />
-            <ComponentRef Id="qtquick1_ru.qm" />
             <ComponentRef Id="qtscript_ru.qm" />
             <ComponentRef Id="qtxmlpatterns_ru.qm" />
 
@@ -226,7 +207,6 @@
             <?if $(sys.BUILDARCH)="x64"?>
                 <ComponentRef Id="qtbase_es.qm" />
                 <ComponentRef Id="qtmultimedia_es.qm" />
-                <ComponentRef Id="qtquick1_es.qm" />
                 <ComponentRef Id="qtscript_es.qm" />
                 <ComponentRef Id="qtxmlpatterns_es.qm" />
             <?endif?>
@@ -237,7 +217,6 @@
             <ComponentRef Id="qt_uk.qm" />
             <ComponentRef Id="qtbase_uk.qm" />
             <ComponentRef Id="qtmultimedia_uk.qm" />
-            <ComponentRef Id="qtquick1_uk.qm" />
             <ComponentRef Id="qtscript_uk.qm" />
             <ComponentRef Id="qtxmlpatterns_uk.qm" />
 
