@@ -37,6 +37,7 @@ The info below often helps, please fill it out if you're able to. :)
 
 #### What is your DB4S version?
 
+- [ ] 3.11.0
 - [ ] 3.11.0-alpha1 or 3.11.0-beta*
 - [ ] 3.10.1
 - [ ] Other: ___
