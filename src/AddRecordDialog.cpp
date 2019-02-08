@@ -198,6 +198,8 @@ void AddRecordDialog::populateFields()
         }
         if (contains(pk, f.name()))
             tbitem->setIcon(kName, QIcon(":/icons/field_key"));
+        else if (m_table.constraint({f.name()}, sqlb::Constraint::ForeignKeyConstraintType))
+            tbitem->setIcon(kName, QIcon(":/icons/field_fk"));
         else
             tbitem->setIcon(kName, QIcon(":/icons/field"));
 

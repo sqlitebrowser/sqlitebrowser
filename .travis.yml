@@ -1,6 +1,6 @@
 language: cpp
 sudo: required
-dist: trusty
+dist: xenial
 
 branches:
   only:
@@ -32,13 +32,9 @@ matrix:
     env: COMPILER=clang++-3.8
 
 before_install:
-- sudo add-apt-repository ppa:likemartinma/devel -y
-- sudo add-apt-repository --yes ppa:beineri/opt-qt571-trusty
 - sudo apt-get update -qq
-- sudo apt-get --force-yes install qt57base qt57translations qt57tools
-- sudo apt-get --force-yes install libsqlite3-dev libsqlcipher-dev libantlr-dev
-- QT_ENV_SCRIPT=$(find /opt -name 'qt*-env.sh')
-- source $QT_ENV_SCRIPT
+- sudo apt-get --force-yes install build-essential git-core cmake libsqlite3-dev qt5-default qttools5-dev-tools libsqlcipher-dev qtbase5-dev libantlr-dev libqt5scintilla2-dev libqcustomplot-dev qttools5-dev
+
 
 install:
 - if [ "$CXX" = "g++" ]; then export CXX="g++-5" CC="gcc-5"; fi
@@ -58,12 +54,12 @@ script:
 
 notifications:
   email:
-    recipients:
-    - mkleusberg@gmail.com
-    - innermous@gmail.com
-    - justin@postgresql.org
-    - mgrojo@gmail.com
-    on_success: never
-    on_failure: always
+   recipients:
+   - mkleusberg@gmail.com
+   - innermous@gmail.com
+   - justin@postgresql.org
+   - mgrojo@gmail.com
+   on_success: never
+   on_failure: always
   slack:
-    secure: ax5bu7ySF+wlG0pCmQqyzvaurzQt2yLnp/u4KajyFCgWZKOwcvElndjhvW8bIRNgWrGP8TVPkosHhwGucFQNjJq5hHJIbuPzfBTIbITCVbKJNRqeqL0QXlKLwMTejX9AUYwzzJ3xTTj8rZn/UMocsiCy7uPuK1v/5BhZfEr3BBU=
+   secure: ax5bu7ySF+wlG0pCmQqyzvaurzQt2yLnp/u4KajyFCgWZKOwcvElndjhvW8bIRNgWrGP8TVPkosHhwGucFQNjJq5hHJIbuPzfBTIbITCVbKJNRqeqL0QXlKLwMTejX9AUYwzzJ3xTTj8rZn/UMocsiCy7uPuK1v/5BhZfEr3BBU=

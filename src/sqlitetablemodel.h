@@ -98,7 +98,7 @@ public:
     QString encoding() const { return m_encoding; }
 
     // The pseudo-primary key is exclusively for editing views
-    void setPseudoPk(const QString& pseudoPk);
+    void setPseudoPk(QString pseudoPk);
     bool hasPseudoPk() const;
     QString pseudoPk() const { return QString::fromStdString(m_query.rowIdColumn()); }
 
