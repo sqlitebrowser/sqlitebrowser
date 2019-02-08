@@ -147,12 +147,6 @@ static QString shortcutsTip(const QList<QKeySequence>& keys)
     return tip;
 }
 
-static void addShortcutsTooltip(QWidget* widget, const QList<QKeySequence>& keys)
-{
-    if (!keys.isEmpty())
-        widget->setToolTip(widget->toolTip() + shortcutsTip(keys));
-}
-
 static void addShortcutsTooltip(QAction* action, const QList<QKeySequence>& extraKeys = QList<QKeySequence>())
 {
     if (!action->shortcuts().isEmpty() || !extraKeys.isEmpty())
