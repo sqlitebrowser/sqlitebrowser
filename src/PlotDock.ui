@@ -110,6 +110,18 @@ Select the axes or axes labels to drag and zoom only in that orientation.</strin
         </property>
         <item>
          <widget class="QComboBox" name="comboLineType">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="currentIndex">
            <number>1</number>
           </property>
@@ -157,6 +169,18 @@ Select the axes or axes labels to drag and zoom only in that orientation.</strin
         </item>
         <item>
          <widget class="QComboBox" name="comboPointShape">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="currentIndex">
            <number>0</number>
           </property>

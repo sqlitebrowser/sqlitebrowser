@@ -54,8 +54,8 @@ EditDialog::EditDialog(QWidget* parent)
     connect(sciEdit, SIGNAL(textChanged()), this, SLOT(editTextChanged()));
 
     // Create shortcuts for the widgets that doesn't have its own print action or printing mechanism.
-    QShortcut* shortcutPrintText = new QShortcut(QKeySequence::Print, ui->editorText, nullptr, nullptr, Qt::WidgetShortcut);
-    connect(shortcutPrintText, &QShortcut::activated, this, &EditDialog::openPrintDialog);
+    QShortcut* shortcutPrint = new QShortcut(QKeySequence::Print, this, nullptr, nullptr, Qt::WidgetShortcut);
+    connect(shortcutPrint, &QShortcut::activated, this, &EditDialog::openPrintDialog);
 
     // Add actions to editors that have a context menu based on actions. This also activates the shortcuts.
     ui->editorImage->addAction(ui->actionPrintImage);
@@ -63,7 +63,7 @@ EditDialog::EditDialog(QWidget* parent)
     ui->editorBinary->addAction(ui->actionCopyHexAscii);
 
     mustIndentAndCompact = Settings::getValue("databrowser", "indent_compact").toBool();
-    ui->buttonIndent->setChecked(mustIndentAndCompact);
+    ui->actionIndent->setChecked(mustIndentAndCompact);
 
     ui->buttonAutoSwitchMode->setChecked(Settings::getValue("databrowser", "auto_switch_mode").toBool());
 
@@ -661,7 +661,7 @@ void EditDialog::setDataInBuffer(const QByteArray& data, DataSources source)
 // Called when the user manually changes the "Mode" drop down combobox
 void EditDialog::editModeChanged(int newMode)
 {
-    ui->buttonIndent->setEnabled(newMode == JsonEditor || newMode == XmlEditor);
+    ui->actionIndent->setEnabled(newMode == JsonEditor || newMode == XmlEditor);
     setStackCurrentIndex(newMode);
 
     // * If the dataSource is the text buffer, the data is always text *
@@ -861,8 +861,8 @@ void EditDialog::setReadOnly(bool ro)
     QPalette textEditPalette = ui->editorText->palette();
 
     ui->buttonApply->setEnabled(!ro);
-    ui->buttonNull->setEnabled(!ro);
-    ui->buttonImport->setEnabled(!ro);
+    ui->actionNull->setEnabled(!ro);
+    ui->actionImport->setEnabled(!ro);
 
     ui->editorText->setReadOnly(ro);
     sciEdit->setReadOnly(ro);
@@ -1014,6 +1014,9 @@ void EditDialog::reloadSettings()
     hexFont.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
     hexEdit->setFont(hexFont);
 
+    ui->editCellToolbar->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>
+                                            (Settings::getValue("General", "toolbarStyleEditCell").toInt()));
+
     sciEdit->reloadSettings();
 }
 
@@ -1041,6 +1044,12 @@ void EditDialog::setStackCurrentIndex(int editMode)
 
 void EditDialog::openPrintDialog()
 {
+    int editMode = ui->editorStack->currentIndex();
+    if (editMode == ImageViewer) {
+        openPrintImageDialog();
+        return;
+    }
+
     QPrinter printer;
     QPrintPreviewDialog *dialog = new QPrintPreviewDialog(&printer);
 
