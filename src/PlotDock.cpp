@@ -776,10 +776,15 @@ void PlotDock::toggleLegendVisible(bool visible)
 void PlotDock::adjustBars()
 {
     const double padding = 0.15;
-    const double groupedWidth = ui->plotWidget->plottableCount()? 1.0 / ui->plotWidget->plottableCount() : 0.0;
+    int plottableCount = ui->plotWidget->plottableCount();
+
+    if (plottableCount == 0)
+        return;
+
+    const double groupedWidth = 1.0 / plottableCount;
     QCPBars* previousBar = nullptr;
-    QCPBarsGroup* barsGroup = m_stackedBars? nullptr : new QCPBarsGroup(ui->plotWidget);
-    for (int i = 0, ie = ui->plotWidget->plottableCount(); i < ie; ++i)
+    QCPBarsGroup* barsGroup = m_stackedBars ? nullptr : new QCPBarsGroup(ui->plotWidget);
+    for (int i = 0, ie = plottableCount; i < ie; ++i)
     {
         QCPBars* bar = qobject_cast<QCPBars*>(ui->plotWidget->plottable(i));
         if (bar) {
