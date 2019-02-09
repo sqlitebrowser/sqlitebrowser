@@ -189,7 +189,7 @@ CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStr
                     // no linefeed, so assume that CR represents a newline
                     if(nit != sBufferEnd && *nit != '\n')
                     {
-                        field = addColumn(record, field, m_bTrimFields);
+                        addColumn(record, field, m_bTrimFields);
 
                         if(!(field = addRow(insertFunction, record, parsedRows)))
                             return ParserResult::ParserResultError;
@@ -197,7 +197,7 @@ CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStr
                 }
                 else if(c == '\n')
                 {
-                    field = addColumn(record, field, m_bTrimFields);
+                    addColumn(record, field, m_bTrimFields);
 
                     if(!(field = addRow(insertFunction, record, parsedRows)))
                         return ParserResult::ParserResultError;
@@ -235,7 +235,7 @@ CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStr
                 else if(c == '\n')
                 {
                     state = StateNormal;
-                    field = addColumn(record, field, m_bTrimFields);
+                    addColumn(record, field, m_bTrimFields);
 
                     if(!(field = addRow(insertFunction, record, parsedRows)))
                         return ParserResult::ParserResultError;
@@ -257,7 +257,7 @@ CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStr
                     // no linefeed, so assume that CR represents a newline
                     if(nit != sBufferEnd && *nit != '\n')
                     {
-                        field = addColumn(record, field, m_bTrimFields);
+                        addColumn(record, field, m_bTrimFields);
 
                         if(!(field = addRow(insertFunction, record, parsedRows)))
                             return ParserResult::ParserResultError;
@@ -285,7 +285,7 @@ CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStr
 
     if(record.num_fields)
     {
-        field = addColumn(record, field, m_bTrimFields);
+        addColumn(record, field, m_bTrimFields);
 
         if(!(field = addRow(insertFunction, record, parsedRows)))
             return ParserResult::ParserResultError;
