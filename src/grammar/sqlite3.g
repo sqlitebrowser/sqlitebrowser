@@ -454,7 +454,7 @@ subexpr
   | EXISTS LPAREN (expr | selectstmt) RPAREN
   | caseexpr
   | raisefunction
-  | windowfunc
+//  | windowfunc
   )
   (suffixexpr)?
   ;
@@ -469,6 +469,7 @@ caseexpr
   CASE_T (expr)? (WHEN expr THEN expr)+ (ELSE_T expr)? END
   ;
 
+/*
 windowfunc
   :
   functionname LPAREN (STAR | (expr (COMMA expr)*))? RPAREN (FILTER LPAREN WHERE expr RPAREN)? OVER
@@ -516,6 +517,7 @@ framespec
     | (expr FOLLOWING)
   )
   ;
+*/
 
 like_operator
   :

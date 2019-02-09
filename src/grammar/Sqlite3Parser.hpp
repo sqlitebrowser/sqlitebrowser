@@ -66,11 +66,7 @@ public:
 	public: void castexpr();
 	public: void caseexpr();
 	public: void raisefunction();
-	public: void windowfunc();
 	public: void suffixexpr();
-	public: void windowdefn();
-	public: void orderingterm();
-	public: void framespec();
 	public: void like_operator();
 	public: void between_subexpr();
 public:
@@ -84,10 +80,10 @@ protected:
 private:
 	static const char* tokenNames[];
 #ifndef NO_STATIC_CONSTS
-	static const int NUM_TOKENS = 125;
+	static const int NUM_TOKENS = 121;
 #else
 	enum {
-		NUM_TOKENS = 125
+		NUM_TOKENS = 121
 	};
 #endif
 	
@@ -141,14 +137,6 @@ private:
 	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_23;
 	static const unsigned long _tokenSet_24_data_[];
 	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_24;
-	static const unsigned long _tokenSet_25_data_[];
-	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_25;
-	static const unsigned long _tokenSet_26_data_[];
-	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_26;
-	static const unsigned long _tokenSet_27_data_[];
-	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_27;
-	static const unsigned long _tokenSet_28_data_[];
-	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_28;
 };
 
 #endif /*INC_Sqlite3Parser_hpp_*/
