@@ -173,6 +173,7 @@ void EditDialog::loadData(const QByteArray& data)
 
     case Text:
     case JSON:
+    case XML:
         // Can be stored in any widget, except the ImageViewer
 
         switch (editMode) {
@@ -382,7 +383,7 @@ void EditDialog::exportData()
         filters << tr("Binary files (*.bin)");
         break;
     case Text:
-        // Base the XML case on the mode, not the data type since XML detection is currently not implemented.
+        // Include the XML case on the text data type, since XML detection is not very sofisticated.
         if (ui->comboMode->currentIndex() == XmlEditor)
             filters << tr("XML files (*.xml)") << tr("Text files (*.txt)");
         else
@@ -393,6 +394,9 @@ void EditDialog::exportData()
         break;
     case SVG:
         filters << tr("SVG files (*.svg)");
+        break;
+    case XML:
+        filters << tr("XML files (*.xml)");
         break;
     case Null:
         return;
@@ -803,6 +807,8 @@ int EditDialog::checkDataType(const QByteArray& data)
     // Check if it's text only
     if(isTextOnly(cellData))
     {
+        if (cellData.startsWith("<?xml"))
+            return XML;
         QJsonDocument jsonDoc = QJsonDocument::fromJson(cellData);
         if (!jsonDoc.isNull())
             return JSON;
@@ -907,6 +913,7 @@ void EditDialog::switchEditorMode(bool autoSwitchForType)
             ui->comboMode->setCurrentIndex(JsonEditor);
             break;
         case SVG:
+        case XML:
             ui->comboMode->setCurrentIndex(XmlEditor);
             break;
         }
@@ -952,6 +959,7 @@ void EditDialog::updateCellInfoAndMode(const QByteArray& data)
         ui->editorText->setPlaceholderText(Settings::getValue("databrowser", "null_text").toString());
         break;
 
+    case XML:
     case Text: {
         // Text only
         // Determine the length of the cell text in characters (possibly different to number of bytes).
