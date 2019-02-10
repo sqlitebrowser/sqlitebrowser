@@ -889,7 +889,23 @@ bool DBBrowserDB::dump(const QString& filePath,
     return false;
 }
 
-bool DBBrowserDB::executeSQL(QString statement, bool dirtyDB, bool logsql)
+// Callback for sqlite3_exec. It receives the user callback in the first parameter. Converts parameters
+// to C++ classes and calls user callback.
+int DBBrowserDB::callbackWrapper (void* callback, int numberColumns, char** values, char** columnNames)
+{
+    QStringList valuesList;
+    QStringList namesList;
+
+    for (int i=0; i<numberColumns; i++) {
+        valuesList << QString(values[i]);
+        namesList << QString(columnNames[i]);
+    }
+
+    execCallback userCallback = *(static_cast<execCallback*>(callback));
+    return userCallback(numberColumns, valuesList, namesList);
+}
+
+bool DBBrowserDB::executeSQL(QString statement, bool dirtyDB, bool logsql, execCallback callback)
 {
     waitForDbRelease();
     if(!_db)
@@ -904,7 +920,7 @@ bool DBBrowserDB::executeSQL(QString statement, bool dirtyDB, bool logsql)
     if (dirtyDB) setSavepoint();
 
     char* errmsg;
-    if (SQLITE_OK == sqlite3_exec(_db, statement.toUtf8(), nullptr, nullptr, &errmsg))
+    if (SQLITE_OK == sqlite3_exec(_db, statement.toUtf8(), callback ? callbackWrapper : nullptr, &callback, &errmsg))
     {
         // Update DB structure after executing an SQL statement. But try to avoid doing unnecessary updates.
         if(!dontCheckForStructureUpdates && (statement.startsWith("ALTER", Qt::CaseInsensitive) ||
@@ -918,6 +934,7 @@ bool DBBrowserDB::executeSQL(QString statement, bool dirtyDB, bool logsql)
         lastErrorMessage = QString("%1 (%2)").arg(QString::fromUtf8(errmsg)).arg(statement);
         qWarning() << "executeSQL: " << statement << "->" << errmsg;
         sqlite3_free(errmsg);
+
         return false;
     }
 }
