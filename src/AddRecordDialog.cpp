@@ -12,6 +12,7 @@
 #include <QMenu>
 
 class NullLineEdit: public QLineEdit {
+    Q_OBJECT
 private:
     bool m_isNull;
 
@@ -338,3 +339,5 @@ void AddRecordDialog::on_buttonBox_clicked(QAbstractButton* button)
             populateFields();
     }
 }
+
+#include "AddRecordDialog.moc"
