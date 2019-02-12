@@ -676,7 +676,7 @@ static unsigned char unmap[256] = { 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x
                                     0x80, 0x81, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, // 20 - 27
                                     0x80, 0x80, 0x80, 0x3E, 0x80, 0x80, 0x80, 0x3F, // 28 - 2F
                                     0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x3A, 0x3B, // 30 - 37
-                                    0x3C, 0x3D, 0x80, 0x80, 0x80, 0x00, 0x80, 0x80, // 38 - 3F
+                                    0x3C, 0x3D, 0x80, 0x80, 0x80, 0x40, 0x80, 0x80, // 38 - 3F
                                     0x80, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, // 40 - 47
                                     0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, // 48 - 4F
                                     0x0F, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, // 50 - 57
@@ -703,7 +703,12 @@ static unsigned char unmap[256] = { 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x
                                     0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, // F8 - FF
 };
 
-int decodeBase64(unsigned char **result, const char *data, int dataLength)
+/***  decodeBase64
+ *
+ *    Returns decoded data and length.
+ */
+
+int decodeBase64(unsigned char **result, int *resultLength, const char *data, int dataLength)
 {
   int bitsLeft = 8;
   int in = 0;
@@ -711,6 +716,7 @@ int decodeBase64(unsigned char **result, const char *data, int dataLength)
   unsigned char d;
   unsigned char *decoded = malloc(dataLength * 3 / 4 + 3);
   *result = decoded;
+  *resultLength = 0;
   if (decoded == NULL)
     return ERROR_INSUFFICIENT_MEMORY;
  
@@ -722,7 +728,7 @@ int decodeBase64(unsigned char **result, const char *data, int dataLength)
         free(decoded);
         return ERROR_INVALID_CHARACTER;
       }
-      continue;        //  White space
+      break;                  //  padding space
     }
 
     switch (bitsLeft) {
@@ -747,7 +753,7 @@ int decodeBase64(unsigned char **result, const char *data, int dataLength)
              break;
     }
   }
-  decoded[in] = '\0';
+  *resultLength = in;
   return ERROR_NONE;
 }
 
@@ -820,6 +826,39 @@ static void encodeBase64Func(sqlite3_context *context, int argc, sqlite3_value *
   }
 }
 
+
+/***  isText
+ *
+ *    Returns zero if supplied data is entirely
+ *    ASCII printable characters or white space.
+ */
+
+int isText(unsigned char *data, int dataLength)
+{
+  static unsigned char map[256] = {
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+  };
+  int result = 0;
+  for (int i=0; i < dataLength; i++)
+    result |= map[*(data++)];
+  return result;
+}
+
 static void decodeBase64Func(sqlite3_context *context, int argc, sqlite3_value **argv){
   int resultLength;
   int errno = 0;
@@ -830,10 +869,12 @@ static void decodeBase64Func(sqlite3_context *context, int argc, sqlite3_value *
     case SQLITE_TEXT: {
       const char *data = sqlite3_value_text(argv[0]);
       int dataLength = sqlite3_value_bytes(argv[0]);
-      errno = decodeBase64(&result, data, dataLength);
+      errno = decodeBase64(&result, &resultLength, data, dataLength);
       if (errno == ERROR_NONE) {
-        resultLength = strlen(result);
-        sqlite3_result_text(context,  result, resultLength, &freeResult);
+        if (isText(result, resultLength) == 0)
+          sqlite3_result_text(context,  result, resultLength, &freeResult);
+        else
+          sqlite3_result_blob(context,  result, resultLength, &freeResult);
       } else {
         if (sqlite3_value_type(argv[0]) == SQLITE_TEXT)
           sqlite3_result_text(context, data, dataLength, NULL);
@@ -876,4 +917,5 @@ int sqlite3_sqliteformats_init(sqlite3 *db, char **pzErrMsg, const sqlite3_api_r
 }
 
 #endif
+
 
