@@ -17,6 +17,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" "${CMAKE_MODULE_PATH}"
 OPTION(ENABLE_TESTING "Enable the unit tests" OFF)
 OPTION(FORCE_INTERNAL_ANTLR "Don't use the distribution's Antlr library even if there is one" OFF)
 OPTION(FORCE_INTERNAL_QSCINTILLA "Don't use the distribution's QScintilla library even if there is one" OFF)
+OPTION(ALL_WARNINGS "Enable some useful warning flags" OFF)
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release")
@@ -366,6 +367,16 @@ add_executable(${PROJECT_NAME}
 		${SQLB_MOC}
 		${SQLB_RESOURCES_RCC}
 		${SQLB_MISC})
+
+
+# Warnings
+if (ALL_WARNINGS AND CMAKE_COMPILER_IS_GNUCC)
+    target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wsign-conversion)
+    target_compile_options(${PROJECT_NAME} PRIVATE -Wdouble-promotion -Wformat=2 -Wlogical-op -Wuseless-cast)
+    if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 7.0)
+        target_compile_options(${PROJECT_NAME} PRIVATE -Wnull-dereference -Wduplicated-cond -Wduplicated-branches)
+    endif()
+endif()
 
 add_dependencies(${PROJECT_NAME} qhexedit qcustomplot)
 if(NOT ANTLR2_FOUND)
