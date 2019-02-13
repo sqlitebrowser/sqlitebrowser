@@ -1,6 +1,7 @@
 #include "Data.h"
 
 #include <QTextCodec>
+#include <algorithm>
 
 // Note that these aren't all possible BOMs. But they are probably the most common ones.
 // The size is needed at least for the ones with character zero in them.
@@ -17,15 +18,11 @@ bool isTextOnly(QByteArray data, const QString& encoding, bool quickTest)
         return true;
 
     // Truncate to the first couple of bytes for quick testing
-    if(quickTest)
-        data = data.left(512);
-
-    // Convert to Unicode if necessary
-    if(!encoding.isEmpty())
-        data = QTextCodec::codecForName(encoding.toUtf8())->toUnicode(data).toUtf8();
-
-    // Perform check
-    return QString(data).toUtf8() == data;
+    int testSize = quickTest? std::min(512, data.size()) : data.size();
+    QTextCodec::ConverterState state;
+    QTextCodec *codec = encoding.isEmpty()? QTextCodec::codecForName("UTF-8") : QTextCodec::codecForName(encoding.toUtf8());
+    const QString text = codec->toUnicode(data.constData(), testSize, &state);
+    return state.invalidChars <= 0;
 }
 
 bool startsWithBom(const QByteArray& data)
