@@ -30,7 +30,6 @@
             Schedule="afterInstallInitialize"
             AllowSameVersionUpgrades="yes"
             AllowDowngrades="yes"
-            DowngradeErrorMessage="A later version of $(var.Name) is already installed. Setup will now exit."
         />
 
         <!-- ========================================= Add/Remove Programs ========================================= -->
