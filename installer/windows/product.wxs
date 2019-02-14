@@ -14,12 +14,6 @@
             Removes the installed product first then installs the new version, if the installation of the new version
             fails, Windows Installer also rolls back the removal of the installed product, in other words, reinstalls it.
 
-        AllowSameVersionUpgrades="yes"
-            When upgrading products (using the same "UpgradeCode"), Windows Installer only check the first three version
-            fields (Major.Minor.Patch) to decide if it should upgrade the product or not. The nightly build version never
-            change and therefore "AllowSameVersionUpgrades" is required if we want to be able to update the installed
-            nightly version.
-
         AllowDowngrades="yes"
             When set to yes, any version can be installed over any other version.
 
@@ -28,7 +22,6 @@
         -->
         <MajorUpgrade
             Schedule="afterInstallInitialize"
-            AllowSameVersionUpgrades="yes"
             AllowDowngrades="yes"
         />
 
