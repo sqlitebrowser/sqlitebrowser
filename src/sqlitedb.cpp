@@ -19,6 +19,7 @@
 #include <functional>
 #include <atomic>
 #include <algorithm>
+#include <cctype>
 
 QStringList DBBrowserDB::Datatypes = QStringList() << "INTEGER" << "TEXT" << "BLOB" << "REAL" << "NUMERIC";
 
