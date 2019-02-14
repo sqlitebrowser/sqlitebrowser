@@ -166,7 +166,7 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
         // Execute default SQL
         if(!isReadOnly)
         {
-            QString default_sql = Settings::getValue("db", "defaultsqltext").toString();
+            QByteArray default_sql = Settings::getValue("db", "defaultsqltext").toByteArray();
             if(!default_sql.isEmpty())
                 executeMultiSQL(default_sql, false, true);
         }
@@ -581,7 +581,7 @@ bool DBBrowserDB::create ( const QString & db)
         loadExtensionsFromSettings();
 
         // Execute default SQL
-        QString default_sql = Settings::getValue("db", "defaultsqltext").toString();
+        QByteArray default_sql = Settings::getValue("db", "defaultsqltext").toByteArray();
         if(!default_sql.isEmpty())
             executeMultiSQL(default_sql, false, true);
 
@@ -923,7 +923,7 @@ bool DBBrowserDB::executeSQL(QString statement, bool dirtyDB, bool logsql)
     }
 }
 
-bool DBBrowserDB::executeMultiSQL(QString query, bool dirty, bool log)
+bool DBBrowserDB::executeMultiSQL(QByteArray query, bool dirty, bool log)
 {
     waitForDbRelease();
     if(!_db)
@@ -932,12 +932,17 @@ bool DBBrowserDB::executeMultiSQL(QString query, bool dirty, bool log)
         return false;
     }
 
-    // Check if this SQL containts any transaction statements
-    QRegExp transactionRegex("^\\s*BEGIN TRANSACTION;|COMMIT;\\s*$");
-    if(query.contains(transactionRegex))
+    // Check if this SQL containts any transaction statements. If so remove them and create a savepoint instead by overriding the dirty parameter.
+    // TODO This should check for 'END TRANSACTION' too. It should be case insensitive and it should work with any amounts of whitespace etc. "Good" news
+    // is that none of this was ever done correctly before.
+    if(query.contains("BEGIN TRANSACTION;"))
     {
-        // If so remove them and create a savepoint instead by overriding the dirty parameter
-        query.remove(transactionRegex);
+        query.replace("BEGIN TRANSACTION;", "                  ");
+        dirty = true;
+    }
+    if(query.contains("COMMIT;"))
+    {
+        query.replace("COMMIT;", "       ");
         dirty = true;
     }
 
@@ -961,10 +966,9 @@ bool DBBrowserDB::executeMultiSQL(QString query, bool dirty, bool log)
 
     // Execute the statement by looping until SQLite stops giving back a tail string
     sqlite3_stmt* vm;
-    QByteArray utf8Query = query.toUtf8();
-    const char *tail = utf8Query.constData();
+    const char *tail = query.constData();
     const char * const tail_start = tail;
-    const char * const tail_end = tail + utf8Query.size() + 1;
+    const char * const tail_end = tail + query.size() + 1;
     size_t total_tail_length = static_cast<size_t>(tail_end - tail_start);
     int res = SQLITE_OK;
     unsigned int line = 0;
