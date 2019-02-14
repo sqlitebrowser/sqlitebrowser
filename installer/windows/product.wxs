@@ -19,10 +19,17 @@
             fields (Major.Minor.Patch) to decide if it should upgrade the product or not. The nightly build version never
             change and therefore "AllowSameVersionUpgrades" is required if we want to be able to update the installed
             nightly version.
+
+        AllowDowngrades="yes"
+            When set to yes, any version can be installed over any other version.
+
+        Further info:
+            http://wixtoolset.org/documentation/manual/v3/xsd/wix/majorupgrade.html
         -->
         <MajorUpgrade
             Schedule="afterInstallInitialize"
             AllowSameVersionUpgrades="yes"
+            AllowDowngrades="yes"
             DowngradeErrorMessage="A later version of $(var.Name) is already installed. Setup will now exit."
         />
 
