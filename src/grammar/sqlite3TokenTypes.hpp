@@ -127,12 +127,8 @@ struct CUSTOM_API sqlite3TokenTypes {
 		BITWISELEFT = 116,
 		BITWISERIGHT = 117,
 		SELECT = 118,
-		BY = 119,
-		ORDER = 120,
-		CURRENT = 121,
-		ROW = 122,
-		SLASH = 123,
-		PERCENT = 124,
+		SLASH = 119,
+		PERCENT = 120,
 		NULL_TREE_LOOKAHEAD = 3
 	};
 #ifdef __cplusplus

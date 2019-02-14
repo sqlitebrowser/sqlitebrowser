@@ -187,7 +187,11 @@ void PreferencesDialog::loadSettings()
     ui->checkRegexDisabled->setChecked(Settings::getValue("extensions", "disableregex").toBool());
     ui->checkAllowLoadExtension->setChecked(Settings::getValue("extensions", "enable_load_extension").toBool());
     fillLanguageBox();
-    ui->toolbarStyleComboBox->setCurrentIndex(Settings::getValue("General", "toolbarStyle").toInt());
+    ui->toolbarStyleComboMain->setCurrentIndex(Settings::getValue("General", "toolbarStyle").toInt());
+    ui->toolbarStyleComboStructure->setCurrentIndex(Settings::getValue("General", "toolbarStyleStructure").toInt());
+    ui->toolbarStyleComboBrowse->setCurrentIndex(Settings::getValue("General", "toolbarStyleBrowse").toInt());
+    ui->toolbarStyleComboSql->setCurrentIndex(Settings::getValue("General", "toolbarStyleSql").toInt());
+    ui->toolbarStyleComboEditCell->setCurrentIndex(Settings::getValue("General", "toolbarStyleEditCell").toInt());
 }
 
 void PreferencesDialog::saveSettings()
@@ -309,7 +313,13 @@ void PreferencesDialog::saveSettings()
                                  tr("The language will change after you restart the application."));
 
     Settings::setValue("General", "language", newLanguage);
-    Settings::setValue("General", "toolbarStyle", ui->toolbarStyleComboBox->currentIndex());
+
+    Settings::setValue("General", "toolbarStyle", ui->toolbarStyleComboMain->currentIndex());
+    Settings::setValue("General", "toolbarStyleStructure", ui->toolbarStyleComboStructure->currentIndex());
+    Settings::setValue("General", "toolbarStyleBrowse", ui->toolbarStyleComboBrowse->currentIndex());
+    Settings::setValue("General", "toolbarStyleSql", ui->toolbarStyleComboSql->currentIndex());
+    Settings::setValue("General", "toolbarStyleEditCell", ui->toolbarStyleComboEditCell->currentIndex());
+
     Settings::setValue("General", "DBFileExtensions", m_dbFileExtensions.join(";;") );
 
     accept();

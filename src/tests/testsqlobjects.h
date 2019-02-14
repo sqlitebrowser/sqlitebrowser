@@ -35,6 +35,7 @@ private slots:
     void createTableWithNotLikeConstraint();
     void rowValues();
     void complexExpressions();
+    void datetimeExpression();
 };
 
 #endif

@@ -12,6 +12,7 @@
 #include <QMenu>
 
 class NullLineEdit: public QLineEdit {
+    Q_OBJECT
 private:
     bool m_isNull;
 
@@ -36,7 +37,7 @@ protected:
         {
             QMenu* editContextMenu = createStandardContextMenu();
 
-            QAction* nullAction = new QAction(tr("Set to NULL"), editContextMenu);
+            QAction* nullAction = new QAction(QIcon(":/icons/set_to_null"), tr("Set to NULL"), editContextMenu);
             connect(nullAction, &QAction::triggered, [&]() {
                     setNull(true);
                 });
@@ -338,3 +339,5 @@ void AddRecordDialog::on_buttonBox_clicked(QAbstractButton* button)
             populateFields();
     }
 }
+
+#include "AddRecordDialog.moc"

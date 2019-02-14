@@ -158,6 +158,22 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
     if(group == "General" && name == "toolbarStyle")
         return static_cast<int>(Qt::ToolButtonTextBesideIcon);
 
+    // General/toolbarStyleStructure
+    if(group == "General" && name == "toolbarStyleStructure")
+        return static_cast<int>(Qt::ToolButtonTextBesideIcon);
+
+    // General/toolbarStyleBrowse
+    if(group == "General" && name == "toolbarStyleBrowse")
+        return static_cast<int>(Qt::ToolButtonIconOnly);
+
+    // General/toolbarStyleSql
+    if(group == "General" && name == "toolbarStyleSql")
+        return static_cast<int>(Qt::ToolButtonIconOnly);
+
+    // General/toolbarStyleEditCell
+    if(group == "General" && name == "toolbarStyleEditCell")
+        return static_cast<int>(Qt::ToolButtonIconOnly);
+
     if(group == "General" && name == "DBFileExtensions")
         return QObject::tr("SQLite database files (*.db *.sqlite *.sqlite3 *.db3)");
 

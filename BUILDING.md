@@ -107,7 +107,7 @@ $ sudo make install
 ### macOS
 
 The application can be compiled to a single executable binary file, similar to
-other command line utilities.  Or it can be compiled to a .app bundle, suitable
+other command line utilities, or it can be compiled to an .app bundle, suitable
 for placing in /Applications.
 
 ### Building a single executable binary

@@ -117,8 +117,7 @@ public:
     // represents the name of corresponding result column.
     typedef std::function<bool(int, QStringList, QStringList)> execCallback;
     bool executeSQL(QString statement, bool dirtyDB = true, bool logsql = true, execCallback callback = nullptr);
-
-    bool executeMultiSQL(const QString& statement, bool dirty = true, bool log = false);
+    bool executeMultiSQL(QByteArray query, bool dirty = true, bool log = false);
     QByteArray querySingleValueFromDb(const QString& sql, bool log = true, ChoiceOnUse choice = Ask);
 
     const QString& lastError() const { return lastErrorMessage; }
