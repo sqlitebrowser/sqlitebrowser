@@ -911,7 +911,7 @@ bool DBBrowserDB::executeSQL(QString statement, bool dirtyDB, bool logsql)
     }
 }
 
-bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log)
+bool DBBrowserDB::executeMultiSQL(QString query, bool dirty, bool log)
 {
     waitForDbRelease();
     if(!_db)
@@ -920,13 +920,11 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
         return false;
     }
 
-    QString query = statement.trimmed();
-
     // Check if this SQL containts any transaction statements
     QRegExp transactionRegex("^\\s*BEGIN TRANSACTION;|COMMIT;\\s*$");
     if(query.contains(transactionRegex))
     {
-        // If so remove them anc create a savepoint instead by overriding the dirty parameter
+        // If so remove them and create a savepoint instead by overriding the dirty parameter
         query.remove(transactionRegex);
         dirty = true;
     }
@@ -944,43 +942,64 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
     }
 
     // Show progress dialog
-    int statement_size = query.size();
     QProgressDialog progress(tr("Executing SQL..."),
-                             tr("Cancel"), 0, statement_size);
+                             tr("Cancel"), 0, 100);
     progress.setWindowModality(Qt::ApplicationModal);
     progress.show();
 
     // Execute the statement by looping until SQLite stops giving back a tail string
     sqlite3_stmt* vm;
     QByteArray utf8Query = query.toUtf8();
-    const char *tail = utf8Query.data();
+    const char *tail = utf8Query.constData();
+    const char * const tail_start = tail;
+    const char * const tail_end = tail + utf8Query.size() + 1;
+    size_t total_tail_length = static_cast<size_t>(tail_end - tail_start);
     int res = SQLITE_OK;
     unsigned int line = 0;
     bool structure_updated = false;
+    int last_progress_value = -1;
     while(tail && *tail != 0 && (res == SQLITE_OK || res == SQLITE_DONE))
     {
         line++;
-        size_t tail_length = strlen(tail);
 
-        // Update progress dialog, keep UI responsive
-        progress.setValue(statement_size - tail_length);
-        qApp->processEvents();
-        if(progress.wasCanceled())
+        // Update progress dialog, keep UI responsive. Make sure to not spend too much time updating the progress dialog in case there are many small statements.
+        int progress_value = static_cast<int>(static_cast<float>(tail - tail_start) / total_tail_length * 100.0f);
+        if(progress_value > last_progress_value)
         {
-            lastErrorMessage = tr("Action cancelled.");
-            return false;
+            progress.setValue(progress_value);
+            qApp->processEvents();
+            if(progress.wasCanceled())
+            {
+                lastErrorMessage = tr("Action cancelled.");
+                return false;
+            }
+            last_progress_value = progress_value;
         }
 
         // Check whether the DB structure is changed by this statement
-        QString qtail = QString(tail);
-        if(!dontCheckForStructureUpdates && !structure_updated && (qtail.startsWith("ALTER", Qt::CaseInsensitive) ||
-                qtail.startsWith("CREATE", Qt::CaseInsensitive) ||
-                qtail.startsWith("DROP", Qt::CaseInsensitive) ||
-                qtail.startsWith("ROLLBACK", Qt::CaseInsensitive)))
-            structure_updated = true;
+        if(!dontCheckForStructureUpdates && !structure_updated)
+        {
+            // Ignore all whitespace at the start of the current tail
+            const char* tail_ptr = tail;
+            while(std::isspace(*tail_ptr))
+                tail_ptr++;
+
+            // Convert the first couple of bytes of the tail to a C++ string for easier handling. We only need the first 8 bytes (in cae it's a ROLLBACK
+            // statement), so no need to convert the entire tail. If the tail is less than 8 bytes long, make sure not to read past its end.
+            size_t length = std::min(static_cast<size_t>(tail_end - tail + 1), static_cast<size_t>(8));
+            std::string next_statement(tail_ptr, length);
+            std::transform(next_statement.begin(), next_statement.end(), next_statement.begin(), ::toupper);
+
+            // Check if it's a modifying statement
+            if(next_statement.compare(0, 5, "ALTER") == 0 ||
+                    next_statement.compare(0, 6, "CREATE") == 0 ||
+                    next_statement.compare(0, 4, "DROP") == 0 ||
+                    next_statement.compare(0, 8, "ROLLBACK") == 0)
+                structure_updated = true;
+        }
 
         // Execute next statement
-        res = sqlite3_prepare_v2(_db, tail, tail_length, &vm, &tail);
+        res = sqlite3_prepare_v2(_db, tail, tail_end - tail + 1, &vm, &tail);
         if(res == SQLITE_OK)
         {
             switch(sqlite3_step(vm))

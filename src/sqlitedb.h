@@ -95,7 +95,7 @@ public:
     bool dump(const QString& filename, const QStringList& tablesToDump, bool insertColNames, bool insertNew, bool exportSchema, bool exportData, bool keepOldSchema);
 
     bool executeSQL(QString statement, bool dirtyDB = true, bool logsql = true);
-    bool executeMultiSQL(const QString& statement, bool dirty = true, bool log = false);
+    bool executeMultiSQL(QString query, bool dirty = true, bool log = false);
     QVariant querySingleValueFromDb(const QString& statement, bool log = true);
 
     const QString& lastError() const { return lastErrorMessage; }
