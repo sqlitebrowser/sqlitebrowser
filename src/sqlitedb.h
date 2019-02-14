@@ -106,7 +106,7 @@ public:
     };
 
     bool executeSQL(QString statement, bool dirtyDB = true, bool logsql = true);
-    bool executeMultiSQL(const QString& statement, bool dirty = true, bool log = false);
+    bool executeMultiSQL(QString query, bool dirty = true, bool log = false);
     QByteArray querySingleValueFromDb(const QString& sql, bool log = true, ChoiceOnUse choice = Ask);
 
     const QString& lastError() const { return lastErrorMessage; }
