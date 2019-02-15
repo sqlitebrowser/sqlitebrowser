@@ -1592,12 +1592,13 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
     }
 
     // Copy the data from the old table to the new one
-    if(!executeSQL(QString("INSERT INTO %1.%2 (%3) SELECT %4 FROM %5;")
+    if(!executeSQL(QString("INSERT INTO %1.%2 (%3) SELECT %4 FROM %5.%6;")
                    .arg(sqlb::escapeIdentifier(newSchemaName))
                    .arg(sqlb::escapeIdentifier(new_table_with_random_name.name()))
                    .arg(sqlb::escapeIdentifier(copy_values_to).join(","))
                    .arg(sqlb::escapeIdentifier(copy_values_from).join(","))
-                   .arg(tablename.toString())))
+                   .arg(sqlb::escapeIdentifier(tablename.schema()))
+                   .arg(sqlb::escapeIdentifier(old_table.name()))))
     {
         QString error(tr("Copying data to new table failed. DB says:\n%1").arg(lastErrorMessage));
         revertToSavepoint(savepointName);
@@ -1610,7 +1611,7 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
     for(auto it : schemata[tablename.schema()])
     {
         // If this object references the table and it's not the table itself save it's SQL string
-        if(it->baseTable() == tablename.name() && it->type() != sqlb::Object::Types::Table)
+        if(it->baseTable() == old_table.name() && it->type() != sqlb::Object::Types::Table)
         {
             // If this is an index, update the fields first. This highly increases the chance that the SQL statement won't throw an
             // error later on when we try to recreate it.
@@ -1661,7 +1662,7 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
     setPragma("defer_foreign_keys", "1");
 
     // Delete the old table
-    if(!executeSQL(QString("DROP TABLE %1;").arg(tablename.toString()), true, true))
+    if(!executeSQL(QString("DROP TABLE %1.%2;").arg(sqlb::escapeIdentifier(tablename.schema())).arg(sqlb::escapeIdentifier(old_table.name())), true, true))
     {
         QString error(tr("Deleting old table failed. DB says: %1").arg(lastErrorMessage));
         revertToSavepoint(savepointName);
@@ -1670,7 +1671,7 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
     }
 
     // Rename the temporary table
-    if(!renameTable(newSchemaName, new_table_with_random_name.name(), tablename.name()))
+    if(!renameTable(newSchemaName, new_table_with_random_name.name(), new_table.name()))
     {
         revertToSavepoint(savepointName);
         return false;

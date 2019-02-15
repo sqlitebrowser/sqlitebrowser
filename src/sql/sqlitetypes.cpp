@@ -360,12 +360,35 @@ bool Table::operator==(const Table& rhs) const
 
     if(m_rowidColumn != rhs.m_rowidColumn)
         return false;
-    if(m_constraints != rhs.m_constraints)
-        return false;
     if(m_virtual != rhs.m_virtual)
         return false;
     if(fields != rhs.fields)
         return false;
+
+    // We need to compare the constraint maps manually here. The reason is that the values are pointers and the default implementation
+    // would compare the pointers not the actual objects.
+    if(m_constraints.size() != rhs.m_constraints.size())
+        return false;
+    for(auto it=m_constraints.cbegin();it!=m_constraints.end();++it)
+    {
+        // For each element in this map we get the list of all elements with the same key from the other map.
+        // Then we loop through that list and check if we find an element of the same type which produces the same SQL substring. We use this
+        // approach to avoid casting both objects to their actual type, then dereferencing it etc.
+        auto range = rhs.m_constraints.equal_range(it->first);
+        bool found_something = false;
+        for(auto jt=range.first;jt!=range.second;++jt)
+        {
+            if(it->second->type() == jt->second->type() && it->second->toSql(it->first) == jt->second->toSql(jt->first))
+            {
+                found_something = true;
+                break;
+            }
+        }
+
+        // If no match was found, the constraint maps aren't equal
+        if(!found_something)
+            return false;
+    }
 
     return true;
 }
