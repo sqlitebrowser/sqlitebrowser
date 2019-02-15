@@ -101,13 +101,13 @@ void ColumnDisplayFormatDialog::accept()
 {
     QString errorMessage;
 
-    // Accept the SQL code if it's the column name (default), it's a function invocation containing the column name an it can be executed
-    // without errors.
+    // Accept the SQL code if it's the column name (default), it contains a function invocation applied to the column name and it can be
+    // executed without errors returning only one column.
     // Users could still devise a way to break this, but this is considered good enough for letting them know about simple incorrect
     // cases.
     if(!(ui->editDisplayFormat->text() == sqlb::escapeIdentifier(column_name) ||
-         ui->editDisplayFormat->text().contains(QRegExp("^ *[a-z]+[a-z_0-9]* *\\(.*" + QRegExp::escape(sqlb::escapeIdentifier(column_name)) + ".*\\) *$"))))
-        errorMessage = tr("Custom display format must be a function call applied to %1").arg(sqlb::escapeIdentifier(column_name));
+         ui->editDisplayFormat->text().contains(QRegExp("[a-z]+[a-z_0-9]* *\\(.*" + QRegExp::escape(sqlb::escapeIdentifier(column_name)) + ".*\\)", Qt::CaseInsensitive))))
+        errorMessage = tr("Custom display format must contain a function call applied to %1").arg(sqlb::escapeIdentifier(column_name));
     else {
         // Execute a query using the display format and check that it only returns one column.
         int customNumberColumns = 0;
@@ -121,7 +121,7 @@ void ColumnDisplayFormatDialog::accept()
                            false, true, callback))
             errorMessage = tr("Error in custom display format. Message from database engine:\n\n%1").arg(pdb.lastError());
         else if(customNumberColumns != 1)
-            errorMessage = tr("Custom display format must return only one column but it returned %1").arg(customNumberColumns);
+            errorMessage = tr("Custom display format must return only one column but it returned %1.").arg(customNumberColumns);
 
     }
     if(!errorMessage.isEmpty())
