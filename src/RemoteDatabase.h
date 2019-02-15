@@ -5,6 +5,7 @@
 #include <QtNetwork/QSslConfiguration>
 
 class QNetworkAccessManager;
+class QNetworkConfigurationManager;
 class QString;
 class QNetworkReply;
 class QSslError;
@@ -88,6 +89,7 @@ private:
     void clearAccessCache(const QString& clientCert);
 
     QNetworkAccessManager* m_manager;
+    QNetworkConfigurationManager* m_configurationManager;
     QProgressDialog* m_progress;
     QSslConfiguration m_sslConfiguration;
     QMap<QString, QSslCertificate> m_clientCertFiles;

@@ -518,15 +518,6 @@ void MainWindow::init()
     // Load all settings
     reloadSettings();
 
-#ifdef CHECKNEWVERSION
-    // Check for a new version if automatic update check aren't disabled in the settings dialog
-    if(Settings::getValue("checkversion", "enabled").toBool())
-    {
-        m_remoteDb->fetch("https://download.sqlitebrowser.org/currentrelease",
-                          RemoteDatabase::RequestTypeNewVersionCheck);
-    }
-#endif
-
 #ifndef ENABLE_SQLCIPHER
     // Only show encryption menu action when SQLCipher support is enabled
     ui->actionEncryption->setVisible(false);
