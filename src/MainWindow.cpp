@@ -1734,7 +1734,10 @@ void MainWindow::importDatabaseFromSQL()
             return;
         }
 
+        // Create the new file and open it in the browser
         db.create(newDbFile);
+        db.close();
+        fileOpen(newDbFile);
     }
 
     // Defer foreign keys. Just deferring them instead of disabling them should work fine because in the import we only expect CREATE and INSERT
@@ -1760,14 +1763,9 @@ void MainWindow::importDatabaseFromSQL()
     // Restore the former foreign key settings
     db.setPragma("defer_foreign_keys", foreignKeysOldSettings);
 
-    // Refresh window when importing into an existing DB or - when creating a new file - just open it correctly
-    if(newDbFile.size())
-    {
-        fileOpen(newDbFile);
-    } else {
-        db.updateSchema();
-        populateTable();
-    }
+    // Refresh views
+    db.updateSchema();
+    populateTable();
 }
 
 void MainWindow::openPreferences()
