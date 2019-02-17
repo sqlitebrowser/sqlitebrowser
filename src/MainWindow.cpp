@@ -914,9 +914,16 @@ void MainWindow::setRecordsetLabel()
     // Update the validator of the goto row field
     gotoValidator->setRange(0, total);
 
+    // When there is no query for this table (i.e. no table is selected), there is no row count query either which in turn means
+    // that the row count query will never finish. And because of this the row count will be forever unknown. To avoid always showing
+    // a misleading "determining row count" text in the UI we set the row count status to complete here for empty queries.
+    auto row_count_available = m_browseTableModel->rowCountAvailable();
+    if(m_browseTableModel->query().isEmpty())
+        row_count_available = SqliteTableModel::RowCount::Complete;
+
     // Update the label showing the current position
     QString txt;
-    switch(m_browseTableModel->rowCountAvailable())
+    switch(row_count_available)
     {
     case SqliteTableModel::RowCount::Unknown:
         txt = tr("determining row count...");
