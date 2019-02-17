@@ -1503,7 +1503,7 @@ void MainWindow::executeQuery()
     sqlWidget->finishExecution(statusMessage, ok);
     attachPlot(sqlWidget->getTableResult(), sqlWidget->getModel());
 
-    connect(sqlWidget->getTableResult(), &ExtendedTableWidget::activated, this, &MainWindow::dataTableSelectionChanged);
+    connect(sqlWidget->getTableResult()->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(dataTableSelectionChanged(QModelIndex)));
     connect(sqlWidget->getTableResult(), SIGNAL(doubleClicked(QModelIndex)), this, SLOT(doubleClickTable(QModelIndex)));
 
     // If the DB structure was changed by some command in this SQL script, update our schema representations
