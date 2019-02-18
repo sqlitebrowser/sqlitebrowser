@@ -41,6 +41,11 @@
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="22"/>
+        <source>Built for </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../AboutDialog.cpp" line="23"/>
         <source>Qt Version </source>
         <translation>Versión de Qt</translation>
     </message>
@@ -103,42 +108,42 @@
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Guardar&lt;/span&gt; enviará a la base de datos la sentencia SQL mostrada para insertar el nuevo registro.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Restituir valores por Defecto&lt;/span&gt; restituirá los valores iniciales en la columna &lt;span style=&quot; font-weight:600;&quot;&gt;Valor&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Cancelar&lt;/span&gt; cierra este diálogo sin ejecutar la consulta.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../AddRecordDialog.cpp" line="208"/>
+        <location filename="../AddRecordDialog.cpp" line="209"/>
         <source>Auto-increment
 </source>
         <translation>Auto-incremento
 </translation>
     </message>
     <message>
-        <location filename="../AddRecordDialog.cpp" line="211"/>
+        <location filename="../AddRecordDialog.cpp" line="212"/>
         <source>Unique constraint
 </source>
         <translation>Restricción UNIQUE
 </translation>
     </message>
     <message>
-        <location filename="../AddRecordDialog.cpp" line="214"/>
+        <location filename="../AddRecordDialog.cpp" line="215"/>
         <source>Check constraint:	 %1
 </source>
         <translation>Restricción CHECK:	 %1
 </translation>
     </message>
     <message>
-        <location filename="../AddRecordDialog.cpp" line="218"/>
+        <location filename="../AddRecordDialog.cpp" line="219"/>
         <source>Foreign key:	 %1
 </source>
         <translation>Clave foránea:	 %1
 </translation>
     </message>
     <message>
-        <location filename="../AddRecordDialog.cpp" line="226"/>
+        <location filename="../AddRecordDialog.cpp" line="227"/>
         <source>Default value:	 %1
 </source>
         <translation>Valor por defecto:	 %1
 </translation>
     </message>
     <message>
-        <location filename="../AddRecordDialog.cpp" line="252"/>
+        <location filename="../AddRecordDialog.cpp" line="253"/>
         <source>Error adding record. Message from database engine:
 
 %1</source>
@@ -147,7 +152,7 @@
 %1</translation>
     </message>
     <message>
-        <location filename="../AddRecordDialog.cpp" line="333"/>
+        <location filename="../AddRecordDialog.cpp" line="334"/>
         <source>Are you sure you want to restore all the entered values to their defaults?</source>
         <translation>¿Está seguro de que quiere restaurar todos los valores introducidos a sus valores por defecto?</translation>
     </message>
@@ -453,38 +458,38 @@ Si se modificaron cualquiera de los otros ajustes para este archivo de base de d
         <translation type="obsolete">Sin errores</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="214"/>
+        <location filename="../sqlitedb.cpp" line="215"/>
         <source>Please specify the database name under which you want to access the attached database</source>
         <translation>Por favor, especifique el nombre con el que acceder a la base de datos anexada</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="275"/>
+        <location filename="../sqlitedb.cpp" line="276"/>
         <source>Invalid file format</source>
         <translation>Formato de archivo inválido</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="617"/>
+        <location filename="../sqlitedb.cpp" line="618"/>
         <source>Do you want to save the changes made to the database file %1?</source>
         <translation>¿Guardar los cambios hechos al archivo de base de datos «%1»?</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="719"/>
+        <location filename="../sqlitedb.cpp" line="720"/>
         <source>Exporting database to SQL file...</source>
         <translation>Exportando base de datos a un archivo SQL...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="720"/>
-        <location filename="../sqlitedb.cpp" line="949"/>
+        <location filename="../sqlitedb.cpp" line="721"/>
+        <location filename="../sqlitedb.cpp" line="952"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="948"/>
+        <location filename="../sqlitedb.cpp" line="951"/>
         <source>Executing SQL...</source>
         <translation>Ejecutando SQL...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="970"/>
+        <location filename="../sqlitedb.cpp" line="978"/>
         <source>Action cancelled.</source>
         <translation>Acción cancelada.</translation>
     </message>
@@ -499,99 +504,99 @@ Abortando ejecución.</translation>
         <translation type="obsolete">renameColumn: no se puede encontrar la tabla %1.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="203"/>
+        <location filename="../sqlitedb.cpp" line="204"/>
         <source>This database has already been attached. Its schema name is &apos;%1&apos;.</source>
         <translation>Esta base de datos ya ha sido anexada. Su nombre de esquema es «%1».</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="612"/>
+        <location filename="../sqlitedb.cpp" line="613"/>
         <source>Do you really want to close this temporary database? All data will be lost.</source>
         <translation>¿Está seguro de que quiere cerrar esta base de datos temporal? Todos los datos se perderán.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="669"/>
+        <location filename="../sqlitedb.cpp" line="670"/>
         <source>The database is currently busy: </source>
         <translation>La base de datos está actualmente ocupada:</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="670"/>
+        <location filename="../sqlitedb.cpp" line="671"/>
         <source>Do you want to abort that other operation?</source>
         <translation>¿Desea abortar la otra operación?</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="886"/>
-        <location filename="../sqlitedb.cpp" line="919"/>
+        <location filename="../sqlitedb.cpp" line="887"/>
+        <location filename="../sqlitedb.cpp" line="920"/>
         <source>No database file opened</source>
         <translation>No hay una base de datos abierta</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="999"/>
-        <location filename="../sqlitedb.cpp" line="1012"/>
+        <location filename="../sqlitedb.cpp" line="1023"/>
+        <location filename="../sqlitedb.cpp" line="1036"/>
         <source>Error in statement #%1: %2.
 Aborting execution%3.</source>
         <translation>Error en la sentencia #%1: %2.
 Abortando ejecución%3.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1002"/>
-        <location filename="../sqlitedb.cpp" line="1015"/>
+        <location filename="../sqlitedb.cpp" line="1026"/>
+        <location filename="../sqlitedb.cpp" line="1039"/>
         <source> and rolling back</source>
         <translation> y deshaciendo cambios</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1055"/>
+        <location filename="../sqlitedb.cpp" line="1079"/>
         <source>didn&apos;t receive any output from %1</source>
         <translation>no se recibió ninguna salida de «%1»</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1061"/>
+        <location filename="../sqlitedb.cpp" line="1085"/>
         <source>could not execute command: %1</source>
         <translation>no se pudo ejecutar el comando: «%1»</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1229"/>
+        <location filename="../sqlitedb.cpp" line="1253"/>
         <source>Cannot delete this object</source>
         <translation>No se puede borrar este objeto</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1260"/>
+        <location filename="../sqlitedb.cpp" line="1284"/>
         <source>Cannot set data on this object</source>
         <translation>No se pueden poner datos en este objeto</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1378"/>
+        <location filename="../sqlitedb.cpp" line="1402"/>
         <source>A table with the name &apos;%1&apos; already exists in schema &apos;%2&apos;.</source>
         <translation>Una tabla con el nombre «%1» ya existe en el esquema «%2».</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1389"/>
+        <location filename="../sqlitedb.cpp" line="1413"/>
         <source>renameColumn: cannot find column %1.</source>
         <translation>renameColumn: no se puede encontrar la columna «%1».</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1397"/>
+        <location filename="../sqlitedb.cpp" line="1421"/>
         <source>renameColumn: creating savepoint failed. DB says: %1</source>
         <translation>renameColumn: creación del savepoint fallido. La base de datos dice: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1443"/>
+        <location filename="../sqlitedb.cpp" line="1467"/>
         <source>renameColumn: creating new table failed. DB says: %1</source>
         <translation>renameColumn: creación de la nueva tabla fallida. La base de datos dice: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1456"/>
+        <location filename="../sqlitedb.cpp" line="1480"/>
         <source>renameColumn: copying data to new table failed. DB says:
 %1</source>
         <translation>renameColumn: copia de datos a la nueva table fallida. La base de datos dice:
 %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1513"/>
+        <location filename="../sqlitedb.cpp" line="1537"/>
         <source>renameColumn: deleting old table failed. DB says: %1</source>
         <translation>renameColumn: borrado de tabla fallido. La base de datos dice: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1538"/>
+        <location filename="../sqlitedb.cpp" line="1562"/>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 
 </source>
@@ -600,34 +605,34 @@ Abortando ejecución%3.</translation>
 </translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1547"/>
+        <location filename="../sqlitedb.cpp" line="1571"/>
         <source>renameColumn: releasing savepoint failed. DB says: %1</source>
         <translation>renameColumn: liberación del savepoint fallido. La base de datos dice: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1586"/>
+        <location filename="../sqlitedb.cpp" line="1610"/>
         <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.Message from database engine:
 %3</source>
         <translation>Error renombrando la tabla «%1» a «%2». Mensaje de la base de datos:
 «%3»</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1621"/>
+        <location filename="../sqlitedb.cpp" line="1645"/>
         <source>... &lt;string can not be logged, contains binary data&gt; ...</source>
         <translation>... &lt;la cadena no se puede registrar; contiene datos binarios&gt; ...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1730"/>
+        <location filename="../sqlitedb.cpp" line="1754"/>
         <source>could not get list of databases: %1</source>
         <translation>no se pudo obtener lista de bases de datos: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1869"/>
+        <location filename="../sqlitedb.cpp" line="1893"/>
         <source>Error loading extension: %1</source>
         <translation>Error cargando la extensión: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1894"/>
+        <location filename="../sqlitedb.cpp" line="1918"/>
         <source>could not get column information</source>
         <translation>No se pudo obtener información de la columna</translation>
     </message>
@@ -636,7 +641,7 @@ Abortando ejecución%3.</translation>
         <translation type="obsolete">tipo de objeto desconocido %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1724"/>
+        <location filename="../sqlitedb.cpp" line="1748"/>
         <source>could not get list of db objects: %1, %2</source>
         <translation>No se pudo obtener la lista de objetos de la base de datos: %1, %2</translation>
     </message>
@@ -645,22 +650,22 @@ Abortando ejecución%3.</translation>
         <translation type="obsolete">No se pudieron obtener los tipos</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1760"/>
+        <location filename="../sqlitedb.cpp" line="1784"/>
         <source>didn&apos;t receive any output from pragma %1</source>
         <translation>No se obtuvo ninguna salida del pragma %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1764"/>
+        <location filename="../sqlitedb.cpp" line="1788"/>
         <source>could not execute pragma command: %1, %2</source>
         <translation>No se pudo ejecutar el comando pragma: %1, %2</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1785"/>
+        <location filename="../sqlitedb.cpp" line="1809"/>
         <source>Error setting pragma %1 to %2: %3</source>
         <translation>Error definiendo pragma %1 como %2: %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1831"/>
+        <location filename="../sqlitedb.cpp" line="1855"/>
         <source>File not found.</source>
         <translation>Archivo no encontrado.</translation>
     </message>
@@ -2950,7 +2955,7 @@ Usted puede arrastrar sentencias SQL desde una fila de objeto y soltarlas en otr
     </message>
     <message>
         <location filename="../MainWindow.ui" line="243"/>
-        <location filename="../MainWindow.cpp" line="3496"/>
+        <location filename="../MainWindow.cpp" line="3497"/>
         <source>Delete Record</source>
         <translation>Borrar registro</translation>
     </message>
@@ -3399,7 +3404,7 @@ Puede arrastrar sentencias SQL desde la columna Esquema y soltarlas en el editor
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1981"/>
-        <location filename="../MainWindow.cpp" line="3196"/>
+        <location filename="../MainWindow.cpp" line="3197"/>
         <source>Set encoding</source>
         <translation>Definir codificación</translation>
     </message>
@@ -3419,7 +3424,7 @@ Puede arrastrar sentencias SQL desde la columna Esquema y soltarlas en el editor
         <translation>Cambia la codificación por defecto para todas las tablas en la base de datos</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3090"/>
+        <location filename="../MainWindow.cpp" line="3091"/>
         <source>Duplicate record</source>
         <translation>Duplicar registro</translation>
     </message>
@@ -3857,9 +3862,8 @@ Puede arrastrar sentencias SQL desde la columna Esquema y soltarlas en el editor
         <translation>Editar pragmas</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="493"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_case_sensitive_like&quot;&gt;Case Sensitive Like&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_case_sensitive_like&quot;&gt;Like sensible a mayúsculas&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_case_sensitive_like&quot;&gt;Like sensible a mayúsculas&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="506"/>
@@ -4110,8 +4114,8 @@ Puede arrastrar sentencias SQL desde la columna Esquema y soltarlas en el editor
         <translation>La base de datos está cifrada usando SQLCipher</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="436"/>
-        <location filename="../MainWindow.cpp" line="2903"/>
+        <location filename="../MainWindow.cpp" line="427"/>
+        <location filename="../MainWindow.cpp" line="2904"/>
         <source>Choose a database file</source>
         <translation>Seleccione un archivo de base de datos</translation>
     </message>
@@ -4124,9 +4128,9 @@ Puede arrastrar sentencias SQL desde la columna Esquema y soltarlas en el editor
         <translation type="obsolete">Formato de archivo inválido.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="489"/>
+        <location filename="../MainWindow.cpp" line="480"/>
         <location filename="../MainWindow.cpp" line="1679"/>
-        <location filename="../MainWindow.cpp" line="2787"/>
+        <location filename="../MainWindow.cpp" line="2788"/>
         <source>Choose a filename to save under</source>
         <translation>Seleccione un nombre de archivo en el que guardar</translation>
     </message>
@@ -4137,25 +4141,25 @@ Puede arrastrar sentencias SQL desde la columna Esquema y soltarlas en el editor
 </translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="841"/>
+        <location filename="../MainWindow.cpp" line="832"/>
         <source>Error deleting record:
 %1</source>
         <translation>Error borrando registro:
 %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="850"/>
+        <location filename="../MainWindow.cpp" line="841"/>
         <source>Please select a record first</source>
         <translation>Por favor, antes seleccione un registro</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="938"/>
+        <location filename="../MainWindow.cpp" line="936"/>
         <source>%1 - %2 of %3</source>
         <translation>%1 - %2 de %3</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="975"/>
-        <location filename="../MainWindow.cpp" line="989"/>
+        <location filename="../MainWindow.cpp" line="973"/>
+        <location filename="../MainWindow.cpp" line="987"/>
         <source>There is no database opened. Please open or create a new database file.</source>
         <translation>No hay una base de datos abierta. Por favor, abra o cree un nuevo archivo de base de datos.</translation>
     </message>
@@ -4308,37 +4312,37 @@ Si responde no se intentarán importar los datos del archivo SQL en la base de d
         <translation>Extensiones (*.so *.dylib *.dll);;Todos los archivos (*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2521"/>
+        <location filename="../MainWindow.cpp" line="2522"/>
         <source>Choose a project file to open</source>
         <translation>Seleccione un archivo de proyecto para abrir</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2630"/>
+        <location filename="../MainWindow.cpp" line="2631"/>
         <source>This project file is using an old file format because it was created using DB Browser for SQLite version 3.10 or lower. Loading this file format is still fully supported but we advice you to convert all your project files to the new file format because support for older formats might be dropped at some point in the future. You can convert your files by simply opening and re-saving them.</source>
         <translation>Este archivo de proyecto está usando un formato antiguo porque fue creado usando una versión 3.10 o inferior de «DB Browser for SQLite». La carga de este archivo aún está completamente soportada pero le recomendamos convertir todos sus archivos de proyecto al nuevo formato porque el soporte de formatos antiguos podría ser descartado en algún momento futuro. Usted puede convertir sus archivos simplemente abriéndolos y guardándolos de nuevo.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3090"/>
+        <location filename="../MainWindow.cpp" line="3091"/>
         <source>Duplicate records</source>
         <translation>Duplicar registros</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3095"/>
+        <location filename="../MainWindow.cpp" line="3096"/>
         <source>Ctrl+&quot;</source>
         <translation>Ctrl+&quot;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3265"/>
+        <location filename="../MainWindow.cpp" line="3266"/>
         <source>Please enter a pseudo-primary key in order to enable editing on this view. This should be the name of a unique column in the view.</source>
         <translation>Introduzca una clave pseudo-primaria para activar la edición en esta vista. Esta debería ser el nombre de una columna única en la vista.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3370"/>
+        <location filename="../MainWindow.cpp" line="3371"/>
         <source>Collation needed! Proceed?</source>
         <translation>¡Es necesaria una función de comparación! ¿Proceder?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3371"/>
+        <location filename="../MainWindow.cpp" line="3372"/>
         <source>A table in this database requires a special collation function &apos;%1&apos; that this application can&apos;t provide without further knowledge.
 If you choose to proceed, be aware bad things can happen to your database.
 Create a backup!</source>
@@ -4355,78 +4359,78 @@ Are you sure?</source>
 ¿Está seguro?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="477"/>
+        <location filename="../MainWindow.cpp" line="468"/>
         <source>Could not open database file.
 Reason: %1</source>
         <translation>No se pudo abrir el archivo de base de datos.
 Razón: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="510"/>
+        <location filename="../MainWindow.cpp" line="501"/>
         <source>In-Memory database</source>
         <translation>Base de datos en memoria</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="931"/>
+        <location filename="../MainWindow.cpp" line="929"/>
         <source>determining row count...</source>
         <translation>determinando nº de filas...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="934"/>
+        <location filename="../MainWindow.cpp" line="932"/>
         <source>%1 - %2 of &gt;= %3</source>
         <translation>%1 - %2 de &gt;= %3</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1014"/>
+        <location filename="../MainWindow.cpp" line="1012"/>
         <source>Are you sure you want to delete the table &apos;%1&apos;?
 All data associated with the table will be lost.</source>
         <translation>¿Está seguro de que quiere borrar la tabla «%1»?
 Se perderán todos los datos asociados con la tabla.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1016"/>
+        <location filename="../MainWindow.cpp" line="1014"/>
         <source>Are you sure you want to delete the view &apos;%1&apos;?</source>
         <translation>¿Está seguro de que quiere borrar la vista «%1»?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1018"/>
+        <location filename="../MainWindow.cpp" line="1016"/>
         <source>Are you sure you want to delete the trigger &apos;%1&apos;?</source>
         <translation>¿Está seguro de que quiere borrar el disparador «%1»?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1020"/>
+        <location filename="../MainWindow.cpp" line="1018"/>
         <source>Are you sure you want to delete the index &apos;%1&apos;?</source>
         <translation>¿Está seguro de que quiere borrar el índice «%1»?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1031"/>
+        <location filename="../MainWindow.cpp" line="1029"/>
         <source>Error: could not delete the table.</source>
         <translation>Error: no se pudo borrar la tabla.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1033"/>
+        <location filename="../MainWindow.cpp" line="1031"/>
         <source>Error: could not delete the view.</source>
         <translation>Error: no se pudo borrar la vista.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1035"/>
+        <location filename="../MainWindow.cpp" line="1033"/>
         <source>Error: could not delete the trigger.</source>
         <translation>Error: no se pudo borrar el disparador.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1037"/>
+        <location filename="../MainWindow.cpp" line="1035"/>
         <source>Error: could not delete the index.</source>
         <translation>Error: no se pudo borrar el índice.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1039"/>
+        <location filename="../MainWindow.cpp" line="1037"/>
         <source>Message from database engine:
 %1</source>
         <translation>Mensaje de la base de datos:
 %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1068"/>
+        <location filename="../MainWindow.cpp" line="1066"/>
         <source>Editing the table requires to save all pending changes now.
 Are you sure you want to save the database?</source>
         <translation>Para editar la tabla es necesario guardar antes todos los cambios pendientes.
@@ -4540,7 +4544,7 @@ Are you sure?</source>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2324"/>
-        <location filename="../MainWindow.cpp" line="2626"/>
+        <location filename="../MainWindow.cpp" line="2627"/>
         <source>Don&apos;t show again</source>
         <translation>No volver a mostrar</translation>
     </message>
@@ -4555,52 +4559,52 @@ Are you sure?</source>
         <translation>Hay disponible una nueva versión de «DB Browser for SQLite» (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Por favor, descárguela de &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3376"/>
+        <location filename="../MainWindow.cpp" line="3377"/>
         <source>creating collation</source>
         <translation>creando comparación</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3385"/>
+        <location filename="../MainWindow.cpp" line="3386"/>
         <source>Set a new name for the SQL tab. Use the &apos;&amp;&amp;&apos; character to allow using the following character as a keyboard shortcut.</source>
         <translation>Establezca el nuevo nombre para la pestaña SQL. Use el carácter «&amp;&amp;» para permitir usar el carácter siguiente como un atajo de teclado.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3428"/>
+        <location filename="../MainWindow.cpp" line="3429"/>
         <source>Please specify the view name</source>
         <translation>Por favor, especifique el nombre de la vista</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3432"/>
+        <location filename="../MainWindow.cpp" line="3433"/>
         <source>There is already an object with that name. Please choose a different name.</source>
         <translation>Ya hay un objeto con ese nombre. Por favor, elija un nombre diferente.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3439"/>
+        <location filename="../MainWindow.cpp" line="3440"/>
         <source>View successfully created.</source>
         <translation>Vista creada con éxito.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3441"/>
+        <location filename="../MainWindow.cpp" line="3442"/>
         <source>Error creating view: %1</source>
         <translation>Error creando la vista: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3456"/>
+        <location filename="../MainWindow.cpp" line="3457"/>
         <source>There is no filter set for this table. View will not be created.</source>
         <translation>No existe un filtro para esta tabla. La vista no será creada.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3494"/>
+        <location filename="../MainWindow.cpp" line="3495"/>
         <source>Delete Records</source>
         <translation>Borrar registros</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3501"/>
+        <location filename="../MainWindow.cpp" line="3502"/>
         <source>This action will open a new SQL tab for running:</source>
         <translation>Esta acción abrirá una nueva pestaña SQL para ejecutar:</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3503"/>
+        <location filename="../MainWindow.cpp" line="3504"/>
         <source>Press Help for opening the corresponding SQLite reference page.</source>
         <translation>Pulse Ayuda para abrir la página correspondiente de la referencia de SQLite.</translation>
     </message>
@@ -4629,40 +4633,40 @@ Are you sure?</source>
         <translation type="obsolete">Seleccione un archivo para abrir</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2522"/>
-        <location filename="../MainWindow.cpp" line="2788"/>
+        <location filename="../MainWindow.cpp" line="2523"/>
+        <location filename="../MainWindow.cpp" line="2789"/>
         <source>DB Browser for SQLite project file (*.sqbpro)</source>
         <translation>Archivo de proyecto de «DB Browser for SQLite» (*.sqbpro)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3194"/>
+        <location filename="../MainWindow.cpp" line="3195"/>
         <source>Please choose a new encoding for this table.</source>
         <translation>Por favor, elija una nueva codificación para esta tabla.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3192"/>
+        <location filename="../MainWindow.cpp" line="3193"/>
         <source>Please choose a new encoding for all tables.</source>
         <translation>Por favor, elija una nueva codificación para todas las tablas.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1087"/>
+        <location filename="../MainWindow.cpp" line="1085"/>
         <source>Error checking foreign keys after table modification. The changes will be reverted.</source>
         <translation>Error comprobando las claves foráneas tras la modificación de la tabla. Los cambios se desharán.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1090"/>
+        <location filename="../MainWindow.cpp" line="1088"/>
         <source>This table did not pass a foreign-key check.&lt;br/&gt;You should run &apos;Tools | Foreign-Key Check&apos; and fix the reported issues.</source>
         <translation>Esta tabla no ha pasado la comprobación de claves foráneas.&lt;br/&gt;Debería ejecutar &apos;Herramientas | Comprobar Claves foráneas&apos; y arreglar los problemas mostrados.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3197"/>
+        <location filename="../MainWindow.cpp" line="3198"/>
         <source>%1
 Leave the field empty for using the database encoding.</source>
         <translation>%1
 Deje este campo vacío para usar la codificación de la base de datos.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3209"/>
+        <location filename="../MainWindow.cpp" line="3210"/>
         <source>This encoding is either not valid or not supported.</source>
         <translation>Esta codificación no es válida o no está soportada.</translation>
     </message>
@@ -4678,12 +4682,12 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
 <context>
     <name>NullLineEdit</name>
     <message>
-        <location filename="../AddRecordDialog.cpp" line="39"/>
+        <location filename="../AddRecordDialog.cpp" line="40"/>
         <source>Set to NULL</source>
         <translation>Poner a NULL</translation>
     </message>
     <message>
-        <location filename="../AddRecordDialog.cpp" line="43"/>
+        <location filename="../AddRecordDialog.cpp" line="44"/>
         <source>Alt+Del</source>
         <translation></translation>
     </message>
@@ -5719,50 +5723,50 @@ Si decide continuar, está avisado de que la base de datos se puede dañar.
 %2</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="107"/>
+        <location filename="../RemoteDatabase.cpp" line="120"/>
         <source>Error when connecting to %1.
 %2</source>
         <translation>Error conectando a %1.
 %2</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="268"/>
+        <location filename="../RemoteDatabase.cpp" line="281"/>
         <source>Error opening remote file at %1.
 %2</source>
         <translation>Error abriendo el archivo remoto en %1.
 %2</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="341"/>
+        <location filename="../RemoteDatabase.cpp" line="354"/>
         <source>Error: Invalid client certificate specified.</source>
         <translation>Error: El certificado del cliente es inválido.</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="353"/>
+        <location filename="../RemoteDatabase.cpp" line="366"/>
         <source>Please enter the passphrase for this client certificate in order to authenticate.</source>
         <translation>Por favor, introduzca la clave de este certificado de cliente para autenticarse.</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="377"/>
+        <location filename="../RemoteDatabase.cpp" line="390"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="381"/>
+        <location filename="../RemoteDatabase.cpp" line="394"/>
         <source>Uploading remote database to
 %1</source>
         <translation>Subiendo base de datos remota a
 %1</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="383"/>
+        <location filename="../RemoteDatabase.cpp" line="396"/>
         <source>Downloading remote database from
 %1</source>
         <translation>Descargando base de datos remota desde
 %1</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="760"/>
+        <location filename="../RemoteDatabase.cpp" line="773"/>
         <source>The remote database has been updated since the last checkout. Do you want to update the local database to the newest version? Note that this discards any changes you have made locally! If you don&apos;t want to lose local changes, click No to open the local version.</source>
         <translation>La base de datos remota ha cambiado desde la última sincronización. ¿Desea actualizar la base de datos local a la versión más reciente? ¡Tenga en cuenta que esto descartará cualquier cambio que haya hecho localmente! Si no desea perder cambios locales, pulse «No» para abrir la versión local.</translation>
     </message>
@@ -5779,25 +5783,25 @@ Si decide continuar, está avisado de que la base de datos se puede dañar.
 %1.</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="400"/>
-        <location filename="../RemoteDatabase.cpp" line="453"/>
+        <location filename="../RemoteDatabase.cpp" line="413"/>
+        <location filename="../RemoteDatabase.cpp" line="466"/>
         <source>Error: The network is not accessible.</source>
         <translation>Error: La red no es accesible.</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="462"/>
+        <location filename="../RemoteDatabase.cpp" line="475"/>
         <source>Error: Cannot open the file for sending.</source>
         <translation>Error: No se puede abrir el archivo para enviar.</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="554"/>
+        <location filename="../RemoteDatabase.cpp" line="567"/>
         <source>Error opening local databases list.
 %1</source>
         <translation>Error abriendo la lista de bases de datos locales.
 %1</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="572"/>
+        <location filename="../RemoteDatabase.cpp" line="585"/>
         <source>Error creating local databases list.
 %1</source>
         <translation>Error creando la lista de bases de datos locales.
