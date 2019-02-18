@@ -167,6 +167,15 @@ void MainWindow::init()
     ogl->setHidden(true);
 #endif
 
+    // Automatic update check
+#ifdef CHECKNEWVERSION
+    connect(m_remoteDb, &RemoteDatabase::networkReady, [this]() {
+        // Check for a new version if automatic update check aren't disabled in the settings dialog
+        if(Settings::getValue("checkversion", "enabled").toBool())
+            m_remoteDb->fetch("https://download.sqlitebrowser.org/currentrelease", RemoteDatabase::RequestTypeNewVersionCheck);
+    });
+#endif
+
     // Connect SQL logging and database state setting to main window
     connect(&db, &DBBrowserDB::dbChanged, this, &MainWindow::dbState, Qt::QueuedConnection);
     connect(&db, &DBBrowserDB::sqlExecuted, this, &MainWindow::logSql, Qt::QueuedConnection);

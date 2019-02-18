@@ -30,11 +30,7 @@ RemoteDatabase::RemoteDatabase() :
     connect(m_configurationManager, &QNetworkConfigurationManager::updateCompleted, [this]() {
         m_manager->setConfiguration(m_configurationManager->defaultConfiguration());
 
-#ifdef CHECKNEWVERSION
-    // Check for a new version if automatic update check aren't disabled in the settings dialog
-    if(Settings::getValue("checkversion", "enabled").toBool())
-        fetch("https://download.sqlitebrowser.org/currentrelease", RemoteDatabase::RequestTypeNewVersionCheck);
-#endif
+        emit networkReady();
     });
 
     // Set up SSL configuration
