@@ -374,6 +374,11 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     connect(printAction, &QAction::triggered, [&]() {
        openPrintDialog();
     });
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
+    // This work arounds QTBUG-73721 and should be removed or limited in version scope when it is fixed.
+    setWordWrap(false);
+#endif
 }
 
 void ExtendedTableWidget::reloadSettings()
