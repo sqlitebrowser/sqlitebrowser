@@ -43,6 +43,8 @@ install:
 script:
 - mkdir build
 - mkdir build_cipher
+- mkdir appbuild
+- mkdir appdir
 - cd build
 - cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DENABLE_TESTING=ON ..
 - make
@@ -51,6 +53,21 @@ script:
 - cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DENABLE_TESTING=ON -Dsqlcipher=1 ..
 - make
 - ctest -V
+- cd ../appbuild
+- cmake -DCMAKE_INSTALL_PREFIX:PATH=../appdir/usr -Wno-dev -Dsqlcipher=1 ..
+- make install
+- cd ..
+- git rev-list master --count
+- wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/6/linuxdeployqt-6-x86_64.AppImage"
+- chmod a+x linuxdeployqt-6-x86_64.AppImage
+- export VERSION=$(printf "`master`-`git rev-list HEAD --count`-` git -C . rev-parse --short HEAD`")    #$(git rev-parse --short HEAD) # linuxdeployqt uses this for naming the file
+- ./linuxdeployqt-6-x86_64.AppImage appdir/usr/share/applications/*.desktop -appimage
+
+
+after_success:
+  - find appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq
+  - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
+  - bash upload.sh DB_Browser_for_SQLite*.AppImage*
 
 notifications:
   email:
