@@ -327,10 +327,6 @@ QString Field::affinity() const
     return "NUMERIC";
 }
 
-Table::~Table()
-{
-}
-
 Table& Table::operator=(const Table& rhs)
 {
     // Base class
@@ -1241,10 +1237,6 @@ QString IndexedColumn::toString(const QString& indent, const QString& sep) const
     return indent + name + order;
 }
 
-Index::~Index()
-{
-}
-
 Index& Index::operator=(const Index& rhs)
 {
     // Base class
@@ -1456,10 +1448,6 @@ void CreateIndexWalker::parsecolumn(Index* index, antlr::RefAST c)
 }
 
 
-
-View::~View()
-{
-}
 
 ViewPtr View::parseSQL(const QString& sSQL)
 {
