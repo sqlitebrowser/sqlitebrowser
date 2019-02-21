@@ -1311,7 +1311,7 @@ void MainWindow::doubleClickTable(const QModelIndex& index)
 
     // * Don't allow editing of other objects than tables (on the browse table) *
     bool isEditingAllowed = !db.readOnly() && m_currentTabTableModel == m_browseTableModel &&
-            (db.getObjectByName(currentlyBrowsedTableName())->type() == sqlb::Object::Types::Table);
+            m_browseTableModel->isEditable();
 
     // Enable or disable the Apply, Null, & Import buttons in the Edit Cell
     // dock depending on the value of the "isEditingAllowed" bool above
@@ -1335,7 +1335,7 @@ void MainWindow::dataTableSelectionChanged(const QModelIndex& index)
     }
 
     bool editingAllowed = !db.readOnly() && (m_currentTabTableModel == m_browseTableModel) &&
-            (db.getObjectByName(currentlyBrowsedTableName())->type() == sqlb::Object::Types::Table);
+            m_browseTableModel->isEditable();
 
     // Don't allow editing of other objects than tables
     editDock->setReadOnly(!editingAllowed);
