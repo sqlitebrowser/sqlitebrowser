@@ -573,14 +573,6 @@ bool DBBrowserDB::create ( const QString & db)
 
     if (_db)
     {
-        // Set foreign key settings as requested in the preferences
-        bool foreignkeys = Settings::getValue("db", "foreignkeys").toBool();
-        setPragma("foreign_keys", foreignkeys ? "1" : "0");
-
-        // Register REGEXP function
-        if(Settings::getValue("extensions", "disableregex").toBool() == false)
-            sqlite3_create_function(_db, "REGEXP", 2, SQLITE_UTF8, nullptr, regexp, nullptr, nullptr);
-
         // force sqlite3 do write proper file header
         // if we don't create and drop the table we might end up
         // with a 0 byte file, if the user cancels the create table dialog
@@ -590,19 +582,10 @@ bool DBBrowserDB::create ( const QString & db)
             executeSQL("DROP TABLE notempty;", false, false);
         }
 
-        // Load extensions
-        loadExtensionsFromSettings();
-
-        // Execute default SQL
-        QByteArray default_sql = Settings::getValue("db", "defaultsqltext").toByteArray();
-        if(!default_sql.isEmpty())
-            executeMultiSQL(default_sql, false, true);
-
-        curDBFilename = db;
-        isEncrypted = false;
-        isReadOnly = false;
-        updateSchema();
-        return true;
+        // Close database and open it through the code for opening existing database files. This is slightly less efficient but saves us some duplicate
+        // code.
+        sqlite3_close(_db);
+        return open(db);
     } else {
         return false;
     }
