@@ -1082,6 +1082,11 @@ You can drag SQL statements from an object row and drop them into other applicat
            <string>Application</string>
           </property>
          </item>
+         <item>
+          <property name="text">
+           <string>Error Log</string>
+          </property>
+         </item>
         </widget>
        </item>
        <item>
@@ -1135,6 +1140,17 @@ You can drag SQL statements from an object row and drop them into other applicat
         </property>
        </widget>
        <widget class="SqlTextEdit" name="editLogApplication">
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="ExtendedScintilla" name="editLogErrorLog">
         <property name="font">
          <font>
           <family>Monospace</family>
@@ -2523,6 +2539,12 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <signal>foreignKeyClicked(sqlb::ObjectIdentifier,QString,QByteArray)</signal>
    </slots>
   </customwidget>
+  <customwidget>
+   <class>ExtendedScintilla</class>
+   <extends>QTextEdit</extends>
+   <header>ExtendedScintilla.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>mainTab</tabstop>
@@ -3104,6 +3126,22 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <hint type="destinationlabel">
      <x>1028</x>
      <y>230</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonLogClear</sender>
+   <signal>clicked()</signal>
+   <receiver>editLogErrorLog</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>989</x>
+     <y>126</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>632</x>
+     <y>173</y>
     </hint>
    </hints>
   </connection>

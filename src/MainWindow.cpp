@@ -933,6 +933,7 @@ bool MainWindow::fileClose()
     // Clear the SQL Log
     ui->editLogApplication->clear();
     ui->editLogUser->clear();
+    ui->editLogErrorLog->clear();
 
     return true;
 }
@@ -2118,9 +2119,12 @@ void MainWindow::logSql(const QString& sql, int msgtype)
     {
         ui->editLogUser->append(sql + "\n");
         ui->editLogUser->verticalScrollBar()->setValue(ui->editLogUser->verticalScrollBar()->maximum());
-    } else {
+    } else if(msgtype == kLogMsg_App) {
         ui->editLogApplication->append(sql + "\n");
         ui->editLogApplication->verticalScrollBar()->setValue(ui->editLogApplication->verticalScrollBar()->maximum());
+    } else if(msgtype == kLogMsg_ErrorLog) {
+        ui->editLogErrorLog->append(sql + "\n");
+        ui->editLogErrorLog->verticalScrollBar()->setValue(ui->editLogErrorLog->verticalScrollBar()->maximum());
     }
 }
 
@@ -2378,8 +2382,10 @@ void MainWindow::reloadSettings()
     // Set font for SQL logs and edit dialog
     ui->editLogApplication->reloadSettings();
     ui->editLogUser->reloadSettings();
+    ui->editLogErrorLog->reloadSettings();
     ui->editLogApplication->setFont(logfont);
     ui->editLogUser->setFont(logfont);
+    ui->editLogErrorLog->setFont(logfont);
     editDock->reloadSettings();
 
     // Load extensions

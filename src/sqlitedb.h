@@ -15,10 +15,11 @@
 struct sqlite3;
 class CipherSettings;
 
-enum
+enum LogMessageType
 {
     kLogMsg_User,
-    kLogMsg_App
+    kLogMsg_App,
+    kLogMsg_ErrorLog
 };
 
 typedef QMultiMap<QString, sqlb::ObjectPtr> objectMap;      // Maps from object type (table, index, view, trigger) to a pointer to the object representation
@@ -211,7 +212,7 @@ public:
     QString currentFile() const { return curDBFilename; }
 
     /// log an SQL statement [thread-safe]
-    void logSQL(QString statement, int msgtype);
+    void logSQL(QString statement, LogMessageType msgtype);
 
     QString getPragma(const QString& pragma);
     bool setPragma(const QString& pragma, const QString& value);
@@ -262,7 +263,9 @@ private:
 
     QString primaryKeyForEditing(const sqlb::ObjectIdentifier& table, const QString& pseudo_pk) const;
 
+    // SQLite Callbacks
     void collationNeeded(void* pData, sqlite3* db, int eTextRep, const char* sCollationName);
+    void errorLogCallback(void* user_data, int error_code, const char* message);
 
     bool tryEncryptionSettings(const QString& filename, bool* encrypted, CipherSettings*& cipherSettings);
 

@@ -74,6 +74,13 @@ void DBBrowserDB::collationNeeded(void* /*pData*/, sqlite3* /*db*/, int eTextRep
     }
 }
 
+void DBBrowserDB::errorLogCallback(void* /*user_data*/, int error_code, const char* message)
+{
+    QString msg = QString("(%1) %2").arg(error_code).arg(message);
+
+    logSQL(msg, kLogMsg_ErrorLog);
+}
+
 static void regexp(sqlite3_context* ctx, int /*argc*/, sqlite3_value* argv[])
 {
     // Get arguments and check their values
@@ -114,6 +121,12 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
     CipherSettings* cipherSettings = nullptr;
     if(tryEncryptionSettings(db, &isEncrypted, cipherSettings) == false)
         return false;
+
+    // Register error log callback. We need to make sure SQLite is being shut down before calling sqlite3_config.
+    sqlite3_shutdown();
+    Callback<void(void*, int, const char*)>::func = std::bind(&DBBrowserDB::errorLogCallback, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+    void (*log_callback)(void*, int, const char*) = static_cast<decltype(log_callback)>(Callback<void(void*, int, const char*)>::callback);
+    sqlite3_config(SQLITE_CONFIG_LOG, log_callback, nullptr);
 
     // Open database file
     if(sqlite3_open_v2(db.toUtf8(), &_db, readOnly ? SQLITE_OPEN_READONLY : SQLITE_OPEN_READWRITE, nullptr) != SQLITE_OK)
@@ -1777,7 +1790,7 @@ objectMap DBBrowserDB::getBrowsableObjects(const QString& schema) const
     return res;
 }
 
-void DBBrowserDB::logSQL(QString statement, int msgtype)
+void DBBrowserDB::logSQL(QString statement, LogMessageType msgtype)
 {
     // Remove any leading and trailing spaces, tabs, or line breaks first
     statement = statement.trimmed();
