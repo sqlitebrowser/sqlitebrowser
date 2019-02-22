@@ -473,26 +473,33 @@ void PreferencesDialog::loadColorSetting(QFrame *frame, const QString & settingN
 void PreferencesDialog::setColorSetting(QFrame *frame, const QColor &color)
 {
     QPalette::ColorRole role;
+    QString style;
     QLineEdit *line;
 
     if (frame == ui->fr_bin_bg) {
         line = ui->txtBlob;
         role = line->backgroundRole();
+        style = QString("background-color");
     } else if (frame ==  ui->fr_bin_fg) {
         line = ui->txtBlob;
         role = line->foregroundRole();
+        style = QString("color");
     } else if (frame ==  ui->fr_reg_bg) {
         line = ui->txtRegular;
         role = line->backgroundRole();
+        style = QString("background-color");
     } else if (frame ==  ui->fr_reg_fg) {
         line = ui->txtRegular;
         role = line->foregroundRole();
+        style = QString("color");
     } else if (frame ==  ui->fr_null_bg) {
         line = ui->txtNull;
         role = line->backgroundRole();
+        style = QString("background-color");
     } else if (frame ==  ui->fr_null_fg) {
         line = ui->txtNull;
         role = line->foregroundRole();
+        style = QString("color");
     } else
         return;
 
@@ -500,9 +507,14 @@ void PreferencesDialog::setColorSetting(QFrame *frame, const QColor &color)
     palette.setColor(frame->backgroundRole(), color);
     frame->setPalette(palette);
 
+    frame->setStyleSheet(QString("background-color: %2").arg(color.name()));
+
     palette = line->palette();
     palette.setColor(role, color);
     line->setPalette(palette);
+
+    line->setStyleSheet(QString("color: %1; background-color: %2").arg(palette.color(line->foregroundRole()).name(),
+                                                                       palette.color(line->backgroundRole()).name()));
 }
 
 void PreferencesDialog::saveColorSetting(QFrame *frame, const QString & settingName)
