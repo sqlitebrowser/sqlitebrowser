@@ -2364,6 +2364,24 @@ void MainWindow::reloadSettings()
     // Set data browser font
     ui->dataTable->reloadSettings();
 
+    switch (static_cast<Settings::AppStyle>(Settings::getValue("General", "appStyle").toInt())) {
+    case Settings::FollowDesktopStyle :
+        qApp->setStyleSheet("");
+
+        break;
+    case Settings::DarkStyle :
+        QFile f(":qdarkstyle/style.qss");
+        if (!f.exists()) {
+            QMessageBox::warning(this, qApp->applicationName(),
+                               tr("Could not open find resource file: %1").arg(f.fileName()));
+        } else {
+            f.open(QFile::ReadOnly | QFile::Text);
+            QTextStream ts(&f);
+            qApp->setStyleSheet(ts.readAll());
+        }
+        break;
+    }
+
     setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(Settings::getValue("General", "toolbarStyle").toInt()));
     ui->dbToolbar->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(Settings::getValue("General", "toolbarStyleStructure").toInt()));
     ui->browseToolbar->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(Settings::getValue("General", "toolbarStyleBrowse").toInt()));

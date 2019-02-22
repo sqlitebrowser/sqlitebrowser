@@ -9,6 +9,11 @@ class Settings
     friend class PreferencesDialog;
 
 public:
+
+    enum AppStyle {
+        FollowDesktopStyle,
+        DarkStyle
+    };
     static QVariant getValue(const QString& group, const QString& name);
     static void setValue(const QString& group, const QString& name, const QVariant& value, bool dont_save_to_disk = false);
     static void restoreDefaults();
