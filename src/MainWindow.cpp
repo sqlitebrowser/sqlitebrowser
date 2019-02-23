@@ -1470,9 +1470,10 @@ void MainWindow::executeQuery()
         // Log the query and the result message.
         // The query takes the last placeholder as it may itself contain the sequence '%' + number.
         QString query = editor->text(from_position, to_position);
-        QString log_message = tr("-- At line %1:\n%3\n-- Result: %2").arg(execute_from_line+1).arg(status_message).arg(query.trimmed());
+        QString log_message = QString("-- " + tr("At line %1:") + "\n%3\n-- " + tr("Result: %2")).arg(execute_from_line+1).arg(status_message).arg(query.trimmed());
         db.logSQL(log_message, kLogMsg_User);
 
+        log_message = QString(tr("Result: %2") + "\n" + tr("At line %1:") + "\n%3").arg(execute_from_line+1).arg(status_message).arg(query.trimmed());
         // Update the execution area
         sqlWidget->finishExecution(log_message, ok);
     };
@@ -1550,9 +1551,9 @@ void MainWindow::executeQuery()
 
         // Show Done message
         if(sqlWidget->inErrorState())
-            sqlWidget->getStatusEdit()->setPlainText(tr("Execution finished with errors.") + "\n\n" + sqlWidget->getStatusEdit()->toPlainText());
+            sqlWidget->getStatusEdit()->setPlainText(tr("Execution finished with errors.") + "\n" + sqlWidget->getStatusEdit()->toPlainText());
         else
-            sqlWidget->getStatusEdit()->setPlainText(tr("Execution finished without errors.") + "\n\n" + sqlWidget->getStatusEdit()->toPlainText());
+            sqlWidget->getStatusEdit()->setPlainText(tr("Execution finished without errors.") + "\n" + sqlWidget->getStatusEdit()->toPlainText());
     });
 
     // Add an hourglass icon to the current tab to indicate that there's a running execution in there.
