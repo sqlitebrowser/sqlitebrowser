@@ -931,31 +931,9 @@ bool DBBrowserDB::executeMultiSQL(QByteArray query, bool dirty, bool log)
         return false;
     }
 
-    // Check if this SQL containts any transaction statements. If so remove them and create a savepoint instead by overriding the dirty parameter.
-    // TODO This should check for 'END TRANSACTION' too. It should be case insensitive and it should work with any amounts of whitespace etc. "Good" news
-    // is that none of this was ever done correctly before.
-    if(query.contains("BEGIN TRANSACTION;"))
-    {
-        query.replace("BEGIN TRANSACTION;", "                  ");
-        dirty = true;
-    }
-    if(query.contains("COMMIT;"))
-    {
-        query.replace("COMMIT;", "       ");
-        dirty = true;
-    }
-
     // Log the statement if needed
     if(log)
         logSQL(query, kLogMsg_App);
-
-    // Set DB to dirty/create restore point if necessary
-    QString savepoint_name;
-    if(dirty)
-    {
-        savepoint_name = generateSavepointName("execmultisql");
-        setSavepoint(savepoint_name);
-    }
 
     // Show progress dialog
     QProgressDialog progress(tr("Executing SQL..."),
@@ -973,6 +951,7 @@ bool DBBrowserDB::executeMultiSQL(QByteArray query, bool dirty, bool log)
     unsigned int line = 0;
     bool structure_updated = false;
     int last_progress_value = -1;
+    QString savepoint_name;
     while(tail && *tail != 0 && (res == SQLITE_OK || res == SQLITE_DONE))
     {
         line++;
@@ -1011,6 +990,25 @@ bool DBBrowserDB::executeMultiSQL(QByteArray query, bool dirty, bool log)
                     next_statement.compare(0, 4, "DROP") == 0 ||
                     next_statement.compare(0, 8, "ROLLBACK") == 0)
                 structure_updated = true;
+
+            // Check for transaction statements and skip until the next semicolon
+            if(next_statement.compare(0, 5, "COMMIT") == 0 ||
+                    next_statement.compare(0, 4, "END ") == 0 ||
+                    next_statement.compare(0, 6, "BEGIN ") == 0)
+            {
+                while(tail != tail_end)
+                {
+                    if(*++tail == ';')
+                        break;
+                }
+
+                // Set DB to dirty and create a restore point if we haven't done that yet
+                if(dirty && savepoint_name.isNull())
+                {
+                    savepoint_name = generateSavepointName("execmultisql");
+                    setSavepoint(savepoint_name);
+                }
+            }
         }
 
         // Execute next statement
