@@ -17,8 +17,6 @@ ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(const QString& colname, QSt
     ui->comboDisplayFormat->addItem(tr("Hex number"), "hex");
     ui->comboDisplayFormat->addItem(tr("Octal number"), "octal");
     ui->comboDisplayFormat->addItem(tr("Round number"), "round");
-    ui->comboDisplayFormat->addItem(tr("Base64"), "unBase64");
-    ui->comboDisplayFormat->addItem(tr("Plist"), "plist");
     ui->comboDisplayFormat->insertSeparator(ui->comboDisplayFormat->count());
     ui->comboDisplayFormat->addItem(tr("Apple NSDate to date"), "appleDate");
     ui->comboDisplayFormat->addItem(tr("Java epoch (milliseconds) to date"), "javaEpoch");
@@ -31,7 +29,6 @@ ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(const QString& colname, QSt
     ui->comboDisplayFormat->addItem(tr("Lower case"), "lower");
     ui->comboDisplayFormat->addItem(tr("Upper case"), "upper");
     ui->labelDisplayFormat->setText(ui->labelDisplayFormat->text().arg(column_name));
-
     formatFunctions["decimal"] = "printf('%d', " + sqlb::escapeIdentifier(column_name) + ")";
     formatFunctions["exponent"] = "printf('%e', " + sqlb::escapeIdentifier(column_name) + ")";
     formatFunctions["hexblob"] = "hex(" + sqlb::escapeIdentifier(column_name) + ")";
