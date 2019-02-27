@@ -41,6 +41,8 @@ PreferencesDialog::PreferencesDialog(QWidget* parent, Tabs tab)
 
     loadSettings();
 
+    connect(ui->appStyleCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(adjustColorsToStyle(int)));
+
     // Avoid different heights due to having check boxes or not
     ui->treeSyntaxHighlighting->setUniformRowHeights(true);
 
@@ -521,6 +523,26 @@ void PreferencesDialog::saveColorSetting(QFrame *frame, const QString & settingN
 {
     Settings::setValue("databrowser", settingName + "_colour",
         frame->palette().color(frame->backgroundRole()));
+}
+
+void PreferencesDialog::adjustColorsToStyle(int style)
+{
+    Settings::AppStyle appStyle = static_cast<Settings::AppStyle>(style);
+    setColorSetting(ui->fr_null_fg, Settings::getDefaultColorValue("databrowser", "null_fg_colour", appStyle));
+    setColorSetting(ui->fr_null_bg, Settings::getDefaultColorValue("databrowser", "null_bg_colour", appStyle));
+    setColorSetting(ui->fr_bin_fg, Settings::getDefaultColorValue("databrowser", "bin_fg_colour", appStyle));
+    setColorSetting(ui->fr_bin_bg, Settings::getDefaultColorValue("databrowser", "bin_bg_colour", appStyle));
+    setColorSetting(ui->fr_reg_fg, Settings::getDefaultColorValue("databrowser", "reg_fg_colour", appStyle));
+    setColorSetting(ui->fr_reg_bg, Settings::getDefaultColorValue("databrowser", "reg_bg_colour", appStyle));
+
+    for(int i=0; i < ui->treeSyntaxHighlighting->topLevelItemCount(); ++i)
+    {
+        QString name = ui->treeSyntaxHighlighting->topLevelItem(i)->text(0);
+        QColor color = Settings::getDefaultColorValue("syntaxhighlighter", name + "_colour", appStyle);
+        ui->treeSyntaxHighlighting->topLevelItem(i)->setTextColor(2, color);
+        ui->treeSyntaxHighlighting->topLevelItem(i)->setBackgroundColor(2, color);
+        ui->treeSyntaxHighlighting->topLevelItem(i)->setText(2, color.name());
+    }
 }
 
 void PreferencesDialog::activateRemoteTab(bool active)

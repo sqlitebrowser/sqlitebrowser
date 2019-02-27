@@ -509,6 +509,9 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="toolTip">
+          <string>When this value is changed, all the other color preferences are also set to matching colors.</string>
+         </property>
          <property name="currentIndex">
           <number>0</number>
          </property>
@@ -873,6 +876,9 @@ Can be set to 0 for disabling completion.</string>
               <property name="focusPolicy">
                <enum>Qt::StrongFocus</enum>
               </property>
+              <property name="toolTip">
+               <string>Click to set this color</string>
+              </property>
               <property name="autoFillBackground">
                <bool>true</bool>
               </property>
@@ -898,6 +904,9 @@ Can be set to 0 for disabling completion.</string>
              <widget class="QFrame" name="fr_null_fg">
               <property name="focusPolicy">
                <enum>Qt::StrongFocus</enum>
+              </property>
+              <property name="toolTip">
+               <string>Click to set this color</string>
               </property>
               <property name="autoFillBackground">
                <bool>true</bool>
@@ -925,6 +934,9 @@ Can be set to 0 for disabling completion.</string>
               <property name="focusPolicy">
                <enum>Qt::StrongFocus</enum>
               </property>
+              <property name="toolTip">
+               <string>Click to set this color</string>
+              </property>
               <property name="autoFillBackground">
                <bool>true</bool>
               </property>
@@ -940,6 +952,9 @@ Can be set to 0 for disabling completion.</string>
              <widget class="QFrame" name="fr_null_bg">
               <property name="focusPolicy">
                <enum>Qt::StrongFocus</enum>
+              </property>
+              <property name="toolTip">
+               <string>Click to set this color</string>
               </property>
               <property name="autoFillBackground">
                <bool>true</bool>
@@ -957,6 +972,9 @@ Can be set to 0 for disabling completion.</string>
               <property name="focusPolicy">
                <enum>Qt::StrongFocus</enum>
               </property>
+              <property name="toolTip">
+               <string>Click to set this color</string>
+              </property>
               <property name="autoFillBackground">
                <bool>true</bool>
               </property>
@@ -972,6 +990,9 @@ Can be set to 0 for disabling completion.</string>
              <widget class="QFrame" name="fr_reg_bg">
               <property name="focusPolicy">
                <enum>Qt::StrongFocus</enum>
+              </property>
+              <property name="toolTip">
+               <string>Click to set this color</string>
               </property>
               <property name="autoFillBackground">
                <bool>true</bool>
