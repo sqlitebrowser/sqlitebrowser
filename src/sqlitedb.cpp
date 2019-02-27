@@ -992,7 +992,7 @@ bool DBBrowserDB::executeMultiSQL(QByteArray query, bool dirty, bool log)
                 structure_updated = true;
 
             // Check for transaction statements and skip until the next semicolon
-            if(next_statement.compare(0, 5, "COMMIT") == 0 ||
+            if(next_statement.compare(0, 6, "COMMIT") == 0 ||
                     next_statement.compare(0, 4, "END ") == 0 ||
                     next_statement.compare(0, 6, "BEGIN ") == 0)
             {
