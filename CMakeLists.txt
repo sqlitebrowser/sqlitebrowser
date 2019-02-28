@@ -17,6 +17,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" "${CMAKE_MODULE_PATH}"
 OPTION(ENABLE_TESTING "Enable the unit tests" OFF)
 OPTION(FORCE_INTERNAL_ANTLR "Don't use the distribution's Antlr library even if there is one" OFF)
 OPTION(FORCE_INTERNAL_QSCINTILLA "Don't use the distribution's QScintilla library even if there is one" OFF)
+OPTION(ALL_WARNINGS "Enable some useful warning flags" OFF)
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release")
@@ -367,6 +368,16 @@ add_executable(${PROJECT_NAME}
 		${SQLB_RESOURCES_RCC}
 		${SQLB_MISC})
 
+
+# Warnings
+if (ALL_WARNINGS AND CMAKE_COMPILER_IS_GNUCC)
+    target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wsign-conversion)
+    target_compile_options(${PROJECT_NAME} PRIVATE -Wdouble-promotion -Wformat=2 -Wlogical-op -Wuseless-cast)
+    if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 7.0)
+        target_compile_options(${PROJECT_NAME} PRIVATE -Wnull-dereference -Wduplicated-cond -Wduplicated-branches)
+    endif()
+endif()
+
 add_dependencies(${PROJECT_NAME} qhexedit qcustomplot)
 if(NOT ANTLR2_FOUND)
     add_dependencies(${PROJECT_NAME} antlr)
@@ -389,13 +400,13 @@ endif()
 set(QT_LIBS Qt5::Gui Qt5::Test Qt5::PrintSupport Qt5::Widgets Qt5::Network Qt5::Concurrent Qt5::Xml)
 
 target_link_libraries(${PROJECT_NAME}
-		qhexedit
-		qcustomplot
+    qhexedit
+    qcustomplot
     ${LPTHREAD}
     ${QT_LIBS}
-		${WIN32_STATIC_LINK}
-		${LIBSQLITE}
-		${ADDITIONAL_LIBS})
+    ${WIN32_STATIC_LINK}
+    ${LIBSQLITE}
+    ${ADDITIONAL_LIBS})
 if(ANTLR2_FOUND)
     target_link_libraries(${PROJECT_NAME} ${ANTLR2_LIBRARIES})
 else()
@@ -432,7 +443,7 @@ if(ENABLE_TESTING)
 	add_subdirectory(src/tests)
 endif()
 
-if(UNIX AND NOT APPLE)
+if(UNIX)
 	install(FILES src/icons/${PROJECT_NAME}.png
 		DESTINATION share/icons/hicolor/256x256/apps/)
 
@@ -441,7 +452,7 @@ if(UNIX AND NOT APPLE)
 
 	install(FILES distri/${PROJECT_NAME}.desktop.appdata.xml
 		DESTINATION share/appdata/)
-endif(UNIX AND NOT APPLE)
+endif(UNIX)
 
 if(WIN32 AND MSVC)
 	install(TARGETS ${PROJECT_NAME}

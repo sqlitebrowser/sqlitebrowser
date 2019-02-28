@@ -19,6 +19,7 @@
 #include <functional>
 #include <atomic>
 #include <algorithm>
+#include <cctype>
 
 QStringList DBBrowserDB::Datatypes = QStringList() << "INTEGER" << "TEXT" << "BLOB" << "REAL" << "NUMERIC";
 
@@ -73,6 +74,13 @@ void DBBrowserDB::collationNeeded(void* /*pData*/, sqlite3* /*db*/, int eTextRep
     }
 }
 
+void DBBrowserDB::errorLogCallback(void* /*user_data*/, int error_code, const char* message)
+{
+    QString msg = QString("(%1) %2").arg(error_code).arg(message);
+
+    logSQL(msg, kLogMsg_ErrorLog);
+}
+
 static void regexp(sqlite3_context* ctx, int /*argc*/, sqlite3_value* argv[])
 {
     // Get arguments and check their values
@@ -114,6 +122,12 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
     if(tryEncryptionSettings(db, &isEncrypted, cipherSettings) == false)
         return false;
 
+    // Register error log callback. We need to make sure SQLite is being shut down before calling sqlite3_config.
+    sqlite3_shutdown();
+    Callback<void(void*, int, const char*)>::func = std::bind(&DBBrowserDB::errorLogCallback, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+    void (*log_callback)(void*, int, const char*) = static_cast<decltype(log_callback)>(Callback<void(void*, int, const char*)>::callback);
+    sqlite3_config(SQLITE_CONFIG_LOG, log_callback, nullptr);
+
     // Open database file
     if(sqlite3_open_v2(db.toUtf8(), &_db, readOnly ? SQLITE_OPEN_READONLY : SQLITE_OPEN_READWRITE, nullptr) != SQLITE_OK)
     {
@@ -128,8 +142,8 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
         executeSQL(QString("PRAGMA key = %1").arg(cipherSettings->getPassword()), false, false);
         executeSQL(QString("PRAGMA cipher_page_size = %1;").arg(cipherSettings->getPageSize()), false, false);
         executeSQL(QString("PRAGMA kdf_iter = %1;").arg(cipherSettings->getKdfIterations()), false, false);
-        executeSQL(QString("PRAGMA cipher_hmac_algorithm = HMAC_%1;").arg(cipherSettings->getHmacAlgorithm()), false, false);
-        executeSQL(QString("PRAGMA cipher_kdf_algorithm = PBKDF2_HMAC_%1;").arg(cipherSettings->getKdfAlgorithm()), false, false);
+        executeSQL(QString("PRAGMA cipher_hmac_algorithm = %1;").arg(cipherSettings->getHmacAlgorithm()), false, false);
+        executeSQL(QString("PRAGMA cipher_kdf_algorithm = %1;").arg(cipherSettings->getKdfAlgorithm()), false, false);
     }
 #endif
     delete cipherSettings;
@@ -165,7 +179,7 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
         // Execute default SQL
         if(!isReadOnly)
         {
-            QString default_sql = Settings::getValue("db", "defaultsqltext").toString();
+            QByteArray default_sql = Settings::getValue("db", "defaultsqltext").toByteArray();
             if(!default_sql.isEmpty())
                 executeMultiSQL(default_sql, false, true);
         }
@@ -230,32 +244,38 @@ bool DBBrowserDB::attach(const QString& filePath, QString attach_as)
     QString key;
     if(cipherSettings && is_encrypted)
         key = "KEY " + cipherSettings->getPassword();
+
     if(!executeSQL(QString("ATTACH '%1' AS %2 %3").arg(filePath).arg(sqlb::escapeIdentifier(attach_as)).arg(key), false))
     {
         QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
         return false;
     }
-    if(!executeSQL(QString("PRAGMA %1.cipher_page_size = %2").arg(sqlb::escapeIdentifier(attach_as)).arg(cipherSettings->getPageSize()), false))
+
+    // Only apply cipher settings if the database is encrypted
+    if(cipherSettings && is_encrypted)
     {
-        QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
-        return false;
+        if(!executeSQL(QString("PRAGMA %1.cipher_page_size = %2").arg(sqlb::escapeIdentifier(attach_as)).arg(cipherSettings->getPageSize()), false))
+        {
+            QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
+            return false;
+        }
+        if(!executeSQL(QString("PRAGMA %1.kdf_iter = %2").arg(sqlb::escapeIdentifier(attach_as)).arg(cipherSettings->getKdfIterations()), false))
+        {
+            QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
+            return false;
+        }
+        if(!executeSQL(QString("PRAGMA %1.cipher_hmac_algorithm = %2").arg(sqlb::escapeIdentifier(attach_as)).arg(cipherSettings->getHmacAlgorithm()), false))
+        {
+            QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
+            return false;
+        }
+        if(!executeSQL(QString("PRAGMA %1.cipher_kdf_algorithm = %2").arg(sqlb::escapeIdentifier(attach_as)).arg(cipherSettings->getKdfAlgorithm()), false))
+        {
+            QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
+            return false;
+        }
+        delete cipherSettings;
     }
-    if(!executeSQL(QString("PRAGMA %1.kdf_iter = %2").arg(sqlb::escapeIdentifier(attach_as)).arg(cipherSettings->getKdfIterations()), false))
-    {
-        QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
-        return false;
-    }
-    if(!executeSQL(QString("PRAGMA %1.cipher_hmac_algorithm = HMAC_%2").arg(sqlb::escapeIdentifier(attach_as)).arg(cipherSettings->getHmacAlgorithm()), false))
-    {
-        QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
-        return false;
-    }
-    if(!executeSQL(QString("PRAGMA %1.cipher_kdf_algorithm = PBKDF2_HMAC_%2").arg(sqlb::escapeIdentifier(attach_as)).arg(cipherSettings->getKdfAlgorithm()), false))
-    {
-        QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
-        return false;
-    }
-    delete cipherSettings;
 #else
     // Attach database
     if(!executeSQL(QString("ATTACH '%1' AS %2").arg(filePath).arg(sqlb::escapeIdentifier(attach_as)), false))
@@ -404,9 +424,9 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
             if(cipherSettings->getKdfIterations() != enc_default_kdf_iter)
                 sqlite3_exec(dbHandle, QString("PRAGMA kdf_iter = %1;").arg(cipherSettings->getKdfIterations()).toUtf8(), nullptr, nullptr, nullptr);
             if(cipherSettings->getHmacAlgorithm() != enc_default_hmac_algorithm)
-                sqlite3_exec(dbHandle, QString("PRAGMA cipher_hmac_algorithm = HMAC_%1;").arg(cipherSettings->getHmacAlgorithm()).toUtf8(), nullptr, nullptr, nullptr);
+                sqlite3_exec(dbHandle, QString("PRAGMA cipher_hmac_algorithm = %1;").arg(cipherSettings->getHmacAlgorithm()).toUtf8(), nullptr, nullptr, nullptr);
             if(cipherSettings->getKdfAlgorithm() != enc_default_kdf_algorithm)
-                sqlite3_exec(dbHandle, QString("PRAGMA cipher_kdf_algorithm = PBKDF2_HMAC_%1;").arg(cipherSettings->getKdfAlgorithm()).toUtf8(), nullptr, nullptr, nullptr);
+                sqlite3_exec(dbHandle, QString("PRAGMA cipher_kdf_algorithm = %1;").arg(cipherSettings->getKdfAlgorithm()).toUtf8(), nullptr, nullptr, nullptr);
 
             *encrypted = true;
 #else
@@ -559,14 +579,6 @@ bool DBBrowserDB::create ( const QString & db)
 
     if (_db)
     {
-        // Set foreign key settings as requested in the preferences
-        bool foreignkeys = Settings::getValue("db", "foreignkeys").toBool();
-        setPragma("foreign_keys", foreignkeys ? "1" : "0");
-
-        // Register REGEXP function
-        if(Settings::getValue("extensions", "disableregex").toBool() == false)
-            sqlite3_create_function(_db, "REGEXP", 2, SQLITE_UTF8, nullptr, regexp, nullptr, nullptr);
-
         // force sqlite3 do write proper file header
         // if we don't create and drop the table we might end up
         // with a 0 byte file, if the user cancels the create table dialog
@@ -576,19 +588,10 @@ bool DBBrowserDB::create ( const QString & db)
             executeSQL("DROP TABLE notempty;", false, false);
         }
 
-        // Load extensions
-        loadExtensionsFromSettings();
-
-        // Execute default SQL
-        QString default_sql = Settings::getValue("db", "defaultsqltext").toString();
-        if(!default_sql.isEmpty())
-            executeMultiSQL(default_sql, false, true);
-
-        curDBFilename = db;
-        isEncrypted = false;
-        isReadOnly = false;
-        updateSchema();
-        return true;
+        // Close database and open it through the code for opening existing database files. This is slightly less efficient but saves us some duplicate
+        // code.
+        sqlite3_close(_db);
+        return open(db);
     } else {
         return false;
     }
@@ -889,7 +892,23 @@ bool DBBrowserDB::dump(const QString& filePath,
     return false;
 }
 
-bool DBBrowserDB::executeSQL(QString statement, bool dirtyDB, bool logsql)
+// Callback for sqlite3_exec. It receives the user callback in the first parameter. Converts parameters
+// to C++ classes and calls user callback.
+int DBBrowserDB::callbackWrapper (void* callback, int numberColumns, char** values, char** columnNames)
+{
+    QStringList valuesList;
+    QStringList namesList;
+
+    for (int i=0; i<numberColumns; i++) {
+        valuesList << QString(values[i]);
+        namesList << QString(columnNames[i]);
+    }
+
+    execCallback userCallback = *(static_cast<execCallback*>(callback));
+    return userCallback(numberColumns, valuesList, namesList);
+}
+
+bool DBBrowserDB::executeSQL(QString statement, bool dirtyDB, bool logsql, execCallback callback)
 {
     waitForDbRelease();
     if(!_db)
@@ -904,7 +923,7 @@ bool DBBrowserDB::executeSQL(QString statement, bool dirtyDB, bool logsql)
     if (dirtyDB) setSavepoint();
 
     char* errmsg;
-    if (SQLITE_OK == sqlite3_exec(_db, statement.toUtf8(), nullptr, nullptr, &errmsg))
+    if (SQLITE_OK == sqlite3_exec(_db, statement.toUtf8(), callback ? callbackWrapper : nullptr, &callback, &errmsg))
     {
         // Update DB structure after executing an SQL statement. But try to avoid doing unnecessary updates.
         if(!dontCheckForStructureUpdates && (statement.startsWith("ALTER", Qt::CaseInsensitive) ||
@@ -918,11 +937,12 @@ bool DBBrowserDB::executeSQL(QString statement, bool dirtyDB, bool logsql)
         lastErrorMessage = QString("%1 (%2)").arg(QString::fromUtf8(errmsg)).arg(statement);
         qWarning() << "executeSQL: " << statement << "->" << errmsg;
         sqlite3_free(errmsg);
+
         return false;
     }
 }
 
-bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log)
+bool DBBrowserDB::executeMultiSQL(QByteArray query, bool dirty, bool log)
 {
     waitForDbRelease();
     if(!_db)
@@ -931,67 +951,88 @@ bool DBBrowserDB::executeMultiSQL(const QString& statement, bool dirty, bool log
         return false;
     }
 
-    QString query = statement.trimmed();
-
-    // Check if this SQL containts any transaction statements
-    QRegExp transactionRegex("^\\s*BEGIN TRANSACTION;|COMMIT;\\s*$");
-    if(query.contains(transactionRegex))
-    {
-        // If so remove them anc create a savepoint instead by overriding the dirty parameter
-        query.remove(transactionRegex);
-        dirty = true;
-    }
-
     // Log the statement if needed
     if(log)
         logSQL(query, kLogMsg_App);
 
-    // Set DB to dirty/create restore point if necessary
-    QString savepoint_name;
-    if(dirty)
-    {
-        savepoint_name = generateSavepointName("execmultisql");
-        setSavepoint(savepoint_name);
-    }
-
     // Show progress dialog
-    int statement_size = query.size();
     QProgressDialog progress(tr("Executing SQL..."),
-                             tr("Cancel"), 0, statement_size);
+                             tr("Cancel"), 0, 100);
     progress.setWindowModality(Qt::ApplicationModal);
     progress.show();
 
     // Execute the statement by looping until SQLite stops giving back a tail string
     sqlite3_stmt* vm;
-    QByteArray utf8Query = query.toUtf8();
-    const char *tail = utf8Query.data();
+    const char *tail = query.constData();
+    const char * const tail_start = tail;
+    const char * const tail_end = tail + query.size() + 1;
+    size_t total_tail_length = static_cast<size_t>(tail_end - tail_start);
     int res = SQLITE_OK;
     unsigned int line = 0;
     bool structure_updated = false;
+    int last_progress_value = -1;
+    QString savepoint_name;
     while(tail && *tail != 0 && (res == SQLITE_OK || res == SQLITE_DONE))
     {
         line++;
-        size_t tail_length = strlen(tail);
 
-        // Update progress dialog, keep UI responsive
-        progress.setValue(statement_size - tail_length);
-        qApp->processEvents();
-        if(progress.wasCanceled())
+        // Update progress dialog, keep UI responsive. Make sure to not spend too much time updating the progress dialog in case there are many small statements.
+        int progress_value = static_cast<int>(static_cast<float>(tail - tail_start) / total_tail_length * 100.0f);
+        if(progress_value > last_progress_value)
         {
-            lastErrorMessage = tr("Action cancelled.");
-            return false;
+            progress.setValue(progress_value);
+            qApp->processEvents();
+            if(progress.wasCanceled())
+            {
+                lastErrorMessage = tr("Action cancelled.");
+                return false;
+            }
+            last_progress_value = progress_value;
         }
 
         // Check whether the DB structure is changed by this statement
-        QString qtail = QString(tail);
-        if(!dontCheckForStructureUpdates && !structure_updated && (qtail.startsWith("ALTER", Qt::CaseInsensitive) ||
-                qtail.startsWith("CREATE", Qt::CaseInsensitive) ||
-                qtail.startsWith("DROP", Qt::CaseInsensitive) ||
-                qtail.startsWith("ROLLBACK", Qt::CaseInsensitive)))
-            structure_updated = true;
+        if(!dontCheckForStructureUpdates && !structure_updated)
+        {
+            // Ignore all whitespace at the start of the current tail
+            const char* tail_ptr = tail;
+            while(std::isspace(*tail_ptr))
+                tail_ptr++;
+
+            // Convert the first couple of bytes of the tail to a C++ string for easier handling. We only need the first 8 bytes (in cae it's a ROLLBACK
+            // statement), so no need to convert the entire tail. If the tail is less than 8 bytes long, make sure not to read past its end.
+            size_t length = std::min(static_cast<size_t>(tail_end - tail + 1), static_cast<size_t>(8));
+            std::string next_statement(tail_ptr, length);
+            std::transform(next_statement.begin(), next_statement.end(), next_statement.begin(), ::toupper);
+
+            // Check if it's a modifying statement
+            if(next_statement.compare(0, 5, "ALTER") == 0 ||
+                    next_statement.compare(0, 6, "CREATE") == 0 ||
+                    next_statement.compare(0, 4, "DROP") == 0 ||
+                    next_statement.compare(0, 8, "ROLLBACK") == 0)
+                structure_updated = true;
+
+            // Check for transaction statements and skip until the next semicolon
+            if(next_statement.compare(0, 6, "COMMIT") == 0 ||
+                    next_statement.compare(0, 4, "END ") == 0 ||
+                    next_statement.compare(0, 6, "BEGIN ") == 0)
+            {
+                while(tail != tail_end)
+                {
+                    if(*++tail == ';')
+                        break;
+                }
+
+                // Set DB to dirty and create a restore point if we haven't done that yet
+                if(dirty && savepoint_name.isNull())
+                {
+                    savepoint_name = generateSavepointName("execmultisql");
+                    setSavepoint(savepoint_name);
+                }
+            }
+        }
 
         // Execute next statement
-        res = sqlite3_prepare_v2(_db, tail, tail_length, &vm, &tail);
+        res = sqlite3_prepare_v2(_db, tail, tail_end - tail + 1, &vm, &tail);
         if(res == SQLITE_OK)
         {
             switch(sqlite3_step(vm))
@@ -1568,12 +1609,13 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
     }
 
     // Copy the data from the old table to the new one
-    if(!executeSQL(QString("INSERT INTO %1.%2 (%3) SELECT %4 FROM %5;")
+    if(!executeSQL(QString("INSERT INTO %1.%2 (%3) SELECT %4 FROM %5.%6;")
                    .arg(sqlb::escapeIdentifier(newSchemaName))
                    .arg(sqlb::escapeIdentifier(new_table_with_random_name.name()))
                    .arg(sqlb::escapeIdentifier(copy_values_to).join(","))
                    .arg(sqlb::escapeIdentifier(copy_values_from).join(","))
-                   .arg(tablename.toString())))
+                   .arg(sqlb::escapeIdentifier(tablename.schema()))
+                   .arg(sqlb::escapeIdentifier(old_table.name()))))
     {
         QString error(tr("Copying data to new table failed. DB says:\n%1").arg(lastErrorMessage));
         revertToSavepoint(savepointName);
@@ -1586,7 +1628,7 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
     for(auto it : schemata[tablename.schema()])
     {
         // If this object references the table and it's not the table itself save it's SQL string
-        if(it->baseTable() == tablename.name() && it->type() != sqlb::Object::Types::Table)
+        if(it->baseTable() == old_table.name() && it->type() != sqlb::Object::Types::Table)
         {
             // If this is an index, update the fields first. This highly increases the chance that the SQL statement won't throw an
             // error later on when we try to recreate it.
@@ -1637,7 +1679,7 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
     setPragma("defer_foreign_keys", "1");
 
     // Delete the old table
-    if(!executeSQL(QString("DROP TABLE %1;").arg(tablename.toString()), true, true))
+    if(!executeSQL(QString("DROP TABLE %1.%2;").arg(sqlb::escapeIdentifier(tablename.schema())).arg(sqlb::escapeIdentifier(old_table.name())), true, true))
     {
         QString error(tr("Deleting old table failed. DB says: %1").arg(lastErrorMessage));
         revertToSavepoint(savepointName);
@@ -1646,7 +1688,7 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
     }
 
     // Rename the temporary table
-    if(!renameTable(newSchemaName, new_table_with_random_name.name(), tablename.name()))
+    if(!renameTable(newSchemaName, new_table_with_random_name.name(), new_table.name()))
     {
         revertToSavepoint(savepointName);
         return false;
@@ -1735,7 +1777,7 @@ objectMap DBBrowserDB::getBrowsableObjects(const QString& schema) const
     return res;
 }
 
-void DBBrowserDB::logSQL(QString statement, int msgtype)
+void DBBrowserDB::logSQL(QString statement, LogMessageType msgtype)
 {
     // Remove any leading and trailing spaces, tabs, or line breaks first
     statement = statement.trimmed();

@@ -402,7 +402,6 @@ class Table : public Object
 {
 public:
     explicit Table(const QString& name): Object(name), m_rowidColumn("_rowid_") {}
-    ~Table() override;
     Table& operator=(const Table& rhs);
 
     bool operator==(const Table& rhs) const;
@@ -492,7 +491,6 @@ class Index : public Object
 {
 public:
     explicit Index(const QString& name): Object(name), m_unique(false) {}
-    ~Index() override;
     Index& operator=(const Index& rhs);
 
     Types type() const override { return Object::Index; }
@@ -539,7 +537,6 @@ class View : public Object
 {
 public:
     explicit View(const QString& name): Object(name) {}
-    ~View() override;
 
     Types type() const override { return Object::View; }
 
@@ -559,7 +556,6 @@ class Trigger : public Object
 {
 public:
     explicit Trigger(const QString& name): Object(name) {}
-    ~Trigger() override {}
 
     Types type() const override { return Object::Trigger; }
 

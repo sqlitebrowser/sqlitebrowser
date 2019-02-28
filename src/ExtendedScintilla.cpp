@@ -90,8 +90,7 @@ void ExtendedScintilla::updateLineNumberAreaWidth()
 
     // Calculate the width of this number if it was all zeros (this is because a 1 might require less space than a 0 and this could
     // cause some flickering depending on the font) and set the new margin width.
-    QFont font = lexer()->defaultFont();
-    setMarginWidth(0, QFontMetrics(font).width(QString("0").repeated(digits)) + 5);
+    setMarginWidth(0, QFontMetrics(font()).width(QString("0").repeated(digits)) + 5);
 }
 
 void ExtendedScintilla::dropEvent(QDropEvent* e)
@@ -147,13 +146,16 @@ void ExtendedScintilla::reloadSettings()
 void ExtendedScintilla::reloadLexerSettings(QsciLexer *lexer)
 {
     // Set syntax highlighting settings
-    QFont defaultfont(Settings::getValue("editor", "font").toString());
-    defaultfont.setStyleHint(QFont::TypeWriter);
-    defaultfont.setPointSize(Settings::getValue("editor", "fontsize").toInt());
-    lexer->setFont(defaultfont);
+    if(lexer)
+    {
+        QFont defaultfont(Settings::getValue("editor", "font").toString());
+        defaultfont.setStyleHint(QFont::TypeWriter);
+        defaultfont.setPointSize(Settings::getValue("editor", "fontsize").toInt());
+        lexer->setFont(defaultfont);
 
-    lexer->setDefaultColor(QColor(Settings::getValue("syntaxhighlighter", "foreground_colour").toString()));
-    lexer->setPaper(QColor(Settings::getValue("syntaxhighlighter", "background_colour").toString()));
+        lexer->setDefaultColor(QColor(Settings::getValue("syntaxhighlighter", "foreground_colour").toString()));
+        lexer->setPaper(QColor(Settings::getValue("syntaxhighlighter", "background_colour").toString()));
+    }
 
     // Set font
     QFont font(Settings::getValue("editor", "font").toString());
@@ -162,11 +164,8 @@ void ExtendedScintilla::reloadLexerSettings(QsciLexer *lexer)
     setFont(font);
 
     // Show line numbers
-    QFont marginsfont(QFont(Settings::getValue("editor", "font").toString()));
-    marginsfont.setPointSize(font.pointSize());
-    setMarginsFont(marginsfont);
+    setMarginsFont(font);
     setMarginLineNumbers(0, true);
-
     updateLineNumberAreaWidth();
 
     // Highlight current line
@@ -176,7 +175,8 @@ void ExtendedScintilla::reloadLexerSettings(QsciLexer *lexer)
 
     // Set tab width
     setTabWidth(Settings::getValue("editor", "tabsize").toInt());
-    lexer->refreshProperties();
+    if(lexer)
+        lexer->refreshProperties();
 
     // Set wrap lines
     setWrapMode(static_cast<QsciScintilla::WrapMode>(Settings::getValue("editor", "wrap_lines").toInt()));

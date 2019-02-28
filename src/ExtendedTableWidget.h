@@ -56,7 +56,7 @@ public slots:
     void reloadSettings();
     void selectTableLine(int lineToSelect);
     void selectTableLines(int firstLine, int count);
-    void selectAll();
+    void selectAll() override;
     void openPrintDialog();
 
 signals:
