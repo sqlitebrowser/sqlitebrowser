@@ -23,6 +23,11 @@ struct SortedColumn
         direction(direction_)
     {}
 
+    bool operator==(const SortedColumn& rhs) const
+    {
+        return column == rhs.column && direction == rhs.direction;
+    }
+
     int column;
     SortDirection direction;
 };

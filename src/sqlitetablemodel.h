@@ -88,6 +88,7 @@ public:
     void setChunkSize(size_t chunksize);
     size_t chunkSize() { return m_chunkSize; };
     void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
+    void sort(const std::vector<sqlb::SortedColumn>& columns);
     sqlb::ObjectIdentifier currentTableName() const { return m_query.table(); }
 
     Qt::ItemFlags flags(const QModelIndex& index) const override;
