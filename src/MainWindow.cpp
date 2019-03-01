@@ -2014,10 +2014,13 @@ void MainWindow::browseTableHeaderClicked(int logicalindex)
         applyBrowseTableSettings(settings);
         return;
     }
-    int dummy;
+    int column;
     Qt::SortOrder order;
-    fromSortOrderVector(settings.query.orderBy(), dummy, order);
-    order = order == Qt::AscendingOrder ? Qt::DescendingOrder : Qt::AscendingOrder;
+    fromSortOrderVector(settings.query.orderBy(), column, order);
+    if(column == logicalindex)
+        order = order == Qt::AscendingOrder ? Qt::DescendingOrder : Qt::AscendingOrder;
+    else
+        order = Qt::AscendingOrder;
     settings.query.orderBy() = toSortOrderVector(logicalindex, order);
     ui->dataTable->sortByColumn(logicalindex, order);
 
