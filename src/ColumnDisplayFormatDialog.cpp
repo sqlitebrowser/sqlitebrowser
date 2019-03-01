@@ -43,8 +43,6 @@ ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(DBBrowserDB& db, const sqlb
     formatFunctions["hex"] = "printf('0x%x', " + sqlb::escapeIdentifier(column_name) + ")";
     formatFunctions["octal"] = "printf('%o', " + sqlb::escapeIdentifier(column_name) + ")";
     formatFunctions["round"] = "round(" + sqlb::escapeIdentifier(column_name) + ")";
-    formatFunctions["unBase64"] = "unBase64(" + sqlb::escapeIdentifier(column_name) + ")";
-    formatFunctions["plist"] = "plist(" + sqlb::escapeIdentifier(column_name) + ")";
     formatFunctions["appleDate"] = "datetime('2001-01-01', " + sqlb::escapeIdentifier(column_name) + " || ' seconds')";
     formatFunctions["javaEpoch"] = "strftime('%Y-%m-%d %H:%M:%S.', " + sqlb::escapeIdentifier(column_name) +
             "/1000, 'unixepoch') || (" + sqlb::escapeIdentifier(column_name) + "%1000)";
