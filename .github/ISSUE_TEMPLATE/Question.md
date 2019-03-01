@@ -1,6 +1,9 @@
 ---
 name: Question
 about: Ask a question related to this project or SQLite in general
+title: ''
+labels: ''
+assignees: ''
 
 ---
 
