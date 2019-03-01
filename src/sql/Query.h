@@ -73,6 +73,7 @@ public:
 
     const std::vector<SortedColumn>& orderBy() const { return m_sort; }
     std::vector<SortedColumn>& orderBy() { return m_sort; }
+    void setOrderBy(const std::vector<SortedColumn>& columns) { m_sort = columns; }
 
 private:
     std::vector<std::string> m_column_names;

@@ -764,7 +764,7 @@ void MainWindow::populateTable()
         sqlb::Query query(tablename);
 
         // Sorting
-        query.orderBy() = storedData.query.orderBy();
+        query.setOrderBy(storedData.query.orderBy());
 
         // Filters
         for(auto it=storedData.filterValues.constBegin();it!=storedData.filterValues.constEnd();++it)
@@ -848,9 +848,12 @@ void MainWindow::applyBrowseTableSettings(BrowseDataTableSettings storedData, bo
 
     // Sorting
     // For now just use the first sort column for the sort indicator
-    ui->dataTable->filterHeader()->setSortIndicator(
-                storedData.query.orderBy().front().column,
-                storedData.query.orderBy().front().direction == sqlb::Ascending ? Qt::AscendingOrder : Qt::DescendingOrder);
+    if(storedData.query.orderBy().size())
+    {
+        ui->dataTable->filterHeader()->setSortIndicator(
+                    storedData.query.orderBy().front().column,
+                    storedData.query.orderBy().front().direction == sqlb::Ascending ? Qt::AscendingOrder : Qt::DescendingOrder);
+    }
 
     // Filters
     if(!skipFilters)
@@ -2581,7 +2584,7 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, QXmlS
     {
         int sortOrderIndex = xml.attributes().value("sort_order_index").toInt();
         Qt::SortOrder sortOrderMode = static_cast<Qt::SortOrder>(xml.attributes().value("sort_order_mode").toInt());
-        settings.query.orderBy() = toSortOrderVector(sortOrderIndex, sortOrderMode);
+        settings.query.setOrderBy(toSortOrderVector(sortOrderIndex, sortOrderMode));
     }
 
     settings.showRowid = xml.attributes().value("show_row_id").toInt();
