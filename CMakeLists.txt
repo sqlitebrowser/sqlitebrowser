@@ -226,6 +226,7 @@ set(SQLB_RESOURCES
 	src/translations/flags/flags.qrc
 	src/translations/translations.qrc
 	src/certs/CaCerts.qrc
+	src/qdarkstyle/style.qrc
 )
 
 set(SQLB_MISC
