@@ -17,6 +17,12 @@ bool isTextOnly(QByteArray data, const QString& encoding, bool quickTest)
     if(startsWithBom(data))
         return true;
 
+    // We can assume that the default encoding (UTF-8) cannot contain character zero.
+    // This has to be checked explicitly because toUnicode() is ignoring bytes beyond
+    // the zero.
+    if(encoding.isEmpty() && data.contains('\0'))
+        return false;
+
     // Truncate to the first couple of bytes for quick testing
     int testSize = quickTest? std::min(512, data.size()) : data.size();
     QTextCodec::ConverterState state;
