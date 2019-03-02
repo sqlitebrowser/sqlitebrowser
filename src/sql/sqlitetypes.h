@@ -444,6 +444,11 @@ public:
 
     field_iterator findPk();
 
+    bool hasPk() const;
+
+    void setOnConflictClause(const QString& onConflictClause);
+    QString onConflictClause() const;
+
     /**
      * @brief parseSQL Parses the create Table statement in sSQL.
      * @param sSQL The create table statement.
@@ -453,11 +458,13 @@ public:
 private:
     QStringList fieldList() const;
     bool hasAutoIncrement() const;
+    std::shared_ptr<PrimaryKeyConstraint> getPk() const;
 
 private:
     QString m_rowidColumn;
     ConstraintMap m_constraints;
     QString m_virtual;
+    mutable QString m_onConflictClause;
 };
 
 class IndexedColumn

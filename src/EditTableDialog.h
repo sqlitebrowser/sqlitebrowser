@@ -58,6 +58,7 @@ private slots:
     void moveDown();
     void setWithoutRowid(bool without_rowid);
     void changeSchema(const QString& schema);
+    void setOnConflict(const QString& on_conflict);
 
 private:
     Ui::EditTableDialog* ui;

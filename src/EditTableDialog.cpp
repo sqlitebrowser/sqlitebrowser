@@ -30,6 +30,10 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
     m_fkEditorDelegate = new ForeignKeyEditorDelegate(db, m_table, this);
     ui->treeWidget->setItemDelegateForColumn(kForeignKey, m_fkEditorDelegate);
 
+    ui->comboOnConflict->blockSignals(true);
+    ui->comboOnConflict->addItems({"", "ROLLBACK", "ABORT", "FAIL", "IGNORE", "REPLACE"});
+    ui->comboOnConflict->blockSignals(false);
+
     // Editing an existing table?
     if(m_bNewTable == false)
     {
@@ -50,12 +54,15 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
         ui->comboSchema->addItems(pdb.schemata.keys());         // Load list of database schemata
         ui->comboSchema->setCurrentText(curTable.schema());
         ui->comboSchema->blockSignals(false);
-
+        ui->checkWithoutRowid->blockSignals(true);
+        ui->comboOnConflict->setCurrentText(m_table.onConflictClause());
+        ui->checkWithoutRowid->blockSignals(false);
         populateFields();
     } else {
         ui->comboSchema->addItems(pdb.schemata.keys());         // Load list of database schemata
         ui->comboSchema->setCurrentText("main");                // Always create tables in the main schema by default
         ui->labelEditWarning->setVisible(false);
+        ui->comboOnConflict->setCurrentText("");
     }
 
     // And create a savepoint
@@ -695,6 +702,26 @@ void EditTableDialog::setWithoutRowid(bool without_rowid)
 
 void EditTableDialog::changeSchema(const QString& /*schema*/)
 {
+    // Update the SQL preview
+    updateSqlText();
+}
+
+void EditTableDialog::setOnConflict(const QString& on_conflict)
+{
+    if(m_table.hasPk())
+    {
+        m_table.setOnConflictClause(on_conflict);
+    } else {
+        QMessageBox::information(this, QApplication::applicationName(),
+                                 tr("Please add a field which meets the following criteria before setting on conflict clause:\n"
+                                    " - Primary key flag set"));
+
+        ui->comboOnConflict->blockSignals(true);
+        ui->comboOnConflict->setCurrentText("");
+        ui->comboOnConflict->blockSignals(false);
+        return;
+    }
+
     // Update the SQL preview
     updateSqlText();
 }

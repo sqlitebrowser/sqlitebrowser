@@ -335,6 +335,7 @@ Table& Table::operator=(const Table& rhs)
     // Just assign the strings
     m_rowidColumn = rhs.m_rowidColumn;
     m_virtual = rhs.m_virtual;
+    m_onConflictClause = rhs.m_onConflictClause;
 
     // Clear the fields and the constraints first in order to avoid duplicates and/or old data in the next step
     fields.clear();
@@ -360,7 +361,8 @@ bool Table::operator==(const Table& rhs) const
         return false;
     if(fields != rhs.fields)
         return false;
-
+    if(m_onConflictClause != rhs.m_onConflictClause)
+        return false;
     // We need to compare the constraint maps manually here. The reason is that the values are pointers and the default implementation
     // would compare the pointers not the actual objects.
     if(m_constraints.size() != rhs.m_constraints.size())
@@ -398,6 +400,36 @@ Table::field_iterator Table::findPk()
         return fields.end();
     else
         return findField(this, pk.at(0));
+}
+
+bool Table::hasPk() const {
+    return this->getPk() != nullptr;
+}
+
+std::shared_ptr<PrimaryKeyConstraint> Table::getPk() const {
+    auto constraint = this->constraint(QStringList(), sqlb::Constraint::PrimaryKeyConstraintType);
+    auto pk_constraint = std::dynamic_pointer_cast<sqlb::PrimaryKeyConstraint>(constraint);
+    return pk_constraint;
+}
+
+void Table::setOnConflictClause(const QString& onConflictClause) {
+    auto pk = getPk();
+    if (pk) {
+        m_onConflictClause = onConflictClause;
+        pk->setConflictAction(onConflictClause);
+    } else {
+        m_onConflictClause = "";
+    }
+}
+
+QString Table::onConflictClause() const {
+    auto pk = getPk();
+    if (pk) {
+        m_onConflictClause = pk->conflictAction();
+    } else {
+        m_onConflictClause = "";
+    }
+    return m_onConflictClause;
 }
 
 QStringList Table::fieldList() const
