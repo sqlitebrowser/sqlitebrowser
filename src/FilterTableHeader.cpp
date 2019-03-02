@@ -80,6 +80,9 @@ void FilterTableHeader::adjustPositions()
             w->move(sectionPosition(i) - offset(), w->sizeHint().height() + 2);   // The two adds some extra space between the header label and the input widget
         w->resize(sectionSize(i), w->sizeHint().height());
     }
+    // And finally add that extra space to the header so the filter box is not clipped.
+    if(filterWidgets.size() > 0)
+        setMinimumSize(sizeHint().width(), sizeHint().height() + 2);
 }
 
 void FilterTableHeader::inputChanged(const QString& new_value)
