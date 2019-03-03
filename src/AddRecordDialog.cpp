@@ -112,12 +112,12 @@ public:
     }
 };
 
-AddRecordDialog::AddRecordDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& tableName, QWidget* parent)
+AddRecordDialog::AddRecordDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& tableName, QWidget* parent, const QString &pseudo_pk)
     : QDialog(parent),
       ui(new Ui::AddRecordDialog),
       pdb(db),
       curTable(tableName),
-      m_table(*(pdb.getObjectByName<sqlb::Table>(curTable)))
+      pseudo_pk(pseudo_pk)
 {
     // Create UI
     ui->setupUi(this);
@@ -179,10 +179,28 @@ void AddRecordDialog::populateFields()
     ui->treeWidget->setItemDelegateForColumn(kType, new NoEditDelegate(this));
     ui->treeWidget->setItemDelegateForColumn(kValue, new EditDelegate(this));
 
-    const auto& fields = m_table.fields;
-    const QStringList& pk = m_table.primaryKey();
-    for(const sqlb::Field& f : fields)
+    sqlb::FieldVector fields;
+    QVector<sqlb::ConstraintPtr> fks;
+    QStringList pk;
+
+    // Initialize fields, fks and pk differently depending on whether it's a table or a view.
+    if (pseudo_pk.isNull())
     {
+        sqlb::TablePtr m_table = pdb.getObjectByName<sqlb::Table>(curTable);
+        fields = m_table->fields;
+        for(const sqlb::Field& f : fields)
+            fks.append(m_table->constraint({f.name()}, sqlb::Constraint::ForeignKeyConstraintType));
+        pk = m_table->primaryKey();
+    } else {
+        sqlb::ViewPtr m_view = pdb.getObjectByName<sqlb::View>(curTable);
+        fields = m_view->fields;
+        fks.fill(sqlb::ConstraintPtr(nullptr), fields.size());
+        pk = QStringList(pseudo_pk);
+    }
+
+    for(uint i = 0; i < fields.size(); i++)
+    {
+        const sqlb::Field& f = fields[i];
         QTreeWidgetItem *tbitem = new QTreeWidgetItem(ui->treeWidget);
 
         tbitem->setFlags(Qt::ItemIsEnabled | Qt::ItemIsEditable);
@@ -199,7 +217,7 @@ void AddRecordDialog::populateFields()
         }
         if (contains(pk, f.name()))
             tbitem->setIcon(kName, QIcon(":/icons/field_key"));
-        else if (m_table.constraint({f.name()}, sqlb::Constraint::ForeignKeyConstraintType))
+        else if (fks[i])
             tbitem->setIcon(kName, QIcon(":/icons/field_fk"));
         else
             tbitem->setIcon(kName, QIcon(":/icons/field"));
@@ -216,7 +234,7 @@ void AddRecordDialog::populateFields()
         if (!f.check().isEmpty())
             toolTip.append(tr("Check constraint:\t %1\n").arg (f.check()));
 
-        auto fk = std::dynamic_pointer_cast<sqlb::ForeignKeyClause>(m_table.constraint({f.name()}, sqlb::Constraint::ForeignKeyConstraintType));
+        auto fk = std::dynamic_pointer_cast<sqlb::ForeignKeyClause>(fks[i]);
         if(fk)
             toolTip.append(tr("Foreign key:\t %1\n").arg(fk->toString()));
 
