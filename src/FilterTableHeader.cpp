@@ -50,7 +50,7 @@ QSize FilterTableHeader::sizeHint() const
     // For the size hint just take the value of the standard implementation and add the height of a input widget to it if necessary
     QSize s = QHeaderView::sizeHint();
     if(filterWidgets.size())
-        s.setHeight(s.height() + filterWidgets.at(0)->sizeHint().height() + 5); // The 5 adds just adds some extra space
+        s.setHeight(s.height() + filterWidgets.at(0)->sizeHint().height() + 4); // The 4 adds just adds some extra space
     return s;
 }
 
@@ -74,15 +74,14 @@ void FilterTableHeader::adjustPositions()
     {
         // Get the current widget, move it and resize it
         QWidget* w = filterWidgets.at(i);
+        // The two adds some extra space between the header label and the input widget
+        int y = QHeaderView::sizeHint().height() + 2;
         if (QApplication::layoutDirection() == Qt::RightToLeft)
-            w->move(width() - (sectionPosition(i) + sectionSize(i) - offset()), w->sizeHint().height() + 2);   // The two adds some extra space between the header label and the input widget
+            w->move(width() - (sectionPosition(i) + sectionSize(i) - offset()), y);
         else
-            w->move(sectionPosition(i) - offset(), w->sizeHint().height() + 2);   // The two adds some extra space between the header label and the input widget
+            w->move(sectionPosition(i) - offset(), y);
         w->resize(sectionSize(i), w->sizeHint().height());
     }
-    // And finally add that extra space to the header so the filter box is not clipped.
-    if(filterWidgets.size() > 0)
-        setMinimumSize(sizeHint().width(), sizeHint().height() + 2);
 }
 
 void FilterTableHeader::inputChanged(const QString& new_value)
