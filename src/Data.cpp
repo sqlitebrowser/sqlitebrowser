@@ -17,10 +17,11 @@ bool isTextOnly(QByteArray data, const QString& encoding, bool quickTest)
     if(startsWithBom(data))
         return true;
 
-    // We can assume that the default encoding (UTF-8) cannot contain character zero.
-    // This has to be checked explicitly because toUnicode() is ignoring bytes beyond
-    // the zero.
-    if(encoding.isEmpty() && data.contains('\0'))
+    // We can assume that the default encoding (UTF-8) and all the ISO-8859
+    // cannot contain character zero.
+    // This has to be checked explicitly because toUnicode() is using zero as
+    // a terminator for these encodings.
+    if((encoding.isEmpty() || encoding.startsWith("ISO-8859")) && data.contains('\0'))
         return false;
 
     // Truncate to the first couple of bytes for quick testing
