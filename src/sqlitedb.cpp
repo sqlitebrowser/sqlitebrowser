@@ -168,10 +168,15 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
         if(Settings::getValue("extensions", "disableregex").toBool() == false)
             sqlite3_create_function(_db, "REGEXP", 2, SQLITE_UTF8, nullptr, regexp, nullptr, nullptr);
 
-        // Check if file is read only
-        QFileInfo fi(db);
-        QFileInfo fid(fi.absoluteDir().absolutePath());
-        isReadOnly = readOnly || !fi.isWritable() || !fid.isWritable();
+        // Check if file is read only. In-memory databases are never read only
+        if(db == ":memory:")
+        {
+            isReadOnly = false;
+        } else {
+            QFileInfo fi(db);
+            QFileInfo fid(fi.absoluteDir().absolutePath());
+            isReadOnly = readOnly || !fi.isWritable() || !fid.isWritable();
+        }
 
         // Load extensions
         loadExtensionsFromSettings();
