@@ -970,8 +970,7 @@ bool DBBrowserDB::executeMultiSQL(QByteArray query, bool dirty, bool log)
             last_progress_value = progress_value;
         }
 
-        // Check whether the DB structure is changed by this statement
-        if(!dontCheckForStructureUpdates && !structure_updated)
+        // Check next statement
         {
             // Ignore all whitespace at the start of the current tail
             const char* tail_ptr = tail;
@@ -984,13 +983,6 @@ bool DBBrowserDB::executeMultiSQL(QByteArray query, bool dirty, bool log)
             std::string next_statement(tail_ptr, length);
             std::transform(next_statement.begin(), next_statement.end(), next_statement.begin(), ::toupper);
 
-            // Check if it's a modifying statement
-            if(next_statement.compare(0, 5, "ALTER") == 0 ||
-                    next_statement.compare(0, 6, "CREATE") == 0 ||
-                    next_statement.compare(0, 4, "DROP") == 0 ||
-                    next_statement.compare(0, 8, "ROLLBACK") == 0)
-                structure_updated = true;
-
             // Check for transaction statements and skip until the next semicolon
             if(next_statement.compare(0, 6, "COMMIT") == 0 ||
                     next_statement.compare(0, 4, "END ") == 0 ||
@@ -998,16 +990,31 @@ bool DBBrowserDB::executeMultiSQL(QByteArray query, bool dirty, bool log)
             {
                 while(tail != tail_end)
                 {
-                    if(*++tail == ';')
+                    if(*tail++ == ';')
                         break;
                 }
 
                 // Set DB to dirty and create a restore point if we haven't done that yet
-                if(dirty && savepoint_name.isNull())
+                if(savepoint_name.isNull())
                 {
                     savepoint_name = generateSavepointName("execmultisql");
                     setSavepoint(savepoint_name);
+                    dirty = true;
                 }
+
+                // Don't just execute next statement. Start next statement with the same checks
+                continue;
+            }
+
+            // Check whether the DB structure is changed by this statement
+            if(!dontCheckForStructureUpdates && !structure_updated)
+            {
+                // Check if it's a modifying statement
+                if(next_statement.compare(0, 5, "ALTER") == 0 ||
+                        next_statement.compare(0, 6, "CREATE") == 0 ||
+                        next_statement.compare(0, 4, "DROP") == 0 ||
+                        next_statement.compare(0, 8, "ROLLBACK") == 0)
+                    structure_updated = true;
             }
         }
 
