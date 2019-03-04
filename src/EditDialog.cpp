@@ -864,7 +864,6 @@ void EditDialog::setFocus()
 void EditDialog::setReadOnly(bool ro)
 {
     isReadOnly = ro;
-    QPalette textEditPalette = ui->editorText->palette();
 
     ui->buttonApply->setEnabled(!ro);
     ui->actionNull->setEnabled(!ro);
@@ -874,24 +873,11 @@ void EditDialog::setReadOnly(bool ro)
     sciEdit->setReadOnly(ro);
     hexEdit->setReadOnly(ro);
 
-    // This makes the caret being visible for selection, although the editor is read-only.
+    // This makes the caret being visible for selection, although the editor is read-only. The read-only state is hinted by the
+    // caret not blinking. The same should happen for QScintilla, but it always lets the user select text by keyboard (ok) but
+    // the caret is also blinking when in read-only mode (not ok).
     Qt::TextInteractionFlags textFlags = ro? Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard : Qt::TextEditorInteraction;
     ui->editorText->setTextInteractionFlags(textFlags);
-
-    // If read-only, set the Disabled palette settings for the (in)active groups, so the user gets a hint about the text being read-only.
-    // This should be set also for the Scintilla widget, but it isn't working for that.
-    if (ro) {
-        textEditPalette.setColor(QPalette::Active, QPalette::Base, textEditPalette.color(QPalette::Disabled, QPalette::Base));
-        textEditPalette.setColor(QPalette::Inactive, QPalette::Base, textEditPalette.color(QPalette::Disabled, QPalette::Base));
-        textEditPalette.setColor(QPalette::Active, QPalette::Highlight, textEditPalette.color(QPalette::Disabled, QPalette::Highlight));
-        textEditPalette.setColor(QPalette::Inactive, QPalette::Highlight, textEditPalette.color(QPalette::Disabled, QPalette::Highlight));
-        textEditPalette.setColor(QPalette::Active, QPalette::HighlightedText, textEditPalette.color(QPalette::Disabled, QPalette::HighlightedText));
-        textEditPalette.setColor(QPalette::Inactive, QPalette::HighlightedText, textEditPalette.color(QPalette::Disabled, QPalette::HighlightedText));
-        ui->editorText->setPalette(textEditPalette);
-    } else {
-        // Restore default palette
-        ui->editorText->setPalette(QPalette());
-    }
 }
 
 void EditDialog::switchEditorMode(bool autoSwitchForType)
