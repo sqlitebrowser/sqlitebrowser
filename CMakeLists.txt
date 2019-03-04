@@ -62,6 +62,8 @@ if(WIN32 AND MSVC)
 	set(CMAKE_PREFIX_PATH "${QT5_PATH};${SQLITE3_PATH}")
 endif()
 
+find_package(Qt5 REQUIRED COMPONENTS Concurrent Gui LinguistTools Network PrintSupport Test Widgets Xml)
+
 if(NOT FORCE_INTERNAL_ANTLR)
     find_package(Antlr2 QUIET)
 endif()
@@ -86,8 +88,6 @@ if(NOT QCUSTOMPLOT_FOUND)
     set(QCUSTOMPLOT_DIR libs/qcustomplot-source)
     add_subdirectory(${QCUSTOMPLOT_DIR})
 endif()
-
-find_package(Qt5 REQUIRED COMPONENTS Concurrent Gui LinguistTools Network PrintSupport Test Widgets Xml)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)

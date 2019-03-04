@@ -44,7 +44,9 @@
 
 
 find_path ( QSCINTILLA_INCLUDE_DIR qsciscintilla.h
-  HINTS /usr/local/include/Qsci /usr/local/opt/qscintilla2/include/Qsci
+  HINTS /usr/local/include/Qsci
+        /usr/local/opt/qscintilla2/include/Qsci
+        ${Qt5Widgets_INCLUDE_DIRS}/Qsci
 )
 
 set ( QSCINTILLA_INCLUDE_DIRS ${QSCINTILLA_INCLUDE_DIR} )
@@ -79,7 +81,9 @@ endif ()
 
 find_library ( QSCINTILLA_LIBRARY
   NAMES qscintilla2 qscintilla2_qt5
-  HINTS /usr/local/lib /usr/local/opt/qscintilla2/lib
+  HINTS /usr/local/lib
+        /usr/local/opt/qscintilla2/lib
+        ${Qt5Widgets_LIBRARIES}
 )
 
 set ( QSCINTILLA_LIBRARIES ${QSCINTILLA_LIBRARY} )
