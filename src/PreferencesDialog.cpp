@@ -509,13 +509,13 @@ void PreferencesDialog::setColorSetting(QFrame *frame, const QColor &color)
     palette.setColor(frame->backgroundRole(), color);
     frame->setPalette(palette);
 
-    frame->setStyleSheet(QString("background-color: %2").arg(color.name()));
+    frame->setStyleSheet(QString(".QFrame {background-color: %2}").arg(color.name()));
 
     palette = line->palette();
     palette.setColor(role, color);
     line->setPalette(palette);
 
-    line->setStyleSheet(QString("color: %1; background-color: %2").arg(palette.color(line->foregroundRole()).name(),
+    line->setStyleSheet(QString(".QLineEdit {color: %1; background-color: %2}").arg(palette.color(line->foregroundRole()).name(),
                                                                        palette.color(line->backgroundRole()).name()));
 }
 
