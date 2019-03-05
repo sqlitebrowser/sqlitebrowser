@@ -61,11 +61,13 @@ if(WIN32 AND MSVC)
 	set(CMAKE_PREFIX_PATH "${QT5_PATH};${SQLITE3_PATH}")
 endif()
 
+find_package(Qt5 REQUIRED COMPONENTS Concurrent Gui LinguistTools Network PrintSupport Test Widgets Xml)
+
 if(NOT FORCE_INTERNAL_ANTLR)
     find_package(Antlr2 QUIET)
 endif()
 if(NOT FORCE_INTERNAL_QSCINTILLA)
-    find_package(QScintilla QUIET)
+    find_package(QScintilla 2.8.10 QUIET)
 endif()
 
 set(QHEXEDIT_DIR libs/qhexedit)
@@ -81,8 +83,6 @@ if(NOT QSCINTILLA_FOUND)
 endif()
 add_subdirectory(${QHEXEDIT_DIR})
 add_subdirectory(${QCUSTOMPLOT_DIR})
-
-find_package(Qt5 REQUIRED COMPONENTS Concurrent Gui LinguistTools Network PrintSupport Test Widgets Xml)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
