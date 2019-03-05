@@ -330,7 +330,6 @@ tryAgain:;
 void Sqlite3Lexer::mDIGIT(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = DIGIT;
-	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	matchRange(L'0',L'9');
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
@@ -338,26 +337,22 @@ void Sqlite3Lexer::mDIGIT(bool _createToken) {
 	   _token->setText(text.substr(_begin, text.length()-_begin));
 	}
 	_returnToken = _token;
-	_saveIndex=0;
 }
 
 void Sqlite3Lexer::mDOT(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = DOT;
-	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
 	   _token = makeToken(_ttype);
 	   _token->setText(text.substr(_begin, text.length()-_begin));
 	}
 	_returnToken = _token;
-	_saveIndex=0;
 }
 
 void Sqlite3Lexer::mID(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = ID;
-	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	{
 	switch ( LA(1)) {
@@ -470,13 +465,11 @@ void Sqlite3Lexer::mID(bool _createToken) {
 	   _token->setText(text.substr(_begin, text.length()-_begin));
 	}
 	_returnToken = _token;
-	_saveIndex=0;
 }
 
 void Sqlite3Lexer::mQUOTEDID(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = QUOTEDID;
-	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	switch ( LA(1)) {
 	case 0x60 /* '`' */ :
@@ -535,13 +528,11 @@ void Sqlite3Lexer::mQUOTEDID(bool _createToken) {
 	   _token->setText(text.substr(_begin, text.length()-_begin));
 	}
 	_returnToken = _token;
-	_saveIndex=0;
 }
 
 void Sqlite3Lexer::mQUOTEDLITERAL(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = QUOTEDLITERAL;
-	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	match(L'\"' /* charlit */ );
 	{ // ( ... )*
@@ -568,13 +559,11 @@ void Sqlite3Lexer::mQUOTEDLITERAL(bool _createToken) {
 	   _token->setText(text.substr(_begin, text.length()-_begin));
 	}
 	_returnToken = _token;
-	_saveIndex=0;
 }
 
 void Sqlite3Lexer::mNUMERIC(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = NUMERIC;
-	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	{
 	switch ( LA(1)) {
@@ -708,13 +697,11 @@ void Sqlite3Lexer::mNUMERIC(bool _createToken) {
 	   _token->setText(text.substr(_begin, text.length()-_begin));
 	}
 	_returnToken = _token;
-	_saveIndex=0;
 }
 
 void Sqlite3Lexer::mPLUS(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = PLUS;
-	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	match(L'+' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
@@ -722,13 +709,11 @@ void Sqlite3Lexer::mPLUS(bool _createToken) {
 	   _token->setText(text.substr(_begin, text.length()-_begin));
 	}
 	_returnToken = _token;
-	_saveIndex=0;
 }
 
 void Sqlite3Lexer::mMINUS(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = MINUS;
-	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	match(L'-' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
@@ -736,13 +721,11 @@ void Sqlite3Lexer::mMINUS(bool _createToken) {
 	   _token->setText(text.substr(_begin, text.length()-_begin));
 	}
 	_returnToken = _token;
-	_saveIndex=0;
 }
 
 void Sqlite3Lexer::mNL(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = NL;
-	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	{
 	switch ( LA(1)) {
@@ -768,13 +751,11 @@ void Sqlite3Lexer::mNL(bool _createToken) {
 	   _token->setText(text.substr(_begin, text.length()-_begin));
 	}
 	_returnToken = _token;
-	_saveIndex=0;
 }
 
 void Sqlite3Lexer::mCOMMENT(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = COMMENT;
-	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	{
 	switch ( LA(1)) {
@@ -840,13 +821,11 @@ void Sqlite3Lexer::mCOMMENT(bool _createToken) {
 	   _token->setText(text.substr(_begin, text.length()-_begin));
 	}
 	_returnToken = _token;
-	_saveIndex=0;
 }
 
 void Sqlite3Lexer::mWS(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = WS;
-	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	{
 	switch ( LA(1)) {
@@ -883,13 +862,11 @@ void Sqlite3Lexer::mWS(bool _createToken) {
 	   _token->setText(text.substr(_begin, text.length()-_begin));
 	}
 	_returnToken = _token;
-	_saveIndex=0;
 }
 
 void Sqlite3Lexer::mSTRINGLITERAL(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = STRINGLITERAL;
-	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	match(L'\'' /* charlit */ );
 	{ // ( ... )*
@@ -916,13 +893,11 @@ void Sqlite3Lexer::mSTRINGLITERAL(bool _createToken) {
 	   _token->setText(text.substr(_begin, text.length()-_begin));
 	}
 	_returnToken = _token;
-	_saveIndex=0;
 }
 
 void Sqlite3Lexer::mLPAREN(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = LPAREN;
-	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	match(L'(' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
@@ -930,13 +905,11 @@ void Sqlite3Lexer::mLPAREN(bool _createToken) {
 	   _token->setText(text.substr(_begin, text.length()-_begin));
 	}
 	_returnToken = _token;
-	_saveIndex=0;
 }
 
 void Sqlite3Lexer::mRPAREN(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = RPAREN;
-	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	match(L')' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
@@ -944,13 +917,11 @@ void Sqlite3Lexer::mRPAREN(bool _createToken) {
 	   _token->setText(text.substr(_begin, text.length()-_begin));
 	}
 	_returnToken = _token;
-	_saveIndex=0;
 }
 
 void Sqlite3Lexer::mCOMMA(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = COMMA;
-	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	match(L',' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
@@ -958,13 +929,11 @@ void Sqlite3Lexer::mCOMMA(bool _createToken) {
 	   _token->setText(text.substr(_begin, text.length()-_begin));
 	}
 	_returnToken = _token;
-	_saveIndex=0;
 }
 
 void Sqlite3Lexer::mSEMI(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = SEMI;
-	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	match(L';' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
@@ -972,13 +941,11 @@ void Sqlite3Lexer::mSEMI(bool _createToken) {
 	   _token->setText(text.substr(_begin, text.length()-_begin));
 	}
 	_returnToken = _token;
-	_saveIndex=0;
 }
 
 void Sqlite3Lexer::mSTAR(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = STAR;
-	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	match(L'*' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
@@ -986,13 +953,11 @@ void Sqlite3Lexer::mSTAR(bool _createToken) {
 	   _token->setText(text.substr(_begin, text.length()-_begin));
 	}
 	_returnToken = _token;
-	_saveIndex=0;
 }
 
 void Sqlite3Lexer::mTILDE(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = TILDE;
-	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	match(L'~' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
@@ -1000,13 +965,11 @@ void Sqlite3Lexer::mTILDE(bool _createToken) {
 	   _token->setText(text.substr(_begin, text.length()-_begin));
 	}
 	_returnToken = _token;
-	_saveIndex=0;
 }
 
 void Sqlite3Lexer::mAMPERSAND(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = AMPERSAND;
-	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	match(L'&' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
@@ -1014,13 +977,11 @@ void Sqlite3Lexer::mAMPERSAND(bool _createToken) {
 	   _token->setText(text.substr(_begin, text.length()-_begin));
 	}
 	_returnToken = _token;
-	_saveIndex=0;
 }
 
 void Sqlite3Lexer::mBITOR(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = BITOR;
-	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	match(L'|' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
@@ -1028,13 +989,11 @@ void Sqlite3Lexer::mBITOR(bool _createToken) {
 	   _token->setText(text.substr(_begin, text.length()-_begin));
 	}
 	_returnToken = _token;
-	_saveIndex=0;
 }
 
 void Sqlite3Lexer::mOROP(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = OROP;
-	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	mBITOR(false);
 	mBITOR(false);
@@ -1043,13 +1002,11 @@ void Sqlite3Lexer::mOROP(bool _createToken) {
 	   _token->setText(text.substr(_begin, text.length()-_begin));
 	}
 	_returnToken = _token;
-	_saveIndex=0;
 }
 
 void Sqlite3Lexer::mEQUAL(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = EQUAL;
-	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	match(L'=' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
@@ -1057,13 +1014,11 @@ void Sqlite3Lexer::mEQUAL(bool _createToken) {
 	   _token->setText(text.substr(_begin, text.length()-_begin));
 	}
 	_returnToken = _token;
-	_saveIndex=0;
 }
 
 void Sqlite3Lexer::mEQUAL2(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = EQUAL2;
-	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	mEQUAL(false);
 	mEQUAL(false);
@@ -1072,13 +1027,11 @@ void Sqlite3Lexer::mEQUAL2(bool _createToken) {
 	   _token->setText(text.substr(_begin, text.length()-_begin));
 	}
 	_returnToken = _token;
-	_saveIndex=0;
 }
 
 void Sqlite3Lexer::mGREATER(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = GREATER;
-	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	match(L'>' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
@@ -1086,13 +1039,11 @@ void Sqlite3Lexer::mGREATER(bool _createToken) {
 	   _token->setText(text.substr(_begin, text.length()-_begin));
 	}
 	_returnToken = _token;
-	_saveIndex=0;
 }
 
 void Sqlite3Lexer::mGREATEREQUAL(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = GREATEREQUAL;
-	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	mGREATER(false);
 	mEQUAL(false);
@@ -1101,13 +1052,11 @@ void Sqlite3Lexer::mGREATEREQUAL(bool _createToken) {
 	   _token->setText(text.substr(_begin, text.length()-_begin));
 	}
 	_returnToken = _token;
-	_saveIndex=0;
 }
 
 void Sqlite3Lexer::mLOWER(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = LOWER;
-	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	match(L'<' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
@@ -1115,13 +1064,11 @@ void Sqlite3Lexer::mLOWER(bool _createToken) {
 	   _token->setText(text.substr(_begin, text.length()-_begin));
 	}
 	_returnToken = _token;
-	_saveIndex=0;
 }
 
 void Sqlite3Lexer::mLOWEREQUAL(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = LOWEREQUAL;
-	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	mLOWER(false);
 	mEQUAL(false);
@@ -1130,13 +1077,11 @@ void Sqlite3Lexer::mLOWEREQUAL(bool _createToken) {
 	   _token->setText(text.substr(_begin, text.length()-_begin));
 	}
 	_returnToken = _token;
-	_saveIndex=0;
 }
 
 void Sqlite3Lexer::mUNEQUAL(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = UNEQUAL;
-	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	match(L'!' /* charlit */ );
 	mEQUAL(false);
@@ -1145,13 +1090,11 @@ void Sqlite3Lexer::mUNEQUAL(bool _createToken) {
 	   _token->setText(text.substr(_begin, text.length()-_begin));
 	}
 	_returnToken = _token;
-	_saveIndex=0;
 }
 
 void Sqlite3Lexer::mUNEQUAL2(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = UNEQUAL2;
-	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	mLOWER(false);
 	mGREATER(false);
@@ -1160,13 +1103,11 @@ void Sqlite3Lexer::mUNEQUAL2(bool _createToken) {
 	   _token->setText(text.substr(_begin, text.length()-_begin));
 	}
 	_returnToken = _token;
-	_saveIndex=0;
 }
 
 void Sqlite3Lexer::mBITWISELEFT(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = BITWISELEFT;
-	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	mLOWER(false);
 	mLOWER(false);
@@ -1175,13 +1116,11 @@ void Sqlite3Lexer::mBITWISELEFT(bool _createToken) {
 	   _token->setText(text.substr(_begin, text.length()-_begin));
 	}
 	_returnToken = _token;
-	_saveIndex=0;
 }
 
 void Sqlite3Lexer::mBITWISERIGHT(bool _createToken) {
 	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
 	_ttype = BITWISERIGHT;
-	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	mGREATER(false);
 	mGREATER(false);
@@ -1190,7 +1129,6 @@ void Sqlite3Lexer::mBITWISERIGHT(bool _createToken) {
 	   _token->setText(text.substr(_begin, text.length()-_begin));
 	}
 	_returnToken = _token;
-	_saveIndex=0;
 }
 
 
