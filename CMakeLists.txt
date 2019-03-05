@@ -17,6 +17,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" "${CMAKE_MODULE_PATH}"
 OPTION(ENABLE_TESTING "Enable the unit tests" OFF)
 OPTION(FORCE_INTERNAL_ANTLR "Don't use the distribution's Antlr library even if there is one" OFF)
 OPTION(FORCE_INTERNAL_QSCINTILLA "Don't use the distribution's QScintilla library even if there is one" OFF)
+OPTION(EXTERNAL_QCUSTOMPLOT "Use distribution's QCustomPlot if available" OFF)
 OPTION(ALL_WARNINGS "Enable some useful warning flags" OFF)
 
 if(NOT CMAKE_BUILD_TYPE)
@@ -67,9 +68,10 @@ endif()
 if(NOT FORCE_INTERNAL_QSCINTILLA)
     find_package(QScintilla QUIET)
 endif()
-
+if(EXTERNAL_QCUSTOMPLOT)
+    find_package(QCustomPlot)
+endif()
 set(QHEXEDIT_DIR libs/qhexedit)
-set(QCUSTOMPLOT_DIR libs/qcustomplot-source)
 
 if(NOT ANTLR2_FOUND)
     set(ANTLR_DIR libs/antlr-2.7.7)
@@ -80,7 +82,10 @@ if(NOT QSCINTILLA_FOUND)
     add_subdirectory(${QSCINTILLA_DIR})
 endif()
 add_subdirectory(${QHEXEDIT_DIR})
-add_subdirectory(${QCUSTOMPLOT_DIR})
+if(NOT QCUSTOMPLOT_FOUND)
+    set(QCUSTOMPLOT_DIR libs/qcustomplot-source)
+    add_subdirectory(${QCUSTOMPLOT_DIR})
+endif()
 
 find_package(Qt5 REQUIRED COMPONENTS Concurrent Gui LinguistTools Network PrintSupport Test Widgets Xml)
 
@@ -347,9 +352,13 @@ endif()
 include_directories(
 		"${CMAKE_CURRENT_BINARY_DIR}"
 		${QHEXEDIT_DIR}
-		${QCUSTOMPLOT_DIR}
 		${ADDITIONAL_INCLUDE_PATHS}
 		src)
+if(QCUSTOMPLOT_FOUND)
+    include_directories(${QCUSTOMPLOT_INCLUDE_DIR})
+else()
+    include_directories(${QCUSTOMPLOT_DIR})
+endif()
 if(ANTLR2_FOUND)
     include_directories(${ANTLR2_INCLUDE_DIRS})
 else()
@@ -379,7 +388,10 @@ if (ALL_WARNINGS AND CMAKE_COMPILER_IS_GNUCC)
     endif()
 endif()
 
-add_dependencies(${PROJECT_NAME} qhexedit qcustomplot)
+add_dependencies(${PROJECT_NAME} qhexedit)
+if(NOT QCUSTOMPLOT_FOUND)
+    add_dependencies(${PROJECT_NAME} qcustomplot)
+endif()
 if(NOT ANTLR2_FOUND)
     add_dependencies(${PROJECT_NAME} antlr)
 endif()
@@ -389,8 +401,10 @@ endif()
 
 link_directories(
 	"${CMAKE_CURRENT_BINARY_DIR}/${QHEXEDIT_DIR}"
-	"${CMAKE_CURRENT_BINARY_DIR}/${QCUSTOMPLOT_DIR}"
 )
+if(NOT QCUSTOMPLOT_FOUND)
+    link_directories("${CMAKE_CURRENT_BINARY_DIR}/${QCUSTOMPLOT_DIR}")
+endif()
 if(NOT ANTLR2_FOUND)
     link_directories("${CMAKE_CURRENT_BINARY_DIR}/${ANTLR_DIR}")
 endif()
@@ -402,12 +416,16 @@ set(QT_LIBS Qt5::Gui Qt5::Test Qt5::PrintSupport Qt5::Widgets Qt5::Network Qt5::
 
 target_link_libraries(${PROJECT_NAME}
     qhexedit
-    qcustomplot
     ${LPTHREAD}
     ${QT_LIBS}
     ${WIN32_STATIC_LINK}
     ${LIBSQLITE}
     ${ADDITIONAL_LIBS})
+if(QCUSTOMPLOT_FOUND)
+    target_link_libraries(${PROJECT_NAME} ${QCUSTOMPLOT_LIBRARIES})
+else()
+    target_link_libraries(${PROJECT_NAME} qcustomplot)
+endif()
 if(ANTLR2_FOUND)
     target_link_libraries(${PROJECT_NAME} ${ANTLR2_LIBRARIES})
 else()
