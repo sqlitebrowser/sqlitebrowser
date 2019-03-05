@@ -20,6 +20,7 @@ class ColumnDisplayFormatDialog : public QDialog
 public:
     explicit ColumnDisplayFormatDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& tableName, const QString& colname, QString current_format, QWidget* parent = nullptr);
     ~ColumnDisplayFormatDialog() override;
+
     QString selectedDisplayFormat() const;
 
 private slots:

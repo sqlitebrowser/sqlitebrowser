@@ -37,6 +37,7 @@ ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(DBBrowserDB& db, const sqlb
     ui->comboDisplayFormat->addItem(tr("Custom"), "custom");
 
     ui->labelDisplayFormat->setText(ui->labelDisplayFormat->text().arg(column_name));
+
     formatFunctions["decimal"] = "printf('%d', " + sqlb::escapeIdentifier(column_name) + ")";
     formatFunctions["exponent"] = "printf('%e', " + sqlb::escapeIdentifier(column_name) + ")";
     formatFunctions["hexblob"] = "hex(" + sqlb::escapeIdentifier(column_name) + ")";
