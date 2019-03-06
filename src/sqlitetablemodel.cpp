@@ -608,6 +608,11 @@ QString SqliteTableModel::customQuery(bool withRowid)
         selector.chop(1);
     }
 
+    // ORDER BY part
+    QString order_by;
+    if(m_iSortColumn >= 0 && m_iSortColumn < m_headers.size())
+        order_by = QString("ORDER BY %1 %2").arg(sqlb::escapeIdentifier(m_headers.at(m_iSortColumn))).arg(m_sSortOrder);
+
     // Note: Building the SQL string is intentionally split into several parts here instead of arg()'ing it all together as one.
     // The reason is that we're adding '%' characters automatically around search terms (and even if we didn't the user could add
     // them manually) which means that e.g. searching for '1' results in another '%1' in the string which then totally confuses
@@ -616,9 +621,7 @@ QString SqliteTableModel::customQuery(bool withRowid)
             .arg(selector)
             .arg(m_sTable.toString())
             + where
-            + QString("ORDER BY %1 %2")
-            .arg(sqlb::escapeIdentifier(m_headers.at(m_iSortColumn)))
-            .arg(m_sSortOrder);
+            + order_by;
 }
 
 void SqliteTableModel::buildQuery()
