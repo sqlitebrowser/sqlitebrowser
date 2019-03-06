@@ -7,7 +7,7 @@
  *
  *    Compile using:
  *
- *       gcc -g -fPIC -shared extension-formats.c -o extension-formats.so
+ *       gcc -g -fPIC -shared extension-formats.c -o libsqlite-formats.so
  */
 
 #include <stdio.h>
