@@ -875,7 +875,7 @@ Aborting execution%3.</translation>
         <location filename="../EditDialog.cpp" line="770"/>
         <location filename="../EditDialog.cpp" line="960"/>
         <location filename="../EditDialog.cpp" line="968"/>
-        <source>%n char(s)</source>
+        <source>%n character(s)</source>
         <translation>
             <numerusform>%n char</numerusform>
             <numerusform>%n chars</numerusform>

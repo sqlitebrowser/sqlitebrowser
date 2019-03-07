@@ -1065,7 +1065,7 @@ Errors are indicated with a red squiggle underline.</source>
         <location filename="../EditDialog.cpp" line="767"/>
         <location filename="../EditDialog.cpp" line="957"/>
         <location filename="../EditDialog.cpp" line="965"/>
-        <source>%n char(s)</source>
+        <source>%n character(s)</source>
         <translation>
             <numerusform>%n символ </numerusform>
             <numerusform>%n символу </numerusform>

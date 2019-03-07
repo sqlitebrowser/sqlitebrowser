@@ -771,7 +771,7 @@ void EditDialog::editTextChanged()
             ui->editorText->setPlaceholderText("");
             ui->labelType->setText(tr("Type of data currently in cell: Text / Numeric"));
         }
-        ui->labelSize->setText(tr("%n char(s)", "", dataLength));
+        ui->labelSize->setText(tr("%n character(s)", "", dataLength));
     }
 }
 
@@ -951,7 +951,7 @@ void EditDialog::updateCellInfoAndMode(const QByteArray& data)
         // Determine the length of the cell text in characters (possibly different to number of bytes).
         int textLength = QString(cellData).length();
         ui->labelType->setText(tr("Type of data currently in cell: Text / Numeric"));
-        ui->labelSize->setText(tr("%n char(s)", "", textLength));
+        ui->labelSize->setText(tr("%n character(s)", "", textLength));
         break;
     }
     case JSON: {
@@ -959,7 +959,7 @@ void EditDialog::updateCellInfoAndMode(const QByteArray& data)
         // Determine the length of the cell text in characters (possibly different to number of bytes).
         int jsonLength = QString(cellData).length();
         ui->labelType->setText(tr("Type of data currently in cell: Valid JSON"));
-        ui->labelSize->setText(tr("%n char(s)", "", jsonLength));
+        ui->labelSize->setText(tr("%n character(s)", "", jsonLength));
         break;
     }
     default:
