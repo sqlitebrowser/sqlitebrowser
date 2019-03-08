@@ -5,6 +5,7 @@
 #include <QtNetwork/QSslConfiguration>
 
 class QNetworkAccessManager;
+class QNetworkConfigurationManager;
 class QString;
 class QNetworkReply;
 class QSslError;
@@ -50,6 +51,10 @@ public:
               const QString& branch = QString("master"), bool forcePush = false);
 
 signals:
+    // As soon as you can safely open a network connection, this signal is emitted. This can be used to delay early network requests
+    // which might otherwise fail.
+    void networkReady();
+
     // The openFile signal is emitted whenever a remote database file shall be opened in the main window. This happens when the
     // fetch() call for a database is finished, either by actually downloading the database or opening the local clone.
     void openFile(QString path);
@@ -88,6 +93,7 @@ private:
     void clearAccessCache(const QString& clientCert);
 
     QNetworkAccessManager* m_manager;
+    QNetworkConfigurationManager* m_configurationManager;
     QProgressDialog* m_progress;
     QSslConfiguration m_sslConfiguration;
     QMap<QString, QSslCertificate> m_clientCertFiles;

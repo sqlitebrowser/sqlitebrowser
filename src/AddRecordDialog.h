@@ -19,7 +19,7 @@ class AddRecordDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit AddRecordDialog(DBBrowserDB& pdb, const sqlb::ObjectIdentifier& tableName, QWidget* parent = nullptr);
+    explicit AddRecordDialog(DBBrowserDB& pdb, const sqlb::ObjectIdentifier& tableName, QWidget* parent = nullptr, const QString& pseudo_pk = QString());
     ~AddRecordDialog() override;
 
 protected:
@@ -46,7 +46,7 @@ private:
     Ui::AddRecordDialog* ui;
     DBBrowserDB& pdb;
     sqlb::ObjectIdentifier curTable;
-    sqlb::Table m_table;
+    QString pseudo_pk;
 };
 
 #endif

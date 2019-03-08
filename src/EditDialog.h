@@ -74,7 +74,8 @@ private:
         Null,
         Text,
         JSON,
-        SVG
+        SVG,
+        XML
     };
 
     // Edit modes and editor stack (this must be aligned with the UI)

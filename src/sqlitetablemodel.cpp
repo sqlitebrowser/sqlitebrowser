@@ -454,16 +454,20 @@ Qt::ItemFlags SqliteTableModel::flags(const QModelIndex& index) const
 
 void SqliteTableModel::sort(int column, Qt::SortOrder order)
 {
+    // Construct a sort order list from this item and forward it to the function to sort by lists
+    std::vector<sqlb::SortedColumn> list;
+    list.emplace_back(column, order == Qt::AscendingOrder ? sqlb::Ascending : sqlb::Descending);
+    sort(list);
+}
+
+void SqliteTableModel::sort(const std::vector<sqlb::SortedColumn>& columns)
+{
     // Don't do anything when the sort order hasn't changed
-    if(m_query.orderBy().size() && m_query.orderBy().at(0).column == column && m_query.orderBy().at(0).direction == (order == Qt::AscendingOrder ? sqlb::Ascending : sqlb::Descending))
+    if(m_query.orderBy() == columns)
         return;
 
-    // Reset sort order
-    m_query.orderBy().clear();
-
     // Save sort order
-	if (column >= 0 && column < m_headers.size())
-        m_query.orderBy().emplace_back(column, (order == Qt::AscendingOrder ? sqlb::Ascending : sqlb::Descending));
+    m_query.orderBy() = columns;
 
     // Set the new query (but only if a table has already been set
     if(!m_query.table().isEmpty())

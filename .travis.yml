@@ -58,10 +58,10 @@ script:
 - make install
 - cd ..
 - git rev-list master --count
-- wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
-- chmod a+x linuxdeployqt-continuous-x86_64.AppImage
+- wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/6/linuxdeployqt-6-x86_64.AppImage"
+- chmod a+x linuxdeployqt-6-x86_64.AppImage
 - export VERSION=$(printf "`master`-`git rev-list HEAD --count`-` git -C . rev-parse --short HEAD`")    #$(git rev-parse --short HEAD) # linuxdeployqt uses this for naming the file
-- ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -appimage
+- ./linuxdeployqt-6-x86_64.AppImage appdir/usr/share/applications/*.desktop -appimage
 
 
 after_success:

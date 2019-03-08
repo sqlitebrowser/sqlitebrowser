@@ -54,8 +54,8 @@ EditDialog::EditDialog(QWidget* parent)
     connect(sciEdit, SIGNAL(textChanged()), this, SLOT(editTextChanged()));
 
     // Create shortcuts for the widgets that doesn't have its own print action or printing mechanism.
-    QShortcut* shortcutPrintText = new QShortcut(QKeySequence::Print, ui->editorText, nullptr, nullptr, Qt::WidgetShortcut);
-    connect(shortcutPrintText, &QShortcut::activated, this, &EditDialog::openPrintDialog);
+    QShortcut* shortcutPrint = new QShortcut(QKeySequence::Print, this, nullptr, nullptr, Qt::WidgetShortcut);
+    connect(shortcutPrint, &QShortcut::activated, this, &EditDialog::openPrintDialog);
 
     // Add actions to editors that have a context menu based on actions. This also activates the shortcuts.
     ui->editorImage->addAction(ui->actionPrintImage);
@@ -63,7 +63,7 @@ EditDialog::EditDialog(QWidget* parent)
     ui->editorBinary->addAction(ui->actionCopyHexAscii);
 
     mustIndentAndCompact = Settings::getValue("databrowser", "indent_compact").toBool();
-    ui->buttonIndent->setChecked(mustIndentAndCompact);
+    ui->actionIndent->setChecked(mustIndentAndCompact);
 
     ui->buttonAutoSwitchMode->setChecked(Settings::getValue("databrowser", "auto_switch_mode").toBool());
 
@@ -173,6 +173,7 @@ void EditDialog::loadData(const QByteArray& data)
 
     case Text:
     case JSON:
+    case XML:
         // Can be stored in any widget, except the ImageViewer
 
         switch (editMode) {
@@ -382,7 +383,7 @@ void EditDialog::exportData()
         filters << tr("Binary files (*.bin)");
         break;
     case Text:
-        // Base the XML case on the mode, not the data type since XML detection is currently not implemented.
+        // Include the XML case on the text data type, since XML detection is not very sofisticated.
         if (ui->comboMode->currentIndex() == XmlEditor)
             filters << tr("XML files (*.xml)") << tr("Text files (*.txt)");
         else
@@ -393,6 +394,9 @@ void EditDialog::exportData()
         break;
     case SVG:
         filters << tr("SVG files (*.svg)");
+        break;
+    case XML:
+        filters << tr("XML files (*.xml)");
         break;
     case Null:
         return;
@@ -661,7 +665,7 @@ void EditDialog::setDataInBuffer(const QByteArray& data, DataSources source)
 // Called when the user manually changes the "Mode" drop down combobox
 void EditDialog::editModeChanged(int newMode)
 {
-    ui->buttonIndent->setEnabled(newMode == JsonEditor || newMode == XmlEditor);
+    ui->actionIndent->setEnabled(newMode == JsonEditor || newMode == XmlEditor);
     setStackCurrentIndex(newMode);
 
     // * If the dataSource is the text buffer, the data is always text *
@@ -767,7 +771,7 @@ void EditDialog::editTextChanged()
             ui->editorText->setPlaceholderText("");
             ui->labelType->setText(tr("Type of data currently in cell: Text / Numeric"));
         }
-        ui->labelSize->setText(tr("%n char(s)", "", dataLength));
+        ui->labelSize->setText(tr("%n character(s)", "", dataLength));
     }
 }
 
@@ -803,6 +807,8 @@ int EditDialog::checkDataType(const QByteArray& data)
     // Check if it's text only
     if(isTextOnly(cellData))
     {
+        if (cellData.startsWith("<?xml"))
+            return XML;
         QJsonDocument jsonDoc = QJsonDocument::fromJson(cellData);
         if (!jsonDoc.isNull())
             return JSON;
@@ -858,34 +864,20 @@ void EditDialog::setFocus()
 void EditDialog::setReadOnly(bool ro)
 {
     isReadOnly = ro;
-    QPalette textEditPalette = ui->editorText->palette();
 
     ui->buttonApply->setEnabled(!ro);
-    ui->buttonNull->setEnabled(!ro);
-    ui->buttonImport->setEnabled(!ro);
+    ui->actionNull->setEnabled(!ro);
+    ui->actionImport->setEnabled(!ro);
 
     ui->editorText->setReadOnly(ro);
     sciEdit->setReadOnly(ro);
     hexEdit->setReadOnly(ro);
 
-    // This makes the caret being visible for selection, although the editor is read-only.
+    // This makes the caret being visible for selection, although the editor is read-only. The read-only state is hinted by the
+    // caret not blinking. The same should happen for QScintilla, but it always lets the user select text by keyboard (ok) but
+    // the caret is also blinking when in read-only mode (not ok).
     Qt::TextInteractionFlags textFlags = ro? Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard : Qt::TextEditorInteraction;
     ui->editorText->setTextInteractionFlags(textFlags);
-
-    // If read-only, set the Disabled palette settings for the (in)active groups, so the user gets a hint about the text being read-only.
-    // This should be set also for the Scintilla widget, but it isn't working for that.
-    if (ro) {
-        textEditPalette.setColor(QPalette::Active, QPalette::Base, textEditPalette.color(QPalette::Disabled, QPalette::Base));
-        textEditPalette.setColor(QPalette::Inactive, QPalette::Base, textEditPalette.color(QPalette::Disabled, QPalette::Base));
-        textEditPalette.setColor(QPalette::Active, QPalette::Highlight, textEditPalette.color(QPalette::Disabled, QPalette::Highlight));
-        textEditPalette.setColor(QPalette::Inactive, QPalette::Highlight, textEditPalette.color(QPalette::Disabled, QPalette::Highlight));
-        textEditPalette.setColor(QPalette::Active, QPalette::HighlightedText, textEditPalette.color(QPalette::Disabled, QPalette::HighlightedText));
-        textEditPalette.setColor(QPalette::Inactive, QPalette::HighlightedText, textEditPalette.color(QPalette::Disabled, QPalette::HighlightedText));
-        ui->editorText->setPalette(textEditPalette);
-    } else {
-        // Restore default palette
-        ui->editorText->setPalette(QPalette());
-    }
 }
 
 void EditDialog::switchEditorMode(bool autoSwitchForType)
@@ -907,6 +899,7 @@ void EditDialog::switchEditorMode(bool autoSwitchForType)
             ui->comboMode->setCurrentIndex(JsonEditor);
             break;
         case SVG:
+        case XML:
             ui->comboMode->setCurrentIndex(XmlEditor);
             break;
         }
@@ -952,12 +945,13 @@ void EditDialog::updateCellInfoAndMode(const QByteArray& data)
         ui->editorText->setPlaceholderText(Settings::getValue("databrowser", "null_text").toString());
         break;
 
+    case XML:
     case Text: {
         // Text only
         // Determine the length of the cell text in characters (possibly different to number of bytes).
         int textLength = QString(cellData).length();
         ui->labelType->setText(tr("Type of data currently in cell: Text / Numeric"));
-        ui->labelSize->setText(tr("%n char(s)", "", textLength));
+        ui->labelSize->setText(tr("%n character(s)", "", textLength));
         break;
     }
     case JSON: {
@@ -965,7 +959,7 @@ void EditDialog::updateCellInfoAndMode(const QByteArray& data)
         // Determine the length of the cell text in characters (possibly different to number of bytes).
         int jsonLength = QString(cellData).length();
         ui->labelType->setText(tr("Type of data currently in cell: Valid JSON"));
-        ui->labelSize->setText(tr("%n char(s)", "", jsonLength));
+        ui->labelSize->setText(tr("%n character(s)", "", jsonLength));
         break;
     }
     default:
@@ -1014,6 +1008,9 @@ void EditDialog::reloadSettings()
     hexFont.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
     hexEdit->setFont(hexFont);
 
+    ui->editCellToolbar->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>
+                                            (Settings::getValue("General", "toolbarStyleEditCell").toInt()));
+
     sciEdit->reloadSettings();
 }
 
@@ -1041,6 +1038,12 @@ void EditDialog::setStackCurrentIndex(int editMode)
 
 void EditDialog::openPrintDialog()
 {
+    int editMode = ui->editorStack->currentIndex();
+    if (editMode == ImageViewer) {
+        openPrintImageDialog();
+        return;
+    }
+
     QPrinter printer;
     QPrintPreviewDialog *dialog = new QPrintPreviewDialog(&printer);
 

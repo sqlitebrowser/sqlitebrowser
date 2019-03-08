@@ -23,6 +23,11 @@ struct SortedColumn
         direction(direction_)
     {}
 
+    bool operator==(const SortedColumn& rhs) const
+    {
+        return column == rhs.column && direction == rhs.direction;
+    }
+
     int column;
     SortDirection direction;
 };
@@ -68,6 +73,7 @@ public:
 
     const std::vector<SortedColumn>& orderBy() const { return m_sort; }
     std::vector<SortedColumn>& orderBy() { return m_sort; }
+    void setOrderBy(const std::vector<SortedColumn>& columns) { m_sort = columns; }
 
 private:
     std::vector<std::string> m_column_names;

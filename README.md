@@ -90,6 +90,10 @@ Arch Linux provides a package through pacman.
 Install for Fedora (i386 and x86_64) by issuing the following command:
 
     $ sudo dnf install sqlitebrowser
+    
+### openSUSE
+
+    $ sudo zypper install sqlitebrowser
 
 ### Debian
 
@@ -201,6 +205,8 @@ Follow us on Twitter: https://twitter.com/sqlitebrowser
 
 ## Releases
 
+* [Version 3.11.1 released](https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/v3.11.1) - 2019-02-18
+* [Version 3.11.0 released](https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/v3.11.0) - 2019-02-07
 * [Version 3.10.1 released](https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/v3.10.1) - 2017-09-20
 * [Version 3.10.0 released](https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/v3.10.0) - 2017-08-20
 * [Version 3.9.1 released](https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/v3.9.1) - 2016-10-03

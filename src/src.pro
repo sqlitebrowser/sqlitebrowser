@@ -126,7 +126,8 @@ SOURCES += \
 RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc \
              translations/translations.qrc \
-             certs/CaCerts.qrc
+             certs/CaCerts.qrc \
+             qdarkstyle/style.qrc
 
 FORMS += \
     MainWindow.ui \

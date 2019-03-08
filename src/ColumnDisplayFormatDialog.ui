@@ -31,11 +31,7 @@
        <widget class="QComboBox" name="comboDisplayFormat"/>
       </item>
       <item>
-       <widget class="SqlTextEdit" name="editDisplayFormat">
-        <property name="readOnly">
-         <bool>true</bool>
-        </property>
-       </widget>
+       <widget class="SqlTextEdit" name="editDisplayFormat"/>
       </item>
      </layout>
     </widget>
@@ -114,8 +110,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>editDisplayFormat</sender>
+   <signal>modificationChanged(bool)</signal>
+   <receiver>ColumnDisplayFormatDialog</receiver>
+   <slot>setCustom(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>125</x>
+     <y>69</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>244</x>
+     <y>4</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>updateSqlCode()</slot>
+  <slot>setCustom()</slot>
  </slots>
 </ui>

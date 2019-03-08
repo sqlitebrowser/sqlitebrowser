@@ -90,8 +90,7 @@ void ExtendedScintilla::updateLineNumberAreaWidth()
 
     // Calculate the width of this number if it was all zeros (this is because a 1 might require less space than a 0 and this could
     // cause some flickering depending on the font) and set the new margin width.
-    QFont font = lexer()->defaultFont();
-    setMarginWidth(0, QFontMetrics(font).width(QString("0").repeated(digits)) + 5);
+    setMarginWidth(0, QFontMetrics(font()).width(QString("0").repeated(digits)) + 5);
 }
 
 void ExtendedScintilla::dropEvent(QDropEvent* e)
@@ -126,11 +125,18 @@ void ExtendedScintilla::setLexer(QsciLexer *lexer)
 {
     QsciScintilla::setLexer(lexer);
 
-    // Set margins to system window theme. setLexer seems to reset these colours.
-    setMarginsBackgroundColor(QPalette().color(QPalette::Active, QPalette::Window));
-    setMarginsForegroundColor(QPalette().color(QPalette::Active, QPalette::WindowText));
-    setIndentationGuidesBackgroundColor(QPalette().color(QPalette::Active, QPalette::Window));
-    setIndentationGuidesForegroundColor(QPalette().color(QPalette::Active, QPalette::WindowText));
+    // Set margins according to settings. setLexer seems to reset these colours.
+    // Use desktop default colors for margins when following desktop style, or the custom colors otherwise.
+    switch (Settings::getValue("General", "appStyle").toInt()) {
+    case Settings::FollowDesktopStyle :
+        setMarginsBackgroundColor(QPalette().color(QPalette::Active, QPalette::Window));
+        setMarginsForegroundColor(QPalette().color(QPalette::Active, QPalette::WindowText));
+        break;
+    case Settings::DarkStyle :
+        setMarginsBackgroundColor(QColor(Settings::getValue("syntaxhighlighter","background_colour").toString()));
+        setMarginsForegroundColor(QColor(Settings::getValue("syntaxhighlighter","foreground_colour").toString()));
+        break;
+    }
 }
 
 void ExtendedScintilla::reloadKeywords()
@@ -146,37 +152,43 @@ void ExtendedScintilla::reloadSettings()
 }
 void ExtendedScintilla::reloadLexerSettings(QsciLexer *lexer)
 {
-    // Set syntax highlighting settings
+    QColor foreground (Settings::getValue("syntaxhighlighter", "foreground_colour").toString());
+    QColor background (Settings::getValue("syntaxhighlighter", "background_colour").toString());
+
     QFont defaultfont(Settings::getValue("editor", "font").toString());
     defaultfont.setStyleHint(QFont::TypeWriter);
     defaultfont.setPointSize(Settings::getValue("editor", "fontsize").toInt());
-    lexer->setFont(defaultfont);
 
-    lexer->setDefaultColor(QColor(Settings::getValue("syntaxhighlighter", "foreground_colour").toString()));
-    lexer->setPaper(QColor(Settings::getValue("syntaxhighlighter", "background_colour").toString()));
+    // Set syntax highlighting settings
+    if(lexer)
+    {
+        lexer->setFont(defaultfont);
+
+        lexer->setDefaultPaper(background);
+        lexer->setDefaultColor(foreground);
+
+        // This sets the base colors for all the styles
+        lexer->setPaper(background);
+        lexer->setColor(foreground);
+    }
 
     // Set font
-    QFont font(Settings::getValue("editor", "font").toString());
-    font.setStyleHint(QFont::TypeWriter);
-    font.setPointSize(Settings::getValue("editor", "fontsize").toInt());
-    setFont(font);
+    setFont(defaultfont);
 
     // Show line numbers
-    QFont marginsfont(QFont(Settings::getValue("editor", "font").toString()));
-    marginsfont.setPointSize(font.pointSize());
-    setMarginsFont(marginsfont);
+    setMarginsFont(defaultfont);
     setMarginLineNumbers(0, true);
-
     updateLineNumberAreaWidth();
 
     // Highlight current line
     setCaretLineVisible(true);
     setCaretLineBackgroundColor(QColor(Settings::getValue("syntaxhighlighter", "currentline_colour").toString()));
-    setCaretForegroundColor(QColor(Settings::getValue("syntaxhighlighter", "foreground_colour").toString()));
+    setCaretForegroundColor(foreground);
 
     // Set tab width
     setTabWidth(Settings::getValue("editor", "tabsize").toInt());
-    lexer->refreshProperties();
+    if(lexer)
+        lexer->refreshProperties();
 
     // Set wrap lines
     setWrapMode(static_cast<QsciScintilla::WrapMode>(Settings::getValue("editor", "wrap_lines").toInt()));

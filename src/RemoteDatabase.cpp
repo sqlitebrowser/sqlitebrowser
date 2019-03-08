@@ -1,5 +1,6 @@
 #include <QApplication>
 #include <QtNetwork/QNetworkAccessManager>
+#include <QtNetwork/QNetworkConfigurationManager>
 #include <QMessageBox>
 #include <QtNetwork/QNetworkReply>
 #include <QFile>
@@ -21,9 +22,17 @@
 
 RemoteDatabase::RemoteDatabase() :
     m_manager(new QNetworkAccessManager),
+    m_configurationManager(new QNetworkConfigurationManager),
     m_progress(nullptr),
     m_dbLocal(nullptr)
 {
+    // Update network configurations
+    connect(m_configurationManager, &QNetworkConfigurationManager::updateCompleted, [this]() {
+        m_manager->setConfiguration(m_configurationManager->defaultConfiguration());
+
+        emit networkReady();
+    });
+
     // Set up SSL configuration
     m_sslConfiguration = QSslConfiguration::defaultConfiguration();
     m_sslConfiguration.setPeerVerifyMode(QSslSocket::VerifyPeer);

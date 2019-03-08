@@ -70,8 +70,8 @@ CipherSettings CipherDialog::getCipherSettings() const
     cipherSettings.setPassword(password);
     cipherSettings.setPageSize(pageSize);
     cipherSettings.setKdfIterations(ui->spinKdfIterations->value());
-    cipherSettings.setHmacAlgorithm(ui->comboHmacAlgorithm->currentText());
-    cipherSettings.setKdfAlgorithm(ui->comboKdfAlgorithm->currentText());
+    cipherSettings.setHmacAlgorithm(QString("HMAC_") + ui->comboHmacAlgorithm->currentText());
+    cipherSettings.setKdfAlgorithm(QString("PBKDF2_HMAC_") + ui->comboKdfAlgorithm->currentText());
 
     return cipherSettings;
 }

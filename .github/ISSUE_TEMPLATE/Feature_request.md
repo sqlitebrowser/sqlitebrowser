@@ -1,6 +1,9 @@
 ---
 name: Feature Request
 about: Suggest an idea or request a new feature
+title: ''
+labels: ''
+assignees: ''
 
 ---
 

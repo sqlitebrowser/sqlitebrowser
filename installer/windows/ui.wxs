@@ -14,10 +14,10 @@
                 <Control Id="SQLiteLabel" Type="Text" X="65" Y="175" Width="120" Height="10" Text="!(loc.ShortcutsDialog_SQLiteLabel)" />
                 <Control Id="SQLCipherLabel" Type="Text" X="205" Y="175" Width="120" Height="10" Text="!(loc.ShortcutsDialog_SQLCipherLabel)" />
 
-                <Control Id="SQLiteDesktopCheckbox" Type="CheckBox" X="65" Y="190" Width="65" Height="10" CheckBoxValue="1" Property="SHORTCUT_SQLITE_DESKTOP" Text="!(loc.ShortcutsDialog_Desktop)" />
-                <Control Id="SQLiteProgramMenyCheckbox" Type="CheckBox" X="65" Y="205" Width="65" Height="10" CheckBoxValue="1" Property="SHORTCUT_SQLITE_PROGRAMMENU" Text="!(loc.ShortcutsDialog_ProgramMenu)" />
-                <Control Id="SQLCipherDesktopCheckbox" Type="CheckBox" X="205" Y="190" Width="65" Height="10" CheckBoxValue="1" Property="SHORTCUT_SQLCIPHER_DESKTOP" Text="!(loc.ShortcutsDialog_Desktop)" />
-                <Control Id="SQLCipherProgramMenyCheckbox" Type="CheckBox" X="205" Y="205" Width="65" Height="10" CheckBoxValue="1" Property="SHORTCUT_SQLCIPHER_PROGRAMMENU" Text="!(loc.ShortcutsDialog_ProgramMenu)"/>
+                <Control Id="SQLiteDesktopCheckbox" Type="CheckBox" X="65" Y="190" Width="75" Height="10" CheckBoxValue="1" Property="SHORTCUT_SQLITE_DESKTOP" Text="!(loc.ShortcutsDialog_Desktop)" />
+                <Control Id="SQLiteProgramMenyCheckbox" Type="CheckBox" X="65" Y="205" Width="75" Height="10" CheckBoxValue="1" Property="SHORTCUT_SQLITE_PROGRAMMENU" Text="!(loc.ShortcutsDialog_ProgramMenu)" />
+                <Control Id="SQLCipherDesktopCheckbox" Type="CheckBox" X="205" Y="190" Width="75" Height="10" CheckBoxValue="1" Property="SHORTCUT_SQLCIPHER_DESKTOP" Text="!(loc.ShortcutsDialog_Desktop)" />
+                <Control Id="SQLCipherProgramMenyCheckbox" Type="CheckBox" X="205" Y="205" Width="75" Height="10" CheckBoxValue="1" Property="SHORTCUT_SQLCIPHER_PROGRAMMENU" Text="!(loc.ShortcutsDialog_ProgramMenu)"/>
 
                 <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="&amp;Next">
                     <Publish Event="NewDialog" Value="CustomizeDlg">1</Publish>

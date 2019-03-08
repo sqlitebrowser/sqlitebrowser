@@ -473,3 +473,17 @@ void TestTable::complexExpressions()
     QCOMPARE(tab.fields.at(2).check(), "(c=-1) or (c>0 and c>1) or (c=0)");
     QCOMPARE(tab.fields.at(3).check(), "(((d>0)))");
 }
+
+void TestTable::datetimeExpression()
+{
+    QString sql = "CREATE TABLE test(\n"
+                  "entry INTEGER DEFAULT (DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME'))\n"
+                  ");";
+
+    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sql)));
+    QCOMPARE(tab.name(), "test");
+
+    QCOMPARE(tab.fields.at(0).name(), "entry");
+    QCOMPARE(tab.fields.at(0).type(), "INTEGER");
+    QCOMPARE(tab.fields.at(0).defaultValue(), "(DATETIME(CURRENT_TIMESTAMP,'LOCALTIME'))");
+}
