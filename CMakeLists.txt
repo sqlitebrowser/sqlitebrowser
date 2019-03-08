@@ -76,6 +76,7 @@ else()
     find_package(QCustomPlot)
 endif()
 set(QHEXEDIT_DIR libs/qhexedit)
+set(JSON_DIR libs/json)
 
 if(NOT ANTLR2_FOUND)
     set(ANTLR_DIR libs/antlr-2.7.7)
@@ -86,6 +87,7 @@ if(NOT QSCINTILLA_FOUND)
     add_subdirectory(${QSCINTILLA_DIR})
 endif()
 add_subdirectory(${QHEXEDIT_DIR})
+add_subdirectory(${JSON_DIR})
 if(NOT QCUSTOMPLOT_FOUND)
     set(QCUSTOMPLOT_DIR libs/qcustomplot-source)
     add_subdirectory(${QCUSTOMPLOT_DIR})
@@ -354,6 +356,7 @@ endif()
 include_directories(
 		"${CMAKE_CURRENT_BINARY_DIR}"
 		${QHEXEDIT_DIR}
+		${JSON_DIR}
 		${ADDITIONAL_INCLUDE_PATHS}
 		src)
 if(QCUSTOMPLOT_FOUND)
@@ -401,9 +404,7 @@ if(NOT QSCINTILLA_FOUND)
     add_dependencies(${PROJECT_NAME} qscintilla2)
 endif()
 
-link_directories(
-	"${CMAKE_CURRENT_BINARY_DIR}/${QHEXEDIT_DIR}"
-)
+link_directories("${CMAKE_CURRENT_BINARY_DIR}/${QHEXEDIT_DIR}")
 if(NOT QCUSTOMPLOT_FOUND)
     link_directories("${CMAKE_CURRENT_BINARY_DIR}/${QCUSTOMPLOT_DIR}")
 endif()
