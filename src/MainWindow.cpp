@@ -93,7 +93,7 @@ MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
       ui(new Ui::MainWindow),
       db(),
-      m_browseTableModel(new SqliteTableModel(db, this, Settings::getValue("db", "prefetchsize").toInt())),
+      m_browseTableModel(new SqliteTableModel(db, this, Settings::getValue("db", "prefetchsize").toUInt())),
       m_currentTabTableModel(m_browseTableModel),
       m_remoteDb(new RemoteDatabase),
       editDock(new EditDialog(this)),
@@ -776,9 +776,9 @@ void MainWindow::populateTable()
         if(db.getObjectByName(tablename))
         {
             const sqlb::FieldInfoList& tablefields = db.getObjectByName(tablename)->fieldInformation();
-            for(size_t i=0; i<tablefields.size(); ++i)
+            for(size_t i = 0; i < tablefields.size(); ++i)
             {
-                QString format = storedData.displayFormats[i+1];
+                QString format = storedData.displayFormats[static_cast<int>(i) + 1];
                 if(format.size())
                 {
                     query.selectedColumns().emplace_back(tablefields.at(i).name.toStdString(), format.toStdString());
@@ -1880,7 +1880,7 @@ void MainWindow::updateRecentFileActions()
         // Add shortcut for opening the file using the keyboard. However, if the application is configured to store
         // more than nine recently opened files don't set shortcuts for the later ones which wouldn't be single digit anymore.
         if(i < 9)
-            recentFileActs[i]->setShortcut(QKeySequence(Qt::CTRL + (Qt::Key_1+i)));
+            recentFileActs[i]->setShortcut(QKeySequence(static_cast<int>(Qt::CTRL),(static_cast<int>(Qt::Key_1) + i)));
     }
     for (int j = numRecentFiles; j < MaxRecentFiles; ++j)
         recentFileActs[j]->setVisible(false);
@@ -2234,12 +2234,14 @@ unsigned int MainWindow::openSqlTab(bool resetCounter)
     // Create new tab, add it to the tab widget and select it
     SqlExecutionArea* w = new SqlExecutionArea(db, this);
     int index = ui->tabSqlAreas->addTab(w, QString("SQL %1").arg(++tabNumber));
+	if (index < 0)
+		return 0;
     ui->tabSqlAreas->setCurrentIndex(index);
     w->setFindFrameVisibility(ui->actionSqlFind->isChecked());
     w->getEditor()->setFocus();
     connect(w, SIGNAL(findFrameVisibilityChanged(bool)), ui->actionSqlFind, SLOT(setChecked(bool)));
 
-    return index;
+    return static_cast<unsigned int>(index);
 }
 
 void MainWindow::changeSqlTab(int index)
@@ -2287,16 +2289,22 @@ void MainWindow::openSqlFile()
         unsigned int index;
         SqlExecutionArea* current_tab = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
         if(current_tab && current_tab->getSql().isEmpty() && current_tab->getModel()->rowCount() == 0)
-            index = ui->tabSqlAreas->currentIndex();
-        else
+		{
+			int nCurInx = ui->tabSqlAreas->currentIndex();
+			if(nCurInx >= 0)
+				index = static_cast<unsigned int>(nCurInx);
+			else
+				index = openSqlTab();
+        }
+		else
             index = openSqlTab();
 
-        SqlExecutionArea* sqlarea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index));
+        SqlExecutionArea* sqlarea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(static_cast<int>(index)));
         sqlarea->getEditor()->setText(f.readAll());
         sqlarea->getEditor()->setModified(false);
         sqlarea->setFileName(file);
         QFileInfo fileinfo(file);
-        ui->tabSqlAreas->setTabText(index, fileinfo.fileName());
+        ui->tabSqlAreas->setTabText(static_cast<int>(index), fileinfo.fileName());
     }
 }
 
@@ -2406,7 +2414,7 @@ void MainWindow::reloadSettings()
     ui->toolbarSql->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(Settings::getValue("General", "toolbarStyleSql").toInt()));
 
     // Set prefetch sizes for lazy population of table models
-    m_browseTableModel->setChunkSize(Settings::getValue("db", "prefetchsize").toInt());
+    m_browseTableModel->setChunkSize(Settings::getValue("db", "prefetchsize").toUInt());
     for(int i=0;i<ui->tabSqlAreas->count();++i)
         qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i))->reloadSettings();
 
@@ -2871,8 +2879,8 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                         {
                             // SQL editor tab
                             unsigned int index = openSqlTab();
-                            ui->tabSqlAreas->setTabText(index, xml.attributes().value("name").toString());
-                            SqlTextEdit* sqlEditor = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index))->getEditor();
+                            ui->tabSqlAreas->setTabText(static_cast<int>(index), xml.attributes().value("name").toString());
+                            SqlTextEdit* sqlEditor = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(static_cast<int>(index)))->getEditor();
                             sqlEditor->setText(xml.readElementText());
                             sqlEditor->setModified(false);
                         } else if(xml.name() == "current_tab") {
@@ -3376,15 +3384,18 @@ void MainWindow::editDataColumnDisplayFormat()
     // Get the current table name and fetch its table object, then retrieve the fields of that table and look up the index of the clicked table header
     // section using it as the table field array index. Subtract one from the header index to get the column index because in the the first (though hidden)
     // column is always the rowid column. Ultimately, get the column name from the column object
+	// NOTE: assume (field array index - 1) will always be >= 0
     sqlb::ObjectIdentifier current_table = currentlyBrowsedTableName();
     int field_number = sender()->property("clicked_column").toInt();
+	if(field_number <= 0)
+		return;
     QString field_name;
     if (db.getObjectByName(current_table)->type() == sqlb::Object::Table)
-      field_name = db.getObjectByName<sqlb::Table>(current_table)->fields.at(field_number-1).name();
+      field_name = db.getObjectByName<sqlb::Table>(current_table)->fields.at(static_cast<size_t>(field_number - 1)).name();
     else
-      field_name = db.getObjectByName<sqlb::View>(current_table)->fieldNames().at(field_number-1);
+      field_name = db.getObjectByName<sqlb::View>(current_table)->fieldNames().at(static_cast<size_t>(field_number - 1));
     // Get the current display format of the field
-    QString current_displayformat = browseTableSettings[current_table].displayFormats[field_number];
+    QString current_displayformat = browseTableSettings[current_table].displayFormats[static_cast<size_t>(field_number)];
 
     // Open the dialog
     ColumnDisplayFormatDialog dialog(db, current_table, field_name, current_displayformat, this);
@@ -3393,9 +3404,9 @@ void MainWindow::editDataColumnDisplayFormat()
         // Set the newly selected display format
         QString new_format = dialog.selectedDisplayFormat();
         if(new_format.size())
-            browseTableSettings[current_table].displayFormats[field_number] = new_format;
+            browseTableSettings[current_table].displayFormats[static_cast<size_t>(field_number)] = new_format;
         else
-            browseTableSettings[current_table].displayFormats.remove(field_number);
+            browseTableSettings[current_table].displayFormats.remove(static_cast<size_t>(field_number));
 
         // Refresh view
         populateTable();
@@ -3780,8 +3791,8 @@ void MainWindow::runSqlNewTab(const QString& query, const QString& title)
             ui->mainTab->addTab(ui->query, ui->query->accessibleName());
         ui->mainTab->setCurrentWidget(ui->query);
         unsigned int index = openSqlTab();
-        ui->tabSqlAreas->setTabText(index, title);
-        qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index))->getEditor()->setText(query);
+        ui->tabSqlAreas->setTabText(static_cast<int>(index), title);
+        qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(static_cast<int>(index)))->getEditor()->setText(query);
         executeQuery();
         break;
     }

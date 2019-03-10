@@ -25,10 +25,10 @@ std::string Query::buildWherePart() const
     {
         where = "WHERE ";
 
-        for(auto i=m_where.cbegin();i!=m_where.cend();++i)
+        for(auto i = m_where.cbegin(); i != m_where.cend(); ++i)
         {
-            const auto it = findSelectedColumnByName(m_column_names.at(i->first));
-            std::string column = sqlb::escapeIdentifier(m_column_names.at(i->first));
+            const auto it = findSelectedColumnByName(m_column_names.at(static_cast<size_t>(i->first)));
+            std::string column = sqlb::escapeIdentifier(m_column_names.at(static_cast<size_t>(i->first)));
             if(it != m_selected_columns.cend() && it->selector != column)
                 column = it->selector;
             where += column + " " + i->second + " AND ";
@@ -68,8 +68,9 @@ std::string Query::buildQuery(bool withRowid) const
     std::string order_by;
     for(const auto& sorted_column : m_sort)
     {
-        if(sorted_column.column < m_column_names.size())
-            order_by += sqlb::escapeIdentifier(m_column_names.at(sorted_column.column)) + " "
+        if(static_cast<size_t>(sorted_column.column) < m_column_names.size())
+            order_by += sqlb::escapeIdentifier(m_column_names.at(static_cast<size_t>(sorted_column.column)))
+					+ " "
                     + (sorted_column.direction == sqlb::Ascending ? "ASC" : "DESC") + ",";
     }
     if(order_by.size())

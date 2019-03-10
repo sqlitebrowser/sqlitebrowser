@@ -74,13 +74,13 @@ EditIndexDialog::EditIndexDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
     }
 
     // Add event handler for index column name changes. These are only allowed for expression columns, though.
-    connect(ui->tableIndexColumns, &QTableWidget::itemChanged,
-            [=](QTableWidgetItem* item)
-    {
-        index.fields[item->row()].setName(item->text());
-        updateSqlText();
-    });
-
+	// NOTE: size_t(item->row()) may cause assertion if negative value returned
+	connect(ui->tableIndexColumns, &QTableWidget::itemChanged,
+			[=](QTableWidgetItem* item)
+	{
+		index.fields.at(static_cast<size_t>(item->row())).setName(item->text());
+		updateSqlText();
+	});
     // Create a savepoint to revert back to
     pdb.setSavepoint(m_sRestorePointName);
 }
@@ -208,26 +208,28 @@ void EditIndexDialog::removeFromIndex(const QModelIndex& idx)
 {
     // Get current row number
     int row;
+	size_t rowValUse;
     if(idx.isValid())
         row = idx.row();
     else
         row = ui->tableIndexColumns->currentRow();
 
-    // No row selected? Abort.
-    if(row == -1)
-        return;
-
+    // No row selected? (or other invalid negative value) Abort.
+	if(row <= -1)
+		return;
+	else
+		rowValUse = static_cast<size_t>(row);
     // If this is an expression column and the action was triggered by a double click event instead of a button click,
     // we won't remove the expression column because it's too likely that this was only done by accident by the user.
     // Instead just open the expression column for editing.
-    if(index.fields[row].expression() && sender() != ui->buttonFromIndex)
+    if(index.fields.at(rowValUse).expression() && sender() != ui->buttonFromIndex)
     {
-        ui->tableIndexColumns->editItem(ui->tableIndexColumns->item(row, 0));
+        ui->tableIndexColumns->editItem(ui->tableIndexColumns->item(rowValUse, 0));
         return;
     }
 
     // Remove column from index
-    sqlb::removeField(index, ui->tableIndexColumns->item(row, 0)->text());
+    sqlb::removeField(index, ui->tableIndexColumns->item(rowValUse, 0)->text());
 
     // Update UI
     updateColumnLists();
@@ -304,7 +306,7 @@ void EditIndexDialog::moveCurrentColumn(bool down)
 {
     // Get current row number and calculate row number after the movement. Check the values
     int currentRow = ui->tableIndexColumns->currentRow();
-    if(currentRow == -1)
+    if(currentRow < 0)
         return;
     int newRow = currentRow + (down ? 1 : -1);
     if(newRow < 0)
@@ -313,7 +315,8 @@ void EditIndexDialog::moveCurrentColumn(bool down)
         return;
 
     // Swap the columns
-    std::swap(index.fields[currentRow], index.fields[newRow]);
+    std::swap(index.fields.at(static_cast<size_t>(currentRow)),
+			  index.fields.at(static_cast<size_t>(newRow)));
 
     // Update UI
     updateColumnLists();

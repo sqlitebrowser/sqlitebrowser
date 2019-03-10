@@ -359,8 +359,8 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                 }
 
                 // Line type and point shape are not supported by the String X type (Bars)
-                ui->comboLineType->setEnabled(xtype != QVariant::String);
-                ui->comboPointShape->setEnabled(xtype != QVariant::String);
+                ui->comboLineType->setEnabled(xtype != static_cast<int>(QVariant::String));
+                ui->comboPointShape->setEnabled(xtype != static_cast<int>(QVariant::String));
 
                 // WARN: ssDot is removed
                 int shapeIdx = ui->comboPointShape->currentIndex();
@@ -373,7 +373,8 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                 // When it is not sorted by x, we draw a curve, so the order selected by the user in the table or in the query is
                 // respected.  In this case the line will have loops and only None and Line is supported as line style.
                 // TODO: how to make the user aware of this without disturbing.
-                if (xtype == QVariant::String) {
+                if (xtype == static_cast<int>(QVariant::String))
+				{
                     QCPBars* bars = new QCPBars(ui->plotWidget->xAxis, ui->plotWidget->yAxis);
                     plottable = bars;
                     bars->setData(xdata, ydata);
@@ -519,7 +520,8 @@ void PlotDock::on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem* item, int c
 
     int type = item->data(PlotColumnType, Qt::UserRole).toInt();
 
-    if(column == PlotColumnY && type == QVariant::Double)
+    if((column == PlotColumnY) &&
+	   (type == static_cast<int>(QVariant::Double)))
     {
         // On double click open the colordialog
         QColorDialog colordialog(this);

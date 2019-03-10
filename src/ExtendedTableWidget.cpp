@@ -149,7 +149,8 @@ QWidget* ExtendedTableWidgetEditorDelegate::createEditor(QWidget* parent, const 
 
         // if the current column of the current table does NOT have not-null constraint,
         // the NULL is united to the query to get the possible values in the combo-box.
-        if (!currentTable->fields.at(index.column()-1).notnull())
+        if ((( index.column() - 1 ) >= 0) &&
+			(!currentTable->fields.at(static_cast<size_t>(index.column() - 1)).notnull()))
             query.append (" UNION SELECT NULL");
 
         SqliteTableModel* fkModel = new SqliteTableModel(m->db(), parent, m->chunkSize(), m->encoding());

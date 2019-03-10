@@ -58,15 +58,14 @@ void SqliteTableModel::handleFinishedFetch (int life_id, unsigned int fetched_ro
 
     Q_ASSERT(fetched_row_end >= fetched_row_begin);
 
-    auto old_row_count = m_currentRowCount;
-
-    auto new_row_count = std::max(old_row_count, fetched_row_begin);
+    unsigned int old_row_count = m_currentRowCount;
+    unsigned int new_row_count = std::max(old_row_count, fetched_row_begin);
     new_row_count = std::max(new_row_count, fetched_row_end);
     Q_ASSERT(new_row_count >= old_row_count);
 
     if(new_row_count != old_row_count)
     {
-        beginInsertRows(QModelIndex(), old_row_count, new_row_count - 1);
+        beginInsertRows(QModelIndex(), static_cast<int>(old_row_count), static_cast<int>(new_row_count - 1));
         m_currentRowCount = new_row_count;
         endInsertRows();
     }
@@ -75,13 +74,14 @@ void SqliteTableModel::handleFinishedFetch (int life_id, unsigned int fetched_ro
     {
         // TODO optimize
         int num_columns = m_headers.size();
-        emit dataChanged(createIndex(fetched_row_begin, 0), createIndex(fetched_row_end - 1, num_columns - 1));
+        emit dataChanged(createIndex(static_cast<int>(fetched_row_begin), 0),
+						 createIndex(static_cast<int>(fetched_row_end) - 1, num_columns - 1));
     }
 
     if(m_rowCountAvailable != RowCount::Complete)
         m_rowCountAvailable = RowCount::Partial;
 
-    emit finishedFetch(fetched_row_begin, fetched_row_end);
+    emit finishedFetch(static_cast<int>(fetched_row_begin), static_cast<int>(fetched_row_end));
 }
 
 void SqliteTableModel::handleRowCountComplete (int life_id, int num_rows)
@@ -90,7 +90,7 @@ void SqliteTableModel::handleRowCountComplete (int life_id, int num_rows)
         return;
 
     m_rowCountAvailable = RowCount::Complete;
-    handleFinishedFetch(life_id, num_rows, num_rows);
+    handleFinishedFetch(life_id, static_cast<unsigned int>(num_rows), static_cast<unsigned int>(num_rows));
 
     emit finishedRowCount();
 }
@@ -197,14 +197,14 @@ void SqliteTableModel::setQuery(const QString& sQuery, const QString& sCountQuer
         m_headers.append(getColumns(worker->getDb(), sQuery, m_vDataTypes));
 
     // now fetch the first entries
-    triggerCacheLoad(m_chunkSize / 2 - 1);
+    triggerCacheLoad(static_cast<int>(m_chunkSize) / 2 - 1);
 
     emit layoutChanged();
 }
 
 int SqliteTableModel::rowCount(const QModelIndex&) const
 {
-    return m_currentRowCount;
+    return static_cast<int>(m_currentRowCount);
 }
 
 int SqliteTableModel::columnCount(const QModelIndex&) const
@@ -214,7 +214,7 @@ int SqliteTableModel::columnCount(const QModelIndex&) const
 
 int SqliteTableModel::filterCount() const
 {
-    return m_query.where().size();
+    return static_cast<int>(m_query.where().size());
 }
 
 QVariant SqliteTableModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -248,9 +248,9 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
     bool row_available;
 
     const Row * cached_row;
-    if(m_cache.count(index.row()))
+    if(m_cache.count(static_cast<size_t>(index.row())))
     {
-        cached_row = &m_cache.at(index.row());
+        cached_row = &m_cache.at(static_cast<size_t>(index.row()));
         row_available = true;
     } else {
         blank_data = makeDefaultCacheEntry();
@@ -356,7 +356,8 @@ sqlb::ForeignKeyClause SqliteTableModel::getForeignKeyClause(int column) const
         // Note that the rowid column has number -1 here, it can safely be excluded since there will never be a
         // foreign key on that column.
 
-        sqlb::ConstraintPtr ptr = tbl->constraint({tbl->fields.at(column).name()}, sqlb::Constraint::ForeignKeyConstraintType);
+        sqlb::ConstraintPtr ptr = tbl->constraint({tbl->fields.at(static_cast<size_t>(column)).name()},
+												  sqlb::Constraint::ForeignKeyConstraintType);
         if(ptr)
             return *(std::dynamic_pointer_cast<sqlb::ForeignKeyClause>(ptr));
     }
@@ -386,7 +387,7 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
     {
         QMutexLocker lock(&m_mutexDataCache);
 
-        auto & cached_row = m_cache.at(index.row());
+        auto & cached_row = m_cache.at(static_cast<size_t>(index.row()));
 
         QByteArray newValue = encode(value.toByteArray());
         QByteArray oldValue = cached_row.at(index.column());
@@ -444,7 +445,7 @@ Qt::ItemFlags SqliteTableModel::flags(const QModelIndex& index) const
     if(m_query.selectedColumns().size())
     {
         if(index.column() > 0)
-            custom_display_format = QString::fromStdString(m_query.selectedColumns().at(index.column()-1).selector) != sqlb::escapeIdentifier(headerData(index.column(), Qt::Horizontal).toString());
+            custom_display_format = QString::fromStdString(m_query.selectedColumns().at(static_cast<size_t>(index.column()) - 1).selector) != sqlb::escapeIdentifier(headerData(index.column(), Qt::Horizontal).toString());
     }
 
     if(!isBinary(index) && !custom_display_format)
@@ -494,15 +495,21 @@ bool SqliteTableModel::insertRows(int row, int count, const QModelIndex& parent)
     if(!isEditable())
         return false;
 
-    if(readingData()) {
+    if(readingData())
+	{
         // can't insert rows while reading data in background
         return false;
     }
+	if(row < 0)
+	{
+		// negative row value passed to model
+		return false;
+	}
 
     const auto blank_data = makeDefaultCacheEntry();
 
     std::vector<Row> tempList;
-    for(int i=row; i < row + count; ++i)
+    for(int i = row; i < row + count; ++i)
     {
         QString rowid = m_db.addRecord(m_query.table());
         if(rowid.isNull())
@@ -526,7 +533,7 @@ bool SqliteTableModel::insertRows(int row, int count, const QModelIndex& parent)
     beginInsertRows(parent, row, row + count - 1);
     for(unsigned int i = 0; i < tempList.size(); ++i)
     {
-        m_cache.insert(i + row, std::move(tempList.at(i)));
+        m_cache.insert(i + static_cast<unsigned int>(row), std::move(tempList.at(i)));
         m_currentRowCount++;
     }
     endInsertRows();
@@ -539,16 +546,22 @@ bool SqliteTableModel::removeRows(int row, int count, const QModelIndex& parent)
     if(!isEditable())
         return false;
 
-    if(readingData()) {
+    if(readingData())
+	{
         // can't delete rows while reading data in background
         return false;
     }
-
+	if(row < 0)
+	{
+		// negative row value passed to model
+		return false;
+	}
     QStringList rowids;
-    for(int i=count-1;i>=0;i--)
+    for(int i = count - 1;i >= 0;i--)
     {
-        if(m_cache.count(row+i)) {
-            rowids.append(m_cache.at(row + i).at(0));
+        if(m_cache.count(static_cast<size_t>(row + i)))
+		{
+            rowids.append(m_cache.at(static_cast<unsigned int>(row + i)).at(0));
         }
     }
 
@@ -557,9 +570,9 @@ bool SqliteTableModel::removeRows(int row, int count, const QModelIndex& parent)
     if (ok) {
         beginRemoveRows(parent, row, row + count - 1);
 
-        for(int i=count-1;i>=0;i--)
+        for(int i = count - 1; i >= 0; i--)
         {
-            m_cache.erase(row + i);
+            m_cache.erase(static_cast<size_t>(row + i));
             m_currentRowCount--;
         }
 
@@ -585,10 +598,10 @@ QModelIndex SqliteTableModel::dittoRecord(int old_row)
     for (size_t col = 0; col < t->fields.size(); ++col) {
         if(!contains(pk, t->fields.at(col).name())) {
             if (!firstEditedColumn)
-                firstEditedColumn = col + 1;
+                firstEditedColumn = static_cast<int>(col + 1);
 
-            QVariant value = data(index(old_row, col + 1), Qt::EditRole);
-            setData(index(new_row, col + 1), value);
+            QVariant value = data(index(old_row, static_cast<int>(col + 1)), Qt::EditRole);
+            setData(index(new_row, static_cast<int>(col + 1)), value);
         }
     }
 
@@ -725,7 +738,7 @@ void SqliteTableModel::clearCache()
 
     if(m_currentRowCount > 0)
     {
-        beginRemoveRows(QModelIndex(), 0, m_currentRowCount - 1);
+        beginRemoveRows(QModelIndex(), 0, static_cast<int>(m_currentRowCount - 1));
         endRemoveRows();
     }
 
@@ -742,11 +755,11 @@ bool SqliteTableModel::isBinary(const QModelIndex& index) const
 
 bool SqliteTableModel::nosync_isBinary(const QModelIndex& index) const
 {
-    if(!m_cache.count(index.row()))
+	if(index.row() <= 0)
+		return false;
+    if(!m_cache.count(static_cast<size_t>(index.row())))
         return false;
-
-    const auto & cached_row = m_cache.at(index.row());
-
+    const auto & cached_row = m_cache.at(static_cast<size_t>(index.row()));
     return !isTextOnly(cached_row.at(index.column()), m_encoding, true);
 }
 
@@ -816,11 +829,12 @@ bool SqliteTableModel::isEditable() const
 
 void SqliteTableModel::triggerCacheLoad (int row) const
 {
-    size_t row_begin = std::max(0, row - int(m_chunkSize) / 2);
-    size_t row_end = row + m_chunkSize / 2;
+    size_t row_begin = std::max(static_cast<size_t>(0), static_cast<size_t>(row) - m_chunkSize / 2);
+    size_t row_end = static_cast<size_t>(row) + m_chunkSize / 2;
 
-    if(rowCountAvailable() == RowCount::Complete) {
-        row_end = std::min(row_end, size_t(rowCount()));
+    if(rowCountAvailable() == RowCount::Complete)
+	{
+        row_end = std::min(row_end, static_cast<size_t>(rowCount()));
     } else {
         // will be truncated by reader
     }
@@ -853,7 +867,7 @@ bool SqliteTableModel::completeCache () const
     waitUntilIdle();
 
     // This loop fetches all data by loading it block by block into the cache
-    for(int i=0;i<rowCount()+static_cast<int>(m_chunkSize)/2;i+=m_chunkSize)
+    for(int i = 0; i < rowCount() + static_cast<int>(m_chunkSize) / 2; i += static_cast<int>(m_chunkSize))
     {
         progress.setValue(i);
         qApp->processEvents();

@@ -261,9 +261,9 @@ bool EditTableDialog::eventFilter(QObject *object, QEvent *event)
 void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
 {
     int index = ui->treeWidget->indexOfTopLevelItem(item);
-    if(index < static_cast<int>(m_table.fields.size()))
+    if((index < static_cast<int>(m_table.fields.size())) && (index >= 0))
     {
-        sqlb::Field& field = m_table.fields.at(index);
+        sqlb::Field& field = m_table.fields.at(static_cast<size_t>(index));
         QString oldFieldName = field.name();
 
         switch(column)
@@ -528,7 +528,7 @@ void EditTableDialog::addField()
     // Find an unused name for the field by starting with 'Fieldx' where x is the number of fields + 1.
     // If this name happens to exist already, increase x by one until we find an unused name.
     {
-        unsigned int field_number = ui->treeWidget->topLevelItemCount();
+        unsigned int field_number = static_cast<unsigned int>(ui->treeWidget->topLevelItemCount());
         QString field_name;
         do
         {
@@ -633,8 +633,11 @@ void EditTableDialog::moveDown()
 void EditTableDialog::moveCurrentField(bool down)
 {
     int currentRow = ui->treeWidget->currentIndex().row();
+	if(currentRow < 0 )
+		return;
     int newRow = currentRow + (down ? 1 : -1);
-
+	if(newRow < 0)
+		return;
     // Save the combobox first by making a copy
     QComboBox* oldCombo = qobject_cast<QComboBox*>(ui->treeWidget->itemWidget(ui->treeWidget->topLevelItem(currentRow), kType));
     QComboBox* newCombo = new QComboBox(ui->treeWidget);
@@ -655,7 +658,8 @@ void EditTableDialog::moveCurrentField(bool down)
     ui->treeWidget->setCurrentIndex(ui->treeWidget->currentIndex().sibling(newRow, 0));
 
     // Finally update the table SQL
-    std::swap(m_table.fields[newRow], m_table.fields[currentRow]);
+    std::swap(m_table.fields.at(static_cast<size_t>(newRow)),
+			  m_table.fields.at(static_cast<size_t>(currentRow)));
 
     // Update the SQL preview
     updateSqlText();

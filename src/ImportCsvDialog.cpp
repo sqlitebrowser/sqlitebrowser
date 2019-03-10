@@ -377,8 +377,8 @@ CSVParser::ParserResult ImportCsvDialog::parseCSV(const QString &fileName, std::
     CSVParser csv(ui->checkBoxTrimFields->isChecked(), currentSeparatorChar(), currentQuoteChar());
 
     // Only show progress dialog if we parse all rows. The assumption here is that if a row count limit has been set, it won't be a very high one.
-    if(count == 0)
-        csv.setCSVProgress(new CSVImportProgress(file.size()));
+    if(( count == 0 ) && (file.size() >= 0))
+        csv.setCSVProgress(new CSVImportProgress(static_cast<size_t>(file.size())));
 
     QTextStream tstream(&file);
     tstream.setCodec(currentEncoding().toUtf8());

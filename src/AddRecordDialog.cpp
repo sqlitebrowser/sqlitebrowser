@@ -198,7 +198,7 @@ void AddRecordDialog::populateFields()
         pk = QStringList(pseudo_pk);
     }
 
-    for(uint i = 0; i < fields.size(); i++)
+    for(size_t i = 0; i < fields.size(); i++)
     {
         const sqlb::Field& f = fields[i];
         QTreeWidgetItem *tbitem = new QTreeWidgetItem(ui->treeWidget);
@@ -217,7 +217,7 @@ void AddRecordDialog::populateFields()
         }
         if (contains(pk, f.name()))
             tbitem->setIcon(kName, QIcon(":/icons/field_key"));
-        else if (fks[i])
+        else if (fks.at(static_cast<int>(i)))
             tbitem->setIcon(kName, QIcon(":/icons/field_fk"));
         else
             tbitem->setIcon(kName, QIcon(":/icons/field"));
@@ -234,7 +234,7 @@ void AddRecordDialog::populateFields()
         if (!f.check().isEmpty())
             toolTip.append(tr("Check constraint:\t %1\n").arg (f.check()));
 
-        auto fk = std::dynamic_pointer_cast<sqlb::ForeignKeyClause>(fks[i]);
+        auto fk = std::dynamic_pointer_cast<sqlb::ForeignKeyClause>(fks.at(static_cast<int>(i)));
         if(fk)
             toolTip.append(tr("Foreign key:\t %1\n").arg(fk->toString()));
 
