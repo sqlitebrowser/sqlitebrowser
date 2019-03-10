@@ -42,6 +42,7 @@ protected:
     static QsciLexerXML* xmlLexer;
 private:
     Language m_language;
+    QFont plainTextFont;
 };
 
 #endif

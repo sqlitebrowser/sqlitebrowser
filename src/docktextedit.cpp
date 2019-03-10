@@ -36,9 +36,9 @@ void DockTextEdit::reloadSettings()
     reloadLexerSettings(xmlLexer);
 
     // Set the databrowser font for the plain text editor.
-    QFont textFont(Settings::getValue("databrowser", "font").toString());
-    textFont.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
-    setFont(textFont);
+    plainTextFont = QFont(Settings::getValue("databrowser", "font").toString());
+    plainTextFont.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
+    setFont(plainTextFont);
 
     setupSyntaxHighlightingFormat(jsonLexer, "comment", QsciLexerJSON::CommentLine);
     setupSyntaxHighlightingFormat(jsonLexer, "comment", QsciLexerJSON::CommentBlock);
@@ -84,6 +84,8 @@ void DockTextEdit::setLanguage(Language lang)
     case PlainText: {
         setLexer(nullptr);
         setFolding(QsciScintilla::NoFoldStyle);
+        // This appears to be reset by setLexer
+        setFont(plainTextFont);
         break;
     }
     case JSON:
