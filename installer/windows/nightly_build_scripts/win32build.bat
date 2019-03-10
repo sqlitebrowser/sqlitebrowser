@@ -50,7 +50,7 @@ git clean -dffx
 :: WIN32 SQLITE BUILD PROCEDURE
 
 :: Set path variables
-CALL "C:\\Program Files (x86)\\Microsoft Visual Studio 12.0\\VC\\bin\\vcvars32.bat"
+CALL "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\bin\\vcvars32.bat" 8.1
 
 :: Build SQLite x86
 CD %SQLITE_DIR%
@@ -65,7 +65,7 @@ cl /MD extension-functions.c -link -dll -def:extension-functions.def -out:math.d
 CD C:\\builds
 MKDIR "release-sqlite-win32"
 CD "release-sqlite-win32"
-cmake -G "Visual Studio 12 2013" -Wno-dev C:\\git_repos\\sqlitebrowser
+cmake -G "Visual Studio 14 2015" -Wno-dev C:\\git_repos\\sqlitebrowser
 
 :: Build package
 devenv /Build Release sqlitebrowser.sln /project "ALL_BUILD"
@@ -81,7 +81,7 @@ nmake /f Makefile.msc sqlcipher.dll USE_AMALGAMATION=1 NO_TCL=1 SQLITE3DLL=sqlci
 CD C:\\builds
 MKDIR "release-sqlcipher-win32"
 CD "release-sqlcipher-win32"
-cmake -G "Visual Studio 12 2013" -Wno-dev -Dsqlcipher=1 C:\\git_repos\\sqlitebrowser
+cmake -G "Visual Studio 14 2015" -Wno-dev -Dsqlcipher=1 C:\\git_repos\\sqlitebrowser
 
 :: Build package
 devenv /Build Release sqlitebrowser.sln /project "ALL_BUILD"

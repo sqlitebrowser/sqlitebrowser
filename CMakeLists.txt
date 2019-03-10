@@ -49,7 +49,7 @@ if(WIN32 AND MSVC)
 	else()
 		# Paths for 32-bit windows builds
 		set(OPENSSL_PATH "C:/dev/OpenSSL-Win32" CACHE PATH "OpenSSL Path")
-		set(QT5_PATH "C:/dev/Qt/5.7/msvc2013" CACHE PATH "Qt5 Path")
+		set(QT5_PATH "C:/dev/Qt/5.7/msvc2015" CACHE PATH "Qt5 Path")
 
                 # Choose between SQLCipher or SQLite, depending whether
                 # -Dsqlcipher=1 is passed on the command line
