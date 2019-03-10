@@ -20,12 +20,13 @@
 #include <QPrintPreviewDialog>
 #include <QPainter>
 #include <QClipboard>
+#include <QTextDocument>
 
 EditDialog::EditDialog(QWidget* parent)
     : QDialog(parent),
       ui(new Ui::EditDialog),
       currentIndex(QModelIndex()),
-      dataSource(TextBuffer),
+      dataSource(SciBuffer),
       dataType(Null),
       isReadOnly(true)
 {
@@ -47,9 +48,7 @@ EditDialog::EditDialog(QWidget* parent)
     QShortcut* ins = new QShortcut(QKeySequence(Qt::Key_Insert), this);
     connect(ins, SIGNAL(activated()), this, SLOT(toggleOverwriteMode()));
 
-    connect(ui->editorText, SIGNAL(textChanged()), this, SLOT(updateApplyButton()));
     connect(hexEdit, SIGNAL(dataChanged()), this, SLOT(updateApplyButton()));
-
     connect(sciEdit, SIGNAL(textChanged()), this, SLOT(updateApplyButton()));
     connect(sciEdit, SIGNAL(textChanged()), this, SLOT(editTextChanged()));
 
@@ -124,19 +123,10 @@ void EditDialog::loadData(const QByteArray& data)
     // Data type specific handling
     switch (dataType) {
     case Null:
-        // Set enabled any of the text widgets
-        ui->editorText->setEnabled(true);
+        // Set enabled the text widget
         sciEdit->setEnabled(true);
         switch (editMode) {
         case TextEditor:
-            // The text widget buffer is now the main data source
-            dataSource = TextBuffer;
-
-            // Empty the text editor contents, then enable text editing
-            ui->editorText->clear();
-
-            break;
-
         case JsonEditor:
         case XmlEditor:
 
@@ -178,8 +168,6 @@ void EditDialog::loadData(const QByteArray& data)
 
         switch (editMode) {
         case TextEditor:
-            setDataInBuffer(data, TextBuffer);
-            break;
         case JsonEditor:
         case XmlEditor:
             setDataInBuffer(data, SciBuffer);
@@ -194,7 +182,7 @@ void EditDialog::loadData(const QByteArray& data)
             ui->editorImage->setPixmap(QPixmap(0,0));
 
             // Load the text into the text editor
-            setDataInBuffer(data, TextBuffer);
+            setDataInBuffer(data, SciBuffer);
 
             break;
         }
@@ -210,19 +198,12 @@ void EditDialog::loadData(const QByteArray& data)
         // Update the display if in text edit or image viewer mode
         switch (editMode) {
         case TextEditor:
-            // Disable text editing, and use a warning message as the contents
-            ui->editorText->setText(QString("<i>" %
-                    tr("Image data can't be viewed in this mode.") % "<br/>" %
-                    tr("Try switching to Image or Binary mode.") %
-                    "</i>"));
-            ui->editorText->setEnabled(false);
-            break;
-
         case XmlEditor:
         case JsonEditor:
             // Disable text editing, and use a warning message as the contents
             sciEdit->setText(tr("Image data can't be viewed in this mode.") % '\n' %
                              tr("Try switching to Image or Binary mode."));
+            sciEdit->setTextInMargin(tr("Image"));
             sciEdit->setEnabled(false);
 
             break;
@@ -239,9 +220,6 @@ void EditDialog::loadData(const QByteArray& data)
         // Set the XML data in any buffer or update image in image viewer mode
         switch (editMode) {
         case TextEditor:
-            setDataInBuffer(data, TextBuffer);
-            break;
-
         case JsonEditor:
         case XmlEditor:
 
@@ -276,20 +254,13 @@ void EditDialog::loadData(const QByteArray& data)
 
         switch (editMode) {
         case TextEditor:
+        case JsonEditor:
+        case XmlEditor:
             // Disable text editing, and use a warning message as the contents
-            ui->editorText->setText(QString("<i>" %
-                    tr("Binary data can't be viewed in this mode.") % "<br/>" %
-                    tr("Try switching to Binary mode.") %
-                    "</i>"));
-            ui->editorText->setEnabled(false);
-            break;
-
-         case JsonEditor:
-         case XmlEditor:
-            // Disable text editing, and use a warning message as the contents
-             sciEdit->setText(QString(tr("Binary data can't be viewed in this mode.") % '\n' %
-                                      tr("Try switching to Binary mode.")));
-             sciEdit->setEnabled(false);
+            sciEdit->setText(QString(tr("Binary data can't be viewed in this mode.") % '\n' %
+                                     tr("Try switching to Binary mode.")));
+            sciEdit->setTextInMargin(Settings::getValue("databrowser", "blob_text").toString());
+            sciEdit->setEnabled(false);
             break;
 
         case ImageViewer:
@@ -429,10 +400,6 @@ void EditDialog::exportData()
               else
                   file.write(hexEdit->data());
               break;
-          case TextBuffer:
-              // Data source is the text buffer
-              file.write(ui->editorText->toPlainText().toUtf8());
-              break;
           case SciBuffer:
               // Data source is the Scintilla buffer
               file.write(sciEdit->text().toUtf8());
@@ -445,7 +412,6 @@ void EditDialog::exportData()
 
 void EditDialog::setNull()
 {
-    ui->editorText->clear();
     ui->editorImage->clear();
     hexEdit->setData(QByteArray());
     sciEdit->clear();
@@ -456,8 +422,7 @@ void EditDialog::setNull()
     // and a NULL, so we need to record NULL outside of that
     dataType = Null;
 
-    // Ensure the text (plain and Scintilla) editors are enabled
-    ui->editorText->setEnabled(true);
+    // Ensure the text (Scintilla) editor is enabled
     sciEdit->setEnabled(true);
 
     // Update the cell data info in the bottom left of the Edit Cell
@@ -465,7 +430,7 @@ void EditDialog::setNull()
     // the better visual clue of containing a NULL value (placeholder).
     updateCellInfoAndMode(hexEdit->data());
 
-    ui->editorText->setFocus();
+    sciEdit->setFocus();
 }
 
 void EditDialog::updateApplyButton()
@@ -495,18 +460,18 @@ void EditDialog::accept()
     }
 
     switch (dataSource) {
-    case TextBuffer:
-    {
-        QString oldData = currentIndex.data(Qt::EditRole).toString();
-        QString newData = removedBom + ui->editorText->toPlainText();
-        // Check first for null case, otherwise empty strings cannot overwrite NULL values
-        if ((currentIndex.data(Qt::EditRole).isNull() && dataType != Null) || oldData != newData)
-            // The data is different, so commit it back to the database
-            emit recordTextUpdated(currentIndex, removedBom + newData.toUtf8(), false);
-        break;
-    }
     case SciBuffer:
         switch (sciEdit->language()) {
+        case DockTextEdit::PlainText:
+        {
+            QString oldData = currentIndex.data(Qt::EditRole).toString();
+            QString newData = removedBom + sciEdit->text();
+            // Check first for null case, otherwise empty strings cannot overwrite NULL values
+            if ((currentIndex.data(Qt::EditRole).isNull() && dataType != Null) || oldData != newData)
+                // The data is different, so commit it back to the database
+                emit recordTextUpdated(currentIndex, removedBom + newData.toUtf8(), false);
+            break;
+        }
         case DockTextEdit::JSON:
         {
             QString oldData = currentIndex.data(Qt::EditRole).toString();
@@ -588,22 +553,23 @@ void EditDialog::setDataInBuffer(const QByteArray& data, DataSources source)
     // 2) Set the text in the corresponding editor widget (the text widget for the Image case).
     // 3) Enable the widget.
     switch (dataSource) {
-    case TextBuffer:
-    {
-        // Load the text into the text editor, remove BOM first if there is one
-        QByteArray dataWithoutBom = data;
-        removedBom = removeBom(dataWithoutBom);
-
-        textData = QString::fromUtf8(dataWithoutBom.constData(), dataWithoutBom.size());
-        ui->editorText->setPlainText(textData);
-
-        // Select all of the text by default (this is useful for simple text data that we usually edit as a whole)
-        ui->editorText->selectAll();
-        ui->editorText->setEnabled(true);
-        break;
-    }
     case SciBuffer:
         switch (sciEdit->language()) {
+        case DockTextEdit::PlainText:
+        {
+            // Load the text into the text editor, remove BOM first if there is one
+            QByteArray dataWithoutBom = data;
+            removedBom = removeBom(dataWithoutBom);
+
+            textData = QString::fromUtf8(dataWithoutBom.constData(), dataWithoutBom.size());
+            sciEdit->setText(textData);
+
+            // Select all of the text by default (this is useful for simple text data that we usually edit as a whole)
+            if (!isReadOnly)
+                sciEdit->selectAll();
+            sciEdit->setEnabled(true);
+            break;
+        }
         case DockTextEdit::JSON:
         {
             QJsonParseError parseError;
@@ -670,30 +636,6 @@ void EditDialog::editModeChanged(int newMode)
 
     // * If the dataSource is the text buffer, the data is always text *
     switch (dataSource) {
-    case TextBuffer:
-        switch (newMode) {
-        case TextEditor: // Switching to the text editor
-            // Nothing to do, as the text is already in the text buffer
-            break;
-
-        case JsonEditor: // Switching to one of the Scintilla editor modes
-        case XmlEditor:
-
-            setDataInBuffer(ui->editorText->toPlainText().toUtf8(), SciBuffer);
-            break;
-
-        case HexEditor: // Switching to the hex editor
-            // Convert the text widget buffer for the hex widget
-            // The hex widget buffer is now the main data source
-            setDataInBuffer(removedBom + ui->editorText->toPlainText().toUtf8(), HexBuffer);
-            break;
-
-        case ImageViewer:
-            // Clear any image from the image viewing widget
-            ui->editorImage->setPixmap(QPixmap(0,0));
-            break;
-        }
-        break;
     case HexBuffer:
 
         // * If the dataSource is the hex buffer, the contents could be anything
@@ -706,11 +648,6 @@ void EditDialog::editModeChanged(int newMode)
         break;
     case SciBuffer:
         switch (newMode) {
-        case TextEditor: // Switching to the text editor
-            // Convert the text widget buffer for the JSON widget
-            setDataInBuffer(sciEdit->text().toUtf8(), TextBuffer);
-            break;
-
         case HexEditor: // Switching to the hex editor
             // Convert the text widget buffer for the hex widget
             setDataInBuffer(sciEdit->text().toUtf8(), HexBuffer);
@@ -732,6 +669,7 @@ void EditDialog::editModeChanged(int newMode)
         }
         break;
 
+        case TextEditor: // Switching to the text editor
         case JsonEditor: // Switching to the JSON editor
         case XmlEditor: // Switching to the XML editor
             // The text is already in the Sci buffer but we need to perform the necessary formatting.
@@ -745,30 +683,20 @@ void EditDialog::editModeChanged(int newMode)
 // Called for every keystroke in the text editor (only)
 void EditDialog::editTextChanged()
 {
-    if (dataSource == TextBuffer || dataSource == SciBuffer) {
+    if (dataSource == SciBuffer) {
 
         // Update the cell info in the bottom left manually.  This is because
         // updateCellInfoAndMode() only works with QByteArray's (for now)
-        int dataLength;
-        bool isModified;
+        int dataLength = sciEdit->text().length();
+        bool isModified = sciEdit->isModified();
 
-        if(dataSource == TextBuffer) {
-            // TextBuffer
-            dataLength = ui->editorText->toPlainText().length();
-            isModified = ui->editorText->document()->isModified();
-        } else {
-            // SciBuffer
-            dataLength = sciEdit->text().length();
-            isModified = sciEdit->isModified();
-        }
-        // Data has been changed in the text editor, so it can't be a NULL
+        // If data has been entered in the text editor, it can't be a NULL
         // any more. It hasn't been validated yet, so it cannot be JSON nor XML.
-        if (dataType == Null && isModified)
+        if (dataType == Null && isModified && dataLength != 0)
             dataType = Text;
 
         if (dataType != Null) {
-            ui->editorText->setStyleSheet("");
-            ui->editorText->setPlaceholderText("");
+            sciEdit->clearTextInMargin();
             ui->labelType->setText(tr("Type of data currently in cell: Text / Numeric"));
         }
         ui->labelSize->setText(tr("%n character(s)", "", dataLength));
@@ -826,7 +754,6 @@ void EditDialog::toggleOverwriteMode()
     currentMode = !currentMode;
 
     hexEdit->setOverwriteMode(currentMode);
-    ui->editorText->setOverwriteMode(currentMode);
     sciEdit->setOverwriteMode(currentMode);
 }
 
@@ -843,14 +770,12 @@ void EditDialog::setFocus()
 
     switch (editMode) {
     case TextEditor:
-        ui->editorText->setFocus();
-        ui->editorText->selectAll();
+        sciEdit->setFocus();
+        if (sciEdit->language() == DockTextEdit::PlainText && !isReadOnly)
+            sciEdit->selectAll();
         break;
     case HexEditor:
         hexEdit->setFocus();
-        break;
-    case SciEditor:
-        sciEdit->setFocus();
         break;
     case ImageViewer:
         // Nothing to do
@@ -869,15 +794,8 @@ void EditDialog::setReadOnly(bool ro)
     ui->actionNull->setEnabled(!ro);
     ui->actionImport->setEnabled(!ro);
 
-    ui->editorText->setReadOnly(ro);
     sciEdit->setReadOnly(ro);
     hexEdit->setReadOnly(ro);
-
-    // This makes the caret being visible for selection, although the editor is read-only. The read-only state is hinted by the
-    // caret not blinking. The same should happen for QScintilla, but it always lets the user select text by keyboard (ok) but
-    // the caret is also blinking when in read-only mode (not ok).
-    Qt::TextInteractionFlags textFlags = ro? Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard : Qt::TextEditorInteraction;
-    ui->editorText->setTextInteractionFlags(textFlags);
 }
 
 void EditDialog::switchEditorMode(bool autoSwitchForType)
@@ -937,14 +855,15 @@ void EditDialog::updateCellInfoAndMode(const QByteArray& data)
 
     // Use a switch statement for the other data types to keep things neat :)
     switch (dataType) {
-    case Null:
+    case Null: {
         // NULL data type
         ui->labelType->setText(tr("Type of data currently in cell: NULL"));
         ui->labelSize->setText(tr("%n byte(s)", "", 0));
-        ui->editorText->setStyleSheet("QTextEdit{ font-style: italic; }");
-        ui->editorText->setPlaceholderText(Settings::getValue("databrowser", "null_text").toString());
-        break;
 
+        // Use margin to set the NULL text.
+        sciEdit->setTextInMargin(Settings::getValue("databrowser", "null_text").toString());
+        break;
+    }
     case XML:
     case Text: {
         // Text only
@@ -997,13 +916,9 @@ QString EditDialog::humanReadableSize(double byteCount) const
 
 void EditDialog::reloadSettings()
 {
-    // Set the databrowser font for the text editor but the (SQL) editor
-    // font for hex editor, since it needs a Monospace font and the
-    // databrowser font would be usually of variable width.
-    QFont textFont(Settings::getValue("databrowser", "font").toString());
-    textFont.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
-    ui->editorText->setFont(textFont);
-
+    // Set the (SQL) editor font for hex editor, since it needs a
+    // Monospace font and the databrowser font would be usually of
+    // variable width.
     QFont hexFont(Settings::getValue("editor", "font").toString());
     hexFont.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
     hexEdit->setFont(hexFont);
@@ -1018,6 +933,10 @@ void EditDialog::setStackCurrentIndex(int editMode)
 {
     switch (editMode) {
     case TextEditor:
+        // Scintilla case: switch to the single Scintilla editor and set language
+        ui->editorStack->setCurrentIndex(TextEditor);
+        sciEdit->setLanguage(DockTextEdit::PlainText);
+        break;
     case HexEditor:
     case ImageViewer:
         // General case: switch to the selected editor
@@ -1025,12 +944,12 @@ void EditDialog::setStackCurrentIndex(int editMode)
         break;
     case JsonEditor:
         // Scintilla case: switch to the single Scintilla editor and set language
-        ui->editorStack->setCurrentIndex(SciEditor);
+        ui->editorStack->setCurrentIndex(TextEditor);
         sciEdit->setLanguage(DockTextEdit::JSON);
         break;
     case XmlEditor:
         // Scintilla case: switch to the single Scintilla editor and set language
-        ui->editorStack->setCurrentIndex(SciEditor);
+        ui->editorStack->setCurrentIndex(TextEditor);
         sciEdit->setLanguage(DockTextEdit::XML);
         break;
     }
@@ -1049,9 +968,6 @@ void EditDialog::openPrintDialog()
 
     QTextDocument *document = new QTextDocument();
     switch (dataSource) {
-    case TextBuffer:
-        document->setPlainText(ui->editorText->toPlainText());
-        break;
     case SciBuffer:
         // This case isn't really expected because the Scintilla widget has it's own printing slot
         document->setPlainText(sciEdit->text());
