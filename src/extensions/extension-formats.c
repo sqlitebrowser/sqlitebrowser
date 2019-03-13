@@ -7,11 +7,7 @@
  *
  *    Compile using:
  *
-<<<<<<< HEAD
- *       gcc -g -fPIC -shared extension-formats.c -o extension-formats.so
-=======
  *       gcc -g -fPIC -shared extension-formats.c -o libsqlite-formats.so
->>>>>>> upstream/master
  */
 
 #include <stdio.h>
@@ -631,15 +627,6 @@ int encodeBase64(char **result, const unsigned char *data, int dataLength)
  
   while (out < dataLength) {
     d = data[out++];
-<<<<<<< HEAD
-=======
-    if (d > 0x3F) {
-      if (d == 0x80)
-        continue;
-      free(encoded);
-      return ERROR_INVALID_CHARACTER;
-    }
->>>>>>> upstream/master
     switch (bitsLeft) {
       case 0:
              encoded[in++] = map[d >> 2];
