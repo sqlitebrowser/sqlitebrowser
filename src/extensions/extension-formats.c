@@ -794,22 +794,31 @@ static void plistFunc(sqlite3_context *context, int argc, sqlite3_value **argv){
 static void encodeBase64Func(sqlite3_context *context, int argc, sqlite3_value **argv){
   int resultLength;
   int errno = 0;
+  int dataLength;
+  const unsigned char *data;
   char *result = NULL;
   assert( argc==1 );
   switch( sqlite3_value_type(argv[0]) ){
     case SQLITE_BLOB:
-    case SQLITE_TEXT: {
-      const unsigned char *data = sqlite3_value_text(argv[0]);
-      int dataLength = sqlite3_value_bytes(argv[0]);
+      data = sqlite3_value_blob(argv[0]);
+      dataLength = sqlite3_value_bytes(argv[0]);
       errno = encodeBase64(&result, data, dataLength);
       if (errno == ERROR_NONE) {
         resultLength = strlen(result);
-        sqlite3_result_text(context,  result, resultLength, &freeResult);
+        sqlite3_result_text(context, result, resultLength, &freeResult);
       } else {
-        if (sqlite3_value_type(argv[0]) == SQLITE_TEXT)
-          sqlite3_result_text(context, data, dataLength, NULL);
-        else
-          sqlite3_result_blob(context, data, dataLength, NULL);
+        sqlite3_result_blob(context, data, dataLength, NULL);
+      }
+      break;
+    case SQLITE_TEXT: {
+      data = sqlite3_value_text(argv[0]);
+      dataLength = sqlite3_value_bytes(argv[0]);
+      errno = encodeBase64(&result, data, dataLength);
+      if (errno == ERROR_NONE) {
+        resultLength = strlen(result);
+        sqlite3_result_text(context, result, resultLength, &freeResult);
+      } else {
+        sqlite3_result_text(context, data, dataLength, NULL);
       }
       break;
     }
