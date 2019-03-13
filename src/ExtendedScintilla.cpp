@@ -124,12 +124,27 @@ void ExtendedScintilla::setupSyntaxHighlightingFormat(QsciLexer *lexer, const QS
 void ExtendedScintilla::setLexer(QsciLexer *lexer)
 {
     QsciScintilla::setLexer(lexer);
+    reloadCommonSettings();
+}
 
-    // Set margins to system window theme. setLexer seems to reset these colours.
-    setMarginsBackgroundColor(QPalette().color(QPalette::Active, QPalette::Window));
-    setMarginsForegroundColor(QPalette().color(QPalette::Active, QPalette::WindowText));
-    setIndentationGuidesBackgroundColor(QPalette().color(QPalette::Active, QPalette::Window));
-    setIndentationGuidesForegroundColor(QPalette().color(QPalette::Active, QPalette::WindowText));
+void ExtendedScintilla::reloadCommonSettings()
+{
+    // Set margins and default text colours according to settings. setLexer seems to reset these colours.
+
+    // Use desktop default colors for margins when following desktop
+    // style, or the colors matching the dark style-sheet, otherwise.
+    switch (Settings::getValue("General", "appStyle").toInt()) {
+    case Settings::FollowDesktopStyle :
+        setMarginsBackgroundColor(QPalette().color(QPalette::Active, QPalette::Window));
+        setMarginsForegroundColor(QPalette().color(QPalette::Active, QPalette::WindowText));
+        break;
+    case Settings::DarkStyle :
+        setMarginsBackgroundColor(QColor("#32414B"));
+        setMarginsForegroundColor(QColor("#EFF0F1"));
+        break;
+    }
+    setPaper(Settings::getValue("syntaxhighlighter", "background_colour").toString());
+    setColor(Settings::getValue("syntaxhighlighter", "foreground_colour").toString());
 }
 
 void ExtendedScintilla::reloadKeywords()
@@ -145,33 +160,38 @@ void ExtendedScintilla::reloadSettings()
 }
 void ExtendedScintilla::reloadLexerSettings(QsciLexer *lexer)
 {
+    QColor foreground (Settings::getValue("syntaxhighlighter", "foreground_colour").toString());
+    QColor background (Settings::getValue("syntaxhighlighter", "background_colour").toString());
+
+    QFont defaultfont(Settings::getValue("editor", "font").toString());
+    defaultfont.setStyleHint(QFont::TypeWriter);
+    defaultfont.setPointSize(Settings::getValue("editor", "fontsize").toInt());
+
     // Set syntax highlighting settings
     if(lexer)
     {
-        QFont defaultfont(Settings::getValue("editor", "font").toString());
-        defaultfont.setStyleHint(QFont::TypeWriter);
-        defaultfont.setPointSize(Settings::getValue("editor", "fontsize").toInt());
         lexer->setFont(defaultfont);
 
-        lexer->setDefaultColor(QColor(Settings::getValue("syntaxhighlighter", "foreground_colour").toString()));
-        lexer->setPaper(QColor(Settings::getValue("syntaxhighlighter", "background_colour").toString()));
+        lexer->setDefaultPaper(background);
+        lexer->setDefaultColor(foreground);
+
+        // This sets the base colors for all the styles
+        lexer->setPaper(background);
+        lexer->setColor(foreground);
     }
 
     // Set font
-    QFont font(Settings::getValue("editor", "font").toString());
-    font.setStyleHint(QFont::TypeWriter);
-    font.setPointSize(Settings::getValue("editor", "fontsize").toInt());
-    setFont(font);
+    setFont(defaultfont);
 
     // Show line numbers
-    setMarginsFont(font);
+    setMarginsFont(defaultfont);
     setMarginLineNumbers(0, true);
     updateLineNumberAreaWidth();
 
     // Highlight current line
     setCaretLineVisible(true);
     setCaretLineBackgroundColor(QColor(Settings::getValue("syntaxhighlighter", "currentline_colour").toString()));
-    setCaretForegroundColor(QColor(Settings::getValue("syntaxhighlighter", "foreground_colour").toString()));
+    setCaretForegroundColor(foreground);
 
     // Set tab width
     setTabWidth(Settings::getValue("editor", "tabsize").toInt());
@@ -272,4 +292,19 @@ void ExtendedScintilla::openPrintDialog()
     dialog->exec();
 
     delete dialog;
+}
+
+void ExtendedScintilla::setReadOnly(bool ro)
+{
+    QsciScintilla::setReadOnly(ro);
+    // Disable or enable caret blinking so it is obvious whether the text can be modified or not. Otherwise there isn't any other hint.
+    SendScintilla(QsciScintillaBase::SCI_SETCARETPERIOD, ro ? 0 : 500);
+}
+
+void ExtendedScintilla::setText(const QString& text)
+{
+    // Reset scroll width, so the scroll bar is readjusted to the new text.
+    // Otherwise, it grows always bigger.
+    setScrollWidth(80);
+    QsciScintilla::setText(text);
 }

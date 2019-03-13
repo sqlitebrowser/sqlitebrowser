@@ -41,6 +41,8 @@ PreferencesDialog::PreferencesDialog(QWidget* parent, Tabs tab)
 
     loadSettings();
 
+    connect(ui->appStyleCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(adjustColorsToStyle(int)));
+
     // Avoid different heights due to having check boxes or not
     ui->treeSyntaxHighlighting->setUniformRowHeights(true);
 
@@ -187,6 +189,7 @@ void PreferencesDialog::loadSettings()
     ui->checkRegexDisabled->setChecked(Settings::getValue("extensions", "disableregex").toBool());
     ui->checkAllowLoadExtension->setChecked(Settings::getValue("extensions", "enable_load_extension").toBool());
     fillLanguageBox();
+    ui->appStyleCombo->setCurrentIndex(Settings::getValue("General", "appStyle").toInt());
     ui->toolbarStyleComboMain->setCurrentIndex(Settings::getValue("General", "toolbarStyle").toInt());
     ui->toolbarStyleComboStructure->setCurrentIndex(Settings::getValue("General", "toolbarStyleStructure").toInt());
     ui->toolbarStyleComboBrowse->setCurrentIndex(Settings::getValue("General", "toolbarStyleBrowse").toInt());
@@ -313,6 +316,7 @@ void PreferencesDialog::saveSettings()
                                  tr("The language will change after you restart the application."));
 
     Settings::setValue("General", "language", newLanguage);
+    Settings::setValue("General", "appStyle", ui->appStyleCombo->currentIndex());
 
     Settings::setValue("General", "toolbarStyle", ui->toolbarStyleComboMain->currentIndex());
     Settings::setValue("General", "toolbarStyleStructure", ui->toolbarStyleComboStructure->currentIndex());
@@ -471,26 +475,33 @@ void PreferencesDialog::loadColorSetting(QFrame *frame, const QString & settingN
 void PreferencesDialog::setColorSetting(QFrame *frame, const QColor &color)
 {
     QPalette::ColorRole role;
+    QString style;
     QLineEdit *line;
 
     if (frame == ui->fr_bin_bg) {
         line = ui->txtBlob;
         role = line->backgroundRole();
+        style = QString("background-color");
     } else if (frame ==  ui->fr_bin_fg) {
         line = ui->txtBlob;
         role = line->foregroundRole();
+        style = QString("color");
     } else if (frame ==  ui->fr_reg_bg) {
         line = ui->txtRegular;
         role = line->backgroundRole();
+        style = QString("background-color");
     } else if (frame ==  ui->fr_reg_fg) {
         line = ui->txtRegular;
         role = line->foregroundRole();
+        style = QString("color");
     } else if (frame ==  ui->fr_null_bg) {
         line = ui->txtNull;
         role = line->backgroundRole();
+        style = QString("background-color");
     } else if (frame ==  ui->fr_null_fg) {
         line = ui->txtNull;
         role = line->foregroundRole();
+        style = QString("color");
     } else
         return;
 
@@ -498,15 +509,40 @@ void PreferencesDialog::setColorSetting(QFrame *frame, const QColor &color)
     palette.setColor(frame->backgroundRole(), color);
     frame->setPalette(palette);
 
+    frame->setStyleSheet(QString(".QFrame {background-color: %2}").arg(color.name()));
+
     palette = line->palette();
     palette.setColor(role, color);
     line->setPalette(palette);
+
+    line->setStyleSheet(QString(".QLineEdit {color: %1; background-color: %2}").arg(palette.color(line->foregroundRole()).name(),
+                                                                       palette.color(line->backgroundRole()).name()));
 }
 
 void PreferencesDialog::saveColorSetting(QFrame *frame, const QString & settingName)
 {
     Settings::setValue("databrowser", settingName + "_colour",
         frame->palette().color(frame->backgroundRole()));
+}
+
+void PreferencesDialog::adjustColorsToStyle(int style)
+{
+    Settings::AppStyle appStyle = static_cast<Settings::AppStyle>(style);
+    setColorSetting(ui->fr_null_fg, Settings::getDefaultColorValue("databrowser", "null_fg_colour", appStyle));
+    setColorSetting(ui->fr_null_bg, Settings::getDefaultColorValue("databrowser", "null_bg_colour", appStyle));
+    setColorSetting(ui->fr_bin_fg, Settings::getDefaultColorValue("databrowser", "bin_fg_colour", appStyle));
+    setColorSetting(ui->fr_bin_bg, Settings::getDefaultColorValue("databrowser", "bin_bg_colour", appStyle));
+    setColorSetting(ui->fr_reg_fg, Settings::getDefaultColorValue("databrowser", "reg_fg_colour", appStyle));
+    setColorSetting(ui->fr_reg_bg, Settings::getDefaultColorValue("databrowser", "reg_bg_colour", appStyle));
+
+    for(int i=0; i < ui->treeSyntaxHighlighting->topLevelItemCount(); ++i)
+    {
+        QString name = ui->treeSyntaxHighlighting->topLevelItem(i)->text(0);
+        QColor color = Settings::getDefaultColorValue("syntaxhighlighter", name + "_colour", appStyle);
+        ui->treeSyntaxHighlighting->topLevelItem(i)->setTextColor(2, color);
+        ui->treeSyntaxHighlighting->topLevelItem(i)->setBackgroundColor(2, color);
+        ui->treeSyntaxHighlighting->topLevelItem(i)->setText(2, color.name());
+    }
 }
 
 void PreferencesDialog::activateRemoteTab(bool active)

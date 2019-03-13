@@ -1039,7 +1039,7 @@ Gli errori sono indicati con una sottolineatura rossa ondulata.</translation>
         <location filename="../EditDialog.cpp" line="770"/>
         <location filename="../EditDialog.cpp" line="960"/>
         <location filename="../EditDialog.cpp" line="968"/>
-        <source>%n char(s)</source>
+        <source>%n character(s)</source>
         <translation>
             <numerusform>%n carattere</numerusform>
             <numerusform>%n caratteri</numerusform>

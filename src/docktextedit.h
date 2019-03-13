@@ -20,13 +20,20 @@ public:
     // Enumeration of supported languages
     enum Language
     {
+        PlainText,
         JSON,
         XML
     };
 
     void setLanguage(Language lang);
     Language language() { return m_language; }
-    
+
+    // Disables the line-number margin and sets this text in the first line.
+    void setTextInMargin(const QString& text);
+
+    // Resets margin to their original line-number mode
+    void clearTextInMargin();
+
 public slots:
     void reloadSettings();
 
@@ -35,6 +42,7 @@ protected:
     static QsciLexerXML* xmlLexer;
 private:
     Language m_language;
+    QFont plainTextFont;
 };
 
 #endif

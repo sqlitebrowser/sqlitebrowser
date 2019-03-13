@@ -90,6 +90,10 @@ Arch Linux provides a package through pacman.
 Install for Fedora (i386 and x86_64) by issuing the following command:
 
     $ sudo dnf install sqlitebrowser
+    
+### openSUSE
+
+    $ sudo zypper install sqlitebrowser
 
 ### Debian
 

@@ -1175,7 +1175,7 @@ Los errores se indican con un subrayado ondulado rojo.</translation>
         <location filename="../EditDialog.cpp" line="770"/>
         <location filename="../EditDialog.cpp" line="960"/>
         <location filename="../EditDialog.cpp" line="968"/>
-        <source>%n char(s)</source>
+        <source>%n character(s)</source>
         <translation>
             <numerusform>%n carácter</numerusform>
             <numerusform>%n caracteres</numerusform>

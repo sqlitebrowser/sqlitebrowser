@@ -8,6 +8,8 @@
 #include <QStyledItemDelegate>
 #include <QSortFilterProxyModel>
 
+#include "sql/Query.h"
+
 class QMenu;
 class QMimeData;
 class FilterTableHeader;
@@ -51,6 +53,8 @@ public:
 public:
     QSet<int> selectedCols();
     int numVisibleRows();
+
+    void sortByColumns(const std::vector<sqlb::SortedColumn>& columns);
 
 public slots:
     void reloadSettings();

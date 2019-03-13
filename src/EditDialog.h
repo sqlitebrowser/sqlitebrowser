@@ -62,7 +62,6 @@ private:
     QByteArray removedBom;
 
     enum DataSources {
-        TextBuffer,
         HexBuffer,
         SciBuffer
     };
@@ -78,13 +77,14 @@ private:
         XML
     };
 
-    // Edit modes and editor stack (this must be aligned with the UI)
-    // Note that JSON and XML share the Scintilla widget.
+    // Edit modes and editor stack (this must be aligned with the UI).
+    // Note that text modes (plain, JSON and XML) share the Scintilla widget,
+    // Consequently the editor stack range is TextEditor..ImageViewer.
     enum EditModes {
         TextEditor = 0,
         HexEditor = 1,
         ImageViewer = 2,
-        JsonEditor, SciEditor = 3,
+        JsonEditor = 3,
         XmlEditor = 4
     };
 

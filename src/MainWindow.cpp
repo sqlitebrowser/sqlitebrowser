@@ -80,20 +80,7 @@ QDataStream& operator>>(QDataStream& ds, sqlb::ObjectIdentifier& objid)
     return ds;
 }
 
-// These are temporary helper functions to turn a vector of sorted columns into a single column to sort and vice verse. This is done by just taking the
-// first sort column there is and ignoring all the others or creating a single item vector respectively. These functions can be removed once all parts
-// of the application have been converted to deal with vectors of sorted columns.
-static void fromSortOrderVector(const std::vector<sqlb::SortedColumn>& vector, int& index, Qt::SortOrder& mode)
-{
-    if(vector.size())
-    {
-        index = vector.at(0).column;
-        mode = vector.at(0).direction == sqlb::Ascending ? Qt::AscendingOrder : Qt::DescendingOrder;
-    } else {
-        index = 0;
-        mode = Qt::AscendingOrder;
-    }
-}
+// This is a temporary helper function. Delete it once we clean up the project file loading.
 static std::vector<sqlb::SortedColumn> toSortOrderVector(int index, Qt::SortOrder mode)
 {
     std::vector<sqlb::SortedColumn> vector;
@@ -777,10 +764,7 @@ void MainWindow::populateTable()
         sqlb::Query query(tablename);
 
         // Sorting
-        int sortOrderIndex;
-        Qt::SortOrder sortOrderMode;
-        fromSortOrderVector(storedData.query.orderBy(), sortOrderIndex, sortOrderMode);
-        query.orderBy().emplace_back(sortOrderIndex, sortOrderMode == Qt::AscendingOrder ? sqlb::Ascending : sqlb::Descending);
+        query.setOrderBy(storedData.query.orderBy());
 
         // Filters
         for(auto it=storedData.filterValues.constBegin();it!=storedData.filterValues.constEnd();++it)
@@ -863,10 +847,13 @@ void MainWindow::applyBrowseTableSettings(BrowseDataTableSettings storedData, bo
         ui->dataTable->setColumnWidth(widthIt.key(), widthIt.value());
 
     // Sorting
-    int sortOrderIndex;
-    Qt::SortOrder sortOrderMode;
-    fromSortOrderVector(storedData.query.orderBy(), sortOrderIndex, sortOrderMode);
-    ui->dataTable->filterHeader()->setSortIndicator(sortOrderIndex, sortOrderMode);
+    // For now just use the first sort column for the sort indicator
+    if(storedData.query.orderBy().size())
+    {
+        ui->dataTable->filterHeader()->setSortIndicator(
+                    storedData.query.orderBy().front().column,
+                    storedData.query.orderBy().front().direction == sqlb::Ascending ? Qt::AscendingOrder : Qt::DescendingOrder);
+    }
 
     // Filters
     if(!skipFilters)
@@ -971,7 +958,8 @@ void MainWindow::addRecord()
 {
     int row = m_browseTableModel->rowCount();
 
-    if(m_browseTableModel->insertRow(row))
+    // If table has pseudo_pk, then it must be an editable view. Jump straight to inserting by pop-up dialog.
+    if(!m_browseTableModel->hasPseudoPk() && m_browseTableModel->insertRow(row))
     {
         selectTableLine(row);
     } else {
@@ -983,7 +971,8 @@ void MainWindow::addRecord()
 
 void MainWindow::insertValues()
 {
-    AddRecordDialog dialog(db, currentlyBrowsedTableName(), this);
+    QString pseudo_pk = m_browseTableModel->hasPseudoPk() ? m_browseTableModel->pseudoPk() : QString();
+    AddRecordDialog dialog(db, currentlyBrowsedTableName(), this, pseudo_pk);
     if (dialog.exec())
         populateTable();
 }
@@ -1309,7 +1298,7 @@ void MainWindow::doubleClickTable(const QModelIndex& index)
         return;
     }
 
-    // * Don't allow editing of other objects than tables (on the browse table) *
+    // * Don't allow editing of other objects than tables and editable views
     bool isEditingAllowed = !db.readOnly() && m_currentTabTableModel == m_browseTableModel &&
             m_browseTableModel->isEditable();
 
@@ -1337,7 +1326,7 @@ void MainWindow::dataTableSelectionChanged(const QModelIndex& index)
     bool editingAllowed = !db.readOnly() && (m_currentTabTableModel == m_browseTableModel) &&
             m_browseTableModel->isEditable();
 
-    // Don't allow editing of other objects than tables
+    // Don't allow editing of other objects than tables and editable views
     editDock->setReadOnly(!editingAllowed);
 
     // If the Edit Cell dock is visible, load the new value into it
@@ -2010,16 +1999,44 @@ void MainWindow::browseTableHeaderClicked(int logicalindex)
     // Abort if there is more than one column selected because this tells us that the user pretty sure wants to do a range selection
     // instead of sorting data. But restore before the sort indicator automatically changed by Qt so it still indicates the last
     // use sort action.
-    if(ui->dataTable->selectionModel()->selectedColumns().count() > 1) {
+    // This check is disabled when the Control key is pressed. This is done because we use the Control key for sorting by multiple columns and
+    // Qt seems to pretty much always select multiple columns when the Control key is pressed.
+    if(!QApplication::keyboardModifiers().testFlag(Qt::ControlModifier) && ui->dataTable->selectionModel()->selectedColumns().count() > 1) {
         applyBrowseTableSettings(settings);
         return;
     }
-    int dummy;
-    Qt::SortOrder order;
-    fromSortOrderVector(settings.query.orderBy(), dummy, order);
-    order = order == Qt::AscendingOrder ? Qt::DescendingOrder : Qt::AscendingOrder;
-    settings.query.orderBy() = toSortOrderVector(logicalindex, order);
-    ui->dataTable->sortByColumn(logicalindex, order);
+
+    // Get the current list of sort columns
+    auto& columns = settings.query.orderBy();
+
+    // Before sorting, first check if the Control key is pressed. If it is, we want to append this column to the list of sort columns. If it is not,
+    // we want to sort only by the new column.
+    if(QApplication::keyboardModifiers().testFlag(Qt::ControlModifier))
+    {
+        // Multi column sorting
+
+        // If the last sort column was just clicked again, change its sort order.
+        // If not, add the column as a new sort column to the list.
+        if(columns.size() && columns.back().column == logicalindex)
+            columns.back().direction = (columns.back().direction == sqlb::Ascending ? sqlb::Descending : sqlb::Ascending);
+        else
+            columns.emplace_back(logicalindex, sqlb::Ascending);
+    } else {
+        // Single column sorting
+
+        // If we have exactly one sort column and it is the column which was just clicked, change its sort order.
+        // If not, clear the list of sorting columns and replace it by a single new sort column.
+        if(columns.size() == 1 && columns.front().column == logicalindex)
+        {
+            columns.front().direction = (columns.front().direction == sqlb::Ascending ? sqlb::Descending : sqlb::Ascending);
+        } else {
+            columns.clear();
+            columns.emplace_back(logicalindex, sqlb::Ascending);
+        }
+    }
+
+    // Do the actual sorting
+    ui->dataTable->sortByColumns(columns);
 
     // select the first item in the column so the header is bold
     // we might try to select the last selected item
@@ -2365,6 +2382,24 @@ void MainWindow::reloadSettings()
     // Set data browser font
     ui->dataTable->reloadSettings();
 
+    switch (static_cast<Settings::AppStyle>(Settings::getValue("General", "appStyle").toInt())) {
+    case Settings::FollowDesktopStyle :
+        qApp->setStyleSheet("");
+
+        break;
+    case Settings::DarkStyle :
+        QFile f(":qdarkstyle/style.qss");
+        if (!f.exists()) {
+            QMessageBox::warning(this, qApp->applicationName(),
+                               tr("Could not open find resource file: %1").arg(f.fileName()));
+        } else {
+            f.open(QFile::ReadOnly | QFile::Text);
+            QTextStream ts(&f);
+            qApp->setStyleSheet(ts.readAll());
+        }
+        break;
+    }
+
     setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(Settings::getValue("General", "toolbarStyle").toInt()));
     ui->dbToolbar->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(Settings::getValue("General", "toolbarStyleStructure").toInt()));
     ui->browseToolbar->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(Settings::getValue("General", "toolbarStyleBrowse").toInt()));
@@ -2569,7 +2604,7 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, QXmlS
     {
         int sortOrderIndex = xml.attributes().value("sort_order_index").toInt();
         Qt::SortOrder sortOrderMode = static_cast<Qt::SortOrder>(xml.attributes().value("sort_order_mode").toInt());
-        settings.query.orderBy() = toSortOrderVector(sortOrderIndex, sortOrderMode);
+        settings.query.setOrderBy(toSortOrderVector(sortOrderIndex, sortOrderMode));
     }
 
     settings.showRowid = xml.attributes().value("show_row_id").toInt();
@@ -2818,10 +2853,7 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                             populateTable();     // Refresh view
                             sqlb::ObjectIdentifier current_table = currentlyBrowsedTableName();
 
-                            int sortIndex;
-                            Qt::SortOrder sortMode;
-                            fromSortOrderVector(browseTableSettings[current_table].query.orderBy(), sortIndex, sortMode);
-                            ui->dataTable->sortByColumn(sortIndex, sortMode);
+                            ui->dataTable->sortByColumns(browseTableSettings[current_table].query.orderBy());
                             showRowidColumn(browseTableSettings[current_table].showRowid);
                             unlockViewEditing(!browseTableSettings[current_table].unlockViewPk.isEmpty(), browseTableSettings[current_table].unlockViewPk);
                         }
@@ -3724,7 +3756,7 @@ void MainWindow::updateInsertDeleteRecordButton()
     // at least one row to be selected. For the insert button there is an extra rule to disable it when we are browsing a view because inserting
     // into a view isn't supported yet.
     bool isEditable = m_browseTableModel->isEditable() && !db.readOnly();
-    ui->actionNewRecord->setEnabled(isEditable && !m_browseTableModel->hasPseudoPk());
+    ui->actionNewRecord->setEnabled(isEditable);
     ui->actionDeleteRecord->setEnabled(isEditable && rows != 0);
 
     if(rows > 1)

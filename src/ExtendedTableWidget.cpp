@@ -978,3 +978,17 @@ void ExtendedTableWidget::openPrintDialog()
     delete document;
     delete mimeData;
 }
+
+void ExtendedTableWidget::sortByColumns(const std::vector<sqlb::SortedColumn>& columns)
+{
+    // Are there even any columns to sort by?
+    if(columns.size() == 0)
+        return;
+
+    // Are we using a SqliteTableModel as a model? These support multiple sort columns. Other models might not; for those we just use the first sort column
+    SqliteTableModel* sqlite_model = dynamic_cast<SqliteTableModel*>(model());
+    if(sqlite_model == nullptr)
+        model()->sort(columns.front().column, columns.front().direction == sqlb::Ascending ? Qt::AscendingOrder : Qt::DescendingOrder);
+    else
+        sqlite_model->sort(columns);
+}
