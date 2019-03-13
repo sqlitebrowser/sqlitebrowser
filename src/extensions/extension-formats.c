@@ -627,12 +627,6 @@ int encodeBase64(char **result, const unsigned char *data, int dataLength)
  
   while (out < dataLength) {
     d = data[out++];
-    if (d > 0x3F) {
-      if (d == 0x80)
-        continue;
-      free(encoded);
-      return ERROR_INVALID_CHARACTER;
-    }
     switch (bitsLeft) {
       case 0:
              encoded[in++] = map[d >> 2];
