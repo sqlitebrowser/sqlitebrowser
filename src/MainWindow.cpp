@@ -922,6 +922,9 @@ bool MainWindow::fileClose()
     ui->editLogUser->clear();
     ui->editLogErrorLog->clear();
 
+    // Remove completion for identifiers
+    SqlTextEdit::sqlLexer->setTableNames(SqlUiLexer::QualifiedTablesMap());
+
     return true;
 }
 
@@ -2253,8 +2256,8 @@ void MainWindow::changeSqlTab(int index)
     {
         // Not running a query
 
-        ui->actionSqlExecuteLine->setEnabled(true);
-        ui->actionExecuteSql->setEnabled(true);
+        ui->actionSqlExecuteLine->setEnabled(db.isOpen());
+        ui->actionExecuteSql->setEnabled(db.isOpen());
         ui->actionSqlStop->setEnabled(false);
     } else {
         // Running a query
