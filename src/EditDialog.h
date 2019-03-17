@@ -46,6 +46,7 @@ private slots:
     void openPrintDialog();
     void openPrintImageDialog();
     void copyHexAscii();
+    void setWordWrapping(bool value);
 
 signals:
     void recordTextUpdated(const QPersistentModelIndex& idx, const QByteArray& data, bool isBlob);

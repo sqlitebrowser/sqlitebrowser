@@ -22,6 +22,8 @@
 #include <QClipboard>
 #include <QTextDocument>
 
+#include <Qsci/qsciscintilla.h>
+
 EditDialog::EditDialog(QWidget* parent)
     : QDialog(parent),
       ui(new Ui::EditDialog),
@@ -65,6 +67,8 @@ EditDialog::EditDialog(QWidget* parent)
     ui->actionIndent->setChecked(mustIndentAndCompact);
 
     ui->buttonAutoSwitchMode->setChecked(Settings::getValue("databrowser", "auto_switch_mode").toBool());
+    ui->actionWordWrap->setChecked(Settings::getValue("databrowser", "editor_word_wrap").toBool());
+    setWordWrapping(ui->actionWordWrap->isChecked());
 
     reloadSettings();
 }
@@ -73,6 +77,7 @@ EditDialog::~EditDialog()
 {
     Settings::setValue("databrowser", "indent_compact",  mustIndentAndCompact);
     Settings::setValue("databrowser", "auto_switch_mode", ui->buttonAutoSwitchMode->isChecked());
+    Settings::setValue("databrowser", "editor_word_wrap", ui->actionWordWrap->isChecked());
     delete ui;
 }
 
@@ -1011,4 +1016,10 @@ void EditDialog::openPrintImageDialog()
 void EditDialog::copyHexAscii()
 {
     QApplication::clipboard()->setText(hexEdit->selectionToReadableString());
+}
+
+void EditDialog::setWordWrapping(bool value)
+{
+    // Set wrap lines
+    sciEdit->setWrapMode(value ? QsciScintilla::WrapWord : QsciScintilla::WrapNone);
 }
