@@ -217,6 +217,23 @@ int SqliteTableModel::filterCount() const
     return m_query.where().size();
 }
 
+// Convert a number to string using the Unicode superscript characters
+static QString toSuperScript(int number)
+{
+    QString superScript = QString::number(number);
+    superScript.replace('0', u'⁰');
+    superScript.replace('1', u'¹');
+    superScript.replace('2', u'²');
+    superScript.replace('3', u'³');
+    superScript.replace('4', u'⁴');
+    superScript.replace('5', u'⁵');
+    superScript.replace('6', u'⁶');
+    superScript.replace('7', u'⁷');
+    superScript.replace('8', u'⁸');
+    superScript.replace('9', u'⁹');
+    return superScript;
+}
+
 QVariant SqliteTableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (role != Qt::DisplayRole)
@@ -225,9 +242,19 @@ QVariant SqliteTableModel::headerData(int section, Qt::Orientation orientation, 
     if (orientation == Qt::Horizontal)
     {
         // if we have a VIRTUAL table the model will not be valid, with no header data
-        if(section < m_headers.size())
-            return m_headers.at(section);
-
+        if(section < m_headers.size()) {
+            QString sortIndicator;
+            for(int i = 0; i < m_query.orderBy().size(); i++) {
+                const sqlb::SortedColumn sortedColumn = m_query.orderBy()[i];
+                // Append sort indicator with direction and ordinal number in superscript style
+                if (sortedColumn.column == section) {
+                    sortIndicator = sortedColumn.direction == sqlb::Ascending ? " ▾" : " ▴";
+                    sortIndicator.append(toSuperScript(i+1));
+                    break;
+                }
+            }
+            return m_headers.at(section) + sortIndicator;
+        }
         return QString("%1").arg(section + 1);
     }
     else

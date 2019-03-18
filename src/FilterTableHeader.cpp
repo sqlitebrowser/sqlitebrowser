@@ -10,7 +10,8 @@ FilterTableHeader::FilterTableHeader(QTableView* parent) :
 {
     // Activate the click signals to allow sorting
     setSectionsClickable(true);
-    setSortIndicatorShown(true);
+    // But use our own indicators allowing multi-column sorting
+    setSortIndicatorShown(false);
 
     // Do some connects: Basically just resize and reposition the input widgets whenever anything changes
     connect(this, SIGNAL(sectionResized(int,int,int)), this, SLOT(adjustPositions()));
