@@ -661,7 +661,7 @@ int encodeBase64(char **result, const unsigned char *data, int dataLength)
   }
 
   /*  Add padding bytes if required  */
-  b = in & 3;
+  b = in % 3;
   for (int i=0; i < b; i++)
     encoded[in++] = '=';
 
