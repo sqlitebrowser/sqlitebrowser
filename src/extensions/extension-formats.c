@@ -647,6 +647,8 @@ int encodeBase64(char **result, const unsigned char *data, int dataLength)
              break;
     }
   }
+
+  /*  Flush remaining bits  */
   switch (bitsLeft) {
     case 2:
            encoded[in++] = map[b << 4];
@@ -657,9 +659,14 @@ int encodeBase64(char **result, const unsigned char *data, int dataLength)
     default:
            break;
   }
-  for (int i=0; i < (in & 0x03); i++)
+
+  /*  Add padding bytes if required  */
+  b = in & 3;
+  for (int i=0; i < b; i++)
     encoded[in++] = '=';
-  encoded[in] == '\0';
+
+  /*  Terminate as string  */
+  encoded[in] = '\0';
   return ERROR_NONE;
 }
 
@@ -813,6 +820,7 @@ static void encodeBase64Func(sqlite3_context *context, int argc, sqlite3_value *
     case SQLITE_TEXT: {
       data = sqlite3_value_text(argv[0]);
       dataLength = sqlite3_value_bytes(argv[0]);
+      sqlite3_result_text(context, data, dataLength, NULL);
       errno = encodeBase64(&result, data, dataLength);
       if (errno == ERROR_NONE) {
         resultLength = strlen(result);
