@@ -652,18 +652,16 @@ int encodeBase64(char **result, const unsigned char *data, int dataLength)
   switch (bitsLeft) {
     case 2:
            encoded[in++] = map[b << 4];
+           encoded[in++] = '=';
+           encoded[in++] = '=';
            break;
     case 4:
            encoded[in++] = map[b << 2];
+           encoded[in++] = '=';
            break;
     default:
            break;
   }
-
-  /*  Add padding bytes if required  */
-  b = in % 3;
-  for (int i=0; i < b; i++)
-    encoded[in++] = '=';
 
   /*  Terminate as string  */
   encoded[in] = '\0';
