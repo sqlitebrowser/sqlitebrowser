@@ -922,8 +922,10 @@ bool MainWindow::fileClose()
     ui->editLogUser->clear();
     ui->editLogErrorLog->clear();
 
-    // Remove completion for identifiers
+    // Remove completion and highlighting for identifiers
     SqlTextEdit::sqlLexer->setTableNames(SqlUiLexer::QualifiedTablesMap());
+    for(int i=0; i < ui->tabSqlAreas->count(); i++)
+        qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i))->getEditor()->reloadKeywords();
 
     return true;
 }
