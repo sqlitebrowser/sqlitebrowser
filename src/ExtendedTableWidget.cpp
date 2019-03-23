@@ -253,6 +253,7 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     QAction* lessEqualAction = new QAction(tr("Less or equal"), m_contextMenu);
     QAction* inRangeAction = new QAction(tr("Between this and..."), m_contextMenu);
     QAction* regexpAction = new QAction(tr("Regular expression"), m_contextMenu);
+    QAction* condFormatAction = new QAction(QIcon(":/icons/edit_cond_formats"), tr("Edit Conditional Formats..."), m_contextMenu);
 
     QAction* nullAction = new QAction(QIcon(":/icons/set_to_null"), tr("Set to NULL"), m_contextMenu);
     QAction* copyAction = new QAction(QIcon(":/icons/copy"), tr("Copy"), m_contextMenu);
@@ -272,6 +273,7 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     filterMenu->addAction(lessEqualAction);
     filterMenu->addAction(inRangeAction);
     filterMenu->addAction(regexpAction);
+    m_contextMenu->addAction(condFormatAction);
 
     m_contextMenu->addSeparator();
     m_contextMenu->addAction(nullAction);
@@ -309,11 +311,13 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
         copyWithHeadersAction->setEnabled(enabled);
         copyAsSQLAction->setEnabled(enabled);
         printAction->setEnabled(enabled);
+        condFormatAction->setEnabled(enabled);
 
         // Hide filter actions when there isn't any filters
         bool hasFilters = m_tableHeader->hasFilters();
         filterAction->setVisible(hasFilters);
         filterMenu->menuAction()->setVisible(hasFilters);
+        condFormatAction->setVisible(hasFilters);
 
         // Try to find out whether the current view is editable and (de)activate menu options according to that
         bool editable = editTriggers() != QAbstractItemView::NoEditTriggers;
@@ -354,6 +358,9 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     connect(regexpAction, &QAction::triggered, [&]() {
             useAsFilter(QString ("/"), /* binary */ false, QString ("/"));
         });
+    connect(condFormatAction, &QAction::triggered, [&]() {
+        emit editCondFormats(currentIndex().column());
+    });
 
     connect(nullAction, &QAction::triggered, [&]() {
         for(const QModelIndex& index : selectedIndexes())

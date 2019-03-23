@@ -234,6 +234,26 @@ QVariant SqliteTableModel::headerData(int section, Qt::Orientation orientation, 
         return QString("%1").arg(section + 1);
 }
 
+QColor SqliteTableModel::getMatchingCondFormatColor(int column, const QString& value, int role) const
+{
+    bool isNumber;
+    value.toFloat(&isNumber);
+    QString sql;
+    // For each conditional format for this column,
+    // if the condition matches the current data, return the associated colour.
+    for (const CondFormat& eachCondFormat : m_mCondFormats.value(column)) {
+        if (isNumber && !eachCondFormat.sqlCondition().contains("'"))
+            sql = QString("SELECT %1 %2").arg(value, eachCondFormat.sqlCondition());
+        else
+            sql = QString("SELECT '%1' %2").arg(value, eachCondFormat.sqlCondition());
+
+        // Query the DB for the condition, waiting in case there is a loading in progress.
+        if (m_db.querySingleValueFromDb(sql, false, DBBrowserDB::Wait) == "1")
+            return role == Qt::ForegroundRole ? eachCondFormat.foregroundColor() : eachCondFormat.backgroundColor();
+    }
+    return QColor();
+}
+
 QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
@@ -291,6 +311,15 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
             return QColor(Settings::getValue("databrowser", "null_fg_colour").toString());
         else if (nosync_isBinary(index))
             return QColor(Settings::getValue("databrowser", "bin_fg_colour").toString());
+        else if (m_mCondFormats.contains(index.column())) {
+            QString value = cached_row->at(index.column());
+            // Unlock before querying from DB
+            lock.unlock();
+            QColor condFormatColor = getMatchingCondFormatColor(index.column(), value, role);
+            if (condFormatColor.isValid())
+                return condFormatColor;
+            }
+        // Regular case (not null, not binary and no matching conditional format)
         return QColor(Settings::getValue("databrowser", "reg_fg_colour").toString());
     } else if (role == Qt::BackgroundRole) {
         if(!row_available)
@@ -301,23 +330,11 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
             return QColor(Settings::getValue("databrowser", "bin_bg_colour").toString());
         else if (m_mCondFormats.contains(index.column())) {
             QString value = cached_row->at(index.column());
-            bool isNumber;
-            value.toFloat(&isNumber);
-            QString sql;
-            // For each conditional format for this column,
-            // if the condition matches the current data, return the associated colour.
-            for (const CondFormat& eachCondFormat : m_mCondFormats.value(index.column())) {
-                if (isNumber && !eachCondFormat.sqlCondition().contains("'"))
-                    sql = QString("SELECT %1 %2").arg(value, eachCondFormat.sqlCondition());
-                else
-                    sql = QString("SELECT '%1' %2").arg(value, eachCondFormat.sqlCondition());
-
-                // Unlock before querying from DB
-                lock.unlock();
-                // Query the DB for the condition, waiting in case there is a loading in progress.
-                if (m_db.querySingleValueFromDb(sql, false, DBBrowserDB::Wait) == "1")
-                    return eachCondFormat.color();
-            }
+            // Unlock before querying from DB
+            lock.unlock();
+            QColor condFormatColor = getMatchingCondFormatColor(index.column(), value, role);
+            if (condFormatColor.isValid())
+                return condFormatColor;
         }
         // Regular case (not null, not binary and no matching conditional format)
         return QColor(Settings::getValue("databrowser", "reg_bg_colour").toString());

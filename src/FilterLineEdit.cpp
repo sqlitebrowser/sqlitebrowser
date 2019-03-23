@@ -108,13 +108,22 @@ void FilterLineEdit::showContextMenu(const QPoint &pos)
     // This has to be created here, otherwise the set of enabled options would not update accordingly.
     QMenu* editContextMenu = createStandardContextMenu();
     editContextMenu->addSeparator();
-    QString conditionalFormatLabel = text().isEmpty() ? tr("Clear All Conditional Formats") : tr("Use for Conditional Format");
-    QAction* conditionalFormatAction = new QAction(conditionalFormatLabel, editContextMenu);
-    connect(conditionalFormatAction, &QAction::triggered, [&]() {
-        if (text().isEmpty())
-            emit clearAllCondFormats();
-        else
-            emit addFilterAsCondFormat(text());
+
+    QAction* conditionalFormatAction;
+    if (text().isEmpty()) {
+        conditionalFormatAction = new QAction(QIcon(":/icons/clear_cond_formats"), tr("Clear All Conditional Formats"), editContextMenu);
+        connect(conditionalFormatAction, &QAction::triggered, [&]() {
+                emit clearAllCondFormats();
+        });
+    } else {
+        conditionalFormatAction = new QAction(QIcon(":/icons/cond_formats"), tr("Use for Conditional Format"), editContextMenu);
+        connect(conditionalFormatAction, &QAction::triggered, [&]() {
+                emit addFilterAsCondFormat(text());
+        });
+    }
+    QAction* editCondFormatsAction = new QAction(QIcon(":/icons/edit_cond_formats"), tr("Edit Conditional Formats..."), editContextMenu);
+    connect(editCondFormatsAction, &QAction::triggered, [&]() {
+        emit editCondFormats();
     });
     editContextMenu->addSeparator();
 
@@ -184,6 +193,7 @@ void FilterLineEdit::showContextMenu(const QPoint &pos)
         });
 
     editContextMenu->addAction(conditionalFormatAction);
+    editContextMenu->addAction(editCondFormatsAction);
 
     filterMenu->addAction(whatsThisAction);
     filterMenu->addSeparator();

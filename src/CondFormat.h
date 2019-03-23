@@ -9,19 +9,21 @@ class CondFormat
 {
 public:
     CondFormat() {};
-    explicit CondFormat(const QString& filter, const QColor& color, const QString& encoding = QString());
+    explicit CondFormat(const QString& filter, const QColor& foreground, const QColor& background, const QString& encoding = QString());
 
     static QString filterToSqlCondition(const QString& value, const QString& encoding = QString());
 
 private:
     QString m_sqlCondition;
     QString m_filter;
-    QColor m_color;
+    QColor m_bgColor;
+    QColor m_fgColor;
 
 public:
     QString sqlCondition() const { return m_sqlCondition; };
     QString filter() const { return m_filter; };
-    QColor color() const { return m_color; };
+    QColor backgroundColor() const { return m_bgColor; };
+    QColor foregroundColor() const { return m_fgColor; };
 
 };
 

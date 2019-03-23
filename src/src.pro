@@ -66,6 +66,7 @@ HEADERS += \
     FindReplaceDialog.h \
     ExtendedScintilla.h \
     FileExtensionManager.h \
+    CondFormatManager.h \
     Data.h \
     CipherSettings.h \
     DotenvFormat.h \
@@ -115,6 +116,7 @@ SOURCES += \
     FindReplaceDialog.cpp \
     ExtendedScintilla.cpp \
     FileExtensionManager.cpp \
+    CondFormatManager.cpp \
     Data.cpp \
     CipherSettings.cpp \
     DotenvFormat.cpp \
@@ -148,7 +150,8 @@ FORMS += \
     RemoteDock.ui \
     RemotePushDialog.ui \
     FindReplaceDialog.ui \
-    FileExtensionManager.ui
+    FileExtensionManager.ui \
+    CondFormatManager.ui
 
 TRANSLATIONS += \
     translations/sqlb_ar_SA.ts \
