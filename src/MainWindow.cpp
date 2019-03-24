@@ -721,6 +721,20 @@ void MainWindow::populateTable()
         connect(ui->dataTable->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(dataTableSelectionChanged(QModelIndex)));
         connect(ui->dataTable->selectionModel(), &QItemSelectionModel::selectionChanged, [this](const QItemSelection&, const QItemSelection&) {
             updateInsertDeleteRecordButton();
+
+            const QModelIndexList& sel = ui->dataTable->selectionModel()->selectedIndexes();
+            if (sel.count() > 1 && sel.count() < Settings::getValue("databrowser", "complete_threshold").toInt()) {
+                int rows = sel.last().row() - sel.first().row() + 1;
+                int columns = sel.last().column() - sel.first().column() + 1;
+                double sum = 0;
+                for (const QModelIndex& index : sel) {
+                    QVariant data = m_browseTableModel->data(index, Qt::EditRole);
+                    sum += data.toDouble();
+                }
+                ui->statusbar->showMessage(QString("%1 rows, %2 columns. Sum: %3. Average: %4").arg(rows).arg(columns).arg(sum).
+                                           arg(sum/sel.count()));
+            } else
+                ui->statusbar->showMessage(QString());
         });
     }
     // Search stored table settings for this table
