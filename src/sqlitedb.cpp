@@ -249,6 +249,8 @@ bool DBBrowserDB::attach(const QString& filePath, QString attach_as)
     QString key;
     if(cipherSettings && is_encrypted)
         key = "KEY " + cipherSettings->getPassword();
+    else
+        key = "KEY ''";
 
     if(!executeSQL(QString("ATTACH '%1' AS %2 %3").arg(filePath).arg(sqlb::escapeIdentifier(attach_as)).arg(key), false))
     {
