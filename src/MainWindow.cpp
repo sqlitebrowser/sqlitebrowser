@@ -1473,8 +1473,9 @@ void MainWindow::executeQuery()
 
         // Log the query and the result message.
         // The query takes the last placeholder as it may itself contain the sequence '%' + number.
-        statusMessage = QString(tr("-- At line %1:\n%4\n-- Result: %3")).arg(execute_from_line+1).arg(statusMessage).arg(queryPart.trimmed());
-        db.logSQL(statusMessage, kLogMsg_User);
+        QString log_message = QString("-- " + tr("At line %1:") + "\n%3\n-- " + tr("Result: %2")).arg(execute_from_line+1).arg(statusMessage).arg(queryPart.trimmed());
+        db.logSQL(log_message, kLogMsg_User);
+        statusMessage = QString(tr("Result: %2") + "\n" + tr("At line %1:") + "\n%3").arg(execute_from_line+1).arg(statusMessage).arg(queryPart.trimmed());
 
         // Release the database
         pDb = nullptr;

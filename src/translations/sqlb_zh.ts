@@ -440,33 +440,33 @@ If any of the other settings were altered for this database file you need to pro
         <translation>请指明想要附加的数据库名</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="276"/>
+        <location filename="../sqlitedb.cpp" line="282"/>
         <source>Invalid file format</source>
         <translation>无效的文件格式</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="618"/>
+        <location filename="../sqlitedb.cpp" line="624"/>
         <source>Do you want to save the changes made to the database file %1?</source>
         <translation>您是否想保存对数据库文件 %1 做出的更改?</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="720"/>
+        <location filename="../sqlitedb.cpp" line="726"/>
         <source>Exporting database to SQL file...</source>
         <translation>正在导出数据库到 SQL 文件...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="721"/>
-        <location filename="../sqlitedb.cpp" line="952"/>
+        <location filename="../sqlitedb.cpp" line="727"/>
+        <location filename="../sqlitedb.cpp" line="958"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="951"/>
+        <location filename="../sqlitedb.cpp" line="957"/>
         <source>Executing SQL...</source>
         <translation>正在执行 SQL...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="978"/>
+        <location filename="../sqlitedb.cpp" line="984"/>
         <source>Action cancelled.</source>
         <translation>操作已取消。</translation>
     </message>
@@ -486,94 +486,94 @@ Aborting execution.</source>
         <translation>此数据库已被附加。它的架构名是 &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="613"/>
+        <location filename="../sqlitedb.cpp" line="619"/>
         <source>Do you really want to close this temporary database? All data will be lost.</source>
         <translation>你确定要关闭此临时数据库吗？所有数据都会丢失。</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="670"/>
+        <location filename="../sqlitedb.cpp" line="676"/>
         <source>The database is currently busy: </source>
         <translation>数据库正忙: </translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="671"/>
+        <location filename="../sqlitedb.cpp" line="677"/>
         <source>Do you want to abort that other operation?</source>
         <translation>确定要放弃操作吗？</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="887"/>
-        <location filename="../sqlitedb.cpp" line="920"/>
+        <location filename="../sqlitedb.cpp" line="893"/>
+        <location filename="../sqlitedb.cpp" line="926"/>
         <source>No database file opened</source>
         <translation>没有打开数据库文件</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1023"/>
-        <location filename="../sqlitedb.cpp" line="1036"/>
+        <location filename="../sqlitedb.cpp" line="1029"/>
+        <location filename="../sqlitedb.cpp" line="1042"/>
         <source>Error in statement #%1: %2.
 Aborting execution%3.</source>
         <translation>错误在语句 #%1: %2.
 正在放弃执行%3.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1026"/>
-        <location filename="../sqlitedb.cpp" line="1039"/>
+        <location filename="../sqlitedb.cpp" line="1032"/>
+        <location filename="../sqlitedb.cpp" line="1045"/>
         <source> and rolling back</source>
         <translation>并回滚</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1079"/>
+        <location filename="../sqlitedb.cpp" line="1085"/>
         <source>didn&apos;t receive any output from %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1085"/>
+        <location filename="../sqlitedb.cpp" line="1091"/>
         <source>could not execute command: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1253"/>
+        <location filename="../sqlitedb.cpp" line="1259"/>
         <source>Cannot delete this object</source>
         <translation>无法删除此对象</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1284"/>
+        <location filename="../sqlitedb.cpp" line="1290"/>
         <source>Cannot set data on this object</source>
         <translation>不能为此数据设置对象</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1402"/>
+        <location filename="../sqlitedb.cpp" line="1408"/>
         <source>A table with the name &apos;%1&apos; already exists in schema &apos;%2&apos;.</source>
         <translation>一个与 &apos;%1&apos; 同名的表已经存在于架构 &apos;%2&apos; 中。</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1413"/>
+        <location filename="../sqlitedb.cpp" line="1419"/>
         <source>renameColumn: cannot find column %1.</source>
         <translation>重命名列: 不能查找列 %1。</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1421"/>
+        <location filename="../sqlitedb.cpp" line="1427"/>
         <source>renameColumn: creating savepoint failed. DB says: %1</source>
         <translation>重命名列: 创建保存点时失败。DB 说: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1467"/>
+        <location filename="../sqlitedb.cpp" line="1473"/>
         <source>renameColumn: creating new table failed. DB says: %1</source>
         <translation>重命名列: 创建新表时失败。DB 说: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1480"/>
+        <location filename="../sqlitedb.cpp" line="1486"/>
         <source>renameColumn: copying data to new table failed. DB says:
 %1</source>
         <translation>重命名列: 复制数据到新表时失败。DB 说:
 %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1537"/>
+        <location filename="../sqlitedb.cpp" line="1543"/>
         <source>renameColumn: deleting old table failed. DB says: %1</source>
         <translation>重命名列: 删除旧表失败。DB 说: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1562"/>
+        <location filename="../sqlitedb.cpp" line="1568"/>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 
 </source>
@@ -582,34 +582,34 @@ Aborting execution%3.</source>
 </translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1571"/>
+        <location filename="../sqlitedb.cpp" line="1577"/>
         <source>renameColumn: releasing savepoint failed. DB says: %1</source>
         <translation>重命名列: 释放保存点时失败。DB 说: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1610"/>
+        <location filename="../sqlitedb.cpp" line="1616"/>
         <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.Message from database engine:
 %3</source>
         <translation>重命名表 &apos;%1&apos; 为 &apos;%2&apos; 时失败。来自数据库引擎的消息:
 %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1645"/>
+        <location filename="../sqlitedb.cpp" line="1651"/>
         <source>... &lt;string can not be logged, contains binary data&gt; ...</source>
         <translation>... &lt;字符串不能记录，包含二进制数据&gt; ...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1754"/>
+        <location filename="../sqlitedb.cpp" line="1760"/>
         <source>could not get list of databases: %1</source>
         <translation>无法获取数据库列表: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1893"/>
+        <location filename="../sqlitedb.cpp" line="1899"/>
         <source>Error loading extension: %1</source>
         <translation>加载扩展时出错: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1918"/>
+        <location filename="../sqlitedb.cpp" line="1924"/>
         <source>could not get column information</source>
         <translation>无法获取列信息</translation>
     </message>
@@ -618,7 +618,7 @@ Aborting execution%3.</source>
         <translation type="vanished">未知对象类型 %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1748"/>
+        <location filename="../sqlitedb.cpp" line="1754"/>
         <source>could not get list of db objects: %1, %2</source>
         <translation>不能获取数据库对象的列表: %1, %2</translation>
     </message>
@@ -627,22 +627,22 @@ Aborting execution%3.</source>
         <translation type="vanished">不能获取类型</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1784"/>
+        <location filename="../sqlitedb.cpp" line="1790"/>
         <source>didn&apos;t receive any output from pragma %1</source>
         <translation>没有接收到来自杂注 %1 的任何输出</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1788"/>
+        <location filename="../sqlitedb.cpp" line="1794"/>
         <source>could not execute pragma command: %1, %2</source>
         <translation>不能执行杂注命令: %1, %2</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1809"/>
+        <location filename="../sqlitedb.cpp" line="1815"/>
         <source>Error setting pragma %1 to %2: %3</source>
         <translation>设置杂注 %1 为 %2 时出错: %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1855"/>
+        <location filename="../sqlitedb.cpp" line="1861"/>
         <source>File not found.</source>
         <translation>文件找不到。</translation>
     </message>
@@ -2455,7 +2455,7 @@ x~y	范围: 值在 x 和 y 之间</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="243"/>
-        <location filename="../MainWindow.cpp" line="3497"/>
+        <location filename="../MainWindow.cpp" line="3498"/>
         <source>Delete Record</source>
         <translation>删除记录</translation>
     </message>
@@ -2812,7 +2812,7 @@ x~y	范围: 值在 x 和 y 之间</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1981"/>
-        <location filename="../MainWindow.cpp" line="3197"/>
+        <location filename="../MainWindow.cpp" line="3198"/>
         <source>Set encoding</source>
         <translation>设置编码</translation>
     </message>
@@ -2851,7 +2851,7 @@ x~y	范围: 值在 x 和 y 之间</translation>
         <translation>解锁当前视图以编辑。然而，你需要合适的触发器来编辑。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3091"/>
+        <location filename="../MainWindow.cpp" line="3092"/>
         <source>Duplicate record</source>
         <translation>重复的记录</translation>
     </message>
@@ -3834,7 +3834,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="427"/>
-        <location filename="../MainWindow.cpp" line="2904"/>
+        <location filename="../MainWindow.cpp" line="2905"/>
         <source>Choose a database file</source>
         <translation>选择一个数据库文件</translation>
     </message>
@@ -3882,8 +3882,8 @@ Reason: %1</source>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="480"/>
-        <location filename="../MainWindow.cpp" line="1679"/>
-        <location filename="../MainWindow.cpp" line="2788"/>
+        <location filename="../MainWindow.cpp" line="1680"/>
+        <location filename="../MainWindow.cpp" line="2789"/>
         <source>Choose a filename to save under</source>
         <translation>选择一个文件名保存</translation>
     </message>
@@ -3936,7 +3936,7 @@ Are you sure?</source>
 你确定吗？</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3266"/>
+        <location filename="../MainWindow.cpp" line="3267"/>
         <source>Please enter a pseudo-primary key in order to enable editing on this view. This should be the name of a unique column in the view.</source>
         <translation>请输入一个伪主键以在当前视图启用编辑。这需要是视图中的一个满足唯一性的列的名字。</translation>
     </message>
@@ -3958,7 +3958,7 @@ Are you sure?</source>
         <translation type="vanished">查询执行成功: %1 (耗时 %2ms%3)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1629"/>
+        <location filename="../MainWindow.cpp" line="1630"/>
         <source>Error while saving the database file. This means that not all changes to the database were saved. You need to resolve the following error first.
 
 %1</source>
@@ -3967,7 +3967,7 @@ Are you sure?</source>
 %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2328"/>
+        <location filename="../MainWindow.cpp" line="2329"/>
         <source>A new DB Browser for SQLite version is available (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Please download at &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</source>
         <translation>有新版本的 DB Browser for SQLite (%1.%2.%3)可用。&lt;br/&gt;&lt;br/&gt;请从 &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt; 下载。</translation>
     </message>
@@ -3976,18 +3976,18 @@ Are you sure?</source>
         <translation type="vanished">请输入要保存的数据库文件的 URL.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2523"/>
-        <location filename="../MainWindow.cpp" line="2789"/>
+        <location filename="../MainWindow.cpp" line="2524"/>
+        <location filename="../MainWindow.cpp" line="2790"/>
         <source>DB Browser for SQLite project file (*.sqbpro)</source>
         <translation>DB Browser for SQLite 工程文件 (*.sqbpro)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3195"/>
+        <location filename="../MainWindow.cpp" line="3196"/>
         <source>Please choose a new encoding for this table.</source>
         <translation>请为此表选择新的编码</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3193"/>
+        <location filename="../MainWindow.cpp" line="3194"/>
         <source>Please choose a new encoding for all tables.</source>
         <translation>请为所有表选择新的编码</translation>
     </message>
@@ -4002,39 +4002,51 @@ Are you sure?</source>
         <translation>此表格没有通过外键检查。&lt;br/&gt;你需要执行 &apos;工具 | 外键检查&apos; 并修复发现的问题。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2231"/>
+        <location filename="../MainWindow.cpp" line="1476"/>
+        <location filename="../MainWindow.cpp" line="1478"/>
+        <source>At line %1:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="1476"/>
+        <location filename="../MainWindow.cpp" line="1478"/>
+        <source>Result: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="2232"/>
         <source>Extensions(*.so *.dylib *.dll);;All files(*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2522"/>
+        <location filename="../MainWindow.cpp" line="2523"/>
         <source>Choose a project file to open</source>
         <translation>选择一个要打开的工程文件</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2631"/>
+        <location filename="../MainWindow.cpp" line="2632"/>
         <source>This project file is using an old file format because it was created using DB Browser for SQLite version 3.10 or lower. Loading this file format is still fully supported but we advice you to convert all your project files to the new file format because support for older formats might be dropped at some point in the future. You can convert your files by simply opening and re-saving them.</source>
         <translation>此工程文件使用了旧的文件格式，因为它是由 DB Browser for SQLite version 3.10 或更低版本创建的。加载此文件格式依然完全支持，但我们建议你把工程转换到新的格式，因为旧格式支持将来可能会失效。你可以通过打开并重新保存的方式来转换。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3091"/>
+        <location filename="../MainWindow.cpp" line="3092"/>
         <source>Duplicate records</source>
         <translation>重复记录</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3096"/>
+        <location filename="../MainWindow.cpp" line="3097"/>
         <source>Ctrl+&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3198"/>
+        <location filename="../MainWindow.cpp" line="3199"/>
         <source>%1
 Leave the field empty for using the database encoding.</source>
         <translation>%1
 留空此字段以使用数据库默认编码。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3210"/>
+        <location filename="../MainWindow.cpp" line="3211"/>
         <source>This encoding is either not valid or not supported.</source>
         <translation>这种编码非法或者不支持。</translation>
     </message>
@@ -4051,7 +4063,7 @@ Leave the field empty for using the database encoding.</source>
         <translation type="vanished">选择一个文本文件</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1555"/>
+        <location filename="../MainWindow.cpp" line="1556"/>
         <source>Text files(*.csv *.txt);;All files(*)</source>
         <translation>文本文件(*.csv *.txt);;所有文件(*)</translation>
     </message>
@@ -4060,82 +4072,82 @@ Leave the field empty for using the database encoding.</source>
         <translation type="vanished">导入完成</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1638"/>
+        <location filename="../MainWindow.cpp" line="1639"/>
         <source>Are you sure you want to undo all changes made to the database file &apos;%1&apos; since the last save?</source>
         <translation>您是否确认您想撤销从上次保存以来对数据库文件‘%1’做出的所有更改。?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1662"/>
+        <location filename="../MainWindow.cpp" line="1663"/>
         <source>Choose a file to import</source>
         <translation>选择要导入的一个文件</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1663"/>
-        <location filename="../MainWindow.cpp" line="2146"/>
-        <location filename="../MainWindow.cpp" line="2206"/>
+        <location filename="../MainWindow.cpp" line="1664"/>
+        <location filename="../MainWindow.cpp" line="2147"/>
+        <location filename="../MainWindow.cpp" line="2207"/>
         <source>Text files(*.sql *.txt);;All files(*)</source>
         <translation>文本文件(*.sql *.txt);;所有文件(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1673"/>
+        <location filename="../MainWindow.cpp" line="1674"/>
         <source>Do you want to create a new database file to hold the imported data?
 If you answer no we will attempt to import the data in the SQL file to the current database.</source>
         <translation>您是否确认您想创建一个新的数据库文件用来存放导入的数据?
 如果您会到“否”的话，我们将尝试导入 SQL 文件中的数据到当前数据库。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1683"/>
+        <location filename="../MainWindow.cpp" line="1684"/>
         <source>File %1 already exists. Please choose a different name.</source>
         <translation>文件 %1 已存在。请选择一个不同的名称。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1705"/>
+        <location filename="../MainWindow.cpp" line="1706"/>
         <source>Error importing data: %1</source>
         <translation>导入数据时出错: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1709"/>
+        <location filename="../MainWindow.cpp" line="1710"/>
         <source>Import completed.</source>
         <translation>导入完成。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1773"/>
+        <location filename="../MainWindow.cpp" line="1774"/>
         <source>Delete View</source>
         <translation>删除视图</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1774"/>
+        <location filename="../MainWindow.cpp" line="1775"/>
         <source>Modify View</source>
         <translation>修改视图</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1776"/>
+        <location filename="../MainWindow.cpp" line="1777"/>
         <source>Delete Trigger</source>
         <translation>删除触发器</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1777"/>
+        <location filename="../MainWindow.cpp" line="1778"/>
         <source>Modify Trigger</source>
         <translation>修改触发器</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1779"/>
+        <location filename="../MainWindow.cpp" line="1780"/>
         <source>Delete Index</source>
         <translation>删除索引</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1567"/>
-        <location filename="../MainWindow.cpp" line="1782"/>
+        <location filename="../MainWindow.cpp" line="1783"/>
         <source>Delete Table</source>
         <translation>删除表</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1838"/>
+        <location filename="../MainWindow.cpp" line="1839"/>
         <source>&amp;%1 %2</source>
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2064"/>
+        <location filename="../MainWindow.cpp" line="2065"/>
         <source>Setting PRAGMA values will commit your current transaction.
 Are you sure?</source>
         <translation>设置 PRAGMA 值将会提交您的当前事务。.
@@ -4254,56 +4266,55 @@ Are you sure you want to save the database?</source>
         <translation>查询执行成功。耗时 %1ms%2</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1476"/>
         <source>-- At line %1:
 %4
 -- Result: %3</source>
-        <translation>-- 在行号 %1:
+        <translation type="vanished">-- 在行号 %1:
 %4
 -- 结果: %3</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1554"/>
+        <location filename="../MainWindow.cpp" line="1555"/>
         <source>Choose text files</source>
         <translation>选择文本文件</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1707"/>
+        <location filename="../MainWindow.cpp" line="1708"/>
         <source>Import completed. Some foreign key constraints are violated. Please fix them before saving.</source>
         <translation>导入完成。一些外键约束被违反了。请在保存之前修复。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1780"/>
+        <location filename="../MainWindow.cpp" line="1781"/>
         <source>Modify Index</source>
         <translation>修改索引</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1783"/>
+        <location filename="../MainWindow.cpp" line="1784"/>
         <source>Modify Table</source>
         <translation>修改表</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2145"/>
+        <location filename="../MainWindow.cpp" line="2146"/>
         <source>Select SQL file to open</source>
         <translation>选择要打开的 SQL 文件</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2154"/>
+        <location filename="../MainWindow.cpp" line="2155"/>
         <source>Couldn&apos;t read file: %1.</source>
         <translation>无法读取文件: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2192"/>
+        <location filename="../MainWindow.cpp" line="2193"/>
         <source>Couldn&apos;t save file: %1.</source>
         <translation>无法保存文件: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2205"/>
+        <location filename="../MainWindow.cpp" line="2206"/>
         <source>Select file name</source>
         <translation>选择文件名</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2230"/>
+        <location filename="../MainWindow.cpp" line="2231"/>
         <source>Select extension file</source>
         <translation>选择扩展文件</translation>
     </message>
@@ -4312,33 +4323,33 @@ Are you sure you want to save the database?</source>
         <translation type="vanished">扩展(*.so *.dll);;所有文件(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2237"/>
+        <location filename="../MainWindow.cpp" line="2238"/>
         <source>Extension successfully loaded.</source>
         <translation>扩展成功加载。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2239"/>
+        <location filename="../MainWindow.cpp" line="2240"/>
         <source>Error loading extension: %1</source>
         <translation>加载扩展时出错: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2324"/>
-        <location filename="../MainWindow.cpp" line="2627"/>
+        <location filename="../MainWindow.cpp" line="2325"/>
+        <location filename="../MainWindow.cpp" line="2628"/>
         <source>Don&apos;t show again</source>
         <translation>不再显示</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2327"/>
+        <location filename="../MainWindow.cpp" line="2328"/>
         <source>New version available.</source>
         <translation>新版本可用。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3371"/>
+        <location filename="../MainWindow.cpp" line="3372"/>
         <source>Collation needed! Proceed?</source>
         <translation>需要整理! 继续?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3372"/>
+        <location filename="../MainWindow.cpp" line="3373"/>
         <source>A table in this database requires a special collation function &apos;%1&apos; that this application can&apos;t provide without further knowledge.
 If you choose to proceed, be aware bad things can happen to your database.
 Create a backup!</source>
@@ -4347,52 +4358,52 @@ Create a backup!</source>
 记得备份!</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3377"/>
+        <location filename="../MainWindow.cpp" line="3378"/>
         <source>creating collation</source>
         <translation>创建整理</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3386"/>
+        <location filename="../MainWindow.cpp" line="3387"/>
         <source>Set a new name for the SQL tab. Use the &apos;&amp;&amp;&apos; character to allow using the following character as a keyboard shortcut.</source>
         <translation>为 SQL 标签页设置新名称。使用 &apos;&amp;&amp;&apos; 字符来允许它作为键盘快捷键。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3429"/>
+        <location filename="../MainWindow.cpp" line="3430"/>
         <source>Please specify the view name</source>
         <translation>请指定视图名称</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3433"/>
+        <location filename="../MainWindow.cpp" line="3434"/>
         <source>There is already an object with that name. Please choose a different name.</source>
         <translation>已有同名的对象。请选择一个不同的名称。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3440"/>
+        <location filename="../MainWindow.cpp" line="3441"/>
         <source>View successfully created.</source>
         <translation>视图成功创建。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3442"/>
+        <location filename="../MainWindow.cpp" line="3443"/>
         <source>Error creating view: %1</source>
         <translation>创建视图时出错: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3457"/>
+        <location filename="../MainWindow.cpp" line="3458"/>
         <source>There is no filter set for this table. View will not be created.</source>
         <translation>此表没有过滤。视图不会被创建。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3495"/>
+        <location filename="../MainWindow.cpp" line="3496"/>
         <source>Delete Records</source>
         <translation>删除记录</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3502"/>
+        <location filename="../MainWindow.cpp" line="3503"/>
         <source>This action will open a new SQL tab for running:</source>
         <translation>此动作会打开新的 SQL 标签页以运行:</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3504"/>
+        <location filename="../MainWindow.cpp" line="3505"/>
         <source>Press Help for opening the corresponding SQLite reference page.</source>
         <translation>按下帮助以打开对应的 SQLite 参考页。</translation>
     </message>
@@ -5740,6 +5751,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="217"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Results of the last executed statements.&lt;/p&gt;&lt;p&gt;You may want to collapse this panel and use the &lt;span style=&quot; font-style:italic;&quot;&gt;SQL Log&lt;/span&gt; dock with &lt;span style=&quot; font-style:italic;&quot;&gt;User&lt;/span&gt; selection instead.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../SqlExecutionArea.ui" line="238"/>
         <source>Results of the last executed statements</source>
         <translation>上次执行语句的结果</translation>
@@ -6131,17 +6146,17 @@ Hold %3Shift and click to jump there</source>
 %1</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="696"/>
+        <location filename="../sqlitetablemodel.cpp" line="699"/>
         <source>retrieving list of columns</source>
         <translation>正在检索列的列表</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="959"/>
+        <location filename="../sqlitetablemodel.cpp" line="962"/>
         <source>Fetching data...</source>
         <translation>正在拉取数据...</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="960"/>
+        <location filename="../sqlitetablemodel.cpp" line="963"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>

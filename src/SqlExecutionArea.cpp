@@ -36,6 +36,8 @@ SqlExecutionArea::SqlExecutionArea(DBBrowserDB& _db, QWidget* parent) :
     connect(ui->findLineEdit, SIGNAL(returnPressed()), this, SLOT(findNext()));
     connect(ui->hideFindButton, SIGNAL(clicked()), this, SLOT(hideFindFrame()));
 
+    // Set collapsible the editErrors panel
+    ui->splitter_2->setCollapsible(1, true);
     // Load settings
     reloadSettings();
 }
