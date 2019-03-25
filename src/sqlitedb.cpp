@@ -233,37 +233,39 @@ bool DBBrowserDB::attach(const QString& filePath, QString attach_as)
     else
         key = "KEY ''";
 
+    // Only apply cipher settings if the database is encrypted
+    if(cipherSettings && is_encrypted)
+    {
+        if(!executeSQL(QString("PRAGMA cipher_default_page_size = %1").arg(cipherSettings->getPageSize()), false))
+        {
+            QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
+            return false;
+        }
+        if(!executeSQL(QString("PRAGMA cipher_default_kdf_iter = %1").arg(cipherSettings->getKdfIterations()), false))
+        {
+            QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
+            return false;
+        }
+        if(!executeSQL(QString("PRAGMA cipher_hmac_algorithm = %1").arg(cipherSettings->getHmacAlgorithm()), false))
+        {
+            QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
+            return false;
+        }
+        if(!executeSQL(QString("PRAGMA cipher_kdf_algorithm = %1").arg(cipherSettings->getKdfAlgorithm()), false))
+        {
+            QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
+            return false;
+        }
+    }
+
     if(!executeSQL(QString("ATTACH '%1' AS %2 %3").arg(filePath).arg(sqlb::escapeIdentifier(attach_as)).arg(key), false))
     {
         QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
         return false;
     }
 
-    // Only apply cipher settings if the database is encrypted
-    if(cipherSettings && is_encrypted)
-    {
-        if(!executeSQL(QString("PRAGMA %1.cipher_page_size = %2").arg(sqlb::escapeIdentifier(attach_as)).arg(cipherSettings->getPageSize()), false))
-        {
-            QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
-            return false;
-        }
-        if(!executeSQL(QString("PRAGMA %1.kdf_iter = %2").arg(sqlb::escapeIdentifier(attach_as)).arg(cipherSettings->getKdfIterations()), false))
-        {
-            QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
-            return false;
-        }
-        if(!executeSQL(QString("PRAGMA %1.cipher_hmac_algorithm = %2").arg(sqlb::escapeIdentifier(attach_as)).arg(cipherSettings->getHmacAlgorithm()), false))
-        {
-            QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
-            return false;
-        }
-        if(!executeSQL(QString("PRAGMA %1.cipher_kdf_algorithm = %2").arg(sqlb::escapeIdentifier(attach_as)).arg(cipherSettings->getKdfAlgorithm()), false))
-        {
-            QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
-            return false;
-        }
-        delete cipherSettings;
-    }
+    // Clean up cipher settings
+    delete cipherSettings;
 #else
     // Attach database
     if(!executeSQL(QString("ATTACH '%1' AS %2").arg(filePath).arg(sqlb::escapeIdentifier(attach_as)), false))
