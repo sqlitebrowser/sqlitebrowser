@@ -221,16 +221,16 @@ int SqliteTableModel::filterCount() const
 static QString toSuperScript(int number)
 {
     QString superScript = QString::number(number);
-    superScript.replace('0', u'⁰');
-    superScript.replace('1', u'¹');
-    superScript.replace('2', u'²');
-    superScript.replace('3', u'³');
-    superScript.replace('4', u'⁴');
-    superScript.replace('5', u'⁵');
-    superScript.replace('6', u'⁶');
-    superScript.replace('7', u'⁷');
-    superScript.replace('8', u'⁸');
-    superScript.replace('9', u'⁹');
+    superScript.replace("0", "⁰");
+    superScript.replace("1", "¹");
+    superScript.replace("2", "²");
+    superScript.replace("3", "³");
+    superScript.replace("4", "⁴");
+    superScript.replace("5", "⁵");
+    superScript.replace("6", "⁶");
+    superScript.replace("7", "⁷");
+    superScript.replace("8", "⁸");
+    superScript.replace("9", "⁹");
     return superScript;
 }
 
