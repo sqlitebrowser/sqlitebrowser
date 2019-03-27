@@ -868,6 +868,47 @@ int isText(unsigned char *data, int dataLength)
   return result;
 }
 
+/**  isUTF8
+ *
+ *   Returns one if the characters conform to UTF8 format in so
+ *   far as all the byte lengths are consistent. It does not
+ *   check for overlong encodings or invalid characters. A zero
+ *   is returned if the format is not consistent.
+ *   Note that a file of all zeros will be returned as UTF8.
+ */
+
+int isUTF8(unsigned char *data, int length)
+{
+  int count = 0;
+  while (length-- > 0) {
+    unsigned char d = *(data++);
+    switch (count) {
+      case 0:                           /*  First character  */
+             if ((d & 0x80) == 0)
+               continue;                   /*  7 bit ASCII  */
+             if ((d & 0xE0) == 0xC0) {
+               count = 1;                  /*  2 byte code  */
+               break;
+             }
+             if ((d & 0xF0) == 0xE0) {
+               count = 2;                  /*  3 byte code  */
+               break;
+             }
+             if ((d & 0xF8) == 0xF0) {
+               count = 3;                  /*  4 byte code  */
+               break;
+             }
+             return 0;
+       default:
+             count--;
+             if ((d & 0xC0) != 0x80)
+               return 0;
+             break;
+    }
+  }
+  return (count == 0) ? 1 : 0;
+}
+
 static void decodeBase64Func(sqlite3_context *context, int argc, sqlite3_value **argv){
   int resultLength;
   int errno = 0;
@@ -880,7 +921,7 @@ static void decodeBase64Func(sqlite3_context *context, int argc, sqlite3_value *
       int dataLength = sqlite3_value_bytes(argv[0]);
       errno = decodeBase64(&result, &resultLength, data, dataLength);
       if (errno == ERROR_NONE) {
-        if (isText(result, resultLength) == 0)
+        if (isUTF8(result, resultLength))
           sqlite3_result_text(context,  result, resultLength, &freeResult);
         else
           sqlite3_result_blob(context,  result, resultLength, &freeResult);
