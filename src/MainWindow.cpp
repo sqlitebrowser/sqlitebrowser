@@ -62,6 +62,8 @@
     #include <QOpenGLWidget>
 #endif
 
+#include <limits>
+
 const int MainWindow::MaxRecentFiles;
 
 // These are needed for reading and writing object files
@@ -723,18 +725,28 @@ void MainWindow::populateTable()
             updateInsertDeleteRecordButton();
 
             const QModelIndexList& sel = ui->dataTable->selectionModel()->selectedIndexes();
-            if (sel.count() > 1 && sel.count() < Settings::getValue("databrowser", "complete_threshold").toInt()) {
+            QString statusMessage;
+            if (sel.count() > 1) {
                 int rows = sel.last().row() - sel.first().row() + 1;
+                statusMessage = tr("%n row(s)", "", rows);
                 int columns = sel.last().column() - sel.first().column() + 1;
-                double sum = 0;
-                for (const QModelIndex& index : sel) {
-                    QVariant data = m_browseTableModel->data(index, Qt::EditRole);
-                    sum += data.toDouble();
+                statusMessage += tr(", %n column(s)", "", columns);
+
+                if (sel.count() < Settings::getValue("databrowser", "complete_threshold").toInt()) {
+                    double sum = 0;
+                    double first = m_browseTableModel->data(sel.first(), Qt::EditRole).toDouble();
+                    double min = first;
+                    double max = first;
+                    for (const QModelIndex& index : sel) {
+                        double data = m_browseTableModel->data(index, Qt::EditRole).toDouble();
+                        sum += data;
+                        min = std::min(min, data);
+                        max = std::max(max, data);
+                    }
+                    statusMessage += tr(". Sum: %1; Average: %2; Min: %3; Max: %4").arg(sum).arg(sum/sel.count()).arg(min).arg(max);
                 }
-                ui->statusbar->showMessage(QString("%1 rows, %2 columns. Sum: %3. Average: %4").arg(rows).arg(columns).arg(sum).
-                                           arg(sum/sel.count()));
-            } else
-                ui->statusbar->showMessage(QString());
+            };
+            ui->statusbar->showMessage(statusMessage);
         });
     }
     // Search stored table settings for this table
