@@ -749,9 +749,6 @@ void MainWindow::populateTable()
         for(int i=1;i<m_browseTableModel->columnCount();i++)
             ui->dataTable->setColumnWidth(i, ui->dataTable->horizontalHeader()->defaultSectionSize());
 
-        // Sorting
-        ui->dataTable->filterHeader()->setSortIndicator(0, Qt::AscendingOrder);
-
         // Encoding
         m_browseTableModel->setEncoding(defaultBrowseTableEncoding);
 
@@ -848,15 +845,6 @@ void MainWindow::applyBrowseTableSettings(BrowseDataTableSettings storedData, bo
     // Column widths
     for(auto widthIt=storedData.columnWidths.constBegin();widthIt!=storedData.columnWidths.constEnd();++widthIt)
         ui->dataTable->setColumnWidth(widthIt.key(), widthIt.value());
-
-    // Sorting
-    // For now just use the first sort column for the sort indicator
-    if(storedData.query.orderBy().size())
-    {
-        ui->dataTable->filterHeader()->setSortIndicator(
-                    storedData.query.orderBy().front().column,
-                    storedData.query.orderBy().front().direction == sqlb::Ascending ? Qt::AscendingOrder : Qt::DescendingOrder);
-    }
 
     // Filters
     if(!skipFilters)
