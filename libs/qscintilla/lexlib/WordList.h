@@ -8,9 +8,7 @@
 #ifndef WORDLIST_H
 #define WORDLIST_H
 
-#ifdef SCI_NAMESPACE
 namespace Scintilla {
-#endif
 
 /**
  */
@@ -35,8 +33,6 @@ public:
 	const char *WordAt(int n) const;
 };
 
-#ifdef SCI_NAMESPACE
 }
-#endif
 
 #endif

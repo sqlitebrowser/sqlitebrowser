@@ -1,6 +1,6 @@
 // This module implements the QsciStyledText class.
 //
-// Copyright (c) 2018 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2019 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 

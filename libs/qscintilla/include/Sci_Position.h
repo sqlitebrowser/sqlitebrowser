@@ -9,13 +9,21 @@
 #ifndef SCI_POSITION_H
 #define SCI_POSITION_H
 
+#include <stddef.h>
+
 // Basic signed type used throughout interface
-typedef int Sci_Position;
+typedef ptrdiff_t Sci_Position;
 
 // Unsigned variant used for ILexer::Lex and ILexer::Fold
-typedef unsigned int Sci_PositionU;
+typedef size_t Sci_PositionU;
 
 // For Sci_CharacterRange  which is defined as long to be compatible with Win32 CHARRANGE
 typedef long Sci_PositionCR;
+
+#ifdef _WIN32
+	#define SCI_METHOD __stdcall
+#else
+	#define SCI_METHOD
+#endif
 
 #endif

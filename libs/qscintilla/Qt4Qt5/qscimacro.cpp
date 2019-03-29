@@ -1,6 +1,6 @@
 // This module implements the QsciMacro class.
 //
-// Copyright (c) 2018 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2019 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 
@@ -233,7 +233,8 @@ void QsciMacro::play()
     QList<Macro>::const_iterator it;
 
     for (it = macro.begin(); it != macro.end(); ++it)
-        qsci->SendScintilla((*it).msg, (*it).wParam, (*it).text.data());
+        qsci->SendScintilla((*it).msg, static_cast<uintptr_t>((*it).wParam),
+                (*it).text.constData());
 }
 
 

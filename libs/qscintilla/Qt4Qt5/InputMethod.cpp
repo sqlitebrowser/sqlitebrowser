@@ -17,8 +17,6 @@
 #include <QVariant>
 #include <QVarLengthArray>
 
-#include "SciNamespace.h"
-
 #include "Qsci/qsciscintillabase.h"
 #include "ScintillaQt.h"
 
@@ -65,7 +63,7 @@ static void DrawImeIndicator(QsciScintillaQt *sqt, int indicator, int len)
     if (indicator < 8 || indicator > INDIC_MAX) {
         return;
     }
-    sqt->pdoc->decorations.SetCurrentIndicator(indicator);
+    sqt->pdoc->DecorationSetCurrentIndicator(indicator);
     for (size_t r=0; r< sqt-> sel.Count(); r++) {
         int positionInsert = sqt->sel.Range(r).Start().Position();
         sqt->pdoc->DecorationFillRange(positionInsert - len, 1, len);
@@ -229,7 +227,7 @@ QVariant QsciScintillaBase::inputMethodQuery(Qt::InputMethodQuery query) const
         case Qt::ImMicroFocus:
         {
             int startPos = (preeditPos >= 0) ? preeditPos : pos;
-            QSCI_SCI_NAMESPACE(Point) pt = sci->LocationFromPosition(startPos);
+            Scintilla::Point pt = sci->LocationFromPosition(startPos);
             int width = SendScintilla(SCI_GETCARETWIDTH);
             int height = SendScintilla(SCI_TEXTHEIGHT, line);
             return QRect(pt.x, pt.y, width, height);

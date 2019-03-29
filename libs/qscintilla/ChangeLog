@@ -1,4 +1,311 @@
+2019-02-12  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* NEWS:
+	Released as v2.11.1.
+	[bebf741baff8] [2.11.1] <2.11-maint>
+
+	* NEWS:
+	Updated the NEWS file.
+	[9f2dd3438ac3] <2.11-maint>
+
+	* Python/configure-old.py, Python/configure.py, designer-
+	Qt4Qt5/designer.pro, example-Qt4Qt5/application.pro,
+	qt/qscintilla.pro:
+	Bumped the major version number of the library because of the
+	SendScintilla() signature change.
+	[c2fe34e11899] <2.11-maint>
+
+	* Python/sip/qsciscintillabase.sip, qt/qscimacro.cpp,
+	qt/qsciscintillabase.cpp, qt/qsciscintillabase.h:
+	Fixed a regression in QsciScintilla::insert(). The signature of
+	QsciScintillaBase::SendScintilla(unigned int, unsigned long, const
+	char *) has changed so that the second argument is now uintptr_t.
+	This may require code changes.
+	[b62eb7f29de4] <2.11-maint>
+
+2019-02-11  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* NEWS:
+	Updated the NEWS file.
+	[9768dbe05f64] <2.11-maint>
+
+	* qt/qsciscintillabase.cpp:
+	Fixed the marginRightClicked() signal.
+	[6a6efafbefd6] <2.11-maint>
+
+	* qt/qscintilla.pro:
+	Bumped the library version number.
+	[a4ee797a9df9] <2.11-maint>
+
+2019-02-04  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* .hgtags:
+	Added tag 2.11 for changeset 2610e30b0914
+	[f83b4fbdd928]
+
+	* NEWS:
+	Released as v2.11.
+	[2610e30b0914] [2.11]
+
+2018-12-21  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* METADATA.in:
+	Corrected the wheel meta-data version.
+	[593a629d46f5]
+
+2018-12-15  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* NEWS:
+	Updated the NEWS file.
+	[992f3cb597c4]
+
+2018-11-24  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* qt/qscintilla_de.qm, qt/qscintilla_de.ts:
+	Updated German translations from Detlev.
+	[f293bafecde8]
+
+2018-11-17  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* qt/ScintillaQt.h:
+	Fixed the Linux build.
+	[3ec0608d1744]
+
+	* qt/SciClasses.cpp, qt/SciClasses.h:
+	Removed the redundant explicit handling of the Esc key in popup
+	lists.
+	[a3d596e37561]
+
+	* NEWS, Python/sip/qsciscintilla.sip, qt/qsciscintilla.cpp,
+	qt/qsciscintilla.h:
+	Added QsciScintilla::cancelFind().
+	[520cda104a4b]
+
+2018-11-13  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* NEWS, Python/sip/qsciscintilla.sip, qt/qsciscintilla.cpp,
+	qt/qsciscintilla.h:
+	Added support for Cxx11 regular expressions to findFirst() and
+	findFirstInSelection().
+	[9c022f775241]
+
+	* NEWS, Python/sip/qsciscintillabase.sip, qt/qsciscintillabase.h:
+	Added the remaining new API calls.
+	[03f9682f7d6c]
+
+	* NEWS, Python/sip/qsciscintilla.sip,
+	Python/sip/qsciscintillabase.sip, qt/qsciscintilla.h,
+	qt/qsciscintillabase.h:
+	Added the new wrap indent mode.
+	[4a786cbfd975]
+
+	* NEWS, Python/sip/qsciscintillabase.sip, qt/qsciscintillabase.h:
+	Added the style metadata messages.
+	[e3e38b577a1f]
+
+	* NEWS, Python/sip/qsciscintillabase.sip, qt/ScintillaQt.cpp,
+	qt/qsciscintillabase.h:
+	Added the SCN_AUTOCSELECTIONCHANGE() signal.
+	[156c8e0c6fb7]
+
+	* NEWS, Python/sip/qsciscintillabase.sip, qt/ScintillaQt.cpp,
+	qt/qsciscintillabase.h:
+	Added the new SCN_USERLISTSELECTION() signal overload.
+	[031270944f93]
+
+	* NEWS, Python/sip/qsciscintillabase.sip, qt/qscilexer.cpp,
+	qt/qsciscintillabase.h:
+	Added the character/code unit functions.
+	[ff2e92ed2890]
+
+	* qt/qscilexer.cpp, qt/qscilexer.h, qt/qscintilla.pro,
+	qt/qsciscintilla.cpp:
+	Don't use the deprecated style bits API calls.
+	[2d1cf2b1019f]
+
+	* NEWS, Python/sip/qsciscintilla.sip,
+	Python/sip/qsciscintillabase.sip, qt/qsciscintilla.h,
+	qt/qsciscintillabase.h:
+	Added support for the new gradient indicators.
+	[02e7b6ba2fdb]
+
+2018-11-12  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* NEWS, Python/sip/qscilexerdiff.sip, qt/qscilexerdiff.cpp,
+	qt/qscilexerdiff.h, qt/qscintilla_cs.ts, qt/qscintilla_de.ts,
+	qt/qscintilla_es.ts, qt/qscintilla_fr.ts, qt/qscintilla_pt_br.ts:
+	Updates to the diff lexer.
+	[fb8a0cb48593]
+
+	* NEWS, Python/sip/qsciscintillabase.sip, qt/qsciscintillabase.h:
+	Added the symbolic names for the new lexers.
+	[b8d4fab81221]
+
+	* NEWS, Python/sip/qsciscintillabase.sip, qt/qsciscintillabase.cpp,
+	qt/qsciscintillabase.h:
+	Implemented the SCN_URIDROPPED signal.
+	[242bb09d23ea]
+
+	* qt/qsciscintillabase.h:
+	Documented SCN_DWELLSTART and SCN_DWELLEND.
+	[8750296d855d]
+
+	* qt/PlatQt.cpp:
+	Removed some unused platform methods.
+	[70c01135aa8d]
+
+	* qt/InputMethod.cpp, qt/ListBoxQt.cpp, qt/ListBoxQt.h, qt/PlatQt.cpp,
+	qt/SciClasses.cpp, qt/SciNamespace.h, qt/ScintillaQt.cpp,
+	qt/ScintillaQt.h, qt/qscintilla.pro, qt/qsciscintillabase.cpp:
+	Removed the support for the optional Scintilla namespace.
+	[33998bb1d26a]
+
+2018-11-11  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* BACKPORTING, License.txt, LongTermDownload.html, NEWS, README,
+	check.mak, checkdeps.mak, cocoa/InfoBar.mm, cocoa/PlatCocoa.h,
+	cocoa/PlatCocoa.mm, cocoa/QuartzTextLayout.h,
+	cocoa/ScintillaCocoa.h, cocoa/ScintillaCocoa.mm,
+	cocoa/ScintillaFramework/Info.plist, cocoa/ScintillaFramework/Scinti
+	llaFramework.xcodeproj/project.pbxproj,
+	cocoa/ScintillaTest/AppController.mm,
+	cocoa/ScintillaTest/ScintillaTest.xcodeproj/project.pbxproj,
+	cocoa/ScintillaView.mm, cppcheck.suppress, curses/Makefile,
+	curses/README.md, curses/ScintillaCurses.cxx,
+	curses/ScintillaCurses.h, curses/THANKS.md, curses/jinx/Makefile,
+	curses/jinx/jinx.c, delbin.bat, doc/Design.html, doc/LPegLexer.html,
+	doc/SciCoding.html, doc/ScintillaDoc.html,
+	doc/ScintillaDownload.html, doc/ScintillaHistory.html,
+	doc/ScintillaRelated.html, doc/ScintillaToDo.html,
+	doc/StyleMetadata.html, doc/index.html, gtk/Converter.h,
+	gtk/PlatGTK.cxx, gtk/ScintillaGTK.cxx, gtk/ScintillaGTK.h,
+	gtk/ScintillaGTKAccessible.cxx, gtk/ScintillaGTKAccessible.h,
+	gtk/deps.mak, gtk/makefile, gtk/scintilla-marshal.c, gtk/scintilla-
+	marshal.h, gtk/scintilla-marshal.list, include/ILexer.h,
+	include/ILoader.h, include/Platform.h, include/SciLexer.h,
+	include/Sci_Position.h, include/Scintilla.h,
+	include/Scintilla.iface, lexers/LexA68k.cxx, lexers/LexAPDL.cxx,
+	lexers/LexASY.cxx, lexers/LexAU3.cxx, lexers/LexAVE.cxx,
+	lexers/LexAVS.cxx, lexers/LexAbaqus.cxx, lexers/LexAda.cxx,
+	lexers/LexAsm.cxx, lexers/LexAsn1.cxx, lexers/LexBaan.cxx,
+	lexers/LexBash.cxx, lexers/LexBasic.cxx, lexers/LexBatch.cxx,
+	lexers/LexBibTeX.cxx, lexers/LexBullant.cxx, lexers/LexCLW.cxx,
+	lexers/LexCOBOL.cxx, lexers/LexCPP.cxx, lexers/LexCSS.cxx,
+	lexers/LexCaml.cxx, lexers/LexCmake.cxx, lexers/LexCoffeeScript.cxx,
+	lexers/LexConf.cxx, lexers/LexCrontab.cxx, lexers/LexCsound.cxx,
+	lexers/LexD.cxx, lexers/LexDMAP.cxx, lexers/LexDMIS.cxx,
+	lexers/LexDiff.cxx, lexers/LexECL.cxx, lexers/LexEDIFACT.cxx,
+	lexers/LexEScript.cxx, lexers/LexEiffel.cxx, lexers/LexErlang.cxx,
+	lexers/LexErrorList.cxx, lexers/LexFlagship.cxx,
+	lexers/LexForth.cxx, lexers/LexFortran.cxx, lexers/LexGAP.cxx,
+	lexers/LexGui4Cli.cxx, lexers/LexHTML.cxx, lexers/LexHaskell.cxx,
+	lexers/LexHex.cxx, lexers/LexIndent.cxx, lexers/LexInno.cxx,
+	lexers/LexJSON.cxx, lexers/LexKVIrc.cxx, lexers/LexKix.cxx,
+	lexers/LexLPeg.cxx, lexers/LexLaTeX.cxx, lexers/LexLisp.cxx,
+	lexers/LexLout.cxx, lexers/LexLua.cxx, lexers/LexMMIXAL.cxx,
+	lexers/LexMPT.cxx, lexers/LexMSSQL.cxx, lexers/LexMagik.cxx,
+	lexers/LexMake.cxx, lexers/LexMarkdown.cxx, lexers/LexMatlab.cxx,
+	lexers/LexMaxima.cxx, lexers/LexMetapost.cxx, lexers/LexModula.cxx,
+	lexers/LexMySQL.cxx, lexers/LexNimrod.cxx, lexers/LexNsis.cxx,
+	lexers/LexNull.cxx, lexers/LexOScript.cxx, lexers/LexOpal.cxx,
+	lexers/LexPB.cxx, lexers/LexPLM.cxx, lexers/LexPO.cxx,
+	lexers/LexPOV.cxx, lexers/LexPS.cxx, lexers/LexPascal.cxx,
+	lexers/LexPerl.cxx, lexers/LexPowerPro.cxx,
+	lexers/LexPowerShell.cxx, lexers/LexProgress.cxx,
+	lexers/LexProps.cxx, lexers/LexPython.cxx, lexers/LexR.cxx,
+	lexers/LexRebol.cxx, lexers/LexRegistry.cxx, lexers/LexRuby.cxx,
+	lexers/LexRust.cxx, lexers/LexSAS.cxx, lexers/LexSML.cxx,
+	lexers/LexSQL.cxx, lexers/LexSTTXT.cxx, lexers/LexScriptol.cxx,
+	lexers/LexSmalltalk.cxx, lexers/LexSorcus.cxx,
+	lexers/LexSpecman.cxx, lexers/LexSpice.cxx, lexers/LexStata.cxx,
+	lexers/LexTACL.cxx, lexers/LexTADS3.cxx, lexers/LexTAL.cxx,
+	lexers/LexTCL.cxx, lexers/LexTCMD.cxx, lexers/LexTeX.cxx,
+	lexers/LexTxt2tags.cxx, lexers/LexVB.cxx, lexers/LexVHDL.cxx,
+	lexers/LexVerilog.cxx, lexers/LexVisualProlog.cxx,
+	lexers/LexYAML.cxx, lexlib/Accessor.cxx, lexlib/Accessor.h,
+	lexlib/CharacterCategory.cxx, lexlib/CharacterCategory.h,
+	lexlib/CharacterSet.cxx, lexlib/CharacterSet.h,
+	lexlib/DefaultLexer.cxx, lexlib/DefaultLexer.h,
+	lexlib/LexAccessor.h, lexlib/LexerBase.cxx, lexlib/LexerBase.h,
+	lexlib/LexerModule.cxx, lexlib/LexerModule.h,
+	lexlib/LexerNoExceptions.cxx, lexlib/LexerNoExceptions.h,
+	lexlib/LexerSimple.cxx, lexlib/LexerSimple.h, lexlib/OptionSet.h,
+	lexlib/PropSetSimple.cxx, lexlib/PropSetSimple.h,
+	lexlib/SparseState.h, lexlib/StringCopy.h, lexlib/StyleContext.cxx,
+	lexlib/StyleContext.h, lexlib/SubStyles.h, lexlib/WordList.cxx,
+	lexlib/WordList.h, lib/README.doc, qt/InputMethod.cpp,
+	qt/ListBoxQt.cpp, qt/ListBoxQt.h, qt/PlatQt.cpp, qt/SciClasses.cpp,
+	qt/SciClasses.h, qt/SciNamespace.h, qt/ScintillaQt.cpp,
+	qt/ScintillaQt.h, qt/qscintilla.pro, qt/qsciscintillabase.cpp,
+	qt/qsciscintillabase.h, scripts/Face.py, scripts/FileGenerator.py,
+	scripts/GenerateCaseConvert.py, scripts/HFacer.py,
+	scripts/HeaderCheck.py, scripts/HeaderOrder.txt, scripts/LexGen.py,
+	scripts/ScintillaData.py, src/AutoComplete.cxx, src/AutoComplete.h,
+	src/CallTip.cxx, src/CallTip.h, src/CaseConvert.cxx,
+	src/CaseConvert.h, src/CaseFolder.cxx, src/CaseFolder.h,
+	src/Catalogue.cxx, src/Catalogue.h, src/CellBuffer.cxx,
+	src/CellBuffer.h, src/CharClassify.cxx, src/CharClassify.h,
+	src/ContractionState.cxx, src/ContractionState.h, src/DBCS.cxx,
+	src/DBCS.h, src/Decoration.cxx, src/Decoration.h, src/Document.cxx,
+	src/Document.h, src/EditModel.cxx, src/EditModel.h,
+	src/EditView.cxx, src/EditView.h, src/Editor.cxx, src/Editor.h,
+	src/ElapsedPeriod.h, src/ExternalLexer.cxx, src/ExternalLexer.h,
+	src/FontQuality.h, src/Indicator.cxx, src/Indicator.h,
+	src/IntegerRectangle.h, src/KeyMap.cxx, src/KeyMap.h,
+	src/LineMarker.cxx, src/LineMarker.h, src/MarginView.cxx,
+	src/MarginView.h, src/Partitioning.h, src/PerLine.cxx,
+	src/PerLine.h, src/Position.h, src/PositionCache.cxx,
+	src/PositionCache.h, src/RESearch.cxx, src/RESearch.h,
+	src/RunStyles.cxx, src/RunStyles.h, src/ScintillaBase.cxx,
+	src/ScintillaBase.h, src/Selection.cxx, src/Selection.h,
+	src/SparseVector.h, src/SplitVector.h, src/Style.cxx, src/Style.h,
+	src/UniConversion.cxx, src/UniConversion.h, src/UnicodeFromUTF8.h,
+	src/UniqueString.h, src/ViewStyle.cxx, src/ViewStyle.h, src/XPM.cxx,
+	src/XPM.h, test/README, test/ScintillaCallable.py, test/XiteWin.py,
+	test/lexTests.py, test/performanceTests.py, test/simpleTests.py,
+	test/test_lexlua.lua, test/unit/Sci.natvis,
+	test/unit/UnitTester.cxx, test/unit/UnitTester.vcxproj,
+	test/unit/catch.hpp, test/unit/makefile, test/unit/test.mak,
+	test/unit/testCellBuffer.cxx, test/unit/testCharClassify.cxx,
+	test/unit/testContractionState.cxx, test/unit/testDecoration.cxx,
+	test/unit/testPartitioning.cxx, test/unit/testRunStyles.cxx,
+	test/unit/testSparseState.cxx, test/unit/testSparseVector.cxx,
+	test/unit/testSplitVector.cxx, test/unit/testUniConversion.cxx,
+	test/unit/testUnicodeFromUTF8.cxx, test/unit/testWordList.cxx,
+	test/unit/unitTest.cxx, version.txt, win32/CheckD2D.cxx,
+	win32/HanjaDic.cxx, win32/HanjaDic.h, win32/PlatWin.cxx,
+	win32/PlatWin.h, win32/SciLexer.vcxproj, win32/ScintRes.rc,
+	win32/ScintillaDLL.cxx, win32/ScintillaWin.cxx,
+	win32/ScintillaWin.h, win32/deps.mak, win32/makefile,
+	win32/scintilla.mak:
+	The v3.10.1 based code will now build - otherwise untested.
+	[cb6d486795ec]
+
+2018-11-05  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* NEWS:
+	Updated the NEWS file.
+	[a99dfcd91f84]
+
+	* qt/qscintilla_cs.ts, qt/qscintilla_de.qm, qt/qscintilla_de.ts,
+	qt/qscintilla_es.qm, qt/qscintilla_es.ts, qt/qscintilla_fr.ts,
+	qt/qscintilla_pt_br.ts:
+	Updated the translation files.
+	[1529479f8a31]
+
+	* Python/configure.py, Python/sip/qsciscintilla.sip,
+	Python/sip/qsciscintillabase.sip, qt/qscilexerpython.cpp,
+	qt/qscintilla.pro, qt/qscintilla_cs.ts, qt/qscintilla_de.ts,
+	qt/qscintilla_es.ts, qt/qscintilla_fr.ts, qt/qscintilla_pt_br.ts,
+	qt/qsciscintilla.cpp, qt/qsciscintilla.h, qt/qsciscintillabase.h:
+	Merged the 2.10-maint branch with the trunk.
+	[5fcc66abfca0]
+
 2018-10-01  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* .hgtags:
+	Added tag 2.10.8 for changeset 57c8b6076899
+	[b565980f962b] <2.10-maint>
 
 	* NEWS:
 	Released as v2.10.8.
@@ -282,6 +589,116 @@
 	qt/qsciscintillabase.cpp:
 	Added the stubs for accessibility support.
 	[61e00a4f944f] <2.10-maint>
+
+	* qt/SciAccessibility.cpp, qt/SciAccessibility.h, qt/qscintilla.pro,
+	qt/qsciscintillabase.cpp:
+	Added the stubs for accessibility support.
+	[8f2f20b663f1]
+
+	* qt/qscintilla_cs.ts, qt/qscintilla_de.ts, qt/qscintilla_es.ts,
+	qt/qscintilla_fr.ts, qt/qscintilla_pt_br.ts:
+	Updated the .ts files.
+	[7630e7c16a42]
+
+	* Python/sip/qscilexerpython.sip, qt/qscilexerpython.cpp,
+	qt/qscilexerpython.h:
+	Added the DoubleQuotedFString, SingleQuotedFString,
+	TripleSingleQuotedFString and TripleDoubleQuotedFString styles to
+	QsciLexerPython.
+	[69a152791250]
+
+	* Python/sip/qsciscintilla.sip, qt/qsciscintilla.cpp,
+	qt/qsciscintilla.h:
+	Added QsciScintilla::setCaretLineFrameWidth().
+	[61ed51375157]
+
+	* Python/sip/qscicommand.sip:
+	Added ReverseLines to the Python bindings.
+	[132758b054dc]
+
+	* qt/qscicommand.h:
+	Added ReverseLines to QsciCommand::Command.
+	[1cecbd08c177]
+
+	* Python/sip/qsciscintillabase.sip, qt/qsciscintillabase.h:
+	Added SCLEX_INDENT, SCI_GETCARETLINEFRAME, SCI_SETCARETLINEFRAME,
+	SCI_SETACCESSIBILITY, SCI_GETACCESSIBILITY and SCI_LINEREVERSE.
+	[4a5c2bea7d34]
+
+2018-02-03  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/configure-old.py, Python/configure.py, designer-
+	Qt4Qt5/designer.pro, example-Qt4Qt5/application.pro,
+	qt/ScintillaQt.h, qt/qscintilla.pro:
+	Fixes to build with the latest code.
+	[262ad022e5b6]
+
+	* README, cocoa/InfoBar.mm, cocoa/PlatCocoa.h, cocoa/PlatCocoa.mm,
+	cocoa/ScintillaCocoa.h, cocoa/ScintillaCocoa.mm,
+	cocoa/ScintillaFramework/Info.plist, cocoa/ScintillaFramework/Scinti
+	llaFramework.xcodeproj/project.pbxproj,
+	cocoa/ScintillaTest/AppController.h,
+	cocoa/ScintillaTest/AppController.mm,
+	cocoa/ScintillaTest/English.lproj/MainMenu.xib,
+	cocoa/ScintillaTest/ScintillaTest.xcodeproj/project.pbxproj,
+	cocoa/ScintillaView.mm, cppcheck.suppress, doc/ScintillaDoc.html,
+	doc/ScintillaDownload.html, doc/ScintillaHistory.html,
+	doc/ScintillaRelated.html, doc/index.html, gtk/PlatGTK.cxx,
+	gtk/ScintillaGTK.cxx, gtk/ScintillaGTK.h,
+	gtk/ScintillaGTKAccessible.cxx, gtk/ScintillaGTKAccessible.h,
+	gtk/deps.mak, gtk/makefile, include/Platform.h, include/SciLexer.h,
+	include/Scintilla.h, include/Scintilla.iface, lexers/LexAsm.cxx,
+	lexers/LexBaan.cxx, lexers/LexBash.cxx, lexers/LexBasic.cxx,
+	lexers/LexCPP.cxx, lexers/LexD.cxx, lexers/LexDMIS.cxx,
+	lexers/LexDiff.cxx, lexers/LexEDIFACT.cxx, lexers/LexErrorList.cxx,
+	lexers/LexFortran.cxx, lexers/LexHTML.cxx, lexers/LexHaskell.cxx,
+	lexers/LexIndent.cxx, lexers/LexJSON.cxx, lexers/LexLaTeX.cxx,
+	lexers/LexLua.cxx, lexers/LexMatlab.cxx, lexers/LexPerl.cxx,
+	lexers/LexPowerShell.cxx, lexers/LexProgress.cxx,
+	lexers/LexProps.cxx, lexers/LexPython.cxx, lexers/LexRegistry.cxx,
+	lexers/LexRust.cxx, lexers/LexSQL.cxx, lexers/LexVHDL.cxx,
+	lexers/LexVerilog.cxx, lexers/LexVisualProlog.cxx,
+	lexers/LexYAML.cxx, lexlib/Accessor.cxx,
+	lexlib/CharacterCategory.cxx, lexlib/CharacterCategory.h,
+	lexlib/CharacterSet.cxx, lexlib/CharacterSet.h,
+	lexlib/LexAccessor.h, lexlib/LexerBase.cxx, lexlib/LexerModule.cxx,
+	lexlib/LexerModule.h, lexlib/LexerNoExceptions.cxx,
+	lexlib/LexerSimple.cxx, lexlib/PropSetSimple.cxx,
+	lexlib/StyleContext.cxx, lexlib/StyleContext.h, lexlib/WordList.cxx,
+	scripts/FileGenerator.py, scripts/HeaderOrder.txt,
+	scripts/LexGen.py, scripts/ScintillaData.py, src/AutoComplete.cxx,
+	src/AutoComplete.h, src/CallTip.cxx, src/CallTip.h,
+	src/CaseConvert.cxx, src/CaseFolder.h, src/Catalogue.cxx,
+	src/CellBuffer.cxx, src/CellBuffer.h, src/CharClassify.cxx,
+	src/CharClassify.h, src/ContractionState.cxx,
+	src/ContractionState.h, src/Decoration.cxx, src/Decoration.h,
+	src/Document.cxx, src/Document.h, src/EditModel.cxx,
+	src/EditModel.h, src/EditView.cxx, src/EditView.h, src/Editor.cxx,
+	src/Editor.h, src/ExternalLexer.cxx, src/ExternalLexer.h,
+	src/Indicator.cxx, src/KeyMap.cxx, src/LineMarker.cxx,
+	src/LineMarker.h, src/MarginView.cxx, src/MarginView.h,
+	src/Partitioning.h, src/PerLine.cxx, src/PerLine.h, src/Position.h,
+	src/PositionCache.cxx, src/PositionCache.h, src/RESearch.cxx,
+	src/RESearch.h, src/RunStyles.cxx, src/RunStyles.h,
+	src/ScintillaBase.cxx, src/ScintillaBase.h, src/Selection.cxx,
+	src/Selection.h, src/SparseVector.h, src/SplitVector.h,
+	src/Style.cxx, src/Style.h, src/UniConversion.cxx,
+	src/UniConversion.h, src/UniqueString.h, src/ViewStyle.cxx,
+	src/ViewStyle.h, src/XPM.cxx, src/XPM.h, test/gi/Scintilla-
+	filtered.h, test/unit/testCellBuffer.cxx,
+	test/unit/testCharClassify.cxx, test/unit/testContractionState.cxx,
+	test/unit/testDecoration.cxx, test/unit/testPartitioning.cxx,
+	test/unit/testRunStyles.cxx, test/unit/testSparseState.cxx,
+	test/unit/testSparseVector.cxx, test/unit/testSplitVector.cxx,
+	test/unit/testUnicodeFromUTF8.cxx, version.txt, win32/HanjaDic.cxx,
+	win32/PlatWin.cxx, win32/SciLexer.vcxproj, win32/ScintRes.rc,
+	win32/ScintillaWin.cxx, win32/deps.mak, win32/makefile,
+	win32/scintilla.mak:
+	Rebased on Scintilla v3.7.6.
+	[4822c10e2b59]
+
+	* Merged the 2.10-maint branch into the trunk.
+	[64e6e4c3471d]
 
 2017-11-23  Phil Thompson  <phil@riverbankcomputing.com>
 

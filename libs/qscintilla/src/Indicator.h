@@ -8,9 +8,7 @@
 #ifndef INDICATOR_H
 #define INDICATOR_H
 
-#ifdef SCI_NAMESPACE
 namespace Scintilla {
-#endif
 
 struct StyleAndColour {
 	int style;
@@ -53,8 +51,6 @@ public:
 	void SetFlags(int attributes_);
 };
 
-#ifdef SCI_NAMESPACE
 }
-#endif
 
 #endif
