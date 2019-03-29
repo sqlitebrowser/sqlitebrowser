@@ -769,7 +769,7 @@ void freeResult(void *ptr)
 
 static void plistFunc(sqlite3_context *context, int argc, sqlite3_value **argv){
   int resultLength;
-  int errno = 0;
+  int errorCode = 0;
   char *result = NULL;
   assert( argc==1 );
   switch( sqlite3_value_type(argv[0]) ){
@@ -777,8 +777,8 @@ static void plistFunc(sqlite3_context *context, int argc, sqlite3_value **argv){
     case SQLITE_BLOB: {
       const char *data = sqlite3_value_text(argv[0]);
       const int dataLength = sqlite3_value_bytes(argv[0]);
-      errno = parsePlist(&result, data, dataLength);
-      if (errno == ERROR_NONE) {
+      errorCode = parsePlist(&result, data, dataLength);
+      if (errorCode == ERROR_NONE) {
         resultLength = strlen(result);
         sqlite3_result_text(context, result, resultLength, &freeResult);
       } else {
@@ -798,7 +798,7 @@ static void plistFunc(sqlite3_context *context, int argc, sqlite3_value **argv){
 
 static void encodeBase64Func(sqlite3_context *context, int argc, sqlite3_value **argv){
   int resultLength;
-  int errno = 0;
+  int errorCode = 0;
   int dataLength;
   const unsigned char *data;
   char *result = NULL;
@@ -807,8 +807,8 @@ static void encodeBase64Func(sqlite3_context *context, int argc, sqlite3_value *
     case SQLITE_BLOB:
       data = sqlite3_value_blob(argv[0]);
       dataLength = sqlite3_value_bytes(argv[0]);
-      errno = encodeBase64(&result, data, dataLength);
-      if (errno == ERROR_NONE) {
+      errorCode = encodeBase64(&result, data, dataLength);
+      if (errorCode == ERROR_NONE) {
         resultLength = strlen(result);
         sqlite3_result_text(context, result, resultLength, &freeResult);
       } else {
@@ -819,8 +819,8 @@ static void encodeBase64Func(sqlite3_context *context, int argc, sqlite3_value *
       data = sqlite3_value_text(argv[0]);
       dataLength = sqlite3_value_bytes(argv[0]);
       sqlite3_result_text(context, data, dataLength, NULL);
-      errno = encodeBase64(&result, data, dataLength);
-      if (errno == ERROR_NONE) {
+      errorCode = encodeBase64(&result, data, dataLength);
+      if (errorCode == ERROR_NONE) {
         resultLength = strlen(result);
         sqlite3_result_text(context, result, resultLength, &freeResult);
       } else {
@@ -911,7 +911,7 @@ int isUTF8(unsigned char *data, int length)
 
 static void decodeBase64Func(sqlite3_context *context, int argc, sqlite3_value **argv){
   int resultLength;
-  int errno = 0;
+  int errorCode = 0;
   unsigned char *result = NULL;
   assert( argc==1 );
   switch( sqlite3_value_type(argv[0]) ){
@@ -919,8 +919,8 @@ static void decodeBase64Func(sqlite3_context *context, int argc, sqlite3_value *
     case SQLITE_TEXT: {
       const char *data = sqlite3_value_text(argv[0]);
       int dataLength = sqlite3_value_bytes(argv[0]);
-      errno = decodeBase64(&result, &resultLength, data, dataLength);
-      if (errno == ERROR_NONE) {
+      errorCode = decodeBase64(&result, &resultLength, data, dataLength);
+      if (errorCode == ERROR_NONE) {
         if (isUTF8(result, resultLength))
           sqlite3_result_text(context,  result, resultLength, &freeResult);
         else
