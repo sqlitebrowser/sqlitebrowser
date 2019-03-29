@@ -200,7 +200,7 @@ void SqliteTableModel::setQuery(const QString& sQuery, const QString& sCountQuer
         m_headers.append(getColumns(worker->getDb(), sQuery, m_vDataTypes));
 
     // now fetch the first entries
-    triggerCacheLoad(m_chunkSize / 2 - 1);
+    triggerCacheLoad(static_cast<int>(m_chunkSize / 2) - 1);
 
     emit layoutChanged();
 }
@@ -872,11 +872,13 @@ bool SqliteTableModel::isEditable() const
 
 void SqliteTableModel::triggerCacheLoad (int row) const
 {
-    size_t row_begin = std::max(0, row - int(m_chunkSize) / 2);
-    size_t row_end = row + m_chunkSize / 2;
+    int halfChunk = static_cast<int>( m_chunkSize / 2);
+    size_t row_begin = static_cast<std::size_t>(std::max(0, row - halfChunk));
+    size_t row_end = static_cast<std::size_t>(row + halfChunk);
 
-    if(rowCountAvailable() == RowCount::Complete) {
-        row_end = std::min(row_end, size_t(rowCount()));
+    if(rowCountAvailable() == RowCount::Complete)
+    {
+        row_end = std::min(row_end, static_cast<std::size_t>(rowCount()));
     } else {
         // will be truncated by reader
     }
@@ -909,7 +911,7 @@ bool SqliteTableModel::completeCache () const
     waitUntilIdle();
 
     // This loop fetches all data by loading it block by block into the cache
-    for(int i=0;i<rowCount()+static_cast<int>(m_chunkSize)/2;i+=m_chunkSize)
+    for(int i = 0; i < (rowCount() + static_cast<int>( m_chunkSize / 2)); i += static_cast<int>(m_chunkSize))
     {
         progress.setValue(i);
         qApp->processEvents();
