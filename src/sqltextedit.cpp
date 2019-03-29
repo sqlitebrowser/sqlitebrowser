@@ -61,6 +61,8 @@ void SqlTextEdit::reloadSettings()
     } else {
         setAutoCompletionThreshold(0);
     }
+    // Set wrap lines
+    setWrapMode(static_cast<QsciScintilla::WrapMode>(Settings::getValue("editor", "wrap_lines").toInt()));
 
     ExtendedScintilla::reloadSettings();
 

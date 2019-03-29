@@ -150,6 +150,7 @@ set(SQLB_MOC_HDR
 	src/FindReplaceDialog.h
 	src/ExtendedScintilla.h
 	src/FileExtensionManager.h
+	src/CondFormatManager.h
 	src/CipherSettings.h
 	src/DotenvFormat.h
 	src/Palette.h
@@ -200,6 +201,7 @@ set(SQLB_SRC
 	src/FindReplaceDialog.cpp
 	src/ExtendedScintilla.cpp
 	src/FileExtensionManager.cpp
+	src/CondFormatManager.cpp
 	src/Data.cpp
 	src/CipherSettings.cpp
 	src/DotenvFormat.cpp
@@ -228,6 +230,7 @@ set(SQLB_FORMS
 	src/RemotePushDialog.ui
 	src/FindReplaceDialog.ui
 	src/FileExtensionManager.ui
+	src/CondFormatManager.ui
 )
 
 set(SQLB_RESOURCES

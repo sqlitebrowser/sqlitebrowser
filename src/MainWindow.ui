@@ -222,9 +222,6 @@ You can drag SQL statements from an object row and drop them into other applicat
           <property name="selectionMode">
            <enum>QAbstractItemView::ContiguousSelection</enum>
           </property>
-          <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-           <bool>true</bool>
-          </attribute>
          </widget>
         </item>
         <item>

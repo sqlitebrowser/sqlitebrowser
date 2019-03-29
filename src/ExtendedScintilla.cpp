@@ -198,9 +198,6 @@ void ExtendedScintilla::reloadLexerSettings(QsciLexer *lexer)
     if(lexer)
         lexer->refreshProperties();
 
-    // Set wrap lines
-    setWrapMode(static_cast<QsciScintilla::WrapMode>(Settings::getValue("editor", "wrap_lines").toInt()));
-
     // Check if error indicators are enabled and clear them if they just got disabled
     showErrorIndicators = Settings::getValue("editor", "error_indicators").toBool();
     if(!showErrorIndicators)

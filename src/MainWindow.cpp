@@ -28,6 +28,7 @@
 #include "FindReplaceDialog.h"
 #include "Data.h"
 #include "CondFormat.h"
+#include "CondFormatManager.h"
 #include "RunSql.h"
 
 #include <chrono>
@@ -175,6 +176,8 @@ void MainWindow::init()
     connect(ui->dataTable->filterHeader(), SIGNAL(filterChanged(int,QString)), this, SLOT(updateFilter(int,QString)));
     connect(ui->dataTable->filterHeader(), SIGNAL(addCondFormat(int,QString)), this, SLOT(addCondFormat(int,QString)));
     connect(ui->dataTable->filterHeader(), SIGNAL(clearAllCondFormats(int)), this, SLOT(clearAllCondFormats(int)));
+    connect(ui->dataTable->filterHeader(), SIGNAL(editCondFormats(int)), this, SLOT(editCondFormats(int)));
+    connect(ui->dataTable, SIGNAL(editCondFormats(int)), this, SLOT(editCondFormats(int)));
     connect(m_browseTableModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(dataTableSelectionChanged(QModelIndex)));
 
     // Select in table the rows correspoding to the selected points in plot
@@ -746,9 +749,6 @@ void MainWindow::populateTable()
         for(int i=1;i<m_browseTableModel->columnCount();i++)
             ui->dataTable->setColumnWidth(i, ui->dataTable->horizontalHeader()->defaultSectionSize());
 
-        // Sorting
-        ui->dataTable->filterHeader()->setSortIndicator(0, Qt::AscendingOrder);
-
         // Encoding
         m_browseTableModel->setEncoding(defaultBrowseTableEncoding);
 
@@ -846,15 +846,6 @@ void MainWindow::applyBrowseTableSettings(BrowseDataTableSettings storedData, bo
     for(auto widthIt=storedData.columnWidths.constBegin();widthIt!=storedData.columnWidths.constEnd();++widthIt)
         ui->dataTable->setColumnWidth(widthIt.key(), widthIt.value());
 
-    // Sorting
-    // For now just use the first sort column for the sort indicator
-    if(storedData.query.orderBy().size())
-    {
-        ui->dataTable->filterHeader()->setSortIndicator(
-                    storedData.query.orderBy().front().column,
-                    storedData.query.orderBy().front().direction == sqlb::Ascending ? Qt::AscendingOrder : Qt::DescendingOrder);
-    }
-
     // Filters
     if(!skipFilters)
     {
@@ -921,6 +912,11 @@ bool MainWindow::fileClose()
     ui->editLogApplication->clear();
     ui->editLogUser->clear();
     ui->editLogErrorLog->clear();
+
+    // Remove completion and highlighting for identifiers
+    SqlTextEdit::sqlLexer->setTableNames(SqlUiLexer::QualifiedTablesMap());
+    for(int i=0; i < ui->tabSqlAreas->count(); i++)
+        qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i))->getEditor()->reloadKeywords();
 
     return true;
 }
@@ -2253,8 +2249,8 @@ void MainWindow::changeSqlTab(int index)
     {
         // Not running a query
 
-        ui->actionSqlExecuteLine->setEnabled(true);
-        ui->actionExecuteSql->setEnabled(true);
+        ui->actionSqlExecuteLine->setEnabled(db.isOpen());
+        ui->actionExecuteSql->setEnabled(db.isOpen());
         ui->actionSqlStop->setEnabled(false);
     } else {
         // Running a query
@@ -2648,7 +2644,8 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, QXmlS
                     while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "column") {
                         if(xml.name() == "format") {
                             CondFormat newCondFormat(xml.attributes().value("condition").toString(),
-                                                     QColor(xml.attributes().value("color").toString()),
+                                                     QColor(xml.attributes().value("foreground").toString()),
+                                                     QColor(xml.attributes().value("background").toString()),
                                                      settings.encoding);
                             settings.condFormats[index].append(newCondFormat);
                             xml.skipCurrentElement();
@@ -2951,7 +2948,8 @@ static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, Q
         for(auto format : iter.value()) {
             xml.writeStartElement("format");
             xml.writeAttribute("condition", format.filter());
-            xml.writeAttribute("color", format.color().name());
+            xml.writeAttribute("background", format.backgroundColor().name());
+            xml.writeAttribute("foreground", format.foregroundColor().name());
             xml.writeEndElement();
         }
         xml.writeEndElement();
@@ -3166,7 +3164,11 @@ void MainWindow::updateFilter(int column, const QString& value)
 
 void MainWindow::addCondFormat(int column, const QString& value)
 {
-    CondFormat newCondFormat(value, m_condFormatPalette.nextSerialColor(Palette::appHasDarkTheme()), m_browseTableModel->encoding());
+    // Create automatically a new conditional format with the next serial background color according to the theme and the regular foreground
+    // color in the settings.
+    CondFormat newCondFormat(value, QColor(Settings::getValue("databrowser", "reg_fg_colour").toString()),
+                             m_condFormatPalette.nextSerialColor(Palette::appHasDarkTheme()),
+                             m_browseTableModel->encoding());
     m_browseTableModel->addCondFormat(column, newCondFormat);
     browseTableSettings[currentlyBrowsedTableName()].condFormats[column].append(newCondFormat);
 }
@@ -3176,6 +3178,17 @@ void MainWindow::clearAllCondFormats(int column)
     QVector<CondFormat> emptyCondFormatVector = QVector<CondFormat>();
     m_browseTableModel->setCondFormats(column, emptyCondFormatVector);
     browseTableSettings[currentlyBrowsedTableName()].condFormats[column].clear();
+}
+
+void MainWindow::editCondFormats(int column)
+{
+    CondFormatManager condFormatDialog(browseTableSettings[currentlyBrowsedTableName()].condFormats[column],
+                                       m_browseTableModel->encoding(), this);
+    if (condFormatDialog.exec()) {
+        QVector<CondFormat> condFormatVector = condFormatDialog.getCondFormats();
+        m_browseTableModel->setCondFormats(column, condFormatVector);
+        browseTableSettings[currentlyBrowsedTableName()].condFormats[column] = condFormatVector;
+    }
 }
 
 void MainWindow::editEncryption()

@@ -207,6 +207,8 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
             return false;
         if(name == "auto_switch_mode")
             return true;
+        if(name == "editor_word_wrap")
+            return true;
         if(name == "null_text")
             return "NULL";
         if(name == "blob_text")

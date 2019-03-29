@@ -2,11 +2,13 @@
 #include "Settings.h"
 #include "Data.h"
 
-CondFormat::CondFormat(const QString& filter, const QColor& color, const QString& encoding)
+CondFormat::CondFormat(const QString& filter, const QColor& foreground, const QColor& background, const QString& encoding)
     : m_filter(filter),
-      m_color(color)
+      m_fgColor(foreground),
+      m_bgColor(background)
 {
-    m_sqlCondition = filterToSqlCondition(filter, encoding);
+    if (!filter.isEmpty())
+        m_sqlCondition = filterToSqlCondition(filter, encoding);
 }
 
 QString CondFormat::filterToSqlCondition(const QString& value, const QString& encoding)

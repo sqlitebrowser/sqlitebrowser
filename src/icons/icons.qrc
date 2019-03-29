@@ -79,5 +79,9 @@
         <file alias="project_save_as">package_rename.png</file>
         <file alias="field_fk">page_foreign_key.png</file>
         <file alias="save_all">save_all.png</file>
+        <file alias="word_wrap">page_white_text.png</file>
+        <file alias="cond_formats">color_swatch.png</file>
+        <file alias="clear_cond_formats">clear_cond_formats.png</file>
+        <file alias="edit_cond_formats">edit_cond_formats.png</file>
     </qresource>
 </RCC>

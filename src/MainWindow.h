@@ -275,6 +275,7 @@ private slots:
     void updateFilter(int column, const QString& value);
     void addCondFormat(int column, const QString& value);
     void clearAllCondFormats(int column);
+    void editCondFormats(int column);
     void editEncryption();
     void on_actionClearFilters_triggered();
     void copyCurrentCreateStatement();

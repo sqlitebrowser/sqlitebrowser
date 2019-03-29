@@ -115,6 +115,7 @@
      </item>
      <item>
       <widget class="QToolBar" name="editCellToolbar">
+       <addaction name="actionWordWrap"/>
        <addaction name="actionIndent"/>
        <addaction name="actionImport"/>
        <addaction name="actionExport"/>
@@ -150,8 +151,8 @@ Errors are indicated with a red squiggle underline.</string>
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>598</width>
-         <height>265</height>
+         <width>85</width>
+         <height>35</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -359,6 +360,24 @@ Errors are indicated with a red squiggle underline.</string>
     <string>Erases the contents of the cell</string>
    </property>
   </action>
+  <action name="actionWordWrap">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/word_wrap</normaloff>:/icons/word_wrap</iconset>
+   </property>
+   <property name="text">
+    <string>Word Wrap</string>
+   </property>
+   <property name="toolTip">
+    <string>Wrap lines on word boundaries</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
   <tabstop>comboMode</tabstop>
@@ -518,6 +537,22 @@ Errors are indicated with a red squiggle underline.</string>
    <signal>triggered()</signal>
    <receiver>EditDialog</receiver>
    <slot>exportData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>308</x>
+     <y>190</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionWordWrap</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>EditDialog</receiver>
+   <slot>setWordWrapping(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
