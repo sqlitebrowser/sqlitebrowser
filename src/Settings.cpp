@@ -74,7 +74,7 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
 
     // db/prefetchsize?
     if(group == "db" && name == "prefetchsize")
-        return 50000;
+        return 50000U;
 
     // db/defaultsqltext?
     if(group == "db" && name == "defaultsqltext")

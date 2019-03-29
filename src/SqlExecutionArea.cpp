@@ -22,7 +22,7 @@ SqlExecutionArea::SqlExecutionArea(DBBrowserDB& _db, QWidget* parent) :
     ui->setupUi(this);
 
     // Create model
-    model = new SqliteTableModel(db, this, Settings::getValue("db", "prefetchsize").toInt());
+    model = new SqliteTableModel(db, this, static_cast<std::size_t>(Settings::getValue("db", "prefetchsize").toUInt()));
     ui->tableResult->setModel(model);
     connect(model, &SqliteTableModel::finishedFetch, this, &SqlExecutionArea::fetchedData);
 
@@ -88,7 +88,7 @@ void SqlExecutionArea::fetchedData()
 
     // Set column widths according to their contents but make sure they don't exceed a certain size
     ui->tableResult->resizeColumnsToContents();
-    for(int i=0;i<model->columnCount();i++)
+    for(int i = 0; i < model->columnCount(); i++)
     {
         if(ui->tableResult->columnWidth(i) > 300)
             ui->tableResult->setColumnWidth(i, 300);
@@ -135,7 +135,7 @@ void SqlExecutionArea::reloadSettings()
         ui->splitter->setOrientation(Qt::Vertical);
 
     // Set prefetch settings
-    model->setChunkSize(Settings::getValue("db", "prefetchsize").toInt());
+    model->setChunkSize(static_cast<std::size_t>(Settings::getValue("db", "prefetchsize").toUInt()));
 
     // Check if error indicators are enabled for the not-ok background clue
     showErrorIndicators = Settings::getValue("editor", "error_indicators").toBool();

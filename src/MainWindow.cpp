@@ -91,12 +91,11 @@ static std::vector<sqlb::SortedColumn> toSortOrderVector(int index, Qt::SortOrde
     return vector;
 }
 
-
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
       ui(new Ui::MainWindow),
       db(),
-      m_browseTableModel(new SqliteTableModel(db, this, Settings::getValue("db", "prefetchsize").toInt())),
+      m_browseTableModel(new SqliteTableModel(db, this, static_cast<std::size_t>(Settings::getValue("db", "prefetchsize").toUInt()))),
       m_currentTabTableModel(m_browseTableModel),
       m_remoteDb(new RemoteDatabase),
       editDock(new EditDialog(this)),
@@ -2444,7 +2443,7 @@ void MainWindow::reloadSettings()
     ui->toolbarSql->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(Settings::getValue("General", "toolbarStyleSql").toInt()));
 
     // Set prefetch sizes for lazy population of table models
-    m_browseTableModel->setChunkSize(Settings::getValue("db", "prefetchsize").toInt());
+    m_browseTableModel->setChunkSize(static_cast<std::size_t>(Settings::getValue("db", "prefetchsize").toUInt()));
     for(int i=0;i<ui->tabSqlAreas->count();++i)
         qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i))->reloadSettings();
 
