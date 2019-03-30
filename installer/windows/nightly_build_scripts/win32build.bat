@@ -56,10 +56,13 @@ CALL "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\bin\\vcvars32.b
 CD %SQLITE_DIR%
 cl sqlite3.c -DSQLITE_ENABLE_FTS5 -DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_PARENTHESIS -DSQLITE_ENABLE_STAT4 -DSQLITE_ENABLE_JSON1 -DSQLITE_API=__declspec(dllexport) -link -dll -out:sqlite3.dll
 
-:: Build Math extension x86
+:: Build extensions
 COPY C:\git_repos\sqlitebrowser\src\extensions\extension-functions.c
 COPY C:\git_repos\sqlitebrowser\src\extensions\extension-functions.def
 cl /MD extension-functions.c -link -dll -def:extension-functions.def -out:math.dll
+COPY C:\git_repos\sqlitebrowser\src\extensions\extension-formats.c
+COPY C:\git_repos\sqlitebrowser\src\extensions\extension-formats.def
+cl /MD extension-formats.c -link -dll -def:extension-formats.def -out:formats.dll
 
 :: Run CMake for SQLite x86
 CD C:\\builds
