@@ -3244,6 +3244,11 @@ void MainWindow::editEncryption()
         if (ok)
             ok = db.executeSQL(QString("PRAGMA sqlitebrowser_edit_encryption.user_version = %1;").arg(db.getPragma("user_version").toInt()), false, false);
 
+        // We need to detach the database before proceeding
+        qApp->processEvents();
+        if (ok)
+            ok = db.executeSQL("DETACH sqlitebrowser_edit_encryption;", false, false);
+
         // Check for errors
         qApp->processEvents();
         if(ok)
