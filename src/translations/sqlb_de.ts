@@ -47,7 +47,7 @@
     <message>
         <location filename="../AboutDialog.cpp" line="22"/>
         <source>Built for </source>
-        <translation type="unfinished"></translation>
+        <translation>Erstellt für </translation>
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="23"/>
@@ -535,12 +535,12 @@ Ausführung wird abgebrochen %3.</translation>
     <message>
         <location filename="../sqlitedb.cpp" line="1085"/>
         <source>didn&apos;t receive any output from %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 hat nichts ausgegeben</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1091"/>
         <source>could not execute command: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Befehl konnte nicht ausgeführt werden: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1259"/>
@@ -4141,13 +4141,13 @@ Alle mit %1 verbundenen Daten gehen verloren.</translation>
         <location filename="../MainWindow.cpp" line="1476"/>
         <location filename="../MainWindow.cpp" line="1478"/>
         <source>At line %1:</source>
-        <translation type="unfinished"></translation>
+        <translation>In Zeile %1:</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1476"/>
         <location filename="../MainWindow.cpp" line="1478"/>
         <source>Result: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ergebnis: %2</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2232"/>
@@ -6051,7 +6051,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="217"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Results of the last executed statements.&lt;/p&gt;&lt;p&gt;You may want to collapse this panel and use the &lt;span style=&quot; font-style:italic;&quot;&gt;SQL Log&lt;/span&gt; dock with &lt;span style=&quot; font-style:italic;&quot;&gt;User&lt;/span&gt; selection instead.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ergebnisse der zuletzt ausgeführten Statements..&lt;/p&gt;&lt;p&gt;Alternativ kann dieses Panel zusammengeklappt und stattdessen der &lt;span style=&quot; font-style:italic;&quot;&gt;SQL-Log&lt;/span&gt;-Dock mit der Auswahl &lt;span style=&quot; font-style:italic;&quot;&gt;Benutzer&lt;/span&gt; verwendet werden.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="238"/>
