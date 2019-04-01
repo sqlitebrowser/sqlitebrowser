@@ -193,7 +193,7 @@
     <message>
         <location filename="../Application.cpp" line="94"/>
         <source>  -O, --save-option [group/setting=value]	Run application saving this value for this setting</source>
-        <translation type="unfinished"></translation>
+        <translation>  -O, --save-option [group/setting=valore]	Avvia l&apos;applicazione salvando questo valore per impostazione</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="95"/>
@@ -228,7 +228,7 @@
     <message>
         <location filename="../Application.cpp" line="120"/>
         <source>The -o/--option and -O/--save-option options require an argument in the form group/setting=value</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;opzioni -o/--option e -O/--save-option richiedono un parametro nel formato gruppo/impostaizione=valore</translation>
     </message>
     <message>
         <source>The -o/--option option requires an argument in the form group/setting=value</source>
@@ -431,19 +431,21 @@ Se una qualunque altra impostazione è stata modificata per l&apos;inserimento d
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="110"/>
         <source>Custom display format must contain a function call applied to %1</source>
-        <translation type="unfinished"></translation>
+        <translation>I formati di visualizzazione personalizzati devono contenere una chiamata a funzione applicata a %1</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="122"/>
         <source>Error in custom display format. Message from database engine:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Errore nel formato personalizzato di visualizzazione. Messaggio dal motore DB:
+
+%1</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="124"/>
         <source>Custom display format must return only one column but it returned %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il formato di visualizzazione personalizzato deve restituire solo una colonna ma ha restituito %1.</translation>
     </message>
 </context>
 <context>
@@ -451,42 +453,42 @@ Se una qualunque altra impostazione è stata modificata per l&apos;inserimento d
     <message>
         <location filename="../CondFormatManager.ui" line="14"/>
         <source>Conditional Format Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Gestore dei formati condizionali</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="22"/>
         <source>&amp;Up</source>
-        <translation type="unfinished">Porta &amp;su</translation>
+        <translation>Porta &amp;su</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="33"/>
         <source>&amp;Down</source>
-        <translation type="unfinished">Porta &amp;giù</translation>
+        <translation>Porta &amp;giù</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="57"/>
         <source>&amp;Add</source>
-        <translation type="unfinished">&amp;Aggiungi</translation>
+        <translation>&amp;Aggiungi</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="68"/>
         <source>&amp;Remove</source>
-        <translation type="unfinished">&amp;Rimuovi</translation>
+        <translation>&amp;Rimuovi</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="115"/>
         <source>Text color</source>
-        <translation type="unfinished">Colore del testo</translation>
+        <translation>Colore del testo</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="120"/>
         <source>Background color</source>
-        <translation type="unfinished">Colore dello sfondo</translation>
+        <translation>Colore dello sfondo</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="125"/>
         <source>Condition</source>
-        <translation type="unfinished"></translation>
+        <translation>Condizione</translation>
     </message>
 </context>
 <context>
@@ -861,12 +863,14 @@ Annullo l&apos;esecuzione %3.</translation>
         <source>The text editor modes let you edit plain text, as well as JSON or XML data with syntax highlighting, automatic formatting and validation before saving.
 
 Errors are indicated with a red squiggle underline.</source>
-        <translation type="unfinished"></translation>
+        <translation>La modalità editor di testo ti pemrette di editare del testo semplice, così come dei dati JSON o XML con evidenziazione della sintassi, formattazione automatica e validazione prima del salvataggio.
+
+Gli errori sono indicati da una sottolineatura rossa ondulata.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="279"/>
         <source>Open preview dialog for printing the data currently stored in the cell</source>
-        <translation type="unfinished"></translation>
+        <translation>Apre una finestra d&apos;anteprima per la stampa dei dati attualmente memorizzati nella cella</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="315"/>
@@ -881,12 +885,12 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditDialog.ui" line="375"/>
         <source>Word Wrap</source>
-        <translation type="unfinished"></translation>
+        <translation>A capo automatico</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="378"/>
         <source>Wrap lines on word boundaries</source>
-        <translation type="unfinished"></translation>
+        <translation>Porta a capo le line di testo al raggiungimento del bordo</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="312"/>
@@ -896,12 +900,12 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditDialog.ui" line="327"/>
         <source>&amp;Export...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Esporta...</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="342"/>
         <source>&amp;Import...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Importa...</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="345"/>
@@ -1777,7 +1781,7 @@ Tutti i dati che sono attualmente memorizzati in questo campo andranno persi.</t
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="256"/>
         <source>Edit Conditional Formats...</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifica Formattazione Condizionale...</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="258"/>
@@ -1933,7 +1937,7 @@ x~y	Intervallo: valori tra x e y
     <message>
         <location filename="../FilterLineEdit.cpp" line="124"/>
         <source>Edit Conditional Formats...</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifica Formattazione Condizionale...</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="130"/>
@@ -2426,7 +2430,7 @@ Puoi trascinare SQL da una riga oggetto e rilasciarli dentro altri applicativi o
     <message>
         <location filename="../MainWindow.ui" line="2474"/>
         <source>Clear Filters</source>
-        <translation type="unfinished"></translation>
+        <translation>Pulisci Filtri</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2477"/>
@@ -2442,7 +2446,7 @@ Puoi trascinare SQL da una riga oggetto e rilasciarli dentro altri applicativi o
     <message>
         <location filename="../MainWindow.ui" line="2492"/>
         <source>Save Table As...</source>
-        <translation type="unfinished"></translation>
+        <translation>Salva Tabella Come...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2495"/>
@@ -2710,7 +2714,7 @@ Puoi trascinare SQL da una riga oggetto e rilasciarli dentro altri applicativi o
     <message>
         <location filename="../MainWindow.ui" line="1141"/>
         <source>Error Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Registro errori</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1168"/>
@@ -3032,22 +3036,22 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
     <message>
         <location filename="../MainWindow.ui" line="1760"/>
         <source>Execute line</source>
-        <translation type="unfinished"></translation>
+        <translation>Esegui riga</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1849"/>
         <source>Sa&amp;ve Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Sal&amp;va Progetto</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2107"/>
         <source>Find</source>
-        <translation type="unfinished"></translation>
+        <translation>Trova</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2131"/>
         <source>Find or replace</source>
-        <translation type="unfinished"></translation>
+        <translation>Trova o sostituisci</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2363"/>
@@ -3067,7 +3071,7 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
     <message>
         <location filename="../MainWindow.ui" line="2414"/>
         <source>Un/comment block</source>
-        <translation type="unfinished"></translation>
+        <translation>De/Commenta il blocco</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2417"/>
@@ -3092,7 +3096,7 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
     <message>
         <location filename="../MainWindow.ui" line="2438"/>
         <source>Stop execution</source>
-        <translation type="unfinished"></translation>
+        <translation>Ferma esecuzione</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2441"/>
@@ -3102,31 +3106,31 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
     <message>
         <location filename="../MainWindow.ui" line="2546"/>
         <source>&amp;Save Project As...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Salva Progetto Come...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2549"/>
         <location filename="../MainWindow.ui" line="2552"/>
         <location filename="../MainWindow.ui" line="2555"/>
         <source>Save the project in a file selected in a dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Salva il progetto in un file selezionato tramite una finestra di dialogo</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2564"/>
         <source>Save A&amp;ll</source>
-        <translation type="unfinished"></translation>
+        <translation>Salva T&amp;utto</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2567"/>
         <location filename="../MainWindow.ui" line="2570"/>
         <location filename="../MainWindow.ui" line="2573"/>
         <source>Save DB file, project file and opened SQL files</source>
-        <translation type="unfinished"></translation>
+        <translation>Salva il file DB, file di progetto e tutti i file SQL aperti</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2576"/>
         <source>Ctrl+Shift+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1660"/>
@@ -3912,13 +3916,13 @@ Sei sicuro di voler salvare il database?</translation>
         <location filename="../MainWindow.cpp" line="1458"/>
         <location filename="../MainWindow.cpp" line="1461"/>
         <source>At line %1:</source>
-        <translation type="unfinished"></translation>
+        <translation>Alla riga %1:</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1458"/>
         <location filename="../MainWindow.cpp" line="1461"/>
         <source>Result: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Risultato: %2</translation>
     </message>
     <message>
         <source>-- At line %1:
@@ -4092,17 +4096,17 @@ Sei sicuro?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="2156"/>
         <source>Do you want to save the changes made to SQL tabs in a new project file?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vuoi salvare le modifiche effettuate alle schede SQL in un nuovo file di progetto?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2157"/>
         <source>Do you want to save the changes made to SQL tabs in the project file %1?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vuoi salvare le modifiche fatte alle schede SQL nel file di progetto %1?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2177"/>
         <source>Do you want to save the changes made to the SQL file %1?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vuoi salvare le modifiche fatte al file SQL %1?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2203"/>
@@ -4151,7 +4155,7 @@ Sei sicuro?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="2390"/>
         <source>Could not open find resource file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Non posso aprire il file di risorse: %1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2481"/>
@@ -4189,7 +4193,8 @@ Sei sicuro?</translation>
         <location filename="../MainWindow.cpp" line="3014"/>
         <source>Could not open project file for writing.
 Reason: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Non posso scrivere nel file di progetto.
+Motivo: %1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3368"/>
@@ -4707,47 +4712,47 @@ Attenzione: non sono ancora stati recuperati tutti i dati dalla tabella a causa 
     <message>
         <location filename="../PreferencesDialog.ui" line="392"/>
         <source>Main Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Finestra principale</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="405"/>
         <source>Database Structure</source>
-        <translation type="unfinished">Struttura database</translation>
+        <translation>Struttura database</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="418"/>
         <source>Browse Data</source>
-        <translation type="unfinished">Naviga nei dati</translation>
+        <translation>Naviga nei dati</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="431"/>
         <source>Execute SQL</source>
-        <translation type="unfinished">Esegui SQL</translation>
+        <translation>Esegui SQL</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="494"/>
         <source>Edit Database Cell</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifica Cella Database</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="513"/>
         <source>When this value is changed, all the other color preferences are also set to matching colors.</source>
-        <translation type="unfinished"></translation>
+        <translation>Quando questo valore viene modificato, tutte le altre preferenze di colore vengono impostate al colore corrispondente.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="532"/>
         <source>Follow the desktop style</source>
-        <translation type="unfinished"></translation>
+        <translation>Segui lo stile del desktop</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="537"/>
         <source>Dark style</source>
-        <translation type="unfinished"></translation>
+        <translation>Stile scuro</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="545"/>
         <source>Application style</source>
-        <translation type="unfinished"></translation>
+        <translation>Stile Applicazione</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="556"/>
@@ -4875,7 +4880,7 @@ Può essere impostato a 0 per disabilitare il completamento.</translation>
         <location filename="../PreferencesDialog.ui" line="976"/>
         <location filename="../PreferencesDialog.ui" line="995"/>
         <source>Click to set this color</source>
-        <translation type="unfinished"></translation>
+        <translation>Clicca per impostare questo colore</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="896"/>
@@ -5631,7 +5636,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="232"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Results of the last executed statements.&lt;/p&gt;&lt;p&gt;You may want to collapse this panel and use the &lt;span style=&quot; font-style:italic;&quot;&gt;SQL Log&lt;/span&gt; dock with &lt;span style=&quot; font-style:italic;&quot;&gt;User&lt;/span&gt; selection instead.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Risultati degli ultimi statements eseguiti.&lt;/p&gt;&lt;p&gt;Potresti voler rimpicciolire questo pannello e usare la casella &lt;span style=&quot; font-style:italic;&quot;&gt;SQL Log&lt;/span&gt; con la selezione dell&apos;&lt;span style=&quot; font-style:italic;&quot;&gt;Utente&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="253"/>
