@@ -3523,7 +3523,7 @@ void MainWindow::unlockViewEditing(bool unlock, QString pk)
     // If this isn't a view just unlock editing and return
     if(db.getObjectByName(currentTable) && db.getObjectByName(currentTable)->type() != sqlb::Object::View)
     {
-        m_browseTableModel->setPseudoPk(QString());
+        m_browseTableModel->setPseudoPk(m_browseTableModel->pseudoPk());
         enableEditing(true);
         return;
     }
