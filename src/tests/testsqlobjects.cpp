@@ -124,7 +124,7 @@ void TestTable::withoutRowid()
     f.setAutoIncrement(true);
     tt.fields.push_back(f);
     tt.fields.emplace_back("b", "integer");
-    tt.setRowidColumn("a");
+    tt.setRowidColumns({"a"});
     tt.addConstraint({f.name()}, ConstraintPtr(new PrimaryKeyConstraint()));
 
     QCOMPARE(tt.sql(), QString("CREATE TABLE \"testtable\" (\n"
@@ -177,7 +177,7 @@ void TestTable::parseSQL()
     Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL)));
 
     QCOMPARE(tab.name(), "hero");
-    QCOMPARE(tab.rowidColumn(), "_rowid_");
+    QCOMPARE(tab.rowidColumns(), {"_rowid_"});
     QCOMPARE(tab.fields.at(0).name(), "id");
     QCOMPARE(tab.fields.at(1).name(), "name");
     QCOMPARE(tab.fields.at(2).name(), "info");
@@ -318,8 +318,8 @@ void TestTable::parseSQLWithoutRowid()
 
     Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL)));
 
-    QCOMPARE(tab.findPk()->name(), "a");
-    QCOMPARE(tab.rowidColumn(), "a");
+    QCOMPARE(tab.primaryKey(), {"a"});
+    QCOMPARE(tab.rowidColumns(), {"a"});
 }
 
 void TestTable::parseNonASCIIChars()
