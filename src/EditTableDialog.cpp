@@ -372,8 +372,8 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                 // we need to check for this case and cancel here. Maybe we can think of some way to modify the INSERT INTO ... SELECT statement
                 // to at least replace all troublesome NULL values by the default value
                 SqliteTableModel m(pdb, this);
-                m.setQuery(QString("SELECT COUNT(%1) FROM %2 WHERE %3 IS NULL;")
-                           .arg(sqlb::escapeIdentifier(pdb.getObjectByName<sqlb::Table>(curTable)->rowidColumn()))
+                m.setQuery(QString("SELECT COUNT(%1) FROM %2 WHERE coalesce(NULL,%3) IS NULL;")
+                           .arg(sqlb::escapeIdentifier(pdb.getObjectByName<sqlb::Table>(curTable)->rowidColumns()).join(","))
                            .arg(curTable.toString())
                            .arg(sqlb::escapeIdentifier(field.name())));
                 if(!m.completeCache())
@@ -666,27 +666,31 @@ void EditTableDialog::setWithoutRowid(bool without_rowid)
     if(without_rowid)
     {
         // Before setting the without rowid flag, first perform a check to see if the table meets all the required criteria for without rowid tables
-        auto pk = m_table.findPk();
-        if(pk == m_table.fields.end() || pk->autoIncrement())
+        auto pks = m_table.primaryKey();
+        for(const auto& pk_name : pks)
         {
-            QMessageBox::information(this, QApplication::applicationName(),
-                                     tr("Please add a field which meets the following criteria before setting the without rowid flag:\n"
-                                        " - Primary key flag set\n"
-                                        " - Auto increment disabled"));
+            auto pk = sqlb::findField(m_table, pk_name);
+            if(pk == m_table.fields.end() || pk->autoIncrement())
+            {
+                QMessageBox::information(this, QApplication::applicationName(),
+                                         tr("Please add a field which meets the following criteria before setting the without rowid flag:\n"
+                                            " - Primary key flag set\n"
+                                            " - Auto increment disabled"));
 
-            // Reset checkbox state to unchecked. Block any signals while doing this in order to avoid an extra call to
-            // this function being triggered.
-            ui->checkWithoutRowid->blockSignals(true);
-            ui->checkWithoutRowid->setChecked(false);
-            ui->checkWithoutRowid->blockSignals(false);
-            return;
+                // Reset checkbox state to unchecked. Block any signals while doing this in order to avoid an extra call to
+                // this function being triggered.
+                ui->checkWithoutRowid->blockSignals(true);
+                ui->checkWithoutRowid->setChecked(false);
+                ui->checkWithoutRowid->blockSignals(false);
+                return;
+            }
         }
 
-        // If it does, override the the rowid column name of the table object with the name of the primary key.
-        m_table.setRowidColumn(pk->name());
+        // If it does, override the the rowid column names of the table object with the names of the primary keys.
+        m_table.setRowidColumns(pks);
     } else {
         // If the without rowid flag is unset no further checks are required. Just set the rowid column name back to "_rowid_"
-        m_table.setRowidColumn("_rowid_");
+        m_table.setRowidColumns({"_rowid_"});
     }
 
     // Update the SQL preview

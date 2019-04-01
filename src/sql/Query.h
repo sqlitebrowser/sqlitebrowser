@@ -61,9 +61,10 @@ public:
     void setTable(const sqlb::ObjectIdentifier& table) { m_table = table; }
     sqlb::ObjectIdentifier table() const { return m_table; }
 
-    void setRowIdColumn(const std::string& rowid) { m_rowid_column = rowid; }
-    std::string rowIdColumn() const { return m_rowid_column; }
-    bool hasCustomRowIdColumn() const { return m_rowid_column != "rowid" && m_rowid_column != "_rowid_"; }
+    void setRowIdColumns(const std::vector<std::string>& rowids) { m_rowid_columns = rowids; }
+    std::vector<std::string> rowIdColumns() const { return m_rowid_columns; }
+    void setRowIdColumn(const std::string& rowid) { m_rowid_columns = {rowid}; }
+    bool hasCustomRowIdColumn() const { return m_rowid_columns.size() != 1 || (m_rowid_columns.at(0) != "rowid" && m_rowid_columns.at(0) != "_rowid_"); }
 
     const std::vector<SelectedColumn>& selectedColumns() const { return m_selected_columns; }
     std::vector<SelectedColumn>& selectedColumns() { return m_selected_columns; }
@@ -78,7 +79,7 @@ public:
 private:
     std::vector<std::string> m_column_names;
     sqlb::ObjectIdentifier m_table;
-    std::string m_rowid_column;
+    std::vector<std::string> m_rowid_columns;
     std::vector<SelectedColumn> m_selected_columns;
     std::unordered_map<int, std::string> m_where;
     std::vector<SortedColumn> m_sort;

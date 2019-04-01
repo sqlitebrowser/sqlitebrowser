@@ -401,7 +401,7 @@ private:
 class Table : public Object
 {
 public:
-    explicit Table(const QString& name): Object(name), m_rowidColumn("_rowid_") {}
+    explicit Table(const QString& name): Object(name), m_rowidColumns({"_rowid_"}) {}
     Table& operator=(const Table& rhs);
 
     bool operator==(const Table& rhs) const;
@@ -420,9 +420,9 @@ public:
 
     QStringList fieldNames() const;
 
-    void setRowidColumn(const QString& rowid) {  m_rowidColumn = rowid; }
-    const QString& rowidColumn() const { return m_rowidColumn; }
-    bool isWithoutRowidTable() const { return m_rowidColumn != "_rowid_"; }
+    void setRowidColumns(const QStringList& rowid) {  m_rowidColumns = rowid; }
+    const QStringList& rowidColumns() const { return m_rowidColumns; }
+    bool isWithoutRowidTable() const { return m_rowidColumns != (QStringList() << "_rowid_"); }
 
     void setVirtualUsing(const QString& virt_using) { m_virtual = virt_using; }
     QString virtualUsing() const { return m_virtual; }
@@ -442,8 +442,6 @@ public:
     void removeKeyFromAllConstraints(const QString& key);
     void renameKeyInAllConstraints(const QString& key, const QString& to);
 
-    field_iterator findPk();
-
     /**
      * @brief parseSQL Parses the create Table statement in sSQL.
      * @param sSQL The create table statement.
@@ -455,7 +453,7 @@ private:
     bool hasAutoIncrement() const;
 
 private:
-    QString m_rowidColumn;
+    QStringList m_rowidColumns;
     ConstraintMap m_constraints;
     QString m_virtual;
 };

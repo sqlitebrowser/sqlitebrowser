@@ -132,9 +132,12 @@ void SqliteTableModel::setQuery(const sqlb::Query& query)
         sqlb::TablePtr t = m_db.getObjectByName<sqlb::Table>(query.table());
         if(t && t->fields.size()) // parsing was OK
         {
-            QString rowid = t->rowidColumn();
-            m_query.setRowIdColumn(rowid.toStdString());
-            m_headers.push_back(rowid);
+            QStringList rowids = t->rowidColumns();
+            std::vector<std::string> rowids_std;
+            for(const auto& rowid : rowids)
+                rowids_std.push_back(rowid.toStdString());
+            m_query.setRowIdColumns(rowids_std);
+            m_headers.push_back(rowids.join(","));
             m_headers.append(t->fieldNames());
 
             // parse columns types
@@ -160,7 +163,7 @@ void SqliteTableModel::setQuery(const sqlb::Query& query)
     if(!allOk)
     {
         QString sColumnQuery = QString::fromUtf8("SELECT * FROM %1;").arg(query.table().toString());
-        if(m_query.rowIdColumn().empty())
+        if(m_query.rowIdColumns().empty())
             m_query.setRowIdColumn("_rowid_");
         m_headers.push_back("_rowid_");
         m_headers.append(getColumns(nullptr, sColumnQuery, m_vDataTypes));
@@ -453,10 +456,13 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
         if(oldValue == newValue && oldValue.isNull() == newValue.isNull())
             return true;
 
-        if(m_db.updateRecord(m_query.table(), m_headers.at(index.column()), cached_row.at(0), newValue, isBlob, QString::fromStdString(m_query.rowIdColumn())))
+        if(m_db.updateRecord(m_query.table(), m_headers.at(index.column()), cached_row.at(0), newValue, isBlob, m_query.rowIdColumns()))
         {
             cached_row.replace(index.column(), newValue);
-            if(m_headers.at(index.column()).toStdString() == m_query.rowIdColumn()) {
+            QStringList header;
+            for(const auto& col : m_query.rowIdColumns())
+                header += QString::fromStdString(col);
+            if(m_headers.at(index.column()) == header.join(",")) {
                 cached_row.replace(0, newValue);
                 const QModelIndex& rowidIndex = index.sibling(index.row(), 0);
                 lock.unlock();
@@ -596,7 +602,7 @@ bool SqliteTableModel::removeRows(int row, int count, const QModelIndex& parent)
         }
     }
 
-    bool ok = m_db.deleteRecords(m_query.table(), rowids, QString::fromStdString(m_query.rowIdColumn()));
+    bool ok = m_db.deleteRecords(m_query.table(), rowids, m_query.rowIdColumns());
 
     if (ok) {
         beginRemoveRows(parent, row, row + count - 1);
@@ -830,18 +836,23 @@ bool SqliteTableModel::dropMimeData(const QMimeData* data, Qt::DropAction, int r
     return false;
 }
 
-void SqliteTableModel::setPseudoPk(QString pseudoPk)
+void SqliteTableModel::setPseudoPk(std::vector<std::string> pseudoPk)
 {
-    if(pseudoPk.isNull())
-        pseudoPk = QString("_rowid_");
+    if(pseudoPk.empty())
+        pseudoPk.emplace_back("_rowid_");
 
     // Do nothing if the value didn't change
-    if(m_query.rowIdColumn() == pseudoPk.toStdString())
+    if(m_query.rowIdColumns() == pseudoPk)
         return;
 
-    m_query.setRowIdColumn(pseudoPk.toStdString());
+    m_query.setRowIdColumns(pseudoPk);
     if(m_headers.size())
-        m_headers[0] = pseudoPk;
+    {
+        QStringList headers;
+        for(const auto& col : pseudoPk)
+            headers << QString::fromStdString(col);
+        m_headers[0] = headers.join(",");
+    }
 
     buildQuery();
 }

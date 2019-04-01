@@ -967,7 +967,7 @@ void MainWindow::addRecord()
 
 void MainWindow::insertValues()
 {
-    QString pseudo_pk = m_browseTableModel->hasPseudoPk() ? m_browseTableModel->pseudoPk() : QString();
+    QString pseudo_pk = m_browseTableModel->hasPseudoPk() ? QString::fromStdString(m_browseTableModel->pseudoPk().front()) : QString();
     AddRecordDialog dialog(db, currentlyBrowsedTableName(), this, pseudo_pk);
     if (dialog.exec())
         populateTable();
@@ -3314,7 +3314,7 @@ void MainWindow::jumpToRow(const sqlb::ObjectIdentifier& table, QString column, 
 
     // If no column name is set, assume the primary key is meant
     if(!column.size())
-        column = obj->findPk()->name();
+        column = obj->primaryKey().first();
 
     // If column doesn't exist don't do anything
     auto column_index = sqlb::findField(obj, column);
@@ -3564,7 +3564,7 @@ void MainWindow::unlockViewEditing(bool unlock, QString pk)
 
     // (De)activate editing
     enableEditing(unlock);
-    m_browseTableModel->setPseudoPk(pk);
+    m_browseTableModel->setPseudoPk({pk.toStdString()});
 
     // Update checked status of the popup menu action
     ui->actionUnlockViewEditing->blockSignals(true);

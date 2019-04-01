@@ -333,7 +333,7 @@ Table& Table::operator=(const Table& rhs)
     Object::operator=(rhs);
 
     // Just assign the strings
-    m_rowidColumn = rhs.m_rowidColumn;
+    m_rowidColumns = rhs.m_rowidColumns;
     m_virtual = rhs.m_virtual;
 
     // Clear the fields and the constraints first in order to avoid duplicates and/or old data in the next step
@@ -354,7 +354,7 @@ bool Table::operator==(const Table& rhs) const
     if(!Object::operator==(rhs))
         return false;
 
-    if(m_rowidColumn != rhs.m_rowidColumn)
+    if(m_rowidColumns != rhs.m_rowidColumns)
         return false;
     if(m_virtual != rhs.m_virtual)
         return false;
@@ -387,17 +387,6 @@ bool Table::operator==(const Table& rhs) const
     }
 
     return true;
-}
-
-Table::field_iterator Table::findPk()
-{
-    // TODO This is a stupid function (and always was) which should be fixed/improved
-
-    QStringList pk = primaryKey();
-    if(pk.empty())
-        return fields.end();
-    else
-        return findField(this, pk.at(0));
 }
 
 QStringList Table::fieldList() const
@@ -1009,7 +998,7 @@ TablePtr CreateTableWalker::table()
                 s = s->getNextSibling();    // WITHOUT
                 s = s->getNextSibling();    // ROWID
 
-                tab->setRowidColumn(tab->findPk()->name());
+                tab->setRowidColumns(tab->primaryKey());
             }
         }
     }

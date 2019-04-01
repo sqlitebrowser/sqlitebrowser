@@ -12,7 +12,7 @@ Query::Query()
 void Query::clear()
 {
     m_table.clear();
-    m_rowid_column = "_rowid_";
+    m_rowid_columns = {"_rowid_"};
     m_selected_columns.clear();
     m_where.clear();
     m_sort.clear();
@@ -45,7 +45,20 @@ std::string Query::buildQuery(bool withRowid) const
     // Selector and display formats
     std::string selector;
     if (withRowid)
-        selector = sqlb::escapeIdentifier(m_rowid_column) + ",";
+    {
+        // We select the rowid data into a JSON array in case there are multiple rowid columns in order to have all values at hand.
+        // If there is only one rowid column, we leave it as is.
+        if(m_rowid_columns.size() == 1)
+        {
+            selector = sqlb::escapeIdentifier(m_rowid_columns.at(0)) + ",";
+        } else {
+            selector += "json_array(";
+            for(size_t i=0;i<m_rowid_columns.size();i++)
+                selector += sqlb::escapeIdentifier(m_rowid_columns.at(i)) + ",";
+            selector.pop_back();    // Remove the last comma
+            selector += "),";
+        }
+    }
 
     if(m_selected_columns.empty())
     {

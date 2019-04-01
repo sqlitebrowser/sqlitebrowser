@@ -164,8 +164,8 @@ private:
 
 public:
     QString addRecord(const sqlb::ObjectIdentifier& tablename);
-    bool deleteRecords(const sqlb::ObjectIdentifier& table, const QStringList& rowids, const QString& pseudo_pk = QString());
-    bool updateRecord(const sqlb::ObjectIdentifier& table, const QString& column, const QString& rowid, const QByteArray& value, bool itsBlob, const QString& pseudo_pk = QString());
+    bool deleteRecords(const sqlb::ObjectIdentifier& table, const QStringList& rowids, const std::vector<std::string>& pseudo_pk = {});
+    bool updateRecord(const sqlb::ObjectIdentifier& table, const QString& column, const QString& rowid, const QByteArray& value, bool itsBlob, const std::vector<std::string>& pseudo_pk = {});
 
     bool createTable(const sqlb::ObjectIdentifier& name, const sqlb::FieldVector& structure);
     bool renameTable(const QString& schema, const QString& from_table, const QString& to_table);
@@ -261,7 +261,7 @@ private:
     bool isEncrypted;
     bool isReadOnly;
 
-    QString primaryKeyForEditing(const sqlb::ObjectIdentifier& table, const QString& pseudo_pk) const;
+    QStringList primaryKeyForEditing(const sqlb::ObjectIdentifier& table, const std::vector<std::string>& pseudo_pk) const;
 
     // SQLite Callbacks
     void collationNeeded(void* pData, sqlite3* db, int eTextRep, const char* sCollationName);

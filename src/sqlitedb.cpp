@@ -1141,10 +1141,19 @@ bool DBBrowserDB::getRow(const sqlb::ObjectIdentifier& table, const QString& row
     if(!_db)
         return false;
 
-    QString sQuery = QString("SELECT * FROM %1 WHERE %2='%3';")
-            .arg(table.toString())
-            .arg(sqlb::escapeIdentifier(getObjectByName<sqlb::Table>(table)->rowidColumn()))
-            .arg(rowid);
+    QString sQuery = QString("SELECT * FROM %1 WHERE ")
+            .arg(table.toString());
+
+    // For a single rowid column we can use a simple WHERE condition, for multiple rowid columns we have to use json_array to decode the composed rowid values.
+    QStringList pks = getObjectByName<sqlb::Table>(table)->rowidColumns();
+    if(pks.size() == 1)
+    {
+        sQuery += QString("%1='%2;").arg(sqlb::escapeIdentifier(pks.front())).arg(rowid);
+    } else {
+        sQuery += QString("json_array(%1)='%2';")
+                .arg(sqlb::escapeIdentifier(pks).join(","))
+                .arg(QString(rowid).replace("'", "''"));
+    }
 
     QByteArray utf8Query = sQuery.toUtf8();
     sqlite3_stmt *stmt;
@@ -1270,7 +1279,9 @@ QString DBBrowserDB::addRecord(const sqlb::ObjectIdentifier& tablename)
     QString pk_value;
     if(table->isWithoutRowidTable())
     {
-        pk_value = QString::number(max(tablename, *sqlb::findField(table, table->rowidColumn())).toLongLong() + 1);
+        // For multiple rowid columns we just use the value of the last one and increase that one by one. If this doesn't yield a valid combination
+        // the insert record dialog should pop up automatically.
+        pk_value = QString::number(max(tablename, *sqlb::findField(table, table->rowidColumns().last())).toLongLong() + 1);
         sInsertstmt = emptyInsertStmt(tablename.schema(), *table, pk_value);
     } else {
         sInsertstmt = emptyInsertStmt(tablename.schema(), *table);
@@ -1288,26 +1299,42 @@ QString DBBrowserDB::addRecord(const sqlb::ObjectIdentifier& tablename)
     }
 }
 
-bool DBBrowserDB::deleteRecords(const sqlb::ObjectIdentifier& table, const QStringList& rowids, const QString& pseudo_pk)
+bool DBBrowserDB::deleteRecords(const sqlb::ObjectIdentifier& table, const QStringList& rowids, const std::vector<std::string>& pseudo_pk)
 {
     if (!isOpen()) return false;
 
     // Get primary key of the object to edit.
-    QString pk = primaryKeyForEditing(table, pseudo_pk);
-    if(pk.isNull())
+    QStringList pks = primaryKeyForEditing(table, pseudo_pk);
+    if(pks.isEmpty())
     {
         lastErrorMessage = tr("Cannot delete this object");
         return false;
     }
 
+    // Quote all values in advance
     QStringList quoted_rowids;
     for(QString rowid : rowids)
         quoted_rowids.append("'" + rowid.replace("'", "''") + "'");
 
-    QString statement = QString("DELETE FROM %1 WHERE %2 IN (%3);")
-            .arg(table.toString())
-            .arg(pk)
-            .arg(quoted_rowids.join(", "));
+    // For a single rowid column we can use a SELECT ... IN(...) statement which is faster.
+    // For multiple rowid columns we have to use json_array to decode the composed rowid values.
+    QString statement;
+    if(pks.size() == 1)
+    {
+        statement = QString("DELETE FROM %1 WHERE %2 IN (%3);")
+                .arg(table.toString())
+                .arg(pks.at(0))
+                .arg(quoted_rowids.join(", "));
+    } else {
+        statement = QString("DELETE FROM %1 WHERE ").arg(table.toString());
+
+        statement += "json_array(";
+        for(const auto& pk : pks)
+            statement += sqlb::escapeIdentifier(pk) + ",";
+        statement.chop(1);
+        statement += QString(") IN (%1)").arg(quoted_rowids.join(", "));
+    }
+
     if(executeSQL(statement))
     {
         return true;
@@ -1318,24 +1345,34 @@ bool DBBrowserDB::deleteRecords(const sqlb::ObjectIdentifier& table, const QStri
 }
 
 bool DBBrowserDB::updateRecord(const sqlb::ObjectIdentifier& table, const QString& column,
-                               const QString& rowid, const QByteArray& value, bool itsBlob, const QString& pseudo_pk)
+                               const QString& rowid, const QByteArray& value, bool itsBlob, const std::vector<std::string>& pseudo_pk)
 {
     waitForDbRelease();
     if (!isOpen()) return false;
 
     // Get primary key of the object to edit.
-    QString pk = primaryKeyForEditing(table, pseudo_pk);
-    if(pk.isNull())
+    QStringList pks = primaryKeyForEditing(table, pseudo_pk);
+    if(pks.isEmpty())
     {
         lastErrorMessage = tr("Cannot set data on this object");
         return false;
     }
 
-    QString sql = QString("UPDATE %1 SET %2=? WHERE %3='%4';")
+    QString sql = QString("UPDATE %1 SET %2=? WHERE ")
             .arg(table.toString())
-            .arg(sqlb::escapeIdentifier(column))
-            .arg(sqlb::escapeIdentifier(pk))
-            .arg(QString(rowid).replace("'", "''"));
+            .arg(sqlb::escapeIdentifier(column));
+
+    // For a single rowid column we can use a simple WHERE condition, for multiple rowid columns we have to use json_array to decode the composed rowid values.
+    if(pks.size() == 1)
+    {
+        sql += QString("%1='%2';")
+                .arg(sqlb::escapeIdentifier(pks.first()))
+                .arg(QString(rowid).replace("'", "''"));
+    } else {
+        sql += QString("json_array(%1)='%2';")
+                .arg(sqlb::escapeIdentifier(pks).join(","))
+                .arg(QString(rowid).replace("'", "''"));
+    }
 
     logSQL(sql, kLogMsg_App);
     setSavepoint();
@@ -1375,22 +1412,25 @@ bool DBBrowserDB::updateRecord(const sqlb::ObjectIdentifier& table, const QStrin
     }
 }
 
-QString DBBrowserDB::primaryKeyForEditing(const sqlb::ObjectIdentifier& table, const QString& pseudo_pk) const
+QStringList DBBrowserDB::primaryKeyForEditing(const sqlb::ObjectIdentifier& table, const std::vector<std::string>& pseudo_pk) const
 {
     // This function returns the primary key of the object to edit. For views we support 'pseudo' primary keys which must be specified manually.
     // If no pseudo pk is specified we'll take the rowid column of the table instead. If this neither a table nor was a pseudo-PK specified,
     // it is most likely a view that hasn't been configured for editing yet. In this case we return a null string to abort.
 
-    if(pseudo_pk.isEmpty())
+    if(pseudo_pk.empty())
     {
         sqlb::TablePtr tbl = getObjectByName<sqlb::Table>(table);
         if(tbl)
-            return tbl->rowidColumn();
+            return tbl->rowidColumns();
     } else {
-        return pseudo_pk;
+        QStringList ret;
+        for(const auto& col : pseudo_pk)
+            ret << QString::fromStdString(col);
+        return ret;
     }
 
-    return QString();
+    return QStringList();
 }
 
 bool DBBrowserDB::createTable(const sqlb::ObjectIdentifier& name, const sqlb::FieldVector& structure)

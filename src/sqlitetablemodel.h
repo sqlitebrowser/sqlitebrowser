@@ -99,9 +99,9 @@ public:
     QString encoding() const { return m_encoding; }
 
     // The pseudo-primary key is exclusively for editing views
-    void setPseudoPk(QString pseudoPk);
+    void setPseudoPk(std::vector<std::string> pseudoPk);
     bool hasPseudoPk() const;
-    QString pseudoPk() const { return QString::fromStdString(m_query.rowIdColumn()); }
+    std::vector<std::string> pseudoPk() const { return m_query.rowIdColumns(); }
 
     sqlb::ForeignKeyClause getForeignKeyClause(int column) const;
 
