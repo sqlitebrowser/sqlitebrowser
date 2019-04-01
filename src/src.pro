@@ -66,6 +66,7 @@ HEADERS += \
     FindReplaceDialog.h \
     ExtendedScintilla.h \
     FileExtensionManager.h \
+    CondFormatManager.h \
     Data.h \
     CipherSettings.h \
     DotenvFormat.h \
@@ -115,6 +116,7 @@ SOURCES += \
     FindReplaceDialog.cpp \
     ExtendedScintilla.cpp \
     FileExtensionManager.cpp \
+    CondFormatManager.cpp \
     Data.cpp \
     CipherSettings.cpp \
     DotenvFormat.cpp \
@@ -148,7 +150,8 @@ FORMS += \
     RemoteDock.ui \
     RemotePushDialog.ui \
     FindReplaceDialog.ui \
-    FileExtensionManager.ui
+    FileExtensionManager.ui \
+    CondFormatManager.ui
 
 TRANSLATIONS += \
     translations/sqlb_ar_SA.ts \
@@ -192,6 +195,7 @@ LIBPATH_QHEXEDIT=$$OUT_PWD/../libs/qhexedit
 LIBPATH_ANTLR=$$OUT_PWD/../libs/antlr-2.7.7
 LIBPATH_QCUSTOMPLOT=$$OUT_PWD/../libs/qcustomplot-source
 LIBPATH_QSCINTILLA=$$OUT_PWD/../libs/qscintilla/Qt4Qt5
+LIBPATH_JSON=$$OUT_PWD/../libs/json
 unix {
     LIBS += -ldl
 }
@@ -206,13 +210,15 @@ win32 {
         LIBPATH_QHEXEDIT = $$LIBPATH_QHEXEDIT/debug
         LIBPATH_ANTLR = $$LIBPATH_ANTLR/debug
         LIBPATH_QCUSTOMPLOT = $$LIBPATH_QCUSTOMPLOT/debug
-    LIBPATH_QSCINTILLA = $$LIBPATH_QSCINTILLA/debug
+        LIBPATH_QSCINTILLA = $$LIBPATH_QSCINTILLA/debug
+        LIBPATH_JSON = $$LIBPATH_JSON/debug
     }
     CONFIG(release,debug|release) {
         LIBPATH_QHEXEDIT = $$LIBPATH_QHEXEDIT/release
         LIBPATH_ANTLR = $$LIBPATH_ANTLR/release
         LIBPATH_QCUSTOMPLOT = $$LIBPATH_QCUSTOMPLOT/release
-    LIBPATH_QSCINTILLA = $$LIBPATH_QSCINTILLA/release
+        LIBPATH_QSCINTILLA = $$LIBPATH_QSCINTILLA/release
+        LIBPATH_JSON = $$LIBPATH_JSON/release
     }
     QMAKE_CXXFLAGS += -DCHECKNEWVERSION
 
@@ -237,9 +243,9 @@ CONFIG(all_warnings) {
 }
 
 UI_DIR = .ui
-INCLUDEPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit $$PWD/../libs/qcustomplot-source $$PWD/../libs/qscintilla/Qt4Qt5 $$PWD/..
+INCLUDEPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit $$PWD/../libs/qcustomplot-source $$PWD/../libs/qscintilla/Qt4Qt5 $$PWD/../libs/json $$PWD/..
 LIBS += -L$$LIBPATH_QHEXEDIT -L$$LIBPATH_ANTLR -L$$LIBPATH_QCUSTOMPLOT -L$$LIBPATH_QSCINTILLA -lantlr -lqhexedit -lqcustomplot -lqscintilla2
-DEPENDPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit $$PWD/../libs/qcustomplot-source $$PWD/../libs/qscintilla/Qt4Qt5
+DEPENDPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit $$PWD/../libs/qcustomplot-source $$PWD/../libs/qscintilla/Qt4Qt5 $$PWD/../libs/json
 
 unix {
     # Below, the user can specify where all generated file can be placed

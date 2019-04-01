@@ -49,7 +49,7 @@ if(WIN32 AND MSVC)
 	else()
 		# Paths for 32-bit windows builds
 		set(OPENSSL_PATH "C:/dev/OpenSSL-Win32" CACHE PATH "OpenSSL Path")
-		set(QT5_PATH "C:/dev/Qt/5.7/msvc2013" CACHE PATH "Qt5 Path")
+		set(QT5_PATH "C:/dev/Qt/5.7/msvc2015" CACHE PATH "Qt5 Path")
 
                 # Choose between SQLCipher or SQLite, depending whether
                 # -Dsqlcipher=1 is passed on the command line
@@ -76,6 +76,7 @@ else()
     find_package(QCustomPlot)
 endif()
 set(QHEXEDIT_DIR libs/qhexedit)
+set(JSON_DIR libs/json)
 
 if(NOT ANTLR2_FOUND)
     set(ANTLR_DIR libs/antlr-2.7.7)
@@ -86,6 +87,7 @@ if(NOT QSCINTILLA_FOUND)
     add_subdirectory(${QSCINTILLA_DIR})
 endif()
 add_subdirectory(${QHEXEDIT_DIR})
+add_subdirectory(${JSON_DIR})
 if(NOT QCUSTOMPLOT_FOUND)
     set(QCUSTOMPLOT_DIR libs/qcustomplot-source)
     add_subdirectory(${QCUSTOMPLOT_DIR})
@@ -148,6 +150,7 @@ set(SQLB_MOC_HDR
 	src/FindReplaceDialog.h
 	src/ExtendedScintilla.h
 	src/FileExtensionManager.h
+	src/CondFormatManager.h
 	src/CipherSettings.h
 	src/DotenvFormat.h
 	src/Palette.h
@@ -198,6 +201,7 @@ set(SQLB_SRC
 	src/FindReplaceDialog.cpp
 	src/ExtendedScintilla.cpp
 	src/FileExtensionManager.cpp
+	src/CondFormatManager.cpp
 	src/Data.cpp
 	src/CipherSettings.cpp
 	src/DotenvFormat.cpp
@@ -226,6 +230,7 @@ set(SQLB_FORMS
 	src/RemotePushDialog.ui
 	src/FindReplaceDialog.ui
 	src/FileExtensionManager.ui
+	src/CondFormatManager.ui
 )
 
 set(SQLB_RESOURCES
@@ -354,6 +359,7 @@ endif()
 include_directories(
 		"${CMAKE_CURRENT_BINARY_DIR}"
 		${QHEXEDIT_DIR}
+		${JSON_DIR}
 		${ADDITIONAL_INCLUDE_PATHS}
 		src)
 if(QCUSTOMPLOT_FOUND)
@@ -401,9 +407,7 @@ if(NOT QSCINTILLA_FOUND)
     add_dependencies(${PROJECT_NAME} qscintilla2)
 endif()
 
-link_directories(
-	"${CMAKE_CURRENT_BINARY_DIR}/${QHEXEDIT_DIR}"
-)
+link_directories("${CMAKE_CURRENT_BINARY_DIR}/${QHEXEDIT_DIR}")
 if(NOT QCUSTOMPLOT_FOUND)
     link_directories("${CMAKE_CURRENT_BINARY_DIR}/${QCUSTOMPLOT_DIR}")
 endif()

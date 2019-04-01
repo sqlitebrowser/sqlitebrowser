@@ -8,9 +8,7 @@
 #ifndef ACCESSOR_H
 #define ACCESSOR_H
 
-#ifdef SCI_NAMESPACE
 namespace Scintilla {
-#endif
 
 enum { wsSpace=1, wsTab=2, wsSpaceTab=4, wsInconsistent=8 };
 
@@ -28,8 +26,6 @@ public:
 	int IndentAmount(Sci_Position line, int *flags, PFNIsCommentLeader pfnIsCommentLeader = 0);
 };
 
-#ifdef SCI_NAMESPACE
 }
-#endif
 
 #endif

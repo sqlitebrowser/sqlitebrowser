@@ -8,27 +8,62 @@
 #ifndef SPARSEVECTOR_H
 #define SPARSEVECTOR_H
 
-#ifdef SCI_NAMESPACE
 namespace Scintilla {
-#endif
 
 // SparseVector is similar to RunStyles but is more efficient for cases where values occur
 // for one position instead of over a range of positions.
 template <typename T>
 class SparseVector {
 private:
-	Partitioning *starts;
-	SplitVector<T> *values;
-	// Private so SparseVector objects can not be copied
-	SparseVector(const SparseVector &);
-	void ClearValue(int partition) {
+	std::unique_ptr<Partitioning<Sci::Position>> starts;
+	std::unique_ptr<SplitVector<T>> values;
+	T empty;
+	void ClearValue(Sci::Position partition) {
 		values->SetValueAt(partition, T());
 	}
-	void CommonSetValueAt(int position, T value) {
-		// Do the work of setting the value to allow for specialization of SetValueAt.
+public:
+	SparseVector() : empty() {
+		starts = std::unique_ptr<Partitioning<Sci::Position>>(new Partitioning<Sci::Position>(8));
+		values = std::unique_ptr<SplitVector<T>>(new SplitVector<T>());
+		values->InsertEmpty(0, 2);
+	}
+	// Deleted so SparseVector objects can not be copied.
+	SparseVector(const SparseVector &) = delete;
+	SparseVector(SparseVector &&) = delete;
+	void operator=(const SparseVector &) = delete;
+	void operator=(SparseVector &&) = delete;
+	~SparseVector() {
+		starts.reset();
+		// starts dead here but not used by ClearValue.
+		for (Sci::Position part = 0; part < values->Length(); part++) {
+			ClearValue(part);
+		}
+		values.reset();
+	}
+	Sci::Position Length() const {
+		return starts->PositionFromPartition(starts->Partitions());
+	}
+	Sci::Position Elements() const {
+		return starts->Partitions();
+	}
+	Sci::Position PositionOfElement(int element) const {
+		return starts->PositionFromPartition(element);
+	}
+	const T& ValueAt(Sci::Position position) const {
 		assert(position < Length());
-		const int partition = starts->PartitionFromPosition(position);
-		const int startPartition = starts->PositionFromPartition(partition);
+		const Sci::Position partition = starts->PartitionFromPosition(position);
+		const Sci::Position startPartition = starts->PositionFromPartition(partition);
+		if (startPartition == position) {
+			return values->ValueAt(partition);
+		} else {
+			return empty;
+		}
+	}
+	template <typename ParamType>
+	void SetValueAt(Sci::Position position, ParamType &&value) {
+		assert(position < Length());
+		const Sci::Position partition = starts->PartitionFromPosition(position);
+		const Sci::Position startPartition = starts->PositionFromPartition(partition);
 		if (value == T()) {
 			// Setting the empty value is equivalent to deleting the position
 			if (position == 0) {
@@ -44,71 +79,30 @@ private:
 			if (position == startPartition) {
 				// Already a value at this position, so replace
 				ClearValue(partition);
-				values->SetValueAt(partition, value);
+				values->SetValueAt(partition, std::forward<ParamType>(value));
 			} else {
 				// Insert a new element
 				starts->InsertPartition(partition + 1, position);
-				values->InsertValue(partition + 1, 1, value);
+				values->Insert(partition + 1, std::forward<ParamType>(value));
 			}
 		}
 	}
-public:
-	SparseVector() {
-		starts = new Partitioning(8);
-		values = new SplitVector<T>();
-		values->InsertValue(0, 2, T());
-	}
-	~SparseVector() {
-		delete starts;
-		starts = NULL;
-		// starts dead here but not used by ClearValue.
-		for (int part = 0; part < values->Length(); part++) {
-			ClearValue(part);
-		}
-		delete values;
-		values = NULL;
-	}
-	int Length() const {
-		return starts->PositionFromPartition(starts->Partitions());
-	}
-	int Elements() const {
-		return starts->Partitions();
-	}
-	int PositionOfElement(int element) const {
-		return starts->PositionFromPartition(element);
-	}
-	T ValueAt(int position) const {
-		assert(position < Length());
-		const int partition = starts->PartitionFromPosition(position);
-		const int startPartition = starts->PositionFromPartition(partition);
-		if (startPartition == position) {
-			return values->ValueAt(partition);
-		} else {
-			return T();
-		}
-	}
-	void SetValueAt(int position, T value) {
-		CommonSetValueAt(position, value);
-	}
-	void InsertSpace(int position, int insertLength) {
+	void InsertSpace(Sci::Position position, Sci::Position insertLength) {
 		assert(position <= Length());	// Only operation that works at end.
-		const int partition = starts->PartitionFromPosition(position);
-		const int startPartition = starts->PositionFromPartition(partition);
+		const Sci::Position partition = starts->PartitionFromPosition(position);
+		const Sci::Position startPartition = starts->PositionFromPartition(partition);
 		if (startPartition == position) {
-			T valueCurrent = values->ValueAt(partition);
+			const bool positionOccupied = values->ValueAt(partition) != T();
 			// Inserting at start of run so make previous longer
 			if (partition == 0) {
-				// Inserting at start of document so ensure 0
-				if (valueCurrent != T()) {
-					ClearValue(0);
+				// Inserting at start of document so ensure start empty
+				if (positionOccupied) {
 					starts->InsertPartition(1, 0);
-					values->InsertValue(1, 1, valueCurrent);
-					starts->InsertText(0, insertLength);
-				} else {
-					starts->InsertText(partition, insertLength);
+					values->InsertEmpty(0, 1);
 				}
+				starts->InsertText(partition, insertLength);
 			} else {
-				if (valueCurrent != T()) {
+				if (positionOccupied) {
 					starts->InsertText(partition - 1, insertLength);
 				} else {
 					// Insert at end of run so do not extend style
@@ -119,10 +113,10 @@ public:
 			starts->InsertText(partition, insertLength);
 		}
 	}
-	void DeletePosition(int position) {
+	void DeletePosition(Sci::Position position) {
 		assert(position < Length());
-		int partition = starts->PartitionFromPosition(position);
-		const int startPartition = starts->PositionFromPartition(partition);
+		Sci::Position partition = starts->PartitionFromPosition(position);
+		const Sci::Position startPartition = starts->PositionFromPartition(partition);
 		if (startPartition == position) {
 			if (partition == 0) {
 				ClearValue(0);
@@ -134,7 +128,7 @@ public:
 				ClearValue(partition);
 				starts->RemovePartition(partition);
 				values->Delete(partition);
-				// Its the previous partition now that gets smaller 
+				// Its the previous partition now that gets smaller
 				partition--;
 			}
 		}
@@ -157,30 +151,6 @@ public:
 	}
 };
 
-// The specialization for const char * makes copies and deletes them as needed.
-
-template<>
-inline void SparseVector<const char *>::ClearValue(int partition) {
-	const char *value = values->ValueAt(partition);
-	delete []value;
-	values->SetValueAt(partition, NULL);
 }
-
-template<>
-inline void SparseVector<const char *>::SetValueAt(int position, const char *value) {
-	// Make a copy of the string
-	if (value) {
-		const size_t len = strlen(value);
-		char *valueCopy = new char[len + 1]();
-		std::copy(value, value + len, valueCopy);
-		CommonSetValueAt(position, valueCopy);
-	} else {
-		CommonSetValueAt(position, NULL);
-	}
-}
-
-#ifdef SCI_NAMESPACE
-}
-#endif
 
 #endif

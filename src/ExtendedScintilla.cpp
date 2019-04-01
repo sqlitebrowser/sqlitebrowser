@@ -124,19 +124,27 @@ void ExtendedScintilla::setupSyntaxHighlightingFormat(QsciLexer *lexer, const QS
 void ExtendedScintilla::setLexer(QsciLexer *lexer)
 {
     QsciScintilla::setLexer(lexer);
+    reloadCommonSettings();
+}
 
-    // Set margins according to settings. setLexer seems to reset these colours.
-    // Use desktop default colors for margins when following desktop style, or the custom colors otherwise.
+void ExtendedScintilla::reloadCommonSettings()
+{
+    // Set margins and default text colours according to settings. setLexer seems to reset these colours.
+
+    // Use desktop default colors for margins when following desktop
+    // style, or the colors matching the dark style-sheet, otherwise.
     switch (Settings::getValue("General", "appStyle").toInt()) {
     case Settings::FollowDesktopStyle :
         setMarginsBackgroundColor(QPalette().color(QPalette::Active, QPalette::Window));
         setMarginsForegroundColor(QPalette().color(QPalette::Active, QPalette::WindowText));
         break;
     case Settings::DarkStyle :
-        setMarginsBackgroundColor(QColor(Settings::getValue("syntaxhighlighter","background_colour").toString()));
-        setMarginsForegroundColor(QColor(Settings::getValue("syntaxhighlighter","foreground_colour").toString()));
+        setMarginsBackgroundColor(QColor("#32414B"));
+        setMarginsForegroundColor(QColor("#EFF0F1"));
         break;
     }
+    setPaper(Settings::getValue("syntaxhighlighter", "background_colour").toString());
+    setColor(Settings::getValue("syntaxhighlighter", "foreground_colour").toString());
 }
 
 void ExtendedScintilla::reloadKeywords()
@@ -189,9 +197,6 @@ void ExtendedScintilla::reloadLexerSettings(QsciLexer *lexer)
     setTabWidth(Settings::getValue("editor", "tabsize").toInt());
     if(lexer)
         lexer->refreshProperties();
-
-    // Set wrap lines
-    setWrapMode(static_cast<QsciScintilla::WrapMode>(Settings::getValue("editor", "wrap_lines").toInt()));
 
     // Check if error indicators are enabled and clear them if they just got disabled
     showErrorIndicators = Settings::getValue("editor", "error_indicators").toBool();
@@ -284,4 +289,19 @@ void ExtendedScintilla::openPrintDialog()
     dialog->exec();
 
     delete dialog;
+}
+
+void ExtendedScintilla::setReadOnly(bool ro)
+{
+    QsciScintilla::setReadOnly(ro);
+    // Disable or enable caret blinking so it is obvious whether the text can be modified or not. Otherwise there isn't any other hint.
+    SendScintilla(QsciScintillaBase::SCI_SETCARETPERIOD, ro ? 0 : 500);
+}
+
+void ExtendedScintilla::setText(const QString& text)
+{
+    // Reset scroll width, so the scroll bar is readjusted to the new text.
+    // Otherwise, it grows always bigger.
+    setScrollWidth(80);
+    QsciScintilla::setText(text);
 }

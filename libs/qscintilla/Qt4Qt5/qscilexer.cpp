@@ -1,6 +1,6 @@
 // This module implements the QsciLexer class.
 //
-// Copyright (c) 2018 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2019 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 
@@ -65,12 +65,6 @@ QsciLexer::~QsciLexer()
 void QsciLexer::setEditor(QsciScintilla *editor)
 {
     attached_editor = editor;
-
-    if (attached_editor)
-    {
-        attached_editor->SendScintilla(QsciScintillaBase::SCI_SETSTYLEBITS,
-                styleBitsNeeded());
-    }
 }
 
 
@@ -91,10 +85,7 @@ int QsciLexer::lexerId() const
 // Return the number of style bits needed by the lexer.
 int QsciLexer::styleBitsNeeded() const
 {
-    if (!attached_editor)
-        return 5;
-
-    return attached_editor->SendScintilla(QsciScintillaBase::SCI_GETSTYLEBITSNEEDED);
+    return 8;
 }
 
 

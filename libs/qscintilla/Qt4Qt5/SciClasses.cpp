@@ -1,7 +1,7 @@
 // The implementation of various Qt version independent classes used by the
 // rest of the port.
 //
-// Copyright (c) 2018 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2019 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 
@@ -19,7 +19,6 @@
 // WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 
 
-#include "SciNamespace.h"
 #include "SciClasses.h"
 
 #include <QCoreApplication>
@@ -56,7 +55,8 @@ QsciSciCallTip::~QsciSciCallTip()
 // Paint a call tip.
 void QsciSciCallTip::paintEvent(QPaintEvent *)
 {
-    QSCI_SCI_NAMESPACE(Surface) *surfaceWindow = QSCI_SCI_NAMESPACE(Surface)::Allocate(SC_TECHNOLOGY_DEFAULT);
+    Scintilla::Surface *surfaceWindow = Scintilla::Surface::Allocate(
+            SC_TECHNOLOGY_DEFAULT);
 
     if (!surfaceWindow)
         return;
@@ -74,7 +74,7 @@ void QsciSciCallTip::paintEvent(QPaintEvent *)
 // Handle a mouse press in a call tip.
 void QsciSciCallTip::mousePressEvent(QMouseEvent *e)
 {
-    QSCI_SCI_NAMESPACE(Point) pt;
+    Scintilla::Point pt;
 
     pt.x = e->x();
     pt.y = e->y();
@@ -141,9 +141,14 @@ QsciSciListBox::QsciSciListBox(QWidget *parent, QsciListBoxQt *lbx_)
 
     setFrameShape(StyledPanel);
     setFrameShadow(Plain);
+}
 
-    connect(this, SIGNAL(itemDoubleClicked(QListWidgetItem *)),
-            SLOT(handleSelection()));
+
+QsciSciListBox::~QsciSciListBox()
+{
+    // Ensure that the main widget doesn't get a focus out event when this is
+    // destroyed.
+    setFocusProxy(0);
 }
 
 
@@ -176,34 +181,13 @@ QString QsciSciListBox::text(int n)
 }
 
 
-// Reimplemented to close the list when the user presses Escape.
-void QsciSciListBox::keyPressEvent(QKeyEvent *e)
+void QsciSciListBox::mouseDoubleClickEvent(QMouseEvent *)
 {
-    if (e->key() == Qt::Key_Escape)
-    {
-        e->accept();
-        close();
-    }
-    else
-    {
-        QListWidget::keyPressEvent(e);
-
-        if (!e->isAccepted())
-            QCoreApplication::sendEvent(parent(), e);
-    }
+    lbx->handleDoubleClick();
 }
 
 
-QsciSciListBox::~QsciSciListBox()
+void QsciSciListBox::mouseReleaseEvent(QMouseEvent *)
 {
-    // Ensure that the main widget doesn't get a focus out event when this is
-    // destroyed.
-    setFocusProxy(0);
-}
-
-
-void QsciSciListBox::handleSelection()
-{
-    if (lbx && lbx->cb_action)
-        lbx->cb_action(lbx->cb_data);
+    lbx->handleRelease();
 }

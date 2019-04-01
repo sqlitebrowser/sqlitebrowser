@@ -36,8 +36,8 @@
         The Visual C++ runtime merge modules are installed with Visual Studio and are located in this directory.
     VCRedistFile
         The Visual C++ runtime file. This file is usually named "Microsoft_[VERSION]_CRT_[ARCH].msm". "VERSION" is the
-        Visual Studio version the application is built with. Use VC120 (version 12.0) if the application is built with
-        Visual Studio 2013. The build "ARCH" will be set automatically.
+        Visual Studio version the application is built with. Use VC140 (version 14.0) if the application is built with
+        Visual Studio 2015. The build "ARCH" will be set automatically.
     -->
 
     <?if $(sys.BUILDARCH)="x64"?>
@@ -45,7 +45,7 @@
         <?define VCRedistFile="Microsoft_VC141_CRT_$(sys.BUILDARCH).msm" ?>
     <?elseif $(sys.BUILDARCH)="x86"?>
         <?define VCRedistPath="C:\Program Files (x86)\Common Files\Merge Modules" ?>
-        <?define VCRedistFile="Microsoft_VC120_CRT_$(sys.BUILDARCH).msm" ?>
+        <?define VCRedistFile="Microsoft_VC140_CRT_$(sys.BUILDARCH).msm" ?>
     <?endif?>
 
     <!--
@@ -62,7 +62,7 @@
         <?define SQLiteExePath="C:\builds\release-sqlite-win64\Release" ?>
         <?define SQLCipherExePath="C:\builds\release-sqlcipher-win64\Release" ?>
     <?elseif $(sys.BUILDARCH)="x86"?>
-        <?define QtPath="C:\dev\Qt\5.7\msvc2013" ?>
+        <?define QtPath="C:\dev\Qt\5.7\msvc2015" ?>
         <?define SQLitePath="C:\dev\SQLite-Win32" ?>
         <?define SQLCipherPath="C:\git_repos\SQLCipher-Win32" ?>
         <?define OpenSSLPath="C:\dev\OpenSSL-Win32" ?>

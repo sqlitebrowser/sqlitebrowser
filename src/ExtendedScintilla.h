@@ -21,6 +21,10 @@ public:
     void clearSelection();
     // Override parent setLexer
     void setLexer(QsciLexer *lexer) override;
+    // Override parent setReadOnly
+    void setReadOnly(bool ro) override;
+    // Override parent setText
+    void setText(const QString& text) override;
 
 public slots:
     void reloadKeywords();
@@ -37,6 +41,7 @@ protected:
 
     void setupSyntaxHighlightingFormat(QsciLexer *lexer, const QString& settings_name, int style);
     void reloadLexerSettings(QsciLexer *lexer);
+    void reloadCommonSettings();
 
     int errorIndicatorNumber;
     bool showErrorIndicators;

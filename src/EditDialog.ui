@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Edit database cell</string>
   </property>
+  <property name="whatsThis">
+   <string>This area displays information about the data present in this database cell</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_5">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
@@ -112,6 +115,7 @@
      </item>
      <item>
       <widget class="QToolBar" name="editCellToolbar">
+       <addaction name="actionWordWrap"/>
        <addaction name="actionIndent"/>
        <addaction name="actionImport"/>
        <addaction name="actionExport"/>
@@ -126,24 +130,12 @@
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="verticalLayout_4">
-      <layout class="QVBoxLayout" name="verticalLayout_3">
-       <item>
-        <widget class="QTextEdit" name="editorText">
-         <property name="font">
-          <font>
-           <family>Monospace</family>
-          </font>
-         </property>
-         <property name="whatsThis">
-          <string>This area displays information about the data present in this database cell</string>
-         </property>
-         <property name="acceptRichText">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
+     <widget class="QWidget" name="editorSci">
+      <property name="whatsThis">
+       <string>The text editor modes let you edit plain text, as well as JSON or XML data with syntax highlighting, automatic formatting and validation before saving.
+
+Errors are indicated with a red squiggle underline.</string>
+      </property>
      </widget>
      <widget class="QWidget" name="editorBinary">
       <property name="contextMenuPolicy">
@@ -159,7 +151,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>84</width>
+         <width>85</width>
          <height>35</height>
         </rect>
        </property>
@@ -176,13 +168,6 @@
         </item>
        </layout>
       </widget>
-     </widget>
-     <widget class="QWidget" name="editorSci">
-      <property name="whatsThis">
-       <string>This editor mode lets you edit JSON or XML data with syntax highlighting, automatic formatting and validation before saving.
-
-Errors are indicated with a red squiggle underline.</string>
-      </property>
      </widget>
     </widget>
    </item>
@@ -375,11 +360,28 @@ Errors are indicated with a red squiggle underline.</string>
     <string>Erases the contents of the cell</string>
    </property>
   </action>
+  <action name="actionWordWrap">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/word_wrap</normaloff>:/icons/word_wrap</iconset>
+   </property>
+   <property name="text">
+    <string>Word Wrap</string>
+   </property>
+   <property name="toolTip">
+    <string>Wrap lines on word boundaries</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
   <tabstop>comboMode</tabstop>
   <tabstop>buttonAutoSwitchMode</tabstop>
-  <tabstop>editorText</tabstop>
   <tabstop>buttonApply</tabstop>
  </tabstops>
  <resources>
@@ -415,22 +417,6 @@ Errors are indicated with a red squiggle underline.</string>
     <hint type="destinationlabel">
      <x>201</x>
      <y>431</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>editorText</sender>
-   <signal>textChanged()</signal>
-   <receiver>EditDialog</receiver>
-   <slot>editTextChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>279</x>
-     <y>191</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>339</x>
-     <y>335</y>
     </hint>
    </hints>
   </connection>
@@ -551,6 +537,22 @@ Errors are indicated with a red squiggle underline.</string>
    <signal>triggered()</signal>
    <receiver>EditDialog</receiver>
    <slot>exportData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>308</x>
+     <y>190</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionWordWrap</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>EditDialog</receiver>
+   <slot>setWordWrapping(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

@@ -148,6 +148,10 @@ private:
     QByteArray encode(const QByteArray& str) const;
     QByteArray decode(const QByteArray& str) const;
 
+    // Return matching conditional format color or invalid color, otherwise.
+    // Only Qt::ForegroundRole and Qt::BackgroundRole are expected in role (Qt::ItemDataRole)
+    QColor getMatchingCondFormatColor(int column, const QString& value, int role) const;
+
     DBBrowserDB& m_db;
 
     /// counts numbers of clearCache() since instantiation; using this

@@ -1,7 +1,7 @@
 // This defines the specialisation of QListBox that handles the Scintilla
 // double-click callback.
 //
-// Copyright (c) 2018 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2019 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 
@@ -23,8 +23,6 @@
 #include <qpixmap.h>
 #include <qstring.h>
 
-#include "SciNamespace.h"
-
 #include "Platform.h"
 
 
@@ -32,23 +30,20 @@ class QsciSciListBox;
 
 
 // This is an internal class but it is referenced by a public class so it has
-// to have a Qsci prefix rather than being put in the Scintilla namespace
-// which would mean exposing the SCI_NAMESPACE mechanism).
-class QsciListBoxQt : public QSCI_SCI_NAMESPACE(ListBox)
+// to have a Qsci prefix rather than being put in the Scintilla namespace.
+// However the reason for avoiding this no longer applies.
+class QsciListBoxQt : public Scintilla::ListBox
 {
 public:
     QsciListBoxQt();
 
-    QSCI_SCI_NAMESPACE(CallBackAction) cb_action;
-    void *cb_data;
-
-    virtual void SetFont(QSCI_SCI_NAMESPACE(Font) &font);
-    virtual void Create(QSCI_SCI_NAMESPACE(Window) &parent, int,
-            QSCI_SCI_NAMESPACE(Point), int, bool unicodeMode, int);
+    virtual void SetFont(Scintilla::Font &font);
+    virtual void Create(Scintilla::Window &parent, int, Scintilla::Point, int,
+            bool unicodeMode, int);
     virtual void SetAverageCharWidth(int);
     virtual void SetVisibleRows(int);
     virtual int GetVisibleRows() const;
-    virtual QSCI_SCI_NAMESPACE(PRectangle) GetDesiredRect();
+    virtual Scintilla::PRectangle GetDesiredRect();
     virtual int CaretFromEdge();
     virtual void Clear();
     virtual void Append(char *s, int type = -1);
@@ -62,15 +57,20 @@ public:
     virtual void RegisterRGBAImage(int type, int width, int height,
             const unsigned char *pixelsImage);
     virtual void ClearRegisteredImages();
-    virtual void SetDoubleClickAction(
-            QSCI_SCI_NAMESPACE(CallBackAction) action, void *data);
+    virtual void SetDelegate(Scintilla::IListBoxDelegate *lbDelegate);
     virtual void SetList(const char *list, char separator, char typesep);
+
+    void handleDoubleClick();
+    void handleRelease();
 
 private:
     QsciSciListBox *slb;
     int visible_rows;
     bool utf8;
+    Scintilla::IListBoxDelegate *delegate;
 
     typedef QMap<int, QPixmap> xpmMap;
     xpmMap xset;
+
+    void selectionChanged();
 };

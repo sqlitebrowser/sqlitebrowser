@@ -2,7 +2,7 @@
 // Scintilla.  It is modelled on QTextEdit - a method of the same name should
 // behave in the same way.
 //
-// Copyright (c) 2018 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2019 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 
@@ -1712,7 +1712,8 @@ void QsciScintilla::zoomTo(int size)
 
 // Find the first occurrence of a string.
 bool QsciScintilla::findFirst(const QString &expr, bool re, bool cs, bool wo,
-        bool wrap, bool forward, int line, int index, bool show, bool posix)
+        bool wrap, bool forward, int line, int index, bool show, bool posix,
+        bool cxx11)
 {
     if (expr.isEmpty())
     {
@@ -1729,7 +1730,8 @@ bool QsciScintilla::findFirst(const QString &expr, bool re, bool cs, bool wo,
         (cs ? SCFIND_MATCHCASE : 0) |
         (wo ? SCFIND_WHOLEWORD : 0) |
         (re ? SCFIND_REGEXP : 0) |
-        (posix ? SCFIND_POSIX : 0);
+        (posix ? SCFIND_POSIX : 0) |
+        (cxx11 ? SCFIND_CXX11REGEX : 0);
 
     if (line < 0 || index < 0)
         findState.startpos = SendScintilla(SCI_GETCURRENTPOS);
@@ -1749,7 +1751,7 @@ bool QsciScintilla::findFirst(const QString &expr, bool re, bool cs, bool wo,
 
 // Find the first occurrence of a string in the current selection.
 bool QsciScintilla::findFirstInSelection(const QString &expr, bool re, bool cs,
-        bool wo, bool forward, bool show, bool posix)
+        bool wo, bool forward, bool show, bool posix, bool cxx11)
 {
     if (expr.isEmpty())
     {
@@ -1766,7 +1768,8 @@ bool QsciScintilla::findFirstInSelection(const QString &expr, bool re, bool cs,
         (cs ? SCFIND_MATCHCASE : 0) |
         (wo ? SCFIND_WHOLEWORD : 0) |
         (re ? SCFIND_REGEXP : 0) |
-        (posix ? SCFIND_POSIX : 0);
+        (posix ? SCFIND_POSIX : 0) |
+        (cxx11 ? SCFIND_CXX11REGEX : 0);
 
     findState.startpos_orig = SendScintilla(SCI_GETSELECTIONSTART);
     findState.endpos_orig = SendScintilla(SCI_GETSELECTIONEND);
@@ -1785,6 +1788,13 @@ bool QsciScintilla::findFirstInSelection(const QString &expr, bool re, bool cs,
     findState.show = show;
 
     return doFind();
+}
+
+
+// Cancel any current search.
+void QsciScintilla::cancelFind()
+{
+    findState.status = FindState::Idle;
 }
 
 
@@ -2071,6 +2081,13 @@ bool QsciScintilla::selectionToEol() const
 void QsciScintilla::setCaretWidth(int width)
 {
     SendScintilla(SCI_SETCARETWIDTH, width);
+}
+
+
+// Set the width of the frame of the line containing the caret.
+void QsciScintilla::setCaretLineFrameWidth(int width)
+{
+    SendScintilla(SCI_SETCARETLINEFRAME, width);
 }
 
 
@@ -3401,9 +3418,7 @@ void QsciScintilla::setLexer(QsciLexer *lexer)
         // incorrect) font setting gets reset when style 0 is set.
         setLexerStyle(STYLE_DEFAULT);
 
-        int nrStyles = 1 << SendScintilla(SCI_GETSTYLEBITS);
-
-        for (int s = 0; s < nrStyles; ++s)
+        for (int s = 0; s <= STYLE_MAX; ++s)
             if (!lex->description(s).isEmpty())
                 setLexerStyle(s);
 
@@ -4411,9 +4426,7 @@ void QsciScintilla::changeEvent(QEvent *e)
     {
         setEnabledColors(STYLE_DEFAULT, fore, back);
 
-        int nrStyles = 1 << SendScintilla(SCI_GETSTYLEBITS);
-
-        for (int s = 0; s < nrStyles; ++s)
+        for (int s = 0; s <= STYLE_MAX; ++s)
             if (!lex->description(s).isNull())
                 setEnabledColors(s, fore, back);
     }

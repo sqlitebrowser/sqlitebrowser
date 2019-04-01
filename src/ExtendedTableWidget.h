@@ -68,6 +68,7 @@ signals:
     void switchTable(bool next);    // 'next' parameter is set to true if next table should be selected and to false if previous table should be selected
     void openFileFromDropEvent(QString);
     void selectedRowsToBeDeleted();
+    void editCondFormats(int column);
 
 private:
     void copyMimeData(const QModelIndexList& fromIndices, QMimeData* mimeData, const bool withHeaders, const bool inSQL);

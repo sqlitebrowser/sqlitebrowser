@@ -1,6 +1,6 @@
 // This module implements the "official" low-level API.
 //
-// Copyright (c) 2018 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2019 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 
@@ -66,6 +66,7 @@
 #undef  SCK_WIN
 #undef  SCK_RWIN
 #undef  SCK_MENU
+#undef  SCN_URIDROPPED
 
 
 // Remember if we have linked the lexers.
@@ -82,6 +83,7 @@ static const QLatin1String mimeRectangular("text/x-qscintilla-rectangular");
 #if (QT_VERSION >= 0x040200 && QT_VERSION < 0x050000 && defined(Q_OS_MAC)) || (QT_VERSION >= 0x050200 && defined(Q_OS_OSX))
 extern void initialiseRectangularPasteboardMime();
 #endif
+
 
 // The ctor.
 QsciScintillaBase::QsciScintillaBase(QWidget *parent)
@@ -183,7 +185,7 @@ long QsciScintillaBase::SendScintilla(unsigned int msg, unsigned long wParam,
 
 
 // Overloaded message send.
-long QsciScintillaBase::SendScintilla(unsigned int msg, unsigned long wParam,
+long QsciScintillaBase::SendScintilla(unsigned int msg, uintptr_t wParam,
         const char *lParam) const
 {
     return sci->WndProc(msg, wParam, reinterpret_cast<sptr_t>(lParam));
@@ -264,7 +266,7 @@ long QsciScintillaBase::SendScintilla(unsigned int msg, unsigned long wParam,
 {
     Sci_RangeToFormat rf;
 
-    rf.hdc = rf.hdcTarget = reinterpret_cast<QSCI_SCI_NAMESPACE(SurfaceID)>(hdc);
+    rf.hdc = rf.hdcTarget = reinterpret_cast<Scintilla::SurfaceID>(hdc);
 
     rf.rc.left = rc.left();
     rf.rc.top = rc.top();
@@ -316,7 +318,7 @@ void QsciScintillaBase::changeEvent(QEvent *e)
 // Re-implemented to handle the context menu.
 void QsciScintillaBase::contextMenuEvent(QContextMenuEvent *e)
 {
-    sci->ContextMenu(QSCI_SCI_NAMESPACE(Point)(e->globalX(), e->globalY()));
+    sci->ContextMenu(Scintilla::Point(e->globalX(), e->globalY()));
 }
 
 
@@ -545,14 +547,10 @@ void QsciScintillaBase::mouseDoubleClickEvent(QMouseEvent *e)
     setFocus();
 
     // Make sure Scintilla will interpret this as a double-click.
-    unsigned clickTime = sci->lastClickTime + QSCI_SCI_NAMESPACE(Platform)::DoubleClickTime() - 1;
+    unsigned clickTime = sci->lastClickTime + Scintilla::Platform::DoubleClickTime() - 1;
 
-    bool shift = e->modifiers() & Qt::ShiftModifier;
-    bool ctrl = e->modifiers() & Qt::ControlModifier;
-    bool alt = e->modifiers() & Qt::AltModifier;
-
-    sci->ButtonDown(QSCI_SCI_NAMESPACE(Point)(e->x(), e->y()), clickTime,
-            shift, ctrl, alt);
+    sci->ButtonDownWithModifiers(Scintilla::Point(e->x(), e->y()), clickTime,
+            eventModifiers(e));
 
     // Remember the current position and time in case it turns into a triple
     // click.
@@ -564,7 +562,8 @@ void QsciScintillaBase::mouseDoubleClickEvent(QMouseEvent *e)
 // Handle a mouse move.
 void QsciScintillaBase::mouseMoveEvent(QMouseEvent *e)
 {
-    sci->ButtonMove(QSCI_SCI_NAMESPACE(Point)(e->x(), e->y()));
+    sci->ButtonMoveWithModifiers(Scintilla::Point(e->x(), e->y()), 0,
+            eventModifiers(e));
 }
 
 
@@ -573,18 +572,18 @@ void QsciScintillaBase::mousePressEvent(QMouseEvent *e)
 {
     setFocus();
 
-    QSCI_SCI_NAMESPACE(Point) pt(e->x(), e->y());
+    Scintilla::Point pt(e->x(), e->y());
 
-    if (e->button() == Qt::LeftButton)
+    if (e->button() == Qt::LeftButton || e->button() == Qt::RightButton)
     {
         unsigned clickTime;
 
         // It is a triple click if the timer is running and the mouse hasn't
         // moved too much.
         if (triple_click.isActive() && (e->globalPos() - triple_click_at).manhattanLength() < QApplication::startDragDistance())
-            clickTime = sci->lastClickTime + QSCI_SCI_NAMESPACE(Platform)::DoubleClickTime() - 1;
+            clickTime = sci->lastClickTime + Scintilla::Platform::DoubleClickTime() - 1;
         else
-            clickTime = sci->lastClickTime + QSCI_SCI_NAMESPACE(Platform)::DoubleClickTime() + 1;
+            clickTime = sci->lastClickTime + Scintilla::Platform::DoubleClickTime() + 1;
 
         triple_click.stop();
 
@@ -602,7 +601,12 @@ void QsciScintillaBase::mousePressEvent(QMouseEvent *e)
         bool alt = ctrl;
 #endif
 
-        sci->ButtonDown(pt, clickTime, shift, ctrl, alt);
+        if (e->button() == Qt::LeftButton)
+            sci->ButtonDownWithModifiers(pt, clickTime,
+                    QsciScintillaQt::ModifierFlags(shift, ctrl, alt));
+        else
+            sci->RightButtonDownWithModifiers(pt, clickTime,
+                    QsciScintillaQt::ModifierFlags(shift, ctrl, alt));
     }
     else if (e->button() == Qt::MidButton)
     {
@@ -627,13 +631,14 @@ void QsciScintillaBase::mouseReleaseEvent(QMouseEvent *e)
     if (e->button() != Qt::LeftButton)
         return;
 
-    QSCI_SCI_NAMESPACE(Point) pt(e->x(), e->y());
+    Scintilla::Point pt(e->x(), e->y());
 
     if (sci->HaveMouseCapture())
     {
         bool ctrl = e->modifiers() & Qt::ControlModifier;
 
-        sci->ButtonUp(pt, 0, ctrl);
+        sci->ButtonUpWithModifiers(pt, 0,
+                QsciScintillaQt::ModifierFlags(false, ctrl, false));
     }
 
 #if QT_VERSION >= 0x050000
@@ -696,34 +701,51 @@ void QsciScintillaBase::dragEnterEvent(QDragEnterEvent *e)
 // Handle drag leaves.
 void QsciScintillaBase::dragLeaveEvent(QDragLeaveEvent *)
 {
-    sci->SetDragPosition(QSCI_SCI_NAMESPACE(SelectionPosition)());
+    sci->SetDragPosition(Scintilla::SelectionPosition());
 }
 
 
 // Handle drag moves.
 void QsciScintillaBase::dragMoveEvent(QDragMoveEvent *e)
 {
-    sci->SetDragPosition(
-            sci->SPositionFromLocation(
-                    QSCI_SCI_NAMESPACE(Point)(e->pos().x(), e->pos().y()),
-                    false, false, sci->UserVirtualSpace()));
+    if (e->mimeData()->hasUrls())
+    {
+        e->acceptProposedAction();
+    }
+    else
+    {
+        sci->SetDragPosition(
+                sci->SPositionFromLocation(
+                        Scintilla::Point(e->pos().x(), e->pos().y()), false,
+                        false, sci->UserVirtualSpace()));
 
-    acceptAction(e);
+        acceptAction(e);
+    }
 }
 
 
 // Handle drops.
 void QsciScintillaBase::dropEvent(QDropEvent *e)
 {
-    bool moving;
-    int len;
-    const char *s;
-    bool rectangular;
+    if (e->mimeData()->hasUrls())
+    {
+        e->acceptProposedAction();
+
+        foreach (const QUrl &url, e->mimeData()->urls())
+            emit SCN_URIDROPPED(url);
+
+        return;
+    }
 
     acceptAction(e);
 
     if (!e->isAccepted())
         return;
+
+    bool moving;
+    int len;
+    const char *s;
+    bool rectangular;
 
     moving = (e->dropAction() == Qt::MoveAction);
 
@@ -731,7 +753,7 @@ void QsciScintillaBase::dropEvent(QDropEvent *e)
     len = text.length();
     s = text.data();
 
-    std::string dest = QSCI_SCI_NAMESPACE(Document)::TransformLineEnds(s, len,
+    std::string dest = Scintilla::Document::TransformLineEnds(s, len,
                 sci->pdoc->eolMode);
 
     sci->DropAt(sci->posDrop, dest.c_str(), dest.length(), moving,
@@ -849,7 +871,7 @@ void QsciScintillaBase::replaceHorizontalScrollBar(QScrollBar *scrollBar)
 // backwards compatibility.
 bool QsciScintillaBase::contextMenuNeeded(int x, int y) const
 {
-    QSCI_SCI_NAMESPACE(Point) pt(x, y);
+    Scintilla::Point pt(x, y);
 
     // Clear any selection if the mouse is outside.
     if (!sci->PointInSelection(pt))
@@ -857,4 +879,15 @@ bool QsciScintillaBase::contextMenuNeeded(int x, int y) const
 
     // Respect SC_POPUP_*.
     return sci->ShouldDisplayPopup(pt);
+}
+
+
+// Return the Scintilla keyboard modifiers set for a mouse event.
+int QsciScintillaBase::eventModifiers(QMouseEvent *e)
+{
+    bool shift = e->modifiers() & Qt::ShiftModifier;
+    bool ctrl = e->modifiers() & Qt::ControlModifier;
+    bool alt = e->modifiers() & Qt::AltModifier;
+
+    return QsciScintillaQt::ModifierFlags(shift, ctrl, alt);
 }

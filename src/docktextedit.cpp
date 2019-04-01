@@ -1,6 +1,8 @@
 #include "docktextedit.h"
 #include "Settings.h"
 
+#include <Qsci/qscistyle.h>
+
 QsciLexerJSON* DockTextEdit::jsonLexer = nullptr;
 QsciLexerXML* DockTextEdit::xmlLexer = nullptr;
 
@@ -13,8 +15,8 @@ DockTextEdit::DockTextEdit(QWidget* parent) :
     if(xmlLexer == nullptr)
         xmlLexer = new QsciLexerXML(this);
 
-    // Set the JSON lexer as default
-    setLexer(jsonLexer);
+    // Set plain text as default
+    setLanguage(PlainText);
 
     jsonLexer->setFoldCompact(false);
     jsonLexer->setHighlightComments(true);
@@ -32,6 +34,11 @@ void DockTextEdit::reloadSettings()
     // Set the parent settings for both lexers
     reloadLexerSettings(jsonLexer);
     reloadLexerSettings(xmlLexer);
+
+    // Set the databrowser font for the plain text editor.
+    plainTextFont = QFont(Settings::getValue("databrowser", "font").toString());
+    plainTextFont.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
+    setFont(plainTextFont);
 
     setupSyntaxHighlightingFormat(jsonLexer, "comment", QsciLexerJSON::CommentLine);
     setupSyntaxHighlightingFormat(jsonLexer, "comment", QsciLexerJSON::CommentBlock);
@@ -74,11 +81,37 @@ void DockTextEdit::setLanguage(Language lang)
 {
     m_language = lang;
     switch (lang) {
+    case PlainText: {
+        setLexer(nullptr);
+        setFolding(QsciScintilla::NoFoldStyle);
+        // This appears to be reset by setLexer
+        setFont(plainTextFont);
+        break;
+    }
     case JSON:
         setLexer(jsonLexer);
+        setFolding(QsciScintilla::BoxedTreeFoldStyle);
         break;
     case XML:
         setLexer(xmlLexer);
+        setFolding(QsciScintilla::BoxedTreeFoldStyle);
         break;
     }
+}
+
+void DockTextEdit::setTextInMargin(const QString& text)
+{
+    clearMarginText();
+    setMarginType(0, QsciScintilla::TextMargin);
+    setMarginText(0, text, QsciStyle(QsciScintillaBase::STYLE_LINENUMBER));
+    setMarginWidth(0, text);
+    reloadCommonSettings();
+}
+
+void DockTextEdit::clearTextInMargin()
+{
+    clearMarginText();
+    setMarginLineNumbers(0, true);
+    reloadCommonSettings();
+    linesChanged();
 }
