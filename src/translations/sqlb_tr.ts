@@ -437,33 +437,33 @@ Bu veritabanı için herhangi bir başka ayar daha yapılmışsa, bu bilgileri d
         <translation>Lütfen veritabanının ismini erişmek istediğiniz bağlı veritabanının altında belirtin</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="282"/>
+        <location filename="../sqlitedb.cpp" line="286"/>
         <source>Invalid file format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="624"/>
+        <location filename="../sqlitedb.cpp" line="628"/>
         <source>Do you want to save the changes made to the database file %1?</source>
         <translation>%1 veritabanı dosyasında yaptığınız değişiklikleri kaydetmek istiyor musunuz?</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="726"/>
+        <location filename="../sqlitedb.cpp" line="730"/>
         <source>Exporting database to SQL file...</source>
         <translation>veritabanı SQL dosyası olarak dışa aktarılıyor...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="727"/>
-        <location filename="../sqlitedb.cpp" line="958"/>
+        <location filename="../sqlitedb.cpp" line="731"/>
+        <location filename="../sqlitedb.cpp" line="940"/>
         <source>Cancel</source>
         <translation>İptal</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="957"/>
+        <location filename="../sqlitedb.cpp" line="939"/>
         <source>Executing SQL...</source>
         <translation>SQL yürütülüyor...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="984"/>
+        <location filename="../sqlitedb.cpp" line="967"/>
         <source>Action cancelled.</source>
         <translation>İşlem iptal edildi.</translation>
     </message>
@@ -482,92 +482,92 @@ Aborting execution.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="619"/>
+        <location filename="../sqlitedb.cpp" line="623"/>
         <source>Do you really want to close this temporary database? All data will be lost.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="676"/>
+        <location filename="../sqlitedb.cpp" line="680"/>
         <source>The database is currently busy: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="677"/>
+        <location filename="../sqlitedb.cpp" line="681"/>
         <source>Do you want to abort that other operation?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="893"/>
-        <location filename="../sqlitedb.cpp" line="926"/>
+        <location filename="../sqlitedb.cpp" line="897"/>
+        <location filename="../sqlitedb.cpp" line="930"/>
         <source>No database file opened</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1029"/>
-        <location filename="../sqlitedb.cpp" line="1042"/>
+        <location filename="../sqlitedb.cpp" line="1038"/>
+        <location filename="../sqlitedb.cpp" line="1051"/>
         <source>Error in statement #%1: %2.
 Aborting execution%3.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1032"/>
-        <location filename="../sqlitedb.cpp" line="1045"/>
+        <location filename="../sqlitedb.cpp" line="1041"/>
+        <location filename="../sqlitedb.cpp" line="1054"/>
         <source> and rolling back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1085"/>
+        <location filename="../sqlitedb.cpp" line="1094"/>
         <source>didn&apos;t receive any output from %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1091"/>
+        <location filename="../sqlitedb.cpp" line="1100"/>
         <source>could not execute command: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1259"/>
+        <location filename="../sqlitedb.cpp" line="1268"/>
         <source>Cannot delete this object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1290"/>
+        <location filename="../sqlitedb.cpp" line="1299"/>
         <source>Cannot set data on this object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1408"/>
+        <location filename="../sqlitedb.cpp" line="1417"/>
         <source>A table with the name &apos;%1&apos; already exists in schema &apos;%2&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1419"/>
+        <location filename="../sqlitedb.cpp" line="1428"/>
         <source>renameColumn: cannot find column %1.</source>
         <translation>Sütunu Yeniden Adlandırma: %1 sütunu bulunamadı.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1427"/>
+        <location filename="../sqlitedb.cpp" line="1436"/>
         <source>renameColumn: creating savepoint failed. DB says: %1</source>
         <translation>Sütunu Yeniden Adlandırma: Kayıt noktası oluşturma başarısız. veritabanı mesajı: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1473"/>
+        <location filename="../sqlitedb.cpp" line="1482"/>
         <source>renameColumn: creating new table failed. DB says: %1</source>
         <translation>Sütunu Yeniden Adlandırma: Yeni tablo oluşturma başarısız. veritabanı mesajı: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1486"/>
+        <location filename="../sqlitedb.cpp" line="1495"/>
         <source>renameColumn: copying data to new table failed. DB says:
 %1</source>
         <translation>Sütunu Yeniden Adlandırma: Verileri yeni veritabanına kopyalama başarısız. veritabanı mesajı: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1543"/>
+        <location filename="../sqlitedb.cpp" line="1552"/>
         <source>renameColumn: deleting old table failed. DB says: %1</source>
         <translation>Sütunu Yeniden Adlandırma: Eski veritabanı silme işlemi başarısız. veritabanı mesajı: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1568"/>
+        <location filename="../sqlitedb.cpp" line="1577"/>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 
 </source>
@@ -576,33 +576,33 @@ Aborting execution%3.</source>
 </translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1577"/>
+        <location filename="../sqlitedb.cpp" line="1586"/>
         <source>renameColumn: releasing savepoint failed. DB says: %1</source>
         <translation>Sütun Yeniden Adlandırma: Kayıt noktası işlemi sonlandırılırken hata oluştu. veritabanı mesajı: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1616"/>
+        <location filename="../sqlitedb.cpp" line="1625"/>
         <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.Message from database engine:
 %3</source>
         <translation>Tablo &apos;%1&apos; isminden &apos;%2&apos; ismine yeniden adlandırılırken hata oluştu. veritabanı motorunun mesajı: %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1651"/>
+        <location filename="../sqlitedb.cpp" line="1660"/>
         <source>... &lt;string can not be logged, contains binary data&gt; ...</source>
         <translation>... &lt;dize ikili veri içeriyor, günlüğe yazılamadı&gt; ...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1760"/>
+        <location filename="../sqlitedb.cpp" line="1769"/>
         <source>could not get list of databases: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1899"/>
+        <location filename="../sqlitedb.cpp" line="1908"/>
         <source>Error loading extension: %1</source>
         <translation type="unfinished">Eklenti yüklenirken hata oluştu: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1924"/>
+        <location filename="../sqlitedb.cpp" line="1933"/>
         <source>could not get column information</source>
         <translation type="unfinished"></translation>
     </message>
@@ -611,7 +611,7 @@ Aborting execution%3.</source>
         <translation type="vanished">bilinmeyen nesne tipi %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1754"/>
+        <location filename="../sqlitedb.cpp" line="1763"/>
         <source>could not get list of db objects: %1, %2</source>
         <translation>veritabanı nesnelerinin listesi alınamadı: %1, %2</translation>
     </message>
@@ -620,22 +620,22 @@ Aborting execution%3.</source>
         <translation type="vanished">tipler alınamadı</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1790"/>
+        <location filename="../sqlitedb.cpp" line="1799"/>
         <source>didn&apos;t receive any output from pragma %1</source>
         <translation>%1 pragmasından herhangi bir çıktı alınamadı</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1794"/>
+        <location filename="../sqlitedb.cpp" line="1803"/>
         <source>could not execute pragma command: %1, %2</source>
         <translation>pragma komutu yürütülemedi: %1, %2</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1815"/>
+        <location filename="../sqlitedb.cpp" line="1824"/>
         <source>Error setting pragma %1 to %2: %3</source>
         <translation>Belirtilen pragma ayarlanırken hata oluştu: %1 &gt; %2: %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1861"/>
+        <location filename="../sqlitedb.cpp" line="1870"/>
         <source>File not found.</source>
         <translation>Dosya bulunamadı.</translation>
     </message>
@@ -2366,7 +2366,7 @@ x~y	Range: values between x and y</source>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="243"/>
-        <location filename="../MainWindow.cpp" line="3498"/>
+        <location filename="../MainWindow.cpp" line="3503"/>
         <source>Delete Record</source>
         <translation>Kaydı Sil</translation>
     </message>
@@ -2695,7 +2695,7 @@ x~y	Range: values between x and y</source>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1981"/>
-        <location filename="../MainWindow.cpp" line="3198"/>
+        <location filename="../MainWindow.cpp" line="3203"/>
         <source>Set encoding</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4058,22 +4058,22 @@ Eğer cevabınız hayır ise biz SQL dosyasındaki verileri geçerli veritabanı
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3092"/>
+        <location filename="../MainWindow.cpp" line="3097"/>
         <source>Duplicate records</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3092"/>
+        <location filename="../MainWindow.cpp" line="3097"/>
         <source>Duplicate record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3097"/>
+        <location filename="../MainWindow.cpp" line="3102"/>
         <source>Ctrl+&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3267"/>
+        <location filename="../MainWindow.cpp" line="3272"/>
         <source>Please enter a pseudo-primary key in order to enable editing on this view. This should be the name of a unique column in the view.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4268,12 +4268,12 @@ Are you sure?</source>
         <translation>Yeni bir SQLite DB Browser sürümü mevcut (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Lütfen buradan indiriniz: &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3372"/>
+        <location filename="../MainWindow.cpp" line="3377"/>
         <source>Collation needed! Proceed?</source>
         <translation type="unfinished">Harmanlama gerekli! Devam edilsin mi?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3373"/>
+        <location filename="../MainWindow.cpp" line="3378"/>
         <source>A table in this database requires a special collation function &apos;%1&apos; that this application can&apos;t provide without further knowledge.
 If you choose to proceed, be aware bad things can happen to your database.
 Create a backup!</source>
@@ -4281,52 +4281,52 @@ Create a backup!</source>
 Daha fazla bilgi olmadan program bunu sağlayamaz. Eğer bu şekilde devam edecekseniz, veritabanınıza kötü şeyler olabileceğinin farkında olun ve yedek oluşturun.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3378"/>
+        <location filename="../MainWindow.cpp" line="3383"/>
         <source>creating collation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3387"/>
+        <location filename="../MainWindow.cpp" line="3392"/>
         <source>Set a new name for the SQL tab. Use the &apos;&amp;&amp;&apos; character to allow using the following character as a keyboard shortcut.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3430"/>
+        <location filename="../MainWindow.cpp" line="3435"/>
         <source>Please specify the view name</source>
         <translation type="unfinished">Lütfen görünümünün ismini belirtin</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3434"/>
+        <location filename="../MainWindow.cpp" line="3439"/>
         <source>There is already an object with that name. Please choose a different name.</source>
         <translation type="unfinished">Bu isme sahip obje zaten mevcut. Lütfen farklı bir isim seçiniz.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3441"/>
+        <location filename="../MainWindow.cpp" line="3446"/>
         <source>View successfully created.</source>
         <translation type="unfinished">Görünüm başarıyla oluşturuldu.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3443"/>
+        <location filename="../MainWindow.cpp" line="3448"/>
         <source>Error creating view: %1</source>
         <translation type="unfinished">Görünüm oluşturma hatası: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3458"/>
+        <location filename="../MainWindow.cpp" line="3463"/>
         <source>There is no filter set for this table. View will not be created.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3496"/>
+        <location filename="../MainWindow.cpp" line="3501"/>
         <source>Delete Records</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3503"/>
+        <location filename="../MainWindow.cpp" line="3508"/>
         <source>This action will open a new SQL tab for running:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3505"/>
+        <location filename="../MainWindow.cpp" line="3510"/>
         <source>Press Help for opening the corresponding SQLite reference page.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4349,12 +4349,12 @@ Daha fazla bilgi olmadan program bunu sağlayamaz. Eğer bu şekilde devam edece
         <translation>SQLite DB Browser proje dosyası (*.sqbpro)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3196"/>
+        <location filename="../MainWindow.cpp" line="3201"/>
         <source>Please choose a new encoding for this table.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3194"/>
+        <location filename="../MainWindow.cpp" line="3199"/>
         <source>Please choose a new encoding for all tables.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4381,13 +4381,13 @@ Daha fazla bilgi olmadan program bunu sağlayamaz. Eğer bu şekilde devam edece
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3199"/>
+        <location filename="../MainWindow.cpp" line="3204"/>
         <source>%1
 Leave the field empty for using the database encoding.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3211"/>
+        <location filename="../MainWindow.cpp" line="3216"/>
         <source>This encoding is either not valid or not supported.</source>
         <translation type="unfinished"></translation>
     </message>
