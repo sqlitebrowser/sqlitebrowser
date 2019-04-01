@@ -47,6 +47,7 @@ set(QSCINTILLA_SRC
 	../lexlib/Accessor.cpp
 	../lexlib/CharacterCategory.cpp
 	../lexlib/CharacterSet.cpp
+    ../lexlib/DefaultLexer.cpp
 	../lexlib/LexerBase.cpp
 	../lexlib/LexerModule.cpp
 	../lexlib/LexerNoExceptions.cpp
@@ -103,6 +104,7 @@ set(QSCINTILLA_HDR
 	../lexlib/Accessor.h
 	../lexlib/CharacterCategory.h
 	../lexlib/CharacterSet.h
+	../lexlib/DefaultLexer.h
 	../lexlib/LexAccessor.h
 	../lexlib/LexerBase.h
 	../lexlib/LexerModule.h

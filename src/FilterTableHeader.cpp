@@ -10,7 +10,8 @@ FilterTableHeader::FilterTableHeader(QTableView* parent) :
 {
     // Activate the click signals to allow sorting
     setSectionsClickable(true);
-    setSortIndicatorShown(true);
+    // But use our own indicators allowing multi-column sorting
+    setSortIndicatorShown(false);
 
     // Do some connects: Basically just resize and reposition the input widgets whenever anything changes
     connect(this, SIGNAL(sectionResized(int,int,int)), this, SLOT(adjustPositions()));
@@ -38,6 +39,7 @@ void FilterTableHeader::generateFilters(int number, bool showFirst)
         connect(l, SIGNAL(delayedTextChanged(QString)), this, SLOT(inputChanged(QString)));
         connect(l, SIGNAL(addFilterAsCondFormat(QString)), this, SLOT(addFilterAsCondFormat(QString)));
         connect(l, SIGNAL(clearAllCondFormats()), this, SLOT(clearAllCondFormats()));
+        connect(l, SIGNAL(editCondFormats()), this, SLOT(editCondFormats()));
         filterWidgets.push_back(l);
     }
 
@@ -50,7 +52,7 @@ QSize FilterTableHeader::sizeHint() const
     // For the size hint just take the value of the standard implementation and add the height of a input widget to it if necessary
     QSize s = QHeaderView::sizeHint();
     if(filterWidgets.size())
-        s.setHeight(s.height() + filterWidgets.at(0)->sizeHint().height() + 5); // The 5 adds just adds some extra space
+        s.setHeight(s.height() + filterWidgets.at(0)->sizeHint().height() + 4); // The 4 adds just adds some extra space
     return s;
 }
 
@@ -74,10 +76,12 @@ void FilterTableHeader::adjustPositions()
     {
         // Get the current widget, move it and resize it
         QWidget* w = filterWidgets.at(i);
+        // The two adds some extra space between the header label and the input widget
+        int y = QHeaderView::sizeHint().height() + 2;
         if (QApplication::layoutDirection() == Qt::RightToLeft)
-            w->move(width() - (sectionPosition(i) + sectionSize(i) - offset()), w->sizeHint().height() + 2);   // The two adds some extra space between the header label and the input widget
+            w->move(width() - (sectionPosition(i) + sectionSize(i) - offset()), y);
         else
-            w->move(sectionPosition(i) - offset(), w->sizeHint().height() + 2);   // The two adds some extra space between the header label and the input widget
+            w->move(sectionPosition(i) - offset(), y);
         w->resize(sectionSize(i), w->sizeHint().height());
     }
 }
@@ -98,6 +102,12 @@ void FilterTableHeader::clearAllCondFormats()
 {
     // Just get the column number and send it to anybody responsible or interested in clearing conditional formatting
     emit clearAllCondFormats(sender()->property("column").toInt());
+}
+
+void FilterTableHeader::editCondFormats()
+{
+    // Just get the column number and the new value and send them to anybody interested in editting conditional formatting
+    emit editCondFormats(sender()->property("column").toInt());
 }
 
 void FilterTableHeader::clearFilters()

@@ -8,6 +8,8 @@
 #include <QStyledItemDelegate>
 #include <QSortFilterProxyModel>
 
+#include "sql/Query.h"
+
 class QMenu;
 class QMimeData;
 class FilterTableHeader;
@@ -52,11 +54,13 @@ public:
     QSet<int> selectedCols();
     int numVisibleRows();
 
+    void sortByColumns(const std::vector<sqlb::SortedColumn>& columns);
+
 public slots:
     void reloadSettings();
     void selectTableLine(int lineToSelect);
     void selectTableLines(int firstLine, int count);
-    void selectAll();
+    void selectAll() override;
     void openPrintDialog();
 
 signals:
@@ -64,6 +68,7 @@ signals:
     void switchTable(bool next);    // 'next' parameter is set to true if next table should be selected and to false if previous table should be selected
     void openFileFromDropEvent(QString);
     void selectedRowsToBeDeleted();
+    void editCondFormats(int column);
 
 private:
     void copyMimeData(const QModelIndexList& fromIndices, QMimeData* mimeData, const bool withHeaders, const bool inSQL);

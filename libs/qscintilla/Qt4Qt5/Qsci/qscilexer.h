@@ -1,6 +1,6 @@
 // This defines the interface to the QsciLexer class.
 //
-// Copyright (c) 2018 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2019 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 
@@ -243,7 +243,8 @@ public:
     virtual void refreshProperties();
 
     //! Returns the number of style bits needed by the lexer.  Normally this
-    //! should only be re-implemented by custom lexers.
+    //! should only be re-implemented by custom lexers.  This is deprecated and
+    //! no longer has any effect.
     virtual int styleBitsNeeded() const;
 
     //! Returns the string of characters that comprise a word.  The default is

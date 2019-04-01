@@ -1,11 +1,16 @@
+#include <QMessageBox>
+
 #include "ColumnDisplayFormatDialog.h"
 #include "ui_ColumnDisplayFormatDialog.h"
 #include "sql/sqlitetypes.h"
+#include "sqlitedb.h"
 
-ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(const QString& colname, QString current_format, QWidget* parent)
+ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& tableName, const QString& colname, QString current_format, QWidget* parent)
     : QDialog(parent),
       ui(new Ui::ColumnDisplayFormatDialog),
-      column_name(colname)
+      column_name(colname),
+      pdb(db),
+      curTable(tableName)
 {
     // Create UI
     ui->setupUi(this);
@@ -28,6 +33,9 @@ ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(const QString& colname, QSt
     ui->comboDisplayFormat->insertSeparator(ui->comboDisplayFormat->count());
     ui->comboDisplayFormat->addItem(tr("Lower case"), "lower");
     ui->comboDisplayFormat->addItem(tr("Upper case"), "upper");
+    ui->comboDisplayFormat->insertSeparator(ui->comboDisplayFormat->count());
+    ui->comboDisplayFormat->addItem(tr("Custom"), "custom");
+
     ui->labelDisplayFormat->setText(ui->labelDisplayFormat->text().arg(column_name));
 
     formatFunctions["decimal"] = "printf('%d', " + sqlb::escapeIdentifier(column_name) + ")";
@@ -53,18 +61,13 @@ ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(const QString& colname, QSt
         ui->comboDisplayFormat->setCurrentIndex(0);
         updateSqlCode();
     } else {
-        QString formatName;
+        // When it doesn't match any predefined format, it is considered custom
+        QString formatName = "custom";
         for(auto& formatKey : formatFunctions.keys()) {
             if(current_format == formatFunctions.value(formatKey)) {
                 formatName = formatKey;
                 break;
             }
-        }
-
-        if(formatName.isEmpty()) {
-            ui->comboDisplayFormat->insertSeparator(ui->comboDisplayFormat->count());
-            ui->comboDisplayFormat->addItem(tr("Custom"), "custom");
-            formatName = "custom";
         }
         ui->comboDisplayFormat->setCurrentIndex(ui->comboDisplayFormat->findData(formatName));
         ui->editDisplayFormat->setText(current_format);
@@ -90,7 +93,46 @@ void ColumnDisplayFormatDialog::updateSqlCode()
 
     if(format == "default")
         ui->editDisplayFormat->setText(sqlb::escapeIdentifier(column_name));
-    else
+    else if(format != "custom")
         ui->editDisplayFormat->setText(formatFunctions.value(format));
+}
 
+void ColumnDisplayFormatDialog::accept()
+{
+    QString errorMessage;
+
+    // Accept the SQL code if it's the column name (default), it contains a function invocation applied to the column name and it can be
+    // executed without errors returning only one column.
+    // Users could still devise a way to break this, but this is considered good enough for letting them know about simple incorrect
+    // cases.
+    if(!(ui->editDisplayFormat->text() == sqlb::escapeIdentifier(column_name) ||
+         ui->editDisplayFormat->text().contains(QRegExp("[a-z]+[a-z_0-9]* *\\(.*" + QRegExp::escape(sqlb::escapeIdentifier(column_name)) + ".*\\)", Qt::CaseInsensitive))))
+        errorMessage = tr("Custom display format must contain a function call applied to %1").arg(sqlb::escapeIdentifier(column_name));
+    else {
+        // Execute a query using the display format and check that it only returns one column.
+        int customNumberColumns = 0;
+
+        DBBrowserDB::execCallback callback = [&customNumberColumns](int numberColumns, QStringList, QStringList) -> bool {
+            customNumberColumns = numberColumns;
+            // Return false so the query is not aborted and no error is reported.
+            return false;
+        };
+        if(!pdb.executeSQL(QString("SELECT %1 FROM %2 LIMIT 1").arg(ui->editDisplayFormat->text(), curTable.toString()),
+                           false, true, callback))
+            errorMessage = tr("Error in custom display format. Message from database engine:\n\n%1").arg(pdb.lastError());
+        else if(customNumberColumns != 1)
+            errorMessage = tr("Custom display format must return only one column but it returned %1.").arg(customNumberColumns);
+
+    }
+    if(!errorMessage.isEmpty())
+        QMessageBox::warning(this, QApplication::applicationName(), errorMessage);
+    else
+        QDialog::accept();
+}
+
+void ColumnDisplayFormatDialog::setCustom(bool modified)
+{
+    // If the SQL code is modified by user, select the custom value in the combo-box
+    if(modified && ui->editDisplayFormat->hasFocus())
+        ui->comboDisplayFormat->setCurrentIndex(ui->comboDisplayFormat->findData("custom"));
 }

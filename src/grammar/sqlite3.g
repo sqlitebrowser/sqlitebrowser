@@ -252,8 +252,11 @@ keywordastablename
   | CURRENT_TIMESTAMP
   | DEFERRED
   | DESC
+  | ELSE_T
   | END
   | FAIL
+  | FILTER
+  | FOLLOWING
   | GLOB
   | KEY
   | LIKE
@@ -262,13 +265,22 @@ keywordastablename
   | IMMEDIATE
   | MATCH
   | NO
+  | OVER
+  | PARTITION
+  | PRECEDING
   | RAISE
+  | RANGE
   | REGEXP
   | REPLACE
   | RESTRICT
   | ROLLBACK
+  | ROWID
+  | ROWS
   | TEMPORARY
   | TEMP
+  | UNBOUNDED
+  | VIRTUAL
+  | WITHOUT
   )
   {#keywordastablename = #([KEYWORDASTABLENAME, "KEYWORDASTABLENAME"], #keywordastablename);}
   ;
@@ -297,56 +309,44 @@ keywordascolumnname
   :
   ( ABORT
   | ACTION
-  | AUTOINCREMENT
-  | AS
   | ASC
-  | AND
-  | OR
   | CASCADE
-  | CASE_T
   | CAST
-  | CREATE
-  | COLLATE
   | CONFLICT
   | CURRENT_TIME
   | CURRENT_DATE
   | CURRENT_TIMESTAMP
-  | DEFAULT
-  | DEFERRABLE
   | DEFERRED
-  | DELETE
   | DESC
-  | ELSE_T
   | END
-  | ESCAPE
   | FAIL
+  | FILTER
+  | FOLLOWING
   | GLOB
   | KEY
   | LIKE
-  | TABLE
   | IF_T
   | IGNORE
   | INITIALLY
   | IMMEDIATE
-  | IS
-  | NULL_T
   | MATCH
-  | EXISTS
   | NO
-  | ON
+  | OVER
+  | PARTITION
+  | PRECEDING
   | RAISE
-  | REFERENCES
+  | RANGE
   | REGEXP
   | REPLACE
   | RESTRICT
   | ROLLBACK
   | ROWID
-  | SET
+  | ROWS
   | TEMPORARY
   | TEMP
-  | THEN
-  | UPDATE
-  | WHEN
+  | UNBOUNDED
+  | VIRTUAL
+  | WITHOUT
   )
   {#keywordascolumnname = #([KEYWORDASCOLUMNNAME, "KEYWORDASCOLUMNNAME"], #keywordascolumnname);}
   ;
@@ -454,7 +454,7 @@ subexpr
   | EXISTS LPAREN (expr | selectstmt) RPAREN
   | caseexpr
   | raisefunction
-  | windowfunc
+//  | windowfunc
   )
   (suffixexpr)?
   ;
@@ -469,6 +469,7 @@ caseexpr
   CASE_T (expr)? (WHEN expr THEN expr)+ (ELSE_T expr)? END
   ;
 
+/*
 windowfunc
   :
   functionname LPAREN (STAR | (expr (COMMA expr)*))? RPAREN (FILTER LPAREN WHERE expr RPAREN)? OVER
@@ -516,6 +517,7 @@ framespec
     | (expr FOLLOWING)
   )
   ;
+*/
 
 like_operator
   :

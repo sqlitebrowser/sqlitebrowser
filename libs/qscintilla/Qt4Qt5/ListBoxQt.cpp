@@ -1,7 +1,7 @@
 // This module implements the specialisation of QListBox that handles the
 // Scintilla double-click callback.
 //
-// Copyright (c) 2018 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2019 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 
@@ -28,12 +28,12 @@
 
 
 QsciListBoxQt::QsciListBoxQt()
-    : cb_action(0), cb_data(0), slb(0), visible_rows(5), utf8(false)
+    : slb(0), visible_rows(5), utf8(false), delegate(0)
 {
 }
 
 
-void QsciListBoxQt::SetFont(QSCI_SCI_NAMESPACE(Font) &font)
+void QsciListBoxQt::SetFont(Scintilla::Font &font)
 {
     QFont *f = reinterpret_cast<QFont *>(font.GetID());
 
@@ -42,8 +42,8 @@ void QsciListBoxQt::SetFont(QSCI_SCI_NAMESPACE(Font) &font)
 }
 
 
-void QsciListBoxQt::Create(QSCI_SCI_NAMESPACE(Window) &parent, int,
-        QSCI_SCI_NAMESPACE(Point), int, bool unicodeMode, int)
+void QsciListBoxQt::Create(Scintilla::Window &parent, int, Scintilla::Point,
+        int, bool unicodeMode, int)
 {
     utf8 = unicodeMode;
 
@@ -73,9 +73,9 @@ int QsciListBoxQt::GetVisibleRows() const
 }
 
 
-QSCI_SCI_NAMESPACE(PRectangle) QsciListBoxQt::GetDesiredRect()
+Scintilla::PRectangle QsciListBoxQt::GetDesiredRect()
 {
-    QSCI_SCI_NAMESPACE(PRectangle) rc(0, 0, 100, 100);
+    Scintilla::PRectangle rc(0, 0, 100, 100);
 
     if (slb)
     {
@@ -153,6 +153,7 @@ void QsciListBoxQt::Select(int n)
     Q_ASSERT(slb);
 
     slb->setCurrentRow(n);
+    selectionChanged();
 }
 
 
@@ -258,11 +259,39 @@ void QsciListBoxQt::ClearRegisteredImages()
 }
 
 
-void QsciListBoxQt::SetDoubleClickAction(
-        QSCI_SCI_NAMESPACE(CallBackAction) action, void *data)
+void QsciListBoxQt::SetDelegate(Scintilla::IListBoxDelegate *lbDelegate)
 {
-    cb_action = action;
-    cb_data = data;
+    delegate = lbDelegate;
+}
+
+
+void QsciListBoxQt::handleDoubleClick()
+{
+    if (delegate)
+    {
+        Scintilla::ListBoxEvent event(
+                Scintilla::ListBoxEvent::EventType::doubleClick);
+
+        delegate->ListNotify(&event);
+    }
+}
+
+
+void QsciListBoxQt::handleRelease()
+{
+    selectionChanged();
+}
+
+
+void QsciListBoxQt::selectionChanged()
+{
+    if (delegate)
+    {
+        Scintilla::ListBoxEvent event(
+                Scintilla::ListBoxEvent::EventType::selectionChange);
+
+        delegate->ListNotify(&event);
+    }
 }
 
 
@@ -312,17 +341,17 @@ void QsciListBoxQt::SetList(const char *list, char separator, char typesep)
 
 // The ListBox methods that need to be implemented explicitly.
 
-QSCI_SCI_NAMESPACE(ListBox)::ListBox()
+Scintilla::ListBox::ListBox() noexcept
 {
 }
 
 
-QSCI_SCI_NAMESPACE(ListBox)::~ListBox()
+Scintilla::ListBox::~ListBox()
 {
 }
 
 
-QSCI_SCI_NAMESPACE(ListBox) *QSCI_SCI_NAMESPACE(ListBox)::Allocate()
+Scintilla::ListBox *Scintilla::ListBox::Allocate()
 {
     return new QsciListBoxQt();
 }

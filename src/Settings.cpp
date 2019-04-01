@@ -154,9 +154,29 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
     if(group == "General" && name == "language")
         return QLocale::system().name();
 
+    // General/appStyle
+    if(group == "General" && name == "appStyle")
+        return static_cast<int>(FollowDesktopStyle);
+
     // General/toolbarStyle
     if(group == "General" && name == "toolbarStyle")
         return static_cast<int>(Qt::ToolButtonTextBesideIcon);
+
+    // General/toolbarStyleStructure
+    if(group == "General" && name == "toolbarStyleStructure")
+        return static_cast<int>(Qt::ToolButtonTextBesideIcon);
+
+    // General/toolbarStyleBrowse
+    if(group == "General" && name == "toolbarStyleBrowse")
+        return static_cast<int>(Qt::ToolButtonIconOnly);
+
+    // General/toolbarStyleSql
+    if(group == "General" && name == "toolbarStyleSql")
+        return static_cast<int>(Qt::ToolButtonIconOnly);
+
+    // General/toolbarStyleEditCell
+    if(group == "General" && name == "toolbarStyleEditCell")
+        return static_cast<int>(Qt::ToolButtonIconOnly);
 
     if(group == "General" && name == "DBFileExtensions")
         return QObject::tr("SQLite database files (*.db *.sqlite *.sqlite3 *.db3)");
@@ -187,6 +207,8 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
             return false;
         if(name == "auto_switch_mode")
             return true;
+        if(name == "editor_word_wrap")
+            return true;
         if(name == "null_text")
             return "NULL";
         if(name == "blob_text")
@@ -195,18 +217,8 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
             return "\\";
         if(name == "filter_delay")
             return 200;
-        if(name == "null_fg_colour")
-            return QColor(Qt::lightGray).name();
-        if(name == "null_bg_colour")
-            return QPalette().color(QPalette::Active, QPalette::Base).name();
-        if(name == "reg_fg_colour")
-            return QPalette().color(QPalette::Active, QPalette::Text).name();
-        if(name == "reg_bg_colour")
-            return QPalette().color(QPalette::Active, QPalette::Base).name();
-        if(name == "bin_fg_colour")
-            return QColor(Qt::lightGray).name();
-        if(name == "bin_bg_colour")
-            return QPalette().color(QPalette::Active, QPalette::Base).name();
+        if(name.right(6) == "colour")
+            return getDefaultColorValue(group, name, FollowDesktopStyle);
     }
 
     // syntaxhighlighter?
@@ -226,52 +238,7 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
 
         // Colour?
         if(name.right(6) == "colour")
-        {
-            QColor backgroundColour = QPalette().color(QPalette::Active, QPalette::Base);
-            QColor foregroundColour = QPalette().color(QPalette::Active, QPalette::Text);
-
-            if(name == "foreground_colour")
-                return foregroundColour.name();
-            else if(name == "background_colour")
-                return backgroundColour.name();
-
-            // Detect and provide sensible defaults for dark themes
-            if (backgroundColour.value() < foregroundColour.value()) {
-                if(name == "keyword_colour")
-                  return QColor(82, 148, 226).name();
-                else if(name == "function_colour")
-                    return QColor(Qt::yellow).name();
-                else if(name == "table_colour")
-                    return QColor(Qt::cyan).name();
-                else if(name == "comment_colour")
-                    return QColor(Qt::green).name();
-                else if(name == "identifier_colour")
-                    return QColor(Qt::magenta).name();
-                else if(name == "string_colour")
-                    return QColor(Qt::lightGray).name();
-                else if(name == "currentline_colour")
-                    return backgroundColour.lighter(150).name();
-                else if(name == "background_colour")
-                    return backgroundColour.name();
-            } else {
-                if(name == "keyword_colour")
-                    return QColor(Qt::darkBlue).name();
-                else if(name == "function_colour")
-                    return QColor(Qt::blue).name();
-                else if(name == "table_colour")
-                    return QColor(Qt::darkCyan).name();
-                else if(name == "comment_colour")
-                    return QColor(Qt::darkGreen).name();
-                else if(name == "identifier_colour")
-                    return QColor(Qt::darkMagenta).name();
-                else if(name == "string_colour")
-                    return QColor(Qt::red).name();
-                else if(name == "currentline_colour")
-                    return QColor(236, 236, 245).name();
-                else if(name == "background_colour")
-                    return backgroundColour.name();
-            }
-        }
+            return getDefaultColorValue(group, name, FollowDesktopStyle);
     }
 
     // editor/font?
@@ -376,6 +343,103 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
 
     // Unknown combination of group and name? Return an invalid QVariant!
     return QVariant();
+}
+
+QColor Settings::getDefaultColorValue(const QString& group, const QString& name, AppStyle style)
+{
+    // Data Browser/NULL & Binary Fields
+    if(group == "databrowser")
+    {
+        switch (style) {
+        case FollowDesktopStyle :
+            if(name == "null_fg_colour")
+                return QColor(Qt::lightGray).name();
+            if(name == "null_bg_colour")
+                return QPalette().color(QPalette::Active, QPalette::Base).name();
+            if(name == "reg_fg_colour")
+                return QPalette().color(QPalette::Active, QPalette::Text).name();
+            if(name == "reg_bg_colour")
+                return QPalette().color(QPalette::Active, QPalette::Base).name();
+            if(name == "bin_fg_colour")
+                return QColor(Qt::lightGray).name();
+            if(name == "bin_bg_colour")
+                return QPalette().color(QPalette::Active, QPalette::Base).name();
+        case DarkStyle :
+            if(name == "null_fg_colour")
+                return QColor("#787878");
+            if(name == "null_bg_colour")
+                return QColor("#19232D");
+            if(name == "reg_fg_colour")
+                return QColor("#F0F0F0");
+            if(name == "reg_bg_colour")
+                return QColor("#19232D");
+            if(name == "bin_fg_colour")
+                return QColor("#787878");
+            if(name == "bin_bg_colour")
+                return QColor("#19232D");
+        }
+    }
+
+    // syntaxhighlighter?
+    if(group == "syntaxhighlighter")
+    {
+        // Colour?
+        if(name.right(6) == "colour")
+        {
+            QColor backgroundColour;
+            QColor foregroundColour;
+            switch (style) {
+            case FollowDesktopStyle :
+                backgroundColour = QPalette().color(QPalette::Active, QPalette::Base);
+                foregroundColour = QPalette().color(QPalette::Active, QPalette::Text);
+                break;
+            case DarkStyle :
+                foregroundColour = QColor("#F0F0F0");
+                backgroundColour = QColor("#19232D");
+                break;
+            }
+            if(name == "foreground_colour")
+                return foregroundColour;
+            else if(name == "background_colour")
+                return backgroundColour;
+
+            // Detect and provide sensible defaults for dark themes
+            if (backgroundColour.value() < foregroundColour.value()) {
+                if(name == "keyword_colour")
+                    return QColor(82, 148, 226);
+                else if(name == "function_colour")
+                    return QColor(Qt::yellow);
+                else if(name == "table_colour")
+                    return QColor(Qt::cyan);
+                else if(name == "comment_colour")
+                    return QColor(Qt::green);
+                else if(name == "identifier_colour")
+                    return QColor(Qt::magenta);
+                else if(name == "string_colour")
+                    return QColor(Qt::lightGray);
+                else if(name == "currentline_colour")
+                    return backgroundColour.lighter(150);
+            } else {
+                if(name == "keyword_colour")
+                    return QColor(Qt::darkBlue);
+                else if(name == "function_colour")
+                    return QColor(Qt::blue);
+                else if(name == "table_colour")
+                    return QColor(Qt::darkCyan);
+                else if(name == "comment_colour")
+                    return QColor(Qt::darkGreen);
+                else if(name == "identifier_colour")
+                    return QColor(Qt::darkMagenta);
+                else if(name == "string_colour")
+                    return QColor(Qt::red);
+                else if(name == "currentline_colour")
+                    return QColor(236, 236, 245);
+            }
+        }
+    }
+
+    // Unknown combination of group and name? Return an invalid QColor!
+    return QColor();
 }
 
 void Settings::restoreDefaults ()

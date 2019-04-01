@@ -25,6 +25,7 @@ signals:
     void delayedTextChanged(QString text);
     void addFilterAsCondFormat(QString text);
     void clearAllCondFormats();
+    void editCondFormats();
 
 protected:
     void keyReleaseEvent(QKeyEvent* event) override;

@@ -354,6 +354,10 @@ void DbStructureModel::buildTree(QTreeWidgetItem* parent, const QString& schema)
             for(const sqlb::FieldInfo& field : fieldList)
             {
                 QTreeWidgetItem *fldItem = new QTreeWidgetItem(item);
+                bool isFK = false;
+                if(it->type() == sqlb::Object::Types::Table)
+                    isFK = std::dynamic_pointer_cast<sqlb::Table>(it)->constraint({field.name}, sqlb::Constraint::ForeignKeyConstraintType) != nullptr;
+
                 fldItem->setText(ColumnName, field.name);
                 fldItem->setText(ColumnObjectType, "field");
                 fldItem->setText(ColumnDataType, field.type);
@@ -361,6 +365,8 @@ void DbStructureModel::buildTree(QTreeWidgetItem* parent, const QString& schema)
                 fldItem->setText(ColumnSchema, schema);
                 if(pk_columns.contains(field.name))
                     fldItem->setIcon(ColumnName, QIcon(":/icons/field_key"));
+                else if(isFK)
+                    fldItem->setIcon(ColumnName, QIcon(":/icons/field_fk"));
                 else
                     fldItem->setIcon(ColumnName, QIcon(":/icons/field"));
             }

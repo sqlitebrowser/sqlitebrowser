@@ -6,6 +6,7 @@
 #include <condition_variable>
 #include <memory>
 #include <mutex>
+#include <functional>
 
 #include <QByteArray>
 #include <QMultiMap>
@@ -14,10 +15,11 @@
 struct sqlite3;
 class CipherSettings;
 
-enum
+enum LogMessageType
 {
     kLogMsg_User,
-    kLogMsg_App
+    kLogMsg_App,
+    kLogMsg_ErrorLog
 };
 
 typedef QMultiMap<QString, sqlb::ObjectPtr> objectMap;      // Maps from object type (table, index, view, trigger) to a pointer to the object representation
@@ -54,6 +56,7 @@ private:
     };
 
 public:
+
     explicit DBBrowserDB () : _db(nullptr), db_used(false), isEncrypted(false), isReadOnly(false), dontCheckForStructureUpdates(false) {}
     ~DBBrowserDB () override {}
 
@@ -104,9 +107,18 @@ public:
         Wait,
         CancelOther
     };
-
-    bool executeSQL(QString statement, bool dirtyDB = true, bool logsql = true);
-    bool executeMultiSQL(const QString& statement, bool dirty = true, bool log = false);
+    // Callback to get results from executeSQL(). It is invoked for
+    // each result row coming out of the evaluated SQL statements. If
+    // a callback returns true (abort), the executeSQL() method
+    // returns false (error) without invoking the callback again and
+    // without running any subsequent SQL statements. The 1st argument
+    // is the number of columns in the result. The 2nd argument to the
+    // callback is the text representation of the values, one for each
+    // column. The 3rd argument is a list of strings where each entry
+    // represents the name of corresponding result column.
+    typedef std::function<bool(int, QStringList, QStringList)> execCallback;
+    bool executeSQL(QString statement, bool dirtyDB = true, bool logsql = true, execCallback callback = nullptr);
+    bool executeMultiSQL(QByteArray query, bool dirty = true, bool log = false);
     QByteArray querySingleValueFromDb(const QString& sql, bool log = true, ChoiceOnUse choice = Ask);
 
     const QString& lastError() const { return lastErrorMessage; }
@@ -135,6 +147,8 @@ private:
      * @return the max value of the field or 0 on error
      */
     QString max(const sqlb::ObjectIdentifier& tableName, const sqlb::Field& field) const;
+
+    static int callbackWrapper (void* callback, int numberColumns, char** values, char** columnNames);
 
 public:
     void updateSchema();
@@ -198,7 +212,7 @@ public:
     QString currentFile() const { return curDBFilename; }
 
     /// log an SQL statement [thread-safe]
-    void logSQL(QString statement, int msgtype);
+    void logSQL(QString statement, LogMessageType msgtype);
 
     QString getPragma(const QString& pragma);
     bool setPragma(const QString& pragma, const QString& value);
@@ -249,7 +263,9 @@ private:
 
     QString primaryKeyForEditing(const sqlb::ObjectIdentifier& table, const QString& pseudo_pk) const;
 
+    // SQLite Callbacks
     void collationNeeded(void* pData, sqlite3* db, int eTextRep, const char* sCollationName);
+    void errorLogCallback(void* user_data, int error_code, const char* message);
 
     bool tryEncryptionSettings(const QString& filename, bool* encrypted, CipherSettings*& cipherSettings);
 

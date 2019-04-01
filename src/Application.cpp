@@ -91,6 +91,7 @@ Application::Application(int& argc, char** argv) :
             qWarning() << qPrintable(tr("  -t, --table [table]\tBrowse this table after opening the DB"));
             qWarning() << qPrintable(tr("  -R, --read-only\tOpen database in read-only mode"));
             qWarning() << qPrintable(tr("  -o, --option [group/setting=value]\tRun application with this setting temporarily set to value"));
+            qWarning() << qPrintable(tr("  -O, --save-option [group/setting=value]\tRun application saving this value for this setting"));
             qWarning() << qPrintable(tr("  -v, --version\t\tDisplay the current version"));
             qWarning() << qPrintable(tr("  [file]\t\tOpen this SQLite database"));
             m_dontShowMainWindow = true;
@@ -114,8 +115,10 @@ Application::Application(int& argc, char** argv) :
             m_dontShowMainWindow = true;
         } else if(arguments().at(i) == "-R" || arguments().at(i) == "--read-only") {
             readOnly = true;
-        } else if(arguments().at(i) == "-o" || arguments().at(i) == "--option") {
-            const QString optionWarning = tr("The -o/--option option requires an argument in the form group/setting=value");
+        } else if(arguments().at(i) == "-o" || arguments().at(i) == "--option" ||
+                  arguments().at(i) == "-O" || arguments().at(i) == "--save-option") {
+            const QString optionWarning = tr("The -o/--option and -O/--save-option options require an argument in the form group/setting=value");
+            bool saveToDisk = arguments().at(i) == "-O" || arguments().at(i) == "--save-option";
             if(++i >= arguments().size())
                 qWarning() << qPrintable(optionWarning);
             else {
@@ -126,8 +129,15 @@ Application::Application(int& argc, char** argv) :
                     QStringList setting = option.at(0).split("/");
                     if (setting.size() != 2)
                         qWarning() << qPrintable(optionWarning);
-                    else
-                        Settings::setValue(setting.at(0), setting.at(1), option.at(1), /* dont_save_to_disk */ true);
+                    else {
+                        QVariant value;
+                        // Split string lists. This assumes they are always named "*list"
+                        if (setting.at(1).endsWith("list", Qt::CaseInsensitive))
+                            value = option.at(1).split(",");
+                        else
+                            value = option.at(1);
+                        Settings::setValue(setting.at(0), setting.at(1), value, !saveToDisk);
+                    }
                 }
             }
         } else {

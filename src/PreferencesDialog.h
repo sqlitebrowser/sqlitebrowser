@@ -45,6 +45,7 @@ private slots:
     void removeClientCertificate();
     void chooseRemoteCloneDirectory();
     void updatePreviewFont();
+    void adjustColorsToStyle(int style);
 
     void on_buttonManageFileExtension_clicked();
     void on_buttonBox_clicked(QAbstractButton* button);

@@ -1,7 +1,7 @@
 // The definition of various Qt version independent classes used by the rest of
 // the port.
 //
-// Copyright (c) 2018 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2019 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 
@@ -93,10 +93,8 @@ public:
     QString text(int n);
 
 protected:
-    void keyPressEvent(QKeyEvent *e);
-
-private slots:
-    void handleSelection();
+    void mouseDoubleClickEvent(QMouseEvent *e);
+    void mouseReleaseEvent(QMouseEvent *e);
 
 private:
     QsciListBoxQt *lbx;

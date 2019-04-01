@@ -1,6 +1,6 @@
 // The definition of the Qt specific subclass of ScintillaBase.
 //
-// Copyright (c) 2018 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2019 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 
@@ -27,23 +27,25 @@
 
 #include <Qsci/qsciglobal.h>
 
-#include "SciNamespace.h"
-
 // These are needed because Scintilla class header files don't manage their own
 // dependencies properly.
 #include <algorithm>
 #include <assert.h>
 #include <ctype.h>
+#include <memory>
 #include <stdexcept>
 #include <stdlib.h>
 #include <string>
 #include <map>
 #include <vector>
 #include "ILexer.h"
+#include "ILoader.h"
 #include "Platform.h"
 #include "Scintilla.h"
 #include "SplitVector.h"
 #include "Partitioning.h"
+#include "Position.h"
+#include "UniqueString.h"
 #include "CellBuffer.h"
 #include "CharClassify.h"
 #include "RunStyles.h"
@@ -82,9 +84,9 @@ class QsciSciPopup;
 
 
 // This is an internal class but it is referenced by a public class so it has
-// to have a Qsci prefix rather than being put in the Scintilla namespace
-// which would mean exposing the SCI_NAMESPACE mechanism).
-class QsciScintillaQt : public QObject, public QSCI_SCI_NAMESPACE(ScintillaBase)
+// to have a Qsci prefix rather than being put in the Scintilla namespace.
+// (However the reason for avoiding this no longer applies.)
+class QsciScintillaQt : public QObject, public Scintilla::ScintillaBase
 {
     Q_OBJECT
 
@@ -115,23 +117,21 @@ private:
 	bool HaveMouseCapture();
 	void SetVerticalScrollPos();
 	void SetHorizontalScrollPos();
-	bool ModifyScrollBars(int nMax, int nPage);
+	bool ModifyScrollBars(Sci::Line nMax, Sci::Line nPage);
 	void ReconfigureScrollBars();
 	void NotifyChange();
 	void NotifyParent(SCNotification scn);
-	void CopyToClipboard(
-            const QSCI_SCI_NAMESPACE(SelectionText) &selectedText);
+	void CopyToClipboard(const Scintilla::SelectionText &selectedText);
 	void Copy();
 	void Paste();
-	void CreateCallTipWindow(QSCI_SCI_NAMESPACE(PRectangle) rc);
+	void CreateCallTipWindow(Scintilla::PRectangle rc);
 	void AddToPopUp(const char *label, int cmd = 0, bool enabled = true);
 	void ClaimSelection();
 	void UnclaimSelection();
 	static sptr_t DirectFunction(QsciScintillaQt *sci, unsigned int iMessage,
             uptr_t wParam,sptr_t lParam);
 
-	QMimeData *mimeSelection(
-            const QSCI_SCI_NAMESPACE(SelectionText) &text) const;
+	QMimeData *mimeSelection(const Scintilla::SelectionText &text) const;
 	void paintEvent(QPaintEvent *e);
     void pasteFromClipboard(QClipboard::Mode mode);
 

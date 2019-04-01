@@ -11,18 +11,20 @@
 /**
  * A Position is a position within a document between two characters or at the beginning or end.
  * Sometimes used as a character index where it identifies the character after the position.
+ * A Line is a document or screen line.
  */
 
 namespace Sci {
 
-typedef int Position;
-
-// A later version (4.x) of this file may:
-//#if defined(SCI_LARGE_FILE_SUPPORT)
-//typedef std::ptrdiff_t Position;
-// or may allow runtime choice between different position sizes.
+typedef ptrdiff_t Position;
+typedef ptrdiff_t Line;
 
 const Position invalidPosition = -1;
+
+template <typename T>
+inline constexpr T clamp(T val, T minVal, T maxVal) {
+	return (val > maxVal) ? maxVal : ((val < minVal) ? minVal : val);
+}
 
 }
 

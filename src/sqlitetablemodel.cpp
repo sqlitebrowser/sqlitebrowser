@@ -217,6 +217,23 @@ int SqliteTableModel::filterCount() const
     return m_query.where().size();
 }
 
+// Convert a number to string using the Unicode superscript characters
+static QString toSuperScript(int number)
+{
+    QString superScript = QString::number(number);
+    superScript.replace("0", "⁰");
+    superScript.replace("1", "¹");
+    superScript.replace("2", "²");
+    superScript.replace("3", "³");
+    superScript.replace("4", "⁴");
+    superScript.replace("5", "⁵");
+    superScript.replace("6", "⁶");
+    superScript.replace("7", "⁷");
+    superScript.replace("8", "⁸");
+    superScript.replace("9", "⁹");
+    return superScript;
+}
+
 QVariant SqliteTableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (role != Qt::DisplayRole)
@@ -225,13 +242,43 @@ QVariant SqliteTableModel::headerData(int section, Qt::Orientation orientation, 
     if (orientation == Qt::Horizontal)
     {
         // if we have a VIRTUAL table the model will not be valid, with no header data
-        if(section < m_headers.size())
-            return m_headers.at(section);
-
+        if(section < m_headers.size()) {
+            QString sortIndicator;
+            for(int i = 0; i < m_query.orderBy().size(); i++) {
+                const sqlb::SortedColumn sortedColumn = m_query.orderBy()[i];
+                // Append sort indicator with direction and ordinal number in superscript style
+                if (sortedColumn.column == section) {
+                    sortIndicator = sortedColumn.direction == sqlb::Ascending ? " ▾" : " ▴";
+                    sortIndicator.append(toSuperScript(i+1));
+                    break;
+                }
+            }
+            return m_headers.at(section) + sortIndicator;
+        }
         return QString("%1").arg(section + 1);
     }
     else
         return QString("%1").arg(section + 1);
+}
+
+QColor SqliteTableModel::getMatchingCondFormatColor(int column, const QString& value, int role) const
+{
+    bool isNumber;
+    value.toFloat(&isNumber);
+    QString sql;
+    // For each conditional format for this column,
+    // if the condition matches the current data, return the associated colour.
+    for (const CondFormat& eachCondFormat : m_mCondFormats.value(column)) {
+        if (isNumber && !eachCondFormat.sqlCondition().contains("'"))
+            sql = QString("SELECT %1 %2").arg(value, eachCondFormat.sqlCondition());
+        else
+            sql = QString("SELECT '%1' %2").arg(value, eachCondFormat.sqlCondition());
+
+        // Query the DB for the condition, waiting in case there is a loading in progress.
+        if (m_db.querySingleValueFromDb(sql, false, DBBrowserDB::Wait) == "1")
+            return role == Qt::ForegroundRole ? eachCondFormat.foregroundColor() : eachCondFormat.backgroundColor();
+    }
+    return QColor();
 }
 
 QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
@@ -291,6 +338,15 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
             return QColor(Settings::getValue("databrowser", "null_fg_colour").toString());
         else if (nosync_isBinary(index))
             return QColor(Settings::getValue("databrowser", "bin_fg_colour").toString());
+        else if (m_mCondFormats.contains(index.column())) {
+            QString value = cached_row->at(index.column());
+            // Unlock before querying from DB
+            lock.unlock();
+            QColor condFormatColor = getMatchingCondFormatColor(index.column(), value, role);
+            if (condFormatColor.isValid())
+                return condFormatColor;
+            }
+        // Regular case (not null, not binary and no matching conditional format)
         return QColor(Settings::getValue("databrowser", "reg_fg_colour").toString());
     } else if (role == Qt::BackgroundRole) {
         if(!row_available)
@@ -301,23 +357,11 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
             return QColor(Settings::getValue("databrowser", "bin_bg_colour").toString());
         else if (m_mCondFormats.contains(index.column())) {
             QString value = cached_row->at(index.column());
-            bool isNumber;
-            value.toFloat(&isNumber);
-            QString sql;
-            // For each conditional format for this column,
-            // if the condition matches the current data, return the associated colour.
-            for (const CondFormat& eachCondFormat : m_mCondFormats.value(index.column())) {
-                if (isNumber && !eachCondFormat.sqlCondition().contains("'"))
-                    sql = QString("SELECT %1 %2").arg(value, eachCondFormat.sqlCondition());
-                else
-                    sql = QString("SELECT '%1' %2").arg(value, eachCondFormat.sqlCondition());
-
-                // Unlock before querying from DB
-                lock.unlock();
-                // Query the DB for the condition, waiting in case there is a loading in progress.
-                if (m_db.querySingleValueFromDb(sql, false, DBBrowserDB::Wait) == "1")
-                    return eachCondFormat.color();
-            }
+            // Unlock before querying from DB
+            lock.unlock();
+            QColor condFormatColor = getMatchingCondFormatColor(index.column(), value, role);
+            if (condFormatColor.isValid())
+                return condFormatColor;
         }
         // Regular case (not null, not binary and no matching conditional format)
         return QColor(Settings::getValue("databrowser", "reg_bg_colour").toString());
@@ -454,16 +498,20 @@ Qt::ItemFlags SqliteTableModel::flags(const QModelIndex& index) const
 
 void SqliteTableModel::sort(int column, Qt::SortOrder order)
 {
+    // Construct a sort order list from this item and forward it to the function to sort by lists
+    std::vector<sqlb::SortedColumn> list;
+    list.emplace_back(column, order == Qt::AscendingOrder ? sqlb::Ascending : sqlb::Descending);
+    sort(list);
+}
+
+void SqliteTableModel::sort(const std::vector<sqlb::SortedColumn>& columns)
+{
     // Don't do anything when the sort order hasn't changed
-    if(m_query.orderBy().size() && m_query.orderBy().at(0).column == column && m_query.orderBy().at(0).direction == (order == Qt::AscendingOrder ? sqlb::Ascending : sqlb::Descending))
+    if(m_query.orderBy() == columns)
         return;
 
-    // Reset sort order
-    m_query.orderBy().clear();
-
     // Save sort order
-	if (column >= 0 && column < m_headers.size())
-        m_query.orderBy().emplace_back(column, (order == Qt::AscendingOrder ? sqlb::Ascending : sqlb::Descending));
+    m_query.orderBy() = columns;
 
     // Set the new query (but only if a table has already been set
     if(!m_query.table().isEmpty())

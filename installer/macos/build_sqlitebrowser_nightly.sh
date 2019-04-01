@@ -63,9 +63,9 @@ echo Remove any existing Homebrew installed packages >>$LOG 2>&1
 $BREW remove `$BREW list` --force >>$LOG 2>&1
 
 # Install SQLite3 
+# Note - `brew tap sqlitebrowser/homebrew-sqlite3` needs to have been run at least once (manually) first
 echo Install SQLite3 >>$LOG 2>&1
-$BREW install sqlite --with-functions --with-json1 --with-fts --with-fts5 >>$LOG 2>&1
-$BREW link sqlite3 --force >>$LOG 2>&1
+$BREW install sqlitefts5 >>$LOG 2>&1
 
 # Update the sqlitebrowser source
 echo Update the sqlitebrowser source >>$LOG 2>&1
@@ -99,7 +99,7 @@ $MACDEPLOYQT src/DB\ Browser\ for\ SQLite.app -verbose=2 >>$LOG 2>&1
 # Add the math extensions to the .dmg
 echo Add the math extensions to the .dmg >>$LOG 2>&1
 mkdir src/DB\ Browser\ for\ SQLite.app/Contents/Extensions >>$LOG 2>&1
-gcc -I/usr/local/opt/sqlite/include -L/usr/local/opt/sqlite/lib -fno-common -dynamiclib src/extensions/extension-functions.c -o src/DB\ Browser\ for\ SQLite.app/Contents/Extensions/math.dylib >>$LOG 2>&1
+gcc -I/usr/local/opt/sqlitefts5/include -L/usr/local/opt/sqlitefts5/lib -fno-common -dynamiclib src/extensions/extension-functions.c -o src/DB\ Browser\ for\ SQLite.app/Contents/Extensions/math.dylib >>$LOG 2>&1
 
 # Copy the license files to the .dmg
 echo Copying the license files to the .dmg >>$LOG 2>&1
@@ -132,7 +132,6 @@ npm -g uninstall appdmg >>$LOG 2>&1
 npm -g install appdmg >>$LOG 2>&1
 appdmg --quiet nightly.json DB\ Browser\ for\ SQLite_${DATE}.dmg >>$LOG 2>&1
 mv DB\ Browser\ for\ SQLite_${DATE}.dmg $HOME/db4s_nightlies/ >>$LOG 2>&1
-$BREW unlink sqlite3 >>$LOG 2>&1
 rm -rf $HOME/appdmg/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
 
 ### Build SQLCipher version
@@ -142,7 +141,7 @@ $BREW remove `$BREW list` --force >>$LOG 2>&1
 
 # Install SQLCipher
 echo Install SQLCipher >>$LOG 2>&1
-$BREW install sqlcipher --with-fts >>$LOG 2>&1
+$BREW install sqlcipher >>$LOG 2>&1
 
 # Clean the sqlitebrowser source
 echo Clean the sqlitebrowser source >>$LOG 2>&1
@@ -174,7 +173,7 @@ $MACDEPLOYQT src/DB\ Browser\ for\ SQLite.app -verbose=2 >>$LOG 2>&1
 # Add the math extensions to the .dmg
 echo Add the math extensions to the .dmg >>$LOG 2>&1
 mkdir src/DB\ Browser\ for\ SQLite.app/Contents/Extensions >>$LOG 2>&1
-gcc -I/usr/local/opt/sqlite/include -L/usr/local/opt/sqlite/lib -fno-common -dynamiclib src/extensions/extension-functions.c -o src/DB\ Browser\ for\ SQLite.app/Contents/Extensions/math.dylib >>$LOG 2>&1
+gcc -I/usr/local/opt/sqlitefts5/include -L/usr/local/opt/sqlitefts5/lib -fno-common -dynamiclib src/extensions/extension-functions.c -o src/DB\ Browser\ for\ SQLite.app/Contents/Extensions/math.dylib >>$LOG 2>&1
 
 # Copy the license files to the .dmg
 echo Copying the license files to the .dmg >>$LOG 2>&1

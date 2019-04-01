@@ -8,9 +8,7 @@
 #ifndef SCINTILLABASE_H
 #define SCINTILLABASE_H
 
-#ifdef SCI_NAMESPACE
 namespace Scintilla {
-#endif
 
 #ifdef SCI_LEXER
 class LexState;
@@ -18,11 +16,7 @@ class LexState;
 
 /**
  */
-class ScintillaBase : public Editor {
-	// Private so ScintillaBase objects can not be copied
-	explicit ScintillaBase(const ScintillaBase &);
-	ScintillaBase &operator=(const ScintillaBase &);
-
+class ScintillaBase : public Editor, IListBoxDelegate {
 protected:
 	/** Enumeration of commands and child windows. */
 	enum {
@@ -58,17 +52,22 @@ protected:
 #endif
 
 	ScintillaBase();
-	virtual ~ScintillaBase();
-	virtual void Initialise() = 0;
-	virtual void Finalise();
+	// Deleted so ScintillaBase objects can not be copied.
+	ScintillaBase(const ScintillaBase &) = delete;
+	ScintillaBase(ScintillaBase &&) = delete;
+	ScintillaBase &operator=(const ScintillaBase &) = delete;
+	ScintillaBase &operator=(ScintillaBase &&) = delete;
+	~ScintillaBase() override;
+	void Initialise() override {}
+	void Finalise() override;
 
-	virtual void AddCharUTF(const char *s, unsigned int len, bool treatAsDBCS=false);
+	void AddCharUTF(const char *s, unsigned int len, bool treatAsDBCS=false) override;
 	void Command(int cmdId);
-	virtual void CancelModes();
-	virtual int KeyCommand(unsigned int iMessage);
+	void CancelModes() override;
+	int KeyCommand(unsigned int iMessage) override;
 
-	void AutoCompleteInsert(Position startPos, int removeLen, const char *text, int textLen);
-	void AutoCompleteStart(int lenEntered, const char *list);
+	void AutoCompleteInsert(Sci::Position startPos, Sci::Position removeLen, const char *text, Sci::Position textLen);
+	void AutoCompleteStart(Sci::Position lenEntered, const char *list);
 	void AutoCompleteCancel();
 	void AutoCompleteMove(int delta);
 	int AutoCompleteGetCurrent() const;
@@ -77,7 +76,8 @@ protected:
 	void AutoCompleteCharacterDeleted();
 	void AutoCompleteCompleted(char ch, unsigned int completionMethod);
 	void AutoCompleteMoveToCurrentWord();
-	static void AutoCompleteDoubleClick(void *p);
+	void AutoCompleteSelection();
+	void ListNotify(ListBoxEvent *plbe) override;
 
 	void CallTipClick();
 	void CallTipShow(Point pt, const char *defn);
@@ -87,20 +87,17 @@ protected:
 	bool ShouldDisplayPopup(Point ptInWindowCoordinates) const;
 	void ContextMenu(Point pt);
 
-	virtual void ButtonDownWithModifiers(Point pt, unsigned int curTime, int modifiers);
-	virtual void ButtonDown(Point pt, unsigned int curTime, bool shift, bool ctrl, bool alt);
-	virtual void RightButtonDownWithModifiers(Point pt, unsigned int curTime, int modifiers);
+	void ButtonDownWithModifiers(Point pt, unsigned int curTime, int modifiers) override;
+	void RightButtonDownWithModifiers(Point pt, unsigned int curTime, int modifiers) override;
 
-	void NotifyStyleToNeeded(int endStyleNeeded);
-	void NotifyLexerChanged(Document *doc, void *userData);
+	void NotifyStyleToNeeded(Sci::Position endStyleNeeded) override;
+	void NotifyLexerChanged(Document *doc, void *userData) override;
 
 public:
 	// Public so scintilla_send_message can use it
-	virtual sptr_t WndProc(unsigned int iMessage, uptr_t wParam, sptr_t lParam);
+	sptr_t WndProc(unsigned int iMessage, uptr_t wParam, sptr_t lParam) override;
 };
 
-#ifdef SCI_NAMESPACE
 }
-#endif
 
 #endif

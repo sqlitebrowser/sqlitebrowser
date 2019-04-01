@@ -1,6 +1,6 @@
 // This module implements the QsciLexerPython class.
 //
-// Copyright (c) 2018 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2019 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 
@@ -122,6 +122,8 @@ QColor QsciLexerPython::defaultColor(int style) const
 
     case DoubleQuotedString:
     case SingleQuotedString:
+    case DoubleQuotedFString:
+    case SingleQuotedFString:
         return QColor(0x7f,0x00,0x7f);
 
     case Keyword:
@@ -129,6 +131,8 @@ QColor QsciLexerPython::defaultColor(int style) const
 
     case TripleSingleQuotedString:
     case TripleDoubleQuotedString:
+    case TripleSingleQuotedFString:
+    case TripleDoubleQuotedFString:
         return QColor(0x7f,0x00,0x00);
 
     case ClassName:
@@ -187,6 +191,8 @@ QFont QsciLexerPython::defaultFont(int style) const
 
     case DoubleQuotedString:
     case SingleQuotedString:
+    case DoubleQuotedFString:
+    case SingleQuotedFString:
     case UnclosedString:
 #if defined(Q_OS_WIN)
         f = QFont("Courier New",10);
@@ -275,6 +281,18 @@ QString QsciLexerPython::description(int style) const
 
     case Decorator:
         return tr("Decorator");
+
+    case DoubleQuotedFString:
+        return tr("Double-quoted f-string");
+
+    case SingleQuotedFString:
+        return tr("Single-quoted f-string");
+
+    case TripleSingleQuotedFString:
+        return tr("Triple single-quoted f-string");
+
+    case TripleDoubleQuotedFString:
+        return tr("Triple double-quoted f-string");
     }
 
     return QString();

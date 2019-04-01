@@ -50,22 +50,25 @@ git clean -dffx
 :: WIN32 SQLITE BUILD PROCEDURE
 
 :: Set path variables
-CALL "C:\\Program Files (x86)\\Microsoft Visual Studio 12.0\\VC\\bin\\vcvars32.bat"
+CALL "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\bin\\vcvars32.bat" 8.1
 
 :: Build SQLite x86
 CD %SQLITE_DIR%
-cl sqlite3.c -DSQLITE_ENABLE_FTS5 -DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_PARENTHESIS -DSQLITE_ENABLE_JSON1 -DSQLITE_API=__declspec(dllexport) -link -dll -out:sqlite3.dll
+cl sqlite3.c -DSQLITE_ENABLE_FTS5 -DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_PARENTHESIS -DSQLITE_ENABLE_STAT4 -DSQLITE_ENABLE_JSON1 -DSQLITE_API=__declspec(dllexport) -link -dll -out:sqlite3.dll
 
-:: Build Math extension x86
+:: Build extensions
 COPY C:\git_repos\sqlitebrowser\src\extensions\extension-functions.c
 COPY C:\git_repos\sqlitebrowser\src\extensions\extension-functions.def
 cl /MD extension-functions.c -link -dll -def:extension-functions.def -out:math.dll
+COPY C:\git_repos\sqlitebrowser\src\extensions\extension-formats.c
+COPY C:\git_repos\sqlitebrowser\src\extensions\extension-formats.def
+cl /MD extension-formats.c -link -dll -def:extension-formats.def -out:formats.dll
 
 :: Run CMake for SQLite x86
 CD C:\\builds
 MKDIR "release-sqlite-win32"
 CD "release-sqlite-win32"
-cmake -G "Visual Studio 12 2013" -Wno-dev C:\\git_repos\\sqlitebrowser
+cmake -G "Visual Studio 14 2015" -Wno-dev C:\\git_repos\\sqlitebrowser
 
 :: Build package
 devenv /Build Release sqlitebrowser.sln /project "ALL_BUILD"
@@ -75,13 +78,13 @@ devenv /Build Release sqlitebrowser.sln /project "ALL_BUILD"
 
 :: Build SQLCipher x86
 CD %SQLCIPHER_DIR%
-nmake /f Makefile.msc sqlcipher.dll USE_AMALGAMATION=1 NO_TCL=1 SQLITE3DLL=sqlcipher.dll SQLITE3LIB=sqlcipher.lib SQLITE3EXE=sqlcipher.exe LTLINKOPTS="C:\dev\OpenSSL-Win32\lib\libeay32.lib" OPT_FEATURE_FLAGS="-DSQLITE_TEMP_STORE=2 -DSQLITE_HAS_CODEC=1 -DSQLITE_ENABLE_FTS5=1 -DSQLITE_ENABLE_FTS3_PARENTHESIS=1 -DSQLITE_ENABLE_JSON1=1 -DSQLCIPHER_CRYPTO_OPENSSL=1 -IC:\dev\OpenSSL-Win32\include"
+nmake /f Makefile.msc sqlcipher.dll USE_AMALGAMATION=1 NO_TCL=1 SQLITE3DLL=sqlcipher.dll SQLITE3LIB=sqlcipher.lib SQLITE3EXE=sqlcipher.exe LTLINKOPTS="C:\dev\OpenSSL-Win32\lib\libeay32.lib" OPT_FEATURE_FLAGS="-DSQLITE_TEMP_STORE=2 -DSQLITE_HAS_CODEC=1 -DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_FTS5=1 -DSQLITE_ENABLE_FTS3_PARENTHESIS=1 -DSQLITE_ENABLE_STAT4=1 -DSQLITE_ENABLE_JSON1=1 -DSQLCIPHER_CRYPTO_OPENSSL=1 -IC:\dev\OpenSSL-Win32\include"
 
 :: Run CMake for SQLCipher x86
 CD C:\\builds
 MKDIR "release-sqlcipher-win32"
 CD "release-sqlcipher-win32"
-cmake -G "Visual Studio 12 2013" -Wno-dev -Dsqlcipher=1 C:\\git_repos\\sqlitebrowser
+cmake -G "Visual Studio 14 2015" -Wno-dev -Dsqlcipher=1 C:\\git_repos\\sqlitebrowser
 
 :: Build package
 devenv /Build Release sqlitebrowser.sln /project "ALL_BUILD"

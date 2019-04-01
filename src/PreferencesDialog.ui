@@ -122,18 +122,18 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
+       <item row="3" column="0">
         <widget class="QLabel" name="labelToolbarStyle">
          <property name="text">
           <string>Toolbar style</string>
          </property>
          <property name="buddy">
-          <cstring>toolbarStyleComboBox</cstring>
+          <cstring>toolbarStyleComboMain</cstring>
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
-        <widget class="QComboBox" name="toolbarStyleComboBox">
+       <item row="5" column="1">
+        <widget class="QComboBox" name="toolbarStyleComboMain">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -182,7 +182,167 @@
          </item>
         </widget>
        </item>
-       <item row="3" column="1">
+       <item row="6" column="1">
+        <widget class="QComboBox" name="toolbarStyleComboStructure">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="currentIndex">
+          <number>2</number>
+         </property>
+         <property name="sizeAdjustPolicy">
+          <enum>QComboBox::AdjustToContents</enum>
+         </property>
+         <property name="minimumContentsLength">
+          <number>35</number>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>15</height>
+          </size>
+         </property>
+         <item>
+          <property name="text">
+           <string>Only display the icon</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Only display the text</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>The text appears beside the icon</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>The text appears under the icon</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Follow the style</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QComboBox" name="toolbarStyleComboBrowse">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <property name="sizeAdjustPolicy">
+          <enum>QComboBox::AdjustToContents</enum>
+         </property>
+         <property name="minimumContentsLength">
+          <number>35</number>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>15</height>
+          </size>
+         </property>
+         <item>
+          <property name="text">
+           <string>Only display the icon</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Only display the text</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>The text appears beside the icon</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>The text appears under the icon</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Follow the style</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QComboBox" name="toolbarStyleComboSql">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <property name="sizeAdjustPolicy">
+          <enum>QComboBox::AdjustToContents</enum>
+         </property>
+         <property name="minimumContentsLength">
+          <number>35</number>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>15</height>
+          </size>
+         </property>
+         <item>
+          <property name="text">
+           <string>Only display the icon</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Only display the text</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>The text appears beside the icon</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>The text appears under the icon</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Follow the style</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="10" column="0">
+        <widget class="QLabel" name="labelUseRemotes">
+         <property name="text">
+          <string>Show remote options</string>
+         </property>
+         <property name="buddy">
+          <cstring>checkUseRemotes</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="1">
         <widget class="QCheckBox" name="checkUseRemotes">
          <property name="text">
           <string>enabled</string>
@@ -192,7 +352,7 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="0">
+       <item row="11" column="0">
         <widget class="QLabel" name="labelUpdates">
          <property name="text">
           <string>Automatic &amp;updates</string>
@@ -202,14 +362,14 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="1">
+       <item row="11" column="1">
         <widget class="QCheckBox" name="checkUpdates">
          <property name="text">
           <string>enabled</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="0">
+       <item row="12" column="0">
         <widget class="QLabel" name="label_16">
          <property name="text">
           <string>DB file extensions</string>
@@ -219,20 +379,173 @@
          </property>
         </widget>
        </item>
-       <item row="5" column="1">
+       <item row="12" column="1">
         <widget class="QPushButton" name="buttonManageFileExtension">
          <property name="text">
           <string>Manage</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="labelUseRemotes">
+       <item row="5" column="0">
+        <widget class="QLabel" name="labelMainToolBar">
          <property name="text">
-          <string>Show remote options</string>
+          <string>Main Window</string>
+         </property>
+         <property name="indent">
+          <number>20</number>
          </property>
          <property name="buddy">
-          <cstring>checkUseRemotes</cstring>
+          <cstring>toolbarStyleComboMain</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="labelStructureToolBar">
+         <property name="text">
+          <string>Database Structure</string>
+         </property>
+         <property name="indent">
+          <number>20</number>
+         </property>
+         <property name="buddy">
+          <cstring>toolbarStyleComboStructure</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="labelBrowseToolBar">
+         <property name="text">
+          <string>Browse Data</string>
+         </property>
+         <property name="indent">
+          <number>20</number>
+         </property>
+         <property name="buddy">
+          <cstring>toolbarStyleComboBrowse</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <widget class="QLabel" name="labelSqlToolBar">
+         <property name="text">
+          <string>Execute SQL</string>
+         </property>
+         <property name="indent">
+          <number>20</number>
+         </property>
+         <property name="buddy">
+          <cstring>toolbarStyleComboSql</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="1">
+        <widget class="QComboBox" name="toolbarStyleComboEditCell">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <property name="sizeAdjustPolicy">
+          <enum>QComboBox::AdjustToContents</enum>
+         </property>
+         <property name="minimumContentsLength">
+          <number>35</number>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>15</height>
+          </size>
+         </property>
+         <item>
+          <property name="text">
+           <string>Only display the icon</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Only display the text</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>The text appears beside the icon</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>The text appears under the icon</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Follow the style</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="9" column="0">
+        <widget class="QLabel" name="labelEditCellToolBar">
+         <property name="text">
+          <string>Edit Database Cell</string>
+         </property>
+         <property name="indent">
+          <number>20</number>
+         </property>
+         <property name="buddy">
+          <cstring>toolbarStyleComboEditCell</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QComboBox" name="appStyleCombo">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="toolTip">
+          <string>When this value is changed, all the other color preferences are also set to matching colors.</string>
+         </property>
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <property name="sizeAdjustPolicy">
+          <enum>QComboBox::AdjustToContents</enum>
+         </property>
+         <property name="minimumContentsLength">
+          <number>35</number>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>15</height>
+          </size>
+         </property>
+         <item>
+          <property name="text">
+           <string>Follow the desktop style</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Dark style</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="labelAppStyle">
+         <property name="text">
+          <string>Application style</string>
+         </property>
+         <property name="buddy">
+          <cstring>toolbarStyleComboStructure</cstring>
          </property>
         </widget>
        </item>
@@ -563,6 +876,9 @@ Can be set to 0 for disabling completion.</string>
               <property name="focusPolicy">
                <enum>Qt::StrongFocus</enum>
               </property>
+              <property name="toolTip">
+               <string>Click to set this color</string>
+              </property>
               <property name="autoFillBackground">
                <bool>true</bool>
               </property>
@@ -588,6 +904,9 @@ Can be set to 0 for disabling completion.</string>
              <widget class="QFrame" name="fr_null_fg">
               <property name="focusPolicy">
                <enum>Qt::StrongFocus</enum>
+              </property>
+              <property name="toolTip">
+               <string>Click to set this color</string>
               </property>
               <property name="autoFillBackground">
                <bool>true</bool>
@@ -615,6 +934,9 @@ Can be set to 0 for disabling completion.</string>
               <property name="focusPolicy">
                <enum>Qt::StrongFocus</enum>
               </property>
+              <property name="toolTip">
+               <string>Click to set this color</string>
+              </property>
               <property name="autoFillBackground">
                <bool>true</bool>
               </property>
@@ -630,6 +952,9 @@ Can be set to 0 for disabling completion.</string>
              <widget class="QFrame" name="fr_null_bg">
               <property name="focusPolicy">
                <enum>Qt::StrongFocus</enum>
+              </property>
+              <property name="toolTip">
+               <string>Click to set this color</string>
               </property>
               <property name="autoFillBackground">
                <bool>true</bool>
@@ -647,6 +972,9 @@ Can be set to 0 for disabling completion.</string>
               <property name="focusPolicy">
                <enum>Qt::StrongFocus</enum>
               </property>
+              <property name="toolTip">
+               <string>Click to set this color</string>
+              </property>
               <property name="autoFillBackground">
                <bool>true</bool>
               </property>
@@ -662,6 +990,9 @@ Can be set to 0 for disabling completion.</string>
              <widget class="QFrame" name="fr_reg_bg">
               <property name="focusPolicy">
                <enum>Qt::StrongFocus</enum>
+              </property>
+              <property name="toolTip">
+               <string>Click to set this color</string>
               </property>
               <property name="autoFillBackground">
                <bool>true</bool>
@@ -1523,7 +1854,11 @@ Can be set to 0 for disabling completion.</string>
   <tabstop>locationEdit</tabstop>
   <tabstop>setLocationButton</tabstop>
   <tabstop>languageComboBox</tabstop>
-  <tabstop>toolbarStyleComboBox</tabstop>
+  <tabstop>toolbarStyleComboMain</tabstop>
+  <tabstop>toolbarStyleComboStructure</tabstop>
+  <tabstop>toolbarStyleComboBrowse</tabstop>
+  <tabstop>toolbarStyleComboSql</tabstop>
+  <tabstop>toolbarStyleComboEditCell</tabstop>
   <tabstop>checkUseRemotes</tabstop>
   <tabstop>checkUpdates</tabstop>
   <tabstop>encodingComboBox</tabstop>

@@ -1,6 +1,6 @@
 // This defines the interface to the QsciCommand class.
 //
-// Copyright (c) 2018 Riverbank Computing Limited <info@riverbankcomputing.com>
+// Copyright (c) 2019 Riverbank Computing Limited <info@riverbankcomputing.com>
 // 
 // This file is part of QScintilla.
 // 
@@ -339,6 +339,9 @@ public:
 
         //! Zoom out.
         ZoomOut = QsciScintillaBase::SCI_ZOOMOUT,
+
+        //! Reverse the selected lines.
+        ReverseLines = QsciScintillaBase::SCI_LINEREVERSE,
     };
 
     //! Return the command that will be executed by this instance.

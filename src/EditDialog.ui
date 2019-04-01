@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Edit database cell</string>
   </property>
+  <property name="whatsThis">
+   <string>This area displays information about the data present in this database cell</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_5">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
@@ -27,19 +30,16 @@
        <property name="text">
         <string>Mode:</string>
        </property>
+       <property name="buddy">
+        <cstring>comboMode</cstring>
+       </property>
       </widget>
      </item>
      <item>
       <widget class="QComboBox" name="comboMode">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
        <property name="minimumSize">
         <size>
-         <width>50</width>
+         <width>0</width>
          <height>0</height>
         </size>
        </property>
@@ -105,79 +105,22 @@
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::MinimumExpanding</enum>
-       </property>
        <property name="sizeHint" stdset="0">
         <size>
          <width>0</width>
-         <height>20</height>
+         <height>0</height>
         </size>
        </property>
       </spacer>
      </item>
      <item>
-      <widget class="QToolButton" name="buttonIndent">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="toolTip">
-        <string>Auto-format: pretty print on loading, compact on saving.</string>
-       </property>
-       <property name="statusTip">
-        <string>Auto-format: pretty print on loading, compact on saving.</string>
-       </property>
-       <property name="whatsThis">
-        <string>When enabled, the auto-format feature formats the data on loading, breaking the text in lines and indenting it for maximum readability. On data saving, the auto-format feature compacts the data removing end of lines, and unnecessary whitespace.</string>
-       </property>
-       <property name="text">
-        <string>Autoformat</string>
-       </property>
-       <property name="icon">
-        <iconset resource="icons/icons.qrc">
-         <normaloff>:/icons/text_indent</normaloff>:/icons/text_indent</iconset>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="buttonImport">
-       <property name="minimumSize">
-        <size>
-         <width>50</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="toolTip">
-        <string>Import from file</string>
-       </property>
-       <property name="whatsThis">
-        <string>Opens a file dialog used to import any kind of data to this database cell.</string>
-       </property>
-       <property name="text">
-        <string>&amp;Import</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="buttonExport">
-       <property name="minimumSize">
-        <size>
-         <width>50</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="toolTip">
-        <string>Export to file</string>
-       </property>
-       <property name="whatsThis">
-        <string>Opens a file dialog used to export the contents of this database cell to a file.</string>
-       </property>
-       <property name="text">
-        <string>&amp;Export</string>
-       </property>
+      <widget class="QToolBar" name="editCellToolbar">
+       <addaction name="actionWordWrap"/>
+       <addaction name="actionIndent"/>
+       <addaction name="actionImport"/>
+       <addaction name="actionExport"/>
+       <addaction name="actionNull"/>
+       <addaction name="actionPrint"/>
       </widget>
      </item>
     </layout>
@@ -187,24 +130,12 @@
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="verticalLayout_4">
-      <layout class="QVBoxLayout" name="verticalLayout_3">
-       <item>
-        <widget class="QTextEdit" name="editorText">
-         <property name="font">
-          <font>
-           <family>Monospace</family>
-          </font>
-         </property>
-         <property name="whatsThis">
-          <string>This area displays information about the data present in this database cell</string>
-         </property>
-         <property name="acceptRichText">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
+     <widget class="QWidget" name="editorSci">
+      <property name="whatsThis">
+       <string>The text editor modes let you edit plain text, as well as JSON or XML data with syntax highlighting, automatic formatting and validation before saving.
+
+Errors are indicated with a red squiggle underline.</string>
+      </property>
      </widget>
      <widget class="QWidget" name="editorBinary">
       <property name="contextMenuPolicy">
@@ -220,7 +151,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>98</width>
+         <width>85</width>
          <height>35</height>
         </rect>
        </property>
@@ -238,35 +169,68 @@
        </layout>
       </widget>
      </widget>
-     <widget class="QWidget" name="editorSci">
-      <property name="whatsThis">
-       <string>This editor mode lets you edit JSON or XML data with syntax highlighting, automatic formatting and validation before saving.
-
-Errors are indicated with a red squiggle underline.</string>
-      </property>
-     </widget>
     </widget>
    </item>
    <item>
-    <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="QLabel" name="labelType">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="text">
           <string>Type of data currently in cell</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelSize">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Size of data currently in table</string>
+         </property>
+         <property name="textFormat">
+          <enum>Qt::PlainText</enum>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
       </layout>
      </item>
-     <item row="1" column="2">
+     <item>
       <widget class="QPushButton" name="buttonApply">
-       <property name="minimumSize">
-        <size>
-         <width>50</width>
-         <height>0</height>
-        </size>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
        </property>
        <property name="toolTip">
         <string>Apply data to cell</string>
@@ -279,45 +243,6 @@ Errors are indicated with a red squiggle underline.</string>
        </property>
        <property name="default">
         <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="0" column="2">
-      <widget class="QPushButton" name="buttonNull">
-       <property name="minimumSize">
-        <size>
-         <width>50</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="toolTip">
-        <string>Set this cell to NULL</string>
-       </property>
-       <property name="whatsThis">
-        <string>Erases the contents of the cell</string>
-       </property>
-       <property name="text">
-        <string>Set as &amp;NULL</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="labelSize">
-       <property name="text">
-        <string>Size of data currently in table</string>
        </property>
       </widget>
      </item>
@@ -350,8 +275,14 @@ Errors are indicated with a red squiggle underline.</string>
    <property name="toolTip">
     <string>Open preview dialog for printing displayed text</string>
    </property>
+   <property name="whatsThis">
+    <string>Open preview dialog for printing the data currently stored in the cell</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+P</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WidgetShortcut</enum>
    </property>
   </action>
   <action name="actionCopyHexAscii">
@@ -369,46 +300,94 @@ Errors are indicated with a red squiggle underline.</string>
     <string>Ctrl+Shift+C</string>
    </property>
   </action>
+  <action name="actionIndent">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/text_indent</normaloff>:/icons/text_indent</iconset>
+   </property>
+   <property name="text">
+    <string>Autoformat</string>
+   </property>
+   <property name="toolTip">
+    <string>Auto-format: pretty print on loading, compact on saving.</string>
+   </property>
+   <property name="whatsThis">
+    <string>When enabled, the auto-format feature formats the data on loading, breaking the text in lines and indenting it for maximum readability. On data saving, the auto-format feature compacts the data removing end of lines, and unnecessary whitespace.</string>
+   </property>
+  </action>
+  <action name="actionExport">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/save_sql</normaloff>:/icons/save_sql</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Export...</string>
+   </property>
+   <property name="toolTip">
+    <string>Export to file</string>
+   </property>
+   <property name="whatsThis">
+    <string>Opens a file dialog used to export the contents of this database cell to a file.</string>
+   </property>
+  </action>
+  <action name="actionImport">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/document_open</normaloff>:/icons/document_open</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Import...</string>
+   </property>
+   <property name="toolTip">
+    <string>Import from file</string>
+   </property>
+   <property name="whatsThis">
+    <string>Opens a file dialog used to import any kind of data to this database cell.</string>
+   </property>
+  </action>
+  <action name="actionNull">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/set_to_null</normaloff>:/icons/set_to_null</iconset>
+   </property>
+   <property name="text">
+    <string>Set as &amp;NULL</string>
+   </property>
+   <property name="whatsThis">
+    <string>Erases the contents of the cell</string>
+   </property>
+  </action>
+  <action name="actionWordWrap">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/word_wrap</normaloff>:/icons/word_wrap</iconset>
+   </property>
+   <property name="text">
+    <string>Word Wrap</string>
+   </property>
+   <property name="toolTip">
+    <string>Wrap lines on word boundaries</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
-  <tabstop>buttonExport</tabstop>
+  <tabstop>comboMode</tabstop>
+  <tabstop>buttonAutoSwitchMode</tabstop>
+  <tabstop>buttonApply</tabstop>
  </tabstops>
  <resources>
   <include location="icons/icons.qrc"/>
  </resources>
  <connections>
-  <connection>
-   <sender>buttonImport</sender>
-   <signal>clicked()</signal>
-   <receiver>EditDialog</receiver>
-   <slot>importData()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>400</x>
-     <y>28</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>60</x>
-     <y>0</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonExport</sender>
-   <signal>clicked()</signal>
-   <receiver>EditDialog</receiver>
-   <slot>exportData()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>488</x>
-     <y>51</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>162</x>
-     <y>17</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>buttonApply</sender>
    <signal>clicked()</signal>
@@ -442,46 +421,14 @@ Errors are indicated with a red squiggle underline.</string>
    </hints>
   </connection>
   <connection>
-   <sender>buttonNull</sender>
-   <signal>clicked()</signal>
-   <receiver>EditDialog</receiver>
-   <slot>setNull()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>528</x>
-     <y>28</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>723</x>
-     <y>58</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>editorText</sender>
-   <signal>textChanged()</signal>
-   <receiver>EditDialog</receiver>
-   <slot>editTextChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>279</x>
-     <y>191</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>339</x>
-     <y>335</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonIndent</sender>
+   <sender>actionIndent</sender>
    <signal>toggled(bool)</signal>
    <receiver>EditDialog</receiver>
    <slot>setMustIndentAndCompact(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>309</x>
-     <y>22</y>
+     <x>-1</x>
+     <y>-1</y>
     </hint>
     <hint type="destinationlabel">
      <x>308</x>
@@ -496,8 +443,8 @@ Errors are indicated with a red squiggle underline.</string>
    <slot>switchEditorMode(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>135</x>
-     <y>22</y>
+     <x>162</x>
+     <y>33</y>
     </hint>
     <hint type="destinationlabel">
      <x>308</x>
@@ -542,6 +489,70 @@ Errors are indicated with a red squiggle underline.</string>
    <signal>triggered()</signal>
    <receiver>EditDialog</receiver>
    <slot>copyHexAscii()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>308</x>
+     <y>190</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionNull</sender>
+   <signal>triggered()</signal>
+   <receiver>EditDialog</receiver>
+   <slot>setNull()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>308</x>
+     <y>190</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionImport</sender>
+   <signal>triggered()</signal>
+   <receiver>EditDialog</receiver>
+   <slot>importData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>308</x>
+     <y>190</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionExport</sender>
+   <signal>triggered()</signal>
+   <receiver>EditDialog</receiver>
+   <slot>exportData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>308</x>
+     <y>190</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionWordWrap</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>EditDialog</receiver>
+   <slot>setWordWrapping(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

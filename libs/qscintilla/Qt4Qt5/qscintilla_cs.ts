@@ -1420,43 +1420,63 @@
 <context>
     <name>QsciLexerDiff</name>
     <message>
-        <location filename="qscilexerdiff.cpp" line="87"/>
+        <location filename="qscilexerdiff.cpp" line="91"/>
         <source>Default</source>
         <translation>Default</translation>
     </message>
     <message>
-        <location filename="qscilexerdiff.cpp" line="90"/>
+        <location filename="qscilexerdiff.cpp" line="94"/>
         <source>Comment</source>
         <translation>Komentář</translation>
     </message>
     <message>
-        <location filename="qscilexerdiff.cpp" line="93"/>
+        <location filename="qscilexerdiff.cpp" line="97"/>
         <source>Command</source>
         <translation>Příkaz</translation>
     </message>
     <message>
-        <location filename="qscilexerdiff.cpp" line="96"/>
+        <location filename="qscilexerdiff.cpp" line="100"/>
         <source>Header</source>
         <translation>Hlavička</translation>
     </message>
     <message>
-        <location filename="qscilexerdiff.cpp" line="99"/>
+        <location filename="qscilexerdiff.cpp" line="103"/>
         <source>Position</source>
         <translation>Pozice</translation>
     </message>
     <message>
-        <location filename="qscilexerdiff.cpp" line="102"/>
+        <location filename="qscilexerdiff.cpp" line="106"/>
         <source>Removed line</source>
         <translation>Odebraná řádka</translation>
     </message>
     <message>
-        <location filename="qscilexerdiff.cpp" line="105"/>
+        <location filename="qscilexerdiff.cpp" line="109"/>
         <source>Added line</source>
         <translation>Přidaná řádka</translation>
     </message>
     <message>
-        <location filename="qscilexerdiff.cpp" line="108"/>
+        <location filename="qscilexerdiff.cpp" line="112"/>
         <source>Changed line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qscilexerdiff.cpp" line="115"/>
+        <source>Added adding patch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qscilexerdiff.cpp" line="118"/>
+        <source>Removed adding patch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qscilexerdiff.cpp" line="121"/>
+        <source>Added removing patch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qscilexerdiff.cpp" line="124"/>
+        <source>Removed removing patch</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3096,84 +3116,104 @@
 <context>
     <name>QsciLexerPython</name>
     <message>
-        <location filename="qscilexerpython.cpp" line="217"/>
+        <location filename="qscilexerpython.cpp" line="223"/>
         <source>Default</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qscilexerpython.cpp" line="220"/>
+        <location filename="qscilexerpython.cpp" line="226"/>
         <source>Comment</source>
         <translation>Komentář</translation>
     </message>
     <message>
-        <location filename="qscilexerpython.cpp" line="223"/>
+        <location filename="qscilexerpython.cpp" line="229"/>
         <source>Number</source>
         <translation>Číslo</translation>
     </message>
     <message>
-        <location filename="qscilexerpython.cpp" line="226"/>
+        <location filename="qscilexerpython.cpp" line="232"/>
         <source>Double-quoted string</source>
         <translation>String ve dvojitých uvozovkách</translation>
     </message>
     <message>
-        <location filename="qscilexerpython.cpp" line="229"/>
+        <location filename="qscilexerpython.cpp" line="235"/>
         <source>Single-quoted string</source>
         <translation>String v jednoduchých uvozovkách</translation>
     </message>
     <message>
-        <location filename="qscilexerpython.cpp" line="232"/>
+        <location filename="qscilexerpython.cpp" line="238"/>
         <source>Keyword</source>
         <translation>Klíčové slovo</translation>
     </message>
     <message>
-        <location filename="qscilexerpython.cpp" line="235"/>
+        <location filename="qscilexerpython.cpp" line="241"/>
         <source>Triple single-quoted string</source>
         <translation>String ve třech jednoduchých uvozovkách</translation>
     </message>
     <message>
-        <location filename="qscilexerpython.cpp" line="238"/>
+        <location filename="qscilexerpython.cpp" line="244"/>
         <source>Triple double-quoted string</source>
         <translation>String ve třech dvojitých uvozovkách</translation>
     </message>
     <message>
-        <location filename="qscilexerpython.cpp" line="241"/>
+        <location filename="qscilexerpython.cpp" line="247"/>
         <source>Class name</source>
         <translation>Jméno třídy</translation>
     </message>
     <message>
-        <location filename="qscilexerpython.cpp" line="244"/>
+        <location filename="qscilexerpython.cpp" line="250"/>
         <source>Function or method name</source>
         <translation>Jméno funkce nebo metody</translation>
     </message>
     <message>
-        <location filename="qscilexerpython.cpp" line="247"/>
+        <location filename="qscilexerpython.cpp" line="253"/>
         <source>Operator</source>
         <translation>Operátor</translation>
     </message>
     <message>
-        <location filename="qscilexerpython.cpp" line="250"/>
+        <location filename="qscilexerpython.cpp" line="256"/>
         <source>Identifier</source>
         <translation>Identifikátor</translation>
     </message>
     <message>
-        <location filename="qscilexerpython.cpp" line="253"/>
+        <location filename="qscilexerpython.cpp" line="259"/>
         <source>Comment block</source>
         <translation>Blok komentáře</translation>
     </message>
     <message>
-        <location filename="qscilexerpython.cpp" line="256"/>
+        <location filename="qscilexerpython.cpp" line="262"/>
         <source>Unclosed string</source>
         <translation>Neuzavřený string</translation>
     </message>
     <message>
-        <location filename="qscilexerpython.cpp" line="259"/>
+        <location filename="qscilexerpython.cpp" line="265"/>
         <source>Highlighted identifier</source>
         <translation>Zvýrazněný identifikátor</translation>
     </message>
     <message>
-        <location filename="qscilexerpython.cpp" line="262"/>
+        <location filename="qscilexerpython.cpp" line="268"/>
         <source>Decorator</source>
         <translation>Dekorátor</translation>
+    </message>
+    <message>
+        <location filename="qscilexerpython.cpp" line="271"/>
+        <source>Double-quoted f-string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qscilexerpython.cpp" line="274"/>
+        <source>Single-quoted f-string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qscilexerpython.cpp" line="277"/>
+        <source>Triple single-quoted f-string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qscilexerpython.cpp" line="280"/>
+        <source>Triple double-quoted f-string</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3742,6 +3782,11 @@
         <translation type="unfinished">Komentář</translation>
     </message>
     <message>
+        <location filename="qscilexerverilog.cpp" line="290"/>
+        <source>Inactive comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="qscilexerverilog.cpp" line="293"/>
         <source>Line comment</source>
         <translation type="unfinished">Jednořádkový komentář</translation>
@@ -3797,6 +3842,11 @@
         <translation type="unfinished">Sekundární klíčová slova a identifikátory</translation>
     </message>
     <message>
+        <location filename="qscilexerverilog.cpp" line="326"/>
+        <source>Inactive secondary keywords and identifiers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="qscilexerverilog.cpp" line="329"/>
         <source>System task</source>
         <translation type="unfinished"></translation>
@@ -3809,6 +3859,11 @@
     <message>
         <location filename="qscilexerverilog.cpp" line="335"/>
         <source>Preprocessor block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qscilexerverilog.cpp" line="338"/>
+        <source>Inactive preprocessor block</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3825,6 +3880,11 @@
         <location filename="qscilexerverilog.cpp" line="347"/>
         <source>Identifier</source>
         <translation type="unfinished">Identifikátor</translation>
+    </message>
+    <message>
+        <location filename="qscilexerverilog.cpp" line="350"/>
+        <source>Inactive identifier</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="qscilexerverilog.cpp" line="353"/>
@@ -3953,37 +4013,37 @@
 <context>
     <name>QsciScintilla</name>
     <message>
-        <location filename="qsciscintilla.cpp" line="4448"/>
+        <location filename="qsciscintilla.cpp" line="4455"/>
         <source>&amp;Undo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qsciscintilla.cpp" line="4452"/>
+        <location filename="qsciscintilla.cpp" line="4459"/>
         <source>&amp;Redo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qsciscintilla.cpp" line="4458"/>
+        <location filename="qsciscintilla.cpp" line="4465"/>
         <source>Cu&amp;t</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qsciscintilla.cpp" line="4463"/>
+        <location filename="qsciscintilla.cpp" line="4470"/>
         <source>&amp;Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qsciscintilla.cpp" line="4469"/>
+        <location filename="qsciscintilla.cpp" line="4476"/>
         <source>&amp;Paste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qsciscintilla.cpp" line="4473"/>
+        <location filename="qsciscintilla.cpp" line="4480"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qsciscintilla.cpp" line="4480"/>
+        <location filename="qsciscintilla.cpp" line="4487"/>
         <source>Select All</source>
         <translation type="unfinished"></translation>
     </message>

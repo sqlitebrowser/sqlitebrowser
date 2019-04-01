@@ -1046,7 +1046,7 @@ Fehler werden durch eine rote Wellenlinie gekennzeichnet.</translation>
         <location filename="../EditDialog.cpp" line="767"/>
         <location filename="../EditDialog.cpp" line="957"/>
         <location filename="../EditDialog.cpp" line="965"/>
-        <source>%n char(s)</source>
+        <source>%n character(s)</source>
         <translation>
             <numerusform>%n Zeichen</numerusform>
             <numerusform>%n Zeichen</numerusform>

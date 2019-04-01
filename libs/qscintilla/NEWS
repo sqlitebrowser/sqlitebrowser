@@ -1,3 +1,47 @@
+v2.11.1 14th February 2019
+  - There is a small (but potentially incompatible) change to the signature of
+    a QsciScintillaBase::SendScintilla() overload which may require an explicit
+    cast to be added.
+  - Bug fixes.
+
+v2.11 10th February 2019
+  - Based on Scintilla v3.10.1.
+  - Added setCaretLineFrameWidth() to QsciScintilla.
+  - The findFirst() and findFirstInSelection() methods of QsciScintilla now
+    support Cxx11 regular expressions.
+  - Added cancelFind() to QsciScintilla.
+  - Added GradientIndicator and CentreGradientIndicator to
+    QsciScintilla::IndicatorStyle.
+  - Added WrapIndentDeeplyIndented to QsciScintilla::WrapIndentMode.
+  - Added ReverseLines to QsciCommand::Command.
+  - Deprecated QsciLexer::styleBitsNeeded().
+  - Added the AddingPatchAdded, RemovingPatchAdded, AddingPatchRemoved and
+    RemovingPatchRemoved styles to QsciLexerDiff.
+  - Added the DoubleQuotedFString, SingleQuotedFString,
+    TripleSingleQuotedFString and TripleDoubleQuotedFString styles to
+    QsciLexerPython.
+  - Added SCLEX_INDENT, SCLEX_MAXIMA and SCLEX_STATA to QsciScintillaBase.
+  - Added SCI_SETACCESSIBILITY, SCI_GETACCESSIBILITY, SCI_GETCARETLINEFRAME,
+    SCI_SETCARETLINEFRAME, SCI_SETCOMMANDEVENTS, SCI_GETCOMMANDEVENTS,
+    SCI_LINEREVERSE and SCI_GETMOVEEXTENDSSELECTION to QsciScintillaBase.
+  - Added SCI_GETLINECHARACTERINDEX, SCI_ALLOCATELINECHARACTERINDEX,
+    SCI_RELEASELINECHARACTERINDEX, SCI_LINEFROMINDEXPOSITION,
+    SCI_INDEXPOSITIONFROMLINE, SCI_COUNTCODEUNITS and
+    SCI_POSITIONRELATIVECODEUNITS to QsciScintillaBase.
+  - Added SC_LINECHARACTERINDEX_NONE, SC_LINECHARACTERINDEX_UTF32 and
+    SC_LINECHARACTERINDEX_UTF16 to QsciScintillaBase.
+  - Added SCI_GETNAMEDSTYLES, SCI_NAMEOFSTYLE, SCI_TAGSOFSTYLE and
+    SCI_DESCRIPTIONOFSTYLE to QsciScintillaBase.
+  - Added the SCN_AUTOCSELECTIONCHANGE and SCN_URIDROPPED() signals to
+    QsciScintillaBase.
+  - Added the overloaded SCN_USERLISTSELECTION() signal to QsciScintillaBase.
+  - Added INDIC_GRADIENT and INDIC_GRADIENTCENTRE to QsciScintillaBase.
+  - Added SC_PRINT_SCREENCOLOURS to QsciScintillaBase.
+  - Added SC_WRAPINDENT_DEEPINDENT to QsciScintillaBase.
+  - Added SCI_GETDOCUMENTOPTIONS, SC_DOCUMENTOPTION_DEFAULT,
+    SC_DOCUMENTOPTION_STYLES_NONE and SC_DOCUMENTOPTION_TEXT_LARGE to
+    QsciScintillaBase.
+
 v2.10.8 1st October 2018
   - Bug fixes.
 

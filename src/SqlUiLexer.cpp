@@ -21,7 +21,6 @@ SqlUiLexer::SqlUiLexer(QObject* parent) :
 void SqlUiLexer::setupAutoCompletion()
 {
     // Set keywords
-    QStringList keywordPatterns;
     keywordPatterns
             // Keywords
             << "ABORT" << "ACTION" << "ADD" << "AFTER" << "ALL"
@@ -29,9 +28,9 @@ void SqlUiLexer::setupAutoCompletion()
             << "ATTACH" << "AUTOINCREMENT" << "BEFORE" << "BEGIN" << "BETWEEN"
             << "BY" << "CASCADE" << "CASE" << "CAST" << "CHECK"
             << "COLLATE" << "COLUMN" << "COMMIT" << "CONFLICT" << "CONSTRAINT"
-            << "CREATE" << "CROSS" << "CURRENT_DATE" << "CURRENT_TIME" << "CURRENT_TIMESTAMP"
+            << "CREATE" << "CROSS" << "CURRENT" << "CURRENT_DATE" << "CURRENT_TIME" << "CURRENT_TIMESTAMP"
             << "DATABASE" << "DEFAULT" << "DEFERRABLE" << "DEFERRED" << "DELETE"
-            << "DESC" << "DETACH" << "DISTINCT" << "DROP" << "EACH"
+            << "DESC" << "DETACH" << "DISTINCT" << "DO" << "DROP" << "EACH"
             << "ELSE" << "END" << "ESCAPE" << "EXCEPT" << "EXCLUSIVE"
             << "EXISTS" << "EXPLAIN" << "FAIL" << "FILTER" << "FOLLOWING" << "FOR" << "FOREIGN"
             << "FROM" << "FULL" << "GLOB" << "GROUP" << "HAVING"
@@ -39,16 +38,16 @@ void SqlUiLexer::setupAutoCompletion()
             << "INDEXED" << "INITIALLY" << "INNER" << "INSERT" << "INSTEAD"
             << "INTERSECT" << "INTO" << "IS" << "ISNULL" << "JOIN"
             << "KEY" << "LEFT" << "LIKE" << "LIMIT" << "MATCH"
-            << "NATURAL" << "NO" << "NOT" << "NOTNULL" << "NULL"
+            << "NATURAL" << "NO" << "NOT" << "NOTHING" << "NOTNULL" << "NULL"
             << "OF" << "OFFSET" << "ON" << "OR" << "ORDER"
             << "OUTER" << "OVER" << "PARTITION" << "PLAN" << "PRAGMA" << "PRECEDING" << "PRIMARY" << "QUERY"
             << "RAISE" << "RANGE" << "RECURSIVE" << "REFERENCES" << "REGEXP" << "REINDEX" << "RELEASE"
             << "RENAME" << "REPLACE" << "RESTRICT" << "RIGHT" << "ROLLBACK"
-            << "ROWID" << "ROWS" << "SAVEPOINT" << "SELECT" << "SET" << "TABLE"
+            << "ROWID" << "ROW" << "ROWS" << "SAVEPOINT" << "SELECT" << "SET" << "TABLE"
             << "TEMP" << "TEMPORARY" << "THEN" << "TO" << "TRANSACTION"
             << "TRIGGER" << "UNBOUNDED" << "UNION" << "UNIQUE" << "UPDATE" << "USING"
             << "VACUUM" << "VALUES" << "VIEW" << "VIRTUAL" << "WHEN"
-            << "WHERE" << "WITH" << "WITHOUT"
+            << "WHERE" << "WINDOW" << "WITH" << "WITHOUT"
             // Data types
             << "INT" << "INTEGER" << "REAL" << "TEXT" << "BLOB" << "NUMERIC" << "CHAR";
     bool upperKeywords = Settings::getValue("editor", "upper_keywords").toBool();
@@ -183,12 +182,15 @@ const char* SqlUiLexer::keywords(int set) const
 {
     // Function and table names are generated automatically but need to be returned to the calling functions.
     // In order to not have them deleted after this function ends they are stored as static variables. Because
-    // the functions list doesn't change after the first call it's initialised here whereas the tables list, which
-    // can change, is updated for each call
+    // the keywords and functions lists don't change after the first call it's initialised here whereas the tables
+    // list, which can change, is updated for each call
+    static std::string sqliteKeywords = keywordPatterns.join(" ").toLower().toUtf8().constData();
     static std::string functions = listFunctions.join(" ").toUtf8().constData();
     static std::string tables;
 
-    if(set == 6)            // This corresponds to the QsciLexerSQL::KeywordSet6 style in SqlTextEdit
+     if(set == 1) {         // This corresponds to the QsciLexerSQL::Keyword style in SqlTextEdit
+        return sqliteKeywords.c_str();
+    } else if(set == 6)     // This corresponds to the QsciLexerSQL::KeywordSet6 style in SqlTextEdit
     {
         tables = listTables.join(" ").toLower().toUtf8().constData();
         return tables.c_str();

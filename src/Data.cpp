@@ -1,6 +1,7 @@
 #include "Data.h"
 
 #include <QTextCodec>
+#include <algorithm>
 
 // Note that these aren't all possible BOMs. But they are probably the most common ones.
 // The size is needed at least for the ones with character zero in them.
@@ -16,15 +17,19 @@ bool isTextOnly(QByteArray data, const QString& encoding, bool quickTest)
     if(startsWithBom(data))
         return true;
 
+    // We can assume that the default encoding (UTF-8) and all the ISO-8859
+    // cannot contain character zero.
+    // This has to be checked explicitly because toUnicode() is using zero as
+    // a terminator for these encodings.
+    if((encoding.isEmpty() || encoding.startsWith("ISO-8859")) && data.contains('\0'))
+        return false;
+
     // Truncate to the first couple of bytes for quick testing
-    if(quickTest)
-        data = data.left(512);
-
-    // Convert to Unicode if necessary
-    data = decodeString(data, encoding);
-
-    // Perform check
-    return QString(data).toUtf8() == data;
+    int testSize = quickTest? std::min(512, data.size()) : data.size();
+    QTextCodec::ConverterState state;
+    QTextCodec *codec = encoding.isEmpty()? QTextCodec::codecForName("UTF-8") : QTextCodec::codecForName(encoding.toUtf8());
+    const QString text = codec->toUnicode(data.constData(), testSize, &state);
+    return state.invalidChars <= 0;
 }
 
 bool startsWithBom(const QByteArray& data)

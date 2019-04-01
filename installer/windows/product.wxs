@@ -14,16 +14,15 @@
             Removes the installed product first then installs the new version, if the installation of the new version
             fails, Windows Installer also rolls back the removal of the installed product, in other words, reinstalls it.
 
-        AllowSameVersionUpgrades="yes"
-            When upgrading products (using the same "UpgradeCode"), Windows Installer only check the first three version
-            fields (Major.Minor.Patch) to decide if it should upgrade the product or not. The nightly build version never
-            change and therefore "AllowSameVersionUpgrades" is required if we want to be able to update the installed
-            nightly version.
+        AllowDowngrades="yes"
+            When set to yes, any version can be installed over any other version.
+
+        Further info:
+            http://wixtoolset.org/documentation/manual/v3/xsd/wix/majorupgrade.html
         -->
         <MajorUpgrade
             Schedule="afterInstallInitialize"
-            AllowSameVersionUpgrades="yes"
-            DowngradeErrorMessage="A later version of $(var.Name) is already installed. Setup will now exit."
+            AllowDowngrades="yes"
         />
 
         <!-- ========================================= Add/Remove Programs ========================================= -->
@@ -70,6 +69,7 @@
                     <?endif?>
                     <Directory Id="extensions" Name="extensions">
                         <Component><File Source="$(var.SQLitePath)\math.dll" /></Component>
+                        <Component><File Source="$(var.SQLitePath)\formats.dll" /></Component>
                     </Directory>
                     <Directory Id="imageformats" Name="imageformats">
                         <Component><File Source="$(var.QtPath)\plugins\imageformats\qgif.dll" /></Component>
@@ -144,6 +144,9 @@
             <Feature Id="Extensions" Title="SQLite Extensions" Description="SQLite runtime loadable extensions" AllowAdvertise="no" Display="expand">
                 <Feature Id="MathExtension" Title="Math" Description="Provide mathematical and string extension functions for SQL queries." AllowAdvertise="no">
                     <ComponentRef Id="math.dll" />
+                </Feature>
+                <Feature Id="FormatsExtension" Title="Formats" Description="Provide additional field display formats." AllowAdvertise="no">
+                    <ComponentRef Id="formats.dll" />
                 </Feature>
             </Feature>
 
