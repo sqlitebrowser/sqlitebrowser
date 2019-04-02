@@ -52,7 +52,7 @@ std::string Query::buildQuery(bool withRowid) const
         {
             selector = sqlb::escapeIdentifier(m_rowid_columns.at(0)) + ",";
         } else {
-            selector += "json_array(";
+            selector += "sqlb_make_single_value(";
             for(size_t i=0;i<m_rowid_columns.size();i++)
                 selector += sqlb::escapeIdentifier(m_rowid_columns.at(i)) + ",";
             selector.pop_back();    // Remove the last comma

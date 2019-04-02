@@ -20,6 +20,9 @@
 #include <atomic>
 #include <algorithm>
 #include <cctype>
+#include <json.hpp>
+
+using json = nlohmann::json;
 
 QStringList DBBrowserDB::Datatypes = QStringList() << "INTEGER" << "TEXT" << "BLOB" << "REAL" << "NUMERIC";
 
@@ -58,6 +61,22 @@ static int sqlite_compare_utf16ci( void* /*arg*/,int size1, const void *str1, in
     const QString string2 = QString::fromRawData(reinterpret_cast<const QChar*>(str2), size2 / sizeof(QChar));
 
     return QString::compare(string1, string2, Qt::CaseInsensitive);
+}
+
+static void sqlite_make_single_value(sqlite3_context* ctx, int num_arguments, sqlite3_value* arguments[])
+{
+    json array;
+    for(int i=0;i<num_arguments;i++)
+        array.push_back(reinterpret_cast<const char*>(sqlite3_value_text(arguments[i])));
+
+    std::string output = array.dump();
+    char* output_str = new char[output.size()+1];
+    std::strcpy(output_str, output.c_str());
+
+    sqlite3_result_text(ctx, output_str, output.length(), [](void* ptr) {
+        char* cptr = static_cast<char*>(ptr);
+        delete cptr;
+    });
 }
 
 void DBBrowserDB::collationNeeded(void* /*pData*/, sqlite3* /*db*/, int eTextRep, const char* sCollationName)
@@ -167,6 +186,19 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
         // Register REGEXP function
         if(Settings::getValue("extensions", "disableregex").toBool() == false)
             sqlite3_create_function(_db, "REGEXP", 2, SQLITE_UTF8, nullptr, regexp, nullptr, nullptr);
+
+        // Register our internal helper function for putting multiple values into a single column
+        sqlite3_create_function_v2(
+            _db,
+            "sqlb_make_single_value",
+            -1,
+            SQLITE_UTF8 | SQLITE_DETERMINISTIC,
+            nullptr,
+            sqlite_make_single_value,
+            nullptr,
+            nullptr,
+            nullptr
+        );
 
         // Check if file is read only. In-memory databases are never read only
         if(db == ":memory:")
@@ -1144,13 +1176,13 @@ bool DBBrowserDB::getRow(const sqlb::ObjectIdentifier& table, const QString& row
     QString sQuery = QString("SELECT * FROM %1 WHERE ")
             .arg(table.toString());
 
-    // For a single rowid column we can use a simple WHERE condition, for multiple rowid columns we have to use json_array to decode the composed rowid values.
+    // For a single rowid column we can use a simple WHERE condition, for multiple rowid columns we have to use sqlb_make_single_value to decode the composed rowid values.
     QStringList pks = getObjectByName<sqlb::Table>(table)->rowidColumns();
     if(pks.size() == 1)
     {
         sQuery += QString("%1='%2;").arg(sqlb::escapeIdentifier(pks.front())).arg(rowid);
     } else {
-        sQuery += QString("json_array(%1)='%2';")
+        sQuery += QString("sqlb_make_single_value(%1)='%2';")
                 .arg(sqlb::escapeIdentifier(pks).join(","))
                 .arg(QString(rowid).replace("'", "''"));
     }
@@ -1317,7 +1349,7 @@ bool DBBrowserDB::deleteRecords(const sqlb::ObjectIdentifier& table, const QStri
         quoted_rowids.append("'" + rowid.replace("'", "''") + "'");
 
     // For a single rowid column we can use a SELECT ... IN(...) statement which is faster.
-    // For multiple rowid columns we have to use json_array to decode the composed rowid values.
+    // For multiple rowid columns we have to use sqlb_make_single_value to decode the composed rowid values.
     QString statement;
     if(pks.size() == 1)
     {
@@ -1328,7 +1360,7 @@ bool DBBrowserDB::deleteRecords(const sqlb::ObjectIdentifier& table, const QStri
     } else {
         statement = QString("DELETE FROM %1 WHERE ").arg(table.toString());
 
-        statement += "json_array(";
+        statement += "sqlb_make_single_value(";
         for(const auto& pk : pks)
             statement += sqlb::escapeIdentifier(pk) + ",";
         statement.chop(1);
@@ -1362,14 +1394,14 @@ bool DBBrowserDB::updateRecord(const sqlb::ObjectIdentifier& table, const QStrin
             .arg(table.toString())
             .arg(sqlb::escapeIdentifier(column));
 
-    // For a single rowid column we can use a simple WHERE condition, for multiple rowid columns we have to use json_array to decode the composed rowid values.
+    // For a single rowid column we can use a simple WHERE condition, for multiple rowid columns we have to use sqlb_make_single_value to decode the composed rowid values.
     if(pks.size() == 1)
     {
         sql += QString("%1='%2';")
                 .arg(sqlb::escapeIdentifier(pks.first()))
                 .arg(QString(rowid).replace("'", "''"));
     } else {
-        sql += QString("json_array(%1)='%2';")
+        sql += QString("sqlb_make_single_value(%1)='%2';")
                 .arg(sqlb::escapeIdentifier(pks).join(","))
                 .arg(QString(rowid).replace("'", "''"));
     }
