@@ -3510,13 +3510,13 @@ Sei sicuro?</translation>
         <location filename="../MainWindow.cpp" line="1476"/>
         <location filename="../MainWindow.cpp" line="1478"/>
         <source>At line %1:</source>
-        <translation type="unfinished"></translation>
+        <translation>Alla riga %1:</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1476"/>
         <location filename="../MainWindow.cpp" line="1478"/>
         <source>Result: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Risultato: %2</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2232"/>
@@ -5061,7 +5061,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="217"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Results of the last executed statements.&lt;/p&gt;&lt;p&gt;You may want to collapse this panel and use the &lt;span style=&quot; font-style:italic;&quot;&gt;SQL Log&lt;/span&gt; dock with &lt;span style=&quot; font-style:italic;&quot;&gt;User&lt;/span&gt; selection instead.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Risultati degli ultimi statements eseguiti.&lt;/p&gt;&lt;p&gt;Potresti voler rimpicciolire questo pannello e usare la casella &lt;span style=&quot; font-style:italic;&quot;&gt;SQL Log&lt;/span&gt; con la selezione dell&apos;&lt;span style=&quot; font-style:italic;&quot;&gt;Utente&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="238"/>
