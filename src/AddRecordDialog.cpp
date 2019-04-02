@@ -112,7 +112,7 @@ public:
     }
 };
 
-AddRecordDialog::AddRecordDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& tableName, QWidget* parent, const QString &pseudo_pk)
+AddRecordDialog::AddRecordDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& tableName, QWidget* parent, const std::vector<std::string>& pseudo_pk)
     : QDialog(parent),
       ui(new Ui::AddRecordDialog),
       pdb(db),
@@ -184,7 +184,8 @@ void AddRecordDialog::populateFields()
     QStringList pk;
 
     // Initialize fields, fks and pk differently depending on whether it's a table or a view.
-    if (pseudo_pk.isNull())
+    const sqlb::ObjectPtr obj = pdb.getObjectByName(curTable);
+    if (obj->type() == sqlb::Object::Table)
     {
         sqlb::TablePtr m_table = pdb.getObjectByName<sqlb::Table>(curTable);
         fields = m_table->fields;
@@ -195,7 +196,8 @@ void AddRecordDialog::populateFields()
         sqlb::ViewPtr m_view = pdb.getObjectByName<sqlb::View>(curTable);
         fields = m_view->fields;
         fks.fill(sqlb::ConstraintPtr(nullptr), fields.size());
-        pk = QStringList(pseudo_pk);
+        for(const auto& col : pseudo_pk)
+            pk << QString::fromStdString(col);
     }
 
     for(uint i = 0; i < fields.size(); i++)

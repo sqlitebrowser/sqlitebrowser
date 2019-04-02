@@ -967,7 +967,7 @@ void MainWindow::addRecord()
 
 void MainWindow::insertValues()
 {
-    QString pseudo_pk = m_browseTableModel->hasPseudoPk() ? QString::fromStdString(m_browseTableModel->pseudoPk().front()) : QString();
+    std::vector<std::string> pseudo_pk = m_browseTableModel->hasPseudoPk() ? m_browseTableModel->pseudoPk() : std::vector<std::string>();
     AddRecordDialog dialog(db, currentlyBrowsedTableName(), this, pseudo_pk);
     if (dialog.exec())
         populateTable();

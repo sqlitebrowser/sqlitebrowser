@@ -19,7 +19,7 @@ class AddRecordDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit AddRecordDialog(DBBrowserDB& pdb, const sqlb::ObjectIdentifier& tableName, QWidget* parent = nullptr, const QString& pseudo_pk = QString());
+    explicit AddRecordDialog(DBBrowserDB& pdb, const sqlb::ObjectIdentifier& tableName, QWidget* parent = nullptr, const std::vector<std::string>& pseudo_pk = {});
     ~AddRecordDialog() override;
 
 protected:
@@ -46,7 +46,7 @@ private:
     Ui::AddRecordDialog* ui;
     DBBrowserDB& pdb;
     sqlb::ObjectIdentifier curTable;
-    QString pseudo_pk;
+    std::vector<std::string> pseudo_pk;
 };
 
 #endif
