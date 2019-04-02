@@ -221,7 +221,8 @@ int SqliteTableModel::filterCount() const
 }
 
 // Convert a number to string using the Unicode superscript characters
-static QString toSuperScript(int number)
+template<class T>
+static QString toSuperScript(T number)
 {
     QString superScript = QString::number(number);
     superScript.replace("0", "⁰");
@@ -247,7 +248,7 @@ QVariant SqliteTableModel::headerData(int section, Qt::Orientation orientation, 
         // if we have a VIRTUAL table the model will not be valid, with no header data
         if(section < m_headers.size()) {
             QString sortIndicator;
-            for(int i = 0; i < m_query.orderBy().size(); i++) {
+            for(size_t i = 0; i < m_query.orderBy().size(); i++) {
                 const sqlb::SortedColumn sortedColumn = m_query.orderBy()[i];
                 // Append sort indicator with direction and ordinal number in superscript style
                 if (sortedColumn.column == section) {
