@@ -131,6 +131,7 @@ npm -g upgrade >>$LOG 2>&1
 npm -g uninstall appdmg >>$LOG 2>&1
 npm -g install appdmg >>$LOG 2>&1
 appdmg --quiet nightly.json DB\ Browser\ for\ SQLite_${DATE}.dmg >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --deep --keychain "/Library/Keychains/System.keychain" DB\ Browser\ for\ SQLite_${DATE}.dmg >>$LOG 2>&1
 mv DB\ Browser\ for\ SQLite_${DATE}.dmg $HOME/db4s_nightlies/ >>$LOG 2>&1
 rm -rf $HOME/appdmg/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
 
@@ -205,6 +206,7 @@ npm -g upgrade >>$LOG 2>&1
 npm -g uninstall appdmg >>$LOG 2>&1
 npm -g install appdmg >>$LOG 2>&1
 appdmg --quiet nightly.json DB\ Browser\ for\ SQLite-sqlcipher_${DATE}.dmg >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --deep --keychain "/Library/Keychains/System.keychain" DB\ Browser\ for\ SQLite-sqlcipher_${DATE}.dmg >>$LOG 2>&1
 mv DB\ Browser\ for\ SQLite-sqlcipher_${DATE}.dmg $HOME/db4s_nightlies/ >>$LOG 2>&1
 rm -rf $HOME/appdmg/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
 
