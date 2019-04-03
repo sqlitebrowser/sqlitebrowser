@@ -332,8 +332,8 @@ Table& Table::operator=(const Table& rhs)
     // Base class
     Object::operator=(rhs);
 
-    // Just assign the strings
-    m_rowidColumns = rhs.m_rowidColumns;
+    // Just assign the simple values
+    m_withoutRowid = rhs.m_withoutRowid;
     m_virtual = rhs.m_virtual;
 
     // Clear the fields and the constraints first in order to avoid duplicates and/or old data in the next step
@@ -354,7 +354,7 @@ bool Table::operator==(const Table& rhs) const
     if(!Object::operator==(rhs))
         return false;
 
-    if(m_rowidColumns != rhs.m_rowidColumns)
+    if(m_withoutRowid != rhs.m_withoutRowid)
         return false;
     if(m_virtual != rhs.m_virtual)
         return false;
@@ -407,6 +407,15 @@ QStringList Table::fieldNames() const
         sl << f.name();
 
     return sl;
+}
+
+QStringList Table::rowidColumns() const
+{
+    // For WITHOUT ROWID tables this function returns the names of the primary key column. For ordinary tables with a rowid column, it returns "_rowid_"
+    if(m_withoutRowid)
+        return primaryKey();
+    else
+        return {"_rowid_"};
 }
 
 FieldInfoList Table::fieldInformation() const
@@ -495,7 +504,7 @@ QString Table::sql(const QString& schema, bool ifNotExists) const
     sql += "\n)";
 
     // without rowid
-    if(isWithoutRowidTable())
+    if(withoutRowidTable())
         sql += " WITHOUT ROWID";
 
     return sql + ";";
@@ -998,7 +1007,7 @@ TablePtr CreateTableWalker::table()
                 s = s->getNextSibling();    // WITHOUT
                 s = s->getNextSibling();    // ROWID
 
-                tab->setRowidColumns(tab->primaryKey());
+                tab->setWithoutRowidTable(true);
             }
         }
     }

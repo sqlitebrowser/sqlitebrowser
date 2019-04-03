@@ -44,7 +44,7 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
         // Set without rowid checkbox and schema dropdown. No need to trigger any events here as we're only loading a table exactly as it is stored by SQLite, so no need
         // for error checking etc.
         ui->checkWithoutRowid->blockSignals(true);
-        ui->checkWithoutRowid->setChecked(m_table.isWithoutRowidTable());
+        ui->checkWithoutRowid->setChecked(m_table.withoutRowidTable());
         ui->checkWithoutRowid->blockSignals(false);
         ui->comboSchema->blockSignals(true);
         ui->comboSchema->addItems(pdb.schemata.keys());         // Load list of database schemata
@@ -686,11 +686,11 @@ void EditTableDialog::setWithoutRowid(bool without_rowid)
             }
         }
 
-        // If it does, override the the rowid column names of the table object with the names of the primary keys.
-        m_table.setRowidColumns(pks);
+        // If it does, set the without rowid flag of the table
+        m_table.setWithoutRowidTable(true);
     } else {
-        // If the without rowid flag is unset no further checks are required. Just set the rowid column name back to "_rowid_"
-        m_table.setRowidColumns({"_rowid_"});
+        // If the without rowid flag is unset no further checks are required. Just unset the without rowid flag
+        m_table.setWithoutRowidTable(false);
     }
 
     // Update the SQL preview

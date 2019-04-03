@@ -401,7 +401,7 @@ private:
 class Table : public Object
 {
 public:
-    explicit Table(const QString& name): Object(name), m_rowidColumns({"_rowid_"}) {}
+    explicit Table(const QString& name): Object(name), m_withoutRowid(false) {}
     Table& operator=(const Table& rhs);
 
     bool operator==(const Table& rhs) const;
@@ -420,9 +420,9 @@ public:
 
     QStringList fieldNames() const;
 
-    void setRowidColumns(const QStringList& rowid) {  m_rowidColumns = rowid; }
-    const QStringList& rowidColumns() const { return m_rowidColumns; }
-    bool isWithoutRowidTable() const { return m_rowidColumns != (QStringList() << "_rowid_"); }
+    QStringList rowidColumns() const;
+    void setWithoutRowidTable(bool without_rowid) {  m_withoutRowid = without_rowid; }
+    bool withoutRowidTable() const { return m_withoutRowid; }
 
     void setVirtualUsing(const QString& virt_using) { m_virtual = virt_using; }
     QString virtualUsing() const { return m_virtual; }
@@ -453,7 +453,7 @@ private:
     bool hasAutoIncrement() const;
 
 private:
-    QStringList m_rowidColumns;
+    bool m_withoutRowid;
     ConstraintMap m_constraints;
     QString m_virtual;
 };

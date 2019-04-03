@@ -838,7 +838,7 @@ void MainWindow::populateTable()
         // Table
         sqlb::TablePtr table = db.getObjectByName<sqlb::Table>(currentlyBrowsedTableName());
         ui->actionUnlockViewEditing->setVisible(false);
-        ui->actionShowRowidColumn->setVisible(!table->isWithoutRowidTable());
+        ui->actionShowRowidColumn->setVisible(!table->withoutRowidTable());
     } else {
         // View
         ui->actionUnlockViewEditing->setVisible(true);

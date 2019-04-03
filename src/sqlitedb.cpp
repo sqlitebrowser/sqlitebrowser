@@ -1309,7 +1309,7 @@ QString DBBrowserDB::addRecord(const sqlb::ObjectIdentifier& tablename)
     // and adding one to it.
     QString sInsertstmt;
     QString pk_value;
-    if(table->isWithoutRowidTable())
+    if(table->withoutRowidTable())
     {
         // For multiple rowid columns we just use the value of the last one and increase that one by one. If this doesn't yield a valid combination
         // the insert record dialog should pop up automatically.
@@ -1324,7 +1324,7 @@ QString DBBrowserDB::addRecord(const sqlb::ObjectIdentifier& tablename)
         qWarning() << "addRecord: " << lastErrorMessage;
         return QString();
     } else {
-        if(table->isWithoutRowidTable())
+        if(table->withoutRowidTable())
             return pk_value;
         else
             return QString::number(sqlite3_last_insert_rowid(_db));

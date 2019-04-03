@@ -124,7 +124,7 @@ void TestTable::withoutRowid()
     f.setAutoIncrement(true);
     tt.fields.push_back(f);
     tt.fields.emplace_back("b", "integer");
-    tt.setRowidColumns({"a"});
+    tt.setWithoutRowidTable(true);
     tt.addConstraint({f.name()}, ConstraintPtr(new PrimaryKeyConstraint()));
 
     QCOMPARE(tt.sql(), QString("CREATE TABLE \"testtable\" (\n"
