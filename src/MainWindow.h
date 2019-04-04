@@ -251,7 +251,7 @@ private slots:
     void savePragmas();
     void mainTabSelected( int tabindex );
     void browseTableHeaderClicked(int logicalindex);
-    unsigned int openSqlTab(bool resetCounter = false);
+    int openSqlTab(bool resetCounter = false);
     void closeSqlTab(int index, bool force = false);
     void changeSqlTab(int index);
     void openSqlFile();

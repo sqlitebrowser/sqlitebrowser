@@ -9,6 +9,7 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QShortcut>
+#include <QFile>
 
 SqlExecutionArea::SqlExecutionArea(DBBrowserDB& _db, QWidget* parent) :
     QWidget(parent),
@@ -205,5 +206,51 @@ void SqlExecutionArea::setFindFrameVisibility(bool show)
         emit findFrameVisibilityChanged(true);
     } else {
         hideFindFrame();
+    }
+}
+
+void SqlExecutionArea::openFile(const QString& filename)
+{
+    // Open file for reading
+    QFile f(filename);
+    f.open(QIODevice::ReadOnly);
+    if(!f.isOpen())
+    {
+        QMessageBox::warning(this, qApp->applicationName(), tr("Couldn't read file: %1.").arg(f.errorString()));
+        return;
+    }
+
+    // Read in the entire file
+    ui->editEditor->setText(f.readAll());
+
+    // No modifications yet
+    ui->editEditor->setModified(false);
+
+    // Remember file name
+    sqlFileName = filename;
+}
+
+void SqlExecutionArea::saveFile(const QString& filename)
+{
+    // Open file for writing
+    QFile f(filename);
+    f.open(QIODevice::WriteOnly);
+    if(!f.isOpen())
+    {
+        QMessageBox::warning(this, qApp->applicationName(), tr("Couldn't save file: %1.").arg(f.errorString()));
+        return;
+    }
+
+    // Write to the file
+    if(f.write(getSql().toUtf8()) != -1)
+    {
+        // Set modified to false so we can get control of unsaved changes when closing.
+        ui->editEditor->setModified(false);
+
+        // Remember file name
+        sqlFileName = filename;
+    } else {
+        QMessageBox::warning(this, qApp->applicationName(), tr("Couldn't save file: %1.").arg(f.errorString()));
+        return;
     }
 }

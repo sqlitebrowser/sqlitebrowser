@@ -2246,9 +2246,9 @@ void MainWindow::closeSqlTab(int index, bool force)
     delete w;
 }
 
-unsigned int MainWindow::openSqlTab(bool resetCounter)
+int MainWindow::openSqlTab(bool resetCounter)
 {
-    static unsigned int tabNumber = 0;
+    static int tabNumber = 0;
 
     if(resetCounter)
         tabNumber = 0;
@@ -2297,16 +2297,8 @@ void MainWindow::openSqlFile()
 
     if(QFile::exists(file))
     {
-        QFile f(file);
-        f.open(QIODevice::ReadOnly);
-        if(!f.isOpen())
-        {
-            QMessageBox::warning(this, qApp->applicationName(), tr("Couldn't read file: %1.").arg(f.errorString()));
-            return;
-        }
-
         // Decide whether to open a new tab or take the current one
-        unsigned int index;
+        int index;
         SqlExecutionArea* current_tab = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
         if(current_tab && current_tab->getSql().isEmpty() && current_tab->getModel()->rowCount() == 0)
             index = ui->tabSqlAreas->currentIndex();
@@ -2314,9 +2306,8 @@ void MainWindow::openSqlFile()
             index = openSqlTab();
 
         SqlExecutionArea* sqlarea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index));
-        sqlarea->getEditor()->setText(f.readAll());
-        sqlarea->getEditor()->setModified(false);
-        sqlarea->setFileName(file);
+        sqlarea->openFile(file);
+
         QFileInfo fileinfo(file);
         ui->tabSqlAreas->setTabText(index, fileinfo.fileName());
     }
@@ -2333,17 +2324,7 @@ void MainWindow::saveSqlFile(int tabIndex)
     {
         saveSqlFileAs();
     } else {
-        QFile f(sqlarea->fileName());
-        f.open(QIODevice::WriteOnly);
-        if(f.isOpen() && f.write(sqlarea->getSql().toUtf8()) != -1)
-        {
-            QFileInfo fileinfo(sqlarea->fileName());
-            ui->tabSqlAreas->setTabText(ui->tabSqlAreas->currentIndex(), fileinfo.fileName());
-            // Set modified to false so we can get control of unsaved changes when closing.
-            sqlarea->getEditor()->setModified(false);
-        } else {
-            QMessageBox::warning(this, qApp->applicationName(), tr("Couldn't save file: %1.").arg(f.errorString()));
-        }
+        sqlarea->saveFile(sqlarea->fileName());
     }
 }
 
@@ -2366,9 +2347,10 @@ void MainWindow::saveSqlFileAs()
 
     if(!file.isEmpty())
     {
-        // Just set the selected file name and call the standard save action which is going to use it
-        qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget())->setFileName(file);
-        saveSqlFile();
+        sqlarea->saveFile(file);
+
+        QFileInfo fileinfo(file);
+        ui->tabSqlAreas->setTabText(ui->tabSqlAreas->currentIndex(), fileinfo.fileName());
     }
 }
 
