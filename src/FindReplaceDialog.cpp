@@ -86,6 +86,15 @@ bool FindReplaceDialog::findNext()
 
 }
 
+void FindReplaceDialog::showFindReplaceDialog(bool hasReplace)
+{
+    ui->replaceWithText->setVisible(hasReplace);
+    ui->replaceButton->setVisible(hasReplace);
+    ui->replaceWithLabel->setVisible(hasReplace);
+    ui->replaceAllButton->setVisible(hasReplace);
+    show();
+}
+
 void FindReplaceDialog::show()
 {
     ui->findText->setFocus();

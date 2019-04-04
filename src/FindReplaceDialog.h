@@ -20,6 +20,7 @@ public:
     ~FindReplaceDialog() override;
     void setExtendedScintilla(ExtendedScintilla* scintilla);
     void show();
+    void showFindReplaceDialog(bool hasReplace);
 
 private slots:
     bool findNext();

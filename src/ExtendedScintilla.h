@@ -4,6 +4,7 @@
 #include "Qsci/qsciscintilla.h"
 
 class FindReplaceDialog;
+class QShortcut;
 
 /**
  * @brief The ExtendedScintilla class
@@ -18,6 +19,7 @@ public:
     ~ExtendedScintilla() override;
 
     bool findText(QString text, bool regexp, bool caseSensitive, bool words, bool wrap, bool forward);
+    void setEnabledFindDialog(bool value);
     void clearSelection();
     // Override parent setLexer
     void setLexer(QsciLexer *lexer) override;
@@ -34,6 +36,7 @@ public slots:
     // Set error indicator from position to end of line
     void setErrorIndicator(int position);
     void openFindReplaceDialog();
+    void openFindDialog();
     void openPrintDialog();
 
 protected:
@@ -46,6 +49,7 @@ protected:
     int errorIndicatorNumber;
     bool showErrorIndicators;
     FindReplaceDialog* findReplaceDialog;
+    QShortcut* shortcutFind;
 
 private slots:
     void updateLineNumberAreaWidth();

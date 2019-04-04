@@ -2258,6 +2258,9 @@ int MainWindow::openSqlTab(bool resetCounter)
     int index = ui->tabSqlAreas->addTab(w, QString("SQL %1").arg(++tabNumber));
     ui->tabSqlAreas->setCurrentIndex(index);
     w->setFindFrameVisibility(ui->actionSqlFind->isChecked());
+    // Disable the find dialog in the SQL tabs, since the shortcut
+    // would interfere with the search bar and it'd be anyway redundant.
+    w->getEditor()->setEnabledFindDialog(false);
     w->getEditor()->setFocus();
     connect(w, SIGNAL(findFrameVisibilityChanged(bool)), ui->actionSqlFind, SLOT(setChecked(bool)));
 

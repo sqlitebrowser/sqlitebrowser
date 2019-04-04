@@ -60,6 +60,8 @@ ExtendedScintilla::ExtendedScintilla(QWidget* parent) :
     // The shortcuts are constrained to the Widget context so they do not conflict with other SqlTextEdit widgets in the Main Window.
     QShortcut* shortcutFindReplace = new QShortcut(QKeySequence(tr("Ctrl+H")), this, nullptr, nullptr, Qt::WidgetShortcut);
     connect(shortcutFindReplace, SIGNAL(activated()), this, SLOT(openFindReplaceDialog()));
+    shortcutFind = new QShortcut(QKeySequence(tr("Ctrl+F")), this, nullptr, nullptr, Qt::WidgetShortcut);
+    connect(shortcutFind, SIGNAL(activated()), this, SLOT(openFindDialog()));
 
 #ifdef Q_OS_MACX
     // Alt+Backspace on Mac is expected to delete one word to the left,
@@ -245,6 +247,11 @@ bool ExtendedScintilla::findText(QString text, bool regexp, bool caseSensitive, 
                      /* line */ -1, /* index */ -1, /* show */ true, /* posix */ true);
 }
 
+void ExtendedScintilla::setEnabledFindDialog(bool value)
+{
+    shortcutFind->setEnabled(value);
+}
+
 void ExtendedScintilla::clearSelection()
 {
     setSelection(-1,-1,-1,-1);
@@ -253,12 +260,27 @@ void ExtendedScintilla::clearSelection()
 void ExtendedScintilla::openFindReplaceDialog()
 {
     findReplaceDialog->setExtendedScintilla(this);
-    findReplaceDialog->show();
+    findReplaceDialog->showFindReplaceDialog(true);
+}
+
+void ExtendedScintilla::openFindDialog()
+{
+    findReplaceDialog->setExtendedScintilla(this);
+    findReplaceDialog->showFindReplaceDialog(false);
 }
 
 void ExtendedScintilla::showContextMenu(const QPoint &pos)
 {
 
+    // This has to be created here, otherwise the set of enabled options would not update accordingly.
+    QMenu* editContextMenu = createStandardContextMenu();
+    editContextMenu->addSeparator();
+    if (shortcutFind->isEnabled()) {
+        QAction* findAction = new QAction(QIcon(":/icons/find"), tr("Find..."), this);
+        findAction->setShortcut(shortcutFind->key());
+        connect(findAction, &QAction::triggered, this, &ExtendedScintilla::openFindDialog);
+        editContextMenu->addAction(findAction);
+    }
     QAction* findReplaceAction = new QAction(QIcon(":/icons/text_replace"), tr("Find and Replace..."), this);
     findReplaceAction->setShortcut(QKeySequence(tr("Ctrl+H")));
     connect(findReplaceAction, &QAction::triggered, this, &ExtendedScintilla::openFindReplaceDialog);
@@ -267,10 +289,8 @@ void ExtendedScintilla::showContextMenu(const QPoint &pos)
     printAction->setShortcut(QKeySequence(tr("Ctrl+P")));
     connect(printAction, &QAction::triggered, this, &ExtendedScintilla::openPrintDialog);
 
-    // This has to be created here, otherwise the set of enabled options would not update accordingly.
-    QMenu* editContextMenu = createStandardContextMenu();
-    editContextMenu->addSeparator();
     editContextMenu->addAction(findReplaceAction);
+    editContextMenu->addSeparator();
     editContextMenu->addAction(printAction);
 
     editContextMenu->exec(mapToGlobal(pos));
