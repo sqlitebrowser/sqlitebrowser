@@ -38,8 +38,11 @@ SqlExecutionArea::SqlExecutionArea(DBBrowserDB& _db, QWidget* parent) :
     connect(ui->findLineEdit, SIGNAL(returnPressed()), this, SLOT(findNext()));
     connect(ui->hideFindButton, SIGNAL(clicked()), this, SLOT(hideFindFrame()));
 
+    connect(&fileSystemWatch, &QFileSystemWatcher::fileChanged, this, &SqlExecutionArea::fileChanged);
+
     // Set collapsible the editErrors panel
     ui->splitter_2->setCollapsible(1, true);
+
     // Load settings
     reloadSettings();
 }
@@ -228,10 +231,19 @@ void SqlExecutionArea::openFile(const QString& filename)
 
     // Remember file name
     sqlFileName = filename;
+
+    // Start watching this file for changes and unwatch the previously watched file, if any
+    if(!fileSystemWatch.files().empty())
+        fileSystemWatch.removePaths(fileSystemWatch.files());
+    fileSystemWatch.addPath(filename);
 }
 
 void SqlExecutionArea::saveFile(const QString& filename)
 {
+    // Unwatch all files now. By unwathing them before the actual saving, we are not notified of our own changes
+    if(!fileSystemWatch.files().empty())
+        fileSystemWatch.removePaths(fileSystemWatch.files());
+
     // Open file for writing
     QFile f(filename);
     f.open(QIODevice::WriteOnly);
@@ -249,8 +261,33 @@ void SqlExecutionArea::saveFile(const QString& filename)
 
         // Remember file name
         sqlFileName = filename;
+
+        // Start watching this file
+        fileSystemWatch.addPath(filename);
     } else {
         QMessageBox::warning(this, qApp->applicationName(), tr("Couldn't save file: %1.").arg(f.errorString()));
         return;
+    }
+}
+
+void SqlExecutionArea::fileChanged(const QString& filename)
+{
+    // Check if there are unsaved changes in the file
+    QString changes;
+    if(ui->editEditor->isModified())
+        changes = QString(" ") + tr("Your changes will be lost when reloading it!");
+
+    // Ask user whether to realod the modified file
+    if(QMessageBox::question(
+                this,
+                qApp->applicationName(),
+                tr("The file \"%1\" was modified by another program. Do you want to reload it?%2").arg(filename).arg(changes),
+                QMessageBox::Yes | QMessageBox::Ignore) == QMessageBox::Yes)
+    {
+        // Read in the file
+        openFile(filename);
+    } else {
+        // The file does not match the file on the disk anymore. So set the modified flag
+        ui->editEditor->setModified(true);
     }
 }

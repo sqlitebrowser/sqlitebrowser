@@ -1,7 +1,8 @@
-#ifndef SQLEXECUTIONAREA_H
+﻿#ifndef SQLEXECUTIONAREA_H
 #define SQLEXECUTIONAREA_H
 
 #include <QWidget>
+#include <QFileSystemWatcher>
 
 class SqlTextEdit;
 class SqliteTableModel;
@@ -51,6 +52,8 @@ private slots:
     void findLineEdit_textChanged(const QString& text);
     void hideFindFrame();
 
+    void fileChanged(const QString& filename);
+
 signals:
     void findFrameVisibilityChanged(bool visible);
 
@@ -59,6 +62,7 @@ private:
     DBBrowserDB& db;
     SqliteTableModel* model;
     QString sqlFileName;
+    QFileSystemWatcher fileSystemWatch;
     Ui::SqlExecutionArea* ui;
     bool m_columnsResized;              // This is set to true if the columns of the table view were already adjusted to fit their contents
     bool showErrorIndicators;
