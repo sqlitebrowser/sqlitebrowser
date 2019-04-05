@@ -2264,6 +2264,10 @@ int MainWindow::openSqlTab(bool resetCounter)
     w->getEditor()->setFocus();
     connect(w, SIGNAL(findFrameVisibilityChanged(bool)), ui->actionSqlFind, SLOT(setChecked(bool)));
 
+    // Connect now the find shortcut to the editor with widget context, so it isn't ambiguous with other Scintilla Widgets.
+    QShortcut* shortcutFind = new QShortcut(ui->actionSqlFind->shortcut(), w->getEditor(), nullptr, nullptr, Qt::WidgetShortcut);
+    connect(shortcutFind, SIGNAL(activated()), ui->actionSqlFind, SLOT(toggle()));
+
     return index;
 }
 
