@@ -96,10 +96,17 @@ make -j3 >>$LOG 2>&1 # Seems to need a 2nd time now, due to language files needi
 # Include the depencencies in the .app bundle
 $MACDEPLOYQT src/DB\ Browser\ for\ SQLite.app -verbose=2 >>$LOG 2>&1
 
-# Add the math extensions to the .dmg
+# Add the extensions to the .dmg
 echo Add the math extensions to the .dmg >>$LOG 2>&1
 mkdir src/DB\ Browser\ for\ SQLite.app/Contents/Extensions >>$LOG 2>&1
+gcc -I/usr/local/opt/sqlitefts5/include -L/usr/local/opt/sqlitefts5/lib -fno-common -dynamiclib src/extensions/extension-formats.c -o src/DB\ Browser\ for\ SQLite.app/Contents/Extensions/formats.dylib >>$LOG 2>&1
 gcc -I/usr/local/opt/sqlitefts5/include -L/usr/local/opt/sqlitefts5/lib -fno-common -dynamiclib src/extensions/extension-functions.c -o src/DB\ Browser\ for\ SQLite.app/Contents/Extensions/math.dylib >>$LOG 2>&1
+
+# fileio.c extension
+curl -L -o src/extensions/fileio.c https://sqlite.org/src/raw/ext/misc/fileio.c?name=288e7230e0fe464d71b0694e2d8bdd3a353118ac2e31da3964b95f460f09915f >>$LOG 2>&1
+curl -L -o src/extensions/test_windirent.c https://sqlite.org/src/raw/src/test_windirent.c?name=a895e2c068a06644eef91a7f0a32182445a893b9a0f33d0cdb4283dca2486ac1 >>$LOG 2>&1
+curl -L -o src/extensions/test_windirent.h https://sqlite.org/src/raw/src/test_windirent.h?name=90dfbe95442c9762357fe128dc7ae3dc199d006de93eb33ba3972e0a90484215 >>$LOG 2>&1
+gcc -I/usr/local/opt/sqlitefts5/include -L/usr/local/opt/sqlitefts5/lib -fno-common -dynamiclib src/extensions/fileio.c src/extensions/test_windirent.c -o src/DB\ Browser\ for\ SQLite.app/Contents/Extensions/fileio.dylib >>$LOG 2>&1
 
 # Copy the license files to the .dmg
 echo Copying the license files to the .dmg >>$LOG 2>&1
@@ -171,10 +178,17 @@ make -j3 >>$LOG 2>&1 # Seems to need a 2nd time now, due to language files needi
 # Include the depencencies in the .app bundle
 $MACDEPLOYQT src/DB\ Browser\ for\ SQLite.app -verbose=2 >>$LOG 2>&1
 
-# Add the math extensions to the .dmg
+# Add the extensions to the .dmg
 echo Add the math extensions to the .dmg >>$LOG 2>&1
 mkdir src/DB\ Browser\ for\ SQLite.app/Contents/Extensions >>$LOG 2>&1
+gcc -I/usr/local/opt/sqlitefts5/include -L/usr/local/opt/sqlitefts5/lib -fno-common -dynamiclib src/extensions/extension-formats.c -o src/DB\ Browser\ for\ SQLite.app/Contents/Extensions/formats.dylib >>$LOG 2>&1
 gcc -I/usr/local/opt/sqlitefts5/include -L/usr/local/opt/sqlitefts5/lib -fno-common -dynamiclib src/extensions/extension-functions.c -o src/DB\ Browser\ for\ SQLite.app/Contents/Extensions/math.dylib >>$LOG 2>&1
+
+# fileio.c extension
+curl -L -o src/extensions/fileio.c https://sqlite.org/src/raw/ext/misc/fileio.c?name=288e7230e0fe464d71b0694e2d8bdd3a353118ac2e31da3964b95f460f09915f >>$LOG 2>&1
+curl -L -o src/extensions/test_windirent.c https://sqlite.org/src/raw/src/test_windirent.c?name=a895e2c068a06644eef91a7f0a32182445a893b9a0f33d0cdb4283dca2486ac1 >>$LOG 2>&1
+curl -L -o src/extensions/test_windirent.h https://sqlite.org/src/raw/src/test_windirent.h?name=90dfbe95442c9762357fe128dc7ae3dc199d006de93eb33ba3972e0a90484215 >>$LOG 2>&1
+gcc -I/usr/local/opt/sqlitefts5/include -L/usr/local/opt/sqlitefts5/lib -fno-common -dynamiclib src/extensions/fileio.c src/extensions/test_windirent.c -o src/DB\ Browser\ for\ SQLite.app/Contents/Extensions/fileio.dylib >>$LOG 2>&1
 
 # Copy the license files to the .dmg
 echo Copying the license files to the .dmg >>$LOG 2>&1
