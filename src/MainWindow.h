@@ -167,6 +167,7 @@ private:
     QByteArray defaultWindowState;
 
     QString currentProjectFilename;
+    bool isProjectModified;
 
     void init();
     void clearCompleterModelsFields();
@@ -189,6 +190,7 @@ private:
     QString saveOpenTabs();
     QString saveProject(const QString& currentFilename);
     bool closeFiles();
+    bool closeProject();
     bool askSaveSqlTab(int index, bool& ignoreUnattachedBuffers);
 
 protected:
@@ -198,7 +200,7 @@ protected:
     void resizeEvent(QResizeEvent *event) override;
 
 public slots:
-    bool fileOpen(const QString& fileName = QString(), bool dontAddToRecentFiles = false, bool readOnly = false);
+    bool fileOpen(const QString& fileName = QString(), bool openFromProject = false, bool readOnly = false);
     void logSql(const QString &sql, int msgtype);
     void dbState(bool dirty);
     void refresh();

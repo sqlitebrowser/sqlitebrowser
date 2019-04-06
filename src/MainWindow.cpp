@@ -104,6 +104,7 @@ MainWindow::MainWindow(QWidget* parent)
       remoteDock(new RemoteDock(this)),
       findReplaceDialog(new FindReplaceDialog(this)),
       gotoValidator(new QIntValidator(0, 0, this)),
+      isProjectModified(false),
       execute_sql_worker(nullptr)
 {
     ui->setupUi(this);
@@ -535,7 +536,7 @@ void MainWindow::init()
     ui->dockRemote->setWindowTitle(ui->dockRemote->windowTitle().remove('&'));
 }
 
-bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles, bool readOnly)
+bool MainWindow::fileOpen(const QString& fileName, bool openFromProject, bool readOnly)
 {
     bool retval = false;
 
@@ -577,9 +578,10 @@ bool MainWindow::fileOpen(const QString& fileName, bool dontAddToRecentFiles, bo
                 statusEncryptionLabel->setVisible(db.encrypted());
                 statusReadOnlyLabel->setVisible(db.readOnly());
                 setCurrentFile(wFile);
-                currentProjectFilename.clear();
-                if(!dontAddToRecentFiles)
+                if(!openFromProject) {
+                    currentProjectFilename.clear();
                     addToRecentFilesMenu(wFile);
+                }
                 openSqlTab(true);
                 if(ui->mainTab->currentWidget() == ui->browser)
                     populateTable();
@@ -908,7 +910,7 @@ bool MainWindow::fileClose()
     }
 
     // Close the database but stop the closing process here if the user pressed the cancel button in there
-    if(!db.close())
+    if(!closeProject())
         return false;
 
     setWindowTitle(QApplication::applicationName());
@@ -973,6 +975,28 @@ bool MainWindow::closeFiles()
         // Ask for saving and comply with cancel answer.
         if(!askSaveSqlTab(i, ignoreUnattachedBuffers))
             return false;
+    return closeProject();
+}
+
+bool MainWindow::closeProject()
+{
+    if(!currentProjectFilename.isEmpty() && isProjectModified) {
+        QMessageBox::StandardButton reply = QMessageBox::question
+            (nullptr,
+             QApplication::applicationName(),
+             tr("Do you want to save the changes made to the project file %1?").
+             arg(QFileInfo(currentProjectFilename).fileName()),
+             QMessageBox::Save | QMessageBox::No | QMessageBox::Cancel);
+        switch(reply) {
+        case QMessageBox::Save:
+            saveProject();
+            break;
+        case QMessageBox::Cancel:
+            return false;
+        default:
+            break;
+        }
+    }
     return db.close();
 }
 
@@ -1749,7 +1773,7 @@ void MainWindow::importDatabaseFromSQL()
 
         // Create the new file and open it in the browser
         db.create(newDbFile);
-        db.close();
+        closeProject();
         fileOpen(newDbFile);
     }
 
@@ -2068,6 +2092,8 @@ void MainWindow::browseTableHeaderClicked(int logicalindex)
 
     // Reapply the view settings. This seems to be necessary as a workaround for newer Qt versions.
     applyBrowseTableSettings(settings);
+
+    isProjectModified = true;
 }
 
 void MainWindow::resizeEvent(QResizeEvent*)
@@ -2149,6 +2175,7 @@ void MainWindow::savePragmas()
     db.setPragma("user_version", ui->spinPragmaUserVersion->value(), pragmaValues.user_version);
     db.setPragma("wal_autocheckpoint", ui->spinPragmaWalAutoCheckpoint->value(), pragmaValues.wal_autocheckpoint);
     db.setPragma("case_sensitive_like", ui->checkboxPragmaCaseSensitiveLike->isChecked(), pragmaValues.case_sensitive_like);
+    isProjectModified = true;
 
     updatePragmaUi();
 }
@@ -2594,7 +2621,10 @@ void MainWindow::updateBrowseDataColumnWidth(int section, int /*old_size*/, int 
 
     if (!selectedCols.contains(section))
     {
-        browseTableSettings[tableName].columnWidths[section] = new_size;
+        if (browseTableSettings[tableName].columnWidths[section] != new_size) {
+            isProjectModified = true;
+            browseTableSettings[tableName].columnWidths[section] = new_size;
+        }
     }
     else
     {
@@ -2602,7 +2632,10 @@ void MainWindow::updateBrowseDataColumnWidth(int section, int /*old_size*/, int 
         for(int col : selectedCols)
         {
             ui->dataTable->setColumnWidth(col, new_size);
-            browseTableSettings[tableName].columnWidths[col] = new_size;
+            if (browseTableSettings[tableName].columnWidths[col] != new_size) {
+                isProjectModified = true;
+                browseTableSettings[tableName].columnWidths[col] = new_size;
+            }
         }
         ui->dataTable->blockSignals(false);
     }
@@ -2724,6 +2757,7 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
         if(xml.name() != "sqlb_project")
             return false;
 
+        isProjectModified = false;
         addToRecentFilesMenu(filename);
 
         while(!xml.atEnd() && !xml.hasError())
@@ -2742,8 +2776,11 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
 
                     // DB file
                     QString dbfilename = xml.attributes().value("path").toString();
-                    if(!QFile::exists(dbfilename))
+                    if(!QFile::exists(dbfilename)) {
                         dbfilename = QFileInfo(filename).absolutePath() + QDir::separator() + dbfilename;
+                        // New DB filename is pending to be saved
+                        isProjectModified = true;
+                    }
                     fileOpen(dbfilename, true, readOnly);
                     ui->dbTreeWidget->collapseAll();
 
@@ -3133,6 +3170,7 @@ QString MainWindow::saveProject(const QString& currentFilename)
         file.close();
 
         addToRecentFilesMenu(filename);
+        isProjectModified = false;
         QApplication::restoreOverrideCursor();
     }
     return filename;
@@ -3161,6 +3199,7 @@ void MainWindow::fileAttach()
 
     // Attach it
     db.attach(file);
+    isProjectModified = true;
 }
 
 void MainWindow::updateFilter(int column, const QString& value)
@@ -3168,9 +3207,12 @@ void MainWindow::updateFilter(int column, const QString& value)
     m_browseTableModel->updateFilter(column, value);
     BrowseDataTableSettings& settings = browseTableSettings[currentlyBrowsedTableName()];
     if(value.isEmpty())
-        settings.filterValues.remove(column);
+        isProjectModified = settings.filterValues.remove(column) > 0;
     else
-        settings.filterValues[column] = value;
+        if (settings.filterValues[column] != value) {
+            isProjectModified = true;
+            settings.filterValues[column] = value;
+        }
     setRecordsetLabel();
 
     // Reapply the view settings. This seems to be necessary as a workaround for newer Qt versions.
@@ -3193,6 +3235,7 @@ void MainWindow::clearAllCondFormats(int column)
     QVector<CondFormat> emptyCondFormatVector = QVector<CondFormat>();
     m_browseTableModel->setCondFormats(column, emptyCondFormatVector);
     browseTableSettings[currentlyBrowsedTableName()].condFormats[column].clear();
+    isProjectModified = true;
 }
 
 void MainWindow::editCondFormats(int column)
@@ -3203,6 +3246,7 @@ void MainWindow::editCondFormats(int column)
         QVector<CondFormat> condFormatVector = condFormatDialog.getCondFormats();
         m_browseTableModel->setCondFormats(column, condFormatVector);
         browseTableSettings[currentlyBrowsedTableName()].condFormats[column] = condFormatVector;
+        isProjectModified = true;
     }
 }
 
@@ -3429,6 +3473,7 @@ void MainWindow::editDataColumnDisplayFormat()
             browseTableSettings[current_table].displayFormats[field_number] = new_format;
         else
             browseTableSettings[current_table].displayFormats.remove(field_number);
+        isProjectModified = true;
 
         // Refresh view
         populateTable();
@@ -3457,7 +3502,10 @@ void MainWindow::showRowidColumn(bool show, bool skipFilters)
 
     // Save settings for this table
     sqlb::ObjectIdentifier current_table = currentlyBrowsedTableName();
-    browseTableSettings[current_table].showRowid = show;
+    if (browseTableSettings[current_table].showRowid != show) {
+        isProjectModified = true;
+        browseTableSettings[current_table].showRowid = show;
+    }
 
     // Update the filter row
     if(!skipFilters)
@@ -3517,6 +3565,7 @@ void MainWindow::browseDataSetTableEncoding(bool forAllTables)
             for(auto it=browseTableSettings.begin();it!=browseTableSettings.end();++it)
                 it.value().encoding = encoding;
         }
+        isProjectModified = true;
     }
 }
 
@@ -3595,6 +3644,7 @@ void MainWindow::unlockViewEditing(bool unlock, QString pk)
         settings.unlockViewPk = pk;
         // Reapply the view settings. This seems to be necessary as a workaround for newer Qt versions.
         applyBrowseTableSettings(settings);
+        isProjectModified = true;
     }
 }
 
@@ -3645,6 +3695,7 @@ void MainWindow::hideColumns(int column, bool hide)
 
     if(allHidden  && ui->dataTable->model()->columnCount() > 1)
         hideColumns(1, false);
+    isProjectModified = true;
 }
 
 void MainWindow::on_actionShowAllColumns_triggered()
