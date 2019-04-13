@@ -278,8 +278,9 @@ QColor SqliteTableModel::getMatchingCondFormatColor(int column, const QString& v
         else
             sql = QString("SELECT '%1' %2").arg(value, eachCondFormat.sqlCondition());
 
+        // Empty filter means: apply format to any row.
         // Query the DB for the condition, waiting in case there is a loading in progress.
-        if (m_db.querySingleValueFromDb(sql, false, DBBrowserDB::Wait) == "1")
+        if (eachCondFormat.filter().isEmpty() || m_db.querySingleValueFromDb(sql, false, DBBrowserDB::Wait) == "1")
             return role == Qt::ForegroundRole ? eachCondFormat.foregroundColor() : eachCondFormat.backgroundColor();
     }
     return QColor();

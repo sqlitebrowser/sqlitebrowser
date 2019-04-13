@@ -15,26 +15,94 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
+    <widget class="QLabel" name="labelTitle">
+     <property name="text">
+      <string>This dialog allows creating and editing conditional formats, where the cell text and background will be colored based on one or more conditions. Conditional formats can be moved up and down, where those at higher rows take precedence over those at lower.</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QPushButton" name="buttonUp">
+      <widget class="QToolButton" name="buttonAdd">
+       <property name="toolTip">
+        <string>Add new conditional format</string>
+       </property>
        <property name="text">
-        <string>&amp;Up</string>
+        <string>&amp;Add</string>
+       </property>
+       <property name="icon">
+        <iconset resource="icons/icons.qrc">
+         <normaloff>:/icons/field_add</normaloff>:/icons/field_add</iconset>
+       </property>
+       <property name="toolButtonStyle">
+        <enum>Qt::ToolButtonTextBesideIcon</enum>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="buttonRemove">
+       <property name="toolTip">
+        <string>Remove selected conditional format</string>
+       </property>
+       <property name="text">
+        <string>&amp;Remove</string>
+       </property>
+       <property name="icon">
+        <iconset resource="icons/icons.qrc">
+         <normaloff>:/icons/field_delete</normaloff>:/icons/field_delete</iconset>
+       </property>
+       <property name="toolButtonStyle">
+        <enum>Qt::ToolButtonTextBesideIcon</enum>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="buttonUp">
+       <property name="toolTip">
+        <string>Move selected conditional format up</string>
+       </property>
+       <property name="text">
+        <string>Move &amp;up</string>
        </property>
        <property name="icon">
         <iconset resource="icons/icons.qrc">
          <normaloff>:/icons/up</normaloff>:/icons/up</iconset>
        </property>
+       <property name="toolButtonStyle">
+        <enum>Qt::ToolButtonTextBesideIcon</enum>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="buttonDown">
+      <widget class="QToolButton" name="buttonDown">
+       <property name="toolTip">
+        <string>Move selected conditional format down</string>
+       </property>
        <property name="text">
-        <string>&amp;Down</string>
+        <string>Move &amp;down</string>
        </property>
        <property name="icon">
         <iconset resource="icons/icons.qrc">
          <normaloff>:/icons/down</normaloff>:/icons/down</iconset>
+       </property>
+       <property name="toolButtonStyle">
+        <enum>Qt::ToolButtonTextBesideIcon</enum>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -51,28 +119,6 @@
        </property>
       </spacer>
      </item>
-     <item>
-      <widget class="QPushButton" name="buttonAdd">
-       <property name="text">
-        <string>&amp;Add</string>
-       </property>
-       <property name="icon">
-        <iconset resource="icons/icons.qrc">
-         <normaloff>:/icons/field_add</normaloff>:/icons/field_add</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="buttonRemove">
-       <property name="text">
-        <string>&amp;Remove</string>
-       </property>
-       <property name="icon">
-        <iconset resource="icons/icons.qrc">
-         <normaloff>:/icons/field_delete</normaloff>:/icons/field_delete</iconset>
-       </property>
-      </widget>
-     </item>
     </layout>
    </item>
    <item>
@@ -85,9 +131,6 @@
      </property>
      <property name="tabKeyNavigation">
       <bool>true</bool>
-     </property>
-     <property name="selectionMode">
-      <enum>QAbstractItemView::SingleSelection</enum>
      </property>
      <property name="selectionBehavior">
       <enum>QAbstractItemView::SelectItems</enum>
@@ -133,7 +176,7 @@
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Help|QDialogButtonBox::Ok|QDialogButtonBox::Reset</set>
      </property>
     </widget>
    </item>

@@ -11,6 +11,7 @@ namespace Ui {
 
 class CondFormat;
 class QTreeWidgetItem;
+class QAbstractButton;
 
 class CondFormatManager : public QDialog
 {
@@ -38,9 +39,10 @@ private slots:
     void removeItem();
     void upItem();
     void downItem();
+    void on_buttonBox_clicked(QAbstractButton* button);
     
 public slots:
-    void itemDoubleClicked(QTreeWidgetItem* item, int column);
+    void itemClicked(QTreeWidgetItem* item, int column);
 };
 
 #endif // CONDFORMATMANAGER_H
