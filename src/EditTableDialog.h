@@ -37,6 +37,13 @@ private:
         kForeignKey = 8
     };
 
+    enum ConstraintColumns {
+        kConstraintColumns = 0,
+        kConstraintType = 1,
+        kConstraintName = 2,
+        kConstraintSql = 3
+    };
+
     void updateColumnWidth();
     void updateSqlText();
 
@@ -44,6 +51,7 @@ private:
 
 private slots:
     void populateFields();
+    void populateConstraints();
     void addField();
     void removeField();
     void fieldSelectionChanged();
