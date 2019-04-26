@@ -2,7 +2,7 @@
 #define FILTERLINEEDIT_H
 
 #include <QLineEdit>
-#include <QList>
+#include <vector>
 
 class QTimer;
 class QKeyEvent;
@@ -12,7 +12,7 @@ class FilterLineEdit : public QLineEdit
     Q_OBJECT
 
 public:
-    explicit FilterLineEdit(QWidget* parent, QList<FilterLineEdit*>* filters, int columnnum);
+    explicit FilterLineEdit(QWidget* parent, std::vector<FilterLineEdit*>* filters, size_t columnnum);
 
     // Override methods for programatically changing the value of the line edit
     void clear();
@@ -32,8 +32,8 @@ protected:
     void setFilterHelper(const QString& filterOperator, const QString& operatorSuffix = "");
 
 private:
-    QList<FilterLineEdit*>* filterList;
-    int columnNumber;
+    std::vector<FilterLineEdit*>* filterList;
+    size_t columnNumber;
     QTimer* delaySignalTimer;
     QString lastValue;
 

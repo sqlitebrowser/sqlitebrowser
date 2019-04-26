@@ -117,7 +117,7 @@ void ColumnDisplayFormatDialog::accept()
             // Return false so the query is not aborted and no error is reported.
             return false;
         };
-        if(!pdb.executeSQL(QString("SELECT %1 FROM %2 LIMIT 1").arg(ui->editDisplayFormat->text(), curTable.toString()),
+        if(!pdb.executeSQL(QString("SELECT %1 FROM %2 LIMIT 1").arg(ui->editDisplayFormat->text(), QString::fromStdString(curTable.toString())),
                            false, true, callback))
             errorMessage = tr("Error in custom display format. Message from database engine:\n\n%1").arg(pdb.lastError());
         else if(customNumberColumns != 1)

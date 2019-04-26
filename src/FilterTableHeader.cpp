@@ -72,10 +72,10 @@ void FilterTableHeader::updateGeometries()
 void FilterTableHeader::adjustPositions()
 {
     // Loop through all widgets
-    for(int i=0;i < filterWidgets.size(); ++i)
+    for(int i=0;i < static_cast<int>(filterWidgets.size()); ++i)
     {
         // Get the current widget, move it and resize it
-        QWidget* w = filterWidgets.at(i);
+        QWidget* w = filterWidgets.at(static_cast<size_t>(i));
         // The two adds some extra space between the header label and the input widget
         int y = QHeaderView::sizeHint().height() + 2;
         if (QApplication::layoutDirection() == Qt::RightToLeft)
@@ -116,7 +116,7 @@ void FilterTableHeader::clearFilters()
         filterLineEdit->clear();
 }
 
-void FilterTableHeader::setFilter(int column, const QString& value)
+void FilterTableHeader::setFilter(size_t column, const QString& value)
 {
     if(column < filterWidgets.size())
         filterWidgets.at(column)->setText(value);

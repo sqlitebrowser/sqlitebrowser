@@ -7,7 +7,9 @@
 #include <memory>
 #include <mutex>
 #include <functional>
+#include <vector>
 
+#include <QObject>
 #include <QByteArray>
 #include <QMultiMap>
 #include <QStringList>
@@ -22,10 +24,15 @@ enum LogMessageType
     kLogMsg_ErrorLog
 };
 
-typedef QMultiMap<QString, sqlb::ObjectPtr> objectMap;      // Maps from object type (table, index, view, trigger) to a pointer to the object representation
-typedef QMap<QString, objectMap> schemaMap;                 // Maps from the schema name (main, temp, attached schemas) to the object map for that schema
+typedef QMultiMap<std::string, sqlb::ObjectPtr> objectMap;      // Maps from object type (table, index, view, trigger) to a pointer to the object representation
+typedef QMap<std::string, objectMap> schemaMap;                 // Maps from the schema name (main, temp, attached schemas) to the object map for that schema
 
 int collCompare(void* pArg, int sizeA, const void* sA, int sizeB, const void* sB);
+
+namespace sqlb
+{
+QString escapeIdentifier(const QString& id);
+}
 
 /// represents a single SQLite database. except when noted otherwise,
 /// all member functions are to be called from the main UI thread
@@ -132,7 +139,7 @@ public:
      * @param rowdata A list of QByteArray containing the row data.
      * @return true if statement execution was ok, else false.
      */
-    bool getRow(const sqlb::ObjectIdentifier& table, const QString& rowid, QVector<QByteArray>& rowdata);
+    bool getRow(const sqlb::ObjectIdentifier& table, const QString& rowid, std::vector<QByteArray>& rowdata);
 
     /**
      * @brief Interrupts the currenty running statement as soon as possible.
@@ -160,15 +167,15 @@ private:
      * @param pk_value This optional parameter can be used to manually set a specific value for the primary key column
      * @return An sqlite conform INSERT INTO statement with empty values. (NULL,'',0)
      */
-    QString emptyInsertStmt(const QString& schemaName, const sqlb::Table& t, const QString& pk_value = QString()) const;
+    QString emptyInsertStmt(const std::string& schemaName, const sqlb::Table& t, const QString& pk_value = QString()) const;
 
 public:
     QString addRecord(const sqlb::ObjectIdentifier& tablename);
-    bool deleteRecords(const sqlb::ObjectIdentifier& table, const QStringList& rowids, const std::vector<std::string>& pseudo_pk = {});
-    bool updateRecord(const sqlb::ObjectIdentifier& table, const QString& column, const QString& rowid, const QByteArray& value, bool itsBlob, const std::vector<std::string>& pseudo_pk = {});
+    bool deleteRecords(const sqlb::ObjectIdentifier& table, const QStringList& rowids, const sqlb::StringVector& pseudo_pk = {});
+    bool updateRecord(const sqlb::ObjectIdentifier& table, const std::string& column, const QString& rowid, const QByteArray& value, bool itsBlob, const sqlb::StringVector& pseudo_pk = {});
 
     bool createTable(const sqlb::ObjectIdentifier& name, const sqlb::FieldVector& structure);
-    bool renameTable(const QString& schema, const QString& from_table, const QString& to_table);
+    bool renameTable(const std::string& schema, const std::string& from_table, const std::string& to_table);
     bool addColumn(const sqlb::ObjectIdentifier& tablename, const sqlb::Field& field);
 
     /**
@@ -190,9 +197,9 @@ public:
      * @param newSchema Set this to a non-empty string to move the table to a new schema
      * @return true if renaming was successful, false if not. In the latter case also lastErrorMessage is set
      */
-    bool alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb::Table& new_table, AlterTableTrackColumns track_columns, QString newSchemaName = QString());
+    bool alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb::Table& new_table, AlterTableTrackColumns track_columns, std::string newSchemaName = "");
 
-    objectMap getBrowsableObjects(const QString& schema) const;
+    objectMap getBrowsableObjects(const std::string& schema) const;
 
     template<typename T = sqlb::Object>
     const std::shared_ptr<T> getObjectByName(const sqlb::ObjectIdentifier& name) const
@@ -225,13 +232,13 @@ public:
     static QStringList Datatypes;
 
 private:
-    QVector<QPair<QString, QString>> queryColumnInformation(const QString& schema_name, const QString& object_name);
+    std::vector<std::pair<std::string, std::string> > queryColumnInformation(const std::string& schema_name, const std::string& object_name);
 
 public:
     QString generateSavepointName(const QString& identifier = QString()) const;
 
     // This function generates the name for a temporary table. It guarantees that there is no table with this name yet
-    QString generateTemporaryTableName(const QString& schema) const;
+    std::string generateTemporaryTableName(const std::string& schema) const;
 
     schemaMap schemata;
 
@@ -261,7 +268,7 @@ private:
     bool isEncrypted;
     bool isReadOnly;
 
-    QStringList primaryKeyForEditing(const sqlb::ObjectIdentifier& table, const std::vector<std::string>& pseudo_pk) const;
+    sqlb::StringVector primaryKeyForEditing(const sqlb::ObjectIdentifier& table, const sqlb::StringVector& pseudo_pk) const;
 
     // SQLite Callbacks
     void collationNeeded(void* pData, sqlite3* db, int eTextRep, const char* sCollationName);

@@ -136,16 +136,16 @@ QWidget* ExtendedTableWidgetEditorDelegate::createEditor(QWidget* parent, const 
 
         sqlb::ObjectIdentifier foreignTable = sqlb::ObjectIdentifier(m->currentTableName().schema(), fk.table());
 
-        QString column;
+        std::string column;
         // If no column name is set, assume the primary key is meant
-        if(fk.columns().isEmpty()) {
+        if(fk.columns().empty()) {
             sqlb::TablePtr obj = m->db().getObjectByName<sqlb::Table>(foreignTable);
-            column = obj->primaryKey().first();
+            column = obj->primaryKey().front();
         } else
             column = fk.columns().at(0);
 
         sqlb::TablePtr currentTable = m->db().getObjectByName<sqlb::Table>(m->currentTableName());
-        QString query = QString("SELECT %1 FROM %2").arg(sqlb::escapeIdentifier(column)).arg(foreignTable.toString());
+        QString query = QString("SELECT %1 FROM %2").arg(QString::fromStdString(sqlb::escapeIdentifier(column))).arg(QString::fromStdString(foreignTable.toString()));
 
         // if the current column of the current table does NOT have not-null constraint,
         // the NULL is united to the query to get the possible values in the combo-box.
@@ -479,7 +479,7 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
     const QString rowSepText = "\n";
 #endif
 
-    QString sqlInsertStatement = QString("INSERT INTO %1 (").arg(m->currentTableName().toString());
+    QString sqlInsertStatement = QString("INSERT INTO %1 (").arg(QString::fromStdString(m->currentTableName().toString()));
     // Table headers
     if (withHeaders || inSQL) {
         htmlResult.append("<tr><th>");
@@ -861,7 +861,7 @@ void ExtendedTableWidget::cellClicked(const QModelIndex& index)
 
         if(fk.isSet())
             emit foreignKeyClicked(sqlb::ObjectIdentifier(m->currentTableName().schema(), fk.table()),
-                                   fk.columns().size() ? fk.columns().at(0) : "",
+                                   fk.columns().size() ? QString::fromStdString(fk.columns().at(0)) : "",
                                    m->data(index, Qt::EditRole).toByteArray());
     }
 }

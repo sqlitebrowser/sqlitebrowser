@@ -49,8 +49,8 @@ ExportDataDialog::ExportDataDialog(DBBrowserDB& db, ExportFormats format, QWidge
             for(auto jt=tables.constBegin();jt!=tables.constEnd();++jt)
             {
                 sqlb::ObjectIdentifier obj(it.key(), (*jt)->name());
-                QListWidgetItem* item = new QListWidgetItem(QIcon(QString(":icons/%1").arg(sqlb::Object::typeToString((*jt)->type()))), obj.toDisplayString());
-                item->setData(Qt::UserRole, obj.toVariant());
+                QListWidgetItem* item = new QListWidgetItem(QIcon(QString(":icons/%1").arg(QString::fromStdString(sqlb::Object::typeToString((*jt)->type())))), QString::fromStdString(obj.toDisplayString()));
+                item->setData(Qt::UserRole, QString::fromStdString(obj.toSerialised()));
                 ui->listTables->addItem(item);
             }
         }
@@ -63,7 +63,7 @@ ExportDataDialog::ExportDataDialog(DBBrowserDB& db, ExportFormats format, QWidge
         } else {
             for(int i=0;i<ui->listTables->count();i++)
             {
-                if(sqlb::ObjectIdentifier(ui->listTables->item(i)->data(Qt::UserRole)) == selection)
+                if(sqlb::ObjectIdentifier(ui->listTables->item(i)->data(Qt::UserRole).toString().toStdString()) == selection)
                 {
                     ui->listTables->setCurrentRow(i);
                     break;
@@ -211,21 +211,21 @@ bool ExportDataDialog::exportQueryJson(const QString& sQuery, const QString& sFi
             QApplication::setOverrideCursor(Qt::WaitCursor);
             int columns = sqlite3_column_count(stmt);
             size_t counter = 0;
-            QList<QString> column_names;
+            std::vector<std::string> column_names;
             while(sqlite3_step(stmt) == SQLITE_ROW)
             {
                 // Get column names if we didn't do so before
                 if(!column_names.size())
                 {
                     for(int i=0;i<columns;++i)
-                        column_names.push_back(QString::fromUtf8(sqlite3_column_name(stmt, i)));
+                        column_names.push_back(sqlite3_column_name(stmt, i));
                 }
 
                 json json_row;
                 for(int i=0;i<columns;++i)
                 {
                     int type = sqlite3_column_type(stmt, i);
-                    std::string column_name = column_names[i].toStdString();
+                    std::string column_name = column_names[i];
 
                     switch (type) {
                     case SQLITE_INTEGER: {
@@ -369,7 +369,7 @@ void ExportDataDialog::accept()
         {
             // if we are called from execute sql tab, query is already set
             // and we only export 1 select
-            QString sQuery = QString("SELECT * FROM %1;").arg(sqlb::ObjectIdentifier(selectedItems.at(i)->data(Qt::UserRole)).toString());
+            QString sQuery = QString("SELECT * FROM %1;").arg(QString::fromStdString(sqlb::ObjectIdentifier(selectedItems.at(i)->data(Qt::UserRole).toString().toStdString()).toString()));
             exportQuery(sQuery, filenames.at(i));
         }
     }

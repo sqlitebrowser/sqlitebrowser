@@ -47,7 +47,7 @@ QVariant DbStructureModel::data(const QModelIndex& index, int role) const
         // for schemata != "main"). For the normal structure branch of the tree we don't want to add the schema name because it's already obvious from
         // the position of the item in the tree.
         if(index.column() == ColumnName && item->parent() == browsablesRootItem)
-            return sqlb::ObjectIdentifier(item->text(ColumnSchema), item->text(ColumnName)).toDisplayString();
+            return QString::fromStdString(sqlb::ObjectIdentifier(item->text(ColumnSchema).toStdString(), item->text(ColumnName).toStdString()).toDisplayString());
         else
             return Settings::getValue("db", "hideschemalinebreaks").toBool() ? item->text(index.column()).replace("\n", " ").simplified() : item->text(index.column());
     case Qt::EditRole:
@@ -186,7 +186,7 @@ void DbStructureModel::reloadData()
         {
             QTreeWidgetItem* itemSchema = new QTreeWidgetItem(itemAll);
             itemSchema->setIcon(ColumnName, QIcon(QString(":/icons/database")));
-            itemSchema->setText(ColumnName, it.key());
+            itemSchema->setText(ColumnName, QString::fromStdString(it.key()));
             itemSchema->setText(ColumnObjectType, "database");
             buildTree(itemSchema, it.key());
         }
@@ -236,8 +236,8 @@ QMimeData* DbStructureModel::mimeData(const QModelIndexList& indices) const
                 if(objectType == "table")
                 {
                     SqliteTableModel tableModel(m_db);
-                    sqlb::ObjectIdentifier objid(data(index.sibling(index.row(), ColumnSchema), Qt::DisplayRole).toString(),
-                                                 data(index.sibling(index.row(), ColumnName), Qt::DisplayRole).toString());
+                    sqlb::ObjectIdentifier objid(data(index.sibling(index.row(), ColumnSchema), Qt::DisplayRole).toString().toStdString(),
+                                                 data(index.sibling(index.row(), ColumnName), Qt::DisplayRole).toString().toStdString());
                     tableModel.setQuery(sqlb::Query(objid));
                     if(tableModel.completeCache())
                     {
@@ -245,7 +245,7 @@ QMimeData* DbStructureModel::mimeData(const QModelIndexList& indices) const
 
                         for(int i=0; i < tableModel.rowCount(); ++i)
                         {
-                            QString insertStatement = "INSERT INTO " + objid.toString() + " VALUES(";
+                            QString insertStatement = "INSERT INTO " + QString::fromStdString(objid.toString()) + " VALUES(";
                             for(int j=1; j < tableModel.columnCount(); ++j)
                                 insertStatement += QString("'%1',").arg(tableModel.data(tableModel.index(i, j), Qt::EditRole).toString());
                             insertStatement.chop(1);
@@ -300,10 +300,10 @@ bool DbStructureModel::dropMimeData(const QMimeData* data, Qt::DropAction action
     }
 }
 
-void DbStructureModel::buildTree(QTreeWidgetItem* parent, const QString& schema)
+void DbStructureModel::buildTree(QTreeWidgetItem* parent, const std::string& schema)
 {
     // Build a map from object type to tree node to simplify finding the correct tree node later
-    QMap<QString, QTreeWidgetItem*> typeToParentItem;
+    QMap<std::string, QTreeWidgetItem*> typeToParentItem;
 
     // Get object map for the given schema
     objectMap objmap = m_db.schemata[schema];
@@ -330,7 +330,7 @@ void DbStructureModel::buildTree(QTreeWidgetItem* parent, const QString& schema)
     typeToParentItem.insert("trigger", itemTriggers);
 
     // Get all database objects and sort them by their name
-    QMultiMap<QString, sqlb::ObjectPtr> dbobjs;
+    QMultiMap<std::string, sqlb::ObjectPtr> dbobjs;
     for(auto it : objmap)
         dbobjs.insert(it->name(), it);
 
@@ -348,7 +348,7 @@ void DbStructureModel::buildTree(QTreeWidgetItem* parent, const QString& schema)
         sqlb::FieldInfoList fieldList = it->fieldInformation();
         if(!fieldList.empty())
         {
-            QStringList pk_columns;
+            sqlb::StringVector pk_columns;
             if(it->type() == sqlb::Object::Types::Table)
                 pk_columns = std::dynamic_pointer_cast<sqlb::Table>(it)->primaryKey();
             for(const sqlb::FieldInfo& field : fieldList)
@@ -358,12 +358,12 @@ void DbStructureModel::buildTree(QTreeWidgetItem* parent, const QString& schema)
                 if(it->type() == sqlb::Object::Types::Table)
                     isFK = std::dynamic_pointer_cast<sqlb::Table>(it)->constraint({field.name}, sqlb::Constraint::ForeignKeyConstraintType) != nullptr;
 
-                fldItem->setText(ColumnName, field.name);
+                fldItem->setText(ColumnName, QString::fromStdString(field.name));
                 fldItem->setText(ColumnObjectType, "field");
-                fldItem->setText(ColumnDataType, field.type);
-                fldItem->setText(ColumnSQL, field.sql);
-                fldItem->setText(ColumnSchema, schema);
-                if(pk_columns.contains(field.name))
+                fldItem->setText(ColumnDataType, QString::fromStdString(field.type));
+                fldItem->setText(ColumnSQL, QString::fromStdString(field.sql));
+                fldItem->setText(ColumnSchema, QString::fromStdString(schema));
+                if(contains(pk_columns, field.name))
                     fldItem->setIcon(ColumnName, QIcon(":/icons/field_key"));
                 else if(isFK)
                     fldItem->setIcon(ColumnName, QIcon(":/icons/field_fk"));
@@ -374,16 +374,16 @@ void DbStructureModel::buildTree(QTreeWidgetItem* parent, const QString& schema)
     }
 }
 
-QTreeWidgetItem* DbStructureModel::addNode(QTreeWidgetItem* parent, const sqlb::ObjectPtr& object, const QString& schema)
+QTreeWidgetItem* DbStructureModel::addNode(QTreeWidgetItem* parent, const sqlb::ObjectPtr& object, const std::string& schema)
 {
-    QString type = sqlb::Object::typeToString(object->type());
+    QString type = QString::fromStdString(sqlb::Object::typeToString(object->type()));
 
     QTreeWidgetItem *item = new QTreeWidgetItem(parent);
     item->setIcon(ColumnName, QIcon(QString(":/icons/%1").arg(type)));
-    item->setText(ColumnName, object->name());
+    item->setText(ColumnName, QString::fromStdString(object->name()));
     item->setText(ColumnObjectType, type);
-    item->setText(ColumnSQL, object->originalSql());
-    item->setText(ColumnSchema, schema);
+    item->setText(ColumnSQL, QString::fromStdString(object->originalSql()));
+    item->setText(ColumnSchema, QString::fromStdString(schema));
 
     return item;
 }

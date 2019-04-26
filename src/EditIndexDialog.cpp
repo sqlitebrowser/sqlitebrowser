@@ -19,7 +19,7 @@ EditIndexDialog::EditIndexDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
     ui->sqlTextEdit->setReadOnly(true);
 
     // Get list of tables, sort it alphabetically and fill the combobox
-    QMap<QString, sqlb::ObjectIdentifier> dbobjs;  // Map from display name to full object identifier
+    QMap<std::string, sqlb::ObjectIdentifier> dbobjs;  // Map from display name to full object identifier
     if(newIndex)        // If this is a new index, offer all tables of all database schemata
     {
         for(auto it=pdb.schemata.constBegin();it!=pdb.schemata.constEnd();++it)
@@ -43,7 +43,7 @@ EditIndexDialog::EditIndexDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
     }
     ui->comboTableName->blockSignals(true);
     for(auto it=dbobjs.constBegin();it!=dbobjs.constEnd();++it)
-        ui->comboTableName->addItem(QIcon(QString(":icons/table")), it.key(), it.value().toVariant());
+        ui->comboTableName->addItem(QIcon(QString(":icons/table")), QString::fromStdString(it.key()), QString::fromStdString(it.value().toSerialised()));
     ui->comboTableName->blockSignals(false);
 
     QHeaderView *tableHeaderView = ui->tableIndexColumns->horizontalHeader();
@@ -56,19 +56,19 @@ EditIndexDialog::EditIndexDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
         index = *(pdb.getObjectByName<sqlb::Index>(curIndex));
 
         ui->editIndexName->blockSignals(true);
-        ui->editIndexName->setText(index.name());
+        ui->editIndexName->setText(QString::fromStdString(index.name()));
         ui->editIndexName->blockSignals(false);
         ui->checkIndexUnique->blockSignals(true);
         ui->checkIndexUnique->setChecked(index.unique());
         ui->checkIndexUnique->blockSignals(false);
         ui->comboTableName->blockSignals(true);
-        ui->comboTableName->setCurrentText(index.table());
+        ui->comboTableName->setCurrentText(QString::fromStdString(index.table()));
         ui->comboTableName->blockSignals(false);
         ui->editPartialClause->blockSignals(true);
-        ui->editPartialClause->setText(index.whereExpr());
+        ui->editPartialClause->setText(QString::fromStdString(index.whereExpr()));
         ui->editPartialClause->blockSignals(false);
 
-        tableChanged(index.table(), true);
+        tableChanged(QString::fromStdString(index.table()), true);
     } else {
         tableChanged(ui->comboTableName->currentText(), false);
     }
@@ -77,7 +77,7 @@ EditIndexDialog::EditIndexDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
     connect(ui->tableIndexColumns, &QTableWidget::itemChanged,
             [=](QTableWidgetItem* item)
     {
-        index.fields[item->row()].setName(item->text());
+        index.fields[item->row()].setName(item->text().toStdString());
         updateSqlText();
     });
 
@@ -95,7 +95,7 @@ void EditIndexDialog::tableChanged(const QString& new_table, bool initialLoad)
     // Set the table name and clear all index columns
     if(!initialLoad)
     {
-        index.setTable(sqlb::ObjectIdentifier(ui->comboTableName->currentData()).name());
+        index.setTable(sqlb::ObjectIdentifier(ui->comboTableName->currentData().toString().toStdString()).name());
         index.fields.clear();
     }
 
@@ -113,7 +113,7 @@ void EditIndexDialog::tableChanged(const QString& new_table, bool initialLoad)
 void EditIndexDialog::updateColumnLists()
 {
     // Fill the table column list
-    sqlb::TablePtr table = pdb.getObjectByName<sqlb::Table>(sqlb::ObjectIdentifier(ui->comboTableName->currentData()));
+    sqlb::TablePtr table = pdb.getObjectByName<sqlb::Table>(sqlb::ObjectIdentifier(ui->comboTableName->currentData().toString().toStdString()));
     if(!table)
         return;
     sqlb::FieldInfoList tableFields = table->fieldInformation();
@@ -127,12 +127,12 @@ void EditIndexDialog::updateColumnLists()
         if(sqlb::findField(index, tableFields.at(i).name) == index.fields.end())
         {
             // Put the name of the field in the first column
-            QTableWidgetItem* name = new QTableWidgetItem(tableFields.at(i).name);
+            QTableWidgetItem* name = new QTableWidgetItem(QString::fromStdString(tableFields.at(i).name));
             name->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
             ui->tableTableColumns->setItem(tableRows, 0, name);
 
             // Put the data type in the second column
-            QTableWidgetItem* type = new QTableWidgetItem(tableFields.at(i).type);
+            QTableWidgetItem* type = new QTableWidgetItem(QString::fromStdString(tableFields.at(i).type));
             type->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
             ui->tableTableColumns->setItem(tableRows, 1, type);
 
@@ -151,7 +151,7 @@ void EditIndexDialog::updateColumnLists()
     for(size_t i=0;i<indexFields.size();++i)
     {
         // Put the name of the field in the first column
-        QTableWidgetItem* name = new QTableWidgetItem(indexFields.at(i).name());
+        QTableWidgetItem* name = new QTableWidgetItem(QString::fromStdString(indexFields.at(i).name()));
         Qt::ItemFlags flags = Qt::ItemIsSelectable | Qt::ItemIsEnabled;
         if(indexFields.at(i).expression())
             flags |= Qt::ItemIsEditable;
@@ -163,7 +163,7 @@ void EditIndexDialog::updateColumnLists()
         order->addItem("");
         order->addItem("ASC");
         order->addItem("DESC");
-        order->setCurrentText(indexFields.at(i).order().toUpper());
+        order->setCurrentText(QString::fromStdString(indexFields.at(i).order()).toUpper());
         ui->tableIndexColumns->setCellWidget(i, 1, order);
         connect(order, &QComboBox::currentTextChanged,
                 [=](QString new_order)
@@ -171,7 +171,7 @@ void EditIndexDialog::updateColumnLists()
             auto colnum = sqlb::findField(index, indexFields.at(i).name());
             if(colnum != index.fields.end())
             {
-                colnum->setOrder(new_order);
+                colnum->setOrder(new_order.toStdString());
                 updateSqlText();
             }
         });
@@ -196,9 +196,9 @@ void EditIndexDialog::addToIndex(const QModelIndex& idx)
 
     // Add field to index
     index.fields.emplace_back(
-                ui->tableTableColumns->item(row, 0)->text(),     // Column name
-                false,                                           // Is expression
-                "");                                             // Order
+                ui->tableTableColumns->item(row, 0)->text().toStdString(),  // Column name
+                false,                                                      // Is expression
+                "");                                                        // Order
 
     // Update UI
     updateColumnLists();
@@ -227,7 +227,7 @@ void EditIndexDialog::removeFromIndex(const QModelIndex& idx)
     }
 
     // Remove column from index
-    sqlb::removeField(index, ui->tableIndexColumns->item(row, 0)->text());
+    sqlb::removeField(index, ui->tableIndexColumns->item(row, 0)->text().toStdString());
 
     // Update UI
     updateColumnLists();
@@ -252,9 +252,9 @@ void EditIndexDialog::checkInput()
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(valid);
 
     // Set the index name and the unique flag
-    index.setName(ui->editIndexName->text());
+    index.setName(ui->editIndexName->text().toStdString());
     index.setUnique(ui->checkIndexUnique->isChecked());
-    index.setWhereExpr(ui->editPartialClause->text());
+    index.setWhereExpr(ui->editPartialClause->text().toStdString());
     updateSqlText();
 }
 
@@ -263,7 +263,7 @@ void EditIndexDialog::accept()
     // When editing an index, delete the old one first
     if(!newIndex)
     {
-        if(!pdb.executeSQL(QString("DROP INDEX IF EXISTS %1;").arg(curIndex.toString())))
+        if(!pdb.executeSQL(QString("DROP INDEX IF EXISTS %1;").arg(QString::fromStdString(curIndex.toString()))))
         {
             QMessageBox::warning(this, qApp->applicationName(), tr("Deleting the old index failed:\n%1").arg(pdb.lastError()));
             return;
@@ -271,7 +271,7 @@ void EditIndexDialog::accept()
     }
 
     // Create the new index in the schema of the selected table
-    if(pdb.executeSQL(index.sql(sqlb::ObjectIdentifier(ui->comboTableName->currentData()).schema())))
+    if(pdb.executeSQL(QString::fromStdString(index.sql(sqlb::ObjectIdentifier(ui->comboTableName->currentData().toString().toStdString()).schema()))))
         QDialog::accept();
     else
         QMessageBox::warning(this, QApplication::applicationName(), tr("Creating the index failed:\n%1").arg(pdb.lastError()));
@@ -287,7 +287,7 @@ void EditIndexDialog::reject()
 
 void EditIndexDialog::updateSqlText()
 {
-    ui->sqlTextEdit->setText(index.sql(sqlb::ObjectIdentifier(ui->comboTableName->currentData()).schema()));
+    ui->sqlTextEdit->setText(QString::fromStdString(index.sql(sqlb::ObjectIdentifier(ui->comboTableName->currentData().toString().toStdString()).schema())));
 }
 
 void EditIndexDialog::moveColumnUp()

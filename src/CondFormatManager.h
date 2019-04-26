@@ -2,6 +2,7 @@
 #define CONDFORMATMANAGER_H
 
 #include <QDialog>
+#include <vector>
 
 #include "Palette.h"
 
@@ -18,10 +19,10 @@ class CondFormatManager : public QDialog
     Q_OBJECT
 
 public:
-    explicit CondFormatManager(const QVector<CondFormat>& condFormats, const QString& encoding, QWidget *parent = nullptr);
+    explicit CondFormatManager(const std::vector<CondFormat>& condFormats, const QString& encoding, QWidget *parent = nullptr);
     ~CondFormatManager() override;
 
-    QVector<CondFormat> getCondFormats();
+    std::vector<CondFormat> getCondFormats();
 private:
     enum Columns {
         ColumnForeground = 0,
@@ -29,7 +30,7 @@ private:
         ColumnFilter = 2
     };
     Ui::CondFormatManager *ui;
-    QVector<CondFormat> m_condFormats;
+    std::vector<CondFormat> m_condFormats;
     Palette m_condFormatPalette;
     QString m_encoding;
     

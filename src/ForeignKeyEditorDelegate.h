@@ -2,6 +2,8 @@
 #define FOREIGNKEYDELEGATE_H
 
 #include <QStyledItemDelegate>
+#include <vector>
+#include <string>
 
 class DBBrowserDB;
 class QPushButton;
@@ -30,7 +32,7 @@ public:
 private:
     const DBBrowserDB& m_db;
     sqlb::Table& m_table;
-    mutable QMap<QString, QStringList> m_tablesIds;
+    mutable QMap<QString, std::vector<std::string>> m_tablesIds;
 };
 
 #endif // FOREIGNKEYDELEGATE_H

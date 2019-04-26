@@ -74,7 +74,7 @@ void SqliteTableModel::handleFinishedFetch (int life_id, unsigned int fetched_ro
     if(fetched_row_end != fetched_row_begin)
     {
         // TODO optimize
-        int num_columns = m_headers.size();
+        size_t num_columns = m_headers.size();
         emit dataChanged(createIndex(fetched_row_begin, 0), createIndex(fetched_row_end - 1, num_columns - 1));
     }
 
@@ -132,13 +132,11 @@ void SqliteTableModel::setQuery(const sqlb::Query& query)
         sqlb::TablePtr t = m_db.getObjectByName<sqlb::Table>(query.table());
         if(t && t->fields.size()) // parsing was OK
         {
-            QStringList rowids = t->rowidColumns();
-            std::vector<std::string> rowids_std;
-            for(const auto& rowid : rowids)
-                rowids_std.push_back(rowid.toStdString());
-            m_query.setRowIdColumns(rowids_std);
-            m_headers.push_back(rowids.join(","));
-            m_headers.append(t->fieldNames());
+            sqlb::StringVector rowids = t->rowidColumns();
+            m_query.setRowIdColumns(rowids);
+            m_headers.push_back(sqlb::joinStringVector(rowids, ","));
+            for(const auto& n : t->fieldNames())
+                m_headers.push_back(n);
 
             // parse columns types
             static QStringList dataTypes = QStringList()
@@ -148,7 +146,7 @@ void SqliteTableModel::setQuery(const sqlb::Query& query)
                     << "BLOB";
             for(const sqlb::Field& fld :  t->fields)
             {
-                QString name(fld.type().toUpper());
+                QString name = QString::fromStdString(fld.type()).toUpper();
                 int colType = dataTypes.indexOf(name);
                 colType = (colType == -1) ? SQLITE_TEXT : colType + 1;
                 m_vDataTypes.push_back(colType);
@@ -162,18 +160,16 @@ void SqliteTableModel::setQuery(const sqlb::Query& query)
     // NOTE: It would be nice to eventually get rid of this piece here. As soon as the grammar parser is good enough...
     if(!allOk)
     {
-        QString sColumnQuery = QString::fromUtf8("SELECT * FROM %1;").arg(query.table().toString());
+        QString sColumnQuery = QString::fromUtf8("SELECT * FROM %1;").arg(QString::fromStdString(query.table().toString()));
         if(m_query.rowIdColumns().empty())
             m_query.setRowIdColumn("_rowid_");
         m_headers.push_back("_rowid_");
-        m_headers.append(getColumns(nullptr, sColumnQuery, m_vDataTypes));
+        auto columns = getColumns(nullptr, sColumnQuery, m_vDataTypes);
+        m_headers.insert(m_headers.end(), columns.begin(), columns.end());
     }
 
     // Tell the query object about the column names
-    std::vector<std::string> column_names;
-    for(const auto& h : m_headers)
-        column_names.push_back(h.toStdString());
-    m_query.setColumNames(column_names);
+    m_query.setColumNames(m_headers);
 
     // Apply new query and update view
     buildQuery();
@@ -197,7 +193,10 @@ void SqliteTableModel::setQuery(const QString& sQuery, const QString& sCountQuer
     worker->triggerRowCountDetermination(m_lifeCounter);
 
     if(!dontClearHeaders)
-        m_headers.append(getColumns(worker->getDb(), sQuery, m_vDataTypes));
+    {
+        auto columns = getColumns(worker->getDb(), sQuery, m_vDataTypes);
+        m_headers.insert(m_headers.end(), columns.begin(), columns.end());
+    }
 
     // now fetch the first entries
     triggerCacheLoad(static_cast<int>(m_chunkSize / 2) - 1);
@@ -212,7 +211,7 @@ int SqliteTableModel::rowCount(const QModelIndex&) const
 
 int SqliteTableModel::columnCount(const QModelIndex&) const
 {
-    return m_headers.size();
+    return static_cast<int>(m_headers.size());
 }
 
 size_t SqliteTableModel::filterCount() const
@@ -246,18 +245,18 @@ QVariant SqliteTableModel::headerData(int section, Qt::Orientation orientation, 
     if (orientation == Qt::Horizontal)
     {
         // if we have a VIRTUAL table the model will not be valid, with no header data
-        if(section < m_headers.size()) {
+        if(static_cast<size_t>(section) < m_headers.size()) {
             QString sortIndicator;
             for(size_t i = 0; i < m_query.orderBy().size(); i++) {
                 const sqlb::SortedColumn sortedColumn = m_query.orderBy()[i];
                 // Append sort indicator with direction and ordinal number in superscript style
-                if (sortedColumn.column == section) {
+                if (sortedColumn.column == static_cast<size_t>(section)) {
                     sortIndicator = sortedColumn.direction == sqlb::Ascending ? " ▾" : " ▴";
                     sortIndicator.append(toSuperScript(i+1));
                     break;
                 }
             }
-            return m_headers.at(section) + sortIndicator;
+            return QString::fromStdString(m_headers.at(static_cast<size_t>(section))) + sortIndicator;
         }
         return QString("%1").arg(section + 1);
     }
@@ -373,8 +372,10 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
     } else if(role == Qt::ToolTipRole) {
         sqlb::ForeignKeyClause fk = getForeignKeyClause(index.column()-1);
         if(fk.isSet())
-          return tr("References %1(%2)\nHold %3Shift and click to jump there").arg(fk.table()).arg(fk.columns().join(","))
-            .arg(QKeySequence(Qt::CTRL).toString(QKeySequence::NativeText));
+          return tr("References %1(%2)\nHold %3Shift and click to jump there")
+                  .arg(QString::fromStdString(fk.table()))
+                  .arg(QString::fromStdString(sqlb::joinStringVector(fk.columns(), ",")))
+                  .arg(QKeySequence(Qt::CTRL).toString(QKeySequence::NativeText));
         else
             return QString();
     }
@@ -460,12 +461,9 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
 
         if(m_db.updateRecord(m_query.table(), m_headers.at(index.column()), cached_row.at(0), newValue, isBlob, m_query.rowIdColumns()))
         {
-            cached_row.replace(index.column(), newValue);
-            QStringList header;
-            for(const auto& col : m_query.rowIdColumns())
-                header += QString::fromStdString(col);
-            if(m_headers.at(index.column()) == header.join(",")) {
-                cached_row.replace(0, newValue);
+            cached_row[index.column()] = newValue;
+            if(m_headers.at(index.column()) == sqlb::joinStringVector(m_query.rowIdColumns(), ",")) {
+                cached_row[0] =  newValue;
                 const QModelIndex& rowidIndex = index.sibling(index.row(), 0);
                 lock.unlock();
                 emit dataChanged(rowidIndex, rowidIndex);
@@ -530,7 +528,7 @@ SqliteTableModel::Row SqliteTableModel::makeDefaultCacheEntry () const
 {
     Row blank_data;
 
-    for(int i=0; i < m_headers.size(); ++i)
+    for(size_t i=0; i < m_headers.size(); ++i)
         blank_data.push_back("");
 
     return blank_data;
@@ -562,15 +560,15 @@ bool SqliteTableModel::insertRows(int row, int count, const QModelIndex& parent)
             return false;
         }
         tempList.push_back(blank_data);
-        tempList.back().replace(0, rowid.toUtf8());
+        tempList.back()[0] = rowid.toUtf8();
 
         // update column with default values
         Row rowdata;
         if(m_db.getRow(m_query.table(), rowid, rowdata))
         {
-            for(int j=1; j < m_headers.size(); ++j)
+            for(size_t j=1; j < m_headers.size(); ++j)
             {
-                tempList.back().replace(j, rowdata[j - 1]);
+                tempList.back()[j] = rowdata[j - 1];
             }
         }
     }
@@ -633,7 +631,7 @@ QModelIndex SqliteTableModel::dittoRecord(int old_row)
 
     sqlb::TablePtr t = m_db.getObjectByName<sqlb::Table>(m_query.table());
 
-    QStringList pk = t->primaryKey();
+    sqlb::StringVector pk = t->primaryKey();
     for (size_t col = 0; col < t->fields.size(); ++col) {
         if(!contains(pk, t->fields.at(col).name())) {
             if (!firstEditedColumn)
@@ -716,7 +714,7 @@ void SqliteTableModel::removeCommentsFromQuery(QString& query)
     }
 }
 
-QStringList SqliteTableModel::getColumns(std::shared_ptr<sqlite3> pDb, const QString& sQuery, QVector<int>& fieldsTypes)
+std::vector<std::string> SqliteTableModel::getColumns(std::shared_ptr<sqlite3> pDb, const QString& sQuery, std::vector<int>& fieldsTypes)
 {
     if(!pDb)
         pDb = m_db.get(tr("retrieving list of columns"));
@@ -724,14 +722,14 @@ QStringList SqliteTableModel::getColumns(std::shared_ptr<sqlite3> pDb, const QSt
     sqlite3_stmt* stmt;
     QByteArray utf8Query = sQuery.toUtf8();
     int status = sqlite3_prepare_v2(pDb.get(), utf8Query, utf8Query.size(), &stmt, nullptr);
-    QStringList listColumns;
+    std::vector<std::string> listColumns;
     if(SQLITE_OK == status)
     {
         sqlite3_step(stmt);
         int columns = sqlite3_data_count(stmt);
         for(int i = 0; i < columns; ++i)
         {
-            listColumns.append(QString::fromUtf8(sqlite3_column_name(stmt, i)));
+            listColumns.push_back(sqlite3_column_name(stmt, i));
             fieldsTypes.push_back(sqlite3_column_type(stmt, i));
         }
     }
@@ -742,11 +740,11 @@ QStringList SqliteTableModel::getColumns(std::shared_ptr<sqlite3> pDb, const QSt
 
 void SqliteTableModel::addCondFormat(int column, const CondFormat& condFormat)
 {
-    m_mCondFormats[column].append(condFormat);
+    m_mCondFormats[column].push_back(condFormat);
     emit layoutChanged();
 }
 
-void SqliteTableModel::setCondFormats(int column, const QVector<CondFormat>& condFormats)
+void SqliteTableModel::setCondFormats(int column, const std::vector<CondFormat>& condFormats)
 {
     m_mCondFormats[column] = condFormats;
     emit layoutChanged();
@@ -849,12 +847,7 @@ void SqliteTableModel::setPseudoPk(std::vector<std::string> pseudoPk)
 
     m_query.setRowIdColumns(pseudoPk);
     if(m_headers.size())
-    {
-        QStringList headers;
-        for(const auto& col : pseudoPk)
-            headers << QString::fromStdString(col);
-        m_headers[0] = headers.join(",");
-    }
+        m_headers[0] = sqlb::joinStringVector(pseudoPk, ",");
 
     buildQuery();
 }

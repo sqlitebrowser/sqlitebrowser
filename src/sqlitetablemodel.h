@@ -2,11 +2,10 @@
 #define SQLITETABLEMODEL_H
 
 #include <QAbstractTableModel>
-#include <QStringList>
-#include <QVector>
 #include <QMutex>
 #include <QColor>
 #include <memory>
+#include <vector>
 
 #include "RowCache.h"
 #include "CondFormat.h"
@@ -114,7 +113,7 @@ public:
     static void removeCommentsFromQuery(QString& query);
 
     void addCondFormat(int column, const CondFormat& condFormat);
-    void setCondFormats(int column, const QVector<CondFormat>& condFormats);
+    void setCondFormats(int column, const std::vector<CondFormat>& condFormats);
 
     DBBrowserDB& db() { return m_db; }
 
@@ -143,7 +142,7 @@ private:
     void buildQuery();
 
     /// \param pDb connection to query; if null, obtains it from 'm_db'.
-    QStringList getColumns(std::shared_ptr<sqlite3> pDb, const QString& sQuery, QVector<int>& fieldsTypes);
+    std::vector<std::string> getColumns(std::shared_ptr<sqlite3> pDb, const QString& sQuery, std::vector<int>& fieldsTypes);
 
     QByteArray encode(const QByteArray& str) const;
     QByteArray decode(const QByteArray& str) const;
@@ -167,13 +166,13 @@ private:
     RowCount m_rowCountAvailable;
     unsigned int m_currentRowCount;
 
-    QStringList m_headers;
+    std::vector<std::string> m_headers;
 
     /// reading something in background right now? (either counting
     /// rows or actually loading data, doesn't matter)
     bool readingData() const;
 
-    using Row = QVector<QByteArray>;
+    using Row = std::vector<QByteArray>;
     mutable RowCache<Row> m_cache;
 
     Row makeDefaultCacheEntry () const;
@@ -181,8 +180,8 @@ private:
     bool nosync_isBinary(const QModelIndex& index) const;
 
     QString m_sQuery;
-    QVector<int> m_vDataTypes;
-    QMap<int, QVector<CondFormat>> m_mCondFormats;
+    std::vector<int> m_vDataTypes;
+    QMap<int, std::vector<CondFormat>> m_mCondFormats;
     sqlb::Query m_query;
 
     /**

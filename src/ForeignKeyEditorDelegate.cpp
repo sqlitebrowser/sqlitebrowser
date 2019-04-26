@@ -87,7 +87,7 @@ ForeignKeyEditorDelegate::ForeignKeyEditorDelegate(const DBBrowserDB& db, sqlb::
         {
             if((*jt)->type() == sqlb::Object::Types::Table)
             {
-                QString tableName = (*jt)->name();
+                QString tableName = QString::fromStdString((*jt)->name());
                 m_tablesIds.insert(tableName, std::dynamic_pointer_cast<sqlb::Table>(*jt)->fieldNames());
             }
         }
@@ -108,7 +108,8 @@ QWidget* ForeignKeyEditorDelegate::createEditor(QWidget* parent, const QStyleOpt
         QComboBox* box = editor->idsComboBox;
         box->clear();
         box->addItem(QString());                // for those heroes who don't like to specify key explicitly
-        box->addItems(m_tablesIds[tableName]);
+        for(const auto& n : m_tablesIds[tableName])
+            box->addItem(QString::fromStdString(n));
         box->setCurrentIndex(0);
     });
 
@@ -126,10 +127,10 @@ void ForeignKeyEditorDelegate::setEditorData(QWidget* editor, const QModelIndex&
     const sqlb::Field& field = m_table.fields.at(column);
     auto fk = std::dynamic_pointer_cast<sqlb::ForeignKeyClause>(m_table.constraint({field.name()}, sqlb::Constraint::ForeignKeyConstraintType));
     if (fk) {
-        fkEditor->tablesComboBox->setCurrentText(fk->table());
-        fkEditor->clauseEdit->setText(fk->constraint());
-        if (!fk->columns().isEmpty())
-            fkEditor->idsComboBox->setCurrentText(fk->columns().first());
+        fkEditor->tablesComboBox->setCurrentText(QString::fromStdString(fk->table()));
+        fkEditor->clauseEdit->setText(QString::fromStdString(fk->constraint()));
+        if (!fk->columns().empty())
+            fkEditor->idsComboBox->setCurrentText(QString::fromStdString(fk->columns().front()));
     } else {
         fkEditor->tablesComboBox->setCurrentIndex(-1);
     }
@@ -150,16 +151,16 @@ void ForeignKeyEditorDelegate::setModelData(QWidget* editor, QAbstractItemModel*
         sqlb::ForeignKeyClause* fk = new sqlb::ForeignKeyClause;
 
         const QString table     = fkEditor->tablesComboBox->currentText();
-        const QString id        = fkEditor->idsComboBox->currentText();
+        const std::string id    = fkEditor->idsComboBox->currentText().toStdString();
         const QString clause    = fkEditor->clauseEdit->text();
 
-        fk->setTable(table);
+        fk->setTable(table.toStdString());
 
-        if (!id.isEmpty())
+        if (!id.empty())
             fk->setColumns({id});
 
         if (!clause.trimmed().isEmpty()) {
-            fk->setConstraint(clause);
+            fk->setConstraint(clause.toStdString());
         }
 
         m_table.setConstraint({field.name()}, sqlb::ConstraintPtr(fk));
@@ -180,7 +181,7 @@ void ForeignKeyEditorDelegate::updateTablesList(const QString& oldTableName)
     // this is used for recursive table constraints when
     // table column references column within same table
     m_tablesIds.remove(oldTableName);
-    m_tablesIds.insert(m_table.name(), m_table.fieldNames());
+    m_tablesIds.insert(QString::fromStdString(m_table.name()), m_table.fieldNames());
 }
 
 #include "ForeignKeyEditorDelegate.moc"

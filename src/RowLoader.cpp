@@ -19,7 +19,7 @@ namespace {
 RowLoader::RowLoader (
     std::function<std::shared_ptr<sqlite3>(void)> db_getter_,
     std::function<void(QString)> statement_logger_,
-    QStringList & headers_,
+    std::vector<std::string> & headers_,
     QMutex & cache_mutex_,
     Cache & cache_data_
     )
@@ -230,7 +230,7 @@ void RowLoader::process (Task & t)
 
     if(SQLITE_OK == status)
     {
-        const int num_columns = headers.size();
+        const int num_columns = static_cast<int>(headers.size());
 
         while(!t.cancel && sqlite3_step(stmt) == SQLITE_ROW)
         {
@@ -239,13 +239,13 @@ void RowLoader::process (Task & t)
             {
                 if(sqlite3_column_type(stmt, i) == SQLITE_NULL)
                 {
-                    rowdata.append(QByteArray());
+                    rowdata.push_back(QByteArray());
                 } else {
                     int bytes = sqlite3_column_bytes(stmt, i);
                     if(bytes)
-                        rowdata.append(QByteArray(static_cast<const char*>(sqlite3_column_blob(stmt, i)), bytes));
+                        rowdata.push_back(QByteArray(static_cast<const char*>(sqlite3_column_blob(stmt, i)), bytes));
                     else
-                        rowdata.append(QByteArray(""));
+                        rowdata.push_back(QByteArray(""));
                 }
             }
             QMutexLocker lk(&cache_mutex);

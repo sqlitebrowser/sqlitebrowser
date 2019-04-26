@@ -3,7 +3,6 @@
 
 #include <QDialog>
 #include <QVariant>
-#include <QHash>
 
 class QTreeWidgetItem;
 class QFrame;

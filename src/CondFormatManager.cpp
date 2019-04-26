@@ -9,7 +9,7 @@
 #include <QPushButton>
 #include <QMessageBox>
 
-CondFormatManager::CondFormatManager(const QVector<CondFormat>& condFormats, const QString& encoding, QWidget *parent) :
+CondFormatManager::CondFormatManager(const std::vector<CondFormat>& condFormats, const QString& encoding, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CondFormatManager),
     m_condFormats(condFormats),
@@ -97,16 +97,16 @@ void CondFormatManager::downItem()
                                                                                        ui->tableCondFormats->currentIndex().column()));
 }
 
-QVector<CondFormat> CondFormatManager::getCondFormats()
+std::vector<CondFormat> CondFormatManager::getCondFormats()
 {
-    QVector<CondFormat> result;
+    std::vector<CondFormat> result;
     for (int i = 0; i < ui->tableCondFormats->topLevelItemCount(); ++i)
     {
         QTreeWidgetItem* item = ui->tableCondFormats->topLevelItem(i);
         CondFormat aCondFormat(item->text(ColumnFilter),
                                item->background(ColumnForeground).color(),
                                item->background(ColumnBackground).color(), m_encoding);
-        result.append(aCondFormat);
+        result.push_back(aCondFormat);
     }
     return result;
 }

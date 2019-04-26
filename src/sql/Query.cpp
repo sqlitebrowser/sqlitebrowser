@@ -87,13 +87,13 @@ std::string Query::buildQuery(bool withRowid) const
         order_by = "ORDER BY " + order_by;
     }
 
-    return "SELECT " + selector + " FROM " + m_table.toString().toStdString() + " " + where + " " + order_by;
+    return "SELECT " + selector + " FROM " + m_table.toString() + " " + where + " " + order_by;
 }
 
 std::string Query::buildCountQuery() const
 {
     // Build simplest count query for this (filtered) table
-    return "SELECT COUNT(*) FROM " + m_table.toString().toStdString() + " " + buildWherePart();
+    return "SELECT COUNT(*) FROM " + m_table.toString() + " " + buildWherePart();
 }
 
 std::vector<SelectedColumn>::iterator Query::findSelectedColumnByName(const std::string& name)

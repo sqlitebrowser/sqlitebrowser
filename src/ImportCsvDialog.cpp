@@ -245,7 +245,7 @@ void ImportCsvDialog::updatePreview()
     // Set horizontal header data
     QStringList horizontalHeader;
     for(const sqlb::Field& field : fieldList)
-        horizontalHeader.push_back(field.name());
+        horizontalHeader.push_back(QString::fromStdString(field.name()));
     ui->tablePreview->setHorizontalHeaderLabels(horizontalHeader);
 
     // Parse file
@@ -416,7 +416,7 @@ sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename)
 
             // Add field to the column list. For now we set the data type to nothing but this might be overwritten later in the automatic
             // type detection code.
-            fieldList.emplace_back(fieldname, "");
+            fieldList.emplace_back(fieldname.toStdString(), "");
         }
 
         // Try to find out a data type for each column. Skip the header row if there is one.
@@ -426,7 +426,7 @@ sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename)
             {
                 // If the data type has been set to TEXT, there's no going back because it means we had at least one row with text-only
                 // content and that means we don't want to set the data type to any number type.
-                QString old_type = fieldList.at(i).type();
+                std::string old_type = fieldList.at(i).type();
                 if(old_type != "TEXT")
                 {
                     QString content = QString::fromUtf8(data.fields[i].data, data.fields[i].data_length);
@@ -437,7 +437,7 @@ sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename)
                     content.toFloat(&convert_to_float);
 
                     // Set new data type. If we don't find any better data type, we fall back to the TEXT data type
-                    QString new_type = "TEXT";
+                    std::string new_type = "TEXT";
                     if(old_type == "INTEGER" && !convert_to_int && convert_to_float)    // So far it's integer, but now it's only convertible to float
                         new_type = "REAL";
                     else if(old_type == "" && convert_to_int)                           // No type yet, but this bit is convertible to integer
@@ -497,7 +497,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
 
     // Are we importing into an existing table?
     bool importToExistingTable = false;
-    const sqlb::ObjectPtr obj = pdb->getObjectByName(sqlb::ObjectIdentifier("main", tableName));
+    const sqlb::ObjectPtr obj = pdb->getObjectByName(sqlb::ObjectIdentifier("main", tableName.toStdString()));
     if(obj && obj->type() == sqlb::Object::Types::Table)
     {
         if(std::dynamic_pointer_cast<sqlb::Table>(obj)->fields.size() != fieldList.size())
@@ -542,13 +542,13 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
     }
 
     // Create table
-    QVector<QByteArray> nullValues;
+    std::vector<QByteArray> nullValues;
     std::vector<bool> failOnMissingFieldList;
     bool ignoreDefaults = ui->checkIgnoreDefaults->isChecked();
     bool failOnMissing = ui->checkFailOnMissing->isChecked();
     if(!importToExistingTable)
     {
-        if(!pdb->createTable(sqlb::ObjectIdentifier("main", tableName), fieldList))
+        if(!pdb->createTable(sqlb::ObjectIdentifier("main", tableName.toStdString()), fieldList))
         {
             rollback(this, pdb, nullptr, restorepointName, 0, tr("Creating the table failed: %1").arg(pdb->lastError()));
             return false;
@@ -562,7 +562,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
 
         // Prepare the values for each table column that are to be inserted if the field in the CSV file is empty. Depending on the data type
         // and the constraints of a field, we need to handle this case differently.
-        sqlb::TablePtr tbl = pdb->getObjectByName<sqlb::Table>(sqlb::ObjectIdentifier("main", tableName));
+        sqlb::TablePtr tbl = pdb->getObjectByName<sqlb::Table>(sqlb::ObjectIdentifier("main", tableName.toStdString()));
         if(tbl)
         {
             for(const sqlb::Field& f : tbl->fields)
@@ -575,9 +575,9 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
 
                 // If a field has a default value, that gets priority over everything else.
                 // Exception: if the user wants to ignore default values we never use them.
-                if(!ignoreDefaults && !f.defaultValue().isNull())
+                if(!ignoreDefaults && !f.defaultValue().empty())
                 {
-                    nullValues << f.defaultValue().toUtf8();
+                    nullValues.push_back(f.defaultValue().c_str());
                 } else {
                     // If it has no default value, check if the field is NOT NULL
                     if(f.notnull())
@@ -586,9 +586,9 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
 
                         // If this is an integer column insert 0. Otherwise insert an empty string.
                         if(f.isInteger())
-                            nullValues << "0";
+                            nullValues.push_back("0");
                         else
-                            nullValues << "";
+                            nullValues.push_back("");
 
                         // If the user wants to fail the import, remember this field
                         if(failOnMissing)
@@ -597,7 +597,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
                         // The field is not NOT NULL (stupid double negation here! NULL values are allowed in this case)
 
                         // Just insert a NULL value
-                        nullValues << QByteArray();
+                        nullValues.push_back(QByteArray());
                     }
                 }
             }

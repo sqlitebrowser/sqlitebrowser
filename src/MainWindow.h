@@ -36,7 +36,7 @@ struct BrowseDataTableSettings
     sqlb::Query query;                              // NOTE: We only store the sort order in here (for now)
     QMap<int, int> columnWidths;
     QMap<int, QString> filterValues;
-    QMap<int, QVector<CondFormat>> condFormats;
+    QMap<int, std::vector<CondFormat>> condFormats;
     QMap<int, QString> displayFormats;
     bool showRowid;
     QString encoding;
