@@ -1114,14 +1114,19 @@ void CreateTableWalker::parsecolumn(Table* table, antlr::RefAST c)
         break;
         case sqlite3TokenTypes::CHECK:
         {
-            // TODO Support constraint names here
-            if(!constraint_name.isEmpty())
-                table->setFullyParsed(false);
-
             con = con->getNextSibling(); //CHECK
             con = con->getNextSibling(); //LPAREN
 
             check = concatExprAST(con);
+
+            // If we have a constraint name, convert this constraint from a column into a table constaint in order to save it with our data model
+            if(!constraint_name.isEmpty())
+            {
+                CheckConstraint* check_constraint = new CheckConstraint(check);
+                check_constraint->setName(constraint_name);
+                table->addConstraint({colname}, ConstraintPtr(check_constraint));
+                check.clear();
+            }
         }
         break;
         case sqlite3TokenTypes::DEFAULT:
