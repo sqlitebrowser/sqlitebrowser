@@ -35,7 +35,7 @@ RowLoader::RowLoader (
 {
 }
 
-void RowLoader::setQuery (QString new_query, QString newCountQuery)
+void RowLoader::setQuery (const QString& new_query, const QString& newCountQuery)
 {
     std::lock_guard<std::mutex> lk(m);
     query = new_query;

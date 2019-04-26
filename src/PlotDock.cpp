@@ -7,6 +7,7 @@
 
 #include <QPrinter>
 #include <QPrintPreviewDialog>
+#include <QRandomGenerator>
 
 PlotDock::PlotDock(QWidget* parent)
     : QDialog(parent),
@@ -524,7 +525,7 @@ void PlotDock::on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem* item, int c
         // On double click open the colordialog
         QColorDialog colordialog(this);
         QColor curbkcolor = item->backgroundColor(column);
-        QColor precolor = !curbkcolor.isValid() ? static_cast<Qt::GlobalColor>(qrand() % 13 + 5) : curbkcolor;
+        QColor precolor = !curbkcolor.isValid() ? static_cast<Qt::GlobalColor>(QRandomGenerator::global()->bounded(5, 13)) : curbkcolor;
         QColor color = colordialog.getColor(precolor, this, tr("Choose an axis color"));
         if(color.isValid())
         {

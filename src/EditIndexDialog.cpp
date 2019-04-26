@@ -117,7 +117,7 @@ void EditIndexDialog::updateColumnLists()
     if(!table)
         return;
     sqlb::FieldInfoList tableFields = table->fieldInformation();
-    ui->tableTableColumns->setRowCount(tableFields.size());
+    ui->tableTableColumns->setRowCount(static_cast<int>(tableFields.size()));
     int tableRows = 0;
     for(size_t i=0;i<tableFields.size();++i)
     {
@@ -147,7 +147,7 @@ void EditIndexDialog::updateColumnLists()
     // table) and to preserve the order of the index columns
     auto indexFields = index.fields;
     ui->tableIndexColumns->blockSignals(true);
-    ui->tableIndexColumns->setRowCount(indexFields.size());
+    ui->tableIndexColumns->setRowCount(static_cast<int>(indexFields.size()));
     for(size_t i=0;i<indexFields.size();++i)
     {
         // Put the name of the field in the first column

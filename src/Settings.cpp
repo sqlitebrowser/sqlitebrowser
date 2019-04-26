@@ -364,6 +364,7 @@ QColor Settings::getDefaultColorValue(const QString& group, const QString& name,
                 return QColor(Qt::lightGray).name();
             if(name == "bin_bg_colour")
                 return QPalette().color(QPalette::Active, QPalette::Base).name();
+            break;
         case DarkStyle :
             if(name == "null_fg_colour")
                 return QColor("#787878");
@@ -377,6 +378,7 @@ QColor Settings::getDefaultColorValue(const QString& group, const QString& name,
                 return QColor("#787878");
             if(name == "bin_bg_colour")
                 return QColor("#19232D");
+            break;
         }
     }
 

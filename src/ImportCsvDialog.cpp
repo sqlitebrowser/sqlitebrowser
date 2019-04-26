@@ -43,7 +43,7 @@ ImportCsvDialog::ImportCsvDialog(const QStringList &filenames, DBBrowserDB* db, 
 
     // Create a list of all available encodings and create an auto completion list from them
     QStringList encodingList;
-    for(const QString& enc : QTextCodec::availableCodecs())
+    for(const QByteArray& enc : QTextCodec::availableCodecs())
         encodingList.push_back(enc);
     encodingCompleter = new QCompleter(encodingList, this);
     encodingCompleter->setCaseSensitivity(Qt::CaseInsensitive);
@@ -136,17 +136,17 @@ public:
         m_pProgressDlg->setWindowModality(Qt::ApplicationModal);
     }
 
-    ~CSVImportProgress()
+    ~CSVImportProgress() override
     {
         delete m_pProgressDlg;
     }
 
-    void start()
+    void start() override
     {
         m_pProgressDlg->show();
     }
 
-    bool update(unsigned long long pos)
+    bool update(unsigned long long pos) override
     {
         m_pProgressDlg->setValue(static_cast<int>((static_cast<float>(pos) / static_cast<float>(totalFileSize)) * 10000.0f));
         qApp->processEvents();
@@ -154,7 +154,7 @@ public:
         return !m_pProgressDlg->wasCanceled();
     }
 
-    void end()
+    void end() override
     {
         m_pProgressDlg->hide();
     }
@@ -236,7 +236,7 @@ void ImportCsvDialog::updatePreview()
 
     // Reset preview widget
     ui->tablePreview->clear();
-    ui->tablePreview->setColumnCount(fieldList.size());
+    ui->tablePreview->setColumnCount(static_cast<int>(fieldList.size()));
 
     // Exit if there are no lines to preview at all
     if(fieldList.size() == 0)

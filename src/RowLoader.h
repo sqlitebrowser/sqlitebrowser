@@ -34,7 +34,7 @@ public:
         Cache & cache_data
         );
 
-    void setQuery (QString new_query, QString newCountQuery = QString());
+    void setQuery (const QString& new_query, const QString& newCountQuery = QString());
 
     void triggerRowCountDetermination (int token);
 

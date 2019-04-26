@@ -207,7 +207,7 @@ void SqliteTableModel::setQuery(const QString& sQuery, const QString& sCountQuer
 
 int SqliteTableModel::rowCount(const QModelIndex&) const
 {
-    return m_currentRowCount;
+    return static_cast<int>(m_currentRowCount);
 }
 
 int SqliteTableModel::columnCount(const QModelIndex&) const
@@ -215,7 +215,7 @@ int SqliteTableModel::columnCount(const QModelIndex&) const
     return m_headers.size();
 }
 
-int SqliteTableModel::filterCount() const
+size_t SqliteTableModel::filterCount() const
 {
     return m_query.where().size();
 }

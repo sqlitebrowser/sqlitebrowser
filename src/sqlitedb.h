@@ -38,7 +38,7 @@ private:
     /// custom unique_ptr deleter releases database for further use by others
     struct DatabaseReleaser
     {
-        DatabaseReleaser(DBBrowserDB * pParent_ = nullptr) : pParent(pParent_) {}
+        explicit DatabaseReleaser(DBBrowserDB * pParent_ = nullptr) : pParent(pParent_) {}
 
         DBBrowserDB * pParent;
 
@@ -91,7 +91,7 @@ public:
        \returns a unique_ptr containing the SQLite database handle, or
        nullptr in case no database is open.
     **/
-    db_pointer_type get (QString user, bool force_wait = false);
+    db_pointer_type get (const QString& user, bool force_wait = false);
 
     bool setSavepoint(const QString& pointname = "RESTOREPOINT");
     bool releaseSavepoint(const QString& pointname = "RESTOREPOINT");

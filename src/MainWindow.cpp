@@ -103,8 +103,8 @@ MainWindow::MainWindow(QWidget* parent)
       remoteDock(new RemoteDock(this)),
       findReplaceDialog(new FindReplaceDialog(this)),
       gotoValidator(new QIntValidator(0, 0, this)),
-      isProjectModified(false),
-      execute_sql_worker(nullptr)
+      execute_sql_worker(nullptr),
+      isProjectModified(false)
 {
     ui->setupUi(this);
     init();
@@ -1504,10 +1504,10 @@ void MainWindow::executeQuery()
         // Log the query and the result message.
         // The query takes the last placeholder as it may itself contain the sequence '%' + number.
         QString query = editor->text(from_position, to_position);
-        QString log_message = QString("-- " + tr("At line %1:") + "\n%3\n-- " + tr("Result: %2")).arg(execute_from_line+1).arg(status_message).arg(query.trimmed());
+        QString log_message = "-- " + tr("At line %1:").arg(execute_from_line+1) + "\n" + query.trimmed() + "\n-- " + tr("Result: %1").arg(status_message);
         db.logSQL(log_message, kLogMsg_User);
 
-        log_message = QString(tr("Result: %2") + "\n" + tr("At line %1:") + "\n%3").arg(execute_from_line+1).arg(status_message).arg(query.trimmed());
+        log_message = tr("Result: %2").arg(status_message) + "\n" + tr("At line %1:").arg(execute_from_line+1) + "\n" + query.trimmed();
         // Update the execution area
         sqlWidget->finishExecution(log_message, ok);
     };
@@ -2918,7 +2918,7 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                         if(xml.name() == "sql")
                         {
                             // SQL editor tab
-                            unsigned int index = openSqlTab();
+                            int index = openSqlTab();
                             ui->tabSqlAreas->setTabText(index, xml.attributes().value("name").toString());
                             SqlTextEdit* sqlEditor = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index))->getEditor();
                             sqlEditor->setText(xml.readElementText());
@@ -3456,9 +3456,9 @@ void MainWindow::editDataColumnDisplayFormat()
     int field_number = sender()->property("clicked_column").toInt();
     QString field_name;
     if (db.getObjectByName(current_table)->type() == sqlb::Object::Table)
-      field_name = db.getObjectByName<sqlb::Table>(current_table)->fields.at(field_number-1).name();
+        field_name = db.getObjectByName<sqlb::Table>(current_table)->fields.at(field_number-1).name();
     else
-      field_name = db.getObjectByName<sqlb::View>(current_table)->fieldNames().at(field_number-1);
+        field_name = db.getObjectByName<sqlb::View>(current_table)->fieldNames().at(field_number-1);
     // Get the current display format of the field
     QString current_displayformat = browseTableSettings[current_table].displayFormats[field_number];
 
@@ -3862,7 +3862,7 @@ void MainWindow::runSqlNewTab(const QString& query, const QString& title)
         if (ui->mainTab->indexOf(ui->query) == -1)
             ui->mainTab->addTab(ui->query, ui->query->accessibleName());
         ui->mainTab->setCurrentWidget(ui->query);
-        unsigned int index = openSqlTab();
+        int index = openSqlTab();
         ui->tabSqlAreas->setTabText(index, title);
         qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index))->getEditor()->setText(query);
         executeQuery();

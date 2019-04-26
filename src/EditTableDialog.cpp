@@ -168,7 +168,7 @@ void EditTableDialog::populateConstraints()
     const auto& constraints = m_table.allConstraints();
 
     ui->tableConstraints->blockSignals(true);
-    ui->tableConstraints->setRowCount(constraints.size());
+    ui->tableConstraints->setRowCount(static_cast<int>(constraints.size()));
     int row = 0;
     for(const auto& pair : constraints)
     {
@@ -609,7 +609,7 @@ void EditTableDialog::addField()
     // Find an unused name for the field by starting with 'Fieldx' where x is the number of fields + 1.
     // If this name happens to exist already, increase x by one until we find an unused name.
     {
-        unsigned int field_number = ui->treeWidget->topLevelItemCount();
+        int field_number = ui->treeWidget->topLevelItemCount();
         QString field_name;
         do
         {

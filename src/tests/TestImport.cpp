@@ -83,13 +83,13 @@ void TestImport::csvImport_data()
     result.append(QVector<QByteArray>() << "g" << "h" << "i");
     QTest::newRow("commas_noquotes") << "a,b,c\nd,e,f\ng,h,i\n"
                                      << ','
-                                     << (char)0
+                                     << static_cast<char>(0)
                                      << "UTF-8"
                                      << 3
                                      << result;
     QTest::newRow("semicolons_noquotes") << "a;b;c\nd;e;f\ng;h;i\n"
                                          << ';'
-                                         << (char)0
+                                         << static_cast<char>(0)
                                          << "UTF-8"
                                          << 3
                                          << result;
@@ -107,13 +107,13 @@ void TestImport::csvImport_data()
                                            << result;
     QTest::newRow("windowslinebreaks") << "a,b,c\r\nd,e,f\r\ng,h,i\r\n"
                                        << ','
-                                       << (char)0
+                                       << static_cast<char>(0)
                                        << "UTF-8"
                                        << 3
                                        << result;
     QTest::newRow("oldmaclinebreaks")  << "a,b,c\rd,e,f\rg,h,i\r"
                                        << ','
-                                       << (char)0
+                                       << static_cast<char>(0)
                                        << "UTF-8"
                                        << 3
                                        << result;
@@ -126,7 +126,7 @@ void TestImport::csvImport_data()
     result.append(QVector<QByteArray>() << "" << "" << "f");
     QTest::newRow("emptyvalues") << "a,b,\nc,\nd,,e\n\n,,f"
                                      << ','
-                                     << (char)0
+                                     << static_cast<char>(0)
                                      << "UTF-8"
                                      << 3
                                      << result;
@@ -135,7 +135,7 @@ void TestImport::csvImport_data()
     result.append(QVector<QByteArray>() << "a" << "b" << "c");
     QTest::newRow("oneline") << "a,b,c"
                              << ','
-                             << (char)0
+                             << static_cast<char>(0)
                              << "UTF-8"
                              << 3
                              << result;
@@ -155,7 +155,7 @@ void TestImport::csvImport_data()
     QString csv = QString::fromUtf8("\xC2\xAE") + "," + QString::fromUtf8("\xC9\x85") + "," + QString::fromUtf8("\xC6\x89") + "\n";
     QTest::newRow("utf8chars") << csv
                                << ','
-                               << (char)0
+                               << static_cast<char>(0)
                                << "UTF-8"
                                << 3
                                << result;
@@ -165,7 +165,7 @@ void TestImport::csvImport_data()
     QString csv2 = QString::fromUtf8("\u4E18") + "," + QString::fromUtf8("\u4E26") + "," + QString::fromUtf8("\u4E4B") + "\n";
     QTest::newRow("utf16chars") << csv2
                                << ','
-                               << (char)0
+                               << static_cast<char>(0)
                                << "UTF-16"
                                << 3
                                << result;

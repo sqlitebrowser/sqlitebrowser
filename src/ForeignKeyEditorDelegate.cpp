@@ -122,7 +122,7 @@ void ForeignKeyEditorDelegate::setEditorData(QWidget* editor, const QModelIndex&
 {
     ForeignKeyEditor* fkEditor = static_cast<ForeignKeyEditor*>(editor);
 
-    int column = index.row(); // weird? I know right
+    size_t column = static_cast<size_t>(index.row()); // weird? I know right
     const sqlb::Field& field = m_table.fields.at(column);
     auto fk = std::dynamic_pointer_cast<sqlb::ForeignKeyClause>(m_table.constraint({field.name()}, sqlb::Constraint::ForeignKeyConstraintType));
     if (fk) {
@@ -140,7 +140,7 @@ void ForeignKeyEditorDelegate::setModelData(QWidget* editor, QAbstractItemModel*
     ForeignKeyEditor* fkEditor = static_cast<ForeignKeyEditor*>(editor);
     QString sql = fkEditor->getSql();
 
-    int column = index.row();
+    size_t column = static_cast<size_t>(index.row());
     const sqlb::Field& field = m_table.fields.at(column);
     if (sql.isEmpty()) {
         // Remove the foreign key

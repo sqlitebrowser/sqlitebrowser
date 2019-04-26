@@ -18,7 +18,7 @@ enum SortDirection
 
 struct SortedColumn
 {
-    SortedColumn(int column_, SortDirection direction_) :
+    SortedColumn(size_t column_, SortDirection direction_) :
         column(column_),
         direction(direction_)
     {}
@@ -28,7 +28,7 @@ struct SortedColumn
         return column == rhs.column && direction == rhs.direction;
     }
 
-    int column;
+    size_t column;
     SortDirection direction;
 };
 
@@ -46,8 +46,8 @@ struct SelectedColumn
 class Query
 {
 public:
-    Query();
-    Query(const sqlb::ObjectIdentifier& table) :
+    Query() {}
+    explicit Query(const sqlb::ObjectIdentifier& table) :
         m_table(table)
     {}
 
@@ -69,8 +69,8 @@ public:
     const std::vector<SelectedColumn>& selectedColumns() const { return m_selected_columns; }
     std::vector<SelectedColumn>& selectedColumns() { return m_selected_columns; }
 
-    const std::unordered_map<int, std::string>& where() const { return m_where; }
-    std::unordered_map<int, std::string>& where() { return m_where; }
+    const std::unordered_map<size_t, std::string>& where() const { return m_where; }
+    std::unordered_map<size_t, std::string>& where() { return m_where; }
 
     const std::vector<SortedColumn>& orderBy() const { return m_sort; }
     std::vector<SortedColumn>& orderBy() { return m_sort; }
@@ -81,7 +81,7 @@ private:
     sqlb::ObjectIdentifier m_table;
     std::vector<std::string> m_rowid_columns;
     std::vector<SelectedColumn> m_selected_columns;
-    std::unordered_map<int, std::string> m_where;
+    std::unordered_map<size_t, std::string> m_where;
     std::vector<SortedColumn> m_sort;
 
     std::vector<SelectedColumn>::iterator findSelectedColumnByName(const std::string& name);

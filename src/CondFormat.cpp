@@ -4,8 +4,8 @@
 
 CondFormat::CondFormat(const QString& filter, const QColor& foreground, const QColor& background, const QString& encoding)
     : m_filter(filter),
-      m_fgColor(foreground),
-      m_bgColor(background)
+      m_bgColor(background),
+      m_fgColor(foreground)
 {
     if (!filter.isEmpty())
         m_sqlCondition = filterToSqlCondition(filter, encoding);

@@ -43,7 +43,7 @@ std::function<Ret(Params...)> Callback<Ret(Params...)>::func;
 int collCompare(void* /*pArg*/, int sizeA, const void* sA, int sizeB, const void* sB)
 {
     if(sizeA == sizeB)
-        return memcmp(sA, sB, sizeA);
+        return memcmp(sA, sB, static_cast<size_t>(sizeA));
     return sizeA - sizeB;
 }
 
@@ -687,7 +687,7 @@ bool DBBrowserDB::close()
     return true;
 }
 
-DBBrowserDB::db_pointer_type DBBrowserDB::get(QString user, bool force_wait)
+DBBrowserDB::db_pointer_type DBBrowserDB::get(const QString& user, bool force_wait)
 {
     if(!_db)
         return nullptr;
@@ -753,7 +753,7 @@ bool DBBrowserDB::dump(const QString& filePath,
         QApplication::setOverrideCursor(Qt::WaitCursor);
 
         // Count the total number of all records in all tables for the progress dialog
-        size_t numRecordsTotal = 0, numRecordsCurrent = 0;
+        size_t numRecordsTotal = 0;
         objectMap objMap = schemata["main"];            // We only always export the main database, not the attached databases
         QList<sqlb::ObjectPtr> tables = objMap.values("table");
         for(QMutableListIterator<sqlb::ObjectPtr> it(tables);it.hasNext();)
@@ -772,7 +772,7 @@ bool DBBrowserDB::dump(const QString& filePath,
         }
 
         QProgressDialog progress(tr("Exporting database to SQL file..."),
-                                 tr("Cancel"), 0, numRecordsTotal);
+                                 tr("Cancel"), 0, static_cast<int>(numRecordsTotal));
         progress.setWindowModality(Qt::ApplicationModal);
         progress.show();
         qApp->processEvents();
@@ -818,6 +818,7 @@ bool DBBrowserDB::dump(const QString& filePath,
                 {
                     int columns = sqlite3_column_count(stmt);
                     size_t counter = 0;
+                    size_t numRecordsCurrent = 0;
                     qApp->processEvents();
                     while(sqlite3_step(stmt) == SQLITE_ROW)
                     {
@@ -872,7 +873,7 @@ bool DBBrowserDB::dump(const QString& filePath,
                                 stream << ',';
                         }
 
-                        progress.setValue(++numRecordsCurrent);
+                        progress.setValue(static_cast<int>(++numRecordsCurrent));
                         if(counter % 5000 == 0)
                             qApp->processEvents();
                         counter++;
@@ -1080,7 +1081,7 @@ bool DBBrowserDB::executeMultiSQL(QByteArray query, bool dirty, bool log)
         }
 
         // Execute next statement
-        res = sqlite3_prepare_v2(_db, tail, tail_end - tail + 1, &vm, &tail);
+        res = sqlite3_prepare_v2(_db, tail, static_cast<int>(tail_end - tail + 1), &vm, &tail);
         if(res == SQLITE_OK)
         {
             switch(sqlite3_step(vm))

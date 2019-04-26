@@ -54,7 +54,7 @@ void setIdentifierQuoting(escapeQuoting toQuoting);
 
 QString escapeIdentifier(QString id);
 std::string escapeIdentifier(std::string id);
-QStringList escapeIdentifier(const QStringList& ids);
+QStringList escapeIdentifier(QStringList ids);
 
 class ObjectIdentifier
 {
@@ -430,11 +430,11 @@ public:
 
     FieldInfoList fieldInformation() const override;
 
-    void addConstraint(QStringList fields, ConstraintPtr constraint);
-    void setConstraint(QStringList fields, ConstraintPtr constraint);
-    void removeConstraints(QStringList fields = QStringList(), Constraint::ConstraintTypes type = Constraint::NoType); //! Only removes the first constraint, if any
-    ConstraintPtr constraint(QStringList fields = QStringList(), Constraint::ConstraintTypes type = Constraint::NoType) const;   //! Only returns the first constraint, if any
-    std::vector<ConstraintPtr> constraints(QStringList fields = QStringList(), Constraint::ConstraintTypes type = Constraint::NoType) const;
+    void addConstraint(const QStringList& fields, ConstraintPtr constraint);
+    void setConstraint(const QStringList& fields, ConstraintPtr constraint);
+    void removeConstraints(const QStringList& fields = QStringList(), Constraint::ConstraintTypes type = Constraint::NoType); //! Only removes the first constraint, if any
+    ConstraintPtr constraint(const QStringList& fields = QStringList(), Constraint::ConstraintTypes type = Constraint::NoType) const;   //! Only returns the first constraint, if any
+    std::vector<ConstraintPtr> constraints(const QStringList& fields = QStringList(), Constraint::ConstraintTypes type = Constraint::NoType) const;
     ConstraintMap allConstraints() const { return m_constraints; }
     void setConstraints(const ConstraintMap& constraints);
     QStringList& primaryKeyRef();

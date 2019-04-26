@@ -91,9 +91,9 @@ bool ExportDataDialog::exportQuery(const QString& sQuery, const QString& sFilena
         return exportQueryCsv(sQuery, sFilename);
     case ExportFormatJson:
         return exportQueryJson(sQuery, sFilename);
-    default:
-        return false;
     }
+
+    return false;
 }
 
 bool ExportDataDialog::exportQueryCsv(const QString& sQuery, const QString& sFilename)

@@ -31,15 +31,15 @@ class FileDialog : public QFileDialog
 public:
     static QString getOpenFileName(const FileDialogTypes dialogType, QWidget* parent = nullptr, const QString& caption = QString(),
                                    const QString& filter = QString(), QString* selectedFilter = nullptr,
-                                   Options options = 0);
+                                   Options options = Options());
     static QStringList getOpenFileNames(const FileDialogTypes dialogType, QWidget* parent = nullptr, const QString& caption = QString(),
                                         const QString& filter = QString(), QString* selectedFilter = nullptr,
-                                        Options options = 0);
+                                        Options options = Options());
     static QString getSaveFileName(const FileDialogTypes dialogType, QWidget* parent = nullptr, const QString& caption = QString(),
                                    const QString& filter = QString(), const QString& defaultFileName = QString(), QString* selectedFilter = nullptr,
-                                   Options options = 0);
+                                   Options options = Options());
     static QString getExistingDirectory(const FileDialogTypes dialogType, QWidget* parent = nullptr, const QString& caption = QString(),
-                                        Options options = 0);
+                                        Options options = Options());
 
     static QString getSqlDatabaseFileFilter();
 

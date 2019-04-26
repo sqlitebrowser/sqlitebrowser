@@ -39,12 +39,12 @@ std::string escapeIdentifier(std::string id)
     return escapeIdentifier(QString::fromStdString(id)).toStdString();
 }
 
-QStringList escapeIdentifier(const QStringList& ids)
+QStringList escapeIdentifier(QStringList ids)
 {
-    QStringList ret;
-    for(const QString& id : ids)
-        ret.push_back(escapeIdentifier(id));
-    return ret;
+    std::transform(ids.begin(), ids.end(), ids.begin(), [](const QString& id) {
+        return escapeIdentifier(id);
+    });
+    return ids;
 }
 
 /**
@@ -59,10 +59,8 @@ class SetLocaleToC
 {
 public:
     SetLocaleToC()
+        : oldLocale(std::setlocale(LC_CTYPE, nullptr))      // Query current locale and save it
     {
-        // Query current locale and save it
-        oldLocale = std::setlocale(LC_CTYPE, nullptr);
-
         // Set locale for standard library functions
         std::setlocale(LC_CTYPE, "C.UTF-8");
     }
@@ -342,8 +340,7 @@ Table& Table::operator=(const Table& rhs)
 
     // Make copies of the fields and the constraints. This is necessary in order to avoid any unwanted changes to the application's main database
     // schema representation just by modifying a reference to the fields or constraints and thinking it operates on a copy.
-    for(const Field& f : rhs.fields)
-        fields.push_back(f);
+    std::copy(rhs.fields.begin(), rhs.fields.end(), std::back_inserter(fields));
     m_constraints = rhs.m_constraints;
 
     return *this;
@@ -428,11 +425,7 @@ FieldInfoList Table::fieldInformation() const
 
 bool Table::hasAutoIncrement() const
 {
-    for(const Field& f : fields) {
-        if(f.autoIncrement())
-            return true;
-    }
-    return false;
+    return std::any_of(fields.begin(), fields.end(), [](const Field& f) {return f.autoIncrement(); });
 }
 
 TablePtr Table::parseSQL(const QString& sSQL)
@@ -510,12 +503,12 @@ QString Table::sql(const QString& schema, bool ifNotExists) const
     return sql + ";";
 }
 
-void Table::addConstraint(QStringList fields, ConstraintPtr constraint)
+void Table::addConstraint(const QStringList& fields, ConstraintPtr constraint)
 {
     m_constraints.insert({fields, constraint});
 }
 
-void Table::setConstraint(QStringList fields, ConstraintPtr constraint)
+void Table::setConstraint(const QStringList& fields, ConstraintPtr constraint)
 {
     // Delete any old constraints of this type for these fields
     removeConstraints(fields, constraint->type());
@@ -524,7 +517,7 @@ void Table::setConstraint(QStringList fields, ConstraintPtr constraint)
     addConstraint(fields, constraint);
 }
 
-void Table::removeConstraints(QStringList fields, Constraint::ConstraintTypes type)
+void Table::removeConstraints(const QStringList& fields, Constraint::ConstraintTypes type)
 {
     for(auto it = m_constraints.begin();it!=m_constraints.end();)
     {
@@ -535,7 +528,7 @@ void Table::removeConstraints(QStringList fields, Constraint::ConstraintTypes ty
     }
 }
 
-ConstraintPtr Table::constraint(QStringList fields, Constraint::ConstraintTypes type) const
+ConstraintPtr Table::constraint(const QStringList& fields, Constraint::ConstraintTypes type) const
 {
     auto list = constraints(fields, type);
     if(list.size())
@@ -544,7 +537,7 @@ ConstraintPtr Table::constraint(QStringList fields, Constraint::ConstraintTypes 
         return ConstraintPtr(nullptr);
 }
 
-std::vector<ConstraintPtr> Table::constraints(QStringList fields, Constraint::ConstraintTypes type) const
+std::vector<ConstraintPtr> Table::constraints(const QStringList& fields, Constraint::ConstraintTypes type) const
 {
     ConstraintMap::const_iterator begin, end;
     if(fields.empty())
@@ -1251,8 +1244,7 @@ Index& Index::operator=(const Index& rhs)
     m_whereExpr = rhs.m_whereExpr;
 
     // Make copies of the column
-    for(const IndexedColumn& c : rhs.fields)
-        fields.push_back(c);
+    std::copy(rhs.fields.begin(), rhs.fields.end(), std::back_inserter(fields));
 
     return *this;
 }
