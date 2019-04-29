@@ -7,7 +7,18 @@
 
 #include <QPrinter>
 #include <QPrintPreviewDialog>
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
 #include <QRandomGenerator>
+#endif
+
+static int random_number(int from, int to)
+{
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+    return QRandomGenerator::global()->bounded(from, to);
+#else
+    return qrand() % to + from;
+#endif
+}
 
 PlotDock::PlotDock(QWidget* parent)
     : QDialog(parent),
@@ -525,7 +536,7 @@ void PlotDock::on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem* item, int c
         // On double click open the colordialog
         QColorDialog colordialog(this);
         QColor curbkcolor = item->backgroundColor(column);
-        QColor precolor = !curbkcolor.isValid() ? static_cast<Qt::GlobalColor>(QRandomGenerator::global()->bounded(5, 13)) : curbkcolor;
+        QColor precolor = !curbkcolor.isValid() ? static_cast<Qt::GlobalColor>(random_number(5, 13)) : curbkcolor;
         QColor color = colordialog.getColor(precolor, this, tr("Choose an axis color"));
         if(color.isValid())
         {
