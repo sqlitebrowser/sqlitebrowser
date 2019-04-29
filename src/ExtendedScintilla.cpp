@@ -88,7 +88,7 @@ ExtendedScintilla::~ExtendedScintilla()
 void ExtendedScintilla::updateLineNumberAreaWidth()
 {
     // Calculate number of digits of the current number of lines
-    int digits = std::floor(std::log10(lines())) + 1;
+    int digits = static_cast<int>(std::log10(lines())) + 1;
 
     // Calculate the width of this number if it was all zeros (this is because a 1 might require less space than a 0 and this could
     // cause some flickering depending on the font) and set the new margin width.
@@ -225,8 +225,8 @@ void ExtendedScintilla::setErrorIndicator(int position)
     // Set error indicator for the position until end of line, but only if they're enabled
     if(showErrorIndicators) {
 
-        int column = SendScintilla(QsciScintillaBase::SCI_GETCOLUMN, position);
-        int line = SendScintilla(QsciScintillaBase::SCI_LINEFROMPOSITION, position);
+        int column = static_cast<int>(SendScintilla(QsciScintillaBase::SCI_GETCOLUMN, position));
+        int line = static_cast<int>(SendScintilla(QsciScintillaBase::SCI_LINEFROMPOSITION, position));
 
         fillIndicatorRange(line, column, line+1, 0, errorIndicatorNumber);
     }

@@ -331,8 +331,8 @@ bool EditTableDialog::eventFilter(QObject *object, QEvent *event)
 
 void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
 {
-    int index = ui->treeWidget->indexOfTopLevelItem(item);
-    if(index < static_cast<int>(m_table.fields.size()))
+    size_t index = static_cast<size_t>(ui->treeWidget->indexOfTopLevelItem(item));
+    if(index < m_table.fields.size())
     {
         sqlb::Field& field = m_table.fields.at(index);
         QString oldFieldName = QString::fromStdString(field.name());
@@ -348,7 +348,7 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
             // because it's doing a case-independent search and it can't return another field number because SQLite prohibits duplicate field
             // names (no matter the case). So when this happens we just allow the renaming because there's no harm to be expected from it.
             auto foundField = sqlb::findField(m_table, item->text(column).toStdString());
-            if(foundField != m_table.fields.end() && foundField-m_table.fields.begin() != index)
+            if(foundField != m_table.fields.end() && foundField-m_table.fields.begin() != static_cast<int>(index))
             {
                 QMessageBox::warning(this, qApp->applicationName(), tr("There already is a field with that name. Please rename it first or choose a different "
                                                                        "name for this field."));
@@ -741,7 +741,7 @@ void EditTableDialog::moveCurrentField(bool down)
     ui->treeWidget->setCurrentIndex(ui->treeWidget->currentIndex().sibling(newRow, 0));
 
     // Finally update the table SQL
-    std::swap(m_table.fields[newRow], m_table.fields[currentRow]);
+    std::swap(m_table.fields[static_cast<size_t>(newRow)], m_table.fields[static_cast<size_t>(currentRow)]);
 
     // Update the SQL preview
     updateSqlText();

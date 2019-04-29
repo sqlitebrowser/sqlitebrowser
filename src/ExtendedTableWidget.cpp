@@ -149,7 +149,7 @@ QWidget* ExtendedTableWidgetEditorDelegate::createEditor(QWidget* parent, const 
 
         // if the current column of the current table does NOT have not-null constraint,
         // the NULL is united to the query to get the possible values in the combo-box.
-        if (!currentTable->fields.at(index.column()-1).notnull())
+        if (!currentTable->fields.at(static_cast<size_t>(index.column())-1).notnull())
             query.append (" UNION SELECT NULL");
 
         SqliteTableModel* fkModel = new SqliteTableModel(m->db(), parent, m->chunkSize(), m->encoding());
@@ -710,10 +710,11 @@ void ExtendedTableWidget::useAsFilter(const QString& filterOperator, bool binary
 
     // If binary operator, the cell data is used as first value and
     // the second value must be added by the user.
+    size_t column = static_cast<size_t>(index.column());
     if (binary)
-        m_tableHeader->setFilter(index.column(), value + filterOperator);
+        m_tableHeader->setFilter(column, value + filterOperator);
     else
-        m_tableHeader->setFilter(index.column(), filterOperator + value + operatorSuffix);
+        m_tableHeader->setFilter(column, filterOperator + value + operatorSuffix);
 }
 
 void ExtendedTableWidget::duplicateUpperCell()
@@ -995,7 +996,7 @@ void ExtendedTableWidget::sortByColumns(const std::vector<sqlb::SortedColumn>& c
     // Are we using a SqliteTableModel as a model? These support multiple sort columns. Other models might not; for those we just use the first sort column
     SqliteTableModel* sqlite_model = dynamic_cast<SqliteTableModel*>(model());
     if(sqlite_model == nullptr)
-        model()->sort(columns.front().column, columns.front().direction == sqlb::Ascending ? Qt::AscendingOrder : Qt::DescendingOrder);
+        model()->sort(static_cast<int>(columns.front().column), columns.front().direction == sqlb::Ascending ? Qt::AscendingOrder : Qt::DescendingOrder);
     else
         sqlite_model->sort(columns);
 }

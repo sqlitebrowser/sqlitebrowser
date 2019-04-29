@@ -225,7 +225,7 @@ bool ExportDataDialog::exportQueryJson(const QString& sQuery, const QString& sFi
                 for(int i=0;i<columns;++i)
                 {
                     int type = sqlite3_column_type(stmt, i);
-                    std::string column_name = column_names[i];
+                    std::string column_name = column_names[static_cast<size_t>(i)];
 
                     switch (type) {
                     case SQLITE_INTEGER: {

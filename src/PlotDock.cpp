@@ -318,7 +318,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                     case QVariant::Date: {
                         QString s = model->data(model->index(j, x)).toString();
                         QDateTime d = QDateTime::fromString(s, Qt::ISODate);
-                        xdata[j] = d.toMSecsSinceEpoch() / 1000.0;
+                        xdata[j] = static_cast<double>(d.toMSecsSinceEpoch()) / 1000.0;
                         break;
                     }
                     case QVariant::Time: {

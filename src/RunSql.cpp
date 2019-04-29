@@ -149,7 +149,7 @@ bool RunSql::executeNextStatement()
     int sql3status = sqlite3_prepare_v2(pDb.get(), tail, tail_length, &vm, &tail);
     QString queryPart = QString::fromUtf8(qbegin, static_cast<int>(tail - qbegin));
     int tail_length_before = tail_length;
-    tail_length -= (tail - qbegin);
+    tail_length -= static_cast<int>(tail - qbegin);
     int end_of_current_statement_position = execute_current_position + tail_length_before - tail_length;
 
     // Save remaining statements

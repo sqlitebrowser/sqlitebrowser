@@ -59,7 +59,7 @@ void RowLoader::triggerRowCountDetermination(int token)
         if(nrows >= 0)
             emit rowCountComplete(token, nrows);
 
-        std::lock_guard<std::mutex> lk(m);
+        std::lock_guard<std::mutex> lk2(m);
         nosync_taskDone();
     });
 }

@@ -57,16 +57,16 @@ int collCompare(void* /*pArg*/, int sizeA, const void* sA, int sizeB, const void
 
 static int sqlite_compare_utf16( void* /*arg*/,int size1, const void *str1, int size2, const void* str2)
 {
-    const QString string1 = QString::fromRawData(reinterpret_cast<const QChar*>(str1), size1 / sizeof(QChar));
-    const QString string2 = QString::fromRawData(reinterpret_cast<const QChar*>(str2), size2 / sizeof(QChar));
+    const QString string1 = QString::fromRawData(reinterpret_cast<const QChar*>(str1), static_cast<int>(static_cast<size_t>(size1) / sizeof(QChar)));
+    const QString string2 = QString::fromRawData(reinterpret_cast<const QChar*>(str2), static_cast<int>(static_cast<size_t>(size2) / sizeof(QChar)));
 
     return QString::compare(string1, string2, Qt::CaseSensitive);
 }
 
 static int sqlite_compare_utf16ci( void* /*arg*/,int size1, const void *str1, int size2, const void* str2)
 {
-    const QString string1 = QString::fromRawData(reinterpret_cast<const QChar*>(str1), size1 / sizeof(QChar));
-    const QString string2 = QString::fromRawData(reinterpret_cast<const QChar*>(str2), size2 / sizeof(QChar));
+    const QString string1 = QString::fromRawData(reinterpret_cast<const QChar*>(str1), static_cast<int>(static_cast<size_t>(size1) / sizeof(QChar)));
+    const QString string2 = QString::fromRawData(reinterpret_cast<const QChar*>(str2), static_cast<int>(static_cast<size_t>(size2) / sizeof(QChar)));
 
     return QString::compare(string1, string2, Qt::CaseInsensitive);
 }
@@ -81,7 +81,7 @@ static void sqlite_make_single_value(sqlite3_context* ctx, int num_arguments, sq
     char* output_str = new char[output.size()+1];
     std::strcpy(output_str, output.c_str());
 
-    sqlite3_result_text(ctx, output_str, output.length(), [](void* ptr) {
+    sqlite3_result_text(ctx, output_str, static_cast<int>(output.length()), [](void* ptr) {
         char* cptr = static_cast<char*>(ptr);
         delete cptr;
     });

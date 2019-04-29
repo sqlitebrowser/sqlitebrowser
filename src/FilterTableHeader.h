@@ -18,7 +18,7 @@ public:
     bool hasFilters() const {return (filterWidgets.size() > 0);}
     
 public slots:
-    void generateFilters(int number, bool showFirst = false);
+    void generateFilters(size_t number, bool showFirst = false);
     void adjustPositions();
     void clearFilters();
     void setFilter(size_t column, const QString& value);

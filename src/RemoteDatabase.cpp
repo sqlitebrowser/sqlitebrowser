@@ -256,15 +256,7 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
 void RemoteDatabase::gotError(QNetworkReply* reply, const QList<QSslError>& errors)
 {
     // Are there any errors in here that aren't about self-signed certificates and non-matching hostnames?
-    bool serious_errors = false;
-    for(const QSslError& error : errors)
-    {
-        if(error.error() != QSslError::SelfSignedCertificate)
-        {
-            serious_errors = true;
-            break;
-        }
-    }
+    bool serious_errors = std::any_of(errors.begin(), errors.end(), [](const QSslError& error) { return error.error() != QSslError::SelfSignedCertificate; });
 
     // Just stop the error checking here and accept the reply if there were no 'serious' errors
     if(!serious_errors)

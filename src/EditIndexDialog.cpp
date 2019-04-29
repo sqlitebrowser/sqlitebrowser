@@ -77,7 +77,7 @@ EditIndexDialog::EditIndexDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
     connect(ui->tableIndexColumns, &QTableWidget::itemChanged,
             [=](QTableWidgetItem* item)
     {
-        index.fields[item->row()].setName(item->text().toStdString());
+        index.fields[static_cast<size_t>(item->row())].setName(item->text().toStdString());
         updateSqlText();
     });
 
@@ -156,7 +156,7 @@ void EditIndexDialog::updateColumnLists()
         if(indexFields.at(i).expression())
             flags |= Qt::ItemIsEditable;
         name->setFlags(flags);
-        ui->tableIndexColumns->setItem(i, 0, name);
+        ui->tableIndexColumns->setItem(static_cast<int>(i), 0, name);
 
         // And put a combobox to select the order in which to index the field in the last column
         QComboBox* order = new QComboBox(this);
@@ -164,7 +164,7 @@ void EditIndexDialog::updateColumnLists()
         order->addItem("ASC");
         order->addItem("DESC");
         order->setCurrentText(QString::fromStdString(indexFields.at(i).order()).toUpper());
-        ui->tableIndexColumns->setCellWidget(i, 1, order);
+        ui->tableIndexColumns->setCellWidget(static_cast<int>(i), 1, order);
         connect(order, &QComboBox::currentTextChanged,
                 [=](QString new_order)
         {
@@ -220,7 +220,7 @@ void EditIndexDialog::removeFromIndex(const QModelIndex& idx)
     // If this is an expression column and the action was triggered by a double click event instead of a button click,
     // we won't remove the expression column because it's too likely that this was only done by accident by the user.
     // Instead just open the expression column for editing.
-    if(index.fields[row].expression() && sender() != ui->buttonFromIndex)
+    if(index.fields[static_cast<size_t>(row)].expression() && sender() != ui->buttonFromIndex)
     {
         ui->tableIndexColumns->editItem(ui->tableIndexColumns->item(row, 0));
         return;
@@ -313,7 +313,7 @@ void EditIndexDialog::moveCurrentColumn(bool down)
         return;
 
     // Swap the columns
-    std::swap(index.fields[currentRow], index.fields[newRow]);
+    std::swap(index.fields[static_cast<size_t>(currentRow)], index.fields[static_cast<size_t>(newRow)]);
 
     // Update UI
     updateColumnLists();
@@ -326,7 +326,7 @@ void EditIndexDialog::addExpressionColumn()
 {
     // Check if there already is an empty expression column
     auto field_it = sqlb::findField(index, "");
-    int row = std::distance(index.fields.begin(), field_it);
+    int row = static_cast<int>(std::distance(index.fields.begin(), field_it));
     if(field_it == index.fields.end())
     {
         // There is no empty expression column yet, so add one.

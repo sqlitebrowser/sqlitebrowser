@@ -112,12 +112,12 @@ public:
     }
 };
 
-AddRecordDialog::AddRecordDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& tableName, QWidget* parent, const std::vector<std::string>& pseudo_pk)
+AddRecordDialog::AddRecordDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& tableName, QWidget* parent, const std::vector<std::string>& _pseudo_pk)
     : QDialog(parent),
       ui(new Ui::AddRecordDialog),
       pdb(db),
       curTable(tableName),
-      pseudo_pk(pseudo_pk)
+      pseudo_pk(_pseudo_pk)
 {
     // Create UI
     ui->setupUi(this);

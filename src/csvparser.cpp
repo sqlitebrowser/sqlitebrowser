@@ -140,7 +140,7 @@ CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStr
     };
     FieldBufferDealloc dealloc(record);
 
-    qint64 bufferPos = 0;
+    int64_t bufferPos = 0;
     while(!stream.atEnd())
     {
         sBuffer = stream.read(m_nBufferSize).toUtf8();

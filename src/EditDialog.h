@@ -91,7 +91,7 @@ private:
 
     int checkDataType(const QByteArray& data);
     QString humanReadableSize(double byteCount) const;
-    bool promptInvalidData(const QString& dataType, const QString& errorString);
+    bool promptInvalidData(const QString& data_type, const QString& errorString);
     void setDataInBuffer(const QByteArray& data, DataSources source);
     void setStackCurrentIndex(int editMode);
 };

@@ -4,6 +4,7 @@
 #include "csvparser.h"
 #include "sqlite.h"
 #include "Settings.h"
+#include "Data.h"
 
 #include <QMessageBox>
 #include <QProgressDialog>
@@ -42,10 +43,7 @@ ImportCsvDialog::ImportCsvDialog(const QStringList &filenames, DBBrowserDB* db, 
     ui->editName->setText(file.baseName());
 
     // Create a list of all available encodings and create an auto completion list from them
-    QStringList encodingList;
-    for(const QByteArray& enc : QTextCodec::availableCodecs())
-        encodingList.push_back(enc);
-    encodingCompleter = new QCompleter(encodingList, this);
+    encodingCompleter = new QCompleter(toStringList(QTextCodec::availableCodecs()), this);
     encodingCompleter->setCaseSensitivity(Qt::CaseInsensitive);
     ui->editCustomEncoding->setCompleter(encodingCompleter);
 
@@ -125,7 +123,7 @@ void rollback(
 class CSVImportProgress : public CSVProgress
 {
 public:
-    explicit CSVImportProgress(unsigned long long filesize)
+    explicit CSVImportProgress(int64_t filesize)
         : totalFileSize(filesize)
     {
         m_pProgressDlg = new QProgressDialog(
@@ -135,6 +133,9 @@ public:
                     10000);
         m_pProgressDlg->setWindowModality(Qt::ApplicationModal);
     }
+
+    CSVImportProgress(const CSVImportProgress&) = delete;
+    bool operator=(const CSVImportProgress&) = delete;
 
     ~CSVImportProgress() override
     {
@@ -146,7 +147,7 @@ public:
         m_pProgressDlg->show();
     }
 
-    bool update(unsigned long long pos) override
+    bool update(int64_t pos) override
     {
         m_pProgressDlg->setValue(static_cast<int>((static_cast<float>(pos) / static_cast<float>(totalFileSize)) * 10000.0f));
         qApp->processEvents();
@@ -162,7 +163,7 @@ public:
 private:
     QProgressDialog* m_pProgressDlg;
 
-    unsigned long long totalFileSize;
+    int64_t totalFileSize;
 };
 
 void ImportCsvDialog::accept()
@@ -265,17 +266,17 @@ void ImportCsvDialog::updatePreview()
         {
             // Generate vertical header items
             if(i == 0)
-                ui->tablePreview->setVerticalHeaderItem(rowNum, new QTableWidgetItem(QString::number(rowNum + 1)));
+                ui->tablePreview->setVerticalHeaderItem(static_cast<int>(rowNum), new QTableWidgetItem(QString::number(rowNum + 1)));
 
             // Add table item. Limit data length to a maximum character count to avoid a sluggish UI. And it's very unlikely that this
             // many characters are going to be needed anyway for a preview.
-            int data_length = data.fields[i].data_length;
+            uint64_t data_length = data.fields[i].data_length;
             if(data_length > 1024)
                 data_length = 1024;
             ui->tablePreview->setItem(
-                        rowNum,
-                        i,
-                        new QTableWidgetItem(QString::fromUtf8(data.fields[i].data, data_length)));
+                        static_cast<int>(rowNum),
+                        static_cast<int>(i),
+                        new QTableWidgetItem(QString::fromUtf8(data.fields[i].data, static_cast<int>(data_length))));
         }
 
         return true;
@@ -401,7 +402,7 @@ sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename)
             if(rowNum == 0 && ui->checkboxHeader->isChecked())
             {
                 // Take field name from CSV and remove invalid characters
-                fieldname = QString::fromUtf8(data.fields[i].data, data.fields[i].data_length);
+                fieldname = QString::fromUtf8(data.fields[i].data, static_cast<int>(data.fields[i].data_length));
                 fieldname.replace("`", "");
                 fieldname.replace(" ", "");
                 fieldname.replace('"', "");
@@ -429,7 +430,7 @@ sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename)
                 std::string old_type = fieldList.at(i).type();
                 if(old_type != "TEXT")
                 {
-                    QString content = QString::fromUtf8(data.fields[i].data, data.fields[i].data_length);
+                    QString content = QString::fromUtf8(data.fields[i].data, static_cast<int>(data.fields[i].data_length));
 
                     // Check if the content can be converted to an integer or to float
                     bool convert_to_int, convert_to_float;
@@ -635,7 +636,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
         {
             // Empty values need special treatment
             // When importing into an existing table where we could find out something about its table definition
-            if(importToExistingTable && data.fields[i].data_length == 0 && static_cast<size_t>(nullValues.size()) > i)
+            if(importToExistingTable && data.fields[i].data_length == 0 && nullValues.size() > i)
             {
                 // Do we want to fail when trying to import an empty value into this field? Then exit with an error.
                 if(failOnMissingFieldList.at(i))
@@ -644,13 +645,13 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
                 // This is an empty value. We'll need to look up how to handle it depending on the field to be inserted into.
                 const QByteArray& val = nullValues.at(i);
                 if(!val.isNull())       // No need to bind NULL values here as that is the default bound value in SQLite
-                    sqlite3_bind_text(stmt, i+1, val, val.size(), SQLITE_STATIC);
+                    sqlite3_bind_text(stmt, static_cast<int>(i)+1, val, val.size(), SQLITE_STATIC);
             // When importing into a new table, use the missing values setting directly
             } else if(!importToExistingTable && data.fields[i].data_length == 0) {
                 // No need to bind NULL values here as that is the default bound value in SQLite
             } else {
                 // This is a non-empty value, or we want to insert the empty string. Just add it to the statement
-                sqlite3_bind_text(stmt, i+1, data.fields[i].data, data.fields[i].data_length, SQLITE_STATIC);
+                sqlite3_bind_text(stmt, static_cast<int>(i)+1, data.fields[i].data, static_cast<int>(data.fields[i].data_length), SQLITE_STATIC);
             }
         }
 

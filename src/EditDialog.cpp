@@ -444,12 +444,12 @@ void EditDialog::updateApplyButton()
         ui->buttonApply->setEnabled(true);
 }
 
-bool EditDialog::promptInvalidData(const QString& dataType, const QString& errorString)
+bool EditDialog::promptInvalidData(const QString& data_type, const QString& errorString)
 {
     QMessageBox::StandardButton reply = QMessageBox::question(
       this,
       tr("Invalid data for this mode"),
-      tr("The cell contains invalid %1 data. Reason: %2. Do you really want to apply it to the cell?").arg(dataType, errorString),
+      tr("The cell contains invalid %1 data. Reason: %2. Do you really want to apply it to the cell?").arg(data_type, errorString),
       QMessageBox::Apply | QMessageBox::Cancel);
     return (reply == QMessageBox::Apply);
 }

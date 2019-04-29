@@ -809,7 +809,7 @@ void MainWindow::populateTable()
             const sqlb::FieldInfoList& tablefields = db.getObjectByName(tablename)->fieldInformation();
             for(size_t i=0; i<tablefields.size(); ++i)
             {
-                QString format = storedData.displayFormats[i+1];
+                QString format = storedData.displayFormats[static_cast<int>(i)+1];
                 if(format.size())
                 {
                     query.selectedColumns().emplace_back(tablefields.at(i).name, format.toStdString());
@@ -884,7 +884,7 @@ void MainWindow::applyBrowseTableSettings(BrowseDataTableSettings storedData, bo
         FilterTableHeader* filterHeader = qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader());
         bool oldState = filterHeader->blockSignals(true);
         for(auto filterIt=storedData.filterValues.constBegin();filterIt!=storedData.filterValues.constEnd();++filterIt)
-            filterHeader->setFilter(filterIt.key(), filterIt.value());
+            filterHeader->setFilter(static_cast<size_t>(filterIt.key()), filterIt.value());
 
         // Conditional formats
         for(auto formatIt=storedData.condFormats.constBegin(); formatIt!=storedData.condFormats.constEnd(); ++formatIt)
@@ -3388,7 +3388,7 @@ void MainWindow::jumpToRow(const sqlb::ObjectIdentifier& table, QString column, 
     populateTable();
 
     // Set filter
-    ui->dataTable->filterHeader()->setFilter(column_index-obj->fields.begin()+1, QString("=") + value);
+    ui->dataTable->filterHeader()->setFilter(static_cast<size_t>(column_index-obj->fields.begin()+1), QString("=") + value);
 }
 
 void MainWindow::showDataColumnPopupMenu(const QPoint& pos)
@@ -3460,9 +3460,9 @@ void MainWindow::editDataColumnDisplayFormat()
     int field_number = sender()->property("clicked_column").toInt();
     QString field_name;
     if (db.getObjectByName(current_table)->type() == sqlb::Object::Table)
-        field_name = QString::fromStdString(db.getObjectByName<sqlb::Table>(current_table)->fields.at(field_number-1).name());
+        field_name = QString::fromStdString(db.getObjectByName<sqlb::Table>(current_table)->fields.at(static_cast<size_t>(field_number)-1).name());
     else
-        field_name = QString::fromStdString(db.getObjectByName<sqlb::View>(current_table)->fieldNames().at(field_number-1));
+        field_name = QString::fromStdString(db.getObjectByName<sqlb::View>(current_table)->fieldNames().at(static_cast<size_t>(field_number)-1));
     // Get the current display format of the field
     QString current_displayformat = browseTableSettings[current_table].displayFormats[field_number];
 
@@ -3512,7 +3512,7 @@ void MainWindow::showRowidColumn(bool show, bool skipFilters)
 
     // Update the filter row
     if(!skipFilters)
-        qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader())->generateFilters(m_browseTableModel->columnCount(), show);
+        qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader())->generateFilters(static_cast<size_t>(m_browseTableModel->columnCount()), show);
 
     // Re-enable signals
     ui->dataTable->horizontalHeader()->blockSignals(false);

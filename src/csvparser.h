@@ -18,7 +18,7 @@ public:
     virtual ~CSVProgress() { }
 
     virtual void start() = 0;
-    virtual bool update(unsigned long long pos) = 0;
+    virtual bool update(int64_t pos) = 0;
     virtual void end() = 0;
 };
 
@@ -88,7 +88,7 @@ private:
     char m_cQuoteChar;
     CSVProgress* m_pCSVProgress;
 
-    unsigned long m_nBufferSize;        //! internal buffer read size
+    int64_t m_nBufferSize;        //! internal buffer read size
 };
 
 #endif
