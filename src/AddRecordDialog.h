@@ -1,7 +1,7 @@
 #ifndef ADDRECORDDIALOG_H
 #define ADDRECORDDIALOG_H
 
-#include "sql/sqlitetypes.h"
+#include "sql/ObjectIdentifier.h"
 
 #include <QDialog>
 

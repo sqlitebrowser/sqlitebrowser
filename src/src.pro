@@ -73,7 +73,8 @@ HEADERS += \
     Palette.h \
     CondFormat.h \
     sql/Query.h \
-    RunSql.h
+    RunSql.h \
+    sql/ObjectIdentifier.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -123,7 +124,8 @@ SOURCES += \
     Palette.cpp \
     CondFormat.cpp \
     sql/Query.cpp \
-    RunSql.cpp
+    RunSql.cpp \
+    sql/ObjectIdentifier.cpp
 
 RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc \

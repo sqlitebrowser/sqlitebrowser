@@ -13,8 +13,9 @@
 #include <QString>
 #include <QMutex>
 
-#include "sqlite.h"
 #include "RowCache.h"
+
+class sqlite3;
 
 class RowLoader : public QThread
 {

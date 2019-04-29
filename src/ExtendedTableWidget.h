@@ -3,8 +3,6 @@
 
 #include <QTableView>
 #include <QSet>
-#include <QDropEvent>
-#include <QDragMoveEvent>
 #include <QStyledItemDelegate>
 #include <QSortFilterProxyModel>
 
@@ -12,6 +10,9 @@
 
 class QMenu;
 class QMimeData;
+class QDropEvent;
+class QDragMoveEvent;
+
 class FilterTableHeader;
 namespace sqlb { class ObjectIdentifier; }
 

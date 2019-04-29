@@ -3,7 +3,6 @@
 
 #include "ExtendedScintilla.h"
 
-class FindReplaceDialog;
 class SqlUiLexer;
 
 /**

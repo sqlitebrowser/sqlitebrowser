@@ -6,9 +6,7 @@
 
 class QNetworkAccessManager;
 class QNetworkConfigurationManager;
-class QString;
 class QNetworkReply;
-class QSslError;
 class QProgressDialog;
 class QNetworkRequest;
 class QHttpMultiPart;

@@ -1,7 +1,7 @@
 #ifndef QUERY_H
 #define QUERY_H
 
-#include "sqlitetypes.h"
+#include "ObjectIdentifier.h"
 
 #include <string>
 #include <unordered_map>

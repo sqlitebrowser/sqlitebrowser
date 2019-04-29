@@ -2,7 +2,6 @@
 #define PREFERENCESDIALOG_H
 
 #include <QDialog>
-#include <QVariant>
 
 class QTreeWidgetItem;
 class QFrame;

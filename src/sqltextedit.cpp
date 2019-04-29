@@ -1,4 +1,4 @@
-#include "sql/sqlitetypes.h"
+#include "sql/ObjectIdentifier.h"
 #include "sqltextedit.h"
 #include "Settings.h"
 #include "SqlUiLexer.h"

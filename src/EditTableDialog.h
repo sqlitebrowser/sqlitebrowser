@@ -1,6 +1,7 @@
 #ifndef EDITTABLEDIALOG_H
 #define EDITTABLEDIALOG_H
 
+#include "sql/ObjectIdentifier.h"
 #include "sql/sqlitetypes.h"
 
 #include <QDialog>

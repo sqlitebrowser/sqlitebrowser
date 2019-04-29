@@ -6,9 +6,6 @@
 #include <string>
 
 class DBBrowserDB;
-class QPushButton;
-class QComboBox;
-class QLineEdit;
 
 namespace sqlb
 {

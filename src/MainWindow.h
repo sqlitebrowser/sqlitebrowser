@@ -6,7 +6,6 @@
 #include "Palette.h"
 #include "CondFormat.h"
 #include "sql/Query.h"
-#include "RunSql.h"
 
 #include <memory>
 #include <QMainWindow>
@@ -19,6 +18,7 @@ class RemoteDock;
 class RemoteDatabase;
 class FindReplaceDialog;
 class ExtendedTableWidget;
+class RunSql;
 
 class QDragEnterEvent;
 class QIntValidator;

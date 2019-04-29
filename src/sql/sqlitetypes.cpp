@@ -1,4 +1,5 @@
 #include "sqlitetypes.h"
+#include "ObjectIdentifier.h"
 #include "grammar/Sqlite3Lexer.hpp"
 #include "grammar/Sqlite3Parser.hpp"
 
@@ -9,32 +10,6 @@
 #include <numeric>
 
 namespace sqlb {
-
-static escapeQuoting customQuoting = DoubleQuotes;
-
-void setIdentifierQuoting(escapeQuoting toQuoting)
-{
-    customQuoting = toQuoting;
-}
-
-std::string escapeIdentifier(std::string id)
-{
-    switch(customQuoting) {
-    case GraveAccents:
-        return '`' + std::regex_replace(id, std::regex("\\`"), "``") + '`';
-    case SquareBrackets:
-        // There aren't any escaping possibilities for square brackets inside the identifier,
-        // so we rely on the user to not enter these characters when this kind of quoting is
-        // selected.
-        return '[' + id + ']';
-    case DoubleQuotes:
-    default:
-        // This may produce a 'control reaches end of non-void function' warning if the
-        // default branch is removed, even though we have covered all possibilities in the
-        // switch statement.
-        return '"' + std::regex_replace(id, std::regex("\\\""), "\"\"") + '"';
-    }
-}
 
 StringVector escapeIdentifier(StringVector ids)
 {

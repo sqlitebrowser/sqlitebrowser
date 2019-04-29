@@ -2,10 +2,11 @@
 #ifndef SQLITETYPES_H
 #define SQLITETYPES_H
 
-#include <vector>
-#include <unordered_map>
-#include <memory>
 #include <algorithm>
+#include <memory>
+#include <unordered_map>
+#include <string>
+#include <vector>
 
 template<typename C, typename E>
 bool contains(const C& container, E element)
@@ -24,113 +25,10 @@ bool compare_ci(const T& a, const T& b)
 
 namespace sqlb {
 
-enum escapeQuoting {
-    DoubleQuotes,
-    GraveAccents,
-    SquareBrackets
-};
-
 using StringVector = std::vector<std::string>;
 
-// Set quoting style for escapeIdentifier
-void setIdentifierQuoting(escapeQuoting toQuoting);
-
-std::string escapeIdentifier(std::string id);
 StringVector escapeIdentifier(StringVector ids);
-
 std::string joinStringVector(const StringVector& vec, const std::string& delim);
-
-class ObjectIdentifier
-{
-public:
-    ObjectIdentifier(const std::string& schema, const std::string& name)
-        : m_schema(schema),
-          m_name(name)
-    {
-    }
-
-    ObjectIdentifier()
-        : m_schema("main")
-    {
-    }
-
-    explicit ObjectIdentifier(const std::string& variant)
-    {
-        // Try to unserialise the parameter first. If that does not work, just assume it's an object name for the main schema
-        clear();
-        if(!fromSerialised(variant))
-            m_name = variant;
-    }
-
-    bool operator==(const ObjectIdentifier& rhs) const
-    {
-        return (rhs.m_schema == m_schema && rhs.m_name == m_name);
-    }
-
-    bool operator<(const ObjectIdentifier& rhs) const
-    {
-        return toDisplayString() < rhs.toDisplayString();
-    }
-
-    const std::string& schema() const { return m_schema; }
-    const std::string& name() const { return m_name; }
-    void setSchema(const std::string& schema) { m_schema = schema; }
-    void setName(const std::string& name) { m_name = name; }
-
-    void clear()
-    {
-        m_schema = "main";
-        m_name.clear();
-    }
-
-    bool isEmpty() const { return m_name.empty(); }
-
-    // This returns a string which can be used in SQL statements
-    std::string toString(bool shortName = false) const
-    {
-        if(shortName && m_schema == "main")
-            return sqlb::escapeIdentifier(m_name);
-        else
-            return sqlb::escapeIdentifier(m_schema) + "." + sqlb::escapeIdentifier(m_name);
-    }
-
-    // This returns a string which can be used in the user interface
-    std::string toDisplayString() const
-    {
-        if(m_schema == "main")
-            return m_name;
-        else
-            return m_schema + "." + m_name;
-    }
-
-    std::string toSerialised() const
-    {
-        return std::to_string(m_schema.size()) + "," + std::to_string(m_name.size()) + ":" + m_schema + m_name;
-    }
-
-    bool fromSerialised(const std::string& serialised)
-    {
-        auto pos_comma = serialised.find(",");
-        auto pos_colon = serialised.find(":");
-        if(pos_comma == serialised.npos || pos_colon == serialised.npos)
-            return false;
-
-        size_t size_schema, size_name;
-        size_schema = std::stoul(serialised.substr(0, pos_comma));
-        size_name = std::stoul(serialised.substr(pos_comma+1, pos_colon-pos_comma));
-        if(pos_colon + size_schema + size_name + 1 != serialised.size())
-            return false;
-
-        m_schema = serialised.substr(pos_colon + 1, size_schema);
-        m_name = serialised.substr(pos_colon + size_schema + 1, size_name);
-
-        return true;
-    }
-
-private:
-    std::string m_schema;
-    std::string m_name;
-};
 
 struct StringVectorHash
 {

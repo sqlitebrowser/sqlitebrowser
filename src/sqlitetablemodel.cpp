@@ -3,6 +3,7 @@
 #include "sqlite.h"
 #include "Settings.h"
 #include "Data.h"
+#include "CondFormat.h"
 
 #include <QMessageBox>
 #include <QApplication>

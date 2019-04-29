@@ -8,11 +8,12 @@
 #include <vector>
 
 #include "RowCache.h"
-#include "CondFormat.h"
 #include "sql/Query.h"
+#include "sql/sqlitetypes.h"
 
 struct sqlite3;
 class DBBrowserDB;
+class CondFormat;
 
 class SqliteTableModel : public QAbstractTableModel
 {

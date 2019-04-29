@@ -5,7 +5,7 @@
 #include "sql/sqlitetypes.h"
 #include "sqlitedb.h"
 
-ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& tableName, const QString& colname, QString current_format, QWidget* parent)
+ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& tableName, const QString& colname, const QString& current_format, QWidget* parent)
     : QDialog(parent),
       ui(new Ui::ColumnDisplayFormatDialog),
       column_name(colname),

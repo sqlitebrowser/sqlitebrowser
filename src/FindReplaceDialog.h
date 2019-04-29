@@ -2,7 +2,8 @@
 #define FindReplaceDialog_H
 
 #include <QDialog>
-#include <QAbstractButton>
+
+class QAbstractButton;
 
 class ExtendedScintilla;
 
