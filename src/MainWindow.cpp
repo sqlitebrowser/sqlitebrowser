@@ -744,10 +744,10 @@ void MainWindow::populateTable()
                     double min = first;
                     double max = first;
                     for (const QModelIndex& index : sel) {
-                        double data = m_browseTableModel->data(index, Qt::EditRole).toDouble();
-                        sum += data;
-                        min = std::min(min, data);
-                        max = std::max(max, data);
+                        double dblData = m_browseTableModel->data(index, Qt::EditRole).toDouble();
+                        sum += dblData;
+                        min = std::min(min, dblData);
+                        max = std::max(max, dblData);
                     }
                     statusMessage += tr(". Sum: %1; Average: %2; Min: %3; Max: %4").arg(sum).arg(sum/sel.count()).arg(min).arg(max);
                 }
@@ -3905,8 +3905,8 @@ void MainWindow::printDbStructure ()
     for (int row = 0; row < rowCount; row++) {
 
         QModelIndex headerIndex = model->index(row, 0, treeView->rootIndex());
-        QString data = model->data(headerIndex).toString().toHtmlEscaped();
-        out << QString("<h1>%1</h1>").arg(data);
+        QString strData = model->data(headerIndex).toString().toHtmlEscaped();
+        out << QString("<h1>%1</h1>").arg(strData);
 
         // Open a new table for each group of objects
         out << "<table border=1 cellspacing=0 cellpadding=2><thead><tr bgcolor=\"#F0F0F0\">";

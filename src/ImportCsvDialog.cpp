@@ -250,7 +250,7 @@ void ImportCsvDialog::updatePreview()
     ui->tablePreview->setHorizontalHeaderLabels(horizontalHeader);
 
     // Parse file
-    parseCSV(selectedFile, [this](size_t rowNum, const CSVRow& data) -> bool {
+    parseCSV(selectedFile, [this](size_t rowNum, const CSVRow& rowData) -> bool {
         // Skip first row if it is to be used as header
         if(rowNum == 0 && ui->checkboxHeader->isChecked())
             return true;
@@ -262,7 +262,7 @@ void ImportCsvDialog::updatePreview()
 
         // Fill data section
         ui->tablePreview->setRowCount(ui->tablePreview->rowCount() + 1);
-        for(size_t i=0;i<data.num_fields;i++)
+        for(size_t i=0;i<rowData.num_fields;i++)
         {
             // Generate vertical header items
             if(i == 0)
@@ -270,13 +270,13 @@ void ImportCsvDialog::updatePreview()
 
             // Add table item. Limit data length to a maximum character count to avoid a sluggish UI. And it's very unlikely that this
             // many characters are going to be needed anyway for a preview.
-            uint64_t data_length = data.fields[i].data_length;
+            uint64_t data_length = rowData.fields[i].data_length;
             if(data_length > 1024)
                 data_length = 1024;
             ui->tablePreview->setItem(
                         static_cast<int>(rowNum),
                         static_cast<int>(i),
-                        new QTableWidgetItem(QString::fromUtf8(data.fields[i].data, static_cast<int>(data_length))));
+                        new QTableWidgetItem(QString::fromUtf8(rowData.fields[i].data, static_cast<int>(data_length))));
         }
 
         return true;
@@ -392,9 +392,9 @@ sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename)
     sqlb::FieldVector fieldList;        // List of fields in the file
 
     // Parse the first couple of records of the CSV file and only analyse them
-    parseCSV(filename, [this, &fieldList](size_t rowNum, const CSVRow& data) -> bool {
+    parseCSV(filename, [this, &fieldList](size_t rowNum, const CSVRow& rowData) -> bool {
         // Has this row more columns than the previous one? Then add more fields to the field list as necessary.
-        for(size_t i=fieldList.size();i<data.num_fields;i++)
+        for(size_t i=fieldList.size();i<rowData.num_fields;i++)
         {
             QString fieldname;
 
@@ -402,7 +402,7 @@ sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename)
             if(rowNum == 0 && ui->checkboxHeader->isChecked())
             {
                 // Take field name from CSV and remove invalid characters
-                fieldname = QString::fromUtf8(data.fields[i].data, static_cast<int>(data.fields[i].data_length));
+                fieldname = QString::fromUtf8(rowData.fields[i].data, static_cast<int>(rowData.fields[i].data_length));
                 fieldname.replace("`", "");
                 fieldname.replace(" ", "");
                 fieldname.replace('"', "");
@@ -423,14 +423,14 @@ sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename)
         // Try to find out a data type for each column. Skip the header row if there is one.
         if(!ui->checkNoTypeDetection->isChecked() && !(rowNum == 0 && ui->checkboxHeader->isChecked()))
         {
-            for(size_t i=0;i<data.num_fields;i++)
+            for(size_t i=0;i<rowData.num_fields;i++)
             {
                 // If the data type has been set to TEXT, there's no going back because it means we had at least one row with text-only
                 // content and that means we don't want to set the data type to any number type.
                 std::string old_type = fieldList.at(i).type();
                 if(old_type != "TEXT")
                 {
-                    QString content = QString::fromUtf8(data.fields[i].data, static_cast<int>(data.fields[i].data_length));
+                    QString content = QString::fromUtf8(rowData.fields[i].data, static_cast<int>(rowData.fields[i].data_length));
 
                     // Check if the content can be converted to an integer or to float
                     bool convert_to_int, convert_to_float;
@@ -617,7 +617,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
 
     // Parse entire file
     size_t lastRowNum = 0;
-    CSVParser::ParserResult result = parseCSV(fileName, [&](size_t rowNum, const CSVRow& data) -> bool {
+    CSVParser::ParserResult result = parseCSV(fileName, [&](size_t rowNum, const CSVRow& rowData) -> bool {
         // Process the parser results row by row
 
 #ifdef CSV_BENCHMARK
@@ -632,11 +632,11 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
             return true;
 
         // Bind all values
-        for(size_t i=0;i<data.num_fields;i++)
+        for(size_t i=0;i<rowData.num_fields;i++)
         {
             // Empty values need special treatment
             // When importing into an existing table where we could find out something about its table definition
-            if(importToExistingTable && data.fields[i].data_length == 0 && nullValues.size() > i)
+            if(importToExistingTable && rowData.fields[i].data_length == 0 && nullValues.size() > i)
             {
                 // Do we want to fail when trying to import an empty value into this field? Then exit with an error.
                 if(failOnMissingFieldList.at(i))
@@ -647,11 +647,11 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
                 if(!val.isNull())       // No need to bind NULL values here as that is the default bound value in SQLite
                     sqlite3_bind_text(stmt, static_cast<int>(i)+1, val, val.size(), SQLITE_STATIC);
             // When importing into a new table, use the missing values setting directly
-            } else if(!importToExistingTable && data.fields[i].data_length == 0) {
+            } else if(!importToExistingTable && rowData.fields[i].data_length == 0) {
                 // No need to bind NULL values here as that is the default bound value in SQLite
             } else {
                 // This is a non-empty value, or we want to insert the empty string. Just add it to the statement
-                sqlite3_bind_text(stmt, static_cast<int>(i)+1, data.fields[i].data, static_cast<int>(data.fields[i].data_length), SQLITE_STATIC);
+                sqlite3_bind_text(stmt, static_cast<int>(i)+1, rowData.fields[i].data, static_cast<int>(rowData.fields[i].data_length), SQLITE_STATIC);
             }
         }
 
