@@ -1152,7 +1152,12 @@ QByteArray DBBrowserDB::querySingleValueFromDb(const QString& sql, bool log, Cho
     sqlite3_stmt* stmt;
     if(sqlite3_prepare_v2(_db, utf8Query, utf8Query.size(), &stmt, nullptr) == SQLITE_OK)
     {
-        if(sqlite3_step(stmt) == SQLITE_ROW)
+        // Execute the statement. We distinguish three types of results:
+        // SQLITE_ROW in case some data was returned from the database. This data is then used as a return value.
+        // SQLITE_DONE in case the statement executed successfully but did not return any data. We do nothing in this case, leaving the return value empty.
+        // Any other case is an error, so we need to prepare an error message.
+        int result = sqlite3_step(stmt);
+        if(result == SQLITE_ROW)
         {
             if(sqlite3_column_count(stmt) > 0 && sqlite3_column_type(stmt, 0) != SQLITE_NULL)
             {
@@ -1162,7 +1167,7 @@ QByteArray DBBrowserDB::querySingleValueFromDb(const QString& sql, bool log, Cho
                 else
                     retval = "";
             }
-        } else {
+        } else if(result != SQLITE_DONE) {
             lastErrorMessage = tr("didn't receive any output from %1").arg(sql);
             qWarning() << lastErrorMessage;
         }
