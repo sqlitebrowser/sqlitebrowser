@@ -329,11 +329,11 @@ public:
 
     FieldInfoList fieldInformation() const override;
 
-    void addConstraint(const StringVector& fields, ConstraintPtr constraint);
-    void setConstraint(const StringVector& fields, ConstraintPtr constraint);
-    void removeConstraints(const StringVector& fields = StringVector(), Constraint::ConstraintTypes type = Constraint::NoType); //! Only removes the first constraint, if any
-    ConstraintPtr constraint(const StringVector& fields = StringVector(), Constraint::ConstraintTypes type = Constraint::NoType) const;   //! Only returns the first constraint, if any
-    std::vector<ConstraintPtr> constraints(const StringVector& fields = StringVector(), Constraint::ConstraintTypes type = Constraint::NoType) const;
+    void addConstraint(const StringVector& vStrFields, ConstraintPtr constraint);
+    void setConstraint(const StringVector& vStrFields, ConstraintPtr constraint);
+    void removeConstraints(const StringVector& vStrFields = StringVector(), Constraint::ConstraintTypes type = Constraint::NoType); //! Only removes the first constraint, if any
+    ConstraintPtr constraint(const StringVector& vStrFields = StringVector(), Constraint::ConstraintTypes type = Constraint::NoType) const;   //! Only returns the first constraint, if any
+    std::vector<ConstraintPtr> constraints(const StringVector& vStrFields = StringVector(), Constraint::ConstraintTypes type = Constraint::NoType) const;
     ConstraintMap allConstraints() const { return m_constraints; }
     void setConstraints(const ConstraintMap& constraints);
     StringVector& primaryKeyRef();
