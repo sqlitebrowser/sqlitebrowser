@@ -15,7 +15,7 @@
 
 #include "RowCache.h"
 
-class sqlite3;
+struct sqlite3;
 
 class RowLoader : public QThread
 {
