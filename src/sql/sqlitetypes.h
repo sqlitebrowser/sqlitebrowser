@@ -18,7 +18,7 @@ bool contains(const C& container, E element)
 template<typename T>
 bool compare_ci(const T& a, const T& b)
 {
-    return std::equal(a.begin(), a.end(), b.begin(), [](char c1, char c2) {
+    return std::equal(a.begin(), a.end(), b.begin(), [](unsigned char c1, unsigned char c2) {
         // TODO: Do we need to make this UTF-8-aware?
         return std::tolower(c1) == std::tolower(c2);
     });
