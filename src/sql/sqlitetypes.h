@@ -7,6 +7,7 @@
 #include <unordered_map>
 #include <string>
 #include <vector>
+#include <cctype>
 
 template<typename C, typename E>
 bool contains(const C& container, E element)
