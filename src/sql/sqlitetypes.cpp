@@ -462,49 +462,49 @@ std::string Table::sql(const std::string& schema, bool ifNotExists) const
     return sql + ";";
 }
 
-void Table::addConstraint(const StringVector& fields, ConstraintPtr constraint)
+void Table::addConstraint(const StringVector& vStrFields, ConstraintPtr constraint)
 {
-    m_constraints.insert({fields, constraint});
+    m_constraints.insert({vStrFields, constraint});
 }
 
-void Table::setConstraint(const StringVector& fields, ConstraintPtr constraint)
+void Table::setConstraint(const StringVector& vStrFields, ConstraintPtr constraint)
 {
     // Delete any old constraints of this type for these fields
-    removeConstraints(fields, constraint->type());
+    removeConstraints(vStrFields, constraint->type());
 
     // Add the new constraint to the table, effectively overwriting all old constraints for that fields/type combination
-    addConstraint(fields, constraint);
+    addConstraint(vStrFields, constraint);
 }
 
-void Table::removeConstraints(const StringVector& fields, Constraint::ConstraintTypes type)
+void Table::removeConstraints(const StringVector& vStrFields, Constraint::ConstraintTypes type)
 {
     for(auto it = m_constraints.begin();it!=m_constraints.end();)
     {
-        if(it->first == fields && it->second->type() == type)
+        if(it->first == vStrFields && it->second->type() == type)
             m_constraints.erase(it++);
         else
             ++it;
     }
 }
 
-ConstraintPtr Table::constraint(const StringVector& fields, Constraint::ConstraintTypes type) const
+ConstraintPtr Table::constraint(const StringVector& vStrFields, Constraint::ConstraintTypes type) const
 {
-    auto list = constraints(fields, type);
+    auto list = constraints(vStrFields, type);
     if(list.size())
         return list.at(0);
     else
         return ConstraintPtr(nullptr);
 }
 
-std::vector<ConstraintPtr> Table::constraints(const StringVector& fields, Constraint::ConstraintTypes type) const
+std::vector<ConstraintPtr> Table::constraints(const StringVector& vStrFields, Constraint::ConstraintTypes type) const
 {
     ConstraintMap::const_iterator begin, end;
-    if(fields.empty())
+    if(vStrFields.empty())
     {
         begin = m_constraints.begin();
         end = m_constraints.end();
     } else {
-        std::tie(begin, end) = m_constraints.equal_range(fields);
+        std::tie(begin, end) = m_constraints.equal_range(vStrFields);
     }
 
     std::vector<ConstraintPtr> clist;
