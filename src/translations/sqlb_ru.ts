@@ -2542,7 +2542,7 @@ x~y	Range: values between x and y
     <message>
         <location filename="../MainWindow.ui" line="2039"/>
         <source>This button refreshes the data in the currently selected table.</source>
-        <translation>Эта кнопка отновляет данные выбранной в данный момент таблицы.</translation>
+        <translation>Эта кнопка обновляет данные выбранной в данный момент таблицы.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2480"/>
