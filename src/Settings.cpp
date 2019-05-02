@@ -9,27 +9,32 @@
 #include <QStandardPaths>
 #include <QPalette>
 
-QHash<QString, QVariant> Settings::m_hCache;
+std::unordered_map<std::string, QVariant> Settings::m_hCache;
 
-QVariant Settings::getValue(const QString& group, const QString& name)
+static bool ends_with(const std::string& str, const std::string& with)
+{
+    return str.rfind(with) == str.size() - with.size();
+}
+
+QVariant Settings::getValue(const std::string& group, const std::string& name)
 {
     // Have a look in the cache first
     auto cacheIndex = m_hCache.find(group + name);
     if(cacheIndex != m_hCache.end())
     {
-        return cacheIndex.value();
+        return cacheIndex->second;
     } else {
         // Nothing found in the cache, so get the value from the settings file or get the default value if there is no value set yet
         QSettings settings(QApplication::organizationName(), QApplication::organizationName());
-        QVariant value = settings.value(group + "/" + name, getDefaultValue(group, name));
+        QVariant value = settings.value(QString::fromStdString(group + "/" + name), getDefaultValue(group, name));
 
         // Store this value in the cache for further usage and return it afterwards
-        m_hCache.insert(group + name, value);
+        m_hCache.insert({group + name, value});
         return value;
     }
 }
 
-void Settings::setValue(const QString& group, const QString& name, const QVariant& value, bool dont_save_to_disk)
+void Settings::setValue(const std::string& group, const std::string& name, const QVariant& value, bool dont_save_to_disk)
 {
     // Sometime the value has to be saved for the current session only but get discarded when the application exits.
     // In order to achieve this this flag can be set which disables the save to disk mechanism and only leaves the save to cache part active.
@@ -37,8 +42,8 @@ void Settings::setValue(const QString& group, const QString& name, const QVarian
     {
         // Set the group and save the given value
         QSettings settings(QApplication::organizationName(), QApplication::organizationName());
-        settings.beginGroup(group);
-        settings.setValue(name, value);
+        settings.beginGroup(QString::fromStdString(group));
+        settings.setValue(QString::fromStdString(name), value);
         settings.endGroup();
     }
 
@@ -46,7 +51,7 @@ void Settings::setValue(const QString& group, const QString& name, const QVarian
     m_hCache[group + name] = value;
 }
 
-QVariant Settings::getDefaultValue(const QString& group, const QString& name)
+QVariant Settings::getDefaultValue(const std::string& group, const std::string& name)
 {
     // db/defaultencoding?
     if(group == "db" && name == "defaultencoding")
@@ -217,7 +222,7 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
             return "\\";
         if(name == "filter_delay")
             return 200;
-        if(name.right(6) == "colour")
+        if(ends_with(name, "colour"))
             return getDefaultColorValue(group, name, FollowDesktopStyle);
     }
 
@@ -225,19 +230,19 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
     if(group == "syntaxhighlighter")
     {
         // Bold? Only tables, functions and keywords are bold by default
-        if(name.right(4) == "bold")
+        if(ends_with(name, "bold"))
             return name == "keyword_bold" || name == "table_bold" || name == "function_bold";
 
         // Italic? Nothing by default
-        if(name.right(6) == "italic")
+        if(ends_with(name, "italic"))
             return false;
 
         // Underline? Nothing by default
-        if(name.right(9) == "underline")
+        if(ends_with(name, "underline"))
             return false;
 
         // Colour?
-        if(name.right(6) == "colour")
+        if(ends_with(name, "colour"))
             return getDefaultColorValue(group, name, FollowDesktopStyle);
     }
 
@@ -345,7 +350,7 @@ QVariant Settings::getDefaultValue(const QString& group, const QString& name)
     return QVariant();
 }
 
-QColor Settings::getDefaultColorValue(const QString& group, const QString& name, AppStyle style)
+QColor Settings::getDefaultColorValue(const std::string& group, const std::string& name, AppStyle style)
 {
     // Data Browser/NULL & Binary Fields
     if(group == "databrowser")
@@ -386,7 +391,7 @@ QColor Settings::getDefaultColorValue(const QString& group, const QString& name,
     if(group == "syntaxhighlighter")
     {
         // Colour?
-        if(name.right(6) == "colour")
+        if(ends_with(name, "colour"))
         {
             QColor backgroundColour;
             QColor foregroundColour;

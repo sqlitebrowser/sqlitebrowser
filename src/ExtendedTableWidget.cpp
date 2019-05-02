@@ -110,9 +110,9 @@ UniqueFilterModel::UniqueFilterModel(QObject* parent)
 bool UniqueFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
     QModelIndex index = sourceModel()->index(sourceRow, filterKeyColumn(), sourceParent);
-    const QString& value = index.data(Qt::EditRole).toString();
+    const std::string value = index.data(Qt::EditRole).toString().toStdString();
 
-    if (!value.isEmpty() && !m_uniqueValues.contains(value)) {
+    if (!value.empty() && m_uniqueValues.find(value) == m_uniqueValues.end()) {
         const_cast<UniqueFilterModel*>(this)->m_uniqueValues.insert(value);
         return true;
     }
@@ -834,7 +834,7 @@ void ExtendedTableWidget::vscrollbarChanged(int value)
     }
 }
 
-int ExtendedTableWidget::numVisibleRows()
+int ExtendedTableWidget::numVisibleRows() const
 {
     // Get the row numbers of the rows currently visible at the top and the bottom of the widget
     int row_top = rowAt(0) == -1 ? 0 : rowAt(0);
@@ -844,9 +844,9 @@ int ExtendedTableWidget::numVisibleRows()
     return row_bottom - row_top;
 }
 
-QSet<int> ExtendedTableWidget::selectedCols()
+std::unordered_set<int> ExtendedTableWidget::selectedCols() const
 {
-    QSet<int> selectedCols;
+    std::unordered_set<int> selectedCols;
     for(const QModelIndex & idx : selectedIndexes())
         selectedCols.insert(idx.column());
     return selectedCols;

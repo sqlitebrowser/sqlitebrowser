@@ -2619,10 +2619,10 @@ void MainWindow::on_actionDonatePatreon_triggered()
 
 void MainWindow::updateBrowseDataColumnWidth(int section, int /*old_size*/, int new_size)
 {
-    QSet<int> selectedCols(ui->dataTable->selectedCols());
+    std::unordered_set<int> selectedCols = ui->dataTable->selectedCols();
     sqlb::ObjectIdentifier tableName = currentlyBrowsedTableName();
 
-    if (!selectedCols.contains(section))
+    if (selectedCols.find(section) == selectedCols.end())
     {
         if (browseTableSettings[tableName].columnWidths[section] != new_size) {
             isProjectModified = true;
@@ -3668,13 +3668,15 @@ void MainWindow::hideColumns(int column, bool hide)
     sqlb::ObjectIdentifier tableName = currentlyBrowsedTableName();
 
     // Select columns to (un)hide
-    QSet<int> columns;
+    std::unordered_set<int> columns;
     if(column == -1)
     {
          if(ui->dataTable->selectedCols().size() == 0)
              columns.insert(ui->actionBrowseTableEditDisplayFormat->property("clicked_column").toInt());
-         else
-             columns += ui->dataTable->selectedCols();
+         else {
+             auto cols = ui->dataTable->selectedCols();
+             columns.insert(cols.begin(), cols.end());
+         }
     } else {
         columns.insert(column);
     }

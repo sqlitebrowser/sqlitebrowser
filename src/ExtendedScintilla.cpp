@@ -111,7 +111,7 @@ void ExtendedScintilla::dropEvent(QDropEvent* e)
     f.close();
 }
 
-void ExtendedScintilla::setupSyntaxHighlightingFormat(QsciLexer *lexer, const QString& settings_name, int style)
+void ExtendedScintilla::setupSyntaxHighlightingFormat(QsciLexer* lexer, const std::string& settings_name, int style)
 {
     lexer->setColor(QColor(Settings::getValue("syntaxhighlighter", settings_name + "_colour").toString()), style);
 

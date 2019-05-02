@@ -2,6 +2,7 @@
 #define FOREIGNKEYDELEGATE_H
 
 #include <QStyledItemDelegate>
+#include <unordered_map>
 #include <vector>
 #include <string>
 
@@ -24,12 +25,12 @@ public:
     void setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const override;
     void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 
-    void updateTablesList(const QString& oldTableName);
+    void updateTablesList(const std::string& oldTableName);
 
 private:
     const DBBrowserDB& m_db;
     sqlb::Table& m_table;
-    mutable QMap<QString, std::vector<std::string>> m_tablesIds;
+    mutable std::unordered_map<std::string, std::vector<std::string>> m_tablesIds;
 };
 
 #endif // FOREIGNKEYDELEGATE_H

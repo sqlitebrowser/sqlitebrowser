@@ -7,6 +7,7 @@
 #include <QMimeData>
 #include <QMessageBox>
 #include <QApplication>
+#include <unordered_map>
 
 DbStructureModel::DbStructureModel(DBBrowserDB& db, QObject* parent)
     : QAbstractItemModel(parent),
@@ -303,7 +304,7 @@ bool DbStructureModel::dropMimeData(const QMimeData* data, Qt::DropAction action
 void DbStructureModel::buildTree(QTreeWidgetItem* parent, const std::string& schema)
 {
     // Build a map from object type to tree node to simplify finding the correct tree node later
-    QMap<std::string, QTreeWidgetItem*> typeToParentItem;
+    std::unordered_map<std::string, QTreeWidgetItem*> typeToParentItem;
 
     // Get object map for the given schema
     objectMap objmap = m_db.schemata[schema];
@@ -312,22 +313,22 @@ void DbStructureModel::buildTree(QTreeWidgetItem* parent, const std::string& sch
     QTreeWidgetItem* itemTables = new QTreeWidgetItem(parent);
     itemTables->setIcon(ColumnName, QIcon(QString(":/icons/table")));
     itemTables->setText(ColumnName, tr("Tables (%1)").arg(objmap.values("table").count()));
-    typeToParentItem.insert("table", itemTables);
+    typeToParentItem.insert({"table", itemTables});
 
     QTreeWidgetItem* itemIndices = new QTreeWidgetItem(parent);
     itemIndices->setIcon(ColumnName, QIcon(QString(":/icons/index")));
     itemIndices->setText(ColumnName, tr("Indices (%1)").arg(objmap.values("index").count()));
-    typeToParentItem.insert("index", itemIndices);
+    typeToParentItem.insert({"index", itemIndices});
 
     QTreeWidgetItem* itemViews = new QTreeWidgetItem(parent);
     itemViews->setIcon(ColumnName, QIcon(QString(":/icons/view")));
     itemViews->setText(ColumnName, tr("Views (%1)").arg(objmap.values("view").count()));
-    typeToParentItem.insert("view", itemViews);
+    typeToParentItem.insert({"view", itemViews});
 
     QTreeWidgetItem* itemTriggers = new QTreeWidgetItem(parent);
     itemTriggers->setIcon(ColumnName, QIcon(QString(":/icons/trigger")));
     itemTriggers->setText(ColumnName, tr("Triggers (%1)").arg(objmap.values("trigger").count()));
-    typeToParentItem.insert("trigger", itemTriggers);
+    typeToParentItem.insert({"trigger", itemTriggers});
 
     // Get all database objects and sort them by their name
     QMultiMap<std::string, sqlb::ObjectPtr> dbobjs;
@@ -338,7 +339,7 @@ void DbStructureModel::buildTree(QTreeWidgetItem* parent, const std::string& sch
     for(auto it : dbobjs)
     {
         // Object node
-        QTreeWidgetItem* item = addNode(typeToParentItem.value(sqlb::Object::typeToString(it->type())), it, schema);
+        QTreeWidgetItem* item = addNode(typeToParentItem.at(sqlb::Object::typeToString(it->type())), it, schema);
 
         // If it is a table or view add the field nodes, add an extra node for the browsable section
         if(it->type() == sqlb::Object::Types::Table || it->type() == sqlb::Object::Types::View)

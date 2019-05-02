@@ -42,7 +42,7 @@ public slots:
 protected:
     void dropEvent(QDropEvent* e) override;
 
-    void setupSyntaxHighlightingFormat(QsciLexer *lexer, const QString& settings_name, int style);
+    void setupSyntaxHighlightingFormat(QsciLexer* lexer, const std::string& settings_name, int style);
     void reloadLexerSettings(QsciLexer *lexer);
     void reloadCommonSettings();
 

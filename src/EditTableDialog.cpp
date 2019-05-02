@@ -277,7 +277,7 @@ void EditTableDialog::checkInput()
     if (normTableName != m_table.name()) {
         const std::string oldTableName = m_table.name();
         m_table.setName(normTableName);
-        m_fkEditorDelegate->updateTablesList(QString::fromStdString(oldTableName));
+        m_fkEditorDelegate->updateTablesList(oldTableName);
 
         // update fk's that refer to table itself recursively
         const auto& fields = m_table.fields;

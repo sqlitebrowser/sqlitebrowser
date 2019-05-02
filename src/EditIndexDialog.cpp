@@ -19,7 +19,7 @@ EditIndexDialog::EditIndexDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
     ui->sqlTextEdit->setReadOnly(true);
 
     // Get list of tables, sort it alphabetically and fill the combobox
-    QMap<std::string, sqlb::ObjectIdentifier> dbobjs;  // Map from display name to full object identifier
+    std::map<std::string, sqlb::ObjectIdentifier> dbobjs;  // Map from display name to full object identifier
     if(newIndex)        // If this is a new index, offer all tables of all database schemata
     {
         for(auto it=pdb.schemata.constBegin();it!=pdb.schemata.constEnd();++it)
@@ -29,7 +29,7 @@ EditIndexDialog::EditIndexDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
             {
                 // Only show the schema name for non-main schemata
                 sqlb::ObjectIdentifier obj(it.key(), (*jt)->name());
-                dbobjs.insert(obj.toDisplayString(), obj);
+                dbobjs.insert({obj.toDisplayString(), obj});
             }
         }
     } else {            // If this is an existing index, only offer tables of the current database schema
@@ -38,12 +38,12 @@ EditIndexDialog::EditIndexDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
         {
             // Only show the schema name for non-main schemata
             sqlb::ObjectIdentifier obj(curIndex.schema(), it->name());
-            dbobjs.insert(obj.toDisplayString(), obj);
+            dbobjs.insert({obj.toDisplayString(), obj});
         }
     }
     ui->comboTableName->blockSignals(true);
-    for(auto it=dbobjs.constBegin();it!=dbobjs.constEnd();++it)
-        ui->comboTableName->addItem(QIcon(QString(":icons/table")), QString::fromStdString(it.key()), QString::fromStdString(it.value().toSerialised()));
+    for(auto it=dbobjs.cbegin();it!=dbobjs.cend();++it)
+        ui->comboTableName->addItem(QIcon(QString(":icons/table")), QString::fromStdString(it->first), QString::fromStdString(it->second.toSerialised()));
     ui->comboTableName->blockSignals(false);
 
     QHeaderView *tableHeaderView = ui->tableIndexColumns->horizontalHeader();
