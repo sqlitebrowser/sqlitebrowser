@@ -1,10 +1,9 @@
-#include <QJsonDocument>
-#include <QJsonArray>
-#include <QJsonObject>
 #include <QImage>
 
 #include "RemoteModel.h"
 #include "RemoteDatabase.h"
+
+using json = nlohmann::json;
 
 RemoteModelItem::RemoteModelItem(RemoteModelItem* parent) :
     m_parent(parent),
@@ -65,25 +64,26 @@ void RemoteModelItem::setFetchedDirectoryList(bool fetched)
     m_fetchedDirectoryList = fetched;
 }
 
-QList<RemoteModelItem*> RemoteModelItem::loadArray(const QJsonValue& value, RemoteModelItem* parent)
+std::vector<RemoteModelItem*> RemoteModelItem::loadArray(const json& array, RemoteModelItem* parent)
 {
-    QList<RemoteModelItem*> items;
+    std::vector<RemoteModelItem*> items;
 
     // Loop through all directory items
-    QJsonArray array = value.toArray();
-    for(int i=0;i<array.size();i++)
+    for(const auto& elem : array)
     {
         // Create a new model item with the specified parent
         RemoteModelItem* item = new RemoteModelItem(parent);
 
         // Save all relevant values. If one of the values isn't set in the JSON document, an empty string
         // will be stored
-        item->setValue(RemoteModelColumnName, array.at(i).toObject().value("name"));
-        item->setValue(RemoteModelColumnType, array.at(i).toObject().value("type"));
-        item->setValue(RemoteModelColumnUrl, array.at(i).toObject().value("url"));
-        item->setValue(RemoteModelColumnCommitId, array.at(i).toObject().value("commit_id"));
-        item->setValue(RemoteModelColumnSize, array.at(i).toObject().value("size"));
-        item->setValue(RemoteModelColumnLastModified, array.at(i).toObject().value("last_modified"));
+        item->setValue(RemoteModelColumnName, QString::fromStdString(elem["name"]));
+        item->setValue(RemoteModelColumnType, QString::fromStdString(elem["type"]));
+        item->setValue(RemoteModelColumnUrl, QString::fromStdString(elem["url"]));
+        item->setValue(RemoteModelColumnLastModified, QString::fromStdString(elem["last_modified"]));
+        if(elem.contains("commit_id"))
+            item->setValue(RemoteModelColumnCommitId, QString::fromStdString(elem["commit_id"]));
+        if(elem.contains("size"))
+            item->setValue(RemoteModelColumnSize, QString::number(static_cast<int>(elem["size"])));
 
         items.push_back(item);
     }
@@ -121,13 +121,12 @@ void RemoteModel::setNewRootDir(const QString& url, const QString& cert)
     remoteDatabase.fetch(currentRootDirectory, RemoteDatabase::RequestTypeDirectory, currentClientCert, QModelIndex());
 }
 
-void RemoteModel::parseDirectoryListing(const QString& json, const QVariant& userdata)
+void RemoteModel::parseDirectoryListing(const QString& text, const QVariant& userdata)
 {
     // Load new JSON root document assuming it's an array
-    QJsonDocument doc = QJsonDocument::fromJson(json.toUtf8());
-    if(doc.isNull() || !doc.isArray())
+    json array = json::parse(text.toStdString(), nullptr, false);
+    if(array.is_discarded() || !array.is_array())
         return;
-    QJsonArray array = doc.array();
 
     // Get model index to store the new data under
     QModelIndex parent = userdata.toModelIndex();
@@ -148,8 +147,8 @@ void RemoteModel::parseDirectoryListing(const QString& json, const QVariant& use
     }
 
     // Insert data
-    beginInsertRows(parent, 0, array.size());
-    QList<RemoteModelItem*> items = RemoteModelItem::loadArray(QJsonValue(array), parentItem);
+    beginInsertRows(parent, 0, static_cast<int>(array.size()));
+    std::vector<RemoteModelItem*> items = RemoteModelItem::loadArray(array, parentItem);
     for(RemoteModelItem* item : items)
         parentItem->appendChild(item);
     endInsertRows();

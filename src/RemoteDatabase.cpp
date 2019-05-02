@@ -10,15 +10,16 @@
 #include <QDir>
 #include <QStandardPaths>
 #include <QUrlQuery>
-#include <QJsonDocument>
-#include <QJsonObject>
 #include <QtNetwork/QHttpMultiPart>
 #include <QTimeZone>
+#include <json.hpp>
 
 #include "RemoteDatabase.h"
 #include "version.h"
 #include "Settings.h"
 #include "sqlite.h"
+
+using json = nlohmann::json;
 
 RemoteDatabase::RemoteDatabase() :
     m_manager(new QNetworkAccessManager),
@@ -149,7 +150,7 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
 
             // Add cloned database to list of local databases
             QString saveFileAs = localAdd(reply->url().fileName(), reply->property("certfile").toString(),
-                                          reply->url(), QUrlQuery(reply->url()).queryItemValue("commit"));
+                                          reply->url(), QUrlQuery(reply->url()).queryItemValue("commit").toStdString());
 
             // Save the downloaded data under the generated file name
             QFile file(saveFileAs);
@@ -185,15 +186,14 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
     case RequestTypeLicenceList:
         {
             // Read and check results
-            QJsonDocument json = QJsonDocument::fromJson(reply->readAll());
-            if(json.isNull() || !json.isObject())
+            json obj = json::parse(reply->readAll(), nullptr, false);
+            if(obj.is_discarded() || !obj.is_object())
                 break;
-            QJsonObject obj = json.object();
 
             // Parse data and build licence map (short name -> long name)
-            QMap<QString, QString> licences;
-            for(auto it=obj.constBegin();it!=obj.constEnd();++it)
-                licences.insert(it.key(), it.value().toObject().value("full_name").toString());
+            QMap<std::string, std::string> licences;
+            for(auto it=obj.cbegin();it!=obj.cend();++it)
+                licences.insert(it.key(), it.value()["full_name"]);
 
             // Send licence map to anyone who's interested
             emit gotLicenceList(licences);
@@ -202,27 +202,18 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
     case RequestTypeBranchList:
         {
             // Read and check results
-            QJsonDocument json = QJsonDocument::fromJson(reply->readAll());
-            if(json.isNull() || !json.isObject())
+            json obj = json::parse(reply->readAll(), nullptr, false);
+            if(obj.is_discarded() || !obj.is_object())
                 break;
-            QJsonObject obj = json.object();
-            QJsonObject obj_branches = obj["branches"].toObject();
+            json obj_branches = obj["branches"];
 
             // Parse data and assemble branch list
-            QStringList branches;
-            for(auto it=obj_branches.constBegin();it!=obj_branches.constEnd();++it)
-                branches.append(it.key());
+            std::vector<std::string> branches;
+            for(auto it=obj_branches.cbegin();it!=obj_branches.cend();++it)
+                branches.push_back(it.key());
 
             // Get default branch
-#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
-            QString default_branch = obj["default_branch"].toString("master");
-#else
-            QString default_branch = obj["default_branch"].toString();
-            if ( default_branch.isEmpty () )
-            {
-                default_branch = "master";
-            }
-#endif
+            std::string default_branch = (obj.contains("default_branch") && !obj["default_branch"].empty()) ? obj["default_branch"] : "master";
 
             // Send branch list to anyone who is interested
             emit gotBranchList(branches, default_branch);
@@ -231,20 +222,19 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
     case RequestTypePush:
         {
             // Read and check results
-            QJsonDocument json = QJsonDocument::fromJson(reply->readAll());
-            if(json.isNull() || !json.isObject())
+            json obj = json::parse(reply->readAll(), nullptr, false);
+            if(obj.is_discarded() || !obj.is_object())
                 break;
-            QJsonObject obj = json.object();
 
             // Create or update the record in our local checkout database
-            QString saveFileAs = localAdd(reply->url().fileName(), reply->property("certfile").toString(), obj["url"].toString(), obj["commit_id"].toString());
+            QString saveFileAs = localAdd(reply->url().fileName(), reply->property("certfile").toString(), QString::fromStdString(obj["url"]), obj["commit_id"]);
 
             // If the name of the source file and the name we're saving as differ, we're doing an initial push. In this case, copy the source file to
             // the destination path to avoid redownloading it when it's first used.
             if(saveFileAs != reply->property("source_file").toString())
                 QFile::copy(reply->property("source_file").toString(), saveFileAs);
 
-            emit uploadFinished(obj["url"].toString());
+            emit uploadFinished(obj["url"]);
             break;
         }
     }
@@ -480,7 +470,7 @@ void RemoteDatabase::push(const QString& filename, const QString& url, const QSt
     addPart(multipart, "licence", licence);
     addPart(multipart, "public", isPublic ? "true" : "false");
     addPart(multipart, "branch", branch);
-    addPart(multipart, "commit", localLastCommitId(clientCert, url));
+    addPart(multipart, "commit", QString::fromStdString(localLastCommitId(clientCert, url)));
     addPart(multipart, "force", forcePush ? "true" : "false");
     addPart(multipart, "lastmodified", last_modified.toString("yyyy-MM-dd'T'HH:mm:ss'Z'"));
 
@@ -578,7 +568,7 @@ void RemoteDatabase::localAssureOpened()
     }
 }
 
-QString RemoteDatabase::localAdd(QString filename, QString identity, const QUrl& url, const QString& new_commit_id)
+QString RemoteDatabase::localAdd(QString filename, QString identity, const QUrl& url, const std::string& new_commit_id)
 {
     // This function adds a new local database clone to our internal list. It does so by adding a single
     // new record to the remote dbs database. All the fields are extracted from the filename, the identity
@@ -595,8 +585,8 @@ QString RemoteDatabase::localAdd(QString filename, QString identity, const QUrl&
     identity = f.fileName();
 
     // Check if this file has already been checked in
-    QString last_commit_id = localLastCommitId(identity, url.toString());
-    if(last_commit_id.isNull())
+    std::string last_commit_id = localLastCommitId(identity, url.toString());
+    if(last_commit_id.empty())
     {
         // The file hasn't been checked in yet. So add a new record for it.
 
@@ -628,13 +618,13 @@ QString RemoteDatabase::localAdd(QString filename, QString identity, const QUrl&
             return QString();
         }
 
-        if(sqlite3_bind_text(stmt, 4, new_commit_id.toUtf8(), new_commit_id.toUtf8().length(), SQLITE_TRANSIENT))
+        if(sqlite3_bind_text(stmt, 4, new_commit_id.c_str(), static_cast<int>(new_commit_id.size()), SQLITE_TRANSIENT))
         {
             sqlite3_finalize(stmt);
             return QString();
         }
 
-        if(sqlite3_bind_text(stmt, 5, filename.toUtf8(), filename.toUtf8().length(), SQLITE_TRANSIENT))
+        if(sqlite3_bind_text(stmt, 5, filename.toUtf8(), filename.size(), SQLITE_TRANSIENT))
         {
             sqlite3_finalize(stmt);
             return QString();
@@ -662,7 +652,7 @@ QString RemoteDatabase::localAdd(QString filename, QString identity, const QUrl&
         if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, nullptr) != SQLITE_OK)
             return QString();
 
-        if(sqlite3_bind_text(stmt, 1, new_commit_id.toUtf8(), new_commit_id.toUtf8().length(), SQLITE_TRANSIENT))
+        if(sqlite3_bind_text(stmt, 1, new_commit_id.c_str(), static_cast<int>(new_commit_id.size()), SQLITE_TRANSIENT))
         {
             sqlite3_finalize(stmt);
             return QString();
@@ -825,7 +815,7 @@ QString RemoteDatabase::localCheckFile(const QString& local_file)
     }
 }
 
-QString RemoteDatabase::localLastCommitId(QString identity, const QUrl& url)
+std::string RemoteDatabase::localLastCommitId(QString identity, const QUrl& url)
 {
     // This function takes a file name and checks with which commit id we had checked out this file or last pushed it.
 
@@ -835,32 +825,32 @@ QString RemoteDatabase::localLastCommitId(QString identity, const QUrl& url)
     QString sql = QString("SELECT commit_id FROM local WHERE identity=? AND url=?");
     sqlite3_stmt* stmt;
     if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, nullptr) != SQLITE_OK)
-        return QString();
+        return std::string();
 
     QFileInfo f(identity);                  // Remove the path
     identity = f.fileName();
     if(sqlite3_bind_text(stmt, 1, identity.toUtf8(), identity.toUtf8().length(), SQLITE_TRANSIENT))
     {
         sqlite3_finalize(stmt);
-        return QString();
+        return std::string();
     }
 
     if(sqlite3_bind_text(stmt, 2, url.toString(QUrl::PrettyDecoded | QUrl::RemoveQuery).toUtf8(),
                          url.toString(QUrl::PrettyDecoded | QUrl::RemoveQuery).toUtf8().size(), SQLITE_TRANSIENT))
     {
         sqlite3_finalize(stmt);
-        return QString();
+        return std::string();
     }
 
     if(sqlite3_step(stmt) != SQLITE_ROW)
     {
         // If there was either an error or no record was found for this file name, stop here.
         sqlite3_finalize(stmt);
-        return QString();
+        return std::string();
     }
 
     // Having come here we can assume that at least some local clone with the given file name
-    QString local_commit_id = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0)));
+    std::string local_commit_id = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0));
     sqlite3_finalize(stmt);
 
     return local_commit_id;

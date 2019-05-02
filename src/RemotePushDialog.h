@@ -45,8 +45,8 @@ protected slots:
 
     void reloadBranchList();
 
-    void fillInLicences(const QMap<QString, QString>& licences);
-    void fillInBranches(const QStringList& branches, const QString& default_branch);
+    void fillInLicences(const QMap<std::string, std::string>& licences);
+    void fillInBranches(const std::vector<std::string>& branches, const std::string& default_branch);
 };
 
 #endif

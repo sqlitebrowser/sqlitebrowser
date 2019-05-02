@@ -4,6 +4,8 @@
 #include <QAbstractItemModel>
 #include <QStringList>
 
+#include <json.hpp>
+
 class RemoteDatabase;
 
 // List of fields stored in the JSON data
@@ -39,7 +41,7 @@ public:
 
     // This function assumes the JSON value it's getting passed is an array ("[{...}, {...}, {...}, ...]"). It returns a list of model items, one
     // per array entry and each with the specified parent set.
-    static QList<RemoteModelItem*> loadArray(const QJsonValue& value, RemoteModelItem* parent = nullptr);
+    static std::vector<RemoteModelItem*> loadArray(const nlohmann::json& array, RemoteModelItem* parent = nullptr);
 
 private:
     // These are just the fields from the json objects returned by the dbhub.io server
@@ -93,7 +95,7 @@ signals:
 private slots:
     // This is called whenever a network reply containing a directory listing arrives. json contains the reply data, userdata
     // contains some custom data passed to the request. In this case we expect this to be the model index of the parent tree item.
-    void parseDirectoryListing(const QString& json, const QVariant& userdata);
+    void parseDirectoryListing(const QString& text, const QVariant& userdata);
 
 private:
     // Pointer to the root item. This contains all the actual item data.

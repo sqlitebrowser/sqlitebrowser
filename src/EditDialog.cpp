@@ -13,7 +13,6 @@
 #include <QImageReader>
 #include <QBuffer>
 #include <QModelIndex>
-#include <QJsonDocument>
 #include <QtXml/QDomDocument>
 #include <QMessageBox>
 #include <QPrinter>
@@ -23,6 +22,9 @@
 #include <QTextDocument>
 
 #include <Qsci/qsciscintilla.h>
+#include <json.hpp>
+
+using json = nlohmann::json;
 
 EditDialog::EditDialog(QWidget* parent)
     : QDialog(parent),
@@ -479,29 +481,33 @@ void EditDialog::accept()
         }
         case DockTextEdit::JSON:
         {
+            sciEdit->clearErrorIndicators();
+
             QString oldData = currentIndex.data(Qt::EditRole).toString();
 
             QString newData;
-            QJsonParseError parseError;
-            QJsonDocument jsonDoc = QJsonDocument::fromJson(sciEdit->text().toUtf8(), &parseError);
-            bool proceed;
+            bool proceed = true;
+            json jsonDoc;
 
-            sciEdit->clearErrorIndicators();
-            if (parseError.error != QJsonParseError::NoError)
-                sciEdit->setErrorIndicator(parseError.offset-1);
+            try {
+                jsonDoc = json::parse(sciEdit->text().toStdString());
+            } catch(json::parse_error& parseError) {
+                sciEdit->setErrorIndicator(static_cast<int>(parseError.byte - 1));
 
-            if (!jsonDoc.isNull()) {
+                proceed = promptInvalidData("JSON", parseError.what());
+            }
+
+            if (!jsonDoc.is_null()) {
                 if (mustIndentAndCompact)
                     // Compact the JSON data before storing
-                    newData = QString(jsonDoc.toJson(QJsonDocument::Compact));
+                    newData = QString::fromStdString(jsonDoc.dump());
                 else
                     newData = sciEdit->text();
-                proceed = (oldData != newData);
-
             } else {
                 newData = sciEdit->text();
-                proceed = (oldData != newData && promptInvalidData("JSON", parseError.errorString()));
             }
+            proceed = proceed && (oldData != newData);
+
             if (proceed)
                 // The data is different, so commit it back to the database
                 emit recordTextUpdated(currentIndex, newData.toUtf8(), false);
@@ -577,23 +583,26 @@ void EditDialog::setDataInBuffer(const QByteArray& data, DataSources source)
         }
         case DockTextEdit::JSON:
         {
-            QJsonParseError parseError;
-            QJsonDocument jsonDoc = QJsonDocument::fromJson(QByteArray(data.constData(), data.size()), &parseError);
+            sciEdit->clearErrorIndicators();
 
-            if (mustIndentAndCompact && !jsonDoc.isNull()) {
+            json jsonDoc;
+
+            try {
+                jsonDoc = json::parse(std::string(data.constData(), static_cast<size_t>(data.size())));
+            } catch(json::parse_error& parseError) {
+                sciEdit->setErrorIndicator(static_cast<int>(parseError.byte - 1));
+            }
+
+            if (mustIndentAndCompact && !jsonDoc.is_null() && !jsonDoc.is_discarded()) {
                 // Load indented JSON into the JSON editor
-                textData = QString(jsonDoc.toJson(QJsonDocument::Indented));
+                textData = QString::fromStdString(jsonDoc.dump(4));
             } else {
                 // Fallback case. The data is not yet valid JSON or no auto-formatting applied.
                 textData = QString::fromUtf8(data.constData(), data.size());
             }
+
             sciEdit->setText(textData);
-
-            sciEdit->clearErrorIndicators();
-            if (parseError.error != QJsonParseError::NoError)
-                sciEdit->setErrorIndicator(parseError.offset-1);
             sciEdit->setEnabled(true);
-
         }
 
         break;
@@ -742,8 +751,8 @@ int EditDialog::checkDataType(const QByteArray& data)
     {
         if (cellData.startsWith("<?xml"))
             return XML;
-        QJsonDocument jsonDoc = QJsonDocument::fromJson(cellData);
-        if (!jsonDoc.isNull())
+
+        if(!json::parse(cellData, nullptr, false).is_discarded())
             return JSON;
         else
             return Text;
