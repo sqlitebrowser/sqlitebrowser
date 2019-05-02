@@ -13,8 +13,11 @@
 #include <QUrl>
 #include <QtConcurrent/QtConcurrentRun>
 #include <QProgressDialog>
+#include <json.hpp>
 
 #include "RowLoader.h"
+
+using json = nlohmann::json;
 
 SqliteTableModel::SqliteTableModel(DBBrowserDB& db, QObject* parent, size_t chunkSize, const QString& encoding)
     : QAbstractTableModel(parent)
@@ -466,8 +469,26 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
         if(m_db.updateRecord(m_query.table(), m_headers.at(column), cached_row.at(0), newValue, isBlob, m_query.rowIdColumns()))
         {
             cached_row[column] = newValue;
-            if(m_headers.at(column) == sqlb::joinStringVector(m_query.rowIdColumns(), ",")) {
-                cached_row[0] =  newValue;
+
+            // After updating the value itself in the cache, we need to check if we need to update the rowid too.
+            if(contains(m_query.rowIdColumns(), m_headers.at(column)))
+            {
+                // When the cached rowid column needs to be updated as well, we need to distinguish between single-column and multi-column primary keys.
+                // For the former ones, we can just overwrite the existing value with the new value.
+                // For the latter ones, we need to make a new JSON object of the values of all primary key columns, not just the updated one.
+                if(m_query.rowIdColumns().size() == 1)
+                {
+                    cached_row[0] = newValue;
+                } else {
+                    json array;
+                    assert(m_headers.size() == cached_row.size());
+                    for(size_t i=0;i<m_query.rowIdColumns().size();i++)
+                    {
+                        auto it = std::find(m_headers.begin()+1, m_headers.end(), m_query.rowIdColumns().at(i));    // +1 in order to omit the rowid column itself
+                        array.push_back(cached_row[static_cast<size_t>(std::distance(m_headers.begin(), it))]);
+                    }
+                    cached_row[0] = QByteArray::fromStdString(array.dump());
+                }
                 const QModelIndex& rowidIndex = index.sibling(index.row(), 0);
                 lock.unlock();
                 emit dataChanged(rowidIndex, rowidIndex);
