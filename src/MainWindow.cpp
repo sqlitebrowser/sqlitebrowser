@@ -2694,11 +2694,10 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, QXmlS
                     int index = xml.attributes().value("index").toInt();
                     while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "column") {
                         if(xml.name() == "format") {
-                            CondFormat newCondFormat(xml.attributes().value("condition").toString(),
-                                                     QColor(xml.attributes().value("foreground").toString()),
-                                                     QColor(xml.attributes().value("background").toString()),
-                                                     settings.encoding);
-                            settings.condFormats[index].push_back(newCondFormat);
+                            settings.condFormats[index].emplace_back(xml.attributes().value("condition").toString(),
+                                                                     QColor(xml.attributes().value("foreground").toString()),
+                                                                     QColor(xml.attributes().value("background").toString()),
+                                                                     settings.encoding);
                             xml.skipCurrentElement();
                         }
                     }

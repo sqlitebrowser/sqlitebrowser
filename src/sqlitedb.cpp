@@ -1213,13 +1213,13 @@ bool DBBrowserDB::getRow(const sqlb::ObjectIdentifier& table, const QString& row
             {
                 if(sqlite3_column_type(stmt, i) == SQLITE_NULL)
                 {
-                    rowdata.push_back(QByteArray());
+                    rowdata.emplace_back();
                 } else {
                     int bytes = sqlite3_column_bytes(stmt, i);
                     if(bytes)
-                        rowdata.push_back(QByteArray(static_cast<const char*>(sqlite3_column_blob(stmt, i)), bytes));
+                        rowdata.emplace_back(static_cast<const char*>(sqlite3_column_blob(stmt, i)), bytes);
                     else
-                        rowdata.push_back(QByteArray(""));
+                        rowdata.emplace_back("");
                 }
             }
             ret = true;

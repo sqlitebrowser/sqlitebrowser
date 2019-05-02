@@ -103,10 +103,9 @@ std::vector<CondFormat> CondFormatManager::getCondFormats()
     for (int i = 0; i < ui->tableCondFormats->topLevelItemCount(); ++i)
     {
         QTreeWidgetItem* item = ui->tableCondFormats->topLevelItem(i);
-        CondFormat aCondFormat(item->text(ColumnFilter),
-                               item->background(ColumnForeground).color(),
-                               item->background(ColumnBackground).color(), m_encoding);
-        result.push_back(aCondFormat);
+        result.emplace_back(item->text(ColumnFilter),
+                            item->background(ColumnForeground).color(),
+                            item->background(ColumnBackground).color(), m_encoding);
     }
     return result;
 }

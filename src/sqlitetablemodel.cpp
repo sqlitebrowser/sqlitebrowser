@@ -124,7 +124,7 @@ void SqliteTableModel::setQuery(const sqlb::Query& query)
     m_query = query;
 
     // The first column is the rowid column and therefore is always of type integer
-    m_vDataTypes.push_back(SQLITE_INTEGER);
+    m_vDataTypes.emplace_back(SQLITE_INTEGER);
 
     // Get the data types of all other columns as well as the column names
     bool allOk = false;
@@ -164,7 +164,7 @@ void SqliteTableModel::setQuery(const sqlb::Query& query)
         QString sColumnQuery = QString::fromUtf8("SELECT * FROM %1;").arg(QString::fromStdString(query.table().toString()));
         if(m_query.rowIdColumns().empty())
             m_query.setRowIdColumn("_rowid_");
-        m_headers.push_back("_rowid_");
+        m_headers.emplace_back("_rowid_");
         auto columns = getColumns(nullptr, sColumnQuery, m_vDataTypes);
         m_headers.insert(m_headers.end(), columns.begin(), columns.end());
     }
@@ -533,7 +533,7 @@ SqliteTableModel::Row SqliteTableModel::makeDefaultCacheEntry () const
     Row blank_data;
 
     for(size_t i=0; i < m_headers.size(); ++i)
-        blank_data.push_back("");
+        blank_data.emplace_back("");
 
     return blank_data;
 }
@@ -563,7 +563,7 @@ bool SqliteTableModel::insertRows(int row, int count, const QModelIndex& parent)
         {
             return false;
         }
-        tempList.push_back(blank_data);
+        tempList.emplace_back(blank_data);
         tempList.back()[0] = rowid.toUtf8();
 
         // update column with default values
