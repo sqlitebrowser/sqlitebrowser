@@ -25,17 +25,14 @@
 
 #include <limits>
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 4, 0)
-    typedef QList<QByteArray> QByteArrayList;
-#endif
-
-QList<QByteArrayList> ExtendedTableWidget::m_buffer;
+using BufferRow = std::vector<QByteArray>;
+std::vector<BufferRow> ExtendedTableWidget::m_buffer;
 QString ExtendedTableWidget::m_generatorStamp;
 
 namespace
 {
 
-QList<QByteArrayList> parseClipboard(QString clipboard)
+std::vector<BufferRow> parseClipboard(QString clipboard)
 {
     // Remove trailing line break from the clipboard text. This is necessary because some applications append an extra
     // line break to the clipboard contents which we would then interpret as regular data, setting the first field of the
@@ -50,11 +47,11 @@ QList<QByteArrayList> parseClipboard(QString clipboard)
         clipboard.chop(1);
 
     // Make sure there is some data in the clipboard
-    QList<QByteArrayList> result;
+    std::vector<BufferRow> result;
     if(clipboard.isEmpty())
         return result;
 
-    result.push_back(QByteArrayList());
+    result.push_back(BufferRow());
 
     QRegExp re("(\"(?:[^\t\"]+|\"\"[^\"]*\"\")*)\"|(\t|\r?\n)");
     int offset = 0;
@@ -69,7 +66,7 @@ QList<QByteArrayList> parseClipboard(QString clipboard)
             if(QRegExp("\".*\"").exactMatch(text))
                 text = text.mid(1, text.length() - 2);
             text.replace("\"\"", "\"");
-            result.last().push_back(text.toUtf8());
+            result.back().push_back(text.toUtf8());
             break;
         }
 
@@ -81,18 +78,18 @@ QList<QByteArrayList> parseClipboard(QString clipboard)
         QString ws = re.cap(2);
         // if two whitespaces in row - that's an empty cell
         if (!(pos - whitespace_offset)) {
-            result.last().push_back(QByteArray());
+            result.back().push_back(QByteArray());
         } else {
             text = clipboard.mid(whitespace_offset, pos - whitespace_offset);
             if(QRegExp("\".*\"").exactMatch(text))
                 text = text.mid(1, text.length() - 2);
             text.replace("\"\"", "\"");
-            result.last().push_back(text.toUtf8());
+            result.back().push_back(text.toUtf8());
         }
 
         if (ws.endsWith("\n"))
             // create new row
-            result.push_back(QByteArrayList());
+            result.push_back(BufferRow());
 
         whitespace_offset = offset = pos + ws.length();
     }
@@ -440,7 +437,7 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
 
     // Copy selected data into internal copy-paste buffer
     int last_row = indices.first().row();
-    QByteArrayList lst;
+    BufferRow lst;
     for(int i=0;i<indices.size();i++)
     {
         if(indices.at(i).row() != last_row)
@@ -448,7 +445,7 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
             m_buffer.push_back(lst);
             lst.clear();
         }
-        lst << indices.at(i).data(Qt::EditRole).toByteArray();
+        lst.push_back(indices.at(i).data(Qt::EditRole).toByteArray());
         last_row = indices.at(i).row();
     }
     m_buffer.push_back(lst);
@@ -610,10 +607,10 @@ void ExtendedTableWidget::paste()
     // If data in system clipboard is ours and the internal copy-paste buffer is filled, use the internal buffer; otherwise parse the
     // system clipboard contents (case for data copied by other application).
 
-    QList<QByteArrayList> clipboardTable;
-    QList<QByteArrayList>* source;
+    std::vector<BufferRow> clipboardTable;
+    std::vector<BufferRow>* source;
 
-    if(mimeClipboard->hasHtml() && mimeClipboard->html().contains(m_generatorStamp) && !m_buffer.isEmpty())
+    if(mimeClipboard->hasHtml() && mimeClipboard->html().contains(m_generatorStamp) && !m_buffer.empty())
     {
         source = &m_buffer;
     } else {
@@ -626,8 +623,8 @@ void ExtendedTableWidget::paste()
         return;
 
     // Starting from assumption that selection is rectangular, and then first index is upper-left corner and last is lower-right.
-    int rows = source->size();
-    int columns = source->first().size();
+    int rows = static_cast<int>(source->size());
+    int columns = static_cast<int>(source->front().size());
 
     int firstRow = indices.front().row();
     int firstColumn = indices.front().column();
@@ -641,7 +638,7 @@ void ExtendedTableWidget::paste()
     // Special case: if there is only one cell of data to be pasted, paste it into all selected fields
     if(rows == 1 && columns == 1)
     {
-        QByteArray data = source->first().first();
+        QByteArray data = source->front().front();
         for(int row=firstRow;row<firstRow+selectedRows;row++)
         {
             for(int column=firstColumn;column<firstColumn+selectedColumns;column++)
@@ -667,7 +664,7 @@ void ExtendedTableWidget::paste()
 
     // Copy the data cell by cell and as-is from the source buffer to the table
     int row = firstRow;
-    for(const QByteArrayList& source_row : *source)
+    for(const auto& source_row : *source)
     {
         int column = firstColumn;
         for(const QByteArray& source_cell : source_row)

@@ -48,7 +48,7 @@ private:
     QVariant m_values[RemoteModelColumnCount];
 
     // Child items and parent item
-    QList<RemoteModelItem*> m_children;
+    std::vector<RemoteModelItem*> m_children;
     RemoteModelItem* m_parent;
 
     // Indicates whether we already tried fetching a directory listing for this item. This serves two purposes:

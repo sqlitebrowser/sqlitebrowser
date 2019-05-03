@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QtNetwork/QSslConfiguration>
 
+#include <map>
+
 class QNetworkAccessManager;
 class QNetworkConfigurationManager;
 class QNetworkReply;
@@ -30,7 +32,7 @@ public:
     };
 
     const QList<QSslCertificate>& caCertificates() const;
-    const QMap<QString, QSslCertificate>& clientCertificates() const { return m_clientCertFiles; }
+    const std::map<QString, QSslCertificate>& clientCertificates() const { return m_clientCertFiles; }
     QString getInfoFromClientCert(const QString& cert, CertInfo info) const;
 
     enum RequestType
@@ -61,7 +63,7 @@ signals:
     // a directory listing or the licence list.
     void gotDirList(QString json, QVariant userdata);
     void gotCurrentVersion(QString version, QString url);
-    void gotLicenceList(QMap<std::string, std::string> licences);
+    void gotLicenceList(std::map<std::string, std::string> licences);
     void gotBranchList(std::vector<std::string> branches, std::string default_branch);
 
     // The uploadFinished() signal is emitted when a push() call is finished, i.e. a database upload has completed.
@@ -94,7 +96,7 @@ private:
     QNetworkConfigurationManager* m_configurationManager;
     QProgressDialog* m_progress;
     QSslConfiguration m_sslConfiguration;
-    QMap<QString, QSslCertificate> m_clientCertFiles;
+    std::map<QString, QSslCertificate> m_clientCertFiles;
     sqlite3* m_dbLocal;
 };
 

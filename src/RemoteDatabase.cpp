@@ -76,7 +76,7 @@ void RemoteDatabase::reloadSettings()
         file.open(QFile::ReadOnly);
         QSslCertificate cert(&file);
         file.close();
-        m_clientCertFiles.insert(path, cert);
+        m_clientCertFiles.insert({path, cert});
     }
 
     // Always add the default certificate for anonymous access to dbhub.io
@@ -85,7 +85,7 @@ void RemoteDatabase::reloadSettings()
         file.open(QFile::ReadOnly);
         QSslCertificate cert(&file);
         file.close();
-        m_clientCertFiles.insert(":/user_certs/public.cert.pem", cert);
+        m_clientCertFiles.insert({":/user_certs/public.cert.pem", cert});
     }
 
     // TODO Add support for proxies here
@@ -200,9 +200,9 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
                 break;
 
             // Parse data and build licence map (short name -> long name)
-            QMap<std::string, std::string> licences;
+            std::map<std::string, std::string> licences;
             for(auto it=obj.cbegin();it!=obj.cend();++it)
-                licences.insert(it.key(), it.value()["full_name"]);
+                licences.insert({it.key(), it.value()["full_name"]});
 
             // Send licence map to anyone who's interested
             emit gotLicenceList(licences);
@@ -318,7 +318,7 @@ const QList<QSslCertificate>& RemoteDatabase::caCertificates() const
 QString RemoteDatabase::getInfoFromClientCert(const QString& cert, CertInfo info) const
 {
     // Get the common name of the certificate and split it into user name and server address
-    QString cn = m_clientCertFiles[cert].subjectInfo(QSslCertificate::CommonName).at(0);
+    QString cn = m_clientCertFiles.at(cert).subjectInfo(QSslCertificate::CommonName).at(0);
     QStringList cn_parts = cn.split("@");
     if(cn_parts.size() < 2)
         return QString();

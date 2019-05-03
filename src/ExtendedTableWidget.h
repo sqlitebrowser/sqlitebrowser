@@ -79,8 +79,7 @@ private:
     void useAsFilter(const QString& filterOperator, bool binary = false, const QString& operatorSuffix = "");
     void duplicateUpperCell();
 
-    typedef QList<QByteArray> QByteArrayList;
-    static QList<QByteArrayList> m_buffer;
+    static std::vector<std::vector<QByteArray>> m_buffer;
     static QString m_generatorStamp;
 
 private slots:

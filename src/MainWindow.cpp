@@ -671,7 +671,7 @@ void MainWindow::populateStructure(const QString& old_table)
 
             sqlb::FieldInfoList fi = jt->fieldInformation();
             for(const sqlb::FieldInfo& f : fi)
-                tablesToColumnsMap[objectname].append(QString::fromStdString(f.name));
+                tablesToColumnsMap[objectname].push_back(QString::fromStdString(f.name));
         }
         qualifiedTablesMap[QString::fromStdString(it.key())] = tablesToColumnsMap;
     }

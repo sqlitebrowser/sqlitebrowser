@@ -1,6 +1,8 @@
 #include "FileExtensionManager.h"
 #include "ui_FileExtensionManager.h"
 
+#include <set>
+
 FileExtensionManager::FileExtensionManager(QStringList init, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FileExtensionManager)
@@ -46,21 +48,12 @@ void FileExtensionManager::addItem()
 
 void FileExtensionManager::removeItem()
 {
-    QList<int> selectedRows;
+    std::set<int> selectedRows;
     for (const QTableWidgetItem* item : ui->tableExtensions->selectedItems())
-    {
-        if (selectedRows.contains(item->row()) == false)
-        {
-            selectedRows.append(item->row());
-        }
-    }
+        selectedRows.insert(item->row());
 
-    qSort(selectedRows);
-
-    for (int i = selectedRows.size()-1; i >= 0; --i)
-    {
-        ui->tableExtensions->removeRow(selectedRows[i]);
-    }
+    for(int row : selectedRows)
+        ui->tableExtensions->removeRow(row);
 }
 
 void FileExtensionManager::upItem()

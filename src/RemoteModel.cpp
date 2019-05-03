@@ -28,12 +28,12 @@ void RemoteModelItem::setValue(RemoteModelColumns column, QVariant value)
 
 void RemoteModelItem::appendChild(RemoteModelItem *item)
 {
-    m_children.append(item);
+    m_children.push_back(item);
 }
 
 RemoteModelItem* RemoteModelItem::child(int row) const
 {
-    return m_children.value(row);
+    return m_children[static_cast<size_t>(row)];
 }
 
 RemoteModelItem* RemoteModelItem::parent() const
@@ -43,13 +43,19 @@ RemoteModelItem* RemoteModelItem::parent() const
 
 int RemoteModelItem::childCount() const
 {
-    return m_children.count();
+    return static_cast<int>(m_children.size());
 }
 
 int RemoteModelItem::row() const
 {
     if(m_parent)
-        return m_parent->m_children.indexOf(const_cast<RemoteModelItem*>(this));
+    {
+        auto f = std::find( m_parent->m_children.begin(), m_parent->m_children.end(), const_cast<RemoteModelItem*>(this));
+        if(f == m_parent->m_children.end())
+            return -1;
+        else
+            return static_cast<int>(std::distance(m_parent->m_children.begin(), f));
+    }
 
     return 0;
 }

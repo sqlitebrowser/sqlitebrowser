@@ -104,15 +104,15 @@ bool RemotePushDialog::forcePush() const
     return ui->checkForce->isChecked();
 }
 
-void RemotePushDialog::fillInLicences(const QMap<std::string, std::string>& licences)
+void RemotePushDialog::fillInLicences(const std::map<std::string, std::string>& licences)
 {
     // Clear licence list and add default item for unspecified licence
     ui->comboLicence->clear();
     ui->comboLicence->addItem(tr("Unspecified"), QString());
 
     // Parse licence list and fill combo box. Show the full name to the user and use the short name as user data.
-    for(auto it=licences.constBegin();it!=licences.constEnd();++it)
-        ui->comboLicence->addItem(QString::fromStdString(it.value()), QString::fromStdString(it.key()));
+    for(const auto& it : licences)
+        ui->comboLicence->addItem(QString::fromStdString(it.second), QString::fromStdString(it.first));
 }
 
 void RemotePushDialog::fillInBranches(const std::vector<std::string>& branches, const std::string& default_branch)
