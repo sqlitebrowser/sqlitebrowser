@@ -199,13 +199,17 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
             if(obj.is_discarded() || !obj.is_object())
                 break;
 
-            // Parse data and build licence map (short name -> long name)
-            std::map<std::string, std::string> licences;
+            // Parse data and build ordered licence map: order -> (short name, long name)
+            std::map<int, std::pair<std::string, std::string>> licences;
             for(auto it=obj.cbegin();it!=obj.cend();++it)
-                licences.insert({it.key(), it.value()["full_name"]});
+                licences.insert({it.value()["order"], {it.key(), it.value()["full_name"]}});
 
-            // Send licence map to anyone who's interested
-            emit gotLicenceList(licences);
+            // Convert the map into an ordered vector and send it to anyone who's interested
+            std::vector<std::pair<std::string, std::string>> licence_list;
+            std::transform(licences.begin(), licences.end(), std::back_inserter(licence_list), [](const std::pair<int, std::pair<std::string, std::string>>& it) {
+                return it.second;
+            });
+            emit gotLicenceList(licence_list);
             break;
         }
     case RequestTypeBranchList:

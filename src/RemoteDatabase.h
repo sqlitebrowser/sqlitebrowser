@@ -63,7 +63,7 @@ signals:
     // a directory listing or the licence list.
     void gotDirList(QString json, QVariant userdata);
     void gotCurrentVersion(QString version, QString url);
-    void gotLicenceList(std::map<std::string, std::string> licences);
+    void gotLicenceList(std::vector<std::pair<std::string, std::string>> licences);
     void gotBranchList(std::vector<std::string> branches, std::string default_branch);
 
     // The uploadFinished() signal is emitted when a push() call is finished, i.e. a database upload has completed.

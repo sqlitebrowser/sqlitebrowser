@@ -104,11 +104,10 @@ bool RemotePushDialog::forcePush() const
     return ui->checkForce->isChecked();
 }
 
-void RemotePushDialog::fillInLicences(const std::map<std::string, std::string>& licences)
+void RemotePushDialog::fillInLicences(const std::vector<std::pair<std::string, std::string>>& licences)
 {
-    // Clear licence list and add default item for unspecified licence
+    // Clear licence list
     ui->comboLicence->clear();
-    ui->comboLicence->addItem(tr("Unspecified"), QString());
 
     // Parse licence list and fill combo box. Show the full name to the user and use the short name as user data.
     for(const auto& it : licences)
