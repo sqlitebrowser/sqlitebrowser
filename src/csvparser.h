@@ -50,7 +50,7 @@ struct CSVRow
 class CSVParser
 {
 public:
-    typedef std::function<bool(size_t, CSVRow)> csvRowFunction;
+    using csvRowFunction = std::function<bool(size_t, CSVRow)>;
 
     CSVParser(bool trimfields = true, char fieldseparator = ',', char quotechar = '"');
     ~CSVParser();
