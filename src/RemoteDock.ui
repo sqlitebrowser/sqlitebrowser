@@ -90,7 +90,7 @@
       </layout>
      </widget>
      <widget class="QWidget" name="pageNoCerts">
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
@@ -120,14 +120,25 @@
           </spacer>
          </item>
          <item>
-          <widget class="QLabel" name="labelNoCert">
-           <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;No DBHub.io account yet? &lt;a href=&quot;https://dbhub.io/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Create one now&lt;/span&gt;&lt;/a&gt; and import your certificate &lt;a href=&quot;#preferences&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;here&lt;/span&gt;&lt;/a&gt; to share your databases.&lt;/p&gt;&lt;p&gt;For online help visit &lt;a href=&quot;https://dbhub.io/about&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;here&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-           <property name="wordWrap">
-            <bool>true</bool>
-           </property>
-          </widget>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QLabel" name="labelNoCert">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;You are currently using a built-in, read-only identity. For uploading your database, you need to configure and use your DBHub.io account.&lt;/p&gt;&lt;p&gt;No DBHub.io account yet? &lt;a href=&quot;https://dbhub.io/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Create one now&lt;/span&gt;&lt;/a&gt; and import your certificate &lt;a href=&quot;#preferences&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;here&lt;/span&gt;&lt;/a&gt; to share your databases.&lt;/p&gt;&lt;p&gt;For online help visit &lt;a href=&quot;https://dbhub.io/about&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;here&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCommandLinkButton" name="buttonNoCertBack">
+             <property name="text">
+              <string>Back</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
          <item>
           <spacer name="horizontalSpacer_3">
@@ -215,10 +226,27 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>buttonNoCertBack</sender>
+   <signal>clicked()</signal>
+   <receiver>RemoteDock</receiver>
+   <slot>switchToMainView()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>266</x>
+     <y>217</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>266</x>
+     <y>148</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>setNewIdentity()</slot>
   <slot>fetchDatabase(QModelIndex)</slot>
   <slot>pushDatabase()</slot>
+  <slot>switchToMainView()</slot>
  </slots>
 </ui>

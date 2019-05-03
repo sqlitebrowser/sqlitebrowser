@@ -79,6 +79,15 @@ void RemoteDatabase::reloadSettings()
         m_clientCertFiles.insert(path, cert);
     }
 
+    // Always add the default certificate for anonymous access to dbhub.io
+    {
+        QFile file(":/user_certs/public.cert.pem");
+        file.open(QFile::ReadOnly);
+        QSslCertificate cert(&file);
+        file.close();
+        m_clientCertFiles.insert(":/user_certs/public.cert.pem", cert);
+    }
+
     // TODO Add support for proxies here
 }
 
