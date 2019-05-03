@@ -15,7 +15,7 @@ std::string escapeIdentifier(const std::string& id)
 {
     switch(customQuoting) {
     case GraveAccents:
-        return '`' + std::regex_replace(id, std::regex("\\`"), "``") + '`';
+        return '`' + std::regex_replace(id, std::regex("\\`"), std::string("``")) + '`';
     case SquareBrackets:
         // There aren't any escaping possibilities for square brackets inside the identifier,
         // so we rely on the user to not enter these characters when this kind of quoting is
@@ -26,7 +26,7 @@ std::string escapeIdentifier(const std::string& id)
         // This may produce a 'control reaches end of non-void function' warning if the
         // default branch is removed, even though we have covered all possibilities in the
         // switch statement.
-        return '"' + std::regex_replace(id, std::regex("\\\""), "\"\"") + '"';
+        return '"' + std::regex_replace(id, std::regex("\\\""), std::string("\"\"")) + '"';
     }
 }
 
