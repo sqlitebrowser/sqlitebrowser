@@ -545,7 +545,9 @@ bool MainWindow::fileOpen(const QString& fileName, bool openFromProject, bool re
     bool retval = false;
 
     QString wFile = fileName;
-    if (!QFile::exists(wFile))
+    // QFile::exist will produce error message if passed empty string.
+    // Test string length before usage w/ QFile to silence warning
+    if (wFile.isEmpty() || !QFile::exists(wFile))
     {
         wFile = FileDialog::getOpenFileName(
                     OpenDatabaseFile,
@@ -556,7 +558,8 @@ bool MainWindow::fileOpen(const QString& fileName, bool openFromProject, bool re
 #endif
                     );
     }
-    if(QFile::exists(wFile) )
+    // catch situation where user has canceled file selection from dialog
+    if(!wFile.isEmpty() && QFile::exists(wFile) )
     {
         // Close the database. If the user didn't want to close it, though, stop here
         if (db.isOpen())
