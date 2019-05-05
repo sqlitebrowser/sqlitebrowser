@@ -2,7 +2,7 @@
 #include "ui_EditDialog.h"
 #include "sqlitedb.h"
 #include "Settings.h"
-#include "src/qhexedit.h"
+#include "qhexedit.h"
 #include "docktextedit.h"
 #include "FileDialog.h"
 #include "Data.h"

@@ -76,6 +76,7 @@ else()
     find_package(QCustomPlot)
 endif()
 set(QHEXEDIT_DIR libs/qhexedit)
+set(QHEXEDIT_INCL_DIR ${QHEXEDIT_DIR}/src)
 set(JSON_DIR libs/json)
 
 if(NOT ANTLR2_FOUND)
@@ -360,7 +361,7 @@ endif()
 
 include_directories(
 		"${CMAKE_CURRENT_BINARY_DIR}"
-		${QHEXEDIT_DIR}
+		${QHEXEDIT_INCL_DIR}
 		${JSON_DIR}
 		${ADDITIONAL_INCLUDE_PATHS}
 		src)
