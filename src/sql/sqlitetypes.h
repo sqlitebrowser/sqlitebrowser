@@ -24,6 +24,12 @@ bool compare_ci(const T& a, const T& b)
     });
 }
 
+template<typename T>
+bool compare_ci(const T& a, const char* b)
+{
+    return compare_ci(a, std::string(b));
+}
+
 namespace sqlb {
 
 using StringVector = std::vector<std::string>;
