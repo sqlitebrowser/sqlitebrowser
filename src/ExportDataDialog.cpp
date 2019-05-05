@@ -43,13 +43,20 @@ ExportDataDialog::ExportDataDialog(DBBrowserDB& db, ExportFormats format, QWidge
     if(query.isEmpty())
     {
         // Get list of tables to export
-        for(auto it=pdb.schemata.constBegin();it!=pdb.schemata.constEnd();++it)
+        for(const auto& it : pdb.schemata)
         {
-            QList<sqlb::ObjectPtr> tables = it->values("table") + it->values("view");
-            for(auto jt=tables.constBegin();jt!=tables.constEnd();++jt)
+            const auto tables = it.second.equal_range("table");
+            const auto views = it.second.equal_range("view");
+            std::map<std::string, sqlb::ObjectPtr> objects;
+            for(auto jt=tables.first;jt!=tables.second;++jt)
+                objects.insert({jt->second->name(), jt->second});
+            for(auto jt=views.first;jt!=views.second;++jt)
+                objects.insert({jt->second->name(), jt->second});
+
+            for(const auto& jt : objects)
             {
-                sqlb::ObjectIdentifier obj(it.key(), (*jt)->name());
-                QListWidgetItem* item = new QListWidgetItem(QIcon(QString(":icons/%1").arg(QString::fromStdString(sqlb::Object::typeToString((*jt)->type())))), QString::fromStdString(obj.toDisplayString()));
+                sqlb::ObjectIdentifier obj(it.first, jt.second->name());
+                QListWidgetItem* item = new QListWidgetItem(QIcon(QString(":icons/%1").arg(QString::fromStdString(sqlb::Object::typeToString(jt.second->type())))), QString::fromStdString(obj.toDisplayString()));
                 item->setData(Qt::UserRole, QString::fromStdString(obj.toSerialised()));
                 ui->listTables->addItem(item);
             }

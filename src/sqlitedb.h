@@ -9,10 +9,10 @@
 #include <mutex>
 #include <functional>
 #include <vector>
+#include <map>
 
 #include <QObject>
 #include <QByteArray>
-#include <QMultiMap>
 #include <QStringList>
 
 struct sqlite3;
@@ -25,8 +25,8 @@ enum LogMessageType
     kLogMsg_ErrorLog
 };
 
-using objectMap = QMultiMap<std::string, sqlb::ObjectPtr>;      // Maps from object type (table, index, view, trigger) to a pointer to the object representation
-using schemaMap = QMap<std::string, objectMap>;                 // Maps from the schema name (main, temp, attached schemas) to the object map for that schema
+using objectMap = std::multimap<std::string, sqlb::ObjectPtr>;  // Maps from object type (table, index, view, trigger) to a pointer to the object representation
+using schemaMap = std::map<std::string, objectMap>;             // Maps from the schema name (main, temp, attached schemas) to the object map for that schema
 
 int collCompare(void* pArg, int sizeA, const void* sA, int sizeB, const void* sB);
 
@@ -188,7 +188,7 @@ public:
      * 3) Map from an existing column name to a Null string: Delete the column.
      * 4) Map from a Null column name to a new column name: Add the column.
      */
-    using AlterTableTrackColumns = QMap<QString, QString>;
+    using AlterTableTrackColumns = std::map<QString, QString>;
 
     /**
      * @brief alterTable Can be used to rename, modify or drop existing columns of a given table
@@ -205,10 +205,10 @@ public:
     template<typename T = sqlb::Object>
     const std::shared_ptr<T> getObjectByName(const sqlb::ObjectIdentifier& name) const
     {
-        for(auto& it : schemata[name.schema()])
+        for(auto& it : schemata.at(name.schema()))
         {
-            if(it->name() == name.name())
-                return std::dynamic_pointer_cast<T>(it);
+            if(it.second->name() == name.name())
+                return std::dynamic_pointer_cast<T>(it.second);
         }
         return std::shared_ptr<T>();
     }

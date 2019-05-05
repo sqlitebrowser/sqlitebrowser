@@ -81,12 +81,12 @@ ForeignKeyEditorDelegate::ForeignKeyEditorDelegate(const DBBrowserDB& db, sqlb::
     , m_db(db)
     , m_table(table)
 {
-    for(auto it=m_db.schemata.constBegin();it!=m_db.schemata.constEnd();++it)
+    for(const auto& it : m_db.schemata)
     {
-        for(auto jt=it->constBegin();jt!=it->constEnd();++jt)
+        for(const auto& jt : it.second)
         {
-            if((*jt)->type() == sqlb::Object::Types::Table)
-                m_tablesIds.insert({(*jt)->name(), std::dynamic_pointer_cast<sqlb::Table>(*jt)->fieldNames()});
+            if(jt.second->type() == sqlb::Object::Types::Table)
+                m_tablesIds.insert({jt.second->name(), std::dynamic_pointer_cast<sqlb::Table>(jt.second)->fieldNames()});
         }
     }
 }

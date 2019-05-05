@@ -661,19 +661,19 @@ void MainWindow::populateStructure(const QString& old_table)
 
     // Update table and column names for syntax highlighting
     SqlUiLexer::QualifiedTablesMap qualifiedTablesMap;
-    for(auto it=db.schemata.constBegin();it!=db.schemata.constEnd();++it)
+    for(const auto& it : db.schemata)
     {
         SqlUiLexer::TablesAndColumnsMap tablesToColumnsMap;
-        objectMap tab = db.getBrowsableObjects(it.key());
-        for(auto jt : tab)
+        objectMap tab = db.getBrowsableObjects(it.first);
+        for(const auto& jt : tab)
         {
-            QString objectname = QString::fromStdString(jt->name());
+            QString objectname = QString::fromStdString(jt.second->name());
 
-            sqlb::FieldInfoList fi = jt->fieldInformation();
+            sqlb::FieldInfoList fi = jt.second->fieldInformation();
             for(const sqlb::FieldInfo& f : fi)
                 tablesToColumnsMap[objectname].push_back(QString::fromStdString(f.name));
         }
-        qualifiedTablesMap[QString::fromStdString(it.key())] = tablesToColumnsMap;
+        qualifiedTablesMap[QString::fromStdString(it.first)] = tablesToColumnsMap;
     }
     SqlTextEdit::sqlLexer->setTableNames(qualifiedTablesMap);
     ui->editLogApplication->reloadKeywords();

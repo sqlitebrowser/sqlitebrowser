@@ -8,6 +8,7 @@
 #include <QMessageBox>
 #include <QApplication>
 #include <unordered_map>
+#include <map>
 
 DbStructureModel::DbStructureModel(DBBrowserDB& db, QObject* parent)
     : QAbstractItemModel(parent),
@@ -170,7 +171,7 @@ void DbStructureModel::reloadData()
     buildTree(itemAll, "main");
 
     // Add the temporary database as a node if it isn't empty. Make sure it's always second if it exists.
-    if(!m_db.schemata["temp"].isEmpty())
+    if(!m_db.schemata["temp"].empty())
     {
         QTreeWidgetItem* itemTemp = new QTreeWidgetItem(itemAll);
         itemTemp->setIcon(ColumnName, QIcon(QString(":/icons/database")));
@@ -180,16 +181,16 @@ void DbStructureModel::reloadData()
     }
 
     // Now load all the other schemata last
-    for(auto it=m_db.schemata.constBegin();it!=m_db.schemata.constEnd();++it)
+    for(const auto& it : m_db.schemata)
     {
         // Don't load the main and temp schema again
-        if(it.key() != "main" && it.key() != "temp")
+        if(it.first != "main" && it.first != "temp")
         {
             QTreeWidgetItem* itemSchema = new QTreeWidgetItem(itemAll);
             itemSchema->setIcon(ColumnName, QIcon(QString(":/icons/database")));
-            itemSchema->setText(ColumnName, QString::fromStdString(it.key()));
+            itemSchema->setText(ColumnName, QString::fromStdString(it.first));
             itemSchema->setText(ColumnObjectType, "database");
-            buildTree(itemSchema, it.key());
+            buildTree(itemSchema, it.first);
         }
     }
 
@@ -301,6 +302,15 @@ bool DbStructureModel::dropMimeData(const QMimeData* data, Qt::DropAction action
     }
 }
 
+static long calc_number_of_objects_by_type(const objectMap& objmap, const std::string& type)
+{
+    auto objects = objmap.equal_range(type);
+    if(objects.first == objmap.end())
+        return 0;
+    else
+        return std::distance(objects.first, objects.second) + 1;
+}
+
 void DbStructureModel::buildTree(QTreeWidgetItem* parent, const std::string& schema)
 {
     // Build a map from object type to tree node to simplify finding the correct tree node later
@@ -312,32 +322,34 @@ void DbStructureModel::buildTree(QTreeWidgetItem* parent, const std::string& sch
     // Prepare tree
     QTreeWidgetItem* itemTables = new QTreeWidgetItem(parent);
     itemTables->setIcon(ColumnName, QIcon(QString(":/icons/table")));
-    itemTables->setText(ColumnName, tr("Tables (%1)").arg(objmap.values("table").count()));
+    itemTables->setText(ColumnName, tr("Tables (%1)").arg(calc_number_of_objects_by_type(objmap, "table")));
     typeToParentItem.insert({"table", itemTables});
 
     QTreeWidgetItem* itemIndices = new QTreeWidgetItem(parent);
     itemIndices->setIcon(ColumnName, QIcon(QString(":/icons/index")));
-    itemIndices->setText(ColumnName, tr("Indices (%1)").arg(objmap.values("index").count()));
+    itemIndices->setText(ColumnName, tr("Indices (%1)").arg(calc_number_of_objects_by_type(objmap, "index")));
     typeToParentItem.insert({"index", itemIndices});
 
     QTreeWidgetItem* itemViews = new QTreeWidgetItem(parent);
     itemViews->setIcon(ColumnName, QIcon(QString(":/icons/view")));
-    itemViews->setText(ColumnName, tr("Views (%1)").arg(objmap.values("view").count()));
+    itemViews->setText(ColumnName, tr("Views (%1)").arg(calc_number_of_objects_by_type(objmap, "view")));
     typeToParentItem.insert({"view", itemViews});
 
     QTreeWidgetItem* itemTriggers = new QTreeWidgetItem(parent);
     itemTriggers->setIcon(ColumnName, QIcon(QString(":/icons/trigger")));
-    itemTriggers->setText(ColumnName, tr("Triggers (%1)").arg(objmap.values("trigger").count()));
+    itemTriggers->setText(ColumnName, tr("Triggers (%1)").arg(calc_number_of_objects_by_type(objmap, "trigger")));
     typeToParentItem.insert({"trigger", itemTriggers});
 
     // Get all database objects and sort them by their name
-    QMultiMap<std::string, sqlb::ObjectPtr> dbobjs;
-    for(auto it : objmap)
-        dbobjs.insert(it->name(), it);
+    std::map<std::string, sqlb::ObjectPtr> dbobjs;
+    for(const auto& it : objmap)
+        dbobjs.insert({it.second->name(), it.second});
 
     // Add the database objects to the tree nodes
-    for(auto it : dbobjs)
+    for(const auto& obj : dbobjs)
     {
+        sqlb::ObjectPtr it = obj.second;
+
         // Object node
         QTreeWidgetItem* item = addNode(typeToParentItem.at(sqlb::Object::typeToString(it->type())), it, schema);
 

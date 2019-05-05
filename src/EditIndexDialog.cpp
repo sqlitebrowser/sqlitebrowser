@@ -22,22 +22,22 @@ EditIndexDialog::EditIndexDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
     std::map<std::string, sqlb::ObjectIdentifier> dbobjs;  // Map from display name to full object identifier
     if(newIndex)        // If this is a new index, offer all tables of all database schemata
     {
-        for(auto it=pdb.schemata.constBegin();it!=pdb.schemata.constEnd();++it)
+        for(const auto& it : pdb.schemata)
         {
-            QList<sqlb::ObjectPtr> tables = it->values("table");
-            for(auto jt=tables.constBegin();jt!=tables.constEnd();++jt)
+            auto tables = it.second.equal_range("table");
+            for(auto jt=tables.first;jt!=tables.second;++jt)
             {
                 // Only show the schema name for non-main schemata
-                sqlb::ObjectIdentifier obj(it.key(), (*jt)->name());
+                sqlb::ObjectIdentifier obj(it.first, jt->second->name());
                 dbobjs.insert({obj.toDisplayString(), obj});
             }
         }
     } else {            // If this is an existing index, only offer tables of the current database schema
-        QList<sqlb::ObjectPtr> tables = pdb.schemata[curIndex.schema()].values("table");
-        for(auto it : tables)
+        auto tables = pdb.schemata[curIndex.schema()].equal_range("table");
+        for(auto it=tables.first;it!=tables.second;++it)
         {
             // Only show the schema name for non-main schemata
-            sqlb::ObjectIdentifier obj(curIndex.schema(), it->name());
+            sqlb::ObjectIdentifier obj(curIndex.schema(), it->second->name());
             dbobjs.insert({obj.toDisplayString(), obj});
         }
     }

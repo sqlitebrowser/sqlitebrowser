@@ -275,7 +275,7 @@ QColor SqliteTableModel::getMatchingCondFormatColor(int column, const QString& v
     QString sql;
     // For each conditional format for this column,
     // if the condition matches the current data, return the associated colour.
-    for (const CondFormat& eachCondFormat : m_mCondFormats.value(column)) {
+    for (const CondFormat& eachCondFormat : m_mCondFormats.at(column)) {
         if (isNumber && !eachCondFormat.sqlCondition().contains("'"))
             sql = QString("SELECT %1 %2").arg(value, eachCondFormat.sqlCondition());
         else
@@ -348,7 +348,7 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
             return QColor(Settings::getValue("databrowser", "null_fg_colour").toString());
         else if (nosync_isBinary(index))
             return QColor(Settings::getValue("databrowser", "bin_fg_colour").toString());
-        else if (m_mCondFormats.contains(index.column())) {
+        else if (m_mCondFormats.find(index.column()) != m_mCondFormats.end()) {
             QString value = cached_row->at(column);
             // Unlock before querying from DB
             lock.unlock();
@@ -365,7 +365,7 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
             return QColor(Settings::getValue("databrowser", "null_bg_colour").toString());
         else if (nosync_isBinary(index))
             return QColor(Settings::getValue("databrowser", "bin_bg_colour").toString());
-        else if (m_mCondFormats.contains(index.column())) {
+        else if (m_mCondFormats.find(index.column()) != m_mCondFormats.end()) {
             QString value = cached_row->at(column);
             // Unlock before querying from DB
             lock.unlock();

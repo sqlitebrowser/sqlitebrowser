@@ -4,8 +4,9 @@
 #include "sql/ObjectIdentifier.h"
 #include "sql/sqlitetypes.h"
 
+#include <map>
+
 #include <QDialog>
-#include <QMap>
 
 class DBBrowserDB;
 class QTreeWidgetItem;
@@ -74,7 +75,7 @@ private:
     DBBrowserDB& pdb;
     ForeignKeyEditorDelegate* m_fkEditorDelegate;
     sqlb::ObjectIdentifier curTable;
-    QMap<QString, QString> trackColumns;
+    std::map<QString, QString> trackColumns;
     sqlb::Table m_table;
     bool m_bNewTable;
     QString m_sRestorePointName;

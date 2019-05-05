@@ -28,9 +28,9 @@ ExportSqlDialog::ExportSqlDialog(DBBrowserDB* db, QWidget* parent, const QString
     ui->comboOldSchema->setCurrentIndex(Settings::getValue("exportsql", "oldschema").toInt());
 
     // Get list of tables to export
-    QList<sqlb::ObjectPtr> objects = pdb->schemata["main"].values("table");
-    for(const sqlb::ObjectPtr& it : objects)
-        ui->listTables->addItem(new QListWidgetItem(QIcon(QString(":icons/%1").arg(QString::fromStdString(sqlb::Object::typeToString(it->type())))), QString::fromStdString(it->name())));
+    const auto objects = pdb->schemata["main"].equal_range("table");
+    for(auto it=objects.first;it!=objects.second;++it)
+        ui->listTables->addItem(new QListWidgetItem(QIcon(QString(":icons/%1").arg(QString::fromStdString(sqlb::Object::typeToString(it->second->type())))), QString::fromStdString(it->second->name())));
 
     // Sort list of tables and select the table specified in the
     // selection parameter or all tables if table not specified

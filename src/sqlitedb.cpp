@@ -763,19 +763,17 @@ bool DBBrowserDB::dump(const QString& filePath,
         // Count the total number of all records in all tables for the progress dialog
         size_t numRecordsTotal = 0;
         objectMap objMap = schemata["main"];            // We only always export the main database, not the attached databases
-        QList<sqlb::ObjectPtr> tables = objMap.values("table");
-        for(QMutableListIterator<sqlb::ObjectPtr> it(tables);it.hasNext();)
+        std::vector<sqlb::ObjectPtr> tables;
+        auto all_tables = objMap.equal_range("table");
+        for(auto it=all_tables.first;it!=all_tables.second;++it)
         {
-            it.next();
-
-            // Remove the sqlite_stat1 and the sqlite_sequence tables if they exist. Also remove any tables which are not selected for export.
-            if(it.value()->name() == "sqlite_stat1" || it.value()->name() == "sqlite_sequence" || !tablesToDump.contains(QString::fromStdString(it.value()->name())))
+            // Never export the sqlite_stat1 and the sqlite_sequence tables if they exist. Also only export any tables which are selected for export.
+            if(it->second->name() != "sqlite_stat1" && it->second->name() != "sqlite_sequence" && tablesToDump.contains(QString::fromStdString(it->second->name())))
             {
-                it.remove();
-            } else {
-                // Otherwise get the number of records in this table
+                // Get the number of records in this table and remember to export it
+                tables.push_back(it->second);
                 numRecordsTotal += querySingleValueFromDb(QString("SELECT COUNT(*) FROM %1;")
-                                                         .arg(QString::fromStdString(sqlb::ObjectIdentifier("main", it.value()->name()).toString()))).toUInt();
+                                                         .arg(QString::fromStdString(sqlb::ObjectIdentifier("main", it->second->name()).toString()))).toUInt();
             }
         }
 
@@ -904,8 +902,10 @@ bool DBBrowserDB::dump(const QString& filePath,
         // Finally export all objects other than tables
         if(exportSchema)
         {
-            for(auto it : objMap)
+            for(const auto& obj : objMap)
             {
+                const auto& it = obj.second;
+
                 // Make sure it's not a table again
                 if(it->type() == sqlb::Object::Types::Table)
                     continue;
@@ -1536,11 +1536,11 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
     sqlb::Table old_table = *old_table_ptr;
 
     // Check if tracked fields actually exist in the old table
-    for(const auto& old_name : track_columns.keys())
+    for(const auto& old_it : track_columns)
     {
-        if(!old_name.isNull() && sqlb::findField(old_table, old_name.toStdString()) == old_table.fields.end())
+        if(!old_it.first.isNull() && sqlb::findField(old_table, old_it.first.toStdString()) == old_table.fields.end())
         {
-            lastErrorMessage = tr("Cannot find column %1.").arg(old_name);
+            lastErrorMessage = tr("Cannot find column %1.").arg(old_it.first);
             return false;
         }
     }
@@ -1549,7 +1549,7 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
     // We do this before checking if all tracked fields are in the new table to make sure the following check includes them.
     for(const auto& field : old_table.fields)
     {
-        if(!track_columns.keys().contains(QString::fromStdString(field.name())))
+        if(track_columns.find(QString::fromStdString(field.name())) == track_columns.end())
         {
             // If a field isn't tracked, add it to the list and indicate explicitly that it has the same name in the new table
             track_columns[QString::fromStdString(field.name())] = QString::fromStdString(field.name());
@@ -1557,11 +1557,11 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
     }
 
     // Check if tracked fields actually exist in the new table
-    for(const auto& new_name : track_columns.values())
+    for(const auto& new_name_it : track_columns)
     {
-        if(!new_name.isNull() && sqlb::findField(new_table, new_name.toStdString()) == new_table.fields.end())
+        if(!new_name_it.second.isNull() && sqlb::findField(new_table, new_name_it.second.toStdString()) == new_table.fields.end())
         {
-            lastErrorMessage = tr("Cannot find column %1.").arg(new_name);
+            lastErrorMessage = tr("Cannot find column %1.").arg(new_name_it.second);
             return false;
         }
     }
@@ -1601,14 +1601,15 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
     }
 
     // Add columns if necessary
-    const auto new_fields = track_columns.values(QString());
     for(const auto& field : new_table.fields)
     {
         // We loop through all the fields of the new table schema and check for each of them if they are new.
         // If so, we add that field. The reason for looping through the new table schema instead of the track_columns
         // map is that this way we make sure to preserve their order which increases our chances that we are done after
         // this step.
-        if(new_fields.contains(QString::fromStdString(field.name())))
+        if(std::any_of(track_columns.begin(), track_columns.end(), [&field](const std::pair<QString, QString>& p) {
+                       return p.first.isNull() && p.second.toStdString() == field.name();
+        }))
         {
             if(!addColumn(sqlb::ObjectIdentifier(tablename.schema(), new_table.name()), field))
             {
@@ -1626,8 +1627,10 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
     // map for tracking column names here which uses the update column names as the old names too. This is to
     // make sure we are using the new table layout for later updates.
     AlterTableTrackColumns new_track_columns;
-    for(const auto& old_name : track_columns.keys())
+    for(const auto& old_name_it : track_columns)
     {
+        QString old_name = old_name_it.first;
+
         QString new_name = track_columns[old_name];
         if(!old_name.isNull() && !new_name.isNull() && new_name != old_name)
         {
@@ -1643,9 +1646,9 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
             }
 
             changed_something = true;
-            new_track_columns.insert(new_name, new_name);
+            new_track_columns.insert({new_name, new_name});
         } else {
-            new_track_columns.insert(old_name, new_name);
+            new_track_columns.insert({old_name, new_name});
         }
     }
     track_columns.swap(new_track_columns);
@@ -1692,8 +1695,10 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
     // Assemble list of column names to copy from in the old table and list of column names to into into in the new table
     sqlb::StringVector copy_values_from;
     sqlb::StringVector copy_values_to;
-    for(const auto& from : track_columns.keys())
+    for(const auto& from_it : track_columns)
     {
+        const auto& from = from_it.first;
+
         // Ignore new fields
         if(from.isNull())
             continue;
@@ -1724,8 +1729,10 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
 
     // Save all indices, triggers and views associated with this table because SQLite deletes them when we drop the table in the next step
     QStringList otherObjectsSql;
-    for(auto it : schemata[tablename.schema()])
+    for(const auto& schema : schemata[tablename.schema()])
     {
+        const auto& it = schema.second;
+
         // If this object references the table and it's not the table itself save it's SQL string
         if(it->baseTable() == old_table.name() && it->type() != sqlb::Object::Types::Table)
         {
@@ -1737,9 +1744,10 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
 
                 // Loop through all changes to the table schema. For indices only the column names are relevant, so it suffices to look at the
                 // list of tracked columns
-                for(const auto& from : track_columns)
+                for(const auto& from_it : track_columns)
                 {
-                    QString to = track_columns[from];
+                    const auto& from = from_it.first;
+                    const auto& to = from_it.second;
 
                     // Are we updating the field name or are we removing the field entirely?
                     if(!to.isNull())
@@ -1867,10 +1875,11 @@ objectMap DBBrowserDB::getBrowsableObjects(const std::string& schema) const
 {
     objectMap res;
 
-    for(auto it=schemata[schema].constBegin();it!=schemata[schema].constEnd();++it)
+    const objectMap map = schemata.at(schema);
+    for(const auto& it : map)
     {
-        if(it.key() == "table" || it.key() == "view")
-            res.insert(it.key(), it.value());
+        if(it.first == "table" || it.first == "view")
+            res.insert({it.first, it.second});
     }
 
     return res;
@@ -1986,7 +1995,7 @@ void DBBrowserDB::updateSchema()
                             trg->setTable(val_tblname);
                         }
 
-                        schemata[schema_name].insert(val_type, object);
+                        schemata[schema_name].insert({val_type, object});
                     }
                 }
                 sqlite3_finalize(vm);
