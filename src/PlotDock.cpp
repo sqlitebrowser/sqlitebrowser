@@ -687,8 +687,8 @@ QVariant::Type PlotDock::guessDataType(SqliteTableModel* model, int column)
     QVariant::Type type = QVariant::Invalid;
     for(int i = 0; i < std::min(10, model->rowCount()) && type != QVariant::String; ++i)
     {
-        QVariant data = model->data(model->index(i, column), Qt::EditRole);
-        if(data.isNull() || data.convert(QVariant::Double))
+        QVariant varData = model->data(model->index(i, column), Qt::EditRole);
+        if(varData.isNull() || varData.convert(QVariant::Double))
         {
             type = QVariant::Double;
         } else {

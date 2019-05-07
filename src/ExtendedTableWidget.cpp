@@ -421,9 +421,9 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
     // If a single cell is selected which contains an image, copy it to the clipboard
     if (!inSQL && !withHeaders && indices.size() == 1) {
         QImage img;
-        QVariant data = m->data(indices.first(), Qt::EditRole);
+        QVariant varData = m->data(indices.first(), Qt::EditRole);
 
-        if (img.loadFromData(data.toByteArray()))
+        if (img.loadFromData(varData.toByteArray()))
         {
             // If it's an image, copy the image data to the clipboard
             mimeData->setImageData(img);
@@ -516,10 +516,10 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
         currentRow = index.row();
 
         QImage img;
-        QVariant data = index.data(Qt::EditRole);
+        QVariant bArrdata = index.data(Qt::EditRole);
 
         // Table cell data: image? Store it as an embedded image in HTML
-        if (!inSQL && img.loadFromData(data.toByteArray()))
+        if (!inSQL && img.loadFromData(bArrdata.toByteArray()))
         {
             QByteArray ba;
             QBuffer buffer(&ba);
@@ -535,7 +535,7 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
         } else {
             QByteArray text;
             if (!m->isBinary(index)) {
-                text = data.toByteArray();
+                text = bArrdata.toByteArray();
 
                 // Table cell data: text
                 if (text.contains('\n') || text.contains('\t'))
@@ -547,7 +547,7 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
                 sqlResult.append("'" + text.replace("'", "''") + "'");
             } else
                 // Table cell data: binary. Save as BLOB literal in SQL
-                sqlResult.append( "X'" + data.toByteArray().toHex() + "'" );
+                sqlResult.append( "X'" + bArrdata.toByteArray().toHex() + "'" );
 
         }
     }
@@ -638,11 +638,11 @@ void ExtendedTableWidget::paste()
     // Special case: if there is only one cell of data to be pasted, paste it into all selected fields
     if(rows == 1 && columns == 1)
     {
-        QByteArray data = source->front().front();
+        QByteArray bArrdata = source->front().front();
         for(int row=firstRow;row<firstRow+selectedRows;row++)
         {
             for(int column=firstColumn;column<firstColumn+selectedColumns;column++)
-                m->setData(m->index(row, column), data);
+                m->setData(m->index(row, column), bArrdata);
         }
         return;
     }
@@ -691,14 +691,14 @@ void ExtendedTableWidget::useAsFilter(const QString& filterOperator, bool binary
     if (!index.isValid() || !selectionModel()->hasSelection() || m->isBinary(index))
         return;
 
-    QVariant data = model()->data(index, Qt::EditRole);
+    QVariant bArrdata = model()->data(index, Qt::EditRole);
     QString value;
-    if (data.isNull())
+    if (bArrdata.isNull())
         value = "NULL";
-    else if (data.toString().isEmpty())
+    else if (bArrdata.toString().isEmpty())
         value = "''";
     else
-        value = data.toString();
+        value = bArrdata.toString();
 
     // When Containing filter is requested (empty operator) and the value starts with
     // an operator character, the character is escaped.
