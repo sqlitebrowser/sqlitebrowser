@@ -27,7 +27,7 @@ template <typename T>
 class RowCache
 {
 public:
-    typedef T value_type;
+    using value_type = T;
 
     /// constructs an empty cache
     explicit RowCache ();

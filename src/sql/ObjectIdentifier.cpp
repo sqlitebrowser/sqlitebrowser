@@ -1,6 +1,15 @@
 #include "ObjectIdentifier.h"
 
-#include <regex>
+static std::string duplicate_char(std::string str, char to_replace)
+{
+    size_t pos = 0;
+    while((pos = str.find(to_replace, pos)) != std::string::npos)
+    {
+        str.insert(pos, 1, to_replace);
+        pos += 2;                           // Advance by two characters in order to avoid escaping a character multiple times
+    }
+    return str;
+}
 
 namespace sqlb {
 
@@ -15,7 +24,7 @@ std::string escapeIdentifier(const std::string& id)
 {
     switch(customQuoting) {
     case GraveAccents:
-        return '`' + std::regex_replace(id, std::regex("\\`"), "``") + '`';
+        return '`' + duplicate_char(id, '`') + '`';
     case SquareBrackets:
         // There aren't any escaping possibilities for square brackets inside the identifier,
         // so we rely on the user to not enter these characters when this kind of quoting is
@@ -26,7 +35,7 @@ std::string escapeIdentifier(const std::string& id)
         // This may produce a 'control reaches end of non-void function' warning if the
         // default branch is removed, even though we have covered all possibilities in the
         // switch statement.
-        return '"' + std::regex_replace(id, std::regex("\\\""), "\"\"") + '"';
+        return '"' + duplicate_char(id, '"') + '"';
     }
 }
 

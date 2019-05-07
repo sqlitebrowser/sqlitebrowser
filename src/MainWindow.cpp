@@ -661,19 +661,19 @@ void MainWindow::populateStructure(const QString& old_table)
 
     // Update table and column names for syntax highlighting
     SqlUiLexer::QualifiedTablesMap qualifiedTablesMap;
-    for(auto it=db.schemata.constBegin();it!=db.schemata.constEnd();++it)
+    for(const auto& it : db.schemata)
     {
         SqlUiLexer::TablesAndColumnsMap tablesToColumnsMap;
-        objectMap tab = db.getBrowsableObjects(it.key());
-        for(auto jt : tab)
+        objectMap tab = db.getBrowsableObjects(it.first);
+        for(const auto& jt : tab)
         {
-            QString objectname = QString::fromStdString(jt->name());
+            QString objectname = QString::fromStdString(jt.second->name());
 
-            sqlb::FieldInfoList fi = jt->fieldInformation();
+            sqlb::FieldInfoList fi = jt.second->fieldInformation();
             for(const sqlb::FieldInfo& f : fi)
-                tablesToColumnsMap[objectname].append(QString::fromStdString(f.name));
+                tablesToColumnsMap[objectname].push_back(QString::fromStdString(f.name));
         }
-        qualifiedTablesMap[QString::fromStdString(it.key())] = tablesToColumnsMap;
+        qualifiedTablesMap[QString::fromStdString(it.first)] = tablesToColumnsMap;
     }
     SqlTextEdit::sqlLexer->setTableNames(qualifiedTablesMap);
     ui->editLogApplication->reloadKeywords();
@@ -2619,10 +2619,10 @@ void MainWindow::on_actionDonatePatreon_triggered()
 
 void MainWindow::updateBrowseDataColumnWidth(int section, int /*old_size*/, int new_size)
 {
-    QSet<int> selectedCols(ui->dataTable->selectedCols());
+    std::unordered_set<int> selectedCols = ui->dataTable->selectedCols();
     sqlb::ObjectIdentifier tableName = currentlyBrowsedTableName();
 
-    if (!selectedCols.contains(section))
+    if (selectedCols.find(section) == selectedCols.end())
     {
         if (browseTableSettings[tableName].columnWidths[section] != new_size) {
             isProjectModified = true;
@@ -2694,11 +2694,10 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, QXmlS
                     int index = xml.attributes().value("index").toInt();
                     while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "column") {
                         if(xml.name() == "format") {
-                            CondFormat newCondFormat(xml.attributes().value("condition").toString(),
-                                                     QColor(xml.attributes().value("foreground").toString()),
-                                                     QColor(xml.attributes().value("background").toString()),
-                                                     settings.encoding);
-                            settings.condFormats[index].push_back(newCondFormat);
+                            settings.condFormats[index].emplace_back(xml.attributes().value("condition").toString(),
+                                                                     QColor(xml.attributes().value("foreground").toString()),
+                                                                     QColor(xml.attributes().value("background").toString()),
+                                                                     settings.encoding);
                             xml.skipCurrentElement();
                         }
                     }
@@ -3669,13 +3668,15 @@ void MainWindow::hideColumns(int column, bool hide)
     sqlb::ObjectIdentifier tableName = currentlyBrowsedTableName();
 
     // Select columns to (un)hide
-    QSet<int> columns;
+    std::unordered_set<int> columns;
     if(column == -1)
     {
          if(ui->dataTable->selectedCols().size() == 0)
              columns.insert(ui->actionBrowseTableEditDisplayFormat->property("clicked_column").toInt());
-         else
-             columns += ui->dataTable->selectedCols();
+         else {
+             auto cols = ui->dataTable->selectedCols();
+             columns.insert(cols.begin(), cols.end());
+         }
     } else {
         columns.insert(column);
     }

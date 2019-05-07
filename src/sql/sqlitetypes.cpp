@@ -3,11 +3,21 @@
 #include "grammar/Sqlite3Lexer.hpp"
 #include "grammar/Sqlite3Parser.hpp"
 
-#include <sstream>
-#include <iostream>
 #include <clocale>          // This include seems to only be necessary for the Windows build
-#include <regex>
+#include <iostream>
+#include <iterator>
 #include <numeric>
+#include <sstream>
+
+namespace {
+bool starts_with_ci(const std::string& str, const std::string& with)
+{
+    if(str.size() < with.size())
+        return false;
+    else
+        return compare_ci(str.substr(0, with.size()), with);
+}
+}
 
 namespace sqlb {
 
@@ -235,32 +245,55 @@ std::string Field::toString(const std::string& indent, const std::string& sep) c
 
 bool Field::isText() const
 {
-    std::regex is_text("(^(character|varchar|varying character|nchar|native character|nvarchar))|(^(text|clob)$)", std::regex::icase);
-    return std::regex_match(m_type, is_text);
+    if(starts_with_ci(m_type, "character")) return true;
+    if(starts_with_ci(m_type, "varchar")) return true;
+    if(starts_with_ci(m_type, "varying character")) return true;
+    if(starts_with_ci(m_type, "nchar")) return true;
+    if(starts_with_ci(m_type, "native character")) return true;
+    if(starts_with_ci(m_type, "nvarchar")) return true;
+    if(compare_ci(m_type, "text")) return true;
+    if(compare_ci(m_type, "clob")) return true;
+    return false;
 }
 
 bool Field::isInteger() const
 {
-    std::regex is_integer("^(int|integer|tinyint|smallint|mediumint|bigint|unsigned big int|int2|int8)$", std::regex::icase);
-    return std::regex_match(m_type, is_integer);
+    if(compare_ci(m_type, "int")) return true;
+    if(compare_ci(m_type, "integer")) return true;
+    if(compare_ci(m_type, "tinyint")) return true;
+    if(compare_ci(m_type, "smallint")) return true;
+    if(compare_ci(m_type, "mediumint")) return true;
+    if(compare_ci(m_type, "bigint")) return true;
+    if(compare_ci(m_type, "unsigned big int")) return true;
+    if(compare_ci(m_type, "int2")) return true;
+    if(compare_ci(m_type, "int8")) return true;
+    return false;
 }
 
 bool Field::isReal() const
 {
-    std::regex is_real("^(real|double|double precision|float)$", std::regex::icase);
-    return std::regex_match(m_type, is_real);
+    if(compare_ci(m_type, "real")) return true;
+    if(compare_ci(m_type, "double")) return true;
+    if(compare_ci(m_type, "double precision")) return true;
+    if(compare_ci(m_type, "float")) return true;
+    return false;
 }
 
 bool Field::isNumeric() const
 {
-    std::regex is_numeric("(^(decimal))|(^(numeric|boolean|date|datetime)$)", std::regex::icase);
-    return std::regex_match(m_type, is_numeric);
+    if(starts_with_ci(m_type, "decimal")) return true;
+    if(compare_ci(m_type, "numeric")) return true;
+    if(compare_ci(m_type, "boolean")) return true;
+    if(compare_ci(m_type, "date")) return true;
+    if(compare_ci(m_type, "datetime")) return true;
+    return false;
 }
 
 bool Field::isBlob() const
 {
-    std::regex is_blob("(^$)|(^blob$)", std::regex::icase);
-    return std::regex_match(m_type, is_blob);
+    if(m_type.empty()) return true;
+    if(compare_ci(m_type, "blob")) return true;
+    return false;
 }
 
 std::string Field::affinity() const
@@ -462,49 +495,49 @@ std::string Table::sql(const std::string& schema, bool ifNotExists) const
     return sql + ";";
 }
 
-void Table::addConstraint(const StringVector& fields, ConstraintPtr constraint)
+void Table::addConstraint(const StringVector& vStrFields, ConstraintPtr constraint)
 {
-    m_constraints.insert({fields, constraint});
+    m_constraints.insert({vStrFields, constraint});
 }
 
-void Table::setConstraint(const StringVector& fields, ConstraintPtr constraint)
+void Table::setConstraint(const StringVector& vStrFields, ConstraintPtr constraint)
 {
     // Delete any old constraints of this type for these fields
-    removeConstraints(fields, constraint->type());
+    removeConstraints(vStrFields, constraint->type());
 
     // Add the new constraint to the table, effectively overwriting all old constraints for that fields/type combination
-    addConstraint(fields, constraint);
+    addConstraint(vStrFields, constraint);
 }
 
-void Table::removeConstraints(const StringVector& fields, Constraint::ConstraintTypes type)
+void Table::removeConstraints(const StringVector& vStrFields, Constraint::ConstraintTypes type)
 {
     for(auto it = m_constraints.begin();it!=m_constraints.end();)
     {
-        if(it->first == fields && it->second->type() == type)
+        if(it->first == vStrFields && it->second->type() == type)
             m_constraints.erase(it++);
         else
             ++it;
     }
 }
 
-ConstraintPtr Table::constraint(const StringVector& fields, Constraint::ConstraintTypes type) const
+ConstraintPtr Table::constraint(const StringVector& vStrFields, Constraint::ConstraintTypes type) const
 {
-    auto list = constraints(fields, type);
+    auto list = constraints(vStrFields, type);
     if(list.size())
         return list.at(0);
     else
         return ConstraintPtr(nullptr);
 }
 
-std::vector<ConstraintPtr> Table::constraints(const StringVector& fields, Constraint::ConstraintTypes type) const
+std::vector<ConstraintPtr> Table::constraints(const StringVector& vStrFields, Constraint::ConstraintTypes type) const
 {
     ConstraintMap::const_iterator begin, end;
-    if(fields.empty())
+    if(vStrFields.empty())
     {
         begin = m_constraints.begin();
         end = m_constraints.end();
     } else {
-        std::tie(begin, end) = m_constraints.equal_range(fields);
+        std::tie(begin, end) = m_constraints.equal_range(vStrFields);
     }
 
     std::vector<ConstraintPtr> clist;
@@ -591,6 +624,19 @@ void Table::renameKeyInAllConstraints(const std::string& key, const std::string&
 
 namespace
 {
+std::string unescape_identifier(std::string str, char quote_char)
+{
+    std::string quote(2, quote_char);
+
+    size_t pos = 0;
+    while((pos = str.find(quote, pos)) != std::string::npos)
+    {
+        str.erase(pos, 1);
+        pos += 1;               // Don't remove the other quote char too
+    }
+    return str;
+}
+
 std::string identifier(antlr::RefAST ident)
 {
     std::string sident = ident->getText();
@@ -599,7 +645,7 @@ std::string identifier(antlr::RefAST ident)
        ident->getType() == sqlite3TokenTypes::STRINGLITERAL)
     {
         // Remember the way the identifier is quoted
-        std::string quoteChar(1, sident.at(0));
+        char quoteChar = sident.at(0);
 
         // Remove first and final character, i.e. the quotes
         sident = sident.substr(1, sident.size() - 2);
@@ -608,7 +654,7 @@ std::string identifier(antlr::RefAST ident)
         // by a single instance. This is done because two quotes can be used as a means of escaping
         // the quote character, thus only the visual representation has its two quotes, the actual
         // name contains only one.
-        sident = std::regex_replace(sident, std::regex("\\" + quoteChar + "\\" + quoteChar), quoteChar);
+        sident = unescape_identifier(sident, quoteChar);
     }
 
     return sident;

@@ -7,6 +7,7 @@
 #include <unordered_map>
 #include <string>
 #include <vector>
+#include <cctype>
 
 template<typename C, typename E>
 bool contains(const C& container, E element)
@@ -17,10 +18,16 @@ bool contains(const C& container, E element)
 template<typename T>
 bool compare_ci(const T& a, const T& b)
 {
-    return std::equal(a.begin(), a.end(), b.begin(), [](char c1, char c2) {
+    return std::equal(a.begin(), a.end(), b.begin(), [](unsigned char c1, unsigned char c2) {
         // TODO: Do we need to make this UTF-8-aware?
         return std::tolower(c1) == std::tolower(c2);
     });
+}
+
+template<typename T>
+bool compare_ci(const T& a, const char* b)
+{
+    return compare_ci(a, std::string(b));
 }
 
 namespace sqlb {
@@ -328,11 +335,11 @@ public:
 
     FieldInfoList fieldInformation() const override;
 
-    void addConstraint(const StringVector& fields, ConstraintPtr constraint);
-    void setConstraint(const StringVector& fields, ConstraintPtr constraint);
-    void removeConstraints(const StringVector& fields = StringVector(), Constraint::ConstraintTypes type = Constraint::NoType); //! Only removes the first constraint, if any
-    ConstraintPtr constraint(const StringVector& fields = StringVector(), Constraint::ConstraintTypes type = Constraint::NoType) const;   //! Only returns the first constraint, if any
-    std::vector<ConstraintPtr> constraints(const StringVector& fields = StringVector(), Constraint::ConstraintTypes type = Constraint::NoType) const;
+    void addConstraint(const StringVector& vStrFields, ConstraintPtr constraint);
+    void setConstraint(const StringVector& vStrFields, ConstraintPtr constraint);
+    void removeConstraints(const StringVector& vStrFields = StringVector(), Constraint::ConstraintTypes type = Constraint::NoType); //! Only removes the first constraint, if any
+    ConstraintPtr constraint(const StringVector& vStrFields = StringVector(), Constraint::ConstraintTypes type = Constraint::NoType) const;   //! Only returns the first constraint, if any
+    std::vector<ConstraintPtr> constraints(const StringVector& vStrFields = StringVector(), Constraint::ConstraintTypes type = Constraint::NoType) const;
     ConstraintMap allConstraints() const { return m_constraints; }
     void setConstraints(const ConstraintMap& constraints);
     StringVector& primaryKeyRef();

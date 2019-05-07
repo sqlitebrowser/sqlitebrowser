@@ -2,9 +2,9 @@
 #define EXTENDEDTABLEWIDGET_H
 
 #include <QTableView>
-#include <QSet>
 #include <QStyledItemDelegate>
 #include <QSortFilterProxyModel>
+#include <unordered_set>
 
 #include "sql/Query.h"
 
@@ -25,7 +25,7 @@ public:
     explicit UniqueFilterModel(QObject* parent = nullptr);
     bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
  private:
-    QSet<QString> m_uniqueValues;
+    std::unordered_set<std::string> m_uniqueValues;
 };
 
 // We use this class to provide editor widgets for the ExtendedTableWidget. It's used for every cell in the table view.
@@ -52,8 +52,8 @@ public:
     FilterTableHeader* filterHeader() { return m_tableHeader; }
 
 public:
-    QSet<int> selectedCols();
-    int numVisibleRows();
+    std::unordered_set<int> selectedCols() const;
+    int numVisibleRows() const;
 
     void sortByColumns(const std::vector<sqlb::SortedColumn>& columns);
 
@@ -79,8 +79,7 @@ private:
     void useAsFilter(const QString& filterOperator, bool binary = false, const QString& operatorSuffix = "");
     void duplicateUpperCell();
 
-    typedef QList<QByteArray> QByteArrayList;
-    static QList<QByteArrayList> m_buffer;
+    static std::vector<std::vector<QByteArray>> m_buffer;
     static QString m_generatorStamp;
 
 private slots:

@@ -2,7 +2,8 @@
 #define COLUMNDISPLAYFORMATDIALOG_H
 
 #include <QDialog>
-#include <QMap>
+
+#include <unordered_map>
 
 #include "sql/ObjectIdentifier.h"
 
@@ -32,7 +33,7 @@ private slots:
 private:
     Ui::ColumnDisplayFormatDialog* ui;
     QString column_name;
-    QMap<QString, QString> formatFunctions;
+    std::unordered_map<std::string, QString> formatFunctions;
     DBBrowserDB& pdb;
     sqlb::ObjectIdentifier curTable;
 };

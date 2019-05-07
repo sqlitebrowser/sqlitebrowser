@@ -54,9 +54,9 @@ private:
     QStringList m_dbFileExtensions;
 
     void fillLanguageBox();
-    void loadColorSetting(QFrame *frame, const QString &name);
-    void setColorSetting(QFrame *frame, const QColor &color);
-    void saveColorSetting(QFrame *frame, const QString &name);
+    void loadColorSetting(QFrame *frame, const std::string& name);
+    void setColorSetting(QFrame* frame, const QColor &color);
+    void saveColorSetting(QFrame* frame, const std::string& name);
     void addClientCertToTable(const QString& path, const QSslCertificate& cert);
 
 protected:

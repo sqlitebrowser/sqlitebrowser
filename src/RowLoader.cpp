@@ -234,18 +234,18 @@ void RowLoader::process (Task & t)
 
         while(!t.cancel && sqlite3_step(stmt) == SQLITE_ROW)
         {
-            Cache::value_type rowdata;
+            // Construct a new row object with the right number of columns
+            Cache::value_type rowdata(static_cast<size_t>(num_columns));
             for(int i=0;i<num_columns;++i)
             {
-                if(sqlite3_column_type(stmt, i) == SQLITE_NULL)
+                // No need to do anything for NULL values because we can just use the already default constructed value
+                if(sqlite3_column_type(stmt, i) != SQLITE_NULL)
                 {
-                    rowdata.push_back(QByteArray());
-                } else {
                     int bytes = sqlite3_column_bytes(stmt, i);
                     if(bytes)
-                        rowdata.push_back(QByteArray(static_cast<const char*>(sqlite3_column_blob(stmt, i)), bytes));
+                        rowdata[static_cast<size_t>(i)] = QByteArray(static_cast<const char*>(sqlite3_column_blob(stmt, i)), bytes);
                     else
-                        rowdata.push_back(QByteArray(""));
+                        rowdata[static_cast<size_t>(i)] = "";
                 }
             }
             QMutexLocker lk(&cache_mutex);

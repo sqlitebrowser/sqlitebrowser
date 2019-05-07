@@ -13,8 +13,11 @@
 #include <QUrl>
 #include <QtConcurrent/QtConcurrentRun>
 #include <QProgressDialog>
+#include <json.hpp>
 
 #include "RowLoader.h"
+
+using json = nlohmann::json;
 
 SqliteTableModel::SqliteTableModel(DBBrowserDB& db, QObject* parent, size_t chunkSize, const QString& encoding)
     : QAbstractTableModel(parent)
@@ -124,7 +127,7 @@ void SqliteTableModel::setQuery(const sqlb::Query& query)
     m_query = query;
 
     // The first column is the rowid column and therefore is always of type integer
-    m_vDataTypes.push_back(SQLITE_INTEGER);
+    m_vDataTypes.emplace_back(SQLITE_INTEGER);
 
     // Get the data types of all other columns as well as the column names
     bool allOk = false;
@@ -164,7 +167,7 @@ void SqliteTableModel::setQuery(const sqlb::Query& query)
         QString sColumnQuery = QString::fromUtf8("SELECT * FROM %1;").arg(QString::fromStdString(query.table().toString()));
         if(m_query.rowIdColumns().empty())
             m_query.setRowIdColumn("_rowid_");
-        m_headers.push_back("_rowid_");
+        m_headers.emplace_back("_rowid_");
         auto columns = getColumns(nullptr, sColumnQuery, m_vDataTypes);
         m_headers.insert(m_headers.end(), columns.begin(), columns.end());
     }
@@ -272,7 +275,7 @@ QColor SqliteTableModel::getMatchingCondFormatColor(int column, const QString& v
     QString sql;
     // For each conditional format for this column,
     // if the condition matches the current data, return the associated colour.
-    for (const CondFormat& eachCondFormat : m_mCondFormats.value(column)) {
+    for (const CondFormat& eachCondFormat : m_mCondFormats.at(column)) {
         if (isNumber && !eachCondFormat.sqlCondition().contains("'"))
             sql = QString("SELECT %1 %2").arg(value, eachCondFormat.sqlCondition());
         else
@@ -345,7 +348,7 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
             return QColor(Settings::getValue("databrowser", "null_fg_colour").toString());
         else if (nosync_isBinary(index))
             return QColor(Settings::getValue("databrowser", "bin_fg_colour").toString());
-        else if (m_mCondFormats.contains(index.column())) {
+        else if (m_mCondFormats.find(index.column()) != m_mCondFormats.end()) {
             QString value = cached_row->at(column);
             // Unlock before querying from DB
             lock.unlock();
@@ -362,7 +365,7 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
             return QColor(Settings::getValue("databrowser", "null_bg_colour").toString());
         else if (nosync_isBinary(index))
             return QColor(Settings::getValue("databrowser", "bin_bg_colour").toString());
-        else if (m_mCondFormats.contains(index.column())) {
+        else if (m_mCondFormats.find(index.column()) != m_mCondFormats.end()) {
             QString value = cached_row->at(column);
             // Unlock before querying from DB
             lock.unlock();
@@ -466,8 +469,26 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
         if(m_db.updateRecord(m_query.table(), m_headers.at(column), cached_row.at(0), newValue, isBlob, m_query.rowIdColumns()))
         {
             cached_row[column] = newValue;
-            if(m_headers.at(column) == sqlb::joinStringVector(m_query.rowIdColumns(), ",")) {
-                cached_row[0] =  newValue;
+
+            // After updating the value itself in the cache, we need to check if we need to update the rowid too.
+            if(contains(m_query.rowIdColumns(), m_headers.at(column)))
+            {
+                // When the cached rowid column needs to be updated as well, we need to distinguish between single-column and multi-column primary keys.
+                // For the former ones, we can just overwrite the existing value with the new value.
+                // For the latter ones, we need to make a new JSON object of the values of all primary key columns, not just the updated one.
+                if(m_query.rowIdColumns().size() == 1)
+                {
+                    cached_row[0] = newValue;
+                } else {
+                    json array;
+                    assert(m_headers.size() == cached_row.size());
+                    for(size_t i=0;i<m_query.rowIdColumns().size();i++)
+                    {
+                        auto it = std::find(m_headers.begin()+1, m_headers.end(), m_query.rowIdColumns().at(i));    // +1 in order to omit the rowid column itself
+                        array.push_back(cached_row[static_cast<size_t>(std::distance(m_headers.begin(), it))]);
+                    }
+                    cached_row[0] = QByteArray::fromStdString(array.dump());
+                }
                 const QModelIndex& rowidIndex = index.sibling(index.row(), 0);
                 lock.unlock();
                 emit dataChanged(rowidIndex, rowidIndex);
@@ -533,7 +554,7 @@ SqliteTableModel::Row SqliteTableModel::makeDefaultCacheEntry () const
     Row blank_data;
 
     for(size_t i=0; i < m_headers.size(); ++i)
-        blank_data.push_back("");
+        blank_data.emplace_back("");
 
     return blank_data;
 }
@@ -563,7 +584,7 @@ bool SqliteTableModel::insertRows(int row, int count, const QModelIndex& parent)
         {
             return false;
         }
-        tempList.push_back(blank_data);
+        tempList.emplace_back(blank_data);
         tempList.back()[0] = rowid.toUtf8();
 
         // update column with default values

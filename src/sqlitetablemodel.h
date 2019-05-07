@@ -6,6 +6,7 @@
 #include <QColor>
 #include <memory>
 #include <vector>
+#include <map>
 
 #include "RowCache.h"
 #include "sql/Query.h"
@@ -182,7 +183,7 @@ private:
 
     QString m_sQuery;
     std::vector<int> m_vDataTypes;
-    QMap<int, std::vector<CondFormat>> m_mCondFormats;
+    std::map<int, std::vector<CondFormat>> m_mCondFormats;
     sqlb::Query m_query;
 
     /**

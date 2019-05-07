@@ -51,16 +51,16 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
         ui->checkWithoutRowid->setChecked(m_table.withoutRowidTable());
         ui->checkWithoutRowid->blockSignals(false);
         ui->comboSchema->blockSignals(true);
-        for(const auto& n : pdb.schemata.keys())                    // Load list of database schemata
-            ui->comboSchema->addItem(QString::fromStdString(n));
+        for(const auto& n : pdb.schemata)                       // Load list of database schemata
+            ui->comboSchema->addItem(QString::fromStdString(n.first));
         ui->comboSchema->setCurrentText(QString::fromStdString(curTable.schema()));
         ui->comboSchema->blockSignals(false);
 
         populateFields();
         populateConstraints();
     } else {
-        for(const auto& n : pdb.schemata.keys())                    // Load list of database schemata
-            ui->comboSchema->addItem(QString::fromStdString(n));
+        for(const auto& n : pdb.schemata)                       // Load list of database schemata
+            ui->comboSchema->addItem(QString::fromStdString(n.first));
         ui->comboSchema->setCurrentText("main");                // Always create tables in the main schema by default
         ui->labelEditWarning->setVisible(false);
     }
@@ -277,7 +277,7 @@ void EditTableDialog::checkInput()
     if (normTableName != m_table.name()) {
         const std::string oldTableName = m_table.name();
         m_table.setName(normTableName);
-        m_fkEditorDelegate->updateTablesList(QString::fromStdString(oldTableName));
+        m_fkEditorDelegate->updateTablesList(oldTableName);
 
         // update fk's that refer to table itself recursively
         const auto& fields = m_table.fields;
@@ -363,8 +363,12 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
             if(!m_bNewTable)
             {
                 sqlb::StringVector pk = m_table.primaryKey();
-                for(const sqlb::ObjectPtr& fkobj : pdb.schemata[curTable.schema()].values("table"))
+                const auto tables = pdb.schemata[curTable.schema()].equal_range("table");
+                for(auto it=tables.first;it!=tables.second;++it)
                 {
+                    const sqlb::ObjectPtr& fkobj = it->second;
+
+
                     auto fks = std::dynamic_pointer_cast<sqlb::Table>(fkobj)->constraints(sqlb::StringVector(), sqlb::Constraint::ForeignKeyConstraintType);
                     for(const sqlb::ConstraintPtr& fkptr : fks)
                     {
@@ -394,10 +398,10 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
             // Update the field name in the map of old column names to new column names
             if(!m_bNewTable)
             {
-                for(const auto& key : trackColumns.keys())
+                for(const auto& it : trackColumns)
                 {
-                    if(trackColumns[key] == oldFieldName)
-                        trackColumns[key] = QString::fromStdString(field.name());
+                    if(trackColumns[it.first] == oldFieldName)
+                        trackColumns[it.first] = QString::fromStdString(field.name());
                 }
             }
 
@@ -651,7 +655,7 @@ void EditTableDialog::addField()
 
     // Add the new column to the list of tracked columns to indicate it has been added
     if(!m_bNewTable)
-        trackColumns.insert(QString(), tbitem->text(kName));
+        trackColumns.insert({QString(), tbitem->text(kName)});
 
     checkInput();
 }
@@ -671,10 +675,10 @@ void EditTableDialog::removeField()
 
         // Update the map of tracked columns to indicate the column is deleted
         QString name = ui->treeWidget->currentItem()->text(0);
-        for(const auto& key : trackColumns.keys())
+        for(const auto& it : trackColumns)
         {
-            if(trackColumns[key] == name)
-                trackColumns[key] = QString();
+            if(trackColumns[it.first] == name)
+                trackColumns[it.first] = QString();
         }
     }
 

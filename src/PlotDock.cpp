@@ -11,6 +11,14 @@
 #include <QRandomGenerator>
 #endif
 
+// Enable this line to show the most basic performance stats after pressing the fetch-all-data button. Please keep in mind that while these
+// numbers might help to estimate the performance of the data loading procedure, this is not a proper benchmark.
+//#define LOAD_DATA_BENCHMARK
+
+#ifdef LOAD_DATA_BENCHMARK
+#include <QElapsedTimer>
+#endif
+
 static int random_number(int from, int to)
 {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
@@ -709,8 +717,20 @@ void PlotDock::fetchAllData()
 {
     if(m_currentPlotModel)
     {
+#ifdef LOAD_DATA_BENCHMARK
+    // If benchmark mode is enabled start measuring the performance now
+    QElapsedTimer timer;
+    timer.start();
+#endif
+
         // Make sure all data is loaded
         m_currentPlotModel->completeCache();
+
+#ifdef LOAD_DATA_BENCHMARK
+    QMessageBox::information(this, qApp->applicationName(),
+                             tr("Loading all remaining data for this table took %1ms.")
+                             .arg(timer.elapsed()));
+#endif
 
         // Update plot
         updatePlot(m_currentPlotModel, m_currentTableSettings);

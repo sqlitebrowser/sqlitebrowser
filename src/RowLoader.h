@@ -15,7 +15,7 @@
 
 #include "RowCache.h"
 
-class sqlite3;
+struct sqlite3;
 
 class RowLoader : public QThread
 {
@@ -24,7 +24,7 @@ class RowLoader : public QThread
     void run() override;
 
 public:
-    typedef RowCache<std::vector<QByteArray>> Cache;
+    using Cache = RowCache<std::vector<QByteArray>>;
 
     /// set up worker thread to handle row loading
     explicit RowLoader (
