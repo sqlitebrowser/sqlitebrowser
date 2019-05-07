@@ -710,7 +710,7 @@ void ImportCsvDialog::setQuoteChar(const QChar& c)
     int index = combo->findText(c);
     if(index == -1)
     {
-        combo->setCurrentIndex(combo->count());
+        combo->setCurrentIndex(combo->count() - 1);
         ui->editCustomQuote->setText(c);
     }
     else
@@ -738,7 +738,7 @@ void ImportCsvDialog::setSeparatorChar(const QChar& c)
     int index = combo->findText(sText);
     if(index == -1)
     {
-        combo->setCurrentIndex(combo->count());
+        combo->setCurrentIndex(combo->count() - 1);
         ui->editCustomSeparator->setText(c);
     }
     else
@@ -762,7 +762,7 @@ void ImportCsvDialog::setEncoding(const QString& sEnc)
     int index = combo->findText(sEnc);
     if(index == -1)
     {
-        combo->setCurrentIndex(combo->count());
+        combo->setCurrentIndex(combo->count() - 1);
         ui->editCustomEncoding->setText(sEnc);
     }
     else
