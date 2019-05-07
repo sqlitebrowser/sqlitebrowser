@@ -2,13 +2,23 @@
 
 #include <QTextStream>
 
-CSVParser::CSVParser(bool trimfields, char fieldseparator, char quotechar)
+CSVParser::CSVParser(bool trimfields, char32_t fieldseparator, char32_t quotechar)
     : m_bTrimFields(trimfields)
-    , m_cFieldSeparator(fieldseparator)
-    , m_cQuoteChar(quotechar)
+    , m_iNumExtraBytesFieldSeparator(0)
+    , m_iNumExtraBytesQuoteChar(0)
     , m_pCSVProgress(nullptr)
     , m_nBufferSize(4096)
 {
+    for(int i=0;i<4;i++)
+    {
+        m_cFieldSeparator[i] = static_cast<char>((fieldseparator >> i*8) & 0xFF);
+        m_cQuoteChar[i] = static_cast<char>((quotechar >> i*8) & 0xFF);
+
+        if(i && m_cFieldSeparator[i])
+            m_iNumExtraBytesFieldSeparator = i;
+        if(i && m_cQuoteChar[i])
+            m_iNumExtraBytesQuoteChar = i;
+    }
 }
 
 CSVParser::~CSVParser()
@@ -156,38 +166,26 @@ CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStr
             {
             case StateNormal:
             {
-                if(c == m_cFieldSeparator)
+                if(c == m_cFieldSeparator[0])
                 {
-                    field = addColumn(record, field, m_bTrimFields);
+                    if(!m_iNumExtraBytesFieldSeparator || look_ahead(stream, sBuffer, &it, &sBufferEnd, m_cFieldSeparator[1]))
+                    {
+                        field = addColumn(record, field, m_bTrimFields);
+                        it += m_iNumExtraBytesFieldSeparator;
+                    }
                 }
-                else if(c == m_cQuoteChar)
+                else if(c == m_cQuoteChar[0])
                 {
-                    state = StateInQuote;
+                    if(!m_iNumExtraBytesQuoteChar || look_ahead(stream, sBuffer, &it, &sBufferEnd, m_cQuoteChar[1]))
+                    {
+                        state = StateInQuote;
+                        it += m_iNumExtraBytesQuoteChar;
+                    }
                 }
                 else if(c == '\r')
                 {
                     // look ahead to check for linefeed
-                    auto nit = it + 1;
-
-                    // In order to check what the next byte is we must make sure that that byte is already loaded. Assume we're at an m_nBufferSize
-                    // boundary but not at the end of the file when we hit a \r character. Now we're going to be at the end of the sBuffer string
-                    // because of the m_nBufferSize boundary. But this means that the following check won't work properly because we can't check the
-                    // next byte when we really should be able to do so because there's more data coming. To fix this we'll check for this particular
-                    // case and, if this is what's happening, we'll just load an extra byte.
-                    if(nit == sBufferEnd && !stream.atEnd())
-                    {
-                        // Load one more byte
-                        sBuffer.append(stream.read(1));
-                        sBufferEnd = sBuffer.constEnd();
-
-                        // Restore both iterators. sBufferEnd points to the imagined char after the last one in the string. So the extra byte we've
-                        // just loaded is the one before that, i.e. the actual last one, and the original last char is the one before that.
-                        it = sBufferEnd - 2;
-                        nit = sBufferEnd - 1;
-                    }
-
-                    // no linefeed, so assume that CR represents a newline
-                    if(nit != sBufferEnd && *nit != '\n')
+                    if(!look_ahead(stream, sBuffer, &it, &sBufferEnd, '\n'))
                     {
                         addColumn(record, field, m_bTrimFields);
 
@@ -210,9 +208,13 @@ CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStr
             break;
             case StateInQuote:
             {
-                if(c == m_cQuoteChar)
+                if(c == m_cQuoteChar[0])
                 {
-                    state = StateEndQuote;
+                    if(!m_iNumExtraBytesQuoteChar || look_ahead(stream, sBuffer, &it, &sBufferEnd, m_cQuoteChar[1]))
+                    {
+                        state = StateEndQuote;
+                        it += m_iNumExtraBytesQuoteChar;
+                    }
                 }
                 else
                 {
@@ -222,15 +224,23 @@ CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStr
             break;
             case StateEndQuote:
             {
-                if(c == m_cQuoteChar)
+                if(c == m_cQuoteChar[0])
                 {
-                    state = StateInQuote;
-                    addChar(field, c);
+                    if(!m_iNumExtraBytesQuoteChar || look_ahead(stream, sBuffer, &it, &sBufferEnd, m_cQuoteChar[1]))
+                    {
+                        state = StateInQuote;
+                        addChar(field, c);
+                        it += m_iNumExtraBytesQuoteChar;
+                    }
                 }
-                else if(c == m_cFieldSeparator)
+                else if(c == m_cFieldSeparator[0])
                 {
-                    state = StateNormal;
-                    field = addColumn(record, field, m_bTrimFields);
+                    if(!m_iNumExtraBytesFieldSeparator || look_ahead(stream, sBuffer, &it, &sBufferEnd, m_cFieldSeparator[1]))
+                    {
+                        state = StateNormal;
+                        field = addColumn(record, field, m_bTrimFields);
+                        it += m_iNumExtraBytesFieldSeparator;
+                    }
                 }
                 else if(c == '\n')
                 {
@@ -243,19 +253,7 @@ CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStr
                 else if(c == '\r')
                 {
                     // look ahead to check for linefeed
-                    auto nit = it + 1;
-
-                    // See above for details on this.
-                    if(nit == sBufferEnd && !stream.atEnd())
-                    {
-                        sBuffer.append(stream.read(1));
-                        sBufferEnd = sBuffer.constEnd();
-                        it = sBufferEnd - 2;
-                        nit = sBufferEnd - 1;
-                    }
-
-                    // no linefeed, so assume that CR represents a newline
-                    if(nit != sBufferEnd && *nit != '\n')
+                    if(!look_ahead(stream, sBuffer, &it, &sBufferEnd, '\n'))
                     {
                         addColumn(record, field, m_bTrimFields);
 
@@ -295,4 +293,30 @@ CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStr
         m_pCSVProgress->end();
 
     return (state == StateNormal) ? ParserResult::ParserResultSuccess : ParserResult::ParserResultError;
+}
+
+bool CSVParser::look_ahead(QTextStream& stream, QByteArray& sBuffer, const char** it, const char** sBufferEnd, char expected)
+{
+    // look ahead for next byte
+    auto nit = *it + 1;
+
+    // In order to check what the next byte is we must make sure that that byte is already loaded. Assume we're at an m_nBufferSize
+    // boundary but not at the end of the file when we hit a \r character. Now we're going to be at the end of the sBuffer string
+    // because of the m_nBufferSize boundary. But this means that the following check won't work properly because we can't check the
+    // next byte when we really should be able to do so because there's more data coming. To fix this we'll check for this particular
+    // case and, if this is what's happening, we'll just load an extra byte.
+    if(nit == *sBufferEnd && !stream.atEnd())
+    {
+        // Load one more byte
+        sBuffer.append(stream.read(1));
+        *sBufferEnd = sBuffer.constEnd();
+
+        // Restore both iterators. sBufferEnd points to the imagined char after the last one in the string. So the extra byte we've
+        // just loaded is the one before that, i.e. the actual last one, and the original last char is the one before that.
+        *it = *sBufferEnd - 2;
+        nit = *sBufferEnd - 1;
+    }
+
+    // Check whether there actually is one more byte and it is the expected one
+    return nit != *sBufferEnd && *nit == expected;
 }

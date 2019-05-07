@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <cstddef>
 
+class QByteArray;
 class QTextStream;
 
 /*!
@@ -52,7 +53,7 @@ class CSVParser
 public:
     using csvRowFunction = std::function<bool(size_t, CSVRow)>;
 
-    CSVParser(bool trimfields = true, char fieldseparator = ',', char quotechar = '"');
+    CSVParser(bool trimfields = true, char32_t fieldseparator = ',', char32_t quotechar = '"');
     ~CSVParser();
 
     enum ParserResult
@@ -84,11 +85,15 @@ private:
 
 private:
     bool m_bTrimFields;
-    char m_cFieldSeparator;
-    char m_cQuoteChar;
+    char m_cFieldSeparator[4];
+    char m_cQuoteChar[4];
+    int m_iNumExtraBytesFieldSeparator;
+    int m_iNumExtraBytesQuoteChar;
     CSVProgress* m_pCSVProgress;
 
     int64_t m_nBufferSize;        //! internal buffer read size
+
+    bool look_ahead(QTextStream& stream, QByteArray& sBuffer, const char** it, const char** sBufferEnd, char expected);
 };
 
 #endif

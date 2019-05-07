@@ -58,8 +58,8 @@ ImportCsvDialog::ImportCsvDialog(const QStringList &filenames, DBBrowserDB* db, 
     ui->checkboxHeader->setChecked(Settings::getValue("importcsv", "firstrowheader").toBool());
     ui->checkBoxTrimFields->setChecked(Settings::getValue("importcsv", "trimfields").toBool());
     ui->checkBoxSeparateTables->setChecked(Settings::getValue("importcsv", "separatetables").toBool());
-    setSeparatorChar(Settings::getValue("importcsv", "separator").toInt());
-    setQuoteChar(Settings::getValue("importcsv", "quotecharacter").toInt());
+    setSeparatorChar(static_cast<char32_t>(Settings::getValue("importcsv", "separator").toInt()));
+    setQuoteChar(static_cast<char32_t>(Settings::getValue("importcsv", "quotecharacter").toInt()));
     setEncoding(Settings::getValue("importcsv", "encoding").toString());
 
     ui->checkboxHeader->blockSignals(false);
@@ -704,14 +704,14 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
     return true;
 }
 
-void ImportCsvDialog::setQuoteChar(const QChar& c)
+void ImportCsvDialog::setQuoteChar(char32_t c)
 {
     QComboBox* combo = ui->comboQuote;
-    int index = combo->findText(c);
+    int index = combo->findText(QString(c));
     if(index == -1)
     {
         combo->setCurrentIndex(combo->count() - 1);
-        ui->editCustomQuote->setText(c);
+        ui->editCustomQuote->setText(QString(c));
     }
     else
     {
@@ -719,19 +719,21 @@ void ImportCsvDialog::setQuoteChar(const QChar& c)
     }
 }
 
-char ImportCsvDialog::currentQuoteChar() const
+char32_t ImportCsvDialog::currentQuoteChar() const
 {
+    QString value;
+
     // The last item in the combobox is the 'Other' item; if it is selected return the text of the line edit field instead
     if(ui->comboQuote->currentIndex() == ui->comboQuote->count()-1)
-        return ui->editCustomQuote->text().length() ? ui->editCustomQuote->text().at(0).toLatin1() : 0;
+        value = ui->editCustomQuote->text().length() ? ui->editCustomQuote->text() : "";
 
     if(ui->comboQuote->currentText().length())
-        return ui->comboQuote->currentText().at(0).toLatin1();
-    else
-        return 0;
+        value = ui->comboQuote->currentText();
+
+    return toUtf8(value);
 }
 
-void ImportCsvDialog::setSeparatorChar(const QChar& c)
+void ImportCsvDialog::setSeparatorChar(char32_t c)
 {
     QComboBox* combo = ui->comboSeparator;
     QString sText = c == '\t' ? QString("Tab") : QString(c);
@@ -739,7 +741,7 @@ void ImportCsvDialog::setSeparatorChar(const QChar& c)
     if(index == -1)
     {
         combo->setCurrentIndex(combo->count() - 1);
-        ui->editCustomSeparator->setText(c);
+        ui->editCustomSeparator->setText(QString(c));
     }
     else
     {
@@ -747,13 +749,17 @@ void ImportCsvDialog::setSeparatorChar(const QChar& c)
     }
 }
 
-char ImportCsvDialog::currentSeparatorChar() const
+char32_t ImportCsvDialog::currentSeparatorChar() const
 {
-    // The last item in the combobox is the 'Other' item; if it is selected return the text of the line edit field instead
-    if(ui->comboSeparator->currentIndex() == ui->comboSeparator->count()-1)
-        return ui->editCustomSeparator->text().length() ? ui->editCustomSeparator->text().at(0).toLatin1() : 0;
+    QString value;
 
-    return ui->comboSeparator->currentText() == tr("Tab") ? '\t' : ui->comboSeparator->currentText().at(0).toLatin1();
+    // The last item in the combobox is the 'Other' item; if it is selected return the text of the line edit field instead
+    if(ui->comboSeparator->currentIndex() == ui->comboSeparator->count()-1 || ui->comboSeparator->currentText().isEmpty())
+        value = ui->editCustomSeparator->text().length() ? ui->editCustomSeparator->text() : "";
+    else
+        value = ui->comboSeparator->currentText() == tr("Tab") ? "\t" : ui->comboSeparator->currentText();
+
+    return toUtf8(value);
 }
 
 void ImportCsvDialog::setEncoding(const QString& sEnc)
@@ -803,4 +809,18 @@ void ImportCsvDialog::toggleAdvancedSection(bool show)
     ui->checkIgnoreDefaults->setVisible(show);
     ui->labelOnConflictStrategy->setVisible(show);
     ui->comboOnConflictStrategy->setVisible(show);
+}
+
+char32_t ImportCsvDialog::toUtf8(const QString& s) const
+{
+    if(s.isEmpty())
+        return 0;
+
+    QByteArray ba = s.toUtf8();
+
+    char32_t result = 0;
+    for(int i=std::min(ba.size()-1,3);i>=0;i--)
+        result = (result << 8) + static_cast<unsigned char>(ba.at(i));
+
+    return result;
 }
