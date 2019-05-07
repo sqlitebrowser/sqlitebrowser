@@ -14,6 +14,8 @@
 #include <QTimeZone>
 #include <json.hpp>
 
+#include <iterator>
+
 #include "RemoteDatabase.h"
 #include "version.h"
 #include "Settings.h"
