@@ -379,8 +379,8 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
        openPrintDialog();
     });
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
-    // This work arounds QTBUG-73721 and should be removed or limited in version scope when it is fixed.
+#if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0) && QT_VERSION < QT_VERSION_CHECK(5, 12, 3)
+    // This work arounds QTBUG-73721 and it is applied only for the affected version range.
     setWordWrap(false);
 #endif
 }
