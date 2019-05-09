@@ -167,18 +167,23 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
             QFile file(saveFileAs);
             file.open(QIODevice::WriteOnly);
             file.write(reply->readAll());
-            file.close();
 
             // Set last modified data of the new file to the one provided by the server
-            // TODO Qt doesn't offer any option to set this attribute, so we'd need to figure out a way to do it
-            // ourselves in a platform-independent way.
-            /*QString last_modified = reply->rawHeader("Content-Disposition");
+            // Before version 5.10, Qt didn't offer any option to set this attribute, so we're not setting it at the moment
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+            QString last_modified = reply->rawHeader("Content-Disposition");
             QRegExp regex("^.*modification-date=\"(.+)\";.*$");
             regex.setMinimal(true); // Set to non-greedy matching
             if(regex.indexIn(last_modified) != -1)
             {
                 last_modified = regex.cap(1);
-            }*/
+                bool success = file.setFileTime(QDateTime::fromString(last_modified, Qt::ISODate), QFileDevice::FileModificationTime);
+                if(!success)
+                    qWarning() << file.errorString();
+            }
+#endif
+
+            file.close();
 
             // Tell the application to open this file
             emit openFile(saveFileAs);
