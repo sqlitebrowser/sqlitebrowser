@@ -11,7 +11,9 @@
 #include <QStandardPaths>
 #include <QUrlQuery>
 #include <QtNetwork/QHttpMultiPart>
+#include <QtNetwork/QNetworkProxyFactory>
 #include <QTimeZone>
+#include <QtNetwork/QNetworkProxy>
 #include <json.hpp>
 
 #include <iterator>
@@ -90,7 +92,50 @@ void RemoteDatabase::reloadSettings()
         m_clientCertFiles.insert({":/user_certs/public.cert.pem", cert});
     }
 
-    // TODO Add support for proxies here
+    // Configure proxy to use
+    {
+        QString type = Settings::getValue("proxy", "type").toString();
+
+        QNetworkProxy proxy;
+        if(type == "system")
+        {
+            // For system settings we have to get the system-wide proxy and use that
+
+            // Get list of proxies for accessing dbhub.io via HTTPS and use the first one
+            auto list = QNetworkProxyFactory::systemProxyForQuery(QNetworkProxyQuery(QUrl("https://db4s.dbhub.io/")));
+            proxy = list.front();
+        } else {
+            // For any other type we have to set up our own proxy configuration
+
+            // Retrieve the required settings
+            QString host = Settings::getValue("proxy", "host").toString();
+            unsigned short port = static_cast<unsigned short>(Settings::getValue("proxy", "port").toUInt());
+            bool authentication = Settings::getValue("proxy", "authentication").toBool();
+
+            if(type == "http")
+                proxy.setType(QNetworkProxy::HttpProxy);
+            else if(type == "socks5")
+                proxy.setType(QNetworkProxy::Socks5Proxy);
+            else
+                proxy.setType(QNetworkProxy::NoProxy);
+
+            proxy.setHostName(host);
+            proxy.setPort(port);
+
+            // Only set authentication details when authentication is required
+            if(authentication)
+            {
+                QString user = Settings::getValue("proxy", "user").toString();
+                QString password = Settings::getValue("proxy", "password").toString();
+
+                proxy.setUser(user);
+                proxy.setPassword(password);
+            }
+        }
+
+        // Start using the new proxy configuration
+        QNetworkProxy::setApplicationProxy(proxy);
+    }
 }
 
 void RemoteDatabase::gotEncrypted(QNetworkReply* reply)

@@ -158,6 +158,7 @@ set(SQLB_MOC_HDR
 	src/Palette.h
 	src/CondFormat.h
 	src/RunSql.h
+	src/ProxyDialog.h
 )
 
 set(SQLB_SRC
@@ -211,6 +212,7 @@ set(SQLB_SRC
 	src/Palette.cpp
 	src/CondFormat.cpp
 	src/RunSql.cpp
+	src/ProxyDialog.cpp
 )
 
 set(SQLB_FORMS
@@ -234,6 +236,7 @@ set(SQLB_FORMS
 	src/FindReplaceDialog.ui
 	src/FileExtensionManager.ui
 	src/CondFormatManager.ui
+	src/ProxyDialog.ui
 )
 
 set(SQLB_RESOURCES

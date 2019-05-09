@@ -74,7 +74,8 @@ HEADERS += \
     CondFormat.h \
     sql/Query.h \
     RunSql.h \
-    sql/ObjectIdentifier.h
+    sql/ObjectIdentifier.h \
+    ProxyDialog.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -125,7 +126,8 @@ SOURCES += \
     CondFormat.cpp \
     sql/Query.cpp \
     RunSql.cpp \
-    sql/ObjectIdentifier.cpp
+    sql/ObjectIdentifier.cpp \
+    ProxyDialog.cpp
 
 RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc \
@@ -153,7 +155,8 @@ FORMS += \
     RemotePushDialog.ui \
     FindReplaceDialog.ui \
     FileExtensionManager.ui \
-    CondFormatManager.ui
+    CondFormatManager.ui \
+    ProxyDialog.ui
 
 TRANSLATIONS += \
     translations/sqlb_ar_SA.ts \

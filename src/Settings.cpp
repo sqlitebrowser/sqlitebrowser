@@ -346,6 +346,14 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
 #endif
     }
 
+    // Proxy settings
+    if(group == "proxy")
+    {
+        // Use system settings by default
+        if(name == "type")
+            return "system";
+    }
+
     // Unknown combination of group and name? Return an invalid QVariant!
     return QVariant();
 }

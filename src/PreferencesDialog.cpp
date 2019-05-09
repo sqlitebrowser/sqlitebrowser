@@ -6,6 +6,7 @@
 #include "MainWindow.h"
 #include "RemoteDatabase.h"
 #include "FileExtensionManager.h"
+#include "ProxyDialog.h"
 
 #include <QDir>
 #include <QColorDialog>
@@ -16,6 +17,7 @@
 PreferencesDialog::PreferencesDialog(QWidget* parent, Tabs tab)
     : QDialog(parent),
       ui(new Ui::PreferencesDialog),
+      m_proxyDialog(new ProxyDialog(this)),
       m_dbFileExtensions(Settings::getValue("General", "DBFileExtensions").toString().split(";;"))
 {
     ui->setupUi(this);
@@ -325,6 +327,8 @@ void PreferencesDialog::saveSettings()
     Settings::setValue("General", "toolbarStyleEditCell", ui->toolbarStyleComboEditCell->currentIndex());
 
     Settings::setValue("General", "DBFileExtensions", m_dbFileExtensions.join(";;") );
+
+    m_proxyDialog->saveSettings();
 
     accept();
 
@@ -671,4 +675,9 @@ void PreferencesDialog::on_buttonBox_clicked(QAbstractButton* button)
             accept();
         }
     }
+}
+
+void PreferencesDialog::configureProxy()
+{
+    m_proxyDialog->show();
 }
