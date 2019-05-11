@@ -3589,6 +3589,9 @@ void MainWindow::unlockViewEditing(bool unlock, QString pk)
 {
     sqlb::ObjectIdentifier currentTable = currentlyBrowsedTableName();
 
+    if(currentTable.isEmpty())
+        return;
+
     // If this isn't a view just unlock editing and return
     if(db.getObjectByName(currentTable) && db.getObjectByName(currentTable)->type() != sqlb::Object::View)
     {
