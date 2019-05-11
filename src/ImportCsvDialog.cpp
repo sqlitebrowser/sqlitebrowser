@@ -729,7 +729,7 @@ QChar ImportCsvDialog::currentQuoteChar() const
     else if(ui->comboQuote->currentText().length())
         value = ui->comboQuote->currentText();
 
-    return value.size() ? value.front() : QChar();
+    return value.size() ? value.at(0) : QChar();
 }
 
 void ImportCsvDialog::setSeparatorChar(QChar c)
@@ -758,7 +758,7 @@ QChar ImportCsvDialog::currentSeparatorChar() const
     else
         value = ui->comboSeparator->currentText() == tr("Tab") ? "\t" : ui->comboSeparator->currentText();
 
-    return value.size() ? value.front() : QChar();
+    return value.size() ? value.at(0) : QChar();
 }
 
 void ImportCsvDialog::setEncoding(const QString& sEnc)
