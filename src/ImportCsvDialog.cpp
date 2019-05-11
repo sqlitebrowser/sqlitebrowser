@@ -58,8 +58,8 @@ ImportCsvDialog::ImportCsvDialog(const QStringList &filenames, DBBrowserDB* db, 
     ui->checkboxHeader->setChecked(Settings::getValue("importcsv", "firstrowheader").toBool());
     ui->checkBoxTrimFields->setChecked(Settings::getValue("importcsv", "trimfields").toBool());
     ui->checkBoxSeparateTables->setChecked(Settings::getValue("importcsv", "separatetables").toBool());
-    setSeparatorChar(static_cast<char32_t>(Settings::getValue("importcsv", "separator").toInt()));
-    setQuoteChar(static_cast<char32_t>(Settings::getValue("importcsv", "quotecharacter").toInt()));
+    setSeparatorChar(Settings::getValue("importcsv", "separator").toChar());
+    setQuoteChar(Settings::getValue("importcsv", "quotecharacter").toChar());
     setEncoding(Settings::getValue("importcsv", "encoding").toString());
 
     ui->checkboxHeader->blockSignals(false);
@@ -375,7 +375,7 @@ CSVParser::ParserResult ImportCsvDialog::parseCSV(const QString &fileName, std::
     QFile file(fileName);
     file.open(QIODevice::ReadOnly);
 
-    CSVParser csv(ui->checkBoxTrimFields->isChecked(), currentSeparatorChar(), currentQuoteChar());
+    CSVParser csv(ui->checkBoxTrimFields->isChecked(), toUtf8(currentSeparatorChar()), toUtf8(currentQuoteChar()));
 
     // Only show progress dialog if we parse all rows. The assumption here is that if a row count limit has been set, it won't be a very high one.
     if(count == 0)
@@ -704,7 +704,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
     return true;
 }
 
-void ImportCsvDialog::setQuoteChar(char32_t c)
+void ImportCsvDialog::setQuoteChar(QChar c)
 {
     QComboBox* combo = ui->comboQuote;
     int index = combo->findText(QString(c));
@@ -719,21 +719,20 @@ void ImportCsvDialog::setQuoteChar(char32_t c)
     }
 }
 
-char32_t ImportCsvDialog::currentQuoteChar() const
+QChar ImportCsvDialog::currentQuoteChar() const
 {
     QString value;
 
     // The last item in the combobox is the 'Other' item; if it is selected return the text of the line edit field instead
     if(ui->comboQuote->currentIndex() == ui->comboQuote->count()-1)
         value = ui->editCustomQuote->text().length() ? ui->editCustomQuote->text() : "";
-
-    if(ui->comboQuote->currentText().length())
+    else if(ui->comboQuote->currentText().length())
         value = ui->comboQuote->currentText();
 
-    return toUtf8(value);
+    return value.size() ? value.front() : QChar();
 }
 
-void ImportCsvDialog::setSeparatorChar(char32_t c)
+void ImportCsvDialog::setSeparatorChar(QChar c)
 {
     QComboBox* combo = ui->comboSeparator;
     QString sText = c == '\t' ? QString("Tab") : QString(c);
@@ -749,7 +748,7 @@ void ImportCsvDialog::setSeparatorChar(char32_t c)
     }
 }
 
-char32_t ImportCsvDialog::currentSeparatorChar() const
+QChar ImportCsvDialog::currentSeparatorChar() const
 {
     QString value;
 
@@ -759,7 +758,7 @@ char32_t ImportCsvDialog::currentSeparatorChar() const
     else
         value = ui->comboSeparator->currentText() == tr("Tab") ? "\t" : ui->comboSeparator->currentText();
 
-    return toUtf8(value);
+    return value.size() ? value.front() : QChar();
 }
 
 void ImportCsvDialog::setEncoding(const QString& sEnc)
