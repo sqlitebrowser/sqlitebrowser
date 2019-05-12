@@ -5,7 +5,7 @@ MKDIR "%DEST_PATH%"
 SET ZIP_EXE="C:\Program Files\7-Zip\7z.exe"
 SET SQLITE_DIR=C:\\dev\\SQLite-Win32
 SET SQLCIPHER_DIR=C:\\git_repos\\SQLCipher-Win32
-SET SQLCIPHER_TAG=v4.0.1
+SET SQLCIPHER_TAG=v4.1.0
 
 :: You need to change the date format in Windows settings to YYYY-MM-DD
 :: before this will work properly. ;)
@@ -63,9 +63,9 @@ cl /MD extension-functions.c -link -dll -def:extension-functions.def -out:math.d
 COPY C:\git_repos\sqlitebrowser\src\extensions\extension-formats.c
 COPY C:\git_repos\sqlitebrowser\src\extensions\extension-formats.def
 cl /MD extension-formats.c -link -dll -def:extension-formats.def -out:formats.dll
-curl -L -o fileio.c https://sqlite.org/src/raw/ext/misc/fileio.c?name=288e7230e0fe464d71b0694e2d8bdd3a353118ac2e31da3964b95f460f09915f
-curl -L -o test_windirent.c https://sqlite.org/src/raw/src/test_windirent.c?name=a895e2c068a06644eef91a7f0a32182445a893b9a0f33d0cdb4283dca2486ac1
-curl -L -o test_windirent.h https://sqlite.org/src/raw/src/test_windirent.h?name=90dfbe95442c9762357fe128dc7ae3dc199d006de93eb33ba3972e0a90484215
+curl -L -o fileio.c "https://sqlite.org/src/raw?filename=ext/misc/fileio.c&ci=trunk"
+curl -L -o test_windirent.c "https://sqlite.org/src/raw?filename=src/test_windirent.c&ci=trunk"
+curl -L -o test_windirent.h "https://sqlite.org/src/raw?filename=src/test_windirent.h&ci=trunk"
 cl /MD fileio.c test_windirent.c -link sqlite3.lib -dll -out:fileio.dll
 
 :: Run CMake for SQLite x86
