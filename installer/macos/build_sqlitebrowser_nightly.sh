@@ -8,7 +8,7 @@ BRANCH="master"
 BREW="/usr/local/bin/brew"
 BUILD_TYPE="release"
 DATE=`date "+%Y%m%d"`
-LOG="$HOME/db4s_nightlies/nightly.log-$DATE"
+LOG="$HOME/db4s_nightlies/nightly-$DATE.log"
 LRELEASE="$HOME/Qt/${QTVER}/clang_64/bin/lrelease"
 LUPDATE="$HOME/Qt/${QTVER}/clang_64/bin/lupdate"
 MACDEPLOYQT="$HOME/Qt/${QTVER}/clang_64/bin/macdeployqt"
@@ -97,15 +97,14 @@ make -j3 >>$LOG 2>&1 # Seems to need a 2nd time now, due to language files needi
 $MACDEPLOYQT src/DB\ Browser\ for\ SQLite.app -verbose=2 >>$LOG 2>&1
 
 # Add the extensions to the .dmg
-echo Add the math extensions to the .dmg >>$LOG 2>&1
+echo Add the extensions to the .dmg >>$LOG 2>&1
 mkdir src/DB\ Browser\ for\ SQLite.app/Contents/Extensions >>$LOG 2>&1
 gcc -I/usr/local/opt/sqlitefts5/include -L/usr/local/opt/sqlitefts5/lib -fno-common -dynamiclib src/extensions/extension-formats.c -o src/DB\ Browser\ for\ SQLite.app/Contents/Extensions/formats.dylib >>$LOG 2>&1
 gcc -I/usr/local/opt/sqlitefts5/include -L/usr/local/opt/sqlitefts5/lib -fno-common -dynamiclib src/extensions/extension-functions.c -o src/DB\ Browser\ for\ SQLite.app/Contents/Extensions/math.dylib >>$LOG 2>&1
-
 # fileio.c extension
-curl -L -o src/extensions/fileio.c https://sqlite.org/src/raw/ext/misc/fileio.c?name=288e7230e0fe464d71b0694e2d8bdd3a353118ac2e31da3964b95f460f09915f >>$LOG 2>&1
-curl -L -o src/extensions/test_windirent.c https://sqlite.org/src/raw/src/test_windirent.c?name=a895e2c068a06644eef91a7f0a32182445a893b9a0f33d0cdb4283dca2486ac1 >>$LOG 2>&1
-curl -L -o src/extensions/test_windirent.h https://sqlite.org/src/raw/src/test_windirent.h?name=90dfbe95442c9762357fe128dc7ae3dc199d006de93eb33ba3972e0a90484215 >>$LOG 2>&1
+curl -L -o src/extensions/fileio.c 'https://sqlite.org/src/raw?filename=ext/misc/fileio.c&ci=trunk' >>$LOG 2>&1
+curl -L -o src/extensions/test_windirent.c 'https://sqlite.org/src/raw?filename=src/test_windirent.c&ci=trunk' >>$LOG 2>&1
+curl -L -o src/extensions/test_windirent.h 'https://sqlite.org/src/raw?filename=src/test_windirent.h&ci=trunk' >>$LOG 2>&1
 gcc -I/usr/local/opt/sqlitefts5/include -L/usr/local/opt/sqlitefts5/lib -fno-common -dynamiclib src/extensions/fileio.c src/extensions/test_windirent.c -o src/DB\ Browser\ for\ SQLite.app/Contents/Extensions/fileio.dylib >>$LOG 2>&1
 
 # Copy the license files to the .dmg
@@ -132,11 +131,6 @@ codesign --sign "${DEV_ID}" --verbose --deep --keychain "/Library/Keychains/Syst
 # Make a .dmg file from the .app
 mv src/DB\ Browser\ for\ SQLite.app $HOME/appdmg/ >>$LOG 2>&1
 cd $HOME/appdmg >>$LOG 2>&1
-$BREW install npm >>$LOG 2>&1
-npm -g update >>$LOG 2>&1
-npm -g upgrade >>$LOG 2>&1
-npm -g uninstall appdmg >>$LOG 2>&1
-npm -g install appdmg >>$LOG 2>&1
 appdmg --quiet nightly.json DB\ Browser\ for\ SQLite_${DATE}.dmg >>$LOG 2>&1
 codesign --sign "${DEV_ID}" --verbose --deep --keychain "/Library/Keychains/System.keychain" DB\ Browser\ for\ SQLite_${DATE}.dmg >>$LOG 2>&1
 mv DB\ Browser\ for\ SQLite_${DATE}.dmg $HOME/db4s_nightlies/ >>$LOG 2>&1
@@ -149,7 +143,7 @@ $BREW remove `$BREW list` --force >>$LOG 2>&1
 
 # Install SQLCipher
 echo Install SQLCipher >>$LOG 2>&1
-$BREW install sqlcipher >>$LOG 2>&1
+$BREW install sqlcipherdb4s >>$LOG 2>&1
 
 # Clean the sqlitebrowser source
 echo Clean the sqlitebrowser source >>$LOG 2>&1
@@ -179,16 +173,15 @@ make -j3 >>$LOG 2>&1 # Seems to need a 2nd time now, due to language files needi
 $MACDEPLOYQT src/DB\ Browser\ for\ SQLite.app -verbose=2 >>$LOG 2>&1
 
 # Add the extensions to the .dmg
-echo Add the math extensions to the .dmg >>$LOG 2>&1
+echo Add the extensions to the .dmg >>$LOG 2>&1
 mkdir src/DB\ Browser\ for\ SQLite.app/Contents/Extensions >>$LOG 2>&1
-gcc -I/usr/local/opt/sqlitefts5/include -L/usr/local/opt/sqlitefts5/lib -fno-common -dynamiclib src/extensions/extension-formats.c -o src/DB\ Browser\ for\ SQLite.app/Contents/Extensions/formats.dylib >>$LOG 2>&1
-gcc -I/usr/local/opt/sqlitefts5/include -L/usr/local/opt/sqlitefts5/lib -fno-common -dynamiclib src/extensions/extension-functions.c -o src/DB\ Browser\ for\ SQLite.app/Contents/Extensions/math.dylib >>$LOG 2>&1
-
+gcc -I/usr/local/opt/sqlcipherdb4s/include -L/usr/local/opt/sqlcipherdb4s/lib -fno-common -dynamiclib src/extensions/extension-formats.c -o src/DB\ Browser\ for\ SQLite.app/Contents/Extensions/formats.dylib >>$LOG 2>&1
+gcc -I/usr/local/opt/sqlcipherdb4s/include -L/usr/local/opt/sqlcipherdb4s/lib -fno-common -dynamiclib src/extensions/extension-functions.c -o src/DB\ Browser\ for\ SQLite.app/Contents/Extensions/math.dylib >>$LOG 2>&1
 # fileio.c extension
-curl -L -o src/extensions/fileio.c https://sqlite.org/src/raw/ext/misc/fileio.c?name=288e7230e0fe464d71b0694e2d8bdd3a353118ac2e31da3964b95f460f09915f >>$LOG 2>&1
-curl -L -o src/extensions/test_windirent.c https://sqlite.org/src/raw/src/test_windirent.c?name=a895e2c068a06644eef91a7f0a32182445a893b9a0f33d0cdb4283dca2486ac1 >>$LOG 2>&1
-curl -L -o src/extensions/test_windirent.h https://sqlite.org/src/raw/src/test_windirent.h?name=90dfbe95442c9762357fe128dc7ae3dc199d006de93eb33ba3972e0a90484215 >>$LOG 2>&1
-gcc -I/usr/local/opt/sqlitefts5/include -L/usr/local/opt/sqlitefts5/lib -fno-common -dynamiclib src/extensions/fileio.c src/extensions/test_windirent.c -o src/DB\ Browser\ for\ SQLite.app/Contents/Extensions/fileio.dylib >>$LOG 2>&1
+curl -L -o src/extensions/fileio.c 'https://sqlite.org/src/raw?filename=ext/misc/fileio.c&ci=trunk' >>$LOG 2>&1
+curl -L -o src/extensions/test_windirent.c 'https://sqlite.org/src/raw?filename=src/test_windirent.c&ci=trunk' >>$LOG 2>&1
+curl -L -o src/extensions/test_windirent.h 'https://sqlite.org/src/raw?filename=src/test_windirent.h&ci=trunk' >>$LOG 2>&1
+gcc -I/usr/local/opt/sqlcipherdb4s/include -L/usr/local/opt/sqlcipherdb4s/lib -fno-common -dynamiclib src/extensions/fileio.c src/extensions/test_windirent.c -o src/DB\ Browser\ for\ SQLite.app/Contents/Extensions/fileio.dylib >>$LOG 2>&1
 
 # Copy the license files to the .dmg
 echo Copying the license files to the .dmg >>$LOG 2>&1
@@ -214,11 +207,6 @@ codesign --sign "${DEV_ID}" --verbose --deep --keychain "/Library/Keychains/Syst
 # Make a .dmg file from the .app
 mv src/DB\ Browser\ for\ SQLite.app $HOME/appdmg/ >>$LOG 2>&1
 cd $HOME/appdmg >>$LOG 2>&1
-$BREW install npm >>$LOG 2>&1
-npm -g update >>$LOG 2>&1
-npm -g upgrade >>$LOG 2>&1
-npm -g uninstall appdmg >>$LOG 2>&1
-npm -g install appdmg >>$LOG 2>&1
 appdmg --quiet nightly.json DB\ Browser\ for\ SQLite-sqlcipher_${DATE}.dmg >>$LOG 2>&1
 codesign --sign "${DEV_ID}" --verbose --deep --keychain "/Library/Keychains/System.keychain" DB\ Browser\ for\ SQLite-sqlcipher_${DATE}.dmg >>$LOG 2>&1
 mv DB\ Browser\ for\ SQLite-sqlcipher_${DATE}.dmg $HOME/db4s_nightlies/ >>$LOG 2>&1
@@ -236,7 +224,7 @@ fi
 
 # Upload nightly builds and the build log thus far
 echo Upload nightly builds >>$LOG 2>&1
-rsync -aP $HOME/db4s_nightlies/DB\ Browser\ for\ SQLite*${DATE}.dmg $HOME/db4s_nightlies/nightly.log-${DATE} ${UPLOAD_SERVER}:/nightlies/osx/ >>$LOG 2>&1
+rsync -aP $HOME/db4s_nightlies/DB\ Browser\ for\ SQLite*${DATE}.dmg ${LOG} ${UPLOAD_SERVER}:/nightlies/osx/ >>$LOG 2>&1
 
 # Add the new builds to the "latest" directory
 ssh ${UPLOAD_SERVER} "cd /nightlies/latest; rm -f *dmg" >>$LOG 2>&1
