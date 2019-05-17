@@ -40,6 +40,14 @@ SqlExecutionArea::SqlExecutionArea(DBBrowserDB& _db, QWidget* parent) :
 
     connect(&fileSystemWatch, &QFileSystemWatcher::fileChanged, this, &SqlExecutionArea::fileChanged);
 
+    // Save to settings when sppliter is moved, but only to memory.
+    connect(ui->splitter, &QSplitter::splitterMoved, this,  [this]() {
+            Settings::setValue("editor", "splitter1_sizes", ui->splitter->saveState(), /* dont_save_to_disk */ true);
+        });
+    connect(ui->splitter_2, &QSplitter::splitterMoved, this, [this]() {
+            Settings::setValue("editor", "splitter2_sizes", ui->splitter_2->saveState(), /* dont_save_to_disk */ true);
+        });
+
     // Set collapsible the editErrors panel
     ui->splitter_2->setCollapsible(1, true);
 
@@ -49,6 +57,10 @@ SqlExecutionArea::SqlExecutionArea(DBBrowserDB& _db, QWidget* parent) :
 
 SqlExecutionArea::~SqlExecutionArea()
 {
+    // Save to disk last stored splitter sizes
+    Settings::setValue("editor", "splitter1_sizes", Settings::getValue("editor", "splitter1_sizes"));
+    Settings::setValue("editor", "splitter2_sizes", Settings::getValue("editor", "splitter1_sizes"));
+
     delete ui;
 }
 
@@ -133,6 +145,9 @@ void SqlExecutionArea::reloadSettings()
         ui->splitter->setOrientation(Qt::Horizontal);
     else
         ui->splitter->setOrientation(Qt::Vertical);
+
+    ui->splitter->restoreState(Settings::getValue("editor", "splitter1_sizes").toByteArray());
+    ui->splitter_2->restoreState(Settings::getValue("editor", "splitter2_sizes").toByteArray());
 
     // Set prefetch settings
     model->setChunkSize(static_cast<std::size_t>(Settings::getValue("db", "prefetchsize").toUInt()));

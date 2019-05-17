@@ -295,6 +295,14 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
     if(group == "editor" && name == "horizontal_tiling")
         return false;
 
+    // editor/splitter1_sizes?
+    if(group == "editor" && name == "splitter1_sizes")
+        return QVariant();
+
+    // editor/splitter2_sizes?
+    if(group == "editor" && name == "splitter2_sizes")
+        return QVariant();
+
     // extensions/list?
     if(group == "extensions" && name == "list")
         return QStringList();
