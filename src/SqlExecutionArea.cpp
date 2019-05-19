@@ -305,7 +305,7 @@ void SqlExecutionArea::fileChanged(const QString& filename)
 
 void SqlExecutionArea::saveState() {
 
-  // Save to disk last stored splitter sizes
-  Settings::setValue("editor", "splitter1_sizes", Settings::getValue("editor", "splitter1_sizes"));
-  Settings::setValue("editor", "splitter2_sizes", Settings::getValue("editor", "splitter1_sizes"));
+    // Save to disk last stored splitter sizes
+    Settings::setValue("editor", "splitter1_sizes", Settings::getValue("editor", "splitter1_sizes"));
+    Settings::setValue("editor", "splitter2_sizes", Settings::getValue("editor", "splitter2_sizes"));
 }
