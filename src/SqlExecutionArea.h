@@ -39,6 +39,9 @@ public:
 
     bool inErrorState() const { return error_state; }
 
+    // Save window state to settings
+    static void saveState();
+
 public slots:
     void finishExecution(const QString& result, const bool ok);
     void saveAsCsv();

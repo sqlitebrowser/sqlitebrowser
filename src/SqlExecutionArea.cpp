@@ -57,10 +57,6 @@ SqlExecutionArea::SqlExecutionArea(DBBrowserDB& _db, QWidget* parent) :
 
 SqlExecutionArea::~SqlExecutionArea()
 {
-    // Save to disk last stored splitter sizes
-    Settings::setValue("editor", "splitter1_sizes", Settings::getValue("editor", "splitter1_sizes"));
-    Settings::setValue("editor", "splitter2_sizes", Settings::getValue("editor", "splitter1_sizes"));
-
     delete ui;
 }
 
@@ -305,4 +301,11 @@ void SqlExecutionArea::fileChanged(const QString& filename)
         // The file does not match the file on the disk anymore. So set the modified flag
         ui->editEditor->setModified(true);
     }
+}
+
+void SqlExecutionArea::saveState() {
+
+  // Save to disk last stored splitter sizes
+  Settings::setValue("editor", "splitter1_sizes", Settings::getValue("editor", "splitter1_sizes"));
+  Settings::setValue("editor", "splitter2_sizes", Settings::getValue("editor", "splitter1_sizes"));
 }

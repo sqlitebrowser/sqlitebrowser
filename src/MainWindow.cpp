@@ -967,6 +967,8 @@ void MainWindow::closeEvent( QCloseEvent* event )
         Settings::setValue("SchemaDock", "dropQualifiedNames", ui->actionDropQualifiedCheck->isChecked());
         Settings::setValue("SchemaDock", "dropEnquotedNames", ui->actionEnquoteNamesCheck->isChecked());
 
+        SqlExecutionArea::saveState();
+
         QMainWindow::closeEvent(event);
     } else {
         event->ignore();
