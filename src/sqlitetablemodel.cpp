@@ -13,7 +13,7 @@
 #include <QUrl>
 #include <QtConcurrent/QtConcurrentRun>
 #include <QProgressDialog>
-#include <json.hpp>
+#include <nlohmann/json.hpp>
 
 #include "RowLoader.h"
 

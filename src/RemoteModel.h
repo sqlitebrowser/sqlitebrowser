@@ -4,7 +4,7 @@
 #include <QAbstractItemModel>
 #include <QStringList>
 
-#include <json.hpp>
+#include <nlohmann/json.hpp>
 
 class RemoteDatabase;
 

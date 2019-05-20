@@ -20,8 +20,8 @@
 #include <atomic>
 #include <algorithm>
 #include <cctype>
-#include <json.hpp>
 #include <regex>
+#include <nlohmann/json.hpp>
 
 using json = nlohmann::json;
 

@@ -1,5 +1,6 @@
 project(sqlitebrowser)
-cmake_minimum_required(VERSION 2.8.12.2)
+# minimum version also depending on nlohmann/JSON
+cmake_minimum_required(VERSION 3.1)
 
 # BUILD_VERSION is the current date in YYYYMMDD format. It is only
 # used by the nightly version to add the date of the build.
@@ -19,6 +20,16 @@ OPTION(FORCE_INTERNAL_ANTLR "Don't use the distribution's Antlr library even if 
 OPTION(FORCE_INTERNAL_QSCINTILLA "Don't use the distribution's QScintilla library even if there is one" OFF)
 OPTION(FORCE_INTERNAL_QCUSTOMPLOT "Don't use distribution's QCustomPlot even if available" ON)
 OPTION(ALL_WARNINGS "Enable some useful warning flags" OFF)
+OPTION(OPT_JSON_BUILD_TESTS "Build nlohmann/JSON library with tests" OFF)
+OPTION(OPT_JSON_ENABLE_INSTALL "Enable nlohmann/JSON lbirary target install" OFF)
+
+# Settings to control build of dependent library - nlohmann/JSON
+# build tests in nlohmann library
+# Default: in nlohmann library - ON || this project - OFF)
+set(JSON_BuildTests ${OPT_JSON_BUILD_TESTS} CACHE BOOL "Disable testing in nlohmann/JSON")
+# install target library nlohmann JSON during install
+# Default: in nlohmann library - ON || this project - OFF)
+set(JSON_Install ${OPT_JSON_ENABLE_INSTALL} CACHE BOOL "Disable installing nlohmann/JSON target during installtion")
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release")
@@ -77,7 +88,7 @@ else()
 endif()
 set(QHEXEDIT_DIR libs/qhexedit)
 set(QHEXEDIT_INCL_DIR ${QHEXEDIT_DIR}/src)
-set(JSON_DIR libs/json)
+set(JSON_DIR libs/nlohmann_JSON/)
 
 if(NOT ANTLR2_FOUND)
     set(ANTLR_DIR libs/antlr-2.7.7)
@@ -365,9 +376,10 @@ endif()
 include_directories(
 		"${CMAKE_CURRENT_BINARY_DIR}"
 		${QHEXEDIT_INCL_DIR}
-		${JSON_DIR}
+        "${JSON_DIR}/include"
 		${ADDITIONAL_INCLUDE_PATHS}
 		src)
+
 if(QCUSTOMPLOT_FOUND)
     include_directories(${QCUSTOMPLOT_INCLUDE_DIR})
 else()

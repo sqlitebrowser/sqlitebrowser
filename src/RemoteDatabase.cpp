@@ -14,7 +14,7 @@
 #include <QtNetwork/QNetworkProxyFactory>
 #include <QTimeZone>
 #include <QtNetwork/QNetworkProxy>
-#include <json.hpp>
+#include <nlohmann/json.hpp>
 
 #include <iterator>
 
