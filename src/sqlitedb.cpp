@@ -525,7 +525,7 @@ bool DBBrowserDB::setSavepoint(const QString& pointname)
         return true;
 
     QString query = QString("SAVEPOINT %1;").arg(sqlb::escapeIdentifier(pointname));
-    executeSQL(query, false, false);
+    executeSQL(query, false, true);
     savepointList.append(pointname);
     emit dbChanged(getDirty());
 
@@ -543,7 +543,7 @@ bool DBBrowserDB::releaseSavepoint(const QString& pointname)
         return true;
 
     QString query = QString("RELEASE %1;").arg(sqlb::escapeIdentifier(pointname));
-    if(!executeSQL(query, false, false))
+    if(!executeSQL(query, false, true))
         return false;
     // SQLite releases all savepoints that were created between
     // creation of given savepoint and releasing of it,
@@ -561,9 +561,9 @@ bool DBBrowserDB::revertToSavepoint(const QString& pointname)
         return false;
 
     QString query = QString("ROLLBACK TO SAVEPOINT %1;").arg(sqlb::escapeIdentifier(pointname));
-    executeSQL(query, false, false);
+    executeSQL(query, false, true);
     query = QString("RELEASE %1;").arg(sqlb::escapeIdentifier(pointname));
-    executeSQL(query, false, false);
+    executeSQL(query, false, true);
     // SQLite releases all savepoints that were created between
     // creation of given savepoint and releasing of it,
     // so we should too
@@ -589,7 +589,7 @@ bool DBBrowserDB::releaseAllSavepoints()
 
     // When still in a transaction, commit that too
     if(sqlite3_get_autocommit(_db) == 0)
-        executeSQL("COMMIT;", false, false);
+        executeSQL("COMMIT;", false, true);
 
     return true;
 }
