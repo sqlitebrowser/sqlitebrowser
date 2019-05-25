@@ -32,6 +32,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 if (POLICY CMP0025)
     cmake_policy(SET CMP0025 NEW)
 endif ()
+# Fix warning of AUTOMOC behavior
+if (POLICY CMP0071)
+    # Use of AUTOMOC is set to old for now for consistency.
+    # Affects of 'new' behavior is as yet to be determined.
+    # https://cmake.org/cmake/help/latest/policy/CMP0071.html
+    cmake_policy(SET CMP0071 OLD)
+endif()
 
 if(WIN32 AND MSVC)
 	if(CMAKE_CL_64)
