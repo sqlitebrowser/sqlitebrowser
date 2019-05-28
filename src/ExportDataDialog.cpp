@@ -296,17 +296,23 @@ bool ExportDataDialog::exportQueryJson(const QString& sQuery, const QString& sFi
 
 void ExportDataDialog::accept()
 {
-    QString file_dialog_filter;
+    QStringList file_dialog_filter;
     QString default_file_extension;
     switch(m_format)
     {
     case ExportFormatCsv:
-        file_dialog_filter = tr("Text files(*.csv *.txt)");
-        default_file_extension = ".csv";
+        file_dialog_filter << FILE_FILTER_CSV
+                           << FILE_FILTER_TSV
+                           << FILE_FILTER_DSV
+                           << FILE_FILTER_TXT
+                           << FILE_FILTER_ALL;
+        default_file_extension = FILE_EXT_CSV_DEFAULT;
         break;
     case ExportFormatJson:
-        file_dialog_filter = tr("Text files(*.json *.js *.txt)");
-        default_file_extension = ".json";
+        file_dialog_filter << FILE_FILTER_JSON
+                           << FILE_FILTER_TXT
+                           << FILE_FILTER_ALL;
+        default_file_extension = FILE_EXT_JSON_DEFAULT;
         break;
     }
 
@@ -317,7 +323,7 @@ void ExportDataDialog::accept()
                 CreateDataFile,
                 this,
                 tr("Choose a filename to export data"),
-                file_dialog_filter);
+                file_dialog_filter.join(";;"));
         if(sFilename.isEmpty())
         {
             close();
@@ -344,7 +350,7 @@ void ExportDataDialog::accept()
                     CreateDataFile,
                     this,
                     tr("Choose a filename to export data"),
-                    file_dialog_filter,
+                    file_dialog_filter.join(";;"),
                     selectedItems.at(0)->text() + default_file_extension);
             if(fileName.isEmpty())
             {

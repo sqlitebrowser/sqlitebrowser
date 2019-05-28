@@ -78,15 +78,15 @@ void ExportSqlDialog::accept()
     // Try to find a default file name
     QString defaultFileName;
     if(selectedItems.count() == 1)  // One table -> Suggest table name
-        defaultFileName = selectedItems.at(0)->text() + ".sql";
+        defaultFileName = selectedItems.at(0)->text() + FILE_EXT_SQL_DEFAULT;
     else if(selectedItems.count() == ui->listTables->count())   // All tables -> Suggest database name
-        defaultFileName = pdb->currentFile() + ".sql";;
+        defaultFileName = pdb->currentFile() + FILE_EXT_SQL_DEFAULT;;
 
     QString fileName = FileDialog::getSaveFileName(
                 CreateSQLFile,
                 this,
                 tr("Choose a filename to export"),
-                tr("Text files(*.sql *.txt)"),
+                FILE_FILTER_SQL,
                 defaultFileName);
     if(fileName.isEmpty())
         return;

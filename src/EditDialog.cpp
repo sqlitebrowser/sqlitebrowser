@@ -289,11 +289,12 @@ void EditDialog::importData()
     image_formats.chop(1);
 
     QStringList filters;
-    filters << tr("Text files (*.txt)") <<
-        tr("JSON files (*.json)") <<
-        tr("XML files (*.xml)") <<
-        tr("Image files (%1)").arg(image_formats) <<
-        tr("Binary files (*.bin)") << tr("All files (*)");
+    filters << FILE_FILTER_TXT
+            << FILE_FILTER_JSON
+            << FILE_FILTER_XML
+            << tr("Image files (%1)").arg(image_formats)
+            << FILE_FILTER_BIN
+            << FILE_FILTER_ALL;
 
     QString selectedFilter;
 
@@ -303,19 +304,19 @@ void EditDialog::importData()
     // Set as selected filter the appropriate for the current mode.
     switch (mode) {
     case TextEditor:
-        selectedFilter = tr("Text files (*.txt)");
+        selectedFilter = FILE_FILTER_TXT;
         break;
     case HexEditor:
-        selectedFilter = tr("Binary files (*.bin)");
+        selectedFilter = FILE_FILTER_BIN;
         break;
     case ImageViewer:
         selectedFilter = tr("Image files (%1)").arg(image_formats);
         break;
     case JsonEditor:
-        selectedFilter = tr("JSON files (*.json)");
+        selectedFilter = FILE_FILTER_JSON;
         break;
     case XmlEditor:
-        selectedFilter = tr("XML files (*.xml)");
+        selectedFilter = FILE_FILTER_XML;
         break;
     }
     QString fileName = FileDialog::getOpenFileName(
@@ -363,27 +364,29 @@ void EditDialog::exportData()
     case Text:
         // Include the XML case on the text data type, since XML detection is not very sofisticated.
         if (ui->comboMode->currentIndex() == XmlEditor)
-            filters << tr("XML files (*.xml)") << tr("Text files (*.txt)");
+            filters << FILE_FILTER_XML
+                    << FILE_FILTER_TXT;
         else
-            filters << tr("Text files (*.txt)") << tr("XML files (*.xml)");
+            filters << FILE_FILTER_TXT
+                    << FILE_FILTER_XML;
         break;
     case JSON:
-        filters << tr("JSON files (*.json)");
+        filters << FILE_FILTER_JSON;
         break;
     case SVG:
-        filters << tr("SVG files (*.svg)");
+        filters << FILE_FILTER_SVG;
         break;
     case XML:
-        filters << tr("XML files (*.xml)");
+        filters << FILE_FILTER_XML;
         break;
     case Null:
         return;
     }
 
     if (dataSource == HexBuffer)
-        filters << tr("Hex dump files (*.txt)");
+        filters << FILE_FILTER_HEX;
 
-    filters << tr("All files (*)");
+    filters << FILE_FILTER_ALL;
 
     QString selectedFilter = filters.first();
     QString fileName = FileDialog::getSaveFileName(
@@ -402,7 +405,7 @@ void EditDialog::exportData()
           case HexBuffer:
               // Data source is the hex buffer
               // If text option has been selected, the readable representation of the content is saved to file.
-              if (selectedFilter == tr("Hex dump files (*.txt)"))
+              if (selectedFilter == FILE_FILTER_HEX)
                   file.write(hexEdit->toReadableString().toUtf8());
               else
                   file.write(hexEdit->data());
