@@ -215,7 +215,6 @@ void ImportCsvDialog::accept()
         importCsv(csvFilenames.first());
     }
 
-    QMessageBox::information(this, QApplication::applicationName(), tr("Import completed"));
     QApplication::restoreOverrideCursor();  // restore original cursor
     QDialog::accept();
 }

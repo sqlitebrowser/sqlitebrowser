@@ -1639,11 +1639,18 @@ void MainWindow::mainTabSelected(int /*tabindex*/)
 
 void MainWindow::importTableFromCSV()
 {
+    QStringList file_filter;
+    file_filter << FILE_FILTER_CSV
+                << FILE_FILTER_TSV
+                << FILE_FILTER_DSV
+                << FILE_FILTER_TXT
+                << FILE_FILTER_ALL;
+
     QStringList wFiles = FileDialog::getOpenFileNames(
                              OpenCSVFile,
                              this,
                              tr("Choose text files"),
-                             tr("Text files(*.csv *.txt);;All files(*)"));
+                             file_filter.join(";;"));
 
     QStringList validFiles;
     for(const auto& file : wFiles) {
@@ -1747,18 +1754,24 @@ void MainWindow::exportDatabaseToSQL()
 
 void MainWindow::importDatabaseFromSQL()
 {
+    QStringList file_filter;
+    file_filter << FILE_FILTER_SQL
+                << FILE_FILTER_TXT
+                << FILE_FILTER_ALL;
+
     // Get file name to import
     QString fileName = FileDialog::getOpenFileName(
                 OpenSQLFile,
                 this,
                 tr("Choose a file to import"),
-                tr("Text files(*.sql *.txt);;All files(*)"));
+                file_filter.join(";;"));
 
     // Cancel when file doesn't exist
     if(!QFile::exists(fileName))
         return;
 
-    // If there is already a database file opened ask the user whether to import into this one or a new one. If no DB is opened just ask for a DB name directly
+    // If there is already a database file opened ask the user whether to import into
+    // this one or a new one. If no DB is opened just ask for a DB name directly
     QString newDbFile;
     if((db.isOpen() && QMessageBox::question(this,
                                             QApplication::applicationName(),
@@ -1909,7 +1922,7 @@ void MainWindow::updateRecentFileActions()
     // Get recent files list from settings
     QStringList files = Settings::getValue("General", "recentFileList").toStringList();
 
-    // Check if files still exist and remove any non-existant file
+    // Check if files still exist and remove any non-existent file
     for(int i=0;i<files.size();i++)
     {
         QFileInfo fi(files.at(i));
@@ -2381,11 +2394,15 @@ void MainWindow::saveSqlFileAs()
     if(!sqlarea)
         return;
 
+    QStringList file_filter;
+    file_filter << FILE_FILTER_SQL
+                << FILE_FILTER_TXT
+                << FILE_FILTER_ALL;
     QString file = FileDialog::getSaveFileName(
                 CreateSQLFile,
                 this,
                 tr("Select file name"),
-                tr("Text files(*.sql *.txt);;All files(*)"));
+                file_filter.join(";;"));
 
     if(!file.isEmpty())
     {
@@ -2408,11 +2425,15 @@ void MainWindow::saveSqlResultsAsView()
 
 void MainWindow::loadExtension()
 {
+    QStringList file_filter;
+    file_filter << FILE_FILTER_DYN
+                << FILE_FILTER_ALL;
+
     QString file = FileDialog::getOpenFileName(
                 OpenExtensionFile,
                 this,
                 tr("Select extension file"),
-                tr("Extensions(*.so *.dylib *.dll);;All files(*)"));
+                file_filter.join(";;"));
 
     if(file.isEmpty())
         return;
@@ -3055,7 +3076,7 @@ QString MainWindow::saveProject(const QString& currentFilename)
                            CreateProjectFile,
                            this,
                            tr("Choose a filename to save under"),
-                           tr("DB Browser for SQLite project file (*.sqbpro)"),
+                           FILE_FILTER_SQLPRJ,
                            basePathName);
     } else
         filename = currentFilename;
@@ -3063,8 +3084,8 @@ QString MainWindow::saveProject(const QString& currentFilename)
     if(!filename.isEmpty())
     {
         // Make sure the file has got a .sqbpro ending
-        if(!filename.endsWith(".sqbpro", Qt::CaseInsensitive))
-            filename.append(".sqbpro");
+        if(!filename.endsWith(FILE_EXT_SQLPRJ_DEFAULT, Qt::CaseInsensitive))
+            filename.append(FILE_EXT_SQLPRJ_DEFAULT);
 
         QFile file(filename);
         bool opened = file.open(QFile::WriteOnly | QFile::Text);
