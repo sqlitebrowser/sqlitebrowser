@@ -308,7 +308,7 @@ static long calc_number_of_objects_by_type(const objectMap& objmap, const std::s
     if(objects.first == objmap.end())
         return 0;
     else
-        return std::distance(objects.first, objects.second) + 1;
+        return std::distance(objects.first, objects.second);
 }
 
 void DbStructureModel::buildTree(QTreeWidgetItem* parent, const std::string& schema)
