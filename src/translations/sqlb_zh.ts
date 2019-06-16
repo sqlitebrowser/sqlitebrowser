@@ -4274,7 +4274,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>, %1 rows affected</source>
-        <translation type="vanished">%1 行数据受影响</translation>
+        <translation type="vanished">，%1 行数据受影响</translation>
     </message>
     <message>
         <source>Query executed successfully: %1 (took %2ms%3)</source>
@@ -6147,7 +6147,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../RunSql.cpp" line="204"/>
         <source>, %1 rows affected</source>
-        <translation type="unfinished">%1 行数据受影响</translation>
+        <translation type="unfinished">，%1 行数据受影响</translation>
     </message>
     <message>
         <location filename="../RunSql.cpp" line="218"/>
