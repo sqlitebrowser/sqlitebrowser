@@ -47,6 +47,19 @@ git pull
 git clean -dffx
 
 
+:: Get the current commit hash
+FOR /F %%A IN ('git rev-parse --verify HEAD') DO SET CURRENT_COMMIT=%%A
+
+:: Get the last build commit hash from the server
+curl -f -L -o commit.txt "https://nightlies.sqlitebrowser.org/win32/commit.txt"
+
+:: Save the hash to a variable for comparison
+IF EXIST "commit.txt" SET /P LAST_COMMIT=<commit.txt
+
+:: Do not continue if there are no changes
+IF "%CURRENT_COMMIT%"=="%LAST_COMMIT%" EXIT
+
+
 :: WIN32 SQLITE BUILD PROCEDURE
 
 :: Set path variables
@@ -111,6 +124,10 @@ MOVE %CD%\zip\System\* "%CD%\zip\DB Browser for SQLite"
 %ZIP_EXE% a "DB.Browser.for.SQLite-%RUN_DATE%-win32.zip" "%CD%\zip\DB Browser for SQLite"
 RMDIR /S /Q %CD%\zip
 
+
+:: Save the last commit hash to 'commit.txt' and upload it to the nightlies server
+git rev-parse --verify HEAD 1>commit.txt
+pscp -q -p -i C:\dev\puttygen_private.ppk "%DEST_PATH%\commit.txt" nightlies@nightlies.sqlitebrowser.org:/nightlies/win32
 
 :: Upload the packages to the nightlies server
 pscp -q -p -i C:\dev\puttygen_private.ppk "%DEST_PATH%\DB*%RUN_DATE%*win32.*" nightlies@nightlies.sqlitebrowser.org:/nightlies/win32
