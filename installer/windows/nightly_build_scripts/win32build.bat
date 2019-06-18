@@ -126,7 +126,8 @@ RMDIR /S /Q %CD%\zip
 
 
 :: Save the last commit hash to 'commit.txt' and upload it to the nightlies server
-git rev-parse --verify HEAD 1>commit.txt
+CD C:\\git_repos\\sqlitebrowser
+git rev-parse --verify HEAD 1>C:\\builds\\commit.txt
 pscp -q -p -i C:\dev\puttygen_private.ppk "%DEST_PATH%\commit.txt" nightlies@nightlies.sqlitebrowser.org:/nightlies/win32
 
 :: Upload the packages to the nightlies server
