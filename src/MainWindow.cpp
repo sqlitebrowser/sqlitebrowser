@@ -251,7 +251,7 @@ void MainWindow::init()
     for(int i = 0; i < MaxRecentFiles; ++i) {
         recentFileActs[i] = new QAction(this);
         recentFileActs[i]->setVisible(false);
-        connect(recentFileActs[i], SIGNAL(triggered()), this, SLOT(openRecentFile()));
+        connect(recentFileActs[i], &QAction::triggered, this, &MainWindow::openRecentFile);
     }
     for(int i = 0; i < MaxRecentFiles; ++i)
         ui->fileMenu->insertAction(ui->fileExitAction, recentFileActs[i]);
@@ -1925,8 +1925,7 @@ void MainWindow::updateRecentFileActions()
     // Check if files still exist and remove any non-existent file
     for(int i=0;i<files.size();i++)
     {
-        QFileInfo fi(files.at(i));
-        if(!fi.exists())
+        if(!QFileInfo::exists(files.at(i)))
         {
             files.removeAt(i);
             i--;
