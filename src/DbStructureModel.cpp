@@ -1,4 +1,5 @@
 #include "DbStructureModel.h"
+#include <IconCache.h>
 #include "sqlitedb.h"
 #include "sqlitetablemodel.h"
 #include "Settings.h"
@@ -160,12 +161,12 @@ void DbStructureModel::reloadData()
     // The second node contains four sub-nodes (tables, indices, views and triggers), each containing a list of objects of that type.
     // This way we only have to have and only have to update one model and can use it in all sorts of places, just by setting a different root node.
     browsablesRootItem = new QTreeWidgetItem(rootItem);
-    browsablesRootItem->setIcon(ColumnName, QIcon(QString(":/icons/view")));
+    browsablesRootItem->setIcon(ColumnName, IconCache::get("view"));
     browsablesRootItem->setText(ColumnName, tr("Browsables"));
 
     // Make sure to always load the main schema first
     QTreeWidgetItem* itemAll = new QTreeWidgetItem(rootItem);
-    itemAll->setIcon(ColumnName, QIcon(QString(":/icons/database")));
+    itemAll->setIcon(ColumnName, IconCache::get("database"));
     itemAll->setText(ColumnName, tr("All"));
     itemAll->setText(ColumnObjectType, "database");
     buildTree(itemAll, "main");
@@ -174,7 +175,7 @@ void DbStructureModel::reloadData()
     if(!m_db.schemata["temp"].empty())
     {
         QTreeWidgetItem* itemTemp = new QTreeWidgetItem(itemAll);
-        itemTemp->setIcon(ColumnName, QIcon(QString(":/icons/database")));
+        itemTemp->setIcon(ColumnName, IconCache::get("database"));
         itemTemp->setText(ColumnName, tr("Temporary"));
         itemTemp->setText(ColumnObjectType, "database");
         buildTree(itemTemp, "temp");
@@ -187,7 +188,7 @@ void DbStructureModel::reloadData()
         if(it.first != "main" && it.first != "temp")
         {
             QTreeWidgetItem* itemSchema = new QTreeWidgetItem(itemAll);
-            itemSchema->setIcon(ColumnName, QIcon(QString(":/icons/database")));
+            itemSchema->setIcon(ColumnName, IconCache::get("database"));
             itemSchema->setText(ColumnName, QString::fromStdString(it.first));
             itemSchema->setText(ColumnObjectType, "database");
             buildTree(itemSchema, it.first);
@@ -321,22 +322,22 @@ void DbStructureModel::buildTree(QTreeWidgetItem* parent, const std::string& sch
 
     // Prepare tree
     QTreeWidgetItem* itemTables = new QTreeWidgetItem(parent);
-    itemTables->setIcon(ColumnName, QIcon(QString(":/icons/table")));
+    itemTables->setIcon(ColumnName, IconCache::get("table"));
     itemTables->setText(ColumnName, tr("Tables (%1)").arg(calc_number_of_objects_by_type(objmap, "table")));
     typeToParentItem.insert({"table", itemTables});
 
     QTreeWidgetItem* itemIndices = new QTreeWidgetItem(parent);
-    itemIndices->setIcon(ColumnName, QIcon(QString(":/icons/index")));
+    itemIndices->setIcon(ColumnName, IconCache::get("index"));
     itemIndices->setText(ColumnName, tr("Indices (%1)").arg(calc_number_of_objects_by_type(objmap, "index")));
     typeToParentItem.insert({"index", itemIndices});
 
     QTreeWidgetItem* itemViews = new QTreeWidgetItem(parent);
-    itemViews->setIcon(ColumnName, QIcon(QString(":/icons/view")));
+    itemViews->setIcon(ColumnName, IconCache::get("view"));
     itemViews->setText(ColumnName, tr("Views (%1)").arg(calc_number_of_objects_by_type(objmap, "view")));
     typeToParentItem.insert({"view", itemViews});
 
     QTreeWidgetItem* itemTriggers = new QTreeWidgetItem(parent);
-    itemTriggers->setIcon(ColumnName, QIcon(QString(":/icons/trigger")));
+    itemTriggers->setIcon(ColumnName, IconCache::get("trigger"));
     itemTriggers->setText(ColumnName, tr("Triggers (%1)").arg(calc_number_of_objects_by_type(objmap, "trigger")));
     typeToParentItem.insert({"trigger", itemTriggers});
 
@@ -377,11 +378,11 @@ void DbStructureModel::buildTree(QTreeWidgetItem* parent, const std::string& sch
                 fldItem->setText(ColumnSQL, QString::fromStdString(field.sql));
                 fldItem->setText(ColumnSchema, QString::fromStdString(schema));
                 if(contains(pk_columns, field.name))
-                    fldItem->setIcon(ColumnName, QIcon(":/icons/field_key"));
+                    fldItem->setIcon(ColumnName, IconCache::get("field_key"));
                 else if(isFK)
-                    fldItem->setIcon(ColumnName, QIcon(":/icons/field_fk"));
+                    fldItem->setIcon(ColumnName, IconCache::get("field_fk"));
                 else
-                    fldItem->setIcon(ColumnName, QIcon(":/icons/field"));
+                    fldItem->setIcon(ColumnName, IconCache::get("field"));
             }
         }
     }
@@ -389,12 +390,12 @@ void DbStructureModel::buildTree(QTreeWidgetItem* parent, const std::string& sch
 
 QTreeWidgetItem* DbStructureModel::addNode(QTreeWidgetItem* parent, const sqlb::ObjectPtr& object, const std::string& schema)
 {
-    QString type = QString::fromStdString(sqlb::Object::typeToString(object->type()));
+    std::string type = sqlb::Object::typeToString(object->type());
 
     QTreeWidgetItem *item = new QTreeWidgetItem(parent);
-    item->setIcon(ColumnName, QIcon(QString(":/icons/%1").arg(type)));
+    item->setIcon(ColumnName, IconCache::get(type));
     item->setText(ColumnName, QString::fromStdString(object->name()));
-    item->setText(ColumnObjectType, type);
+    item->setText(ColumnObjectType, QString::fromStdString(type));
     item->setText(ColumnSQL, QString::fromStdString(object->originalSql()));
     item->setText(ColumnSchema, QString::fromStdString(schema));
 

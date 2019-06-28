@@ -75,7 +75,8 @@ HEADERS += \
     sql/Query.h \
     RunSql.h \
     sql/ObjectIdentifier.h \
-    ProxyDialog.h
+    ProxyDialog.h \
+    IconCache.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -127,7 +128,8 @@ SOURCES += \
     sql/Query.cpp \
     RunSql.cpp \
     sql/ObjectIdentifier.cpp \
-    ProxyDialog.cpp
+    ProxyDialog.cpp \
+    IconCache.cpp
 
 RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc \

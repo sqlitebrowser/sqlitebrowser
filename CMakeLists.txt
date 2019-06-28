@@ -127,6 +127,7 @@ set(SQLB_HDR
 	src/grammar/Sqlite3Lexer.hpp
 	src/grammar/Sqlite3Parser.hpp
 	src/Data.h
+	src/IconCache.h
 )
 
 set(SQLB_MOC_HDR
@@ -228,6 +229,7 @@ set(SQLB_SRC
 	src/CondFormat.cpp
 	src/RunSql.cpp
 	src/ProxyDialog.cpp
+	src/IconCache.cpp
 )
 
 set(SQLB_FORMS
