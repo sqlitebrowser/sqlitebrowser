@@ -63,6 +63,7 @@ private:
     QByteArray removedBom;
 
     enum DataSources {
+        QtBuffer,
         HexBuffer,
         SciBuffer
     };
@@ -75,18 +76,22 @@ private:
         Text,
         JSON,
         SVG,
-        XML
+        XML,
+        RtlText
     };
 
     // Edit modes and editor stack (this must be aligned with the UI).
     // Note that text modes (plain, JSON and XML) share the Scintilla widget,
     // Consequently the editor stack range is TextEditor..ImageViewer.
     enum EditModes {
+        // Modes with their own widget in the stack:
         TextEditor = 0,
-        HexEditor = 1,
-        ImageViewer = 2,
-        JsonEditor = 3,
-        XmlEditor = 4
+        RtlTextEditor = 1,
+        HexEditor = 2,
+        ImageViewer = 3,
+        // Modes in the Scintilla editor:
+        JsonEditor = 4,
+        XmlEditor = 5
     };
 
     int checkDataType(const QByteArray& bArrdata);
