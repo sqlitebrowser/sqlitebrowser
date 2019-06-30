@@ -53,6 +53,11 @@
        </item>
        <item>
         <property name="text">
+         <string>RTL Text</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
          <string>Binary</string>
         </property>
        </item>
@@ -137,6 +142,25 @@
 Errors are indicated with a red squiggle underline.</string>
       </property>
      </widget>
+     <widget class="QWidget" name="rtlVerticalLayout">
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QTextEdit" name="qtEdit">
+         <property name="font">
+          <font>
+           <family>Monospace</family>
+          </font>
+         </property>
+         <property name="whatsThis">
+          <string>This Qt editor is used for right-to-left scripts, which are not supported by the default Text editor. The presence of right-to-left characters is detected and this editor mode is automatically selected.</string>
+         </property>
+         <property name="acceptRichText">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
      <widget class="QWidget" name="editorBinary">
       <property name="contextMenuPolicy">
        <enum>Qt::ActionsContextMenu</enum>
@@ -151,8 +175,8 @@ Errors are indicated with a red squiggle underline.</string>
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>85</width>
-         <height>35</height>
+         <width>598</width>
+         <height>264</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -417,6 +441,22 @@ Errors are indicated with a red squiggle underline.</string>
     <hint type="destinationlabel">
      <x>201</x>
      <y>431</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>qtEdit</sender>
+   <signal>textChanged()</signal>
+   <receiver>EditDialog</receiver>
+   <slot>editTextChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>279</x>
+     <y>191</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>339</x>
+     <y>335</y>
     </hint>
    </hints>
   </connection>
