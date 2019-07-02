@@ -18,6 +18,7 @@ OPTION(ENABLE_TESTING "Enable the unit tests" OFF)
 OPTION(FORCE_INTERNAL_ANTLR "Don't use the distribution's Antlr library even if there is one" OFF)
 OPTION(FORCE_INTERNAL_QSCINTILLA "Don't use the distribution's QScintilla library even if there is one" OFF)
 OPTION(FORCE_INTERNAL_QCUSTOMPLOT "Don't use distribution's QCustomPlot even if available" ON)
+OPTION(FORCE_INTERNAL_QHEXEDIT "Don't use distribution's QHexEdit even if available" ON)
 OPTION(ALL_WARNINGS "Enable some useful warning flags" OFF)
 
 if(NOT CMAKE_BUILD_TYPE)
@@ -32,6 +33,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 if (POLICY CMP0025)
     cmake_policy(SET CMP0025 NEW)
 endif ()
+# Fix warning of AUTOMOC behavior
+if (POLICY CMP0071)
+    # Use of AUTOMOC is set to old for now for consistency.
+    # Affects of 'new' behavior is as yet to be determined.
+    # https://cmake.org/cmake/help/latest/policy/CMP0071.html
+    cmake_policy(SET CMP0071 OLD)
+endif()
 
 if(WIN32 AND MSVC)
 	if(CMAKE_CL_64)
@@ -75,7 +83,11 @@ if(FORCE_INTERNAL_QCUSTOMPLOT)
 else()
     find_package(QCustomPlot)
 endif()
-set(QHEXEDIT_DIR libs/qhexedit)
+if(FORCE_INTERNAL_QHEXEDIT)
+    set(QHEXEDIT_FOUND FALSE)
+else()
+    find_package(QHexEdit)
+endif()
 set(JSON_DIR libs/json)
 
 if(NOT ANTLR2_FOUND)
@@ -86,7 +98,11 @@ if(NOT QSCINTILLA_FOUND)
     set(QSCINTILLA_DIR libs/qscintilla/Qt4Qt5)
     add_subdirectory(${QSCINTILLA_DIR})
 endif()
-add_subdirectory(${QHEXEDIT_DIR})
+if(NOT QHEXEDIT_FOUND)
+    set(QHEXEDIT_DIR libs/qhexedit)
+    set(QHEXEDIT_INCL_DIR ${QHEXEDIT_DIR}/src)
+    add_subdirectory(${QHEXEDIT_DIR})
+endif()
 add_subdirectory(${JSON_DIR})
 if(NOT QCUSTOMPLOT_FOUND)
     set(QCUSTOMPLOT_DIR libs/qcustomplot-source)
@@ -104,12 +120,14 @@ set(SQLB_HDR
 	src/version.h
 	src/sql/sqlitetypes.h
 	src/sql/Query.h
+	src/sql/ObjectIdentifier.h
 	src/csvparser.h
 	src/sqlite.h
 	src/grammar/sqlite3TokenTypes.hpp
 	src/grammar/Sqlite3Lexer.hpp
 	src/grammar/Sqlite3Parser.hpp
 	src/Data.h
+	src/IconCache.h
 )
 
 set(SQLB_MOC_HDR
@@ -156,6 +174,7 @@ set(SQLB_MOC_HDR
 	src/Palette.h
 	src/CondFormat.h
 	src/RunSql.h
+	src/ProxyDialog.h
 )
 
 set(SQLB_SRC
@@ -178,6 +197,7 @@ set(SQLB_SRC
 	src/RowLoader.cpp
 	src/sql/sqlitetypes.cpp
 	src/sql/Query.cpp
+	src/sql/ObjectIdentifier.cpp
 	src/sqltextedit.cpp
 	src/docktextedit.cpp
 	src/csvparser.cpp
@@ -208,6 +228,8 @@ set(SQLB_SRC
 	src/Palette.cpp
 	src/CondFormat.cpp
 	src/RunSql.cpp
+	src/ProxyDialog.cpp
+	src/IconCache.cpp
 )
 
 set(SQLB_FORMS
@@ -231,6 +253,7 @@ set(SQLB_FORMS
 	src/FindReplaceDialog.ui
 	src/FileExtensionManager.ui
 	src/CondFormatManager.ui
+	src/ProxyDialog.ui
 )
 
 set(SQLB_RESOURCES
@@ -358,10 +381,14 @@ endif()
 
 include_directories(
 		"${CMAKE_CURRENT_BINARY_DIR}"
-		${QHEXEDIT_DIR}
 		${JSON_DIR}
 		${ADDITIONAL_INCLUDE_PATHS}
 		src)
+if(QHEXEDIT_FOUND)
+    include_directories(${QHEXEDIT_INCLUDE_DIR})
+else()
+    include_directories(${QHEXEDIT_INCL_DIR})
+endif()
 if(QCUSTOMPLOT_FOUND)
     include_directories(${QCUSTOMPLOT_INCLUDE_DIR})
 else()
@@ -396,7 +423,9 @@ if (ALL_WARNINGS AND CMAKE_COMPILER_IS_GNUCC)
     endif()
 endif()
 
-add_dependencies(${PROJECT_NAME} qhexedit)
+if(NOT QHEXEDIT_FOUND)
+    add_dependencies(${PROJECT_NAME} qhexedit)
+endif()
 if(NOT QCUSTOMPLOT_FOUND)
     add_dependencies(${PROJECT_NAME} qcustomplot)
 endif()
@@ -407,7 +436,9 @@ if(NOT QSCINTILLA_FOUND)
     add_dependencies(${PROJECT_NAME} qscintilla2)
 endif()
 
-link_directories("${CMAKE_CURRENT_BINARY_DIR}/${QHEXEDIT_DIR}")
+if(NOT QHEXEDIT_FOUND)
+    link_directories("${CMAKE_CURRENT_BINARY_DIR}/${QHEXEDIT_DIR}")
+endif()
 if(NOT QCUSTOMPLOT_FOUND)
     link_directories("${CMAKE_CURRENT_BINARY_DIR}/${QCUSTOMPLOT_DIR}")
 endif()
@@ -421,12 +452,16 @@ endif()
 set(QT_LIBS Qt5::Gui Qt5::Test Qt5::PrintSupport Qt5::Widgets Qt5::Network Qt5::Concurrent Qt5::Xml)
 
 target_link_libraries(${PROJECT_NAME}
-    qhexedit
     ${LPTHREAD}
     ${QT_LIBS}
     ${WIN32_STATIC_LINK}
     ${LIBSQLITE}
     ${ADDITIONAL_LIBS})
+if(QHEXEDIT_FOUND)
+    target_link_libraries(${PROJECT_NAME} ${QHEXEDIT_LIBRARIES})
+else()
+    target_link_libraries(${PROJECT_NAME} qhexedit)
+endif()
 if(QCUSTOMPLOT_FOUND)
     target_link_libraries(${PROJECT_NAME} ${QCUSTOMPLOT_LIBRARIES})
 else()

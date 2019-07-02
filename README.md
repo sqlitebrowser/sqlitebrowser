@@ -55,7 +55,7 @@ Download nightly builds for Windows and OSX here:
 
 Download Windows releases here:
 
-* https://github.com/sqlitebrowser/sqlitebrowser/releases
+* https://sqlitebrowser.org/dl/#windows
 
 **Note** - If for some reason the standard Windows release does not work
 (e.g. gives an error), try a nightly build.  Nightly builds often fix bugs
@@ -69,7 +69,7 @@ DB Browser for SQLite works well on MacOS X / macOS.
 
 Download OSX releases here:
 
-* https://github.com/sqlitebrowser/sqlitebrowser/releases
+* https://sqlitebrowser.org/dl/#macos
 
 The latest OSX binary can be installed via [Homebrew Cask](https://caskroom.github.io/ "Homebrew Cask"):
 
@@ -205,6 +205,7 @@ Follow us on Twitter: https://twitter.com/sqlitebrowser
 
 ## Releases
 
+* [Version 3.11.2 released](https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/v3.11.2) - 2019-04-03
 * [Version 3.11.1 released](https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/v3.11.1) - 2019-02-18
 * [Version 3.11.0 released](https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/v3.11.0) - 2019-02-07
 * [Version 3.10.1 released](https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/v3.10.1) - 2017-09-20

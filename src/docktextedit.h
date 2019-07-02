@@ -2,8 +2,9 @@
 #define DOCKTEXTEDIT_H
 
 #include "ExtendedScintilla.h"
-#include <Qsci/qscilexerjson.h>
-#include <Qsci/qscilexerxml.h>
+
+class QsciLexerJSON;
+class QsciLexerXML;
 
 /**
  * @brief The DockTextEdit class

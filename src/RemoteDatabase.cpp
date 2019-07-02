@@ -10,15 +10,20 @@
 #include <QDir>
 #include <QStandardPaths>
 #include <QUrlQuery>
-#include <QJsonDocument>
-#include <QJsonObject>
 #include <QtNetwork/QHttpMultiPart>
+#include <QtNetwork/QNetworkProxyFactory>
 #include <QTimeZone>
+#include <QtNetwork/QNetworkProxy>
+#include <json.hpp>
+
+#include <iterator>
 
 #include "RemoteDatabase.h"
 #include "version.h"
 #include "Settings.h"
 #include "sqlite.h"
+
+using json = nlohmann::json;
 
 RemoteDatabase::RemoteDatabase() :
     m_manager(new QNetworkAccessManager),
@@ -75,10 +80,62 @@ void RemoteDatabase::reloadSettings()
         file.open(QFile::ReadOnly);
         QSslCertificate cert(&file);
         file.close();
-        m_clientCertFiles.insert(path, cert);
+        m_clientCertFiles.insert({path, cert});
     }
 
-    // TODO Add support for proxies here
+    // Always add the default certificate for anonymous access to dbhub.io
+    {
+        QFile file(":/user_certs/public.cert.pem");
+        file.open(QFile::ReadOnly);
+        QSslCertificate cert(&file);
+        file.close();
+        m_clientCertFiles.insert({":/user_certs/public.cert.pem", cert});
+    }
+
+    // Configure proxy to use
+    {
+        QString type = Settings::getValue("proxy", "type").toString();
+
+        QNetworkProxy proxy;
+        if(type == "system")
+        {
+            // For system settings we have to get the system-wide proxy and use that
+
+            // Get list of proxies for accessing dbhub.io via HTTPS and use the first one
+            auto list = QNetworkProxyFactory::systemProxyForQuery(QNetworkProxyQuery(QUrl("https://db4s.dbhub.io/")));
+            proxy = list.front();
+        } else {
+            // For any other type we have to set up our own proxy configuration
+
+            // Retrieve the required settings
+            QString host = Settings::getValue("proxy", "host").toString();
+            unsigned short port = static_cast<unsigned short>(Settings::getValue("proxy", "port").toUInt());
+            bool authentication = Settings::getValue("proxy", "authentication").toBool();
+
+            if(type == "http")
+                proxy.setType(QNetworkProxy::HttpProxy);
+            else if(type == "socks5")
+                proxy.setType(QNetworkProxy::Socks5Proxy);
+            else
+                proxy.setType(QNetworkProxy::NoProxy);
+
+            proxy.setHostName(host);
+            proxy.setPort(port);
+
+            // Only set authentication details when authentication is required
+            if(authentication)
+            {
+                QString user = Settings::getValue("proxy", "user").toString();
+                QString password = Settings::getValue("proxy", "password").toString();
+
+                proxy.setUser(user);
+                proxy.setPassword(password);
+            }
+        }
+
+        // Start using the new proxy configuration
+        QNetworkProxy::setApplicationProxy(proxy);
+    }
 }
 
 void RemoteDatabase::gotEncrypted(QNetworkReply* reply)
@@ -149,24 +206,29 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
 
             // Add cloned database to list of local databases
             QString saveFileAs = localAdd(reply->url().fileName(), reply->property("certfile").toString(),
-                                          reply->url(), QUrlQuery(reply->url()).queryItemValue("commit"));
+                                          reply->url(), QUrlQuery(reply->url()).queryItemValue("commit").toStdString());
 
             // Save the downloaded data under the generated file name
             QFile file(saveFileAs);
             file.open(QIODevice::WriteOnly);
             file.write(reply->readAll());
-            file.close();
 
             // Set last modified data of the new file to the one provided by the server
-            // TODO Qt doesn't offer any option to set this attribute, so we'd need to figure out a way to do it
-            // ourselves in a platform-independent way.
-            /*QString last_modified = reply->rawHeader("Content-Disposition");
+            // Before version 5.10, Qt didn't offer any option to set this attribute, so we're not setting it at the moment
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+            QString last_modified = reply->rawHeader("Content-Disposition");
             QRegExp regex("^.*modification-date=\"(.+)\";.*$");
             regex.setMinimal(true); // Set to non-greedy matching
             if(regex.indexIn(last_modified) != -1)
             {
                 last_modified = regex.cap(1);
-            }*/
+                bool success = file.setFileTime(QDateTime::fromString(last_modified, Qt::ISODate), QFileDevice::FileModificationTime);
+                if(!success)
+                    qWarning() << file.errorString();
+            }
+#endif
+
+            file.close();
 
             // Tell the application to open this file
             emit openFile(saveFileAs);
@@ -185,44 +247,38 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
     case RequestTypeLicenceList:
         {
             // Read and check results
-            QJsonDocument json = QJsonDocument::fromJson(reply->readAll());
-            if(json.isNull() || !json.isObject())
+            json obj = json::parse(reply->readAll(), nullptr, false);
+            if(obj.is_discarded() || !obj.is_object())
                 break;
-            QJsonObject obj = json.object();
 
-            // Parse data and build licence map (short name -> long name)
-            QMap<QString, QString> licences;
-            for(auto it=obj.constBegin();it!=obj.constEnd();++it)
-                licences.insert(it.key(), it.value().toObject().value("full_name").toString());
+            // Parse data and build ordered licence map: order -> (short name, long name)
+            std::map<int, std::pair<std::string, std::string>> licences;
+            for(auto it=obj.cbegin();it!=obj.cend();++it)
+                licences.insert({it.value()["order"], {it.key(), it.value()["full_name"]}});
 
-            // Send licence map to anyone who's interested
-            emit gotLicenceList(licences);
+            // Convert the map into an ordered vector and send it to anyone who's interested
+            std::vector<std::pair<std::string, std::string>> licence_list;
+            std::transform(licences.begin(), licences.end(), std::back_inserter(licence_list), [](const std::pair<int, std::pair<std::string, std::string>>& it) {
+                return it.second;
+            });
+            emit gotLicenceList(licence_list);
             break;
         }
     case RequestTypeBranchList:
         {
             // Read and check results
-            QJsonDocument json = QJsonDocument::fromJson(reply->readAll());
-            if(json.isNull() || !json.isObject())
+            json obj = json::parse(reply->readAll(), nullptr, false);
+            if(obj.is_discarded() || !obj.is_object())
                 break;
-            QJsonObject obj = json.object();
-            QJsonObject obj_branches = obj["branches"].toObject();
+            json obj_branches = obj["branches"];
 
             // Parse data and assemble branch list
-            QStringList branches;
-            for(auto it=obj_branches.constBegin();it!=obj_branches.constEnd();++it)
-                branches.append(it.key());
+            std::vector<std::string> branches;
+            for(auto it=obj_branches.cbegin();it!=obj_branches.cend();++it)
+                branches.push_back(it.key());
 
             // Get default branch
-#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
-            QString default_branch = obj["default_branch"].toString("master");
-#else
-            QString default_branch = obj["default_branch"].toString();
-            if ( default_branch.isEmpty () )
-            {
-                default_branch = "master";
-            }
-#endif
+            std::string default_branch = (obj.contains("default_branch") && !obj["default_branch"].empty()) ? obj["default_branch"] : "master";
 
             // Send branch list to anyone who is interested
             emit gotBranchList(branches, default_branch);
@@ -231,20 +287,19 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
     case RequestTypePush:
         {
             // Read and check results
-            QJsonDocument json = QJsonDocument::fromJson(reply->readAll());
-            if(json.isNull() || !json.isObject())
+            json obj = json::parse(reply->readAll(), nullptr, false);
+            if(obj.is_discarded() || !obj.is_object())
                 break;
-            QJsonObject obj = json.object();
 
             // Create or update the record in our local checkout database
-            QString saveFileAs = localAdd(reply->url().fileName(), reply->property("certfile").toString(), obj["url"].toString(), obj["commit_id"].toString());
+            QString saveFileAs = localAdd(reply->url().fileName(), reply->property("certfile").toString(), QString::fromStdString(obj["url"]), obj["commit_id"]);
 
             // If the name of the source file and the name we're saving as differ, we're doing an initial push. In this case, copy the source file to
             // the destination path to avoid redownloading it when it's first used.
             if(saveFileAs != reply->property("source_file").toString())
                 QFile::copy(reply->property("source_file").toString(), saveFileAs);
 
-            emit uploadFinished(obj["url"].toString());
+            emit uploadFinished(obj["url"]);
             break;
         }
     }
@@ -256,15 +311,7 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
 void RemoteDatabase::gotError(QNetworkReply* reply, const QList<QSslError>& errors)
 {
     // Are there any errors in here that aren't about self-signed certificates and non-matching hostnames?
-    bool serious_errors = false;
-    for(const QSslError& error : errors)
-    {
-        if(error.error() != QSslError::SelfSignedCertificate)
-        {
-            serious_errors = true;
-            break;
-        }
-    }
+    bool serious_errors = std::any_of(errors.begin(), errors.end(), [](const QSslError& error) { return error.error() != QSslError::SelfSignedCertificate; });
 
     // Just stop the error checking here and accept the reply if there were no 'serious' errors
     if(!serious_errors)
@@ -327,7 +374,7 @@ const QList<QSslCertificate>& RemoteDatabase::caCertificates() const
 QString RemoteDatabase::getInfoFromClientCert(const QString& cert, CertInfo info) const
 {
     // Get the common name of the certificate and split it into user name and server address
-    QString cn = m_clientCertFiles[cert].subjectInfo(QSslCertificate::CommonName).at(0);
+    QString cn = m_clientCertFiles.at(cert).subjectInfo(QSslCertificate::CommonName).at(0);
     QStringList cn_parts = cn.split("@");
     if(cn_parts.size() < 2)
         return QString();
@@ -488,7 +535,7 @@ void RemoteDatabase::push(const QString& filename, const QString& url, const QSt
     addPart(multipart, "licence", licence);
     addPart(multipart, "public", isPublic ? "true" : "false");
     addPart(multipart, "branch", branch);
-    addPart(multipart, "commit", localLastCommitId(clientCert, url));
+    addPart(multipart, "commit", QString::fromStdString(localLastCommitId(clientCert, url)));
     addPart(multipart, "force", forcePush ? "true" : "false");
     addPart(multipart, "lastmodified", last_modified.toString("yyyy-MM-dd'T'HH:mm:ss'Z'"));
 
@@ -586,7 +633,7 @@ void RemoteDatabase::localAssureOpened()
     }
 }
 
-QString RemoteDatabase::localAdd(QString filename, QString identity, const QUrl& url, const QString& new_commit_id)
+QString RemoteDatabase::localAdd(QString filename, QString identity, const QUrl& url, const std::string& new_commit_id)
 {
     // This function adds a new local database clone to our internal list. It does so by adding a single
     // new record to the remote dbs database. All the fields are extracted from the filename, the identity
@@ -603,8 +650,8 @@ QString RemoteDatabase::localAdd(QString filename, QString identity, const QUrl&
     identity = f.fileName();
 
     // Check if this file has already been checked in
-    QString last_commit_id = localLastCommitId(identity, url.toString());
-    if(last_commit_id.isNull())
+    std::string last_commit_id = localLastCommitId(identity, url.toString());
+    if(last_commit_id.empty())
     {
         // The file hasn't been checked in yet. So add a new record for it.
 
@@ -636,13 +683,13 @@ QString RemoteDatabase::localAdd(QString filename, QString identity, const QUrl&
             return QString();
         }
 
-        if(sqlite3_bind_text(stmt, 4, new_commit_id.toUtf8(), new_commit_id.toUtf8().length(), SQLITE_TRANSIENT))
+        if(sqlite3_bind_text(stmt, 4, new_commit_id.c_str(), static_cast<int>(new_commit_id.size()), SQLITE_TRANSIENT))
         {
             sqlite3_finalize(stmt);
             return QString();
         }
 
-        if(sqlite3_bind_text(stmt, 5, filename.toUtf8(), filename.toUtf8().length(), SQLITE_TRANSIENT))
+        if(sqlite3_bind_text(stmt, 5, filename.toUtf8(), filename.size(), SQLITE_TRANSIENT))
         {
             sqlite3_finalize(stmt);
             return QString();
@@ -670,7 +717,7 @@ QString RemoteDatabase::localAdd(QString filename, QString identity, const QUrl&
         if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, nullptr) != SQLITE_OK)
             return QString();
 
-        if(sqlite3_bind_text(stmt, 1, new_commit_id.toUtf8(), new_commit_id.toUtf8().length(), SQLITE_TRANSIENT))
+        if(sqlite3_bind_text(stmt, 1, new_commit_id.c_str(), static_cast<int>(new_commit_id.size()), SQLITE_TRANSIENT))
         {
             sqlite3_finalize(stmt);
             return QString();
@@ -833,7 +880,7 @@ QString RemoteDatabase::localCheckFile(const QString& local_file)
     }
 }
 
-QString RemoteDatabase::localLastCommitId(QString identity, const QUrl& url)
+std::string RemoteDatabase::localLastCommitId(QString identity, const QUrl& url)
 {
     // This function takes a file name and checks with which commit id we had checked out this file or last pushed it.
 
@@ -843,32 +890,32 @@ QString RemoteDatabase::localLastCommitId(QString identity, const QUrl& url)
     QString sql = QString("SELECT commit_id FROM local WHERE identity=? AND url=?");
     sqlite3_stmt* stmt;
     if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, nullptr) != SQLITE_OK)
-        return QString();
+        return std::string();
 
     QFileInfo f(identity);                  // Remove the path
     identity = f.fileName();
     if(sqlite3_bind_text(stmt, 1, identity.toUtf8(), identity.toUtf8().length(), SQLITE_TRANSIENT))
     {
         sqlite3_finalize(stmt);
-        return QString();
+        return std::string();
     }
 
     if(sqlite3_bind_text(stmt, 2, url.toString(QUrl::PrettyDecoded | QUrl::RemoveQuery).toUtf8(),
                          url.toString(QUrl::PrettyDecoded | QUrl::RemoveQuery).toUtf8().size(), SQLITE_TRANSIENT))
     {
         sqlite3_finalize(stmt);
-        return QString();
+        return std::string();
     }
 
     if(sqlite3_step(stmt) != SQLITE_ROW)
     {
         // If there was either an error or no record was found for this file name, stop here.
         sqlite3_finalize(stmt);
-        return QString();
+        return std::string();
     }
 
     // Having come here we can assume that at least some local clone with the given file name
-    QString local_commit_id = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0)));
+    std::string local_commit_id = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0));
     sqlite3_finalize(stmt);
 
     return local_commit_id;

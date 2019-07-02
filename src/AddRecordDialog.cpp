@@ -17,7 +17,7 @@ private:
     bool m_isNull;
 
 public:
-    NullLineEdit(QWidget* parent=nullptr): QLineEdit(parent), m_isNull (true) {}
+    explicit NullLineEdit(QWidget* parent=nullptr): QLineEdit(parent), m_isNull (true) {}
 
     bool isNull() {return m_isNull;}
     void setNull(bool value) {
@@ -65,7 +65,7 @@ protected:
 // Styled Item Delegate for non-editable columns (all except Value)
 class NoEditDelegate: public QStyledItemDelegate {
 public:
-    NoEditDelegate(QObject* parent=nullptr): QStyledItemDelegate(parent) {}
+    explicit NoEditDelegate(QObject* parent=nullptr): QStyledItemDelegate(parent) {}
     QWidget* createEditor(QWidget* /* parent */, const QStyleOptionViewItem& /* option */, const QModelIndex& /* index */) const override {
         return nullptr;
     }
@@ -75,7 +75,7 @@ public:
 class EditDelegate: public QStyledItemDelegate {
 
 public:
-    EditDelegate(QObject* parent=nullptr): QStyledItemDelegate(parent) {}
+    explicit EditDelegate(QObject* parent=nullptr): QStyledItemDelegate(parent) {}
     QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem& /* option */, const QModelIndex& /* index */) const override {
         return new NullLineEdit(parent);
     }
@@ -112,12 +112,12 @@ public:
     }
 };
 
-AddRecordDialog::AddRecordDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& tableName, QWidget* parent, const QString &pseudo_pk)
+AddRecordDialog::AddRecordDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& tableName, QWidget* parent, const std::vector<std::string>& _pseudo_pk)
     : QDialog(parent),
       ui(new Ui::AddRecordDialog),
       pdb(db),
       curTable(tableName),
-      pseudo_pk(pseudo_pk)
+      pseudo_pk(_pseudo_pk)
 {
     // Create UI
     ui->setupUi(this);
@@ -180,22 +180,23 @@ void AddRecordDialog::populateFields()
     ui->treeWidget->setItemDelegateForColumn(kValue, new EditDelegate(this));
 
     sqlb::FieldVector fields;
-    QVector<sqlb::ConstraintPtr> fks;
-    QStringList pk;
+    std::vector<sqlb::ConstraintPtr> fks;
+    sqlb::StringVector pk;
 
     // Initialize fields, fks and pk differently depending on whether it's a table or a view.
-    if (pseudo_pk.isNull())
+    const sqlb::ObjectPtr obj = pdb.getObjectByName(curTable);
+    if (obj->type() == sqlb::Object::Table)
     {
         sqlb::TablePtr m_table = pdb.getObjectByName<sqlb::Table>(curTable);
         fields = m_table->fields;
         for(const sqlb::Field& f : fields)
-            fks.append(m_table->constraint({f.name()}, sqlb::Constraint::ForeignKeyConstraintType));
+            fks.push_back(m_table->constraint({f.name()}, sqlb::Constraint::ForeignKeyConstraintType));
         pk = m_table->primaryKey();
     } else {
         sqlb::ViewPtr m_view = pdb.getObjectByName<sqlb::View>(curTable);
         fields = m_view->fields;
-        fks.fill(sqlb::ConstraintPtr(nullptr), fields.size());
-        pk = QStringList(pseudo_pk);
+        fks.resize(fields.size(), sqlb::ConstraintPtr(nullptr));
+        pk = pseudo_pk;
     }
 
     for(uint i = 0; i < fields.size(); i++)
@@ -205,9 +206,9 @@ void AddRecordDialog::populateFields()
 
         tbitem->setFlags(Qt::ItemIsEnabled | Qt::ItemIsEditable);
 
-        tbitem->setText(kName, f.name());
-        tbitem->setText(kType, f.type());
-        tbitem->setData(kType, Qt::UserRole, f.affinity());
+        tbitem->setText(kName, QString::fromStdString(f.name()));
+        tbitem->setText(kType, QString::fromStdString(f.type()));
+        tbitem->setData(kType, Qt::UserRole, QString::fromStdString(f.affinity()));
 
         // NOT NULL fields are indicated in bold.
         if (f.notnull()) {
@@ -222,7 +223,7 @@ void AddRecordDialog::populateFields()
         else
             tbitem->setIcon(kName, QIcon(":/icons/field"));
 
-        QString defaultValue = f.defaultValue();
+        QString defaultValue = QString::fromStdString(f.defaultValue());
         QString toolTip;
 
         if (f.autoIncrement())
@@ -231,19 +232,19 @@ void AddRecordDialog::populateFields()
         if (f.unique())
             toolTip.append(tr("Unique constraint\n"));
 
-        if (!f.check().isEmpty())
-            toolTip.append(tr("Check constraint:\t %1\n").arg (f.check()));
+        if (!f.check().empty())
+            toolTip.append(tr("Check constraint:\t %1\n").arg(QString::fromStdString(f.check())));
 
         auto fk = std::dynamic_pointer_cast<sqlb::ForeignKeyClause>(fks[i]);
         if(fk)
-            toolTip.append(tr("Foreign key:\t %1\n").arg(fk->toString()));
+            toolTip.append(tr("Foreign key:\t %1\n").arg(QString::fromStdString(fk->toString())));
 
         setDefaultsStyle(tbitem);
 
         // Display Role is used for displaying the default values.
         // Only when they are changed, the User Role is updated and then used in the INSERT query.
         if (!defaultValue.isEmpty()) {
-            tbitem->setData(kValue, Qt::DisplayRole, f.defaultValue());
+            tbitem->setData(kValue, Qt::DisplayRole, QString::fromStdString(f.defaultValue()));
             toolTip.append(tr("Default value:\t %1\n").arg (defaultValue));
         } else
             tbitem->setData(kValue, Qt::DisplayRole, Settings::getValue("databrowser", "null_text"));
@@ -279,7 +280,7 @@ void AddRecordDialog::accept()
 
 void AddRecordDialog::updateSqlText()
 {
-    QString stmt = QString("INSERT INTO %1").arg(curTable.toString());
+    QString stmt = QString("INSERT INTO %1").arg(QString::fromStdString(curTable.toString()));
 
     QStringList vals;
     QStringList fields;

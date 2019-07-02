@@ -7,14 +7,15 @@
 #include <memory>
 #include <future>
 #include <functional>
+#include <vector>
 
 #include <QThread>
 #include <QString>
-#include <QStringList>
 #include <QMutex>
 
-#include "sqlite.h"
 #include "RowCache.h"
+
+struct sqlite3;
 
 class RowLoader : public QThread
 {
@@ -23,18 +24,18 @@ class RowLoader : public QThread
     void run() override;
 
 public:
-    typedef RowCache<QVector<QByteArray>> Cache;
+    using Cache = RowCache<std::vector<QByteArray>>;
 
     /// set up worker thread to handle row loading
     explicit RowLoader (
         std::function<std::shared_ptr<sqlite3>(void)> db_getter,
         std::function<void(QString)> statement_logger,
-        QStringList & headers,
+        std::vector<std::string> & headers,
         QMutex & cache_mutex,
         Cache & cache_data
         );
 
-    void setQuery (QString new_query, QString newCountQuery = QString());
+    void setQuery (const QString& new_query, const QString& newCountQuery = QString());
 
     void triggerRowCountDetermination (int token);
 
@@ -69,7 +70,7 @@ signals:
 private:
     const std::function<std::shared_ptr<sqlite3>()> db_getter;
     const std::function<void(QString)> statement_logger;
-    QStringList & headers;
+    std::vector<std::string> & headers;
     QMutex & cache_mutex;
     Cache & cache_data;
 

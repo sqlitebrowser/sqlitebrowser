@@ -4,8 +4,8 @@
 
 CondFormat::CondFormat(const QString& filter, const QColor& foreground, const QColor& background, const QString& encoding)
     : m_filter(filter),
-      m_fgColor(foreground),
-      m_bgColor(background)
+      m_bgColor(background),
+      m_fgColor(foreground)
 {
     if (!filter.isEmpty())
         m_sqlCondition = filterToSqlCondition(filter, encoding);
@@ -24,10 +24,10 @@ QString CondFormat::filterToSqlCondition(const QString& value, const QString& en
         int sepIdx = value.indexOf('~');
         val  = value.mid(0, sepIdx);
         val2 = value.mid(sepIdx+1);
-        val.toFloat(&ok);
+        float valf = val.toFloat(&ok);
         if (ok) {
-            val2.toFloat(&ok);
-            ok = ok && (val.toFloat() < val2.toFloat());
+            float val2f = val2.toFloat(&ok);
+            ok = ok && (valf < val2f);
         }
     }
     if (ok) {

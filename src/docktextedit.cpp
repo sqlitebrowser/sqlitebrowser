@@ -2,6 +2,8 @@
 #include "Settings.h"
 
 #include <Qsci/qscistyle.h>
+#include <Qsci/qscilexerjson.h>
+#include <Qsci/qscilexerxml.h>
 
 QsciLexerJSON* DockTextEdit::jsonLexer = nullptr;
 QsciLexerXML* DockTextEdit::xmlLexer = nullptr;

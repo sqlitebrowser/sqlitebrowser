@@ -52,8 +52,8 @@ private:
     bool m_dropQualifiedNames;
     bool m_dropEnquotedNames;
 
-    void buildTree(QTreeWidgetItem* parent, const QString& schema);
-    QTreeWidgetItem* addNode(QTreeWidgetItem* parent, const sqlb::ObjectPtr& object, const QString& schema);
+    void buildTree(QTreeWidgetItem* parent, const std::string& schema);
+    QTreeWidgetItem* addNode(QTreeWidgetItem* parent, const sqlb::ObjectPtr& object, const std::string& schema);
     QString getNameForDropping(const QString& domain, const QString& object, const QString& field) const;
 };
 

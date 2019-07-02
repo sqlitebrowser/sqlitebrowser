@@ -45,16 +45,18 @@ private:
 
     bool importCsv(const QString& f, const QString& n = QString());
 
-    void setQuoteChar(const QChar& c);
-    char currentQuoteChar() const;
+    void setQuoteChar(QChar c);
+    QChar currentQuoteChar() const;
 
-    void setSeparatorChar(const QChar& c);
-    char currentSeparatorChar() const;
+    void setSeparatorChar(QChar c);
+    QChar currentSeparatorChar() const;
 
     void setEncoding(const QString& sEnc);
     QString currentEncoding() const;
 
     QString currentOnConflictStrategy() const;
+
+    char32_t toUtf8(const QString& s) const;
 };
 
 #endif

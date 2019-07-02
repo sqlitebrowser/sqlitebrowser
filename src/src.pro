@@ -73,7 +73,10 @@ HEADERS += \
     Palette.h \
     CondFormat.h \
     sql/Query.h \
-    RunSql.h
+    RunSql.h \
+    sql/ObjectIdentifier.h \
+    ProxyDialog.h \
+    IconCache.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -123,7 +126,10 @@ SOURCES += \
     Palette.cpp \
     CondFormat.cpp \
     sql/Query.cpp \
-    RunSql.cpp
+    RunSql.cpp \
+    sql/ObjectIdentifier.cpp \
+    ProxyDialog.cpp \
+    IconCache.cpp
 
 RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc \
@@ -151,7 +157,8 @@ FORMS += \
     RemotePushDialog.ui \
     FindReplaceDialog.ui \
     FileExtensionManager.ui \
-    CondFormatManager.ui
+    CondFormatManager.ui \
+    ProxyDialog.ui
 
 TRANSLATIONS += \
     translations/sqlb_ar_SA.ts \
@@ -243,7 +250,7 @@ CONFIG(all_warnings) {
 }
 
 UI_DIR = .ui
-INCLUDEPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit $$PWD/../libs/qcustomplot-source $$PWD/../libs/qscintilla/Qt4Qt5 $$PWD/../libs/json $$PWD/..
+INCLUDEPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit/src $$PWD/../libs/qcustomplot-source $$PWD/../libs/qscintilla/Qt4Qt5 $$PWD/../libs/json $$PWD/..
 LIBS += -L$$LIBPATH_QHEXEDIT -L$$LIBPATH_ANTLR -L$$LIBPATH_QCUSTOMPLOT -L$$LIBPATH_QSCINTILLA -lantlr -lqhexedit -lqcustomplot -lqscintilla2
 DEPENDPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit $$PWD/../libs/qcustomplot-source $$PWD/../libs/qscintilla/Qt4Qt5 $$PWD/../libs/json
 

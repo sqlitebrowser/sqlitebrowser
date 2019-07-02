@@ -1,5 +1,12 @@
 #include "CipherSettings.h"
 
+CipherSettings::CipherSettings()
+    : keyFormat(Passphrase),
+      pageSize(0),
+      kdfIterations(0)
+{
+}
+
 CipherSettings::KeyFormats CipherSettings::getKeyFormat() const
 {
     return keyFormat;

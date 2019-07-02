@@ -6,6 +6,8 @@
 class CipherSettings
 {
 public:
+    CipherSettings();
+
     enum KeyFormats
     {
         Passphrase,

@@ -18,7 +18,7 @@ bool startsWithBom(const QByteArray& data);
 // with a BOM an empty byte array is returned and the original data is not modified.
 QByteArray removeBom(QByteArray& data);
 
-QStringList toStringList(const QList<QByteArray> list);
+QStringList toStringList(const QList<QByteArray>& list);
 
 QByteArray encodeString(const QByteArray& str, const QString& encoding);
 

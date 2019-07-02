@@ -63,8 +63,8 @@ void RemoteDock::reloadSettings()
             ui->comboUser->addItem(cert.subjectInfo(QSslCertificate::CommonName).at(0), file);
     }
 
-    // If there are no client certs, just show a simple message instead of all the unusable widgets
-    ui->stack->setCurrentIndex(!ui->comboUser->count());
+    // Add public certificate for anonymous read-only access to dbhub.io
+    ui->comboUser->addItem(tr("Public"), ":/user_certs/public.cert.pem");
 }
 
 void RemoteDock::setNewIdentity()
@@ -110,6 +110,14 @@ void RemoteDock::enableButtons()
 
 void RemoteDock::pushDatabase()
 {
+    // If the currently active identity is the read-only public access to dbhub.io, don't show the Push Database dialog because it won't work anyway.
+    // Instead switch to an explanation offering some advice to create and import a proper certificate.
+    if(remoteModel->currentClientCertificate() == ":/user_certs/public.cert.pem")
+    {
+        ui->stack->setCurrentIndex(1);
+        return;
+    }
+
     // The default suggestion for a database name is the local file name. If it is a remote file (like when it initially was fetched using DB4S),
     // the extra bit of information at the end of the name gets removed first.
     QString name = QFileInfo(mainWindow->getDb().currentFile()).fileName();
@@ -156,4 +164,9 @@ void RemoteDock::reject()
     // We override this, to ensure the Escape key doesn't make this dialog
     // dock go away
     return;
+}
+
+void RemoteDock::switchToMainView()
+{
+    ui->stack->setCurrentIndex(0);
 }
