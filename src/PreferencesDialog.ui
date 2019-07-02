@@ -794,8 +794,10 @@
                </sizepolicy>
               </property>
               <property name="toolTip">
-               <string>This is the maximum number of rows in a table for enabling the value completion based on current values in the column.
-Can be set to 0 for disabling completion.</string>
+               <string>This is the maximum number of items allowed for some computationally expensive functionalities to be enabled:
+Maximum number of rows in a table for enabling the value completion based on current values in the column.
+Maximum number of indexes in a selection for calculating sum and average.
+Can be set to 0 for disabling the functionalities.</string>
               </property>
               <property name="whatsThis">
                <string>This is the maximum number of rows in a table for enabling the value completion based on current values in the column.
@@ -812,7 +814,7 @@ Can be set to 0 for disabling completion.</string>
             <item row="1" column="0">
              <widget class="QLabel" name="labelCompleteThreshold">
               <property name="text">
-               <string>Row count threshold for completion</string>
+               <string>Threshold for completion and calculation on selection</string>
               </property>
               <property name="buddy">
                <cstring>spinCompleteThreshold</cstring>
@@ -1786,14 +1788,14 @@ Can be set to 0 for disabling completion.</string>
        </item>
        <item>
         <layout class="QFormLayout" name="formLayout_5">
-         <item row="0" column="0">
+         <item row="1" column="0">
           <widget class="QLabel" name="label_23">
            <property name="text">
             <string>Clone databases into</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
+         <item row="1" column="1">
           <layout class="QHBoxLayout" name="horizontalLayout_4">
            <item>
             <widget class="QLineEdit" name="editRemoteCloneDirectory">
@@ -1822,6 +1824,20 @@ Can be set to 0 for disabling completion.</string>
             </widget>
            </item>
           </layout>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_21">
+           <property name="text">
+            <string>Proxy</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QToolButton" name="buttonProxy">
+           <property name="text">
+            <string>Configure</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -2097,6 +2113,22 @@ Can be set to 0 for disabling completion.</string>
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>buttonProxy</sender>
+   <signal>clicked()</signal>
+   <receiver>PreferencesDialog</receiver>
+   <slot>configureProxy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>385</x>
+     <y>591</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>385</x>
+     <y>306</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>saveSettings()</slot>
@@ -2108,5 +2140,6 @@ Can be set to 0 for disabling completion.</string>
   <slot>addClientCertificate()</slot>
   <slot>removeClientCertificate()</slot>
   <slot>chooseRemoteCloneDirectory()</slot>
+  <slot>configureProxy()</slot>
  </slots>
 </ui>

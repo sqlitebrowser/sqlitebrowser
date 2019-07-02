@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ProxyDialog</class>
+ <widget class="QDialog" name="ProxyDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>535</width>
+    <height>231</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Proxy Configuration</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Pro&amp;xy Type</string>
+       </property>
+       <property name="buddy">
+        <cstring>comboType</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="comboType"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Host Na&amp;me</string>
+       </property>
+       <property name="buddy">
+        <cstring>editHost</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="editHost"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Port</string>
+       </property>
+       <property name="buddy">
+        <cstring>spinPort</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QSpinBox" name="spinPort">
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>65536</number>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string>Authentication Re&amp;quired</string>
+       </property>
+       <property name="buddy">
+        <cstring>checkAuthentication</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QCheckBox" name="checkAuthentication"/>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>&amp;User Name</string>
+       </property>
+       <property name="buddy">
+        <cstring>editUser</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QLineEdit" name="editUser"/>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>Password</string>
+       </property>
+       <property name="buddy">
+        <cstring>editPassword</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QLineEdit" name="editPassword">
+       <property name="echoMode">
+        <enum>QLineEdit::Password</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>comboType</tabstop>
+  <tabstop>editHost</tabstop>
+  <tabstop>spinPort</tabstop>
+  <tabstop>checkAuthentication</tabstop>
+  <tabstop>editUser</tabstop>
+  <tabstop>editPassword</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>ProxyDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>227</x>
+     <y>210</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>230</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>ProxyDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>295</x>
+     <y>216</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>230</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboType</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>ProxyDialog</receiver>
+   <slot>proxyTypeChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>343</x>
+     <y>22</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>267</x>
+     <y>115</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkAuthentication</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>ProxyDialog</receiver>
+   <slot>authenticationRequiredChanged(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>343</x>
+     <y>114</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>267</x>
+     <y>115</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>proxyTypeChanged(int)</slot>
+  <slot>authenticationRequiredChanged(bool)</slot>
+ </slots>
+</ui>

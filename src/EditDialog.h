@@ -36,12 +36,12 @@ private slots:
     void setNull();
     void updateApplyButton();
     void accept() override;
-    void loadData(const QByteArray& data);
+    void loadData(const QByteArray& bArrdata);
     void toggleOverwriteMode();
     void editModeChanged(int newMode);
     void editTextChanged();
     void switchEditorMode(bool autoSwitchForType);
-    void updateCellInfoAndMode(const QByteArray& data);
+    void updateCellInfoAndMode(const QByteArray& bArrdata);
     void setMustIndentAndCompact(bool enable);
     void openPrintDialog();
     void openPrintImageDialog();
@@ -49,7 +49,7 @@ private slots:
     void setWordWrapping(bool value);
 
 signals:
-    void recordTextUpdated(const QPersistentModelIndex& idx, const QByteArray& data, bool isBlob);
+    void recordTextUpdated(const QPersistentModelIndex& idx, const QByteArray& bArrdata, bool isBlob);
 
 private:
     Ui::EditDialog* ui;
@@ -89,10 +89,10 @@ private:
         XmlEditor = 4
     };
 
-    int checkDataType(const QByteArray& data);
+    int checkDataType(const QByteArray& bArrdata);
     QString humanReadableSize(double byteCount) const;
-    bool promptInvalidData(const QString& dataType, const QString& errorString);
-    void setDataInBuffer(const QByteArray& data, DataSources source);
+    bool promptInvalidData(const QString& data_type, const QString& errorString);
+    void setDataInBuffer(const QByteArray& bArrdata, DataSources source);
     void setStackCurrentIndex(int editMode);
 };
 

@@ -6,7 +6,6 @@
 #include "Palette.h"
 #include "CondFormat.h"
 #include "sql/Query.h"
-#include "RunSql.h"
 
 #include <memory>
 #include <QMainWindow>
@@ -19,6 +18,7 @@ class RemoteDock;
 class RemoteDatabase;
 class FindReplaceDialog;
 class ExtendedTableWidget;
+class RunSql;
 
 class QDragEnterEvent;
 class QIntValidator;
@@ -36,7 +36,7 @@ struct BrowseDataTableSettings
     sqlb::Query query;                              // NOTE: We only store the sort order in here (for now)
     QMap<int, int> columnWidths;
     QMap<int, QString> filterValues;
-    QMap<int, QVector<CondFormat>> condFormats;
+    QMap<int, std::vector<CondFormat>> condFormats;
     QMap<int, QString> displayFormats;
     bool showRowid;
     QString encoding;
@@ -167,6 +167,7 @@ private:
     QByteArray defaultWindowState;
 
     QString currentProjectFilename;
+    bool isProjectModified;
 
     void init();
     void clearCompleterModelsFields();
@@ -189,6 +190,7 @@ private:
     QString saveOpenTabs();
     QString saveProject(const QString& currentFilename);
     bool closeFiles();
+    bool closeProject();
     bool askSaveSqlTab(int index, bool& ignoreUnattachedBuffers);
 
 protected:
@@ -198,7 +200,7 @@ protected:
     void resizeEvent(QResizeEvent *event) override;
 
 public slots:
-    bool fileOpen(const QString& fileName = QString(), bool dontAddToRecentFiles = false, bool readOnly = false);
+    bool fileOpen(const QString& fileName = QString(), bool openFromProject = false, bool readOnly = false);
     void logSql(const QString &sql, int msgtype);
     void dbState(bool dirty);
     void refresh();
@@ -251,7 +253,7 @@ private slots:
     void savePragmas();
     void mainTabSelected( int tabindex );
     void browseTableHeaderClicked(int logicalindex);
-    unsigned int openSqlTab(bool resetCounter = false);
+    int openSqlTab(bool resetCounter = false);
     void closeSqlTab(int index, bool force = false);
     void changeSqlTab(int index);
     void openSqlFile();

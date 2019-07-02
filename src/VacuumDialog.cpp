@@ -15,11 +15,11 @@ VacuumDialog::VacuumDialog(DBBrowserDB* _db, QWidget* parent) :
     // Show warning if DB is dirty
     ui->labelSavepointWarning->setVisible(db->getDirty());
 
-    // Populate list of objects to compact. We just support vacuuming the main schema here.
-    for(auto it=db->schemata.constBegin();it!=db->schemata.constEnd();++it)
+    // Populate list of objects to compact. We just support vacuuming the different schemas here.
+    for(const auto& it : db->schemata)
     {
         QTreeWidgetItem* item = new QTreeWidgetItem(ui->treeDatabases);
-        item->setText(0, it.key());
+        item->setText(0, QString::fromStdString(it.first));
         item->setIcon(0, QIcon(QString(":icons/database")));
         ui->treeDatabases->addTopLevelItem(item);
     }

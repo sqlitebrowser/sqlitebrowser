@@ -12,6 +12,7 @@ set(TESTSQLOBJECTS_SRC
     ../RowLoader.cpp
     ../sql/sqlitetypes.cpp
     ../sql/Query.cpp
+    ../sql/ObjectIdentifier.cpp
     ../csvparser.cpp
     ../grammar/Sqlite3Lexer.cpp
     ../grammar/Sqlite3Parser.cpp
@@ -29,6 +30,7 @@ set(TESTSQLOBJECTS_HDR
     ../grammar/Sqlite3Parser.hpp
     ../sql/sqlitetypes.h
     ../sql/Query.h
+    ../sql/ObjectIdentifier.h
     ../Data.h
 )
 
@@ -98,6 +100,7 @@ set(TESTREGEX_SRC
     ../RowLoader.cpp
     ../sql/sqlitetypes.cpp
     ../sql/Query.cpp
+    ../sql/ObjectIdentifier.cpp
     ../grammar/Sqlite3Lexer.cpp
     ../grammar/Sqlite3Parser.cpp
     ../Settings.cpp
@@ -114,6 +117,7 @@ set(TESTREGEX_HDR
     ../grammar/Sqlite3Parser.hpp
     ../sql/sqlitetypes.h
     ../sql/Query.h
+    ../sql/ObjectIdentifier.h
     ../Data.h
 )
 

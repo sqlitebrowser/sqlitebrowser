@@ -5,7 +5,7 @@
 #include "sql/sqlitetypes.h"
 #include "sqlitedb.h"
 
-ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& tableName, const QString& colname, QString current_format, QWidget* parent)
+ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& tableName, const QString& colname, const QString& current_format, QWidget* parent)
     : QDialog(parent),
       ui(new Ui::ColumnDisplayFormatDialog),
       column_name(colname),
@@ -63,12 +63,11 @@ ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(DBBrowserDB& db, const sqlb
     } else {
         // When it doesn't match any predefined format, it is considered custom
         QString formatName = "custom";
-        for(auto& formatKey : formatFunctions.keys()) {
-            if(current_format == formatFunctions.value(formatKey)) {
-                formatName = formatKey;
-                break;
-            }
-        }
+        auto it = std::find_if(formatFunctions.begin(), formatFunctions.end(), [current_format](const std::pair<std::string, QString>& s) {
+            return s.second == current_format;
+        });
+        if(it != formatFunctions.end())
+            formatName = QString::fromStdString(it->first);
         ui->comboDisplayFormat->setCurrentIndex(ui->comboDisplayFormat->findData(formatName));
         ui->editDisplayFormat->setText(current_format);
     }
@@ -89,12 +88,12 @@ QString ColumnDisplayFormatDialog::selectedDisplayFormat() const
 
 void ColumnDisplayFormatDialog::updateSqlCode()
 {
-    QString format = ui->comboDisplayFormat->currentData().toString();
+    std::string format = ui->comboDisplayFormat->currentData().toString().toStdString();
 
     if(format == "default")
         ui->editDisplayFormat->setText(sqlb::escapeIdentifier(column_name));
     else if(format != "custom")
-        ui->editDisplayFormat->setText(formatFunctions.value(format));
+        ui->editDisplayFormat->setText(formatFunctions.at(format));
 }
 
 void ColumnDisplayFormatDialog::accept()
@@ -117,7 +116,7 @@ void ColumnDisplayFormatDialog::accept()
             // Return false so the query is not aborted and no error is reported.
             return false;
         };
-        if(!pdb.executeSQL(QString("SELECT %1 FROM %2 LIMIT 1").arg(ui->editDisplayFormat->text(), curTable.toString()),
+        if(!pdb.executeSQL(QString("SELECT %1 FROM %2 LIMIT 1").arg(ui->editDisplayFormat->text(), QString::fromStdString(curTable.toString())),
                            false, true, callback))
             errorMessage = tr("Error in custom display format. Message from database engine:\n\n%1").arg(pdb.lastError());
         else if(customNumberColumns != 1)

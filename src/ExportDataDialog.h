@@ -3,7 +3,7 @@
 
 #include <QDialog>
 
-#include "sql/sqlitetypes.h"
+#include "sql/ObjectIdentifier.h"
 
 class DBBrowserDB;
 

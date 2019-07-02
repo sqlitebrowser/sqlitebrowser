@@ -14,8 +14,8 @@ remove characters. A manipulation stores allways two actions
 1. redo (or do) action
 2. undo action.
 
-CharCommand also supports command compression via mergeWidht(). This allows
-the user to execute a undo command contation e.g. 3 steps in a single command.
+CharCommand also supports command compression via mergeWidht(). This enables
+the user to perform an undo command e.g. 3 steps in a single command.
 If you for example insert a new byt "34" this means for the editor doing 3
 steps: insert a "00", overwrite it with "03" and the overwrite it with "34". These
 3 steps are combined into a single step, insert a "34".

@@ -28,9 +28,9 @@ ExportSqlDialog::ExportSqlDialog(DBBrowserDB* db, QWidget* parent, const QString
     ui->comboOldSchema->setCurrentIndex(Settings::getValue("exportsql", "oldschema").toInt());
 
     // Get list of tables to export
-    QList<sqlb::ObjectPtr> objects = pdb->schemata["main"].values("table");
-    for(const sqlb::ObjectPtr& it : objects)
-        ui->listTables->addItem(new QListWidgetItem(QIcon(QString(":icons/%1").arg(sqlb::Object::typeToString(it->type()))), it->name()));
+    const auto objects = pdb->schemata["main"].equal_range("table");
+    for(auto it=objects.first;it!=objects.second;++it)
+        ui->listTables->addItem(new QListWidgetItem(QIcon(QString(":icons/%1").arg(QString::fromStdString(sqlb::Object::typeToString(it->second->type())))), QString::fromStdString(it->second->name())));
 
     // Sort list of tables and select the table specified in the
     // selection parameter or all tables if table not specified
@@ -78,15 +78,15 @@ void ExportSqlDialog::accept()
     // Try to find a default file name
     QString defaultFileName;
     if(selectedItems.count() == 1)  // One table -> Suggest table name
-        defaultFileName = selectedItems.at(0)->text() + ".sql";
+        defaultFileName = selectedItems.at(0)->text() + FILE_EXT_SQL_DEFAULT;
     else if(selectedItems.count() == ui->listTables->count())   // All tables -> Suggest database name
-        defaultFileName = pdb->currentFile() + ".sql";;
+        defaultFileName = pdb->currentFile() + FILE_EXT_SQL_DEFAULT;;
 
     QString fileName = FileDialog::getSaveFileName(
                 CreateSQLFile,
                 this,
                 tr("Choose a filename to export"),
-                tr("Text files(*.sql *.txt)"),
+                FILE_FILTER_SQL,
                 defaultFileName);
     if(fileName.isEmpty())
         return;

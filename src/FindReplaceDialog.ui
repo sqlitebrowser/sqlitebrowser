@@ -141,6 +141,9 @@
           <property name="text">
            <string>&amp;Find Next</string>
           </property>
+          <property name="shortcut">
+           <string>F3</string>
+          </property>
          </widget>
         </item>
         <item>

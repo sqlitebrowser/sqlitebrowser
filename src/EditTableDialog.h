@@ -1,7 +1,10 @@
 #ifndef EDITTABLEDIALOG_H
 #define EDITTABLEDIALOG_H
 
+#include "sql/ObjectIdentifier.h"
 #include "sql/sqlitetypes.h"
+
+#include <map>
 
 #include <QDialog>
 
@@ -37,6 +40,13 @@ private:
         kForeignKey = 8
     };
 
+    enum ConstraintColumns {
+        kConstraintColumns = 0,
+        kConstraintType = 1,
+        kConstraintName = 2,
+        kConstraintSql = 3
+    };
+
     void updateColumnWidth();
     void updateSqlText();
 
@@ -44,6 +54,7 @@ private:
 
 private slots:
     void populateFields();
+    void populateConstraints();
     void addField();
     void removeField();
     void fieldSelectionChanged();
@@ -64,7 +75,7 @@ private:
     DBBrowserDB& pdb;
     ForeignKeyEditorDelegate* m_fkEditorDelegate;
     sqlb::ObjectIdentifier curTable;
-    QMap<QString, QString> trackColumns;
+    std::map<QString, QString> trackColumns;
     sqlb::Table m_table;
     bool m_bNewTable;
     QString m_sRestorePointName;

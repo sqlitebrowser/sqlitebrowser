@@ -6,6 +6,7 @@
 #include "MainWindow.h"
 #include "RemoteDatabase.h"
 #include "FileExtensionManager.h"
+#include "ProxyDialog.h"
 
 #include <QDir>
 #include <QColorDialog>
@@ -16,6 +17,7 @@
 PreferencesDialog::PreferencesDialog(QWidget* parent, Tabs tab)
     : QDialog(parent),
       ui(new Ui::PreferencesDialog),
+      m_proxyDialog(new ProxyDialog(this)),
       m_dbFileExtensions(Settings::getValue("General", "DBFileExtensions").toString().split(";;"))
 {
     ui->setupUi(this);
@@ -114,7 +116,7 @@ void PreferencesDialog::loadSettings()
 
     for(int i=0; i < ui->treeSyntaxHighlighting->topLevelItemCount(); ++i)
     {
-        QString name = ui->treeSyntaxHighlighting->topLevelItem(i)->text(0);
+        std::string name = ui->treeSyntaxHighlighting->topLevelItem(i)->text(0).toStdString();
         QString colorname = Settings::getValue("syntaxhighlighter", name + "_colour").toString();
         QColor color = QColor(colorname);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setTextColor(2, color);
@@ -230,7 +232,7 @@ void PreferencesDialog::saveSettings()
 
     for(int i=0; i < ui->treeSyntaxHighlighting->topLevelItemCount(); ++i)
     {
-        QString name = ui->treeSyntaxHighlighting->topLevelItem(i)->text(0);
+        std::string name = ui->treeSyntaxHighlighting->topLevelItem(i)->text(0).toStdString();
         Settings::setValue("syntaxhighlighter", name + "_colour", ui->treeSyntaxHighlighting->topLevelItem(i)->text(2));
         Settings::setValue("syntaxhighlighter", name + "_bold", ui->treeSyntaxHighlighting->topLevelItem(i)->checkState(3) == Qt::Checked);
         Settings::setValue("syntaxhighlighter", name + "_italic", ui->treeSyntaxHighlighting->topLevelItem(i)->checkState(4) == Qt::Checked);
@@ -325,6 +327,8 @@ void PreferencesDialog::saveSettings()
     Settings::setValue("General", "toolbarStyleEditCell", ui->toolbarStyleComboEditCell->currentIndex());
 
     Settings::setValue("General", "DBFileExtensions", m_dbFileExtensions.join(";;") );
+
+    m_proxyDialog->saveSettings();
 
     accept();
 
@@ -466,7 +470,7 @@ void PreferencesDialog::fillLanguageBox()
     ui->languageComboBox->setCurrentIndex(0);
 }
 
-void PreferencesDialog::loadColorSetting(QFrame *frame, const QString & settingName)
+void PreferencesDialog::loadColorSetting(QFrame *frame, const std::string& settingName)
 {
     QColor color = QColor(Settings::getValue("databrowser", settingName + "_colour").toString());
     setColorSetting(frame, color);
@@ -519,7 +523,7 @@ void PreferencesDialog::setColorSetting(QFrame *frame, const QColor &color)
                                                                        palette.color(line->backgroundRole()).name()));
 }
 
-void PreferencesDialog::saveColorSetting(QFrame *frame, const QString & settingName)
+void PreferencesDialog::saveColorSetting(QFrame* frame, const std::string& settingName)
 {
     Settings::setValue("databrowser", settingName + "_colour",
         frame->palette().color(frame->backgroundRole()));
@@ -537,7 +541,7 @@ void PreferencesDialog::adjustColorsToStyle(int style)
 
     for(int i=0; i < ui->treeSyntaxHighlighting->topLevelItemCount(); ++i)
     {
-        QString name = ui->treeSyntaxHighlighting->topLevelItem(i)->text(0);
+        std::string name = ui->treeSyntaxHighlighting->topLevelItem(i)->text(0).toStdString();
         QColor color = Settings::getDefaultColorValue("syntaxhighlighter", name + "_colour", appStyle);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setTextColor(2, color);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setBackgroundColor(2, color);
@@ -671,4 +675,9 @@ void PreferencesDialog::on_buttonBox_clicked(QAbstractButton* button)
             accept();
         }
     }
+}
+
+void PreferencesDialog::configureProxy()
+{
+    m_proxyDialog->show();
 }

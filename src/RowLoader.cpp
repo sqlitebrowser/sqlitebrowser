@@ -19,7 +19,7 @@ namespace {
 RowLoader::RowLoader (
     std::function<std::shared_ptr<sqlite3>(void)> db_getter_,
     std::function<void(QString)> statement_logger_,
-    QStringList & headers_,
+    std::vector<std::string> & headers_,
     QMutex & cache_mutex_,
     Cache & cache_data_
     )
@@ -35,7 +35,7 @@ RowLoader::RowLoader (
 {
 }
 
-void RowLoader::setQuery (QString new_query, QString newCountQuery)
+void RowLoader::setQuery (const QString& new_query, const QString& newCountQuery)
 {
     std::lock_guard<std::mutex> lk(m);
     query = new_query;
@@ -59,7 +59,7 @@ void RowLoader::triggerRowCountDetermination(int token)
         if(nrows >= 0)
             emit rowCountComplete(token, nrows);
 
-        std::lock_guard<std::mutex> lk(m);
+        std::lock_guard<std::mutex> lk2(m);
         nosync_taskDone();
     });
 }
@@ -230,22 +230,22 @@ void RowLoader::process (Task & t)
 
     if(SQLITE_OK == status)
     {
-        const int num_columns = headers.size();
+        const int num_columns = static_cast<int>(headers.size());
 
         while(!t.cancel && sqlite3_step(stmt) == SQLITE_ROW)
         {
-            Cache::value_type rowdata;
+            // Construct a new row object with the right number of columns
+            Cache::value_type rowdata(static_cast<size_t>(num_columns));
             for(int i=0;i<num_columns;++i)
             {
-                if(sqlite3_column_type(stmt, i) == SQLITE_NULL)
+                // No need to do anything for NULL values because we can just use the already default constructed value
+                if(sqlite3_column_type(stmt, i) != SQLITE_NULL)
                 {
-                    rowdata.append(QByteArray());
-                } else {
                     int bytes = sqlite3_column_bytes(stmt, i);
                     if(bytes)
-                        rowdata.append(QByteArray(static_cast<const char*>(sqlite3_column_blob(stmt, i)), bytes));
+                        rowdata[static_cast<size_t>(i)] = QByteArray(static_cast<const char*>(sqlite3_column_blob(stmt, i)), bytes);
                     else
-                        rowdata.append(QByteArray(""));
+                        rowdata[static_cast<size_t>(i)] = "";
                 }
             }
             QMutexLocker lk(&cache_mutex);

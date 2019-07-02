@@ -1,5 +1,5 @@
 EXPORTS
     RegisterExtensionFormats
     sqlite3_api
-    sqlite3_sqliteformats_init
+    sqlite3_extension_init
     freeResult

@@ -136,7 +136,7 @@ Application::Application(int& argc, char** argv) :
                             value = option.at(1).split(",");
                         else
                             value = option.at(1);
-                        Settings::setValue(setting.at(0), setting.at(1), value, !saveToDisk);
+                        Settings::setValue(setting.at(0).toStdString(), setting.at(1).toStdString(), value, !saveToDisk);
                     }
                 }
             }

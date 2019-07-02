@@ -3,7 +3,7 @@
 #include "SqlUiLexer.h"
 #include "Qsci/qsciapis.h"
 #include "Settings.h"
-#include "sql/sqlitetypes.h"
+#include "sqlitedb.h"
 
 SqlUiLexer::SqlUiLexer(QObject* parent) :
     QsciLexerSQL(parent)
@@ -155,24 +155,24 @@ void SqlUiLexer::setTableNames(const QualifiedTablesMap& tables)
     autocompleteApi->clear();
     listTables.clear();
     setupAutoCompletion();
-    for(auto itSchemas=tables.constBegin();itSchemas!=tables.constEnd();++itSchemas)
+    for(const auto& itSchemas : tables)
     {
-        for(auto itTables=itSchemas.value().constBegin();itTables!=itSchemas.value().constEnd();++itTables)
+        for(const auto& itTables : itSchemas.second)
         {
             // Completion for schema.table
-            autocompleteApi->add(itSchemas.key() + "?" + QString::number(SqlUiLexer::ApiCompleterIconIdSchema) + "." +
-                                 itTables.key() + "?" + QString::number(SqlUiLexer::ApiCompleterIconIdTable));
+            autocompleteApi->add(itSchemas.first + "?" + QString::number(SqlUiLexer::ApiCompleterIconIdSchema) + "." +
+                                 itTables.first + "?" + QString::number(SqlUiLexer::ApiCompleterIconIdTable));
 
-            for(const QString& field : itTables.value()) {
+            for(const QString& field : itTables.second) {
                 // Completion for table.field
-                autocompleteApi->add(itTables.key() + "?" + QString::number(SqlUiLexer::ApiCompleterIconIdTable) + "." +
+                autocompleteApi->add(itTables.first + "?" + QString::number(SqlUiLexer::ApiCompleterIconIdTable) + "." +
                                      field + "?" + QString::number(SqlUiLexer::ApiCompleterIconIdColumn));
 
                 // Completion for isolated field
                 autocompleteApi->add(field + "?" + QString::number(SqlUiLexer::ApiCompleterIconIdColumn));
             }
             // Store the table name list in order to highlight them in a different colour
-            listTables.append(itTables.key());
+            listTables.append(itTables.first);
         }
     }
     autocompleteApi->prepare();

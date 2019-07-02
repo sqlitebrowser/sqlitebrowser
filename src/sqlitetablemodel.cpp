@@ -3,6 +3,7 @@
 #include "sqlite.h"
 #include "Settings.h"
 #include "Data.h"
+#include "CondFormat.h"
 
 #include <QMessageBox>
 #include <QApplication>
@@ -12,8 +13,11 @@
 #include <QUrl>
 #include <QtConcurrent/QtConcurrentRun>
 #include <QProgressDialog>
+#include <json.hpp>
 
 #include "RowLoader.h"
+
+using json = nlohmann::json;
 
 SqliteTableModel::SqliteTableModel(DBBrowserDB& db, QObject* parent, size_t chunkSize, const QString& encoding)
     : QAbstractTableModel(parent)
@@ -66,7 +70,7 @@ void SqliteTableModel::handleFinishedFetch (int life_id, unsigned int fetched_ro
 
     if(new_row_count != old_row_count)
     {
-        beginInsertRows(QModelIndex(), old_row_count, new_row_count - 1);
+        beginInsertRows(QModelIndex(), static_cast<int>(old_row_count), static_cast<int>(new_row_count - 1));
         m_currentRowCount = new_row_count;
         endInsertRows();
     }
@@ -74,14 +78,14 @@ void SqliteTableModel::handleFinishedFetch (int life_id, unsigned int fetched_ro
     if(fetched_row_end != fetched_row_begin)
     {
         // TODO optimize
-        int num_columns = m_headers.size();
-        emit dataChanged(createIndex(fetched_row_begin, 0), createIndex(fetched_row_end - 1, num_columns - 1));
+        size_t num_columns = m_headers.size();
+        emit dataChanged(createIndex(static_cast<int>(fetched_row_begin), 0), createIndex(static_cast<int>(fetched_row_end) - 1, static_cast<int>(num_columns) - 1));
     }
 
     if(m_rowCountAvailable != RowCount::Complete)
         m_rowCountAvailable = RowCount::Partial;
 
-    emit finishedFetch(fetched_row_begin, fetched_row_end);
+    emit finishedFetch(static_cast<int>(fetched_row_begin), static_cast<int>(fetched_row_end));
 }
 
 void SqliteTableModel::handleRowCountComplete (int life_id, int num_rows)
@@ -90,7 +94,7 @@ void SqliteTableModel::handleRowCountComplete (int life_id, int num_rows)
         return;
 
     m_rowCountAvailable = RowCount::Complete;
-    handleFinishedFetch(life_id, num_rows, num_rows);
+    handleFinishedFetch(life_id, static_cast<unsigned int>(num_rows), static_cast<unsigned int>(num_rows));
 
     emit finishedRowCount();
 }
@@ -123,7 +127,7 @@ void SqliteTableModel::setQuery(const sqlb::Query& query)
     m_query = query;
 
     // The first column is the rowid column and therefore is always of type integer
-    m_vDataTypes.push_back(SQLITE_INTEGER);
+    m_vDataTypes.emplace_back(SQLITE_INTEGER);
 
     // Get the data types of all other columns as well as the column names
     bool allOk = false;
@@ -132,10 +136,11 @@ void SqliteTableModel::setQuery(const sqlb::Query& query)
         sqlb::TablePtr t = m_db.getObjectByName<sqlb::Table>(query.table());
         if(t && t->fields.size()) // parsing was OK
         {
-            QString rowid = t->rowidColumn();
-            m_query.setRowIdColumn(rowid.toStdString());
-            m_headers.push_back(rowid);
-            m_headers.append(t->fieldNames());
+            sqlb::StringVector rowids = t->rowidColumns();
+            m_query.setRowIdColumns(rowids);
+            m_headers.push_back(sqlb::joinStringVector(rowids, ","));
+            for(const auto& n : t->fieldNames())
+                m_headers.push_back(n);
 
             // parse columns types
             static QStringList dataTypes = QStringList()
@@ -145,7 +150,7 @@ void SqliteTableModel::setQuery(const sqlb::Query& query)
                     << "BLOB";
             for(const sqlb::Field& fld :  t->fields)
             {
-                QString name(fld.type().toUpper());
+                QString name = QString::fromStdString(fld.type()).toUpper();
                 int colType = dataTypes.indexOf(name);
                 colType = (colType == -1) ? SQLITE_TEXT : colType + 1;
                 m_vDataTypes.push_back(colType);
@@ -159,18 +164,16 @@ void SqliteTableModel::setQuery(const sqlb::Query& query)
     // NOTE: It would be nice to eventually get rid of this piece here. As soon as the grammar parser is good enough...
     if(!allOk)
     {
-        QString sColumnQuery = QString::fromUtf8("SELECT * FROM %1;").arg(query.table().toString());
-        if(m_query.rowIdColumn().empty())
+        QString sColumnQuery = QString::fromUtf8("SELECT * FROM %1;").arg(QString::fromStdString(query.table().toString()));
+        if(m_query.rowIdColumns().empty())
             m_query.setRowIdColumn("_rowid_");
-        m_headers.push_back("_rowid_");
-        m_headers.append(getColumns(nullptr, sColumnQuery, m_vDataTypes));
+        m_headers.emplace_back("_rowid_");
+        auto columns = getColumns(nullptr, sColumnQuery, m_vDataTypes);
+        m_headers.insert(m_headers.end(), columns.begin(), columns.end());
     }
 
     // Tell the query object about the column names
-    std::vector<std::string> column_names;
-    for(const auto& h : m_headers)
-        column_names.push_back(h.toStdString());
-    m_query.setColumNames(column_names);
+    m_query.setColumNames(m_headers);
 
     // Apply new query and update view
     buildQuery();
@@ -194,31 +197,35 @@ void SqliteTableModel::setQuery(const QString& sQuery, const QString& sCountQuer
     worker->triggerRowCountDetermination(m_lifeCounter);
 
     if(!dontClearHeaders)
-        m_headers.append(getColumns(worker->getDb(), sQuery, m_vDataTypes));
+    {
+        auto columns = getColumns(worker->getDb(), sQuery, m_vDataTypes);
+        m_headers.insert(m_headers.end(), columns.begin(), columns.end());
+    }
 
     // now fetch the first entries
-    triggerCacheLoad(m_chunkSize / 2 - 1);
+    triggerCacheLoad(static_cast<int>(m_chunkSize / 2) - 1);
 
     emit layoutChanged();
 }
 
 int SqliteTableModel::rowCount(const QModelIndex&) const
 {
-    return m_currentRowCount;
+    return static_cast<int>(m_currentRowCount);
 }
 
 int SqliteTableModel::columnCount(const QModelIndex&) const
 {
-    return m_headers.size();
+    return static_cast<int>(m_headers.size());
 }
 
-int SqliteTableModel::filterCount() const
+size_t SqliteTableModel::filterCount() const
 {
     return m_query.where().size();
 }
 
 // Convert a number to string using the Unicode superscript characters
-static QString toSuperScript(int number)
+template<class T>
+static QString toSuperScript(T number)
 {
     QString superScript = QString::number(number);
     superScript.replace("0", "⁰");
@@ -242,18 +249,18 @@ QVariant SqliteTableModel::headerData(int section, Qt::Orientation orientation, 
     if (orientation == Qt::Horizontal)
     {
         // if we have a VIRTUAL table the model will not be valid, with no header data
-        if(section < m_headers.size()) {
+        if(static_cast<size_t>(section) < m_headers.size()) {
             QString sortIndicator;
-            for(int i = 0; i < m_query.orderBy().size(); i++) {
+            for(size_t i = 0; i < m_query.orderBy().size(); i++) {
                 const sqlb::SortedColumn sortedColumn = m_query.orderBy()[i];
                 // Append sort indicator with direction and ordinal number in superscript style
-                if (sortedColumn.column == section) {
+                if (sortedColumn.column == static_cast<size_t>(section)) {
                     sortIndicator = sortedColumn.direction == sqlb::Ascending ? " ▾" : " ▴";
                     sortIndicator.append(toSuperScript(i+1));
                     break;
                 }
             }
-            return m_headers.at(section) + sortIndicator;
+            return QString::fromStdString(m_headers.at(static_cast<size_t>(section))) + sortIndicator;
         }
         return QString("%1").arg(section + 1);
     }
@@ -268,14 +275,15 @@ QColor SqliteTableModel::getMatchingCondFormatColor(int column, const QString& v
     QString sql;
     // For each conditional format for this column,
     // if the condition matches the current data, return the associated colour.
-    for (const CondFormat& eachCondFormat : m_mCondFormats.value(column)) {
+    for (const CondFormat& eachCondFormat : m_mCondFormats.at(column)) {
         if (isNumber && !eachCondFormat.sqlCondition().contains("'"))
             sql = QString("SELECT %1 %2").arg(value, eachCondFormat.sqlCondition());
         else
             sql = QString("SELECT '%1' %2").arg(value, eachCondFormat.sqlCondition());
 
+        // Empty filter means: apply format to any row.
         // Query the DB for the condition, waiting in case there is a loading in progress.
-        if (m_db.querySingleValueFromDb(sql, false, DBBrowserDB::Wait) == "1")
+        if (eachCondFormat.filter().isEmpty() || m_db.querySingleValueFromDb(sql, false, DBBrowserDB::Wait) == "1")
             return role == Qt::ForegroundRole ? eachCondFormat.foregroundColor() : eachCondFormat.backgroundColor();
     }
     return QColor();
@@ -295,9 +303,11 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
     bool row_available;
 
     const Row * cached_row;
-    if(m_cache.count(index.row()))
+    const size_t row = static_cast<size_t>(index.row());
+    const size_t column = static_cast<size_t>(index.column());
+    if(m_cache.count(row))
     {
-        cached_row = &m_cache.at(index.row());
+        cached_row = &m_cache.at(row);
         row_available = true;
     } else {
         blank_data = makeDefaultCacheEntry();
@@ -309,14 +319,14 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
     {
         if(!row_available)
             return tr("loading...");
-        if(role == Qt::DisplayRole && cached_row->at(index.column()).isNull())
+        if(role == Qt::DisplayRole && cached_row->at(column).isNull())
         {
             return Settings::getValue("databrowser", "null_text").toString();
         } else if(role == Qt::DisplayRole && nosync_isBinary(index)) {
             return Settings::getValue("databrowser", "blob_text").toString();
         } else if(role == Qt::DisplayRole) {
             int limit = Settings::getValue("databrowser", "symbol_limit").toInt();
-            QByteArray displayText = cached_row->at(index.column());
+            QByteArray displayText = cached_row->at(column);
             if (displayText.length() > limit) {
                 // Add "..." to the end of truncated strings
                 return decode(displayText.left(limit).append(" ..."));
@@ -324,22 +334,22 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
                 return decode(displayText);
             }
         } else {
-            return decode(cached_row->at(index.column()));
+            return decode(cached_row->at(column));
         }
     } else if(role == Qt::FontRole) {
         QFont font;
-        if(!row_available || cached_row->at(index.column()).isNull() || nosync_isBinary(index))
+        if(!row_available || cached_row->at(column).isNull() || nosync_isBinary(index))
             font.setItalic(true);
         return font;
     } else if(role == Qt::ForegroundRole) {
         if(!row_available)
             return QColor(100, 100, 100);
-        if(cached_row->at(index.column()).isNull())
+        if(cached_row->at(column).isNull())
             return QColor(Settings::getValue("databrowser", "null_fg_colour").toString());
         else if (nosync_isBinary(index))
             return QColor(Settings::getValue("databrowser", "bin_fg_colour").toString());
-        else if (m_mCondFormats.contains(index.column())) {
-            QString value = cached_row->at(index.column());
+        else if (m_mCondFormats.find(index.column()) != m_mCondFormats.end()) {
+            QString value = cached_row->at(column);
             // Unlock before querying from DB
             lock.unlock();
             QColor condFormatColor = getMatchingCondFormatColor(index.column(), value, role);
@@ -351,12 +361,12 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
     } else if (role == Qt::BackgroundRole) {
         if(!row_available)
             return QColor(255, 200, 200);
-        if(cached_row->at(index.column()).isNull())
+        if(cached_row->at(column).isNull())
             return QColor(Settings::getValue("databrowser", "null_bg_colour").toString());
         else if (nosync_isBinary(index))
             return QColor(Settings::getValue("databrowser", "bin_bg_colour").toString());
-        else if (m_mCondFormats.contains(index.column())) {
-            QString value = cached_row->at(index.column());
+        else if (m_mCondFormats.find(index.column()) != m_mCondFormats.end()) {
+            QString value = cached_row->at(column);
             // Unlock before querying from DB
             lock.unlock();
             QColor condFormatColor = getMatchingCondFormatColor(index.column(), value, role);
@@ -368,8 +378,10 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
     } else if(role == Qt::ToolTipRole) {
         sqlb::ForeignKeyClause fk = getForeignKeyClause(index.column()-1);
         if(fk.isSet())
-          return tr("References %1(%2)\nHold %3Shift and click to jump there").arg(fk.table()).arg(fk.columns().join(","))
-            .arg(QKeySequence(Qt::CTRL).toString(QKeySequence::NativeText));
+          return tr("References %1(%2)\nHold %3Shift and click to jump there")
+                  .arg(QString::fromStdString(fk.table()))
+                  .arg(QString::fromStdString(sqlb::joinStringVector(fk.columns(), ",")))
+                  .arg(QKeySequence(Qt::CTRL).toString(QKeySequence::NativeText));
         else
             return QString();
     }
@@ -400,7 +412,7 @@ sqlb::ForeignKeyClause SqliteTableModel::getForeignKeyClause(int column) const
         // Note that the rowid column has number -1 here, it can safely be excluded since there will never be a
         // foreign key on that column.
 
-        sqlb::ConstraintPtr ptr = tbl->constraint({tbl->fields.at(column).name()}, sqlb::Constraint::ForeignKeyConstraintType);
+        sqlb::ConstraintPtr ptr = tbl->constraint({tbl->fields.at(static_cast<size_t>(column)).name()}, sqlb::Constraint::ForeignKeyConstraintType);
         if(ptr)
             return *(std::dynamic_pointer_cast<sqlb::ForeignKeyClause>(ptr));
     }
@@ -430,10 +442,11 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
     {
         QMutexLocker lock(&m_mutexDataCache);
 
-        auto & cached_row = m_cache.at(index.row());
+        auto & cached_row = m_cache.at(static_cast<size_t>(index.row()));
+        const size_t column = static_cast<size_t>(index.column());
 
         QByteArray newValue = encode(value.toByteArray());
-        QByteArray oldValue = cached_row.at(index.column());
+        QByteArray oldValue = cached_row.at(column);
 
         // Special handling for integer columns: instead of setting an integer column to an empty string, set it to '0' when it is also
         // used in a primary key. Otherwise SQLite will always output an 'datatype mismatch' error.
@@ -442,7 +455,7 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
             sqlb::TablePtr table = m_db.getObjectByName<sqlb::Table>(m_query.table());
             if(table)
             {
-                auto field = sqlb::findField(table, m_headers.at(index.column()));
+                auto field = sqlb::findField(table, m_headers.at(column));
                 if(contains(table->primaryKey(), field->name()) && field->isInteger())
                     newValue = "0";
             }
@@ -453,11 +466,29 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
         if(oldValue == newValue && oldValue.isNull() == newValue.isNull())
             return true;
 
-        if(m_db.updateRecord(m_query.table(), m_headers.at(index.column()), cached_row.at(0), newValue, isBlob, QString::fromStdString(m_query.rowIdColumn())))
+        if(m_db.updateRecord(m_query.table(), m_headers.at(column), cached_row.at(0), newValue, isBlob, m_query.rowIdColumns()))
         {
-            cached_row.replace(index.column(), newValue);
-            if(m_headers.at(index.column()).toStdString() == m_query.rowIdColumn()) {
-                cached_row.replace(0, newValue);
+            cached_row[column] = newValue;
+
+            // After updating the value itself in the cache, we need to check if we need to update the rowid too.
+            if(contains(m_query.rowIdColumns(), m_headers.at(column)))
+            {
+                // When the cached rowid column needs to be updated as well, we need to distinguish between single-column and multi-column primary keys.
+                // For the former ones, we can just overwrite the existing value with the new value.
+                // For the latter ones, we need to make a new JSON object of the values of all primary key columns, not just the updated one.
+                if(m_query.rowIdColumns().size() == 1)
+                {
+                    cached_row[0] = newValue;
+                } else {
+                    json array;
+                    assert(m_headers.size() == cached_row.size());
+                    for(size_t i=0;i<m_query.rowIdColumns().size();i++)
+                    {
+                        auto it = std::find(m_headers.begin()+1, m_headers.end(), m_query.rowIdColumns().at(i));    // +1 in order to omit the rowid column itself
+                        array.push_back(cached_row[static_cast<size_t>(std::distance(m_headers.begin(), it))]);
+                    }
+                    cached_row[0] = QByteArray::fromStdString(array.dump());
+                }
                 const QModelIndex& rowidIndex = index.sibling(index.row(), 0);
                 lock.unlock();
                 emit dataChanged(rowidIndex, rowidIndex);
@@ -488,7 +519,7 @@ Qt::ItemFlags SqliteTableModel::flags(const QModelIndex& index) const
     if(m_query.selectedColumns().size())
     {
         if(index.column() > 0)
-            custom_display_format = QString::fromStdString(m_query.selectedColumns().at(index.column()-1).selector) != sqlb::escapeIdentifier(headerData(index.column(), Qt::Horizontal).toString());
+            custom_display_format = QString::fromStdString(m_query.selectedColumns().at(static_cast<size_t>(index.column())-1).selector) != sqlb::escapeIdentifier(headerData(index.column(), Qt::Horizontal).toString());
     }
 
     if(!isBinary(index) && !custom_display_format)
@@ -522,8 +553,8 @@ SqliteTableModel::Row SqliteTableModel::makeDefaultCacheEntry () const
 {
     Row blank_data;
 
-    for(int i=0; i < m_headers.size(); ++i)
-        blank_data.push_back("");
+    for(size_t i=0; i < m_headers.size(); ++i)
+        blank_data.emplace_back("");
 
     return blank_data;
 }
@@ -553,24 +584,24 @@ bool SqliteTableModel::insertRows(int row, int count, const QModelIndex& parent)
         {
             return false;
         }
-        tempList.push_back(blank_data);
-        tempList.back().replace(0, rowid.toUtf8());
+        tempList.emplace_back(blank_data);
+        tempList.back()[0] = rowid.toUtf8();
 
         // update column with default values
         Row rowdata;
         if(m_db.getRow(m_query.table(), rowid, rowdata))
         {
-            for(int j=1; j < m_headers.size(); ++j)
+            for(size_t j=1; j < m_headers.size(); ++j)
             {
-                tempList.back().replace(j, rowdata[j - 1]);
+                tempList.back()[j] = rowdata[j - 1];
             }
         }
     }
 
     beginInsertRows(parent, row, row + count - 1);
-    for(unsigned int i = 0; i < tempList.size(); ++i)
+    for(size_t i = 0; i < tempList.size(); ++i)
     {
-        m_cache.insert(i + row, std::move(tempList.at(i)));
+        m_cache.insert(i + static_cast<size_t>(row), std::move(tempList.at(i)));
         m_currentRowCount++;
     }
     endInsertRows();
@@ -591,19 +622,19 @@ bool SqliteTableModel::removeRows(int row, int count, const QModelIndex& parent)
     QStringList rowids;
     for(int i=count-1;i>=0;i--)
     {
-        if(m_cache.count(row+i)) {
-            rowids.append(m_cache.at(row + i).at(0));
+        if(m_cache.count(static_cast<size_t>(row+i))) {
+            rowids.append(m_cache.at(static_cast<size_t>(row + i)).at(0));
         }
     }
 
-    bool ok = m_db.deleteRecords(m_query.table(), rowids, QString::fromStdString(m_query.rowIdColumn()));
+    bool ok = m_db.deleteRecords(m_query.table(), rowids, m_query.rowIdColumns());
 
     if (ok) {
         beginRemoveRows(parent, row, row + count - 1);
 
         for(int i=count-1;i>=0;i--)
         {
-            m_cache.erase(row + i);
+            m_cache.erase(static_cast<size_t>(row + i));
             m_currentRowCount--;
         }
 
@@ -620,23 +651,23 @@ QModelIndex SqliteTableModel::dittoRecord(int old_row)
     if (!insertRow(rowCount()))
         return QModelIndex();
 
-    int firstEditedColumn = 0;
+    size_t firstEditedColumn = 0;
     int new_row = rowCount() - 1;
 
     sqlb::TablePtr t = m_db.getObjectByName<sqlb::Table>(m_query.table());
 
-    QStringList pk = t->primaryKey();
+    sqlb::StringVector pk = t->primaryKey();
     for (size_t col = 0; col < t->fields.size(); ++col) {
         if(!contains(pk, t->fields.at(col).name())) {
             if (!firstEditedColumn)
                 firstEditedColumn = col + 1;
 
-            QVariant value = data(index(old_row, col + 1), Qt::EditRole);
-            setData(index(new_row, col + 1), value);
+            QVariant value = data(index(old_row, static_cast<int>(col + 1)), Qt::EditRole);
+            setData(index(new_row, static_cast<int>(col + 1)), value);
         }
     }
 
-    return index(new_row, firstEditedColumn);
+    return index(new_row, static_cast<int>(firstEditedColumn));
 }
 
 void SqliteTableModel::buildQuery()
@@ -708,7 +739,7 @@ void SqliteTableModel::removeCommentsFromQuery(QString& query)
     }
 }
 
-QStringList SqliteTableModel::getColumns(std::shared_ptr<sqlite3> pDb, const QString& sQuery, QVector<int>& fieldsTypes)
+std::vector<std::string> SqliteTableModel::getColumns(std::shared_ptr<sqlite3> pDb, const QString& sQuery, std::vector<int>& fieldsTypes)
 {
     if(!pDb)
         pDb = m_db.get(tr("retrieving list of columns"));
@@ -716,14 +747,14 @@ QStringList SqliteTableModel::getColumns(std::shared_ptr<sqlite3> pDb, const QSt
     sqlite3_stmt* stmt;
     QByteArray utf8Query = sQuery.toUtf8();
     int status = sqlite3_prepare_v2(pDb.get(), utf8Query, utf8Query.size(), &stmt, nullptr);
-    QStringList listColumns;
+    std::vector<std::string> listColumns;
     if(SQLITE_OK == status)
     {
         sqlite3_step(stmt);
         int columns = sqlite3_data_count(stmt);
         for(int i = 0; i < columns; ++i)
         {
-            listColumns.append(QString::fromUtf8(sqlite3_column_name(stmt, i)));
+            listColumns.push_back(sqlite3_column_name(stmt, i));
             fieldsTypes.push_back(sqlite3_column_type(stmt, i));
         }
     }
@@ -734,11 +765,11 @@ QStringList SqliteTableModel::getColumns(std::shared_ptr<sqlite3> pDb, const QSt
 
 void SqliteTableModel::addCondFormat(int column, const CondFormat& condFormat)
 {
-    m_mCondFormats[column].append(condFormat);
+    m_mCondFormats[column].push_back(condFormat);
     emit layoutChanged();
 }
 
-void SqliteTableModel::setCondFormats(int column, const QVector<CondFormat>& condFormats)
+void SqliteTableModel::setCondFormats(int column, const std::vector<CondFormat>& condFormats)
 {
     m_mCondFormats[column] = condFormats;
     emit layoutChanged();
@@ -750,9 +781,9 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
 
     // If the value was set to an empty string remove any filter for this column. Otherwise insert a new filter rule or replace the old one if there is already one
     if(whereClause.isEmpty())
-        m_query.where().erase(column);
+        m_query.where().erase(static_cast<size_t>(column));
     else
-        m_query.where()[column] = whereClause.toStdString();
+        m_query.where()[static_cast<size_t>(column)] = whereClause.toStdString();
 
     // Build the new query
     buildQuery();
@@ -769,7 +800,7 @@ void SqliteTableModel::clearCache()
 
     if(m_currentRowCount > 0)
     {
-        beginRemoveRows(QModelIndex(), 0, m_currentRowCount - 1);
+        beginRemoveRows(QModelIndex(), 0, static_cast<int>(m_currentRowCount - 1));
         endRemoveRows();
     }
 
@@ -786,12 +817,13 @@ bool SqliteTableModel::isBinary(const QModelIndex& index) const
 
 bool SqliteTableModel::nosync_isBinary(const QModelIndex& index) const
 {
-    if(!m_cache.count(index.row()))
+    const size_t row = static_cast<size_t>(index.row());
+    if(!m_cache.count(row))
         return false;
 
-    const auto & cached_row = m_cache.at(index.row());
+    const auto & cached_row = m_cache.at(row);
 
-    return !isTextOnly(cached_row.at(index.column()), m_encoding, true);
+    return !isTextOnly(cached_row.at(static_cast<size_t>(index.column())), m_encoding, true);
 }
 
 QByteArray SqliteTableModel::encode(const QByteArray& str) const
@@ -830,18 +862,18 @@ bool SqliteTableModel::dropMimeData(const QMimeData* data, Qt::DropAction, int r
     return false;
 }
 
-void SqliteTableModel::setPseudoPk(QString pseudoPk)
+void SqliteTableModel::setPseudoPk(std::vector<std::string> pseudoPk)
 {
-    if(pseudoPk.isNull())
-        pseudoPk = QString("_rowid_");
+    if(pseudoPk.empty())
+        pseudoPk.emplace_back("_rowid_");
 
     // Do nothing if the value didn't change
-    if(m_query.rowIdColumn() == pseudoPk.toStdString())
+    if(m_query.rowIdColumns() == pseudoPk)
         return;
 
-    m_query.setRowIdColumn(pseudoPk.toStdString());
+    m_query.setRowIdColumns(pseudoPk);
     if(m_headers.size())
-        m_headers[0] = pseudoPk;
+        m_headers[0] = sqlb::joinStringVector(pseudoPk, ",");
 
     buildQuery();
 }
@@ -860,11 +892,13 @@ bool SqliteTableModel::isEditable() const
 
 void SqliteTableModel::triggerCacheLoad (int row) const
 {
-    size_t row_begin = std::max(0, row - int(m_chunkSize) / 2);
-    size_t row_end = row + m_chunkSize / 2;
+    int halfChunk = static_cast<int>( m_chunkSize / 2);
+    size_t row_begin = static_cast<std::size_t>(std::max(0, row - halfChunk));
+    size_t row_end = static_cast<std::size_t>(row + halfChunk);
 
-    if(rowCountAvailable() == RowCount::Complete) {
-        row_end = std::min(row_end, size_t(rowCount()));
+    if(rowCountAvailable() == RowCount::Complete)
+    {
+        row_end = std::min(row_end, static_cast<std::size_t>(rowCount()));
     } else {
         // will be truncated by reader
     }
@@ -897,7 +931,7 @@ bool SqliteTableModel::completeCache () const
     waitUntilIdle();
 
     // This loop fetches all data by loading it block by block into the cache
-    for(int i=0;i<rowCount()+static_cast<int>(m_chunkSize)/2;i+=m_chunkSize)
+    for(int i = 0; i < (rowCount() + static_cast<int>( m_chunkSize / 2)); i += static_cast<int>(m_chunkSize))
     {
         progress.setValue(i);
         qApp->processEvents();

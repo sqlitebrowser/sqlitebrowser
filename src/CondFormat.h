@@ -8,7 +8,7 @@
 class CondFormat
 {
 public:
-    CondFormat() {};
+    CondFormat() {}
     explicit CondFormat(const QString& filter, const QColor& foreground, const QColor& background, const QString& encoding = QString());
 
     static QString filterToSqlCondition(const QString& value, const QString& encoding = QString());
@@ -20,10 +20,10 @@ private:
     QColor m_fgColor;
 
 public:
-    QString sqlCondition() const { return m_sqlCondition; };
-    QString filter() const { return m_filter; };
-    QColor backgroundColor() const { return m_bgColor; };
-    QColor foregroundColor() const { return m_fgColor; };
+    QString sqlCondition() const { return m_sqlCondition; }
+    QString filter() const { return m_filter; }
+    QColor backgroundColor() const { return m_bgColor; }
+    QColor foregroundColor() const { return m_fgColor; }
 
 };
 

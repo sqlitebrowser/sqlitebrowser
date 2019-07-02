@@ -17,19 +17,30 @@ bool isTextOnly(QByteArray data, const QString& encoding, bool quickTest)
     if(startsWithBom(data))
         return true;
 
-    // We can assume that the default encoding (UTF-8) and all the ISO-8859
-    // cannot contain character zero.
-    // This has to be checked explicitly because toUnicode() is using zero as
-    // a terminator for these encodings.
-    if((encoding.isEmpty() || encoding.startsWith("ISO-8859")) && data.contains('\0'))
-        return false;
-
-    // Truncate to the first couple of bytes for quick testing
+    // Truncate to the first few bytes for quick testing
     int testSize = quickTest? std::min(512, data.size()) : data.size();
-    QTextCodec::ConverterState state;
-    QTextCodec *codec = encoding.isEmpty()? QTextCodec::codecForName("UTF-8") : QTextCodec::codecForName(encoding.toUtf8());
-    const QString text = codec->toUnicode(data.constData(), testSize, &state);
-    return state.invalidChars <= 0;
+
+    // If the quick test has been requested and we have to truncate the string, we have to use
+    // an approach where truncated multibyte characters are not interpreted as invalid characters.
+    if(quickTest && data.size() > testSize) {
+
+        // We can assume that the default encoding (UTF-8) and all the ISO-8859
+        // cannot contain character zero.
+        // This has to be checked explicitly because toUnicode() is using zero as
+        // a terminator for these encodings.
+        if((encoding.isEmpty() || encoding.startsWith("ISO-8859")) && data.contains('\0'))
+            return false;
+
+        QTextCodec::ConverterState state;
+        QTextCodec *codec = encoding.isEmpty()? QTextCodec::codecForName("UTF-8") : QTextCodec::codecForName(encoding.toUtf8());
+        const QString text = codec->toUnicode(data.constData(), testSize, &state);
+        return state.invalidChars == 0;
+    } else {
+        // Convert to Unicode if necessary
+        data = decodeString(data, encoding);
+        // Perform check
+        return QString(data).toUtf8() == data;
+    }
 }
 
 bool startsWithBom(const QByteArray& data)
@@ -62,7 +73,7 @@ QByteArray removeBom(QByteArray& data)
     }
 }
 
-QStringList toStringList(const QList<QByteArray> list) {
+QStringList toStringList(const QList<QByteArray>& list) {
     QStringList strings;
     for (const QByteArray &item : list) {
         strings.append(QString::fromUtf8(item));

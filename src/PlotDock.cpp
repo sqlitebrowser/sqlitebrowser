@@ -7,6 +7,26 @@
 
 #include <QPrinter>
 #include <QPrintPreviewDialog>
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+#include <QRandomGenerator>
+#endif
+
+// Enable this line to show the most basic performance stats after pressing the fetch-all-data button. Please keep in mind that while these
+// numbers might help to estimate the performance of the data loading procedure, this is not a proper benchmark.
+//#define LOAD_DATA_BENCHMARK
+
+#ifdef LOAD_DATA_BENCHMARK
+#include <QElapsedTimer>
+#endif
+
+static int random_number(int from, int to)
+{
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+    return QRandomGenerator::global()->bounded(from, to);
+#else
+    return qrand() % to + from;
+#endif
+}
 
 PlotDock::PlotDock(QWidget* parent)
     : QDialog(parent),
@@ -317,7 +337,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                     case QVariant::Date: {
                         QString s = model->data(model->index(j, x)).toString();
                         QDateTime d = QDateTime::fromString(s, Qt::ISODate);
-                        xdata[j] = d.toMSecsSinceEpoch() / 1000.0;
+                        xdata[j] = static_cast<double>(d.toMSecsSinceEpoch()) / 1000.0;
                         break;
                     }
                     case QVariant::Time: {
@@ -524,7 +544,7 @@ void PlotDock::on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem* item, int c
         // On double click open the colordialog
         QColorDialog colordialog(this);
         QColor curbkcolor = item->backgroundColor(column);
-        QColor precolor = !curbkcolor.isValid() ? static_cast<Qt::GlobalColor>(qrand() % 13 + 5) : curbkcolor;
+        QColor precolor = !curbkcolor.isValid() ? static_cast<Qt::GlobalColor>(random_number(5, 13)) : curbkcolor;
         QColor color = colordialog.getColor(precolor, this, tr("Choose an axis color"));
         if(color.isValid())
         {
@@ -667,8 +687,8 @@ QVariant::Type PlotDock::guessDataType(SqliteTableModel* model, int column)
     QVariant::Type type = QVariant::Invalid;
     for(int i = 0; i < std::min(10, model->rowCount()) && type != QVariant::String; ++i)
     {
-        QVariant data = model->data(model->index(i, column), Qt::EditRole);
-        if(data.isNull() || data.convert(QVariant::Double))
+        QVariant varData = model->data(model->index(i, column), Qt::EditRole);
+        if(varData.isNull() || varData.convert(QVariant::Double))
         {
             type = QVariant::Double;
         } else {
@@ -697,8 +717,20 @@ void PlotDock::fetchAllData()
 {
     if(m_currentPlotModel)
     {
+#ifdef LOAD_DATA_BENCHMARK
+    // If benchmark mode is enabled start measuring the performance now
+    QElapsedTimer timer;
+    timer.start();
+#endif
+
         // Make sure all data is loaded
         m_currentPlotModel->completeCache();
+
+#ifdef LOAD_DATA_BENCHMARK
+    QMessageBox::information(this, qApp->applicationName(),
+                             tr("Loading all remaining data for this table took %1ms.")
+                             .arg(timer.elapsed()));
+#endif
 
         // Update plot
         updatePlot(m_currentPlotModel, m_currentTableSettings);

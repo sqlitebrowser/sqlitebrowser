@@ -2,7 +2,7 @@
 #include "ui_EditDialog.h"
 #include "sqlitedb.h"
 #include "Settings.h"
-#include "src/qhexedit.h"
+#include "qhexedit.h"
 #include "docktextedit.h"
 #include "FileDialog.h"
 #include "Data.h"
@@ -13,7 +13,6 @@
 #include <QImageReader>
 #include <QBuffer>
 #include <QModelIndex>
-#include <QJsonDocument>
 #include <QtXml/QDomDocument>
 #include <QMessageBox>
 #include <QPrinter>
@@ -23,6 +22,9 @@
 #include <QTextDocument>
 
 #include <Qsci/qsciscintilla.h>
+#include <json.hpp>
+
+using json = nlohmann::json;
 
 EditDialog::EditDialog(QWidget* parent)
     : QDialog(parent),
@@ -85,9 +87,9 @@ void EditDialog::setCurrentIndex(const QModelIndex& idx)
 {
     currentIndex = QPersistentModelIndex(idx);
 
-    QByteArray data = idx.data(Qt::EditRole).toByteArray();
-    loadData(data);
-    updateCellInfoAndMode(data);
+    QByteArray bArrData = idx.data(Qt::EditRole).toByteArray();
+    loadData(bArrData);
+    updateCellInfoAndMode(bArrData);
 
     ui->buttonApply->setDisabled(true);
 }
@@ -111,7 +113,7 @@ void EditDialog::reject()
 }
 
 // Loads data from a cell into the Edit Cell window
-void EditDialog::loadData(const QByteArray& data)
+void EditDialog::loadData(const QByteArray& bArrdata)
 {
     QImage img;
     QString textData;
@@ -120,7 +122,7 @@ void EditDialog::loadData(const QByteArray& data)
     removedBom.clear();
 
     // Determine the data type, saving that info in the class variable
-    dataType = checkDataType(data);
+    dataType = checkDataType(bArrdata);
 
     // Get the current editor mode (eg text, hex, image, json or xml mode)
     int editMode = ui->comboMode->currentIndex();
@@ -148,7 +150,7 @@ void EditDialog::loadData(const QByteArray& data)
             dataSource = HexBuffer;
 
             // Load the Null into the hex editor
-            hexEdit->setData(data);
+            hexEdit->setData(bArrdata);
 
             break;
 
@@ -160,7 +162,7 @@ void EditDialog::loadData(const QByteArray& data)
             ui->editorImage->setPixmap(QPixmap(0,0));
 
             // Load the Null into the hex editor
-            hexEdit->setData(data);
+            hexEdit->setData(bArrdata);
 
             break;
         }
@@ -175,10 +177,10 @@ void EditDialog::loadData(const QByteArray& data)
         case TextEditor:
         case JsonEditor:
         case XmlEditor:
-            setDataInBuffer(data, SciBuffer);
+            setDataInBuffer(bArrdata, SciBuffer);
             break;
         case HexEditor:
-            setDataInBuffer(data, HexBuffer);
+            setDataInBuffer(bArrdata, HexBuffer);
             break;
         case ImageViewer:
             // The image viewer cannot hold data nor display text.
@@ -187,7 +189,7 @@ void EditDialog::loadData(const QByteArray& data)
             ui->editorImage->setPixmap(QPixmap(0,0));
 
             // Load the text into the text editor
-            setDataInBuffer(data, SciBuffer);
+            setDataInBuffer(bArrdata, SciBuffer);
 
             break;
         }
@@ -198,7 +200,7 @@ void EditDialog::loadData(const QByteArray& data)
         // stored it in the editorImage widget instead, it would be a pixmap
         // and there's no good way to restore that back to the original
         // (pristine) image data.  eg image metadata would be lost
-        setDataInBuffer(data, HexBuffer);
+        setDataInBuffer(bArrdata, HexBuffer);
 
         // Update the display if in text edit or image viewer mode
         switch (editMode) {
@@ -215,7 +217,7 @@ void EditDialog::loadData(const QByteArray& data)
 
         case ImageViewer:
             // Load the image into the image viewing widget
-            if (img.loadFromData(data)) {
+            if (img.loadFromData(bArrdata)) {
                 ui->editorImage->setPixmap(QPixmap::fromImage(img));
             }
             break;
@@ -228,21 +230,21 @@ void EditDialog::loadData(const QByteArray& data)
         case JsonEditor:
         case XmlEditor:
 
-            setDataInBuffer(data, SciBuffer);
+            setDataInBuffer(bArrdata, SciBuffer);
             break;
 
         case HexEditor:
 
-            setDataInBuffer(data, HexBuffer);
+            setDataInBuffer(bArrdata, HexBuffer);
             break;
 
         case ImageViewer:
             // Set data in the XML (Sci) Buffer and load the SVG Image
-            setDataInBuffer(data, SciBuffer);
+            setDataInBuffer(bArrdata, SciBuffer);
             sciEdit->setLanguage(DockTextEdit::XML);
 
             // Load the image into the image viewing widget
-            if (img.loadFromData(data)) {
+            if (img.loadFromData(bArrdata)) {
                 ui->editorImage->setPixmap(QPixmap::fromImage(img));
             }
             break;
@@ -255,7 +257,7 @@ void EditDialog::loadData(const QByteArray& data)
         // into the hex widget (the only safe place for it)
 
         // Load the data into the hex buffer
-        setDataInBuffer(data, HexBuffer);
+        setDataInBuffer(bArrdata, HexBuffer);
 
         switch (editMode) {
         case TextEditor:
@@ -287,11 +289,12 @@ void EditDialog::importData()
     image_formats.chop(1);
 
     QStringList filters;
-    filters << tr("Text files (*.txt)") <<
-        tr("JSON files (*.json)") <<
-        tr("XML files (*.xml)") <<
-        tr("Image files (%1)").arg(image_formats) <<
-        tr("Binary files (*.bin)") << tr("All files (*)");
+    filters << FILE_FILTER_TXT
+            << FILE_FILTER_JSON
+            << FILE_FILTER_XML
+            << tr("Image files (%1)").arg(image_formats)
+            << FILE_FILTER_BIN
+            << FILE_FILTER_ALL;
 
     QString selectedFilter;
 
@@ -301,19 +304,19 @@ void EditDialog::importData()
     // Set as selected filter the appropriate for the current mode.
     switch (mode) {
     case TextEditor:
-        selectedFilter = tr("Text files (*.txt)");
+        selectedFilter = FILE_FILTER_TXT;
         break;
     case HexEditor:
-        selectedFilter = tr("Binary files (*.bin)");
+        selectedFilter = FILE_FILTER_BIN;
         break;
     case ImageViewer:
         selectedFilter = tr("Image files (%1)").arg(image_formats);
         break;
     case JsonEditor:
-        selectedFilter = tr("JSON files (*.json)");
+        selectedFilter = FILE_FILTER_JSON;
         break;
     case XmlEditor:
-        selectedFilter = tr("XML files (*.xml)");
+        selectedFilter = FILE_FILTER_XML;
         break;
     }
     QString fileName = FileDialog::getOpenFileName(
@@ -361,27 +364,29 @@ void EditDialog::exportData()
     case Text:
         // Include the XML case on the text data type, since XML detection is not very sofisticated.
         if (ui->comboMode->currentIndex() == XmlEditor)
-            filters << tr("XML files (*.xml)") << tr("Text files (*.txt)");
+            filters << FILE_FILTER_XML
+                    << FILE_FILTER_TXT;
         else
-            filters << tr("Text files (*.txt)") << tr("XML files (*.xml)");
+            filters << FILE_FILTER_TXT
+                    << FILE_FILTER_XML;
         break;
     case JSON:
-        filters << tr("JSON files (*.json)");
+        filters << FILE_FILTER_JSON;
         break;
     case SVG:
-        filters << tr("SVG files (*.svg)");
+        filters << FILE_FILTER_SVG;
         break;
     case XML:
-        filters << tr("XML files (*.xml)");
+        filters << FILE_FILTER_XML;
         break;
     case Null:
         return;
     }
 
     if (dataSource == HexBuffer)
-        filters << tr("Hex dump files (*.txt)");
+        filters << FILE_FILTER_HEX;
 
-    filters << tr("All files (*)");
+    filters << FILE_FILTER_ALL;
 
     QString selectedFilter = filters.first();
     QString fileName = FileDialog::getSaveFileName(
@@ -400,7 +405,7 @@ void EditDialog::exportData()
           case HexBuffer:
               // Data source is the hex buffer
               // If text option has been selected, the readable representation of the content is saved to file.
-              if (selectedFilter == tr("Hex dump files (*.txt)"))
+              if (selectedFilter == FILE_FILTER_HEX)
                   file.write(hexEdit->toReadableString().toUtf8());
               else
                   file.write(hexEdit->data());
@@ -444,12 +449,12 @@ void EditDialog::updateApplyButton()
         ui->buttonApply->setEnabled(true);
 }
 
-bool EditDialog::promptInvalidData(const QString& dataType, const QString& errorString)
+bool EditDialog::promptInvalidData(const QString& data_type, const QString& errorString)
 {
     QMessageBox::StandardButton reply = QMessageBox::question(
       this,
       tr("Invalid data for this mode"),
-      tr("The cell contains invalid %1 data. Reason: %2. Do you really want to apply it to the cell?").arg(dataType, errorString),
+      tr("The cell contains invalid %1 data. Reason: %2. Do you really want to apply it to the cell?").arg(data_type, errorString),
       QMessageBox::Apply | QMessageBox::Cancel);
     return (reply == QMessageBox::Apply);
 }
@@ -479,29 +484,33 @@ void EditDialog::accept()
         }
         case DockTextEdit::JSON:
         {
+            sciEdit->clearErrorIndicators();
+
             QString oldData = currentIndex.data(Qt::EditRole).toString();
 
             QString newData;
-            QJsonParseError parseError;
-            QJsonDocument jsonDoc = QJsonDocument::fromJson(sciEdit->text().toUtf8(), &parseError);
-            bool proceed;
+            bool proceed = true;
+            json jsonDoc;
 
-            sciEdit->clearErrorIndicators();
-            if (parseError.error != QJsonParseError::NoError)
-                sciEdit->setErrorIndicator(parseError.offset-1);
+            try {
+                jsonDoc = json::parse(sciEdit->text().toStdString());
+            } catch(json::parse_error& parseError) {
+                sciEdit->setErrorIndicator(static_cast<int>(parseError.byte - 1));
 
-            if (!jsonDoc.isNull()) {
+                proceed = promptInvalidData("JSON", parseError.what());
+            }
+
+            if (!jsonDoc.is_null()) {
                 if (mustIndentAndCompact)
                     // Compact the JSON data before storing
-                    newData = QString(jsonDoc.toJson(QJsonDocument::Compact));
+                    newData = QString::fromStdString(jsonDoc.dump());
                 else
                     newData = sciEdit->text();
-                proceed = (oldData != newData);
-
             } else {
                 newData = sciEdit->text();
-                proceed = (oldData != newData && promptInvalidData("JSON", parseError.errorString()));
             }
+            proceed = proceed && (oldData != newData);
+
             if (proceed)
                 // The data is different, so commit it back to the database
                 emit recordTextUpdated(currentIndex, newData.toUtf8(), false);
@@ -549,7 +558,7 @@ void EditDialog::accept()
     }
 }
 
-void EditDialog::setDataInBuffer(const QByteArray& data, DataSources source)
+void EditDialog::setDataInBuffer(const QByteArray& bArrdata, DataSources source)
 {
     dataSource = source;
     QString textData;
@@ -563,7 +572,7 @@ void EditDialog::setDataInBuffer(const QByteArray& data, DataSources source)
         case DockTextEdit::PlainText:
         {
             // Load the text into the text editor, remove BOM first if there is one
-            QByteArray dataWithoutBom = data;
+            QByteArray dataWithoutBom = bArrdata;
             removedBom = removeBom(dataWithoutBom);
 
             textData = QString::fromUtf8(dataWithoutBom.constData(), dataWithoutBom.size());
@@ -577,23 +586,26 @@ void EditDialog::setDataInBuffer(const QByteArray& data, DataSources source)
         }
         case DockTextEdit::JSON:
         {
-            QJsonParseError parseError;
-            QJsonDocument jsonDoc = QJsonDocument::fromJson(QByteArray(data.constData(), data.size()), &parseError);
+            sciEdit->clearErrorIndicators();
 
-            if (mustIndentAndCompact && !jsonDoc.isNull()) {
+            json jsonDoc;
+
+            try {
+                jsonDoc = json::parse(std::string(bArrdata.constData(), static_cast<size_t>(bArrdata.size())));
+            } catch(json::parse_error& parseError) {
+                sciEdit->setErrorIndicator(static_cast<int>(parseError.byte - 1));
+            }
+
+            if (mustIndentAndCompact && !jsonDoc.is_null() && !jsonDoc.is_discarded()) {
                 // Load indented JSON into the JSON editor
-                textData = QString(jsonDoc.toJson(QJsonDocument::Indented));
+                textData = QString::fromStdString(jsonDoc.dump(4));
             } else {
                 // Fallback case. The data is not yet valid JSON or no auto-formatting applied.
-                textData = QString::fromUtf8(data.constData(), data.size());
+                textData = QString::fromUtf8(bArrdata.constData(), bArrdata.size());
             }
+
             sciEdit->setText(textData);
-
-            sciEdit->clearErrorIndicators();
-            if (parseError.error != QJsonParseError::NoError)
-                sciEdit->setErrorIndicator(parseError.offset-1);
             sciEdit->setEnabled(true);
-
         }
 
         break;
@@ -603,14 +615,14 @@ void EditDialog::setDataInBuffer(const QByteArray& data, DataSources source)
             QString errorMsg;
             int errorLine, errorColumn;
             QDomDocument xmlDoc;
-            bool isValid = xmlDoc.setContent(data, true, &errorMsg, &errorLine, &errorColumn);
+            bool isValid = xmlDoc.setContent(bArrdata, true, &errorMsg, &errorLine, &errorColumn);
 
             if (mustIndentAndCompact && isValid) {
                 // Load indented XML into the XML editor
                 textData = xmlDoc.toString(Settings::getValue("editor", "tabsize").toInt());
             } else {
                 // Fallback case. The data is not yet valid JSON or no auto-formatting applied.
-                textData = QString::fromUtf8(data.constData(), data.size());
+                textData = QString::fromUtf8(bArrdata.constData(), bArrdata.size());
             }
             sciEdit->setText(textData);
 
@@ -625,7 +637,7 @@ void EditDialog::setDataInBuffer(const QByteArray& data, DataSources source)
         }
         break;
     case HexBuffer:
-        hexEdit->setData(data);
+        hexEdit->setData(bArrdata);
         hexEdit->setEnabled(true);
 
         break;
@@ -660,12 +672,12 @@ void EditDialog::editModeChanged(int newMode)
         case ImageViewer:
         {
             // When SVG format, load the image, else clear it.
-            QByteArray data = sciEdit->text().toUtf8();
-            dataType = checkDataType(data);
+            QByteArray bArrdata = sciEdit->text().toUtf8();
+            dataType = checkDataType(bArrdata);
             if (dataType == SVG) {
                 QImage img;
 
-                if (img.loadFromData(data))
+                if (img.loadFromData(bArrdata))
                     ui->editorImage->setPixmap(QPixmap::fromImage(img));
                 else
                     // Clear any image from the image viewing widget
@@ -720,9 +732,9 @@ void EditDialog::setMustIndentAndCompact(bool enable)
 }
 
 // Determine the type of data in the cell
-int EditDialog::checkDataType(const QByteArray& data)
+int EditDialog::checkDataType(const QByteArray& bArrdata)
 {
-    QByteArray cellData = data;
+    QByteArray cellData = bArrdata;
 
     // Check for NULL data type
     if (cellData.isNull()) {
@@ -742,8 +754,8 @@ int EditDialog::checkDataType(const QByteArray& data)
     {
         if (cellData.startsWith("<?xml"))
             return XML;
-        QJsonDocument jsonDoc = QJsonDocument::fromJson(cellData);
-        if (!jsonDoc.isNull())
+
+        if(!json::parse(cellData, nullptr, false).is_discarded())
             return JSON;
         else
             return Text;
@@ -831,9 +843,9 @@ void EditDialog::switchEditorMode(bool autoSwitchForType)
 
 // Update the information labels in the bottom left corner of the dialog
 // and switches the editor mode, if required, according to the detected data type.
-void EditDialog::updateCellInfoAndMode(const QByteArray& data)
+void EditDialog::updateCellInfoAndMode(const QByteArray& bArrdata)
 {
-    QByteArray cellData = data;
+    QByteArray cellData = bArrdata;
 
     switchEditorMode(ui->buttonAutoSwitchMode->isChecked());
 

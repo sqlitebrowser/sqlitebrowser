@@ -1,8 +1,9 @@
 #ifndef DOTENVFORMAT_H
 #define DOTENVFORMAT_H
 
-#include <QIODevice>
 #include <QSettings>
+
+class QIODevice;
 
 class DotenvFormat
 {

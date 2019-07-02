@@ -3,9 +3,13 @@
 #include "CondFormat.h"
 #include "Settings.h"
 
-#include "QColorDialog"
+#include <QColorDialog>
+#include <QDesktopServices>
+#include <QUrl>
+#include <QPushButton>
+#include <QMessageBox>
 
-CondFormatManager::CondFormatManager(const QVector<CondFormat>& condFormats, const QString& encoding, QWidget *parent) :
+CondFormatManager::CondFormatManager(const std::vector<CondFormat>& condFormats, const QString& encoding, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CondFormatManager),
     m_condFormats(condFormats),
@@ -24,7 +28,7 @@ CondFormatManager::CondFormatManager(const QVector<CondFormat>& condFormats, con
     connect(ui->buttonDown, SIGNAL(clicked(bool)), this, SLOT(downItem()));
     connect(ui->buttonUp, SIGNAL(clicked(bool)), this, SLOT(upItem()));
 
-    connect(ui->tableCondFormats, &QTreeWidget::itemDoubleClicked, this, &CondFormatManager::itemDoubleClicked);
+    connect(ui->tableCondFormats, &QTreeWidget::itemClicked, this, &CondFormatManager::itemClicked);
 }
 
 CondFormatManager::~CondFormatManager()
@@ -43,12 +47,13 @@ void CondFormatManager::addNewItem()
 void CondFormatManager::addItem(const CondFormat& aCondFormat)
 {
     int i = ui->tableCondFormats->topLevelItemCount();
-    QTreeWidgetItem *newItem = new QTreeWidgetItem({aCondFormat.foregroundColor().name(),
-                                                    aCondFormat.backgroundColor().name(), aCondFormat.filter()});
+    QTreeWidgetItem *newItem = new QTreeWidgetItem({"", "", aCondFormat.filter()});
     newItem->setForeground(ColumnForeground, aCondFormat.foregroundColor());
     newItem->setBackground(ColumnForeground, aCondFormat.foregroundColor());
     newItem->setForeground(ColumnBackground, aCondFormat.backgroundColor());
     newItem->setBackground(ColumnBackground, aCondFormat.backgroundColor());
+    newItem->setToolTip(ColumnBackground, tr("Click to select color"));
+    newItem->setToolTip(ColumnForeground, tr("Click to select color"));
     ui->tableCondFormats->insertTopLevelItem(i, newItem);
     ui->tableCondFormats->openPersistentEditor(newItem, ColumnFilter);
 }
@@ -61,7 +66,8 @@ void CondFormatManager::removeItem()
 
 void CondFormatManager::upItem()
 {
-    if (ui->tableCondFormats->selectedItems().isEmpty()) return;
+    if (!ui->tableCondFormats->currentIndex().isValid())
+        return;
 
     int selectedRow = ui->tableCondFormats->currentIndex().row();
     if(selectedRow == 0)
@@ -70,13 +76,14 @@ void CondFormatManager::upItem()
     QTreeWidgetItem* item;
     item = ui->tableCondFormats->takeTopLevelItem(selectedRow);
     ui->tableCondFormats->insertTopLevelItem(selectedRow-1, item);
+    ui->tableCondFormats->openPersistentEditor(item, ColumnFilter);
     ui->tableCondFormats->setCurrentIndex(ui->tableCondFormats->currentIndex().sibling(selectedRow-1,
                                                                                        ui->tableCondFormats->currentIndex().column()));
 }
 
 void CondFormatManager::downItem()
 {
-    if (ui->tableCondFormats->selectedItems().isEmpty()) return;
+    if (!ui->tableCondFormats->currentIndex().isValid()) return;
 
     int selectedRow = ui->tableCondFormats->currentIndex().row();
     if(selectedRow == ui->tableCondFormats->topLevelItemCount() - 1)
@@ -85,26 +92,26 @@ void CondFormatManager::downItem()
     QTreeWidgetItem* item;
     item = ui->tableCondFormats->takeTopLevelItem(selectedRow);
     ui->tableCondFormats->insertTopLevelItem(selectedRow+1, item);
+    ui->tableCondFormats->openPersistentEditor(item, ColumnFilter);
     ui->tableCondFormats->setCurrentIndex(ui->tableCondFormats->currentIndex().sibling(selectedRow+1,
                                                                                        ui->tableCondFormats->currentIndex().column()));
 }
 
-QVector<CondFormat> CondFormatManager::getCondFormats()
+std::vector<CondFormat> CondFormatManager::getCondFormats()
 {
-    QVector<CondFormat> result;
+    std::vector<CondFormat> result;
     for (int i = 0; i < ui->tableCondFormats->topLevelItemCount(); ++i)
     {
         QTreeWidgetItem* item = ui->tableCondFormats->topLevelItem(i);
-        CondFormat aCondFormat(item->text(ColumnFilter),
-                               item->background(ColumnForeground).color(),
-                               item->background(ColumnBackground).color(), m_encoding);
-        result.append(aCondFormat);
+        result.emplace_back(item->text(ColumnFilter),
+                            item->background(ColumnForeground).color(),
+                            item->background(ColumnBackground).color(), m_encoding);
     }
     return result;
 }
 
 
-void CondFormatManager::itemDoubleClicked(QTreeWidgetItem* item, int column)
+void CondFormatManager::itemClicked(QTreeWidgetItem* item, int column)
 {
     switch (column) {
       case ColumnForeground:
@@ -113,12 +120,31 @@ void CondFormatManager::itemDoubleClicked(QTreeWidgetItem* item, int column)
           if(color.isValid()) {
               item->setTextColor(column, color);
               item->setBackgroundColor(column, color);
-              item->setText(column, color.name());
+              item->setToolTip(column, tr("Click to select color"));
           }
           break;
       }
     case ColumnFilter:
         // Nothing to do
         break;
+    }
+}
+
+void CondFormatManager::on_buttonBox_clicked(QAbstractButton* button)
+{
+    if (button == ui->buttonBox->button(QDialogButtonBox::Cancel))
+        reject();
+    else if (button == ui->buttonBox->button(QDialogButtonBox::Ok))
+        accept();
+    else if (button == ui->buttonBox->button(QDialogButtonBox::Help))
+        QDesktopServices::openUrl(QUrl("https://github.com/sqlitebrowser/sqlitebrowser/wiki/Conditional-Formats"));
+    else if (button == ui->buttonBox->button(QDialogButtonBox::Reset)) {
+        if (QMessageBox::warning(this,
+                                 QApplication::applicationName(),
+                                 tr("Are you sure you want to clear all the conditional formats of this field?"),
+                                 QMessageBox::Reset | QMessageBox::Cancel,
+                                 QMessageBox::Cancel) == QMessageBox::Reset)
+            if(ui->tableCondFormats->model()->hasChildren())
+                ui->tableCondFormats->model()->removeRows(0, ui->tableCondFormats->model()->rowCount());
     }
 }

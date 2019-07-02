@@ -4,6 +4,7 @@
 #include "csvparser.h"
 #include "sqlite.h"
 #include "Settings.h"
+#include "Data.h"
 
 #include <QMessageBox>
 #include <QProgressDialog>
@@ -42,10 +43,7 @@ ImportCsvDialog::ImportCsvDialog(const QStringList &filenames, DBBrowserDB* db, 
     ui->editName->setText(file.baseName());
 
     // Create a list of all available encodings and create an auto completion list from them
-    QStringList encodingList;
-    for(const QString& enc : QTextCodec::availableCodecs())
-        encodingList.push_back(enc);
-    encodingCompleter = new QCompleter(encodingList, this);
+    encodingCompleter = new QCompleter(toStringList(QTextCodec::availableCodecs()), this);
     encodingCompleter->setCaseSensitivity(Qt::CaseInsensitive);
     ui->editCustomEncoding->setCompleter(encodingCompleter);
 
@@ -60,8 +58,8 @@ ImportCsvDialog::ImportCsvDialog(const QStringList &filenames, DBBrowserDB* db, 
     ui->checkboxHeader->setChecked(Settings::getValue("importcsv", "firstrowheader").toBool());
     ui->checkBoxTrimFields->setChecked(Settings::getValue("importcsv", "trimfields").toBool());
     ui->checkBoxSeparateTables->setChecked(Settings::getValue("importcsv", "separatetables").toBool());
-    setSeparatorChar(Settings::getValue("importcsv", "separator").toInt());
-    setQuoteChar(Settings::getValue("importcsv", "quotecharacter").toInt());
+    setSeparatorChar(Settings::getValue("importcsv", "separator").toChar());
+    setQuoteChar(Settings::getValue("importcsv", "quotecharacter").toChar());
     setEncoding(Settings::getValue("importcsv", "encoding").toString());
 
     ui->checkboxHeader->blockSignals(false);
@@ -125,7 +123,7 @@ void rollback(
 class CSVImportProgress : public CSVProgress
 {
 public:
-    explicit CSVImportProgress(unsigned long long filesize)
+    explicit CSVImportProgress(int64_t filesize)
         : totalFileSize(filesize)
     {
         m_pProgressDlg = new QProgressDialog(
@@ -136,17 +134,20 @@ public:
         m_pProgressDlg->setWindowModality(Qt::ApplicationModal);
     }
 
-    ~CSVImportProgress()
+    CSVImportProgress(const CSVImportProgress&) = delete;
+    bool operator=(const CSVImportProgress&) = delete;
+
+    ~CSVImportProgress() override
     {
         delete m_pProgressDlg;
     }
 
-    void start()
+    void start() override
     {
         m_pProgressDlg->show();
     }
 
-    bool update(unsigned long long pos)
+    bool update(int64_t pos) override
     {
         m_pProgressDlg->setValue(static_cast<int>((static_cast<float>(pos) / static_cast<float>(totalFileSize)) * 10000.0f));
         qApp->processEvents();
@@ -154,7 +155,7 @@ public:
         return !m_pProgressDlg->wasCanceled();
     }
 
-    void end()
+    void end() override
     {
         m_pProgressDlg->hide();
     }
@@ -162,7 +163,7 @@ public:
 private:
     QProgressDialog* m_pProgressDlg;
 
-    unsigned long long totalFileSize;
+    int64_t totalFileSize;
 };
 
 void ImportCsvDialog::accept()
@@ -214,7 +215,6 @@ void ImportCsvDialog::accept()
         importCsv(csvFilenames.first());
     }
 
-    QMessageBox::information(this, QApplication::applicationName(), tr("Import completed"));
     QApplication::restoreOverrideCursor();  // restore original cursor
     QDialog::accept();
 }
@@ -236,7 +236,7 @@ void ImportCsvDialog::updatePreview()
 
     // Reset preview widget
     ui->tablePreview->clear();
-    ui->tablePreview->setColumnCount(fieldList.size());
+    ui->tablePreview->setColumnCount(static_cast<int>(fieldList.size()));
 
     // Exit if there are no lines to preview at all
     if(fieldList.size() == 0)
@@ -245,11 +245,11 @@ void ImportCsvDialog::updatePreview()
     // Set horizontal header data
     QStringList horizontalHeader;
     for(const sqlb::Field& field : fieldList)
-        horizontalHeader.push_back(field.name());
+        horizontalHeader.push_back(QString::fromStdString(field.name()));
     ui->tablePreview->setHorizontalHeaderLabels(horizontalHeader);
 
     // Parse file
-    parseCSV(selectedFile, [this](size_t rowNum, const CSVRow& data) -> bool {
+    parseCSV(selectedFile, [this](size_t rowNum, const CSVRow& rowData) -> bool {
         // Skip first row if it is to be used as header
         if(rowNum == 0 && ui->checkboxHeader->isChecked())
             return true;
@@ -261,21 +261,21 @@ void ImportCsvDialog::updatePreview()
 
         // Fill data section
         ui->tablePreview->setRowCount(ui->tablePreview->rowCount() + 1);
-        for(size_t i=0;i<data.num_fields;i++)
+        for(size_t i=0;i<rowData.num_fields;i++)
         {
             // Generate vertical header items
             if(i == 0)
-                ui->tablePreview->setVerticalHeaderItem(rowNum, new QTableWidgetItem(QString::number(rowNum + 1)));
+                ui->tablePreview->setVerticalHeaderItem(static_cast<int>(rowNum), new QTableWidgetItem(QString::number(rowNum + 1)));
 
             // Add table item. Limit data length to a maximum character count to avoid a sluggish UI. And it's very unlikely that this
             // many characters are going to be needed anyway for a preview.
-            int data_length = data.fields[i].data_length;
+            uint64_t data_length = rowData.fields[i].data_length;
             if(data_length > 1024)
                 data_length = 1024;
             ui->tablePreview->setItem(
-                        rowNum,
-                        i,
-                        new QTableWidgetItem(QString::fromUtf8(data.fields[i].data, data_length)));
+                        static_cast<int>(rowNum),
+                        static_cast<int>(i),
+                        new QTableWidgetItem(QString::fromUtf8(rowData.fields[i].data, static_cast<int>(data_length))));
         }
 
         return true;
@@ -374,7 +374,7 @@ CSVParser::ParserResult ImportCsvDialog::parseCSV(const QString &fileName, std::
     QFile file(fileName);
     file.open(QIODevice::ReadOnly);
 
-    CSVParser csv(ui->checkBoxTrimFields->isChecked(), currentSeparatorChar(), currentQuoteChar());
+    CSVParser csv(ui->checkBoxTrimFields->isChecked(), toUtf8(currentSeparatorChar()), toUtf8(currentQuoteChar()));
 
     // Only show progress dialog if we parse all rows. The assumption here is that if a row count limit has been set, it won't be a very high one.
     if(count == 0)
@@ -391,9 +391,9 @@ sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename)
     sqlb::FieldVector fieldList;        // List of fields in the file
 
     // Parse the first couple of records of the CSV file and only analyse them
-    parseCSV(filename, [this, &fieldList](size_t rowNum, const CSVRow& data) -> bool {
+    parseCSV(filename, [this, &fieldList](size_t rowNum, const CSVRow& rowData) -> bool {
         // Has this row more columns than the previous one? Then add more fields to the field list as necessary.
-        for(size_t i=fieldList.size();i<data.num_fields;i++)
+        for(size_t i=fieldList.size();i<rowData.num_fields;i++)
         {
             QString fieldname;
 
@@ -401,7 +401,7 @@ sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename)
             if(rowNum == 0 && ui->checkboxHeader->isChecked())
             {
                 // Take field name from CSV and remove invalid characters
-                fieldname = QString::fromUtf8(data.fields[i].data, data.fields[i].data_length);
+                fieldname = QString::fromUtf8(rowData.fields[i].data, static_cast<int>(rowData.fields[i].data_length));
                 fieldname.replace("`", "");
                 fieldname.replace(" ", "");
                 fieldname.replace('"', "");
@@ -416,20 +416,20 @@ sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename)
 
             // Add field to the column list. For now we set the data type to nothing but this might be overwritten later in the automatic
             // type detection code.
-            fieldList.emplace_back(fieldname, "");
+            fieldList.emplace_back(fieldname.toStdString(), "");
         }
 
         // Try to find out a data type for each column. Skip the header row if there is one.
         if(!ui->checkNoTypeDetection->isChecked() && !(rowNum == 0 && ui->checkboxHeader->isChecked()))
         {
-            for(size_t i=0;i<data.num_fields;i++)
+            for(size_t i=0;i<rowData.num_fields;i++)
             {
                 // If the data type has been set to TEXT, there's no going back because it means we had at least one row with text-only
                 // content and that means we don't want to set the data type to any number type.
-                QString old_type = fieldList.at(i).type();
+                std::string old_type = fieldList.at(i).type();
                 if(old_type != "TEXT")
                 {
-                    QString content = QString::fromUtf8(data.fields[i].data, data.fields[i].data_length);
+                    QString content = QString::fromUtf8(rowData.fields[i].data, static_cast<int>(rowData.fields[i].data_length));
 
                     // Check if the content can be converted to an integer or to float
                     bool convert_to_int, convert_to_float;
@@ -437,7 +437,7 @@ sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename)
                     content.toFloat(&convert_to_float);
 
                     // Set new data type. If we don't find any better data type, we fall back to the TEXT data type
-                    QString new_type = "TEXT";
+                    std::string new_type = "TEXT";
                     if(old_type == "INTEGER" && !convert_to_int && convert_to_float)    // So far it's integer, but now it's only convertible to float
                         new_type = "REAL";
                     else if(old_type == "" && convert_to_int)                           // No type yet, but this bit is convertible to integer
@@ -497,7 +497,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
 
     // Are we importing into an existing table?
     bool importToExistingTable = false;
-    const sqlb::ObjectPtr obj = pdb->getObjectByName(sqlb::ObjectIdentifier("main", tableName));
+    const sqlb::ObjectPtr obj = pdb->getObjectByName(sqlb::ObjectIdentifier("main", tableName.toStdString()));
     if(obj && obj->type() == sqlb::Object::Types::Table)
     {
         if(std::dynamic_pointer_cast<sqlb::Table>(obj)->fields.size() != fieldList.size())
@@ -542,13 +542,13 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
     }
 
     // Create table
-    QVector<QByteArray> nullValues;
+    std::vector<QByteArray> nullValues;
     std::vector<bool> failOnMissingFieldList;
     bool ignoreDefaults = ui->checkIgnoreDefaults->isChecked();
     bool failOnMissing = ui->checkFailOnMissing->isChecked();
     if(!importToExistingTable)
     {
-        if(!pdb->createTable(sqlb::ObjectIdentifier("main", tableName), fieldList))
+        if(!pdb->createTable(sqlb::ObjectIdentifier("main", tableName.toStdString()), fieldList))
         {
             rollback(this, pdb, nullptr, restorepointName, 0, tr("Creating the table failed: %1").arg(pdb->lastError()));
             return false;
@@ -562,7 +562,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
 
         // Prepare the values for each table column that are to be inserted if the field in the CSV file is empty. Depending on the data type
         // and the constraints of a field, we need to handle this case differently.
-        sqlb::TablePtr tbl = pdb->getObjectByName<sqlb::Table>(sqlb::ObjectIdentifier("main", tableName));
+        sqlb::TablePtr tbl = pdb->getObjectByName<sqlb::Table>(sqlb::ObjectIdentifier("main", tableName.toStdString()));
         if(tbl)
         {
             for(const sqlb::Field& f : tbl->fields)
@@ -575,9 +575,9 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
 
                 // If a field has a default value, that gets priority over everything else.
                 // Exception: if the user wants to ignore default values we never use them.
-                if(!ignoreDefaults && !f.defaultValue().isNull())
+                if(!ignoreDefaults && !f.defaultValue().empty())
                 {
-                    nullValues << f.defaultValue().toUtf8();
+                    nullValues.push_back(f.defaultValue().c_str());
                 } else {
                     // If it has no default value, check if the field is NOT NULL
                     if(f.notnull())
@@ -586,9 +586,9 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
 
                         // If this is an integer column insert 0. Otherwise insert an empty string.
                         if(f.isInteger())
-                            nullValues << "0";
+                            nullValues.push_back("0");
                         else
-                            nullValues << "";
+                            nullValues.push_back("");
 
                         // If the user wants to fail the import, remember this field
                         if(failOnMissing)
@@ -597,7 +597,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
                         // The field is not NOT NULL (stupid double negation here! NULL values are allowed in this case)
 
                         // Just insert a NULL value
-                        nullValues << QByteArray();
+                        nullValues.push_back(QByteArray());
                     }
                 }
             }
@@ -616,7 +616,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
 
     // Parse entire file
     size_t lastRowNum = 0;
-    CSVParser::ParserResult result = parseCSV(fileName, [&](size_t rowNum, const CSVRow& data) -> bool {
+    CSVParser::ParserResult result = parseCSV(fileName, [&](size_t rowNum, const CSVRow& rowData) -> bool {
         // Process the parser results row by row
 
 #ifdef CSV_BENCHMARK
@@ -631,11 +631,11 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
             return true;
 
         // Bind all values
-        for(size_t i=0;i<data.num_fields;i++)
+        for(size_t i=0;i<rowData.num_fields;i++)
         {
             // Empty values need special treatment
             // When importing into an existing table where we could find out something about its table definition
-            if(importToExistingTable && data.fields[i].data_length == 0 && static_cast<size_t>(nullValues.size()) > i)
+            if(importToExistingTable && rowData.fields[i].data_length == 0 && nullValues.size() > i)
             {
                 // Do we want to fail when trying to import an empty value into this field? Then exit with an error.
                 if(failOnMissingFieldList.at(i))
@@ -644,13 +644,13 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
                 // This is an empty value. We'll need to look up how to handle it depending on the field to be inserted into.
                 const QByteArray& val = nullValues.at(i);
                 if(!val.isNull())       // No need to bind NULL values here as that is the default bound value in SQLite
-                    sqlite3_bind_text(stmt, i+1, val, val.size(), SQLITE_STATIC);
+                    sqlite3_bind_text(stmt, static_cast<int>(i)+1, val, val.size(), SQLITE_STATIC);
             // When importing into a new table, use the missing values setting directly
-            } else if(!importToExistingTable && data.fields[i].data_length == 0) {
+            } else if(!importToExistingTable && rowData.fields[i].data_length == 0) {
                 // No need to bind NULL values here as that is the default bound value in SQLite
             } else {
                 // This is a non-empty value, or we want to insert the empty string. Just add it to the statement
-                sqlite3_bind_text(stmt, i+1, data.fields[i].data, data.fields[i].data_length, SQLITE_STATIC);
+                sqlite3_bind_text(stmt, static_cast<int>(i)+1, rowData.fields[i].data, static_cast<int>(rowData.fields[i].data_length), SQLITE_STATIC);
             }
         }
 
@@ -703,14 +703,14 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
     return true;
 }
 
-void ImportCsvDialog::setQuoteChar(const QChar& c)
+void ImportCsvDialog::setQuoteChar(QChar c)
 {
     QComboBox* combo = ui->comboQuote;
-    int index = combo->findText(c);
+    int index = combo->findText(QString(c));
     if(index == -1)
     {
-        combo->setCurrentIndex(combo->count());
-        ui->editCustomQuote->setText(c);
+        combo->setCurrentIndex(combo->count() - 1);
+        ui->editCustomQuote->setText(QString(c));
     }
     else
     {
@@ -718,27 +718,28 @@ void ImportCsvDialog::setQuoteChar(const QChar& c)
     }
 }
 
-char ImportCsvDialog::currentQuoteChar() const
+QChar ImportCsvDialog::currentQuoteChar() const
 {
+    QString value;
+
     // The last item in the combobox is the 'Other' item; if it is selected return the text of the line edit field instead
     if(ui->comboQuote->currentIndex() == ui->comboQuote->count()-1)
-        return ui->editCustomQuote->text().length() ? ui->editCustomQuote->text().at(0).toLatin1() : 0;
+        value = ui->editCustomQuote->text().length() ? ui->editCustomQuote->text() : "";
+    else if(ui->comboQuote->currentText().length())
+        value = ui->comboQuote->currentText();
 
-    if(ui->comboQuote->currentText().length())
-        return ui->comboQuote->currentText().at(0).toLatin1();
-    else
-        return 0;
+    return value.size() ? value.at(0) : QChar();
 }
 
-void ImportCsvDialog::setSeparatorChar(const QChar& c)
+void ImportCsvDialog::setSeparatorChar(QChar c)
 {
     QComboBox* combo = ui->comboSeparator;
     QString sText = c == '\t' ? QString("Tab") : QString(c);
     int index = combo->findText(sText);
     if(index == -1)
     {
-        combo->setCurrentIndex(combo->count());
-        ui->editCustomSeparator->setText(c);
+        combo->setCurrentIndex(combo->count() - 1);
+        ui->editCustomSeparator->setText(QString(c));
     }
     else
     {
@@ -746,13 +747,17 @@ void ImportCsvDialog::setSeparatorChar(const QChar& c)
     }
 }
 
-char ImportCsvDialog::currentSeparatorChar() const
+QChar ImportCsvDialog::currentSeparatorChar() const
 {
-    // The last item in the combobox is the 'Other' item; if it is selected return the text of the line edit field instead
-    if(ui->comboSeparator->currentIndex() == ui->comboSeparator->count()-1)
-        return ui->editCustomSeparator->text().length() ? ui->editCustomSeparator->text().at(0).toLatin1() : 0;
+    QString value;
 
-    return ui->comboSeparator->currentText() == tr("Tab") ? '\t' : ui->comboSeparator->currentText().at(0).toLatin1();
+    // The last item in the combobox is the 'Other' item; if it is selected return the text of the line edit field instead
+    if(ui->comboSeparator->currentIndex() == ui->comboSeparator->count()-1 || ui->comboSeparator->currentText().isEmpty())
+        value = ui->editCustomSeparator->text().length() ? ui->editCustomSeparator->text() : "";
+    else
+        value = ui->comboSeparator->currentText() == tr("Tab") ? "\t" : ui->comboSeparator->currentText();
+
+    return value.size() ? value.at(0) : QChar();
 }
 
 void ImportCsvDialog::setEncoding(const QString& sEnc)
@@ -761,7 +766,7 @@ void ImportCsvDialog::setEncoding(const QString& sEnc)
     int index = combo->findText(sEnc);
     if(index == -1)
     {
-        combo->setCurrentIndex(combo->count());
+        combo->setCurrentIndex(combo->count() - 1);
         ui->editCustomEncoding->setText(sEnc);
     }
     else
@@ -802,4 +807,18 @@ void ImportCsvDialog::toggleAdvancedSection(bool show)
     ui->checkIgnoreDefaults->setVisible(show);
     ui->labelOnConflictStrategy->setVisible(show);
     ui->comboOnConflictStrategy->setVisible(show);
+}
+
+char32_t ImportCsvDialog::toUtf8(const QString& s) const
+{
+    if(s.isEmpty())
+        return 0;
+
+    QByteArray ba = s.toUtf8();
+
+    char32_t result = 0;
+    for(int i=std::min(ba.size()-1,3);i>=0;i--)
+        result = (result << 8) + static_cast<unsigned char>(ba.at(i));
+
+    return result;
 }

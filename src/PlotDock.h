@@ -5,11 +5,12 @@
 
 #include <QDialog>
 #include <QVariant>
-#include <QMenu>
+
+class QMenu;
+class QPrinter;
+class QTreeWidgetItem;
 
 class SqliteTableModel;
-class QTreeWidgetItem;
-class QPrinter;
 struct BrowseDataTableSettings;
 
 namespace Ui {

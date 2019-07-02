@@ -6,11 +6,11 @@
 #include <QMenu>
 #include <QWhatsThis>
 
-FilterLineEdit::FilterLineEdit(QWidget* parent, QList<FilterLineEdit*>* filters, int columnnum) : QLineEdit(parent), filterList(filters), columnNumber(columnnum)
+FilterLineEdit::FilterLineEdit(QWidget* parent, std::vector<FilterLineEdit*>* filters, size_t columnnum) : QLineEdit(parent), filterList(filters), columnNumber(columnnum)
 {
     setPlaceholderText(tr("Filter"));
     setClearButtonEnabled(true);
-    setProperty("column", columnnum);            // Store the column number for later use
+    setProperty("column", static_cast<int>(columnnum));            // Store the column number for later use
 
     // Introduce a timer for delaying the signal triggered whenever the user changes the filter value.
     // The idea here is that the textChanged() event isn't connected to the update filter slot directly anymore
