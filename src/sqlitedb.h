@@ -65,7 +65,7 @@ private:
 
 public:
 
-    explicit DBBrowserDB () : _db(nullptr), db_used(false), isEncrypted(false), isReadOnly(false), dontCheckForStructureUpdates(false) {}
+    explicit DBBrowserDB();
     ~DBBrowserDB () override {}
 
     bool open(const QString& db, bool readOnly = false);
