@@ -255,6 +255,5 @@ void RowLoader::process (Task & t)
         sqlite3_finalize(stmt);
     }
 
-    if(row != t.row_begin)
-        emit fetched(t.token, t.row_begin, row);
+    emit fetched(t.token, t.row_begin, row);
 }
