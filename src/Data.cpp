@@ -43,6 +43,21 @@ bool isTextOnly(QByteArray data, const QString& encoding, bool quickTest)
     }
 }
 
+bool containsRightToLeft(const QString& text) {
+
+    for(QChar ch : text) {
+        switch(ch.direction()) {
+        case QChar::DirR:
+        case QChar::DirAL:
+        case QChar::DirRLE:
+        case QChar::DirRLO:
+        case QChar::DirRLI:
+            return true;
+        }
+    }
+    return false;
+}
+
 bool startsWithBom(const QByteArray& data)
 {
     if(data.startsWith(bom3) ||

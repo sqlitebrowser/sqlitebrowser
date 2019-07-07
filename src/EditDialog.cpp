@@ -816,7 +816,7 @@ void EditDialog::editTextChanged()
 
             // Switch to the Qt Editor if we detect right-to-left text,
             // since the QScintilla editor does not support it.
-            if (sciEdit->text().isRightToLeft())
+            if (containsRightToLeft(sciEdit->text()))
                 ui->comboMode->setCurrentIndex(RtlTextEditor);
         }
 
@@ -871,7 +871,7 @@ int EditDialog::checkDataType(const QByteArray& bArrdata)
         if(!json::parse(cellData, nullptr, false).is_discarded())
             return JSON;
         else {
-            if (QString::fromUtf8(cellData).isRightToLeft())
+            if (containsRightToLeft(QString::fromUtf8(cellData)))
                 return RtlText;
             else
                 return Text;
