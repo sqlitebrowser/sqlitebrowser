@@ -10,6 +10,9 @@
 // text but makes it less reliable
 bool isTextOnly(QByteArray data, const QString& encoding = QString(), bool quickTest = false);
 
+// This returns true if text contains some character whose direction is right-to-left.
+bool containsRightToLeft(const QString& text);
+
 // This function returns true if the data in the data parameter starts with a Unicode BOM. Otherwise it returns false.
 bool startsWithBom(const QByteArray& data);
 
