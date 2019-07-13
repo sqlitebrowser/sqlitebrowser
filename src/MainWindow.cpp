@@ -2081,11 +2081,18 @@ void MainWindow::browseTableHeaderClicked(int logicalindex)
     {
         // Multi column sorting
 
-        // If the last sort column was just clicked again, change its sort order.
-        // If not, add the column as a new sort column to the list.
-        if(columns.size() && columns.back().column == static_cast<size_t>(logicalindex))
-            columns.back().direction = (columns.back().direction == sqlb::Ascending ? sqlb::Descending : sqlb::Ascending);
-        else
+        // If the column was control+clicked again, change its sort order.
+        // If not already in the sort order, add the column as a new sort column to the list.
+        bool present = false;
+        for(sqlb::SortedColumn& sortedCol : columns) {
+
+            if(sortedCol.column == static_cast<size_t>(logicalindex)) {
+                sortedCol.direction = (sortedCol.direction == sqlb::Ascending ? sqlb::Descending : sqlb::Ascending);
+                present = true;
+                break;
+            }
+        }
+        if(!present)
             columns.emplace_back(logicalindex, sqlb::Ascending);
     } else {
         // Single column sorting
