@@ -54,7 +54,7 @@ script:
 - make
 - ctest -V
 - cd ../appbuild
-- cmake -DCMAKE_INSTALL_PREFIX:PATH=../appdir/usr -Wno-dev -Dsqlcipher=1 ..
+- cmake -DCMAKE_INSTALL_PREFIX:PATH=../appdir/usr -Wno-dev -Dsqlcipher=1 -DSQLITE_ENABLE_JSON1=1 ..
 - make install
 - cd ..
 - git rev-list master --count
