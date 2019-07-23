@@ -65,7 +65,7 @@
               sqlitebrowser:
                   # source-type:  git
                   plugin:         cmake
-                  configflags:    ["-DUSE_QT5=True", "-Dsqlcipher=1", "-Wno-dev"]
+                  configflags:    ["-DUSE_QT5=True", "-Dsqlcipher=1", "-Wno-dev","-DSQLITE_ENABLE_JSON1=1"]
                   source:         .
               desktop-qt5:
                 build-packages:
