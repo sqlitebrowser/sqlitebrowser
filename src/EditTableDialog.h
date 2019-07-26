@@ -9,8 +9,10 @@
 #include <QDialog>
 
 class DBBrowserDB;
-class QTreeWidgetItem;
 class ForeignKeyEditorDelegate;
+
+class QTableWidgetItem;
+class QTreeWidgetItem;
 
 namespace Ui {
 class EditTableDialog;
@@ -61,7 +63,8 @@ private slots:
     void accept() override;
     void reject() override;
     void checkInput();
-    void itemChanged(QTreeWidgetItem* item, int column);
+    void fieldItemChanged(QTreeWidgetItem* item, int column);
+    void constraintItemChanged(QTableWidgetItem* item);
     void updateTypes(QObject *object);
     bool eventFilter(QObject *object, QEvent *event) override;
     void updateTypes();

@@ -12,6 +12,9 @@
 #include <QKeyEvent>
 #include <algorithm>
 
+Q_DECLARE_METATYPE(sqlb::ConstraintPtr)
+Q_DECLARE_METATYPE(sqlb::StringVector)
+
 EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& tableName, bool createTable, QWidget* parent)
     : QDialog(parent),
       ui(new Ui::EditTableDialog),
@@ -24,9 +27,10 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
     // Create UI
     ui->setupUi(this);
     ui->widgetExtension->setVisible(false);
-    connect(ui->treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*,int)),this,SLOT(itemChanged(QTreeWidgetItem*,int)));
+    connect(ui->treeWidget, &QTreeWidget::itemChanged, this, &EditTableDialog::fieldItemChanged);
+    connect(ui->tableConstraints, &QTableWidget::itemChanged, this, &EditTableDialog::constraintItemChanged);
 
-    // TODO Remove this one we have added support for these buttons
+    // TODO Remove this once we have added support for these buttons
     ui->buttonAddConstraint->setVisible(false);
     ui->buttonRemoveConstraint->setVisible(false);
 
@@ -111,10 +115,8 @@ void EditTableDialog::updateColumnWidth()
 
 void EditTableDialog::populateFields()
 {
-    // disconnect the itemChanged signal or the table item will
-    // be updated while filling the treewidget
-    disconnect(ui->treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*,int)),
-               this,SLOT(itemChanged(QTreeWidgetItem*,int)));
+    // Disable the itemChanged signal or the table item will be updated while filling the treewidget
+    ui->treeWidget->blockSignals(true);
 
     ui->treeWidget->clear();
     const auto& fields = m_table.fields;
@@ -162,14 +164,16 @@ void EditTableDialog::populateFields()
     }
 
     // and reconnect
-    connect(ui->treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*,int)),this,SLOT(itemChanged(QTreeWidgetItem*,int)));
+    ui->treeWidget->blockSignals(false);
 }
 
 void EditTableDialog::populateConstraints()
 {
+    // Disable the itemChanged signal or the table item will be updated while filling the treewidget
+    ui->tableConstraints->blockSignals(true);
+
     const auto& constraints = m_table.allConstraints();
 
-    ui->tableConstraints->blockSignals(true);
     ui->tableConstraints->setRowCount(static_cast<int>(constraints.size()));
     int row = 0;
     for(const auto& pair : constraints)
@@ -179,6 +183,7 @@ void EditTableDialog::populateConstraints()
 
         // Columns
         QTableWidgetItem* column = new QTableWidgetItem(QString::fromStdString(sqlb::joinStringVector(columns, ",")));
+        column->setData(Qt::UserRole, QVariant::fromValue<sqlb::StringVector>(pair.first));         // Remember raw data of columns of constraint
         column->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
         ui->tableConstraints->setItem(row, kConstraintColumns, column);
 
@@ -206,16 +211,18 @@ void EditTableDialog::populateConstraints()
             type->addItem(tr("Unknown"));
             type->setCurrentIndex(type->count()-1);
         }
+        type->setEnabled(false);    // TODO Remove this once we have added support for changing constraint types
         ui->tableConstraints->setCellWidget(row, kConstraintType, type);
 
         // Name
         QTableWidgetItem* name = new QTableWidgetItem(QString::fromStdString(constraint->name()));
-        name->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled /* TODO | Qt::ItemIsEditable */);
+        name->setData(Qt::UserRole, QVariant::fromValue<sqlb::ConstraintPtr>(pair.second));       // Remember address of constraint object. This is used for modifying it later
+        name->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
         ui->tableConstraints->setItem(row, kConstraintName, name);
 
         // SQL
         QTableWidgetItem* sql = new QTableWidgetItem(QString::fromStdString(constraint->toSql(columns)));
-        name->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+        sql->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
         ui->tableConstraints->setItem(row, kConstraintSql, sql);
 
         row++;
@@ -329,7 +336,7 @@ bool EditTableDialog::eventFilter(QObject *object, QEvent *event)
     return false;
 }
 
-void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
+void EditTableDialog::fieldItemChanged(QTreeWidgetItem *item, int column)
 {
     size_t index = static_cast<size_t>(ui->treeWidget->indexOfTopLevelItem(item));
     if(index < m_table.fields.size())
@@ -604,6 +611,25 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
         }
     }
 
+    checkInput();
+}
+
+void EditTableDialog::constraintItemChanged(QTableWidgetItem* item)
+{
+    // Find modified constraint
+    sqlb::StringVector columns = ui->tableConstraints->item(item->row(), kConstraintColumns)->data(Qt::UserRole).value<sqlb::StringVector>();
+    sqlb::ConstraintPtr constraint = ui->tableConstraints->item(item->row(), kConstraintName)->data(Qt::UserRole).value<sqlb::ConstraintPtr>();
+
+    // Which column has been modified?
+    switch(item->column())
+    {
+    case kConstraintName:
+        constraint->setName(item->text().toStdString());
+        break;
+    };
+
+    // Update SQL
+    ui->tableConstraints->item(item->row(), kConstraintSql)->setText(QString::fromStdString(constraint->toSql(columns)));
     checkInput();
 }
 
