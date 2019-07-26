@@ -598,7 +598,7 @@ bool MainWindow::fileOpen(const QString& fileName, bool openFromProject, bool re
                 setCurrentFile(wFile);
                 if(!openFromProject) {
                     currentProjectFilename.clear();
-                    addToRecentFilesMenu(wFile);
+                    addToRecentFilesMenu(wFile, readOnly);
                 }
                 openSqlTab(true);
                 if(ui->mainTab->currentWidget() == ui->browser)
@@ -1934,7 +1934,17 @@ void MainWindow::openRecentFile()
 {
     QAction *action = qobject_cast<QAction *>(sender());
     if (action)
-        fileOpen(action->data().toString());
+    {
+        QString file = action->data().toString();
+        bool read_only = false;
+        if(file.startsWith("[ro]"))     // Check if file is in read-only
+        {
+            file = file.mid(4);
+            read_only = true;
+        }
+
+        fileOpen(file, false, read_only);
+    }
 }
 
 void MainWindow::updateRecentFileActions()
@@ -1945,7 +1955,12 @@ void MainWindow::updateRecentFileActions()
     // Check if files still exist and remove any non-existent file
     for(int i=0;i<files.size();i++)
     {
-        if(!QFileInfo::exists(files.at(i)))
+        // Remove preceding "[ro]" mark for check
+        QString file = files.at(i);
+        if(file.startsWith("[ro]"))
+            file = file.mid(4);
+
+        if(!QFileInfo::exists(file))
         {
             files.removeAt(i);
             i--;
@@ -1958,7 +1973,15 @@ void MainWindow::updateRecentFileActions()
     int numRecentFiles = qMin(files.size(), MaxRecentFiles);
 
     for (int i = 0; i < numRecentFiles; ++i) {
-        QString text = tr("&%1 %2").arg(i + 1).arg(QDir::toNativeSeparators(files[i]));
+        QString file = files[i];
+        bool read_only = false;
+        if(file.startsWith("[ro]"))     // Check if file is in read-only
+        {
+            file = file.mid(4);
+            read_only = true;
+        }
+
+        QString text = tr("&%1 %2%3").arg(i + 1).arg(QDir::toNativeSeparators(file)).arg(read_only ? tr(" (read only)") : "");
         recentFileActs[i]->setText(text);
         recentFileActs[i]->setData(files[i]);
         recentFileActs[i]->setVisible(true);
@@ -1982,13 +2005,17 @@ void MainWindow::setCurrentFile(const QString &fileName)
     dbState(db.getDirty());
 }
 
-void MainWindow::addToRecentFilesMenu(const QString& filename)
+void MainWindow::addToRecentFilesMenu(const QString& filename, bool read_only)
 {
-    QStringList files = Settings::getValue("General", "recentFileList").toStringList();
     QFileInfo info(filename);
+    QString path = info.absoluteFilePath();
+    if(read_only)
+        path = "[ro]" + path;
 
-    files.removeAll(info.absoluteFilePath());
-    files.prepend(info.absoluteFilePath());
+    QStringList files = Settings::getValue("General", "recentFileList").toStringList();
+
+    files.removeAll(path);
+    files.prepend(path);
     while (files.size() > MaxRecentFiles)
         files.removeLast();
 
@@ -2812,7 +2839,7 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
             return false;
 
         isProjectModified = false;
-        addToRecentFilesMenu(filename);
+        addToRecentFilesMenu(filename, readOnly);
 
         while(!xml.atEnd() && !xml.hasError())
         {

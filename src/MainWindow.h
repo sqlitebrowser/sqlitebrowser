@@ -174,7 +174,7 @@ private:
 
     void updateRecentFileActions();
     void setCurrentFile(const QString& fileName);
-    void addToRecentFilesMenu(const QString& filename);
+    void addToRecentFilesMenu(const QString& filename, bool read_only = false);
     void activateFields(bool enable = true);
     void enableEditing(bool enable_edit);
     void saveAsView(QString query);
