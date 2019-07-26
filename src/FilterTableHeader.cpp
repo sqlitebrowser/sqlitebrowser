@@ -10,8 +10,12 @@ FilterTableHeader::FilterTableHeader(QTableView* parent) :
 {
     // Activate the click signals to allow sorting
     setSectionsClickable(true);
+
     // But use our own indicators allowing multi-column sorting
     setSortIndicatorShown(false);
+
+    // Make sure to not automatically resize the columns according to the contents
+    setSectionResizeMode(QHeaderView::Interactive);
 
     // Do some connects: Basically just resize and reposition the input widgets whenever anything changes
     connect(this, SIGNAL(sectionResized(int,int,int)), this, SLOT(adjustPositions()));
