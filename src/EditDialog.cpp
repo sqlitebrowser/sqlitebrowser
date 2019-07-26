@@ -868,7 +868,8 @@ int EditDialog::checkDataType(const QByteArray& bArrdata)
         if (cellData.startsWith("<?xml"))
             return XML;
 
-        if(!json::parse(cellData, nullptr, false).is_discarded())
+        auto json_parse_result = json::parse(cellData, nullptr, false);
+        if(!json_parse_result.is_discarded() && !json_parse_result.is_number())
             return JSON;
         else {
             if (containsRightToLeft(QString::fromUtf8(cellData)))
