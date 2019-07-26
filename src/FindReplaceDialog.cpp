@@ -54,7 +54,8 @@ bool FindReplaceDialog::findFirst(bool wrap, bool forward)
              ui->wholeWordsCheckBox->isChecked(),
              forward,
              /* show */ true,
-             /* posix */ true);
+             /* posix */ true,
+             /* cxx11 */ true);
     else
         return m_scintilla->findFirst
             (ui->findText->text(),
@@ -66,7 +67,8 @@ bool FindReplaceDialog::findFirst(bool wrap, bool forward)
              /* line */ -1,
              /* index */ -1,
              /* show */ true,
-             /* posix */ true);
+             /* posix */ true,
+             /* cxx11 */ true);
 }
 
 bool FindReplaceDialog::findNext()

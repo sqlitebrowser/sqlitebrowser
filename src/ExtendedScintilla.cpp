@@ -244,7 +244,8 @@ bool ExtendedScintilla::findText(QString text, bool regexp, bool caseSensitive, 
     }
 
     return findFirst(text, regexp, caseSensitive, words, wrap, forward,
-                     /* line */ -1, /* index */ -1, /* show */ true, /* posix */ true);
+                     /* line */ -1, /* index */ -1,
+                     /* show */ true, /* posix */ true, /* cxx11 */ true);
 }
 
 void ExtendedScintilla::setEnabledFindDialog(bool value)
