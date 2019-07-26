@@ -267,6 +267,14 @@ void MainWindow::init()
     popupTableMenu->addAction(ui->actionExportCsvPopup);
 
     popupSchemaDockMenu = new QMenu(this);
+    actionPopupSchemaDockBrowseTable = popupSchemaDockMenu->addAction(QIcon(":icons/table"), tr("Browse Table"), [this]() {
+            sqlb::ObjectIdentifier obj(ui->treeSchemaDock->model()->data(ui->treeSchemaDock->currentIndex().sibling(ui->treeSchemaDock->currentIndex().row(), DbStructureModel::ColumnSchema), Qt::EditRole).toString().toStdString(),
+                                       ui->treeSchemaDock->model()->data(ui->treeSchemaDock->currentIndex().sibling(ui->treeSchemaDock->currentIndex().row(), DbStructureModel::ColumnName), Qt::EditRole).toString().toStdString());
+            QString tableToBrowse = QString::fromStdString(obj.toDisplayString());
+            switchToBrowseDataTab(tableToBrowse);
+            refresh();  // Required in case the Browse Data tab already was the active main tab
+    });
+    popupSchemaDockMenu->addSeparator();
     popupSchemaDockMenu->addAction(ui->actionDropQualifiedCheck);
     popupSchemaDockMenu->addAction(ui->actionEnquoteNamesCheck);
 
@@ -1848,6 +1856,15 @@ void MainWindow::createTreeContextMenu(const QPoint &qPoint)
 //** DB Schema Dock Context Menu
 void MainWindow::createSchemaDockContextMenu(const QPoint &qPoint)
 {
+    bool enable_browse_table = false;
+    if(ui->treeSchemaDock->selectionModel()->hasSelection())
+    {
+        QString type = ui->treeSchemaDock->model()->data(ui->treeSchemaDock->currentIndex().sibling(ui->treeSchemaDock->currentIndex().row(), DbStructureModel::ColumnObjectType), Qt::EditRole).toString();
+        if(type == "table" || type == "view")
+            enable_browse_table = true;
+    }
+    actionPopupSchemaDockBrowseTable->setEnabled(enable_browse_table);
+
     popupSchemaDockMenu->exec(ui->treeSchemaDock->mapToGlobal(qPoint));
 }
 

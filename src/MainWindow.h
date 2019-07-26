@@ -134,6 +134,8 @@ private:
     QMenu* popupSaveFilterAsMenu;
     QMenu* popupBrowseDataHeaderMenu;
 
+    QAction* actionPopupSchemaDockBrowseTable;
+
     QLabel* statusEncodingLabel;
     QLabel* statusEncryptionLabel;
     QLabel* statusReadOnlyLabel;
