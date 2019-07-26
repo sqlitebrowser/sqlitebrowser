@@ -2579,6 +2579,15 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>Ctrl+Shift+S</string>
    </property>
   </action>
+  <action name="actionPopupSchemaDockBrowseTable">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/table</normaloff>:/icons/table</iconset>
+   </property>
+   <property name="text">
+    <string>Browse Table</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>

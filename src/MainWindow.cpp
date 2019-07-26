@@ -267,13 +267,7 @@ void MainWindow::init()
     popupTableMenu->addAction(ui->actionExportCsvPopup);
 
     popupSchemaDockMenu = new QMenu(this);
-    actionPopupSchemaDockBrowseTable = popupSchemaDockMenu->addAction(QIcon(":icons/table"), tr("Browse Table"), [this]() {
-            sqlb::ObjectIdentifier obj(ui->treeSchemaDock->model()->data(ui->treeSchemaDock->currentIndex().sibling(ui->treeSchemaDock->currentIndex().row(), DbStructureModel::ColumnSchema), Qt::EditRole).toString().toStdString(),
-                                       ui->treeSchemaDock->model()->data(ui->treeSchemaDock->currentIndex().sibling(ui->treeSchemaDock->currentIndex().row(), DbStructureModel::ColumnName), Qt::EditRole).toString().toStdString());
-            QString tableToBrowse = QString::fromStdString(obj.toDisplayString());
-            switchToBrowseDataTab(tableToBrowse);
-            refresh();  // Required in case the Browse Data tab already was the active main tab
-    });
+    popupSchemaDockMenu->addAction(ui->actionPopupSchemaDockBrowseTable);
     popupSchemaDockMenu->addSeparator();
     popupSchemaDockMenu->addAction(ui->actionDropQualifiedCheck);
     popupSchemaDockMenu->addAction(ui->actionEnquoteNamesCheck);
@@ -508,6 +502,15 @@ void MainWindow::init()
     });
     connect(ui->actionOptimize, &QAction::triggered, [this]() {
             runSqlNewTab("PRAGMA optimize;", ui->actionOptimize->text());
+    });
+
+    // Action for switching the table via the Database Structure tab
+    connect(ui->actionPopupSchemaDockBrowseTable, &QAction::triggered, [this]() {
+            sqlb::ObjectIdentifier obj(ui->treeSchemaDock->model()->data(ui->treeSchemaDock->currentIndex().sibling(ui->treeSchemaDock->currentIndex().row(), DbStructureModel::ColumnSchema), Qt::EditRole).toString().toStdString(),
+                                       ui->treeSchemaDock->model()->data(ui->treeSchemaDock->currentIndex().sibling(ui->treeSchemaDock->currentIndex().row(), DbStructureModel::ColumnName), Qt::EditRole).toString().toStdString());
+            QString tableToBrowse = QString::fromStdString(obj.toDisplayString());
+            switchToBrowseDataTab(tableToBrowse);
+            refresh();  // Required in case the Browse Data tab already was the active main tab
     });
 
     // Set other window settings
@@ -1863,7 +1866,7 @@ void MainWindow::createSchemaDockContextMenu(const QPoint &qPoint)
         if(type == "table" || type == "view")
             enable_browse_table = true;
     }
-    actionPopupSchemaDockBrowseTable->setEnabled(enable_browse_table);
+    ui->actionPopupSchemaDockBrowseTable->setEnabled(enable_browse_table);
 
     popupSchemaDockMenu->exec(ui->treeSchemaDock->mapToGlobal(qPoint));
 }
