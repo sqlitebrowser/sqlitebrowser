@@ -3369,8 +3369,8 @@ void MainWindow::switchToBrowseDataTab(QString tableToBrowse)
         if(!ui->dbTreeWidget->selectionModel()->hasSelection())
             return;
 
-        sqlb::ObjectIdentifier obj(ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnSchema)).toString().toStdString(),
-                                   ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnName)).toString().toStdString());
+        sqlb::ObjectIdentifier obj(ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnSchema), Qt::EditRole).toString().toStdString(),
+                                   ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnName), Qt::EditRole).toString().toStdString());
         tableToBrowse = QString::fromStdString(obj.toDisplayString());
     }
 
