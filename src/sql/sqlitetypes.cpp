@@ -509,6 +509,20 @@ void Table::setConstraint(const StringVector& vStrFields, ConstraintPtr constrai
     addConstraint(vStrFields, constraint);
 }
 
+void Table::removeConstraint(const StringVector& vStrFields, ConstraintPtr constraint)
+{
+    for(auto it = m_constraints.begin();it!=m_constraints.end();++it)
+    {
+        if(it->first == vStrFields && it->second->toSql(vStrFields) == constraint->toSql(vStrFields))
+        {
+            m_constraints.erase(it);
+
+            // Only remove the first constraint matching these criteria
+            return;
+        }
+    }
+}
+
 void Table::removeConstraints(const StringVector& vStrFields, Constraint::ConstraintTypes type)
 {
     for(auto it = m_constraints.begin();it!=m_constraints.end();)

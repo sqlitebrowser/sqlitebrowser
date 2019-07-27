@@ -30,9 +30,8 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
     connect(ui->treeWidget, &QTreeWidget::itemChanged, this, &EditTableDialog::fieldItemChanged);
     connect(ui->tableConstraints, &QTableWidget::itemChanged, this, &EditTableDialog::constraintItemChanged);
 
-    // TODO Remove this once we have added support for these buttons
+    // TODO Remove this once we have added support for this button
     ui->buttonAddConstraint->setVisible(false);
-    ui->buttonRemoveConstraint->setVisible(false);
 
     // Set item delegate for foreign key column
     m_fkEditorDelegate = new ForeignKeyEditorDelegate(db, m_table, this);
@@ -68,6 +67,12 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
         ui->comboSchema->setCurrentText("main");                // Always create tables in the main schema by default
         ui->labelEditWarning->setVisible(false);
     }
+
+    // Enable/disable remove constraint button depending on whether a constraint is selected
+    connect(ui->tableConstraints, &QTableWidget::itemSelectionChanged, [this]() {
+        bool hasSelection = ui->tableConstraints->selectionModel()->hasSelection();
+        ui->buttonRemoveConstraint->setEnabled(hasSelection);
+    });
 
     // And create a savepoint
     pdb.setSavepoint(m_sRestorePointName);
@@ -817,4 +822,24 @@ void EditTableDialog::changeSchema(const QString& /*schema*/)
 {
     // Update the SQL preview
     updateSqlText();
+}
+
+void EditTableDialog::removeConstraint()
+{
+    // Is there any item selected to delete?
+    if(!ui->tableConstraints->currentItem())
+        return;
+
+    // Find constraint to delete
+    int row = ui->tableConstraints->currentRow();
+    sqlb::StringVector columns = ui->tableConstraints->item(row, kConstraintColumns)->data(Qt::UserRole).value<sqlb::StringVector>();
+    sqlb::ConstraintPtr constraint = ui->tableConstraints->item(row, kConstraintName)->data(Qt::UserRole).value<sqlb::ConstraintPtr>();
+
+    // Remove the constraint. If there is more than one constraint with this combination of columns and constraint type, only delete the first one.
+    m_table.removeConstraint(columns, constraint);
+    ui->tableConstraints->removeRow(ui->tableConstraints->currentRow());
+
+    // Update SQL and view
+    updateSqlText();
+    populateFields();
 }

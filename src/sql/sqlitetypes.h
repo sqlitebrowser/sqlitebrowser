@@ -337,7 +337,8 @@ public:
 
     void addConstraint(const StringVector& vStrFields, ConstraintPtr constraint);
     void setConstraint(const StringVector& vStrFields, ConstraintPtr constraint);
-    void removeConstraints(const StringVector& vStrFields = StringVector(), Constraint::ConstraintTypes type = Constraint::NoType); //! Only removes the first constraint, if any
+    void removeConstraint(const StringVector& vStrFields, ConstraintPtr constraint);
+    void removeConstraints(const StringVector& vStrFields = StringVector(), Constraint::ConstraintTypes type = Constraint::NoType);
     ConstraintPtr constraint(const StringVector& vStrFields = StringVector(), Constraint::ConstraintTypes type = Constraint::NoType) const;   //! Only returns the first constraint, if any
     std::vector<ConstraintPtr> constraints(const StringVector& vStrFields = StringVector(), Constraint::ConstraintTypes type = Constraint::NoType) const;
     ConstraintMap allConstraints() const { return m_constraints; }

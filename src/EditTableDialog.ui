@@ -618,6 +618,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>buttonRemoveConstraint</sender>
+   <signal>clicked()</signal>
+   <receiver>EditTableDialog</receiver>
+   <slot>removeConstraint()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>186</x>
+     <y>155</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>647</x>
+     <y>157</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fieldSelectionChanged()</slot>
@@ -630,5 +646,6 @@
   <slot>moveDown()</slot>
   <slot>setWithoutRowid(bool)</slot>
   <slot>changeSchema(QString)</slot>
+  <slot>removeConstraint()</slot>
  </slots>
 </ui>

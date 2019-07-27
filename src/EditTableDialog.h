@@ -72,6 +72,7 @@ private slots:
     void moveDown();
     void setWithoutRowid(bool without_rowid);
     void changeSchema(const QString& schema);
+    void removeConstraint();
 
 private:
     Ui::EditTableDialog* ui;
