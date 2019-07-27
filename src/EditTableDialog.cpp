@@ -4,6 +4,7 @@
 #include "ui_EditTableDialog.h"
 #include "sqlitetablemodel.h"
 #include "sqlitedb.h"
+#include "SelectItemsPopup.h"
 
 #include <QMessageBox>
 #include <QPushButton>
@@ -81,6 +82,45 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
     ui->editTableName->setText(QString::fromStdString(curTable.name()));
     updateColumnWidth();
 
+    // Allow editing of constraint columns by double clicking the columns column of the constraints table
+    connect(ui->tableConstraints, &QTableWidget::itemDoubleClicked, [this](QTableWidgetItem* item) {
+        // Check whether the double clicked item is in the columns column
+        if(item->column() == kConstraintColumns)
+        {
+            sqlb::ConstraintPtr constraint = ui->tableConstraints->item(item->row(), kConstraintName)->data(Qt::UserRole).value<sqlb::ConstraintPtr>();
+
+            // Do not allow editing the columns list of a CHECK constraint because CHECK constraints are independent of column lists
+            if(constraint->type() == sqlb::Constraint::CheckConstraintType)
+                return;
+
+            // Show the select items popup dialog
+            SelectItemsPopup* dialog = new SelectItemsPopup(m_table.fieldNames(), item->data(Qt::UserRole).value<sqlb::StringVector>(), this);
+            QRect item_rect = ui->tableConstraints->visualItemRect(item);
+            dialog->move(ui->tableConstraints->mapToGlobal(QPoint(ui->tableConstraints->x() + item_rect.x(),
+                                                                  ui->tableConstraints->y() + item_rect.y() + item_rect.height() / 2)));
+            dialog->show();
+
+            // When clicking the Apply button in the popup dialog, save the new columns list
+            connect(dialog, &SelectItemsPopup::accepted, [this, dialog, item, constraint]() {
+                // Check if column selection changed at all
+                sqlb::StringVector columns_before = ui->tableConstraints->item(item->row(), kConstraintColumns)->data(Qt::UserRole).value<sqlb::StringVector>();
+                sqlb::StringVector columns_after = dialog->selectedItems();
+                if(columns_before != columns_after)
+                {
+                    // Remove the constraint with the old columns and add a new one with the new columns
+                    m_table.removeConstraint(columns_before, constraint);
+                    m_table.addConstraint(columns_after, constraint);
+
+                    // Update the UI
+                    populateFields();
+                    populateConstraints();
+                    updateSqlText();
+                }
+            });
+        }
+    });
+
+    // (De-)activate fields
     checkInput();
 }
 
