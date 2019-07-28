@@ -119,11 +119,12 @@ class Constraint
 public:
     enum ConstraintTypes
     {
-        NoType,
         PrimaryKeyConstraintType,
         UniqueConstraintType,
         ForeignKeyConstraintType,
         CheckConstraintType,
+
+        NoType = 999,
     };
 
     explicit Constraint(const StringVector& columns = {}, const std::string& name = std::string())
@@ -338,6 +339,7 @@ public:
     std::vector<ConstraintPtr> constraints(const StringVector& vStrFields = StringVector(), Constraint::ConstraintTypes type = Constraint::NoType) const;
     ConstraintSet allConstraints() const { return m_constraints; }
     void setConstraints(const ConstraintSet& constraints);
+    void replaceConstraint(ConstraintPtr from, ConstraintPtr to);
     StringVector& primaryKeyRef();
     const StringVector& primaryKey() const;
     void removeKeyFromAllConstraints(const std::string& key);

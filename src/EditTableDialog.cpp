@@ -232,29 +232,58 @@ void EditTableDialog::populateConstraints()
 
         // Type
         QComboBox* type = new QComboBox(this);
-        type->addItem(tr("Primary Key"));
+        type->addItem(tr("Primary Key"));       // NOTE: The order of the items here have to match the order in the sqlb::Constraint::ConstraintTypes enum!
         type->addItem(tr("Unique"));
         type->addItem(tr("Foreign Key"));
         type->addItem(tr("Check"));
-        switch(constraint->type())
-        {
-        case sqlb::Constraint::PrimaryKeyConstraintType:
-            type->setCurrentIndex(0);
-            break;
-        case sqlb::Constraint::UniqueConstraintType:
-            type->setCurrentIndex(1);
-            break;
-        case sqlb::Constraint::ForeignKeyConstraintType:
-            type->setCurrentIndex(2);
-            break;
-        case sqlb::Constraint::CheckConstraintType:
-            type->setCurrentIndex(3);
-            break;
-        default:
-            type->addItem(tr("Unknown"));
-            type->setCurrentIndex(type->count()-1);
-        }
-        type->setEnabled(false);    // TODO Remove this once we have added support for changing constraint types
+        type->setCurrentIndex(constraint->type());
+        connect(type, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), [this, type, constraint](int index) {
+            // Handle change of constraint type. Effectively this means removing the old constraint and replacing it by an entirely new one.
+            // Only the column list and the name can be migrated to the new constraint.
+
+            // Create new constraint depending on selected type
+            sqlb::ConstraintPtr new_constraint;
+            switch(index)
+            {
+            case 0:
+                // Make sure there is only one primary key at a time
+                if(!m_table.primaryKey().empty())
+                {
+                    QMessageBox::warning(this, qApp->applicationName(), tr("There can only be one primary key for each table. Please modify the existing primary "
+                                                                           "key instead."));
+
+                    // Set combo box back to original constraint type
+                    type->blockSignals(true);
+                    type->setCurrentIndex(constraint->type());
+                    type->blockSignals(false);
+                    return;
+                }
+
+                new_constraint = sqlb::ConstraintPtr(new sqlb::PrimaryKeyConstraint());
+                break;
+            case 1:
+                new_constraint = sqlb::ConstraintPtr(new sqlb::UniqueConstraint());
+                break;
+            case 2:
+                new_constraint = sqlb::ConstraintPtr(new sqlb::ForeignKeyClause());
+                break;
+            case 3:
+                new_constraint = sqlb::ConstraintPtr(new sqlb::CheckConstraint());
+                break;
+            default:
+                return;
+            }
+            new_constraint->setName(constraint->name());
+            new_constraint->column_list = constraint->column_list;
+
+            // Replace old by new constraint
+            m_table.replaceConstraint(constraint, new_constraint);
+
+            // Update SQL and view
+            populateFields();
+            populateConstraints();
+            updateSqlText();
+        });
         ui->tableConstraints->setCellWidget(row, kConstraintType, type);
 
         // Name

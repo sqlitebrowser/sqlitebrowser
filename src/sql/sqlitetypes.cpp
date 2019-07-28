@@ -534,6 +534,16 @@ void Table::setConstraints(const ConstraintSet& constraints)
     m_constraints = constraints;
 }
 
+void Table::replaceConstraint(ConstraintPtr from, ConstraintPtr to)
+{
+    auto it = m_constraints.find(from);
+    if(it == m_constraints.end())
+            return;
+
+    m_constraints.erase(it);    // Erase old constraint
+    m_constraints.insert(to);   // Insert new constraint
+}
+
 StringVector& Table::primaryKeyRef()
 {
     return const_cast<StringVector&>(static_cast<const Table*>(this)->primaryKey());
