@@ -160,32 +160,32 @@ void ForeignKeyClause::setFromString(const std::string& fk)
     m_override = fk;
 }
 
-std::string ForeignKeyClause::toSql(const StringVector& applyOn) const
+std::string ForeignKeyClause::toSql() const
 {
     std::string result;
     if(!m_name.empty())
         result = "CONSTRAINT " + escapeIdentifier(m_name) + " ";
-    result += "FOREIGN KEY(" + joinStringVector(escapeIdentifier(applyOn), ",") + ") REFERENCES " + this->toString();
+    result += "FOREIGN KEY(" + joinStringVector(escapeIdentifier(column_list), ",") + ") REFERENCES " + this->toString();
 
     return result;
 }
 
-std::string UniqueConstraint::toSql(const StringVector& applyOn) const
+std::string UniqueConstraint::toSql() const
 {
     std::string result;
     if(!m_name.empty())
         result = "CONSTRAINT " + escapeIdentifier(m_name) + " ";
-    result += "UNIQUE(" + joinStringVector(escapeIdentifier(applyOn), ",") + ")";
+    result += "UNIQUE(" + joinStringVector(escapeIdentifier(column_list), ",") + ")";
 
     return result;
 }
 
-std::string PrimaryKeyConstraint::toSql(const StringVector& applyOn) const
+std::string PrimaryKeyConstraint::toSql() const
 {
     std::string result;
     if(!m_name.empty())
         result = "CONSTRAINT " + escapeIdentifier(m_name) + " ";
-    result += "PRIMARY KEY(" + joinStringVector(escapeIdentifier(applyOn), ",") + ")";
+    result += "PRIMARY KEY(" + joinStringVector(escapeIdentifier(column_list), ",") + ")";
 
     if(!m_conflictAction.empty())
         result += " ON CONFLICT " + m_conflictAction;
@@ -193,7 +193,7 @@ std::string PrimaryKeyConstraint::toSql(const StringVector& applyOn) const
     return result;
 }
 
-std::string CheckConstraint::toSql(const StringVector&) const
+std::string CheckConstraint::toSql() const
 {
     std::string result;
     if(!m_name.empty())
@@ -341,31 +341,8 @@ bool Table::operator==(const Table& rhs) const
         return false;
     if(fields != rhs.fields)
         return false;
-
-    // We need to compare the constraint maps manually here. The reason is that the values are pointers and the default implementation
-    // would compare the pointers not the actual objects.
-    if(m_constraints.size() != rhs.m_constraints.size())
+    if(m_constraints != rhs.m_constraints)
         return false;
-    for(auto it=m_constraints.cbegin();it!=m_constraints.end();++it)
-    {
-        // For each element in this map we get the list of all elements with the same key from the other map.
-        // Then we loop through that list and check if we find an element of the same type which produces the same SQL substring. We use this
-        // approach to avoid casting both objects to their actual type, then dereferencing it etc.
-        auto range = rhs.m_constraints.equal_range(it->first);
-        bool found_something = false;
-        for(auto jt=range.first;jt!=range.second;++jt)
-        {
-            if(it->second->type() == jt->second->type() && it->second->toSql(it->first) == jt->second->toSql(jt->first))
-            {
-                found_something = true;
-                break;
-            }
-        }
-
-        // If no match was found, the constraint maps aren't equal
-        if(!found_something)
-            return false;
-    }
 
     return true;
 }
@@ -469,21 +446,19 @@ std::string Table::sql(const std::string& schema, bool ifNotExists) const
     sql += joinStringVector(fieldList(), ",\n");
 
     // Constraints
-    ConstraintMap::const_iterator it = m_constraints.cbegin();
     bool autoincrement = hasAutoIncrement();
-    while(it != m_constraints.cend())
+    for(const auto& it : m_constraints)
     {
         // Ignore auto increment primary key constraint
-        if((!autoincrement || it->second->type() != Constraint::PrimaryKeyConstraintType))
+        if((!autoincrement || it->type() != Constraint::PrimaryKeyConstraintType))
         {
             // Ignore all constraints without any fields, except for check constraints which don't rely on a field vector
-            if(!(it->first.empty() && it->second->type() != Constraint::CheckConstraintType))
+            if(!it->column_list.empty() || it->type() == Constraint::CheckConstraintType)
             {
                 sql += ",\n\t";
-                sql += it->second->toSql(it->first);
+                sql += it->toSql();
             }
         }
-        ++it;
     }
 
     sql += "\n)";
@@ -495,25 +470,25 @@ std::string Table::sql(const std::string& schema, bool ifNotExists) const
     return sql + ";";
 }
 
-void Table::addConstraint(const StringVector& vStrFields, ConstraintPtr constraint)
+void Table::addConstraint(ConstraintPtr constraint)
 {
-    m_constraints.insert({vStrFields, constraint});
+    m_constraints.insert(constraint);
 }
 
-void Table::setConstraint(const StringVector& vStrFields, ConstraintPtr constraint)
+void Table::setConstraint(ConstraintPtr constraint)
 {
     // Delete any old constraints of this type for these fields
-    removeConstraints(vStrFields, constraint->type());
+    removeConstraints(constraint->column_list, constraint->type());
 
     // Add the new constraint to the table, effectively overwriting all old constraints for that fields/type combination
-    addConstraint(vStrFields, constraint);
+    addConstraint(constraint);
 }
 
-void Table::removeConstraint(const StringVector& vStrFields, ConstraintPtr constraint)
+void Table::removeConstraint(ConstraintPtr constraint)
 {
     for(auto it = m_constraints.begin();it!=m_constraints.end();++it)
     {
-        if(it->first == vStrFields && it->second->toSql(vStrFields) == constraint->toSql(vStrFields))
+        if((*it)->toSql() == constraint->toSql())
         {
             m_constraints.erase(it);
 
@@ -527,7 +502,7 @@ void Table::removeConstraints(const StringVector& vStrFields, Constraint::Constr
 {
     for(auto it = m_constraints.begin();it!=m_constraints.end();)
     {
-        if(it->first == vStrFields && it->second->type() == type)
+        if((*it)->column_list == vStrFields && (*it)->type() == type)
             m_constraints.erase(it++);
         else
             ++it;
@@ -545,33 +520,16 @@ ConstraintPtr Table::constraint(const StringVector& vStrFields, Constraint::Cons
 
 std::vector<ConstraintPtr> Table::constraints(const StringVector& vStrFields, Constraint::ConstraintTypes type) const
 {
-    ConstraintMap::const_iterator begin, end;
-    if(vStrFields.empty())
-    {
-        begin = m_constraints.begin();
-        end = m_constraints.end();
-    } else {
-        std::tie(begin, end) = m_constraints.equal_range(vStrFields);
-    }
-
     std::vector<ConstraintPtr> clist;
-    std::transform(begin, end, std::back_inserter(clist), [](std::pair<StringVector, ConstraintPtr> elem){return elem.second;});
-
-    if(type == Constraint::NoType)
+    for(const auto& it : m_constraints)
     {
-        return clist;
-    } else {
-        std::vector<ConstraintPtr> clist_typed;
-        for(const ConstraintPtr& ptr : clist)
-        {
-            if(ptr->type() == type)
-                clist_typed.push_back(ptr);
-        }
-        return clist_typed;
+        if((type == Constraint::NoType || it->type() == type) && (vStrFields.empty() || it->column_list == vStrFields))
+            clist.push_back(it);
     }
+    return clist;
 }
 
-void Table::setConstraints(const ConstraintMap& constraints)
+void Table::setConstraints(const ConstraintSet& constraints)
 {
     m_constraints = constraints;
 }
@@ -583,12 +541,10 @@ StringVector& Table::primaryKeyRef()
 
 const StringVector& Table::primaryKey() const
 {
-    auto it = m_constraints.cbegin();
-    while(it != m_constraints.cend())
+    for(const auto& it : m_constraints)
     {
-        if(it->second->type() == Constraint::PrimaryKeyConstraintType)
-            return it->first;
-        ++it;
+        if(it->type() == Constraint::PrimaryKeyConstraintType)
+            return it->column_list;
     }
 
     static StringVector emptyFieldVector;
@@ -597,18 +553,20 @@ const StringVector& Table::primaryKey() const
 
 void Table::removeKeyFromAllConstraints(const std::string& key)
 {
-    // First remove all constraints with exactly that one key
-    m_constraints.erase({key});
-
-    // Then delete all occurrences of the key in compound columns
+    // Update all constraints
     for(auto it=m_constraints.begin();it!=m_constraints.end();)
     {
-        if(contains(it->first, key))
+        // Check if they contain the old key name
+        if(contains((*it)->column_list, key))
         {
-            StringVector k = it->first;
-            k.erase(std::remove(k.begin(), k.end(), key), k.end());
-            m_constraints.insert({k, it->second});
-            it = m_constraints.erase(it);
+            // If so, remove it from the column list
+            (*it)->column_list.erase(std::remove((*it)->column_list.begin(), (*it)->column_list.end(), key), (*it)->column_list.end());
+
+            // If the column list is empty now, remove the entire constraint. Otherwise save the updated column list
+            if((*it)->column_list.empty())
+                it = m_constraints.erase(it);
+            else
+                ++it;
         } else {
             ++it;
         }
@@ -622,17 +580,10 @@ void Table::renameKeyInAllConstraints(const std::string& key, const std::string&
         return;
 
     // Find all occurrences of the key and change it to the new one
-    for(auto it=m_constraints.begin();it!=m_constraints.end();)
+    for(auto& it : m_constraints)
     {
-        if(contains(it->first, key))
-        {
-            StringVector k = it->first;
-            std::replace(k.begin(), k.end(), key, to);
-            m_constraints.insert({k, it->second});
-            it = m_constraints.erase(it);
-        } else {
-            ++it;
-        }
+        if(contains(it->column_list, key))
+            std::replace(it->column_list.begin(), it->column_list.end(), key, to);
     }
 }
 
@@ -843,13 +794,12 @@ TablePtr CreateTableWalker::table()
                     tc = tc->getNextSibling()->getNextSibling(); // skip primary and key
                     tc = tc->getNextSibling(); // skip LPAREN
 
-                    StringVector fields;
                     do
                     {
                         antlr::RefAST indexed_column = tc->getFirstChild();
 
                         std::string col = columnname(indexed_column);
-                        fields.push_back(col);
+                        pk->column_list.push_back(col);
 
                         indexed_column = indexed_column->getNextSibling();
                         if(indexed_column != antlr::nullAST
@@ -888,7 +838,7 @@ TablePtr CreateTableWalker::table()
                     tc = tc->getNextSibling();          // skip RPAREN
                     pk->setConflictAction(parseConflictClause(tc));
 
-                    tab->addConstraint(fields, ConstraintPtr(pk));
+                    tab->addConstraint(ConstraintPtr(pk));
                 }
                 break;
                 case sqlite3TokenTypes::UNIQUE:
@@ -898,14 +848,13 @@ TablePtr CreateTableWalker::table()
 
                     tc = tc->getNextSibling(); // skip UNIQUE
                     tc = tc->getNextSibling(); // skip LPAREN
-                    StringVector fields;
                     do
                     {
                         antlr::RefAST indexed_column = tc->getFirstChild();
 
                         std::string col = columnname(indexed_column);
                         auto field = findField(tab, col);
-                        fields.push_back(field->name());
+                        unique->column_list.push_back(field->name());
 
                         indexed_column = indexed_column->getNextSibling();
                         if(indexed_column != antlr::nullAST
@@ -933,12 +882,12 @@ TablePtr CreateTableWalker::table()
                         }
                     } while(tc != antlr::nullAST && tc->getType() != sqlite3TokenTypes::RPAREN);
 
-                    if(fields.size() == 1 && constraint_name.empty())
+                    if(unique->column_list.size() == 1 && constraint_name.empty())
                     {
-                        findField(tab, fields[0])->setUnique(true);
+                        findField(tab, unique->column_list[0])->setUnique(true);
                         delete unique;
                     } else {
-                        tab->addConstraint(fields, ConstraintPtr(unique));
+                        tab->addConstraint(ConstraintPtr(unique));
                     }
                 }
                 break;
@@ -951,11 +900,10 @@ TablePtr CreateTableWalker::table()
                     tc = tc->getNextSibling();  // KEY
                     tc = tc->getNextSibling();  // LPAREN
 
-                    StringVector fields;
                     do
                     {
                         std::string col = columnname(tc);
-                        fields.push_back(findField(tab, col)->name());
+                        fk->column_list.push_back(findField(tab, col)->name());
 
                         tc = tc->getNextSibling();
 
@@ -986,7 +934,7 @@ TablePtr CreateTableWalker::table()
                     }
 
                     fk->setConstraint(concatTextAST(tc, true));
-                    tab->addConstraint(fields, ConstraintPtr(fk));
+                    tab->addConstraint(ConstraintPtr(fk));
                 }
                 break;
                 case sqlite3TokenTypes::CHECK:
@@ -998,7 +946,7 @@ TablePtr CreateTableWalker::table()
                     tc = tc->getNextSibling(); // skip LPAREN
 
                     check->setExpression(concatExprAST(tc));
-                    tab->addConstraint(StringVector(), ConstraintPtr(check));
+                    tab->addConstraint(ConstraintPtr(check));
                 }
                 break;
                 default:
@@ -1093,6 +1041,7 @@ void CreateTableWalker::parsecolumn(Table* table, antlr::RefAST c)
                 delete primaryKey;
 
             primaryKey = new PrimaryKeyConstraint;
+            primaryKey->column_list = { colname };
             primaryKey->setName(constraint_name);
 
             con = con->getNextSibling()->getNextSibling(); // skip KEY
@@ -1135,7 +1084,8 @@ void CreateTableWalker::parsecolumn(Table* table, antlr::RefAST c)
             {
                 CheckConstraint* check_constraint = new CheckConstraint(check);
                 check_constraint->setName(constraint_name);
-                table->addConstraint({colname}, ConstraintPtr(check_constraint));
+                check_constraint->column_list = { colname };
+                table->addConstraint(ConstraintPtr(check_constraint));
                 check.clear();
             }
         }
@@ -1164,6 +1114,7 @@ void CreateTableWalker::parsecolumn(Table* table, antlr::RefAST c)
             con = con->getNextSibling();    // REFERENCES
 
             sqlb::ForeignKeyClause* foreignKey = new ForeignKeyClause;
+            foreignKey->column_list = { colname };
             foreignKey->setTable(identifier(con));
             foreignKey->setName(constraint_name);
             con = con->getNextSibling();    // identifier
@@ -1210,7 +1161,7 @@ void CreateTableWalker::parsecolumn(Table* table, antlr::RefAST c)
     table->fields.push_back(f);
 
     for(sqlb::ForeignKeyClause* fk : foreignKeys)
-        table->addConstraint({f.name()}, ConstraintPtr(fk));
+        table->addConstraint(ConstraintPtr(fk));
     if(primaryKey)
     {
         StringVector v;
@@ -1222,7 +1173,7 @@ void CreateTableWalker::parsecolumn(Table* table, antlr::RefAST c)
             // don't need another one.
             delete primaryKey;
         } else {
-            table->addConstraint({f.name()}, ConstraintPtr(primaryKey));
+            table->addConstraint(ConstraintPtr(primaryKey));
         }
     }
 }

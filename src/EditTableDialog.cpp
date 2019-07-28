@@ -14,7 +14,6 @@
 #include <algorithm>
 
 Q_DECLARE_METATYPE(sqlb::ConstraintPtr)
-Q_DECLARE_METATYPE(sqlb::StringVector)
 
 EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& tableName, bool createTable, QWidget* parent)
     : QDialog(parent),
@@ -87,29 +86,29 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
         // Check whether the double clicked item is in the columns column
         if(item->column() == kConstraintColumns)
         {
-            sqlb::ConstraintPtr constraint = ui->tableConstraints->item(item->row(), kConstraintName)->data(Qt::UserRole).value<sqlb::ConstraintPtr>();
+            sqlb::ConstraintPtr constraint = ui->tableConstraints->item(item->row(), kConstraintColumns)->data(Qt::UserRole).value<sqlb::ConstraintPtr>();
 
             // Do not allow editing the columns list of a CHECK constraint because CHECK constraints are independent of column lists
             if(constraint->type() == sqlb::Constraint::CheckConstraintType)
                 return;
 
             // Show the select items popup dialog
-            SelectItemsPopup* dialog = new SelectItemsPopup(m_table.fieldNames(), item->data(Qt::UserRole).value<sqlb::StringVector>(), this);
+            SelectItemsPopup* dialog = new SelectItemsPopup(m_table.fieldNames(), item->data(Qt::UserRole).value<sqlb::ConstraintPtr>()->column_list, this);
             QRect item_rect = ui->tableConstraints->visualItemRect(item);
             dialog->move(ui->tableConstraints->mapToGlobal(QPoint(ui->tableConstraints->x() + item_rect.x(),
                                                                   ui->tableConstraints->y() + item_rect.y() + item_rect.height() / 2)));
             dialog->show();
 
             // When clicking the Apply button in the popup dialog, save the new columns list
-            connect(dialog, &SelectItemsPopup::accepted, [this, dialog, item, constraint]() {
+            connect(dialog, &SelectItemsPopup::accepted, [this, dialog, constraint]() {
                 // Check if column selection changed at all
-                sqlb::StringVector columns_before = ui->tableConstraints->item(item->row(), kConstraintColumns)->data(Qt::UserRole).value<sqlb::StringVector>();
-                sqlb::StringVector columns_after = dialog->selectedItems();
-                if(columns_before != columns_after)
+                sqlb::StringVector new_columns = dialog->selectedItems();
+                if(constraint->column_list != new_columns)
                 {
                     // Remove the constraint with the old columns and add a new one with the new columns
-                    m_table.removeConstraint(columns_before, constraint);
-                    m_table.addConstraint(columns_after, constraint);
+                    m_table.removeConstraint(constraint);
+                    constraint->column_list = new_columns;
+                    m_table.addConstraint(constraint);
 
                     // Update the UI
                     populateFields();
@@ -221,15 +220,14 @@ void EditTableDialog::populateConstraints()
 
     ui->tableConstraints->setRowCount(static_cast<int>(constraints.size()));
     int row = 0;
-    for(const auto& pair : constraints)
+    for(const auto& constraint : constraints)
     {
-        const auto& columns = pair.first;
-        const auto& constraint = pair.second;
+        const auto& columns = constraint->column_list;
 
         // Columns
         QTableWidgetItem* column = new QTableWidgetItem(QString::fromStdString(sqlb::joinStringVector(columns, ",")));
-        column->setData(Qt::UserRole, QVariant::fromValue<sqlb::StringVector>(pair.first));         // Remember raw data of columns of constraint
         column->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+        column->setData(Qt::UserRole, QVariant::fromValue<sqlb::ConstraintPtr>(constraint));      // Remember address of constraint object. This is used for modifying it later
         ui->tableConstraints->setItem(row, kConstraintColumns, column);
 
         // Type
@@ -261,12 +259,11 @@ void EditTableDialog::populateConstraints()
 
         // Name
         QTableWidgetItem* name = new QTableWidgetItem(QString::fromStdString(constraint->name()));
-        name->setData(Qt::UserRole, QVariant::fromValue<sqlb::ConstraintPtr>(pair.second));       // Remember address of constraint object. This is used for modifying it later
         name->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
         ui->tableConstraints->setItem(row, kConstraintName, name);
 
         // SQL
-        QTableWidgetItem* sql = new QTableWidgetItem(QString::fromStdString(constraint->toSql(columns)));
+        QTableWidgetItem* sql = new QTableWidgetItem(QString::fromStdString(constraint->toSql()));
         sql->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
         ui->tableConstraints->setItem(row, kConstraintSql, sql);
 
@@ -482,7 +479,7 @@ void EditTableDialog::fieldItemChanged(QTreeWidgetItem *item, int column)
                 }
             } else if(item->checkState(column) == Qt::Checked) {
                 // There is no primary key in the table yet. This means we need to add a default one.
-                m_table.addConstraint({field.name()}, sqlb::ConstraintPtr(new sqlb::PrimaryKeyConstraint()));
+                m_table.addConstraint(sqlb::ConstraintPtr(new sqlb::PrimaryKeyConstraint({field.name()})));
             }
 
             if(item->checkState(column) == Qt::Checked)
@@ -662,8 +659,7 @@ void EditTableDialog::fieldItemChanged(QTreeWidgetItem *item, int column)
 void EditTableDialog::constraintItemChanged(QTableWidgetItem* item)
 {
     // Find modified constraint
-    sqlb::StringVector columns = ui->tableConstraints->item(item->row(), kConstraintColumns)->data(Qt::UserRole).value<sqlb::StringVector>();
-    sqlb::ConstraintPtr constraint = ui->tableConstraints->item(item->row(), kConstraintName)->data(Qt::UserRole).value<sqlb::ConstraintPtr>();
+    sqlb::ConstraintPtr constraint = ui->tableConstraints->item(item->row(), kConstraintColumns)->data(Qt::UserRole).value<sqlb::ConstraintPtr>();
 
     // Which column has been modified?
     switch(item->column())
@@ -674,7 +670,7 @@ void EditTableDialog::constraintItemChanged(QTableWidgetItem* item)
     };
 
     // Update SQL
-    ui->tableConstraints->item(item->row(), kConstraintSql)->setText(QString::fromStdString(constraint->toSql(columns)));
+    ui->tableConstraints->item(item->row(), kConstraintSql)->setText(QString::fromStdString(constraint->toSql()));
     checkInput();
 }
 
@@ -872,11 +868,10 @@ void EditTableDialog::removeConstraint()
 
     // Find constraint to delete
     int row = ui->tableConstraints->currentRow();
-    sqlb::StringVector columns = ui->tableConstraints->item(row, kConstraintColumns)->data(Qt::UserRole).value<sqlb::StringVector>();
-    sqlb::ConstraintPtr constraint = ui->tableConstraints->item(row, kConstraintName)->data(Qt::UserRole).value<sqlb::ConstraintPtr>();
+    sqlb::ConstraintPtr constraint = ui->tableConstraints->item(row, kConstraintColumns)->data(Qt::UserRole).value<sqlb::ConstraintPtr>();
 
     // Remove the constraint. If there is more than one constraint with this combination of columns and constraint type, only delete the first one.
-    m_table.removeConstraint(columns, constraint);
+    m_table.removeConstraint(constraint);
     ui->tableConstraints->removeRow(ui->tableConstraints->currentRow());
 
     // Update SQL and view

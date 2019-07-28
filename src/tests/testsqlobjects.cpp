@@ -29,7 +29,7 @@ void TestTable::sqlOutput()
     tt.fields.push_back(f);
     tt.fields.emplace_back("car", "text");
     tt.fields.push_back(fkm);
-    tt.addConstraint({f.name(), fkm.name()}, ConstraintPtr(new PrimaryKeyConstraint()));
+    tt.addConstraint(ConstraintPtr(new PrimaryKeyConstraint({f.name(), fkm.name()})));
 
     QCOMPARE(tt.sql(), "CREATE TABLE \"testtable\" (\n"
                        "\t\"id\"\tinteger,\n"
@@ -47,7 +47,7 @@ void TestTable::sqlGraveAccentOutput()
     tt.fields.push_back(f);
     tt.fields.emplace_back("car", "text");
     tt.fields.push_back(fkm);
-    tt.addConstraint({f.name(), fkm.name()}, ConstraintPtr(new PrimaryKeyConstraint()));
+    tt.addConstraint(ConstraintPtr(new PrimaryKeyConstraint({f.name(), fkm.name()})));
     sqlb::setIdentifierQuoting(sqlb::GraveAccents);
 
     QCOMPARE(tt.sql(), "CREATE TABLE `testtable` (\n"
@@ -69,7 +69,7 @@ void TestTable::sqlSquareBracketsOutput()
     tt.fields.push_back(f);
     tt.fields.emplace_back("car", "text");
     tt.fields.push_back(fkm);
-    tt.addConstraint({f.name(), fkm.name()}, ConstraintPtr(new PrimaryKeyConstraint()));
+    tt.addConstraint(ConstraintPtr(new PrimaryKeyConstraint({f.name(), fkm.name()})));
     sqlb::setIdentifierQuoting(sqlb::SquareBrackets);
 
     QCOMPARE(tt.sql(), "CREATE TABLE [testtable] (\n"
@@ -91,7 +91,7 @@ void TestTable::autoincrement()
     tt.fields.push_back(f);
     tt.fields.emplace_back("car", "text");
     tt.fields.push_back(fkm);
-    tt.addConstraint({f.name()}, ConstraintPtr(new PrimaryKeyConstraint()));
+    tt.addConstraint(ConstraintPtr(new PrimaryKeyConstraint({f.name()})));
 
     QCOMPARE(tt.sql(), "CREATE TABLE \"testtable\" (\n"
                        "\t\"id\"\tinteger PRIMARY KEY AUTOINCREMENT,\n"
@@ -109,7 +109,7 @@ void TestTable::notnull()
     tt.fields.push_back(f);
     tt.fields.emplace_back("car", "text", true);
     tt.fields.push_back(fkm);
-    tt.addConstraint({f.name()}, ConstraintPtr(new PrimaryKeyConstraint()));
+    tt.addConstraint(ConstraintPtr(new PrimaryKeyConstraint({f.name()})));
 
     QCOMPARE(tt.sql(), "CREATE TABLE \"testtable\" (\n"
                        "\t\"id\"\tinteger PRIMARY KEY AUTOINCREMENT,\n"
@@ -126,7 +126,7 @@ void TestTable::withoutRowid()
     tt.fields.push_back(f);
     tt.fields.emplace_back("b", "integer");
     tt.setWithoutRowidTable(true);
-    tt.addConstraint({f.name()}, ConstraintPtr(new PrimaryKeyConstraint()));
+    tt.addConstraint(ConstraintPtr(new PrimaryKeyConstraint({f.name()})));
 
     QCOMPARE(tt.sql(), "CREATE TABLE \"testtable\" (\n"
                        "\t\"a\"\tinteger PRIMARY KEY AUTOINCREMENT,\n"
@@ -139,7 +139,9 @@ void TestTable::foreignKeys()
     Table tt("testtable");
     Field f("a", "integer");
     tt.fields.push_back(f);
-    tt.addConstraint({f.name()}, sqlb::ConstraintPtr(new sqlb::ForeignKeyClause("b", sqlb::StringVector{"c"})));
+    sqlb::ConstraintPtr fk = sqlb::ConstraintPtr(new sqlb::ForeignKeyClause("b", sqlb::StringVector{"c"}));
+    fk->column_list = {f.name()};
+    tt.addConstraint(fk);
 
     QCOMPARE(tt.sql(), "CREATE TABLE \"testtable\" (\n"
                        "\t\"a\"\tinteger,\n"
@@ -157,7 +159,7 @@ void TestTable::uniqueConstraint()
     tt.fields.push_back(f1);
     tt.fields.push_back(f2);
     tt.fields.push_back(f3);
-    tt.addConstraint({f2.name(), f3.name()}, sqlb::ConstraintPtr(new sqlb::UniqueConstraint()));
+    tt.addConstraint(sqlb::ConstraintPtr(new sqlb::UniqueConstraint({f2.name(), f3.name()})));
 
     QCOMPARE(tt.sql(), "CREATE TABLE \"testtable\" (\n"
                        "\t\"a\"\tinteger UNIQUE,\n"

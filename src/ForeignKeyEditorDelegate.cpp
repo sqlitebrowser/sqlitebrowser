@@ -153,6 +153,7 @@ void ForeignKeyEditorDelegate::setModelData(QWidget* editor, QAbstractItemModel*
         const QString clause    = fkEditor->clauseEdit->text();
 
         fk->setTable(table.toStdString());
+        fk->column_list = { field.name() };
 
         if (!id.empty())
             fk->setColumns({id});
@@ -161,7 +162,7 @@ void ForeignKeyEditorDelegate::setModelData(QWidget* editor, QAbstractItemModel*
             fk->setConstraint(clause.toStdString());
         }
 
-        m_table.setConstraint({field.name()}, sqlb::ConstraintPtr(fk));
+        m_table.setConstraint(sqlb::ConstraintPtr(fk));
     }
 
     model->setData(index, sql);

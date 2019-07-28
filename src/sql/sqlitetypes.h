@@ -4,10 +4,10 @@
 
 #include <algorithm>
 #include <memory>
-#include <unordered_map>
 #include <string>
 #include <vector>
 #include <cctype>
+#include <set>
 
 template<typename C, typename E>
 bool contains(const C& container, E element)
@@ -37,18 +37,6 @@ using StringVector = std::vector<std::string>;
 StringVector escapeIdentifier(StringVector ids);
 std::string joinStringVector(const StringVector& vec, const std::string& delim);
 
-struct StringVectorHash
-{
-    size_t operator()(const StringVector& key) const
-    {
-        // This is taken from Boost
-        size_t seed = 0;
-        for(const std::string& s : key)
-            seed ^= std::hash<std::string>{}(s) + 0x9e3779b9 + (seed << 6) + ( seed >> 2);
-        return seed;
-    }
-};
-
 class Object;
 class Table;
 class Index;
@@ -66,7 +54,7 @@ using TriggerPtr = std::shared_ptr<Trigger>;
 using ConstraintPtr = std::shared_ptr<Constraint>;
 using FieldVector = std::vector<Field>;
 using IndexedColumnVector = std::vector<IndexedColumn>;
-using ConstraintMap = std::unordered_multimap<StringVector, ConstraintPtr, StringVectorHash>;
+using ConstraintSet = std::set<ConstraintPtr>;
 using FieldInfoList = std::vector<FieldInfo>;
 
 struct FieldInfo
@@ -138,8 +126,9 @@ public:
         CheckConstraintType,
     };
 
-    explicit Constraint(const std::string& name = std::string())
-        : m_name(name)
+    explicit Constraint(const StringVector& columns = {}, const std::string& name = std::string())
+        : column_list(columns),
+          m_name(name)
     {
     }
     virtual ~Constraint() {}
@@ -149,7 +138,9 @@ public:
     void setName(const std::string& name) { m_name = name; }
     const std::string& name() const { return m_name; }
 
-    virtual std::string toSql(const StringVector& applyOn) const = 0;
+    virtual std::string toSql() const = 0;
+
+    StringVector column_list;
 
 protected:
     std::string m_name;
@@ -178,7 +169,7 @@ public:
     void setConstraint(const std::string& constraint) { m_constraint = constraint; }
     const std::string& constraint() const { return m_constraint; }
 
-    std::string toSql(const StringVector& applyOn) const override;
+    std::string toSql() const override;
 
     ConstraintTypes type() const override { return ForeignKeyConstraintType; }
 
@@ -193,9 +184,11 @@ private:
 class UniqueConstraint : public Constraint
 {
 public:
-    UniqueConstraint() {}
+    explicit UniqueConstraint(const StringVector& columns = {}) :
+        Constraint (columns)
+    {}
 
-    std::string toSql(const StringVector& applyOn) const override;
+    std::string toSql() const override;
 
     ConstraintTypes type() const override { return UniqueConstraintType; }
 };
@@ -203,12 +196,14 @@ public:
 class PrimaryKeyConstraint : public Constraint
 {
 public:
-    PrimaryKeyConstraint() {}
+    explicit PrimaryKeyConstraint(const StringVector& columns = {}) :
+        Constraint (columns)
+    {}
 
     void setConflictAction(const std::string& conflict) { m_conflictAction = conflict; }
     const std::string& conflictAction() const { return m_conflictAction; }
 
-    std::string toSql(const StringVector& applyOn) const override;
+    std::string toSql() const override;
 
     ConstraintTypes type() const override { return PrimaryKeyConstraintType; }
 
@@ -227,7 +222,7 @@ public:
     void setExpression(const std::string& expr) { m_expression = expr; }
     const std::string& expression() const { return m_expression; }
 
-    std::string toSql(const StringVector& applyOn) const override;
+    std::string toSql() const override;
 
     ConstraintTypes type() const override { return CheckConstraintType; }
 
@@ -335,14 +330,14 @@ public:
 
     FieldInfoList fieldInformation() const override;
 
-    void addConstraint(const StringVector& vStrFields, ConstraintPtr constraint);
-    void setConstraint(const StringVector& vStrFields, ConstraintPtr constraint);
-    void removeConstraint(const StringVector& vStrFields, ConstraintPtr constraint);
+    void addConstraint(ConstraintPtr constraint);
+    void setConstraint(ConstraintPtr constraint);
+    void removeConstraint(ConstraintPtr constraint);
     void removeConstraints(const StringVector& vStrFields = StringVector(), Constraint::ConstraintTypes type = Constraint::NoType);
     ConstraintPtr constraint(const StringVector& vStrFields = StringVector(), Constraint::ConstraintTypes type = Constraint::NoType) const;   //! Only returns the first constraint, if any
     std::vector<ConstraintPtr> constraints(const StringVector& vStrFields = StringVector(), Constraint::ConstraintTypes type = Constraint::NoType) const;
-    ConstraintMap allConstraints() const { return m_constraints; }
-    void setConstraints(const ConstraintMap& constraints);
+    ConstraintSet allConstraints() const { return m_constraints; }
+    void setConstraints(const ConstraintSet& constraints);
     StringVector& primaryKeyRef();
     const StringVector& primaryKey() const;
     void removeKeyFromAllConstraints(const std::string& key);
@@ -360,7 +355,7 @@ private:
 
 private:
     bool m_withoutRowid;
-    ConstraintMap m_constraints;
+    ConstraintSet m_constraints;
     std::string m_virtual;
 };
 
