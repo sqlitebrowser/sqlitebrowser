@@ -1444,7 +1444,7 @@ bool DBBrowserDB::updateRecord(const sqlb::ObjectIdentifier& table, const std::s
             if(sqlite3_bind_blob(stmt, 1, rawValue, value.length(), SQLITE_STATIC))
                 success = -1;
         } else if(force_type == SQLITE_INTEGER) {
-            if(sqlite3_bind_int(stmt, 1, value.toInt()))
+            if(sqlite3_bind_int64(stmt, 1, value.toLongLong()))
                 success = -1;
         } else if(force_type == SQLITE_FLOAT) {
             if(sqlite3_bind_double(stmt, 1, value.toDouble()))
