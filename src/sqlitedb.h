@@ -173,7 +173,7 @@ private:
 public:
     QString addRecord(const sqlb::ObjectIdentifier& tablename);
     bool deleteRecords(const sqlb::ObjectIdentifier& table, const QStringList& rowids, const sqlb::StringVector& pseudo_pk = {});
-    bool updateRecord(const sqlb::ObjectIdentifier& table, const std::string& column, const QString& rowid, const QByteArray& value, bool itsBlob, const sqlb::StringVector& pseudo_pk = {});
+    bool updateRecord(const sqlb::ObjectIdentifier& table, const std::string& column, const QString& rowid, const QByteArray& value, int force_type = 0, const sqlb::StringVector& pseudo_pk = {});
 
     bool createTable(const sqlb::ObjectIdentifier& name, const sqlb::FieldVector& structure);
     bool renameTable(const std::string& schema, const std::string& from_table, const std::string& to_table);

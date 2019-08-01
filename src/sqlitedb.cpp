@@ -1398,7 +1398,7 @@ bool DBBrowserDB::deleteRecords(const sqlb::ObjectIdentifier& table, const QStri
 }
 
 bool DBBrowserDB::updateRecord(const sqlb::ObjectIdentifier& table, const std::string& column,
-                               const QString& rowid, const QByteArray& value, bool itsBlob, const sqlb::StringVector& pseudo_pk)
+                               const QString& rowid, const QByteArray& value, int force_type, const sqlb::StringVector& pseudo_pk)
 {
     waitForDbRelease();
     if (!isOpen()) return false;
@@ -1439,13 +1439,17 @@ bool DBBrowserDB::updateRecord(const sqlb::ObjectIdentifier& table, const std::s
     if(sqlite3_prepare_v2(_db, sql.toUtf8(), -1, &stmt, nullptr) != SQLITE_OK)
         success = 0;
     if(success == 1) {
-        if(itsBlob)
+        if(force_type == SQLITE_BLOB)
         {
             if(sqlite3_bind_blob(stmt, 1, rawValue, value.length(), SQLITE_STATIC))
                 success = -1;
-        }
-        else
-        {
+        } else if(force_type == SQLITE_INTEGER) {
+            if(sqlite3_bind_int(stmt, 1, value.toInt()))
+                success = -1;
+        } else if(force_type == SQLITE_FLOAT) {
+            if(sqlite3_bind_double(stmt, 1, value.toDouble()))
+                success = -1;
+        } else {
             if(sqlite3_bind_text(stmt, 1, rawValue, value.length(), SQLITE_STATIC))
                 success = -1;
         }

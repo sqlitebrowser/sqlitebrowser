@@ -466,7 +466,26 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
         if(oldValue == newValue && oldValue.isNull() == newValue.isNull())
             return true;
 
-        if(m_db.updateRecord(m_query.table(), m_headers.at(column), cached_row.at(0), newValue, isBlob, m_query.rowIdColumns()))
+        // Determine type. If the BLOB flag is set, it's always BLOB. If the affinity data type of the modified column is something numeric,
+        // we check if the new value is also numeric. In that case we can safely set the data type to INTEGER or FLOAT. In all other cases we
+        // default to TEXT.
+        int type = SQLITE_TEXT;
+        if(isBlob)
+        {
+            type = SQLITE_BLOB;
+        } else if(m_vDataTypes.at(column) == SQLITE_INTEGER) {
+            bool ok;
+            newValue.toInt(&ok);
+            if(ok)
+                type = SQLITE_INTEGER;
+        } else if(m_vDataTypes.at(column) == SQLITE_FLOAT) {
+            bool ok;
+            newValue.toFloat(&ok);
+            if(ok)
+                type = SQLITE_FLOAT;
+        }
+
+        if(m_db.updateRecord(m_query.table(), m_headers.at(column), cached_row.at(0), newValue, type, m_query.rowIdColumns()))
         {
             cached_row[column] = newValue;
 
