@@ -36,6 +36,7 @@ private slots:
     void rowValues();
     void complexExpressions();
     void datetimeExpression();
+    void extraParentheses();
 };
 
 #endif
