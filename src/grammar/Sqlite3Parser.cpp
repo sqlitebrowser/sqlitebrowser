@@ -2575,7 +2575,7 @@ void Sqlite3Parser::expr() {
 						astFactory->addASTChild(currentAST, tmp119_AST);
 					}
 					match(LPAREN);
-					subexpr();
+					expr();
 					if (inputState->guessing==0) {
 						astFactory->addASTChild( currentAST, returnAST );
 					}

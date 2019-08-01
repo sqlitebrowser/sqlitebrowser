@@ -518,3 +518,17 @@ void TestTable::moduloOperator()
     QCOMPARE(tab.fields.at(0).type(), "INTEGER");
     QCOMPARE(tab.fields.at(0).defaultValue(), "(7%2)");
 }
+
+void TestTable::complexExpression()
+{
+    std::string sql = "CREATE TABLE test(\n"
+                      "uuid INTEGER DEFAULT (hex(randomblob(4))||'-'||hex(randomblob(2))||'-'||'4'||substr(hex(randomblob(2)),2)||'-'||substr('AB89',1+(abs(random())%4),1)||substr(hex(randomblob(2)),2)||'-'||hex(randomblob(6)))\n"
+                      ");";
+
+    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sql)));
+    QCOMPARE(tab.name(), "test");
+
+    QCOMPARE(tab.fields.at(0).name(), "uuid");
+    QCOMPARE(tab.fields.at(0).type(), "INTEGER");
+    QCOMPARE(tab.fields.at(0).defaultValue(), "(hex(randomblob(4))||'-'||hex(randomblob(2))||'-'||'4'||substr(hex(randomblob(2)),2)||'-'||substr('AB89',1+(abs(random())%4),1)||substr(hex(randomblob(2)),2)||'-'||hex(randomblob(6)))");
+}

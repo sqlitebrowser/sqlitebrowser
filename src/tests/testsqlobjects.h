@@ -38,6 +38,7 @@ private slots:
     void datetimeExpression();
     void extraParentheses();
     void moduloOperator();
+    void complexExpression();
 };
 
 #endif

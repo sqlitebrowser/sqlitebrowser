@@ -441,7 +441,7 @@ functionname
 expr
   :
     ( LPAREN (((subexpr (COMMA subexpr)+ RPAREN binaryoperator LPAREN subexpr (COMMA subexpr)+) | (expr)) RPAREN) ((AND | OR) expr)* )
-  | ( subexpr ((binaryoperator | AND | OR) (subexpr | LPAREN subexpr RPAREN) )* )
+  | ( subexpr ((binaryoperator | AND | OR) (subexpr | LPAREN expr RPAREN) )* )
   ;
 
 subexpr
