@@ -41,6 +41,7 @@ public:
 	public: void mSTAR(bool _createToken);
 	public: void mTILDE(bool _createToken);
 	public: void mAMPERSAND(bool _createToken);
+	public: void mPERCENT(bool _createToken);
 	public: void mBITOR(bool _createToken);
 	public: void mOROP(bool _createToken);
 	public: void mEQUAL(bool _createToken);

@@ -166,6 +166,7 @@ MINUS   :   '-';
 STAR    :   '*';
 TILDE : '~';
 AMPERSAND: '&';
+PERCENT: '%';
 BITOR: '|';
 OROP: BITOR BITOR;
 EQUAL: '=';

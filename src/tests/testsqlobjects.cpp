@@ -504,3 +504,17 @@ void TestTable::extraParentheses()
     QCOMPARE(tab.fields.at(0).type(), "INTEGER");
     QCOMPARE(tab.fields.at(0).defaultValue(), "(1+(5)-4)");
 }
+
+void TestTable::moduloOperator()
+{
+    std::string sql = "CREATE TABLE test(\n"
+                      "xy INTEGER DEFAULT (7 % 2)\n"
+                      ");";
+
+    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sql)));
+    QCOMPARE(tab.name(), "test");
+
+    QCOMPARE(tab.fields.at(0).name(), "xy");
+    QCOMPARE(tab.fields.at(0).type(), "INTEGER");
+    QCOMPARE(tab.fields.at(0).defaultValue(), "(7%2)");
+}

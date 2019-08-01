@@ -238,6 +238,12 @@ ANTLR_USE_NAMESPACE(antlr)RefToken Sqlite3Lexer::nextToken()
 				theRetToken=_returnToken;
 				break;
 			}
+			case 0x25 /* '%' */ :
+			{
+				mPERCENT(true);
+				theRetToken=_returnToken;
+				break;
+			}
 			case 0x21 /* '!' */ :
 			{
 				mUNEQUAL(true);
@@ -1009,6 +1015,20 @@ void Sqlite3Lexer::mAMPERSAND(bool _createToken) {
 	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	match(L'&' /* charlit */ );
+	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
+	   _token = makeToken(_ttype);
+	   _token->setText(text.substr(_begin, text.length()-_begin));
+	}
+	_returnToken = _token;
+	_saveIndex=0;
+}
+
+void Sqlite3Lexer::mPERCENT(bool _createToken) {
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
+	_ttype = PERCENT;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
+	
+	match(L'%' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
 	   _token = makeToken(_ttype);
 	   _token->setText(text.substr(_begin, text.length()-_begin));
