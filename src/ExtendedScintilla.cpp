@@ -22,12 +22,14 @@
 
 ExtendedScintilla::ExtendedScintilla(QWidget* parent) :
     QsciScintilla(parent),
+    showErrorIndicators(true),
     findReplaceDialog(new FindReplaceDialog(this))
 {
     // This class does not set any lexer, that must be done in the child classes.
 
     // Enable UTF8
     setUtf8(true);
+
 
     // Enable brace matching
     setBraceMatching(QsciScintilla::SloppyBraceMatch);

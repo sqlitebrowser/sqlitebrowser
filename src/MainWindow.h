@@ -184,7 +184,7 @@ private:
 
     sqlb::ObjectIdentifier currentlyBrowsedTableName() const;
 
-    void applyBrowseTableSettings(BrowseDataTableSettings storedData, bool skipFilters = false);
+    void applyBrowseTableSettings(const BrowseDataTableSettings& storedData, bool skipFilters = false);
     void toggleTabVisible(QWidget* tabWidget, bool show);
     void restoreOpenTabs(QString tabs);
     QString saveOpenTabs();

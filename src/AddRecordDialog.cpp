@@ -82,7 +82,7 @@ public:
 
     void setEditorData(QWidget *editor, const QModelIndex &index) const override {
 
-        NullLineEdit* lineEditor = dynamic_cast<NullLineEdit*>(editor);
+        NullLineEdit* lineEditor = static_cast<NullLineEdit*>(editor);
         // Set the editor in the null state (unless the user has actually written NULL)
         if (index.model()->data(index, Qt::UserRole).isNull() &&
             index.model()->data(index, Qt::DisplayRole) == Settings::getValue("databrowser", "null_text"))
@@ -94,7 +94,7 @@ public:
     }
     void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const override {
 
-        NullLineEdit* lineEditor = dynamic_cast<NullLineEdit*>(editor);
+        NullLineEdit* lineEditor = static_cast<NullLineEdit*>(editor);
         // Restore NULL text (unless the user has already modified the value)
         if (lineEditor->isNull() && !lineEditor->isModified()) {
             model->setData(index, Settings::getValue("databrowser", "null_text"), Qt::DisplayRole);
