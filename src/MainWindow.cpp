@@ -730,6 +730,9 @@ void MainWindow::populateTable()
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
+    // Restore default value that could have been modified in updateFilter or browseTableHeaderClicked
+    ui->dataTable->verticalHeader()->setMinimumWidth(0);
+
     // Get current table name
     sqlb::ObjectIdentifier tablename = currentlyBrowsedTableName();
 
@@ -2119,6 +2122,9 @@ void MainWindow::browseTableHeaderClicked(int logicalindex)
         return;
     }
 
+    // Set minimum width to the vertical header in order to avoid flickering when sorting.
+    ui->dataTable->verticalHeader()->setMinimumWidth(ui->dataTable->verticalHeader()->width());
+
     // Get the current list of sort columns
     auto& columns = settings.query.orderBy();
 
@@ -3285,6 +3291,9 @@ void MainWindow::fileAttach()
 
 void MainWindow::updateFilter(int column, const QString& value)
 {
+    // Set minimum width to the vertical header in order to avoid flickering while a filter is being updated.
+    ui->dataTable->verticalHeader()->setMinimumWidth(ui->dataTable->verticalHeader()->width());
+
     m_browseTableModel->updateFilter(column, value);
     BrowseDataTableSettings& settings = browseTableSettings[currentlyBrowsedTableName()];
     if(value.isEmpty())
