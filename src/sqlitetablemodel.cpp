@@ -243,24 +243,30 @@ static QString toSuperScript(T number)
 
 QVariant SqliteTableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (role != Qt::DisplayRole)
+    if (role != Qt::DisplayRole && role != Qt::EditRole)
         return QVariant();
 
     if (orientation == Qt::Horizontal)
     {
         // if we have a VIRTUAL table the model will not be valid, with no header data
         if(static_cast<size_t>(section) < m_headers.size()) {
-            QString sortIndicator;
-            for(size_t i = 0; i < m_query.orderBy().size(); i++) {
-                const sqlb::SortedColumn sortedColumn = m_query.orderBy()[i];
-                // Append sort indicator with direction and ordinal number in superscript style
-                if (sortedColumn.column == static_cast<size_t>(section)) {
-                    sortIndicator = sortedColumn.direction == sqlb::Ascending ? " ▾" : " ▴";
-                    sortIndicator.append(toSuperScript(i+1));
-                    break;
+            const QString plainHeader = QString::fromStdString(m_headers.at(static_cast<size_t>(section)));
+            // In the edit role, return a plain column name, but in the display role, add the sort indicator.
+            if (role == Qt::EditRole)
+                return plainHeader;
+            else {
+                QString sortIndicator;
+                for(size_t i = 0; i < m_query.orderBy().size(); i++) {
+                    const sqlb::SortedColumn sortedColumn = m_query.orderBy()[i];
+                    // Append sort indicator with direction and ordinal number in superscript style
+                    if (sortedColumn.column == static_cast<size_t>(section)) {
+                        sortIndicator = sortedColumn.direction == sqlb::Ascending ? " ▾" : " ▴";
+                        sortIndicator.append(toSuperScript(i+1));
+                        break;
+                    }
                 }
+                return plainHeader + sortIndicator;
             }
-            return QString::fromStdString(m_headers.at(static_cast<size_t>(section))) + sortIndicator;
         }
         return QString("%1").arg(section + 1);
     }
@@ -538,7 +544,7 @@ Qt::ItemFlags SqliteTableModel::flags(const QModelIndex& index) const
     if(m_query.selectedColumns().size())
     {
         if(index.column() > 0)
-            custom_display_format = QString::fromStdString(m_query.selectedColumns().at(static_cast<size_t>(index.column())-1).selector) != sqlb::escapeIdentifier(headerData(index.column(), Qt::Horizontal).toString());
+            custom_display_format = QString::fromStdString(m_query.selectedColumns().at(static_cast<size_t>(index.column())-1).selector) != sqlb::escapeIdentifier(headerData(index.column(), Qt::Horizontal, Qt::EditRole).toString());
     }
 
     if(!isBinary(index) && !custom_display_format)

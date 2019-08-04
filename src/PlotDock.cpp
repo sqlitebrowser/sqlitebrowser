@@ -193,7 +193,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                     // in the PlotColumnType, both using the User Role.
                     columnitem->setData(PlotColumnField, Qt::UserRole, i);
                     columnitem->setData(PlotColumnType, Qt::UserRole, static_cast<int>(columntype));
-                    columnitem->setText(PlotColumnField, model->headerData(i, Qt::Horizontal).toString());
+                    columnitem->setText(PlotColumnField, model->headerData(i, Qt::Horizontal, Qt::EditRole).toString());
 
                     // restore previous check state
                     if(mapItemsY.contains(columnitem->text(PlotColumnField)))
@@ -435,7 +435,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                 if(column == RowNumId)
                     yAxisLabels << tr("Row #");
                 else
-                    yAxisLabels << model->headerData(column, Qt::Horizontal).toString();
+                    yAxisLabels << model->headerData(column, Qt::Horizontal, Qt::EditRole).toString();
             }
         }
 
@@ -448,7 +448,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
         if(x == RowNumId)
             ui->plotWidget->xAxis->setLabel(tr("Row #"));
         else
-            ui->plotWidget->xAxis->setLabel(model->headerData(x, Qt::Horizontal).toString());
+            ui->plotWidget->xAxis->setLabel(model->headerData(x, Qt::Horizontal, Qt::EditRole).toString());
         ui->plotWidget->yAxis->setLabel(yAxisLabels.join("|"));
     }
 
