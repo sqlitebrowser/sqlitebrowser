@@ -486,7 +486,7 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
                 type = SQLITE_INTEGER;
         } else if(m_vDataTypes.at(column) == SQLITE_FLOAT) {
             bool ok;
-            newValue.toFloat(&ok);
+            newValue.toDouble(&ok);
             if(ok)
                 type = SQLITE_FLOAT;
         }
