@@ -3720,7 +3720,7 @@ void MainWindow::unlockViewEditing(bool unlock, QString pk)
         }
     } else if(!unlock) {
         // Locking the view is done by unsetting the pseudo-primary key
-        pk.clear();
+        pk = "_rowid_";
     }
 
     // (De)activate editing
