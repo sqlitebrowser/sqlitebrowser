@@ -19,6 +19,8 @@ class RemoteDatabase;
 class FindReplaceDialog;
 class ExtendedTableWidget;
 class RunSql;
+class DiagramTablesListModel;
+class DiagramScene;
 
 class QDragEnterEvent;
 class QIntValidator;
@@ -168,6 +170,9 @@ private:
 
     QString currentProjectFilename;
     bool isProjectModified;
+
+    DiagramTablesListModel* m_diagramTableListModel;
+    DiagramScene* m_diagramScene;
 
     void init();
     void clearCompleterModelsFields();

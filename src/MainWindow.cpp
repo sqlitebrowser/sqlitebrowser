@@ -30,6 +30,8 @@
 #include "CondFormat.h"
 #include "CondFormatManager.h"
 #include "RunSql.h"
+#include "DiagramTablesListModel.h"
+#include "DiagramScene.h"
 
 #include <chrono>
 #include <QFile>
@@ -221,6 +223,19 @@ void MainWindow::init()
 
     // Set up edit dock
     editDock->setReadOnly(true);
+
+    // Set up diagram tab
+    m_diagramTableListModel = new DiagramTablesListModel(db, this);
+    connect(&db, &DBBrowserDB::structureUpdated, this, [this]() {
+        m_diagramTableListModel->update();
+    }, Qt::QueuedConnection);
+    ui->diagramTablesListView->setModel(m_diagramTableListModel);
+
+    m_diagramScene = new DiagramScene(db, this);
+    connect(&db, &DBBrowserDB::structureUpdated, this, [this]() {
+        m_diagramScene->updateTables();
+    }, Qt::QueuedConnection);
+    ui->diagramView->setScene(m_diagramScene);
 
     // Restore window geometry
     restoreGeometry(Settings::getValue("MainWindow", "geometry").toByteArray());

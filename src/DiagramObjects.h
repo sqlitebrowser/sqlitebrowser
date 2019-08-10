@@ -19,7 +19,7 @@ class TableModel : public QAbstractListModel
     Q_OBJECT
 
 public:
-   explicit TableModel(sqlb::Table& table, QObject* parent = nullptr);
+    explicit TableModel(sqlb::Table& table, QObject* parent = nullptr);
 
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;
     QVariant data(const QModelIndex& index, int role) const override;
