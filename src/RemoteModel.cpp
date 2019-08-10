@@ -89,7 +89,7 @@ std::vector<RemoteModelItem*> RemoteModelItem::loadArray(const json& array, Remo
         if(elem.contains("commit_id"))
             item->setValue(RemoteModelColumnCommitId, QString::fromStdString(elem["commit_id"]));
         if(elem.contains("size"))
-            item->setValue(RemoteModelColumnSize, QString::number(static_cast<int>(elem["size"])));
+            item->setValue(RemoteModelColumnSize, QString::number(static_cast<unsigned long>(elem["size"])));
 
         items.push_back(item);
     }
