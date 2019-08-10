@@ -949,6 +949,56 @@ You can drag SQL statements from an object row and drop them into other applicat
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="diagram">
+       <attribute name="title">
+        <string>Database Diagram</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_8">
+        <item>
+         <widget class="QToolBar" name="toolbarDiagram">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="windowTitle">
+           <string>toolBar1</string>
+          </property>
+          <property name="toolButtonStyle">
+           <enum>Qt::ToolButtonTextBesideIcon</enum>
+          </property>
+          <addaction name="actionShowTablesList"/>
+          <addaction name="actionDeleteTableFromDiagram"/>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSplitter" name="tablesSplitter">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <widget class="QGraphicsView" name="diagramView"/>
+          <widget class="QListView" name="diagramTablesListView">
+           <property name="maximumSize">
+            <size>
+             <width>200</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="baseSize">
+            <size>
+             <width>200</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="dragEnabled">
+            <bool>true</bool>
+           </property>
+           <property name="dragDropMode">
+            <enum>QAbstractItemView::DragOnly</enum>
+           </property>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -2046,6 +2096,33 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    </property>
    <property name="shortcutContext">
     <enum>Qt::WidgetShortcut</enum>
+   </property>
+  </action>
+  <action name="actionShowTablesList">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/table</normaloff>:/icons/table</iconset>
+   </property>
+   <property name="text">
+    <string>Show tables list</string>
+   </property>
+  </action>
+  <action name="actionDeleteTableFromDiagram">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/table_delete</normaloff>:/icons/table_delete</iconset>
+   </property>
+   <property name="text">
+    <string>Delete table from diagram</string>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
    </property>
   </action>
   <action name="fileOpenReadOnlyAction">
@@ -3662,6 +3739,22 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <hint type="destinationlabel">
      <x>518</x>
      <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionShowTablesList</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>diagramTablesListView</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>396</x>
+     <y>372</y>
     </hint>
    </hints>
   </connection>
