@@ -6,11 +6,13 @@
 #include "sqlitedb.h"
 #include "SelectItemsPopup.h"
 
-#include <QMessageBox>
-#include <QPushButton>
 #include <QComboBox>
 #include <QDateTime>
 #include <QKeyEvent>
+#include <QMenu>
+#include <QMessageBox>
+#include <QPushButton>
+
 #include <algorithm>
 
 Q_DECLARE_METATYPE(sqlb::ConstraintPtr)
@@ -30,12 +32,21 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
     connect(ui->treeWidget, &QTreeWidget::itemChanged, this, &EditTableDialog::fieldItemChanged);
     connect(ui->tableConstraints, &QTableWidget::itemChanged, this, &EditTableDialog::constraintItemChanged);
 
-    // TODO Remove this once we have added support for this button
-    ui->buttonAddConstraint->setVisible(false);
-
     // Set item delegate for foreign key column
     m_fkEditorDelegate = new ForeignKeyEditorDelegate(db, m_table, this);
     ui->treeWidget->setItemDelegateForColumn(kForeignKey, m_fkEditorDelegate);
+
+    // Set up popup menu for adding constraints
+    QMenu* constraint_menu = new QMenu(this);
+    constraint_menu->addAction(ui->actionAddPrimaryKey);
+    constraint_menu->addAction(ui->actionAddForeignKey);
+    constraint_menu->addAction(ui->actionAddUniqueConstraint);
+    constraint_menu->addAction(ui->actionAddCheckConstraint);
+    connect(ui->actionAddPrimaryKey, &QAction::triggered, [this]() { addConstraint(sqlb::Constraint::PrimaryKeyConstraintType); });
+    connect(ui->actionAddForeignKey, &QAction::triggered, [this]() { addConstraint(sqlb::Constraint::ForeignKeyConstraintType); });
+    connect(ui->actionAddUniqueConstraint, &QAction::triggered, [this]() { addConstraint(sqlb::Constraint::UniqueConstraintType); });
+    connect(ui->actionAddCheckConstraint, &QAction::triggered, [this]() { addConstraint(sqlb::Constraint::CheckConstraintType); });
+    ui->buttonAddConstraint->setMenu(constraint_menu);
 
     // Editing an existing table?
     if(m_bNewTable == false)
@@ -241,38 +252,21 @@ void EditTableDialog::populateConstraints()
             // Handle change of constraint type. Effectively this means removing the old constraint and replacing it by an entirely new one.
             // Only the column list and the name can be migrated to the new constraint.
 
-            // Create new constraint depending on selected type
-            sqlb::ConstraintPtr new_constraint;
-            switch(index)
+            // Make sure there is only one primary key at a time
+            if(index == 0 && !m_table.primaryKey().empty())
             {
-            case 0:
-                // Make sure there is only one primary key at a time
-                if(!m_table.primaryKey().empty())
-                {
-                    QMessageBox::warning(this, qApp->applicationName(), tr("There can only be one primary key for each table. Please modify the existing primary "
-                                                                           "key instead."));
+                QMessageBox::warning(this, qApp->applicationName(), tr("There can only be one primary key for each table. Please modify the existing primary "
+                                                                       "key instead."));
 
-                    // Set combo box back to original constraint type
-                    type->blockSignals(true);
-                    type->setCurrentIndex(constraint->type());
-                    type->blockSignals(false);
-                    return;
-                }
-
-                new_constraint = sqlb::ConstraintPtr(new sqlb::PrimaryKeyConstraint());
-                break;
-            case 1:
-                new_constraint = sqlb::ConstraintPtr(new sqlb::UniqueConstraint());
-                break;
-            case 2:
-                new_constraint = sqlb::ConstraintPtr(new sqlb::ForeignKeyClause());
-                break;
-            case 3:
-                new_constraint = sqlb::ConstraintPtr(new sqlb::CheckConstraint());
-                break;
-            default:
+                // Set combo box back to original constraint type
+                type->blockSignals(true);
+                type->setCurrentIndex(constraint->type());
+                type->blockSignals(false);
                 return;
             }
+
+            // Create new constraint depending on selected type
+            sqlb::ConstraintPtr new_constraint = sqlb::Constraint::makeConstraint(static_cast<sqlb::Constraint::ConstraintTypes>(index));
             new_constraint->setName(constraint->name());
             new_constraint->column_list = constraint->column_list;
 
@@ -906,4 +900,27 @@ void EditTableDialog::removeConstraint()
     // Update SQL and view
     updateSqlText();
     populateFields();
+}
+
+void EditTableDialog::addConstraint(sqlb::Constraint::ConstraintTypes type)
+{
+    // There can only be one primary key
+    if(type == sqlb::Constraint::PrimaryKeyConstraintType)
+    {
+        if(!m_table.primaryKey().empty())
+        {
+            QMessageBox::information(this, qApp->applicationName(), tr("There can only be one primary key for each table. Please modify the existing primary "
+                                                                       "key instead."));
+            return;
+        }
+    }
+
+    // Create new constraint
+    sqlb::ConstraintPtr constraint = sqlb::Constraint::makeConstraint(type);
+    m_table.addConstraint(constraint);
+
+    // Update SQL and view
+    populateFields();
+    populateConstraints();
+    updateSqlText();
 }

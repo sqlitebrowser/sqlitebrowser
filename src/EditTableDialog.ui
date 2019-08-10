@@ -300,6 +300,9 @@
              <iconset resource="icons/icons.qrc">
               <normaloff>:/icons/field_add</normaloff>:/icons/field_add</iconset>
             </property>
+            <property name="popupMode">
+             <enum>QToolButton::InstantPopup</enum>
+            </property>
             <property name="toolButtonStyle">
              <enum>Qt::ToolButtonTextBesideIcon</enum>
             </property>
@@ -401,6 +404,46 @@
     </widget>
    </item>
   </layout>
+  <action name="actionAddPrimaryKey">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/field_key</normaloff>:/icons/field_key</iconset>
+   </property>
+   <property name="text">
+    <string>Primary Key</string>
+   </property>
+   <property name="toolTip">
+    <string>Add a primary key constraint</string>
+   </property>
+  </action>
+  <action name="actionAddForeignKey">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/field_fk</normaloff>:/icons/field_fk</iconset>
+   </property>
+   <property name="text">
+    <string>Foreign Key</string>
+   </property>
+   <property name="toolTip">
+    <string>Add a foreign key constraint</string>
+   </property>
+  </action>
+  <action name="actionAddUniqueConstraint">
+   <property name="text">
+    <string>Unique</string>
+   </property>
+   <property name="toolTip">
+    <string>Add a unique constraint</string>
+   </property>
+  </action>
+  <action name="actionAddCheckConstraint">
+   <property name="text">
+    <string>Check</string>
+   </property>
+   <property name="toolTip">
+    <string>Add a check constraint</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>

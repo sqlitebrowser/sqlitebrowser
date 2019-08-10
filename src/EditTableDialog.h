@@ -73,6 +73,7 @@ private slots:
     void setWithoutRowid(bool without_rowid);
     void changeSchema(const QString& schema);
     void removeConstraint();
+    void addConstraint(sqlb::Constraint::ConstraintTypes type);
 
 private:
     Ui::EditTableDialog* ui;

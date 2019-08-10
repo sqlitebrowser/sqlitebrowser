@@ -134,6 +134,8 @@ public:
     }
     virtual ~Constraint() {}
 
+    static ConstraintPtr makeConstraint(ConstraintTypes type);
+
     virtual ConstraintTypes type() const = 0;
 
     void setName(const std::string& name) { m_name = name; }

@@ -131,6 +131,23 @@ std::string Object::typeToString(Types type)
     return "";
 }
 
+ConstraintPtr Constraint::makeConstraint(ConstraintTypes type)
+{
+    switch(type)
+    {
+    case PrimaryKeyConstraintType:
+        return sqlb::ConstraintPtr(new sqlb::PrimaryKeyConstraint());
+    case UniqueConstraintType:
+        return sqlb::ConstraintPtr(new sqlb::UniqueConstraint());
+    case ForeignKeyConstraintType:
+        return sqlb::ConstraintPtr(new sqlb::ForeignKeyClause());
+    case CheckConstraintType:
+        return sqlb::ConstraintPtr(new sqlb::CheckConstraint());
+    default:
+        return nullptr;
+    }
+}
+
 bool ForeignKeyClause::isSet() const
 {
     return m_override.size() || m_table.size();
