@@ -950,6 +950,9 @@ You can drag SQL statements from an object row and drop them into other applicat
        </layout>
       </widget>
       <widget class="QWidget" name="diagram">
+       <property name="accessibleName">
+        <string extracomment="This has to be equal to the tab title in all the main tabs">Database Diagram</string>
+       </property>
        <attribute name="title">
         <string>Database Diagram</string>
        </attribute>

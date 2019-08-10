@@ -1,11 +1,14 @@
 #ifndef DIAGRAMOBJECTS_H
 #define DIAGRAMOBJECTS_H
 
-#include "sqlitetypes.h"
+#include "sql/sqlitetypes.h"
 
 #include <QAbstractListModel>
 #include <QWidget>
 #include <QMap>
+
+#include <string>
+#include <vector>
 
 class QLabel;
 class QListView;
@@ -16,22 +19,22 @@ class TableModel : public QAbstractListModel
     Q_OBJECT
 
 public:
-    TableModel(sqlb::Table& table, QObject* parent = Q_NULLPTR);
+   explicit TableModel(sqlb::Table& table, QObject* parent = nullptr);
 
-    int rowCount(const QModelIndex& parent = QModelIndex()) const Q_DECL_OVERRIDE;
-    QVariant data(const QModelIndex& index, int role) const Q_DECL_OVERRIDE;
-    Qt::ItemFlags flags(const QModelIndex& index) const Q_DECL_OVERRIDE;
+    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+    QVariant data(const QModelIndex& index, int role) const override;
+    Qt::ItemFlags flags(const QModelIndex& index) const override;
 
     void update();
-    QString tableName() const;
+    std::string tableName() const;
 
 signals:
     void tableNameChanged(QString);
 
 private:
-    QStringList m_primaryKeys;
-    QStringList m_fields;
-    QString m_tableName;
+    std::vector<std::string> m_primaryKeys;
+    std::vector<std::string> m_fields;
+    std::string m_tableName;
 
     sqlb::Table& m_table;
 };
@@ -41,7 +44,7 @@ class TableWidget : public QWidget
     Q_OBJECT
 
 public:
-    TableWidget(TableModel* model, QWidget* parent = Q_NULLPTR);
+    explicit TableWidget(TableModel* model, QWidget* parent = nullptr);
     TableModel *tableModel() const;
 
 private:
@@ -55,7 +58,7 @@ class Relation : public QObject
     Q_OBJECT
 
 public:
-    Relation(TableWidget* fromTable, TableWidget* toTable, QObject* parent = Q_NULLPTR);
+    Relation(TableWidget* fromTable, TableWidget* toTable, QObject* parent = nullptr);
     ~Relation();
 
     QString tooltipText() const;
@@ -65,4 +68,4 @@ private:
     QLineF* m_line;
 };
 
-#endif // DIAGRAMOBJECTS_H
+#endif

@@ -354,7 +354,7 @@ void MainWindow::init()
     connect(ui->mainTab, &QTabWidget::tabCloseRequested, this, &MainWindow::closeTab);
 
     // Add entries for toggling the visibility of main tabs
-    for (QWidget* widget : {ui->structure, ui->browser, ui->pragmas, ui->query}) {
+    for (QWidget* widget : {ui->structure, ui->browser, ui->pragmas, ui->query, ui->diagram}) {
         QAction* action = ui->viewMenu->addAction(QIcon(":/icons/tab"), widget->accessibleName());
         action->setCheckable(true);
         action->setChecked(ui->mainTab->indexOf(widget) != -1);
@@ -386,6 +386,8 @@ void MainWindow::init()
     connect(setTab3Shortcut, &QShortcut::activated, [this]() { ui->mainTab->setCurrentIndex(2); });
     QShortcut* setTab4Shortcut = new QShortcut(QKeySequence("Alt+4"), this);
     connect(setTab4Shortcut, &QShortcut::activated, [this]() { ui->mainTab->setCurrentIndex(3); });
+    QShortcut* setTab5Shortcut = new QShortcut(QKeySequence("Alt+5"), this);
+    connect(setTab5Shortcut, &QShortcut::activated, [this]() { ui->mainTab->setCurrentIndex(4); });
 
     // If we're not compiling in SQLCipher, hide its FAQ link in the help menu
 #ifndef ENABLE_SQLCIPHER

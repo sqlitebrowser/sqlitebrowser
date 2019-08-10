@@ -176,6 +176,9 @@ set(SQLB_MOC_HDR
 	src/RunSql.h
 	src/ProxyDialog.h
 	src/SelectItemsPopup.h
+	src/DiagramObjects.h
+	src/DiagramScene.h
+	src/DiagramTablesListModel.h
 )
 
 set(SQLB_SRC
@@ -232,6 +235,9 @@ set(SQLB_SRC
 	src/ProxyDialog.cpp
 	src/IconCache.cpp
 	src/SelectItemsPopup.cpp
+	src/DiagramObjects.cpp
+	src/DiagramScene.cpp
+	src/DiagramTablesListModel.cpp
 )
 
 set(SQLB_FORMS

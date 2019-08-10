@@ -1,12 +1,9 @@
 #include "DiagramTablesListModel.h"
 
-#include <QDebug>
-
 DiagramTablesListModel::DiagramTablesListModel(const DBBrowserDB &db, QObject *parent)
     : QAbstractListModel(parent)
     , m_db(db)
 {
-
 }
 
 int DiagramTablesListModel::rowCount(const QModelIndex &parent) const
@@ -50,12 +47,12 @@ void DiagramTablesListModel::update()
     removeRows(0, rowCount());
     m_tablesList.clear();
 
-    objectMap objects = m_db.getBrowsableObjects();
+    objectMap objects = m_db.getBrowsableObjects("main");
 
-    foreach(const DBBrowserObject& obj, objects) {
-        if (obj.gettype() == "table") {;
-            m_tablesList.push_back(Table(obj.getTableName()));
-        }
+    for(const auto& obj : objects)
+    {
+        if(obj.second->type() == sqlb::Object::Table)
+            m_tablesList.push_back(Table(QString::fromStdString(obj.second->name())));
     }
 
     insertRows(0, m_tablesList.size());

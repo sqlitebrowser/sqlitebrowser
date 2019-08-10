@@ -10,18 +10,18 @@ class Relation;
 class DiagramScene : public QGraphicsScene
 {
 public:
-    DiagramScene(const DBBrowserDB& db, QWidget* parent = Q_NULLPTR);
+    explicit DiagramScene(const DBBrowserDB& db, QWidget* parent = nullptr);
 
 public slots:
     void updateTables();
-    void removeTable(const QString& tableName);
+    void removeTable(const std::string& tableName);
 
     // ToDo: implement connections
     // void addConnection(const QString& fromTable, const QString& toTable);
     // void removeConnection(const QString& fromTable, const QString& toTable);
 
 private:
-    void addTable(const QString& tableName);
+    void addTable(const std::string& tableName);
 
     QList<TableWidget*> m_tables;
     QList<Relation> m_relations;
@@ -31,4 +31,4 @@ private:
     const DBBrowserDB& m_db;
 };
 
-#endif // DBDIAGRAM_H
+#endif

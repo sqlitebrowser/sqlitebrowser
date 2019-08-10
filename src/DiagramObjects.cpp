@@ -4,7 +4,6 @@
 #include <QListView>
 #include <QLineF>
 #include <QVBoxLayout>
-#include <QDebug>
 
 // TableModel
 
@@ -18,7 +17,7 @@ TableModel::TableModel(sqlb::Table& table, QObject *parent)
 int TableModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
-    return m_fields.size();
+    return static_cast<int>(m_fields.size());
 }
 
 QVariant TableModel::data(const QModelIndex &index, int role) const
@@ -26,14 +25,14 @@ QVariant TableModel::data(const QModelIndex &index, int role) const
     if (!index.isValid())
         return QVariant();
 
-    const QString& fieldName = m_fields.at(index.row());
+    const std::string& fieldName = m_fields.at(static_cast<size_t>(index.row()));
 
     switch (role) {
     case Qt::DisplayRole:
-        return fieldName;
+        return QString::fromStdString(fieldName);
 
     case Qt::DecorationRole:
-        if (m_primaryKeys.contains(fieldName))
+        if (std::find(m_primaryKeys.begin(), m_primaryKeys.end(), fieldName) != m_primaryKeys.end())
             return QIcon(":/icons/field_key");
         else
             return QIcon(":/icons/field");
@@ -55,23 +54,19 @@ void TableModel::update()
 {
     if (m_table.name() != m_tableName) {
         m_tableName = m_table.name();
-        emit tableNameChanged(m_tableName);
+        emit tableNameChanged(QString::fromStdString(m_tableName));
     }
 
     m_fields = m_table.fieldNames();
-    m_primaryKeys.clear();
-    auto primaryKeyFields = m_table.primaryKey();
-    for (auto pkf : primaryKeyFields) {
-        m_primaryKeys.append(pkf->name());
-    }
+    m_primaryKeys = m_table.primaryKey();
 
     removeRows(0, rowCount());
-    insertRows(0, m_fields.size());
+    insertRows(0, static_cast<int>(m_fields.size()));
 
-    emit dataChanged(index(0, 0), index(0, m_fields.size()));
+    emit dataChanged(index(0, 0), index(0, static_cast<int>(m_fields.size())));
 }
 
-QString TableModel::tableName() const
+std::string TableModel::tableName() const
 {
     return m_tableName;
 }
@@ -86,7 +81,7 @@ TableWidget::TableWidget(TableModel* model, QWidget *parent)
 
     m_listView = new QListView(this);
     m_listView->setModel(m_tableModel);
-    m_label = new QLabel(m_tableModel->tableName(), this);
+    m_label = new QLabel(QString::fromStdString(m_tableModel->tableName()), this);
 
     QVBoxLayout* layout = new QVBoxLayout;
     layout->addWidget(m_label);

@@ -5,24 +5,23 @@
 #include <algorithm>
 
 #include <QGraphicsProxyWidget>
-#include <QDebug>
 
 class MovableProxyWidget : public QGraphicsProxyWidget
 {
     Q_OBJECT
 
 #define OVERRIDE_MOUSE_EVENT(event_type) \
-    void event_type(QGraphicsSceneMouseEvent* event) Q_DECL_OVERRIDE \
+    void event_type(QGraphicsSceneMouseEvent* event) override \
     { return QGraphicsItem::event_type(event); }
 
 public:
-    MovableProxyWidget(QGraphicsItem* parent = Q_NULLPTR)
+    MovableProxyWidget(QGraphicsItem* parent = nullptr)
         : QGraphicsProxyWidget(parent)
     {
         setFlags(flags() | ItemIsMovable | ItemIsSelectable);
     }
 
-    ~MovableProxyWidget() { }
+    ~MovableProxyWidget() override {}
 
     OVERRIDE_MOUSE_EVENT(mouseDoubleClickEvent)
     OVERRIDE_MOUSE_EVENT(mouseMoveEvent)
@@ -44,7 +43,7 @@ void DiagramScene::updateTables()
     }
 }
 
-void DiagramScene::removeTable(const QString& tableName)
+void DiagramScene::removeTable(const std::string& tableName)
 {
     std::remove_if(m_tables.begin(), m_tables.end(), [&](TableWidget* wgt)
     {
@@ -52,10 +51,10 @@ void DiagramScene::removeTable(const QString& tableName)
     });
 }
 
-void DiagramScene::addTable(const QString& tableName)
+void DiagramScene::addTable(const std::string& tableName)
 {
-    DBBrowserObject obj = m_db.getObjectByName(tableName);
-    TableModel* model = new TableModel(obj.table);
+    sqlb::TablePtr obj = m_db.getObjectByName<sqlb::Table>(sqlb::ObjectIdentifier("main", tableName));
+    TableModel* model = new TableModel(*obj);
     TableWidget* widget = new TableWidget(model);
     m_tables.push_back(widget);
 

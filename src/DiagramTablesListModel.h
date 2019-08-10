@@ -10,11 +10,11 @@ class DiagramTablesListModel : public QAbstractListModel
     Q_OBJECT
 
 public:
-    DiagramTablesListModel(const DBBrowserDB& db, QObject* parent = Q_NULLPTR);
+    explicit DiagramTablesListModel(const DBBrowserDB& db, QObject* parent = nullptr);
 
-    int rowCount(const QModelIndex& parent = QModelIndex()) const Q_DECL_OVERRIDE;
-    QVariant data(const QModelIndex& index, int role) const Q_DECL_OVERRIDE;
-    Qt::ItemFlags flags(const QModelIndex& index) const Q_DECL_OVERRIDE;
+    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+    QVariant data(const QModelIndex& index, int role) const override;
+    Qt::ItemFlags flags(const QModelIndex& index) const override;
 
 public slots:
     void update();
@@ -22,7 +22,7 @@ public slots:
 private:
     struct Table
     {
-        Table(const QString& table_name)
+        explicit Table(const QString& table_name)
             : name(table_name)
         { }
 
@@ -35,5 +35,4 @@ private:
     const DBBrowserDB& m_db;
 };
 
-
-#endif // DIAGRAMTABLESLISTMODEL_H
+#endif
