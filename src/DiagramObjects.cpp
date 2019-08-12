@@ -1,4 +1,5 @@
 #include "DiagramObjects.h"
+#include "IconCache.h"
 
 #include <QLabel>
 #include <QListView>
@@ -33,9 +34,11 @@ QVariant TableModel::data(const QModelIndex &index, int role) const
 
     case Qt::DecorationRole:
         if (std::find(m_primaryKeys.begin(), m_primaryKeys.end(), fieldName) != m_primaryKeys.end())
-            return QIcon(":/icons/field_key");
+            return IconCache::get("field_key");
+        else if (m_table.constraint({fieldName}, sqlb::Constraint::ForeignKeyConstraintType) != nullptr)
+            return IconCache::get("field_fk");
         else
-            return QIcon(":/icons/field");
+            return IconCache::get("field");
 
     default:
         return QVariant();
