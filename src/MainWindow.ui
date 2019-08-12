@@ -150,6 +150,12 @@ You can drag SQL statements from an object row and drop them into other applicat
           </item>
           <item>
            <widget class="QComboBox" name="comboBrowseTable">
+            <property name="minimumSize">
+             <size>
+              <width>150</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="toolTip">
              <string>Select a table to browse data</string>
             </property>
