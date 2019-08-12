@@ -2674,6 +2674,11 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>Browse Table</string>
    </property>
   </action>
+  <action name="actionPopupSchemaDockAddDiagram">
+   <property name="text">
+    <string>Add Table to Diagram</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>

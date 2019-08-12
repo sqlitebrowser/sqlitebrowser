@@ -11,6 +11,7 @@ class DiagramScene : public QGraphicsScene
 {
 public:
     explicit DiagramScene(const DBBrowserDB& db, QWidget* parent = nullptr);
+    void addTable(const std::string& tableName);
 
 public slots:
     void updateTables();
@@ -21,7 +22,6 @@ public slots:
     // void removeConnection(const QString& fromTable, const QString& toTable);
 
 private:
-    void addTable(const std::string& tableName);
 
     QList<TableWidget*> m_tables;
     QList<Relation> m_relations;

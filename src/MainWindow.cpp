@@ -283,6 +283,7 @@ void MainWindow::init()
 
     popupSchemaDockMenu = new QMenu(this);
     popupSchemaDockMenu->addAction(ui->actionPopupSchemaDockBrowseTable);
+    popupSchemaDockMenu->addAction(ui->actionPopupSchemaDockAddDiagram);
     popupSchemaDockMenu->addSeparator();
     popupSchemaDockMenu->addAction(ui->actionDropQualifiedCheck);
     popupSchemaDockMenu->addAction(ui->actionEnquoteNamesCheck);
@@ -528,6 +529,16 @@ void MainWindow::init()
             QString tableToBrowse = QString::fromStdString(obj.toDisplayString());
             switchToBrowseDataTab(tableToBrowse);
             refresh();  // Required in case the Browse Data tab already was the active main tab
+    });
+
+    connect(ui->actionPopupSchemaDockAddDiagram, &QAction::triggered, [this]() {
+            sqlb::ObjectIdentifier obj(ui->treeSchemaDock->model()->data(ui->treeSchemaDock->currentIndex().sibling(ui->treeSchemaDock->currentIndex().row(), DbStructureModel::ColumnSchema), Qt::EditRole).toString().toStdString(),
+                                       ui->treeSchemaDock->model()->data(ui->treeSchemaDock->currentIndex().sibling(ui->treeSchemaDock->currentIndex().row(), DbStructureModel::ColumnName), Qt::EditRole).toString().toStdString());
+            m_diagramScene->addTable(obj.toDisplayString());
+            if (ui->mainTab->currentWidget() != ui->diagram) {
+                toggleTabVisible(ui->diagram, true);
+                ui->mainTab->setCurrentWidget(ui->diagram);
+            }
     });
 
     // Set other window settings
@@ -1887,6 +1898,7 @@ void MainWindow::createSchemaDockContextMenu(const QPoint &qPoint)
             enable_browse_table = true;
     }
     ui->actionPopupSchemaDockBrowseTable->setEnabled(enable_browse_table);
+    ui->actionPopupSchemaDockAddDiagram->setEnabled(enable_browse_table);
 
     popupSchemaDockMenu->exec(ui->treeSchemaDock->mapToGlobal(qPoint));
 }
