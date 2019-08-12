@@ -2087,6 +2087,7 @@ void MainWindow::activateFields(bool enable)
     ui->actionForeignKeyCheck->setEnabled(enable);
     ui->actionOptimize->setEnabled(enable);
     ui->actionClearFilters->setEnabled(enable);
+    ui->actionClearSorting->setEnabled(enable);
     ui->actionSaveFilterAsPopup->setEnabled(enable);
     ui->dockEdit->setEnabled(enable);
     ui->dockPlot->setEnabled(enable);
@@ -3439,6 +3440,15 @@ void MainWindow::switchToBrowseDataTab(QString tableToBrowse)
 void MainWindow::on_actionClearFilters_triggered()
 {
     ui->dataTable->filterHeader()->clearFilters();
+}
+
+void MainWindow::on_actionClearSorting_triggered()
+{
+    // Get the current list of sort columns
+    auto& columns = browseTableSettings[currentlyBrowsedTableName()].query.orderBy();
+    columns.clear();
+    // Set cleared vector of sort-by columns
+    m_browseTableModel->sort(columns);
 }
 
 void MainWindow::copyCurrentCreateStatement()

@@ -171,6 +171,8 @@ You can drag SQL statements from an object row and drop them into other applicat
             </property>
             <addaction name="actionRefresh"/>
             <addaction name="actionClearFilters"/>
+            <addaction name="actionClearSorting"/>
+            <addaction name="separator"/>
             <addaction name="actionSaveFilterAsPopup"/>
             <addaction name="actionPrintTable"/>
             <addaction name="separator"/>
@@ -2592,6 +2594,24 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    </property>
    <property name="text">
     <string>Browse Table</string>
+   </property>
+  </action>
+  <action name="actionClearSorting">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/clear_sorting</normaloff>:/icons/clear_sorting</iconset>
+   </property>
+   <property name="text">
+    <string>Clear Sorting</string>
+   </property>
+   <property name="toolTip">
+    <string>Reset the order of rows to the default</string>
+   </property>
+   <property name="statusTip">
+    <string>This button clears the sorting columns specified for the currently browsed table and returns to the default order.</string>
+   </property>
+   <property name="whatsThis">
+    <string>This button clears the sorting columns specified for the currently browsed table and returns to the default order.</string>
    </property>
   </action>
  </widget>

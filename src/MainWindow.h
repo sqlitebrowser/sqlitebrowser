@@ -280,6 +280,7 @@ private slots:
     void editCondFormats(int column);
     void editEncryption();
     void on_actionClearFilters_triggered();
+    void on_actionClearSorting_triggered();
     void copyCurrentCreateStatement();
     void showDataColumnPopupMenu(const QPoint& pos);
     void showRecordPopupMenu(const QPoint& pos);
