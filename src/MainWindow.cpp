@@ -30,6 +30,8 @@
 #include "CondFormat.h"
 #include "CondFormatManager.h"
 #include "RunSql.h"
+#include "DiagramTablesListModel.h"
+#include "DiagramScene.h"
 
 #include <chrono>
 #include <QFile>
@@ -222,6 +224,19 @@ void MainWindow::init()
     // Set up edit dock
     editDock->setReadOnly(true);
 
+    // Set up diagram tab
+    m_diagramTableListModel = new DiagramTablesListModel(db, this);
+    connect(&db, &DBBrowserDB::structureUpdated, this, [this]() {
+        m_diagramTableListModel->update();
+    }, Qt::QueuedConnection);
+    ui->diagramTablesListView->setModel(m_diagramTableListModel);
+
+    m_diagramScene = new DiagramScene(db, this);
+    connect(&db, &DBBrowserDB::structureUpdated, this, [this]() {
+        m_diagramScene->updateTables();
+    }, Qt::QueuedConnection);
+    ui->diagramView->setScene(m_diagramScene);
+
     // Restore window geometry
     restoreGeometry(Settings::getValue("MainWindow", "geometry").toByteArray());
 
@@ -268,6 +283,7 @@ void MainWindow::init()
 
     popupSchemaDockMenu = new QMenu(this);
     popupSchemaDockMenu->addAction(ui->actionPopupSchemaDockBrowseTable);
+    popupSchemaDockMenu->addAction(ui->actionPopupSchemaDockAddDiagram);
     popupSchemaDockMenu->addSeparator();
     popupSchemaDockMenu->addAction(ui->actionDropQualifiedCheck);
     popupSchemaDockMenu->addAction(ui->actionEnquoteNamesCheck);
@@ -354,7 +370,7 @@ void MainWindow::init()
     connect(ui->mainTab, &QTabWidget::tabCloseRequested, this, &MainWindow::closeTab);
 
     // Add entries for toggling the visibility of main tabs
-    for (QWidget* widget : {ui->structure, ui->browser, ui->pragmas, ui->query}) {
+    for (QWidget* widget : {ui->structure, ui->browser, ui->pragmas, ui->query, ui->diagram}) {
         QAction* action = ui->viewMenu->addAction(QIcon(":/icons/tab"), widget->accessibleName());
         action->setCheckable(true);
         action->setChecked(ui->mainTab->indexOf(widget) != -1);
@@ -386,6 +402,8 @@ void MainWindow::init()
     connect(setTab3Shortcut, &QShortcut::activated, [this]() { ui->mainTab->setCurrentIndex(2); });
     QShortcut* setTab4Shortcut = new QShortcut(QKeySequence("Alt+4"), this);
     connect(setTab4Shortcut, &QShortcut::activated, [this]() { ui->mainTab->setCurrentIndex(3); });
+    QShortcut* setTab5Shortcut = new QShortcut(QKeySequence("Alt+5"), this);
+    connect(setTab5Shortcut, &QShortcut::activated, [this]() { ui->mainTab->setCurrentIndex(4); });
 
     // If we're not compiling in SQLCipher, hide its FAQ link in the help menu
 #ifndef ENABLE_SQLCIPHER
@@ -511,6 +529,16 @@ void MainWindow::init()
             QString tableToBrowse = QString::fromStdString(obj.toDisplayString());
             switchToBrowseDataTab(tableToBrowse);
             refresh();  // Required in case the Browse Data tab already was the active main tab
+    });
+
+    connect(ui->actionPopupSchemaDockAddDiagram, &QAction::triggered, [this]() {
+            sqlb::ObjectIdentifier obj(ui->treeSchemaDock->model()->data(ui->treeSchemaDock->currentIndex().sibling(ui->treeSchemaDock->currentIndex().row(), DbStructureModel::ColumnSchema), Qt::EditRole).toString().toStdString(),
+                                       ui->treeSchemaDock->model()->data(ui->treeSchemaDock->currentIndex().sibling(ui->treeSchemaDock->currentIndex().row(), DbStructureModel::ColumnName), Qt::EditRole).toString().toStdString());
+            m_diagramScene->addTable(obj.toDisplayString());
+            if (ui->mainTab->currentWidget() != ui->diagram) {
+                toggleTabVisible(ui->diagram, true);
+                ui->mainTab->setCurrentWidget(ui->diagram);
+            }
     });
 
     // Set other window settings
@@ -1870,6 +1898,7 @@ void MainWindow::createSchemaDockContextMenu(const QPoint &qPoint)
             enable_browse_table = true;
     }
     ui->actionPopupSchemaDockBrowseTable->setEnabled(enable_browse_table);
+    ui->actionPopupSchemaDockAddDiagram->setEnabled(enable_browse_table);
 
     popupSchemaDockMenu->exec(ui->treeSchemaDock->mapToGlobal(qPoint));
 }
