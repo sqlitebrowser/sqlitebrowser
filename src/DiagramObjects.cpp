@@ -99,6 +99,11 @@ TableModel *TableWidget::tableModel() const
     return m_tableModel;
 }
 
+QSize TableWidget::sizeHint() const
+{
+    return QSize(m_label->sizeHint().width(), QWidget::sizeHint().height());
+}
+
 // Relation
 
 Relation::Relation(TableWidget* fromTable, TableWidget* toTable, QObject *parent)

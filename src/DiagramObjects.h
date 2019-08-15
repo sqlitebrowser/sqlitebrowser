@@ -46,6 +46,7 @@ class TableWidget : public QWidget
 public:
     explicit TableWidget(TableModel* model, QWidget* parent = nullptr);
     TableModel *tableModel() const;
+    QSize sizeHint() const override;
 
 private:
     TableModel* m_tableModel;
