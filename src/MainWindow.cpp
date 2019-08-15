@@ -4147,3 +4147,42 @@ void MainWindow::saveAll()
     fileSave();
 
 }
+
+void MainWindow::showContextMenuSqlTabBar(const QPoint& pos)
+{
+    // Don't show context menu if the mouse click was outside of all the tabs
+    int tab = ui->tabSqlAreas->tabBar()->tabAt(pos);
+    if(tab == -1)
+        return;
+
+    // Prepare all menu actions
+    QAction* actionRename = new QAction(this);
+    actionRename->setText(tr("Rename Tab"));
+    connect(actionRename, &QAction::triggered, [this, tab]() {
+        renameSqlTab(tab);
+    });
+
+    QAction* actionDuplicate = new QAction(this);
+    actionDuplicate->setText(tr("Duplicate Tab"));
+    connect(actionDuplicate, &QAction::triggered, [this, tab]() {
+        int new_tab = openSqlTab();
+        ui->tabSqlAreas->setTabText(new_tab, ui->tabSqlAreas->tabText(tab) + tr(" (duplicate)"));
+
+        SqlExecutionArea* old_area = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(tab));
+        SqlExecutionArea* new_area = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(new_tab));
+        new_area->setSql(old_area->getSql());
+    });
+
+    QAction* actionClose = new QAction(this);
+    actionClose->setText(tr("Close Tab"));
+    connect(actionClose, &QAction::triggered, [this, tab]() {
+        closeSqlTab(tab);
+    });
+
+    // Show menu
+    QMenu* menuTabs = new QMenu(this);
+    menuTabs->addAction(actionRename);
+    menuTabs->addAction(actionDuplicate);
+    menuTabs->addAction(actionClose);
+    menuTabs->exec(ui->tabSqlAreas->mapToGlobal(pos));
+}

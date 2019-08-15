@@ -70,6 +70,11 @@ QString SqlExecutionArea::getSelectedSql() const
     return ui->editEditor->selectedText().trimmed().replace(QChar(0x2029), '\n');
 }
 
+void SqlExecutionArea::setSql(const QString& sql)
+{
+    ui->editEditor->setText(sql);
+}
+
 void SqlExecutionArea::finishExecution(const QString& result, const bool ok)
 {
     error_state = !ok;

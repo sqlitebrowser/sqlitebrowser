@@ -309,6 +309,7 @@ private slots:
     void showStatusMessage5s(QString message);
     void saveSqlFile(int tabIndex);
     void saveAll();
+    void showContextMenuSqlTabBar(const QPoint& pos);
 };
 
 #endif

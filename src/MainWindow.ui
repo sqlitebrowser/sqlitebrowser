@@ -953,6 +953,9 @@ You can drag SQL statements from an object row and drop them into other applicat
           <property name="movable">
            <bool>true</bool>
           </property>
+	  <property name="contextMenuPolicy">
+           <bool>Qt::CustomContextMenu</bool>
+          </property>
          </widget>
         </item>
        </layout>
@@ -4379,6 +4382,22 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>tabSqlAreas</sender>
+   <signal>customContextMenuRequested(QPoint)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>showContextMenuSqlTabBar(QPoint)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileOpen()</slot>
@@ -4449,5 +4468,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
   <slot>hideColumns()</slot>
   <slot>renameSqlTab(int)</slot>
   <slot>fileNewInMemoryDatabase()</slot>
+  <slot>showContextMenuSqlTabBar(QPoint)</slot>
  </slots>
 </ui>
