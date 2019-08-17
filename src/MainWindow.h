@@ -273,7 +273,7 @@ private slots:
     bool loadProject(QString filename = QString(), bool readOnly = false);
     void saveProject();
     void saveProjectAs();
-    void fileAttach();
+    void fileAttach(const QString& fileName = QString());
     void updateFilter(int column, const QString& value);
     void addCondFormat(int column, const QString& value);
     void clearAllCondFormats(int column);

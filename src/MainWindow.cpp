@@ -2046,8 +2046,43 @@ void MainWindow::dropEvent(QDropEvent *event)
 
     QString fileName = urls.first().toLocalFile();
 
-    if(!fileName.isEmpty())
+    if(!fileName.isEmpty()) {
+
+        // If there is no open database, the only possible option is to open the file.
+        if (!db.isOpen()) {
             fileOpen(fileName);
+            return;
+        }
+        bool ok;
+        const QString open = tr("Open Database or Project");
+        const QString attach = tr("Attach Database...");
+        const QString import = tr("Import CSV file(s)...");
+        QString action = QInputDialog::getItem(this,
+                                   qApp->applicationName(),
+                                   tr("Select the action to apply to the dropped file(s). <br/>"
+                                      "Note: only 'Import' will process more than one file.", "", urls.count()),
+                                   {open, attach, import},
+                                   0,
+                                   false,
+                                   &ok);
+        if(ok) {
+            if (action == open) {
+                fileOpen(fileName);
+            } else if (action == attach) {
+                fileAttach(fileName);
+            } else if (action == import) {
+
+                QStringList validFiles;
+                for(const auto& url : urls) {
+                    if (QFile::exists(url.toLocalFile()))
+                        validFiles.append(url.toLocalFile());
+                }
+                ImportCsvDialog dialog(validFiles, &db, this);
+                if (dialog.exec())
+                    populateTable();
+            }
+        }
+    }
 }
 
 void MainWindow::activateFields(bool enable)
@@ -3274,14 +3309,20 @@ void MainWindow::saveProjectAs()
     currentProjectFilename = saveProject(QString());
 }
 
-void MainWindow::fileAttach()
+void MainWindow::fileAttach(const QString& fileName)
 {
-    // Get file name of database to attach
-    QString file = FileDialog::getOpenFileName(
-                OpenDatabaseFile,
-                this,
-                tr("Choose a database file"),
-                FileDialog::getSqlDatabaseFileFilter());
+    QString file;
+    if (fileName.isEmpty()) {
+
+        // Get file name of database to attach
+        file = FileDialog::getOpenFileName(
+            OpenDatabaseFile,
+            this,
+            tr("Choose a database file"),
+            FileDialog::getSqlDatabaseFileFilter());
+    } else
+        file = fileName;
+
     if(!QFile::exists(file))
         return;
 
