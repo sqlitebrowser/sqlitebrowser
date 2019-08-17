@@ -2883,6 +2883,7 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
         isProjectModified = false;
         addToRecentFilesMenu(filename, readOnly);
 
+        QString currentTable;
         while(!xml.atEnd() && !xml.hasError())
         {
             // Read next token
@@ -2974,7 +2975,7 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                         if(xml.name() == "current_table")
                         {
                             // Currently selected table
-                            ui->comboBrowseTable->setCurrentIndex(ui->comboBrowseTable->findText(xml.attributes().value("name").toString()));
+                            currentTable = xml.attributes().value("name").toString();
                             xml.skipCurrentElement();
                         } else if(xml.name() == "default_encoding") {
                             // Default text encoding
@@ -3020,16 +3021,6 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                             }
                         }
 
-                        if(ui->mainTab->currentWidget() == ui->browser)
-                        {
-                            populateTable();     // Refresh view
-                            sqlb::ObjectIdentifier current_table = currentlyBrowsedTableName();
-
-                            ui->dataTable->sortByColumns(browseTableSettings[current_table].query.orderBy());
-                            showRowidColumn(browseTableSettings[current_table].showRowid);
-                            unlockViewEditing(!browseTableSettings[current_table].unlockViewPk.isEmpty(), browseTableSettings[current_table].unlockViewPk);
-                        }
-
                     }
                 } else if(xml.name() == "tab_sql") {
                     // Close all open tabs first
@@ -3059,6 +3050,15 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
 
         file.close();
         currentProjectFilename = filename;
+
+        if(ui->mainTab->currentWidget() == ui->browser) {
+            qApp->processEvents();
+            if (!currentTable.isEmpty())
+                switchToBrowseDataTab(currentTable);
+            populateTable();     // Refresh view
+            BrowseDataTableSettings& settings = browseTableSettings[currentlyBrowsedTableName()];
+            applyBrowseTableSettings(settings);
+        }
 
         return !xml.hasError();
     } else {
