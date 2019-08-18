@@ -159,7 +159,7 @@ private:
     static int callbackWrapper (void* callback, int numberColumns, char** values, char** columnNames);
 
 public:
-    void updateSchema();
+    void updateSchema();    // Please don't call this from threads other than the main thread.
 
 private:
     /**
