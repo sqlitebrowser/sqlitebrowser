@@ -4206,8 +4206,27 @@ void MainWindow::showContextMenuSqlTabBar(const QPoint& pos)
     QAction* actionDuplicate = new QAction(this);
     actionDuplicate->setText(tr("Duplicate Tab"));
     connect(actionDuplicate, &QAction::triggered, [this, tab]() {
+        QString tab_name = ui->tabSqlAreas->tabText(tab).remove("&").remove(QRegExp(" \\(\\d+\\)$"));
+        QString new_tab_name;
+        for(int i=1;;i++)
+        {
+            new_tab_name = tab_name + QString(" (%1)").arg(i);
+            bool name_already_exists = false;
+            for(int j=0;j<ui->tabSqlAreas->count();j++)
+            {
+                if(ui->tabSqlAreas->tabText(j).remove("&") == new_tab_name)
+                {
+                    name_already_exists = true;
+                    break;
+                }
+            }
+
+            if(!name_already_exists)
+                break;
+        }
+
         int new_tab = openSqlTab();
-        ui->tabSqlAreas->setTabText(new_tab, ui->tabSqlAreas->tabText(tab) + tr(" (duplicate)"));
+        ui->tabSqlAreas->setTabText(new_tab, new_tab_name);
 
         SqlExecutionArea* old_area = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(tab));
         SqlExecutionArea* new_area = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(new_tab));
