@@ -50,9 +50,9 @@ void RunSql::run()
 
     // Execution finished
 
-    // If the DB structure was changed by some command in this SQL script, update our schema representations
+    // If the DB structure was changed by some command in this SQL script, send a signal
     if(structure_updated)
-        db.updateSchema();
+        emit structureUpdated();
 }
 
 void RunSql::startNextStatement()

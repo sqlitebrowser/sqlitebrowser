@@ -193,14 +193,10 @@ void MainWindow::init()
     // Set up DB structure tab
     dbStructureModel = new DbStructureModel(db, this);
     connect(&db, &DBBrowserDB::structureUpdated, this, [this]() {
-        // TODO This needs to be a queued connection because the schema can be updated from different threads than the main thread.
-        // However, this makes calling this lambda asynchronous which can lead to unexpected results. One example is that opening a database,
-        // changing to the Browse Data tab, and then opening another database makes the table browser try to load the old table because the table
-        // list wasn't updated yet.
         QString old_table = ui->comboBrowseTable->currentText();
         dbStructureModel->reloadData();
         populateStructure(old_table);
-    }, Qt::QueuedConnection);
+    });
     ui->dbTreeWidget->setModel(dbStructureModel);
     ui->dbTreeWidget->setColumnWidth(DbStructureModel::ColumnName, 300);
     ui->dbTreeWidget->setColumnHidden(DbStructureModel::ColumnObjectType, true);
@@ -1546,6 +1542,9 @@ void MainWindow::executeQuery()
     // existing execution area.
     execute_sql_worker.reset(new RunSql(db, sql, execute_from_position, execute_to_position, true));
 
+    connect(execute_sql_worker.get(), &RunSql::structureUpdated, sqlWidget, [this]() {
+        db.updateSchema();
+    }, Qt::QueuedConnection);
     connect(execute_sql_worker.get(), &RunSql::statementErrored, sqlWidget, [query_logger, this, sqlWidget](const QString& status_message, int from_position, int to_position) {
         sqlWidget->getModel()->reset();
         ui->actionSqlResultsSave->setEnabled(false);
