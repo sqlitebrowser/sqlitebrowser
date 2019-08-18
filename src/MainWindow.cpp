@@ -3051,7 +3051,6 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
         currentProjectFilename = filename;
 
         if(ui->mainTab->currentWidget() == ui->browser) {
-            qApp->processEvents();
             if (!currentTable.isEmpty())
                 switchToBrowseDataTab(currentTable);
             populateTable();     // Refresh view
