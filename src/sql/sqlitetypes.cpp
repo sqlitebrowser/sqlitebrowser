@@ -701,7 +701,9 @@ std::string concatExprAST(antlr::RefAST t)
         case sqlite3TokenTypes::BETWEEN:
             expr += " " + textAST(t) + " ";
             break;
+        case sqlite3TokenTypes::IS:
         case sqlite3TokenTypes::NOT:
+        case sqlite3TokenTypes::NULL_T:
             expr += " " + textAST(t);
             break;
         default:

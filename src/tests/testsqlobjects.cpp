@@ -522,7 +522,10 @@ void TestTable::moduloOperator()
 void TestTable::complexExpression()
 {
     std::string sql = "CREATE TABLE test(\n"
-                      "uuid INTEGER DEFAULT (hex(randomblob(4))||'-'||hex(randomblob(2))||'-'||'4'||substr(hex(randomblob(2)),2)||'-'||substr('AB89',1+(abs(random())%4),1)||substr(hex(randomblob(2)),2)||'-'||hex(randomblob(6)))\n"
+                      "uuid INTEGER DEFAULT (hex(randomblob(4))||'-'||hex(randomblob(2))||'-'||'4'||substr(hex(randomblob(2)),2)||'-'||substr('AB89',1+(abs(random())%4),1)||substr(hex(randomblob(2)),2)||'-'||hex(randomblob(6))),\n"
+                      "a INTEGER,\n"
+                      "b INTEGER,\n"
+                      "CHECK((a = 'S' AND b IS NOT NULL) OR (a IN ('A', 'P')))"
                       ");";
 
     Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sql)));
@@ -531,4 +534,8 @@ void TestTable::complexExpression()
     QCOMPARE(tab.fields.at(0).name(), "uuid");
     QCOMPARE(tab.fields.at(0).type(), "INTEGER");
     QCOMPARE(tab.fields.at(0).defaultValue(), "(hex(randomblob(4))||'-'||hex(randomblob(2))||'-'||'4'||substr(hex(randomblob(2)),2)||'-'||substr('AB89',1+(abs(random())%4),1)||substr(hex(randomblob(2)),2)||'-'||hex(randomblob(6)))");
+
+    auto c = tab.constraints({}, sqlb::Constraint::CheckConstraintType);
+    QCOMPARE(c.size(), 1);
+    QCOMPARE(std::dynamic_pointer_cast<sqlb::CheckConstraint>(c.at(0))->expression(), "(a='S' AND b IS NOT NULL) OR (a IN ('A','P'))");
 }
