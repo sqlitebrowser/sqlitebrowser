@@ -48,6 +48,16 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
     connect(ui->actionAddCheckConstraint, &QAction::triggered, [this]() { addConstraint(sqlb::Constraint::CheckConstraintType); });
     ui->buttonAddConstraint->setMenu(constraint_menu);
 
+    // Get list of all collations
+    db.executeSQL("PRAGMA collation_list;", false, true, [this](int column_count, QStringList columns, QStringList) -> bool {
+        if(column_count >= 2)
+            m_collationList.push_back(columns.at(1));
+        return false;
+    });
+    if(!m_collationList.contains(""))
+        m_collationList.push_back("");
+    m_collationList.sort();
+
     // Editing an existing table?
     if(m_bNewTable == false)
     {
@@ -194,7 +204,7 @@ void EditTableDialog::populateFields()
         }
         typeBox->setCurrentIndex(index);
         typeBox->installEventFilter(this);
-        connect(typeBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateTypes()));
+        connect(typeBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateTypeAndCollation()));
         ui->treeWidget->setItemWidget(tbitem, kType, typeBox);
 
         tbitem->setCheckState(kNotNull, f.notnull() ? Qt::Checked : Qt::Unchecked);
@@ -211,6 +221,21 @@ void EditTableDialog::populateFields()
             tbitem->setText(kDefault, QString::fromStdString(f.defaultValue()));
 
         tbitem->setText(kCheck, QString::fromStdString(f.check()));
+
+        QComboBox* collationBox = new QComboBox(ui->treeWidget);
+        collationBox->setProperty("column", QString::fromStdString(f.name()));
+        collationBox->addItems(m_collationList);
+        index = collationBox->findText(QString::fromStdString(f.collation()), Qt::MatchCaseSensitive);
+        if(index == -1)
+        {
+            // some non-existing collation
+            collationBox->addItem(QString::fromStdString(f.collation()));
+            index = collationBox->count() - 1;
+        }
+        collationBox->setCurrentIndex(index);
+        collationBox->installEventFilter(this);
+        connect(collationBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateTypeAndCollation()));
+        ui->treeWidget->setItemWidget(tbitem, kCollation, collationBox);
 
         auto fk = std::dynamic_pointer_cast<sqlb::ForeignKeyClause>(m_table.constraint({f.name()}, sqlb::Constraint::ForeignKeyConstraintType));
         if(fk)
@@ -366,19 +391,33 @@ void EditTableDialog::checkInput()
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(valid);
 }
 
-void EditTableDialog::updateTypes(QObject *object)
+void EditTableDialog::updateTypeAndCollation(QObject* object)
 {
-    QComboBox* typeBox = qobject_cast<QComboBox*>(object);
-    if(typeBox)
+    // Get sender combo box and retrieve field name from it
+    QComboBox* combo = qobject_cast<QComboBox*>(object);
+    if(!combo)
+        return;
+    QString column = combo->property("column").toString();
+
+    // Get type *and* collation combo box for this field
+    auto item = ui->treeWidget->findItems(column, Qt::MatchExactly, kName);
+    if(item.size() != 1)
+        return;
+    QComboBox* typeBox = qobject_cast<QComboBox*>(ui->treeWidget->itemWidget(item.front(), kType));
+    QComboBox* collationBox = qobject_cast<QComboBox*>(ui->treeWidget->itemWidget(item.front(), kCollation));
+
+    // Update table
+    if(typeBox && collationBox)
     {
         QString type = typeBox->currentText();
-        std::string column = typeBox->property("column").toString().toStdString();
+        QString collation = collationBox->currentText();
 
         for(size_t index=0; index < m_table.fields.size(); ++index)
         {
-            if(m_table.fields.at(index).name() == column)
+            if(m_table.fields.at(index).name() == column.toStdString())
             {
                 m_table.fields.at(index).setType(type.toStdString());
+                m_table.fields.at(index).setCollation(collation.toStdString());
                 break;
             }
         }
@@ -387,16 +426,16 @@ void EditTableDialog::updateTypes(QObject *object)
     }
 }
 
-void EditTableDialog::updateTypes()
+void EditTableDialog::updateTypeAndCollation()
 {
-    updateTypes(sender());
+    updateTypeAndCollation(sender());
 }
 
 bool EditTableDialog::eventFilter(QObject *object, QEvent *event)
 {
     if(event->type() == QEvent::FocusOut)
     {
-        updateTypes(object);
+        updateTypeAndCollation(object);
     }
     return false;
 }
@@ -481,7 +520,8 @@ void EditTableDialog::fieldItemChanged(QTreeWidgetItem *item, int column)
             populateConstraints();
             } break;
         case kType:
-            // see updateTypes() SLOT
+        case kCollation:
+            // see updateTypeAndCollation() SLOT
             break;
         case kPrimaryKey:
         {
@@ -729,7 +769,7 @@ void EditTableDialog::addField()
 
     ui->treeWidget->setItemWidget(tbitem, kType, typeBox);
     typeBox->installEventFilter(this);
-    connect(typeBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateTypes()));
+    connect(typeBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateTypeAndCollation()));
 
     tbitem->setCheckState(kNotNull, Qt::Unchecked);
     tbitem->setCheckState(kPrimaryKey, Qt::Unchecked);
@@ -815,21 +855,28 @@ void EditTableDialog::moveCurrentField(bool down)
     int currentRow = ui->treeWidget->currentIndex().row();
     int newRow = currentRow + (down ? 1 : -1);
 
-    // Save the combobox first by making a copy
-    QComboBox* oldCombo = qobject_cast<QComboBox*>(ui->treeWidget->itemWidget(ui->treeWidget->topLevelItem(currentRow), kType));
-    QComboBox* newCombo = new QComboBox(ui->treeWidget);
-    newCombo->setProperty("column", oldCombo->property("column"));
-    newCombo->installEventFilter(this);
-    connect(newCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateTypes()));
-    newCombo->setEditable(true);
-    for(int i=0; i < oldCombo->count(); ++i)
-        newCombo->addItem(oldCombo->itemText(i));
-    newCombo->setCurrentIndex(oldCombo->currentIndex());
+    // Save the comboboxes first by making copies
+    QComboBox* newCombo[2];
+    for(int c=0;c<2;c++)
+    {
+        int column = (c == 0 ? kType : kCollation);
+
+        QComboBox* oldCombo = qobject_cast<QComboBox*>(ui->treeWidget->itemWidget(ui->treeWidget->topLevelItem(currentRow), column));
+        newCombo[c] = new QComboBox(ui->treeWidget);
+        newCombo[c]->setProperty("column", oldCombo->property("column"));
+        newCombo[c]->installEventFilter(this);
+        connect(newCombo[c], SIGNAL(currentIndexChanged(int)), this, SLOT(updateTypeAndCollation()));
+        newCombo[c]->setEditable(oldCombo->isEditable());
+        for(int i=0; i < oldCombo->count(); ++i)
+            newCombo[c]->addItem(oldCombo->itemText(i));
+        newCombo[c]->setCurrentIndex(oldCombo->currentIndex());
+    }
 
     // Now, just remove the item and insert it at it's new position, then restore the combobox
     QTreeWidgetItem* item = ui->treeWidget->takeTopLevelItem(currentRow);
     ui->treeWidget->insertTopLevelItem(newRow, item);
-    ui->treeWidget->setItemWidget(item, kType, newCombo);
+    ui->treeWidget->setItemWidget(item, kType, newCombo[0]);
+    ui->treeWidget->setItemWidget(item, kCollation, newCombo[1]);
 
     // Select the old item at its new position
     ui->treeWidget->setCurrentIndex(ui->treeWidget->currentIndex().sibling(newRow, 0));

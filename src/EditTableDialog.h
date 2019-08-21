@@ -39,7 +39,8 @@ private:
         kUnique = 5,
         kDefault = 6,
         kCheck = 7,
-        kForeignKey = 8
+        kCollation = 8,
+        kForeignKey = 9
     };
 
     enum ConstraintColumns {
@@ -65,9 +66,9 @@ private slots:
     void checkInput();
     void fieldItemChanged(QTreeWidgetItem* item, int column);
     void constraintItemChanged(QTableWidgetItem* item);
-    void updateTypes(QObject *object);
+    void updateTypeAndCollation(QObject *object);
     bool eventFilter(QObject *object, QEvent *event) override;
-    void updateTypes();
+    void updateTypeAndCollation();
     void moveUp();
     void moveDown();
     void setWithoutRowid(bool without_rowid);
@@ -84,6 +85,7 @@ private:
     sqlb::Table m_table;
     bool m_bNewTable;
     QString m_sRestorePointName;
+    QStringList m_collationList;
 };
 
 #endif

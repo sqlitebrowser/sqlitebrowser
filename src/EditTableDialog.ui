@@ -275,6 +275,11 @@
             <string>Check constraint</string>
            </property>
           </column>
+	  <column>
+           <property name="text">
+            <string>Collation</string>
+           </property>
+          </column>
           <column>
            <property name="text">
             <string>Foreign Key</string>
