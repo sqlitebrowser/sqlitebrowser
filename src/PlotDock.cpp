@@ -3,7 +3,7 @@
 #include "Settings.h"
 #include "sqlitetablemodel.h"
 #include "FileDialog.h"
-#include "MainWindow.h"     // Just for BrowseDataTableSettings, not for the actual main window class
+#include "TableBrowser.h"     // Just for BrowseDataTableSettings, not for the actual table browser class
 
 #include <QPrinter>
 #include <QPrintPreviewDialog>

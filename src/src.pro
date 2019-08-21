@@ -77,7 +77,8 @@ HEADERS += \
     sql/ObjectIdentifier.h \
     ProxyDialog.h \
     IconCache.h \
-    SelectItemsPopup.h
+    SelectItemsPopup.h \
+    TableBrowser.h
 
 SOURCES += \
     sqlitedb.cpp \
@@ -131,7 +132,8 @@ SOURCES += \
     sql/ObjectIdentifier.cpp \
     ProxyDialog.cpp \
     IconCache.cpp \
-    SelectItemsPopup.cpp
+    SelectItemsPopup.cpp \
+    TableBrowser.cpp
 
 RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc \
@@ -161,7 +163,8 @@ FORMS += \
     FileExtensionManager.ui \
     CondFormatManager.ui \
     ProxyDialog.ui \
-    SelectItemsPopup.ui
+    SelectItemsPopup.ui \
+    TableBrowser.ui
 
 TRANSLATIONS += \
     translations/sqlb_ar_SA.ts \

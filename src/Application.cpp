@@ -5,6 +5,7 @@
 #include <QLibraryInfo>
 #include <QLocale>
 #include <QDebug>
+#include <QAction>
 
 #include "Application.h"
 #include "MainWindow.h"
@@ -174,7 +175,7 @@ Application::Application(int& argc, char** argv) :
 
             // Jump to table if the -t/--table parameter was set
             if(!tableToBrowse.isEmpty())
-                m_mainWindow->switchToBrowseDataTab(tableToBrowse);
+                m_mainWindow->switchToBrowseDataTab(sqlb::ObjectIdentifier("main", tableToBrowse.toStdString()));
         }
     }
 }
@@ -207,4 +208,27 @@ QString Application::versionString()
 #else
     return QString("%1").arg(APP_VERSION);
 #endif
+}
+
+// Functions for documenting the shortcuts in the user interface using native names
+static QString shortcutsTip(const QList<QKeySequence>& keys)
+{
+    QString tip("");
+
+    if (!keys.isEmpty()) {
+        tip = " [";
+
+        for (auto shortcut : keys)
+            tip.append(shortcut.toString(QKeySequence::NativeText) + ", ");
+        tip.chop(2);
+
+        tip.append("]");
+    }
+    return tip;
+}
+
+void addShortcutsTooltip(QAction* action, const QList<QKeySequence>& extraKeys)
+{
+    if (!action->shortcuts().isEmpty() || !extraKeys.isEmpty())
+        action->setToolTip(action->toolTip() + shortcutsTip(action->shortcuts() + extraKeys));
 }

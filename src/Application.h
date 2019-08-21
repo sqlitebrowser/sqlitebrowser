@@ -2,9 +2,12 @@
 #define APPLICATION_H
 
 #include <QApplication>
+#include <QKeySequence>
+
+class QAction;
+class QTranslator;
 
 class MainWindow;
-class QTranslator;
 
 class Application : public QApplication
 {
@@ -29,5 +32,7 @@ private:
     QTranslator* m_translatorQt;
     QTranslator* m_translatorApp;
 };
+
+void addShortcutsTooltip(QAction* action, const QList<QKeySequence>& extraKeys = QList<QKeySequence>());
 
 #endif

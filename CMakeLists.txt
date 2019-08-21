@@ -176,6 +176,7 @@ set(SQLB_MOC_HDR
 	src/RunSql.h
 	src/ProxyDialog.h
 	src/SelectItemsPopup.h
+	src/TableBrowser.h
 )
 
 set(SQLB_SRC
@@ -232,6 +233,7 @@ set(SQLB_SRC
 	src/ProxyDialog.cpp
 	src/IconCache.cpp
 	src/SelectItemsPopup.cpp
+	src/TableBrowser.cpp
 )
 
 set(SQLB_FORMS
@@ -257,6 +259,7 @@ set(SQLB_FORMS
 	src/CondFormatManager.ui
 	src/ProxyDialog.ui
 	src/SelectItemsPopup.ui
+	src/TableBrowser.ui
 )
 
 set(SQLB_RESOURCES
