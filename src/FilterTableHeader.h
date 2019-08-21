@@ -25,8 +25,8 @@ public slots:
 signals:
     void filterChanged(int column, QString value);
     void addCondFormat(int column, QString filter);
-    void clearAllCondFormats(int column);
-    void editCondFormats(int column);
+    void allCondFormatsCleared(int column);
+    void condFormatsEdited(int column);
 
 protected:
     void updateGeometries() override;

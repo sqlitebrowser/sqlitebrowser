@@ -227,8 +227,8 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     // Force ScrollPerItem, so scrolling shows all table rows
     setVerticalScrollMode(ExtendedTableWidget::ScrollPerItem);
 
-    connect(verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(vscrollbarChanged(int)));
-    connect(this, SIGNAL(clicked(QModelIndex)), this, SLOT(cellClicked(QModelIndex)));
+    connect(verticalScrollBar(), &QScrollBar::valueChanged, this, &ExtendedTableWidget::vscrollbarChanged);
+    connect(this, &ExtendedTableWidget::clicked, this, &ExtendedTableWidget::cellClicked);
 
     // Set up filter row
     m_tableHeader = new FilterTableHeader(this);

@@ -29,14 +29,13 @@ SqlExecutionArea::SqlExecutionArea(DBBrowserDB& _db, QWidget* parent) :
     ui->findFrame->hide();
 
     QShortcut* shortcutHideFind = new QShortcut(QKeySequence("ESC"), ui->findLineEdit);
-    connect(shortcutHideFind, SIGNAL(activated()), this, SLOT(hideFindFrame()));
+    connect(shortcutHideFind, &QShortcut::activated, this, &SqlExecutionArea::hideFindFrame);
 
-    connect(ui->findLineEdit, SIGNAL(textChanged(const QString &)),
-            this, SLOT(findLineEdit_textChanged(const QString &)));
-    connect(ui->previousToolButton, SIGNAL(clicked()), this, SLOT(findPrevious()));
-    connect(ui->nextToolButton, SIGNAL(clicked()), this, SLOT(findNext()));
-    connect(ui->findLineEdit, SIGNAL(returnPressed()), this, SLOT(findNext()));
-    connect(ui->hideFindButton, SIGNAL(clicked()), this, SLOT(hideFindFrame()));
+    connect(ui->findLineEdit, &QLineEdit::textChanged, this, &SqlExecutionArea::findLineEdit_textChanged);
+    connect(ui->previousToolButton, &QToolButton::clicked, this, &SqlExecutionArea::findPrevious);
+    connect(ui->nextToolButton, &QToolButton::clicked, this, &SqlExecutionArea::findNext);
+    connect(ui->findLineEdit, &QLineEdit::returnPressed, this, &SqlExecutionArea::findNext);
+    connect(ui->hideFindButton, &QToolButton::clicked, this, &SqlExecutionArea::hideFindFrame);
 
     connect(&fileSystemWatch, &QFileSystemWatcher::fileChanged, this, &SqlExecutionArea::fileChanged);
 

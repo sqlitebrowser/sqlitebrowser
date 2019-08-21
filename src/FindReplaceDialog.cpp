@@ -34,8 +34,8 @@ void FindReplaceDialog::setExtendedScintilla(ExtendedScintilla* scintilla)
     ui->replaceButton->setEnabled(isWriteable);
     ui->replaceAllButton->setEnabled(isWriteable);
 
-    connect(m_scintilla, SIGNAL(destroyed()), this, SLOT(hide()));
-    connect(ui->findText, SIGNAL(editingFinished()), this, SLOT(cancelFind()));
+    connect(m_scintilla, &ExtendedScintilla::destroyed, this, &FindReplaceDialog::hide);
+    connect(ui->findText, &QLineEdit::editingFinished, this, &FindReplaceDialog::cancelFind);
     connect(ui->regexpCheckBox, &QCheckBox::toggled, this, &FindReplaceDialog::cancelFind);
     connect(ui->caseCheckBox, &QCheckBox::toggled, this, &FindReplaceDialog::cancelFind);
     connect(ui->wholeWordsCheckBox, &QCheckBox::toggled, this, &FindReplaceDialog::cancelFind);

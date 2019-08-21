@@ -48,11 +48,11 @@ PlotDock::PlotDock(QWidget* parent)
 
     // Connect signals
     connect(ui->treePlotColumns, &QTreeWidget::itemChanged, this, &PlotDock::on_treePlotColumns_itemChanged);
-    connect(ui->plotWidget, SIGNAL(selectionChangedByUser()), this, SLOT(selectionChanged()));
+    connect(ui->plotWidget, &QCustomPlot::selectionChangedByUser, this, &PlotDock::selectionChanged);
 
     // connect slots that takes care that when an axis is selected, only that direction can be dragged and zoomed:
-    connect(ui->plotWidget, SIGNAL(mousePress(QMouseEvent*)), this, SLOT(mousePress()));
-    connect(ui->plotWidget, SIGNAL(mouseWheel(QWheelEvent*)), this, SLOT(mouseWheel()));
+    connect(ui->plotWidget, &QCustomPlot::mousePress, this, &PlotDock::mousePress);
+    connect(ui->plotWidget, &QCustomPlot::mouseWheel, this, &PlotDock::mouseWheel);
 
     // Enable: click on items to select them, Ctrl+Click for multi-selection, mouse-wheel for zooming and mouse drag for
     // changing the visible range.
@@ -61,7 +61,7 @@ PlotDock::PlotDock(QWidget* parent)
     ui->plotWidget->setSelectionRectMode(QCP::srmNone);
 
     QShortcut* shortcutCopy = new QShortcut(QKeySequence::Copy, ui->plotWidget, nullptr, nullptr, Qt::WidgetShortcut);
-    connect(shortcutCopy, SIGNAL(activated()), this, SLOT(copy()));
+    connect(shortcutCopy, &QShortcut::activated, this, &PlotDock::copy);
 
     QShortcut* shortcutPrint = new QShortcut(QKeySequence::Print, ui->plotWidget, nullptr, nullptr, Qt::WidgetShortcut);
     connect(shortcutPrint, &QShortcut::activated, this, &PlotDock::openPrintDialog);
@@ -89,13 +89,13 @@ PlotDock::PlotDock(QWidget* parent)
     showLegendAction->setCheckable(true);
     m_contextMenu->addAction(showLegendAction);
 
-    connect(showLegendAction, SIGNAL(toggled(bool)), this, SLOT(toggleLegendVisible(bool)));
+    connect(showLegendAction, &QAction::toggled, this, &PlotDock::toggleLegendVisible);
 
     QAction* stackedBarsAction = new QAction(tr("Stacked bars"), m_contextMenu);
     stackedBarsAction->setCheckable(true);
     m_contextMenu->addAction(stackedBarsAction);
 
-    connect(stackedBarsAction, SIGNAL(toggled(bool)), this, SLOT(toggleStackedBars(bool)));
+    connect(stackedBarsAction, &QAction::toggled, this, &PlotDock::toggleStackedBars);
 
     connect(ui->plotWidget, &QTableView::customContextMenuRequested,
             [=](const QPoint& pos) {

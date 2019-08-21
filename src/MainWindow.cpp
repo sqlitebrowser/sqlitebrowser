@@ -180,12 +180,12 @@ void MainWindow::init()
     ui->editGoto->setValidator(gotoValidator);
 
     // Set up filters
-    connect(ui->dataTable->filterHeader(), SIGNAL(filterChanged(int,QString)), this, SLOT(updateFilter(int,QString)));
-    connect(ui->dataTable->filterHeader(), SIGNAL(addCondFormat(int,QString)), this, SLOT(addCondFormat(int,QString)));
-    connect(ui->dataTable->filterHeader(), SIGNAL(clearAllCondFormats(int)), this, SLOT(clearAllCondFormats(int)));
-    connect(ui->dataTable->filterHeader(), SIGNAL(editCondFormats(int)), this, SLOT(editCondFormats(int)));
-    connect(ui->dataTable, SIGNAL(editCondFormats(int)), this, SLOT(editCondFormats(int)));
-    connect(m_browseTableModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(dataTableSelectionChanged(QModelIndex)));
+    connect(ui->dataTable->filterHeader(), &FilterTableHeader::filterChanged, this, &MainWindow::updateFilter);
+    connect(ui->dataTable->filterHeader(), &FilterTableHeader::addCondFormat, this, &MainWindow::addCondFormat);
+    connect(ui->dataTable->filterHeader(), &FilterTableHeader::allCondFormatsCleared, this, &MainWindow::clearAllCondFormats);
+    connect(ui->dataTable->filterHeader(), &FilterTableHeader::condFormatsEdited, this, &MainWindow::editCondFormats);
+    connect(ui->dataTable, &ExtendedTableWidget::editCondFormats, this, &MainWindow::editCondFormats);
+    connect(m_browseTableModel, &SqliteTableModel::dataChanged, this, &MainWindow::dataTableSelectionChanged);
 
     // Select in table the rows correspoding to the selected points in plot
     connect(plotDock, SIGNAL(pointsSelected(int,int)), ui->dataTable, SLOT(selectTableLines(int,int)));
@@ -235,9 +235,9 @@ void MainWindow::init()
     // Add keyboard shortcuts
 
     QShortcut* shortcutBrowseRefreshF5 = new QShortcut(QKeySequence("F5"), this);
-    connect(shortcutBrowseRefreshF5, SIGNAL(activated()), this, SLOT(refresh()));
+    connect(shortcutBrowseRefreshF5, &QShortcut::activated, this, &MainWindow::refresh);
     QShortcut* shortcutBrowseRefreshCtrlR = new QShortcut(QKeySequence("Ctrl+R"), this);
-    connect(shortcutBrowseRefreshCtrlR, SIGNAL(activated()), this, SLOT(refresh()));
+    connect(shortcutBrowseRefreshCtrlR, &QShortcut::activated, this, &MainWindow::refresh);
 
     // Add print shortcut for the DB Structure tab (dbTreeWidget) with context to the widget, so other print shortcuts aren't eclipsed.
     QShortcut* shortcutPrint = new QShortcut(QKeySequence(QKeySequence::Print), ui->dbTreeWidget, nullptr, nullptr, Qt::WidgetShortcut);
@@ -439,16 +439,16 @@ void MainWindow::init()
     });
 
     // Connect some more signals and slots
-    connect(ui->dataTable->filterHeader(), SIGNAL(sectionClicked(int)), this, SLOT(browseTableHeaderClicked(int)));
+    connect(ui->dataTable->filterHeader(), &FilterTableHeader::sectionClicked, this, &MainWindow::browseTableHeaderClicked);
     connect(ui->dataTable->filterHeader(), &QHeaderView::sectionDoubleClicked, ui->dataTable, &QTableView::selectColumn);
-    connect(ui->dataTable->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(setRecordsetLabel()));
-    connect(ui->dataTable->horizontalHeader(), SIGNAL(sectionResized(int,int,int)), this, SLOT(updateBrowseDataColumnWidth(int,int,int)));
-    connect(editDock, SIGNAL(recordTextUpdated(QPersistentModelIndex, QByteArray, bool)), this, SLOT(updateRecordText(QPersistentModelIndex, QByteArray, bool)));
-    connect(ui->dbTreeWidget->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(changeTreeSelection()));
-    connect(ui->dataTable->horizontalHeader(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showDataColumnPopupMenu(QPoint)));
-    connect(ui->dataTable->verticalHeader(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showRecordPopupMenu(QPoint)));
+    connect(ui->dataTable->verticalScrollBar(), &QScrollBar::valueChanged, this, &MainWindow::setRecordsetLabel);
+    connect(ui->dataTable->horizontalHeader(), &QHeaderView::sectionResized, this, &MainWindow::updateBrowseDataColumnWidth);
+    connect(editDock, &EditDialog::recordTextUpdated, this, &MainWindow::updateRecordText);
+    connect(ui->dbTreeWidget->selectionModel(), &QItemSelectionModel::currentChanged, this, &MainWindow::changeTreeSelection);
+    connect(ui->dataTable->horizontalHeader(), &QHeaderView::customContextMenuRequested, this, &MainWindow::showDataColumnPopupMenu);
+    connect(ui->dataTable->verticalHeader(), &QHeaderView::customContextMenuRequested, this, &MainWindow::showRecordPopupMenu);
     connect(ui->dataTable, SIGNAL(openFileFromDropEvent(QString)), this, SLOT(fileOpen(QString)));
-    connect(ui->dockEdit, SIGNAL(visibilityChanged(bool)), this, SLOT(toggleEditDock(bool)));
+    connect(ui->dockEdit, &QDockWidget::visibilityChanged, this, &MainWindow::toggleEditDock);
     connect(m_remoteDb, SIGNAL(openFile(QString)), this, SLOT(fileOpen(QString)));
     connect(m_remoteDb, &RemoteDatabase::gotCurrentVersion, this, &MainWindow::checkNewVersion);
     connect(m_browseTableModel, &SqliteTableModel::finishedFetch, this, &MainWindow::setRecordsetLabel);
@@ -739,7 +739,7 @@ void MainWindow::populateTable()
     ui->dataTable->setModel(m_browseTableModel);
     if(reconnectSelectionSignals)
     {
-        connect(ui->dataTable->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(dataTableSelectionChanged(QModelIndex)));
+        connect(ui->dataTable->selectionModel(), &QItemSelectionModel::currentChanged, this, &MainWindow::dataTableSelectionChanged);
         connect(ui->dataTable->selectionModel(), &QItemSelectionModel::selectionChanged, [this](const QItemSelection&, const QItemSelection&) {
             updateInsertDeleteRecordButton();
 
@@ -1077,9 +1077,8 @@ void MainWindow::attachPlot(ExtendedTableWidget* tableWidget, SqliteTableModel* 
     disconnect(plotDock, SIGNAL(pointsSelected(int,int)), nullptr, nullptr);
     if(tableWidget) {
         // Connect plot selection to the current table results widget.
-        connect(plotDock, SIGNAL(pointsSelected(int,int)), tableWidget, SLOT(selectTableLines(int,int)));
-        connect(tableWidget, SIGNAL(destroyed()), plotDock, SLOT(resetPlot()));
-
+        connect(plotDock, &PlotDock::pointsSelected, tableWidget, &ExtendedTableWidget::selectTableLines);
+        connect(tableWidget, &ExtendedTableWidget::destroyed, plotDock, &PlotDock::resetPlot);
     }
 }
 
@@ -1578,7 +1577,7 @@ void MainWindow::executeQuery()
             disconnect(*conn);
 
             attachPlot(sqlWidget->getTableResult(), sqlWidget->getModel());
-            connect(sqlWidget->getTableResult()->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(dataTableSelectionChanged(QModelIndex)));
+            connect(sqlWidget->getTableResult()->selectionModel(), &QItemSelectionModel::currentChanged, this, &MainWindow::dataTableSelectionChanged);
             connect(sqlWidget->getTableResult(), &QTableView::doubleClicked, this, &MainWindow::doubleClickTable);
 
             auto time_end = std::chrono::high_resolution_clock::now();
@@ -2404,11 +2403,11 @@ int MainWindow::openSqlTab(bool resetCounter)
     // would interfere with the search bar and it'd be anyway redundant.
     w->getEditor()->setEnabledFindDialog(false);
     w->getEditor()->setFocus();
-    connect(w, SIGNAL(findFrameVisibilityChanged(bool)), ui->actionSqlFind, SLOT(setChecked(bool)));
+    connect(w, &SqlExecutionArea::findFrameVisibilityChanged, ui->actionSqlFind, &QAction::setChecked);
 
     // Connect now the find shortcut to the editor with widget context, so it isn't ambiguous with other Scintilla Widgets.
     QShortcut* shortcutFind = new QShortcut(ui->actionSqlFind->shortcut(), w->getEditor(), nullptr, nullptr, Qt::WidgetShortcut);
-    connect(shortcutFind, SIGNAL(activated()), ui->actionSqlFind, SLOT(toggle()));
+    connect(shortcutFind, &QShortcut::activated, ui->actionSqlFind, &QAction::toggle);
 
     return index;
 }

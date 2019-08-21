@@ -121,7 +121,7 @@ AddRecordDialog::AddRecordDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
 {
     // Create UI
     ui->setupUi(this);
-    connect(ui->treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*,int)),this,SLOT(itemChanged(QTreeWidgetItem*,int)));
+    connect(ui->treeWidget, &QTreeWidget::itemChanged, this, &AddRecordDialog::itemChanged);
 
     populateFields();
 
@@ -163,10 +163,8 @@ void AddRecordDialog::setDefaultsStyle(QTreeWidgetItem* item)
 
 void AddRecordDialog::populateFields()
 {
-    // disconnect the itemChanged signal or the SQL text will
-    // be updated while filling the treewidget.
-    disconnect(ui->treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*,int)),
-               this,SLOT(itemChanged(QTreeWidgetItem*,int)));
+    // Block the itemChanged signal or the SQL text will  be updated while filling the treewidget.
+    ui->treeWidget->blockSignals(true);
 
     ui->treeWidget->clear();
 
@@ -260,8 +258,8 @@ void AddRecordDialog::populateFields()
 
     updateSqlText();
 
-    // and reconnect
-    connect(ui->treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*,int)),this,SLOT(itemChanged(QTreeWidgetItem*,int)));
+    // Enable signals from tree widget
+    ui->treeWidget->blockSignals(false);
 }
 
 void AddRecordDialog::accept()

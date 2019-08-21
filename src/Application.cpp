@@ -152,7 +152,7 @@ Application::Application(int& argc, char** argv) :
     // Show main window
     m_mainWindow = new MainWindow();
     m_mainWindow->show();
-    connect(this, SIGNAL(lastWindowClosed()), this, SLOT(quit()));
+    connect(this, &Application::lastWindowClosed, this, &Application::quit);
 
     // Open database if one was specified
     if(fileToOpen.size())
