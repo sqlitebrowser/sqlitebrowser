@@ -771,6 +771,14 @@ void EditTableDialog::addField()
     typeBox->installEventFilter(this);
     connect(typeBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateTypeAndCollation()));
 
+    QComboBox* collationBox = new QComboBox(ui->treeWidget);
+    collationBox->setProperty("column", tbitem->text(kName));
+    collationBox->addItems(m_collationList);
+    collationBox->setCurrentIndex(collationBox->findText(""));
+    ui->treeWidget->setItemWidget(tbitem, kCollation, collationBox);
+    collationBox->installEventFilter(this);
+    connect(collationBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateTypeAndCollation()));
+
     tbitem->setCheckState(kNotNull, Qt::Unchecked);
     tbitem->setCheckState(kPrimaryKey, Qt::Unchecked);
     tbitem->setCheckState(kAutoIncrement, Qt::Unchecked);
