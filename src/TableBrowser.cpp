@@ -22,7 +22,10 @@
 TableBrowser::TableBrowser(QWidget* parent) :
     QWidget(parent),
     ui(new Ui::TableBrowser),
-    gotoValidator(new QIntValidator(0, 0, this))
+    gotoValidator(new QIntValidator(0, 0, this)),
+    db(nullptr),
+    dbStructureModel(nullptr),
+    m_browseTableModel(nullptr)
 {
     ui->setupUi(this);
 
@@ -117,7 +120,8 @@ void TableBrowser::init(DBBrowserDB* _db)
 void TableBrowser::reset()
 {
     // Reset the model
-    m_browseTableModel->reset();
+    if(m_browseTableModel)
+        m_browseTableModel->reset();
 
     // Remove all stored table information browse data tab
     browseTableSettings.clear();
