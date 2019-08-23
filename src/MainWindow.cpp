@@ -158,6 +158,9 @@ void MainWindow::init()
     connect(ui->tableBrowser, &TableBrowser::requestFileOpen, this, [this](const QString& file) {
         fileOpen(file);
     });
+    connect(ui->tableBrowser, &TableBrowser::statusMessageRequested, ui->statusbar, [this](const QString& message) {
+        ui->statusbar->showMessage(message);
+    });
 
     m_currentTabTableModel = ui->tableBrowser->model();
 
