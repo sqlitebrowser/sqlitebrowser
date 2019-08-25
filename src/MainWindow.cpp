@@ -752,11 +752,6 @@ void MainWindow::refresh()
 
 void MainWindow::createTable()
 {
-    if (!db.isOpen()){
-        QMessageBox::information( this, QApplication::applicationName(), tr("There is no database opened. Please open or create a new database file."));
-        return;
-    }
-
     EditTableDialog dialog(db, sqlb::ObjectIdentifier(), true, this);
     if(dialog.exec())
     {
@@ -766,11 +761,6 @@ void MainWindow::createTable()
 
 void MainWindow::createIndex()
 {
-    if (!db.isOpen()){
-        QMessageBox::information( this, QApplication::applicationName(), tr("There is no database opened. Please open or create a new database file."));
-        return;
-    }
-
     EditIndexDialog dialog(db, sqlb::ObjectIdentifier(), true, this);
     if(dialog.exec())
         populateTable();
