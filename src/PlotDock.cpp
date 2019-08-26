@@ -331,36 +331,43 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                 for(int j = 0; j < nrows; ++j)
                 {
                     tdata[j] = j;
-                    // convert x type axis if it's datetime
-                    switch (xtype) {
-                    case QVariant::DateTime:
-                    case QVariant::Date: {
-                        QString s = model->data(model->index(j, x)).toString();
-                        QDateTime d = QDateTime::fromString(s, Qt::ISODate);
-                        xdata[j] = static_cast<double>(d.toMSecsSinceEpoch()) / 1000.0;
-                        break;
-                    }
-                    case QVariant::Time: {
-                        QString s = model->data(model->index(j, x)).toString();
-                        QTime t = QTime::fromString(s);
-                        xdata[j] = t.msecsSinceStartOfDay() / 1000.0;
-                        break;
-                    }
-                    case QVariant::String: {
-                        xdata[j] = j+1;
-                        labels << model->data(model->index(j, x)).toString();
-                        break;
-                    }
-                    default: {
-                        // Get the x value for this point. If the selected column is -1, i.e. the row number, just use the current row number from the loop
-                        // instead of retrieving some value from the model.
-                        if(x == RowNumId)
-                            xdata[j] = j+1;
-                        else
-                            xdata[j] = model->data(model->index(j, x)).toDouble();
-                    }
-                    }
 
+                    // NULL values produce gaps in the graph. We use NaN values in
+                    // that case as required by QCustomPlot.
+                    if(x != RowNumId && model->data(model->index(j, x), Qt::EditRole).isNull())
+                        xdata[j] = qQNaN();
+                    else {
+
+                        // convert x type axis if it's datetime
+                        switch (xtype) {
+                        case QVariant::DateTime:
+                        case QVariant::Date: {
+                            QString s = model->data(model->index(j, x)).toString();
+                            QDateTime d = QDateTime::fromString(s, Qt::ISODate);
+                            xdata[j] = static_cast<double>(d.toMSecsSinceEpoch()) / 1000.0;
+                            break;
+                        }
+                        case QVariant::Time: {
+                            QString s = model->data(model->index(j, x)).toString();
+                            QTime t = QTime::fromString(s);
+                            xdata[j] = t.msecsSinceStartOfDay() / 1000.0;
+                            break;
+                        }
+                        case QVariant::String: {
+                            xdata[j] = j+1;
+                            labels << model->data(model->index(j, x)).toString();
+                            break;
+                        }
+                        default: {
+                            // Get the x value for this point. If the selected column is -1, i.e. the row number, just use the current row number from the loop
+                            // instead of retrieving some value from the model.
+                            if(x == RowNumId)
+                                xdata[j] = j+1;
+                            else
+                                xdata[j] = model->data(model->index(j, x)).toDouble();
+                        }
+                        }
+                    }
                     if (j != 0)
                         isSorted &= (xdata[j-1] <= xdata[j]);
 
