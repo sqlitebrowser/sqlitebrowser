@@ -124,7 +124,7 @@ void MainWindow::init()
 #ifdef Q_OS_MACX
     // Add OpenGL Context for macOS
     QOpenGLWidget *ogl = new QOpenGLWidget(this);
-    ui->horizontalLayout->addWidget(ogl);
+    ui->verticalLayout->addWidget(ogl);
     ogl->setHidden(true);
 #endif
 

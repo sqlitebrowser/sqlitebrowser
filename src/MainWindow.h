@@ -6,7 +6,7 @@
 #include <memory>
 #include <QMainWindow>
 
-class BrowseDataTableSettings;
+struct BrowseDataTableSettings;
 class DbStructureModel;
 class EditDialog;
 class ExtendedTableWidget;
