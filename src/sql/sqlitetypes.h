@@ -305,6 +305,7 @@ class Table : public Object
 {
 public:
     explicit Table(const std::string& name): Object(name), m_withoutRowid(false) {}
+    explicit Table(const Table& table);
     Table& operator=(const Table& rhs);
 
     bool operator==(const Table& rhs) const;

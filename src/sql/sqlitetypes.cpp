@@ -326,6 +326,12 @@ std::string Field::affinity() const
     return "NUMERIC";
 }
 
+Table::Table(const Table& table)
+    : Object(table.name())
+{
+    *this = table;
+}
+
 Table& Table::operator=(const Table& rhs)
 {
     // Base class

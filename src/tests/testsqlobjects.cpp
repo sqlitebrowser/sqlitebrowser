@@ -177,7 +177,7 @@ void TestTable::parseSQL()
                        "\tinfo VARCHAR(255) CHECK (info == 'x')\n"
                        ");";
 
-    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL)));
+    Table tab(*(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL))));
 
     QCOMPARE(tab.name(), "hero");
     QCOMPARE(tab.rowidColumns(), {"_rowid_"});
@@ -207,7 +207,7 @@ void TestTable::parseSQLdefaultexpr()
                        "date datetime default CURRENT_TIMESTAMP,"
                        "zoi integer)";
 
-    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL)));
+    Table tab(*(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL))));
 
     QCOMPARE(tab.name(), "chtest");
     QCOMPARE(tab.fields.at(0).name(), "id");
@@ -241,7 +241,7 @@ void TestTable::parseSQLMultiPk()
                        "PRIMARY KEY(\"id1\",\"id2\")\n"
                        ");";
 
-    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL)));
+    Table tab(*(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL))));
 
     QCOMPARE(tab.name(), "hero");
     QCOMPARE(tab.fields.at(0).name(), "id1");
@@ -260,7 +260,7 @@ void TestTable::parseSQLForeignKey()
 {
     std::string sSQL = "CREATE TABLE grammar_test(id, test, FOREIGN KEY(test) REFERENCES other_table);";
 
-    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL)));
+    Table tab(*(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL))));
 
     QCOMPARE(tab.name(), "grammar_test");
     QCOMPARE(tab.fields.at(0).name(), "id");
@@ -271,7 +271,7 @@ void TestTable::parseSQLSingleQuotes()
 {
     std::string sSQL = "CREATE TABLE 'test'('id','test');";
 
-    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL)));
+    Table tab(*(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL))));
 
     QCOMPARE(tab.name(), "test");
     QCOMPARE(tab.fields.at(0).name(), "id");
@@ -282,7 +282,7 @@ void TestTable::parseSQLSquareBrackets()
 {
     std::string sSQL = "CREATE TABLE [test]([id],[test]);";
 
-    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL)));
+    Table tab(*(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL))));
 
     QCOMPARE(tab.name(), "test");
     QCOMPARE(tab.fields.at(0).name(), "id");
@@ -294,7 +294,7 @@ void TestTable::parseSQLKeywordInIdentifier()
 {
     std::string sSQL = "CREATE TABLE deffered(key integer primary key, if text);";
 
-    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL)));
+    Table tab(*(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL))));
 
     QCOMPARE(tab.name(), "deffered");
     QCOMPARE(tab.fields.at(0).name(), "key");
@@ -308,7 +308,7 @@ void TestTable::parseSQLSomeKeywordsInIdentifier()
                        "`Area of Work`	TEXT,"
                        "`Average Number of Volunteers`	INTEGER);";
 
-    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL)));
+    Table tab(*(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL))));
 
     QCOMPARE(tab.name(), "Average Number of Volunteers by Area of Work");
     QCOMPARE(tab.fields.at(0).name(), "Area of Work");
@@ -319,7 +319,7 @@ void TestTable::parseSQLWithoutRowid()
 {
     std::string sSQL = "CREATE TABLE test(a integer primary key, b integer) WITHOUT ROWID;";
 
-    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL)));
+    Table tab(*(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL))));
 
     QCOMPARE(tab.primaryKey(), {"a"});
     QCOMPARE(tab.rowidColumns(), {"a"});
@@ -332,7 +332,7 @@ void TestTable::parseNonASCIIChars()
                        "PRIMARY KEY(`Fieldöäüß`)"
                        ");";
 
-    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL)));
+    Table tab(*(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL))));
 
     QCOMPARE(tab.name(), "lösung");
     QCOMPARE(tab.fields.at(0).name(), "Fieldöäüß");
@@ -345,7 +345,7 @@ void TestTable::parseNonASCIICharsEs()
                        "PRIMARY KEY(\"Field áéíóúÁÉÍÓÚñÑçÇ\")"
                        ");";
 
-    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL)));
+    Table tab(*(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL))));
 
     QCOMPARE(tab.name(), "Cigüeñas de Alcalá");
     QCOMPARE(tab.fields.at(0).name(), "Field áéíóúÁÉÍÓÚñÑçÇ");
@@ -355,7 +355,7 @@ void TestTable::parseSQLEscapedQuotes()
 {
     std::string sSql = "CREATE TABLE double_quotes(a text default 'a''a');";
 
-    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSql)));
+    Table tab(*(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSql))));
 
     QCOMPARE(tab.name(), "double_quotes");
     QCOMPARE(tab.fields.at(0).name(), "a");
@@ -366,7 +366,7 @@ void TestTable::parseSQLForeignKeys()
 {
     std::string sql = "CREATE TABLE foreign_key_test(a int, b int, foreign key (a) references x, foreign key (b) references w(y,z) on delete set null);";
 
-    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sql)));
+    Table tab(*(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sql))));
 
     QCOMPARE(tab.name(), "foreign_key_test");
     QCOMPARE(tab.fields.at(0).name(), "a");
@@ -381,7 +381,7 @@ void TestTable::parseSQLCheckConstraint()
 {
     std::string sql = "CREATE TABLE a (\"b\" text CHECK(\"b\"='A' or \"b\"='B'));";
 
-    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sql)));
+    Table tab(*(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sql))));
 
     QCOMPARE(tab.name(), "a");
     QCOMPARE(tab.fields.at(0).name(), "b");
@@ -393,7 +393,7 @@ void TestTable::parseDefaultValues()
 {
     std::string sql = "CREATE TABLE test(a int DEFAULT 0, b int DEFAULT -1, c text DEFAULT 'hello', d text DEFAULT '0');";
 
-    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sql)));
+    Table tab(*(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sql))));
 
     QCOMPARE(tab.name(), "test");
     QCOMPARE(tab.fields.at(0).name(), "a");
@@ -417,7 +417,7 @@ void TestTable::createTableWithIn()
                        "value NVARCHAR(5) CHECK (value IN ('a', 'b', 'c'))"
                        ");";
 
-    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL)));
+    Table tab(*(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL))));
     QCOMPARE(tab.name(), "not_working");
 
     QCOMPARE(tab.fields.at(1).check(), "value IN ('a','b','c')");
@@ -434,7 +434,7 @@ void TestTable::createTableWithNotLikeConstraint()
                        "value6 INTEGER CHECK(value6 NOT BETWEEN 1 AND 100)\n"
                        ");";
 
-    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL)));
+    Table tab(*(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL))));
     QCOMPARE(tab.name(), "hopefully_working");
 
     QCOMPARE(tab.fields.at(0).check(), "value NOT LIKE 'prefix%'");
@@ -453,7 +453,7 @@ void TestTable::rowValues()
                       "CHECK((a, b) = (1, 2))\n"
                       ");";
 
-    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sql)));
+    Table tab(*(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sql))));
     QCOMPARE(tab.name(), "test");
 
     QCOMPARE(std::dynamic_pointer_cast<sqlb::CheckConstraint>(tab.constraint({}, sqlb::Constraint::CheckConstraintType))->expression(), "(a,b)=(1,2)");
@@ -468,7 +468,7 @@ void TestTable::complexExpressions()
                       "d INTEGER CHECK((((d > 0))))\n"
                       ");";
 
-    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sql)));
+    Table tab(*(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sql))));
     QCOMPARE(tab.name(), "test");
 
     QCOMPARE(tab.fields.at(0).check(), "(a>0)");
@@ -483,7 +483,7 @@ void TestTable::datetimeExpression()
                       "entry INTEGER DEFAULT (DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME'))\n"
                       ");";
 
-    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sql)));
+    Table tab(*(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sql))));
     QCOMPARE(tab.name(), "test");
 
     QCOMPARE(tab.fields.at(0).name(), "entry");
@@ -497,7 +497,7 @@ void TestTable::extraParentheses()
                       "xy INTEGER DEFAULT (1 + (5) - 4)\n"
                       ");";
 
-    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sql)));
+    Table tab(*(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sql))));
     QCOMPARE(tab.name(), "test");
 
     QCOMPARE(tab.fields.at(0).name(), "xy");
@@ -511,7 +511,7 @@ void TestTable::moduloOperator()
                       "xy INTEGER DEFAULT (7 % 2)\n"
                       ");";
 
-    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sql)));
+    Table tab(*(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sql))));
     QCOMPARE(tab.name(), "test");
 
     QCOMPARE(tab.fields.at(0).name(), "xy");
@@ -528,7 +528,7 @@ void TestTable::complexExpression()
                       "CHECK((a = 'S' AND b IS NOT NULL) OR (a IN ('A', 'P')))"
                       ");";
 
-    Table tab = *(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sql)));
+    Table tab(*(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sql))));
     QCOMPARE(tab.name(), "test");
 
     QCOMPARE(tab.fields.at(0).name(), "uuid");

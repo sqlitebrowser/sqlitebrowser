@@ -289,8 +289,8 @@ keywordastablename
 createtable
   :
   (CREATE (TEMP|TEMPORARY)? TABLE (IF_T NOT EXISTS)? (tablename | keywordastablename)
-    ( LPAREN columndef (COMMA columndef)* ((COMMA)? tableconstraint)* RPAREN (WITHOUT ROWID)?
-    | AS selectstmt
+    ( (LPAREN columndef (COMMA columndef)* (COMMA tableconstraint)* RPAREN (WITHOUT ROWID)?)
+    | (AS selectstmt)
     )
     {#createtable = #([CREATETABLE, "CREATETABLE"], #createtable);}
   )
@@ -382,7 +382,7 @@ columnconstraint
   | (NOT)? NULL_T (conflictclause)?
   | UNIQUE (conflictclause)?
   | CHECK LPAREN expr RPAREN
-  | DEFAULT (QUOTEDLITERAL | LPAREN expr RPAREN | literalvalue | ID | keywordastablename | signednumber)
+  | DEFAULT (QUOTEDLITERAL | LPAREN expr RPAREN | literalvalue | ID | keywordastablename)
   | COLLATE collationname
   | foreignkeyclause)
   {#columnconstraint = #([COLUMNCONSTRAINT, "COLUMNCONSTRAINT"], #columnconstraint);}
@@ -545,7 +545,7 @@ suffixexpr
 
 literalvalue
   :
-    NUMERIC
+    signednumber
   | STRINGLITERAL
 //  | blob-literal
   | NULL_T

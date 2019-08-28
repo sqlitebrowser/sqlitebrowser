@@ -148,9 +148,9 @@ BrowseDataTableSettings& TableBrowser::settings(const sqlb::ObjectIdentifier& ob
     return browseTableSettings[object];
 }
 
-void TableBrowser::setSettings(const sqlb::ObjectIdentifier& table, const BrowseDataTableSettings& data)
+void TableBrowser::setSettings(const sqlb::ObjectIdentifier& table, const BrowseDataTableSettings& table_settings)
 {
-    browseTableSettings[table] = data;
+    browseTableSettings[table] = table_settings;
 }
 
 void TableBrowser::setStructure(QAbstractItemModel* model, const QString& old_table)
@@ -451,7 +451,6 @@ void TableBrowser::updateRecordsetLabel()
         txt = tr("%1 - %2 of >= %3").arg(from).arg(to).arg(total);
         break;
     case SqliteTableModel::RowCount::Complete:
-    default:
         txt = tr("%1 - %2 of %3").arg(from).arg(to).arg(total);
         break;
     }

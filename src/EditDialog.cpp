@@ -629,10 +629,12 @@ void EditDialog::setDataInBuffer(const QByteArray& bArrdata, DataSources source)
         // We don't want this when the QtBuffer has been automatically switched due to the insertion of RTL text,
         // (detected through the state of the apply button) otherwise that would break the typing flow of the user.
         if (!isReadOnly)
+        {
             if (!ui->buttonApply->isEnabled())
                 ui->qtEdit->selectAll();
             else
                 ui->qtEdit->moveCursor(QTextCursor::End);
+        }
         ui->qtEdit->setEnabled(true);
         break;
     }
@@ -913,6 +915,7 @@ void EditDialog::setFocus()
     case RtlTextEditor:
         ui->qtEdit->setFocus();
         ui->qtEdit->selectAll();
+        break;
     case HexEditor:
         hexEdit->setFocus();
         break;

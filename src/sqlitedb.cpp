@@ -1034,7 +1034,7 @@ bool DBBrowserDB::executeMultiSQL(QByteArray query, bool dirty, bool log)
         line++;
 
         // Update progress dialog, keep UI responsive. Make sure to not spend too much time updating the progress dialog in case there are many small statements.
-        int progress_value = static_cast<int>(static_cast<float>(tail - tail_start) / total_tail_length * 100.0f);
+        int progress_value = static_cast<int>(static_cast<float>(tail - tail_start) / static_cast<float>(total_tail_length) * 100.0f);
         if(progress_value > last_progress_value)
         {
             progress.setValue(progress_value);
@@ -1544,7 +1544,7 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
         lastErrorMessage = tr("No table with name '%1' exists in schema '%2'.").arg(QString::fromStdString(tablename.name())).arg(QString::fromStdString(tablename.schema()));
         return false;
     }
-    sqlb::Table old_table = *old_table_ptr;
+    sqlb::Table old_table(*old_table_ptr);
 
     // Check if tracked fields actually exist in the old table
     for(const auto& old_it : track_columns)
@@ -1693,7 +1693,7 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
 
     // Create a new table with the desired schema and a name that doesn't exist yet
     std::string new_table_name = new_table.name();
-    sqlb::Table new_table_with_random_name = new_table;
+    sqlb::Table new_table_with_random_name(new_table);
     new_table_with_random_name.setName(generateTemporaryTableName(newSchemaName));
     if(!executeSQL(QString::fromStdString(new_table_with_random_name.sql(newSchemaName)), true, true))
     {

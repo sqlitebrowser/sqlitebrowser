@@ -84,7 +84,7 @@ public:
 
     QMap<sqlb::ObjectIdentifier, BrowseDataTableSettings> allSettings() const { return browseTableSettings; }
     BrowseDataTableSettings& settings(const sqlb::ObjectIdentifier& object);
-    void setSettings(const sqlb::ObjectIdentifier& table, const BrowseDataTableSettings& data);
+    void setSettings(const sqlb::ObjectIdentifier& table, const BrowseDataTableSettings& table_settings);
 
     void setStructure(QAbstractItemModel* model, const QString& old_table = QString());
     void updateStructure();

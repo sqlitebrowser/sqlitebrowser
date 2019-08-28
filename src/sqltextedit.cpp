@@ -82,7 +82,8 @@ void SqlTextEdit::reloadSettings()
         break;
     case sqlb::GraveAccents:
         sqlLexer->setQuotedIdentifiers(true);
-        // Fall through, treat quoted string as literal string
+        setupSyntaxHighlightingFormat(sqlLexer, "string", QsciLexerSQL::DoubleQuotedString);    // treat quoted string as literal string
+        break;
     case sqlb::SquareBrackets:
         setupSyntaxHighlightingFormat(sqlLexer, "string", QsciLexerSQL::DoubleQuotedString);
         break;
