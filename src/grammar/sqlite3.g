@@ -222,23 +222,6 @@ signednumber
   ;
 
 // parser part
-statementlist
-  :
-  (statement)?
-  (SEMI statement)*
-  ;
-
-statement
-  :
-  createtable
-  | createindex
-  ;
-
-create_statements
-  :
-  createtable
-  | createindex
-  ;
 
 keywordastablename
   :
@@ -289,9 +272,7 @@ keywordastablename
 createtable
   :
   (CREATE (TEMP|TEMPORARY)? TABLE (IF_T NOT EXISTS)? (tablename | keywordastablename)
-    ( (LPAREN columndef (COMMA columndef)* (COMMA tableconstraint)* RPAREN (WITHOUT ROWID)?)
-    | (AS selectstmt)
-    )
+    (LPAREN columndef (COMMA columndef)* (COMMA tableconstraint)* RPAREN (WITHOUT ROWID)?)
     {#createtable = #([CREATETABLE, "CREATETABLE"], #createtable);}
   )
   |(CREATE VIRTUAL TABLE (IF_T NOT EXISTS)? (tablename | keywordastablename)
