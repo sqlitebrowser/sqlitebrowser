@@ -223,6 +223,14 @@ signednumber
 
 // parser part
 
+statement
+  :
+  ( createtable
+    | createindex
+  )
+  (SEMI)?
+  ;
+
 keywordastablename
   :
   ( ABORT
