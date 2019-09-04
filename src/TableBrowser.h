@@ -164,8 +164,8 @@ private:
     /// re-initialized when switching to another table)
     SqliteTableModel* m_browseTableModel;
 
-    QMap<sqlb::ObjectIdentifier, BrowseDataTableSettings> browseTableSettings;  // TODO This probably wants to be static as soon as we have multiple instances of this class
-    QString defaultBrowseTableEncoding;
+    static QMap<sqlb::ObjectIdentifier, BrowseDataTableSettings> browseTableSettings;  // This is static, so settings are shared between instances
+    static QString defaultBrowseTableEncoding;
 
     Palette m_condFormatPalette;
 };

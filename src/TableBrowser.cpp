@@ -19,6 +19,9 @@
 #include <QShortcut>
 #include <QTextCodec>
 
+QMap<sqlb::ObjectIdentifier, BrowseDataTableSettings> TableBrowser::browseTableSettings;
+QString TableBrowser::defaultBrowseTableEncoding;
+
 TableBrowser::TableBrowser(QWidget* parent) :
     QWidget(parent),
     ui(new Ui::TableBrowser),
