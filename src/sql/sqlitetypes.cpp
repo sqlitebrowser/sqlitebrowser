@@ -40,9 +40,10 @@ std::string joinStringVector(const StringVector& vec, const std::string& delim)
  * @brief The SetLocaleToC class
  * This is a stupid helper class which sets the current locale as used by the C++ standard library to the C locale.
  * Upon destruction it resets it to whatever the previous locale was. This is used to work around a problem in Antlr's
- * string comparison which because it is case-independent relies on the current locale. However, when parsind SQL
+ * string comparison which because it is case-independent relies on the current locale. However, when parsing SQL
  * statements we don't want the locale to interfere here. Especially the Turkish locale is problematic here because
  * of the dotted I problem.
+ * TODO: If we ever want to parse from multiple threads, this class needs a thread-safe reference counter.
  */
 class SetLocaleToC
 {
@@ -428,12 +429,6 @@ TablePtr Table::parseSQL(const std::string& sSQL)
 
     try
     {
-        if(sSQL.find("[ blank]") != sSQL.npos)
-        {
-            int a = 0;
-            a++;
-        }
-
         parser.createtable();
         CreateTableWalker ctw(parser.getAST());
 
