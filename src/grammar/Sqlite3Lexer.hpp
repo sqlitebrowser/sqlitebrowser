@@ -39,6 +39,7 @@ public:
 	public: void mCOMMA(bool _createToken);
 	public: void mSEMI(bool _createToken);
 	public: void mSTAR(bool _createToken);
+	public: void mSLASH(bool _createToken);
 	public: void mTILDE(bool _createToken);
 	public: void mAMPERSAND(bool _createToken);
 	public: void mPERCENT(bool _createToken);

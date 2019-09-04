@@ -164,6 +164,7 @@ SEMI 	:	';';
 PLUS    :   '+';
 MINUS   :   '-';
 STAR    :   '*';
+SLASH   :   '/';
 TILDE : '~';
 AMPERSAND: '&';
 PERCENT: '%';

@@ -287,6 +287,10 @@ ANTLR_USE_NAMESPACE(antlr)RefToken Sqlite3Lexer::nextToken()
 					mMINUS(true);
 					theRetToken=_returnToken;
 				}
+				else if ((LA(1) == 0x2f /* '/' */ ) && (true)) {
+					mSLASH(true);
+					theRetToken=_returnToken;
+				}
 				else if ((LA(1) == 0x7c /* '|' */ ) && (true)) {
 					mBITOR(true);
 					theRetToken=_returnToken;
@@ -987,6 +991,20 @@ void Sqlite3Lexer::mSTAR(bool _createToken) {
 	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
 	
 	match(L'*' /* charlit */ );
+	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
+	   _token = makeToken(_ttype);
+	   _token->setText(text.substr(_begin, text.length()-_begin));
+	}
+	_returnToken = _token;
+	_saveIndex=0;
+}
+
+void Sqlite3Lexer::mSLASH(bool _createToken) {
+	int _ttype; ANTLR_USE_NAMESPACE(antlr)RefToken _token; ANTLR_USE_NAMESPACE(std)string::size_type _begin = text.length();
+	_ttype = SLASH;
+	ANTLR_USE_NAMESPACE(std)string::size_type _saveIndex;
+	
+	match(L'/' /* charlit */ );
 	if ( _createToken && _token==ANTLR_USE_NAMESPACE(antlr)nullToken && _ttype!=ANTLR_USE_NAMESPACE(antlr)Token::SKIP ) {
 	   _token = makeToken(_ttype);
 	   _token->setText(text.substr(_begin, text.length()-_begin));
