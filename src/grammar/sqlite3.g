@@ -95,7 +95,6 @@ tokens {
   COLUMNCONSTRAINT;
   TABLECONSTRAINT;
   CREATETABLE;
-  CREATEINDEX;
   INDEXEDCOLUMN;
   KEYWORDASTABLENAME;
   KEYWORDASCOLUMNNAME;
@@ -207,11 +206,6 @@ nonkeyword_columnname
   id
   ;
 
-identifier
-  :
-  ((databasename)? DOT)? tablename
-  ;
-
 collationname
   :
   ID
@@ -219,17 +213,13 @@ collationname
 
 signednumber
   : (PLUS | MINUS)? NUMERIC
-//	{#signednumber = #([SIGNEDNUMBER, "SIGNEDNUMBER"], #signednumber);}
   ;
 
 // parser part
 
 statement
   :
-  ( createtable
-    | createindex
-  )
-  (SEMI)?
+  createtable (SEMI)?
   ;
 
 keywordastablename
@@ -287,13 +277,6 @@ createtable
   |(CREATE VIRTUAL TABLE (IF_T NOT EXISTS)? (tablename | keywordastablename)
     USING name (LPAREN (expr (COMMA expr)*)? RPAREN)?		// TODO: Not sure about using "expr" here
    )
-  ;
-
-createindex
-  :
-  CREATE (UNIQUE)? INDEX (IF_T NOT EXISTS)? (tablename | keywordastablename) ON (tablename | keywordastablename)
-    ( LPAREN indexedcolumn (COMMA indexedcolumn)* RPAREN (WHERE expr)? )
-    {#createindex = #([CREATEINDEX, "CREATEINDEX"], #createindex);}
   ;
 
 keywordascolumnname
@@ -439,7 +422,7 @@ subexpr
   ( literalvalue
 //  | bindparameter TODO
   | ((databasename DOT)? tablename DOT)? columnname
-  | functionname LPAREN (expr (COMMA expr)* )? RPAREN //TODO
+  | functionname LPAREN (expr (COMMA expr)* )? RPAREN
   | castexpr
   | EXISTS LPAREN (expr | selectstmt) RPAREN
   | caseexpr
@@ -516,11 +499,6 @@ like_operator
   | GLOB
   | REGEXP
   | MATCH
-  ;
-
-between_subexpr
-  :
-  subexpr (AND subexpr)+
   ;
 
 suffixexpr

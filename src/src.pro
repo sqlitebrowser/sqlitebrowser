@@ -78,7 +78,11 @@ HEADERS += \
     ProxyDialog.h \
     IconCache.h \
     SelectItemsPopup.h \
-    TableBrowser.h
+    TableBrowser.h \
+    sql/parser/ParserDriver.h \
+    sql/parser/sqlite3_lexer.h \
+    sql/parser/sqlite3_location.h \
+    sql/parser/sqlite3_parser.hpp
 
 SOURCES += \
     sqlitedb.cpp \
@@ -133,7 +137,10 @@ SOURCES += \
     ProxyDialog.cpp \
     IconCache.cpp \
     SelectItemsPopup.cpp \
-    TableBrowser.cpp
+    TableBrowser.cpp \
+    sql/parser/ParserDriver.cpp \
+    sql/parser/sqlite3_lexer.cpp \
+    sql/parser/sqlite3_parser.cpp
 
 RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc \

@@ -22,6 +22,9 @@ set(TESTSQLOBJECTS_SRC
     ../CipherSettings.cpp
     ../DotenvFormat.cpp
     ../CondFormat.cpp
+    ../sql/parser/ParserDriver.cpp
+    ../sql/parser/sqlite3_lexer.cpp
+    ../sql/parser/sqlite3_parser.cpp
 )
 
 set(TESTSQLOBJECTS_HDR
@@ -32,6 +35,10 @@ set(TESTSQLOBJECTS_HDR
     ../sql/Query.h
     ../sql/ObjectIdentifier.h
     ../Data.h
+    ../sql/parser/ParserDriver.h
+    ../sql/parser/sqlite3_lexer.h
+    ../sql/parser/sqlite3_location.h
+    ../sql/parser/sqlite3_parser.hpp
 )
 
 set(TESTSQLOBJECTS_MOC_HDR
@@ -109,6 +116,9 @@ set(TESTREGEX_SRC
     ../CipherSettings.cpp
     ../DotenvFormat.cpp
     ../CondFormat.cpp
+    ../sql/parser/ParserDriver.cpp
+    ../sql/parser/sqlite3_lexer.cpp
+    ../sql/parser/sqlite3_parser.cpp
 )
 
 set(TESTREGEX_HDR
@@ -119,6 +129,10 @@ set(TESTREGEX_HDR
     ../sql/Query.h
     ../sql/ObjectIdentifier.h
     ../Data.h
+    ../sql/parser/ParserDriver.h
+    ../sql/parser/sqlite3_lexer.h
+    ../sql/parser/sqlite3_location.h
+    ../sql/parser/sqlite3_parser.hpp
 )
 
 set(TESTREGEX_MOC_HDR

@@ -38,18 +38,15 @@ public:
 	public: void databasename();
 	public: void tablename();
 	public: void nonkeyword_columnname();
-	public: void identifier();
 	public: void collationname();
 	public: void signednumber();
 	public: void statement();
 	public: void createtable();
-	public: void createindex();
 	public: void keywordastablename();
 	public: void columndef();
 	public: void tableconstraint();
 	public: void name();
 	public: void expr();
-	public: void indexedcolumn();
 	public: void keywordascolumnname();
 	public: void columnname();
 	public: void type_name();
@@ -57,6 +54,7 @@ public:
 	public: void conflictclause();
 	public: void literalvalue();
 	public: void foreignkeyclause();
+	public: void indexedcolumn();
 	public: void selectstmt();
 	public: void functionname();
 	public: void subexpr();
@@ -66,7 +64,6 @@ public:
 	public: void raisefunction();
 	public: void suffixexpr();
 	public: void like_operator();
-	public: void between_subexpr();
 public:
 	ANTLR_USE_NAMESPACE(antlr)RefAST getAST()
 	{
@@ -78,10 +75,10 @@ protected:
 private:
 	static const char* tokenNames[];
 #ifndef NO_STATIC_CONSTS
-	static const int NUM_TOKENS = 121;
+	static const int NUM_TOKENS = 120;
 #else
 	enum {
-		NUM_TOKENS = 121
+		NUM_TOKENS = 120
 	};
 #endif
 	
@@ -129,10 +126,6 @@ private:
 	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_20;
 	static const unsigned long _tokenSet_21_data_[];
 	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_21;
-	static const unsigned long _tokenSet_22_data_[];
-	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_22;
-	static const unsigned long _tokenSet_23_data_[];
-	static const ANTLR_USE_NAMESPACE(antlr)BitSet _tokenSet_23;
 };
 
 #endif /*INC_Sqlite3Parser_hpp_*/

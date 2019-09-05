@@ -14,6 +14,9 @@ enum escapeQuoting {
 // Set quoting style for escapeIdentifier
 void setIdentifierQuoting(escapeQuoting toQuoting);
 
+// Get currently configured quote char
+char getIdentifierQuoteChar();
+
 // Add quotes to an identifier
 std::string escapeIdentifier(const std::string& id);
 

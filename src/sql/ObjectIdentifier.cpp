@@ -20,6 +20,20 @@ void setIdentifierQuoting(escapeQuoting toQuoting)
     customQuoting = toQuoting;
 }
 
+char getIdentifierQuoteChar()
+{
+    switch(customQuoting) {
+    case GraveAccents:
+        return '`';
+    case SquareBrackets:
+        return '[';
+    case DoubleQuotes:
+        return '"';
+    }
+
+    return '"';
+}
+
 std::string escapeIdentifier(const std::string& id)
 {
     switch(customQuoting) {

@@ -128,6 +128,10 @@ set(SQLB_HDR
 	src/grammar/Sqlite3Parser.hpp
 	src/Data.h
 	src/IconCache.h
+	src/sql/parser/ParserDriver.h
+	src/sql/parser/sqlite3_lexer.h
+	src/sql/parser/sqlite3_location.h
+	src/sql/parser/sqlite3_parser.hpp
 )
 
 set(SQLB_MOC_HDR
@@ -234,6 +238,9 @@ set(SQLB_SRC
 	src/IconCache.cpp
 	src/SelectItemsPopup.cpp
 	src/TableBrowser.cpp
+	src/sql/parser/ParserDriver.cpp
+	src/sql/parser/sqlite3_lexer.cpp
+	src/sql/parser/sqlite3_parser.cpp
 )
 
 set(SQLB_FORMS
