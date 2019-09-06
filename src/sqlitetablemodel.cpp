@@ -462,7 +462,8 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
             if(table)
             {
                 auto field = sqlb::findField(table, m_headers.at(column));
-                if(contains(table->primaryKey(), field->name()) && field->isInteger())
+                const auto pk = table->primaryKey();
+                if(pk && contains(pk->columnList(), field->name()) && field->isInteger())
                     newValue = "0";
             }
         }
@@ -681,9 +682,9 @@ QModelIndex SqliteTableModel::dittoRecord(int old_row)
 
     sqlb::TablePtr t = m_db.getObjectByName<sqlb::Table>(m_query.table());
 
-    sqlb::StringVector pk = t->primaryKey();
+    const auto pk = t->primaryKey();
     for (size_t col = 0; col < t->fields.size(); ++col) {
-        if(!contains(pk, t->fields.at(col).name())) {
+        if(!pk || !contains(pk->columnList(), t->fields.at(col).name())) {
             if (!firstEditedColumn)
                 firstEditedColumn = col + 1;
 

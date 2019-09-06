@@ -137,7 +137,7 @@ QWidget* ExtendedTableWidgetEditorDelegate::createEditor(QWidget* parent, const 
         // If no column name is set, assume the primary key is meant
         if(fk.columns().empty()) {
             sqlb::TablePtr obj = m->db().getObjectByName<sqlb::Table>(foreignTable);
-            column = obj->primaryKey().front();
+            column = obj->primaryKey()->columnList().front();
         } else
             column = fk.columns().at(0);
 

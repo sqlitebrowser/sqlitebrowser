@@ -86,17 +86,19 @@ void TestTable::autoincrement()
 {
     Table tt("testtable");
     Field f("id", "integer");
-    f.setAutoIncrement(true);
     Field fkm("km", "integer");
     tt.fields.push_back(f);
     tt.fields.emplace_back("car", "text");
     tt.fields.push_back(fkm);
-    tt.addConstraint(ConstraintPtr(new PrimaryKeyConstraint({f.name()})));
+    PrimaryKeyConstraint pk({f.name()});
+    pk.setAutoIncrement(true);
+    tt.addConstraint(ConstraintPtr(new PrimaryKeyConstraint(pk)));
 
     QCOMPARE(tt.sql(), "CREATE TABLE \"testtable\" (\n"
-                       "\t\"id\"\tinteger PRIMARY KEY AUTOINCREMENT,\n"
+                       "\t\"id\"\tinteger,\n"
                        "\t\"car\"\ttext,\n"
-                       "\t\"km\"\tinteger\n"
+                       "\t\"km\"\tinteger,\n"
+                       "\tPRIMARY KEY(\"id\" AUTOINCREMENT)\n"
                        ");");
 }
 
@@ -104,17 +106,19 @@ void TestTable::notnull()
 {
     Table tt("testtable");
     Field f("id", "integer");
-    f.setAutoIncrement(true);
     Field fkm("km", "integer");
     tt.fields.push_back(f);
     tt.fields.emplace_back("car", "text", true);
     tt.fields.push_back(fkm);
-    tt.addConstraint(ConstraintPtr(new PrimaryKeyConstraint({f.name()})));
+    PrimaryKeyConstraint pk({f.name()});
+    pk.setAutoIncrement(true);
+    tt.addConstraint(ConstraintPtr(new PrimaryKeyConstraint(pk)));
 
     QCOMPARE(tt.sql(), "CREATE TABLE \"testtable\" (\n"
-                       "\t\"id\"\tinteger PRIMARY KEY AUTOINCREMENT,\n"
+                       "\t\"id\"\tinteger,\n"
                        "\t\"car\"\ttext NOT NULL,\n"
-                       "\t\"km\"\tinteger\n"
+                       "\t\"km\"\tinteger,\n"
+                       "\tPRIMARY KEY(\"id\" AUTOINCREMENT)\n"
                        ");");
 }
 
@@ -122,15 +126,15 @@ void TestTable::withoutRowid()
 {
     Table tt("testtable");
     Field f("a", "integer");
-    f.setAutoIncrement(true);
     tt.fields.push_back(f);
     tt.fields.emplace_back("b", "integer");
     tt.setWithoutRowidTable(true);
     tt.addConstraint(ConstraintPtr(new PrimaryKeyConstraint({f.name()})));
 
     QCOMPARE(tt.sql(), "CREATE TABLE \"testtable\" (\n"
-                       "\t\"a\"\tinteger PRIMARY KEY AUTOINCREMENT,\n"
-                       "\t\"b\"\tinteger\n"
+                       "\t\"a\"\tinteger,\n"
+                       "\t\"b\"\tinteger,\n"
+                       "\tPRIMARY KEY(\"a\")\n"
                        ") WITHOUT ROWID;");
 }
 
@@ -140,7 +144,7 @@ void TestTable::foreignKeys()
     Field f("a", "integer");
     tt.fields.push_back(f);
     sqlb::ConstraintPtr fk = sqlb::ConstraintPtr(new sqlb::ForeignKeyClause("b", sqlb::StringVector{"c"}));
-    fk->column_list = {f.name()};
+    fk->setColumnList({f.name()});
     tt.addConstraint(fk);
 
     QCOMPARE(tt.sql(), "CREATE TABLE \"testtable\" (\n"
@@ -189,10 +193,10 @@ void TestTable::parseSQL()
     QCOMPARE(tab.fields.at(1).type(), "text");
     QCOMPARE(tab.fields.at(2).type(), "VARCHAR(255)");
 
-    sqlb::StringVector pk = tab.primaryKey();
-    QVERIFY(tab.fields.at(0).autoIncrement());
-    QCOMPARE(pk.size(), 1);
-    QCOMPARE(pk.at(0), tab.fields.at(0).name());
+    auto pk = tab.primaryKey();
+    QVERIFY(pk->autoIncrement());
+    QCOMPARE(pk->columnList().size(), 1);
+    QCOMPARE(pk->columnList().at(0), tab.fields.at(0).name());
     QVERIFY(tab.fields.at(1).notnull());
     QCOMPARE(tab.fields.at(1).defaultValue(), "'xxxx'");
     QCOMPARE(tab.fields.at(1).check(), "");
@@ -227,9 +231,9 @@ void TestTable::parseSQLdefaultexpr()
     QCOMPARE(tab.fields.at(3).defaultValue(), "");
     QCOMPARE(tab.fields.at(3).check(), "");
 
-    sqlb::StringVector pk = tab.primaryKey();
-    QCOMPARE(pk.size(), 1);
-    QCOMPARE(pk.at(0), tab.fields.at(0).name());
+    auto pk = tab.primaryKey();
+    QCOMPARE(pk->columnList().size(), 1);
+    QCOMPARE(pk->columnList().at(0), tab.fields.at(0).name());
 }
 
 void TestTable::parseSQLMultiPk()
@@ -250,10 +254,10 @@ void TestTable::parseSQLMultiPk()
     QCOMPARE(tab.fields.at(0).type(), "integer");
     QCOMPARE(tab.fields.at(1).type(), "integer");
 
-    sqlb::StringVector pk = tab.primaryKey();
-    QCOMPARE(pk.size(), 2);
-    QCOMPARE(pk.at(0), tab.fields.at(0).name());
-    QCOMPARE(pk.at(1), tab.fields.at(1).name());
+    auto pk = tab.primaryKey();
+    QCOMPARE(pk->columnList().size(), 2);
+    QCOMPARE(pk->columnList().at(0), tab.fields.at(0).name());
+    QCOMPARE(pk->columnList().at(1), tab.fields.at(1).name());
 }
 
 void TestTable::parseSQLForeignKey()
@@ -321,7 +325,7 @@ void TestTable::parseSQLWithoutRowid()
 
     Table tab(*(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL))));
 
-    QCOMPARE(tab.primaryKey(), {"a"});
+    QCOMPARE(tab.primaryKey()->columnList(), {"a"});
     QCOMPARE(tab.rowidColumns(), {"a"});
 }
 

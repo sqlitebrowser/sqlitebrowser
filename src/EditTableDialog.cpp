@@ -114,7 +114,7 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
                 return;
 
             // Show the select items popup dialog
-            SelectItemsPopup* dialog = new SelectItemsPopup(m_table.fieldNames(), item->data(Qt::UserRole).value<sqlb::ConstraintPtr>()->column_list, this);
+            SelectItemsPopup* dialog = new SelectItemsPopup(m_table.fieldNames(), item->data(Qt::UserRole).value<sqlb::ConstraintPtr>()->columnList(), this);
             QRect item_rect = ui->tableConstraints->visualItemRect(item);
             dialog->move(ui->tableConstraints->mapToGlobal(QPoint(ui->tableConstraints->x() + item_rect.x(),
                                                                   ui->tableConstraints->y() + item_rect.y() + item_rect.height() / 2)));
@@ -124,11 +124,11 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
             connect(dialog, &SelectItemsPopup::accepted, [this, dialog, constraint]() {
                 // Check if column selection changed at all
                 sqlb::StringVector new_columns = dialog->selectedItems();
-                if(constraint->column_list != new_columns)
+                if(constraint->columnList() != new_columns)
                 {
                     // Remove the constraint with the old columns and add a new one with the new columns
                     m_table.removeConstraint(constraint);
-                    constraint->column_list = new_columns;
+                    constraint->setColumnList(new_columns);
                     m_table.addConstraint(constraint);
 
                     // Update the UI
@@ -185,7 +185,7 @@ void EditTableDialog::populateFields()
 
     ui->treeWidget->clear();
     const auto& fields = m_table.fields;
-    sqlb::StringVector pk = m_table.primaryKey();
+    const auto pk = m_table.primaryKey();
     for(const sqlb::Field& f : fields)
     {
         QTreeWidgetItem *tbitem = new QTreeWidgetItem(ui->treeWidget);
@@ -208,8 +208,8 @@ void EditTableDialog::populateFields()
         ui->treeWidget->setItemWidget(tbitem, kType, typeBox);
 
         tbitem->setCheckState(kNotNull, f.notnull() ? Qt::Checked : Qt::Unchecked);
-        tbitem->setCheckState(kPrimaryKey, contains(pk, f.name()) ? Qt::Checked : Qt::Unchecked);
-        tbitem->setCheckState(kAutoIncrement, f.autoIncrement() ? Qt::Checked : Qt::Unchecked);
+        tbitem->setCheckState(kPrimaryKey, pk && contains(pk->columnList(), f.name()) ? Qt::Checked : Qt::Unchecked);
+        tbitem->setCheckState(kAutoIncrement, pk && pk->autoIncrement() && contains(pk->columnList(), f.name()) ? Qt::Checked : Qt::Unchecked);
         tbitem->setCheckState(kUnique, f.unique() ? Qt::Checked : Qt::Unchecked);
 
         // For the default value check if it is surrounded by parentheses and if that's the case
@@ -258,7 +258,7 @@ void EditTableDialog::populateConstraints()
     int row = 0;
     for(const auto& constraint : constraints)
     {
-        const auto& columns = constraint->column_list;
+        const auto columns = constraint->columnList();
 
         // Columns
         QTableWidgetItem* column = new QTableWidgetItem(QString::fromStdString(sqlb::joinStringVector(columns, ",")));
@@ -278,7 +278,7 @@ void EditTableDialog::populateConstraints()
             // Only the column list and the name can be migrated to the new constraint.
 
             // Make sure there is only one primary key at a time
-            if(index == 0 && !m_table.primaryKey().empty())
+            if(index == 0 && m_table.primaryKey())
             {
                 QMessageBox::warning(this, qApp->applicationName(), tr("There can only be one primary key for each table. Please modify the existing primary "
                                                                        "key instead."));
@@ -293,7 +293,7 @@ void EditTableDialog::populateConstraints()
             // Create new constraint depending on selected type
             sqlb::ConstraintPtr new_constraint = sqlb::Constraint::makeConstraint(static_cast<sqlb::Constraint::ConstraintTypes>(index));
             new_constraint->setName(constraint->name());
-            new_constraint->column_list = constraint->column_list;
+            new_constraint->setColumnList(constraint->columnList());
 
             // Replace old by new constraint
             m_table.replaceConstraint(constraint, new_constraint);
@@ -473,20 +473,20 @@ void EditTableDialog::fieldItemChanged(QTreeWidgetItem *item, int column)
             // When editing an exiting table, check if any foreign keys would cause trouble in case this name is edited
             if(!m_bNewTable)
             {
-                sqlb::StringVector pk = m_table.primaryKey();
+                const auto pk = m_table.primaryKey();
                 const auto tables = pdb.schemata[curTable.schema()].equal_range("table");
                 for(auto it=tables.first;it!=tables.second;++it)
                 {
                     const sqlb::ObjectPtr& fkobj = it->second;
 
 
-                    auto fks = std::dynamic_pointer_cast<sqlb::Table>(fkobj)->constraints(sqlb::StringVector(), sqlb::Constraint::ForeignKeyConstraintType);
+                    auto fks = std::dynamic_pointer_cast<sqlb::Table>(fkobj)->constraints({}, sqlb::Constraint::ForeignKeyConstraintType);
                     for(const sqlb::ConstraintPtr& fkptr : fks)
                     {
                         auto fk = std::dynamic_pointer_cast<sqlb::ForeignKeyClause>(fkptr);
                         if(fk->table() == m_table.name())
                         {
-                            if(contains(fk->columns(), field.name()) || contains(pk, field.name()))
+                            if(contains(fk->columns(), field.name()) || (pk && contains(pk->columnList(), field.name())))
                             {
                                 QMessageBox::warning(this, qApp->applicationName(), tr("This column is referenced in a foreign key in table %1 and thus "
                                                                                        "its name cannot be changed.")
@@ -526,18 +526,18 @@ void EditTableDialog::fieldItemChanged(QTreeWidgetItem *item, int column)
         case kPrimaryKey:
         {
             // Check if there already is a primary key
-            if(m_table.constraint(sqlb::StringVector(), sqlb::Constraint::PrimaryKeyConstraintType))
+            auto pk = m_table.primaryKey();
+            if(pk)
             {
                 // There already is a primary key for this table. So edit that one as there always can only be one primary key anyway.
-                sqlb::StringVector& pk = m_table.primaryKeyRef();
                 if(item->checkState(column) == Qt::Checked)
                 {
-                    pk.push_back(field.name());
+                    pk->addToColumnList(field.name());
                 } else {
-                    pk.erase(std::remove(pk.begin(), pk.end(), field.name()), pk.end());
+                    pk->removeFromColumnList(field.name());
 
                     // If this is now a primary key constraint without any columns, remove it entirely
-                    if(pk.empty())
+                    if(pk->columnList().empty())
                         m_table.removeConstraints({}, sqlb::Constraint::PrimaryKeyConstraintType);
                 }
             } else if(item->checkState(column) == Qt::Checked) {
@@ -639,7 +639,8 @@ void EditTableDialog::fieldItemChanged(QTreeWidgetItem *item, int column)
                     }
                 }
             }
-            field.setAutoIncrement(ischecked);
+            if(m_table.primaryKey())
+                m_table.primaryKey()->setAutoIncrement(ischecked);
         }
         break;
         case kUnique:
@@ -901,24 +902,20 @@ void EditTableDialog::setWithoutRowid(bool without_rowid)
     if(without_rowid)
     {
         // Before setting the without rowid flag, first perform a check to see if the table meets all the required criteria for without rowid tables
-        auto pks = m_table.primaryKey();
-        for(const auto& pk_name : pks)
+        const auto pk = m_table.primaryKey();
+        if(!pk || pk->autoIncrement())
         {
-            auto pk = sqlb::findField(m_table, pk_name);
-            if(pk == m_table.fields.end() || pk->autoIncrement())
-            {
-                QMessageBox::information(this, QApplication::applicationName(),
-                                         tr("Please add a field which meets the following criteria before setting the without rowid flag:\n"
-                                            " - Primary key flag set\n"
-                                            " - Auto increment disabled"));
+            QMessageBox::information(this, QApplication::applicationName(),
+                                     tr("Please add a field which meets the following criteria before setting the without rowid flag:\n"
+                                        " - Primary key flag set\n"
+                                        " - Auto increment disabled"));
 
-                // Reset checkbox state to unchecked. Block any signals while doing this in order to avoid an extra call to
-                // this function being triggered.
-                ui->checkWithoutRowid->blockSignals(true);
-                ui->checkWithoutRowid->setChecked(false);
-                ui->checkWithoutRowid->blockSignals(false);
-                return;
-            }
+            // Reset checkbox state to unchecked. Block any signals while doing this in order to avoid an extra call to
+            // this function being triggered.
+            ui->checkWithoutRowid->blockSignals(true);
+            ui->checkWithoutRowid->setChecked(false);
+            ui->checkWithoutRowid->blockSignals(false);
+            return;
         }
 
         // If it does, set the without rowid flag of the table
@@ -962,7 +959,7 @@ void EditTableDialog::addConstraint(sqlb::Constraint::ConstraintTypes type)
     // There can only be one primary key
     if(type == sqlb::Constraint::PrimaryKeyConstraintType)
     {
-        if(!m_table.primaryKey().empty())
+        if(m_table.primaryKey())
         {
             QMessageBox::information(this, qApp->applicationName(), tr("There can only be one primary key for each table. Please modify the existing primary "
                                                                        "key instead."));

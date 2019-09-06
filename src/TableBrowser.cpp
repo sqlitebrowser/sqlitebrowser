@@ -1098,7 +1098,7 @@ void TableBrowser::jumpToRow(const sqlb::ObjectIdentifier& table, QString column
 
     // If no column name is set, assume the primary key is meant
     if(!column.size())
-        column = QString::fromStdString(obj->primaryKey().front());
+        column = QString::fromStdString(obj->primaryKey()->columnList().front());
 
     // If column doesn't exist don't do anything
     auto column_index = sqlb::findField(obj, column.toStdString());

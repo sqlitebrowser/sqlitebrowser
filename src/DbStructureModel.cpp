@@ -364,7 +364,12 @@ void DbStructureModel::buildTree(QTreeWidgetItem* parent, const std::string& sch
         {
             sqlb::StringVector pk_columns;
             if(it->type() == sqlb::Object::Types::Table)
-                pk_columns = std::dynamic_pointer_cast<sqlb::Table>(it)->primaryKey();
+            {
+                const auto pk = std::dynamic_pointer_cast<sqlb::Table>(it)->primaryKey();
+                if(pk)
+                    pk_columns = pk->columnList();
+            }
+
             for(const sqlb::FieldInfo& field : fieldList)
             {
                 QTreeWidgetItem *fldItem = new QTreeWidgetItem(item);

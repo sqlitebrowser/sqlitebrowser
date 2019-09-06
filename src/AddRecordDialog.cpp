@@ -180,6 +180,7 @@ void AddRecordDialog::populateFields()
     sqlb::FieldVector fields;
     std::vector<sqlb::ConstraintPtr> fks;
     sqlb::StringVector pk;
+    bool auto_increment = false;
 
     // Initialize fields, fks and pk differently depending on whether it's a table or a view.
     const sqlb::ObjectPtr obj = pdb.getObjectByName(curTable);
@@ -189,7 +190,13 @@ void AddRecordDialog::populateFields()
         fields = m_table->fields;
         for(const sqlb::Field& f : fields)
             fks.push_back(m_table->constraint({f.name()}, sqlb::Constraint::ForeignKeyConstraintType));
-        pk = m_table->primaryKey();
+
+        const auto pk_constraint = m_table->primaryKey();
+        if(pk_constraint)
+        {
+            pk = pk_constraint->columnList();
+            auto_increment = pk_constraint->autoIncrement();
+        }
     } else {
         sqlb::ViewPtr m_view = pdb.getObjectByName<sqlb::View>(curTable);
         fields = m_view->fields;
@@ -224,7 +231,7 @@ void AddRecordDialog::populateFields()
         QString defaultValue = QString::fromStdString(f.defaultValue());
         QString toolTip;
 
-        if (f.autoIncrement())
+        if (auto_increment && contains(pk, f.name()))
             toolTip.append(tr("Auto-increment\n"));
 
         if (f.unique())

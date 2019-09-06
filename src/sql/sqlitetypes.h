@@ -141,11 +141,16 @@ public:
     void setName(const std::string& name) { m_name = name; }
     const std::string& name() const { return m_name; }
 
+    StringVector columnList() const { return column_list; }
+    virtual void setColumnList(const StringVector& list) { column_list = list; }
+    virtual void addToColumnList(const std::string& key) { column_list.push_back(key); }
+    virtual void replaceInColumnList(const std::string& from, const std::string& to);
+    virtual void removeFromColumnList(const std::string& key);
+
     virtual std::string toSql() const = 0;
 
-    StringVector column_list;
-
 protected:
+    StringVector column_list;
     std::string m_name;
 };
 
@@ -187,31 +192,47 @@ private:
 class UniqueConstraint : public Constraint
 {
 public:
-    explicit UniqueConstraint(const StringVector& columns = {}) :
-        Constraint (columns)
-    {}
+    explicit UniqueConstraint(const IndexedColumnVector& columns = {});
+    explicit UniqueConstraint(const StringVector& columns);
+
+    void setConflictAction(const std::string& conflict) { m_conflictAction = conflict; }
+    const std::string& conflictAction() const { return m_conflictAction; }
+
+    // We override these because we maintain our own copy of the column_list variable in m_columns.
+    // This needs to be done because in a unique constraint we can add expressions, sort order, etc. to the
+    // list of columns.
+    void setColumnList(const StringVector& list) override;
+    void addToColumnList(const std::string& key) override;
+    void replaceInColumnList(const std::string& from, const std::string& to) override;
+    void removeFromColumnList(const std::string& key) override;
 
     std::string toSql() const override;
 
     ConstraintTypes type() const override { return UniqueConstraintType; }
+
+protected:
+    IndexedColumnVector m_columns;
+    std::string m_conflictAction;
 };
 
-class PrimaryKeyConstraint : public Constraint
+class PrimaryKeyConstraint : public UniqueConstraint
 {
-public:
-    explicit PrimaryKeyConstraint(const StringVector& columns = {}) :
-        Constraint (columns)
-    {}
+    // Primary keys are a sort of unique constraint for us. This matches quite nicely as both can have a conflict action
+    // and both need to maintain a copy of the column list with sort order information etc.
 
-    void setConflictAction(const std::string& conflict) { m_conflictAction = conflict; }
-    const std::string& conflictAction() const { return m_conflictAction; }
+public:
+    explicit PrimaryKeyConstraint(const IndexedColumnVector& columns = {});
+    explicit PrimaryKeyConstraint(const StringVector& columns);
+
+    void setAutoIncrement(bool ai) { m_auto_increment = ai; }
+    bool autoIncrement() const { return m_auto_increment; }
 
     std::string toSql() const override;
 
     ConstraintTypes type() const override { return PrimaryKeyConstraintType; }
 
 private:
-    std::string m_conflictAction;
+    bool m_auto_increment;
 };
 
 class CheckConstraint : public Constraint
@@ -238,7 +259,6 @@ class Field
 public:
     Field()
         : m_notnull(false),
-          m_autoincrement(false),
           m_unique(false)
     {}
 
@@ -254,7 +274,6 @@ public:
         , m_notnull(notnull)
         , m_check(check)
         , m_defaultvalue(defaultvalue)
-        , m_autoincrement(false)
         , m_unique(unique)
         , m_collation(collation)
     {}
@@ -268,7 +287,6 @@ public:
     void setNotNull(bool notnull = true) { m_notnull = notnull; }
     void setCheck(const std::string& check) { m_check = check; }
     void setDefaultValue(const std::string& defaultvalue) { m_defaultvalue = defaultvalue; }
-    void setAutoIncrement(bool autoinc) { m_autoincrement = autoinc; }
     void setUnique(bool u) { m_unique = u; }
     void setCollation(const std::string& collation) { m_collation = collation; }
 
@@ -286,7 +304,6 @@ public:
     bool notnull() const { return m_notnull; }
     const std::string& check() const { return m_check; }
     const std::string& defaultValue() const { return m_defaultvalue; }
-    bool autoIncrement() const { return m_autoincrement; }
     bool unique() const { return m_unique; }
     const std::string& collation() const { return m_collation; }
 
@@ -296,7 +313,6 @@ private:
     bool m_notnull;
     std::string m_check;
     std::string m_defaultvalue;
-    bool m_autoincrement; //! this is stored here for simplification
     bool m_unique;
     std::string m_collation;
 };
@@ -343,8 +359,7 @@ public:
     ConstraintSet allConstraints() const { return m_constraints; }
     void setConstraints(const ConstraintSet& constraints);
     void replaceConstraint(ConstraintPtr from, ConstraintPtr to);
-    StringVector& primaryKeyRef();
-    const StringVector& primaryKey() const;
+    std::shared_ptr<PrimaryKeyConstraint> primaryKey();
     void removeKeyFromAllConstraints(const std::string& key);
     void renameKeyInAllConstraints(const std::string& key, const std::string& to);
 
@@ -356,7 +371,6 @@ public:
     static TablePtr parseSQL(const std::string& sSQL);
 private:
     StringVector fieldList() const;
-    bool hasAutoIncrement() const;
 
 private:
     bool m_withoutRowid;

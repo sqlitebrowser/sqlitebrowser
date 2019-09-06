@@ -153,7 +153,7 @@ void ForeignKeyEditorDelegate::setModelData(QWidget* editor, QAbstractItemModel*
         const QString clause    = fkEditor->clauseEdit->text();
 
         fk->setTable(table.toStdString());
-        fk->column_list = { field.name() };
+        fk->setColumnList({ field.name() });
 
         if (!id.empty())
             fk->setColumns({id});
