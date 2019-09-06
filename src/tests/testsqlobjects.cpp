@@ -200,7 +200,7 @@ void TestTable::parseSQL()
     QVERIFY(tab.fields.at(1).notnull());
     QCOMPARE(tab.fields.at(1).defaultValue(), "'xxxx'");
     QCOMPARE(tab.fields.at(1).check(), "");
-    QCOMPARE(tab.fields.at(2).check(), "info=='x'");
+    QCOMPARE(tab.fields.at(2).check(), "\"info\" == 'x'");
 }
 
 void TestTable::parseSQLdefaultexpr()
@@ -225,7 +225,7 @@ void TestTable::parseSQLdefaultexpr()
     QCOMPARE(tab.fields.at(3).type(), "integer");
 
     QCOMPARE(tab.fields.at(1).defaultValue(), "('axa')");
-    QCOMPARE(tab.fields.at(1).check(), "dumpytext==\"aa\"");
+    QCOMPARE(tab.fields.at(1).check(), "\"dumpytext\" == \"aa\"");
     QCOMPARE(tab.fields.at(2).defaultValue(), "CURRENT_TIMESTAMP");
     QCOMPARE(tab.fields.at(2).check(), "");
     QCOMPARE(tab.fields.at(3).defaultValue(), "");
@@ -390,7 +390,7 @@ void TestTable::parseSQLCheckConstraint()
     QCOMPARE(tab.name(), "a");
     QCOMPARE(tab.fields.at(0).name(), "b");
     QCOMPARE(tab.fields.at(0).type(), "text");
-    QCOMPARE(tab.fields.at(0).check(), "\"b\"='A' or \"b\"='B'");
+    QCOMPARE(tab.fields.at(0).check(), "\"b\" = 'A' OR \"b\" = 'B'");
 }
 
 void TestTable::parseDefaultValues()
@@ -424,7 +424,7 @@ void TestTable::createTableWithIn()
     Table tab(*(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL))));
     QCOMPARE(tab.name(), "not_working");
 
-    QCOMPARE(tab.fields.at(1).check(), "value IN ('a','b','c')");
+    QCOMPARE(tab.fields.at(1).check(), "\"value\" IN ('a', 'b', 'c')");
 }
 
 void TestTable::createTableWithNotLikeConstraint()
@@ -441,12 +441,12 @@ void TestTable::createTableWithNotLikeConstraint()
     Table tab(*(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sSQL))));
     QCOMPARE(tab.name(), "hopefully_working");
 
-    QCOMPARE(tab.fields.at(0).check(), "value NOT LIKE 'prefix%'");
-    QCOMPARE(tab.fields.at(1).check(), "value2 NOT MATCH 'prefix%'");
-    QCOMPARE(tab.fields.at(2).check(), "value3 NOT REGEXP 'prefix%'");
-    QCOMPARE(tab.fields.at(3).check(), "value4 NOT GLOB 'prefix%'");
-    QCOMPARE(tab.fields.at(4).check(), "value5 BETWEEN 1+4 AND 100 OR 200");
-    QCOMPARE(tab.fields.at(5).check(), "value6 NOT BETWEEN 1 AND 100");
+    QCOMPARE(tab.fields.at(0).check(), "\"value\" NOT LIKE 'prefix%'");
+    QCOMPARE(tab.fields.at(1).check(), "\"value2\" NOT MATCH 'prefix%'");
+    QCOMPARE(tab.fields.at(2).check(), "\"value3\" NOT REGEXP 'prefix%'");
+    QCOMPARE(tab.fields.at(3).check(), "\"value4\" NOT GLOB 'prefix%'");
+    QCOMPARE(tab.fields.at(4).check(), "\"value5\" BETWEEN 1 + 4 AND 100 OR 200");
+    QCOMPARE(tab.fields.at(5).check(), "\"value6\" NOT BETWEEN 1 AND 100");
 }
 
 void TestTable::rowValues()
@@ -460,7 +460,7 @@ void TestTable::rowValues()
     Table tab(*(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sql))));
     QCOMPARE(tab.name(), "test");
 
-    QCOMPARE(std::dynamic_pointer_cast<sqlb::CheckConstraint>(tab.constraint({}, sqlb::Constraint::CheckConstraintType))->expression(), "(a,b)=(1,2)");
+    QCOMPARE(std::dynamic_pointer_cast<sqlb::CheckConstraint>(tab.constraint({}, sqlb::Constraint::CheckConstraintType))->expression(), "(\"a\", \"b\") = (1, 2)");
 }
 
 void TestTable::complexExpressions()
@@ -475,10 +475,10 @@ void TestTable::complexExpressions()
     Table tab(*(std::dynamic_pointer_cast<sqlb::Table>(Table::parseSQL(sql))));
     QCOMPARE(tab.name(), "test");
 
-    QCOMPARE(tab.fields.at(0).check(), "(a>0)");
-    QCOMPARE(tab.fields.at(1).check(), "(b>0 and b>1)");
-    QCOMPARE(tab.fields.at(2).check(), "(c=-1) or (c>0 and c>1) or (c=0)");
-    QCOMPARE(tab.fields.at(3).check(), "(((d>0)))");
+    QCOMPARE(tab.fields.at(0).check(), "(\"a\" > 0)");
+    QCOMPARE(tab.fields.at(1).check(), "(\"b\" > 0 AND \"b\" > 1)");
+    QCOMPARE(tab.fields.at(2).check(), "(\"c\" = -1) OR (\"c\" > 0 AND \"c\" > 1) OR (\"c\" = 0)");
+    QCOMPARE(tab.fields.at(3).check(), "(((\"d\" > 0)))");
 }
 
 void TestTable::datetimeExpression()
@@ -492,7 +492,7 @@ void TestTable::datetimeExpression()
 
     QCOMPARE(tab.fields.at(0).name(), "entry");
     QCOMPARE(tab.fields.at(0).type(), "INTEGER");
-    QCOMPARE(tab.fields.at(0).defaultValue(), "(DATETIME(CURRENT_TIMESTAMP,'LOCALTIME'))");
+    QCOMPARE(tab.fields.at(0).defaultValue(), "(DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME'))");
 }
 
 void TestTable::extraParentheses()
@@ -506,7 +506,7 @@ void TestTable::extraParentheses()
 
     QCOMPARE(tab.fields.at(0).name(), "xy");
     QCOMPARE(tab.fields.at(0).type(), "INTEGER");
-    QCOMPARE(tab.fields.at(0).defaultValue(), "(1+(5)-4)");
+    QCOMPARE(tab.fields.at(0).defaultValue(), "(1 + (5) - 4)");
 }
 
 void TestTable::moduloOperator()
@@ -520,7 +520,7 @@ void TestTable::moduloOperator()
 
     QCOMPARE(tab.fields.at(0).name(), "xy");
     QCOMPARE(tab.fields.at(0).type(), "INTEGER");
-    QCOMPARE(tab.fields.at(0).defaultValue(), "(7%2)");
+    QCOMPARE(tab.fields.at(0).defaultValue(), "(7 % 2)");
 }
 
 void TestTable::complexExpression()
@@ -537,9 +537,9 @@ void TestTable::complexExpression()
 
     QCOMPARE(tab.fields.at(0).name(), "uuid");
     QCOMPARE(tab.fields.at(0).type(), "INTEGER");
-    QCOMPARE(tab.fields.at(0).defaultValue(), "(hex(randomblob(4))||'-'||hex(randomblob(2))||'-'||'4'||substr(hex(randomblob(2)),2)||'-'||substr('AB89',1+(abs(random())%4),1)||substr(hex(randomblob(2)),2)||'-'||hex(randomblob(6)))");
+    QCOMPARE(tab.fields.at(0).defaultValue(), "(hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' || substr(hex(randomblob(2)), 2) || '-' || substr('AB89', 1 + (abs(random()) % 4), 1) || substr(hex(randomblob(2)), 2) || '-' || hex(randomblob(6)))");
 
     auto c = tab.constraints({}, sqlb::Constraint::CheckConstraintType);
     QCOMPARE(c.size(), 1);
-    QCOMPARE(std::dynamic_pointer_cast<sqlb::CheckConstraint>(c.at(0))->expression(), "(a='S' AND b IS NOT NULL) OR (a IN ('A','P'))");
+    QCOMPARE(std::dynamic_pointer_cast<sqlb::CheckConstraint>(c.at(0))->expression(), "(\"a\" = 'S' AND \"b\" IS NOT NULL) OR (\"a\" IN ('A', 'P'))");
 }

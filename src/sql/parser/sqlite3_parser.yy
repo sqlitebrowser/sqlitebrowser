@@ -11,10 +11,66 @@
 
 %code requires {
 	#include <string>
+	#include <tuple>
 	#include "../sqlitetypes.h"
 	#include "../ObjectIdentifier.h"
 	namespace sqlb { namespace parser { class ParserDriver; } }
 	typedef void* yyscan_t;
+
+	// Unfortunately we do not store column constraints in a systematic manner yet.
+	// Instead there is a variable for most column constraints directly inside the
+	// sqlb::Field class. This means that when parsing a column constraint we cannot
+	// just build a column constraint object with all the information and insert that
+	// into the Field object. Instead, the information needs to be passed upwards in
+	// some other way. This is what these declarations are for. We need to be able
+	// to pass information to the Field object as well as to the Table object too
+	// because some column constraints need to be transformed into Table constraints
+	// with our current layout.
+	class ColumnConstraintInfo
+	{
+	public:
+		ColumnConstraintInfo() : is_table_constraint(false), fully_parsed(false) {}
+		~ColumnConstraintInfo() {}
+		ColumnConstraintInfo& operator=(const ColumnConstraintInfo& other)
+		{
+			type = other.type;
+			is_table_constraint = other.is_table_constraint;
+			fully_parsed = other.fully_parsed;
+			if(is_table_constraint)
+				table_constraint = other.table_constraint;
+			text = other.text;
+
+			return *this;
+		}
+		ColumnConstraintInfo(const ColumnConstraintInfo& other)
+		{
+			*this = other;
+		}
+
+		enum ConstraintType
+		{
+			None,
+			AutoIncrement,
+			PrimaryKey,
+			NotNull,
+			Unique,
+			Check,
+			Default,
+			Collate,
+			ForeignKey,
+		};
+
+		ConstraintType type;
+		bool is_table_constraint;
+		bool fully_parsed;
+
+		sqlb::ConstraintPtr table_constraint;
+		std::string text;
+	};
+	using ColumnConstraintInfoVector = std::vector<ColumnConstraintInfo>;
+
+	// Colum definitions are a tuple of three elements: the Field object, a set of table constraints, and a bool to indicate whether parsing was complete
+	using ColumndefData = std::tuple<sqlb::Field, sqlb::ConstraintSet, bool>;
 }
 
 // The parsing context
@@ -189,15 +245,35 @@
 %type <std::string> expr
 %type <bool> optional_if_not_exists
 %type <bool> optional_unique
+%type <bool> optional_temporary
+%type <bool> optional_withoutrowid
 %type <std::string> optional_sort_order
 %type <std::string> optional_where
+%type <std::string> optional_constraintname
+%type <std::string> optional_conflictclause
 %type <std::string> tableid_with_uninteresting_schema
 %type <std::string> optional_exprlist_with_paren
 %type <std::string> select_stmt
+
 %type <sqlb::IndexedColumn> indexed_column
 %type <sqlb::IndexedColumnVector> indexed_column_list
 %type <sqlb::IndexPtr> createindex_stmt
 %type <sqlb::TablePtr> createvirtualtable_stmt
+
+%type <std::string> optional_typename
+%type <ColumnConstraintInfoVector> columnconstraint_list
+%type <ColumnConstraintInfo> columnconstraint
+%type <ColumndefData> columndef
+%type <std::vector<ColumndefData>> columndef_list
+%type <sqlb::StringVector> columnid_list
+%type <sqlb::StringVector> optional_columnid_with_paren_list
+%type <std::string> fk_clause_part
+%type <std::string> fk_clause_part_list
+%type <std::string> optional_fk_clause
+%type <sqlb::ConstraintPtr> tableconstraint
+%type <sqlb::ConstraintSet> tableconstraint_list
+%type <sqlb::ConstraintSet> optional_tableconstraint_list
+%type <sqlb::TablePtr> createtable_stmt
 
 %%
 
@@ -229,6 +305,7 @@ sql:
 statement:
 	createindex_stmt		{ drv.result = $1; }
 	| createvirtualtable_stmt	{ drv.result = $1; }
+	| createtable_stmt		{ drv.result = $1; }
 	;
 
 /*
@@ -538,6 +615,10 @@ createindex_stmt:
 												}
 	;
 
+/*
+ * CREATE VIRTUAL TABLE
+ */
+
 optional_exprlist_with_paren:
 	%empty					{ $$ = {}; }
 	| "(" ")"				{ $$ = {}; }
@@ -550,6 +631,309 @@ createvirtualtable_stmt:
 													$$->setVirtualUsing($7);
 													$$->setFullyParsed(false);
 												}
+	;
+
+/*
+ * CREATE TABLE
+ */
+
+optional_temporary:
+	%empty						{ $$ = false; }
+	| TEMP						{ $$ = true; }
+	| TEMPORARY					{ $$ = true; }
+	;
+
+optional_withoutrowid:
+	%empty						{ $$ = false; }
+	| WITHOUT ROWID					{ $$ = true; }
+	;
+
+optional_conflictclause:
+	%empty						{ $$ = ""; }
+	| ON CONFLICT ROLLBACK				{ $$ = $3; }
+	| ON CONFLICT ABORT				{ $$ = $3; }
+	| ON CONFLICT FAIL				{ $$ = $3; }
+	| ON CONFLICT IGNORE				{ $$ = $3; }
+	| ON CONFLICT REPLACE				{ $$ = $3; }
+	;
+
+optional_typename:
+	%empty					{ $$ = ""; }
+	| type_name				{ $$ = $1; }
+	;
+
+columnconstraint:
+	optional_constraintname PRIMARY KEY optional_sort_order optional_conflictclause	{
+												$$.type = ColumnConstraintInfo::PrimaryKey;
+												$$.is_table_constraint = true;
+												sqlb::PrimaryKeyConstraint* pk = new sqlb::PrimaryKeyConstraint({sqlb::IndexedColumn("", false, $4)});
+												pk->setName($1);
+												pk->setConflictAction($5);
+												$$.table_constraint = sqlb::ConstraintPtr(pk);
+												$$.fully_parsed = true;
+											}
+	| optional_constraintname PRIMARY KEY optional_sort_order optional_conflictclause AUTOINCREMENT	{
+												$$.type = ColumnConstraintInfo::PrimaryKey;
+												$$.is_table_constraint = true;
+												sqlb::PrimaryKeyConstraint* pk = new sqlb::PrimaryKeyConstraint({sqlb::IndexedColumn("", false, $4)});
+												pk->setName($1);
+												pk->setConflictAction($5);
+												pk->setAutoIncrement(true);
+												$$.table_constraint = sqlb::ConstraintPtr(pk);
+												$$.fully_parsed = true;
+											}
+	| optional_constraintname NOT NULL optional_conflictclause			{
+												$$.type = ColumnConstraintInfo::NotNull;
+												$$.is_table_constraint = false;
+												$$.fully_parsed = ($1 == "" && $4 == "");
+											}
+	| optional_constraintname NULL 							{
+												$$.type = ColumnConstraintInfo::None;
+												$$.is_table_constraint = false;
+												$$.fully_parsed = true;
+											}
+	| optional_constraintname UNIQUE optional_conflictclause			{
+												$$.type = ColumnConstraintInfo::Unique;
+												$$.is_table_constraint = false;
+												$$.fully_parsed = ($1 == "" && $3 == "");
+											}
+	| optional_constraintname CHECK "(" expr ")"					{
+												$$.type = ColumnConstraintInfo::Check;
+												$$.is_table_constraint = false;
+												$$.text = $4;
+												$$.fully_parsed = ($1 == "");
+											}
+	| optional_constraintname DEFAULT signednumber					{
+												$$.type = ColumnConstraintInfo::Default;
+												$$.is_table_constraint = false;
+												$$.text = $3;
+												$$.fully_parsed = ($1 == "");
+											}
+	| optional_constraintname DEFAULT literalvalue					{
+												$$.type = ColumnConstraintInfo::Default;
+												$$.is_table_constraint = false;
+												$$.text = $3;
+												$$.fully_parsed = ($1 == "");
+											}
+	| optional_constraintname DEFAULT id						{
+												$$.type = ColumnConstraintInfo::Default;
+												$$.is_table_constraint = false;
+												$$.text = $3;
+												$$.fully_parsed = ($1 == "");
+											}
+	| optional_constraintname DEFAULT allowed_keywords_as_identifier		{	// We must allow the same keywords as unquoted default values as in the columnid context.
+												// But we do not use columnid here in order to avoid reduce/reduce conflicts.
+												$$.type = ColumnConstraintInfo::Default;
+												$$.is_table_constraint = false;
+												$$.text = $3;
+												$$.fully_parsed = ($1 == "");
+											}
+	| optional_constraintname DEFAULT IF						{	// Same as above.
+												$$.type = ColumnConstraintInfo::Default;
+												$$.is_table_constraint = false;
+												$$.text = $3;
+												$$.fully_parsed = ($1 == "");
+											}
+	| optional_constraintname DEFAULT "(" expr ")"					{
+												$$.type = ColumnConstraintInfo::Default;
+												$$.is_table_constraint = false;
+												$$.text = "(" + $4 + ")";
+												$$.fully_parsed = ($1 == "");
+											}
+	| optional_constraintname COLLATE id						{
+												$$.type = ColumnConstraintInfo::Collate;
+												$$.is_table_constraint = false;
+												$$.text = $3;
+												$$.fully_parsed = ($1 == "");
+											}
+	| optional_constraintname REFERENCES tableid optional_columnid_with_paren_list optional_fk_clause	{	// TODO Solve shift/reduce conflict. It is not super important though as shifting seems to be right here.
+												$$.type = ColumnConstraintInfo::ForeignKey;
+												$$.is_table_constraint = true;
+												sqlb::ForeignKeyClause* fk = new sqlb::ForeignKeyClause();
+												fk->setName($1);
+												fk->setTable($3);
+												fk->setColumns($4);
+												fk->setConstraint($5);
+												$$.table_constraint = sqlb::ConstraintPtr(fk);
+												$$.fully_parsed = true;
+											}
+	;
+
+columnconstraint_list:
+	columnconstraint				{ $$ = { $1 }; }
+	| columnconstraint_list columnconstraint	{ $$ = $1; $$.push_back($2); }
+	;
+
+columndef:
+	columnid optional_typename columnconstraint_list	{
+								sqlb::Field f($1, $2);
+								bool fully_parsed = true;
+								sqlb::ConstraintSet table_constraints{};
+								for(auto c : $3)
+								{
+									if(c.fully_parsed == false)
+										fully_parsed = false;
+
+									if(c.type == ColumnConstraintInfo::None)
+										continue;
+
+									if(c.is_table_constraint)
+									{
+										if(c.table_constraint->columnList().empty())
+											c.table_constraint->setColumnList({$1});
+										else
+											c.table_constraint->replaceInColumnList("", $1);
+										table_constraints.insert(c.table_constraint);
+									} else {
+										if(c.type == ColumnConstraintInfo::NotNull) {
+											f.setNotNull(true);
+										} else if(c.type == ColumnConstraintInfo::Unique) {
+											f.setUnique(true);
+										} else if(c.type == ColumnConstraintInfo::Check) {
+											f.setCheck(c.text);
+										} else if(c.type == ColumnConstraintInfo::Default) {
+											f.setDefaultValue(c.text);
+										} else if(c.type == ColumnConstraintInfo::Collate) {
+											f.setCollation(c.text);
+										} else {
+											fully_parsed = false;
+										}
+									}
+								}
+
+								$$ = std::make_tuple(f, table_constraints, fully_parsed);
+							}
+	| columnid optional_typename			{ $$ = std::make_tuple(sqlb::Field($1, $2), sqlb::ConstraintSet{}, true); }
+	;
+
+columndef_list:
+	columndef					{ $$ = {$1}; }
+	| columndef_list "," columndef			{ $$ = $1; $$.push_back($3); }
+	;
+
+optional_constraintname:
+	%empty						{ $$ = ""; }
+	| CONSTRAINT id					{ $$ = $2; }
+	;
+
+columnid_list:
+	columnid					{ $$ = sqlb::StringVector(1, $1); }
+	| columnid_list "," columnid			{ $$ = $1; $$.push_back($3); }
+	;
+
+optional_columnid_with_paren_list:
+	%empty						{ $$ = sqlb::StringVector(); }
+	| "(" columnid_list ")"				{ $$ = $2; }
+	;
+
+fk_clause_part:
+	ON DELETE SET NULL				{ $$ = $1 + " " + $2 + " " + $3 + " " + $4; }
+	| ON DELETE SET DEFAULT				{ $$ = $1 + " " + $2 + " " + $3 + " " + $4; }
+	| ON DELETE CASCADE				{ $$ = $1 + " " + $2 + " " + $3; }
+	| ON DELETE RESTRICT				{ $$ = $1 + " " + $2 + " " + $3; }
+	| ON DELETE NO ACTION				{ $$ = $1 + " " + $2 + " " + $3 + " " + $4; }
+	| ON UPDATE SET NULL				{ $$ = $1 + " " + $2 + " " + $3 + " " + $4; }
+	| ON UPDATE SET DEFAULT				{ $$ = $1 + " " + $2 + " " + $3 + " " + $4; }
+	| ON UPDATE CASCADE				{ $$ = $1 + " " + $2 + " " + $3; }
+	| ON UPDATE RESTRICT				{ $$ = $1 + " " + $2 + " " + $3; }
+	| ON UPDATE NO ACTION				{ $$ = $1 + " " + $2 + " " + $3 + " " + $4; }
+	| ON INSERT SET NULL				{ $$ = $1 + " " + $2 + " " + $3 + " " + $4; }
+	| ON INSERT SET DEFAULT				{ $$ = $1 + " " + $2 + " " + $3 + " " + $4; }
+	| ON INSERT CASCADE				{ $$ = $1 + " " + $2 + " " + $3; }
+	| ON INSERT RESTRICT				{ $$ = $1 + " " + $2 + " " + $3; }
+	| ON INSERT NO ACTION				{ $$ = $1 + " " + $2 + " " + $3 + " " + $4; }
+	| MATCH id					{ $$ = $1 + " " + $2; }
+	;
+
+fk_clause_part_list:
+	fk_clause_part					{ $$ = $1; }
+	| fk_clause_part_list fk_clause_part		{ $$ = $1 + " " + $2; }
+	;
+
+optional_fk_clause:
+	%empty								{ $$ = ""; }
+	| fk_clause_part_list						{ $$ = $1; }
+	| fk_clause_part_list DEFERRABLE INITIALLY DEFERRED		{ $$ = $1 + " " + $2 + " " + $3 + " " + $4; }
+	| fk_clause_part_list DEFERRABLE INITIALLY IMMEDIATE		{ $$ = $1 + " " + $2 + " " + $3 + " " + $4; }
+	| fk_clause_part_list DEFERRABLE				{ $$ = $1 + " " + $2; }
+	| fk_clause_part_list NOT DEFERRABLE INITIALLY DEFERRED		{ $$ = $1 + " " + $2 + " " + $3 + " " + $4 + " " + $5; }
+	| fk_clause_part_list NOT DEFERRABLE INITIALLY IMMEDIATE	{ $$ = $1 + " " + $2 + " " + $3 + " " + $4 + " " + $5; }
+	| fk_clause_part_list NOT DEFERRABLE				{ $$ = $1 + " " + $2 + " " + $3; }
+	| DEFERRABLE INITIALLY DEFERRED					{ $$ = $1 + " " + $2 + " " + $3; }
+	| DEFERRABLE INITIALLY IMMEDIATE				{ $$ = $1 + " " + $2 + " " + $3; }
+	| DEFERRABLE							{ $$ = $1; }
+	| NOT DEFERRABLE INITIALLY DEFERRED				{ $$ = $1 + " " + $2 + " " + $3 + " " + $4; }
+	| NOT DEFERRABLE INITIALLY IMMEDIATE				{ $$ = $1 + " " + $2 + " " + $3 + " " + $4; }
+	| NOT DEFERRABLE						{ $$ = $1 + " " + $2; }
+	;
+
+tableconstraint:
+	optional_constraintname PRIMARY KEY "(" indexed_column_list ")" optional_conflictclause		{
+														sqlb::PrimaryKeyConstraint* pk = new sqlb::PrimaryKeyConstraint($5);
+														pk->setName($1);
+														pk->setConflictAction($7);
+														$$ = sqlb::ConstraintPtr(pk);
+													}
+	| optional_constraintname PRIMARY KEY "(" indexed_column_list AUTOINCREMENT ")" optional_conflictclause	{
+														sqlb::PrimaryKeyConstraint* pk = new sqlb::PrimaryKeyConstraint($5);
+														pk->setName($1);
+														pk->setConflictAction($8);
+														pk->setAutoIncrement(true);
+														$$ = sqlb::ConstraintPtr(pk);
+													}
+	| optional_constraintname UNIQUE "(" indexed_column_list ")" optional_conflictclause		{
+														sqlb::UniqueConstraint* u = new sqlb::UniqueConstraint($4);
+														u->setName($1);
+														u->setConflictAction($6);
+														$$ = sqlb::ConstraintPtr(u);
+													}
+	| optional_constraintname CHECK "(" expr ")"							{
+														$$ = sqlb::ConstraintPtr(new sqlb::CheckConstraint($4));
+														$$->setName($1);
+													}
+	| optional_constraintname FOREIGN KEY "(" columnid_list ")" REFERENCES tableid optional_columnid_with_paren_list optional_fk_clause	{
+														$$ = sqlb::ConstraintPtr(new sqlb::ForeignKeyClause($8, $9, $10));
+														$$->setColumnList($5);
+														$$->setName($1);
+													}
+	;
+
+tableconstraint_list:
+	tableconstraint					{ $$ = {$1}; }
+	| tableconstraint_list "," tableconstraint	{ $$ = $1; $$.insert($3); }
+	| tableconstraint_list tableconstraint		{ $$ = $1; $$.insert($2); }
+	;
+
+optional_tableconstraint_list:
+	%empty						{ $$ = {}; }
+	| "," tableconstraint_list			{ $$ = $2; }
+	;
+
+createtable_stmt:
+	CREATE optional_temporary TABLE optional_if_not_exists tableid_with_uninteresting_schema AS select_stmt		{
+										$$ = sqlb::TablePtr(new sqlb::Table($5));
+										$$->setFullyParsed(false);
+									}
+	| CREATE optional_temporary TABLE optional_if_not_exists tableid_with_uninteresting_schema "(" columndef_list optional_tableconstraint_list ")" optional_withoutrowid		{
+										$$ = sqlb::TablePtr(new sqlb::Table($5));
+										$$->setWithoutRowidTable($10);
+										$$->setConstraints($8);
+										$$->setFullyParsed(true);
+
+										for(const auto& column : $7)
+										{
+											sqlb::Field f;
+											sqlb::ConstraintSet c;
+											bool fully_parsed;
+											std::tie(f, c, fully_parsed) = column;
+
+											if(fully_parsed == false)
+												$$->setFullyParsed(false);
+											$$->fields.push_back(f);
+											for(const auto& i : c)
+												$$->addConstraint(i);
+										}
+									}
 	;
 
 %%
