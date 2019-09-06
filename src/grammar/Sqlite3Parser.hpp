@@ -45,13 +45,13 @@ public:
 	public: void keywordastablename();
 	public: void columndef();
 	public: void tableconstraint();
-	public: void name();
-	public: void expr();
 	public: void keywordascolumnname();
 	public: void columnname();
 	public: void type_name();
 	public: void columnconstraint();
+	public: void name();
 	public: void conflictclause();
+	public: void expr();
 	public: void literalvalue();
 	public: void foreignkeyclause();
 	public: void indexedcolumn();

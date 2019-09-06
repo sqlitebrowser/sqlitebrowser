@@ -270,13 +270,9 @@ keywordastablename
 
 createtable
   :
-  (CREATE (TEMP|TEMPORARY)? TABLE (IF_T NOT EXISTS)? (tablename | keywordastablename)
+  CREATE (TEMP|TEMPORARY)? TABLE (IF_T NOT EXISTS)? (tablename | keywordastablename)
     (LPAREN columndef (COMMA columndef)* (COMMA tableconstraint)* RPAREN (WITHOUT ROWID)?)
     {#createtable = #([CREATETABLE, "CREATETABLE"], #createtable);}
-  )
-  |(CREATE VIRTUAL TABLE (IF_T NOT EXISTS)? (tablename | keywordastablename)
-    USING name (LPAREN (expr (COMMA expr)*)? RPAREN)?		// TODO: Not sure about using "expr" here
-   )
   ;
 
 keywordascolumnname

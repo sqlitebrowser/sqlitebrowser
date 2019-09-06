@@ -474,6 +474,40 @@ FieldInfoList Table::fieldInformation() const
 
 TablePtr Table::parseSQL(const std::string& sSQL)
 {
+    // Try to detect if this is a virtual table or not
+    std::string virtual_string("VIRTUAL");
+    auto it = std::search(
+      sSQL.begin(), sSQL.end(),
+      virtual_string.begin(), virtual_string.end(),
+      [](char ch1, char ch2) { return std::toupper(ch1) == std::toupper(ch2); }
+    );
+    if(it != sSQL.end())
+    {
+        std::string table_string("TABLE");
+        auto jt = std::search(
+          sSQL.begin(), sSQL.end(),
+          table_string.begin(), table_string.end(),
+          [](char ch1, char ch2) { return std::toupper(ch1) == std::toupper(ch2); }
+        );
+        if(it != sSQL.end() && it < jt)
+        {
+            // It is a virtual table
+
+            parser::ParserDriver drv;
+            if(!drv.parse(sSQL))
+            {
+                TablePtr t = std::dynamic_pointer_cast<Table>(drv.result);
+                t->setOriginalSql(sSQL);
+                return t;
+            } else {
+                std::cerr << "Sqlite parse error: " << sSQL << std::endl;
+                return TablePtr(new Table(""));
+            }
+        }
+    }
+
+    // It is an ordinary table
+
     SetLocaleToC locale;
 
     std::stringstream s;
@@ -796,39 +830,22 @@ TablePtr CreateTableWalker::table()
             s = m_root->getNextSibling();
 
         // Skip to table name
-        bool is_virtual_table = false;
         while(s->getType() != Sqlite3Lexer::ID &&
               s->getType() != Sqlite3Lexer::QUOTEDID &&
               s->getType() != Sqlite3Lexer::QUOTEDLITERAL &&
               s->getType() != Sqlite3Lexer::STRINGLITERAL &&
               s->getType() != sqlite3TokenTypes::KEYWORDASTABLENAME)
         {
-            // Is this one of these virtual tables?
-            if(s->getType() == Sqlite3Lexer::VIRTUAL)
-                is_virtual_table = true;
-
             s = s->getNextSibling();
         }
 
         // Extract and set table name
         tab->setName(tablename(s));
 
-        // Special handling for virtual tables. If this is a virtual table, extract the USING part and skip all the
-        // rest of this function because virtual tables don't have column definitons
-        if(is_virtual_table)
-        {
-            s = s->getNextSibling(); // USING
-            s = s->getNextSibling(); // module name
-            tab->setVirtualUsing(concatTextAST(s, true));
-            tab->setFullyParsed(false);
-
-            return TablePtr(tab);
-        }
-
-        // This is a normal table, not a virtual one
         s = s->getNextSibling(); // LPAREN
         s = s->getNextSibling(); // first column name
         antlr::RefAST column = s;
+
         // loop columndefs
         while(column != antlr::nullAST && column->getType() == sqlite3TokenTypes::COLUMNDEF)
         {
@@ -1339,7 +1356,7 @@ IndexPtr Index::parseSQL(const std::string& sSQL)
     parser::ParserDriver drv;
     if(!drv.parse(sSQL))
     {
-        IndexPtr i = drv.result;
+        IndexPtr i = std::dynamic_pointer_cast<Index>(drv.result);
         i->setOriginalSql(sSQL);
         return i;
     } else {

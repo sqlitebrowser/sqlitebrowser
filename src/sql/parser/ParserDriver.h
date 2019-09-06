@@ -28,7 +28,7 @@ public:
     int parse(const std::string& s);
 
     // Result returned by the parsing process
-    sqlb::IndexPtr result;
+    sqlb::ObjectPtr result;
 
     // The token's location used by the scanner
     sqlb::parser::location location;

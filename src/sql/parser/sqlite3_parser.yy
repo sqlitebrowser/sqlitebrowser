@@ -192,10 +192,12 @@
 %type <std::string> optional_sort_order
 %type <std::string> optional_where
 %type <std::string> tableid_with_uninteresting_schema
+%type <std::string> optional_exprlist_with_paren
 %type <std::string> select_stmt
 %type <sqlb::IndexedColumn> indexed_column
 %type <sqlb::IndexedColumnVector> indexed_column_list
 %type <sqlb::IndexPtr> createindex_stmt
+%type <sqlb::TablePtr> createvirtualtable_stmt
 
 %%
 
@@ -225,7 +227,8 @@ sql:
 	;
 
 statement:
-	createindex_stmt { drv.result = $1; }
+	createindex_stmt		{ drv.result = $1; }
+	| createvirtualtable_stmt	{ drv.result = $1; }
 	;
 
 /*
@@ -532,6 +535,20 @@ createindex_stmt:
 													$$->setWhereExpr($11);
 													$$->fields = $9;
 													$$->setFullyParsed(true);
+												}
+	;
+
+optional_exprlist_with_paren:
+	%empty					{ $$ = {}; }
+	| "(" ")"				{ $$ = {}; }
+	| "(" exprlist_expr ")"			{ $$ = $2; }
+	;
+
+createvirtualtable_stmt:
+	CREATE VIRTUAL TABLE optional_if_not_exists tableid_with_uninteresting_schema USING id optional_exprlist_with_paren	{
+													$$ = sqlb::TablePtr(new sqlb::Table($5));
+													$$->setVirtualUsing($7);
+													$$->setFullyParsed(false);
 												}
 	;
 
