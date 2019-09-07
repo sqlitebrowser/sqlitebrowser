@@ -4127,7 +4127,7 @@ void MainWindow::restoreOpenTabs(QString tabs)
         ui->mainTab->setUpdatesEnabled(false);
         ui->mainTab->clear();
         for (QString objectName : tabList) {
-            for (QWidget* widget : {ui->structure, ui->browser, ui->pragmas, ui->query})
+            for (QWidget* widget : {ui->structure, ui->browser, ui->pragmas, ui->query, ui->diagram})
                 if (widget->objectName() == objectName) {
                     ui->mainTab->addTab(widget, widget->accessibleName());
                     break;
