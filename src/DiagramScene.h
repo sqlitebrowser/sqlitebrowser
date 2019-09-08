@@ -6,6 +6,7 @@
 class DBBrowserDB;
 class TableWidget;
 class Relation;
+class TableProxy;
 
 class DiagramScene : public QGraphicsScene
 {
@@ -17,14 +18,13 @@ public slots:
     void updateTables();
     void removeTable(const std::string& tableName);
 
-    // ToDo: implement connections
-    // void addConnection(const QString& fromTable, const QString& toTable);
-    // void removeConnection(const QString& fromTable, const QString& toTable);
-
 private:
 
-    QList<TableWidget*> m_tables;
-    QList<Relation> m_relations;
+    void addRelation(Relation* rel);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
+
+    QList<TableProxy*> m_tables;
+    QList<Relation*> m_relations;
 
     // it won't be const when diagrams would allow to edit DB
     // in the (near) future :)

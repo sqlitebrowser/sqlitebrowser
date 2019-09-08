@@ -4,8 +4,10 @@
 #include "sql/sqlitetypes.h"
 
 #include <QAbstractListModel>
-#include <QWidget>
+#include <QGraphicsProxyWidget>
 #include <QMap>
+#include <QWidget>
+#include <QLineF>
 
 #include <string>
 #include <vector>
@@ -13,6 +15,7 @@
 class QLabel;
 class QListView;
 class QLineF;
+class QGraphicsLineItem;
 
 class TableModel : public QAbstractListModel
 {
@@ -54,19 +57,55 @@ private:
     QLabel* m_label;
 };
 
+class TableProxy : public QGraphicsProxyWidget
+{
+    Q_OBJECT
+
+#define OVERRIDE_MOUSE_EVENT(event_type) \
+    void event_type(QGraphicsSceneMouseEvent* event) override \
+    { return QGraphicsItem::event_type(event); }
+
+public:
+    TableProxy(QGraphicsItem* parent = nullptr)
+        : QGraphicsProxyWidget(parent)
+    {
+        setFlags(flags() | ItemIsMovable | ItemIsSelectable);
+    }
+
+    TableWidget* tableWidget() const
+    {
+        return static_cast<TableWidget*>(widget());
+    }
+
+    ~TableProxy() override {}
+
+    OVERRIDE_MOUSE_EVENT(mouseDoubleClickEvent)
+    OVERRIDE_MOUSE_EVENT(mouseMoveEvent)
+    OVERRIDE_MOUSE_EVENT(mousePressEvent)
+    OVERRIDE_MOUSE_EVENT(mouseReleaseEvent)
+};
+
 class Relation : public QObject
 {
     Q_OBJECT
 
 public:
-    Relation(TableWidget* fromTable, TableWidget* toTable, QObject* parent = nullptr);
+    Relation(TableProxy* parentTable, TableProxy* childTable);
     ~Relation();
+
+    TableProxy* parentTable() const { return m_parentTable; };
+    TableProxy* childTable() const { return m_childTable; };
+
+    void setLineItem(QGraphicsLineItem* item) { m_lineItem = item; };
+    QGraphicsLineItem* lineItem() const { return m_lineItem; };
+    QLineF line() const { return QLineF(m_parentTable->scenePos(),
+                                        m_childTable->scenePos()); };
 
     QString tooltipText() const;
 
 private:
-    TableWidget *m_fromTable, *m_toTable;
-    QLineF* m_line;
+    TableProxy *m_parentTable, *m_childTable;
+    QGraphicsLineItem* m_lineItem;
 };
 
 #endif

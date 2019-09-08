@@ -4,6 +4,7 @@
 #include <QLabel>
 #include <QListView>
 #include <QLineF>
+#include <QGraphicsLineItem>
 #include <QVBoxLayout>
 
 // TableModel
@@ -106,17 +107,16 @@ QSize TableWidget::sizeHint() const
 
 // Relation
 
-Relation::Relation(TableWidget* fromTable, TableWidget* toTable, QObject *parent)
-    : QObject(parent)
-    , m_fromTable(fromTable)
-    , m_toTable(toTable)
+Relation::Relation(TableProxy* parentTable, TableProxy* childTable)
+    : QObject(parentTable)
+    , m_parentTable(parentTable)
+    , m_childTable(childTable)
+    , m_lineItem(nullptr)
 {
-    m_line = new QLineF();
 }
 
 Relation::~Relation()
 {
-    delete m_line;
 }
 
 QString Relation::tooltipText() const
