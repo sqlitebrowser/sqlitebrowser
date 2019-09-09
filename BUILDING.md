@@ -55,7 +55,7 @@ The same process works for building the code in any platform supported by Qt
 
 ```bash
 $ sudo apt install build-essential git-core cmake libsqlite3-dev qt5-default qttools5-dev-tools \
-    libsqlcipher-dev qtbase5-dev libantlr-dev libqt5scintilla2-dev libqcustomplot-dev qttools5-dev
+    libsqlcipher-dev qtbase5-dev libqt5scintilla2-dev libqcustomplot-dev qttools5-dev
 $ git clone https://github.com/sqlitebrowser/sqlitebrowser
 $ cd sqlitebrowser
 $ mkdir build
@@ -77,7 +77,7 @@ Done. :)
 `qt5-qtbase-devel` in the `dnf install` line below.
 
 ```
-$ sudo dnf install ant-antlr antlr-C++ cmake gcc-c++ git qt-devel qt5-linguist qwt-qt5-devel \
+$ sudo dnf install cmake gcc-c++ git qt-devel qt5-linguist qwt-qt5-devel \
        sqlite-devel
 $ git clone https://github.com/sqlitebrowser/sqlitebrowser
 $ cd sqlitebrowser
@@ -93,7 +93,7 @@ This should complete without errors, and `sqlitebrowser` should now be launch-ab
 ```bash
 
 
-$ zypper in -y build git-core, libQt5Core5,  libQt5Core5-32bit,  libqt5-qtbase,  libqt5-qtbase-devel,  libqt5-qttools,  libqt5-qttools-devel,  build,  gcc-c++,  gcc,  sqlite3-devel,  libsqlite3-0,  cmake,  antlr-devel,  sqlcipher-devel
+$ zypper in -y build git-core, libQt5Core5,  libQt5Core5-32bit,  libqt5-qtbase,  libqt5-qtbase-devel,  libqt5-qttools,  libqt5-qttools-devel,  build,  gcc-c++,  gcc,  sqlite3-devel,  libsqlite3-0,  cmake,  sqlcipher-devel
 $ git clone https://github.com/sqlitebrowser/sqlitebrowser
 $ cd sqlitebrowser
 $ mkdir build

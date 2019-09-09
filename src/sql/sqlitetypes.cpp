@@ -1,14 +1,10 @@
 #include "sqlitetypes.h"
 #include "ObjectIdentifier.h"
-#include "grammar/Sqlite3Lexer.hpp"
-#include "grammar/Sqlite3Parser.hpp"
 #include "parser/ParserDriver.h"
 
-#include <clocale>          // This include seems to only be necessary for the Windows build
 #include <iostream>
 #include <iterator>
 #include <numeric>
-#include <sstream>
 
 namespace {
 bool starts_with_ci(const std::string& str, const std::string& with)

@@ -15,7 +15,6 @@ endif()
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" "${CMAKE_MODULE_PATH}")
 
 OPTION(ENABLE_TESTING "Enable the unit tests" OFF)
-OPTION(FORCE_INTERNAL_ANTLR "Don't use the distribution's Antlr library even if there is one" OFF)
 OPTION(FORCE_INTERNAL_QSCINTILLA "Don't use the distribution's QScintilla library even if there is one" OFF)
 OPTION(FORCE_INTERNAL_QCUSTOMPLOT "Don't use distribution's QCustomPlot even if available" ON)
 OPTION(FORCE_INTERNAL_QHEXEDIT "Don't use distribution's QHexEdit even if available" ON)
@@ -72,9 +71,6 @@ endif()
 
 find_package(Qt5 REQUIRED COMPONENTS Concurrent Gui LinguistTools Network PrintSupport Test Widgets Xml)
 
-if(NOT FORCE_INTERNAL_ANTLR)
-    find_package(Antlr2 QUIET)
-endif()
 if(NOT FORCE_INTERNAL_QSCINTILLA)
     find_package(QScintilla 2.8.10 QUIET)
 endif()
@@ -90,10 +86,6 @@ else()
 endif()
 set(JSON_DIR libs/json)
 
-if(NOT ANTLR2_FOUND)
-    set(ANTLR_DIR libs/antlr-2.7.7)
-    add_subdirectory(${ANTLR_DIR})
-endif()
 if(NOT QSCINTILLA_FOUND)
     set(QSCINTILLA_DIR libs/qscintilla/Qt4Qt5)
     add_subdirectory(${QSCINTILLA_DIR})
@@ -123,9 +115,6 @@ set(SQLB_HDR
 	src/sql/ObjectIdentifier.h
 	src/csvparser.h
 	src/sqlite.h
-	src/grammar/sqlite3TokenTypes.hpp
-	src/grammar/Sqlite3Lexer.hpp
-	src/grammar/Sqlite3Parser.hpp
 	src/Data.h
 	src/IconCache.h
 	src/sql/parser/ParserDriver.h
@@ -208,8 +197,6 @@ set(SQLB_SRC
 	src/docktextedit.cpp
 	src/csvparser.cpp
 	src/DbStructureModel.cpp
-	src/grammar/Sqlite3Lexer.cpp
-	src/grammar/Sqlite3Parser.cpp
 	src/main.cpp
 	src/Application.cpp
 	src/CipherDialog.cpp
@@ -278,7 +265,8 @@ set(SQLB_RESOURCES
 )
 
 set(SQLB_MISC
-    src/grammar/sqlite3.g
+    src/sql/parser/sqlite3_parser.yy
+    src/sql/parser/sqlite3_lexer.ll
 )
 
 # Translation files
@@ -407,11 +395,6 @@ if(QCUSTOMPLOT_FOUND)
 else()
     include_directories(${QCUSTOMPLOT_DIR})
 endif()
-if(ANTLR2_FOUND)
-    include_directories(${ANTLR2_INCLUDE_DIRS})
-else()
-    include_directories(${ANTLR_DIR})
-endif()
 if(QSCINTILLA_FOUND)
     include_directories(${QSCINTILLA_INCLUDE_DIR})
 else()
@@ -442,9 +425,6 @@ endif()
 if(NOT QCUSTOMPLOT_FOUND)
     add_dependencies(${PROJECT_NAME} qcustomplot)
 endif()
-if(NOT ANTLR2_FOUND)
-    add_dependencies(${PROJECT_NAME} antlr)
-endif()
 if(NOT QSCINTILLA_FOUND)
     add_dependencies(${PROJECT_NAME} qscintilla2)
 endif()
@@ -454,9 +434,6 @@ if(NOT QHEXEDIT_FOUND)
 endif()
 if(NOT QCUSTOMPLOT_FOUND)
     link_directories("${CMAKE_CURRENT_BINARY_DIR}/${QCUSTOMPLOT_DIR}")
-endif()
-if(NOT ANTLR2_FOUND)
-    link_directories("${CMAKE_CURRENT_BINARY_DIR}/${ANTLR_DIR}")
 endif()
 if(NOT QSCINTILLA_FOUND)
     link_directories("${CMAKE_CURRENT_BINARY_DIR}/${QSCINTILLA_DIR}")
@@ -479,11 +456,6 @@ if(QCUSTOMPLOT_FOUND)
     target_link_libraries(${PROJECT_NAME} ${QCUSTOMPLOT_LIBRARIES})
 else()
     target_link_libraries(${PROJECT_NAME} qcustomplot)
-endif()
-if(ANTLR2_FOUND)
-    target_link_libraries(${PROJECT_NAME} ${ANTLR2_LIBRARIES})
-else()
-    target_link_libraries(${PROJECT_NAME} antlr)
 endif()
 if(QSCINTILLA_FOUND)
     target_link_libraries(${PROJECT_NAME} ${QSCINTILLA_LIBRARIES})

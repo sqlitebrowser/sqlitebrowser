@@ -37,9 +37,6 @@ HEADERS += \
     sql/sqlitetypes.h \
     csvparser.h \
     ExtendedTableWidget.h \
-    grammar/Sqlite3Lexer.hpp \
-    grammar/Sqlite3Parser.hpp \
-    grammar/sqlite3TokenTypes.hpp \
     sqlitetablemodel.h \
     RowCache.h \
     RowLoader.h \
@@ -100,8 +97,6 @@ SOURCES += \
     sql/sqlitetypes.cpp \
     csvparser.cpp \
     ExtendedTableWidget.cpp \
-    grammar/Sqlite3Lexer.cpp \
-    grammar/Sqlite3Parser.cpp \
     sqlitetablemodel.cpp \
     RowLoader.cpp \
     FilterTableHeader.cpp \
@@ -211,7 +206,6 @@ CONFIG(sqlcipher) {
 }
 
 LIBPATH_QHEXEDIT=$$OUT_PWD/../libs/qhexedit
-LIBPATH_ANTLR=$$OUT_PWD/../libs/antlr-2.7.7
 LIBPATH_QCUSTOMPLOT=$$OUT_PWD/../libs/qcustomplot-source
 LIBPATH_QSCINTILLA=$$OUT_PWD/../libs/qscintilla/Qt4Qt5
 LIBPATH_JSON=$$OUT_PWD/../libs/json
@@ -227,14 +221,12 @@ win32 {
     INCLUDEPATH += $$PWD
     CONFIG(debug,debug|release) {
         LIBPATH_QHEXEDIT = $$LIBPATH_QHEXEDIT/debug
-        LIBPATH_ANTLR = $$LIBPATH_ANTLR/debug
         LIBPATH_QCUSTOMPLOT = $$LIBPATH_QCUSTOMPLOT/debug
         LIBPATH_QSCINTILLA = $$LIBPATH_QSCINTILLA/debug
         LIBPATH_JSON = $$LIBPATH_JSON/debug
     }
     CONFIG(release,debug|release) {
         LIBPATH_QHEXEDIT = $$LIBPATH_QHEXEDIT/release
-        LIBPATH_ANTLR = $$LIBPATH_ANTLR/release
         LIBPATH_QCUSTOMPLOT = $$LIBPATH_QCUSTOMPLOT/release
         LIBPATH_QSCINTILLA = $$LIBPATH_QSCINTILLA/release
         LIBPATH_JSON = $$LIBPATH_JSON/release
@@ -262,9 +254,9 @@ CONFIG(all_warnings) {
 }
 
 UI_DIR = .ui
-INCLUDEPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit/src $$PWD/../libs/qcustomplot-source $$PWD/../libs/qscintilla/Qt4Qt5 $$PWD/../libs/json $$PWD/..
-LIBS += -L$$LIBPATH_QHEXEDIT -L$$LIBPATH_ANTLR -L$$LIBPATH_QCUSTOMPLOT -L$$LIBPATH_QSCINTILLA -lantlr -lqhexedit -lqcustomplot -lqscintilla2
-DEPENDPATH += $$PWD/../libs/antlr-2.7.7 $$PWD/../libs/qhexedit $$PWD/../libs/qcustomplot-source $$PWD/../libs/qscintilla/Qt4Qt5 $$PWD/../libs/json
+INCLUDEPATH += $$PWD/../libs/qhexedit/src $$PWD/../libs/qcustomplot-source $$PWD/../libs/qscintilla/Qt4Qt5 $$PWD/../libs/json $$PWD/..
+LIBS += -L$$LIBPATH_QHEXEDIT -L$$LIBPATH_QCUSTOMPLOT -L$$LIBPATH_QSCINTILLA -lqhexedit -lqcustomplot -lqscintilla2
+DEPENDPATH += $$PWD/../libs/qhexedit $$PWD/../libs/qcustomplot-source $$PWD/../libs/qscintilla/Qt4Qt5 $$PWD/../libs/json
 
 unix {
     # Below, the user can specify where all generated file can be placed

@@ -50,7 +50,6 @@
               - qttools5-dev-tools
               - libsqlite3-dev
               - cmake
-              - libantlr-dev
               - libsqlcipher-dev
               - libqcustomplot-dev
               # - libx11-xcb1
