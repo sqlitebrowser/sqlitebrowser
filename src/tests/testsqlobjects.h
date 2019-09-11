@@ -39,6 +39,9 @@ private slots:
     void extraParentheses();
     void moduloOperator();
     void complexExpression();
+
+    void parseTest();
+    void parseTest_data();
 };
 
 #endif
