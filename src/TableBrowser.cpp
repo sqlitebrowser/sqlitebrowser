@@ -35,6 +35,10 @@ TableBrowser::TableBrowser(QWidget* parent) :
     // Set the validator for the goto line edit
     ui->editGoto->setValidator(gotoValidator);
 
+    // Set custom placeholder text for global filter field and disable conditional formats
+    ui->editGlobalFilter->setPlaceholderText(tr("Filter in all columns"));
+    ui->editGlobalFilter->setConditionFormatContextMenuEnabled(false);
+
     // Set uo popup menus
     popupNewRecordMenu = new QMenu(this);
     popupNewRecordMenu->addAction(ui->newRecordAction);
@@ -92,6 +96,28 @@ TableBrowser::TableBrowser(QWidget* parent) :
     connect(ui->dataTable->filterHeader(), &FilterTableHeader::condFormatsEdited, this, &TableBrowser::editCondFormats);
     connect(ui->dataTable, &ExtendedTableWidget::editCondFormats, this, &TableBrowser::editCondFormats);
 
+    // Set up global filter
+    connect(ui->editGlobalFilter, &FilterLineEdit::delayedTextChanged, this, [this](const QString& value) {
+        // Split up filter values
+        QStringList values = value.trimmed().split(" ", QString::SkipEmptyParts);
+        std::vector<QString> filters;
+        for(const auto& s : values)
+            filters.push_back(s);
+
+        // Have they changed?
+        BrowseDataTableSettings& settings = browseTableSettings[currentlyBrowsedTableName()];
+        if(filters != settings.globalFilters)
+        {
+            // Set global filters
+            m_browseTableModel->updateGlobalFilter(filters);
+            updateRecordsetLabel();
+
+            // Save them
+            settings.globalFilters = filters;
+            emit projectModified();
+        }
+    });
+
     connect(ui->dataTable, &ExtendedTableWidget::doubleClicked, this, &TableBrowser::selectionChangedByDoubleClick);
     connect(ui->dataTable->filterHeader(), &FilterTableHeader::sectionClicked, this, &TableBrowser::browseTableHeaderClicked);
     connect(ui->dataTable->filterHeader(), &QHeaderView::sectionDoubleClicked, ui->dataTable, &QTableView::selectColumn);
@@ -132,6 +158,9 @@ void TableBrowser::reset()
 
     // Reset the recordset label inside the Browse tab now
     updateRecordsetLabel();
+
+    // Clear filters
+    clearFilters();
 
     // Reset the plot dock model and connection
     emit updatePlot(nullptr, nullptr, nullptr, true);
@@ -189,6 +218,7 @@ void TableBrowser::setEnabled(bool enable)
     ui->actionClearSorting->setEnabled(enable);
     ui->actionRefresh->setEnabled(enable);
     ui->actionPrintTable->setEnabled(enable);
+    ui->editGlobalFilter->setEnabled(enable);
 
     updateInsertDeleteRecordButton();
 }
@@ -273,6 +303,9 @@ void TableBrowser::updateTable()
         // Encoding
         m_browseTableModel->setEncoding(defaultBrowseTableEncoding);
 
+        // Global filter
+        ui->editGlobalFilter->clear();
+
         updateRecordsetLabel();
 
         // Plot
@@ -290,6 +323,10 @@ void TableBrowser::updateTable()
         // Filters
         for(auto it=storedData.filterValues.constBegin();it!=storedData.filterValues.constEnd();++it)
             query.where().insert({it.key(), CondFormat::filterToSqlCondition(it.value(), m_browseTableModel->encoding()).toStdString()});
+
+        // Global filter
+        for(const auto& f : storedData.globalFilters)
+            query.globalWhere().push_back(CondFormat::filterToSqlCondition(f, m_browseTableModel->encoding()).toStdString());
 
         // Display formats
         bool only_defaults = true;
@@ -345,6 +382,7 @@ void TableBrowser::updateTable()
 void TableBrowser::clearFilters()
 {
     ui->dataTable->filterHeader()->clearFilters();
+    ui->editGlobalFilter->clear();
 }
 
 void TableBrowser::reloadSettings()
@@ -368,6 +406,10 @@ void TableBrowser::clearTableBrowser()
     ui->dataTable->setModel(nullptr);
     if(qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader()))
         qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader())->generateFilters(0);
+
+    ui->editGlobalFilter->blockSignals(true);
+    ui->editGlobalFilter->clear();
+    ui->editGlobalFilter->blockSignals(false);
 }
 
 void TableBrowser::updateFilter(int column, const QString& value)
@@ -498,6 +540,14 @@ void TableBrowser::applyBrowseTableSettings(const BrowseDataTableSettings& store
             m_browseTableModel->setCondFormats(formatIt.key(), formatIt.value());
 
       filterHeader->blockSignals(oldState);
+
+      ui->editGlobalFilter->blockSignals(true);
+      QString text;
+      for(const auto& f : storedData.globalFilters)
+          text += f + " ";
+      text.chop(1);
+      ui->editGlobalFilter->setText(text);
+      ui->editGlobalFilter->blockSignals(false);
     }
 
     // Encoding

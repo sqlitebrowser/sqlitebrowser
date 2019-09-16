@@ -65,13 +65,13 @@ void FilterLineEdit::keyReleaseEvent(QKeyEvent* event)
 {
     if(event->key() == Qt::Key_Tab)
     {
-        if(columnNumber < filterList->size() - 1)
+        if(filterList && columnNumber < filterList->size() - 1)
         {
             filterList->at(columnNumber + 1)->setFocus();
             event->accept();
         }
     } else if(event->key() == Qt::Key_Backtab) {
-        if(columnNumber > 0)
+        if(filterList && columnNumber > 0)
         {
             filterList->at(columnNumber - 1)->setFocus();
             event->accept();
@@ -107,24 +107,6 @@ void FilterLineEdit::showContextMenu(const QPoint &pos)
 
     // This has to be created here, otherwise the set of enabled options would not update accordingly.
     QMenu* editContextMenu = createStandardContextMenu();
-    editContextMenu->addSeparator();
-
-    QAction* conditionalFormatAction;
-    if (text().isEmpty()) {
-        conditionalFormatAction = new QAction(QIcon(":/icons/clear_cond_formats"), tr("Clear All Conditional Formats"), editContextMenu);
-        connect(conditionalFormatAction, &QAction::triggered, [&]() {
-                emit clearAllCondFormats();
-        });
-    } else {
-        conditionalFormatAction = new QAction(QIcon(":/icons/cond_formats"), tr("Use for Conditional Format"), editContextMenu);
-        connect(conditionalFormatAction, &QAction::triggered, [&]() {
-                emit addFilterAsCondFormat(text());
-        });
-    }
-    QAction* editCondFormatsAction = new QAction(QIcon(":/icons/edit_cond_formats"), tr("Edit Conditional Formats..."), editContextMenu);
-    connect(editCondFormatsAction, &QAction::triggered, [&]() {
-        emit editCondFormats();
-    });
     editContextMenu->addSeparator();
 
     QMenu* filterMenu = editContextMenu->addMenu(tr("Set Filter Expression"));
@@ -192,8 +174,31 @@ void FilterLineEdit::showContextMenu(const QPoint &pos)
             setFilterHelper(QString ("/"), QString ("/"));
         });
 
-    editContextMenu->addAction(conditionalFormatAction);
-    editContextMenu->addAction(editCondFormatsAction);
+
+    if(!no_conditional_format)
+    {
+        QAction* conditionalFormatAction;
+        if (text().isEmpty()) {
+            conditionalFormatAction = new QAction(QIcon(":/icons/clear_cond_formats"), tr("Clear All Conditional Formats"), editContextMenu);
+            connect(conditionalFormatAction, &QAction::triggered, [&]() {
+                    emit clearAllCondFormats();
+            });
+        } else {
+            conditionalFormatAction = new QAction(QIcon(":/icons/cond_formats"), tr("Use for Conditional Format"), editContextMenu);
+            connect(conditionalFormatAction, &QAction::triggered, [&]() {
+                    emit addFilterAsCondFormat(text());
+            });
+        }
+        QAction* editCondFormatsAction = new QAction(QIcon(":/icons/edit_cond_formats"), tr("Edit Conditional Formats..."), editContextMenu);
+        connect(editCondFormatsAction, &QAction::triggered, [&]() {
+            emit editCondFormats();
+        });
+        editContextMenu->addSeparator();
+
+        editContextMenu->addAction(conditionalFormatAction);
+        editContextMenu->addAction(editCondFormatsAction);
+    }
+
 
     filterMenu->addAction(whatsThisAction);
     filterMenu->addSeparator();

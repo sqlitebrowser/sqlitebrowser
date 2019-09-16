@@ -12,11 +12,13 @@ class FilterLineEdit : public QLineEdit
     Q_OBJECT
 
 public:
-    explicit FilterLineEdit(QWidget* parent, std::vector<FilterLineEdit*>* filters, size_t columnnum);
+    explicit FilterLineEdit(QWidget* parent, std::vector<FilterLineEdit*>* filters = nullptr, size_t columnnum = 0);
 
     // Override methods for programatically changing the value of the line edit
     void clear();
     void setText(const QString& text);
+
+    void setConditionFormatContextMenuEnabled(bool enable) { no_conditional_format = !enable; }
 
 private slots:
     void delayedSignalTimerTriggered();
@@ -36,6 +38,7 @@ private:
     size_t columnNumber;
     QTimer* delaySignalTimer;
     QString lastValue;
+    bool no_conditional_format;
 
 private slots:
     void showContextMenu(const QPoint &pos);

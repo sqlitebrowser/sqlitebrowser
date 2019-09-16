@@ -2285,6 +2285,16 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, QXmlS
                 }
                 settings.plotYAxes[yAxisName] = yAxisSettings;
             }
+        } else if(xml.name() == "global_filter") {
+            while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "global_filter")
+            {
+                if(xml.name() == "filter")
+                {
+                    QString value = xml.attributes().value("value").toString();
+                    settings.globalFilters.push_back(value);
+                    xml.skipCurrentElement();
+                }
+            }
         }
     }
 }
@@ -2607,6 +2617,14 @@ static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, Q
         xml.writeAttribute("point_shape", QString::number(plotSettings.pointShape));
         xml.writeAttribute("colour", plotSettings.colour.name());
         xml.writeAttribute("active", QString::number(plotSettings.active));
+        xml.writeEndElement();
+    }
+    xml.writeEndElement();
+    xml.writeStartElement("global_filter");
+    for(const auto& v : object.globalFilters)
+    {
+        xml.writeStartElement("filter");
+        xml.writeAttribute("value", v);
         xml.writeEndElement();
     }
     xml.writeEndElement();

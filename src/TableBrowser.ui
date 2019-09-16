@@ -77,6 +77,9 @@
       </widget>
      </item>
      <item>
+      <widget class="FilterLineEdit" name="editGlobalFilter"/>
+     </item>
+     <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -514,6 +517,11 @@
     <signal>foreignKeyClicked(QString,QString,QByteArray)</signal>
     <signal>foreignKeyClicked(sqlb::ObjectIdentifier,QString,QByteArray)</signal>
    </slots>
+  </customwidget>
+  <customwidget>
+   <class>FilterLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>FilterLineEdit.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

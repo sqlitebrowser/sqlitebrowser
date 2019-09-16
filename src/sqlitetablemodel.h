@@ -121,6 +121,7 @@ public:
 
 public slots:
     void updateFilter(int column, const QString& value);
+    void updateGlobalFilter(const std::vector<QString>& values);
 
 signals:
     void finishedFetch(int fetched_row_begin, int fetched_row_end);

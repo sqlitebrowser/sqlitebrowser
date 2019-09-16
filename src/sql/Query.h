@@ -72,6 +72,10 @@ public:
     const std::unordered_map<size_t, std::string>& where() const { return m_where; }
     std::unordered_map<size_t, std::string>& where() { return m_where; }
 
+    const std::vector<std::string>& globalWhere() const { return m_global_where; }
+    std::vector<std::string>& globalWhere() { return m_global_where; }
+    void setGlobalWhere(const std::vector<std::string>& w) { m_global_where = w; }
+
     const std::vector<SortedColumn>& orderBy() const { return m_sort; }
     std::vector<SortedColumn>& orderBy() { return m_sort; }
     void setOrderBy(const std::vector<SortedColumn>& columns) { m_sort = columns; }
@@ -81,7 +85,8 @@ private:
     sqlb::ObjectIdentifier m_table;
     std::vector<std::string> m_rowid_columns;
     std::vector<SelectedColumn> m_selected_columns;
-    std::unordered_map<size_t, std::string> m_where;
+    std::unordered_map<size_t, std::string> m_where;    // TODO The two where variables should be merged into a single variable which ...
+    std::vector<std::string> m_global_where;            // ... holds some sort of general tree structure for all sorts of where conditions.
     std::vector<SortedColumn> m_sort;
 
     std::vector<SelectedColumn>::iterator findSelectedColumnByName(const std::string& name);

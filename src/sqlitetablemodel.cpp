@@ -815,6 +815,17 @@ void SqliteTableModel::updateFilter(int column, const QString& value)
     buildQuery();
 }
 
+void SqliteTableModel::updateGlobalFilter(const std::vector<QString>& values)
+{
+    std::vector<std::string> filters;
+    for(auto& v : values)
+        filters.push_back(CondFormat::filterToSqlCondition(v, m_encoding).toStdString());
+    m_query.setGlobalWhere(filters);
+
+    // Build the new query
+    buildQuery();
+}
+
 void SqliteTableModel::clearCache()
 {
     m_lifeCounter++;

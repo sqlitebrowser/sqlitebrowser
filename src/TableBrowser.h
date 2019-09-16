@@ -33,6 +33,7 @@ struct BrowseDataTableSettings
     QMap<QString, PlotDock::PlotSettings> plotYAxes;
     QString unlockViewPk;
     QMap<int, bool> hiddenColumns;
+    std::vector<QString> globalFilters;
 
     BrowseDataTableSettings() :
         showRowid(false),
