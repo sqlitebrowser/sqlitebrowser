@@ -1201,7 +1201,7 @@ bool DBBrowserDB::getRow(const sqlb::ObjectIdentifier& table, const QString& row
     sqlb::StringVector pks = getObjectByName<sqlb::Table>(table)->rowidColumns();
     if(pks.size() == 1)
     {
-        sQuery += QString("%1='%2;").arg(QString::fromStdString(sqlb::escapeIdentifier(pks.front()))).arg(rowid);
+        sQuery += QString("%1='%2';").arg(QString::fromStdString(sqlb::escapeIdentifier(pks.front()))).arg(rowid);
     } else {
         sQuery += QString("sqlb_make_single_value(%1)='%2';")
                 .arg(QString::fromStdString(sqlb::joinStringVector(sqlb::escapeIdentifier(pks), ",")))
