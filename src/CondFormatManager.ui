@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
+    <width>640</width>
     <height>463</height>
    </rect>
   </property>
@@ -17,7 +17,7 @@
    <item>
     <widget class="QLabel" name="labelTitle">
      <property name="text">
-      <string>This dialog allows creating and editing conditional formats, where the cell text and background will be colored based on one or more conditions. Conditional formats can be moved up and down, where those at higher rows take precedence over those at lower.</string>
+      <string>This dialog allows creating and editing conditional formats. Each cell style will be selected by the first accomplished condition for that cell data. Conditional formats can be moved up and down, where those at higher rows take precedence over those at lower. An empty condition applies to all values.</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
@@ -155,12 +155,28 @@
      </attribute>
      <column>
       <property name="text">
+       <string>Foreground</string>
+      </property>
+      <property name="toolTip">
        <string>Text color</string>
       </property>
      </column>
      <column>
       <property name="text">
+       <string>Background</string>
+      </property>
+      <property name="toolTip">
        <string>Background color</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Font</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Size</string>
       </property>
      </column>
      <column>

@@ -8,6 +8,8 @@
 #include <QUrl>
 #include <QPushButton>
 #include <QMessageBox>
+#include <QFontComboBox>
+#include <QSpinBox>
 
 CondFormatManager::CondFormatManager(const std::vector<CondFormat>& condFormats, const QString& encoding, QWidget *parent) :
     QDialog(parent),
@@ -17,12 +19,12 @@ CondFormatManager::CondFormatManager(const std::vector<CondFormat>& condFormats,
 {
     ui->setupUi(this);
 
+    for(const CondFormat& aCondFormat : condFormats)
+        addItem(aCondFormat);
+
     // Resize columns to contents, except for the condition
     for(int col = ColumnForeground; col < ColumnFilter; ++col)
         ui->tableCondFormats->resizeColumnToContents(col);
-
-    for(const CondFormat& aCondFormat : condFormats)
-        addItem(aCondFormat);
 
     ui->tableCondFormats->setEditTriggers(QAbstractItemView::AllEditTriggers);
 
@@ -52,16 +54,27 @@ void CondFormatManager::addNewItem()
 void CondFormatManager::addItem(const CondFormat& aCondFormat)
 {
     int i = ui->tableCondFormats->topLevelItemCount();
-    QTreeWidgetItem *newItem = new QTreeWidgetItem({"", "", "", "", "", aCondFormat.filter()});
+    QTreeWidgetItem *newItem = new QTreeWidgetItem(ui->tableCondFormats);
     newItem->setForeground(ColumnForeground, aCondFormat.foregroundColor());
     newItem->setBackground(ColumnForeground, aCondFormat.foregroundColor());
     newItem->setForeground(ColumnBackground, aCondFormat.backgroundColor());
     newItem->setBackground(ColumnBackground, aCondFormat.backgroundColor());
     newItem->setToolTip(ColumnBackground, tr("Click to select color"));
     newItem->setToolTip(ColumnForeground, tr("Click to select color"));
+
+    QFontComboBox* fontCombo = new QFontComboBox(ui->tableCondFormats);
+    fontCombo->setCurrentFont(aCondFormat.font());
+    ui->tableCondFormats->setItemWidget(newItem, ColumnFont, fontCombo);
+
+    QSpinBox* sizeBox = new QSpinBox(ui->tableCondFormats);
+    sizeBox->setMinimum(1);
+    sizeBox->setValue(aCondFormat.font().pointSize());
+    ui->tableCondFormats->setItemWidget(newItem, ColumnSize, sizeBox);
+
     newItem->setCheckState(ColumnBold, aCondFormat.isBold() ? Qt::Checked : Qt::Unchecked);
     newItem->setCheckState(ColumnItalic, aCondFormat.isItalic() ? Qt::Checked : Qt::Unchecked);
     newItem->setCheckState(ColumnUnderline, aCondFormat.isUnderline() ? Qt::Checked : Qt::Unchecked);
+    newItem->setText(ColumnFilter, aCondFormat.filter());
     ui->tableCondFormats->insertTopLevelItem(i, newItem);
     ui->tableCondFormats->openPersistentEditor(newItem, ColumnFilter);
 }
@@ -72,48 +85,61 @@ void CondFormatManager::removeItem()
     delete item;
 }
 
-void CondFormatManager::upItem()
+void CondFormatManager::moveItem(int offset)
 {
     if (!ui->tableCondFormats->currentIndex().isValid())
         return;
 
     int selectedRow = ui->tableCondFormats->currentIndex().row();
-    if(selectedRow == 0)
+    int newRow = selectedRow + offset;
+    if(newRow < 0 || newRow >= ui->tableCondFormats->topLevelItemCount())
         return;
 
-    QTreeWidgetItem* item;
+    QTreeWidgetItem* item = ui->tableCondFormats->topLevelItem(selectedRow);
+
+    // Rescue widgets, since they will be deleted, and add them later.
+    QFontComboBox* fontCombo = qobject_cast<QFontComboBox*>(ui->tableCondFormats->itemWidget(item, ColumnFont));
+    QFontComboBox* fontCombo2 = new QFontComboBox(ui->tableCondFormats);
+    fontCombo2->setCurrentFont(fontCombo->currentFont());
+
+    QSpinBox* sizeBox = qobject_cast<QSpinBox*>(ui->tableCondFormats->itemWidget(item, ColumnSize));
+    QSpinBox* sizeBox2 = new QSpinBox(ui->tableCondFormats);
+    sizeBox2->setValue(sizeBox->value());
+    sizeBox2->setMinimum(sizeBox->minimum());
+
     item = ui->tableCondFormats->takeTopLevelItem(selectedRow);
-    ui->tableCondFormats->insertTopLevelItem(selectedRow-1, item);
+    ui->tableCondFormats->insertTopLevelItem(newRow, item);
+
+    // Restore widgets and state
+    ui->tableCondFormats->setItemWidget(item, ColumnFont, fontCombo2);
+    ui->tableCondFormats->setItemWidget(item, ColumnSize, sizeBox2);
     ui->tableCondFormats->openPersistentEditor(item, ColumnFilter);
-    ui->tableCondFormats->setCurrentIndex(ui->tableCondFormats->currentIndex().sibling(selectedRow-1,
+    ui->tableCondFormats->setCurrentIndex(ui->tableCondFormats->currentIndex().sibling(newRow,
                                                                                        ui->tableCondFormats->currentIndex().column()));
+}
+
+void CondFormatManager::upItem()
+{
+    moveItem(-1);
 }
 
 void CondFormatManager::downItem()
 {
-    if (!ui->tableCondFormats->currentIndex().isValid()) return;
-
-    int selectedRow = ui->tableCondFormats->currentIndex().row();
-    if(selectedRow == ui->tableCondFormats->topLevelItemCount() - 1)
-        return;
-
-    QTreeWidgetItem* item;
-    item = ui->tableCondFormats->takeTopLevelItem(selectedRow);
-    ui->tableCondFormats->insertTopLevelItem(selectedRow+1, item);
-    ui->tableCondFormats->openPersistentEditor(item, ColumnFilter);
-    ui->tableCondFormats->setCurrentIndex(ui->tableCondFormats->currentIndex().sibling(selectedRow+1,
-                                                                                       ui->tableCondFormats->currentIndex().column()));
+    moveItem(+1);
 }
 
 std::vector<CondFormat> CondFormatManager::getCondFormats()
 {
     std::vector<CondFormat> result;
-    QFont font = Settings::getValue("databrowser", "font").toString();
 
     for (int i = 0; i < ui->tableCondFormats->topLevelItemCount(); ++i)
     {
         QTreeWidgetItem* item = ui->tableCondFormats->topLevelItem(i);
 
+        QFontComboBox* fontCombo = qobject_cast<QFontComboBox*>(ui->tableCondFormats->itemWidget(item, ColumnFont));
+        QSpinBox* sizeBox = qobject_cast<QSpinBox*>(ui->tableCondFormats->itemWidget(item, ColumnSize));
+        QFont font = fontCombo->currentFont();
+        font.setPointSize(sizeBox->value());
         font.setBold(item->checkState(ColumnBold) == Qt::Checked);
         font.setItalic(item->checkState(ColumnItalic) == Qt::Checked);
         font.setUnderline(item->checkState(ColumnUnderline) == Qt::Checked);
@@ -140,7 +166,7 @@ void CondFormatManager::itemClicked(QTreeWidgetItem* item, int column)
           }
           break;
       }
-    case ColumnFilter:
+    default:
         // Nothing to do
         break;
     }
