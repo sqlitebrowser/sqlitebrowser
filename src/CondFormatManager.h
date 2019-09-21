@@ -32,13 +32,14 @@ private:
         ColumnBold,
         ColumnItalic,
         ColumnUnderline,
+        ColumnAlignment,
         ColumnFilter
     };
     Ui::CondFormatManager *ui;
     std::vector<CondFormat> m_condFormats;
     Palette m_condFormatPalette;
     QString m_encoding;
-    
+
 private slots:
     void addNewItem();
     void addItem(const CondFormat& aCondFormat);

@@ -442,6 +442,7 @@ void TableBrowser::addCondFormat(int column, const QString& value)
     CondFormat newCondFormat(value, QColor(Settings::getValue("databrowser", "reg_fg_colour").toString()),
                              m_condFormatPalette.nextSerialColor(Palette::appHasDarkTheme()),
                              QFont(Settings::getValue("databrowser", "font").toString()),
+                             CondFormat::AlignLeft,
                              m_browseTableModel->encoding());
     m_browseTableModel->addCondFormat(column, newCondFormat);
     browseTableSettings[currentlyBrowsedTableName()].condFormats[column].push_back(newCondFormat);

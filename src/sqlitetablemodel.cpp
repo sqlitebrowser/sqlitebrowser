@@ -301,6 +301,8 @@ QVariant SqliteTableModel::getMatchingCondFormat(int column, const QString& valu
                 return eachCondFormat.backgroundColor();
             case Qt::FontRole:
                 return eachCondFormat.font();
+            case Qt::TextAlignmentRole:
+                return eachCondFormat.alignmentFlag();
             }
     }
     return QVariant();
@@ -409,7 +411,17 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
                   .arg(QKeySequence(Qt::CTRL).toString(QKeySequence::NativeText));
         else
             return QString();
+    } else if (role == Qt::TextAlignmentRole) {
+        QString value = cached_row->at(column);
+        lock.unlock();
+        QVariant condFormat = getMatchingCondFormat(index.column(), value, role);
+        if (condFormat.isValid())
+            return condFormat;
+        bool isNumber;
+        value.toDouble(&isNumber);
+        return isNumber ? Qt::AlignRight : Qt::AlignLeft;
     }
+
 
     return QVariant();
 }

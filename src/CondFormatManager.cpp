@@ -10,6 +10,7 @@
 #include <QMessageBox>
 #include <QFontComboBox>
 #include <QSpinBox>
+#include <QComboBox>
 
 CondFormatManager::CondFormatManager(const std::vector<CondFormat>& condFormats, const QString& encoding, QWidget *parent) :
     QDialog(parent),
@@ -47,6 +48,7 @@ void CondFormatManager::addNewItem()
     CondFormat newCondFormat("", QColor(Settings::getValue("databrowser", "reg_fg_colour").toString()),
                              m_condFormatPalette.nextSerialColor(Palette::appHasDarkTheme()),
                              QFont(Settings::getValue("databrowser", "font").toString()),
+                             CondFormat::AlignLeft,
                              m_encoding);
     addItem(newCondFormat);
 }
@@ -74,6 +76,12 @@ void CondFormatManager::addItem(const CondFormat& aCondFormat)
     newItem->setCheckState(ColumnBold, aCondFormat.isBold() ? Qt::Checked : Qt::Unchecked);
     newItem->setCheckState(ColumnItalic, aCondFormat.isItalic() ? Qt::Checked : Qt::Unchecked);
     newItem->setCheckState(ColumnUnderline, aCondFormat.isUnderline() ? Qt::Checked : Qt::Unchecked);
+
+    QComboBox* alignCombo = new QComboBox(ui->tableCondFormats);
+    alignCombo->addItems(CondFormat::alignmentTexts());
+    alignCombo->setCurrentIndex(aCondFormat.alignment());
+    ui->tableCondFormats->setItemWidget(newItem, ColumnAlignment, alignCombo);
+
     newItem->setText(ColumnFilter, aCondFormat.filter());
     ui->tableCondFormats->insertTopLevelItem(i, newItem);
     ui->tableCondFormats->openPersistentEditor(newItem, ColumnFilter);
@@ -107,12 +115,18 @@ void CondFormatManager::moveItem(int offset)
     sizeBox2->setValue(sizeBox->value());
     sizeBox2->setMinimum(sizeBox->minimum());
 
+    QComboBox* alignCombo = qobject_cast<QComboBox*>(ui->tableCondFormats->itemWidget(item, ColumnAlignment));
+    QComboBox* alignCombo2 = new QComboBox(ui->tableCondFormats);
+    alignCombo2->addItems(CondFormat::alignmentTexts());
+    alignCombo2->setCurrentIndex(alignCombo->currentIndex());
+
     item = ui->tableCondFormats->takeTopLevelItem(selectedRow);
     ui->tableCondFormats->insertTopLevelItem(newRow, item);
 
     // Restore widgets and state
     ui->tableCondFormats->setItemWidget(item, ColumnFont, fontCombo2);
     ui->tableCondFormats->setItemWidget(item, ColumnSize, sizeBox2);
+    ui->tableCondFormats->setItemWidget(item, ColumnAlignment, alignCombo2);
     ui->tableCondFormats->openPersistentEditor(item, ColumnFilter);
     ui->tableCondFormats->setCurrentIndex(ui->tableCondFormats->currentIndex().sibling(newRow,
                                                                                        ui->tableCondFormats->currentIndex().column()));
@@ -143,11 +157,14 @@ std::vector<CondFormat> CondFormatManager::getCondFormats()
         font.setBold(item->checkState(ColumnBold) == Qt::Checked);
         font.setItalic(item->checkState(ColumnItalic) == Qt::Checked);
         font.setUnderline(item->checkState(ColumnUnderline) == Qt::Checked);
+        QComboBox* alignCombo = qobject_cast<QComboBox*>(ui->tableCondFormats->itemWidget(item, ColumnAlignment));
 
         result.emplace_back(item->text(ColumnFilter),
                             item->background(ColumnForeground).color(),
                             item->background(ColumnBackground).color(),
-                            font, m_encoding);
+                            font,
+                            static_cast<CondFormat::Alignment>(alignCombo->currentIndex()),
+                            m_encoding);
     }
     return result;
 }

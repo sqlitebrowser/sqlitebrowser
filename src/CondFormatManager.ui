@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
-    <height>463</height>
+    <width>700</width>
+    <height>400</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -213,6 +213,11 @@
       <property name="icon">
        <iconset resource="icons/icons.qrc">
         <normaloff>:/icons/text_underline.png</normaloff>:/icons/text_underline.png</iconset>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Alignment</string>
       </property>
      </column>
      <column>

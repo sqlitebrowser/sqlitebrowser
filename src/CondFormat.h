@@ -9,8 +9,26 @@
 class CondFormat
 {
 public:
+
+    enum Alignment {
+        AlignLeft = 0,
+        AlignRight,
+        AlignCenter,
+        AlignJustify
+    };
+
+    // List of alignment texts. Order must be as Alignment definition above.
+    static QStringList alignmentTexts() {
+        return {QObject::tr("Left"), QObject::tr("Right"), QObject::tr("Center"), QObject::tr("Justify")};
+    };
+
     CondFormat() {}
-    explicit CondFormat(const QString& filter, const QColor& foreground, const QColor& background, const QFont& font, const QString& encoding = QString());
+    explicit CondFormat(const QString& filter,
+                        const QColor& foreground,
+                        const QColor& background,
+                        const QFont& font,
+                        const Alignment alignment = AlignLeft,
+                        const QString& encoding = QString());
 
     static QString filterToSqlCondition(const QString& value, const QString& encoding = QString());
 
@@ -20,6 +38,7 @@ private:
     QColor m_bgColor;
     QColor m_fgColor;
     QFont m_font;
+    Alignment m_align;
 
 public:
     QString sqlCondition() const { return m_sqlCondition; }
@@ -30,6 +49,8 @@ public:
     bool isItalic() const { return m_font.italic(); }
     bool isUnderline() const { return m_font.underline(); }
     QFont font() const { return m_font; }
+    Alignment alignment() const { return m_align; }
+    Qt::AlignmentFlag alignmentFlag() const;
 };
 
 #endif // CONDFORMAT_H
