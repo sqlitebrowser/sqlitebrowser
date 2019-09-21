@@ -437,11 +437,14 @@ void TableBrowser::updateFilter(int column, const QString& value)
 
 void TableBrowser::addCondFormat(int column, const QString& value)
 {
+    QFont font = QFont(Settings::getValue("databrowser", "font").toString());
+    font.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
+
     // Create automatically a new conditional format with the next serial background color according to the theme and the regular foreground
     // color and font in the settings.
     CondFormat newCondFormat(value, QColor(Settings::getValue("databrowser", "reg_fg_colour").toString()),
                              m_condFormatPalette.nextSerialColor(Palette::appHasDarkTheme()),
-                             QFont(Settings::getValue("databrowser", "font").toString()),
+                             font,
                              CondFormat::AlignLeft,
                              m_browseTableModel->encoding());
     m_browseTableModel->addCondFormat(column, newCondFormat);
@@ -460,6 +463,8 @@ void TableBrowser::editCondFormats(int column)
 {
     CondFormatManager condFormatDialog(browseTableSettings[currentlyBrowsedTableName()].condFormats[column],
                                        m_browseTableModel->encoding(), this);
+    condFormatDialog.setWindowTitle(tr("Conditional formats for \"%1\"").
+                                    arg(m_browseTableModel->headerData(column, Qt::Horizontal).toString()));
     if (condFormatDialog.exec()) {
         std::vector<CondFormat> condFormatVector = condFormatDialog.getCondFormats();
         m_browseTableModel->setCondFormats(column, condFormatVector);

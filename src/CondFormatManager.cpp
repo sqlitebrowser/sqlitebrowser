@@ -45,12 +45,19 @@ CondFormatManager::~CondFormatManager()
 
 void CondFormatManager::addNewItem()
 {
+    QFont font = QFont(Settings::getValue("databrowser", "font").toString());
+    font.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
+
     CondFormat newCondFormat("", QColor(Settings::getValue("databrowser", "reg_fg_colour").toString()),
                              m_condFormatPalette.nextSerialColor(Palette::appHasDarkTheme()),
-                             QFont(Settings::getValue("databrowser", "font").toString()),
+                             font,
                              CondFormat::AlignLeft,
                              m_encoding);
     addItem(newCondFormat);
+
+    // Resize columns to contents, except for the condition
+    for(int col = ColumnForeground; col < ColumnFilter; ++col)
+        ui->tableCondFormats->resizeColumnToContents(col);
 }
 
 void CondFormatManager::addItem(const CondFormat& aCondFormat)
