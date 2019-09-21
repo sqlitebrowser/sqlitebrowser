@@ -17,6 +17,10 @@ CondFormatManager::CondFormatManager(const std::vector<CondFormat>& condFormats,
 {
     ui->setupUi(this);
 
+    // Resize columns to contents, except for the condition
+    for(int col = ColumnForeground; col < ColumnFilter; ++col)
+        ui->tableCondFormats->resizeColumnToContents(col);
+
     for(const CondFormat& aCondFormat : condFormats)
         addItem(aCondFormat);
 
@@ -40,6 +44,7 @@ void CondFormatManager::addNewItem()
 {
     CondFormat newCondFormat("", QColor(Settings::getValue("databrowser", "reg_fg_colour").toString()),
                              m_condFormatPalette.nextSerialColor(Palette::appHasDarkTheme()),
+                             QFont(Settings::getValue("databrowser", "font").toString()),
                              m_encoding);
     addItem(newCondFormat);
 }
@@ -47,13 +52,16 @@ void CondFormatManager::addNewItem()
 void CondFormatManager::addItem(const CondFormat& aCondFormat)
 {
     int i = ui->tableCondFormats->topLevelItemCount();
-    QTreeWidgetItem *newItem = new QTreeWidgetItem({"", "", aCondFormat.filter()});
+    QTreeWidgetItem *newItem = new QTreeWidgetItem({"", "", "", "", "", aCondFormat.filter()});
     newItem->setForeground(ColumnForeground, aCondFormat.foregroundColor());
     newItem->setBackground(ColumnForeground, aCondFormat.foregroundColor());
     newItem->setForeground(ColumnBackground, aCondFormat.backgroundColor());
     newItem->setBackground(ColumnBackground, aCondFormat.backgroundColor());
     newItem->setToolTip(ColumnBackground, tr("Click to select color"));
     newItem->setToolTip(ColumnForeground, tr("Click to select color"));
+    newItem->setCheckState(ColumnBold, aCondFormat.isBold() ? Qt::Checked : Qt::Unchecked);
+    newItem->setCheckState(ColumnItalic, aCondFormat.isItalic() ? Qt::Checked : Qt::Unchecked);
+    newItem->setCheckState(ColumnUnderline, aCondFormat.isUnderline() ? Qt::Checked : Qt::Unchecked);
     ui->tableCondFormats->insertTopLevelItem(i, newItem);
     ui->tableCondFormats->openPersistentEditor(newItem, ColumnFilter);
 }
@@ -100,12 +108,20 @@ void CondFormatManager::downItem()
 std::vector<CondFormat> CondFormatManager::getCondFormats()
 {
     std::vector<CondFormat> result;
+    QFont font = Settings::getValue("databrowser", "font").toString();
+
     for (int i = 0; i < ui->tableCondFormats->topLevelItemCount(); ++i)
     {
         QTreeWidgetItem* item = ui->tableCondFormats->topLevelItem(i);
+
+        font.setBold(item->checkState(ColumnBold) == Qt::Checked);
+        font.setItalic(item->checkState(ColumnItalic) == Qt::Checked);
+        font.setUnderline(item->checkState(ColumnUnderline) == Qt::Checked);
+
         result.emplace_back(item->text(ColumnFilter),
                             item->background(ColumnForeground).color(),
-                            item->background(ColumnBackground).color(), m_encoding);
+                            item->background(ColumnBackground).color(),
+                            font, m_encoding);
     }
     return result;
 }

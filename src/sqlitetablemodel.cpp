@@ -274,13 +274,17 @@ QVariant SqliteTableModel::headerData(int section, Qt::Orientation orientation, 
         return QString("%1").arg(section + 1);
 }
 
-QColor SqliteTableModel::getMatchingCondFormatColor(int column, const QString& value, int role) const
+QVariant SqliteTableModel::getMatchingCondFormat(int column, const QString& value, int role) const
 {
+    if (m_mCondFormats.find(column) == m_mCondFormats.end())
+        return QVariant();
+
     bool isNumber;
-    value.toFloat(&isNumber);
+    value.toDouble(&isNumber);
     QString sql;
+
     // For each conditional format for this column,
-    // if the condition matches the current data, return the associated colour.
+    // if the condition matches the current data, return the associated format.
     for (const CondFormat& eachCondFormat : m_mCondFormats.at(column)) {
         if (isNumber && !eachCondFormat.sqlCondition().contains("'"))
             sql = QString("SELECT %1 %2").arg(value, eachCondFormat.sqlCondition());
@@ -290,9 +294,16 @@ QColor SqliteTableModel::getMatchingCondFormatColor(int column, const QString& v
         // Empty filter means: apply format to any row.
         // Query the DB for the condition, waiting in case there is a loading in progress.
         if (eachCondFormat.filter().isEmpty() || m_db.querySingleValueFromDb(sql, false, DBBrowserDB::Wait) == "1")
-            return role == Qt::ForegroundRole ? eachCondFormat.foregroundColor() : eachCondFormat.backgroundColor();
+            switch (role) {
+              case Qt::ForegroundRole:
+                return eachCondFormat.foregroundColor();
+            case Qt::BackgroundRole:
+                return eachCondFormat.backgroundColor();
+            case Qt::FontRole:
+                return eachCondFormat.font();
+            }
     }
-    return QColor();
+    return QVariant();
 }
 
 QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
@@ -346,6 +357,14 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
         QFont font;
         if(!row_available || cached_row->at(column).isNull() || nosync_isBinary(index))
             font.setItalic(true);
+        else {
+            QString value = cached_row->at(column);
+            // Unlock before querying from DB
+            lock.unlock();
+            QVariant condFormatFont = getMatchingCondFormat(index.column(), value, role);
+            if (condFormatFont.isValid())
+                return condFormatFont;
+        }
         return font;
     } else if(role == Qt::ForegroundRole) {
         if(!row_available)
@@ -358,7 +377,7 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
             QString value = cached_row->at(column);
             // Unlock before querying from DB
             lock.unlock();
-            QColor condFormatColor = getMatchingCondFormatColor(index.column(), value, role);
+            QVariant condFormatColor = getMatchingCondFormat(index.column(), value, role);
             if (condFormatColor.isValid())
                 return condFormatColor;
             }
@@ -375,7 +394,7 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
             QString value = cached_row->at(column);
             // Unlock before querying from DB
             lock.unlock();
-            QColor condFormatColor = getMatchingCondFormatColor(index.column(), value, role);
+            QVariant condFormatColor = getMatchingCondFormat(index.column(), value, role);
             if (condFormatColor.isValid())
                 return condFormatColor;
         }

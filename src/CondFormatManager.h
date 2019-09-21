@@ -27,7 +27,10 @@ private:
     enum Columns {
         ColumnForeground = 0,
         ColumnBackground = 1,
-        ColumnFilter = 2
+        ColumnBold = 2,
+        ColumnItalic = 3,
+        ColumnUnderline = 4,
+        ColumnFilter = 5
     };
     Ui::CondFormatManager *ui;
     std::vector<CondFormat> m_condFormats;

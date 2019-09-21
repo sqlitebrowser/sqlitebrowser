@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>578</width>
+    <width>600</width>
     <height>463</height>
    </rect>
   </property>
@@ -150,8 +150,8 @@
      <property name="expandsOnDoubleClick">
       <bool>false</bool>
      </property>
-     <attribute name="headerDefaultSectionSize">
-      <number>150</number>
+     <attribute name="headerMinimumSectionSize">
+      <number>25</number>
      </attribute>
      <column>
       <property name="text">
@@ -161,6 +161,42 @@
      <column>
       <property name="text">
        <string>Background color</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="toolTip">
+       <string>Bold</string>
+      </property>
+      <property name="icon">
+       <iconset resource="icons/icons.qrc">
+        <normaloff>:/icons/text_bold.png</normaloff>:/icons/text_bold.png</iconset>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="toolTip">
+       <string>Italic</string>
+      </property>
+      <property name="icon">
+       <iconset resource="icons/icons.qrc">
+        <normaloff>:/icons/text_italic.png</normaloff>:/icons/text_italic.png</iconset>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="toolTip">
+       <string>Underline</string>
+      </property>
+      <property name="icon">
+       <iconset resource="icons/icons.qrc">
+        <normaloff>:/icons/text_underline.png</normaloff>:/icons/text_underline.png</iconset>
       </property>
      </column>
      <column>

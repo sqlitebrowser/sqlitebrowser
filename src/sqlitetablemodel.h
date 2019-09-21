@@ -3,7 +3,7 @@
 
 #include <QAbstractTableModel>
 #include <QMutex>
-#include <QColor>
+
 #include <memory>
 #include <vector>
 #include <map>
@@ -150,9 +150,9 @@ private:
     QByteArray encode(const QByteArray& str) const;
     QByteArray decode(const QByteArray& str) const;
 
-    // Return matching conditional format color or invalid color, otherwise.
-    // Only Qt::ForegroundRole and Qt::BackgroundRole are expected in role (Qt::ItemDataRole)
-    QColor getMatchingCondFormatColor(int column, const QString& value, int role) const;
+    // Return matching conditional format color/font or invalid value, otherwise.
+    // Only format roles are expected in role (Qt::ItemDataRole)
+    QVariant getMatchingCondFormat(int column, const QString& value, int role) const;
 
     DBBrowserDB& m_db;
 

@@ -438,9 +438,10 @@ void TableBrowser::updateFilter(int column, const QString& value)
 void TableBrowser::addCondFormat(int column, const QString& value)
 {
     // Create automatically a new conditional format with the next serial background color according to the theme and the regular foreground
-    // color in the settings.
+    // color and font in the settings.
     CondFormat newCondFormat(value, QColor(Settings::getValue("databrowser", "reg_fg_colour").toString()),
                              m_condFormatPalette.nextSerialColor(Palette::appHasDarkTheme()),
+                             QFont(Settings::getValue("databrowser", "font").toString()),
                              m_browseTableModel->encoding());
     m_browseTableModel->addCondFormat(column, newCondFormat);
     browseTableSettings[currentlyBrowsedTableName()].condFormats[column].push_back(newCondFormat);
