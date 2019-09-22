@@ -390,6 +390,16 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
                   .arg(QKeySequence(Qt::CTRL).toString(QKeySequence::NativeText));
         else
             return QString();
+    } else if(role == Qt::DecorationRole) {
+        if(!row_available)
+            return QVariant();
+
+        if(Settings::getValue("databrowser", "image_preview").toBool() && !isImageData(cached_row->at(column)).isNull())
+        {
+            QImage img;
+            img.loadFromData(cached_row->at(column));
+            return QPixmap::fromImage(img);
+        }
     }
 
     return QVariant();

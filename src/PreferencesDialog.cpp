@@ -109,6 +109,7 @@ void PreferencesDialog::loadSettings()
 
     ui->spinSymbolLimit->setValue(Settings::getValue("databrowser", "symbol_limit").toInt());
     ui->spinCompleteThreshold->setValue(Settings::getValue("databrowser", "complete_threshold").toInt());
+    ui->checkShowImagesInline->setChecked(Settings::getValue("databrowser", "image_preview").toBool());
     ui->txtNull->setText(Settings::getValue("databrowser", "null_text").toString());
     ui->txtBlob->setText(Settings::getValue("databrowser", "blob_text").toString());
     ui->editFilterEscape->setText(Settings::getValue("databrowser", "filter_escape").toString());
@@ -217,6 +218,7 @@ void PreferencesDialog::saveSettings()
 
     Settings::setValue("databrowser", "font", ui->comboDataBrowserFont->currentText());
     Settings::setValue("databrowser", "fontsize", ui->spinDataBrowserFontSize->value());
+    Settings::setValue("databrowser", "image_preview", ui->checkShowImagesInline->isChecked());
     saveColorSetting(ui->fr_null_fg, "null_fg");
     saveColorSetting(ui->fr_null_bg, "null_bg");
     saveColorSetting(ui->fr_reg_fg, "reg_fg");

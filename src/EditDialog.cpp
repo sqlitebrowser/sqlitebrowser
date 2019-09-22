@@ -11,7 +11,6 @@
 #include <QKeySequence>
 #include <QShortcut>
 #include <QImageReader>
-#include <QBuffer>
 #include <QModelIndex>
 #include <QtXml/QDomDocument>
 #include <QMessageBox>
@@ -856,12 +855,9 @@ int EditDialog::checkDataType(const QByteArray& bArrdata)
         return Null;
     }
 
-    // Check if it's an image. First do a quick test by calling canRead() which only checks the first couple of bytes or so. Only if
-    // that returned true, do a more sophisticated test of the data. This way we get both, good performance and proper data checking.
-    QBuffer imageBuffer(&cellData);
-    QImageReader readerBuffer(&imageBuffer);
-    QString imageFormat = readerBuffer.format();
-    if(readerBuffer.canRead() && !readerBuffer.read().isNull())
+    // Check if it's an image
+    QString imageFormat = isImageData(cellData);
+    if(!imageFormat.isNull())
         return imageFormat == "svg" ? SVG : Image;
 
     // Check if it's text only
