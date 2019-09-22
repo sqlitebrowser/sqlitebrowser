@@ -45,6 +45,10 @@ QString escapeIdentifier(const QString& id)
 {
     return QString::fromStdString(escapeIdentifier(id.toStdString()));
 }
+QString escapeString(const QString& literal)
+{
+    return QString::fromStdString(escapeString(literal.toStdString()));
+}
 }
 
 // collation callbacks
@@ -324,7 +328,7 @@ bool DBBrowserDB::attach(const QString& filePath, QString attach_as)
         }
     }
 
-    if(!executeSQL(QString("ATTACH '%1' AS %2 %3").arg(filePath).arg(sqlb::escapeIdentifier(attach_as)).arg(key), false))
+    if(!executeSQL(QString("ATTACH %1 AS %2 %3").arg(sqlb::escapeString(filePath)).arg(sqlb::escapeIdentifier(attach_as)).arg(key), false))
     {
         QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
         return false;
@@ -334,7 +338,7 @@ bool DBBrowserDB::attach(const QString& filePath, QString attach_as)
     delete cipherSettings;
 #else
     // Attach database
-    if(!executeSQL(QString("ATTACH '%1' AS %2").arg(filePath).arg(sqlb::escapeIdentifier(attach_as)), false))
+    if(!executeSQL(QString("ATTACH %1 AS %2").arg(sqlb::escapeString(filePath)).arg(sqlb::escapeIdentifier(attach_as)), false))
     {
         QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
         return false;

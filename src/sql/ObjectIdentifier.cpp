@@ -53,6 +53,11 @@ std::string escapeIdentifier(const std::string& id)
     }
 }
 
+std::string escapeString(const std::string& literal)
+{
+  return '\'' + duplicate_char(literal, '\'') + '\'';
+}
+
 bool ObjectIdentifier::fromSerialised(const std::string& serialised)
 {
     auto pos_comma = serialised.find(",");
