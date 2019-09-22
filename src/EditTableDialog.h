@@ -50,10 +50,18 @@ private:
         kConstraintSql = 3
     };
 
+    enum MoveFieldDirection
+    {
+        MoveUp,
+        MoveDown,
+        MoveTop,
+        MoveBottom
+    };
+
     void updateColumnWidth();
     void updateSqlText();
 
-    void moveCurrentField(bool down);
+    void moveCurrentField(MoveFieldDirection dir);
 
 private slots:
     void populateFields();
@@ -71,6 +79,8 @@ private slots:
     void updateTypeAndCollation();
     void moveUp();
     void moveDown();
+    void moveTop();
+    void moveBottom();
     void setWithoutRowid(bool without_rowid);
     void changeSchema(const QString& schema);
     void removeConstraint();

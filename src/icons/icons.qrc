@@ -84,5 +84,7 @@
         <file alias="clear_cond_formats">clear_cond_formats.png</file>
         <file alias="edit_cond_formats">edit_cond_formats.png</file>
         <file alias="clear_sorting">clear_sorting.png</file>
+        <file alias="arrow_bottom">bullet_arrow_bottom.png</file>
+        <file alias="arrow_top">bullet_arrow_top.png</file>
     </qresource>
 </RCC>
