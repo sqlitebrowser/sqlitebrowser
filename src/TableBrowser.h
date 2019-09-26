@@ -151,6 +151,9 @@ private slots:
     void browseDataSetDefaultTableEncoding();
 
 private:
+    void find(const QString& expr, bool forward, bool include_first = false);
+
+private:
     Ui::TableBrowser* ui;
     QIntValidator* gotoValidator;
     QMenu* popupNewRecordMenu;

@@ -127,6 +127,41 @@ TableBrowser::TableBrowser(QWidget* parent) :
     connect(ui->dataTable->verticalHeader(), &QHeaderView::customContextMenuRequested, this, &TableBrowser::showRecordPopupMenu);
     connect(ui->dataTable, &ExtendedTableWidget::openFileFromDropEvent, this, &TableBrowser::requestFileOpen);
     connect(ui->dataTable, &ExtendedTableWidget::selectedRowsToBeDeleted, this, &TableBrowser::deleteRecord);
+
+    // Set up find frame
+    ui->frameFind->hide();
+
+    QShortcut* shortcutHideFindFrame = new QShortcut(QKeySequence("ESC"), ui->editFindExpression);
+    connect(shortcutHideFindFrame, &QShortcut::activated, ui->buttonFindClose, &QToolButton::click);
+
+    connect(ui->actionFind, &QAction::triggered, [this](bool checked) {
+       if(checked)
+       {
+           ui->frameFind->show();
+           ui->editFindExpression->setFocus();
+       } else {
+           ui->buttonFindClose->click();
+       }
+    });
+
+    connect(ui->editFindExpression, &QLineEdit::returnPressed, ui->buttonFindNext, &QToolButton::click);
+    connect(ui->editFindExpression, &QLineEdit::textChanged, this, [this]() {
+        // When the text has changed but neither Return nor F3 or similar nor any buttons were pressed, we want to include the current
+        // cell in the search as well. This makes sure the selected cell does not jump around every time the text is changed but only
+        // when the current cell does not match the search expression anymore.
+        find(ui->editFindExpression->text(), true, true);
+    });
+    connect(ui->buttonFindClose, &QToolButton::clicked, this, [this](){
+        ui->dataTable->setFocus();
+        ui->frameFind->hide();
+        ui->actionFind->setChecked(false);
+    });
+    connect(ui->buttonFindPrevious, &QToolButton::clicked, this, [this](){
+        find(ui->editFindExpression->text(), false);
+    });
+    connect(ui->buttonFindNext, &QToolButton::clicked, this, [this](){
+        find(ui->editFindExpression->text(), true);
+    });
 }
 
 TableBrowser::~TableBrowser()
@@ -219,6 +254,7 @@ void TableBrowser::setEnabled(bool enable)
     ui->actionRefresh->setEnabled(enable);
     ui->actionPrintTable->setEnabled(enable);
     ui->editGlobalFilter->setEnabled(enable);
+    ui->actionFind->setEnabled(enable);
 
     updateInsertDeleteRecordButton();
 }
@@ -270,7 +306,7 @@ void TableBrowser::updateTable()
                     }
                     statusMessage += tr(". Sum: %1; Average: %2; Min: %3; Max: %4").arg(sum).arg(sum/sel.count()).arg(min).arg(max);
                 }
-            };
+            }
             emit statusMessageRequested(statusMessage);
         });
     }
@@ -1161,4 +1197,54 @@ void TableBrowser::jumpToRow(const sqlb::ObjectIdentifier& table, QString column
     // Set filter
     ui->dataTable->filterHeader()->setFilter(static_cast<size_t>(column_index-obj->fields.begin()+1), QString("=") + value);
     updateTable();
+}
+
+void TableBrowser::find(const QString& expr, bool forward, bool include_first)
+{
+    // Get the cell from which the search should be started. If there is a selected cell, use that. If there is no selected cell, start at the first cell.
+    QModelIndex start;
+    if(ui->dataTable->selectionModel()->hasSelection())
+        start = ui->dataTable->selectionModel()->selectedIndexes().front();
+    else
+        start = m_browseTableModel->index(0, 0);
+
+    // Prepare the match flags with all the search settings
+    Qt::MatchFlags flags = Qt::MatchWrap;
+
+    if(ui->checkFindCaseSensitive->isChecked())
+        flags |= Qt::MatchCaseSensitive;
+
+    if(ui->checkFindWholeCell->isChecked())
+        flags |= Qt::MatchFixedString;
+    else
+        flags |= Qt::MatchContains;
+
+    if(ui->checkFindRegEx->isChecked())
+        flags |= Qt::MatchRegExp;
+
+    // Prepare list of columns to search in. We only search in non-hidden rows
+    std::vector<int> column_list;
+    sqlb::ObjectIdentifier tableName = currentlyBrowsedTableName();
+    if(browseTableSettings[tableName].showRowid)
+        column_list.push_back(0);
+    for(int i=1;i<m_browseTableModel->columnCount();i++)
+    {
+        if(browseTableSettings[tableName].hiddenColumns.contains(i) == false)
+            column_list.push_back(i);
+        else if(browseTableSettings[tableName].hiddenColumns[i] == false)
+            column_list.push_back(i);
+    }
+
+    // Perform the actual search using the model class
+    const auto match = m_browseTableModel->nextMatch(start, column_list, expr, flags, !forward, include_first);
+
+    // Select the next match if we found one
+    if(match.isValid())
+        ui->dataTable->setCurrentIndex(match);
+
+    // Make the expression control red if no results were found
+    if(match.isValid() || expr == "")
+        ui->editFindExpression->setStyleSheet("");
+    else
+        ui->editFindExpression->setStyleSheet("QLineEdit {color: white; background-color: rgb(255, 102, 102)}");
 }
