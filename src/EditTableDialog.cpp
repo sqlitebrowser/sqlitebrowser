@@ -504,6 +504,7 @@ void EditTableDialog::fieldItemChanged(QTreeWidgetItem *item, int column)
             field.setName(item->text(column).toStdString());
             m_table.renameKeyInAllConstraints(oldFieldName.toStdString(), item->text(column).toStdString());
             qobject_cast<QComboBox*>(ui->treeWidget->itemWidget(item, kType))->setProperty("column", item->text(column));
+            qobject_cast<QComboBox*>(ui->treeWidget->itemWidget(item, kCollation))->setProperty("column", item->text(column));
 
             // Update the field name in the map of old column names to new column names
             if(!m_bNewTable)
