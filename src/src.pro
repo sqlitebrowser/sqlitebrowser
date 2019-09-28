@@ -1,7 +1,6 @@
 TEMPLATE = app
 
 QT += core gui network widgets printsupport concurrent xml
-macx: QT += opengl
 
 TARGET = sqlitebrowser
 
@@ -191,7 +190,7 @@ CONFIG(sqlcipher) {
     LIBS += -lsqlcipher
 
     # Add the paths for Homebrew installed SQLCipher
-    mac {
+    macx {
         INCLUDEPATH += /usr/local/opt/sqlcipher/include
         LIBS += -L/usr/local/opt/sqlcipher/lib
     }
@@ -199,7 +198,7 @@ CONFIG(sqlcipher) {
     LIBS += -lsqlite3
 
     # Add the paths for Homebrew installed SQLite
-    mac {
+    macx {
         INCLUDEPATH += /usr/local/opt/sqlite/include
         LIBS += -L/usr/local/opt/sqlite/lib
     }
@@ -238,10 +237,10 @@ win32 {
     INCLUDEPATH += $$PWD/../../../dev/SQLite
     DEPENDPATH += $$PWD/../../../dev/SQLite
 }
-mac {
+macx {
     TARGET = "DB Browser for SQLite"
     RC_FILE = macapp.icns
-    QT+= macextras
+    QT += macextras opengl
     INCLUDEPATH += /usr/local/include
     LIBS += -L/usr/local/lib -framework Carbon
     QMAKE_INFO_PLIST = app.plist
