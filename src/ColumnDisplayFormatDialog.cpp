@@ -105,7 +105,7 @@ void ColumnDisplayFormatDialog::accept()
     // Users could still devise a way to break this, but this is considered good enough for letting them know about simple incorrect
     // cases.
     if(!(ui->editDisplayFormat->text() == sqlb::escapeIdentifier(column_name) ||
-         ui->editDisplayFormat->text().contains(QRegExp("[a-z]+[a-z_0-9]* *\\(.*" + QRegExp::escape(sqlb::escapeIdentifier(column_name)) + ".*\\)", Qt::CaseInsensitive))))
+         ui->editDisplayFormat->text().contains(QRegularExpression("[a-z]+[a-z_0-9]* *\\(.*" + QRegularExpression::escape(sqlb::escapeIdentifier(column_name)) + ".*\\)", QRegularExpression::CaseInsensitiveOption))))
         errorMessage = tr("Custom display format must contain a function call applied to %1").arg(sqlb::escapeIdentifier(column_name));
     else {
         // Execute a query using the display format and check that it only returns one column.

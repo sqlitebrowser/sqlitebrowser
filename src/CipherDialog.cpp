@@ -3,7 +3,7 @@
 #include "sqlitedb.h"
 
 #include <QPushButton>
-#include <QRegExpValidator>
+#include <QRegularExpressionValidator>
 
 #include <QtCore/qmath.h>
 
@@ -11,7 +11,7 @@ CipherDialog::CipherDialog(QWidget* parent, bool encrypt) :
     QDialog(parent),
     ui(new Ui::CipherDialog),
     encryptMode(encrypt),
-    rawKeyValidator(new QRegExpValidator(QRegExp("0x[a-fA-F0-9]+")))
+    rawKeyValidator(new QRegularExpressionValidator(QRegularExpression("\\A(0x[a-fA-F0-9]+)\\Z")))
 {
     ui->setupUi(this);
 
