@@ -17,6 +17,9 @@ FilterTableHeader::FilterTableHeader(QTableView* parent) :
     // Make sure to not automatically resize the columns according to the contents
     setSectionResizeMode(QHeaderView::Interactive);
 
+    // Highlight column headers of selected cells to emulate spreadsheet behaviour
+    setHighlightSections(true);
+
     // Do some connects: Basically just resize and reposition the input widgets whenever anything changes
     connect(this, &FilterTableHeader::sectionResized, this, &FilterTableHeader::adjustPositions);
     connect(parent->horizontalScrollBar(), &QScrollBar::valueChanged, this, &FilterTableHeader::adjustPositions);

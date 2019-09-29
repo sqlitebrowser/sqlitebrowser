@@ -2246,10 +2246,22 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, QXmlS
                     int index = xml.attributes().value("index").toInt();
                     while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "column") {
                         if(xml.name() == "format") {
+                            QFont font;
+                            if (xml.attributes().hasAttribute("font"))
+                                font.fromString(xml.attributes().value("font").toString());
+                            else
+                                Settings::getValue("databrowser", "font").toString();
+
+                            CondFormat::Alignment align;
+                            if (xml.attributes().hasAttribute("align"))
+                                align = static_cast<CondFormat::Alignment>(xml.attributes().value("align").toInt());
+                            else
+                                align = CondFormat::AlignLeft;
+
                             settings.condFormats[index].emplace_back(xml.attributes().value("condition").toString(),
                                                                      QColor(xml.attributes().value("foreground").toString()),
                                                                      QColor(xml.attributes().value("background").toString()),
-                                                                     settings.encoding);
+                                                                     font, align, settings.encoding);
                             xml.skipCurrentElement();
                         }
                     }
@@ -2587,6 +2599,8 @@ static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, Q
             xml.writeAttribute("condition", format.filter());
             xml.writeAttribute("background", format.backgroundColor().name());
             xml.writeAttribute("foreground", format.foregroundColor().name());
+            xml.writeAttribute("font", format.font().toString());
+            xml.writeAttribute("align", QString().setNum(format.alignment()));
             xml.writeEndElement();
         }
         xml.writeEndElement();

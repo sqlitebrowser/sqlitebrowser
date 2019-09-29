@@ -80,11 +80,23 @@
         <file alias="field_fk">page_foreign_key.png</file>
         <file alias="save_all">save_all.png</file>
         <file alias="word_wrap">page_white_text.png</file>
-        <file alias="cond_formats">color_swatch.png</file>
-        <file alias="clear_cond_formats">clear_cond_formats.png</file>
-        <file alias="edit_cond_formats">edit_cond_formats.png</file>
+        <file>color_swatch.png</file>
+        <file>edit_cond_formats.png</file>
         <file alias="clear_sorting">clear_sorting.png</file>
         <file alias="arrow_bottom">bullet_arrow_bottom.png</file>
         <file alias="arrow_top">bullet_arrow_top.png</file>
+        <file>text_bold.png</file>
+        <file>text_italic.png</file>
+        <file>text_underline.png</file>
+        <file>text_align_center.png</file>
+        <file>text_align_justify.png</file>
+        <file>text_align_left.png</file>
+        <file>text_align_right.png</file>
+        <file alias="background_color">page_paintbrush.png</file>
+        <file alias="foreground_color">text_paintbrush.png</file>
+        <file alias="cond_formats">style.png</file>
+        <file alias="edit_cond_formats">style_edit.png</file>
+        <file alias="clear_cond_formats">style_delete.png</file>
+        <file alias="add_cond_format">style_add.png</file>
     </qresource>
 </RCC>

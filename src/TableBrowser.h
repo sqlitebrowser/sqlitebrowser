@@ -9,6 +9,8 @@
 #include <QModelIndex>
 #include <QWidget>
 
+#include <unordered_set>
+
 class DBBrowserDB;
 class ExtendedTableWidget;
 class SqliteTableModel;
@@ -172,6 +174,8 @@ private:
     static QString defaultBrowseTableEncoding;
 
     Palette m_condFormatPalette;
+
+    void modifyColumnFormat(std::unordered_set<int> columns, std::function<void(CondFormat&)> changeFunction);
 };
 
 #endif

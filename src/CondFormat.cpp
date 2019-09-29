@@ -2,10 +2,29 @@
 #include "Settings.h"
 #include "Data.h"
 
-CondFormat::CondFormat(const QString& filter, const QColor& foreground, const QColor& background, const QString& encoding)
+CondFormat::Alignment CondFormat::fromCombinedAlignment(Qt::Alignment align)
+{
+    if (align.testFlag(Qt::AlignLeft))
+        return AlignLeft;
+    if (align.testFlag(Qt::AlignRight))
+        return AlignRight;
+    if (align.testFlag(Qt::AlignCenter))
+        return AlignCenter;
+    if (align.testFlag(Qt::AlignJustify))
+        return AlignJustify;
+}
+
+CondFormat::CondFormat(const QString& filter,
+                       const QColor& foreground,
+                       const QColor& background,
+                       const QFont& font,
+                       const Alignment alignment,
+                       const QString& encoding)
     : m_filter(filter),
       m_bgColor(background),
-      m_fgColor(foreground)
+      m_fgColor(foreground),
+      m_font(font),
+      m_align(alignment)
 {
     if (!filter.isEmpty())
         m_sqlCondition = filterToSqlCondition(filter, encoding);
@@ -113,5 +132,19 @@ QString CondFormat::filterToSqlCondition(const QString& value, const QString& en
             whereClause += " AND " + QString(encodeString(val2.toUtf8(), encoding));
         whereClause += " " + escape;
         return whereClause;
+    }
+}
+
+Qt::AlignmentFlag CondFormat::alignmentFlag() const
+{
+    switch (m_align) {
+    case AlignLeft:
+        return Qt::AlignLeft;
+    case AlignCenter:
+        return Qt::AlignCenter;
+    case AlignRight:
+        return Qt::AlignRight;
+    case AlignJustify:
+        return Qt::AlignJustify;
     }
 }

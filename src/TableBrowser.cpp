@@ -18,6 +18,7 @@
 #include <QScrollBar>
 #include <QShortcut>
 #include <QTextCodec>
+#include <QColorDialog>
 
 QMap<sqlb::ObjectIdentifier, BrowseDataTableSettings> TableBrowser::browseTableSettings;
 QString TableBrowser::defaultBrowseTableEncoding;
@@ -127,6 +128,115 @@ TableBrowser::TableBrowser(QWidget* parent) :
     connect(ui->dataTable->verticalHeader(), &QHeaderView::customContextMenuRequested, this, &TableBrowser::showRecordPopupMenu);
     connect(ui->dataTable, &ExtendedTableWidget::openFileFromDropEvent, this, &TableBrowser::requestFileOpen);
     connect(ui->dataTable, &ExtendedTableWidget::selectedRowsToBeDeleted, this, &TableBrowser::deleteRecord);
+
+    connect(ui->fontComboBox, &QFontComboBox::currentFontChanged, this, [this](const QFont &font) {
+        modifyColumnFormat(ui->dataTable->colsInSelection(), [font](CondFormat& format) { format.setFontFamily(font.family()); });
+    });
+    connect(ui->fontSizeBox, QOverload<int>::of(&QSpinBox::valueChanged), this, [this](int pointSize) {
+        modifyColumnFormat(ui->dataTable->colsInSelection(), [pointSize](CondFormat& format) { format.setFontPointSize(pointSize); });
+    });
+
+    connect(ui->actionFontColor, &QAction::triggered, this, [this]() {
+        QColor color = QColorDialog::getColor(QColor(m_browseTableModel->data(currentIndex(), Qt::ForegroundRole).toString()));
+        if(color.isValid())
+            modifyColumnFormat(ui->dataTable->colsInSelection(), [color](CondFormat& format) { format.setForegroundColor(color); });
+    });
+    connect(ui->actionBackgroundColor, &QAction::triggered, this, [this]() {
+        QColor color = QColorDialog::getColor(QColor(m_browseTableModel->data(currentIndex(), Qt::BackgroundRole).toString()));
+        if(color.isValid())
+            modifyColumnFormat(ui->dataTable->colsInSelection(), [color](CondFormat& format) { format.setBackgroundColor(color); });
+    });
+
+    connect(ui->actionBold, &QAction::toggled, this, [this](bool checked) {
+        modifyColumnFormat(ui->dataTable->colsInSelection(), [checked](CondFormat& format) { format.setBold(checked); });
+    });
+    connect(ui->actionItalic, &QAction::toggled, this, [this](bool checked) {
+        modifyColumnFormat(ui->dataTable->colsInSelection(), [checked](CondFormat& format) { format.setItalic(checked); });
+    });
+    connect(ui->actionUnderline, &QAction::toggled, this, [this](bool checked) {
+        modifyColumnFormat(ui->dataTable->colsInSelection(), [checked](CondFormat& format) { format.setUnderline(checked); });
+    });
+
+    connect(ui->actionLeftAlign, &QAction::triggered, this, [this]() {
+        ui->actionLeftAlign->setChecked(true);
+        ui->actionRightAlign->setChecked(false);
+        ui->actionCenter->setChecked(false);
+        ui->actionJustify->setChecked(false);
+        modifyColumnFormat(ui->dataTable->colsInSelection(), [](CondFormat& format) { format.setAlignment(CondFormat::AlignLeft); });
+    });
+    connect(ui->actionRightAlign, &QAction::triggered, this, [this]() {
+        ui->actionLeftAlign->setChecked(false);
+        ui->actionRightAlign->setChecked(true);
+        ui->actionCenter->setChecked(false);
+        ui->actionJustify->setChecked(false);
+        modifyColumnFormat(ui->dataTable->colsInSelection(), [](CondFormat& format) { format.setAlignment(CondFormat::AlignRight); });
+    });
+    connect(ui->actionCenter, &QAction::triggered, this, [this]() {
+        ui->actionLeftAlign->setChecked(false);
+        ui->actionRightAlign->setChecked(false);
+        ui->actionCenter->setChecked(true);
+        ui->actionJustify->setChecked(false);
+        modifyColumnFormat(ui->dataTable->colsInSelection(), [](CondFormat& format) { format.setAlignment(CondFormat::AlignCenter); });
+    });
+    connect(ui->actionJustify, &QAction::triggered, this, [this]() {
+        ui->actionLeftAlign->setChecked(false);
+        ui->actionRightAlign->setChecked(false);
+        ui->actionCenter->setChecked(false);
+        ui->actionJustify->setChecked(true);
+        modifyColumnFormat(ui->dataTable->colsInSelection(), [](CondFormat& format) { format.setAlignment(CondFormat::AlignJustify); });
+    });
+
+    connect(ui->actionEditCondFormats, &QAction::triggered, this, [this]() { editCondFormats(currentIndex().column()); });
+    connect(ui->actionClearFormat, &QAction::triggered, this, [this]() {
+        for (int column : ui->dataTable->colsInSelection())
+            clearAllCondFormats(column);
+    });
+
+    connect(ui->dataTable, &ExtendedTableWidget::currentChanged, this, [this](const QModelIndex &current, const QModelIndex &) {
+            // Get cell current format for updating the format toolbar values. Block signals, so the format change is not reapplied.
+            QFont font;
+            font.fromString(m_browseTableModel->data(current, Qt::FontRole).toString());
+            ui->fontComboBox->blockSignals(true);
+            ui->fontComboBox->setCurrentFont(font);
+            ui->fontComboBox->blockSignals(false);
+
+            ui->fontSizeBox->blockSignals(true);
+            ui->fontSizeBox->setValue(font.pointSize());
+            ui->fontSizeBox->blockSignals(false);
+
+            ui->actionBold->blockSignals(true);
+            ui->actionBold->setChecked(font.bold());
+            ui->actionBold->blockSignals(false);
+
+            ui->actionItalic->blockSignals(true);
+            ui->actionItalic->setChecked(font.italic());
+            ui->actionItalic->blockSignals(false);
+
+            ui->actionUnderline->blockSignals(true);
+            ui->actionUnderline->setChecked(font.underline());
+            ui->actionUnderline->blockSignals(false);
+
+            Qt::Alignment align = Qt::Alignment(m_browseTableModel->data(current, Qt::TextAlignmentRole).toInt());
+            ui->actionLeftAlign->blockSignals(true);
+            ui->actionLeftAlign->setChecked(align.testFlag(Qt::AlignLeft));
+            ui->actionLeftAlign->blockSignals(false);
+
+            ui->actionRightAlign->blockSignals(true);
+            ui->actionRightAlign->setChecked(align.testFlag(Qt::AlignRight));
+            ui->actionRightAlign->blockSignals(false);
+
+            ui->actionCenter->blockSignals(true);
+            ui->actionCenter->setChecked(align.testFlag(Qt::AlignCenter));
+            ui->actionCenter->blockSignals(false);
+
+            ui->actionJustify->blockSignals(true);
+            ui->actionJustify->setChecked(align.testFlag(Qt::AlignJustify));
+            ui->actionJustify->blockSignals(false);
+    });
+
+    connect(ui->actionToggleFormatToolbar, &QAction::toggled, ui->formatFrame, &QFrame::setVisible);
+    ui->actionToggleFormatToolbar->setChecked(false);
+    ui->formatFrame->setVisible(false);
 
     // Set up find frame
     ui->frameFind->hide();
@@ -473,10 +583,15 @@ void TableBrowser::updateFilter(int column, const QString& value)
 
 void TableBrowser::addCondFormat(int column, const QString& value)
 {
+    QFont font = QFont(Settings::getValue("databrowser", "font").toString());
+    font.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
+
     // Create automatically a new conditional format with the next serial background color according to the theme and the regular foreground
-    // color in the settings.
+    // color and font in the settings.
     CondFormat newCondFormat(value, QColor(Settings::getValue("databrowser", "reg_fg_colour").toString()),
                              m_condFormatPalette.nextSerialColor(Palette::appHasDarkTheme()),
+                             font,
+                             CondFormat::AlignLeft,
                              m_browseTableModel->encoding());
     m_browseTableModel->addCondFormat(column, newCondFormat);
     browseTableSettings[currentlyBrowsedTableName()].condFormats[column].push_back(newCondFormat);
@@ -494,12 +609,46 @@ void TableBrowser::editCondFormats(int column)
 {
     CondFormatManager condFormatDialog(browseTableSettings[currentlyBrowsedTableName()].condFormats[column],
                                        m_browseTableModel->encoding(), this);
+    condFormatDialog.setWindowTitle(tr("Conditional formats for \"%1\"").
+                                    arg(m_browseTableModel->headerData(column, Qt::Horizontal).toString()));
     if (condFormatDialog.exec()) {
         std::vector<CondFormat> condFormatVector = condFormatDialog.getCondFormats();
         m_browseTableModel->setCondFormats(column, condFormatVector);
         browseTableSettings[currentlyBrowsedTableName()].condFormats[column] = condFormatVector;
         emit projectModified();
     }
+}
+
+void TableBrowser::modifyColumnFormat(std::unordered_set<int> columns, std::function<void(CondFormat&)> changeFunction)
+{
+    for (int column : columns) {
+        std::vector<CondFormat>& columnFormats = browseTableSettings[currentlyBrowsedTableName()].condFormats[column];
+
+        auto it = std::find_if(columnFormats.begin(), columnFormats.end(), [](const CondFormat& format) {
+                return format.sqlCondition().isEmpty();
+            });
+        if(it != columnFormats.end()) {
+            changeFunction(*it);
+            m_browseTableModel->addCondFormat(column, *it);
+        } else {
+            // Create a new conditional format based on defaults and then modify it as requested using the passed function.
+            // Alignment is get from the current column since the default is different from text and numbers.
+            QFont font = QFont(Settings::getValue("databrowser", "font").toString());
+            font.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
+            Qt::Alignment align = Qt::Alignment(m_browseTableModel->data(currentIndex().sibling(currentIndex().row(), column),
+                                                                         Qt::TextAlignmentRole).toInt());
+
+            CondFormat newCondFormat(QString(""), QColor(Settings::getValue("databrowser", "reg_fg_colour").toString()),
+                                     QColor(Settings::getValue("databrowser", "reg_bg_colour").toString()),
+                                     font,
+                                     CondFormat::fromCombinedAlignment(align),
+                                     m_browseTableModel->encoding());
+            changeFunction(newCondFormat);
+            m_browseTableModel->addCondFormat(column, newCondFormat);
+            browseTableSettings[currentlyBrowsedTableName()].condFormats[column].push_back(newCondFormat);
+        }
+    }
+    emit projectModified();
 }
 
 void TableBrowser::updateRecordsetLabel()
@@ -1239,9 +1388,10 @@ void TableBrowser::find(const QString& expr, bool forward, bool include_first)
     const auto match = m_browseTableModel->nextMatch(start, column_list, expr, flags, !forward, include_first);
 
     // Select the next match if we found one
-    if(match.isValid())
+    if(match.isValid()) {
         ui->dataTable->setCurrentIndex(match);
-
+        ui->dataTable->scrollTo(match);
+    }
     // Make the expression control red if no results were found
     if(match.isValid() || expr == "")
         ui->editFindExpression->setStyleSheet("");

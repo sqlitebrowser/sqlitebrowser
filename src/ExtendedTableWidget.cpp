@@ -849,6 +849,14 @@ std::unordered_set<int> ExtendedTableWidget::selectedCols() const
     return selectedCols;
 }
 
+std::unordered_set<int> ExtendedTableWidget::colsInSelection() const
+{
+    std::unordered_set<int> colsInSelection;
+    for(const QModelIndex & idx : selectedIndexes())
+        colsInSelection.insert(idx.column());
+    return colsInSelection;
+}
+
 void ExtendedTableWidget::cellClicked(const QModelIndex& index)
 {
     // If Ctrl-Shift is pressed try to jump to the row referenced by the foreign key of the clicked cell

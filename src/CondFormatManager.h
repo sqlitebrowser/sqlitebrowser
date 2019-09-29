@@ -26,18 +26,25 @@ public:
 private:
     enum Columns {
         ColumnForeground = 0,
-        ColumnBackground = 1,
-        ColumnFilter = 2
+        ColumnBackground,
+        ColumnFont,
+        ColumnSize,
+        ColumnBold,
+        ColumnItalic,
+        ColumnUnderline,
+        ColumnAlignment,
+        ColumnFilter
     };
     Ui::CondFormatManager *ui;
     std::vector<CondFormat> m_condFormats;
     Palette m_condFormatPalette;
     QString m_encoding;
-    
+
 private slots:
     void addNewItem();
     void addItem(const CondFormat& aCondFormat);
     void removeItem();
+    void moveItem(int offset);
     void upItem();
     void downItem();
     void on_buttonBox_clicked(QAbstractButton* button);
