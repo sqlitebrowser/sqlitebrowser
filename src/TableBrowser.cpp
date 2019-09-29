@@ -594,14 +594,17 @@ void TableBrowser::modifyColumnFormat(std::unordered_set<int> columns, std::func
             changeFunction(*it);
             m_browseTableModel->addCondFormat(column, *it);
         } else {
-
+            // Create a new conditional format based on defaults and then modify it as requested using the passed function.
+            // Alignment is get from the current column since the default is different from text and numbers.
             QFont font = QFont(Settings::getValue("databrowser", "font").toString());
             font.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
+            Qt::Alignment align = Qt::Alignment(m_browseTableModel->data(currentIndex().sibling(currentIndex().row(), column),
+                                                                         Qt::TextAlignmentRole).toInt());
 
             CondFormat newCondFormat(QString(""), QColor(Settings::getValue("databrowser", "reg_fg_colour").toString()),
                                      QColor(Settings::getValue("databrowser", "reg_bg_colour").toString()),
                                      font,
-                                     CondFormat::AlignLeft,
+                                     CondFormat::fromCombinedAlignment(align),
                                      m_browseTableModel->encoding());
             changeFunction(newCondFormat);
             m_browseTableModel->addCondFormat(column, newCondFormat);

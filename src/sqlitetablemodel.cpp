@@ -302,7 +302,7 @@ QVariant SqliteTableModel::getMatchingCondFormat(int column, const QString& valu
             case Qt::FontRole:
                 return eachCondFormat.font();
             case Qt::TextAlignmentRole:
-                return eachCondFormat.alignmentFlag();
+                return static_cast<int>(eachCondFormat.alignmentFlag() | Qt::AlignVCenter);
             }
     }
     return QVariant();
@@ -412,6 +412,8 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
         else
             return QString();
     } else if (role == Qt::TextAlignmentRole) {
+        // Align horizontally according to conditional format or default (left for text and right for numbers)
+        // Align vertically to the center, which displays better.
         QString value = cached_row->at(column);
         lock.unlock();
         QVariant condFormat = getMatchingCondFormat(index.column(), value, role);
@@ -419,7 +421,7 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
             return condFormat;
         bool isNumber;
         value.toDouble(&isNumber);
-        return isNumber ? Qt::AlignRight : Qt::AlignLeft;
+        return static_cast<int>((isNumber ? Qt::AlignRight : Qt::AlignLeft) | Qt::AlignVCenter);
     }
 
 

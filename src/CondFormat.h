@@ -22,6 +22,10 @@ public:
         return {QObject::tr("Left"), QObject::tr("Right"), QObject::tr("Center"), QObject::tr("Justify")};
     };
 
+    // Get alignment from combined Qt alignment (note that this will lose any combination of our Alignment enum
+    // with other values present in the flag (e.g. vertical alignment).
+    static Alignment fromCombinedAlignment(Qt::Alignment align);
+
     CondFormat() {}
     explicit CondFormat(const QString& filter,
                         const QColor& foreground,

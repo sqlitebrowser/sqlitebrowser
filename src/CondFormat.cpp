@@ -2,6 +2,18 @@
 #include "Settings.h"
 #include "Data.h"
 
+CondFormat::Alignment CondFormat::fromCombinedAlignment(Qt::Alignment align)
+{
+    if (align.testFlag(Qt::AlignLeft))
+        return AlignLeft;
+    if (align.testFlag(Qt::AlignRight))
+        return AlignRight;
+    if (align.testFlag(Qt::AlignCenter))
+        return AlignCenter;
+    if (align.testFlag(Qt::AlignJustify))
+        return AlignJustify;
+}
+
 CondFormat::CondFormat(const QString& filter,
                        const QColor& foreground,
                        const QColor& background,
