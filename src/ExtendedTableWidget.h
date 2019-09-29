@@ -70,6 +70,8 @@ signals:
     void openFileFromDropEvent(QString);
     void selectedRowsToBeDeleted();
     void editCondFormats(int column);
+    // Make the inherited protected signal public
+    void currentChanged(const QModelIndex &current, const QModelIndex &previous);
 
 private:
     void copyMimeData(const QModelIndexList& fromIndices, QMimeData* mimeData, const bool withHeaders, const bool inSQL);

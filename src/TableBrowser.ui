@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>552</width>
+    <width>651</width>
     <height>362</height>
    </rect>
   </property>
@@ -14,6 +14,9 @@
    <string>Browse Data</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <property name="spacing">
+    <number>1</number>
+   </property>
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -28,6 +31,12 @@
    </property>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="leftMargin">
+      <number>2</number>
+     </property>
+     <property name="rightMargin">
+      <number>2</number>
+     </property>
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
@@ -74,6 +83,8 @@
        <addaction name="separator"/>
        <addaction name="actionNewRecord"/>
        <addaction name="actionDeleteRecord"/>
+       <addaction name="separator"/>
+       <addaction name="actionToggleFormatToolbar"/>
       </widget>
      </item>
      <item>
@@ -96,6 +107,64 @@
       </spacer>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QFrame" name="formatFrame">
+     <layout class="QHBoxLayout" name="horizontalLayoutFormat">
+      <property name="spacing">
+       <number>5</number>
+      </property>
+      <property name="leftMargin">
+       <number>2</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>2</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QFontComboBox" name="fontComboBox"/>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="fontSizeBox">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolBar" name="formatToolbar">
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonIconOnly</enum>
+        </property>
+        <addaction name="actionBold"/>
+        <addaction name="actionItalic"/>
+        <addaction name="actionUnderline"/>
+        <addaction name="separator"/>
+        <addaction name="actionFontColor"/>
+        <addaction name="actionBackgroundColor"/>
+        <addaction name="separator"/>
+        <addaction name="actionLeftAlign"/>
+        <addaction name="actionCenter"/>
+        <addaction name="actionRightAlign"/>
+        <addaction name="actionJustify"/>
+        <addaction name="separator"/>
+        <addaction name="actionEditCondFormats"/>
+        <addaction name="actionClearFormat"/>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </item>
    <item>
     <widget class="ExtendedTableWidget" name="dataTable">
@@ -127,6 +196,18 @@
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <property name="leftMargin">
+      <number>2</number>
+     </property>
+     <property name="topMargin">
+      <number>2</number>
+     </property>
+     <property name="rightMargin">
+      <number>2</number>
+     </property>
+     <property name="bottomMargin">
+      <number>2</number>
+     </property>
      <item>
       <widget class="QToolButton" name="buttonBegin">
        <property name="enabled">
@@ -505,6 +586,186 @@
    </property>
    <property name="shortcutContext">
     <enum>Qt::WidgetShortcut</enum>
+   </property>
+  </action>
+  <action name="actionBold">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/text_bold.png</normaloff>:/icons/text_bold.png</iconset>
+   </property>
+   <property name="text">
+    <string>Bold</string>
+   </property>
+   <property name="toolTip">
+    <string>Bold</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+B</string>
+   </property>
+  </action>
+  <action name="actionItalic">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/text_italic.png</normaloff>:/icons/text_italic.png</iconset>
+   </property>
+   <property name="text">
+    <string>Italic</string>
+   </property>
+   <property name="toolTip">
+    <string>Italic</string>
+   </property>
+  </action>
+  <action name="actionUnderline">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/text_underline.png</normaloff>:/icons/text_underline.png</iconset>
+   </property>
+   <property name="text">
+    <string>Underline</string>
+   </property>
+   <property name="toolTip">
+    <string>Underline</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+U</string>
+   </property>
+  </action>
+  <action name="actionRightAlign">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/text_align_right.png</normaloff>:/icons/text_align_right.png</iconset>
+   </property>
+   <property name="text">
+    <string>Align Right</string>
+   </property>
+   <property name="toolTip">
+    <string>Align Right</string>
+   </property>
+  </action>
+  <action name="actionLeftAlign">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/text_align_left.png</normaloff>:/icons/text_align_left.png</iconset>
+   </property>
+   <property name="text">
+    <string>Align Left</string>
+   </property>
+   <property name="toolTip">
+    <string>Align Left</string>
+   </property>
+  </action>
+  <action name="actionCenter">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/text_align_center.png</normaloff>:/icons/text_align_center.png</iconset>
+   </property>
+   <property name="text">
+    <string>Center Horizontally</string>
+   </property>
+   <property name="toolTip">
+    <string>Center Horizontally</string>
+   </property>
+  </action>
+  <action name="actionJustify">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/text_align_justify.png</normaloff>:/icons/text_align_justify.png</iconset>
+   </property>
+   <property name="text">
+    <string>Justify</string>
+   </property>
+   <property name="toolTip">
+    <string>Justify</string>
+   </property>
+  </action>
+  <action name="actionEditCondFormats">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/edit_cond_formats</normaloff>:/icons/edit_cond_formats</iconset>
+   </property>
+   <property name="text">
+    <string>Edit Conditional Formats...</string>
+   </property>
+   <property name="toolTip">
+    <string>Edit Conditional Formats...</string>
+   </property>
+  </action>
+  <action name="actionClearFormat">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/clear_cond_formats</normaloff>:/icons/clear_cond_formats</iconset>
+   </property>
+   <property name="text">
+    <string>Clear Format</string>
+   </property>
+   <property name="toolTip">
+    <string>Clear All Conditional Formats</string>
+   </property>
+  </action>
+  <action name="actionFontColor">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/foreground_color</normaloff>:/icons/foreground_color</iconset>
+   </property>
+   <property name="text">
+    <string>Font Color</string>
+   </property>
+   <property name="toolTip">
+    <string>Font Color</string>
+   </property>
+  </action>
+  <action name="actionBackgroundColor">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/background_color</normaloff>:/icons/background_color</iconset>
+   </property>
+   <property name="text">
+    <string>Background Color</string>
+   </property>
+   <property name="toolTip">
+    <string>Background Color</string>
+   </property>
+  </action>
+  <action name="actionToggleFormatToolbar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/cond_formats</normaloff>:/icons/cond_formats</iconset>
+   </property>
+   <property name="text">
+    <string>Toggle Format Toolbar</string>
+   </property>
+   <property name="toolTip">
+    <string>Show/hide format toolbar</string>
+   </property>
+   <property name="statusTip">
+    <string>This button shows or hides the formatting toolbar of the Data Browser</string>
+   </property>
+   <property name="whatsThis">
+    <string>This button shows or hides the formatting toolbar of the Data Browser</string>
    </property>
   </action>
  </widget>

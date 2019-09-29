@@ -822,7 +822,15 @@ std::vector<std::string> SqliteTableModel::getColumns(std::shared_ptr<sqlite3> p
 
 void SqliteTableModel::addCondFormat(int column, const CondFormat& condFormat)
 {
-    m_mCondFormats[column].push_back(condFormat);
+    // If the condition is already present in the vector, update that entry and respect the order, since two entries with the same
+    // condition do not make sense.
+    auto it = std::find_if(m_mCondFormats[column].begin(), m_mCondFormats[column].end(), [condFormat](const CondFormat& format) {
+            return format.sqlCondition() == condFormat.sqlCondition();
+        });
+    if(it != m_mCondFormats[column].end()) {
+        *it = condFormat;
+    } else
+        m_mCondFormats[column].push_back(condFormat);
     emit layoutChanged();
 }
 

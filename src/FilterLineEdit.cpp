@@ -184,7 +184,7 @@ void FilterLineEdit::showContextMenu(const QPoint &pos)
                     emit clearAllCondFormats();
             });
         } else {
-            conditionalFormatAction = new QAction(QIcon(":/icons/cond_formats"), tr("Use for Conditional Format"), editContextMenu);
+            conditionalFormatAction = new QAction(QIcon(":/icons/add_cond_format"), tr("Use for Conditional Format"), editContextMenu);
             connect(conditionalFormatAction, &QAction::triggered, [&]() {
                     emit addFilterAsCondFormat(text());
             });
