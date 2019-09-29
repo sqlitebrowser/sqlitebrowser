@@ -132,7 +132,8 @@ TableBrowser::TableBrowser(QWidget* parent) :
     connect(ui->fontComboBox, &QFontComboBox::currentFontChanged, this, [this](const QFont &font) {
         modifyColumnFormat(ui->dataTable->colsInSelection(), [font](CondFormat& format) { format.setFontFamily(font.family()); });
     });
-    connect(ui->fontSizeBox, QOverload<int>::of(&QSpinBox::valueChanged), this, [this](int pointSize) {
+    connect(ui->fontSizeBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this,
+        [this](int pointSize) {
         modifyColumnFormat(ui->dataTable->colsInSelection(), [pointSize](CondFormat& format) { format.setFontPointSize(pointSize); });
     });
 
