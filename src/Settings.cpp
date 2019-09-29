@@ -208,6 +208,8 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
             return 5000;
         if(name == "complete_threshold")
             return 1000;
+        if(name == "image_preview")
+            return false;
         if(name == "indent_compact")
             return false;
         if(name == "auto_switch_mode")

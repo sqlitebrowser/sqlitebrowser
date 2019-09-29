@@ -117,6 +117,19 @@ public:
     void addCondFormat(int column, const CondFormat& condFormat);
     void setCondFormats(int column, const std::vector<CondFormat>& condFormats);
 
+    // Search for the specified expression in the given cells. This intended as a replacement for QAbstractItemModel::match() even though
+    // it does not override it, which - because of the different parameters - is not possible.
+    // start contains the index to start with, column_list contains the ordered list of the columns to look in, value is the value to search for,
+    // flags allows to modify  the search process (Qt::MatchContains, Qt::MatchRegExp, Qt::MatchCaseSensitive, and Qt::MatchWrap are understood),
+    // reverse can be set to true to progress through the cells in backwards direction, and dont_skip_to_next_field can be set to true if the current
+    // cell can be matched as well.
+    QModelIndex nextMatch(const QModelIndex& start,
+                          const std::vector<int>& column_list,
+                          const QString& value,
+                          Qt::MatchFlags flags = Qt::MatchFlags(Qt::MatchContains),
+                          bool reverse = false,
+                          bool dont_skip_to_next_field = false) const;
+
     DBBrowserDB& db() { return m_db; }
 
 public slots:

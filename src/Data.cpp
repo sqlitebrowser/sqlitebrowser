@@ -1,6 +1,9 @@
 #include "Data.h"
 
+#include <QBuffer>
+#include <QImageReader>
 #include <QTextCodec>
+
 #include <algorithm>
 
 // Note that these aren't all possible BOMs. But they are probably the most common ones.
@@ -86,6 +89,19 @@ QByteArray removeBom(QByteArray& data)
     } else {
         return QByteArray();
     }
+}
+
+QString isImageData(const QByteArray& data)
+{
+    // Check if it's an image. First do a quick test by calling canRead() which only checks the first couple of bytes or so. Only if
+    // that returned true, do a more sophisticated test of the data. This way we get both, good performance and proper data checking.
+    QBuffer imageBuffer(const_cast<QByteArray*>(&data));
+    QImageReader readerBuffer(&imageBuffer);
+    QString imageFormat = readerBuffer.format();
+    if(readerBuffer.canRead() && !readerBuffer.read().isNull())
+        return imageFormat;
+    else
+        return QString();
 }
 
 QStringList toStringList(const QList<QByteArray>& list) {

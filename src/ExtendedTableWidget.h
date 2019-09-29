@@ -52,7 +52,11 @@ public:
     FilterTableHeader* filterHeader() { return m_tableHeader; }
 
 public:
+    // Get set of selected columns (all cells in column has to be selected)
     std::unordered_set<int> selectedCols() const;
+    // Get set of columns traversed by selection (only some cells in column has to be selected)
+    std::unordered_set<int> colsInSelection() const;
+
     int numVisibleRows() const;
 
     void sortByColumns(const std::vector<sqlb::SortedColumn>& columns);

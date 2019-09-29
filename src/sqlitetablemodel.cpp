@@ -13,6 +13,7 @@
 #include <QUrl>
 #include <QtConcurrent/QtConcurrentRun>
 #include <QProgressDialog>
+#include <QRegularExpression>
 #include <json.hpp>
 
 #include "RowLoader.h"
@@ -422,6 +423,16 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
         bool isNumber;
         value.toDouble(&isNumber);
         return static_cast<int>((isNumber ? Qt::AlignRight : Qt::AlignLeft) | Qt::AlignVCenter);
+    } else if(role == Qt::DecorationRole) {
+        if(!row_available)
+            return QVariant();
+
+        if(Settings::getValue("databrowser", "image_preview").toBool() && !isImageData(cached_row->at(column)).isNull())
+        {
+            QImage img;
+            img.loadFromData(cached_row->at(column));
+            return QPixmap::fromImage(img);
+        }
     }
 
 
@@ -1034,4 +1045,109 @@ bool SqliteTableModel::isCacheComplete () const
 void SqliteTableModel::waitUntilIdle () const
 {
     worker->waitUntilIdle();
+}
+
+QModelIndex SqliteTableModel::nextMatch(const QModelIndex& start, const std::vector<int>& column_list, const QString& value, Qt::MatchFlags flags, bool reverse, bool dont_skip_to_next_field) const
+{
+    // Extract flags
+    bool whole_cell = !(flags & Qt::MatchContains);
+    bool regex = flags & Qt::MatchRegExp;
+    Qt::CaseSensitivity case_sensitive = ((flags & Qt::MatchCaseSensitive) ? Qt::CaseSensitive : Qt::CaseInsensitive);
+    bool wrap = flags & Qt::MatchWrap;
+    int increment = (reverse ? -1 : 1);
+
+    // Prepare the regular expression for regex mode
+    QRegularExpression reg_exp;
+    if(regex)
+    {
+        reg_exp = QRegularExpression(value, (case_sensitive ? QRegularExpression::NoPatternOption : QRegularExpression::CaseInsensitiveOption));
+        if(!reg_exp.isValid())
+            return QModelIndex();
+
+        if(whole_cell)
+        {
+#if QT_VERSION < QT_VERSION_CHECK(5, 12, 0)
+        reg_exp.setPattern("\\A(" + reg_exp.pattern() + ")\\Z");
+#else
+        reg_exp.setPattern(QRegularExpression::anchoredPattern(reg_exp.pattern()));
+#endif
+        }
+    }
+
+    // Wait until the row count is there
+    waitUntilIdle();
+
+    // Make sure the start position starts in a column from the list of columns to search in
+    QModelIndex pos = start;
+    if(std::find(column_list.begin(), column_list.end(), pos.column()) == column_list.end())
+    {
+        // If for some weird reason the start index is not in the column list, we simply use the first column of the column list instead
+        pos = pos.sibling(pos.row(), reverse ? column_list.back() : column_list.front());
+    }
+
+    // Get the last cell to search in. If wrapping is enabled, we search until we hit the start cell again. If wrapping is not enabled, we start at the last
+    // cell of the table.
+    QModelIndex end = (wrap ? pos : index(rowCount(), column_list.back()));
+
+    // Loop through all cells for the search
+    while(true)
+    {
+        // Go to the next cell and skip all columns in between which we do not care about. This is done as the first step in order
+        // to skip the start index when matching the first cell is disabled.
+        if(dont_skip_to_next_field == false)
+        {
+            while(true)
+            {
+                // Next cell position
+                int next_row = pos.row();
+                int next_column = pos.column() + increment;
+
+                // Have we reached the end of the row? Then go to the next one
+                if(next_column < 0 || next_column >= static_cast<int>(m_headers.size()))
+                {
+                    next_row += increment;
+                    next_column = (reverse ? column_list.back() : column_list.front());
+                }
+
+                // Have we reached the last row? Then wrap around to the first one
+                if(wrap && (next_row < 0 || next_row >= rowCount()))
+                    next_row = (reverse ? rowCount()-1 : 0);
+
+                // Set next index for search
+                pos = pos.sibling(next_row, next_column);
+
+                // Have we hit the last column? We have not found anything then
+                if(pos == end)
+                    return QModelIndex();
+
+                // Is this a column which we are supposed to search in? If so, stop looking for the next cell and start comparing
+                if(std::find(column_list.begin(), column_list.end(), next_column) != column_list.end())
+                    break;
+            }
+        }
+
+        // Make sure the next time we hit the above check, we actuall move on to the next cell and do not skip the loop again.
+        dont_skip_to_next_field = false;
+
+        // Get row from cache. If it is not in the cache, load the next chunk from the database
+        const size_t row = static_cast<size_t>(pos.row());
+        if(!m_cache.count(row))
+        {
+            triggerCacheLoad(static_cast<int>(row));
+            waitUntilIdle();
+        }
+        const Row* row_data = &m_cache.at(row);
+
+        // Get cell data
+        const size_t column = static_cast<size_t>(pos.column());
+        QString data = row_data->at(column);
+
+        // Perform comparison
+        if(whole_cell && !regex && data.compare(value, case_sensitive) == 0)
+            return pos;
+        else if(!whole_cell && !regex && data.contains(value, case_sensitive))
+            return pos;
+        else if(regex && reg_exp.match(data).hasMatch())
+            return pos;
+    }
 }

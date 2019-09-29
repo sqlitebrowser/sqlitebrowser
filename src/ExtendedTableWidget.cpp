@@ -844,9 +844,17 @@ int ExtendedTableWidget::numVisibleRows() const
 std::unordered_set<int> ExtendedTableWidget::selectedCols() const
 {
     std::unordered_set<int> selectedCols;
-    for(const QModelIndex & idx : selectedIndexes())
+    for(const auto& idx : selectionModel()->selectedColumns())
         selectedCols.insert(idx.column());
     return selectedCols;
+}
+
+std::unordered_set<int> ExtendedTableWidget::colsInSelection() const
+{
+    std::unordered_set<int> colsInSelection;
+    for(const QModelIndex & idx : selectedIndexes())
+        colsInSelection.insert(idx.column());
+    return colsInSelection;
 }
 
 void ExtendedTableWidget::cellClicked(const QModelIndex& index)

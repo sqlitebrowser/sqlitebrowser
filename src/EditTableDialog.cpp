@@ -374,7 +374,6 @@ void EditTableDialog::checkInput()
     if (normTableName != m_table.name()) {
         const std::string oldTableName = m_table.name();
         m_table.setName(normTableName);
-        m_fkEditorDelegate->updateTablesList(oldTableName);
 
         // update fk's that refer to table itself recursively
         const auto& fields = m_table.fields;
@@ -505,6 +504,7 @@ void EditTableDialog::fieldItemChanged(QTreeWidgetItem *item, int column)
             field.setName(item->text(column).toStdString());
             m_table.renameKeyInAllConstraints(oldFieldName.toStdString(), item->text(column).toStdString());
             qobject_cast<QComboBox*>(ui->treeWidget->itemWidget(item, kType))->setProperty("column", item->text(column));
+            qobject_cast<QComboBox*>(ui->treeWidget->itemWidget(item, kCollation))->setProperty("column", item->text(column));
 
             // Update the field name in the map of old column names to new column names
             if(!m_bNewTable)
@@ -845,24 +845,46 @@ void EditTableDialog::fieldSelectionChanged()
     if(hasSelection)
     {
         ui->buttonMoveUp->setEnabled(ui->treeWidget->selectionModel()->currentIndex().row() != 0);
+        ui->buttonMoveTop->setEnabled(ui->buttonMoveUp->isEnabled());
         ui->buttonMoveDown->setEnabled(ui->treeWidget->selectionModel()->currentIndex().row() != ui->treeWidget->topLevelItemCount() - 1);
+        ui->buttonMoveBottom->setEnabled(ui->buttonMoveDown->isEnabled());
     }
 }
 
 void EditTableDialog::moveUp()
 {
-    moveCurrentField(false);
+    moveCurrentField(MoveUp);
 }
 
 void EditTableDialog::moveDown()
 {
-    moveCurrentField(true);
+    moveCurrentField(MoveDown);
 }
 
-void EditTableDialog::moveCurrentField(bool down)
+void EditTableDialog::moveTop()
+{
+    moveCurrentField(MoveTop);
+}
+
+void EditTableDialog::moveBottom()
+{
+    moveCurrentField(MoveBottom);
+}
+
+void EditTableDialog::moveCurrentField(MoveFieldDirection dir)
 {
     int currentRow = ui->treeWidget->currentIndex().row();
-    int newRow = currentRow + (down ? 1 : -1);
+    int newRow;
+    if(dir == MoveUp)
+        newRow = currentRow - 1;
+    else if(dir == MoveDown)
+        newRow = currentRow + 1;
+    else if(dir == MoveTop)
+        newRow = 0;
+    else if(dir == MoveBottom)
+        newRow = ui->treeWidget->topLevelItemCount() - 1;
+    else
+        return;
 
     // Save the comboboxes first by making copies
     QComboBox* newCombo[2];
@@ -891,7 +913,9 @@ void EditTableDialog::moveCurrentField(bool down)
     ui->treeWidget->setCurrentIndex(ui->treeWidget->currentIndex().sibling(newRow, 0));
 
     // Finally update the table SQL
-    std::swap(m_table.fields[static_cast<size_t>(newRow)], m_table.fields[static_cast<size_t>(currentRow)]);
+    sqlb::Field temp = m_table.fields[static_cast<size_t>(currentRow)];
+    m_table.fields.erase(m_table.fields.begin() + currentRow);
+    m_table.fields.insert(m_table.fields.begin() + newRow, temp);
 
     // Update the SQL preview
     updateSqlText();

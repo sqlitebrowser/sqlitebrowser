@@ -33,6 +33,7 @@ int collCompare(void* pArg, int sizeA, const void* sA, int sizeB, const void* sB
 namespace sqlb
 {
 QString escapeIdentifier(const QString& id);
+QString escapeString(const QString& literal);
 }
 
 /// represents a single SQLite database. except when noted otherwise,

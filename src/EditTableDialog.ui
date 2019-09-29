@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>650</width>
+    <width>652</width>
     <height>600</height>
    </rect>
   </property>
@@ -111,7 +111,7 @@
           <item>
            <widget class="QToolButton" name="addFieldButton">
             <property name="text">
-             <string>Add field</string>
+             <string>Add</string>
             </property>
             <property name="icon">
              <iconset resource="icons/icons.qrc">
@@ -131,7 +131,7 @@
              <bool>false</bool>
             </property>
             <property name="text">
-             <string>Remove field</string>
+             <string>Remove</string>
             </property>
             <property name="icon">
              <iconset resource="icons/icons.qrc">
@@ -146,12 +146,35 @@
            </widget>
           </item>
           <item>
+           <widget class="QToolButton" name="buttonMoveTop">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Move to top</string>
+            </property>
+            <property name="icon">
+             <iconset resource="icons/icons.qrc">
+              <normaloff>:/icons/arrow_top</normaloff>:/icons/arrow_top</iconset>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+            <property name="arrowType">
+             <enum>Qt::NoArrow</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QToolButton" name="buttonMoveUp">
             <property name="enabled">
              <bool>false</bool>
             </property>
             <property name="text">
-             <string>Move field up</string>
+             <string>Move up</string>
             </property>
             <property name="icon">
              <iconset resource="icons/icons.qrc">
@@ -171,11 +194,31 @@
              <bool>false</bool>
             </property>
             <property name="text">
-             <string>Move field down</string>
+             <string>Move down</string>
             </property>
             <property name="icon">
              <iconset resource="icons/icons.qrc">
               <normaloff>:/icons/down</normaloff>:/icons/down</iconset>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="buttonMoveBottom">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Move to bottom</string>
+            </property>
+            <property name="icon">
+             <iconset resource="icons/icons.qrc">
+              <normaloff>:/icons/arrow_bottom</normaloff>:/icons/arrow_bottom</iconset>
             </property>
             <property name="toolButtonStyle">
              <enum>Qt::ToolButtonTextBesideIcon</enum>
@@ -275,7 +318,7 @@
             <string>Check constraint</string>
            </property>
           </column>
-	  <column>
+          <column>
            <property name="text">
             <string>Collation</string>
            </property>
@@ -463,12 +506,18 @@
   <tabstop>buttonMore</tabstop>
   <tabstop>comboSchema</tabstop>
   <tabstop>checkWithoutRowid</tabstop>
+  <tabstop>groupDefinition</tabstop>
   <tabstop>addFieldButton</tabstop>
   <tabstop>removeFieldButton</tabstop>
+  <tabstop>buttonMoveTop</tabstop>
   <tabstop>buttonMoveUp</tabstop>
   <tabstop>buttonMoveDown</tabstop>
+  <tabstop>buttonMoveBottom</tabstop>
   <tabstop>treeWidget</tabstop>
   <tabstop>sqlTextEdit</tabstop>
+  <tabstop>buttonAddConstraint</tabstop>
+  <tabstop>buttonRemoveConstraint</tabstop>
+  <tabstop>tableConstraints</tabstop>
  </tabstops>
  <resources>
   <include location="icons/icons.qrc"/>
@@ -529,8 +578,8 @@
    <slot>addField()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>94</x>
-     <y>253</y>
+     <x>78</x>
+     <y>255</y>
     </hint>
     <hint type="destinationlabel">
      <x>79</x>
@@ -545,8 +594,8 @@
    <slot>removeField()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>222</x>
-     <y>253</y>
+     <x>167</x>
+     <y>255</y>
     </hint>
     <hint type="destinationlabel">
      <x>249</x>
@@ -613,8 +662,8 @@
      <y>78</y>
     </hint>
     <hint type="destinationlabel">
-     <x>117</x>
-     <y>176</y>
+     <x>138</x>
+     <y>172</y>
     </hint>
    </hints>
   </connection>
@@ -625,8 +674,8 @@
    <slot>setWithoutRowid(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>344</x>
-     <y>143</y>
+     <x>485</x>
+     <y>160</y>
     </hint>
     <hint type="destinationlabel">
      <x>324</x>
@@ -657,8 +706,8 @@
    <slot>changeSchema(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>186</x>
-     <y>155</y>
+     <x>327</x>
+     <y>139</y>
     </hint>
     <hint type="destinationlabel">
      <x>647</x>
@@ -673,12 +722,44 @@
    <slot>removeConstraint()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>186</x>
-     <y>155</y>
+     <x>295</x>
+     <y>255</y>
     </hint>
     <hint type="destinationlabel">
      <x>647</x>
      <y>157</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonMoveTop</sender>
+   <signal>clicked()</signal>
+   <receiver>EditTableDialog</receiver>
+   <slot>moveTop()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>207</x>
+     <y>240</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>202</x>
+     <y>190</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonMoveBottom</sender>
+   <signal>clicked()</signal>
+   <receiver>EditTableDialog</receiver>
+   <slot>moveBottom()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>530</x>
+     <y>246</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>400</x>
+     <y>186</y>
     </hint>
    </hints>
   </connection>
@@ -695,5 +776,7 @@
   <slot>setWithoutRowid(bool)</slot>
   <slot>changeSchema(QString)</slot>
   <slot>removeConstraint()</slot>
+  <slot>moveTop()</slot>
+  <slot>moveBottom()</slot>
  </slots>
 </ui>

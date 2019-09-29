@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>651</width>
-    <height>362</height>
+    <height>400</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -85,6 +85,7 @@
        <addaction name="actionDeleteRecord"/>
        <addaction name="separator"/>
        <addaction name="actionToggleFormatToolbar"/>
+       <addaction name="actionFind"/>
       </widget>
      </item>
      <item>
@@ -192,6 +193,152 @@
      <property name="selectionMode">
       <enum>QAbstractItemView::ContiguousSelection</enum>
      </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QFrame" name="frameFind">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QGridLayout">
+      <property name="leftMargin">
+       <number>1</number>
+      </property>
+      <property name="topMargin">
+       <number>1</number>
+      </property>
+      <property name="rightMargin">
+       <number>1</number>
+      </property>
+      <property name="bottomMargin">
+       <number>1</number>
+      </property>
+      <property name="spacing">
+       <number>3</number>
+      </property>
+      <item row="0" column="2">
+       <widget class="QToolButton" name="buttonFindNext">
+        <property name="toolTip">
+         <string>Find next match [Enter, F3]</string>
+        </property>
+        <property name="whatsThis">
+         <string>Find next match with wrapping</string>
+        </property>
+        <property name="icon">
+         <iconset resource="icons/icons.qrc">
+          <normaloff>:/icons/down</normaloff>:/icons/down</iconset>
+        </property>
+        <property name="shortcut">
+         <string>F3</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QToolButton" name="buttonFindPrevious">
+        <property name="toolTip">
+         <string>Find previous match [Shift+F3]</string>
+        </property>
+        <property name="whatsThis">
+         <string>Find previous match with mapping</string>
+        </property>
+        <property name="icon">
+         <iconset resource="icons/icons.qrc">
+          <normaloff>:/icons/up</normaloff>:/icons/up</iconset>
+        </property>
+        <property name="shortcut">
+         <string>Shift+F3</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5">
+       <widget class="QCheckBox" name="checkFindRegEx">
+        <property name="toolTip">
+         <string>Interpret search pattern as a regular expression</string>
+        </property>
+        <property name="whatsThis">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When checked, the pattern to find is interpreted as a UNIX regular expression. See &lt;a href=&quot;https://en.wikibooks.org/wiki/Regular_Expressions&quot;&gt;Regular Expression in Wikibooks&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="text">
+         <string>Regular Expression</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <widget class="QCheckBox" name="checkFindWholeCell">
+        <property name="whatsThis">
+         <string>The found pattern must be a whole word</string>
+        </property>
+        <property name="text">
+         <string>Whole Cell</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLineEdit" name="editFindExpression">
+        <property name="contextMenuPolicy">
+         <enum>Qt::DefaultContextMenu</enum>
+        </property>
+        <property name="whatsThis">
+         <string>Text pattern to find considering the checks in this frame</string>
+        </property>
+        <property name="placeholderText">
+         <string>Find in table</string>
+        </property>
+        <property name="clearButtonEnabled">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="8">
+       <widget class="QToolButton" name="buttonFindClose">
+        <property name="toolTip">
+         <string>Close Find Bar</string>
+        </property>
+        <property name="text">
+         <string>Close Find Bar</string>
+        </property>
+        <property name="icon">
+         <iconset resource="icons/icons.qrc">
+          <normaloff>:/icons/close</normaloff>:/icons/close</iconset>
+        </property>
+        <property name="autoRaise">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="6">
+       <spacer name="horizontalSpacer_1">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="3">
+       <widget class="QCheckBox" name="checkFindCaseSensitive">
+        <property name="whatsThis">
+         <string>The found pattern must match in letter case</string>
+        </property>
+        <property name="text">
+         <string>Case Sensitive</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
    <item>
@@ -588,6 +735,24 @@
     <enum>Qt::WidgetShortcut</enum>
    </property>
   </action>
+  <action name="actionFind">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/find</normaloff>:/icons/find</iconset>
+   </property>
+   <property name="text">
+    <string>Find in cells</string>
+   </property>
+   <property name="toolTip">
+    <string>Open the find tool bar which allows you to search for values in the table view below.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F</string>
+   </property>
+  </action>
   <action name="actionBold">
    <property name="checkable">
     <bool>true</bool>
@@ -788,6 +953,14 @@
  <tabstops>
   <tabstop>comboBrowseTable</tabstop>
   <tabstop>dataTable</tabstop>
+  <tabstop>editGlobalFilter</tabstop>
+  <tabstop>editFindExpression</tabstop>
+  <tabstop>buttonFindPrevious</tabstop>
+  <tabstop>buttonFindNext</tabstop>
+  <tabstop>checkFindCaseSensitive</tabstop>
+  <tabstop>checkFindWholeCell</tabstop>
+  <tabstop>checkFindRegEx</tabstop>
+  <tabstop>buttonFindClose</tabstop>
   <tabstop>buttonBegin</tabstop>
   <tabstop>buttonPrevious</tabstop>
   <tabstop>buttonNext</tabstop>
@@ -806,8 +979,8 @@
    <slot>updateTable()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>118</x>
-     <y>141</y>
+     <x>159</x>
+     <y>31</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -822,8 +995,8 @@
    <slot>navigatePrevious()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>86</x>
-     <y>539</y>
+     <x>54</x>
+     <y>358</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -838,8 +1011,8 @@
    <slot>navigateNext()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>183</x>
-     <y>539</y>
+     <x>139</x>
+     <y>358</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -854,8 +1027,8 @@
    <slot>navigateGoto()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>365</x>
-     <y>539</y>
+     <x>403</x>
+     <y>360</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -870,8 +1043,8 @@
    <slot>navigateGoto()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>506</x>
-     <y>538</y>
+     <x>550</x>
+     <y>360</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -886,8 +1059,8 @@
    <slot>navigateEnd()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>223</x>
-     <y>539</y>
+     <x>169</x>
+     <y>358</y>
     </hint>
     <hint type="destinationlabel">
      <x>499</x>
@@ -902,8 +1075,8 @@
    <slot>navigateBegin()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>50</x>
-     <y>539</y>
+     <x>24</x>
+     <y>358</y>
     </hint>
     <hint type="destinationlabel">
      <x>499</x>
@@ -1147,7 +1320,7 @@
     </hint>
     <hint type="destinationlabel">
      <x>326</x>
-     <y>347</y>
+     <y>291</y>
     </hint>
    </hints>
   </connection>
