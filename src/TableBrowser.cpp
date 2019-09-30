@@ -193,7 +193,7 @@ TableBrowser::TableBrowser(QWidget* parent) :
             clearAllCondFormats(column);
     });
 
-    connect(ui->dataTable, &ExtendedTableWidget::currentChanged, this, [this](const QModelIndex &current, const QModelIndex &) {
+    connect(ui->dataTable, &ExtendedTableWidget::currentIndexChanged, this, [this](const QModelIndex &current, const QModelIndex &) {
             // Get cell current format for updating the format toolbar values. Block signals, so the format change is not reapplied.
             QFont font;
             font.fromString(m_browseTableModel->data(current, Qt::FontRole).toString());
@@ -1389,10 +1389,9 @@ void TableBrowser::find(const QString& expr, bool forward, bool include_first)
     const auto match = m_browseTableModel->nextMatch(start, column_list, expr, flags, !forward, include_first);
 
     // Select the next match if we found one
-    if(match.isValid()) {
+    if(match.isValid())
         ui->dataTable->setCurrentIndex(match);
-        ui->dataTable->scrollTo(match);
-    }
+
     // Make the expression control red if no results were found
     if(match.isValid() || expr == "")
         ui->editFindExpression->setStyleSheet("");

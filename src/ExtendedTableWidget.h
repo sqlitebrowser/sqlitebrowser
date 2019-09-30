@@ -74,8 +74,7 @@ signals:
     void openFileFromDropEvent(QString);
     void selectedRowsToBeDeleted();
     void editCondFormats(int column);
-    // Make the inherited protected signal public
-    void currentChanged(const QModelIndex &current, const QModelIndex &previous);
+    void currentIndexChanged(const QModelIndex &current, const QModelIndex &previous);
 
 private:
     void copyMimeData(const QModelIndexList& fromIndices, QMimeData* mimeData, const bool withHeaders, const bool inSQL);
@@ -98,6 +97,7 @@ protected:
     void dragEnterEvent(QDragEnterEvent* event) override;
     void dragMoveEvent(QDragMoveEvent* event) override;
     void dropEvent(QDropEvent* event) override;
+    void currentChanged(const QModelIndex &current, const QModelIndex &previous) override;
 
     FilterTableHeader* m_tableHeader;
     QMenu* m_contextMenu;

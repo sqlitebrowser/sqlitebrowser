@@ -1005,3 +1005,9 @@ void ExtendedTableWidget::sortByColumns(const std::vector<sqlb::SortedColumn>& c
     else
         sqlite_model->sort(columns);
 }
+
+void ExtendedTableWidget::currentChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+    QTableView::currentChanged(current, previous);
+    emit currentIndexChanged(current, previous);
+}
