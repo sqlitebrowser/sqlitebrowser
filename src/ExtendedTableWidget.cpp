@@ -4,6 +4,7 @@
 #include "sql/sqlitetypes.h"
 #include "Settings.h"
 #include "sqlitedb.h"
+#include "CondFormat.h"
 
 #include <QApplication>
 #include <QClipboard>
@@ -467,8 +468,6 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
 
     int currentRow = indices.first().row();
 
-    const QString fieldSepHtml = "</td><td>";
-    const QString rowSepHtml = "</td></tr><tr><td>";
     const QString fieldSepText = "\t";
 #ifdef Q_OS_WIN
     const QString rowSepText = "\r\n";
@@ -500,17 +499,31 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
 
     // Table data rows
     for(const QModelIndex& index : indices) {
+        QFont font;
+        font.fromString(index.data(Qt::FontRole).toString());
+        const QString fontStyle(font.italic() ? "italic" : "normal");
+        const QString fontWeigth(font.bold() ? "bold" : "normal");
+        const QString fontDecoration(font.underline() ? " text-decoration: underline;" : "");
+        const QColor bgColor(index.data(Qt::BackgroundRole).toString());
+        const QColor fgColor(index.data(Qt::ForegroundRole).toString());
+        const Qt::Alignment align(index.data(Qt::TextAlignmentRole).toInt());
+        const QString textAlign(CondFormat::alignmentTexts().at(CondFormat::fromCombinedAlignment(align)).toLower());
+        const QString style = QString("font-family: '%1'; font-size: %2pt; font-style: %3; font-weight: %4;%5 "
+                                      "background-color: %6; color: %7; text-align: %8").
+            arg(font.family().toHtmlEscaped()).arg(font.pointSize()).arg(fontStyle).arg(fontWeigth).arg(fontDecoration).
+            arg(bgColor.name()).arg(fgColor.name()).arg(textAlign);
+
         // Separators. For first cell, only opening table row tags must be added for the HTML and nothing for the text version.
         if (indices.first() == index) {
-            htmlResult.append("<tr><td>");
+            htmlResult.append(QString("<tr><td style=\"%1\">").arg(style));
             sqlResult.append(sqlInsertStatement);
         } else if (index.row() != currentRow) {
             result.append(rowSepText);
-            htmlResult.append(rowSepHtml);
+            htmlResult.append(QString("</td></tr><tr><td style=\"%1\">").arg(style));
             sqlResult.append(");" + rowSepText + sqlInsertStatement);
         } else {
             result.append(fieldSepText);
-            htmlResult.append(fieldSepHtml);
+            htmlResult.append(QString("</td><td style=\"%1\">").arg(style));
             sqlResult.append(", ");
         }
         currentRow = index.row();
