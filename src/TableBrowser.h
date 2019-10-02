@@ -9,6 +9,7 @@
 #include <QModelIndex>
 #include <QWidget>
 
+#include <functional>
 #include <unordered_set>
 
 class DBBrowserDB;
