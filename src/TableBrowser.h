@@ -86,19 +86,19 @@ public:
 
     sqlb::ObjectIdentifier currentlyBrowsedTableName() const;
 
-    QMap<sqlb::ObjectIdentifier, BrowseDataTableSettings> allSettings() const { return browseTableSettings; }
+    QMap<sqlb::ObjectIdentifier, BrowseDataTableSettings> allSettings() const { return m_settings; }
     BrowseDataTableSettings& settings(const sqlb::ObjectIdentifier& object);
     void setSettings(const sqlb::ObjectIdentifier& table, const BrowseDataTableSettings& table_settings);
 
     void setStructure(QAbstractItemModel* model, const QString& old_table = QString());
     void updateStructure();
 
-    SqliteTableModel* model() { return m_browseTableModel; }
+    SqliteTableModel* model() { return m_model; }
 
     QModelIndex currentIndex() const;
 
-    void setDefaultEncoding(const QString& encoding) { defaultBrowseTableEncoding = encoding; }
-    QString defaultEncoding() const { return defaultBrowseTableEncoding; }
+    void setDefaultEncoding(const QString& encoding) { m_defaultEncoding = encoding; }
+    QString defaultEncoding() const { return m_defaultEncoding; }
 
 public slots:
     void setEnabled(bool enable);
@@ -119,12 +119,12 @@ signals:
     void requestFileOpen(QString file);
 
 private slots:
-    void clearTableBrowser();
+    void clear();
     void updateFilter(int column, const QString& value);
     void addCondFormat(int column, const QString& value);
     void clearAllCondFormats(int column);
     void editCondFormats(int column);
-    void applyBrowseTableSettings(const BrowseDataTableSettings& storedData, bool skipFilters = false);
+    void applySettings(const BrowseDataTableSettings& storedData, bool skipFilters = false);
     void enableEditing(bool enable_edit);
     void showRowidColumn(bool show, bool skipFilters = false);
     void unlockViewEditing(bool unlock, QString pk = QString());
@@ -132,8 +132,8 @@ private slots:
     void on_actionShowAllColumns_triggered();
     void updateInsertDeleteRecordButton();
     void duplicateRecord(int currentRow);
-    void browseTableHeaderClicked(int logicalindex);
-    void updateBrowseDataColumnWidth(int section, int /*old_size*/, int new_size);
+    void headerClicked(int logicalindex);
+    void updateColumnWidth(int section, int /*old_size*/, int new_size);
     void showDataColumnPopupMenu(const QPoint& pos);
     void showRecordPopupMenu(const QPoint& pos);
     void addRecord();
@@ -147,11 +147,11 @@ private slots:
     void selectTableLine(int lineToSelect);
     void on_actionClearFilters_triggered();
     void on_actionClearSorting_triggered();
-    void editDataColumnDisplayFormat();
+    void editDisplayFormat();
     void exportFilteredTable();
     void saveFilterAsView();
-    void browseDataSetTableEncoding(bool forAllTables = false);
-    void browseDataSetDefaultTableEncoding();
+    void setTableEncoding(bool forAllTables = false);
+    void setDefaultTableEncoding();
 
 private:
     void find(const QString& expr, bool forward, bool include_first = false);
@@ -161,7 +161,7 @@ private:
     QIntValidator* gotoValidator;
     QMenu* popupNewRecordMenu;
     QMenu* popupSaveFilterAsMenu;
-    QMenu* popupBrowseDataHeaderMenu;
+    QMenu* popupHeaderMenu;
 
     DBBrowserDB* db;
 
@@ -169,10 +169,10 @@ private:
 
     /// the table model used in the "Browse Data" page (re-used and
     /// re-initialized when switching to another table)
-    SqliteTableModel* m_browseTableModel;
+    SqliteTableModel* m_model;
 
-    static QMap<sqlb::ObjectIdentifier, BrowseDataTableSettings> browseTableSettings;  // This is static, so settings are shared between instances
-    static QString defaultBrowseTableEncoding;
+    static QMap<sqlb::ObjectIdentifier, BrowseDataTableSettings> m_settings;  // This is static, so settings are shared between instances
+    static QString m_defaultEncoding;
 
     Palette m_condFormatPalette;
 

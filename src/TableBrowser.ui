@@ -1136,7 +1136,7 @@
    <sender>actionBrowseTableEditDisplayFormat</sender>
    <signal>triggered()</signal>
    <receiver>TableBrowser</receiver>
-   <slot>editDataColumnDisplayFormat()</slot>
+   <slot>editDisplayFormat()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -1248,7 +1248,7 @@
    <sender>actionSetTableEncoding</sender>
    <signal>triggered()</signal>
    <receiver>TableBrowser</receiver>
-   <slot>browseDataSetTableEncoding()</slot>
+   <slot>setTableEncoding()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -1264,7 +1264,7 @@
    <sender>actionSetAllTablesEncoding</sender>
    <signal>triggered()</signal>
    <receiver>TableBrowser</receiver>
-   <slot>browseDataSetDefaultTableEncoding()</slot>
+   <slot>setDefaultTableEncoding()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -1336,14 +1336,14 @@
   <slot>jumpToRow(sqlb::ObjectIdentifier,QString,QByteArray)</slot>
   <slot>showRowidColumn(bool)</slot>
   <slot>unlockViewEditing(bool)</slot>
-  <slot>editDataColumnDisplayFormat()</slot>
+  <slot>editDisplayFormat()</slot>
   <slot>addRecord()</slot>
   <slot>deleteRecord()</slot>
   <slot>insertValues()</slot>
   <slot>exportFilteredTable</slot>
   <slot>saveFilterAsView</slot>
-  <slot>browseDataSetDefaultTableEncoding()</slot>
+  <slot>setDefaultTableEncoding()</slot>
   <slot>hideColumns()</slot>
-  <slot>browseDataSetTableEncoding()</slot>
+  <slot>setTableEncoding()</slot>
  </slots>
 </ui>
