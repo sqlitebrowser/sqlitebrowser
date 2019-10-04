@@ -3556,7 +3556,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
   <slot>refresh()</slot>
   <slot>compact()</slot>
   <slot>helpWhatsThis()</slot>
-  <slot>browseTableHeaderClicked(int)</slot>
   <slot>mainTabSelected(int)</slot>
   <slot>executeQuery()</slot>
   <slot>importTableFromCSV()</slot>
