@@ -23,10 +23,10 @@ public slots:
     void setFilter(size_t column, const QString& value);
 
 signals:
-    void filterChanged(int column, QString value);
-    void addCondFormat(int column, QString filter);
-    void allCondFormatsCleared(int column);
-    void condFormatsEdited(int column);
+    void filterChanged(size_t column, QString value);
+    void addCondFormat(size_t column, QString filter);
+    void allCondFormatsCleared(size_t column);
+    void condFormatsEdited(size_t column);
 
 protected:
     void updateGeometries() override;

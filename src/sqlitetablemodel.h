@@ -104,7 +104,7 @@ public:
     bool hasPseudoPk() const;
     std::vector<std::string> pseudoPk() const { return m_query.rowIdColumns(); }
 
-    sqlb::ForeignKeyClause getForeignKeyClause(int column) const;
+    sqlb::ForeignKeyClause getForeignKeyClause(size_t column) const;
 
     // This returns true if the model is set up for editing. The model is able to operate in more or less two different modes, table browsing
     // and query browsing. We only support editing data for the table browsing mode and not for the query mode. This function returns true if
@@ -114,8 +114,8 @@ public:
     // Helper function for removing all comments from a SQL query
     static void removeCommentsFromQuery(QString& query);
 
-    void addCondFormat(int column, const CondFormat& condFormat);
-    void setCondFormats(int column, const std::vector<CondFormat>& condFormats);
+    void addCondFormat(size_t column, const CondFormat& condFormat);
+    void setCondFormats(size_t column, const std::vector<CondFormat>& condFormats);
 
     // Search for the specified expression in the given cells. This intended as a replacement for QAbstractItemModel::match() even though
     // it does not override it, which - because of the different parameters - is not possible.
@@ -133,7 +133,7 @@ public:
     DBBrowserDB& db() { return m_db; }
 
 public slots:
-    void updateFilter(int column, const QString& value);
+    void updateFilter(size_t column, const QString& value);
     void updateGlobalFilter(const std::vector<QString>& values);
 
 signals:
@@ -165,7 +165,7 @@ private:
 
     // Return matching conditional format color/font or invalid value, otherwise.
     // Only format roles are expected in role (Qt::ItemDataRole)
-    QVariant getMatchingCondFormat(int column, const QString& value, int role) const;
+    QVariant getMatchingCondFormat(size_t column, const QString& value, int role) const;
 
     DBBrowserDB& m_db;
 
@@ -197,7 +197,7 @@ private:
 
     QString m_sQuery;
     std::vector<int> m_vDataTypes;
-    std::map<int, std::vector<CondFormat>> m_mCondFormats;
+    std::map<size_t, std::vector<CondFormat>> m_mCondFormats;
     sqlb::Query m_query;
 
     /**

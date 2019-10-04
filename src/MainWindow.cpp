@@ -2243,7 +2243,7 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, QXmlS
         } else if(xml.name() == "conditional_formats") {
             while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "conditional_formats") {
                 if (xml.name() == "column") {
-                    int index = xml.attributes().value("index").toInt();
+                    size_t index = xml.attributes().value("index").toUInt();
                     while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "column") {
                         if(xml.name() == "format") {
                             QFont font;

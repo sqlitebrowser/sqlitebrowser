@@ -28,7 +28,7 @@ struct BrowseDataTableSettings
     sqlb::Query query;                              // NOTE: We only store the sort order in here (for now)
     QMap<int, int> columnWidths;
     QMap<int, QString> filterValues;
-    QMap<int, std::vector<CondFormat>> condFormats;
+    QMap<size_t, std::vector<CondFormat>> condFormats;
     QMap<int, QString> displayFormats;
     bool showRowid;
     QString encoding;
@@ -120,10 +120,10 @@ signals:
 
 private slots:
     void clear();
-    void updateFilter(int column, const QString& value);
-    void addCondFormat(int column, const QString& value);
-    void clearAllCondFormats(int column);
-    void editCondFormats(int column);
+    void updateFilter(size_t column, const QString& value);
+    void addCondFormat(size_t column, const QString& value);
+    void clearAllCondFormats(size_t column);
+    void editCondFormats(size_t column);
     void applySettings(const BrowseDataTableSettings& storedData, bool skipFilters = false);
     void enableEditing(bool enable_edit);
     void showRowidColumn(bool show, bool skipFilters = false);
@@ -176,7 +176,7 @@ private:
 
     Palette m_condFormatPalette;
 
-    void modifyColumnFormat(std::unordered_set<int> columns, std::function<void(CondFormat&)> changeFunction);
+    void modifyColumnFormat(std::unordered_set<size_t> columns, std::function<void(CondFormat&)> changeFunction);
 };
 
 #endif

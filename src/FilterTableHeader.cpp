@@ -96,25 +96,25 @@ void FilterTableHeader::adjustPositions()
 void FilterTableHeader::inputChanged(const QString& new_value)
 {
     // Just get the column number and the new value and send them to anybody interested in filter changes
-    emit filterChanged(sender()->property("column").toInt(), new_value);
+    emit filterChanged(sender()->property("column").toUInt(), new_value);
 }
 
 void FilterTableHeader::addFilterAsCondFormat(const QString& filter)
 {
     // Just get the column number and the new value and send them to anybody interested in new conditional formatting
-    emit addCondFormat(sender()->property("column").toInt(), filter);
+    emit addCondFormat(sender()->property("column").toUInt(), filter);
 }
 
 void FilterTableHeader::clearAllCondFormats()
 {
     // Just get the column number and send it to anybody responsible or interested in clearing conditional formatting
-    emit allCondFormatsCleared(sender()->property("column").toInt());
+    emit allCondFormatsCleared(sender()->property("column").toUInt());
 }
 
 void FilterTableHeader::editCondFormats()
 {
     // Just get the column number and the new value and send them to anybody interested in editting conditional formatting
-    emit condFormatsEdited(sender()->property("column").toInt());
+    emit condFormatsEdited(sender()->property("column").toUInt());
 }
 
 void FilterTableHeader::clearFilters()

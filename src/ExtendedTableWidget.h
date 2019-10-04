@@ -53,9 +53,9 @@ public:
 
 public:
     // Get set of selected columns (all cells in column has to be selected)
-    std::unordered_set<int> selectedCols() const;
+    std::unordered_set<size_t> selectedCols() const;
     // Get set of columns traversed by selection (only some cells in column has to be selected)
-    std::unordered_set<int> colsInSelection() const;
+    std::unordered_set<size_t> colsInSelection() const;
 
     int numVisibleRows() const;
 

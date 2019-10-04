@@ -128,7 +128,7 @@ QWidget* ExtendedTableWidgetEditorDelegate::createEditor(QWidget* parent, const 
 {
 
     SqliteTableModel* m = qobject_cast<SqliteTableModel*>(const_cast<QAbstractItemModel*>(index.model()));
-    sqlb::ForeignKeyClause fk = m->getForeignKeyClause(index.column()-1);
+    sqlb::ForeignKeyClause fk = m->getForeignKeyClause(static_cast<size_t>(index.column()-1));
 
     if(fk.isSet()) {
 
@@ -854,19 +854,19 @@ int ExtendedTableWidget::numVisibleRows() const
     return row_bottom - row_top;
 }
 
-std::unordered_set<int> ExtendedTableWidget::selectedCols() const
+std::unordered_set<size_t> ExtendedTableWidget::selectedCols() const
 {
-    std::unordered_set<int> selectedCols;
+    std::unordered_set<size_t> selectedCols;
     for(const auto& idx : selectionModel()->selectedColumns())
-        selectedCols.insert(idx.column());
+        selectedCols.insert(static_cast<size_t>(idx.column()));
     return selectedCols;
 }
 
-std::unordered_set<int> ExtendedTableWidget::colsInSelection() const
+std::unordered_set<size_t> ExtendedTableWidget::colsInSelection() const
 {
-    std::unordered_set<int> colsInSelection;
+    std::unordered_set<size_t> colsInSelection;
     for(const QModelIndex & idx : selectedIndexes())
-        colsInSelection.insert(idx.column());
+        colsInSelection.insert(static_cast<size_t>(idx.column()));
     return colsInSelection;
 }
 
@@ -876,7 +876,7 @@ void ExtendedTableWidget::cellClicked(const QModelIndex& index)
     if(qApp->keyboardModifiers().testFlag(Qt::ControlModifier) && qApp->keyboardModifiers().testFlag(Qt::ShiftModifier) && model())
     {
         SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
-        sqlb::ForeignKeyClause fk = m->getForeignKeyClause(index.column()-1);
+        sqlb::ForeignKeyClause fk = m->getForeignKeyClause(static_cast<size_t>(index.column()-1));
 
         if(fk.isSet())
             emit foreignKeyClicked(sqlb::ObjectIdentifier(m->currentTableName().schema(), fk.table()),

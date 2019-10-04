@@ -187,9 +187,9 @@ TableBrowser::TableBrowser(QWidget* parent) :
         modifyColumnFormat(ui->dataTable->colsInSelection(), [](CondFormat& format) { format.setAlignment(CondFormat::AlignJustify); });
     });
 
-    connect(ui->actionEditCondFormats, &QAction::triggered, this, [this]() { editCondFormats(currentIndex().column()); });
+    connect(ui->actionEditCondFormats, &QAction::triggered, this, [this]() { editCondFormats(static_cast<size_t>(currentIndex().column())); });
     connect(ui->actionClearFormat, &QAction::triggered, this, [this]() {
-        for (int column : ui->dataTable->colsInSelection())
+        for (size_t column : ui->dataTable->colsInSelection())
             clearAllCondFormats(column);
     });
 
@@ -559,19 +559,19 @@ void TableBrowser::clear()
     ui->editGlobalFilter->blockSignals(false);
 }
 
-void TableBrowser::updateFilter(int column, const QString& value)
+void TableBrowser::updateFilter(size_t column, const QString& value)
 {
     // Set minimum width to the vertical header in order to avoid flickering while a filter is being updated.
     ui->dataTable->verticalHeader()->setMinimumWidth(ui->dataTable->verticalHeader()->width());
 
     m_model->updateFilter(column, value);
     BrowseDataTableSettings& settings = m_settings[currentlyBrowsedTableName()];
-    if(value.isEmpty() && settings.filterValues.remove(column) > 0)
+    if(value.isEmpty() && settings.filterValues.remove(static_cast<int>(column)) > 0)
     {
         emit projectModified();
     } else {
-        if (settings.filterValues[column] != value) {
-            settings.filterValues[column] = value;
+        if (settings.filterValues[static_cast<int>(column)] != value) {
+            settings.filterValues[static_cast<int>(column)] = value;
             emit projectModified();
         }
     }
@@ -582,7 +582,7 @@ void TableBrowser::updateFilter(int column, const QString& value)
     applySettings(settings, true);
 }
 
-void TableBrowser::addCondFormat(int column, const QString& value)
+void TableBrowser::addCondFormat(size_t column, const QString& value)
 {
     QFont font = QFont(Settings::getValue("databrowser", "font").toString());
     font.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
@@ -598,7 +598,7 @@ void TableBrowser::addCondFormat(int column, const QString& value)
     m_settings[currentlyBrowsedTableName()].condFormats[column].push_back(newCondFormat);
 }
 
-void TableBrowser::clearAllCondFormats(int column)
+void TableBrowser::clearAllCondFormats(size_t column)
 {
     std::vector<CondFormat> emptyCondFormatVector = std::vector<CondFormat>();
     m_model->setCondFormats(column, emptyCondFormatVector);
@@ -606,12 +606,12 @@ void TableBrowser::clearAllCondFormats(int column)
     emit projectModified();
 }
 
-void TableBrowser::editCondFormats(int column)
+void TableBrowser::editCondFormats(size_t column)
 {
     CondFormatManager condFormatDialog(m_settings[currentlyBrowsedTableName()].condFormats[column],
                                        m_model->encoding(), this);
     condFormatDialog.setWindowTitle(tr("Conditional formats for \"%1\"").
-                                    arg(m_model->headerData(column, Qt::Horizontal).toString()));
+                                    arg(m_model->headerData(static_cast<int>(column), Qt::Horizontal).toString()));
     if (condFormatDialog.exec()) {
         std::vector<CondFormat> condFormatVector = condFormatDialog.getCondFormats();
         m_model->setCondFormats(column, condFormatVector);
@@ -620,9 +620,9 @@ void TableBrowser::editCondFormats(int column)
     }
 }
 
-void TableBrowser::modifyColumnFormat(std::unordered_set<int> columns, std::function<void(CondFormat&)> changeFunction)
+void TableBrowser::modifyColumnFormat(std::unordered_set<size_t> columns, std::function<void(CondFormat&)> changeFunction)
 {
-    for (int column : columns) {
+    for (size_t column : columns) {
         std::vector<CondFormat>& columnFormats = m_settings[currentlyBrowsedTableName()].condFormats[column];
 
         auto it = std::find_if(columnFormats.begin(), columnFormats.end(), [](const CondFormat& format) {
@@ -636,7 +636,7 @@ void TableBrowser::modifyColumnFormat(std::unordered_set<int> columns, std::func
             // Alignment is get from the current column since the default is different from text and numbers.
             QFont font = QFont(Settings::getValue("databrowser", "font").toString());
             font.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
-            Qt::Alignment align = Qt::Alignment(m_model->data(currentIndex().sibling(currentIndex().row(), column),
+            Qt::Alignment align = Qt::Alignment(m_model->data(currentIndex().sibling(currentIndex().row(), static_cast<int>(column)),
                                                                          Qt::TextAlignmentRole).toInt());
 
             CondFormat newCondFormat(QString(""), QColor(Settings::getValue("databrowser", "reg_fg_colour").toString()),
@@ -1024,10 +1024,10 @@ void TableBrowser::headerClicked(int logicalindex)
 
 void TableBrowser::updateColumnWidth(int section, int /*old_size*/, int new_size)
 {
-    std::unordered_set<int> selectedCols = ui->dataTable->selectedCols();
+    std::unordered_set<size_t> selectedCols = ui->dataTable->selectedCols();
     sqlb::ObjectIdentifier tableName = currentlyBrowsedTableName();
 
-    if (selectedCols.find(section) == selectedCols.end())
+    if (selectedCols.find(static_cast<size_t>(section)) == selectedCols.end())
     {
         if (m_settings[tableName].columnWidths[section] != new_size) {
             emit projectModified();
@@ -1037,12 +1037,12 @@ void TableBrowser::updateColumnWidth(int section, int /*old_size*/, int new_size
     else
     {
         ui->dataTable->blockSignals(true);
-        for(int col : selectedCols)
+        for(size_t col : selectedCols)
         {
-            ui->dataTable->setColumnWidth(col, new_size);
-            if (m_settings[tableName].columnWidths[col] != new_size) {
+            ui->dataTable->setColumnWidth(static_cast<int>(col), new_size);
+            if (m_settings[tableName].columnWidths[static_cast<int>(col)] != new_size) {
                 emit projectModified();
-                m_settings[tableName].columnWidths[col] = new_size;
+                m_settings[tableName].columnWidths[static_cast<int>(col)] = new_size;
             }
         }
         ui->dataTable->blockSignals(false);

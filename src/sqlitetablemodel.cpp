@@ -275,7 +275,7 @@ QVariant SqliteTableModel::headerData(int section, Qt::Orientation orientation, 
         return QString("%1").arg(section + 1);
 }
 
-QVariant SqliteTableModel::getMatchingCondFormat(int column, const QString& value, int role) const
+QVariant SqliteTableModel::getMatchingCondFormat(size_t column, const QString& value, int role) const
 {
     if (m_mCondFormats.find(column) == m_mCondFormats.end())
         return QVariant();
@@ -364,7 +364,7 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
             QString value = cached_row->at(column);
             // Unlock before querying from DB
             lock.unlock();
-            QVariant condFormatFont = getMatchingCondFormat(index.column(), value, role);
+            QVariant condFormatFont = getMatchingCondFormat(column, value, role);
             if (condFormatFont.isValid())
                 return condFormatFont;
         }
@@ -376,11 +376,11 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
             return QColor(Settings::getValue("databrowser", "null_fg_colour").toString());
         else if (nosync_isBinary(index))
             return QColor(Settings::getValue("databrowser", "bin_fg_colour").toString());
-        else if (m_mCondFormats.find(index.column()) != m_mCondFormats.end()) {
+        else if (m_mCondFormats.find(column) != m_mCondFormats.end()) {
             QString value = cached_row->at(column);
             // Unlock before querying from DB
             lock.unlock();
-            QVariant condFormatColor = getMatchingCondFormat(index.column(), value, role);
+            QVariant condFormatColor = getMatchingCondFormat(column, value, role);
             if (condFormatColor.isValid())
                 return condFormatColor;
             }
@@ -393,18 +393,18 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
             return QColor(Settings::getValue("databrowser", "null_bg_colour").toString());
         else if (nosync_isBinary(index))
             return QColor(Settings::getValue("databrowser", "bin_bg_colour").toString());
-        else if (m_mCondFormats.find(index.column()) != m_mCondFormats.end()) {
+        else if (m_mCondFormats.find(column) != m_mCondFormats.end()) {
             QString value = cached_row->at(column);
             // Unlock before querying from DB
             lock.unlock();
-            QVariant condFormatColor = getMatchingCondFormat(index.column(), value, role);
+            QVariant condFormatColor = getMatchingCondFormat(column, value, role);
             if (condFormatColor.isValid())
                 return condFormatColor;
         }
         // Regular case (not null, not binary and no matching conditional format)
         return QColor(Settings::getValue("databrowser", "reg_bg_colour").toString());
     } else if(role == Qt::ToolTipRole) {
-        sqlb::ForeignKeyClause fk = getForeignKeyClause(index.column()-1);
+        sqlb::ForeignKeyClause fk = getForeignKeyClause(column-1);
         if(fk.isSet())
           return tr("References %1(%2)\nHold %3Shift and click to jump there")
                   .arg(QString::fromStdString(fk.table()))
@@ -417,7 +417,7 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
         // Align vertically to the center, which displays better.
         QString value = cached_row->at(column);
         lock.unlock();
-        QVariant condFormat = getMatchingCondFormat(index.column(), value, role);
+        QVariant condFormat = getMatchingCondFormat(column, value, role);
         if (condFormat.isValid())
             return condFormat;
         bool isNumber;
@@ -439,7 +439,7 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-sqlb::ForeignKeyClause SqliteTableModel::getForeignKeyClause(int column) const
+sqlb::ForeignKeyClause SqliteTableModel::getForeignKeyClause(size_t column) const
 {
     static const sqlb::ForeignKeyClause empty_foreign_key_clause;
 
@@ -457,12 +457,12 @@ sqlb::ForeignKeyClause SqliteTableModel::getForeignKeyClause(int column) const
 
     // Convert object to a table and check if the column number is in the valid range
     sqlb::TablePtr tbl = std::dynamic_pointer_cast<sqlb::Table>(obj);
-    if(tbl && tbl->name().size() && (column >= 0 && column < static_cast<int>(tbl->fields.size())))
+    if(tbl && tbl->name().size() && column < tbl->fields.size())
     {
         // Note that the rowid column has number -1 here, it can safely be excluded since there will never be a
         // foreign key on that column.
 
-        sqlb::ConstraintPtr ptr = tbl->constraint({tbl->fields.at(static_cast<size_t>(column)).name()}, sqlb::Constraint::ForeignKeyConstraintType);
+        sqlb::ConstraintPtr ptr = tbl->constraint({tbl->fields.at(column).name()}, sqlb::Constraint::ForeignKeyConstraintType);
         if(ptr)
             return *(std::dynamic_pointer_cast<sqlb::ForeignKeyClause>(ptr));
     }
@@ -833,7 +833,7 @@ std::vector<std::string> SqliteTableModel::getColumns(std::shared_ptr<sqlite3> p
     return listColumns;
 }
 
-void SqliteTableModel::addCondFormat(int column, const CondFormat& condFormat)
+void SqliteTableModel::addCondFormat(size_t column, const CondFormat& condFormat)
 {
     // If the condition is already present in the vector, update that entry and respect the order, since two entries with the same
     // condition do not make sense.
@@ -847,21 +847,21 @@ void SqliteTableModel::addCondFormat(int column, const CondFormat& condFormat)
     emit layoutChanged();
 }
 
-void SqliteTableModel::setCondFormats(int column, const std::vector<CondFormat>& condFormats)
+void SqliteTableModel::setCondFormats(size_t column, const std::vector<CondFormat>& condFormats)
 {
     m_mCondFormats[column] = condFormats;
     emit layoutChanged();
 }
 
-void SqliteTableModel::updateFilter(int column, const QString& value)
+void SqliteTableModel::updateFilter(size_t column, const QString& value)
 {
     QString whereClause = CondFormat::filterToSqlCondition(value, m_encoding);
 
     // If the value was set to an empty string remove any filter for this column. Otherwise insert a new filter rule or replace the old one if there is already one
     if(whereClause.isEmpty())
-        m_query.where().erase(static_cast<size_t>(column));
+        m_query.where().erase(column);
     else
-        m_query.where()[static_cast<size_t>(column)] = whereClause.toStdString();
+        m_query.where()[column] = whereClause.toStdString();
 
     // Build the new query
     buildQuery();
