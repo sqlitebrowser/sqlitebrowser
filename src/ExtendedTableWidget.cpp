@@ -150,7 +150,7 @@ QWidget* ExtendedTableWidgetEditorDelegate::createEditor(QWidget* parent, const 
         if (!currentTable->fields.at(static_cast<size_t>(index.column())-1).notnull())
             query.append (" UNION SELECT NULL");
 
-        SqliteTableModel* fkModel = new SqliteTableModel(m->db(), parent, m->chunkSize(), m->encoding());
+        SqliteTableModel* fkModel = new SqliteTableModel(m->db(), parent, m->encoding());
         fkModel->setQuery(query);
 
         QComboBox* combo = new QComboBox(parent);

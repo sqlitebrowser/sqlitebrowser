@@ -287,7 +287,7 @@ void TableBrowser::init(DBBrowserDB* _db)
 
     if(m_model)
         delete m_model;
-    m_model = new SqliteTableModel(*db, this, static_cast<std::size_t>(Settings::getValue("db", "prefetchsize").toUInt()));
+    m_model = new SqliteTableModel(*db, this);
 
     connect(m_model, &SqliteTableModel::finishedFetch, this, &TableBrowser::updateRecordsetLabel);
 }
@@ -537,7 +537,7 @@ void TableBrowser::reloadSettings()
     ui->dataTable->reloadSettings();
 
     ui->browseToolbar->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(Settings::getValue("General", "toolbarStyleBrowse").toInt()));
-    m_model->setChunkSize(static_cast<std::size_t>(Settings::getValue("db", "prefetchsize").toUInt()));
+    m_model->reloadSettings();
 }
 
 void TableBrowser::setCurrentTable(const sqlb::ObjectIdentifier& name)

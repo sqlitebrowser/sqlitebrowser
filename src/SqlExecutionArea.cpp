@@ -22,7 +22,7 @@ SqlExecutionArea::SqlExecutionArea(DBBrowserDB& _db, QWidget* parent) :
     ui->setupUi(this);
 
     // Create model
-    model = new SqliteTableModel(db, this, static_cast<std::size_t>(Settings::getValue("db", "prefetchsize").toUInt()));
+    model = new SqliteTableModel(db, this);
     ui->tableResult->setModel(model);
     connect(model, &SqliteTableModel::finishedFetch, this, &SqlExecutionArea::fetchedData);
 
@@ -149,8 +149,8 @@ void SqlExecutionArea::reloadSettings()
     ui->splitter->restoreState(Settings::getValue("editor", "splitter1_sizes").toByteArray());
     ui->splitter_2->restoreState(Settings::getValue("editor", "splitter2_sizes").toByteArray());
 
-    // Set prefetch settings
-    model->setChunkSize(static_cast<std::size_t>(Settings::getValue("db", "prefetchsize").toUInt()));
+    // Reload model settings
+    model->reloadSettings();
 
     // Check if error indicators are enabled for the not-ok background clue
     showErrorIndicators = Settings::getValue("editor", "error_indicators").toBool();

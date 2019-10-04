@@ -2,6 +2,7 @@
 #define SQLITETABLEMODEL_H
 
 #include <QAbstractTableModel>
+#include <QColor>
 #include <QMutex>
 
 #include <memory>
@@ -25,7 +26,7 @@ class SqliteTableModel : public QAbstractTableModel
 #endif
 
 public:
-    explicit SqliteTableModel(DBBrowserDB& db, QObject *parent = nullptr, size_t chunkSize = 50000, const QString& encoding = QString());
+    explicit SqliteTableModel(DBBrowserDB& db, QObject *parent = nullptr, const QString& encoding = QString());
     ~SqliteTableModel() override;
 
     /// reset to state after construction
@@ -86,8 +87,6 @@ public:
     /// configure for browsing specified table
     void setQuery(const sqlb::Query& query);
 
-    void setChunkSize(size_t chunksize);
-    size_t chunkSize() { return m_chunkSize; }
     void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
     void sort(const std::vector<sqlb::SortedColumn>& columns);
     sqlb::ObjectIdentifier currentTableName() const { return m_query.table(); }
@@ -131,6 +130,8 @@ public:
                           bool dont_skip_to_next_field = false) const;
 
     DBBrowserDB& db() { return m_db; }
+
+    void reloadSettings();
 
 public slots:
     void updateFilter(size_t column, const QString& value);
@@ -200,6 +201,31 @@ private:
     std::map<size_t, std::vector<CondFormat>> m_mCondFormats;
     sqlb::Query m_query;
 
+    QString m_encoding;
+
+    /**
+     * These are used for multi-threaded population of the table
+     */
+    mutable QMutex m_mutexDataCache;
+
+private:
+    /**
+     * Settings. These are stored here to avoid fetching and converting them every time we need them. Because this class
+     * uses a lot of settings and because some of its functions are called very often, this should speed things up noticeable.
+     * Call reloadSettings() to update these.
+     */
+
+    QString m_nullText;
+    QString m_blobText;
+    QColor m_regFgColour;
+    QColor m_regBgColour;
+    QColor m_nullFgColour;
+    QColor m_nullBgColour;
+    QColor m_binFgColour;
+    QColor m_binBgColour;
+    int m_symbolLimit;
+    bool m_imagePreviewEnabled;
+
     /**
      * @brief m_chunkSize Size of the next chunk fetch more will try to fetch.
      * This value should be rather high, because our query
@@ -209,13 +235,6 @@ private:
      * to that row count.
      */
     size_t m_chunkSize;
-
-    QString m_encoding;
-
-    /**
-     * These are used for multi-threaded population of the table
-     */
-    mutable QMutex m_mutexDataCache;
 };
 
 #endif

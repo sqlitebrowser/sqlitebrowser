@@ -20,14 +20,16 @@
 
 using json = nlohmann::json;
 
-SqliteTableModel::SqliteTableModel(DBBrowserDB& db, QObject* parent, size_t chunkSize, const QString& encoding)
+SqliteTableModel::SqliteTableModel(DBBrowserDB& db, QObject* parent, const QString& encoding)
     : QAbstractTableModel(parent)
     , m_db(db)
     , m_lifeCounter(0)
     , m_currentRowCount(0)
-    , m_chunkSize(chunkSize)
     , m_encoding(encoding)
 {
+    // Load initial settings first
+    reloadSettings();
+
     worker = new RowLoader(
         [this](){ return m_db.get(tr("reading rows")); },
         [this](QString stmt){ return m_db.logSQL(stmt, kLogMsg_App); },
@@ -112,11 +114,6 @@ void SqliteTableModel::reset()
     m_mCondFormats.clear();
 
     endResetModel();
-}
-
-void SqliteTableModel::setChunkSize(size_t chunksize)
-{
-    m_chunkSize = chunksize;
 }
 
 void SqliteTableModel::setQuery(const sqlb::Query& query)
@@ -341,15 +338,14 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
             return tr("loading...");
         if(role == Qt::DisplayRole && cached_row->at(column).isNull())
         {
-            return Settings::getValue("databrowser", "null_text").toString();
+            return m_nullText;
         } else if(role == Qt::DisplayRole && nosync_isBinary(index)) {
-            return Settings::getValue("databrowser", "blob_text").toString();
+            return m_blobText;
         } else if(role == Qt::DisplayRole) {
-            int limit = Settings::getValue("databrowser", "symbol_limit").toInt();
             QByteArray displayText = cached_row->at(column);
-            if (displayText.length() > limit) {
+            if (displayText.length() > m_symbolLimit) {
                 // Add "..." to the end of truncated strings
-                return decode(displayText.left(limit).append(" ..."));
+                return decode(displayText.left(m_symbolLimit).append(" ..."));
             } else {
                 return decode(displayText);
             }
@@ -373,9 +369,9 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
         if(!row_available)
             return QColor(100, 100, 100);
         if(cached_row->at(column).isNull())
-            return QColor(Settings::getValue("databrowser", "null_fg_colour").toString());
+            return m_nullFgColour;
         else if (nosync_isBinary(index))
-            return QColor(Settings::getValue("databrowser", "bin_fg_colour").toString());
+            return m_binFgColour;
         else if (m_mCondFormats.find(column) != m_mCondFormats.end()) {
             QString value = cached_row->at(column);
             // Unlock before querying from DB
@@ -385,14 +381,14 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
                 return condFormatColor;
             }
         // Regular case (not null, not binary and no matching conditional format)
-        return QColor(Settings::getValue("databrowser", "reg_fg_colour").toString());
+        return m_regFgColour;
     } else if (role == Qt::BackgroundRole) {
         if(!row_available)
             return QColor(255, 200, 200);
         if(cached_row->at(column).isNull())
-            return QColor(Settings::getValue("databrowser", "null_bg_colour").toString());
+            return m_nullBgColour;
         else if (nosync_isBinary(index))
-            return QColor(Settings::getValue("databrowser", "bin_bg_colour").toString());
+            return m_binBgColour;
         else if (m_mCondFormats.find(column) != m_mCondFormats.end()) {
             QString value = cached_row->at(column);
             // Unlock before querying from DB
@@ -402,7 +398,7 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
                 return condFormatColor;
         }
         // Regular case (not null, not binary and no matching conditional format)
-        return QColor(Settings::getValue("databrowser", "reg_bg_colour").toString());
+        return m_regBgColour;
     } else if(role == Qt::ToolTipRole) {
         sqlb::ForeignKeyClause fk = getForeignKeyClause(column-1);
         if(fk.isSet())
@@ -427,7 +423,7 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
         if(!row_available)
             return QVariant();
 
-        if(Settings::getValue("databrowser", "image_preview").toBool() && !isImageData(cached_row->at(column)).isNull())
+        if(m_imagePreviewEnabled && !isImageData(cached_row->at(column)).isNull())
         {
             QImage img;
             img.loadFromData(cached_row->at(column));
@@ -1150,4 +1146,19 @@ QModelIndex SqliteTableModel::nextMatch(const QModelIndex& start, const std::vec
         else if(regex && reg_exp.match(data).hasMatch())
             return pos;
     }
+}
+
+void SqliteTableModel::reloadSettings()
+{
+    m_nullText = Settings::getValue("databrowser", "null_text").toString();
+    m_blobText = Settings::getValue("databrowser", "blob_text").toString();
+    m_regFgColour = QColor(Settings::getValue("databrowser", "reg_fg_colour").toString());
+    m_regBgColour = QColor(Settings::getValue("databrowser", "reg_bg_colour").toString());
+    m_nullFgColour = QColor(Settings::getValue("databrowser", "null_fg_colour").toString());
+    m_nullBgColour = QColor(Settings::getValue("databrowser", "null_bg_colour").toString());
+    m_binFgColour = QColor(Settings::getValue("databrowser", "bin_fg_colour").toString());
+    m_binBgColour = QColor(Settings::getValue("databrowser", "bin_bg_colour").toString());
+    m_symbolLimit = Settings::getValue("databrowser", "symbol_limit").toInt();
+    m_imagePreviewEnabled = Settings::getValue("databrowser", "image_preview").toBool();
+    m_chunkSize = static_cast<std::size_t>(Settings::getValue("db", "prefetchsize").toUInt());
 }
