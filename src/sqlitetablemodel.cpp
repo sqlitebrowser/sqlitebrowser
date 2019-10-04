@@ -332,16 +332,16 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
         row_available = false;
     }
 
-    if(role == Qt::DisplayRole || role == Qt::EditRole)
+    if(role == Qt::DisplayRole)
     {
         if(!row_available)
             return tr("loading...");
-        if(role == Qt::DisplayRole && cached_row->at(column).isNull())
+        if(cached_row->at(column).isNull())
         {
             return m_nullText;
-        } else if(role == Qt::DisplayRole && nosync_isBinary(index)) {
+        } else if(nosync_isBinary(index)) {
             return m_blobText;
-        } else if(role == Qt::DisplayRole) {
+        } else {
             QByteArray displayText = cached_row->at(column);
             if (displayText.length() > m_symbolLimit) {
                 // Add "..." to the end of truncated strings
@@ -349,9 +349,11 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
             } else {
                 return decode(displayText);
             }
-        } else {
-            return decode(cached_row->at(column));
         }
+    } else if(role == Qt::EditRole) {
+        if(!row_available)
+            return QVariant();
+        return decode(cached_row->at(column));
     } else if(role == Qt::FontRole) {
         QFont font;
         if(!row_available || cached_row->at(column).isNull() || nosync_isBinary(index))
@@ -402,12 +404,10 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
     } else if(role == Qt::ToolTipRole) {
         sqlb::ForeignKeyClause fk = getForeignKeyClause(column-1);
         if(fk.isSet())
-          return tr("References %1(%2)\nHold %3Shift and click to jump there")
-                  .arg(QString::fromStdString(fk.table()))
-                  .arg(QString::fromStdString(sqlb::joinStringVector(fk.columns(), ",")))
-                  .arg(QKeySequence(Qt::CTRL).toString(QKeySequence::NativeText));
-        else
-            return QString();
+            return tr("References %1(%2)\nHold %3Shift and click to jump there")
+                    .arg(QString::fromStdString(fk.table()))
+                    .arg(QString::fromStdString(sqlb::joinStringVector(fk.columns(), ",")))
+                    .arg(QKeySequence(Qt::CTRL).toString(QKeySequence::NativeText));
     } else if (role == Qt::TextAlignmentRole) {
         // Align horizontally according to conditional format or default (left for text and right for numbers)
         // Align vertically to the center, which displays better.
