@@ -316,53 +316,42 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
 
     QMutexLocker lock(&m_mutexDataCache);
 
-    Row blank_data;
-    bool row_available;
-
-    const Row * cached_row;
     const size_t row = static_cast<size_t>(index.row());
     const size_t column = static_cast<size_t>(index.column());
-    if(m_cache.count(row))
-    {
-        cached_row = &m_cache.at(row);
-        row_available = true;
-    } else {
-        blank_data = makeDefaultCacheEntry();
-        cached_row = &blank_data;
-        row_available = false;
-    }
+
+    const bool row_available = m_cache.count(row);
+    const QByteArray blank_data("");
+    const QByteArray& data = row_available ? m_cache.at(row).at(column) : blank_data;
 
     if(role == Qt::DisplayRole)
     {
         if(!row_available)
             return tr("loading...");
-        if(cached_row->at(column).isNull())
+        if(data.isNull())
         {
             return m_nullText;
         } else if(nosync_isBinary(index)) {
             return m_blobText;
         } else {
-            QByteArray displayText = cached_row->at(column);
-            if (displayText.length() > m_symbolLimit) {
+            if (data.length() > m_symbolLimit) {
                 // Add "..." to the end of truncated strings
-                return decode(displayText.left(m_symbolLimit).append(" ..."));
+                return decode(data.left(m_symbolLimit).append(" ..."));
             } else {
-                return decode(displayText);
+                return decode(data);
             }
         }
     } else if(role == Qt::EditRole) {
         if(!row_available)
             return QVariant();
-        return decode(cached_row->at(column));
+        return decode(data);
     } else if(role == Qt::FontRole) {
         QFont font;
-        if(!row_available || cached_row->at(column).isNull() || nosync_isBinary(index))
+        if(!row_available || data.isNull() || nosync_isBinary(index))
             font.setItalic(true);
         else {
-            QString value = cached_row->at(column);
             // Unlock before querying from DB
             lock.unlock();
-            QVariant condFormatFont = getMatchingCondFormat(column, value, role);
+            QVariant condFormatFont = getMatchingCondFormat(column, data, role);
             if (condFormatFont.isValid())
                 return condFormatFont;
         }
@@ -370,15 +359,14 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
     } else if(role == Qt::ForegroundRole) {
         if(!row_available)
             return QColor(100, 100, 100);
-        if(cached_row->at(column).isNull())
+        if(data.isNull())
             return m_nullFgColour;
         else if (nosync_isBinary(index))
             return m_binFgColour;
         else if (m_mCondFormats.find(column) != m_mCondFormats.end()) {
-            QString value = cached_row->at(column);
             // Unlock before querying from DB
             lock.unlock();
-            QVariant condFormatColor = getMatchingCondFormat(column, value, role);
+            QVariant condFormatColor = getMatchingCondFormat(column, data, role);
             if (condFormatColor.isValid())
                 return condFormatColor;
             }
@@ -387,15 +375,14 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
     } else if (role == Qt::BackgroundRole) {
         if(!row_available)
             return QColor(255, 200, 200);
-        if(cached_row->at(column).isNull())
+        if(data.isNull())
             return m_nullBgColour;
         else if (nosync_isBinary(index))
             return m_binBgColour;
         else if (m_mCondFormats.find(column) != m_mCondFormats.end()) {
-            QString value = cached_row->at(column);
             // Unlock before querying from DB
             lock.unlock();
-            QVariant condFormatColor = getMatchingCondFormat(column, value, role);
+            QVariant condFormatColor = getMatchingCondFormat(column, data, role);
             if (condFormatColor.isValid())
                 return condFormatColor;
         }
@@ -411,22 +398,21 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
     } else if (role == Qt::TextAlignmentRole) {
         // Align horizontally according to conditional format or default (left for text and right for numbers)
         // Align vertically to the center, which displays better.
-        QString value = cached_row->at(column);
         lock.unlock();
-        QVariant condFormat = getMatchingCondFormat(column, value, role);
+        QVariant condFormat = getMatchingCondFormat(column, data, role);
         if (condFormat.isValid())
             return condFormat;
         bool isNumber;
-        value.toDouble(&isNumber);
+        data.toDouble(&isNumber);
         return static_cast<int>((isNumber ? Qt::AlignRight : Qt::AlignLeft) | Qt::AlignVCenter);
     } else if(role == Qt::DecorationRole) {
         if(!row_available)
             return QVariant();
 
-        if(m_imagePreviewEnabled && !isImageData(cached_row->at(column)).isNull())
+        if(m_imagePreviewEnabled && !isImageData(data).isNull())
         {
             QImage img;
-            img.loadFromData(cached_row->at(column));
+            img.loadFromData(data);
             return QPixmap::fromImage(img);
         }
     }
