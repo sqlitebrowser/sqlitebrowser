@@ -571,7 +571,7 @@ Qt::ItemFlags SqliteTableModel::flags(const QModelIndex& index) const
     if(m_query.selectedColumns().size())
     {
         if(index.column() > 0)
-            custom_display_format = QString::fromStdString(m_query.selectedColumns().at(static_cast<size_t>(index.column())-1).selector) != sqlb::escapeIdentifier(headerData(index.column(), Qt::Horizontal, Qt::EditRole).toString());
+            custom_display_format = m_query.selectedColumns().at(static_cast<size_t>(index.column())-1).selector != m_query.selectedColumns().at(static_cast<size_t>(index.column())-1).original_column;
     }
 
     if(!isBinary(index) && !custom_display_format)
