@@ -731,7 +731,7 @@ void EditTableDialog::constraintItemChanged(QTableWidgetItem* item)
     case kConstraintName:
         constraint->setName(item->text().toStdString());
         break;
-    };
+    }
 
     // Update SQL
     ui->tableConstraints->item(item->row(), kConstraintSql)->setText(QString::fromStdString(constraint->toSql()));

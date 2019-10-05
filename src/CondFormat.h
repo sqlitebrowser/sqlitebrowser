@@ -20,7 +20,7 @@ public:
     // List of alignment texts. Order must be as Alignment definition above.
     static QStringList alignmentTexts() {
         return {QObject::tr("Left"), QObject::tr("Right"), QObject::tr("Center"), QObject::tr("Justify")};
-    };
+    }
 
     // Get alignment from combined Qt alignment (note that this will lose any combination of our Alignment enum
     // with other values present in the flag (e.g. vertical alignment).

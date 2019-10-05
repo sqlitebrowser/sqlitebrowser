@@ -80,7 +80,7 @@ void ExportSqlDialog::accept()
     if(selectedItems.count() == 1)  // One table -> Suggest table name
         defaultFileName = selectedItems.at(0)->text() + FILE_EXT_SQL_DEFAULT;
     else if(selectedItems.count() == ui->listTables->count())   // All tables -> Suggest database name
-        defaultFileName = pdb->currentFile() + FILE_EXT_SQL_DEFAULT;;
+        defaultFileName = pdb->currentFile() + FILE_EXT_SQL_DEFAULT;
 
     QString fileName = FileDialog::getSaveFileName(
                 CreateSQLFile,
