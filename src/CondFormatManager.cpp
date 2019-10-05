@@ -2,6 +2,7 @@
 #include "ui_CondFormatManager.h"
 #include "CondFormat.h"
 #include "Settings.h"
+#include "FilterLineEdit.h"
 
 #include <QColorDialog>
 #include <QDesktopServices>
@@ -11,6 +12,28 @@
 #include <QFontComboBox>
 #include <QSpinBox>
 #include <QComboBox>
+#include <QStyledItemDelegate>
+
+// Styled Item Delegate for non-editable columns (all except Condition)
+class DefaultDelegate: public QStyledItemDelegate {
+public:
+    explicit DefaultDelegate(QObject* parent=nullptr): QStyledItemDelegate(parent) {}
+    QWidget* createEditor(QWidget* /* parent */, const QStyleOptionViewItem& /* option */, const QModelIndex& /* index */) const override {
+        return nullptr;
+    }
+};
+
+// Styled Item Delegate for the Condition column as a filter line editor.
+class FilterEditDelegate: public QStyledItemDelegate {
+
+public:
+    explicit FilterEditDelegate(QObject* parent=nullptr): QStyledItemDelegate(parent) {}
+    QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem& /* option */, const QModelIndex& /* index */) const override {
+        FilterLineEdit* filterEditor = new FilterLineEdit(parent);
+        filterEditor->setConditionFormatContextMenuEnabled(false);
+        return filterEditor;
+    }
+};
 
 CondFormatManager::CondFormatManager(const std::vector<CondFormat>& condFormats, const QString& encoding, QWidget *parent) :
     QDialog(parent),
@@ -23,11 +46,15 @@ CondFormatManager::CondFormatManager(const std::vector<CondFormat>& condFormats,
     for(const CondFormat& aCondFormat : condFormats)
         addItem(aCondFormat);
 
-    // Resize columns to contents, except for the condition
-    for(int col = ColumnForeground; col < ColumnFilter; ++col)
-        ui->tableCondFormats->resizeColumnToContents(col);
-
+    // Make condition editable as a filter line editor.
     ui->tableCondFormats->setEditTriggers(QAbstractItemView::AllEditTriggers);
+    ui->tableCondFormats->setItemDelegateForColumn(ColumnFilter, new FilterEditDelegate(this));
+
+    // Resize columns to contents and make them not text-editable, except for the condition.
+    for(int col = ColumnForeground; col < ColumnFilter; ++col) {
+        ui->tableCondFormats->setItemDelegateForColumn(col, new DefaultDelegate(this));
+        ui->tableCondFormats->resizeColumnToContents(col);
+    }
 
     connect(ui->buttonAdd, SIGNAL(clicked(bool)), this, SLOT(addNewItem()));
     connect(ui->buttonRemove, SIGNAL(clicked(bool)), this, SLOT(removeItem()));
@@ -64,6 +91,8 @@ void CondFormatManager::addItem(const CondFormat& aCondFormat)
 {
     int i = ui->tableCondFormats->topLevelItemCount();
     QTreeWidgetItem *newItem = new QTreeWidgetItem(ui->tableCondFormats);
+    newItem->setFlags(Qt::ItemIsEnabled | Qt::ItemIsEditable);
+
     newItem->setForeground(ColumnForeground, aCondFormat.foregroundColor());
     newItem->setBackground(ColumnForeground, aCondFormat.foregroundColor());
     newItem->setForeground(ColumnBackground, aCondFormat.backgroundColor());
@@ -91,7 +120,6 @@ void CondFormatManager::addItem(const CondFormat& aCondFormat)
 
     newItem->setText(ColumnFilter, aCondFormat.filter());
     ui->tableCondFormats->insertTopLevelItem(i, newItem);
-    ui->tableCondFormats->openPersistentEditor(newItem, ColumnFilter);
 }
 
 void CondFormatManager::removeItem()
@@ -134,7 +162,6 @@ void CondFormatManager::moveItem(int offset)
     ui->tableCondFormats->setItemWidget(item, ColumnFont, fontCombo2);
     ui->tableCondFormats->setItemWidget(item, ColumnSize, sizeBox2);
     ui->tableCondFormats->setItemWidget(item, ColumnAlignment, alignCombo2);
-    ui->tableCondFormats->openPersistentEditor(item, ColumnFilter);
     ui->tableCondFormats->setCurrentIndex(ui->tableCondFormats->currentIndex().sibling(newRow,
                                                                                        ui->tableCondFormats->currentIndex().column()));
 }
@@ -180,16 +207,20 @@ std::vector<CondFormat> CondFormatManager::getCondFormats()
 void CondFormatManager::itemClicked(QTreeWidgetItem* item, int column)
 {
     switch (column) {
-      case ColumnForeground:
-      case ColumnBackground: {
-          QColor color = QColorDialog::getColor(item->background(column).color(), this);
-          if(color.isValid()) {
-              item->setTextColor(column, color);
-              item->setBackgroundColor(column, color);
-              item->setToolTip(column, tr("Click to select color"));
-          }
-          break;
-      }
+    case ColumnForeground:
+    case ColumnBackground: {
+        QColor color = QColorDialog::getColor(item->background(column).color(), this);
+        if(color.isValid()) {
+            item->setTextColor(column, color);
+            item->setBackgroundColor(column, color);
+        }
+        break;
+    }
+    case ColumnBold:
+    case ColumnItalic:
+    case ColumnUnderline:
+        item->setCheckState(column, item->checkState(column) != Qt::Checked ? Qt::Checked : Qt::Unchecked);
+        break;
     default:
         // Nothing to do
         break;
