@@ -213,7 +213,7 @@ void AddRecordDialog::populateFields()
 
         tbitem->setText(kName, QString::fromStdString(f.name()));
         tbitem->setText(kType, QString::fromStdString(f.type()));
-        tbitem->setData(kType, Qt::UserRole, QString::fromStdString(f.affinity()));
+        tbitem->setData(kType, Qt::UserRole, f.affinity());
 
         // NOT NULL fields are indicated in bold.
         if (f.notnull()) {
@@ -303,7 +303,7 @@ void AddRecordDialog::updateSqlText()
             fields << sqlb::escapeIdentifier(item->text(kName));
             value.toDouble(&isNumeric);
             // If it has a numeric format and has no text affinity, do not quote it.
-            if (isNumeric && item->data(kType, Qt::UserRole).toString() != "TEXT")
+            if (isNumeric && item->data(kType, Qt::UserRole).toInt() != sqlb::Field::TextAffinity)
                 vals << value.toString();
             else
                 vals << QString("'%1'").arg(value.toString().replace("'", "''"));

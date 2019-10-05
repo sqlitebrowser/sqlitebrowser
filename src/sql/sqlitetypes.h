@@ -296,8 +296,16 @@ public:
     bool isReal() const;
     bool isNumeric() const;
 
-    // Type affinity of the column according to SQLite3 rules
-    std::string affinity() const;
+    // Type affinity of the column according to SQLite3 rules.
+    // The Affinity enum values match the SQLITE_INTEGER, SQLITE_FLOAT, SQLITE_BLOB, and SQLITE_TEXT constants
+    enum Affinity
+    {
+        IntegerAffinity = 1,
+        FloatAffinity = 2,
+        TextAffinity = 3,
+        BlobAffinity = 4,
+    };
+    Affinity affinity() const;
 
     const std::string& name() const { return m_name; }
     const std::string& type() const { return m_type; }

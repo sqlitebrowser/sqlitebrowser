@@ -194,7 +194,7 @@ private:
 
     Row makeDefaultCacheEntry () const;
 
-    bool nosync_isBinary(const QModelIndex& index) const;
+    bool isBinary(const QByteArray& index) const;
 
     QString m_sQuery;
     std::vector<int> m_vDataTypes;

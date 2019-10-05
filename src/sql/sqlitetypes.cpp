@@ -323,17 +323,17 @@ bool Field::isBlob() const
     return false;
 }
 
-std::string Field::affinity() const
+Field::Affinity Field::affinity() const
 {
-    if (isInteger()) return "INTEGER";
+    if (isInteger()) return IntegerAffinity;
 
-    if (isText()) return "TEXT";
+    if (isText()) return TextAffinity;
 
-    if (isBlob()) return "BLOB";
+    if (isBlob()) return BlobAffinity;
 
-    if (isReal()) return "REAL";
+    if (isReal() || isNumeric()) return FloatAffinity;
 
-    return "NUMERIC";
+    return BlobAffinity;
 }
 
 Table::Table(const Table& table)

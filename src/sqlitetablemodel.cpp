@@ -128,40 +128,24 @@ void SqliteTableModel::setQuery(const sqlb::Query& query)
     m_vDataTypes.emplace_back(SQLITE_INTEGER);
 
     // Get the data types of all other columns as well as the column names
-    bool allOk = false;
-    if(m_db.getObjectByName(query.table()) && m_db.getObjectByName(query.table())->type() == sqlb::Object::Types::Table)
+    sqlb::TablePtr t = m_db.getObjectByName<sqlb::Table>(query.table());
+    if(t && t->fields.size()) // It is a table and parsing was OK
     {
-        sqlb::TablePtr t = m_db.getObjectByName<sqlb::Table>(query.table());
-        if(t && t->fields.size()) // parsing was OK
+        sqlb::StringVector rowids = t->rowidColumns();
+        m_query.setRowIdColumns(rowids);
+        m_headers.push_back(sqlb::joinStringVector(rowids, ","));
+
+        // Store field names and affinity data types
+        for(const sqlb::Field& fld : t->fields)
         {
-            sqlb::StringVector rowids = t->rowidColumns();
-            m_query.setRowIdColumns(rowids);
-            m_headers.push_back(sqlb::joinStringVector(rowids, ","));
-            for(const auto& n : t->fieldNames())
-                m_headers.push_back(n);
-
-            // parse columns types
-            static QStringList dataTypes = QStringList()
-                    << "INTEGER"
-                    << "REAL"
-                    << "TEXT"
-                    << "BLOB";
-            for(const sqlb::Field& fld :  t->fields)
-            {
-                QString name = QString::fromStdString(fld.type()).toUpper();
-                int colType = dataTypes.indexOf(name);
-                colType = (colType == -1) ? SQLITE_TEXT : colType + 1;
-                m_vDataTypes.push_back(colType);
-            }
-            allOk = true;
+            m_headers.push_back(fld.name());
+            m_vDataTypes.push_back(fld.affinity());
         }
-    }
+    } else {
+        // If for one reason or another (either it's a view or we couldn't parse the table statement) we couldn't get the field
+        // information we retrieve it from SQLite using an extra query.
+        // NOTE: It would be nice to eventually get rid of this piece here. As soon as the grammar parser is good enough...
 
-    // If for one reason or another (either it's a view or we couldn't parse the table statement) we couldn't get the field
-    // information we retrieve it from SQLite using an extra query.
-    // NOTE: It would be nice to eventually get rid of this piece here. As soon as the grammar parser is good enough...
-    if(!allOk)
-    {
         QString sColumnQuery = QString::fromUtf8("SELECT * FROM %1;").arg(QString::fromStdString(query.table().toString()));
         if(m_query.rowIdColumns().empty())
             m_query.setRowIdColumn("_rowid_");
@@ -266,15 +250,15 @@ QVariant SqliteTableModel::headerData(int section, Qt::Orientation orientation, 
                 return plainHeader + sortIndicator;
             }
         }
-        return QString("%1").arg(section + 1);
+        return QString::number(section + 1);
     }
     else
-        return QString("%1").arg(section + 1);
+        return QString::number(section + 1);
 }
 
 QVariant SqliteTableModel::getMatchingCondFormat(size_t column, const QString& value, int role) const
 {
-    if (m_mCondFormats.find(column) == m_mCondFormats.end())
+    if (!m_mCondFormats.count(column))
         return QVariant();
 
     bool isNumber;
@@ -330,7 +314,7 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
         if(data.isNull())
         {
             return m_nullText;
-        } else if(nosync_isBinary(index)) {
+        } else if(isBinary(data)) {
             return m_blobText;
         } else {
             if (data.length() > m_symbolLimit) {
@@ -346,7 +330,7 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
         return decode(data);
     } else if(role == Qt::FontRole) {
         QFont font;
-        if(!row_available || data.isNull() || nosync_isBinary(index))
+        if(!row_available || data.isNull() || isBinary(data))
             font.setItalic(true);
         else {
             // Unlock before querying from DB
@@ -361,9 +345,9 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
             return QColor(100, 100, 100);
         if(data.isNull())
             return m_nullFgColour;
-        else if (nosync_isBinary(index))
+        else if (isBinary(data))
             return m_binFgColour;
-        else if (m_mCondFormats.find(column) != m_mCondFormats.end()) {
+        else if (m_mCondFormats.count(column)) {
             // Unlock before querying from DB
             lock.unlock();
             QVariant condFormatColor = getMatchingCondFormat(column, data, role);
@@ -377,9 +361,9 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
             return QColor(255, 200, 200);
         if(data.isNull())
             return m_nullBgColour;
-        else if (nosync_isBinary(index))
+        else if (isBinary(data))
             return m_binBgColour;
-        else if (m_mCondFormats.find(column) != m_mCondFormats.end()) {
+        else if (m_mCondFormats.count(column)) {
             // Unlock before querying from DB
             lock.unlock();
             QVariant condFormatColor = getMatchingCondFormat(column, data, role);
@@ -883,18 +867,18 @@ void SqliteTableModel::clearCache()
 bool SqliteTableModel::isBinary(const QModelIndex& index) const
 {
     QMutexLocker lock(&m_mutexDataCache);
-    return nosync_isBinary(index);
-}
 
-bool SqliteTableModel::nosync_isBinary(const QModelIndex& index) const
-{
     const size_t row = static_cast<size_t>(index.row());
     if(!m_cache.count(row))
         return false;
 
     const auto & cached_row = m_cache.at(row);
+    return isBinary(cached_row.at(static_cast<size_t>(index.column())));
+}
 
-    return !isTextOnly(cached_row.at(static_cast<size_t>(index.column())), m_encoding, true);
+bool SqliteTableModel::isBinary(const QByteArray& data) const
+{
+    return !isTextOnly(data, m_encoding, true);
 }
 
 QByteArray SqliteTableModel::encode(const QByteArray& str) const
