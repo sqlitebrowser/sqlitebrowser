@@ -99,15 +99,10 @@ int RowLoader::countRows()
         QByteArray utf8Query = countQuery.toUtf8();
 
         sqlite3_stmt* stmt;
-        int status = sqlite3_prepare_v2(pDb.get(), utf8Query, utf8Query.size(), &stmt, nullptr);
-        if(status == SQLITE_OK)
+        if(sqlite3_prepare_v2(pDb.get(), utf8Query, utf8Query.size(), &stmt, nullptr) == SQLITE_OK)
         {
-            status = sqlite3_step(stmt);
-            if(status == SQLITE_ROW)
-            {
-                QString sCount = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0)));
-                retval = sCount.toInt();
-            }
+            if(sqlite3_step(stmt) == SQLITE_ROW)
+                retval = sqlite3_column_int(stmt, 0);
             sqlite3_finalize(stmt);
         } else {
             qWarning() << "Count query failed: " << countQuery;
@@ -223,29 +218,25 @@ void RowLoader::process (Task & t)
 
     QByteArray utf8Query = sLimitQuery.toUtf8();
     sqlite3_stmt *stmt;
-
-    int status = sqlite3_prepare_v2(pDb.get(), utf8Query, utf8Query.size(), &stmt, nullptr);
-
     auto row = t.row_begin;
-
-    if(SQLITE_OK == status)
+    if(sqlite3_prepare_v2(pDb.get(), utf8Query, utf8Query.size(), &stmt, nullptr) == SQLITE_OK)
     {
-        const int num_columns = static_cast<int>(headers.size());
+        const size_t num_columns = headers.size();
 
         while(!t.cancel && sqlite3_step(stmt) == SQLITE_ROW)
         {
             // Construct a new row object with the right number of columns
-            Cache::value_type rowdata(static_cast<size_t>(num_columns));
-            for(int i=0;i<num_columns;++i)
+            Cache::value_type rowdata(num_columns);
+            for(size_t i=0;i<num_columns;++i)
             {
                 // No need to do anything for NULL values because we can just use the already default constructed value
-                if(sqlite3_column_type(stmt, i) != SQLITE_NULL)
+                if(sqlite3_column_type(stmt, static_cast<int>(i)) != SQLITE_NULL)
                 {
-                    int bytes = sqlite3_column_bytes(stmt, i);
+                    int bytes = sqlite3_column_bytes(stmt, static_cast<int>(i));
                     if(bytes)
-                        rowdata[static_cast<size_t>(i)] = QByteArray(static_cast<const char*>(sqlite3_column_blob(stmt, i)), bytes);
+                        rowdata[i] = QByteArray(static_cast<const char*>(sqlite3_column_blob(stmt, static_cast<int>(i))), bytes);
                     else
-                        rowdata[static_cast<size_t>(i)] = "";
+                        rowdata[i] = "";
                 }
             }
             QMutexLocker lk(&cache_mutex);

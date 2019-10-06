@@ -152,10 +152,10 @@ private:
     /**
      * @brief max Queries the table t for the max value of field.
      * @param tableName Table to query
-     * @param field Field to get the max value
+     * @param field Name of the field to get the max value
      * @return the max value of the field or 0 on error
      */
-    QString max(const sqlb::ObjectIdentifier& tableName, const sqlb::Field& field) const;
+    unsigned long max(const sqlb::ObjectIdentifier& tableName, const std::string& field) const;
 
     static int callbackWrapper (void* callback, int numberColumns, char** values, char** columnNames);
 
@@ -221,7 +221,7 @@ public:
     QString currentFile() const { return curDBFilename; }
 
     /// log an SQL statement [thread-safe]
-    void logSQL(QString statement, LogMessageType msgtype);
+    void logSQL(const QString& statement, LogMessageType msgtype);
 
     QString getPragma(const QString& pragma);
     bool setPragma(const QString& pragma, const QString& value);

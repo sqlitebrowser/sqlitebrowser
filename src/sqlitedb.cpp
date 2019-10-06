@@ -1241,12 +1241,12 @@ bool DBBrowserDB::getRow(const sqlb::ObjectIdentifier& table, const QString& row
     return ret;
 }
 
-QString DBBrowserDB::max(const sqlb::ObjectIdentifier& tableName, const sqlb::Field& field) const
+unsigned long DBBrowserDB::max(const sqlb::ObjectIdentifier& tableName, const std::string& field) const
 {
-    QString sQuery = QString("SELECT MAX(CAST(%2 AS INTEGER)) FROM %1;").arg(QString::fromStdString(tableName.toString())).arg(QString::fromStdString(sqlb::escapeIdentifier(field.name())));
+    QString sQuery = QString("SELECT MAX(CAST(%2 AS INTEGER)) FROM %1;").arg(QString::fromStdString(tableName.toString())).arg(QString::fromStdString(sqlb::escapeIdentifier(field)));
     QByteArray utf8Query = sQuery.toUtf8();
     sqlite3_stmt *stmt;
-    QString ret = "0";
+    unsigned long ret = 0;
 
     if(sqlite3_prepare_v2(_db, utf8Query, utf8Query.size(), &stmt, nullptr) == SQLITE_OK)
     {
@@ -1254,7 +1254,7 @@ QString DBBrowserDB::max(const sqlb::ObjectIdentifier& tableName, const sqlb::Fi
         while(sqlite3_step(stmt) == SQLITE_ROW)
         {
             if(sqlite3_column_count(stmt) == 1)
-                ret = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0)));
+                ret = static_cast<unsigned long>(sqlite3_column_int64(stmt, 0));
         }
     }
     sqlite3_finalize(stmt);
@@ -1281,8 +1281,8 @@ QString DBBrowserDB::emptyInsertStmt(const std::string& schemaName, const sqlb::
             } else {
                 if(f.notnull())
                 {
-                    QString maxval = this->max(sqlb::ObjectIdentifier(schemaName, t.name()), f);
-                    QString newval = QString::number(maxval.toLongLong() + 1);
+                    unsigned long maxval = this->max(sqlb::ObjectIdentifier(schemaName, t.name()), f.name());
+                    QString newval = QString::number(maxval + 1);
                     vals << (f.isText()? "'" + newval + "'" : newval);
                 } else {
                     vals << "NULL";
@@ -1338,7 +1338,7 @@ QString DBBrowserDB::addRecord(const sqlb::ObjectIdentifier& tablename)
     {
         // For multiple rowid columns we just use the value of the last one and increase that one by one. If this doesn't yield a valid combination
         // the insert record dialog should pop up automatically.
-        pk_value = QString::number(max(tablename, *sqlb::findField(table, table->rowidColumns().back())).toLongLong() + 1);
+        pk_value = QString::number(max(tablename, table->rowidColumns().back()) + 1);
         sInsertstmt = emptyInsertStmt(tablename.schema(), *table, pk_value);
     } else {
         sInsertstmt = emptyInsertStmt(tablename.schema(), *table);
@@ -1900,27 +1900,10 @@ objectMap DBBrowserDB::getBrowsableObjects(const std::string& schema) const
     return res;
 }
 
-void DBBrowserDB::logSQL(QString statement, LogMessageType msgtype)
+void DBBrowserDB::logSQL(const QString& statement, LogMessageType msgtype)
 {
     // Remove any leading and trailing spaces, tabs, or line breaks first
-    statement = statement.trimmed();
-
-    // Replace binary log messages by a placeholder text instead of printing gibberish
-    for(int i=0;i<statement.size();i++)
-    {
-        QChar ch = statement[i];
-        if(ch < 32 && ch != '\n' && ch != '\r' && ch != '\t')
-        {
-            statement.truncate(i>0?i-1:0);
-            statement.append(tr("... <string can not be logged, contains binary data> ..."));
-
-            // early exit if we detect a binary character,
-            // to prevent checking all characters in a potential big string
-            break;
-        }
-    }
-
-    emit sqlExecuted(statement, msgtype);
+    emit sqlExecuted(statement.trimmed(), msgtype);
 }
 
 void DBBrowserDB::updateSchema()
@@ -1967,21 +1950,23 @@ void DBBrowserDB::updateSchema()
                 {
                     std::string val_type = reinterpret_cast<const char*>(sqlite3_column_text(vm, 0));
                     std::string val_name = reinterpret_cast<const char*>(sqlite3_column_text(vm, 1));
-                    QString val_sql = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(vm, 2)));
+                    const char* val_sql = reinterpret_cast<const char*>(sqlite3_column_text(vm, 2));
                     std::string val_tblname = reinterpret_cast<const char*>(sqlite3_column_text(vm, 3));
-                    val_sql = val_sql.replace("\r", "");
 
-                    if(!val_sql.isEmpty())
+                    if(val_sql)
                     {
+                        std::string sql = val_sql;
+                        sql.erase(std::remove(sql.begin(), sql.end(), '\r'), sql.end());
+
                         sqlb::ObjectPtr object;
                         if(val_type == "table")
-                            object = sqlb::Table::parseSQL(val_sql.toStdString());
+                            object = sqlb::Table::parseSQL(sql);
                         else if(val_type == "index")
-                            object = sqlb::Index::parseSQL(val_sql.toStdString());
+                            object = sqlb::Index::parseSQL(sql);
                         else if(val_type == "trigger")
-                            object = sqlb::Trigger::parseSQL(val_sql.toStdString());
+                            object = sqlb::Trigger::parseSQL(sql);
                         else if(val_type == "view")
-                            object = sqlb::View::parseSQL(val_sql.toStdString());
+                            object = sqlb::View::parseSQL(sql);
                         else
                             continue;
 
