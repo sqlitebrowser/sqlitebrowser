@@ -50,11 +50,17 @@ CondFormatManager::CondFormatManager(const std::vector<CondFormat>& condFormats,
     ui->tableCondFormats->setEditTriggers(QAbstractItemView::AllEditTriggers);
     ui->tableCondFormats->setItemDelegateForColumn(ColumnFilter, new FilterEditDelegate(this));
 
-    // Resize columns to contents and make them not text-editable, except for the condition.
-    for(int col = ColumnForeground; col < ColumnFilter; ++col) {
+    // Make columns not text-editable, except for the condition.
+    for(int col = ColumnForeground; col < ColumnFilter; ++col)
         ui->tableCondFormats->setItemDelegateForColumn(col, new DefaultDelegate(this));
+
+    // Resize columns that need more space than the default, but whose content might be too wide
+    // (moreover, resizeColumnToContents seems to have problems with the font column in some Qt versions)
+    ui->tableCondFormats->setColumnWidth(ColumnFont, 125);
+
+    // Resize columns that need less space than the default.
+    for(int col = ColumnSize; col < ColumnFilter; ++col)
         ui->tableCondFormats->resizeColumnToContents(col);
-    }
 
     connect(ui->buttonAdd, SIGNAL(clicked(bool)), this, SLOT(addNewItem()));
     connect(ui->buttonRemove, SIGNAL(clicked(bool)), this, SLOT(removeItem()));
@@ -72,6 +78,11 @@ CondFormatManager::~CondFormatManager()
 
 void CondFormatManager::addNewItem()
 {
+    // Clear focus from the current widget, so if there is some input, it is saved now.
+    QWidget* currentWidget = ui->tableCondFormats->itemWidget(ui->tableCondFormats->currentItem(), ColumnFilter);
+    if (currentWidget != nullptr)
+        currentWidget->clearFocus();
+
     QFont font = QFont(Settings::getValue("databrowser", "font").toString());
     font.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
 
@@ -81,10 +92,6 @@ void CondFormatManager::addNewItem()
                              CondFormat::AlignLeft,
                              m_encoding);
     addItem(newCondFormat);
-
-    // Resize columns to contents, except for the condition
-    for(int col = ColumnForeground; col < ColumnFilter; ++col)
-        ui->tableCondFormats->resizeColumnToContents(col);
 }
 
 void CondFormatManager::addItem(const CondFormat& aCondFormat)
@@ -164,6 +171,8 @@ void CondFormatManager::moveItem(int offset)
     ui->tableCondFormats->setItemWidget(item, ColumnAlignment, alignCombo2);
     ui->tableCondFormats->setCurrentIndex(ui->tableCondFormats->currentIndex().sibling(newRow,
                                                                                        ui->tableCondFormats->currentIndex().column()));
+    // This is added so the widgets are readjusted. Otherwise they can be misplaced when moving an item to the top.
+    ui->tableCondFormats->adjustSize();
 }
 
 void CondFormatManager::upItem()
