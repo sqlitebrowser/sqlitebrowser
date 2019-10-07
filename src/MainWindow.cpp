@@ -32,7 +32,6 @@
 #include <QTextStream>
 #include <QWhatsThis>
 #include <QMessageBox>
-#include <QStandardItemModel>
 #include <QPersistentModelIndex>
 #include <QDragEnterEvent>
 #include <QScrollBar>
