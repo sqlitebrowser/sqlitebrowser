@@ -51,16 +51,10 @@ CondFormatManager::CondFormatManager(const std::vector<CondFormat>& condFormats,
     ui->tableCondFormats->setItemDelegateForColumn(ColumnFilter, new FilterEditDelegate(this));
 
     // Make columns not text-editable, except for the condition.
-    for(int col = ColumnForeground; col < ColumnFilter; ++col)
+    for(int col = ColumnForeground; col < ColumnFilter; ++col) {
         ui->tableCondFormats->setItemDelegateForColumn(col, new DefaultDelegate(this));
-
-    // Resize columns that need more space than the default, but whose content might be too wide
-    // (moreover, resizeColumnToContents seems to have problems with the font column in some Qt versions)
-    ui->tableCondFormats->setColumnWidth(ColumnFont, 125);
-
-    // Resize columns that need less space than the default.
-    for(int col = ColumnSize; col < ColumnFilter; ++col)
         ui->tableCondFormats->resizeColumnToContents(col);
+    }
 
     connect(ui->buttonAdd, SIGNAL(clicked(bool)), this, SLOT(addNewItem()));
     connect(ui->buttonRemove, SIGNAL(clicked(bool)), this, SLOT(removeItem()));
@@ -109,6 +103,8 @@ void CondFormatManager::addItem(const CondFormat& aCondFormat)
 
     QFontComboBox* fontCombo = new QFontComboBox(ui->tableCondFormats);
     fontCombo->setCurrentFont(aCondFormat.font());
+    // Avoid that the font combo box gets too wide and work around a possible Qt bug where the box overlaps the next column.
+    fontCombo->setMaximumWidth(150);
     ui->tableCondFormats->setItemWidget(newItem, ColumnFont, fontCombo);
 
     QSpinBox* sizeBox = new QSpinBox(ui->tableCondFormats);
