@@ -22,7 +22,7 @@ public:
     explicit CondFormatManager(const std::vector<CondFormat>& condFormats, const QString& encoding, QWidget *parent = nullptr);
     ~CondFormatManager() override;
 
-    std::vector<CondFormat> getCondFormats();
+    std::vector<CondFormat> getCondFormats() const;
 private:
     enum Columns {
         ColumnForeground = 0,

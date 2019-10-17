@@ -586,15 +586,19 @@ void MainWindow::populateStructure(const QString& old_table)
     for(const auto& it : db.schemata)
     {
         SqlUiLexer::TablesAndColumnsMap tablesToColumnsMap;
-        objectMap tab = db.getBrowsableObjects(it.first);
-        for(const auto& jt : tab)
-        {
-            QString objectname = QString::fromStdString(jt.second->name());
 
-            sqlb::FieldInfoList fi = jt.second->fieldInformation();
-            for(const sqlb::FieldInfo& f : fi)
-                tablesToColumnsMap[objectname].push_back(QString::fromStdString(f.name));
+        for(const auto& jt : it.second)
+        {
+            if(jt.second->type() == sqlb::Object::Types::Table || jt.second->type() == sqlb::Object::Types::View)
+            {
+                QString objectname = QString::fromStdString(jt.second->name());
+
+                sqlb::FieldInfoList fi = jt.second->fieldInformation();
+                for(const sqlb::FieldInfo& f : fi)
+                    tablesToColumnsMap[objectname].push_back(QString::fromStdString(f.name));
+            }
         }
+
         qualifiedTablesMap[QString::fromStdString(it.first)] = tablesToColumnsMap;
     }
     SqlTextEdit::sqlLexer->setTableNames(qualifiedTablesMap);
@@ -801,8 +805,8 @@ void MainWindow::deleteObject()
                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
     {
         // Delete the table
-        QString statement = QString("DROP %1 %2;").arg(type.toUpper()).arg(QString::fromStdString(name.toString()));
-        if(!db.executeSQL(statement))
+        QString statement = QString("DROP %1 %2;").arg(type.toUpper(), QString::fromStdString(name.toString()));
+        if(!db.executeSQL(statement.toStdString()))
         {
             if (type == "table")
                 message = tr("Error: could not delete the table.");
@@ -856,7 +860,7 @@ void MainWindow::editObject()
 
         // If foreign_keys were enabled, we must commit or rollback the transaction so the foreign_keys pragma can be restored.
         if (foreign_keys == "1") {
-            if (!db.querySingleValueFromDb(QString("PRAGMA %1.foreign_key_check").arg(QString::fromStdString(sqlb::escapeIdentifier(name.schema())))).isNull()) {
+            if (!db.querySingleValueFromDb("PRAGMA " + sqlb::escapeIdentifier(name.schema()) + ".foreign_key_check").isNull()) {
                 // Raise warning for accepted modification. When rejected, warn user also since we know now that the table has problems,
                 // but it wasn't our fault.
                 if (ok)
@@ -1221,13 +1225,13 @@ void MainWindow::importTableFromCSV()
                              tr("Choose text files"),
                              file_filter.join(";;"));
 
-    QStringList validFiles;
+    std::vector<QString> validFiles;
     for(const auto& file : wFiles) {
         if (QFile::exists(file))
-            validFiles.append(file);
+            validFiles.push_back(file);
     }
 
-    if (!validFiles.isEmpty())
+    if (!validFiles.empty())
     {
         ImportCsvDialog dialog(validFiles, &db, this);
         if (dialog.exec())
@@ -1381,7 +1385,7 @@ void MainWindow::importDatabaseFromSQL()
     QApplication::restoreOverrideCursor();
     if(!ok)
         QMessageBox::warning(this, QApplication::applicationName(), tr("Error importing data: %1").arg(db.lastError()));
-    else if(db.getPragma("foreign_keys") == "1" && !db.querySingleValueFromDb(QString("PRAGMA foreign_key_check")).isNull())
+    else if(db.getPragma("foreign_keys") == "1" && !db.querySingleValueFromDb("PRAGMA foreign_key_check").isNull())
         QMessageBox::warning(this, QApplication::applicationName(), tr("Import completed. Some foreign key constraints are violated. Please fix them before saving."));
     else
         QMessageBox::information(this, QApplication::applicationName(), tr("Import completed."));
@@ -1539,7 +1543,7 @@ void MainWindow::updateRecentFileActions()
             read_only = true;
         }
 
-        QString text = tr("&%1 %2%3").arg(i + 1).arg(QDir::toNativeSeparators(file)).arg(read_only ? tr(" (read only)") : "");
+        QString text = tr("&%1 %2%3").arg(i + 1).arg(QDir::toNativeSeparators(file), read_only ? tr(" (read only)") : "");
         recentFileActs[i]->setText(text);
         recentFileActs[i]->setData(files[i]);
         recentFileActs[i]->setVisible(true);
@@ -1638,10 +1642,10 @@ void MainWindow::dropEvent(QDropEvent *event)
                 fileAttach(fileName);
             } else if (action == import) {
 
-                QStringList validFiles;
+                std::vector<QString> validFiles;
                 for(const auto& url : urls) {
                     if (QFile::exists(url.toLocalFile()))
-                        validFiles.append(url.toLocalFile());
+                        validFiles.push_back(url.toLocalFile());
                 }
                 ImportCsvDialog dialog(validFiles, &db, this);
                 if (dialog.exec())
@@ -2144,13 +2148,13 @@ void MainWindow::checkNewVersion(const QString& versionstring, const QString& ur
     }
 }
 
-void MainWindow::on_actionWiki_triggered()
+void MainWindow::on_actionWiki_triggered() const
 {
     QDesktopServices::openUrl(QUrl("https://github.com/sqlitebrowser/sqlitebrowser/wiki"));
 }
 
 // 'Help | Bug Report...' link will set an appropiate body, add the system information and set the label 'bug' automatically to the issue
-void MainWindow::on_actionBug_report_triggered()
+void MainWindow::on_actionBug_report_triggered() const
 {
     const QString version = Application::versionString();
     const QString os = QSysInfo::prettyProductName();
@@ -2189,7 +2193,7 @@ void MainWindow::on_actionBug_report_triggered()
 }
 
 // 'Help | Feature Request...' link will set an appropiate body and add the label 'enhancement' automatically to the issue
-void MainWindow::on_actionFeature_Request_triggered()
+void MainWindow::on_actionFeature_Request_triggered() const
 {
     QUrlQuery query;
 
@@ -2203,17 +2207,17 @@ void MainWindow::on_actionFeature_Request_triggered()
     QDesktopServices::openUrl(url);
 }
 
-void MainWindow::on_actionSqlCipherFaq_triggered()
+void MainWindow::on_actionSqlCipherFaq_triggered() const
 {
     QDesktopServices::openUrl(QUrl("https://discuss.zetetic.net/c/sqlcipher/sqlcipher-faq"));
 }
 
-void MainWindow::on_actionWebsite_triggered()
+void MainWindow::on_actionWebsite_triggered() const
 {
     QDesktopServices::openUrl(QUrl("https://sqlitebrowser.org"));
 }
 
-void MainWindow::on_actionDonatePatreon_triggered()
+void MainWindow::on_actionDonatePatreon_triggered() const
 {
     QDesktopServices::openUrl(QUrl("https://www.patreon.com/bePatron?u=11578749"));
 }
@@ -2732,25 +2736,18 @@ void MainWindow::saveProject(const QString& currentFilename)
 
         // Attached databases
         xml.writeStartElement("attached");
-        QString sql("PRAGMA database_list;");
-        db.logSQL(sql, kLogMsg_App);
-        sqlite3_stmt* db_vm;
-        if(sqlite3_prepare_v2(db.get("project").get(), sql.toUtf8(), sql.toUtf8().length(), &db_vm, nullptr) == SQLITE_OK)
-        {
-            while(sqlite3_step(db_vm) == SQLITE_ROW)
+        db.executeSQL("PRAGMA database_list;", false, true, [&xml](int, std::vector<QByteArray> values, std::vector<QByteArray>) -> bool {
+            auto schema = values.at(1);
+            if(schema != "main" && schema != "temp")
             {
-                QString schema(QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(db_vm, 1))));
-                if(schema != "main" && schema != "temp")
-                {
-                    QString path(QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(db_vm, 2))));
-                    xml.writeStartElement("db");
-                    xml.writeAttribute("schema", schema);
-                    xml.writeAttribute("path", path);
-                    xml.writeEndElement();
-                }
+                auto path = values.at(2);
+                xml.writeStartElement("db");
+                xml.writeAttribute("schema", schema);
+                xml.writeAttribute("path", path);
+                xml.writeEndElement();
             }
-            sqlite3_finalize(db_vm);
-        }
+            return false;
+        });
         xml.writeEndElement();
 
         // Window settings
@@ -2887,17 +2884,17 @@ void MainWindow::editEncryption()
         // Attach a new database using the new settings
         qApp->processEvents();
         if(ok)
-            ok = db.executeSQL(QString("ATTACH DATABASE '%1' AS sqlitebrowser_edit_encryption KEY %2;").arg(db.currentFile() + ".enctemp").arg(cipherSettings.getPassword()),
+            ok = db.executeSQL("ATTACH DATABASE '" + db.currentFile().toStdString() + ".enctemp' AS sqlitebrowser_edit_encryption KEY " + cipherSettings.getPassword() + ";",
                                false, false);
         qApp->processEvents();
         if(ok)
-            ok = db.executeSQL(QString("PRAGMA sqlitebrowser_edit_encryption.cipher_page_size = %1").arg(cipherSettings.getPageSize()), false, false);
+            ok = db.executeSQL("PRAGMA sqlitebrowser_edit_encryption.cipher_page_size = " + std::to_string(cipherSettings.getPageSize()), false, false);
         if(ok)
-            ok = db.executeSQL(QString("PRAGMA sqlitebrowser_edit_encryption.cipher_hmac_algorithm = %1").arg(cipherSettings.getHmacAlgorithm()), false, false);
+            ok = db.executeSQL("PRAGMA sqlitebrowser_edit_encryption.cipher_hmac_algorithm = " + cipherSettings.getHmacAlgorithm(), false, false);
         if(ok)
-            ok = db.executeSQL(QString("PRAGMA sqlitebrowser_edit_encryption.cipher_kdf_algorithm = %1").arg(cipherSettings.getKdfAlgorithm()), false, false);
+            ok = db.executeSQL("PRAGMA sqlitebrowser_edit_encryption.cipher_kdf_algorithm = " + cipherSettings.getKdfAlgorithm(), false, false);
         if(ok)
-            ok = db.executeSQL(QString("PRAGMA sqlitebrowser_edit_encryption.kdf_iter = %1").arg(cipherSettings.getKdfIterations()), false, false);
+            ok = db.executeSQL("PRAGMA sqlitebrowser_edit_encryption.kdf_iter = " + std::to_string(cipherSettings.getKdfIterations()), false, false);
 
         // Export the current database to the new one
         qApp->processEvents();
@@ -2907,7 +2904,7 @@ void MainWindow::editEncryption()
         // Set user version of the new database
         qApp->processEvents();
         if (ok)
-            ok = db.executeSQL(QString("PRAGMA sqlitebrowser_edit_encryption.user_version = %1;").arg(db.getPragma("user_version").toInt()), false, false);
+            ok = db.executeSQL("PRAGMA sqlitebrowser_edit_encryption.user_version = " + std::to_string(db.getPragma("user_version").toInt()) + ";", false, false);
 
         // We need to detach the database before proceeding
         qApp->processEvents();
@@ -3035,7 +3032,7 @@ void MainWindow::openSqlPrintDialog()
         sqlWidget->getEditor()->openPrintDialog();
 }
 
-void MainWindow::saveAsView(QString query)
+void MainWindow::saveAsView(const std::string& query)
 {
     // Let the user select a name for the new view and make sure it doesn't already exist
     QString name;
@@ -3051,7 +3048,7 @@ void MainWindow::saveAsView(QString query)
     }
 
     // Create the view
-    if(db.executeSQL(QString("CREATE VIEW %1 AS %2;").arg(sqlb::escapeIdentifier(name)).arg(query)))
+    if(db.executeSQL("CREATE VIEW " + sqlb::escapeIdentifier(name.toStdString()) + " AS " + query + ";"))
         QMessageBox::information(this, qApp->applicationName(), tr("View successfully created."));
     else
         QMessageBox::warning(this, qApp->applicationName(), tr("Error creating view: %1").arg(db.lastError()));
@@ -3156,21 +3153,19 @@ void MainWindow::printDbStructure ()
     }
     out << "</body></html>";
 
-    QTextDocument *document = new QTextDocument();
-    document->setHtml(strStream);
-
     QPrinter printer;
     printer.setDocName(treeView->windowTitle());
 
     QPrintPreviewDialog *dialog = new QPrintPreviewDialog(&printer);
-    connect(dialog, &QPrintPreviewDialog::paintRequested, [&](QPrinter *previewPrinter) {
-        document->print(previewPrinter);
+    connect(dialog, &QPrintPreviewDialog::paintRequested, [strStream](QPrinter *previewPrinter) {
+        QTextDocument document;
+        document.setHtml(strStream);
+        document.print(previewPrinter);
     });
 
     dialog->exec();
-
     delete dialog;
-    delete document;
+
 }
 
 void MainWindow::updateDatabaseBusyStatus(bool busy, const QString& user)
@@ -3206,7 +3201,7 @@ void MainWindow::restoreOpenTabs(QString tabs)
         // Avoid flickering while clearing and adding tabs.
         ui->mainTab->setUpdatesEnabled(false);
         ui->mainTab->clear();
-        for (QString objectName : tabList) {
+        for (const auto& objectName : tabList) {
             for (QWidget* widget : {ui->structure, ui->browser, ui->pragmas, ui->query})
                 if (widget->objectName() == objectName) {
                     ui->mainTab->addTab(widget, widget->accessibleName());
@@ -3216,7 +3211,7 @@ void MainWindow::restoreOpenTabs(QString tabs)
         ui->mainTab->setUpdatesEnabled(true);
         // Force the update of the View menu toggable entries
         // (it doesn't seem to be a better way)
-        ui->mainTab->tabCloseRequested(-1);
+        emit ui->mainTab->tabCloseRequested(-1);
     }
 }
 

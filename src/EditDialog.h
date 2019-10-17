@@ -94,8 +94,7 @@ private:
         XmlEditor = 5
     };
 
-    int checkDataType(const QByteArray& bArrdata);
-    QString humanReadableSize(double byteCount) const;
+    int checkDataType(const QByteArray& bArrdata) const;
     bool promptInvalidData(const QString& data_type, const QString& errorString);
     void setDataInBuffer(const QByteArray& bArrdata, DataSources source);
     void setStackCurrentIndex(int editMode);

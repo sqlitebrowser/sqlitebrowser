@@ -204,7 +204,7 @@ QString Application::versionString()
     // date in order to avoid confusion about what is more important, version number or build date, and about different
     // build dates for the same version. This also should help making release builds reproducible out of the box.
 #if PATCH_VERSION >= 99
-    return QString("%1 (%2)").arg(APP_VERSION).arg(__DATE__);
+    return QString("%1 (%2)").arg(APP_VERSION, __DATE__);
 #else
     return QString("%1").arg(APP_VERSION);
 #endif
@@ -213,12 +213,12 @@ QString Application::versionString()
 // Functions for documenting the shortcuts in the user interface using native names
 static QString shortcutsTip(const QList<QKeySequence>& keys)
 {
-    QString tip("");
+    QString tip;
 
     if (!keys.isEmpty()) {
         tip = " [";
 
-        for (auto shortcut : keys)
+        for (const auto& shortcut : keys)
             tip.append(shortcut.toString(QKeySequence::NativeText) + ", ");
         tip.chop(2);
 

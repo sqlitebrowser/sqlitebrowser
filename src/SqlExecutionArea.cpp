@@ -171,7 +171,7 @@ void SqlExecutionArea::find(QString expr, bool forward)
        forward);
 
     // Set reddish background when not found
-    if (found || expr == "")
+    if (found || expr.isEmpty())
         ui->findLineEdit->setStyleSheet("");
     else
         ui->findLineEdit->setStyleSheet("QLineEdit {color: white; background-color: rgb(255, 102, 102)}");
@@ -296,7 +296,7 @@ void SqlExecutionArea::fileChanged(const QString& filename)
     if(QMessageBox::question(
                 this,
                 qApp->applicationName(),
-                tr("The file \"%1\" was modified by another program. Do you want to reload it?%2").arg(filename).arg(changes),
+                tr("The file \"%1\" was modified by another program. Do you want to reload it?%2").arg(filename, changes),
                 QMessageBox::Yes | QMessageBox::Ignore) == QMessageBox::Yes)
     {
         // Read in the file

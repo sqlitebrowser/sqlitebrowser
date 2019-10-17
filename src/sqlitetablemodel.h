@@ -3,11 +3,11 @@
 
 #include <QAbstractTableModel>
 #include <QColor>
-#include <QMutex>
 
-#include <memory>
-#include <vector>
 #include <map>
+#include <memory>
+#include <mutex>
+#include <vector>
 
 #include "RowCache.h"
 #include "sql/Query.h"
@@ -81,8 +81,8 @@ public:
     /// configure for browsing results of specified query
     void setQuery(const QString& sQuery, const QString& sCountQuery = QString(), bool dontClearHeaders = false);
 
-    QString query() const { return m_sQuery; }
-    QString customQuery(bool withRowid) const { return QString::fromStdString(m_query.buildQuery(withRowid)); }
+    std::string query() const { return m_sQuery.toStdString(); }
+    std::string customQuery(bool withRowid) const { return m_query.buildQuery(withRowid); }
 
     /// configure for browsing specified table
     void setQuery(const sqlb::Query& query);
@@ -162,7 +162,7 @@ private:
     void buildQuery();
 
     /// \param pDb connection to query; if null, obtains it from 'm_db'.
-    std::vector<std::string> getColumns(std::shared_ptr<sqlite3> pDb, const QString& sQuery, std::vector<int>& fieldsTypes);
+    std::vector<std::string> getColumns(std::shared_ptr<sqlite3> pDb, const std::string& sQuery, std::vector<int>& fieldsTypes) const;
 
     QByteArray encode(const QByteArray& str) const;
     QByteArray decode(const QByteArray& str) const;
@@ -211,7 +211,7 @@ private:
     /**
      * These are used for multi-threaded population of the table
      */
-    mutable QMutex m_mutexDataCache;
+    mutable std::mutex m_mutexDataCache;
 
 private:
     /**

@@ -49,7 +49,7 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
     ui->buttonAddConstraint->setMenu(constraint_menu);
 
     // Get list of all collations
-    db.executeSQL("PRAGMA collation_list;", false, true, [this](int column_count, QStringList columns, QStringList) -> bool {
+    db.executeSQL("PRAGMA collation_list;", false, true, [this](int column_count, std::vector<QByteArray> columns, std::vector<QByteArray>) -> bool {
         if(column_count >= 2)
             m_collationList.push_back(columns.at(1));
         return false;
@@ -328,7 +328,7 @@ void EditTableDialog::accept()
     if(m_bNewTable)
     {
         // Creation of new table
-        if(!pdb.executeSQL(QString::fromStdString(m_table.sql(ui->comboSchema->currentText().toStdString()))))
+        if(!pdb.executeSQL(m_table.sql(ui->comboSchema->currentText().toStdString())))
         {
             QMessageBox::warning(
                 this,
@@ -571,10 +571,10 @@ void EditTableDialog::fieldItemChanged(QTreeWidgetItem *item, int column)
                 // we need to check for this case and cancel here. Maybe we can think of some way to modify the INSERT INTO ... SELECT statement
                 // to at least replace all troublesome NULL values by the default value
                 SqliteTableModel m(pdb, this);
-                m.setQuery(QString("SELECT COUNT(%1) FROM %2 WHERE coalesce(NULL,%3) IS NULL;")
-                           .arg(QString::fromStdString(sqlb::joinStringVector(sqlb::escapeIdentifier(pdb.getObjectByName<sqlb::Table>(curTable)->rowidColumns()), ",")))
-                           .arg(QString::fromStdString(curTable.toString()))
-                           .arg(QString::fromStdString(sqlb::escapeIdentifier(field.name()))));
+                m.setQuery(QString("SELECT COUNT(%1) FROM %2 WHERE coalesce(NULL,%3) IS NULL;").arg(
+                           QString::fromStdString(sqlb::joinStringVector(sqlb::escapeIdentifier(pdb.getObjectByName<sqlb::Table>(curTable)->rowidColumns()), ",")),
+                           QString::fromStdString(curTable.toString()),
+                           QString::fromStdString(sqlb::escapeIdentifier(field.name()))));
                 if(!m.completeCache())
                 {
                     // If we couldn't load all data because the cancel button was clicked, just unset the checkbox again and stop.
@@ -602,10 +602,10 @@ void EditTableDialog::fieldItemChanged(QTreeWidgetItem *item, int column)
                 if(!m_bNewTable)
                 {
                     SqliteTableModel m(pdb, this);
-                    m.setQuery(QString("SELECT COUNT(*) FROM %1 WHERE %2 <> CAST(%3 AS INTEGER);")
-                               .arg(QString::fromStdString(curTable.toString()))
-                               .arg(QString::fromStdString(sqlb::escapeIdentifier(field.name())))
-                               .arg(QString::fromStdString(sqlb::escapeIdentifier(field.name()))));
+                    m.setQuery(QString("SELECT COUNT(*) FROM %1 WHERE %2 <> CAST(%3 AS INTEGER);").arg(
+                               QString::fromStdString(curTable.toString()),
+                               QString::fromStdString(sqlb::escapeIdentifier(field.name())),
+                               QString::fromStdString(sqlb::escapeIdentifier(field.name()))));
                     if(!m.completeCache())
                     {
                         // If we couldn't load all data because the cancel button was clicked, just unset the checkbox again and stop.
@@ -650,7 +650,9 @@ void EditTableDialog::fieldItemChanged(QTreeWidgetItem *item, int column)
             {
                 // Because our renameColumn() function fails when setting a column to unique when it already contains the same values
                 SqliteTableModel m(pdb, this);
-                m.setQuery(QString("SELECT COUNT(%2) FROM %1;").arg(QString::fromStdString(curTable.toString())).arg(QString::fromStdString(sqlb::escapeIdentifier(field.name()))));
+                m.setQuery(QString("SELECT COUNT(%2) FROM %1;").arg(
+                               QString::fromStdString(curTable.toString()),
+                               QString::fromStdString(sqlb::escapeIdentifier(field.name()))));
                 if(!m.completeCache())
                 {
                     // If we couldn't load all data because the cancel button was clicked, just unset the checkbox again and stop.
@@ -658,7 +660,9 @@ void EditTableDialog::fieldItemChanged(QTreeWidgetItem *item, int column)
                     return;
                 }
                 int rowcount = m.data(m.index(0, 0)).toInt();
-                m.setQuery(QString("SELECT COUNT(DISTINCT %2) FROM %1;").arg(QString::fromStdString(curTable.toString())).arg(QString::fromStdString(sqlb::escapeIdentifier(field.name()))));
+                m.setQuery(QString("SELECT COUNT(DISTINCT %2) FROM %1;").arg(
+                               QString::fromStdString(curTable.toString()),
+                               QString::fromStdString(sqlb::escapeIdentifier(field.name()))));
                 if(!m.completeCache())
                 {
                     // If we couldn't load all data because the cancel button was clicked, just unset the checkbox again and stop.
@@ -699,7 +703,7 @@ void EditTableDialog::fieldItemChanged(QTreeWidgetItem *item, int column)
                         {
                             new_value = new_value.trimmed().mid(1); // Leave the brackets as they are needed for a valid SQL expression
                         } else {
-                            new_value = QString("'%1'").arg(new_value.replace("'", "''"));
+                            new_value = sqlb::escapeString(new_value);
                             item->setText(column, new_value);
                         }
                     }

@@ -69,7 +69,7 @@ public slots:
     void openPrintDialog();
 
 signals:
-    void foreignKeyClicked(const sqlb::ObjectIdentifier& table, const QString& column, const QByteArray& value);
+    void foreignKeyClicked(const sqlb::ObjectIdentifier& table, const std::string& column, const QByteArray& value);
     void switchTable(bool next);    // 'next' parameter is set to true if next table should be selected and to false if previous table should be selected
     void openFileFromDropEvent(QString);
     void selectedRowsToBeDeleted();
@@ -81,7 +81,7 @@ private:
     void copy(const bool withHeaders, const bool inSQL);
     void paste();
 
-    void useAsFilter(const QString& filterOperator, bool binary = false, const QString& operatorSuffix = "");
+    void useAsFilter(const QString& filterOperator, bool binary = false, const QString& operatorSuffix = QString());
     void duplicateUpperCell();
 
     static std::vector<std::vector<QByteArray>> m_buffer;

@@ -1,9 +1,13 @@
 #include <QImage>
 
+#include "Data.h"
 #include "RemoteModel.h"
 #include "RemoteDatabase.h"
 
 using json = nlohmann::json;
+
+// The header list is a list of column titles
+const static std::vector<QString> headerList = {QObject::tr("Name"), QObject::tr("Commit"), QObject::tr("Last modified"), QObject::tr("Size")};
 
 RemoteModelItem::RemoteModelItem(RemoteModelItem* parent) :
     m_parent(parent),
@@ -102,9 +106,6 @@ RemoteModel::RemoteModel(QObject* parent, RemoteDatabase& remote) :
     rootItem(new RemoteModelItem()),
     remoteDatabase(remote)
 {
-    // Initialise list of column names
-    headerList << tr("Name") << tr("Commit") << tr("Last modified") << tr("Size");
-
     // Set up signals
     connect(&remoteDatabase, &RemoteDatabase::gotDirList, this, &RemoteModel::parseDirectoryListing);
 }
@@ -238,17 +239,8 @@ QVariant RemoteModel::data(const QModelIndex& index, int role) const
                     return QVariant();
 
                 // Convert size to human readable format
-                float size = item->value(RemoteModelColumnSize).toFloat();
-                QStringList list;
-                list << "KiB" << "MiB" << "GiB" << "TiB";
-                QStringListIterator it(list);
-                QString unit(tr("bytes"));
-                while(size >= 1024.0f && it.hasNext())
-                {
-                    unit = it.next();
-                    size /= 1024.0f;
-                }
-                return QString().setNum(size, 'f', 2).remove(".00") + QString(" ") + unit;
+                unsigned int size = item->value(RemoteModelColumnSize).toUInt();
+                return humanReadableSize(size);
             }
         }
     }
@@ -263,7 +255,7 @@ QVariant RemoteModel::headerData(int section, Qt::Orientation orientation, int r
         return QAbstractItemModel::headerData(section, orientation, role);
 
     // Return header string depending on column
-    return headerList.at(section);
+    return headerList.at(static_cast<size_t>(section));
 }
 
 int RemoteModel::rowCount(const QModelIndex& parent) const
@@ -277,7 +269,7 @@ int RemoteModel::rowCount(const QModelIndex& parent) const
 
 int RemoteModel::columnCount(const QModelIndex& /*parent*/) const
 {
-    return headerList.size();
+    return static_cast<int>(headerList.size());
 }
 
 bool RemoteModel::hasChildren(const QModelIndex& parent) const

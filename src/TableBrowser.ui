@@ -1103,9 +1103,9 @@
   </connection>
   <connection>
    <sender>dataTable</sender>
-   <signal>foreignKeyClicked(sqlb::ObjectIdentifier,QString,QByteArray)</signal>
+   <signal>foreignKeyClicked(sqlb::ObjectIdentifier,std::string,QByteArray)</signal>
    <receiver>TableBrowser</receiver>
-   <slot>jumpToRow(sqlb::ObjectIdentifier,QString,QByteArray)</slot>
+   <slot>jumpToRow(sqlb::ObjectIdentifier,std::string,QByteArray)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>70</x>
@@ -1350,7 +1350,7 @@
   <slot>navigateBegin()</slot>
   <slot>navigateEnd()</slot>
   <slot>navigateGoto()</slot>
-  <slot>jumpToRow(sqlb::ObjectIdentifier,QString,QByteArray)</slot>
+  <slot>jumpToRow(sqlb::ObjectIdentifier,std::string,QByteArray)</slot>
   <slot>showRowidColumn(bool)</slot>
   <slot>unlockViewEditing(bool)</slot>
   <slot>editDisplayFormat()</slot>

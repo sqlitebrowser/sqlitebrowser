@@ -475,11 +475,11 @@ void TableBrowser::updateTable()
 
         // Filters
         for(auto it=storedData.filterValues.constBegin();it!=storedData.filterValues.constEnd();++it)
-            query.where().insert({it.key(), CondFormat::filterToSqlCondition(it.value(), m_model->encoding()).toStdString()});
+            query.where().insert({it.key(), CondFormat::filterToSqlCondition(it.value(), m_model->encoding())});
 
         // Global filter
         for(const auto& f : storedData.globalFilters)
-            query.globalWhere().push_back(CondFormat::filterToSqlCondition(f, m_model->encoding()).toStdString());
+            query.globalWhere().push_back(CondFormat::filterToSqlCondition(f, m_model->encoding()));
 
         // Display formats
         bool only_defaults = true;
@@ -701,7 +701,7 @@ void TableBrowser::updateRecordsetLabel()
     // that the row count query will never finish. And because of this the row count will be forever unknown. To avoid always showing
     // a misleading "determining row count" text in the UI we set the row count status to complete here for empty queries.
     auto row_count_available = m_model->rowCountAvailable();
-    if(m_model->query().isEmpty())
+    if(m_model->query().empty())
         row_count_available = SqliteTableModel::RowCount::Complete;
 
     // Update the label showing the current position
@@ -869,7 +869,7 @@ void TableBrowser::unlockViewEditing(bool unlock, QString pk)
             }
 
             // Do some basic testing of the input and if the input appears to be good, go on
-            if(db->executeSQL(QString("SELECT %1 FROM %2 LIMIT 1;").arg(sqlb::escapeIdentifier(pk)).arg(QString::fromStdString(currentTable.toString())), false, true))
+            if(db->executeSQL("SELECT " + sqlb::escapeIdentifier(pk.toStdString()) + " FROM " + currentTable.toString() + " LIMIT 1;", false, true))
                 break;
         }
     } else if(!unlock) {
@@ -1130,17 +1130,16 @@ void TableBrowser::showRecordPopupMenu(const QPoint& pos)
     action->setShortcut(QKeySequence(tr("Ctrl+\"")));
     popupRecordMenu.addAction(action);
 
-    connect(action, &QAction::triggered, [&]() {
-            for (QModelIndex index : rowList) {
-                duplicateRecord(index.row());
-            }
+    connect(action, &QAction::triggered, [rowList, this]() {
+        for (const QModelIndex& index : rowList)
+            duplicateRecord(index.row());
     });
 
     QAction* deleteRecordAction = new QAction(QIcon(":icons/delete_record"), ui->actionDeleteRecord->text(), &popupRecordMenu);
     popupRecordMenu.addAction(deleteRecordAction);
 
     connect(deleteRecordAction, &QAction::triggered, [&]() {
-            deleteRecord();
+        deleteRecord();
     });
 
     popupRecordMenu.exec(ui->dataTable->verticalHeader()->mapToGlobal(pos));
@@ -1362,7 +1361,7 @@ void TableBrowser::setDefaultTableEncoding()
     setTableEncoding(true);
 }
 
-void TableBrowser::jumpToRow(const sqlb::ObjectIdentifier& table, QString column, const QByteArray& value)
+void TableBrowser::jumpToRow(const sqlb::ObjectIdentifier& table, std::string column, const QByteArray& value)
 {
     // First check if table exists
     sqlb::TablePtr obj = db->getObjectByName<sqlb::Table>(table);
@@ -1371,10 +1370,10 @@ void TableBrowser::jumpToRow(const sqlb::ObjectIdentifier& table, QString column
 
     // If no column name is set, assume the primary key is meant
     if(!column.size())
-        column = QString::fromStdString(obj->primaryKey()->columnList().front());
+        column = obj->primaryKey()->columnList().front();
 
     // If column doesn't exist don't do anything
-    auto column_index = sqlb::findField(obj, column.toStdString());
+    auto column_index = sqlb::findField(obj, column);
     if(column_index == obj->fields.end())
         return;
 
@@ -1430,7 +1429,7 @@ void TableBrowser::find(const QString& expr, bool forward, bool include_first)
         ui->dataTable->setCurrentIndex(match);
 
     // Make the expression control red if no results were found
-    if(match.isValid() || expr == "")
+    if(match.isValid() || expr.isEmpty())
         ui->editFindExpression->setStyleSheet("");
     else
         ui->editFindExpression->setStyleSheet("QLineEdit {color: white; background-color: rgb(255, 102, 102)}");

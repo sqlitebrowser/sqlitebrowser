@@ -30,6 +30,14 @@ bool compare_ci(const T& a, const char* b)
     return compare_ci(a, std::string(b));
 }
 
+inline bool starts_with_ci(const std::string& str, const std::string& with)
+{
+    if(str.size() < with.size())
+        return false;
+    else
+        return compare_ci(str.substr(0, with.size()), with);
+}
+
 namespace sqlb {
 
 using StringVector = std::vector<std::string>;
@@ -80,7 +88,7 @@ public:
     };
 
     explicit Object(const std::string& name): m_name(name), m_fullyParsed(false) {}
-    virtual ~Object() {}
+    virtual ~Object() = default;
 
     bool operator==(const Object& rhs) const;
 
@@ -132,7 +140,7 @@ public:
           m_name(name)
     {
     }
-    virtual ~Constraint() {}
+    virtual ~Constraint() = default;
 
     static ConstraintPtr makeConstraint(ConstraintTypes type);
 
@@ -265,10 +273,10 @@ public:
     Field(const std::string& name,
           const std::string& type,
           bool notnull = false,
-          const std::string& defaultvalue = "",
-          const std::string& check = "",
+          const std::string& defaultvalue = std::string(),
+          const std::string& check = std::string(),
           bool unique = false,
-          const std::string& collation = "")
+          const std::string& collation = std::string())
         : m_name(name)
         , m_type(type)
         , m_notnull(notnull)

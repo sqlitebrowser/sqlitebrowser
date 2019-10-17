@@ -12,7 +12,6 @@ FindReplaceDialog::FindReplaceDialog(QWidget* parent)
 {
     // Create UI
     ui->setupUi(this);
-
 }
 
 FindReplaceDialog::~FindReplaceDialog()

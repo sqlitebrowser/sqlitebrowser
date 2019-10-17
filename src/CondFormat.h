@@ -43,10 +43,10 @@ public:
                const QModelIndex index,
                const QString& encoding = QString());
 
-    static QString filterToSqlCondition(const QString& value, const QString& encoding = QString());
+    static std::string filterToSqlCondition(const QString& value, const QString& encoding = QString());
 
 private:
-    QString m_sqlCondition;
+    std::string m_sqlCondition;
     QString m_filter;
     QColor m_bgColor;
     QColor m_fgColor;
@@ -54,7 +54,7 @@ private:
     Alignment m_align;
 
 public:
-    QString sqlCondition() const { return m_sqlCondition; }
+    std::string sqlCondition() const { return m_sqlCondition; }
     QString filter() const { return m_filter; }
 
     QColor backgroundColor() const { return m_bgColor; }

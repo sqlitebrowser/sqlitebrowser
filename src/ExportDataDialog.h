@@ -23,7 +23,7 @@ public:
     };
 
     explicit ExportDataDialog(DBBrowserDB& db, ExportFormats format, QWidget* parent = nullptr,
-                              const QString& query = "", const sqlb::ObjectIdentifier& selection = sqlb::ObjectIdentifier());
+                              const std::string& query = {}, const sqlb::ObjectIdentifier& selection = sqlb::ObjectIdentifier());
     ~ExportDataDialog() override;
 
 private slots:
@@ -40,9 +40,9 @@ private:
     void setNewLineString(const QString& s);
     QString currentNewLineString() const;
 
-    bool exportQuery(const QString& sQuery, const QString& sFilename);
-    bool exportQueryCsv(const QString& sQuery, const QString& sFilename);
-    bool exportQueryJson(const QString& sQuery, const QString& sFilename);
+    bool exportQuery(const std::string& sQuery, const QString& sFilename);
+    bool exportQueryCsv(const std::string& sQuery, const QString& sFilename);
+    bool exportQueryJson(const std::string& sQuery, const QString& sFilename);
 
 private:
     Ui::ExportDataDialog* ui;
@@ -50,7 +50,7 @@ private:
 
     ExportFormats m_format;
 
-    QString m_sQuery;
+    std::string m_sQuery;
 };
 
 #endif

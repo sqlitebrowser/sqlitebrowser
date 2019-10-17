@@ -49,12 +49,12 @@ EditDialog::EditDialog(QWidget* parent)
     sciLayout->addWidget(sciEdit);
 
     QShortcut* ins = new QShortcut(QKeySequence(Qt::Key_Insert), this);
-    connect(ins, SIGNAL(activated()), this, SLOT(toggleOverwriteMode()));
+    connect(ins, &QShortcut::activated, this, &EditDialog::toggleOverwriteMode);
 
-    connect(sciEdit, SIGNAL(textChanged()), this, SLOT(updateApplyButton()));
-    connect(sciEdit, SIGNAL(textChanged()), this, SLOT(editTextChanged()));
-    connect(ui->qtEdit, SIGNAL(textChanged()), this, SLOT(updateApplyButton()));
-    connect(hexEdit, SIGNAL(dataChanged()), this, SLOT(updateApplyButton()));
+    connect(sciEdit, &DockTextEdit::textChanged, this, &EditDialog::updateApplyButton);
+    connect(sciEdit, &DockTextEdit::textChanged, this, &EditDialog::editTextChanged);
+    connect(ui->qtEdit, &QTextEdit::textChanged, this, &EditDialog::updateApplyButton);
+    connect(hexEdit, &QHexEdit::dataChanged, this, &EditDialog::updateApplyButton);
 
     // Create shortcuts for the widgets that doesn't have its own print action or printing mechanism.
     QShortcut* shortcutPrint = new QShortcut(QKeySequence::Print, this, nullptr, nullptr, Qt::WidgetShortcut);
@@ -116,7 +116,6 @@ void EditDialog::reject()
 void EditDialog::loadData(const QByteArray& bArrdata)
 {
     QImage img;
-    QString textData;
 
     // Clear previously removed BOM
     removedBom.clear();
@@ -846,7 +845,7 @@ void EditDialog::setMustIndentAndCompact(bool enable)
 }
 
 // Determine the type of data in the cell
-int EditDialog::checkDataType(const QByteArray& bArrdata)
+int EditDialog::checkDataType(const QByteArray& bArrdata) const
 {
     QByteArray cellData = bArrdata;
 
@@ -991,7 +990,7 @@ void EditDialog::updateCellInfoAndMode(const QByteArray& bArrdata)
 
         // Display the image dimensions and size
         QSize imageDimensions = imageReader.size();
-        int imageSize = cellData.size();
+        unsigned int imageSize = static_cast<unsigned int>(cellData.size());
 
         QString labelSizeText = tr("%1x%2 pixel(s)").arg(imageDimensions.width()).arg(imageDimensions.height()) + ", " + humanReadableSize(imageSize);
 
@@ -1038,28 +1037,6 @@ void EditDialog::updateCellInfoAndMode(const QByteArray& bArrdata)
         ui->labelSize->setText(tr("%n byte(s)", "", dataLength));
         break;
     }
-}
-
-QString EditDialog::humanReadableSize(double byteCount) const
-{
-    QStringList units;
-    units << "" << "Ki" << "Mi" << "Gi" << "Ti" << "Pi" << "Ei" << "Zi";
-
-    for(const QString& unit : units)
-    {
-        if(fabs(byteCount) < 1024.0)
-        {
-            QString size = QString::number(byteCount, 'f', 2);
-            return size + " " + unit + "B";
-        }
-
-        byteCount /= 1024.0;
-    }
-
-    QString yiUnit = "Yi";
-    QString size = QString::number(byteCount, 'f', 2);
-
-    return size + " " + yiUnit + "B";
 }
 
 void EditDialog::reloadSettings()
@@ -1115,29 +1092,28 @@ void EditDialog::openPrintDialog()
     QPrinter printer;
     QPrintPreviewDialog *dialog = new QPrintPreviewDialog(&printer);
 
-    QTextDocument *document = new QTextDocument();
-    switch (dataSource) {
-    case SciBuffer:
-        // This case isn't really expected because the Scintilla widget has it's own printing slot
-        document->setPlainText(sciEdit->text());
-        break;
-    case HexBuffer:
-        document->setPlainText(hexEdit->toReadableString());
-        document->setDefaultFont(hexEdit->font());
-        break;
-    case QtBuffer:
-        document->setPlainText(ui->qtEdit->toPlainText());
-        break;
-    }
+    connect(dialog, &QPrintPreviewDialog::paintRequested, [this](QPrinter *previewPrinter) {
+        QTextDocument document;
+        switch (dataSource) {
+        case SciBuffer:
+            // This case isn't really expected because the Scintilla widget has it's own printing slot
+            document.setPlainText(sciEdit->text());
+            break;
+        case HexBuffer:
+            document.setPlainText(hexEdit->toReadableString());
+            document.setDefaultFont(hexEdit->font());
+            break;
+        case QtBuffer:
+            document.setPlainText(ui->qtEdit->toPlainText());
+            break;
+        }
 
-    connect(dialog, &QPrintPreviewDialog::paintRequested, [&](QPrinter *previewPrinter) {
-        document->print(previewPrinter);
+        document.print(previewPrinter);
     });
 
     dialog->exec();
-
     delete dialog;
-    delete document;
+
 }
 
 void EditDialog::openPrintImageDialog()

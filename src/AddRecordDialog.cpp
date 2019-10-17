@@ -228,7 +228,6 @@ void AddRecordDialog::populateFields()
         else
             tbitem->setIcon(kName, QIcon(":/icons/field"));
 
-        QString defaultValue = QString::fromStdString(f.defaultValue());
         QString toolTip;
 
         if (auto_increment && contains(pk, f.name()))
@@ -248,9 +247,10 @@ void AddRecordDialog::populateFields()
 
         // Display Role is used for displaying the default values.
         // Only when they are changed, the User Role is updated and then used in the INSERT query.
-        if (!defaultValue.isEmpty()) {
-            tbitem->setData(kValue, Qt::DisplayRole, QString::fromStdString(f.defaultValue()));
-            toolTip.append(tr("Default value:\t %1\n").arg (defaultValue));
+        if (!f.defaultValue().empty()) {
+            QString defaultValue = QString::fromStdString(f.defaultValue());
+            tbitem->setData(kValue, Qt::DisplayRole, defaultValue);
+            toolTip.append(tr("Default value:\t %1\n").arg(defaultValue));
         } else
             tbitem->setData(kValue, Qt::DisplayRole, Settings::getValue("databrowser", "null_text"));
 
@@ -271,7 +271,7 @@ void AddRecordDialog::populateFields()
 
 void AddRecordDialog::accept()
 {
-    if(!pdb.executeSQL(ui->sqlTextEdit->text()))
+    if(!pdb.executeSQL(ui->sqlTextEdit->text().toStdString()))
     {
         QMessageBox::warning(
             this,
@@ -306,7 +306,7 @@ void AddRecordDialog::updateSqlText()
             if (isNumeric && item->data(kType, Qt::UserRole).toInt() != sqlb::Field::TextAffinity)
                 vals << value.toString();
             else
-                vals << QString("'%1'").arg(value.toString().replace("'", "''"));
+                vals << sqlb::escapeString(value.toString());
         }
     }
 

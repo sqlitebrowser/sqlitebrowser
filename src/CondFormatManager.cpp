@@ -56,11 +56,11 @@ CondFormatManager::CondFormatManager(const std::vector<CondFormat>& condFormats,
         ui->tableCondFormats->resizeColumnToContents(col);
     }
 
-    connect(ui->buttonAdd, SIGNAL(clicked(bool)), this, SLOT(addNewItem()));
-    connect(ui->buttonRemove, SIGNAL(clicked(bool)), this, SLOT(removeItem()));
+    connect(ui->buttonAdd, &QToolButton::clicked, this, &CondFormatManager::addNewItem);
+    connect(ui->buttonRemove, &QToolButton::clicked, this, &CondFormatManager::removeItem);
 
-    connect(ui->buttonDown, SIGNAL(clicked(bool)), this, SLOT(downItem()));
-    connect(ui->buttonUp, SIGNAL(clicked(bool)), this, SLOT(upItem()));
+    connect(ui->buttonDown, &QToolButton::clicked, this, &CondFormatManager::downItem);
+    connect(ui->buttonUp, &QToolButton::clicked, this, &CondFormatManager::upItem);
 
     connect(ui->tableCondFormats, &QTreeWidget::itemClicked, this, &CondFormatManager::itemClicked);
 }
@@ -181,7 +181,7 @@ void CondFormatManager::downItem()
     moveItem(+1);
 }
 
-std::vector<CondFormat> CondFormatManager::getCondFormats()
+std::vector<CondFormat> CondFormatManager::getCondFormats() const
 {
     std::vector<CondFormat> result;
 

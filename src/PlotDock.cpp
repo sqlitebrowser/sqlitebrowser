@@ -689,7 +689,7 @@ void PlotDock::on_comboPointShape_currentIndexChanged(int index)
     }
 }
 
-QVariant::Type PlotDock::guessDataType(SqliteTableModel* model, int column)
+QVariant::Type PlotDock::guessDataType(SqliteTableModel* model, int column) const
 {
     QVariant::Type type = QVariant::Invalid;
     for(int i = 0; i < std::min(10, model->rowCount()) && type != QVariant::String; ++i)
@@ -747,9 +747,9 @@ void PlotDock::fetchAllData()
 void PlotDock::selectionChanged()
 {
 
-    for (QCPAbstractPlottable* plottable : ui->plotWidget->selectedPlottables()) {
+    for (const QCPAbstractPlottable* plottable : ui->plotWidget->selectedPlottables()) {
 
-        for (QCPDataRange dataRange : plottable->selection().dataRanges()) {
+        for (const QCPDataRange& dataRange : plottable->selection().dataRanges()) {
 
             int index = dataRange.begin();
             if (dataRange.length() != 0) {

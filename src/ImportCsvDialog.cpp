@@ -26,7 +26,7 @@
 #include <QElapsedTimer>
 #endif
 
-ImportCsvDialog::ImportCsvDialog(const QStringList &filenames, DBBrowserDB* db, QWidget* parent)
+ImportCsvDialog::ImportCsvDialog(const std::vector<QString>& filenames, DBBrowserDB* db, QWidget* parent)
     : QDialog(parent),
       ui(new Ui::ImportCsvDialog),
       csvFilenames(filenames),
@@ -39,7 +39,7 @@ ImportCsvDialog::ImportCsvDialog(const QStringList &filenames, DBBrowserDB* db, 
 
     // Get the actual file name out of the provided path and use it as the default table name for import
     // For importing several files at once, the fields have to be the same so we can safely use the first
-    QFileInfo file(filenames.first());
+    QFileInfo file(filenames.front());
     ui->editName->setText(file.baseName());
 
     // Create a list of all available encodings and create an auto completion list from them
@@ -70,21 +70,21 @@ ImportCsvDialog::ImportCsvDialog(const QStringList &filenames, DBBrowserDB* db, 
     ui->comboEncoding->blockSignals(false);
 
     // Prepare and show interface depending on how many files are selected
-    if (csvFilenames.length() > 1)
+    if (csvFilenames.size() > 1)
     {
         ui->separateTables->setVisible(true);
         ui->checkBoxSeparateTables->setVisible(true);
         ui->filePickerBlock->setVisible(true);
         selectFiles();
     }
-    else if (csvFilenames.length() == 1)
+    else if (csvFilenames.size() == 1)
     {
         ui->separateTables->setVisible(false);
         ui->checkBoxSeparateTables->setVisible(false);
         ui->filePickerBlock->setVisible(false);
     }
 
-    selectedFile = csvFilenames.first();
+    selectedFile = csvFilenames.front();
     updatePreview();
     checkInput();
 }
@@ -99,7 +99,7 @@ void rollback(
         ImportCsvDialog* dialog,
         DBBrowserDB* pdb,
         DBBrowserDB::db_pointer_type* db_ptr,
-        const QString& savepointName,
+        const std::string& savepointName,
         size_t nRecord,
         const QString& message)
 {
@@ -124,23 +124,18 @@ class CSVImportProgress : public CSVProgress
 {
 public:
     explicit CSVImportProgress(int64_t filesize)
-        : totalFileSize(filesize)
+        : m_pProgressDlg(new QProgressDialog(
+                             QObject::tr("Importing CSV file..."),
+                             QObject::tr("Cancel"),
+                             0,
+                             10000)),
+          totalFileSize(filesize)
     {
-        m_pProgressDlg = new QProgressDialog(
-                    QObject::tr("Importing CSV file..."),
-                    QObject::tr("Cancel"),
-                    0,
-                    10000);
         m_pProgressDlg->setWindowModality(Qt::ApplicationModal);
     }
 
     CSVImportProgress(const CSVImportProgress&) = delete;
     bool operator=(const CSVImportProgress&) = delete;
-
-    ~CSVImportProgress() override
-    {
-        delete m_pProgressDlg;
-    }
 
     void start() override
     {
@@ -161,7 +156,7 @@ public:
     }
 
 private:
-    QProgressDialog* m_pProgressDlg;
+    std::unique_ptr<QProgressDialog> m_pProgressDlg;
 
     int64_t totalFileSize;
 };
@@ -212,7 +207,7 @@ void ImportCsvDialog::accept()
             return;
         }
     } else {
-        importCsv(csvFilenames.first());
+        importCsv(csvFilenames.front());
     }
 
     QApplication::restoreOverrideCursor();  // restore original cursor
@@ -305,7 +300,7 @@ void ImportCsvDialog::checkInput()
 
 void ImportCsvDialog::selectFiles()
 {
-    for (auto fileName : csvFilenames) {
+    for (const auto& fileName : csvFilenames) {
         auto fInfo = QFileInfo(fileName);
         auto item = new QListWidgetItem();
         item->setText(fileName);
@@ -368,7 +363,7 @@ void ImportCsvDialog::matchSimilar()
     checkInput();
 }
 
-CSVParser::ParserResult ImportCsvDialog::parseCSV(const QString &fileName, std::function<bool(size_t, CSVRow)> rowFunction, size_t count)
+CSVParser::ParserResult ImportCsvDialog::parseCSV(const QString &fileName, std::function<bool(size_t, CSVRow)> rowFunction, size_t count) const
 {
     // Parse all csv data
     QFile file(fileName);
@@ -386,7 +381,7 @@ CSVParser::ParserResult ImportCsvDialog::parseCSV(const QString &fileName, std::
     return csv.parse(rowFunction, tstream, count);
 }
 
-sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename)
+sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename) const
 {
     sqlb::FieldVector fieldList;        // List of fields in the file
 
@@ -395,28 +390,28 @@ sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename)
         // Has this row more columns than the previous one? Then add more fields to the field list as necessary.
         for(size_t i=fieldList.size();i<rowData.num_fields;i++)
         {
-            QString fieldname;
+            std::string fieldname;
 
             // If the user wants to use the first row as table header and if this is the first row, extract a field name
             if(rowNum == 0 && ui->checkboxHeader->isChecked())
             {
                 // Take field name from CSV and remove invalid characters
-                fieldname = QString::fromUtf8(rowData.fields[i].data, static_cast<int>(rowData.fields[i].data_length));
-                fieldname.replace("`", "");
-                fieldname.replace(" ", "");
-                fieldname.replace('"', "");
-                fieldname.replace("'","");
-                fieldname.replace(",","");
-                fieldname.replace(";","");
+                fieldname = std::string(rowData.fields[i].data, rowData.fields[i].data_length);
+                fieldname.erase(std::remove(fieldname.begin(), fieldname.end(), '`'));
+                fieldname.erase(std::remove(fieldname.begin(), fieldname.end(), ' '));
+                fieldname.erase(std::remove(fieldname.begin(), fieldname.end(), '"'));
+                fieldname.erase(std::remove(fieldname.begin(), fieldname.end(), '\''));
+                fieldname.erase(std::remove(fieldname.begin(), fieldname.end(), ','));
+                fieldname.erase(std::remove(fieldname.begin(), fieldname.end(), ';'));
             }
 
             // If we don't have a field name by now, generate one
-            if(fieldname.isEmpty())
-                fieldname = QString("field%1").arg(i+1);
+            if(fieldname.empty())
+                fieldname = "field" + std::to_string(i + 1);
 
             // Add field to the column list. For now we set the data type to nothing but this might be overwritten later in the automatic
             // type detection code.
-            fieldList.emplace_back(fieldname.toStdString(), "");
+            fieldList.emplace_back(fieldname, "");
         }
 
         // Try to find out a data type for each column. Skip the header row if there is one.
@@ -440,9 +435,9 @@ sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename)
                     std::string new_type = "TEXT";
                     if(old_type == "INTEGER" && !convert_to_int && convert_to_float)    // So far it's integer, but now it's only convertible to float
                         new_type = "REAL";
-                    else if(old_type == "" && convert_to_int)                           // No type yet, but this bit is convertible to integer
+                    else if(old_type.empty() && convert_to_int)                           // No type yet, but this bit is convertible to integer
                         new_type = "INTEGER";
-                    else if(old_type == "" && convert_to_float)                         // No type yet and only convertible to float (less 'difficult' than integer)
+                    else if(old_type.empty() && convert_to_float)                         // No type yet and only convertible to float (less 'difficult' than integer)
                         new_type = "REAL";
                     else if(old_type == "REAL" && convert_to_float)                     // It was float so far and still is
                         new_type = "INTEGER";
@@ -534,7 +529,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
 
     // Create a savepoint, so we can rollback in case of any errors during importing
     // db needs to be saved or an error will occur
-    QString restorepointName = pdb->generateSavepointName("csvimport");
+    std::string restorepointName = pdb->generateSavepointName("csvimport");
     if(!pdb->setSavepoint(restorepointName))
     {
         rollback(this, pdb, nullptr, restorepointName, 0, tr("Creating restore point failed: %1").arg(pdb->lastError()));
@@ -605,14 +600,14 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
     }
 
     // Prepare the INSERT statement. The prepared statement can then be reused for each row to insert
-    QString sQuery = QString("INSERT %1 INTO %2 VALUES(").arg(currentOnConflictStrategy()).arg(sqlb::escapeIdentifier(tableName));
+    std::string sQuery = "INSERT " + currentOnConflictStrategy() + " INTO " + sqlb::escapeIdentifier(tableName.toStdString()) + " VALUES(";
     for(size_t i=1;i<=fieldList.size();i++)
-        sQuery.append(QString("?%1,").arg(i));
-    sQuery.chop(1); // Remove last comma
+        sQuery += "?" + std::to_string(i) + ",";
+    sQuery.pop_back();  // Remove last comma
     sQuery.append(")");
     sqlite3_stmt* stmt;
     auto pDb = pdb->get(tr("importing CSV"));
-    sqlite3_prepare_v2(pDb.get(), sQuery.toUtf8(), sQuery.toUtf8().length(), &stmt, nullptr);
+    sqlite3_prepare_v2(pDb.get(), sQuery.c_str(), static_cast<int>(sQuery.size()), &stmt, nullptr);
 
     // Parse entire file
     size_t lastRowNum = 0;
@@ -784,7 +779,7 @@ QString ImportCsvDialog::currentEncoding() const
         return ui->comboEncoding->currentText();
 }
 
-QString ImportCsvDialog::currentOnConflictStrategy() const
+std::string ImportCsvDialog::currentOnConflictStrategy() const
 {
     switch(ui->comboOnConflictStrategy->currentIndex())
     {
@@ -793,7 +788,7 @@ QString ImportCsvDialog::currentOnConflictStrategy() const
     case 2:
         return "OR REPLACE";
     default:
-        return QString();
+        return {};
     }
 }
 

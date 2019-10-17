@@ -108,7 +108,7 @@ private:
     void setCurrentFile(const QString& fileName);
     void addToRecentFilesMenu(const QString& filename, bool read_only = false);
     void activateFields(bool enable = true);
-    void saveAsView(QString query);
+    void saveAsView(const std::string& query);
     void attachPlot(ExtendedTableWidget* tableWidget, SqliteTableModel* model, BrowseDataTableSettings* settings = nullptr, bool keepOrResetSelection = true);
 
     void toggleTabVisible(QWidget* tabWidget, bool show);
@@ -176,12 +176,12 @@ private slots:
     void saveSqlResultsAsView();
     void loadExtension();
     void checkNewVersion(const QString& versionstring, const QString& url);
-    void on_actionWiki_triggered();
-    void on_actionBug_report_triggered();
-    void on_actionFeature_Request_triggered();
-    void on_actionSqlCipherFaq_triggered();
-    void on_actionWebsite_triggered();
-    void on_actionDonatePatreon_triggered();
+    void on_actionWiki_triggered() const;
+    void on_actionBug_report_triggered() const;
+    void on_actionFeature_Request_triggered() const;
+    void on_actionSqlCipherFaq_triggered() const;
+    void on_actionWebsite_triggered() const;
+    void on_actionDonatePatreon_triggered() const;
     bool loadProject(QString filename = QString(), bool readOnly = false);
     void saveProject();
     void saveProjectAs();

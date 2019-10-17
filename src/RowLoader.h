@@ -11,7 +11,6 @@
 
 #include <QThread>
 #include <QString>
-#include <QMutex>
 
 #include "RowCache.h"
 
@@ -31,7 +30,7 @@ public:
         std::function<std::shared_ptr<sqlite3>(void)> db_getter,
         std::function<void(QString)> statement_logger,
         std::vector<std::string> & headers,
-        QMutex & cache_mutex,
+        std::mutex & cache_mutex,
         Cache & cache_data
         );
 
@@ -71,7 +70,7 @@ private:
     const std::function<std::shared_ptr<sqlite3>()> db_getter;
     const std::function<void(QString)> statement_logger;
     std::vector<std::string> & headers;
-    QMutex & cache_mutex;
+    std::mutex & cache_mutex;
     Cache & cache_data;
 
     mutable std::mutex m;
@@ -111,7 +110,7 @@ private:
     std::unique_ptr<Task> current_task;
     std::unique_ptr<Task> next_task;
 
-    int countRows ();
+    int countRows () const;
 
     void process (Task &);
 

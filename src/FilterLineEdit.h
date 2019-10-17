@@ -31,7 +31,7 @@ signals:
 
 protected:
     void keyReleaseEvent(QKeyEvent* event) override;
-    void setFilterHelper(const QString& filterOperator, const QString& operatorSuffix = "");
+    void setFilterHelper(const QString& filterOperator, const QString& operatorSuffix = QString());
 
 private:
     std::vector<FilterLineEdit*>* filterList;

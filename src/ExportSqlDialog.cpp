@@ -3,6 +3,7 @@
 #include "sqlitedb.h"
 #include "FileDialog.h"
 #include "Settings.h"
+#include "IconCache.h"
 
 #include <QFile>
 #include <QMessageBox>
@@ -30,7 +31,7 @@ ExportSqlDialog::ExportSqlDialog(DBBrowserDB* db, QWidget* parent, const QString
     // Get list of tables to export
     const auto objects = pdb->schemata["main"].equal_range("table");
     for(auto it=objects.first;it!=objects.second;++it)
-        ui->listTables->addItem(new QListWidgetItem(QIcon(QString(":icons/%1").arg(QString::fromStdString(sqlb::Object::typeToString(it->second->type())))), QString::fromStdString(it->second->name())));
+        ui->listTables->addItem(new QListWidgetItem(IconCache::get(sqlb::Object::typeToString(it->second->type())), QString::fromStdString(it->second->name())));
 
     // Sort list of tables and select the table specified in the
     // selection parameter or all tables if table not specified
@@ -96,9 +97,9 @@ void ExportSqlDialog::accept()
     Settings::setValue("exportsql", "insertmultiple", ui->checkMultiple->isChecked());
     Settings::setValue("exportsql", "oldschema", ui->comboOldSchema->currentIndex());
 
-    QStringList tables;
+    std::vector<std::string> tables;
     for(const QListWidgetItem* item : ui->listTables->selectedItems())
-        tables.push_back(item->text());
+        tables.push_back(item->text().toStdString());
 
     // Check what to export. The indices here depend on the order of the items in the combobox in the ui file
     bool exportSchema = ui->comboWhat->currentIndex() == ExportEverything || ui->comboWhat->currentIndex() == ExportSchemaOnly;

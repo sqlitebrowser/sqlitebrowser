@@ -36,7 +36,7 @@ bool isTextOnly(QByteArray data, const QString& encoding, bool quickTest)
 
         QTextCodec::ConverterState state;
         QTextCodec *codec = encoding.isEmpty()? QTextCodec::codecForName("UTF-8") : QTextCodec::codecForName(encoding.toUtf8());
-        const QString text = codec->toUnicode(data.constData(), testSize, &state);
+        codec->toUnicode(data.constData(), testSize, &state);
         return state.invalidChars == 0;
     } else {
         // Convert to Unicode if necessary
@@ -126,4 +126,20 @@ QByteArray decodeString(const QByteArray& str, const QString& encoding)
         return str;
     else
         return QTextCodec::codecForName(encoding.toUtf8())->toUnicode(str).toUtf8();
+}
+
+QString humanReadableSize(unsigned long byteCount)
+{
+    static const std::vector<QString> units = {"B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB"};
+
+    double size = static_cast<double>(byteCount);
+    for(const QString& unit : units)
+    {
+        if(size < 1024.0)
+            return QString::number(size, 'f', 2) + " " + unit;
+
+        size /= 1024.0;
+    }
+
+    return QString::number(size, 'f', 2) + " YiB";
 }

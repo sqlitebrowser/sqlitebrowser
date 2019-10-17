@@ -144,7 +144,7 @@ QWidget* ExtendedTableWidgetEditorDelegate::createEditor(QWidget* parent, const 
             column = fk.columns().at(0);
 
         sqlb::TablePtr currentTable = m->db().getObjectByName<sqlb::Table>(m->currentTableName());
-        QString query = QString("SELECT %1 FROM %2").arg(QString::fromStdString(sqlb::escapeIdentifier(column))).arg(QString::fromStdString(foreignTable.toString()));
+        QString query = QString("SELECT %1 FROM %2").arg(QString::fromStdString(sqlb::escapeIdentifier(column)), QString::fromStdString(foreignTable.toString()));
 
         // if the current column of the current table does NOT have not-null constraint,
         // the NULL is united to the query to get the possible values in the combo-box.
@@ -520,9 +520,15 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
         const Qt::Alignment align(index.data(Qt::TextAlignmentRole).toInt());
         const QString textAlign(CondFormat::alignmentTexts().at(CondFormat::fromCombinedAlignment(align)).toLower());
         const QString style = QString("font-family: '%1'; font-size: %2pt; font-style: %3; font-weight: %4;%5 "
-                                      "background-color: %6; color: %7; text-align: %8").
-            arg(font.family().toHtmlEscaped()).arg(font.pointSize()).arg(fontStyle).arg(fontWeigth).arg(fontDecoration).
-            arg(bgColor.name()).arg(fgColor.name()).arg(textAlign);
+                                      "background-color: %6; color: %7; text-align: %8").arg(
+                    font.family().toHtmlEscaped(),
+                    QString::number(font.pointSize()),
+                    fontStyle,
+                    fontWeigth,
+                    fontDecoration,
+                    bgColor.name(),
+                    fgColor.name(),
+                    textAlign);
 
         // Separators. For first cell, only opening table row tags must be added for the HTML and nothing for the text version.
         if (indices.first() == index) {
@@ -568,7 +574,7 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
                     htmlResult.append(QString(text).toHtmlEscaped());
 
                 result.append(text);
-                sqlResult.append("'" + text.replace("'", "''") + "'");
+                sqlResult.append(sqlb::escapeString(text));
             } else
                 // Table cell data: binary. Save as BLOB literal in SQL
                 sqlResult.append( "X'" + bArrdata.toByteArray().toHex() + "'" );
@@ -891,7 +897,7 @@ void ExtendedTableWidget::cellClicked(const QModelIndex& index)
 
         if(fk.isSet())
             emit foreignKeyClicked(sqlb::ObjectIdentifier(m->currentTableName().schema(), fk.table()),
-                                   fk.columns().size() ? QString::fromStdString(fk.columns().at(0)) : "",
+                                   fk.columns().size() ? fk.columns().at(0) : "",
                                    m->data(index, Qt::EditRole).toByteArray());
     }
 }
@@ -999,20 +1005,18 @@ void ExtendedTableWidget::openPrintDialog()
     // the table with headers. We can then print it using an HTML text document.
     copyMimeData(indices, mimeData, true, false);
 
-    QTextDocument *document = new QTextDocument();
-    document->setHtml(mimeData->html());
-
     QPrinter printer;
     QPrintPreviewDialog *dialog = new QPrintPreviewDialog(&printer);
 
-    connect(dialog, &QPrintPreviewDialog::paintRequested, [&](QPrinter *previewPrinter) {
-        document->print(previewPrinter);
+    connect(dialog, &QPrintPreviewDialog::paintRequested, [mimeData](QPrinter *previewPrinter) {
+        QTextDocument document;
+        document.setHtml(mimeData->html());
+        document.print(previewPrinter);
     });
 
     dialog->exec();
 
     delete dialog;
-    delete document;
     delete mimeData;
 }
 

@@ -30,4 +30,6 @@ QByteArray encodeString(const QByteArray& str, const QString& encoding);
 
 QByteArray decodeString(const QByteArray& str, const QString& encoding);
 
+QString humanReadableSize(unsigned long byteCount);
+
 #endif

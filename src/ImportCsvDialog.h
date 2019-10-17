@@ -19,7 +19,7 @@ class ImportCsvDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ImportCsvDialog(const QStringList& filenames, DBBrowserDB* db, QWidget* parent = nullptr);
+    explicit ImportCsvDialog(const std::vector<QString>& filenames, DBBrowserDB* db, QWidget* parent = nullptr);
     ~ImportCsvDialog() override;
 
 private slots:
@@ -34,14 +34,14 @@ private slots:
 
 private:
     Ui::ImportCsvDialog* ui;
-    QStringList csvFilenames;
+    std::vector<QString> csvFilenames;
     QString selectedFile;
     DBBrowserDB* pdb;
     QCompleter* encodingCompleter;
     QStringList dontAskForExistingTableAgain;
 
-    CSVParser::ParserResult parseCSV(const QString& fileName, std::function<bool(size_t, CSVRow)> rowFunction, size_t count = 0);
-    sqlb::FieldVector generateFieldList(const QString& filename);
+    CSVParser::ParserResult parseCSV(const QString& fileName, std::function<bool(size_t, CSVRow)> rowFunction, size_t count = 0) const;
+    sqlb::FieldVector generateFieldList(const QString& filename) const;
 
     bool importCsv(const QString& f, const QString& n = QString());
 
@@ -54,7 +54,7 @@ private:
     void setEncoding(const QString& sEnc);
     QString currentEncoding() const;
 
-    QString currentOnConflictStrategy() const;
+    std::string currentOnConflictStrategy() const;
 
     char32_t toUtf8(const QString& s) const;
 };

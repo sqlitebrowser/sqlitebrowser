@@ -170,7 +170,7 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
     if(reply->error() != QNetworkReply::NoError)
     {
         QMessageBox::warning(nullptr, qApp->applicationName(),
-                             tr("Error when connecting to %1.\n%2").arg(reply->url().toString()).arg(reply->errorString()));
+                             tr("Error when connecting to %1.\n%2").arg(reply->url().toString(), reply->errorString()));
         reply->deleteLater();
         return;
     }
@@ -321,7 +321,7 @@ void RemoteDatabase::gotError(QNetworkReply* reply, const QList<QSslError>& erro
     }
 
     // Build an error message and short it to the user
-    QString message = tr("Error opening remote file at %1.\n%2").arg(reply->url().toString()).arg(errors.at(0).errorString());
+    QString message = tr("Error opening remote file at %1.\n%2").arg(reply->url().toString(), errors.at(0).errorString());
     QMessageBox::warning(nullptr, qApp->applicationName(), message);
 
     // Delete reply later, i.e. after returning from this slot function
@@ -473,7 +473,7 @@ void RemoteDatabase::fetch(const QString& url, RequestType type, const QString& 
     // Build network request
     QNetworkRequest request;
     request.setUrl(url);
-    request.setRawHeader("User-Agent", QString("%1 %2").arg(qApp->organizationName()).arg(APP_VERSION).toUtf8());
+    request.setRawHeader("User-Agent", QString("%1 %2").arg(qApp->organizationName(), APP_VERSION).toUtf8());
 
     // Set SSL configuration when trying to access a file via the HTTPS protocol.
     // Skip this step when no client certificate was specified. In this case the default HTTPS configuration is used.
@@ -522,7 +522,7 @@ void RemoteDatabase::push(const QString& filename, const QString& url, const QSt
     // Build network request
     QNetworkRequest request;
     request.setUrl(url);
-    request.setRawHeader("User-Agent", QString("%1 %2").arg(qApp->organizationName()).arg(APP_VERSION).toUtf8());
+    request.setRawHeader("User-Agent", QString("%1 %2").arg(qApp->organizationName(), APP_VERSION).toUtf8());
 
     // Get the last modified date of the file and prepare it for conversion into the ISO date format
     QDateTime last_modified = QFileInfo(filename).lastModified();
@@ -565,7 +565,7 @@ void RemoteDatabase::push(const QString& filename, const QString& url, const QSt
     prepareProgressDialog(reply, true, url);
 }
 
-void RemoteDatabase::addPart(QHttpMultiPart* multipart, const QString& name, const QString& value)
+void RemoteDatabase::addPart(QHttpMultiPart* multipart, const QString& name, const QString& value) const
 {
     QHttpPart part;
     part.setHeader(QNetworkRequest::ContentDispositionHeader, QString("form-data; name=\"%1\"").arg(name));
@@ -574,10 +574,10 @@ void RemoteDatabase::addPart(QHttpMultiPart* multipart, const QString& name, con
     multipart->append(part);
 }
 
-void RemoteDatabase::addPart(QHttpMultiPart* multipart, const QString& name, QFile* file, const QString& filename)
+void RemoteDatabase::addPart(QHttpMultiPart* multipart, const QString& name, QFile* file, const QString& filename) const
 {
     QHttpPart part;
-    part.setHeader(QNetworkRequest::ContentDispositionHeader, QString("form-data; name=\"%1\"; filename=\"%2\"").arg(name).arg(filename));
+    part.setHeader(QNetworkRequest::ContentDispositionHeader, QString("form-data; name=\"%1\"; filename=\"%2\"").arg(name, filename));
     part.setBodyDevice(file);
     file->setParent(multipart);     // Close the file and delete the file object as soon as the multi-part object is destroyed
 

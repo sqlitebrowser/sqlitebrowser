@@ -17,7 +17,7 @@ public:
     explicit Application(int& argc, char** argv);
     ~Application() override;
 
-    bool dontShowMainWindow() { return m_dontShowMainWindow; }
+    bool dontShowMainWindow() const { return m_dontShowMainWindow; }
 
     MainWindow* mainWindow() { return m_mainWindow; }
 

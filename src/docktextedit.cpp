@@ -27,10 +27,6 @@ DockTextEdit::DockTextEdit(QWidget* parent) :
     reloadSettings();
 }
 
-DockTextEdit::~DockTextEdit()
-{
-}
-
 void DockTextEdit::reloadSettings()
 {
     // Set the parent settings for both lexers
@@ -115,5 +111,5 @@ void DockTextEdit::clearTextInMargin()
     clearMarginText();
     setMarginLineNumbers(0, true);
     reloadCommonSettings();
-    linesChanged();
+    emit linesChanged();
 }

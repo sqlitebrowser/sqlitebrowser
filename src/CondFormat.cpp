@@ -1,6 +1,7 @@
 #include "CondFormat.h"
 #include "Settings.h"
 #include "Data.h"
+#include "sqlitedb.h"
 
 #include <QAbstractTableModel>
 
@@ -48,8 +49,11 @@ CondFormat::CondFormat(const QString& filter,
     m_font.fromString(model->data(index, Qt::FontRole).toString());
 }
 
-QString CondFormat::filterToSqlCondition(const QString& value, const QString& encoding)
+std::string CondFormat::filterToSqlCondition(const QString& value, const QString& encoding)
 {
+    if(value.isEmpty())
+        return {};
+
     // Check for any special comparison operators at the beginning of the value string. If there are none default to LIKE.
     QString op = "LIKE";
     QString val, val2;
@@ -89,15 +93,15 @@ QString CondFormat::filterToSqlCondition(const QString& value, const QString& en
                 numeric = true;
                 val = "''";
             } else {
-                value.mid(2).toFloat(&numeric);
+                value.midRef(2).toFloat(&numeric);
                 op = value.left(2);
                 val = value.mid(2);
             }
-        } else if(value.left(1) == ">" || value.left(1) == "<") {
-            value.mid(1).toFloat(&numeric);
-            op = value.left(1);
+        } else if(value.front() == ">" || value.front() == "<") {
+            value.midRef(1).toFloat(&numeric);
+            op = value.front();
             val = value.mid(1);
-        } else if(value.left(1) == "=") {
+        } else if(value.front() == "=") {
             val = value.mid(1);
 
             // Check if value to compare with is 'NULL'
@@ -111,7 +115,7 @@ QString CondFormat::filterToSqlCondition(const QString& value, const QString& en
                 op = "IS";
                 numeric = true;
             }
-        } else if(value.left(1) == "/" && value.right(1) == "/" && value.length() > 2) {
+        } else if(value.front() == "/" && value.back() == "/" && value.size() > 2) {
             val = value.mid(1, value.length() - 2);
             op = "REGEXP";
             numeric = false;
@@ -138,18 +142,18 @@ QString CondFormat::filterToSqlCondition(const QString& value, const QString& en
     if(val.isEmpty())
         val = value;
 
-    if(val == "" || val == "%" || val == "%%")
-        return QString();
+    if(val.isEmpty() || val == "%" || val == "%%")
+        return {};
     else {
         // Quote and escape value, but only if it's not numeric and not the empty string sequence
         if(!numeric && val != "''")
-            val = QString("'%1'").arg(val.replace("'", "''"));
+            val = sqlb::escapeString(val);
 
         QString whereClause(op + " " + QString(encodeString(val.toUtf8(), encoding)));
         if (!val2.isEmpty())
             whereClause += " AND " + QString(encodeString(val2.toUtf8(), encoding));
         whereClause += " " + escape;
-        return whereClause;
+        return whereClause.toStdString();
     }
 }
 

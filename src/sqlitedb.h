@@ -67,10 +67,10 @@ private:
 public:
 
     explicit DBBrowserDB();
-    ~DBBrowserDB () override {}
+    ~DBBrowserDB () override = default;
 
     bool open(const QString& db, bool readOnly = false);
-    bool attach(const QString& filename, QString attach_as = "");
+    bool attach(const QString& filename, QString attach_as = QString());
     bool create ( const QString & db);
     bool close();
 
@@ -102,13 +102,13 @@ public:
     **/
     db_pointer_type get (const QString& user, bool force_wait = false);
 
-    bool setSavepoint(const QString& pointname = "RESTOREPOINT");
-    bool releaseSavepoint(const QString& pointname = "RESTOREPOINT");
-    bool revertToSavepoint(const QString& pointname = "RESTOREPOINT");
+    bool setSavepoint(const std::string& pointname = "RESTOREPOINT");
+    bool releaseSavepoint(const std::string& pointname = "RESTOREPOINT");
+    bool revertToSavepoint(const std::string& pointname = "RESTOREPOINT");
     bool releaseAllSavepoints();
     bool revertAll();
 
-    bool dump(const QString& filename, const QStringList& tablesToDump, bool insertColNames, bool insertNew, bool exportSchema, bool exportData, bool keepOldSchema);
+    bool dump(const QString& filename, const std::vector<std::string>& tablesToDump, bool insertColNames, bool insertNew, bool exportSchema, bool exportData, bool keepOldSchema) const;
 
     enum ChoiceOnUse
     {
@@ -125,10 +125,10 @@ public:
     // callback is the text representation of the values, one for each
     // column. The 3rd argument is a list of strings where each entry
     // represents the name of corresponding result column.
-    using execCallback = std::function<bool(int, QStringList, QStringList)>;
-    bool executeSQL(QString statement, bool dirtyDB = true, bool logsql = true, execCallback callback = nullptr);
+    using execCallback = std::function<bool(int, std::vector<QByteArray>, std::vector<QByteArray>)>;
+    bool executeSQL(const std::string& statement, bool dirtyDB = true, bool logsql = true, execCallback callback = nullptr);
     bool executeMultiSQL(QByteArray query, bool dirty = true, bool log = false);
-    QByteArray querySingleValueFromDb(const QString& sql, bool log = true, ChoiceOnUse choice = Ask);
+    QByteArray querySingleValueFromDb(const std::string& sql, bool log = true, ChoiceOnUse choice = Ask) const;
 
     const QString& lastError() const { return lastErrorMessage; }
 
@@ -141,7 +141,7 @@ public:
      * @param rowdata A list of QByteArray containing the row data.
      * @return true if statement execution was ok, else false.
      */
-    bool getRow(const sqlb::ObjectIdentifier& table, const QString& rowid, std::vector<QByteArray>& rowdata);
+    bool getRow(const sqlb::ObjectIdentifier& table, const QString& rowid, std::vector<QByteArray>& rowdata) const;
 
     /**
      * @brief Interrupts the currenty running statement as soon as possible.
@@ -169,11 +169,11 @@ private:
      * @param pk_value This optional parameter can be used to manually set a specific value for the primary key column
      * @return An sqlite conform INSERT INTO statement with empty values. (NULL,'',0)
      */
-    QString emptyInsertStmt(const std::string& schemaName, const sqlb::Table& t, const QString& pk_value = QString()) const;
+    std::string emptyInsertStmt(const std::string& schemaName, const sqlb::Table& t, const QString& pk_value = QString()) const;
 
 public:
     QString addRecord(const sqlb::ObjectIdentifier& tablename);
-    bool deleteRecords(const sqlb::ObjectIdentifier& table, const QStringList& rowids, const sqlb::StringVector& pseudo_pk = {});
+    bool deleteRecords(const sqlb::ObjectIdentifier& table, const std::vector<QString>& rowids, const sqlb::StringVector& pseudo_pk = {});
     bool updateRecord(const sqlb::ObjectIdentifier& table, const std::string& column, const QString& rowid, const QByteArray& value, int force_type = 0, const sqlb::StringVector& pseudo_pk = {});
 
     bool createTable(const sqlb::ObjectIdentifier& name, const sqlb::FieldVector& structure);
@@ -199,9 +199,7 @@ public:
      * @param newSchema Set this to a non-empty string to move the table to a new schema
      * @return true if renaming was successful, false if not. In the latter case also lastErrorMessage is set
      */
-    bool alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb::Table& new_table, AlterTableTrackColumns track_columns, std::string newSchemaName = "");
-
-    objectMap getBrowsableObjects(const std::string& schema) const;
+    bool alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb::Table& new_table, AlterTableTrackColumns track_columns, std::string newSchemaName = std::string());
 
     template<typename T = sqlb::Object>
     const std::shared_ptr<T> getObjectByName(const sqlb::ObjectIdentifier& name) const
@@ -221,12 +219,12 @@ public:
     QString currentFile() const { return curDBFilename; }
 
     /// log an SQL statement [thread-safe]
-    void logSQL(const QString& statement, LogMessageType msgtype);
+    void logSQL(const QString& statement, LogMessageType msgtype) const;
 
-    QString getPragma(const QString& pragma);
-    bool setPragma(const QString& pragma, const QString& value);
-    bool setPragma(const QString& pragma, const QString& value, QString& originalvalue);
-    bool setPragma(const QString& pragma, int value, int& originalvalue);
+    QString getPragma(const std::string& pragma) const;
+    bool setPragma(const std::string& pragma, const QString& value);
+    bool setPragma(const std::string& pragma, const QString& value, QString& originalvalue);
+    bool setPragma(const std::string& pragma, int value, int& originalvalue);
 
     bool loadExtension(const QString& filename);
     void loadExtensionsFromSettings();
@@ -234,10 +232,10 @@ public:
     static QStringList Datatypes;
 
 private:
-    std::vector<std::pair<std::string, std::string> > queryColumnInformation(const std::string& schema_name, const std::string& object_name);
+    std::vector<std::pair<std::string, std::string> > queryColumnInformation(const std::string& schema_name, const std::string& object_name) const;
 
 public:
-    QString generateSavepointName(const QString& identifier = QString()) const;
+    std::string generateSavepointName(const std::string& identifier = std::string()) const;
 
     // This function generates the name for a temporary table. It guarantees that there is no table with this name yet
     std::string generateTemporaryTableName(const std::string& schema) const;
@@ -245,7 +243,7 @@ public:
     schemaMap schemata;
 
 signals:
-    void sqlExecuted(QString sql, int msgtype);
+    void sqlExecuted(QString sql, int msgtype) const;
     void dbChanged(bool dirty);
     void structureUpdated();
     void requestCollation(QString name, int eTextRep);
@@ -254,19 +252,19 @@ signals:
 private:
     /// external code needs to go through get() to obtain access to the database
     sqlite3 * _db;
-    std::mutex m;
-    std::condition_variable cv;
+    mutable std::mutex m;
+    mutable std::condition_variable cv;
     bool db_used;
     QString db_user;
 
     /// wait for release of the DB locked through a previous get(),
     /// giving users the option to discard running task through a
     /// message box.
-    void waitForDbRelease(ChoiceOnUse choice = Ask);
+    void waitForDbRelease(ChoiceOnUse choice = Ask) const;
 
     QString curDBFilename;
-    QString lastErrorMessage;
-    QStringList savepointList;
+    mutable QString lastErrorMessage;
+    std::vector<std::string> savepointList;
     bool isEncrypted;
     bool isReadOnly;
 
@@ -276,7 +274,7 @@ private:
     void collationNeeded(void* pData, sqlite3* db, int eTextRep, const char* sCollationName);
     void errorLogCallback(void* user_data, int error_code, const char* message);
 
-    bool tryEncryptionSettings(const QString& filename, bool* encrypted, CipherSettings*& cipherSettings);
+    bool tryEncryptionSettings(const QString& filename, bool* encrypted, CipherSettings*& cipherSettings) const;
 
     bool dontCheckForStructureUpdates;
 

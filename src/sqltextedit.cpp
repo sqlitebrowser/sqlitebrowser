@@ -45,10 +45,6 @@ SqlTextEdit::SqlTextEdit(QWidget* parent) :
     reloadSettings();
 }
 
-SqlTextEdit::~SqlTextEdit()
-{
-}
-
 void SqlTextEdit::reloadSettings()
 {
     // Enable auto completion if it hasn't been disabled

@@ -147,7 +147,7 @@ void SqliteTableModel::setQuery(const sqlb::Query& query)
         // information we retrieve it from SQLite using an extra query.
         // NOTE: It would be nice to eventually get rid of this piece here. As soon as the grammar parser is good enough...
 
-        QString sColumnQuery = QString::fromUtf8("SELECT * FROM %1;").arg(QString::fromStdString(query.table().toString()));
+        std::string sColumnQuery = "SELECT * FROM " + query.table().toString() + ";";
         if(m_query.rowIdColumns().empty())
             m_query.setRowIdColumn("_rowid_");
         m_headers.emplace_back("_rowid_");
@@ -181,7 +181,7 @@ void SqliteTableModel::setQuery(const QString& sQuery, const QString& sCountQuer
 
     if(!dontClearHeaders)
     {
-        auto columns = getColumns(worker->getDb(), sQuery, m_vDataTypes);
+        auto columns = getColumns(worker->getDb(), sQuery.toStdString(), m_vDataTypes);
         m_headers.insert(m_headers.end(), columns.begin(), columns.end());
     }
 
@@ -264,15 +264,15 @@ QVariant SqliteTableModel::getMatchingCondFormat(const std::map<size_t, std::vec
 
     bool isNumber;
     value.toDouble(&isNumber);
-    QString sql;
+    std::string sql;
 
     // For each conditional format for this column,
     // if the condition matches the current data, return the associated format.
     for (const CondFormat& eachCondFormat : mCondFormats.at(column)) {
-        if (isNumber && !eachCondFormat.sqlCondition().contains("'"))
-            sql = QString("SELECT %1 %2").arg(value, eachCondFormat.sqlCondition());
+        if (isNumber && !contains(eachCondFormat.sqlCondition(), '\''))
+            sql = "SELECT " + value.toStdString() + " " + eachCondFormat.sqlCondition();
         else
-            sql = QString("SELECT '%1' %2").arg(value, eachCondFormat.sqlCondition());
+            sql = "SELECT '" + value.toStdString() + "' " + eachCondFormat.sqlCondition();
 
         // Empty filter means: apply format to any row.
         // Query the DB for the condition, waiting in case there is a loading in progress.
@@ -295,12 +295,14 @@ QVariant SqliteTableModel::getMatchingCondFormat(size_t row, size_t column, cons
 {
     QVariant format;
     // Check first for a row-id format and when there is none, for a conditional format.
-    if (m_mRowIdFormats.count(column)) {
-        QMutexLocker lock(&m_mutexDataCache);
+    if (m_mRowIdFormats.count(column))
+    {
+        std::unique_lock<std::mutex> lock(m_mutexDataCache);
         const bool row_available = m_cache.count(row);
         const QByteArray blank_data("");
         const QByteArray& row_id_data = row_available ? m_cache.at(row).at(0) : blank_data;
         lock.unlock();
+
         format = getMatchingCondFormat(m_mRowIdFormats, column, row_id_data, role);
         if (format.isValid())
             return format;
@@ -319,7 +321,7 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
     if (index.row() >= rowCount())
         return QVariant();
 
-    QMutexLocker lock(&m_mutexDataCache);
+    std::unique_lock<std::mutex> lock(m_mutexDataCache);
 
     const size_t row = static_cast<size_t>(index.row());
     const size_t column = static_cast<size_t>(index.column());
@@ -396,10 +398,10 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
     } else if(role == Qt::ToolTipRole) {
         sqlb::ForeignKeyClause fk = getForeignKeyClause(column-1);
         if(fk.isSet())
-            return tr("References %1(%2)\nHold %3Shift and click to jump there")
-                    .arg(QString::fromStdString(fk.table()))
-                    .arg(QString::fromStdString(sqlb::joinStringVector(fk.columns(), ",")))
-                    .arg(QKeySequence(Qt::CTRL).toString(QKeySequence::NativeText));
+            return tr("References %1(%2)\nHold %3Shift and click to jump there").arg(
+                    QString::fromStdString(fk.table()),
+                    QString::fromStdString(sqlb::joinStringVector(fk.columns(), ",")),
+                    QKeySequence(Qt::CTRL).toString(QKeySequence::NativeText));
     } else if (role == Qt::TextAlignmentRole) {
         // Align horizontally according to conditional format or default (left for text and right for numbers)
         // Align vertically to the center, which displays better.
@@ -477,7 +479,7 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
 
     if(index.isValid() && role == Qt::EditRole)
     {
-        QMutexLocker lock(&m_mutexDataCache);
+        std::unique_lock<std::mutex> lock(m_mutexDataCache);
 
         auto & cached_row = m_cache.at(static_cast<size_t>(index.row()));
         const size_t column = static_cast<size_t>(index.column());
@@ -676,11 +678,11 @@ bool SqliteTableModel::removeRows(int row, int count, const QModelIndex& parent)
         return false;
     }
 
-    QStringList rowids;
+    std::vector<QString> rowids;
     for(int i=count-1;i>=0;i--)
     {
         if(m_cache.count(static_cast<size_t>(row+i))) {
-            rowids.append(m_cache.at(static_cast<size_t>(row + i)).at(0));
+            rowids.push_back(m_cache.at(static_cast<size_t>(row + i)).at(0));
         }
     }
 
@@ -750,7 +752,7 @@ void SqliteTableModel::removeCommentsFromQuery(QString& query)
                 query = rxSQL.cap(3);
             } else {
                 result += query;
-                query = "";
+                query.clear();
             }
         }
         query = result;
@@ -780,7 +782,7 @@ void SqliteTableModel::removeCommentsFromQuery(QString& query)
                 query = rxSQL.cap(4);
             } else {
                 result += query;
-                query = "";
+                query.clear();
             }
         }
 
@@ -796,14 +798,13 @@ void SqliteTableModel::removeCommentsFromQuery(QString& query)
     }
 }
 
-std::vector<std::string> SqliteTableModel::getColumns(std::shared_ptr<sqlite3> pDb, const QString& sQuery, std::vector<int>& fieldsTypes)
+std::vector<std::string> SqliteTableModel::getColumns(std::shared_ptr<sqlite3> pDb, const std::string& sQuery, std::vector<int>& fieldsTypes) const
 {
     if(!pDb)
         pDb = m_db.get(tr("retrieving list of columns"));
 
     sqlite3_stmt* stmt;
-    QByteArray utf8Query = sQuery.toUtf8();
-    int status = sqlite3_prepare_v2(pDb.get(), utf8Query, utf8Query.size(), &stmt, nullptr);
+    int status = sqlite3_prepare_v2(pDb.get(), sQuery.c_str(), static_cast<int>(sQuery.size()), &stmt, nullptr);
     std::vector<std::string> listColumns;
     if(SQLITE_OK == status)
     {
@@ -857,13 +858,13 @@ void SqliteTableModel::setCondFormats(const bool isRowIdFormat, size_t column, c
 
 void SqliteTableModel::updateFilter(size_t column, const QString& value)
 {
-    QString whereClause = CondFormat::filterToSqlCondition(value, m_encoding);
+    std::string whereClause = CondFormat::filterToSqlCondition(value, m_encoding);
 
     // If the value was set to an empty string remove any filter for this column. Otherwise insert a new filter rule or replace the old one if there is already one
-    if(whereClause.isEmpty())
+    if(whereClause.empty())
         m_query.where().erase(column);
     else
-        m_query.where()[column] = whereClause.toStdString();
+        m_query.where()[column] = whereClause;
 
     // Build the new query
     buildQuery();
@@ -873,7 +874,7 @@ void SqliteTableModel::updateGlobalFilter(const std::vector<QString>& values)
 {
     std::vector<std::string> filters;
     for(auto& v : values)
-        filters.push_back(CondFormat::filterToSqlCondition(v, m_encoding).toStdString());
+        filters.push_back(CondFormat::filterToSqlCondition(v, m_encoding));
     m_query.setGlobalWhere(filters);
 
     // Build the new query
@@ -902,7 +903,7 @@ void SqliteTableModel::clearCache()
 
 bool SqliteTableModel::isBinary(const QModelIndex& index) const
 {
-    QMutexLocker lock(&m_mutexDataCache);
+    std::lock_guard<std::mutex> lock(m_mutexDataCache);
 
     const size_t row = static_cast<size_t>(index.row());
     if(!m_cache.count(row))
@@ -995,7 +996,7 @@ void SqliteTableModel::triggerCacheLoad (int row) const
     }
 
     // avoid re-fetching data
-    QMutexLocker lk(&m_mutexDataCache);
+    std::lock_guard<std::mutex> lk(m_mutexDataCache);
     m_cache.smallestNonAvailableRange(row_begin, row_end);
 
     if(row_end != row_begin)
@@ -1040,7 +1041,7 @@ bool SqliteTableModel::isCacheComplete () const
 {
     if(readingData())
         return false;
-    QMutexLocker lock(&m_mutexDataCache);
+    std::lock_guard<std::mutex> lock(m_mutexDataCache);
     return m_cache.numSet() == m_currentRowCount;
 }
 

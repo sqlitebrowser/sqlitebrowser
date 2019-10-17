@@ -30,7 +30,6 @@ ExtendedScintilla::ExtendedScintilla(QWidget* parent) :
     // Enable UTF8
     setUtf8(true);
 
-
     // Enable brace matching
     setBraceMatching(QsciScintilla::SloppyBraceMatch);
 
@@ -57,13 +56,13 @@ ExtendedScintilla::ExtendedScintilla(QWidget* parent) :
     setWrapVisualFlags(QsciScintilla::WrapFlagByBorder);
 
     // Connect signals
-    connect(this, SIGNAL(linesChanged()), this, SLOT(updateLineNumberAreaWidth()));
+    connect(this, &ExtendedScintilla::linesChanged, this, &ExtendedScintilla::updateLineNumberAreaWidth);
 
     // The shortcuts are constrained to the Widget context so they do not conflict with other SqlTextEdit widgets in the Main Window.
     QShortcut* shortcutFindReplace = new QShortcut(QKeySequence(tr("Ctrl+H")), this, nullptr, nullptr, Qt::WidgetShortcut);
-    connect(shortcutFindReplace, SIGNAL(activated()), this, SLOT(openFindReplaceDialog()));
+    connect(shortcutFindReplace, &QShortcut::activated, this, &ExtendedScintilla::openFindReplaceDialog);
     shortcutFind = new QShortcut(QKeySequence(tr("Ctrl+F")), this, nullptr, nullptr, Qt::WidgetShortcut);
-    connect(shortcutFind, SIGNAL(activated()), this, SLOT(openFindDialog()));
+    connect(shortcutFind, &QShortcut::activated, this, &ExtendedScintilla::openFindDialog);
 
 #ifdef Q_OS_MACX
     // Alt+Backspace on Mac is expected to delete one word to the left,
@@ -80,11 +79,7 @@ ExtendedScintilla::ExtendedScintilla(QWidget* parent) :
 
     // Prepare for adding the find/replace option to the QScintilla context menu
     setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(this, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showContextMenu(const QPoint &)));
-}
-
-ExtendedScintilla::~ExtendedScintilla()
-{
+    connect(this, &ExtendedScintilla::customContextMenuRequested, this, &ExtendedScintilla::showContextMenu);
 }
 
 void ExtendedScintilla::updateLineNumberAreaWidth()

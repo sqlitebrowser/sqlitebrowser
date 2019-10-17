@@ -1,5 +1,5 @@
 #include "DbStructureModel.h"
-#include <IconCache.h>
+#include "IconCache.h"
 #include "sqlitedb.h"
 #include "sqlitetablemodel.h"
 #include "Settings.h"
@@ -14,6 +14,7 @@
 DbStructureModel::DbStructureModel(DBBrowserDB& db, QObject* parent)
     : QAbstractItemModel(parent),
       m_db(db),
+      browsablesRootItem(nullptr),
       m_dropQualifiedNames(false),
       m_dropEnquotedNames(false)
 {
@@ -21,7 +22,6 @@ DbStructureModel::DbStructureModel(DBBrowserDB& db, QObject* parent)
     QStringList header;
     header << tr("Name") << tr("Object") << tr("Type") << tr("Schema") << tr("Database");
     rootItem = new QTreeWidgetItem(header);
-    browsablesRootItem = nullptr;
 }
 
 DbStructureModel::~DbStructureModel()

@@ -61,10 +61,10 @@ public:
         if (!id.isEmpty())
             id = QString("(%1)").arg(sqlb::escapeIdentifier(id));
 
-        return QString("%1%2 %3")
-                .arg(table)
-                .arg(id)
-                .arg(clauses)
+        return QString("%1%2 %3").arg(
+                table,
+                id,
+                clauses)
                 .trimmed();
     }
 

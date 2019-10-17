@@ -61,7 +61,7 @@ CipherDialog::~CipherDialog()
 CipherSettings CipherDialog::getCipherSettings() const
 {
     CipherSettings::KeyFormats keyFormat = CipherSettings::getKeyFormat(ui->comboKeyFormat->currentIndex());
-    QString password = ui->editPassword->text();
+    std::string password = ui->editPassword->text().toStdString();
     int pageSize = ui->comboPageSize->itemData(ui->comboPageSize->currentIndex()).toInt();
 
     CipherSettings cipherSettings;
@@ -70,8 +70,8 @@ CipherSettings CipherDialog::getCipherSettings() const
     cipherSettings.setPassword(password);
     cipherSettings.setPageSize(pageSize);
     cipherSettings.setKdfIterations(ui->spinKdfIterations->value());
-    cipherSettings.setHmacAlgorithm(QString("HMAC_") + ui->comboHmacAlgorithm->currentText());
-    cipherSettings.setKdfAlgorithm(QString("PBKDF2_HMAC_") + ui->comboKdfAlgorithm->currentText());
+    cipherSettings.setHmacAlgorithm("HMAC_" + ui->comboHmacAlgorithm->currentText().toStdString());
+    cipherSettings.setKdfAlgorithm("PBKDF2_HMAC_" + ui->comboKdfAlgorithm->currentText().toStdString());
 
     return cipherSettings;
 }

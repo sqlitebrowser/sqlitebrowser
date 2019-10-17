@@ -94,7 +94,7 @@ private:
     std::map<QString, QString> trackColumns;
     sqlb::Table m_table;
     bool m_bNewTable;
-    QString m_sRestorePointName;
+    std::string m_sRestorePointName;
     QStringList m_collationList;
 };
 

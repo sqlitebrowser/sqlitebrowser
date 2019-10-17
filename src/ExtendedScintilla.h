@@ -16,7 +16,6 @@ class ExtendedScintilla : public QsciScintilla
 
 public:
     explicit ExtendedScintilla(QWidget *parent = nullptr);
-    ~ExtendedScintilla() override;
 
     bool findText(QString text, bool regexp, bool caseSensitive, bool words, bool wrap, bool forward);
     void setEnabledFindDialog(bool value);

@@ -6,16 +6,6 @@
 #include <iterator>
 #include <numeric>
 
-namespace {
-bool starts_with_ci(const std::string& str, const std::string& with)
-{
-    if(str.size() < with.size())
-        return false;
-    else
-        return compare_ci(str.substr(0, with.size()), with);
-}
-}
-
 namespace sqlb {
 
 StringVector escapeIdentifier(StringVector ids)
@@ -54,7 +44,7 @@ std::string Object::typeToString(Types type)
     case Types::View: return "view";
     case Types::Trigger: return "trigger";
     }
-    return "";
+    return std::string();
 }
 
 ConstraintPtr Constraint::makeConstraint(ConstraintTypes type)
@@ -62,13 +52,13 @@ ConstraintPtr Constraint::makeConstraint(ConstraintTypes type)
     switch(type)
     {
     case PrimaryKeyConstraintType:
-        return sqlb::ConstraintPtr(new sqlb::PrimaryKeyConstraint());
+        return std::make_shared<PrimaryKeyConstraint>();
     case UniqueConstraintType:
-        return sqlb::ConstraintPtr(new sqlb::UniqueConstraint());
+        return std::make_shared<UniqueConstraint>();
     case ForeignKeyConstraintType:
-        return sqlb::ConstraintPtr(new sqlb::ForeignKeyClause());
+        return std::make_shared<ForeignKeyClause>();
     case CheckConstraintType:
-        return sqlb::ConstraintPtr(new sqlb::CheckConstraint());
+        return std::make_shared<CheckConstraint>();
     default:
         return nullptr;
     }
@@ -92,7 +82,7 @@ bool ForeignKeyClause::isSet() const
 std::string ForeignKeyClause::toString() const
 {
     if(!isSet())
-        return "";
+        return std::string();
 
     if(m_override.size())
         return m_override;
@@ -427,7 +417,7 @@ TablePtr Table::parseSQL(const std::string& sSQL)
         return t;
     } else {
         std::cerr << "Sqlite parse error: " << sSQL << std::endl;
-        return TablePtr(new Table(""));
+        return std::make_shared<Table>("");
     }
 }
 
@@ -664,7 +654,7 @@ IndexPtr Index::parseSQL(const std::string& sSQL)
         return i;
     } else {
         std::cerr << "Sqlite parse error: " << sSQL << std::endl;
-        return IndexPtr(new Index(""));
+        return std::make_shared<Index>("");
     }
 }
 
@@ -674,7 +664,7 @@ ViewPtr View::parseSQL(const std::string& sSQL)
 {
     // TODO
 
-    auto v = ViewPtr(new View(""));
+    auto v = std::make_shared<View>("");
     v->setOriginalSql(sSQL);
     return v;
 }
@@ -702,7 +692,7 @@ TriggerPtr Trigger::parseSQL(const std::string& sSQL)
 {
     // TODO
 
-    auto t = TriggerPtr(new Trigger(""));
+    auto t = std::make_shared<Trigger>("");
     t->setOriginalSql(sSQL);
     return t;
 }

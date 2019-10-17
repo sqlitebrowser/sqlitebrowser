@@ -19,8 +19,8 @@ FilterLineEdit::FilterLineEdit(QWidget* parent, std::vector<FilterLineEdit*>* fi
     // delayedSignalTimerTriggered() method which then stops the timer and emits the delayed signal.
     delaySignalTimer = new QTimer(this);
     delaySignalTimer->setInterval(Settings::getValue("databrowser", "filter_delay").toInt());  // This is the milliseconds of not-typing we want to wait before triggering
-    connect(this, SIGNAL(textChanged(QString)), delaySignalTimer, SLOT(start()));
-    connect(delaySignalTimer, SIGNAL(timeout()), this, SLOT(delayedSignalTimerTriggered()));
+    connect(this, &FilterLineEdit::textChanged, delaySignalTimer, static_cast<void (QTimer::*)()>(&QTimer::start));
+    connect(delaySignalTimer, &QTimer::timeout, this, &FilterLineEdit::delayedSignalTimerTriggered);
 
     setWhatsThis(tr("These input fields allow you to perform quick filters in the currently selected table.\n"
                     "By default, the rows containing the input text are filtered out.\n"
@@ -37,11 +37,11 @@ FilterLineEdit::FilterLineEdit(QWidget* parent, std::vector<FilterLineEdit*>* fi
 
     // Immediately emit the delayed filter value changed signal if the user presses the enter or the return key or
     // the line edit widget loses focus
-    connect(this, SIGNAL(editingFinished()), this, SLOT(delayedSignalTimerTriggered()));
+    connect(this, &FilterLineEdit::editingFinished, this, &FilterLineEdit::delayedSignalTimerTriggered);
 
     // Prepare for adding the What's This information and filter helper actions to the context menu
     setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(this, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showContextMenu(const QPoint &)));
+    connect(this, &FilterLineEdit::customContextMenuRequested, this, &FilterLineEdit::showContextMenu);
 }
 
 void FilterLineEdit::delayedSignalTimerTriggered()

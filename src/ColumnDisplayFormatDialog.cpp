@@ -111,12 +111,12 @@ void ColumnDisplayFormatDialog::accept()
         // Execute a query using the display format and check that it only returns one column.
         int customNumberColumns = 0;
 
-        DBBrowserDB::execCallback callback = [&customNumberColumns](int numberColumns, QStringList, QStringList) -> bool {
+        DBBrowserDB::execCallback callback = [&customNumberColumns](int numberColumns, std::vector<QByteArray>, std::vector<QByteArray>) -> bool {
             customNumberColumns = numberColumns;
             // Return false so the query is not aborted and no error is reported.
             return false;
         };
-        if(!pdb.executeSQL(QString("SELECT %1 FROM %2 LIMIT 1").arg(ui->editDisplayFormat->text(), QString::fromStdString(curTable.toString())),
+        if(!pdb.executeSQL("SELECT " + ui->editDisplayFormat->text().toStdString() + " FROM " + curTable.toString() + " LIMIT 1",
                            false, true, callback))
             errorMessage = tr("Error in custom display format. Message from database engine:\n\n%1").arg(pdb.lastError());
         else if(customNumberColumns != 1)

@@ -109,7 +109,7 @@ public slots:
     void reloadSettings();
     void setCurrentTable(const sqlb::ObjectIdentifier& name);
     void updateRecordsetLabel();
-    void jumpToRow(const sqlb::ObjectIdentifier& table, QString column, const QByteArray& value);
+    void jumpToRow(const sqlb::ObjectIdentifier& table, std::string column, const QByteArray& value);
 
 signals:
     void projectModified();
@@ -117,7 +117,7 @@ signals:
     void selectionChangedByDoubleClick(QModelIndex index);
     void statusMessageRequested(QString message);
     void updatePlot(ExtendedTableWidget* tableWidget, SqliteTableModel* model, BrowseDataTableSettings* settings, bool keepOrResetSelection);
-    void createView(QString sql);
+    void createView(std::string sql);
     void requestFileOpen(QString file);
 
 private slots:

@@ -20,7 +20,7 @@ RowLoader::RowLoader (
     std::function<std::shared_ptr<sqlite3>(void)> db_getter_,
     std::function<void(QString)> statement_logger_,
     std::vector<std::string> & headers_,
-    QMutex & cache_mutex_,
+    std::mutex & cache_mutex_,
     Cache & cache_data_
     )
     : db_getter(db_getter_), statement_logger(statement_logger_), headers(headers_)
@@ -76,7 +76,7 @@ std::shared_ptr<sqlite3> RowLoader::getDb () const
     return pDb;
 }
 
-int RowLoader::countRows()
+int RowLoader::countRows() const
 {
     int retval = -1;
 
@@ -239,7 +239,7 @@ void RowLoader::process (Task & t)
                         rowdata[i] = "";
                 }
             }
-            QMutexLocker lk(&cache_mutex);
+            std::lock_guard<std::mutex> lk(cache_mutex);
             cache_data.set(row++, std::move(rowdata));
         }
 
