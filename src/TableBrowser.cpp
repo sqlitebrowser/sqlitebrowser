@@ -92,7 +92,7 @@ TableBrowser::TableBrowser(QWidget* parent) :
 
     // Set up filters
     connect(ui->dataTable->filterHeader(), &FilterTableHeader::filterChanged, this, &TableBrowser::updateFilter);
-    connect(ui->dataTable->filterHeader(), &FilterTableHeader::addCondFormat, this, &TableBrowser::addCondFormat);
+    connect(ui->dataTable->filterHeader(), &FilterTableHeader::addCondFormat, this, &TableBrowser::addCondFormatFromFilter);
     connect(ui->dataTable->filterHeader(), &FilterTableHeader::allCondFormatsCleared, this, &TableBrowser::clearAllCondFormats);
     connect(ui->dataTable->filterHeader(), &FilterTableHeader::condFormatsEdited, this, &TableBrowser::editCondFormats);
     connect(ui->dataTable, &ExtendedTableWidget::editCondFormats, this, &TableBrowser::editCondFormats);
@@ -130,32 +130,32 @@ TableBrowser::TableBrowser(QWidget* parent) :
     connect(ui->dataTable, &ExtendedTableWidget::selectedRowsToBeDeleted, this, &TableBrowser::deleteRecord);
 
     connect(ui->fontComboBox, &QFontComboBox::currentFontChanged, this, [this](const QFont &font) {
-        modifyColumnFormat(ui->dataTable->colsInSelection(), [font](CondFormat& format) { format.setFontFamily(font.family()); });
+        modifyFormat([font](CondFormat& format) { format.setFontFamily(font.family()); });
     });
     connect(ui->fontSizeBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this,
         [this](int pointSize) {
-        modifyColumnFormat(ui->dataTable->colsInSelection(), [pointSize](CondFormat& format) { format.setFontPointSize(pointSize); });
+        modifyFormat([pointSize](CondFormat& format) { format.setFontPointSize(pointSize); });
     });
 
     connect(ui->actionFontColor, &QAction::triggered, this, [this]() {
         QColor color = QColorDialog::getColor(QColor(m_model->data(currentIndex(), Qt::ForegroundRole).toString()));
         if(color.isValid())
-            modifyColumnFormat(ui->dataTable->colsInSelection(), [color](CondFormat& format) { format.setForegroundColor(color); });
+            modifyFormat([color](CondFormat& format) { format.setForegroundColor(color); });
     });
     connect(ui->actionBackgroundColor, &QAction::triggered, this, [this]() {
         QColor color = QColorDialog::getColor(QColor(m_model->data(currentIndex(), Qt::BackgroundRole).toString()));
         if(color.isValid())
-            modifyColumnFormat(ui->dataTable->colsInSelection(), [color](CondFormat& format) { format.setBackgroundColor(color); });
+            modifyFormat([color](CondFormat& format) { format.setBackgroundColor(color); });
     });
 
     connect(ui->actionBold, &QAction::toggled, this, [this](bool checked) {
-        modifyColumnFormat(ui->dataTable->colsInSelection(), [checked](CondFormat& format) { format.setBold(checked); });
+        modifyFormat([checked](CondFormat& format) { format.setBold(checked); });
     });
     connect(ui->actionItalic, &QAction::toggled, this, [this](bool checked) {
-        modifyColumnFormat(ui->dataTable->colsInSelection(), [checked](CondFormat& format) { format.setItalic(checked); });
+        modifyFormat([checked](CondFormat& format) { format.setItalic(checked); });
     });
     connect(ui->actionUnderline, &QAction::toggled, this, [this](bool checked) {
-        modifyColumnFormat(ui->dataTable->colsInSelection(), [checked](CondFormat& format) { format.setUnderline(checked); });
+        modifyFormat([checked](CondFormat& format) { format.setUnderline(checked); });
     });
 
     connect(ui->actionLeftAlign, &QAction::triggered, this, [this]() {
@@ -163,34 +163,37 @@ TableBrowser::TableBrowser(QWidget* parent) :
         ui->actionRightAlign->setChecked(false);
         ui->actionCenter->setChecked(false);
         ui->actionJustify->setChecked(false);
-        modifyColumnFormat(ui->dataTable->colsInSelection(), [](CondFormat& format) { format.setAlignment(CondFormat::AlignLeft); });
+        modifyFormat([](CondFormat& format) { format.setAlignment(CondFormat::AlignLeft); });
     });
     connect(ui->actionRightAlign, &QAction::triggered, this, [this]() {
         ui->actionLeftAlign->setChecked(false);
         ui->actionRightAlign->setChecked(true);
         ui->actionCenter->setChecked(false);
         ui->actionJustify->setChecked(false);
-        modifyColumnFormat(ui->dataTable->colsInSelection(), [](CondFormat& format) { format.setAlignment(CondFormat::AlignRight); });
+        modifyFormat([](CondFormat& format) { format.setAlignment(CondFormat::AlignRight); });
     });
     connect(ui->actionCenter, &QAction::triggered, this, [this]() {
         ui->actionLeftAlign->setChecked(false);
         ui->actionRightAlign->setChecked(false);
         ui->actionCenter->setChecked(true);
         ui->actionJustify->setChecked(false);
-        modifyColumnFormat(ui->dataTable->colsInSelection(), [](CondFormat& format) { format.setAlignment(CondFormat::AlignCenter); });
+        modifyFormat([](CondFormat& format) { format.setAlignment(CondFormat::AlignCenter); });
     });
     connect(ui->actionJustify, &QAction::triggered, this, [this]() {
         ui->actionLeftAlign->setChecked(false);
         ui->actionRightAlign->setChecked(false);
         ui->actionCenter->setChecked(false);
         ui->actionJustify->setChecked(true);
-        modifyColumnFormat(ui->dataTable->colsInSelection(), [](CondFormat& format) { format.setAlignment(CondFormat::AlignJustify); });
+        modifyFormat([](CondFormat& format) { format.setAlignment(CondFormat::AlignJustify); });
     });
 
     connect(ui->actionEditCondFormats, &QAction::triggered, this, [this]() { editCondFormats(static_cast<size_t>(currentIndex().column())); });
     connect(ui->actionClearFormat, &QAction::triggered, this, [this]() {
-        for (size_t column : ui->dataTable->colsInSelection())
+        for (const size_t column : ui->dataTable->selectedCols())
             clearAllCondFormats(column);
+        for (const QModelIndex& index : ui->dataTable->selectionModel()->selectedIndexes())
+            clearRowIdFormats(index);
+
     });
 
     connect(ui->dataTable, &ExtendedTableWidget::currentIndexChanged, this, [this](const QModelIndex &current, const QModelIndex &) {
@@ -582,7 +585,7 @@ void TableBrowser::updateFilter(size_t column, const QString& value)
     applySettings(settings, true);
 }
 
-void TableBrowser::addCondFormat(size_t column, const QString& value)
+void TableBrowser::addCondFormatFromFilter(size_t column, const QString& value)
 {
     QFont font = QFont(Settings::getValue("databrowser", "font").toString());
     font.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
@@ -594,16 +597,39 @@ void TableBrowser::addCondFormat(size_t column, const QString& value)
                              font,
                              CondFormat::AlignLeft,
                              m_model->encoding());
-    m_model->addCondFormat(column, newCondFormat);
-    m_settings[currentlyBrowsedTableName()].condFormats[column].push_back(newCondFormat);
+    addCondFormat(false, column, newCondFormat);
+}
+
+void TableBrowser::addCondFormat(bool isRowIdFormat, size_t column, const CondFormat& newCondFormat)
+{
+    BrowseDataTableSettings& settings = m_settings[currentlyBrowsedTableName()];
+    std::vector<CondFormat>& formats = isRowIdFormat ? settings.rowIdFormats[column] : settings.condFormats[column];
+    m_model->addCondFormat(isRowIdFormat, column, newCondFormat);
+    // Conditionless formats are pushed back and others inserted at the begining, so they aren't eclipsed.
+    if (newCondFormat.filter().isEmpty())
+        formats.push_back(newCondFormat);
+    else
+        formats.insert(formats.begin(), newCondFormat);
 }
 
 void TableBrowser::clearAllCondFormats(size_t column)
 {
     std::vector<CondFormat> emptyCondFormatVector = std::vector<CondFormat>();
-    m_model->setCondFormats(column, emptyCondFormatVector);
+    m_model->setCondFormats(false, column, emptyCondFormatVector);
     m_settings[currentlyBrowsedTableName()].condFormats[column].clear();
     emit projectModified();
+}
+
+void TableBrowser::clearRowIdFormats(const QModelIndex index)
+{
+
+    std::vector<CondFormat>& rowIdFormats = m_settings[currentlyBrowsedTableName()].rowIdFormats[index.column()];
+    rowIdFormats.erase(std::remove_if(rowIdFormats.begin(), rowIdFormats.end(), [&](const CondFormat& format) {
+            return format.filter() == QString("=%1").arg(m_model->data(index.sibling(index.row(), 0)).toString());
+            }), rowIdFormats.end());
+    m_model->setCondFormats(true, index.column(), rowIdFormats);
+    emit projectModified();
+
 }
 
 void TableBrowser::editCondFormats(size_t column)
@@ -611,42 +637,46 @@ void TableBrowser::editCondFormats(size_t column)
     CondFormatManager condFormatDialog(m_settings[currentlyBrowsedTableName()].condFormats[column],
                                        m_model->encoding(), this);
     condFormatDialog.setWindowTitle(tr("Conditional formats for \"%1\"").
-                                    arg(m_model->headerData(static_cast<int>(column), Qt::Horizontal).toString()));
+                                    arg(m_model->headerData(static_cast<int>(column), Qt::Horizontal, Qt::EditRole).toString()));
     if (condFormatDialog.exec()) {
         std::vector<CondFormat> condFormatVector = condFormatDialog.getCondFormats();
-        m_model->setCondFormats(column, condFormatVector);
+        m_model->setCondFormats(false, column, condFormatVector);
         m_settings[currentlyBrowsedTableName()].condFormats[column] = condFormatVector;
         emit projectModified();
     }
 }
-
-void TableBrowser::modifyColumnFormat(std::unordered_set<size_t> columns, std::function<void(CondFormat&)> changeFunction)
+void TableBrowser::modifySingleFormat(const bool isRowIdFormat, const QString& filter, const QModelIndex refIndex, std::function<void(CondFormat&)> changeFunction)
 {
-    for (size_t column : columns) {
-        std::vector<CondFormat>& columnFormats = m_settings[currentlyBrowsedTableName()].condFormats[column];
+    BrowseDataTableSettings& settings = m_settings[currentlyBrowsedTableName()];
+    std::vector<CondFormat>& formats = isRowIdFormat ? settings.rowIdFormats[refIndex.column()] : settings.condFormats[refIndex.column()];
+    auto it = std::find_if(formats.begin(), formats.end(), [&filter](const CondFormat& format) {
+            return format.filter() == filter;
+        });
+    if(it != formats.end()) {
+        changeFunction(*it);
+        m_model->addCondFormat(isRowIdFormat, refIndex.column(), *it);
+    } else {
+        // Create a new conditional format based on the current reference index and then modify it as requested using the passed function.
+        CondFormat newCondFormat(filter, m_model, refIndex, m_model->encoding());
+        changeFunction(newCondFormat);
+        addCondFormat(isRowIdFormat, refIndex.column(), newCondFormat);
+    }
+}
 
-        auto it = std::find_if(columnFormats.begin(), columnFormats.end(), [](const CondFormat& format) {
-                return format.sqlCondition().isEmpty();
-            });
-        if(it != columnFormats.end()) {
-            changeFunction(*it);
-            m_model->addCondFormat(column, *it);
-        } else {
-            // Create a new conditional format based on defaults and then modify it as requested using the passed function.
-            // Alignment is get from the current column since the default is different from text and numbers.
-            QFont font = QFont(Settings::getValue("databrowser", "font").toString());
-            font.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
-            Qt::Alignment align = Qt::Alignment(m_model->data(currentIndex().sibling(currentIndex().row(), static_cast<int>(column)),
-                                                                         Qt::TextAlignmentRole).toInt());
-
-            CondFormat newCondFormat(QString(""), QColor(Settings::getValue("databrowser", "reg_fg_colour").toString()),
-                                     QColor(Settings::getValue("databrowser", "reg_bg_colour").toString()),
-                                     font,
-                                     CondFormat::fromCombinedAlignment(align),
-                                     m_model->encoding());
-            changeFunction(newCondFormat);
-            m_model->addCondFormat(column, newCondFormat);
-            m_settings[currentlyBrowsedTableName()].condFormats[column].push_back(newCondFormat);
+void TableBrowser::modifyFormat(std::function<void(CondFormat&)> changeFunction)
+{
+    // Modify the conditional formats from entirely selected columns having the current filter value,
+    // or modify the row-id formats of selected cells, when the selection does not cover entire columns.
+    const std::unordered_set<size_t>& columns = ui->dataTable->selectedCols();
+    if (columns.size() > 0) {
+        for (size_t column : columns) {
+            const QString& filter = m_settings[currentlyBrowsedTableName()].filterValues.value(static_cast<int>(column));
+            modifySingleFormat(false, filter, currentIndex().sibling(currentIndex().row(), static_cast<int>(column)), changeFunction);
+        }
+    } else {
+        for(const QModelIndex& index : ui->dataTable->selectionModel()->selectedIndexes()) {
+            const QString filter = QString("=%1").arg(m_model->data(index.sibling(index.row(), 0)).toString());
+            modifySingleFormat(true, filter, index, changeFunction);
         }
     }
     emit projectModified();
@@ -721,19 +751,23 @@ void TableBrowser::applySettings(const BrowseDataTableSettings& storedData, bool
         for(auto filterIt=storedData.filterValues.constBegin();filterIt!=storedData.filterValues.constEnd();++filterIt)
             filterHeader->setFilter(static_cast<size_t>(filterIt.key()), filterIt.value());
 
-        // Conditional formats
+        // Regular conditional formats
         for(auto formatIt=storedData.condFormats.constBegin(); formatIt!=storedData.condFormats.constEnd(); ++formatIt)
-            m_model->setCondFormats(formatIt.key(), formatIt.value());
+            m_model->setCondFormats(false, formatIt.key(), formatIt.value());
 
-      filterHeader->blockSignals(oldState);
+        // Row Id formats
+        for(auto formatIt=storedData.rowIdFormats.constBegin(); formatIt!=storedData.rowIdFormats.constEnd(); ++formatIt)
+            m_model->setCondFormats(true, formatIt.key(), formatIt.value());
 
-      ui->editGlobalFilter->blockSignals(true);
-      QString text;
-      for(const auto& f : storedData.globalFilters)
-          text += f + " ";
-      text.chop(1);
-      ui->editGlobalFilter->setText(text);
-      ui->editGlobalFilter->blockSignals(false);
+        filterHeader->blockSignals(oldState);
+
+        ui->editGlobalFilter->blockSignals(true);
+        QString text;
+        for(const auto& f : storedData.globalFilters)
+            text += f + " ";
+        text.chop(1);
+        ui->editGlobalFilter->setText(text);
+        ui->editGlobalFilter->blockSignals(false);
     }
 
     // Encoding

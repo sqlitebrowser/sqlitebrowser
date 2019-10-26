@@ -2,6 +2,8 @@
 #include "Settings.h"
 #include "Data.h"
 
+#include <QAbstractTableModel>
+
 CondFormat::Alignment CondFormat::fromCombinedAlignment(Qt::Alignment align)
 {
     if (align.testFlag(Qt::AlignLeft))
@@ -28,6 +30,22 @@ CondFormat::CondFormat(const QString& filter,
 {
     if (!filter.isEmpty())
         m_sqlCondition = filterToSqlCondition(filter, encoding);
+}
+
+CondFormat::CondFormat(const QString& filter,
+                       const QAbstractTableModel* model,
+                       const QModelIndex index,
+                       const QString& encoding)
+    : m_filter(filter)
+{
+
+    if (!filter.isEmpty())
+        m_sqlCondition = filterToSqlCondition(filter, encoding);
+
+    m_bgColor = QColor(model->data(index, Qt::BackgroundRole).toString());
+    m_fgColor = QColor(model->data(index, Qt::ForegroundRole).toString());
+    m_align = fromCombinedAlignment(Qt::Alignment(model->data(index, Qt::TextAlignmentRole).toInt()));
+    m_font.fromString(model->data(index, Qt::FontRole).toString());
 }
 
 QString CondFormat::filterToSqlCondition(const QString& value, const QString& encoding)

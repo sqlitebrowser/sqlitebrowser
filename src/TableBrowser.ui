@@ -875,6 +875,9 @@
    <property name="toolTip">
     <string>Edit Conditional Formats...</string>
    </property>
+   <property name="statusTip">
+    <string>Edit conditional formats for the current column</string>
+   </property>
   </action>
   <action name="actionClearFormat">
    <property name="icon">
@@ -885,7 +888,13 @@
     <string>Clear Format</string>
    </property>
    <property name="toolTip">
-    <string>Clear All Conditional Formats</string>
+    <string>Clear All Formats</string>
+   </property>
+   <property name="statusTip">
+    <string>Clear all cell formatting from selected cells and all conditional formats from selected columns</string>
+   </property>
+   <property name="whatsThis">
+    <string>Clear all cell formatting from selected cells and all conditional formats from selected columns</string>
    </property>
   </action>
   <action name="actionFontColor">

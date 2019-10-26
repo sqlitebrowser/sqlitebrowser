@@ -2195,6 +2195,38 @@ void MainWindow::on_actionDonatePatreon_triggered()
     QDesktopServices::openUrl(QUrl("https://www.patreon.com/bePatron?u=11578749"));
 }
 
+static void loadCondFormatMap(BrowseDataTableSettings::CondFormatMap& condFormats, QXmlStreamReader& xml, const QString& encoding)
+{
+    const QStringRef name = xml.name();
+
+    while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != name) {
+        if (xml.name() == "column") {
+            size_t index = xml.attributes().value("index").toUInt();
+            while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "column") {
+                if(xml.name() == "format") {
+                    QFont font;
+                    if (xml.attributes().hasAttribute("font"))
+                        font.fromString(xml.attributes().value("font").toString());
+                    else
+                        Settings::getValue("databrowser", "font").toString();
+
+                    CondFormat::Alignment align;
+                    if (xml.attributes().hasAttribute("align"))
+                        align = static_cast<CondFormat::Alignment>(xml.attributes().value("align").toInt());
+                    else
+                        align = CondFormat::AlignLeft;
+
+                    condFormats[index].emplace_back(xml.attributes().value("condition").toString(),
+                                                    QColor(xml.attributes().value("foreground").toString()),
+                                                    QColor(xml.attributes().value("background").toString()),
+                                                    font, align, encoding);
+                    xml.skipCurrentElement();
+                }
+            }
+        }
+    }
+}
+
 static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, QXmlStreamReader& xml)
 {
     // TODO Remove this in the near future. This file format was only created temporarily by the nightlies from the late 3.11 development period.
@@ -2240,32 +2272,9 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, QXmlS
                 }
             }
         } else if(xml.name() == "conditional_formats") {
-            while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "conditional_formats") {
-                if (xml.name() == "column") {
-                    size_t index = xml.attributes().value("index").toUInt();
-                    while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "column") {
-                        if(xml.name() == "format") {
-                            QFont font;
-                            if (xml.attributes().hasAttribute("font"))
-                                font.fromString(xml.attributes().value("font").toString());
-                            else
-                                Settings::getValue("databrowser", "font").toString();
-
-                            CondFormat::Alignment align;
-                            if (xml.attributes().hasAttribute("align"))
-                                align = static_cast<CondFormat::Alignment>(xml.attributes().value("align").toInt());
-                            else
-                                align = CondFormat::AlignLeft;
-
-                            settings.condFormats[index].emplace_back(xml.attributes().value("condition").toString(),
-                                                                     QColor(xml.attributes().value("foreground").toString()),
-                                                                     QColor(xml.attributes().value("background").toString()),
-                                                                     font, align, settings.encoding);
-                            xml.skipCurrentElement();
-                        }
-                    }
-                }
-            }
+            loadCondFormatMap(settings.condFormats, xml, settings.encoding);
+        } else if(xml.name() == "row_id_formats") {
+            loadCondFormatMap(settings.rowIdFormats, xml, settings.encoding);
         } else if(xml.name() == "display_formats") {
             while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "display_formats") {
                 if (xml.name() == "column") {
@@ -2556,6 +2565,26 @@ static void saveDbTreeState(const QTreeView* tree, QXmlStreamWriter& xml, QModel
     }
 }
 
+static void saveCondFormatMap(const QString& elementName, const BrowseDataTableSettings::CondFormatMap& condFormats, QXmlStreamWriter& xml)
+{
+    xml.writeStartElement(elementName);
+    for(auto iter=condFormats.constBegin(); iter!=condFormats.constEnd(); ++iter) {
+        xml.writeStartElement("column");
+        xml.writeAttribute("index", QString::number(iter.key()));
+        for(auto format : iter.value()) {
+            xml.writeStartElement("format");
+            xml.writeAttribute("condition", format.filter());
+            xml.writeAttribute("background", format.backgroundColor().name());
+            xml.writeAttribute("foreground", format.foregroundColor().name());
+            xml.writeAttribute("font", format.font().toString());
+            xml.writeAttribute("align", QString().setNum(format.alignment()));
+            xml.writeEndElement();
+        }
+        xml.writeEndElement();
+    }
+    xml.writeEndElement();
+}
+
 static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, QXmlStreamWriter& xml)
 {
     xml.writeAttribute("show_row_id", QString::number(object.showRowid));
@@ -2589,22 +2618,8 @@ static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, Q
         xml.writeEndElement();
     }
     xml.writeEndElement();
-    xml.writeStartElement("conditional_formats");
-    for(auto iter=object.condFormats.constBegin(); iter!=object.condFormats.constEnd(); ++iter) {
-        xml.writeStartElement("column");
-        xml.writeAttribute("index", QString::number(iter.key()));
-        for(auto format : iter.value()) {
-            xml.writeStartElement("format");
-            xml.writeAttribute("condition", format.filter());
-            xml.writeAttribute("background", format.backgroundColor().name());
-            xml.writeAttribute("foreground", format.foregroundColor().name());
-            xml.writeAttribute("font", format.font().toString());
-            xml.writeAttribute("align", QString().setNum(format.alignment()));
-            xml.writeEndElement();
-        }
-        xml.writeEndElement();
-    }
-    xml.writeEndElement();
+    saveCondFormatMap("conditional_formats", object.condFormats, xml);
+    saveCondFormatMap("row_id_formats", object.rowIdFormats, xml);
     xml.writeStartElement("display_formats");
     for(auto iter=object.displayFormats.constBegin(); iter!=object.displayFormats.constEnd(); ++iter) {
         xml.writeStartElement("column");

@@ -25,10 +25,12 @@ class TableBrowser;
 
 struct BrowseDataTableSettings
 {
+    using CondFormatMap = QMap<size_t, std::vector<CondFormat>>;
     sqlb::Query query;                              // NOTE: We only store the sort order in here (for now)
     QMap<int, int> columnWidths;
     QMap<int, QString> filterValues;
-    QMap<size_t, std::vector<CondFormat>> condFormats;
+    CondFormatMap condFormats;
+    CondFormatMap rowIdFormats;
     QMap<int, QString> displayFormats;
     bool showRowid;
     QString encoding;
@@ -121,8 +123,10 @@ signals:
 private slots:
     void clear();
     void updateFilter(size_t column, const QString& value);
-    void addCondFormat(size_t column, const QString& value);
+    void addCondFormatFromFilter(size_t column, const QString& value);
+    void addCondFormat(bool isRowIdFormat, size_t column, const CondFormat& newCondFormat);
     void clearAllCondFormats(size_t column);
+    void clearRowIdFormats(const QModelIndex index);
     void editCondFormats(size_t column);
     void applySettings(const BrowseDataTableSettings& storedData, bool skipFilters = false);
     void enableEditing(bool enable_edit);
@@ -176,7 +180,9 @@ private:
 
     Palette m_condFormatPalette;
 
-    void modifyColumnFormat(std::unordered_set<size_t> columns, std::function<void(CondFormat&)> changeFunction);
+    void modifySingleFormat(const bool isRowIdFormat, const QString& filter, const QModelIndex refIndex,
+                            std::function<void(CondFormat&)> changeFunction);
+    void modifyFormat(std::function<void(CondFormat&)> changeFunction);
 };
 
 #endif

@@ -4,6 +4,9 @@
 #include <QString>
 #include <QColor>
 #include <QFont>
+#include <QModelIndex>
+
+class QAbstractTableModel;
 
 // Conditional formatting for given format to table cells based on a specified condition.
 class CondFormat
@@ -27,12 +30,18 @@ public:
     static Alignment fromCombinedAlignment(Qt::Alignment align);
 
     CondFormat() {}
-    explicit CondFormat(const QString& filter,
-                        const QColor& foreground,
-                        const QColor& background,
-                        const QFont& font,
-                        const Alignment alignment = AlignLeft,
-                        const QString& encoding = QString());
+    CondFormat(const QString& filter,
+               const QColor& foreground,
+               const QColor& background,
+               const QFont& font,
+               const Alignment alignment = AlignLeft,
+               const QString& encoding = QString());
+
+    // Create a new CondFormat from values obtained from the model
+    CondFormat(const QString& filter,
+               const QAbstractTableModel* model,
+               const QModelIndex index,
+               const QString& encoding = QString());
 
     static QString filterToSqlCondition(const QString& value, const QString& encoding = QString());
 

@@ -113,8 +113,11 @@ public:
     // Helper function for removing all comments from a SQL query
     static void removeCommentsFromQuery(QString& query);
 
-    void addCondFormat(size_t column, const CondFormat& condFormat);
-    void setCondFormats(size_t column, const std::vector<CondFormat>& condFormats);
+    // Conditional formats are of two kinds: regular conditional formats (including condition-free formats applying to any value in the
+    // column) and formats applying to a particular row-id and which have always precedence over the first kind and whose filter apply
+    // to the row-id column.
+    void addCondFormat(const bool isRowIdFormat, size_t column, const CondFormat& condFormat);
+    void setCondFormats(const bool isRowIdFormat, size_t column, const std::vector<CondFormat>& condFormats);
 
     // Search for the specified expression in the given cells. This intended as a replacement for QAbstractItemModel::match() even though
     // it does not override it, which - because of the different parameters - is not possible.
@@ -166,7 +169,8 @@ private:
 
     // Return matching conditional format color/font or invalid value, otherwise.
     // Only format roles are expected in role (Qt::ItemDataRole)
-    QVariant getMatchingCondFormat(size_t column, const QString& value, int role) const;
+    QVariant getMatchingCondFormat(size_t row, size_t column, const QString& value, int role) const;
+    QVariant getMatchingCondFormat(const std::map<size_t, std::vector<CondFormat>>& mCondFormats, size_t column, const QString& value, int role) const;
 
     DBBrowserDB& m_db;
 
@@ -199,6 +203,7 @@ private:
     QString m_sQuery;
     std::vector<int> m_vDataTypes;
     std::map<size_t, std::vector<CondFormat>> m_mCondFormats;
+    std::map<size_t, std::vector<CondFormat>> m_mRowIdFormats;
     sqlb::Query m_query;
 
     QString m_encoding;

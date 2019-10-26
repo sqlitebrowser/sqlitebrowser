@@ -112,6 +112,7 @@ void SqliteTableModel::reset()
     m_headers.clear();
     m_vDataTypes.clear();
     m_mCondFormats.clear();
+    m_mRowIdFormats.clear();
 
     endResetModel();
 }
@@ -256,9 +257,9 @@ QVariant SqliteTableModel::headerData(int section, Qt::Orientation orientation, 
         return QString::number(section + 1);
 }
 
-QVariant SqliteTableModel::getMatchingCondFormat(size_t column, const QString& value, int role) const
+QVariant SqliteTableModel::getMatchingCondFormat(const std::map<size_t, std::vector<CondFormat>>& mCondFormats, size_t column, const QString& value, int role) const
 {
-    if (!m_mCondFormats.count(column))
+    if (!mCondFormats.count(column))
         return QVariant();
 
     bool isNumber;
@@ -267,7 +268,7 @@ QVariant SqliteTableModel::getMatchingCondFormat(size_t column, const QString& v
 
     // For each conditional format for this column,
     // if the condition matches the current data, return the associated format.
-    for (const CondFormat& eachCondFormat : m_mCondFormats.at(column)) {
+    for (const CondFormat& eachCondFormat : mCondFormats.at(column)) {
         if (isNumber && !eachCondFormat.sqlCondition().contains("'"))
             sql = QString("SELECT %1 %2").arg(value, eachCondFormat.sqlCondition());
         else
@@ -288,6 +289,26 @@ QVariant SqliteTableModel::getMatchingCondFormat(size_t column, const QString& v
             }
     }
     return QVariant();
+}
+
+QVariant SqliteTableModel::getMatchingCondFormat(size_t row, size_t column, const QString& value, int role) const
+{
+    QVariant format;
+    // Check first for a row-id format and when there is none, for a conditional format.
+    if (m_mRowIdFormats.count(column)) {
+        QMutexLocker lock(&m_mutexDataCache);
+        const bool row_available = m_cache.count(row);
+        const QByteArray blank_data("");
+        const QByteArray& row_id_data = row_available ? m_cache.at(row).at(0) : blank_data;
+        lock.unlock();
+        format = getMatchingCondFormat(m_mRowIdFormats, column, row_id_data, role);
+        if (format.isValid())
+            return format;
+    }
+    if (m_mCondFormats.count(column))
+        return getMatchingCondFormat(m_mCondFormats, column, value, role);
+    else
+        return QVariant();
 }
 
 QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
@@ -335,7 +356,7 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
         else {
             // Unlock before querying from DB
             lock.unlock();
-            QVariant condFormatFont = getMatchingCondFormat(column, data, role);
+            QVariant condFormatFont = getMatchingCondFormat(row, column, data, role);
             if (condFormatFont.isValid())
                 return condFormatFont;
         }
@@ -347,10 +368,10 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
             return m_nullFgColour;
         else if (isBinary(data))
             return m_binFgColour;
-        else if (m_mCondFormats.count(column)) {
+        else {
             // Unlock before querying from DB
             lock.unlock();
-            QVariant condFormatColor = getMatchingCondFormat(column, data, role);
+            QVariant condFormatColor = getMatchingCondFormat(row, column, data, role);
             if (condFormatColor.isValid())
                 return condFormatColor;
             }
@@ -363,10 +384,10 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
             return m_nullBgColour;
         else if (isBinary(data))
             return m_binBgColour;
-        else if (m_mCondFormats.count(column)) {
+        else {
             // Unlock before querying from DB
             lock.unlock();
-            QVariant condFormatColor = getMatchingCondFormat(column, data, role);
+            QVariant condFormatColor = getMatchingCondFormat(row, column, data, role);
             if (condFormatColor.isValid())
                 return condFormatColor;
         }
@@ -383,7 +404,7 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
         // Align horizontally according to conditional format or default (left for text and right for numbers)
         // Align vertically to the center, which displays better.
         lock.unlock();
-        QVariant condFormat = getMatchingCondFormat(column, data, role);
+        QVariant condFormat = getMatchingCondFormat(row, column, data, role);
         if (condFormat.isValid())
             return condFormat;
         bool isNumber;
@@ -799,23 +820,38 @@ std::vector<std::string> SqliteTableModel::getColumns(std::shared_ptr<sqlite3> p
     return listColumns;
 }
 
-void SqliteTableModel::addCondFormat(size_t column, const CondFormat& condFormat)
+void addCondFormatToMap(std::map<size_t, std::vector<CondFormat>>& mCondFormats, size_t column, const CondFormat& condFormat)
 {
     // If the condition is already present in the vector, update that entry and respect the order, since two entries with the same
     // condition do not make sense.
-    auto it = std::find_if(m_mCondFormats[column].begin(), m_mCondFormats[column].end(), [condFormat](const CondFormat& format) {
+    auto it = std::find_if(mCondFormats[column].begin(), mCondFormats[column].end(), [condFormat](const CondFormat& format) {
             return format.sqlCondition() == condFormat.sqlCondition();
         });
-    if(it != m_mCondFormats[column].end()) {
+    // Replace cond-format if present. push it back if it's a conditionless format (apply to every cell in column) or insert
+    // as first element otherwise.
+    if(it != mCondFormats[column].end()) {
         *it = condFormat;
-    } else
-        m_mCondFormats[column].push_back(condFormat);
+    } else if (condFormat.filter().isEmpty())
+        mCondFormats[column].push_back(condFormat);
+    else
+        mCondFormats[column].insert(mCondFormats[column].begin(), condFormat);
+}
+
+void SqliteTableModel::addCondFormat(const bool isRowIdFormat, size_t column, const CondFormat& condFormat)
+{
+    if(isRowIdFormat)
+        addCondFormatToMap(m_mRowIdFormats, column, condFormat);
+    else
+        addCondFormatToMap(m_mCondFormats, column, condFormat);
     emit layoutChanged();
 }
 
-void SqliteTableModel::setCondFormats(size_t column, const std::vector<CondFormat>& condFormats)
+void SqliteTableModel::setCondFormats(const bool isRowIdFormat, size_t column, const std::vector<CondFormat>& condFormats)
 {
-    m_mCondFormats[column] = condFormats;
+    if(isRowIdFormat)
+        m_mRowIdFormats[column] = condFormats;
+    else
+        m_mCondFormats[column] = condFormats;
     emit layoutChanged();
 }
 
