@@ -942,6 +942,14 @@
     <string>This button shows or hides the formatting toolbar of the Data Browser</string>
    </property>
   </action>
+  <action name="actionSelectColumn">
+   <property name="text">
+    <string>Select column</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Space</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>

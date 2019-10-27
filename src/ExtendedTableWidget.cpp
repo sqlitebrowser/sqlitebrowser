@@ -23,6 +23,7 @@
 #include <QTextDocument>
 #include <QCompleter>
 #include <QComboBox>
+#include <QShortcut>
 
 #include <limits>
 
@@ -378,6 +379,16 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     });
     connect(printAction, &QAction::triggered, [&]() {
        openPrintDialog();
+    });
+
+    // Add spreadsheet shortcuts for selecting entire columns or entire rows.
+    QShortcut* selectColumnShortcut = new QShortcut(QKeySequence("Ctrl+Space"), this);
+    connect(selectColumnShortcut, &QShortcut::activated, [this]() {
+        selectionModel()->select(QItemSelection(selectionModel()->selectedIndexes().constFirst(), selectionModel()->selectedIndexes().constLast()), QItemSelectionModel::Select | QItemSelectionModel::Columns);
+    });
+    QShortcut* selectRowShortcut = new QShortcut(QKeySequence("Shift+Space"), this);
+    connect(selectRowShortcut, &QShortcut::activated, [this]() {
+        selectionModel()->select(QItemSelection(selectionModel()->selectedIndexes().constFirst(), selectionModel()->selectedIndexes().constLast()), QItemSelectionModel::Select | QItemSelectionModel::Rows);
     });
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0) && QT_VERSION < QT_VERSION_CHECK(5, 12, 3)

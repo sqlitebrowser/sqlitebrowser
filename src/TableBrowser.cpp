@@ -56,12 +56,17 @@ TableBrowser::TableBrowser(QWidget* parent) :
     popupHeaderMenu->addAction(ui->actionShowRowidColumn);
     popupHeaderMenu->addAction(ui->actionHideColumns);
     popupHeaderMenu->addAction(ui->actionShowAllColumns);
+    popupHeaderMenu->addAction(ui->actionSelectColumn);
     popupHeaderMenu->addSeparator();
     popupHeaderMenu->addAction(ui->actionUnlockViewEditing);
     popupHeaderMenu->addAction(ui->actionBrowseTableEditDisplayFormat);
     popupHeaderMenu->addSeparator();
     popupHeaderMenu->addAction(ui->actionSetTableEncoding);
     popupHeaderMenu->addAction(ui->actionSetAllTablesEncoding);
+
+    connect(ui->actionSelectColumn, &QAction::triggered, [this]() {
+        ui->dataTable->selectColumn(ui->actionBrowseTableEditDisplayFormat->property("clicked_column").toInt());
+      });
 
     // Set up shortcuts
     QShortcut* dittoRecordShortcut = new QShortcut(QKeySequence("Ctrl+\""), this);
