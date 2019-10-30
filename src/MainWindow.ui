@@ -1187,7 +1187,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>This button closes the connection to the currently open database file</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+W</string>
+    <string>Ctrl+F4</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>

@@ -215,6 +215,12 @@ void MainWindow::init()
     QShortcut* shortcutPrint = new QShortcut(QKeySequence(QKeySequence::Print), ui->dbTreeWidget, nullptr, nullptr, Qt::WidgetShortcut);
     connect(shortcutPrint, &QShortcut::activated, this, &MainWindow::printDbStructure);
 
+    QShortcut* closeTabShortcut = new QShortcut(tr("Ctrl+W"), ui->tabSqlAreas, nullptr, nullptr, Qt::WidgetWithChildrenShortcut);
+    connect(closeTabShortcut, &QShortcut::activated, this, [this]() {
+        if(ui->tabSqlAreas->currentIndex() > 0)
+          closeSqlTab(ui->tabSqlAreas->currentIndex());
+    });
+
     // Create the actions for the recently opened dbs list
     for(int i = 0; i < MaxRecentFiles; ++i) {
         recentFileActs[i] = new QAction(this);
@@ -3267,6 +3273,7 @@ void MainWindow::showContextMenuSqlTabBar(const QPoint& pos)
 
     QAction* actionClose = new QAction(this);
     actionClose->setText(tr("Close Tab"));
+    actionClose->setShortcut(tr("Ctrl+W"));
     connect(actionClose, &QAction::triggered, [this, tab]() {
         closeSqlTab(tab);
     });
