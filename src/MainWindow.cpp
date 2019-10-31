@@ -1827,10 +1827,6 @@ bool MainWindow::askSaveSqlTab(int index, bool& ignoreUnattachedBuffers)
 
 void MainWindow::closeSqlTab(int index, bool force)
 {
-    // Don't close last tab
-    if(ui->tabSqlAreas->count() == 1 && !force)
-        return;
-
     // Check if we're still executing statements from this tab and stop them before proceeding
     if(!ui->tabSqlAreas->tabIcon(index).isNull())
     {
@@ -1852,6 +1848,10 @@ void MainWindow::closeSqlTab(int index, bool force)
     QWidget* w = ui->tabSqlAreas->widget(index);
     ui->tabSqlAreas->removeTab(index);
     delete w;
+
+    // Don't let an empty tab widget
+    if(ui->tabSqlAreas->count() == 0 && !force)
+        openSqlTab(true);
 }
 
 int MainWindow::openSqlTab(bool resetCounter)
