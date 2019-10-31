@@ -217,7 +217,7 @@ void MainWindow::init()
 
     QShortcut* closeTabShortcut = new QShortcut(tr("Ctrl+W"), ui->tabSqlAreas, nullptr, nullptr, Qt::WidgetWithChildrenShortcut);
     connect(closeTabShortcut, &QShortcut::activated, this, [this]() {
-        if(ui->tabSqlAreas->currentIndex() > 0)
+        if(ui->tabSqlAreas->currentIndex() >= 0)
           closeSqlTab(ui->tabSqlAreas->currentIndex());
     });
 
