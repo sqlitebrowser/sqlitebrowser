@@ -1852,6 +1852,11 @@ void MainWindow::closeSqlTab(int index, bool force)
     // Don't let an empty tab widget
     if(ui->tabSqlAreas->count() == 0 && !force)
         openSqlTab(true);
+
+    // Set focus to the currently selected editor tab.
+    SqlExecutionArea* sqlarea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
+    if(sqlarea)
+        sqlarea->getEditor()->setFocus();
 }
 
 int MainWindow::openSqlTab(bool resetCounter)
