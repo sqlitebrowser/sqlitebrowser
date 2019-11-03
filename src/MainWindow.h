@@ -114,7 +114,7 @@ private:
     void toggleTabVisible(QWidget* tabWidget, bool show);
     void restoreOpenTabs(QString tabs);
     QString saveOpenTabs();
-    QString saveProject(const QString& currentFilename);
+    void saveProject(const QString& currentFilename);
     bool closeFiles();
     bool closeProject();
     bool askSaveSqlTab(int index, bool& ignoreUnattachedBuffers);

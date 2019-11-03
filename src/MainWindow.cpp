@@ -719,6 +719,7 @@ bool MainWindow::closeProject()
             break;
         }
     }
+    currentProjectFilename.clear();
     return db.close();
 }
 
@@ -1557,7 +1558,18 @@ void MainWindow::updateRecentFileActions()
 void MainWindow::setCurrentFile(const QString &fileName)
 {
     setWindowFilePath(fileName);
-    setWindowTitle(QApplication::applicationName() + " - " + QDir::toNativeSeparators(fileName));
+    if(currentProjectFilename.isEmpty())
+        setWindowTitle(QApplication::applicationName() + " - " + QDir::toNativeSeparators(fileName));
+    else {
+        QFileInfo projectFileInfo(currentProjectFilename);
+        QFileInfo dbFileInfo(fileName);
+        QString dbFileName;
+        if(dbFileInfo.path() == projectFileInfo.path())
+            dbFileName = dbFileInfo.fileName();
+        else
+            dbFileName = QDir::toNativeSeparators(fileName);
+        setWindowTitle(QApplication::applicationName() + " - " + QDir::toNativeSeparators(currentProjectFilename) + " [" + dbFileName + "]");
+    }
     activateFields(true);
     dbState(db.getDirty());
 }
@@ -2354,6 +2366,7 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
 
         isProjectModified = false;
         addToRecentFilesMenu(filename, readOnly);
+        currentProjectFilename = filename;
 
         QString currentTable;
         while(!xml.atEnd() && !xml.hasError())
@@ -2525,7 +2538,6 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
         }
 
         file.close();
-        currentProjectFilename = filename;
 
         if(ui->mainTab->currentWidget() == ui->browser) {
             if (!currentTable.isEmpty())
@@ -2669,7 +2681,7 @@ static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, Q
     xml.writeEndElement();
 }
 
-QString MainWindow::saveProject(const QString& currentFilename)
+void MainWindow::saveProject(const QString& currentFilename)
 {
     QString filename;
     if(currentFilename.isEmpty()) {
@@ -2696,8 +2708,10 @@ QString MainWindow::saveProject(const QString& currentFilename)
         if(!opened) {
             QMessageBox::warning(this, qApp->applicationName(),
                                tr("Could not open project file for writing.\nReason: %1").arg(file.errorString()));
-            return QString();
+            currentProjectFilename.clear();
+            return;
         }
+        currentProjectFilename = filename;
         QApplication::setOverrideCursor(Qt::WaitCursor);
 
         QXmlStreamWriter xml(&file);
@@ -2803,20 +2817,20 @@ QString MainWindow::saveProject(const QString& currentFilename)
         file.close();
 
         addToRecentFilesMenu(filename);
+        setCurrentFile(db.currentFile());
         isProjectModified = false;
         QApplication::restoreOverrideCursor();
     }
-    return filename;
 }
 
 void MainWindow::saveProject()
 {
-    currentProjectFilename = saveProject(currentProjectFilename);
+    saveProject(currentProjectFilename);
 }
 
 void MainWindow::saveProjectAs()
 {
-    currentProjectFilename = saveProject(QString());
+    saveProject(QString());
 }
 
 void MainWindow::fileAttach(const QString& fileName)
