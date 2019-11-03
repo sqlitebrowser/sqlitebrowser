@@ -2364,7 +2364,6 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
         if(xml.name() != "sqlb_project")
             return false;
 
-        isProjectModified = false;
         addToRecentFilesMenu(filename, readOnly);
         currentProjectFilename = filename;
 
@@ -2564,6 +2563,8 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
             }
             populateTable();     // Refresh view
         }
+
+        isProjectModified = false;
 
         return !xml.hasError();
     } else {
