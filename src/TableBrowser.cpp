@@ -361,19 +361,17 @@ QModelIndex TableBrowser::currentIndex() const
 
 void TableBrowser::setEnabled(bool enable)
 {
+    ui->browseToolbar->setEnabled(enable);
+    ui->editGlobalFilter->setEnabled(enable);
+    ui->formatFrame->setEnabled(enable);
+    ui->frameFind->setEnabled(enable);
+
     ui->buttonNext->setEnabled(enable);
     ui->buttonPrevious->setEnabled(enable);
     ui->buttonBegin->setEnabled(enable);
     ui->buttonEnd->setEnabled(enable);
     ui->buttonGoto->setEnabled(enable);
     ui->editGoto->setEnabled(enable);
-    ui->actionSaveFilterAsPopup->setEnabled(enable);
-    ui->actionClearFilters->setEnabled(enable);
-    ui->actionClearSorting->setEnabled(enable);
-    ui->actionRefresh->setEnabled(enable);
-    ui->actionPrintTable->setEnabled(enable);
-    ui->editGlobalFilter->setEnabled(enable);
-    ui->actionFind->setEnabled(enable);
 
     updateInsertDeleteRecordButton();
 }
