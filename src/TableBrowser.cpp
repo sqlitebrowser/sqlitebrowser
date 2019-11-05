@@ -626,11 +626,11 @@ void TableBrowser::clearAllCondFormats(size_t column)
 void TableBrowser::clearRowIdFormats(const QModelIndex index)
 {
 
-    std::vector<CondFormat>& rowIdFormats = m_settings[currentlyBrowsedTableName()].rowIdFormats[index.column()];
+    std::vector<CondFormat>& rowIdFormats = m_settings[currentlyBrowsedTableName()].rowIdFormats[static_cast<size_t>(index.column())];
     rowIdFormats.erase(std::remove_if(rowIdFormats.begin(), rowIdFormats.end(), [&](const CondFormat& format) {
             return format.filter() == QString("=%1").arg(m_model->data(index.sibling(index.row(), 0)).toString());
             }), rowIdFormats.end());
-    m_model->setCondFormats(true, index.column(), rowIdFormats);
+    m_model->setCondFormats(true, static_cast<size_t>(index.column()), rowIdFormats);
     emit projectModified();
 
 }
@@ -650,19 +650,20 @@ void TableBrowser::editCondFormats(size_t column)
 }
 void TableBrowser::modifySingleFormat(const bool isRowIdFormat, const QString& filter, const QModelIndex refIndex, std::function<void(CondFormat&)> changeFunction)
 {
+    const size_t column = static_cast<size_t>(refIndex.column());
     BrowseDataTableSettings& settings = m_settings[currentlyBrowsedTableName()];
-    std::vector<CondFormat>& formats = isRowIdFormat ? settings.rowIdFormats[refIndex.column()] : settings.condFormats[refIndex.column()];
+    std::vector<CondFormat>& formats = isRowIdFormat ? settings.rowIdFormats[column] : settings.condFormats[column];
     auto it = std::find_if(formats.begin(), formats.end(), [&filter](const CondFormat& format) {
             return format.filter() == filter;
         });
     if(it != formats.end()) {
         changeFunction(*it);
-        m_model->addCondFormat(isRowIdFormat, refIndex.column(), *it);
+        m_model->addCondFormat(isRowIdFormat, column, *it);
     } else {
         // Create a new conditional format based on the current reference index and then modify it as requested using the passed function.
         CondFormat newCondFormat(filter, m_model, refIndex, m_model->encoding());
         changeFunction(newCondFormat);
-        addCondFormat(isRowIdFormat, refIndex.column(), newCondFormat);
+        addCondFormat(isRowIdFormat, column, newCondFormat);
     }
 }
 

@@ -15,6 +15,8 @@ CondFormat::Alignment CondFormat::fromCombinedAlignment(Qt::Alignment align)
         return AlignCenter;
     if (align.testFlag(Qt::AlignJustify))
         return AlignJustify;
+
+    return AlignLeft;
 }
 
 CondFormat::CondFormat(const QString& filter,
@@ -169,4 +171,6 @@ Qt::AlignmentFlag CondFormat::alignmentFlag() const
     case AlignJustify:
         return Qt::AlignJustify;
     }
+
+    return Qt::AlignLeft;
 }

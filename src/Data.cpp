@@ -56,6 +56,8 @@ bool containsRightToLeft(const QString& text) {
         case QChar::DirRLO:
         case QChar::DirRLI:
             return true;
+        default:
+            break;
         }
     }
     return false;
