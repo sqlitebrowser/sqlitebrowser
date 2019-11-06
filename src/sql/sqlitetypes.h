@@ -18,10 +18,18 @@ bool contains(const C& container, E element)
 template<typename T>
 bool compare_ci(const T& a, const T& b)
 {
+    // Note: This function does not have to be (actually it must not be) fully UTF-8 aware because SQLite itself is not either.
+
+    if(a.length() != b.length())
+        return false;
     return std::equal(a.begin(), a.end(), b.begin(), [](unsigned char c1, unsigned char c2) {
-        // TODO: Do we need to make this UTF-8-aware?
         return std::tolower(c1) == std::tolower(c2);
     });
+
+    // TODO Replace the entire code above by the following once we have enabled C++14 support
+    /*return std::equal(a.begin(), a.end(), b.begin(), b.end(), [](unsigned char c1, unsigned char c2) {
+        return std::tolower(c1) == std::tolower(c2);
+    });*/
 }
 
 template<typename T>
