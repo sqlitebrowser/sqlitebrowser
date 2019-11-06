@@ -339,7 +339,7 @@ void PreferencesDialog::saveSettings()
 
 void PreferencesDialog::showColourDialog(QTreeWidgetItem* item, int column)
 {
-    if(item->text(column).at(0) != "#")
+    if(item->text(column).left(1) != "#")
         return;
 
     QColor colour = QColorDialog::getColor(QColor(item->text(column)), this);
