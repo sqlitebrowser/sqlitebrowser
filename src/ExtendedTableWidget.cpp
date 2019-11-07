@@ -384,10 +384,14 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     // Add spreadsheet shortcuts for selecting entire columns or entire rows.
     QShortcut* selectColumnShortcut = new QShortcut(QKeySequence("Ctrl+Space"), this);
     connect(selectColumnShortcut, &QShortcut::activated, [this]() {
+        if(!hasFocus() || selectionModel()->selectedIndexes().isEmpty())
+            return;
         selectionModel()->select(QItemSelection(selectionModel()->selectedIndexes().first(), selectionModel()->selectedIndexes().last()), QItemSelectionModel::Select | QItemSelectionModel::Columns);
     });
     QShortcut* selectRowShortcut = new QShortcut(QKeySequence("Shift+Space"), this);
     connect(selectRowShortcut, &QShortcut::activated, [this]() {
+        if(!hasFocus() || selectionModel()->selectedIndexes().isEmpty())
+            return;
         selectionModel()->select(QItemSelection(selectionModel()->selectedIndexes().first(), selectionModel()->selectedIndexes().last()), QItemSelectionModel::Select | QItemSelectionModel::Rows);
     });
 
