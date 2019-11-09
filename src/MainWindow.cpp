@@ -1283,12 +1283,11 @@ void MainWindow::exportTableToJson()
     dialog.exec();
 }
 
-void MainWindow::dbState( bool dirty )
+void MainWindow::dbState(bool dirty)
 {
     ui->fileSaveAction->setEnabled(dirty);
     ui->fileRevertAction->setEnabled(dirty);
-    ui->fileAttachAction->setEnabled(!dirty);
-    //ui->actionEncryption->setEnabled(!dirty);
+    ui->fileAttachAction->setEnabled(db.isOpen() && !dirty);
 }
 
 void MainWindow::fileSave()
