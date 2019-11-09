@@ -512,8 +512,10 @@ bool MainWindow::fileOpen(const QString& fileName, bool openFromProject, bool re
                 statusReadOnlyLabel->setVisible(db.readOnly());
                 setCurrentFile(wFile);
                 if(!openFromProject) {
-                    currentProjectFilename.clear();
                     addToRecentFilesMenu(wFile, readOnly);
+                    // When a new DB file has been open while a project is open, set the project modified.
+                    if(!currentProjectFilename.isEmpty())
+                        isProjectModified = true;
                 }
                 openSqlTab(true);
                 if(ui->mainTab->currentWidget() == ui->browser)
@@ -644,10 +646,10 @@ bool MainWindow::fileClose()
     }
 
     // Close the database but stop the closing process here if the user pressed the cancel button in there
-    if(!closeProject())
+    if(!db.close())
         return false;
 
-    setWindowTitle(QApplication::applicationName());
+    setCurrentFile(QString());
     loadPragmas();
     statusEncryptionLabel->setVisible(false);
     statusReadOnlyLabel->setVisible(false);
@@ -657,8 +659,6 @@ bool MainWindow::fileClose()
 
     // Clear edit dock
     editDock->setCurrentIndex(QModelIndex());
-
-    activateFields(false);
 
     // Clear the SQL Log
     ui->editLogApplication->clear();
@@ -710,7 +710,7 @@ bool MainWindow::closeProject()
         QMessageBox::StandardButton reply = QMessageBox::question
             (nullptr,
              QApplication::applicationName(),
-             tr("Do you want to save the changes made to the project file %1?").
+             tr("Do you want to save the changes made to the project file '%1'?").
              arg(QFileInfo(currentProjectFilename).fileName()),
              QMessageBox::Save | QMessageBox::No | QMessageBox::Cancel);
         switch(reply) {
@@ -1367,7 +1367,7 @@ void MainWindow::importDatabaseFromSQL()
 
         // Create the new file and open it in the browser
         db.create(newDbFile);
-        closeProject();
+        db.close();
         fileOpen(newDbFile);
     }
 
@@ -1562,7 +1562,9 @@ void MainWindow::updateRecentFileActions()
 void MainWindow::setCurrentFile(const QString &fileName)
 {
     setWindowFilePath(fileName);
-    if(currentProjectFilename.isEmpty())
+    if(currentProjectFilename.isEmpty() && fileName.isEmpty())
+        setWindowTitle(QApplication::applicationName());
+    else if(currentProjectFilename.isEmpty())
         setWindowTitle(QApplication::applicationName() + " - " + QDir::toNativeSeparators(fileName));
     else {
         QFileInfo projectFileInfo(currentProjectFilename);
@@ -1574,8 +1576,9 @@ void MainWindow::setCurrentFile(const QString &fileName)
             dbFileName = QDir::toNativeSeparators(fileName);
         setWindowTitle(QApplication::applicationName() + " - " + QDir::toNativeSeparators(currentProjectFilename) + " [" + dbFileName + "]");
     }
-    activateFields(true);
-    dbState(db.getDirty());
+    activateFields(!fileName.isEmpty());
+    if(!fileName.isEmpty())
+        dbState(db.getDirty());
 }
 
 void MainWindow::addToRecentFilesMenu(const QString& filename, bool read_only)
@@ -1804,7 +1807,7 @@ bool MainWindow::askSaveSqlTab(int index, bool& ignoreUnattachedBuffers)
             // Once the project is saved, remaining SQL tabs will not be modified, so this is only expected to be asked once.
             QString message = currentProjectFilename.isEmpty() ?
                 tr("Do you want to save the changes made to SQL tabs in a new project file?") :
-                tr("Do you want to save the changes made to SQL tabs in the project file %1?").
+                tr("Do you want to save the changes made to SQL tabs in the project file '%1'?").
                 arg(QFileInfo(currentProjectFilename).fileName());
             QMessageBox::StandardButton reply = QMessageBox::question(nullptr,
                                                                       QApplication::applicationName(),
@@ -2366,6 +2369,11 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
         xml.readNext();     // token == QXmlStreamReader::StartDocument
         xml.readNext();     // name == sqlb_project
         if(xml.name() != "sqlb_project")
+            return false;
+
+        // We are going to open a new project, so close the possible current one before opening another.
+        // Stop the opening process here if the user pressed the cancel button in there.
+        if(!closeProject())
             return false;
 
         addToRecentFilesMenu(filename, readOnly);
