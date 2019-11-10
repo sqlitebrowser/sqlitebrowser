@@ -256,8 +256,21 @@ TableBrowser::TableBrowser(QWidget* parent) :
     connect(ui->actionFind, &QAction::triggered, [this](bool checked) {
        if(checked)
        {
+           ui->widgetReplace->hide();
            ui->frameFind->show();
            ui->editFindExpression->setFocus();
+           ui->actionReplace->setChecked(false);
+       } else {
+           ui->buttonFindClose->click();
+       }
+    });
+    connect(ui->actionReplace, &QAction::triggered, [this](bool checked) {
+       if(checked)
+       {
+           ui->widgetReplace->show();
+           ui->frameFind->show();
+           ui->editFindExpression->setFocus();
+           ui->actionFind->setChecked(false);
        } else {
            ui->buttonFindClose->click();
        }
@@ -274,12 +287,19 @@ TableBrowser::TableBrowser(QWidget* parent) :
         ui->dataTable->setFocus();
         ui->frameFind->hide();
         ui->actionFind->setChecked(false);
+        ui->actionReplace->setChecked(false);
     });
     connect(ui->buttonFindPrevious, &QToolButton::clicked, this, [this](){
         find(ui->editFindExpression->text(), false);
     });
     connect(ui->buttonFindNext, &QToolButton::clicked, this, [this](){
         find(ui->editFindExpression->text(), true);
+    });
+    connect(ui->buttonReplaceNext, &QToolButton::clicked, this, [this](){
+        find(ui->editFindExpression->text(), true, true, ReplaceMode::ReplaceNext);
+    });
+    connect(ui->buttonReplaceAll, &QToolButton::clicked, this, [this](){
+        find(ui->editFindExpression->text(), true, true, ReplaceMode::ReplaceAll);
     });
 }
 
@@ -1386,8 +1406,36 @@ void TableBrowser::jumpToRow(const sqlb::ObjectIdentifier& table, std::string co
     updateTable();
 }
 
-void TableBrowser::find(const QString& expr, bool forward, bool include_first)
+static QString replaceInValue(QString value, const QString& find, const QString& replace, Qt::MatchFlags flags)
 {
+    // Helper function which replaces a string in another string by a third string. It uses regular expressions if told so.
+    if(flags.testFlag(Qt::MatchRegExp))
+    {
+        QRegularExpression reg_exp(find, (flags.testFlag(Qt::MatchCaseSensitive) ? QRegularExpression::NoPatternOption : QRegularExpression::CaseInsensitiveOption));
+        if(!flags.testFlag(Qt::MatchContains))
+        {
+#if QT_VERSION < QT_VERSION_CHECK(5, 12, 0)
+            reg_exp.setPattern("\\A(" + reg_exp.pattern() + ")\\Z");
+#else
+            reg_exp.setPattern(QRegularExpression::anchoredPattern(reg_exp.pattern()));
+#endif
+        }
+
+        return value.replace(reg_exp, replace);
+    } else {
+        return value.replace(find, replace, flags.testFlag(Qt::MatchCaseSensitive) ? Qt::CaseSensitive : Qt::CaseInsensitive);
+    }
+}
+
+void TableBrowser::find(const QString& expr, bool forward, bool include_first, ReplaceMode replace)
+{
+    // Reset the colour of the line edit, assuming there is no error.
+    ui->editFindExpression->setStyleSheet("");
+
+    // You are not allowed to search for an ampty string
+    if(expr.isEmpty())
+        return;
+
     // Get the cell from which the search should be started. If there is a selected cell, use that. If there is no selected cell, start at the first cell.
     QModelIndex start;
     if(ui->dataTable->selectionModel()->hasSelection())
@@ -1422,16 +1470,64 @@ void TableBrowser::find(const QString& expr, bool forward, bool include_first)
             column_list.push_back(i);
     }
 
-    // Perform the actual search using the model class
-    const auto match = m_model->nextMatch(start, column_list, expr, flags, !forward, include_first);
+    // Are we only searching for text or are we supposed to replace text?
+    switch(replace)
+    {
+    case ReplaceMode::NoReplace: {
+        // Perform the actual search using the model class
+        const auto match = m_model->nextMatch(start, column_list, expr, flags, !forward, include_first);
 
-    // Select the next match if we found one
-    if(match.isValid())
-        ui->dataTable->setCurrentIndex(match);
+        // Select the next match if we found one
+        if(match.isValid())
+            ui->dataTable->setCurrentIndex(match);
 
-    // Make the expression control red if no results were found
-    if(match.isValid() || expr.isEmpty())
-        ui->editFindExpression->setStyleSheet("");
-    else
-        ui->editFindExpression->setStyleSheet("QLineEdit {color: white; background-color: rgb(255, 102, 102)}");
+        // Make the expression control red if no results were found
+        if(!match.isValid())
+            ui->editFindExpression->setStyleSheet("QLineEdit {color: white; background-color: rgb(255, 102, 102)}");
+    } break;
+    case ReplaceMode::ReplaceNext: {
+        // Find the next match
+        const auto match = m_model->nextMatch(start, column_list, expr, flags, !forward, include_first);
+
+        // If there was a match, perform the replacement on the cell and select it
+        if(match.isValid())
+        {
+            m_model->setData(match, replaceInValue(match.data(Qt::EditRole).toString(), expr, ui->editReplaceExpression->text(), flags));
+            ui->dataTable->setCurrentIndex(match);
+        }
+
+        // Make the expression control red if no results were found
+        if(!match.isValid())
+            ui->editFindExpression->setStyleSheet("QLineEdit {color: white; background-color: rgb(255, 102, 102)}");
+    } break;
+    case ReplaceMode::ReplaceAll: {
+        // Find all matches
+        std::set<QModelIndex> all_matches;
+        while(true)
+        {
+            // Find the next match
+            const auto match = m_model->nextMatch(start, column_list, expr, flags, !forward, include_first);
+
+            // If there was a match, perform the replacement and continue from that position. If there was no match, stop looking for other matches.
+            // Additionally, keep track of all the matches so far in order to avoid running over them again indefinitely, e.g. when replacing "1" by "10".
+            if(match.isValid() && all_matches.find(match) == all_matches.end())
+            {
+                all_matches.insert(match);
+                m_model->setData(match, replaceInValue(match.data(Qt::EditRole).toString(), expr, ui->editReplaceExpression->text(), flags));
+
+                // Start searching from the last match onwards in order to not search through the same cells over and over again.
+                start = match;
+                include_first = false;
+            } else {
+                break;
+            }
+        }
+
+        // Make the expression control red if no results were found
+        if(!all_matches.empty())
+            QMessageBox::information(this, qApp->applicationName(), tr("%1 replacement(s) made.").arg(all_matches.size()));
+        else
+            ui->editFindExpression->setStyleSheet("QLineEdit {color: white; background-color: rgb(255, 102, 102)}");
+    } break;
+    }
 }

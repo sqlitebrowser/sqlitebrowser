@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>651</width>
+    <width>695</width>
     <height>400</height>
    </rect>
   </property>
@@ -86,6 +86,7 @@
        <addaction name="separator"/>
        <addaction name="actionToggleFormatToolbar"/>
        <addaction name="actionFind"/>
+       <addaction name="actionReplace"/>
       </widget>
      </item>
      <item>
@@ -200,7 +201,7 @@
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>31</height>
+       <height>62</height>
       </size>
      </property>
      <property name="frameShape">
@@ -209,7 +210,10 @@
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QGridLayout">
+     <layout class="QVBoxLayout">
+      <property name="spacing">
+       <number>1</number>
+      </property>
       <property name="leftMargin">
        <number>1</number>
       </property>
@@ -222,120 +226,208 @@
       <property name="bottomMargin">
        <number>1</number>
       </property>
-      <property name="spacing">
-       <number>3</number>
-      </property>
-      <item row="0" column="2">
-       <widget class="QToolButton" name="buttonFindNext">
-        <property name="toolTip">
-         <string>Find next match [Enter, F3]</string>
-        </property>
-        <property name="whatsThis">
-         <string>Find next match with wrapping</string>
-        </property>
-        <property name="icon">
-         <iconset resource="icons/icons.qrc">
-          <normaloff>:/icons/down</normaloff>:/icons/down</iconset>
-        </property>
-        <property name="shortcut">
-         <string>F3</string>
-        </property>
+      <item>
+       <widget class="QWidget" name="widgetFind" native="true">
+        <layout class="QHBoxLayout" name="layoutFind">
+         <property name="spacing">
+          <number>3</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLineEdit" name="editFindExpression">
+           <property name="contextMenuPolicy">
+            <enum>Qt::DefaultContextMenu</enum>
+           </property>
+           <property name="whatsThis">
+            <string>Text pattern to find considering the checks in this frame</string>
+           </property>
+           <property name="placeholderText">
+            <string>Find in table</string>
+           </property>
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="buttonFindPrevious">
+           <property name="toolTip">
+            <string>Find previous match [Shift+F3]</string>
+           </property>
+           <property name="whatsThis">
+            <string>Find previous match with mapping</string>
+           </property>
+           <property name="icon">
+            <iconset resource="icons/icons.qrc">
+             <normaloff>:/icons/up</normaloff>:/icons/up</iconset>
+           </property>
+           <property name="shortcut">
+            <string>Shift+F3</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="buttonFindNext">
+           <property name="toolTip">
+            <string>Find next match [Enter, F3]</string>
+           </property>
+           <property name="whatsThis">
+            <string>Find next match with wrapping</string>
+           </property>
+           <property name="icon">
+            <iconset resource="icons/icons.qrc">
+             <normaloff>:/icons/down</normaloff>:/icons/down</iconset>
+           </property>
+           <property name="shortcut">
+            <string>F3</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkFindCaseSensitive">
+           <property name="whatsThis">
+            <string>The found pattern must match in letter case</string>
+           </property>
+           <property name="text">
+            <string>Case Sensitive</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkFindWholeCell">
+           <property name="whatsThis">
+            <string>The found pattern must be a whole word</string>
+           </property>
+           <property name="text">
+            <string>Whole Cell</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkFindRegEx">
+           <property name="toolTip">
+            <string>Interpret search pattern as a regular expression</string>
+           </property>
+           <property name="whatsThis">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When checked, the pattern to find is interpreted as a UNIX regular expression. See &lt;a href=&quot;https://en.wikibooks.org/wiki/Regular_Expressions&quot;&gt;Regular Expression in Wikibooks&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="text">
+            <string>Regular Expression</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_1">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QToolButton" name="buttonFindClose">
+           <property name="toolTip">
+            <string>Close Find Bar</string>
+           </property>
+           <property name="text">
+            <string>Close Find Bar</string>
+           </property>
+           <property name="icon">
+            <iconset resource="icons/icons.qrc">
+             <normaloff>:/icons/close</normaloff>:/icons/close</iconset>
+           </property>
+           <property name="autoRaise">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QToolButton" name="buttonFindPrevious">
-        <property name="toolTip">
-         <string>Find previous match [Shift+F3]</string>
-        </property>
-        <property name="whatsThis">
-         <string>Find previous match with mapping</string>
-        </property>
-        <property name="icon">
-         <iconset resource="icons/icons.qrc">
-          <normaloff>:/icons/up</normaloff>:/icons/up</iconset>
-        </property>
-        <property name="shortcut">
-         <string>Shift+F3</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="5">
-       <widget class="QCheckBox" name="checkFindRegEx">
-        <property name="toolTip">
-         <string>Interpret search pattern as a regular expression</string>
-        </property>
-        <property name="whatsThis">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When checked, the pattern to find is interpreted as a UNIX regular expression. See &lt;a href=&quot;https://en.wikibooks.org/wiki/Regular_Expressions&quot;&gt;Regular Expression in Wikibooks&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="text">
-         <string>Regular Expression</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="4">
-       <widget class="QCheckBox" name="checkFindWholeCell">
-        <property name="whatsThis">
-         <string>The found pattern must be a whole word</string>
-        </property>
-        <property name="text">
-         <string>Whole Cell</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLineEdit" name="editFindExpression">
-        <property name="contextMenuPolicy">
-         <enum>Qt::DefaultContextMenu</enum>
-        </property>
-        <property name="whatsThis">
-         <string>Text pattern to find considering the checks in this frame</string>
-        </property>
-        <property name="placeholderText">
-         <string>Find in table</string>
-        </property>
-        <property name="clearButtonEnabled">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="8">
-       <widget class="QToolButton" name="buttonFindClose">
-        <property name="toolTip">
-         <string>Close Find Bar</string>
-        </property>
-        <property name="text">
-         <string>Close Find Bar</string>
-        </property>
-        <property name="icon">
-         <iconset resource="icons/icons.qrc">
-          <normaloff>:/icons/close</normaloff>:/icons/close</iconset>
-        </property>
-        <property name="autoRaise">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="6">
-       <spacer name="horizontalSpacer_1">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="0" column="3">
-       <widget class="QCheckBox" name="checkFindCaseSensitive">
-        <property name="whatsThis">
-         <string>The found pattern must match in letter case</string>
-        </property>
-        <property name="text">
-         <string>Case Sensitive</string>
-        </property>
+      <item>
+       <widget class="QWidget" name="widgetReplace" native="true">
+        <layout class="QHBoxLayout" name="layoutReplace">
+         <property name="spacing">
+          <number>3</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLineEdit" name="editReplaceExpression">
+           <property name="contextMenuPolicy">
+            <enum>Qt::DefaultContextMenu</enum>
+           </property>
+           <property name="whatsThis">
+            <string>Text to replace with</string>
+           </property>
+           <property name="placeholderText">
+            <string>Replace with</string>
+           </property>
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="buttonReplaceNext">
+           <property name="toolTip">
+            <string>Replace next match</string>
+           </property>
+           <property name="text">
+            <string>Replace</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="buttonReplaceAll">
+           <property name="toolTip">
+            <string>Replace all matches</string>
+           </property>
+           <property name="text">
+            <string>Replace all</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
        </widget>
       </item>
      </layout>
@@ -950,6 +1042,24 @@
     <string>Ctrl+Space</string>
    </property>
   </action>
+  <action name="actionReplace">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/text_replace</normaloff>:/icons/text_replace</iconset>
+   </property>
+   <property name="text">
+    <string>Replace</string>
+   </property>
+   <property name="toolTip">
+    <string>Replace text in cells</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+H</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -969,15 +1079,20 @@
  </customwidgets>
  <tabstops>
   <tabstop>comboBrowseTable</tabstop>
-  <tabstop>dataTable</tabstop>
   <tabstop>editGlobalFilter</tabstop>
+  <tabstop>fontComboBox</tabstop>
+  <tabstop>fontSizeBox</tabstop>
+  <tabstop>dataTable</tabstop>
   <tabstop>editFindExpression</tabstop>
+  <tabstop>editReplaceExpression</tabstop>
   <tabstop>buttonFindPrevious</tabstop>
   <tabstop>buttonFindNext</tabstop>
   <tabstop>checkFindCaseSensitive</tabstop>
   <tabstop>checkFindWholeCell</tabstop>
   <tabstop>checkFindRegEx</tabstop>
   <tabstop>buttonFindClose</tabstop>
+  <tabstop>buttonReplaceNext</tabstop>
+  <tabstop>buttonReplaceAll</tabstop>
   <tabstop>buttonBegin</tabstop>
   <tabstop>buttonPrevious</tabstop>
   <tabstop>buttonNext</tabstop>
@@ -1012,8 +1127,8 @@
    <slot>navigatePrevious()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>54</x>
-     <y>358</y>
+     <x>55</x>
+     <y>395</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1028,8 +1143,8 @@
    <slot>navigateNext()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>139</x>
-     <y>358</y>
+     <x>140</x>
+     <y>395</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1044,8 +1159,8 @@
    <slot>navigateGoto()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>403</x>
-     <y>360</y>
+     <x>452</x>
+     <y>397</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1060,8 +1175,8 @@
    <slot>navigateGoto()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>550</x>
-     <y>360</y>
+     <x>648</x>
+     <y>397</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1076,8 +1191,8 @@
    <slot>navigateEnd()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>169</x>
-     <y>358</y>
+     <x>170</x>
+     <y>395</y>
     </hint>
     <hint type="destinationlabel">
      <x>499</x>
@@ -1092,8 +1207,8 @@
    <slot>navigateBegin()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>24</x>
-     <y>358</y>
+     <x>25</x>
+     <y>395</y>
     </hint>
     <hint type="destinationlabel">
      <x>499</x>

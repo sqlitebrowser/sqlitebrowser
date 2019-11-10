@@ -158,7 +158,13 @@ private slots:
     void setDefaultTableEncoding();
 
 private:
-    void find(const QString& expr, bool forward, bool include_first = false);
+    enum class ReplaceMode
+    {
+        NoReplace,
+        ReplaceNext,
+        ReplaceAll,
+    };
+    void find(const QString& expr, bool forward, bool include_first = false, ReplaceMode replace = ReplaceMode::NoReplace);
 
 private:
     Ui::TableBrowser* ui;
