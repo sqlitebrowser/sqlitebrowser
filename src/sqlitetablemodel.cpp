@@ -1080,6 +1080,10 @@ QModelIndex SqliteTableModel::nextMatch(const QModelIndex& start, const std::vec
     // Wait until the row count is there
     waitUntilIdle();
 
+    // Stop right away if there is no data in the table
+    if(rowCount() == 0)
+        return QModelIndex();
+
     // Make sure the start position starts in a column from the list of columns to search in
     QModelIndex pos = start;
     if(std::find(column_list.begin(), column_list.end(), pos.column()) == column_list.end())
