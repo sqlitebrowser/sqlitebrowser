@@ -15,6 +15,7 @@
 #include <QDir>
 #include <QDebug>
 #include <QThread>
+#include <QRegularExpression>
 #include <json.hpp>
 
 #include <algorithm>
@@ -128,20 +129,14 @@ void DBBrowserDB::errorLogCallback(void* /*user_data*/, int error_code, const ch
 static void regexp(sqlite3_context* ctx, int /*argc*/, sqlite3_value* argv[])
 {
     // Get arguments and check their values
-    QRegExp arg1(reinterpret_cast<const char*>(sqlite3_value_text(argv[0])));
-    QString arg2(reinterpret_cast<const char*>(sqlite3_value_text(argv[1])));
+    QRegularExpression arg1(reinterpret_cast<const char*>(sqlite3_value_text(argv[0])));
     if(!arg1.isValid())
         return sqlite3_result_error(ctx, "invalid operand", -1);
+    QString arg2(reinterpret_cast<const char*>(sqlite3_value_text(argv[1])));
 
-    // Set the pattern matching syntax to a Perl-like one. This is the default in Qt 4.x but Qt 5
-    // changes this to a greedy one (QRegExp::RegExp2). To make sure the behaviour of our application
-    // doesn't change depending on the build environment, we make sure to always set the same pattern
-    // matching syntax.
-    arg1.setPatternSyntax(QRegExp::RegExp);
-
-    // Perform the actual matching and return the result. Note that Qt's QRegExp returns -1 if the regex
-    // doesn't match and the position in the string otherwise; SQLite expects a 0 for not found and a 1 for found.
-    sqlite3_result_int(ctx, arg1.indexIn(arg2) >= 0);
+    // Perform the actual matching and return the result.
+    // SQLite expects a 0 for not found and a 1 for found.
+    sqlite3_result_int(ctx, arg1.match(arg2).hasMatch());
 }
 
 bool DBBrowserDB::isOpen ( ) const
