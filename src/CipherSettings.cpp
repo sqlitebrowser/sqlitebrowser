@@ -4,7 +4,8 @@
 CipherSettings::CipherSettings()
     : keyFormat(Passphrase),
       pageSize(0),
-      kdfIterations(0)
+      kdfIterations(0),
+      plaintextHeaderSize(0)
 {
 }
 

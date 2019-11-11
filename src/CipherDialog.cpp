@@ -72,6 +72,7 @@ CipherSettings CipherDialog::getCipherSettings() const
     cipherSettings.setKdfIterations(ui->spinKdfIterations->value());
     cipherSettings.setHmacAlgorithm("HMAC_" + ui->comboHmacAlgorithm->currentText().toStdString());
     cipherSettings.setKdfAlgorithm("PBKDF2_HMAC_" + ui->comboKdfAlgorithm->currentText().toStdString());
+    cipherSettings.setPlaintextHeaderSize(ui->plaintextHeaderSize->value());
 
     return cipherSettings;
 }
@@ -113,22 +114,26 @@ void CipherDialog::toggleEncryptionSettings()
         ui->spinKdfIterations->setValue(64000);
         ui->comboHmacAlgorithm->setCurrentText("SHA1");
         ui->comboKdfAlgorithm->setCurrentText("SHA1");
+        ui->plaintextHeaderSize->setValue(0);
 
         ui->comboPageSize->setEnabled(false);
         ui->spinKdfIterations->setEnabled(false);
         ui->comboHmacAlgorithm->setEnabled(false);
         ui->comboKdfAlgorithm->setEnabled(false);
+        ui->plaintextHeaderSize->setEnabled(false);
     } else if(ui->radioEncryptionSqlCipher4->isChecked()) {
         // SQLCipher4
         ui->comboPageSize->setCurrentText(QLocale().toString(4096));
         ui->spinKdfIterations->setValue(256000);
         ui->comboHmacAlgorithm->setCurrentText("SHA512");
         ui->comboKdfAlgorithm->setCurrentText("SHA512");
+        ui->plaintextHeaderSize->setValue(0);
 
         ui->comboPageSize->setEnabled(false);
         ui->spinKdfIterations->setEnabled(false);
         ui->comboHmacAlgorithm->setEnabled(false);
         ui->comboKdfAlgorithm->setEnabled(false);
+        ui->plaintextHeaderSize->setEnabled(false);
     } else if(ui->radioEncryptionCustom->isChecked()) {
         // Custom
 
@@ -136,5 +141,6 @@ void CipherDialog::toggleEncryptionSettings()
         ui->spinKdfIterations->setEnabled(true);
         ui->comboHmacAlgorithm->setEnabled(true);
         ui->comboKdfAlgorithm->setEnabled(true);
+        ui->plaintextHeaderSize->setEnabled(true);
     }
 }

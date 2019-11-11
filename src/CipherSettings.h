@@ -26,6 +26,9 @@ public:
     int getKdfIterations() const { return kdfIterations; }
     void setKdfIterations(int value) { kdfIterations = value; }
 
+    int getPlaintextHeaderSize() const { return plaintextHeaderSize; }
+    void setPlaintextHeaderSize(int value) { plaintextHeaderSize = value; }
+
     std::string getHmacAlgorithm() const { return hmacAlgorithm; }
     void setHmacAlgorithm(const std::string& value) { hmacAlgorithm = value; }
 
@@ -39,6 +42,7 @@ private:
     std::string password;
     int pageSize;
     int kdfIterations;
+    int plaintextHeaderSize;
     std::string hmacAlgorithm;
     std::string kdfAlgorithm;
 };
