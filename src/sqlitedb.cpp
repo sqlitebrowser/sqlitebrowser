@@ -182,6 +182,7 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
         executeSQL("PRAGMA kdf_iter = " + std::to_string(cipherSettings->getKdfIterations()), false, false);
         executeSQL("PRAGMA cipher_hmac_algorithm = " + cipherSettings->getHmacAlgorithm(), false, false);
         executeSQL("PRAGMA cipher_kdf_algorithm = " + cipherSettings->getKdfAlgorithm(), false, false);
+        executeSQL("PRAGMA cipher_plaintext_header_size = " + std::to_string(cipherSettings->getPlaintextHeaderSize()), false, false);
     }
 #endif
     delete cipherSettings;
@@ -322,6 +323,11 @@ bool DBBrowserDB::attach(const QString& filePath, QString attach_as)
             QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
             return false;
         }
+        if(!executeSQL("PRAGMA cipher_plaintext_header_size = " + std::to_string(cipherSettings->getPlaintextHeaderSize()), false))
+        {
+            QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
+            return false;
+        }
     }
 
     if(!executeSQL("ATTACH " + sqlb::escapeString(filePath.toStdString()) + " AS " + sqlb::escapeIdentifier(attach_as.toStdString()) + " " + key, false))
@@ -365,6 +371,7 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
     QString sqlite_version, sqlcipher_version;
     getSqliteVersion(sqlite_version, sqlcipher_version);
     int enc_default_page_size, enc_default_kdf_iter;
+    int enc_default_plaintext_header_size = 0;
     std::string enc_default_hmac_algorithm, enc_default_kdf_algorithm;
     if(sqlcipher_version.startsWith('4'))
     {
@@ -428,6 +435,7 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
 
                     int pageSize = dotenv.value(databaseFileName + "_pageSize", enc_default_page_size).toInt();
                     int kdfIterations = dotenv.value(databaseFileName + "_kdfIter", enc_default_kdf_iter).toInt();
+                    int plaintextHeaderSize = dotenv.value(databaseFileName + "_plaintextHeaderSize", enc_default_kdf_iter).toInt();
                     std::string hmacAlgorithm = dotenv.value(databaseFileName + "_hmacAlgorithm", QString::fromStdString(enc_default_hmac_algorithm)).toString().toStdString();
                     std::string kdfAlgorithm = dotenv.value(databaseFileName + "_kdfAlgorithm", QString::fromStdString(enc_default_kdf_algorithm)).toString().toStdString();
 
@@ -440,6 +448,7 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
                     cipherSettings->setKdfIterations(kdfIterations);
                     cipherSettings->setHmacAlgorithm(hmacAlgorithm);
                     cipherSettings->setKdfAlgorithm(kdfAlgorithm);
+                    cipherSettings->setPlaintextHeaderSize(plaintextHeaderSize);
                 }
             }
 
@@ -482,6 +491,8 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
                 sqlite3_exec(dbHandle, ("PRAGMA cipher_hmac_algorithm = " + cipherSettings->getHmacAlgorithm()).c_str(), nullptr, nullptr, nullptr);
             if(cipherSettings->getKdfAlgorithm() != enc_default_kdf_algorithm)
                 sqlite3_exec(dbHandle, ("PRAGMA cipher_kdf_algorithm = " + cipherSettings->getKdfAlgorithm()).c_str(), nullptr, nullptr, nullptr);
+            if(cipherSettings->getPlaintextHeaderSize() != enc_default_plaintext_header_size)
+                sqlite3_exec(dbHandle, ("PRAGMA cipher_plaintext_header_size = " + std::to_string(cipherSettings->getPlaintextHeaderSize())).c_str(), nullptr, nullptr, nullptr);
 
             *encrypted = true;
 #else

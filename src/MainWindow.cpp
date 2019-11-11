@@ -2902,6 +2902,8 @@ void MainWindow::editEncryption()
             ok = db.executeSQL("PRAGMA sqlitebrowser_edit_encryption.cipher_kdf_algorithm = " + cipherSettings.getKdfAlgorithm(), false, false);
         if(ok)
             ok = db.executeSQL("PRAGMA sqlitebrowser_edit_encryption.kdf_iter = " + std::to_string(cipherSettings.getKdfIterations()), false, false);
+        if (ok)
+            ok = db.executeSQL("PRAGMA sqlitebrowser_edit_encryption.cipher_plaintext_header_size = " + std::to_string(cipherSettings.getPlaintextHeaderSize()), false, false);
 
         // Export the current database to the new one
         qApp->processEvents();

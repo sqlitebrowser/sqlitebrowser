@@ -218,6 +218,26 @@
        </item>
       </widget>
      </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Plaintext Header Size</string>
+       </property>
+       <property name="buddy">
+        <cstring>plaintextHeaderSize</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QSpinBox" name="plaintextHeaderSize">
+       <property name="minimum">
+        <number>0</number>
+       </property>
+       <property name="maximum">
+        <number>1000000</number>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
@@ -243,6 +263,7 @@
   <tabstop>spinKdfIterations</tabstop>
   <tabstop>comboHmacAlgorithm</tabstop>
   <tabstop>comboKdfAlgorithm</tabstop>
+  <tabstop>plaintextHeaderSize</tabstop>
  </tabstops>
  <resources/>
  <connections>
