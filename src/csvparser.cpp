@@ -281,7 +281,7 @@ CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStr
         }
     }
 
-    if(record.num_fields)
+    if(record.num_fields || record.fields->buffer_length)
     {
         addColumn(record, field, m_bTrimFields);
 
