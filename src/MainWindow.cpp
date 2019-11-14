@@ -2824,6 +2824,7 @@ void MainWindow::saveProject(const QString& currentFilename)
         addToRecentFilesMenu(filename);
         setCurrentFile(db.currentFile());
         isProjectModified = false;
+        showStatusMessage5s(tr("Project saved to file '%1'").arg(currentProjectFilename));
         QApplication::restoreOverrideCursor();
     }
 }
