@@ -517,7 +517,8 @@ bool MainWindow::fileOpen(const QString& fileName, bool openFromProject, bool re
                     if(!currentProjectFilename.isEmpty())
                         isProjectModified = true;
                 }
-                openSqlTab(true);
+                if(ui->tabSqlAreas->count() == 0)
+                    openSqlTab(true);
                 if(ui->mainTab->currentWidget() == ui->browser)
                     populateTable();
                 else if(ui->mainTab->currentWidget() == ui->pragmas)
@@ -551,7 +552,8 @@ void MainWindow::fileNew()
         statusEncryptionLabel->setVisible(false);
         statusReadOnlyLabel->setVisible(false);
         populateTable();
-        openSqlTab(true);
+        if(ui->tabSqlAreas->count() == 0)
+            openSqlTab(true);
         createTable();
     }
 }
@@ -564,7 +566,8 @@ void MainWindow::fileNewInMemoryDatabase()
     statusEncryptionLabel->setVisible(false);
     statusReadOnlyLabel->setVisible(false);
     populateTable();
-    openSqlTab(true);
+    if(ui->tabSqlAreas->count() == 0)
+        openSqlTab(true);
     createTable();
 }
 
