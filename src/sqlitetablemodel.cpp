@@ -409,8 +409,7 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
         QVariant condFormat = getMatchingCondFormat(row, column, data, role);
         if (condFormat.isValid())
             return condFormat;
-        bool isNumber;
-        data.toDouble(&isNumber);
+        bool isNumber = m_vDataTypes.at(column) == SQLITE_INTEGER || m_vDataTypes.at(column) == SQLITE_FLOAT;
         return static_cast<int>((isNumber ? Qt::AlignRight : Qt::AlignLeft) | Qt::AlignVCenter);
     } else if(role == Qt::DecorationRole) {
         if(!row_available)
