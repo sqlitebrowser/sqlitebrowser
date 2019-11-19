@@ -30,7 +30,7 @@
             <Directory Id="translations" Name="translations">
 
                 <!-- These files are not present in Qt 5.12, used by our 64-bit nightly builds. -->
-                <?if $(sys.BUILDARCH)="x32"?>
+                <?if $(sys.BUILDARCH)!="x64"?>
                     <Component><File Source="$(var.QtPath)\translations\qtquick1_cs.qm" /></Component>
                     <Component><File Source="$(var.QtPath)\translations\qtquick1_en.qm" /></Component>
                     <Component><File Source="$(var.QtPath)\translations\qtquick1_fr.qm" /></Component>
