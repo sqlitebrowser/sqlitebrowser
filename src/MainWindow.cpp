@@ -333,6 +333,16 @@ void MainWindow::init()
     QShortcut* setTab4Shortcut = new QShortcut(QKeySequence("Alt+4"), this);
     connect(setTab4Shortcut, &QShortcut::activated, [this]() { ui->mainTab->setCurrentIndex(3); });
 
+    // Add button to close Execute SQL tabs
+    QToolButton* buttonCloseSqlTab = new QToolButton(ui->tabSqlAreas);
+    buttonCloseSqlTab->setIcon(QIcon(":icons/close"));
+    buttonCloseSqlTab->setToolTip(tr("Close current SQL tab"));
+    buttonCloseSqlTab->setAutoRaise(true);
+    connect(buttonCloseSqlTab, &QToolButton::clicked, [this]() {
+        closeSqlTab(ui->tabSqlAreas->currentIndex());
+    });
+    ui->tabSqlAreas->setCornerWidget(buttonCloseSqlTab);
+
     // If we're not compiling in SQLCipher, hide its FAQ link in the help menu
 #ifndef ENABLE_SQLCIPHER
     ui->actionSqlCipherFaq->setVisible(false);

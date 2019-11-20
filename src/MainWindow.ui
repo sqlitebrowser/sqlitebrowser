@@ -39,9 +39,6 @@
       <property name="currentIndex">
        <number>0</number>
       </property>
-      <property name="tabsClosable">
-       <bool>true</bool>
-      </property>
       <property name="movable">
        <bool>true</bool>
       </property>
@@ -726,9 +723,6 @@ You can drag SQL statements from an object row and drop them into other applicat
          <widget class="QTabWidget" name="tabSqlAreas">
           <property name="currentIndex">
            <number>-1</number>
-          </property>
-          <property name="tabsClosable">
-           <bool>true</bool>
           </property>
           <property name="movable">
            <bool>true</bool>
