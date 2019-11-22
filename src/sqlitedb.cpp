@@ -128,15 +128,38 @@ void DBBrowserDB::errorLogCallback(void* /*user_data*/, int error_code, const ch
 
 static void regexp(sqlite3_context* ctx, int /*argc*/, sqlite3_value* argv[])
 {
+    // This is a cache for the last 50 regular expressions. Compiling them takes some time, so we want to cache the compiled
+    // regular expressions for performance purposes.
+    static std::array<std::pair<QString, QRegularExpression>, 50> regex_cache;
+
+    // Check if pattern is in cache
+    QString pattern{reinterpret_cast<const char*>(sqlite3_value_text(argv[0]))};
+    QRegularExpression regex;
+    const auto it = std::find_if(regex_cache.begin(), regex_cache.end(), [pattern](const std::pair<QString, QRegularExpression>& val) {
+        return val.first == pattern;
+    });
+    if(it == regex_cache.end())
+    {
+        // Pattern is not in cache. Create a new regular expressions object, compile it, and insert it into the cache
+        regex.setPattern(pattern);
+        if(!regex.isValid())
+            return sqlite3_result_error(ctx, "invalid operand", -1);
+        regex.optimize();
+
+        static size_t regex_cache_size;
+        regex_cache_size = (regex_cache_size + 1) % regex_cache.size();
+        regex_cache[regex_cache_size] = {pattern, regex};
+    } else {
+        // Pattern is in the cache. Just retrieve it
+        regex = it->second;
+    }
+
     // Get arguments and check their values
-    QRegularExpression arg1(reinterpret_cast<const char*>(sqlite3_value_text(argv[0])));
-    if(!arg1.isValid())
-        return sqlite3_result_error(ctx, "invalid operand", -1);
-    QString arg2(reinterpret_cast<const char*>(sqlite3_value_text(argv[1])));
+    QString arg2{reinterpret_cast<const char*>(sqlite3_value_text(argv[1]))};
 
     // Perform the actual matching and return the result.
     // SQLite expects a 0 for not found and a 1 for found.
-    sqlite3_result_int(ctx, arg1.match(arg2).hasMatch());
+    sqlite3_result_int(ctx, regex.match(arg2).hasMatch());
 }
 
 bool DBBrowserDB::isOpen ( ) const
