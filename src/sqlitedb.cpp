@@ -19,6 +19,7 @@
 #include <json.hpp>
 
 #include <algorithm>
+#include <array>
 #include <atomic>
 #include <cctype>
 #include <chrono>
