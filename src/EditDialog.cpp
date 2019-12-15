@@ -28,7 +28,7 @@ using json = nlohmann::json;
 EditDialog::EditDialog(QWidget* parent)
     : QDialog(parent),
       ui(new Ui::EditDialog),
-      currentIndex(QModelIndex()),
+      m_currentIndex(QModelIndex()),
       dataSource(SciBuffer),
       dataType(Null),
       isReadOnly(true)
@@ -85,7 +85,7 @@ EditDialog::~EditDialog()
 
 void EditDialog::setCurrentIndex(const QModelIndex& idx)
 {
-    currentIndex = QPersistentModelIndex(idx);
+    m_currentIndex = QPersistentModelIndex(idx);
 
     QByteArray bArrData = idx.data(Qt::EditRole).toByteArray();
     loadData(bArrData);
@@ -500,11 +500,11 @@ bool EditDialog::promptInvalidData(const QString& data_type, const QString& erro
 
 void EditDialog::accept()
 {
-    if(!currentIndex.isValid())
+    if(!m_currentIndex.isValid())
         return;
 
     if (dataType == Null) {
-        emit recordTextUpdated(currentIndex, hexEdit->data(), true);
+        emit recordTextUpdated(m_currentIndex, hexEdit->data(), true);
         return;
     }
 
@@ -524,7 +524,7 @@ void EditDialog::accept()
         {
             sciEdit->clearErrorIndicators();
 
-            QString oldData = currentIndex.data(Qt::EditRole).toString();
+            QString oldData = m_currentIndex.data(Qt::EditRole).toString();
 
             QString newData;
             bool proceed = true;
@@ -551,12 +551,12 @@ void EditDialog::accept()
 
             if (proceed)
                 // The data is different, so commit it back to the database
-                emit recordTextUpdated(currentIndex, newData.toUtf8(), false);
+                emit recordTextUpdated(m_currentIndex, newData.toUtf8(), false);
         }
         break;
         case DockTextEdit::XML:
         {
-            QString oldData = currentIndex.data(Qt::EditRole).toString();
+            QString oldData = m_currentIndex.data(Qt::EditRole).toString();
 
             QString newData;
             QDomDocument xmlDoc;
@@ -581,27 +581,27 @@ void EditDialog::accept()
             }
             if (proceed)
                 // The data is different, so commit it back to the database
-                emit recordTextUpdated(currentIndex, newData.toUtf8(), false);
+                emit recordTextUpdated(m_currentIndex, newData.toUtf8(), false);
         }
         break;
         }
         break;
     case HexBuffer:
         // The data source is the hex widget buffer, thus binary data
-        QByteArray oldData = currentIndex.data(Qt::EditRole).toByteArray();
+        QByteArray oldData = m_currentIndex.data(Qt::EditRole).toByteArray();
         QByteArray newData = hexEdit->data();
         if (newData != oldData)
-            emit recordTextUpdated(currentIndex, newData, true);
+            emit recordTextUpdated(m_currentIndex, newData, true);
         break;
     }
 
     if (!newTextData.isEmpty()) {
 
-        QString oldData = currentIndex.data(Qt::EditRole).toString();
+        QString oldData = m_currentIndex.data(Qt::EditRole).toString();
         // Check first for null case, otherwise empty strings cannot overwrite NULL values
-        if ((currentIndex.data(Qt::EditRole).isNull() && dataType != Null) || oldData != newTextData)
+        if ((m_currentIndex.data(Qt::EditRole).isNull() && dataType != Null) || oldData != newTextData)
             // The data is different, so commit it back to the database
-            emit recordTextUpdated(currentIndex, removedBom + newTextData.toUtf8(), false);
+            emit recordTextUpdated(m_currentIndex, removedBom + newTextData.toUtf8(), false);
     }
 }
 
@@ -841,7 +841,7 @@ void EditDialog::setMustIndentAndCompact(bool enable)
     if (ui->buttonApply->isEnabled()) {
         setDataInBuffer(sciEdit->text().toUtf8(), SciBuffer);
     } else
-        setCurrentIndex(currentIndex);
+        setCurrentIndex(m_currentIndex);
 }
 
 // Determine the type of data in the cell

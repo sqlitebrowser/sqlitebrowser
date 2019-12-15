@@ -923,8 +923,11 @@ void MainWindow::toggleEditDock(bool visible)
         // Update main window
         ui->tableBrowser->setFocus();
     } else {
-        // fill edit dock with actual data
-        editDock->setCurrentIndex(ui->tableBrowser->currentIndex());
+        // fill edit dock with actual data, when the current index has changed while the dock was invisible.
+        // (note that this signal is also emitted when the widget is docked or undocked, so we have to avoid
+        // reloading data when the user is editing and (un)docks the editor).
+        if (editDock->currentIndex() != ui->tableBrowser->currentIndex())
+            editDock->setCurrentIndex(ui->tableBrowser->currentIndex());
     }
 }
 

@@ -20,6 +20,7 @@ public:
     ~EditDialog() override;
 
     void setCurrentIndex(const QModelIndex& idx);
+    QPersistentModelIndex currentIndex() { return m_currentIndex; };
 
 public slots:
     void setFocus();
@@ -55,7 +56,7 @@ private:
     Ui::EditDialog* ui;
     QHexEdit* hexEdit;
     DockTextEdit* sciEdit;
-    QPersistentModelIndex currentIndex;
+    QPersistentModelIndex m_currentIndex;
     int dataSource;
     int dataType;
     bool isReadOnly;
