@@ -362,8 +362,7 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     });
 
     connect(nullAction, &QAction::triggered, [&]() {
-        for(const QModelIndex& index : selectedIndexes())
-            model()->setData(index, QVariant());
+       setToNull(selectedIndexes());
     });
     connect(copyAction, &QAction::triggered, [&]() {
        copy(false, false);
@@ -810,8 +809,7 @@ void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
             if(event->modifiers().testFlag(Qt::AltModifier))
             {
                 // When pressing Alt+Delete set the value to NULL
-                for(const QModelIndex& index : selectedIndexes())
-                    model()->setData(index, QVariant());
+                setToNull(selectedIndexes());
             } else {
                 // When pressing Delete only set the value to empty string
                 for(const QModelIndex& index : selectedIndexes())
@@ -1042,4 +1040,25 @@ void ExtendedTableWidget::currentChanged(const QModelIndex &current, const QMode
 {
     QTableView::currentChanged(current, previous);
     emit currentIndexChanged(current, previous);
+}
+
+void ExtendedTableWidget::setToNull(const QModelIndexList& indices)
+{
+    SqliteTableModel* m = qobject_cast<SqliteTableModel*>(const_cast<QAbstractItemModel*>(model()));
+    sqlb::TablePtr currentTable = m->db().getObjectByName<sqlb::Table>(m->currentTableName());
+
+    // Check if some column in the selection has a NOT NULL constraint, before trying to update the cells.
+    if(currentTable)
+        for(const QModelIndex& index : indices) {
+            const sqlb::Field& field = currentTable->fields.at(static_cast<size_t>(index.column())-1);
+            if(field.notnull()) {
+                QMessageBox::warning(nullptr, qApp->applicationName(),
+                                     tr("Cannot set selection to NULL. Column %1 has a NOT NULL constraint.").
+                                     arg(QString::fromStdString(field.name())));
+                return;
+            }
+        }
+
+    for(const QModelIndex& index : indices)
+        model()->setData(index, QVariant());
 }

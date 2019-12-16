@@ -84,6 +84,8 @@ private:
     void useAsFilter(const QString& filterOperator, bool binary = false, const QString& operatorSuffix = QString());
     void duplicateUpperCell();
 
+    void setToNull(const QModelIndexList& indices);
+
     static std::vector<std::vector<QByteArray>> m_buffer;
     static QString m_generatorStamp;
 
