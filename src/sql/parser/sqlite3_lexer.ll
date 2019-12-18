@@ -47,7 +47,7 @@ SQUAREBRACKETID		\[([^\n\]])*\]
 
 QUOTEDLITERAL		\"([^\n\"]|(\"\"))*\"
 STRINGLITERAL		\'([^\n\']|(\'\'))*\'
-BLOBLITERAL		X\'[0-9a-f]+\'
+BLOBLITERAL		X\'[0-9a-f]*\'
 
 BINDPARAMETER_NUM	\?([1-9]{DIGIT}*)?
 BINDPARAMETER_STR	[:@][a-z]+
