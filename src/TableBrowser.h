@@ -156,6 +156,7 @@ private slots:
     void saveFilterAsView();
     void setTableEncoding(bool forAllTables = false);
     void setDefaultTableEncoding();
+    void fetchedData();
 
 private:
     enum class ReplaceMode
@@ -185,6 +186,8 @@ private:
     static QString m_defaultEncoding;
 
     Palette m_condFormatPalette;
+    bool m_adjustRows;
+    bool m_columnsResized;
 
     void modifySingleFormat(const bool isRowIdFormat, const QString& filter, const QModelIndex refIndex,
                             std::function<void(CondFormat&)> changeFunction);

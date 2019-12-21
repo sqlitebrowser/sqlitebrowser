@@ -29,7 +29,9 @@ TableBrowser::TableBrowser(QWidget* parent) :
     gotoValidator(new QIntValidator(0, 0, this)),
     db(nullptr),
     dbStructureModel(nullptr),
-    m_model(nullptr)
+    m_model(nullptr),
+    m_adjustRows(false),
+    m_columnsResized(false)
 {
     ui->setupUi(this);
 
@@ -317,7 +319,8 @@ void TableBrowser::init(DBBrowserDB* _db)
         delete m_model;
     m_model = new SqliteTableModel(*db, this);
 
-    connect(m_model, &SqliteTableModel::finishedFetch, this, &TableBrowser::updateRecordsetLabel);
+    connect(m_model, &SqliteTableModel::finishedFetch, this, &TableBrowser::fetchedData);
+
 }
 
 void TableBrowser::reset()
@@ -469,9 +472,8 @@ void TableBrowser::updateTable()
         // Enable editing in general, but lock view editing
         unlockViewEditing(false);
 
-        // Column widths
-        for(int i=1;i<m_model->columnCount();i++)
-            ui->dataTable->setColumnWidth(i, ui->dataTable->horizontalHeader()->defaultSectionSize());
+        // Prepare for setting an initial column width based on the content.
+        m_columnsResized = false;
 
         // Encoding
         m_model->setEncoding(m_defaultEncoding);
@@ -535,6 +537,7 @@ void TableBrowser::updateTable()
         // Plot
         emit updatePlot(ui->dataTable, m_model, &m_settings[tablename], false);
     }
+
 
     // Show/hide menu options depending on whether this is a table or a view
     if(db->getObjectByName(currentlyBrowsedTableName()) && db->getObjectByName(currentlyBrowsedTableName())->type() == sqlb::Object::Table)
@@ -765,6 +768,7 @@ void TableBrowser::applySettings(const BrowseDataTableSettings& storedData, bool
     // Column widths
     for(auto widthIt=storedData.columnWidths.constBegin();widthIt!=storedData.columnWidths.constEnd();++widthIt)
         ui->dataTable->setColumnWidth(widthIt.key(), widthIt.value());
+    m_columnsResized = true;
 
     // Filters
     if(!skipFilters)
@@ -1163,6 +1167,22 @@ void TableBrowser::showRecordPopupMenu(const QPoint& pos)
         deleteRecord();
     });
 
+    popupRecordMenu.addSeparator();
+
+    QAction* adjustRowHeightAction = new QAction(tr("Adjust rows to contents"), &popupRecordMenu);
+    adjustRowHeightAction->setCheckable(true);
+    adjustRowHeightAction->setChecked(m_adjustRows);
+    popupRecordMenu.addAction(adjustRowHeightAction);
+
+    connect(adjustRowHeightAction, &QAction::toggled, [&](bool checked) {
+        m_adjustRows = checked;
+        if(m_adjustRows) {
+            ui->dataTable->verticalHeader()->setResizeContentsPrecision(0);
+            ui->dataTable->resizeRowsToContents();
+        } else
+            updateTable();
+    });
+
     popupRecordMenu.exec(ui->dataTable->verticalHeader()->mapToGlobal(pos));
 }
 
@@ -1529,5 +1549,28 @@ void TableBrowser::find(const QString& expr, bool forward, bool include_first, R
         else
             ui->editFindExpression->setStyleSheet("QLineEdit {color: white; background-color: rgb(255, 102, 102)}");
     } break;
+    }
+}
+
+void TableBrowser::fetchedData()
+{
+    updateRecordsetLabel();
+
+    // Adjust row height to contents. This has to be done each time new data is fetched.
+    if(m_adjustRows)
+        ui->dataTable->resizeRowsToContents();
+
+    // Don't resize the columns more than once to fit their contents. This is necessary because the finishedFetch signal of the model
+    // is emitted for each loaded prefetch block and we want to avoid column resizes while scrolling down.
+    if(m_columnsResized)
+        return;
+    m_columnsResized = true;
+
+    // Set column widths according to their contents but make sure they don't exceed a certain size
+    ui->dataTable->resizeColumnsToContents();
+    for(int i = 0; i < m_model->columnCount(); i++)
+    {
+        if(ui->dataTable->columnWidth(i) > 300)
+            ui->dataTable->setColumnWidth(i, 300);
     }
 }
