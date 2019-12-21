@@ -19,6 +19,7 @@
 #include <QPainter>
 #include <QClipboard>
 #include <QTextDocument>
+#include <QDesktopServices>
 
 #include <Qsci/qsciscintilla.h>
 #include <json.hpp>
@@ -64,6 +65,25 @@ EditDialog::EditDialog(QWidget* parent)
     ui->editorImage->addAction(ui->actionPrintImage);
     ui->editorBinary->addAction(ui->actionPrint);
     ui->editorBinary->addAction(ui->actionCopyHexAscii);
+
+    connect(ui->actionOpenInApp, &QAction::triggered, this, [&]() {
+        QUrl url;
+        switch (dataSource) {
+        case SciBuffer:
+            url.setUrl(sciEdit->text(), QUrl::TolerantMode);
+            break;
+        case QtBuffer:
+            url.setUrl(ui->qtEdit->toPlainText(), QUrl::TolerantMode);;
+            break;
+        default:
+            return;
+        }
+        if(url.isValid())
+            QDesktopServices::openUrl(url);
+        else
+            QMessageBox::warning(this, QApplication::applicationName(),
+                                 tr("Content is not a valid URL or filename: %1").arg(url.errorString()));
+    });
 
     mustIndentAndCompact = Settings::getValue("databrowser", "indent_compact").toBool();
     ui->actionIndent->setChecked(mustIndentAndCompact);

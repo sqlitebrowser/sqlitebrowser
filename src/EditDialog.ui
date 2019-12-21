@@ -124,6 +124,7 @@
        <addaction name="actionIndent"/>
        <addaction name="actionImport"/>
        <addaction name="actionExport"/>
+       <addaction name="actionOpenInApp"/>
        <addaction name="actionNull"/>
        <addaction name="actionPrint"/>
       </widget>
@@ -175,8 +176,8 @@ Errors are indicated with a red squiggle underline.</string>
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>598</width>
-         <height>264</height>
+         <width>84</width>
+         <height>35</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -400,6 +401,24 @@ Errors are indicated with a red squiggle underline.</string>
    </property>
    <property name="toolTip">
     <string>Wrap lines on word boundaries</string>
+   </property>
+  </action>
+  <action name="actionOpenInApp">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/open_in_app</normaloff>:/icons/open_in_app</iconset>
+   </property>
+   <property name="text">
+    <string>Open in default application or browser</string>
+   </property>
+   <property name="iconText">
+    <string>Open in application</string>
+   </property>
+   <property name="toolTip">
+    <string>Open in default application or browser</string>
+   </property>
+   <property name="whatsThis">
+    <string>The value is interpreted as a file or URL and opened in the default application or web browser.</string>
    </property>
   </action>
  </widget>

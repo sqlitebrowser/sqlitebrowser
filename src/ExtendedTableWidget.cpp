@@ -24,6 +24,7 @@
 #include <QCompleter>
 #include <QComboBox>
 #include <QShortcut>
+#include <QDesktopServices>
 
 #include <limits>
 
@@ -901,6 +902,17 @@ void ExtendedTableWidget::cellClicked(const QModelIndex& index)
             emit foreignKeyClicked(sqlb::ObjectIdentifier(m->currentTableName().schema(), fk.table()),
                                    fk.columns().size() ? fk.columns().at(0) : "",
                                    m->data(index, Qt::EditRole).toByteArray());
+        else {
+            // If this column does not have a foreign-key, try to interpret it as a filename/URL and open it in external application.
+
+            // TODO: Qt is doing a contiguous selection when Control+Click is pressed. It should be disabled, but at least moving the
+            // current index gives better result.
+            setCurrentIndex(index);
+
+            QUrl url (model()->data(index, Qt::EditRole).toString(), QUrl::TolerantMode);
+            if(url.isValid())
+                QDesktopServices::openUrl(url);
+        }
     }
 }
 

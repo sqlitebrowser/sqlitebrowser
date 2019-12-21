@@ -98,5 +98,6 @@
         <file alias="edit_cond_formats">style_edit.png</file>
         <file alias="clear_cond_formats">style_delete.png</file>
         <file alias="add_cond_format">style_add.png</file>
+        <file alias="open_in_app">application_link.png</file>
     </qresource>
 </RCC>
