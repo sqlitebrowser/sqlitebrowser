@@ -237,6 +237,10 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     m_tableHeader = new FilterTableHeader(this);
     setHorizontalHeader(m_tableHeader);
 
+    // Disconnect clicking in header to select column, since we will use it for sorting.
+    // Note that, in order to work, this cannot be converted to the standard C++11 format.
+    disconnect(m_tableHeader, SIGNAL(sectionPressed(int)),this, SLOT(selectColumn(int)));
+
     // Set up vertical header context menu
     verticalHeader()->setContextMenuPolicy(Qt::CustomContextMenu);
 
