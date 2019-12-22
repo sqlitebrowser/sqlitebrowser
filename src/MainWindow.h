@@ -204,6 +204,7 @@ private slots:
     void saveSqlFile(int tabIndex);
     void saveAll();
     void showContextMenuSqlTabBar(const QPoint& pos);
+    void openUrlOrFile(const QString& urlString);
 };
 
 #endif

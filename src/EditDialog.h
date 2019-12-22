@@ -51,6 +51,7 @@ private slots:
 
 signals:
     void recordTextUpdated(const QPersistentModelIndex& idx, const QByteArray& bArrdata, bool isBlob);
+    void requestUrlOrFileOpen(const QString& urlString);
 
 private:
     Ui::EditDialog* ui;

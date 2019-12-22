@@ -24,7 +24,6 @@
 #include <QCompleter>
 #include <QComboBox>
 #include <QShortcut>
-#include <QDesktopServices>
 
 #include <limits>
 
@@ -912,10 +911,7 @@ void ExtendedTableWidget::cellClicked(const QModelIndex& index)
             // TODO: Qt is doing a contiguous selection when Control+Click is pressed. It should be disabled, but at least moving the
             // current index gives better result.
             setCurrentIndex(index);
-
-            QUrl url (model()->data(index, Qt::EditRole).toString(), QUrl::TolerantMode);
-            if(url.isValid())
-                QDesktopServices::openUrl(url);
+            emit requestUrlOrFileOpen(model()->data(index, Qt::EditRole).toString());
         }
     }
 }

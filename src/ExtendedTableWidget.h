@@ -75,6 +75,7 @@ signals:
     void selectedRowsToBeDeleted();
     void editCondFormats(int column);
     void currentIndexChanged(const QModelIndex &current, const QModelIndex &previous);
+    void requestUrlOrFileOpen(const QString& urlString);
 
 private:
     void copyMimeData(const QModelIndexList& fromIndices, QMimeData* mimeData, const bool withHeaders, const bool inSQL);

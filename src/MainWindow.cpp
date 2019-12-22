@@ -400,6 +400,7 @@ void MainWindow::init()
 
     // Connect some more signals and slots
     connect(editDock, &EditDialog::recordTextUpdated, this, &MainWindow::updateRecordText);
+    connect(editDock, &EditDialog::requestUrlOrFileOpen, this, &MainWindow::openUrlOrFile);
     connect(ui->dbTreeWidget->selectionModel(), &QItemSelectionModel::currentChanged, this, &MainWindow::changeTreeSelection);
     connect(ui->dockEdit, &QDockWidget::visibilityChanged, this, &MainWindow::toggleEditDock);
     connect(m_remoteDb, SIGNAL(openFile(QString)), this, SLOT(fileOpen(QString)));
@@ -749,6 +750,9 @@ void MainWindow::attachPlot(ExtendedTableWidget* tableWidget, SqliteTableModel* 
         // Connect plot selection to the current table results widget.
         connect(plotDock, SIGNAL(pointsSelected(int,int)), tableWidget, SLOT(selectTableLines(int, int)));
         connect(tableWidget, &ExtendedTableWidget::destroyed, plotDock, &PlotDock::resetPlot);
+        // Disconnect requestUrlOrFileOpen in order to make sure that there is only one connection. Otherwise we can open it several times.
+        disconnect(tableWidget, &ExtendedTableWidget::requestUrlOrFileOpen, this, &MainWindow::openUrlOrFile);
+        connect(tableWidget, &ExtendedTableWidget::requestUrlOrFileOpen, this, &MainWindow::openUrlOrFile);
     }
 }
 
@@ -3325,4 +3329,17 @@ void MainWindow::showContextMenuSqlTabBar(const QPoint& pos)
     menuTabs->addAction(actionDuplicate);
     menuTabs->addAction(actionClose);
     menuTabs->exec(ui->tabSqlAreas->mapToGlobal(pos));
+}
+
+void MainWindow::openUrlOrFile(const QString& urlString)
+{
+    QUrl url = QUrl::fromUserInput(urlString, QFileInfo(db.currentFile()).path(), QUrl::AssumeLocalFile);
+    if(url.isValid()) {
+        if(QDesktopServices::openUrl(url))
+            showStatusMessage5s(tr("Opening '%1'...").arg(url.toDisplayString()));
+        else
+            showStatusMessage5s(tr("There was an error opening '%1'...").arg(url.toDisplayString()));
+
+    } else
+        showStatusMessage5s(tr("Value is not a valid URL or filename: %1").arg(url.errorString()));
 }
