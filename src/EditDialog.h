@@ -32,7 +32,7 @@ protected:
     void showEvent(QShowEvent* ev) override;
 
 private slots:
-    void importData();
+    void importData(bool asLink = false);
     void exportData();
     void setNull();
     void updateApplyButton();

@@ -421,6 +421,33 @@ Errors are indicated with a red squiggle underline.</string>
     <string>The value is interpreted as a file or URL and opened in the default application or web browser.</string>
    </property>
   </action>
+  <action name="actionImportAsLink">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/document_link</normaloff>:/icons/document_link</iconset>
+   </property>
+   <property name="text">
+    <string>Save file reference...</string>
+   </property>
+   <property name="toolTip">
+    <string>Save reference to file</string>
+   </property>
+  </action>
+  <action name="actionImportInMenu">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/document_open</normaloff>:/icons/document_open</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Import...</string>
+   </property>
+   <property name="toolTip">
+    <string>Import from file</string>
+   </property>
+   <property name="whatsThis">
+    <string>Opens a file dialog used to import any kind of data to this database cell.</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
   <tabstop>comboMode</tabstop>
@@ -612,6 +639,22 @@ Errors are indicated with a red squiggle underline.</string>
    <signal>toggled(bool)</signal>
    <receiver>EditDialog</receiver>
    <slot>setWordWrapping(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>308</x>
+     <y>190</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionImportInMenu</sender>
+   <signal>triggered()</signal>
+   <receiver>EditDialog</receiver>
+   <slot>importData()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

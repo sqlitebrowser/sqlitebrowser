@@ -20,6 +20,7 @@
 #include <QClipboard>
 #include <QTextDocument>
 #include <QDesktopServices>
+#include <QMenu>
 
 #include <Qsci/qsciscintilla.h>
 #include <json.hpp>
@@ -65,6 +66,16 @@ EditDialog::EditDialog(QWidget* parent)
     ui->editorImage->addAction(ui->actionPrintImage);
     ui->editorBinary->addAction(ui->actionPrint);
     ui->editorBinary->addAction(ui->actionCopyHexAscii);
+
+    // Set up popup menus
+    QMenu* popupImportFileMenu = new QMenu(this);
+    popupImportFileMenu->addAction(ui->actionImportInMenu);
+    popupImportFileMenu->addAction(ui->actionImportAsLink);
+    ui->actionImport->setMenu(popupImportFileMenu);
+
+    connect(ui->actionImportAsLink, &QAction::triggered, this, [&]() {
+        importData(/* asLink */ true);
+    });
 
     connect(ui->actionOpenInApp, &QAction::triggered, this, [&]() {
         QUrl url;
@@ -330,7 +341,7 @@ void EditDialog::loadData(const QByteArray& bArrdata)
     }
 }
 
-void EditDialog::importData()
+void EditDialog::importData(bool asLink)
 {
     // Get list of supported image file formats to include them in the file dialog filter
     QString image_formats;
@@ -383,16 +394,22 @@ void EditDialog::importData()
                 );
     if(QFile::exists(fileName))
     {
-        QFile file(fileName);
-        if(file.open(QIODevice::ReadOnly))
-        {
-            QByteArray d = file.readAll();
-            loadData(d);
-            file.close();
+        if(asLink) {
+            QByteArray fileNameBa = fileName.toUtf8();
+            loadData(fileNameBa);
+            updateCellInfoAndMode(fileNameBa);
+        } else {
+            QFile file(fileName);
+            if(file.open(QIODevice::ReadOnly))
+            {
+                QByteArray d = file.readAll();
+                loadData(d);
+                file.close();
 
-            // Update the cell data info in the bottom left of the Edit Cell
-            // and update mode (if required) to the just imported data type.
-            updateCellInfoAndMode(d);
+                // Update the cell data info in the bottom left of the Edit Cell
+                // and update mode (if required) to the just imported data type.
+                updateCellInfoAndMode(d);
+            }
         }
     }
 }

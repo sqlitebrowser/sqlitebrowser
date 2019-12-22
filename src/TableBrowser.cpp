@@ -42,7 +42,7 @@ TableBrowser::TableBrowser(QWidget* parent) :
     ui->editGlobalFilter->setPlaceholderText(tr("Filter in all columns"));
     ui->editGlobalFilter->setConditionFormatContextMenuEnabled(false);
 
-    // Set uo popup menus
+    // Set up popup menus
     popupNewRecordMenu = new QMenu(this);
     popupNewRecordMenu->addAction(ui->newRecordAction);
     popupNewRecordMenu->addAction(ui->insertValuesAction);
