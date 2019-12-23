@@ -1126,49 +1126,52 @@ void TableBrowser::showDataColumnPopupMenu(const QPoint& pos)
 
 void TableBrowser::showRecordPopupMenu(const QPoint& pos)
 {
-    if(!(db->getObjectByName(currentlyBrowsedTableName())->type() == sqlb::Object::Types::Table && !db->readOnly()))
-        return;
-
     int row = ui->dataTable->verticalHeader()->logicalIndexAt(pos);
     if (row == -1)
         return;
 
-    // Select the row if it is not already in the selection.
-    QModelIndexList rowList = ui->dataTable->selectionModel()->selectedRows();
-    bool found = false;
-    for (QModelIndex index : rowList) {
-        if (row == index.row()) {
-            found = true;
-            break;
-        }
-    }
-    if (!found)
-        ui->dataTable->selectRow(row);
-
-    rowList = ui->dataTable->selectionModel()->selectedRows();
-
-    QString duplicateText = rowList.count() > 1 ? tr("Duplicate records") : tr("Duplicate record");
-
     QMenu popupRecordMenu(this);
-    QAction* action = new QAction(duplicateText, &popupRecordMenu);
-    // Set shortcut for documentation purposes (the actual functional shortcut is not set here)
-    action->setShortcut(QKeySequence(tr("Ctrl+\"")));
-    popupRecordMenu.addAction(action);
 
-    connect(action, &QAction::triggered, [rowList, this]() {
-        for (const QModelIndex& index : rowList)
-            duplicateRecord(index.row());
-    });
+    // "Delete and duplicate records" can only be done on writable objects
+    if(db->getObjectByName(currentlyBrowsedTableName())->type() == sqlb::Object::Types::Table && !db->readOnly()) {
 
-    QAction* deleteRecordAction = new QAction(QIcon(":icons/delete_record"), ui->actionDeleteRecord->text(), &popupRecordMenu);
-    popupRecordMenu.addAction(deleteRecordAction);
+        // Select the row if it is not already in the selection.
+        QModelIndexList rowList = ui->dataTable->selectionModel()->selectedRows();
+        bool found = false;
+        for (QModelIndex index : rowList) {
+            if (row == index.row()) {
+                found = true;
+                break;
+            }
+        }
+        if (!found)
+            ui->dataTable->selectRow(row);
 
-    connect(deleteRecordAction, &QAction::triggered, [&]() {
-        deleteRecord();
-    });
+        rowList = ui->dataTable->selectionModel()->selectedRows();
 
-    popupRecordMenu.addSeparator();
+        QString duplicateText = rowList.count() > 1 ? tr("Duplicate records") : tr("Duplicate record");
 
+        QAction* action = new QAction(duplicateText, &popupRecordMenu);
+        // Set shortcut for documentation purposes (the actual functional shortcut is not set here)
+        action->setShortcut(QKeySequence(tr("Ctrl+\"")));
+        popupRecordMenu.addAction(action);
+
+        connect(action, &QAction::triggered, [rowList, this]() {
+            for (const QModelIndex& index : rowList)
+                duplicateRecord(index.row());
+        });
+
+        QAction* deleteRecordAction = new QAction(QIcon(":icons/delete_record"), ui->actionDeleteRecord->text(), &popupRecordMenu);
+        popupRecordMenu.addAction(deleteRecordAction);
+
+        connect(deleteRecordAction, &QAction::triggered, [&]() {
+            deleteRecord();
+        });
+
+        popupRecordMenu.addSeparator();
+    }
+
+    // "Adjust rows" can be done on any object
     QAction* adjustRowHeightAction = new QAction(tr("Adjust rows to contents"), &popupRecordMenu);
     adjustRowHeightAction->setCheckable(true);
     adjustRowHeightAction->setChecked(m_adjustRows);
@@ -1176,10 +1179,9 @@ void TableBrowser::showRecordPopupMenu(const QPoint& pos)
 
     connect(adjustRowHeightAction, &QAction::toggled, [&](bool checked) {
         m_adjustRows = checked;
-        if(m_adjustRows) {
-            ui->dataTable->verticalHeader()->setResizeContentsPrecision(0);
+        if(m_adjustRows)
             ui->dataTable->resizeRowsToContents();
-        } else
+        else
             updateTable();
     });
 
