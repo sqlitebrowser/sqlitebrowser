@@ -1182,7 +1182,6 @@ void EditDialog::setWordWrapping(bool value)
 void EditDialog::openDataWithExternal()
 {
     QString extension;
-    QStringList filters;
     switch (dataType) {
     case Image: {
         // Images get special treatment.
@@ -1224,11 +1223,9 @@ void EditDialog::openDataWithExternal()
             file.write(hexEdit->data());
             break;
         case SciBuffer:
-            // Data source is the Scintilla buffer
             file.write(sciEdit->text().toUtf8());
             break;
         case QtBuffer:
-            // Data source is the text buffer
             file.write(ui->qtEdit->toPlainText().toUtf8());
             break;
         }
@@ -1240,7 +1237,7 @@ void EditDialog::openDataWithExternal()
             (nullptr,
              QApplication::applicationName(),
              tr("The data has been saved to a temporary file and has been opened with the default application."
-                "You can edit now the file and when your are ready, you can apply the saved new data to the cell or cancel any changes."),
+                "You can edit now the file and when your are ready, you can apply the saved new data to the cell editor or cancel any changes."),
              QMessageBox::Apply | QMessageBox::Cancel);
 
         QFile readFile(file.fileName());
