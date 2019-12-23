@@ -100,6 +100,7 @@ private:
     bool promptInvalidData(const QString& data_type, const QString& errorString);
     void setDataInBuffer(const QByteArray& bArrdata, DataSources source);
     void setStackCurrentIndex(int editMode);
+    void openDataWithExternal();
 };
 
 #endif

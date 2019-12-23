@@ -88,6 +88,7 @@ EditDialog::EditDialog(QWidget* parent)
             return;
         }
     });
+    connect(ui->actionOpenInExternal, &QAction::triggered, this, &EditDialog::openDataWithExternal);
 
     mustIndentAndCompact = Settings::getValue("databrowser", "indent_compact").toBool();
     ui->actionIndent->setChecked(mustIndentAndCompact);
@@ -1176,4 +1177,77 @@ void EditDialog::setWordWrapping(bool value)
     // Set wrap lines
     sciEdit->setWrapMode(value ? QsciScintilla::WrapWord : QsciScintilla::WrapNone);
     ui->qtEdit->setWordWrapMode(value ? QTextOption::WrapAtWordBoundaryOrAnywhere : QTextOption::NoWrap);
+}
+
+void EditDialog::openDataWithExternal()
+{
+    QString extension;
+    QStringList filters;
+    switch (dataType) {
+    case Image: {
+        // Images get special treatment.
+        // Determine the likely filename extension.
+        QByteArray cellData = hexEdit->data();
+        QBuffer imageBuffer(&cellData);
+        QImageReader imageReader(&imageBuffer);
+        extension = imageReader.format().toLower().prepend(".");
+        break;
+    }
+    case Binary:
+        extension = FILE_EXT_BIN_DEFAULT;
+        break;
+    case RtlText:
+    case Text:
+        if (ui->comboMode->currentIndex() == XmlEditor)
+            extension = FILE_EXT_XML_DEFAULT;
+        else
+            extension = FILE_EXT_TXT_DEFAULT;
+        break;
+    case JSON:
+        extension = FILE_EXT_JSON_DEFAULT;
+        break;
+    case SVG:
+        extension = FILE_EXT_SVG_DEFAULT;
+        break;
+    case XML:
+        extension = FILE_EXT_XML_DEFAULT;
+        break;
+    case Null:
+        return;
+    }
+    QTemporaryFile file (QDir::tempPath() + QString("/DB4S-XXXXXX") + extension);
+
+    if(file.open())
+    {
+        switch (dataSource) {
+        case HexBuffer:
+            file.write(hexEdit->data());
+            break;
+        case SciBuffer:
+            // Data source is the Scintilla buffer
+            file.write(sciEdit->text().toUtf8());
+            break;
+        case QtBuffer:
+            // Data source is the text buffer
+            file.write(ui->qtEdit->toPlainText().toUtf8());
+            break;
+        }
+        file.close();
+
+        emit requestUrlOrFileOpen(file.fileName());
+
+        QMessageBox::StandardButton reply = QMessageBox::information
+            (nullptr,
+             QApplication::applicationName(),
+             tr("The data has been saved to a temporary file and has been opened with the default application."
+                "You can edit now the file and when your are ready, you can apply the saved new data to the cell or cancel any changes."),
+             QMessageBox::Apply | QMessageBox::Cancel);
+
+        QFile readFile(file.fileName());
+        if(reply == QMessageBox::Apply && readFile.open(QIODevice::ReadOnly)){
+            QByteArray d = readFile.readAll();
+            loadData(d);
+            readFile.close();
+        }
+    }
 }

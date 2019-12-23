@@ -124,6 +124,7 @@
        <addaction name="actionIndent"/>
        <addaction name="actionImport"/>
        <addaction name="actionExport"/>
+       <addaction name="actionOpenInExternal"/>
        <addaction name="actionOpenInApp"/>
        <addaction name="actionNull"/>
        <addaction name="actionPrint"/>
@@ -446,6 +447,18 @@ Errors are indicated with a red squiggle underline.</string>
    </property>
    <property name="whatsThis">
     <string>Opens a file dialog used to import any kind of data to this database cell.</string>
+   </property>
+  </action>
+  <action name="actionOpenInExternal">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/open_data_in_app</normaloff>:/icons/open_data_in_app</iconset>
+   </property>
+   <property name="text">
+    <string>Open in external application</string>
+   </property>
+   <property name="toolTip">
+    <string>Open in external application</string>
    </property>
   </action>
  </widget>
