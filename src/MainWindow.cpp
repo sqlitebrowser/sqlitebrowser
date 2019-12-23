@@ -726,7 +726,7 @@ bool MainWindow::closeProject()
              QApplication::applicationName(),
              tr("Do you want to save the changes made to the project file '%1'?").
              arg(QFileInfo(currentProjectFilename).fileName()),
-             QMessageBox::Save | QMessageBox::No | QMessageBox::Cancel);
+             QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
         switch(reply) {
         case QMessageBox::Save:
             saveProject();
@@ -1831,7 +1831,7 @@ bool MainWindow::askSaveSqlTab(int index, bool& ignoreUnattachedBuffers)
             QMessageBox::StandardButton reply = QMessageBox::question(nullptr,
                                                                       QApplication::applicationName(),
                                                                       message,
-                                                                      QMessageBox::Save | QMessageBox::No | QMessageBox::Cancel);
+                                                                      QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
             switch(reply) {
             case QMessageBox::Save:
                 saveProject();
@@ -1848,7 +1848,7 @@ bool MainWindow::askSaveSqlTab(int index, bool& ignoreUnattachedBuffers)
                                       QApplication::applicationName(),
                                       tr("Do you want to save the changes made to the SQL file %1?").
                                       arg(QFileInfo(sqlExecArea->fileName()).fileName()),
-                                      QMessageBox::Save | QMessageBox::No | QMessageBox::Cancel);
+                                      QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
             switch(reply) {
             case QMessageBox::Save:
                 saveSqlFile(index);

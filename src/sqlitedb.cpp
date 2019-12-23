@@ -700,7 +700,7 @@ bool DBBrowserDB::close()
                 reply = QMessageBox::question(nullptr,
                                               QApplication::applicationName(),
                                               tr("Do you want to save the changes made to the database file %1?").arg(curDBFilename),
-                                              QMessageBox::Save | QMessageBox::No | QMessageBox::Cancel);
+                                              QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
             }
 
             // If the user clicked the cancel button stop here and return false
