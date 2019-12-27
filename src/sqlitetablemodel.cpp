@@ -272,7 +272,7 @@ QVariant SqliteTableModel::getMatchingCondFormat(const std::map<size_t, std::vec
         if (isNumber && !contains(eachCondFormat.sqlCondition(), '\''))
             sql = "SELECT " + value.toStdString() + " " + eachCondFormat.sqlCondition();
         else
-            sql = "SELECT '" + value.toStdString() + "' " + eachCondFormat.sqlCondition();
+            sql = "SELECT " + sqlb::escapeString(value.toStdString()) + " " + eachCondFormat.sqlCondition();
 
         // Empty filter means: apply format to any row.
         // Query the DB for the condition, waiting in case there is a loading in progress.
