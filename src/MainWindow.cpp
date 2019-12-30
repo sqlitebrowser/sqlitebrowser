@@ -1087,6 +1087,9 @@ void MainWindow::executeQuery()
         // Note that execute_from_index uses character positions and not byte positions, so text().length() must be used.
         if (editor->text(execute_from_line).length() == execute_from_index+1) {
             execute_from_line++;
+            // The next lines could be empty, so skip all of them too.
+            while(editor->text(execute_from_line).trimmed().isEmpty())
+                execute_from_line++;
             execute_from_index = 0;
         }
 
