@@ -157,6 +157,7 @@ bool RunSql::executeNextStatement()
     queries_left_to_execute = QByteArray(tail);
     lk.unlock();
 
+    QString error;
     if (sql3status == SQLITE_OK)
     {
         sql3status = sqlite3_step(vm);
@@ -227,18 +228,10 @@ bool RunSql::executeNextStatement()
         case SQLITE_MISUSE:
             break;
         default:
-            QString error = QString::fromUtf8(sqlite3_errmsg(pDb.get()));
-            releaseDbAccess();
-            emit statementErrored(error, execute_current_position, end_of_current_statement_position);
-            stopExecution();
-            return false;
+            error = QString::fromUtf8(sqlite3_errmsg(pDb.get()));
         }
     } else {
-        QString error = QString::fromUtf8(sqlite3_errmsg(pDb.get()));
-        releaseDbAccess();
-        emit statementErrored(error, execute_current_position, end_of_current_statement_position);
-        stopExecution();
-        return false;
+        error = QString::fromUtf8(sqlite3_errmsg(pDb.get()));
     }
 
     // Release the database
@@ -256,6 +249,12 @@ bool RunSql::executeNextStatement()
         savepoint_created = false;
     }
 
+    if(!error.isEmpty())
+    {
+        emit statementErrored(error, execute_current_position, end_of_current_statement_position);
+        stopExecution();
+        return false;
+    }
     // Update the start position for the next statement and check if we are at
     // the end of the part we want to execute. If so, stop the execution now.
     execute_current_position = end_of_current_statement_position;
