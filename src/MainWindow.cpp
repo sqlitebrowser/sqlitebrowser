@@ -1058,7 +1058,7 @@ void MainWindow::executeQuery()
 
             // Need to set the end position here before adjusting the start line
             int execute_to_line = execute_from_line;
-            int execute_to_index = editor->text(execute_to_line).length() - 1;     // The -1 compensates for the line break at the end of the line
+            int execute_to_index = editor->text(execute_to_line).remove('\n').remove('\r').length();     // This chops the line break at the end of the line
             execute_to_position = editor->positionFromLineIndex(execute_to_line, execute_to_index);
 
             QByteArray firstPartEntireSQL = sqlWidget->getSql().toUtf8().left(execute_from_position);
@@ -1084,8 +1084,9 @@ void MainWindow::executeQuery()
 
         // Special case: if the start position is at the end of a line, then move to the beggining of next line.
         // Otherwise for the typical case, the line reference is one less than expected.
-        // Note that execute_from_index uses character positions and not byte positions, so text().length() must be used.
-        if (editor->text(execute_from_line).length() == execute_from_index+1) {
+        // Note that execute_from_index uses character positions and not byte positions, so at() can be used.
+        QChar char_at_index = editor->text(execute_from_line).at(execute_from_index);
+        if (char_at_index == '\r' || char_at_index == '\n') {
             execute_from_line++;
             // The next lines could be empty, so skip all of them too.
             while(editor->text(execute_from_line).trimmed().isEmpty())
