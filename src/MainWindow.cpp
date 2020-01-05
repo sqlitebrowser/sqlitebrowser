@@ -1241,6 +1241,7 @@ void MainWindow::importTableFromCSV()
                 << FILE_FILTER_TSV
                 << FILE_FILTER_DSV
                 << FILE_FILTER_TXT
+                << FILE_FILTER_DAT
                 << FILE_FILTER_ALL;
 
     QStringList wFiles = FileDialog::getOpenFileNames(

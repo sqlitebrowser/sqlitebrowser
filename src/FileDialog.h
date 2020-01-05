@@ -32,6 +32,7 @@ static const QString FILE_FILTER_CSV(QObject::tr("Comma-Separated Values Files (
 static const QString FILE_EXT_CSV_DEFAULT(".csv");
 static const QString FILE_FILTER_TSV(QObject::tr("Tab-Separated Values Files (*.tsv)"));
 static const QString FILE_FILTER_DSV(QObject::tr("Delimiter-Separated Values Files (*.dsv)"));
+static const QString FILE_FILTER_DAT(QObject::tr("Concordance DAT files (*.dat)"));
 
 // JSON File Extensions Filter
 static const QString FILE_FILTER_JSON(QObject::tr("JSON Files (*.json *.js)"));

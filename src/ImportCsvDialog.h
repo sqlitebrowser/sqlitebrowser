@@ -33,6 +33,11 @@ private slots:
     void toggleAdvancedSection(bool show);
 
 private:
+
+    // Positions for combos starting at the bottom
+    enum {OtherCode = 1,
+          OtherPrintable = 2};
+
     Ui::ImportCsvDialog* ui;
     std::vector<QString> csvFilenames;
     QString selectedFile;

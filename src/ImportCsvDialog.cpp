@@ -217,8 +217,11 @@ void ImportCsvDialog::accept()
 void ImportCsvDialog::updatePreview()
 {
     // Show/hide custom quote/separator input fields
-    ui->editCustomQuote->setVisible(ui->comboQuote->currentIndex() == ui->comboQuote->count()-1);
-    ui->editCustomSeparator->setVisible(ui->comboSeparator->currentIndex() == ui->comboSeparator->count()-1);
+    ui->editCustomQuote->setVisible(ui->comboQuote->currentIndex() == ui->comboQuote->count() - OtherPrintable);
+    ui->editCustomSeparator->setVisible(ui->comboSeparator->currentIndex() == ui->comboSeparator->count() - OtherPrintable);
+    ui->spinBoxQuote->setVisible(ui->comboQuote->currentIndex() == ui->comboQuote->count() - OtherCode);
+    ui->spinBoxSeparator->setVisible(ui->comboSeparator->currentIndex() == ui->comboSeparator->count() - OtherCode);
+
     ui->editCustomEncoding->setVisible(ui->comboEncoding->currentIndex() == ui->comboEncoding->count()-1);
 
     // Reset preview widget
@@ -702,10 +705,18 @@ void ImportCsvDialog::setQuoteChar(QChar c)
 {
     QComboBox* combo = ui->comboQuote;
     int index = combo->findText(QString(c));
+    ui->spinBoxQuote->setValue(c.unicode());
     if(index == -1)
     {
-        combo->setCurrentIndex(combo->count() - 1);
-        ui->editCustomQuote->setText(QString(c));
+        if(c.isPrint())
+        {
+            combo->setCurrentIndex(combo->count() - OtherPrintable);
+            ui->editCustomQuote->setText(QString(c));
+        }
+        else
+        {
+            combo->setCurrentIndex(combo->count() - OtherCode);
+        }
     }
     else
     {
@@ -718,8 +729,10 @@ QChar ImportCsvDialog::currentQuoteChar() const
     QString value;
 
     // The last item in the combobox is the 'Other' item; if it is selected return the text of the line edit field instead
-    if(ui->comboQuote->currentIndex() == ui->comboQuote->count()-1)
+    if(ui->comboQuote->currentIndex() == ui->comboQuote->count() - OtherPrintable)
         value = ui->editCustomQuote->text().length() ? ui->editCustomQuote->text() : "";
+    else if(ui->comboQuote->currentIndex() == ui->comboQuote->count() - OtherCode)
+        value = QString(QChar(ui->spinBoxQuote->value()));
     else if(ui->comboQuote->currentText().length())
         value = ui->comboQuote->currentText();
 
@@ -731,10 +744,18 @@ void ImportCsvDialog::setSeparatorChar(QChar c)
     QComboBox* combo = ui->comboSeparator;
     QString sText = c == '\t' ? QString("Tab") : QString(c);
     int index = combo->findText(sText);
+    ui->spinBoxSeparator->setValue(c.unicode());
     if(index == -1)
     {
-        combo->setCurrentIndex(combo->count() - 1);
-        ui->editCustomSeparator->setText(QString(c));
+        if(c.isPrint())
+        {
+            combo->setCurrentIndex(combo->count() - OtherPrintable);
+            ui->editCustomSeparator->setText(QString(c));
+        }
+        else
+        {
+            combo->setCurrentIndex(combo->count() - OtherCode);
+        }
     }
     else
     {
@@ -746,9 +767,12 @@ QChar ImportCsvDialog::currentSeparatorChar() const
 {
     QString value;
 
-    // The last item in the combobox is the 'Other' item; if it is selected return the text of the line edit field instead
-    if(ui->comboSeparator->currentIndex() == ui->comboSeparator->count()-1 || ui->comboSeparator->currentText().isEmpty())
+    // The last options in the combobox are the 'Other (*)' items;
+    // if one of them is selected return the text or code of the corresponding field instead
+    if(ui->comboSeparator->currentIndex() == ui->comboSeparator->count() - OtherPrintable)
         value = ui->editCustomSeparator->text().length() ? ui->editCustomSeparator->text() : "";
+    else if(ui->comboSeparator->currentIndex() == ui->comboSeparator->count() - OtherCode)
+        value = QString(QChar(ui->spinBoxSeparator->value()));
     else
         value = ui->comboSeparator->currentText() == tr("Tab") ? "\t" : ui->comboSeparator->currentText();
 
