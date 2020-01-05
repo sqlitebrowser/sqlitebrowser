@@ -271,6 +271,8 @@ void SqlExecutionArea::saveFile(const QString& filename)
     // Write to the file
     if(f.write(getSql().toUtf8()) != -1)
     {
+        // Close file now. If we let the destructor close it, we can get change notifications.
+        f.close();
         // Set modified to false so we can get control of unsaved changes when closing.
         ui->editEditor->setModified(false);
 
