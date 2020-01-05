@@ -142,6 +142,8 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
 
     // (De-)activate fields
     checkInput();
+
+    ui->sqlTextEdit->setReadOnly(true);
 }
 
 EditTableDialog::~EditTableDialog()
