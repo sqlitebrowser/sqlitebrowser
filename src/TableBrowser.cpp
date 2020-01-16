@@ -763,7 +763,7 @@ void TableBrowser::applySettings(const BrowseDataTableSettings& storedData, bool
     showRowidColumn(storedData.showRowid, skipFilters);
 
     // Enable editing in general and (un)lock view editing depending on the settings
-    unlockViewEditing(!storedData.unlockViewPk.isEmpty(), storedData.unlockViewPk);
+    unlockViewEditing(!storedData.unlockViewPk.isEmpty() && storedData.unlockViewPk != "_rowid_", storedData.unlockViewPk);
 
     // Column hidden status
     on_actionShowAllColumns_triggered();
