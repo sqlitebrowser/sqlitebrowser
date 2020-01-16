@@ -341,8 +341,9 @@ void DbStructureModel::buildTree(QTreeWidgetItem* parent, const std::string& sch
     itemTriggers->setText(ColumnName, tr("Triggers (%1)").arg(calc_number_of_objects_by_type(objmap, "trigger")));
     typeToParentItem.insert({"trigger", itemTriggers});
 
-    // Get all database objects and sort them by their name
-    std::map<std::string, sqlb::ObjectPtr> dbobjs;
+    // Get all database objects and sort them by their name.
+    // This needs to be a multimap because SQLite allows views and triggers with the same name which means that names can appear twice.
+    std::multimap<std::string, sqlb::ObjectPtr> dbobjs;
     for(const auto& it : objmap)
         dbobjs.insert({it.second->name(), it.second});
 
