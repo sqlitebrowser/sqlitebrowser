@@ -143,6 +143,7 @@ static void regexp(sqlite3_context* ctx, int /*argc*/, sqlite3_value* argv[])
     {
         // Pattern is not in cache. Create a new regular expressions object, compile it, and insert it into the cache
         regex.setPattern(pattern);
+        regex.setPatternOptions(QRegularExpression::UseUnicodePropertiesOption);
         if(!regex.isValid())
             return sqlite3_result_error(ctx, "invalid operand", -1);
         regex.optimize();
