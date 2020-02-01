@@ -1,0 +1,1481 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TableBrowser</class>
+ <widget class="QWidget" name="TableBrowser">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>695</width>
+    <height>400</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Browse Data</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <property name="spacing">
+    <number>1</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="leftMargin">
+      <number>2</number>
+     </property>
+     <property name="rightMargin">
+      <number>2</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>&amp;Table:</string>
+       </property>
+       <property name="buddy">
+        <cstring>comboBrowseTable</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBrowseTable">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Select a table to browse data</string>
+       </property>
+       <property name="whatsThis">
+        <string>Use this list to select a table to be displayed in the database view</string>
+       </property>
+       <property name="maxVisibleItems">
+        <number>30</number>
+       </property>
+       <property name="sizeAdjustPolicy">
+        <enum>QComboBox::AdjustToContents</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolBar" name="browseToolbar">
+       <property name="toolButtonStyle">
+        <enum>Qt::ToolButtonIconOnly</enum>
+       </property>
+       <addaction name="actionRefresh"/>
+       <addaction name="actionClearFilters"/>
+       <addaction name="actionClearSorting"/>
+       <addaction name="separator"/>
+       <addaction name="actionSaveFilterAsPopup"/>
+       <addaction name="actionPrintTable"/>
+       <addaction name="separator"/>
+       <addaction name="actionNewRecord"/>
+       <addaction name="actionDeleteRecord"/>
+       <addaction name="separator"/>
+       <addaction name="actionToggleFormatToolbar"/>
+       <addaction name="actionFind"/>
+       <addaction name="actionReplace"/>
+      </widget>
+     </item>
+     <item>
+      <widget class="FilterLineEdit" name="editGlobalFilter"/>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::MinimumExpanding</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>0</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QFrame" name="formatFrame">
+     <layout class="QHBoxLayout" name="horizontalLayoutFormat">
+      <property name="spacing">
+       <number>5</number>
+      </property>
+      <property name="leftMargin">
+       <number>2</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>2</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QFontComboBox" name="fontComboBox"/>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="fontSizeBox">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolBar" name="formatToolbar">
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonIconOnly</enum>
+        </property>
+        <addaction name="actionBold"/>
+        <addaction name="actionItalic"/>
+        <addaction name="actionUnderline"/>
+        <addaction name="separator"/>
+        <addaction name="actionFontColor"/>
+        <addaction name="actionBackgroundColor"/>
+        <addaction name="separator"/>
+        <addaction name="actionLeftAlign"/>
+        <addaction name="actionCenter"/>
+        <addaction name="actionRightAlign"/>
+        <addaction name="actionJustify"/>
+        <addaction name="separator"/>
+        <addaction name="actionEditCondFormats"/>
+        <addaction name="actionClearFormat"/>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="ExtendedTableWidget" name="dataTable">
+     <property name="acceptDrops">
+      <bool>true</bool>
+     </property>
+     <property name="whatsThis">
+      <string>This is the database table view. You can do the following actions:
+ - Start writing for editing inline the value.
+ - Double-click any record to edit its contents in the cell editor window.
+ - Alt+Del for deleting the cell content to NULL.
+ - Ctrl+&quot; for duplicating the current record.
+ - Ctrl+' for copying the value from the cell above.
+ - Standard selection and copy/paste operations.</string>
+     </property>
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <property name="dragDropMode">
+      <enum>QAbstractItemView::DragDrop</enum>
+     </property>
+     <property name="defaultDropAction">
+      <enum>Qt::CopyAction</enum>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::ContiguousSelection</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QFrame" name="frameFind">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>62</height>
+      </size>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout">
+      <property name="spacing">
+       <number>1</number>
+      </property>
+      <property name="leftMargin">
+       <number>1</number>
+      </property>
+      <property name="topMargin">
+       <number>1</number>
+      </property>
+      <property name="rightMargin">
+       <number>1</number>
+      </property>
+      <property name="bottomMargin">
+       <number>1</number>
+      </property>
+      <item>
+       <widget class="QWidget" name="widgetFind" native="true">
+        <layout class="QHBoxLayout" name="layoutFind">
+         <property name="spacing">
+          <number>3</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLineEdit" name="editFindExpression">
+           <property name="contextMenuPolicy">
+            <enum>Qt::DefaultContextMenu</enum>
+           </property>
+           <property name="whatsThis">
+            <string>Text pattern to find considering the checks in this frame</string>
+           </property>
+           <property name="placeholderText">
+            <string>Find in table</string>
+           </property>
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="buttonFindPrevious">
+           <property name="toolTip">
+            <string>Find previous match [Shift+F3]</string>
+           </property>
+           <property name="whatsThis">
+            <string>Find previous match with mapping</string>
+           </property>
+           <property name="icon">
+            <iconset resource="icons/icons.qrc">
+             <normaloff>:/icons/up</normaloff>:/icons/up</iconset>
+           </property>
+           <property name="shortcut">
+            <string>Shift+F3</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="buttonFindNext">
+           <property name="toolTip">
+            <string>Find next match [Enter, F3]</string>
+           </property>
+           <property name="whatsThis">
+            <string>Find next match with wrapping</string>
+           </property>
+           <property name="icon">
+            <iconset resource="icons/icons.qrc">
+             <normaloff>:/icons/down</normaloff>:/icons/down</iconset>
+           </property>
+           <property name="shortcut">
+            <string>F3</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkFindCaseSensitive">
+           <property name="whatsThis">
+            <string>The found pattern must match in letter case</string>
+           </property>
+           <property name="text">
+            <string>Case Sensitive</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkFindWholeCell">
+           <property name="whatsThis">
+            <string>The found pattern must be a whole word</string>
+           </property>
+           <property name="text">
+            <string>Whole Cell</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkFindRegEx">
+           <property name="toolTip">
+            <string>Interpret search pattern as a regular expression</string>
+           </property>
+           <property name="whatsThis">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When checked, the pattern to find is interpreted as a UNIX regular expression. See &lt;a href=&quot;https://en.wikibooks.org/wiki/Regular_Expressions&quot;&gt;Regular Expression in Wikibooks&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="text">
+            <string>Regular Expression</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_1">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QToolButton" name="buttonFindClose">
+           <property name="toolTip">
+            <string>Close Find Bar</string>
+           </property>
+           <property name="text">
+            <string>Close Find Bar</string>
+           </property>
+           <property name="icon">
+            <iconset resource="icons/icons.qrc">
+             <normaloff>:/icons/close</normaloff>:/icons/close</iconset>
+           </property>
+           <property name="autoRaise">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="widgetReplace" native="true">
+        <layout class="QHBoxLayout" name="layoutReplace">
+         <property name="spacing">
+          <number>3</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLineEdit" name="editReplaceExpression">
+           <property name="contextMenuPolicy">
+            <enum>Qt::DefaultContextMenu</enum>
+           </property>
+           <property name="whatsThis">
+            <string>Text to replace with</string>
+           </property>
+           <property name="placeholderText">
+            <string>Replace with</string>
+           </property>
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="buttonReplaceNext">
+           <property name="toolTip">
+            <string>Replace next match</string>
+           </property>
+           <property name="text">
+            <string>Replace</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="buttonReplaceAll">
+           <property name="toolTip">
+            <string>Replace all matches</string>
+           </property>
+           <property name="text">
+            <string>Replace all</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <property name="leftMargin">
+      <number>2</number>
+     </property>
+     <property name="topMargin">
+      <number>2</number>
+     </property>
+     <property name="rightMargin">
+      <number>2</number>
+     </property>
+     <property name="bottomMargin">
+      <number>2</number>
+     </property>
+     <item>
+      <widget class="QToolButton" name="buttonBegin">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll to the beginning&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="whatsThis">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates to the beginning in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="text">
+        <string>|&lt;</string>
+       </property>
+       <property name="icon">
+        <iconset resource="icons/icons.qrc">
+         <normaloff>:/icons/resultset_first.png</normaloff>:/icons/resultset_first.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="buttonPrevious">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string>Scroll one page upwards</string>
+       </property>
+       <property name="whatsThis">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates one page of records upwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="text">
+        <string>&lt;</string>
+       </property>
+       <property name="icon">
+        <iconset resource="icons/icons.qrc">
+         <normaloff>:/icons/resultset_previous.png</normaloff>:/icons/resultset_previous.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelRecordset">
+       <property name="text">
+        <string>0 - 0 of 0</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="buttonNext">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string>Scroll one page downwards</string>
+       </property>
+       <property name="whatsThis">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates one page of records downwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="text">
+        <string>&gt;</string>
+       </property>
+       <property name="icon">
+        <iconset resource="icons/icons.qrc">
+         <normaloff>:/icons/run</normaloff>:/icons/run</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="buttonEnd">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string>Scroll to the end</string>
+       </property>
+       <property name="whatsThis">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Clicking this button navigates up to the end in the table view above.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="text">
+        <string>&gt;|</string>
+       </property>
+       <property name="icon">
+        <iconset resource="icons/icons.qrc">
+         <normaloff>:/icons/run_line</normaloff>:/icons/run_line</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonGoto">
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click here to jump to the specified record&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="whatsThis">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button is used to navigate to the record number specified in the Go to area.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="text">
+        <string>Go to:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="editGoto">
+       <property name="toolTip">
+        <string>Enter record number to browse</string>
+       </property>
+       <property name="whatsThis">
+        <string>Type a record number in this area and click the Go to: button to display the record in the database view</string>
+       </property>
+       <property name="text">
+        <string>1</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+  <action name="actionShowRowidColumn">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show rowid column</string>
+   </property>
+   <property name="toolTip">
+    <string>Toggle the visibility of the rowid column</string>
+   </property>
+  </action>
+  <action name="actionUnlockViewEditing">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Unlock view editing</string>
+   </property>
+   <property name="toolTip">
+    <string>This unlocks the current view for editing. However, you will need appropriate triggers for editing.</string>
+   </property>
+  </action>
+  <action name="actionBrowseTableEditDisplayFormat">
+   <property name="text">
+    <string>Edit display format</string>
+   </property>
+   <property name="toolTip">
+    <string>Edit the display format of the data in this column</string>
+   </property>
+  </action>
+  <action name="actionNewRecord">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/add_record</normaloff>:/icons/add_record</iconset>
+   </property>
+   <property name="text">
+    <string>New Record</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert a new record in the current table</string>
+   </property>
+   <property name="statusTip">
+    <string>Insert a new record in the current table</string>
+   </property>
+   <property name="whatsThis">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button creates a new record in the database. Hold the mouse button to open a pop-up menu of different options:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt;: insert a new record with default values in the database.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Insert Values...&lt;/span&gt;: open a dialog for entering values before they are inserted in the database. This allows to enter values acomplishing the different constraints. This dialog is also open if the &lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt; option fails due to these constraints.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </action>
+  <action name="actionDeleteRecord">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/delete_record</normaloff>:/icons/delete_record</iconset>
+   </property>
+   <property name="text">
+    <string>Delete Record</string>
+   </property>
+   <property name="toolTip">
+    <string>Delete the current record</string>
+   </property>
+   <property name="statusTip">
+    <string>This button deletes the record or records currently selected in the table</string>
+   </property>
+   <property name="whatsThis">
+    <string>This button deletes the record or records currently selected in the table</string>
+   </property>
+  </action>
+  <action name="newRecordAction">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/add_record</normaloff>:/icons/add_record</iconset>
+   </property>
+   <property name="text">
+    <string>New Record</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert new record using default values in browsed table</string>
+   </property>
+   <property name="statusTip">
+    <string>Insert new record using default values in browsed table</string>
+   </property>
+  </action>
+  <action name="insertValuesAction">
+   <property name="text">
+    <string>Insert Values...</string>
+   </property>
+   <property name="toolTip">
+    <string>Open a dialog for inserting values in a new record</string>
+   </property>
+   <property name="statusTip">
+    <string>Open a dialog for inserting values in a new record</string>
+   </property>
+  </action>
+  <action name="actionFilteredTableExportCsv">
+   <property name="text">
+    <string>Export to &amp;CSV</string>
+   </property>
+   <property name="toolTip">
+    <string>Export the filtered data to CSV</string>
+   </property>
+   <property name="statusTip">
+    <string>Export the filtered data to CSV</string>
+   </property>
+   <property name="whatsThis">
+    <string>This button exports the data of the browsed table as currently displayed (after filters, display formats and order column) as a CSV file.</string>
+   </property>
+  </action>
+  <action name="actionFilterSaveAsView">
+   <property name="text">
+    <string>Save as &amp;view</string>
+   </property>
+   <property name="toolTip">
+    <string>Save the current filter, sort column and display formats as a view</string>
+   </property>
+   <property name="statusTip">
+    <string>Save the current filter, sort column and display formats as a view</string>
+   </property>
+   <property name="whatsThis">
+    <string>This button saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.</string>
+   </property>
+  </action>
+  <action name="actionSaveFilterAsPopup">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/save_table</normaloff>:/icons/save_table</iconset>
+   </property>
+   <property name="text">
+    <string>Save Table As...</string>
+   </property>
+   <property name="toolTip">
+    <string>Save the table as currently displayed</string>
+   </property>
+   <property name="statusTip">
+    <string>Save the table as currently displayed</string>
+   </property>
+   <property name="whatsThis">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This popup menu provides the following options applying to the currently browsed and filtered table:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Export to CSV: this option exports the data of the browsed table as currently displayed (after filters, display formats and order column) to a CSV file.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Save as view: this option saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </action>
+  <action name="actionHideColumns">
+   <property name="text">
+    <string>Hide column(s)</string>
+   </property>
+   <property name="toolTip">
+    <string>Hide selected column(s)</string>
+   </property>
+  </action>
+  <action name="actionShowAllColumns">
+   <property name="text">
+    <string>Show all columns</string>
+   </property>
+   <property name="toolTip">
+    <string>Show all columns that were hidden</string>
+   </property>
+  </action>
+  <action name="actionSetTableEncoding">
+   <property name="text">
+    <string>Set encoding</string>
+   </property>
+   <property name="toolTip">
+    <string>Change the encoding of the text in the table cells</string>
+   </property>
+  </action>
+  <action name="actionSetAllTablesEncoding">
+   <property name="text">
+    <string>Set encoding for all tables</string>
+   </property>
+   <property name="toolTip">
+    <string>Change the default encoding assumed for all tables in the database</string>
+   </property>
+  </action>
+  <action name="actionClearFilters">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/clear_filters</normaloff>:/icons/clear_filters</iconset>
+   </property>
+   <property name="text">
+    <string>Clear Filters</string>
+   </property>
+   <property name="toolTip">
+    <string>Clear all filters</string>
+   </property>
+   <property name="statusTip">
+    <string>This button clears all the filters set in the header input fields for the currently browsed table.</string>
+   </property>
+   <property name="whatsThis">
+    <string>This button clears all the filters set in the header input fields for the currently browsed table.</string>
+   </property>
+  </action>
+  <action name="actionClearSorting">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/clear_sorting</normaloff>:/icons/clear_sorting</iconset>
+   </property>
+   <property name="text">
+    <string>Clear Sorting</string>
+   </property>
+   <property name="toolTip">
+    <string>Reset the order of rows to the default</string>
+   </property>
+   <property name="statusTip">
+    <string>This button clears the sorting columns specified for the currently browsed table and returns to the default order.</string>
+   </property>
+   <property name="whatsThis">
+    <string>This button clears the sorting columns specified for the currently browsed table and returns to the default order.</string>
+   </property>
+  </action>
+  <action name="actionPrintTable">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/print</normaloff>:/icons/print</iconset>
+   </property>
+   <property name="text">
+    <string>Print</string>
+   </property>
+   <property name="toolTip">
+    <string>Print currently browsed table data</string>
+   </property>
+   <property name="statusTip">
+    <string/>
+   </property>
+   <property name="whatsThis">
+    <string>Print currently browsed table data. Print selection if more than one cell is selected.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WidgetShortcut</enum>
+   </property>
+  </action>
+  <action name="actionRefresh">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/refresh</normaloff>:/icons/refresh</iconset>
+   </property>
+   <property name="text">
+    <string>Refresh</string>
+   </property>
+   <property name="toolTip">
+    <string>Refresh the data in the selected table</string>
+   </property>
+   <property name="statusTip">
+    <string>This button refreshes the data in the currently selected table.</string>
+   </property>
+   <property name="shortcut">
+    <string>F5</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WidgetShortcut</enum>
+   </property>
+  </action>
+  <action name="actionFind">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/find</normaloff>:/icons/find</iconset>
+   </property>
+   <property name="text">
+    <string>Find in cells</string>
+   </property>
+   <property name="toolTip">
+    <string>Open the find tool bar which allows you to search for values in the table view below.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F</string>
+   </property>
+  </action>
+  <action name="actionBold">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/text_bold.png</normaloff>:/icons/text_bold.png</iconset>
+   </property>
+   <property name="text">
+    <string>Bold</string>
+   </property>
+   <property name="toolTip">
+    <string>Bold</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+B</string>
+   </property>
+  </action>
+  <action name="actionItalic">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/text_italic.png</normaloff>:/icons/text_italic.png</iconset>
+   </property>
+   <property name="text">
+    <string>Italic</string>
+   </property>
+   <property name="toolTip">
+    <string>Italic</string>
+   </property>
+  </action>
+  <action name="actionUnderline">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/text_underline.png</normaloff>:/icons/text_underline.png</iconset>
+   </property>
+   <property name="text">
+    <string>Underline</string>
+   </property>
+   <property name="toolTip">
+    <string>Underline</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+U</string>
+   </property>
+  </action>
+  <action name="actionRightAlign">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/text_align_right.png</normaloff>:/icons/text_align_right.png</iconset>
+   </property>
+   <property name="text">
+    <string>Align Right</string>
+   </property>
+   <property name="toolTip">
+    <string>Align Right</string>
+   </property>
+  </action>
+  <action name="actionLeftAlign">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/text_align_left.png</normaloff>:/icons/text_align_left.png</iconset>
+   </property>
+   <property name="text">
+    <string>Align Left</string>
+   </property>
+   <property name="toolTip">
+    <string>Align Left</string>
+   </property>
+  </action>
+  <action name="actionCenter">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/text_align_center.png</normaloff>:/icons/text_align_center.png</iconset>
+   </property>
+   <property name="text">
+    <string>Center Horizontally</string>
+   </property>
+   <property name="toolTip">
+    <string>Center Horizontally</string>
+   </property>
+  </action>
+  <action name="actionJustify">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/text_align_justify.png</normaloff>:/icons/text_align_justify.png</iconset>
+   </property>
+   <property name="text">
+    <string>Justify</string>
+   </property>
+   <property name="toolTip">
+    <string>Justify</string>
+   </property>
+  </action>
+  <action name="actionEditCondFormats">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/edit_cond_formats</normaloff>:/icons/edit_cond_formats</iconset>
+   </property>
+   <property name="text">
+    <string>Edit Conditional Formats...</string>
+   </property>
+   <property name="toolTip">
+    <string>Edit Conditional Formats...</string>
+   </property>
+   <property name="statusTip">
+    <string>Edit conditional formats for the current column</string>
+   </property>
+  </action>
+  <action name="actionClearFormat">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/clear_cond_formats</normaloff>:/icons/clear_cond_formats</iconset>
+   </property>
+   <property name="text">
+    <string>Clear Format</string>
+   </property>
+   <property name="toolTip">
+    <string>Clear All Formats</string>
+   </property>
+   <property name="statusTip">
+    <string>Clear all cell formatting from selected cells and all conditional formats from selected columns</string>
+   </property>
+   <property name="whatsThis">
+    <string>Clear all cell formatting from selected cells and all conditional formats from selected columns</string>
+   </property>
+  </action>
+  <action name="actionFontColor">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/foreground_color</normaloff>:/icons/foreground_color</iconset>
+   </property>
+   <property name="text">
+    <string>Font Color</string>
+   </property>
+   <property name="toolTip">
+    <string>Font Color</string>
+   </property>
+  </action>
+  <action name="actionBackgroundColor">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/background_color</normaloff>:/icons/background_color</iconset>
+   </property>
+   <property name="text">
+    <string>Background Color</string>
+   </property>
+   <property name="toolTip">
+    <string>Background Color</string>
+   </property>
+  </action>
+  <action name="actionToggleFormatToolbar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/cond_formats</normaloff>:/icons/cond_formats</iconset>
+   </property>
+   <property name="text">
+    <string>Toggle Format Toolbar</string>
+   </property>
+   <property name="toolTip">
+    <string>Show/hide format toolbar</string>
+   </property>
+   <property name="statusTip">
+    <string>This button shows or hides the formatting toolbar of the Data Browser</string>
+   </property>
+   <property name="whatsThis">
+    <string>This button shows or hides the formatting toolbar of the Data Browser</string>
+   </property>
+  </action>
+  <action name="actionSelectColumn">
+   <property name="text">
+    <string>Select column</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Space</string>
+   </property>
+  </action>
+  <action name="actionReplace">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/text_replace</normaloff>:/icons/text_replace</iconset>
+   </property>
+   <property name="text">
+    <string>Replace</string>
+   </property>
+   <property name="toolTip">
+    <string>Replace text in cells</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+H</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ExtendedTableWidget</class>
+   <extends>QTableWidget</extends>
+   <header>ExtendedTableWidget.h</header>
+   <slots>
+    <signal>foreignKeyClicked(QString,QString,QByteArray)</signal>
+    <signal>foreignKeyClicked(sqlb::ObjectIdentifier,QString,QByteArray)</signal>
+   </slots>
+  </customwidget>
+  <customwidget>
+   <class>FilterLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>FilterLineEdit.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>comboBrowseTable</tabstop>
+  <tabstop>editGlobalFilter</tabstop>
+  <tabstop>fontComboBox</tabstop>
+  <tabstop>fontSizeBox</tabstop>
+  <tabstop>dataTable</tabstop>
+  <tabstop>editFindExpression</tabstop>
+  <tabstop>editReplaceExpression</tabstop>
+  <tabstop>buttonFindPrevious</tabstop>
+  <tabstop>buttonFindNext</tabstop>
+  <tabstop>checkFindCaseSensitive</tabstop>
+  <tabstop>checkFindWholeCell</tabstop>
+  <tabstop>checkFindRegEx</tabstop>
+  <tabstop>buttonFindClose</tabstop>
+  <tabstop>buttonReplaceNext</tabstop>
+  <tabstop>buttonReplaceAll</tabstop>
+  <tabstop>buttonBegin</tabstop>
+  <tabstop>buttonPrevious</tabstop>
+  <tabstop>buttonNext</tabstop>
+  <tabstop>buttonEnd</tabstop>
+  <tabstop>buttonGoto</tabstop>
+  <tabstop>editGoto</tabstop>
+ </tabstops>
+ <resources>
+  <include location="icons/icons.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>comboBrowseTable</sender>
+   <signal>activated(QString)</signal>
+   <receiver>TableBrowser</receiver>
+   <slot>updateTable()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>159</x>
+     <y>31</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonPrevious</sender>
+   <signal>clicked()</signal>
+   <receiver>TableBrowser</receiver>
+   <slot>navigatePrevious()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>55</x>
+     <y>395</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonNext</sender>
+   <signal>clicked()</signal>
+   <receiver>TableBrowser</receiver>
+   <slot>navigateNext()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>140</x>
+     <y>395</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonGoto</sender>
+   <signal>clicked()</signal>
+   <receiver>TableBrowser</receiver>
+   <slot>navigateGoto()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>452</x>
+     <y>397</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editGoto</sender>
+   <signal>returnPressed()</signal>
+   <receiver>TableBrowser</receiver>
+   <slot>navigateGoto()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>648</x>
+     <y>397</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonEnd</sender>
+   <signal>clicked()</signal>
+   <receiver>TableBrowser</receiver>
+   <slot>navigateEnd()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>170</x>
+     <y>395</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBegin</sender>
+   <signal>clicked()</signal>
+   <receiver>TableBrowser</receiver>
+   <slot>navigateBegin()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>25</x>
+     <y>395</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dataTable</sender>
+   <signal>foreignKeyClicked(sqlb::ObjectIdentifier,std::string,QByteArray)</signal>
+   <receiver>TableBrowser</receiver>
+   <slot>jumpToRow(sqlb::ObjectIdentifier,std::string,QByteArray)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>70</x>
+     <y>242</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionShowRowidColumn</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>TableBrowser</receiver>
+   <slot>showRowidColumn(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionUnlockViewEditing</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>TableBrowser</receiver>
+   <slot>unlockViewEditing(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionBrowseTableEditDisplayFormat</sender>
+   <signal>triggered()</signal>
+   <receiver>TableBrowser</receiver>
+   <slot>editDisplayFormat()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionNewRecord</sender>
+   <signal>triggered()</signal>
+   <receiver>TableBrowser</receiver>
+   <slot>addRecord()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionDeleteRecord</sender>
+   <signal>triggered()</signal>
+   <receiver>TableBrowser</receiver>
+   <slot>deleteRecord()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>newRecordAction</sender>
+   <signal>triggered()</signal>
+   <receiver>TableBrowser</receiver>
+   <slot>addRecord()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>insertValuesAction</sender>
+   <signal>triggered()</signal>
+   <receiver>TableBrowser</receiver>
+   <slot>insertValues()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionFilteredTableExportCsv</sender>
+   <signal>triggered()</signal>
+   <receiver>TableBrowser</receiver>
+   <slot>exportFilteredTable()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionFilterSaveAsView</sender>
+   <signal>triggered()</signal>
+   <receiver>TableBrowser</receiver>
+   <slot>saveFilterAsView()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSetTableEncoding</sender>
+   <signal>triggered()</signal>
+   <receiver>TableBrowser</receiver>
+   <slot>setTableEncoding()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSetAllTablesEncoding</sender>
+   <signal>triggered()</signal>
+   <receiver>TableBrowser</receiver>
+   <slot>setDefaultTableEncoding()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionHideColumns</sender>
+   <signal>triggered()</signal>
+   <receiver>TableBrowser</receiver>
+   <slot>hideColumns()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionRefresh</sender>
+   <signal>triggered()</signal>
+   <receiver>TableBrowser</receiver>
+   <slot>updateTable()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionPrintTable</sender>
+   <signal>triggered()</signal>
+   <receiver>dataTable</receiver>
+   <slot>openPrintDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>326</x>
+     <y>291</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>updateTable()</slot>
+  <slot>selectionChanged(QModelIndex)</slot>
+  <slot>navigatePrevious()</slot>
+  <slot>navigateNext()</slot>
+  <slot>navigateBegin()</slot>
+  <slot>navigateEnd()</slot>
+  <slot>navigateGoto()</slot>
+  <slot>jumpToRow(sqlb::ObjectIdentifier,std::string,QByteArray)</slot>
+  <slot>showRowidColumn(bool)</slot>
+  <slot>unlockViewEditing(bool)</slot>
+  <slot>editDisplayFormat()</slot>
+  <slot>addRecord()</slot>
+  <slot>deleteRecord()</slot>
+  <slot>insertValues()</slot>
+  <slot>exportFilteredTable</slot>
+  <slot>saveFilterAsView</slot>
+  <slot>setDefaultTableEncoding()</slot>
+  <slot>hideColumns()</slot>
+  <slot>setTableEncoding()</slot>
+ </slots>
+</ui>

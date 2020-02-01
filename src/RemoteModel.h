@@ -2,7 +2,6 @@
 #define REMOTEMODEL_H
 
 #include <QAbstractItemModel>
-#include <QStringList>
 
 #include <json.hpp>
 
@@ -100,9 +99,6 @@ private slots:
 private:
     // Pointer to the root item. This contains all the actual item data.
     RemoteModelItem* rootItem;
-
-    // The header list is a list of column titles. It's a static list that's getting filled in the constructor.
-    QStringList headerList;
 
     // Reference to the remote database object which is stored somewhere in the main window.
     RemoteDatabase& remoteDatabase;

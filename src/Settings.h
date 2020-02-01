@@ -19,7 +19,7 @@ public:
     static void restoreDefaults();
 
 private:
-    Settings() { } // class is fully static
+    Settings() = delete;    // class is fully static
 
     // This works similar to getValue but returns the default value instead of the value set by the user
     static QVariant getDefaultValue(const std::string& group, const std::string& name);

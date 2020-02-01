@@ -1,6 +1,5 @@
-TEMPLATE = lib
+TEMPLATE = subdirs
 
-CONFIG += staticlib
 CONFIG += debug_and_release
 
 HEADERS += \

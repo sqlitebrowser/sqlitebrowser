@@ -1,6 +1,7 @@
 #include "EditIndexDialog.h"
 #include "ui_EditIndexDialog.h"
 #include "sqlitedb.h"
+#include "IconCache.h"
 
 #include <QMessageBox>
 #include <QPushButton>
@@ -43,7 +44,7 @@ EditIndexDialog::EditIndexDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
     }
     ui->comboTableName->blockSignals(true);
     for(auto it=dbobjs.cbegin();it!=dbobjs.cend();++it)
-        ui->comboTableName->addItem(QIcon(QString(":icons/table")), QString::fromStdString(it->first), QString::fromStdString(it->second.toSerialised()));
+        ui->comboTableName->addItem(IconCache::get("table"), QString::fromStdString(it->first), QString::fromStdString(it->second.toSerialised()));
     ui->comboTableName->blockSignals(false);
 
     QHeaderView *tableHeaderView = ui->tableIndexColumns->horizontalHeader();
@@ -263,7 +264,7 @@ void EditIndexDialog::accept()
     // When editing an index, delete the old one first
     if(!newIndex)
     {
-        if(!pdb.executeSQL(QString("DROP INDEX IF EXISTS %1;").arg(QString::fromStdString(curIndex.toString()))))
+        if(!pdb.executeSQL("DROP INDEX IF EXISTS " + curIndex.toString()))
         {
             QMessageBox::warning(this, qApp->applicationName(), tr("Deleting the old index failed:\n%1").arg(pdb.lastError()));
             return;
@@ -271,7 +272,7 @@ void EditIndexDialog::accept()
     }
 
     // Create the new index in the schema of the selected table
-    if(pdb.executeSQL(QString::fromStdString(index.sql(sqlb::ObjectIdentifier(ui->comboTableName->currentData().toString().toStdString()).schema()))))
+    if(pdb.executeSQL(index.sql(sqlb::ObjectIdentifier(ui->comboTableName->currentData().toString().toStdString()).schema())))
         QDialog::accept();
     else
         QMessageBox::warning(this, QApplication::applicationName(), tr("Creating the index failed:\n%1").arg(pdb.lastError()));

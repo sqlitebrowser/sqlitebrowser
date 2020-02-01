@@ -25,6 +25,7 @@ public:
 
     QString getSql() const;
     QString getSelectedSql() const;
+    void setSql(const QString& sql);
 
     void openFile(const QString& filename);
     void saveFile(const QString& filename);

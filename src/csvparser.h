@@ -16,7 +16,7 @@ class QTextStream;
 class CSVProgress
 {
 public:
-    virtual ~CSVProgress() { }
+    virtual ~CSVProgress() = default;
 
     virtual void start() = 0;
     virtual bool update(int64_t pos) = 0;

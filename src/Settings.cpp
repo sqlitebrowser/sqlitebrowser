@@ -83,7 +83,7 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
 
     // db/defaultsqltext?
     if(group == "db" && name == "defaultsqltext")
-        return "";
+        return QString();
 
     // exportcsv/firstrowheader?
     if(group == "exportcsv" && name == "firstrowheader")
@@ -137,15 +137,15 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
 
     // MainWindow/geometry?
     if(group == "MainWindow" && name == "geometry")
-        return "";
+        return QString();
 
     // MainWindow/windowState?
     if(group == "MainWindow" && name == "windowState")
-        return "";
+        return QString();
 
     // MainWindow/openTabs?
     if(group == "MainWindow" && name == "openTabs")
-        return "";
+        return QString();
 
     // SQLLogDock/Log?
     if(group == "SQLLogDock" && name == "Log")
@@ -208,6 +208,8 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
             return 5000;
         if(name == "complete_threshold")
             return 1000;
+        if(name == "image_preview")
+            return false;
         if(name == "indent_compact")
             return false;
         if(name == "auto_switch_mode")

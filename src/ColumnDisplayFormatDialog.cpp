@@ -105,18 +105,18 @@ void ColumnDisplayFormatDialog::accept()
     // Users could still devise a way to break this, but this is considered good enough for letting them know about simple incorrect
     // cases.
     if(!(ui->editDisplayFormat->text() == sqlb::escapeIdentifier(column_name) ||
-         ui->editDisplayFormat->text().contains(QRegExp("[a-z]+[a-z_0-9]* *\\(.*" + QRegExp::escape(sqlb::escapeIdentifier(column_name)) + ".*\\)", Qt::CaseInsensitive))))
+         ui->editDisplayFormat->text().contains(QRegularExpression("[a-z]+[a-z_0-9]* *\\(.*" + QRegularExpression::escape(sqlb::escapeIdentifier(column_name)) + ".*\\)", QRegularExpression::CaseInsensitiveOption))))
         errorMessage = tr("Custom display format must contain a function call applied to %1").arg(sqlb::escapeIdentifier(column_name));
     else {
         // Execute a query using the display format and check that it only returns one column.
         int customNumberColumns = 0;
 
-        DBBrowserDB::execCallback callback = [&customNumberColumns](int numberColumns, QStringList, QStringList) -> bool {
+        DBBrowserDB::execCallback callback = [&customNumberColumns](int numberColumns, std::vector<QByteArray>, std::vector<QByteArray>) -> bool {
             customNumberColumns = numberColumns;
             // Return false so the query is not aborted and no error is reported.
             return false;
         };
-        if(!pdb.executeSQL(QString("SELECT %1 FROM %2 LIMIT 1").arg(ui->editDisplayFormat->text(), QString::fromStdString(curTable.toString())),
+        if(!pdb.executeSQL("SELECT " + ui->editDisplayFormat->text().toStdString() + " FROM " + curTable.toString() + " LIMIT 1",
                            false, true, callback))
             errorMessage = tr("Error in custom display format. Message from database engine:\n\n%1").arg(pdb.lastError());
         else if(customNumberColumns != 1)

@@ -5,6 +5,7 @@
 #include <QLibraryInfo>
 #include <QLocale>
 #include <QDebug>
+#include <QAction>
 
 #include "Application.h"
 #include "MainWindow.h"
@@ -152,7 +153,7 @@ Application::Application(int& argc, char** argv) :
     // Show main window
     m_mainWindow = new MainWindow();
     m_mainWindow->show();
-    connect(this, SIGNAL(lastWindowClosed()), this, SLOT(quit()));
+    connect(this, &Application::lastWindowClosed, this, &Application::quit);
 
     // Open database if one was specified
     if(fileToOpen.size())
@@ -174,7 +175,7 @@ Application::Application(int& argc, char** argv) :
 
             // Jump to table if the -t/--table parameter was set
             if(!tableToBrowse.isEmpty())
-                m_mainWindow->switchToBrowseDataTab(tableToBrowse);
+                m_mainWindow->switchToBrowseDataTab(sqlb::ObjectIdentifier("main", tableToBrowse.toStdString()));
         }
     }
 }
@@ -203,8 +204,31 @@ QString Application::versionString()
     // date in order to avoid confusion about what is more important, version number or build date, and about different
     // build dates for the same version. This also should help making release builds reproducible out of the box.
 #if PATCH_VERSION >= 99
-    return QString("%1 (%2)").arg(APP_VERSION).arg(__DATE__);
+    return QString("%1 (%2)").arg(APP_VERSION, __DATE__);
 #else
     return QString("%1").arg(APP_VERSION);
 #endif
+}
+
+// Functions for documenting the shortcuts in the user interface using native names
+static QString shortcutsTip(const QList<QKeySequence>& keys)
+{
+    QString tip;
+
+    if (!keys.isEmpty()) {
+        tip = " [";
+
+        for (const auto& shortcut : keys)
+            tip.append(shortcut.toString(QKeySequence::NativeText) + ", ");
+        tip.chop(2);
+
+        tip.append("]");
+    }
+    return tip;
+}
+
+void addShortcutsTooltip(QAction* action, const QList<QKeySequence>& extraKeys)
+{
+    if (!action->shortcuts().isEmpty() || !extraKeys.isEmpty())
+        action->setToolTip(action->toolTip() + shortcutsTip(action->shortcuts() + extraKeys));
 }

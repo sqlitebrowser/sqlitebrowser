@@ -16,11 +16,13 @@ void Query::clear()
 
 std::string Query::buildWherePart() const
 {
-    std::string where;
+    if(m_where.empty() && m_global_where.empty())
+        return std::string();
+
+    std::string where = "WHERE ";
+
     if(m_where.size())
     {
-        where = "WHERE ";
-
         for(auto i=m_where.cbegin();i!=m_where.cend();++i)
         {
             const auto it = findSelectedColumnByName(m_column_names.at(i->first));
@@ -33,6 +35,39 @@ std::string Query::buildWherePart() const
         // Remove last ' AND '
         where.erase(where.size() - 5);
     }
+
+    if(m_global_where.size())
+    {
+        // Connect to previous conditions if there are any
+        if(m_where.size())
+            where += " AND ";
+
+        // For each condition
+        for(const auto& w : m_global_where)
+        {
+            where += "(";
+
+            // For each selected column
+            for(const auto& c : m_column_names)
+            {
+                const auto it = findSelectedColumnByName(c);
+                std::string column = sqlb::escapeIdentifier(c);
+                if(it != m_selected_columns.cend() && it->selector != column)
+                    column = it->selector;
+
+                where += column + " " + w + " OR ";
+            }
+
+            // Remove last ' OR '
+            where.erase(where.size() - 4);
+
+            where += ") AND ";
+        }
+
+        // Remove last ' AND '
+        where.erase(where.size() - 5);
+    }
+
     return where;
 }
 

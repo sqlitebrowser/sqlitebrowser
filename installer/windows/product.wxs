@@ -70,7 +70,6 @@
                     <Directory Id="extensions" Name="extensions">
                         <Component><File Source="$(var.SQLitePath)\math.dll" /></Component>
                         <Component><File Source="$(var.SQLitePath)\formats.dll" /></Component>
-                        <Component><File Source="$(var.SQLitePath)\fileio.dll" /></Component>
                     </Directory>
                     <Directory Id="imageformats" Name="imageformats">
                         <Component><File Source="$(var.QtPath)\plugins\imageformats\qgif.dll" /></Component>
@@ -148,9 +147,6 @@
                 </Feature>
                 <Feature Id="FormatsExtension" Title="Formats" Description="Provide additional field display formats." AllowAdvertise="no">
                     <ComponentRef Id="formats.dll" />
-                </Feature>
-                <Feature Id="FileioExtension" Title="Fileio" Description="Implements SQL functions readfile(), writefile(), and eponymous virtual type 'fsdir'." AllowAdvertise="no">
-                    <ComponentRef Id="fileio.dll" />
                 </Feature>
             </Feature>
 

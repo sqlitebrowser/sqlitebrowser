@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>578</width>
-    <height>463</height>
+    <width>750</width>
+    <height>400</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <item>
     <widget class="QLabel" name="labelTitle">
      <property name="text">
-      <string>This dialog allows creating and editing conditional formats, where the cell text and background will be colored based on one or more conditions. Conditional formats can be moved up and down, where those at higher rows take precedence over those at lower.</string>
+      <string>This dialog allows creating and editing conditional formats. Each cell style will be selected by the first accomplished condition for that cell data. Conditional formats can be moved up and down, where those at higher rows take precedence over those at lower. Syntax for conditions is the same as for filters and an empty condition applies to all values.</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
@@ -150,17 +150,74 @@
      <property name="expandsOnDoubleClick">
       <bool>false</bool>
      </property>
-     <attribute name="headerDefaultSectionSize">
-      <number>150</number>
+     <attribute name="headerMinimumSectionSize">
+      <number>25</number>
      </attribute>
      <column>
       <property name="text">
+       <string>Foreground</string>
+      </property>
+      <property name="toolTip">
        <string>Text color</string>
       </property>
      </column>
      <column>
       <property name="text">
+       <string>Background</string>
+      </property>
+      <property name="toolTip">
        <string>Background color</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Font</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Size</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="toolTip">
+       <string>Bold</string>
+      </property>
+      <property name="icon">
+       <iconset resource="icons/icons.qrc">
+        <normaloff>:/icons/text_bold.png</normaloff>:/icons/text_bold.png</iconset>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="toolTip">
+       <string>Italic</string>
+      </property>
+      <property name="icon">
+       <iconset resource="icons/icons.qrc">
+        <normaloff>:/icons/text_italic.png</normaloff>:/icons/text_italic.png</iconset>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="toolTip">
+       <string>Underline</string>
+      </property>
+      <property name="icon">
+       <iconset resource="icons/icons.qrc">
+        <normaloff>:/icons/text_underline.png</normaloff>:/icons/text_underline.png</iconset>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Alignment</string>
       </property>
      </column>
      <column>

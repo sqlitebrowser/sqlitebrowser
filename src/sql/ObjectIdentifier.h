@@ -14,8 +14,14 @@ enum escapeQuoting {
 // Set quoting style for escapeIdentifier
 void setIdentifierQuoting(escapeQuoting toQuoting);
 
+// Get currently configured quote char
+char getIdentifierQuoteChar();
+
 // Add quotes to an identifier
 std::string escapeIdentifier(const std::string& id);
+
+// Add SQL quotes to a string literal and escape any single quote character
+std::string escapeString(const std::string& literal);
 
 // Object identifier consisting of schema name and object name
 class ObjectIdentifier

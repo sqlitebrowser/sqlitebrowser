@@ -85,8 +85,8 @@ private:
     std::string localLastCommitId(QString clientCert, const QUrl& url);
 
     // Helper functions for building multi-part HTTP requests
-    void addPart(QHttpMultiPart* multipart, const QString& name, const QString& value);
-    void addPart(QHttpMultiPart* multipart, const QString& name, QFile* file, const QString& filename);
+    void addPart(QHttpMultiPart* multipart, const QString& name, const QString& value) const;
+    void addPart(QHttpMultiPart* multipart, const QString& name, QFile* file, const QString& filename) const;
 
     // Before using a new client certificate we need to clear the access and authentication cache of the network manager
     // object. Otherwise Qt might reuse the old certificate if the requested URL has been used before.

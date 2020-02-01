@@ -1,6 +1,9 @@
 #include "Data.h"
 
+#include <QBuffer>
+#include <QImageReader>
 #include <QTextCodec>
+
 #include <algorithm>
 
 // Note that these aren't all possible BOMs. But they are probably the most common ones.
@@ -33,7 +36,7 @@ bool isTextOnly(QByteArray data, const QString& encoding, bool quickTest)
 
         QTextCodec::ConverterState state;
         QTextCodec *codec = encoding.isEmpty()? QTextCodec::codecForName("UTF-8") : QTextCodec::codecForName(encoding.toUtf8());
-        const QString text = codec->toUnicode(data.constData(), testSize, &state);
+        codec->toUnicode(data.constData(), testSize, &state);
         return state.invalidChars == 0;
     } else {
         // Convert to Unicode if necessary
@@ -53,6 +56,8 @@ bool containsRightToLeft(const QString& text) {
         case QChar::DirRLO:
         case QChar::DirRLI:
             return true;
+        default:
+            break;
         }
     }
     return false;
@@ -88,6 +93,19 @@ QByteArray removeBom(QByteArray& data)
     }
 }
 
+QString isImageData(const QByteArray& data)
+{
+    // Check if it's an image. First do a quick test by calling canRead() which only checks the first couple of bytes or so. Only if
+    // that returned true, do a more sophisticated test of the data. This way we get both, good performance and proper data checking.
+    QBuffer imageBuffer(const_cast<QByteArray*>(&data));
+    QImageReader readerBuffer(&imageBuffer);
+    QString imageFormat = readerBuffer.format();
+    if(readerBuffer.canRead() && !readerBuffer.read().isNull())
+        return imageFormat;
+    else
+        return QString();
+}
+
 QStringList toStringList(const QList<QByteArray>& list) {
     QStringList strings;
     for (const QByteArray &item : list) {
@@ -110,4 +128,20 @@ QByteArray decodeString(const QByteArray& str, const QString& encoding)
         return str;
     else
         return QTextCodec::codecForName(encoding.toUtf8())->toUnicode(str).toUtf8();
+}
+
+QString humanReadableSize(unsigned long byteCount)
+{
+    static const std::vector<QString> units = {"B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB"};
+
+    double size = static_cast<double>(byteCount);
+    for(const QString& unit : units)
+    {
+        if(size < 1024.0)
+            return QString::number(size, 'f', 2) + " " + unit;
+
+        size /= 1024.0;
+    }
+
+    return QString::number(size, 'f', 2) + " YiB";
 }

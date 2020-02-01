@@ -82,7 +82,7 @@ public:
 
     void setEditorData(QWidget *editor, const QModelIndex &index) const override {
 
-        NullLineEdit* lineEditor = dynamic_cast<NullLineEdit*>(editor);
+        NullLineEdit* lineEditor = static_cast<NullLineEdit*>(editor);
         // Set the editor in the null state (unless the user has actually written NULL)
         if (index.model()->data(index, Qt::UserRole).isNull() &&
             index.model()->data(index, Qt::DisplayRole) == Settings::getValue("databrowser", "null_text"))
@@ -94,7 +94,7 @@ public:
     }
     void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const override {
 
-        NullLineEdit* lineEditor = dynamic_cast<NullLineEdit*>(editor);
+        NullLineEdit* lineEditor = static_cast<NullLineEdit*>(editor);
         // Restore NULL text (unless the user has already modified the value)
         if (lineEditor->isNull() && !lineEditor->isModified()) {
             model->setData(index, Settings::getValue("databrowser", "null_text"), Qt::DisplayRole);
@@ -121,7 +121,7 @@ AddRecordDialog::AddRecordDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
 {
     // Create UI
     ui->setupUi(this);
-    connect(ui->treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*,int)),this,SLOT(itemChanged(QTreeWidgetItem*,int)));
+    connect(ui->treeWidget, &QTreeWidget::itemChanged, this, &AddRecordDialog::itemChanged);
 
     populateFields();
 
@@ -163,10 +163,8 @@ void AddRecordDialog::setDefaultsStyle(QTreeWidgetItem* item)
 
 void AddRecordDialog::populateFields()
 {
-    // disconnect the itemChanged signal or the SQL text will
-    // be updated while filling the treewidget.
-    disconnect(ui->treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*,int)),
-               this,SLOT(itemChanged(QTreeWidgetItem*,int)));
+    // Block the itemChanged signal or the SQL text will  be updated while filling the treewidget.
+    ui->treeWidget->blockSignals(true);
 
     ui->treeWidget->clear();
 
@@ -182,6 +180,7 @@ void AddRecordDialog::populateFields()
     sqlb::FieldVector fields;
     std::vector<sqlb::ConstraintPtr> fks;
     sqlb::StringVector pk;
+    bool auto_increment = false;
 
     // Initialize fields, fks and pk differently depending on whether it's a table or a view.
     const sqlb::ObjectPtr obj = pdb.getObjectByName(curTable);
@@ -191,7 +190,13 @@ void AddRecordDialog::populateFields()
         fields = m_table->fields;
         for(const sqlb::Field& f : fields)
             fks.push_back(m_table->constraint({f.name()}, sqlb::Constraint::ForeignKeyConstraintType));
-        pk = m_table->primaryKey();
+
+        const auto pk_constraint = m_table->primaryKey();
+        if(pk_constraint)
+        {
+            pk = pk_constraint->columnList();
+            auto_increment = pk_constraint->autoIncrement();
+        }
     } else {
         sqlb::ViewPtr m_view = pdb.getObjectByName<sqlb::View>(curTable);
         fields = m_view->fields;
@@ -208,7 +213,7 @@ void AddRecordDialog::populateFields()
 
         tbitem->setText(kName, QString::fromStdString(f.name()));
         tbitem->setText(kType, QString::fromStdString(f.type()));
-        tbitem->setData(kType, Qt::UserRole, QString::fromStdString(f.affinity()));
+        tbitem->setData(kType, Qt::UserRole, f.affinity());
 
         // NOT NULL fields are indicated in bold.
         if (f.notnull()) {
@@ -223,10 +228,9 @@ void AddRecordDialog::populateFields()
         else
             tbitem->setIcon(kName, QIcon(":/icons/field"));
 
-        QString defaultValue = QString::fromStdString(f.defaultValue());
         QString toolTip;
 
-        if (f.autoIncrement())
+        if (auto_increment && contains(pk, f.name()))
             toolTip.append(tr("Auto-increment\n"));
 
         if (f.unique())
@@ -243,9 +247,10 @@ void AddRecordDialog::populateFields()
 
         // Display Role is used for displaying the default values.
         // Only when they are changed, the User Role is updated and then used in the INSERT query.
-        if (!defaultValue.isEmpty()) {
-            tbitem->setData(kValue, Qt::DisplayRole, QString::fromStdString(f.defaultValue()));
-            toolTip.append(tr("Default value:\t %1\n").arg (defaultValue));
+        if (!f.defaultValue().empty()) {
+            QString defaultValue = QString::fromStdString(f.defaultValue());
+            tbitem->setData(kValue, Qt::DisplayRole, defaultValue);
+            toolTip.append(tr("Default value:\t %1\n").arg(defaultValue));
         } else
             tbitem->setData(kValue, Qt::DisplayRole, Settings::getValue("databrowser", "null_text"));
 
@@ -260,13 +265,13 @@ void AddRecordDialog::populateFields()
 
     updateSqlText();
 
-    // and reconnect
-    connect(ui->treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*,int)),this,SLOT(itemChanged(QTreeWidgetItem*,int)));
+    // Enable signals from tree widget
+    ui->treeWidget->blockSignals(false);
 }
 
 void AddRecordDialog::accept()
 {
-    if(!pdb.executeSQL(ui->sqlTextEdit->text()))
+    if(!pdb.executeSQL(ui->sqlTextEdit->text().toStdString()))
     {
         QMessageBox::warning(
             this,
@@ -298,10 +303,10 @@ void AddRecordDialog::updateSqlText()
             fields << sqlb::escapeIdentifier(item->text(kName));
             value.toDouble(&isNumeric);
             // If it has a numeric format and has no text affinity, do not quote it.
-            if (isNumeric && item->data(kType, Qt::UserRole).toString() != "TEXT")
+            if (isNumeric && item->data(kType, Qt::UserRole).toInt() != sqlb::Field::TextAffinity)
                 vals << value.toString();
             else
-                vals << QString("'%1'").arg(value.toString().replace("'", "''"));
+                vals << sqlb::escapeString(value.toString());
         }
     }
 

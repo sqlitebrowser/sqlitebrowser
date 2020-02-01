@@ -9,8 +9,10 @@
 #include <QDialog>
 
 class DBBrowserDB;
-class QTreeWidgetItem;
 class ForeignKeyEditorDelegate;
+
+class QTableWidgetItem;
+class QTreeWidgetItem;
 
 namespace Ui {
 class EditTableDialog;
@@ -37,7 +39,8 @@ private:
         kUnique = 5,
         kDefault = 6,
         kCheck = 7,
-        kForeignKey = 8
+        kCollation = 8,
+        kForeignKey = 9
     };
 
     enum ConstraintColumns {
@@ -47,10 +50,18 @@ private:
         kConstraintSql = 3
     };
 
+    enum MoveFieldDirection
+    {
+        MoveUp,
+        MoveDown,
+        MoveTop,
+        MoveBottom
+    };
+
     void updateColumnWidth();
     void updateSqlText();
 
-    void moveCurrentField(bool down);
+    void moveCurrentField(MoveFieldDirection dir);
 
 private slots:
     void populateFields();
@@ -61,14 +72,19 @@ private slots:
     void accept() override;
     void reject() override;
     void checkInput();
-    void itemChanged(QTreeWidgetItem* item, int column);
-    void updateTypes(QObject *object);
+    void fieldItemChanged(QTreeWidgetItem* item, int column);
+    void constraintItemChanged(QTableWidgetItem* item);
+    void updateTypeAndCollation(QObject *object);
     bool eventFilter(QObject *object, QEvent *event) override;
-    void updateTypes();
+    void updateTypeAndCollation();
     void moveUp();
     void moveDown();
+    void moveTop();
+    void moveBottom();
     void setWithoutRowid(bool without_rowid);
     void changeSchema(const QString& schema);
+    void removeConstraint();
+    void addConstraint(sqlb::Constraint::ConstraintTypes type);
 
 private:
     Ui::EditTableDialog* ui;
@@ -78,7 +94,8 @@ private:
     std::map<QString, QString> trackColumns;
     sqlb::Table m_table;
     bool m_bNewTable;
-    QString m_sRestorePointName;
+    std::string m_sRestorePointName;
+    QStringList m_collationList;
 };
 
 #endif

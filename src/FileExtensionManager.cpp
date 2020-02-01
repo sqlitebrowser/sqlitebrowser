@@ -92,12 +92,12 @@ void FileExtensionManager::downItem()
     ui->tableExtensions->selectRow(selectedRow+1);
 }
 
-QStringList FileExtensionManager::getDBFileExtensions()
+QStringList FileExtensionManager::getDBFileExtensions() const
 {
     QStringList result;
     for (int i = 0; i < ui->tableExtensions->rowCount(); ++i)
     {
-        result.append(QString("%1 (%2)").arg(ui->tableExtensions->item(i, 0)->text()).arg(ui->tableExtensions->item(i, 1)->text()));
+        result.append(QString("%1 (%2)").arg(ui->tableExtensions->item(i, 0)->text(), ui->tableExtensions->item(i, 1)->text()));
     }
     return result;
 }

@@ -1,7 +1,7 @@
 #ifndef CIPHERSETTINGS_H
 #define CIPHERSETTINGS_H
 
-#include <QString>
+#include <string>
 
 class CipherSettings
 {
@@ -14,33 +14,37 @@ public:
         RawKey
     };
 
-    KeyFormats getKeyFormat() const;
-    void setKeyFormat(const KeyFormats &value);
+    KeyFormats getKeyFormat() const { return keyFormat; }
+    void setKeyFormat(const KeyFormats &value) { keyFormat = value; }
 
-    QString getPassword() const;
-    void setPassword(const QString &value);
+    std::string getPassword() const;
+    void setPassword(const std::string& value) { password = value; }
 
-    int getPageSize() const;
-    void setPageSize(int value);
+    int getPageSize() const { return pageSize; }
+    void setPageSize(int value) { pageSize = value; }
 
     int getKdfIterations() const { return kdfIterations; }
     void setKdfIterations(int value) { kdfIterations = value; }
 
-    QString getHmacAlgorithm() const { return hmacAlgorithm; }
-    void setHmacAlgorithm(const QString &value) { hmacAlgorithm = value; }
+    int getPlaintextHeaderSize() const { return plaintextHeaderSize; }
+    void setPlaintextHeaderSize(int value) { plaintextHeaderSize = value; }
 
-    QString getKdfAlgorithm() const { return kdfAlgorithm; }
-    void setKdfAlgorithm(const QString &value) { kdfAlgorithm = value; }
+    std::string getHmacAlgorithm() const { return hmacAlgorithm; }
+    void setHmacAlgorithm(const std::string& value) { hmacAlgorithm = value; }
+
+    std::string getKdfAlgorithm() const { return kdfAlgorithm; }
+    void setKdfAlgorithm(const std::string& value) { kdfAlgorithm = value; }
 
     static KeyFormats getKeyFormat(int rawKeyFormat);
 
 private:
     KeyFormats keyFormat;
-    QString password;
+    std::string password;
     int pageSize;
     int kdfIterations;
-    QString hmacAlgorithm;
-    QString kdfAlgorithm;
+    int plaintextHeaderSize;
+    std::string hmacAlgorithm;
+    std::string kdfAlgorithm;
 };
 
 #endif // CIPHERSETTINGS_H

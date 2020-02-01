@@ -22,21 +22,20 @@ SqlExecutionArea::SqlExecutionArea(DBBrowserDB& _db, QWidget* parent) :
     ui->setupUi(this);
 
     // Create model
-    model = new SqliteTableModel(db, this, static_cast<std::size_t>(Settings::getValue("db", "prefetchsize").toUInt()));
+    model = new SqliteTableModel(db, this);
     ui->tableResult->setModel(model);
     connect(model, &SqliteTableModel::finishedFetch, this, &SqlExecutionArea::fetchedData);
 
     ui->findFrame->hide();
 
     QShortcut* shortcutHideFind = new QShortcut(QKeySequence("ESC"), ui->findLineEdit);
-    connect(shortcutHideFind, SIGNAL(activated()), this, SLOT(hideFindFrame()));
+    connect(shortcutHideFind, &QShortcut::activated, this, &SqlExecutionArea::hideFindFrame);
 
-    connect(ui->findLineEdit, SIGNAL(textChanged(const QString &)),
-            this, SLOT(findLineEdit_textChanged(const QString &)));
-    connect(ui->previousToolButton, SIGNAL(clicked()), this, SLOT(findPrevious()));
-    connect(ui->nextToolButton, SIGNAL(clicked()), this, SLOT(findNext()));
-    connect(ui->findLineEdit, SIGNAL(returnPressed()), this, SLOT(findNext()));
-    connect(ui->hideFindButton, SIGNAL(clicked()), this, SLOT(hideFindFrame()));
+    connect(ui->findLineEdit, &QLineEdit::textChanged, this, &SqlExecutionArea::findLineEdit_textChanged);
+    connect(ui->previousToolButton, &QToolButton::clicked, this, &SqlExecutionArea::findPrevious);
+    connect(ui->nextToolButton, &QToolButton::clicked, this, &SqlExecutionArea::findNext);
+    connect(ui->findLineEdit, &QLineEdit::returnPressed, this, &SqlExecutionArea::findNext);
+    connect(ui->hideFindButton, &QToolButton::clicked, this, &SqlExecutionArea::hideFindFrame);
 
     connect(&fileSystemWatch, &QFileSystemWatcher::fileChanged, this, &SqlExecutionArea::fileChanged);
 
@@ -68,6 +67,11 @@ QString SqlExecutionArea::getSql() const
 QString SqlExecutionArea::getSelectedSql() const
 {
     return ui->editEditor->selectedText().trimmed().replace(QChar(0x2029), '\n');
+}
+
+void SqlExecutionArea::setSql(const QString& sql)
+{
+    ui->editEditor->setText(sql);
 }
 
 void SqlExecutionArea::finishExecution(const QString& result, const bool ok)
@@ -145,8 +149,8 @@ void SqlExecutionArea::reloadSettings()
     ui->splitter->restoreState(Settings::getValue("editor", "splitter1_sizes").toByteArray());
     ui->splitter_2->restoreState(Settings::getValue("editor", "splitter2_sizes").toByteArray());
 
-    // Set prefetch settings
-    model->setChunkSize(static_cast<std::size_t>(Settings::getValue("db", "prefetchsize").toUInt()));
+    // Reload model settings
+    model->reloadSettings();
 
     // Check if error indicators are enabled for the not-ok background clue
     showErrorIndicators = Settings::getValue("editor", "error_indicators").toBool();
@@ -167,7 +171,7 @@ void SqlExecutionArea::find(QString expr, bool forward)
        forward);
 
     // Set reddish background when not found
-    if (found || expr == "")
+    if (found || expr.isEmpty())
         ui->findLineEdit->setStyleSheet("");
     else
         ui->findLineEdit->setStyleSheet("QLineEdit {color: white; background-color: rgb(255, 102, 102)}");
@@ -267,6 +271,8 @@ void SqlExecutionArea::saveFile(const QString& filename)
     // Write to the file
     if(f.write(getSql().toUtf8()) != -1)
     {
+        // Close file now. If we let the destructor close it, we can get change notifications.
+        f.close();
         // Set modified to false so we can get control of unsaved changes when closing.
         ui->editEditor->setModified(false);
 
@@ -292,7 +298,7 @@ void SqlExecutionArea::fileChanged(const QString& filename)
     if(QMessageBox::question(
                 this,
                 qApp->applicationName(),
-                tr("The file \"%1\" was modified by another program. Do you want to reload it?%2").arg(filename).arg(changes),
+                tr("The file \"%1\" was modified by another program. Do you want to reload it?%2").arg(filename, changes),
                 QMessageBox::Yes | QMessageBox::Ignore) == QMessageBox::Yes)
     {
         // Read in the file

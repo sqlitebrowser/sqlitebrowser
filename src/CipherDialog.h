@@ -5,7 +5,7 @@
 
 #include "CipherSettings.h"
 
-class QRegExpValidator;
+class QRegularExpressionValidator;
 
 namespace Ui {
 class CipherDialog;
@@ -26,7 +26,7 @@ public:
 private:
     Ui::CipherDialog* ui;
     bool encryptMode;
-    QRegExpValidator* rawKeyValidator;
+    QRegularExpressionValidator* rawKeyValidator;
 
 private slots:
     void checkInputFields();

@@ -14,7 +14,7 @@ class ExportSqlDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ExportSqlDialog(DBBrowserDB* db, QWidget* parent = nullptr, const QString& selection = "");
+    explicit ExportSqlDialog(DBBrowserDB* db, QWidget* parent = nullptr, const QString& selection = QString());
     ~ExportSqlDialog() override;
 
 private slots:

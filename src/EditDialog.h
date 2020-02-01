@@ -20,6 +20,7 @@ public:
     ~EditDialog() override;
 
     void setCurrentIndex(const QModelIndex& idx);
+    QPersistentModelIndex currentIndex() { return m_currentIndex; };
 
 public slots:
     void setFocus();
@@ -31,7 +32,7 @@ protected:
     void showEvent(QShowEvent* ev) override;
 
 private slots:
-    void importData();
+    void importData(bool asLink = false);
     void exportData();
     void setNull();
     void updateApplyButton();
@@ -50,12 +51,13 @@ private slots:
 
 signals:
     void recordTextUpdated(const QPersistentModelIndex& idx, const QByteArray& bArrdata, bool isBlob);
+    void requestUrlOrFileOpen(const QString& urlString);
 
 private:
     Ui::EditDialog* ui;
     QHexEdit* hexEdit;
     DockTextEdit* sciEdit;
-    QPersistentModelIndex currentIndex;
+    QPersistentModelIndex m_currentIndex;
     int dataSource;
     int dataType;
     bool isReadOnly;
@@ -94,11 +96,11 @@ private:
         XmlEditor = 5
     };
 
-    int checkDataType(const QByteArray& bArrdata);
-    QString humanReadableSize(double byteCount) const;
+    int checkDataType(const QByteArray& bArrdata) const;
     bool promptInvalidData(const QString& data_type, const QString& errorString);
     void setDataInBuffer(const QByteArray& bArrdata, DataSources source);
     void setStackCurrentIndex(int editMode);
+    void openDataWithExternal();
 };
 
 #endif

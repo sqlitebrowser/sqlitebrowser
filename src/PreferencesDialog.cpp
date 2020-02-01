@@ -33,8 +33,8 @@ PreferencesDialog::PreferencesDialog(QWidget* parent, Tabs tab)
     ui->fr_null_bg->installEventFilter(this);
     ui->fr_null_fg->installEventFilter(this);
 
-    connect(ui->comboDataBrowserFont, SIGNAL(currentIndexChanged(int)), this, SLOT(updatePreviewFont()));
-    connect(ui->spinDataBrowserFontSize, SIGNAL(valueChanged(int)), this, SLOT(updatePreviewFont()));
+    connect(ui->comboDataBrowserFont, static_cast<void (QFontComboBox::*)(int)>(&QFontComboBox::currentIndexChanged), this, &PreferencesDialog::updatePreviewFont);
+    connect(ui->spinDataBrowserFontSize, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &PreferencesDialog::updatePreviewFont);
 
 #ifndef CHECKNEWVERSION
     ui->labelUpdates->setVisible(false);
@@ -109,6 +109,7 @@ void PreferencesDialog::loadSettings()
 
     ui->spinSymbolLimit->setValue(Settings::getValue("databrowser", "symbol_limit").toInt());
     ui->spinCompleteThreshold->setValue(Settings::getValue("databrowser", "complete_threshold").toInt());
+    ui->checkShowImagesInline->setChecked(Settings::getValue("databrowser", "image_preview").toBool());
     ui->txtNull->setText(Settings::getValue("databrowser", "null_text").toString());
     ui->txtBlob->setText(Settings::getValue("databrowser", "blob_text").toString());
     ui->editFilterEscape->setText(Settings::getValue("databrowser", "filter_escape").toString());
@@ -217,6 +218,7 @@ void PreferencesDialog::saveSettings()
 
     Settings::setValue("databrowser", "font", ui->comboDataBrowserFont->currentText());
     Settings::setValue("databrowser", "fontsize", ui->spinDataBrowserFontSize->value());
+    Settings::setValue("databrowser", "image_preview", ui->checkShowImagesInline->isChecked());
     saveColorSetting(ui->fr_null_fg, "null_fg");
     saveColorSetting(ui->fr_null_bg, "null_bg");
     saveColorSetting(ui->fr_reg_fg, "reg_fg");
@@ -479,33 +481,26 @@ void PreferencesDialog::loadColorSetting(QFrame *frame, const std::string& setti
 void PreferencesDialog::setColorSetting(QFrame *frame, const QColor &color)
 {
     QPalette::ColorRole role;
-    QString style;
     QLineEdit *line;
 
     if (frame == ui->fr_bin_bg) {
         line = ui->txtBlob;
         role = line->backgroundRole();
-        style = QString("background-color");
     } else if (frame ==  ui->fr_bin_fg) {
         line = ui->txtBlob;
         role = line->foregroundRole();
-        style = QString("color");
     } else if (frame ==  ui->fr_reg_bg) {
         line = ui->txtRegular;
         role = line->backgroundRole();
-        style = QString("background-color");
     } else if (frame ==  ui->fr_reg_fg) {
         line = ui->txtRegular;
         role = line->foregroundRole();
-        style = QString("color");
     } else if (frame ==  ui->fr_null_bg) {
         line = ui->txtNull;
         role = line->backgroundRole();
-        style = QString("background-color");
     } else if (frame ==  ui->fr_null_fg) {
         line = ui->txtNull;
         role = line->foregroundRole();
-        style = QString("color");
     } else
         return;
 

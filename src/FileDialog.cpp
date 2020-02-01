@@ -53,7 +53,7 @@ QString FileDialog::getFileDialogPath(const FileDialogTypes dialogType)
     case 1:     // Always use this locations
         return Settings::getValue("db", "defaultlocation").toString();
     default:
-        return "";
+        return QString();
     }
 }
 

@@ -7,11 +7,11 @@
 FindReplaceDialog::FindReplaceDialog(QWidget* parent)
     : QDialog(parent),
       ui(new Ui::FindReplaceDialog),
+      foundIndicatorNumber(0),
       findInProgress(false)
 {
     // Create UI
     ui->setupUi(this);
-
 }
 
 FindReplaceDialog::~FindReplaceDialog()
@@ -33,8 +33,8 @@ void FindReplaceDialog::setExtendedScintilla(ExtendedScintilla* scintilla)
     ui->replaceButton->setEnabled(isWriteable);
     ui->replaceAllButton->setEnabled(isWriteable);
 
-    connect(m_scintilla, SIGNAL(destroyed()), this, SLOT(hide()));
-    connect(ui->findText, SIGNAL(editingFinished()), this, SLOT(cancelFind()));
+    connect(m_scintilla, &ExtendedScintilla::destroyed, this, &FindReplaceDialog::hide);
+    connect(ui->findText, &QLineEdit::editingFinished, this, &FindReplaceDialog::cancelFind);
     connect(ui->regexpCheckBox, &QCheckBox::toggled, this, &FindReplaceDialog::cancelFind);
     connect(ui->caseCheckBox, &QCheckBox::toggled, this, &FindReplaceDialog::cancelFind);
     connect(ui->wholeWordsCheckBox, &QCheckBox::toggled, this, &FindReplaceDialog::cancelFind);
@@ -54,7 +54,8 @@ bool FindReplaceDialog::findFirst(bool wrap, bool forward)
              ui->wholeWordsCheckBox->isChecked(),
              forward,
              /* show */ true,
-             /* posix */ true);
+             /* posix */ true,
+             /* cxx11 */ true);
     else
         return m_scintilla->findFirst
             (ui->findText->text(),
@@ -66,7 +67,8 @@ bool FindReplaceDialog::findFirst(bool wrap, bool forward)
              /* line */ -1,
              /* index */ -1,
              /* show */ true,
-             /* posix */ true);
+             /* posix */ true,
+             /* cxx11 */ true);
 }
 
 bool FindReplaceDialog::findNext()

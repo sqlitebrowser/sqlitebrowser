@@ -1,5 +1,5 @@
 #include "DbStructureModel.h"
-#include <IconCache.h>
+#include "IconCache.h"
 #include "sqlitedb.h"
 #include "sqlitetablemodel.h"
 #include "Settings.h"
@@ -14,6 +14,7 @@
 DbStructureModel::DbStructureModel(DBBrowserDB& db, QObject* parent)
     : QAbstractItemModel(parent),
       m_db(db),
+      browsablesRootItem(nullptr),
       m_dropQualifiedNames(false),
       m_dropEnquotedNames(false)
 {
@@ -21,7 +22,6 @@ DbStructureModel::DbStructureModel(DBBrowserDB& db, QObject* parent)
     QStringList header;
     header << tr("Name") << tr("Object") << tr("Type") << tr("Schema") << tr("Database");
     rootItem = new QTreeWidgetItem(header);
-    browsablesRootItem = nullptr;
 }
 
 DbStructureModel::~DbStructureModel()
@@ -52,7 +52,7 @@ QVariant DbStructureModel::data(const QModelIndex& index, int role) const
         if(index.column() == ColumnName && item->parent() == browsablesRootItem)
             return QString::fromStdString(sqlb::ObjectIdentifier(item->text(ColumnSchema).toStdString(), item->text(ColumnName).toStdString()).toDisplayString());
         else
-            return Settings::getValue("db", "hideschemalinebreaks").toBool() ? item->text(index.column()).replace("\n", " ").simplified() : item->text(index.column());
+            return Settings::getValue("db", "hideschemalinebreaks").toBool() ? item->text(index.column()).simplified() : item->text(index.column());
     case Qt::EditRole:
         return item->text(index.column());
     case Qt::ToolTipRole: {
@@ -341,8 +341,9 @@ void DbStructureModel::buildTree(QTreeWidgetItem* parent, const std::string& sch
     itemTriggers->setText(ColumnName, tr("Triggers (%1)").arg(calc_number_of_objects_by_type(objmap, "trigger")));
     typeToParentItem.insert({"trigger", itemTriggers});
 
-    // Get all database objects and sort them by their name
-    std::map<std::string, sqlb::ObjectPtr> dbobjs;
+    // Get all database objects and sort them by their name.
+    // This needs to be a multimap because SQLite allows views and triggers with the same name which means that names can appear twice.
+    std::multimap<std::string, sqlb::ObjectPtr> dbobjs;
     for(const auto& it : objmap)
         dbobjs.insert({it.second->name(), it.second});
 
@@ -364,7 +365,12 @@ void DbStructureModel::buildTree(QTreeWidgetItem* parent, const std::string& sch
         {
             sqlb::StringVector pk_columns;
             if(it->type() == sqlb::Object::Types::Table)
-                pk_columns = std::dynamic_pointer_cast<sqlb::Table>(it)->primaryKey();
+            {
+                const auto pk = std::dynamic_pointer_cast<sqlb::Table>(it)->primaryKey();
+                if(pk)
+                    pk_columns = pk->columnList();
+            }
+
             for(const sqlb::FieldInfo& field : fieldList)
             {
                 QTreeWidgetItem *fldItem = new QTreeWidgetItem(item);

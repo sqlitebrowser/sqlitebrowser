@@ -821,6 +821,23 @@ Can be set to 0 for disabling completion.</string>
               </property>
              </widget>
             </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_22">
+              <property name="text">
+               <string>Show images in cell</string>
+              </property>
+              <property name="buddy">
+               <cstring>checkShowImagesInline</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QCheckBox" name="checkShowImagesInline">
+              <property name="toolTip">
+               <string>Enable this option to show a preview of BLOBs containing image data in the cells. This can affect the performance of the data browser, however.</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
          </item>
@@ -1866,10 +1883,12 @@ Can be set to 0 for disabling completion.</string>
   </customwidget>
  </customwidgets>
  <tabstops>
+  <tabstop>tabWidget</tabstop>
   <tabstop>comboDefaultLocation</tabstop>
   <tabstop>locationEdit</tabstop>
   <tabstop>setLocationButton</tabstop>
   <tabstop>languageComboBox</tabstop>
+  <tabstop>appStyleCombo</tabstop>
   <tabstop>toolbarStyleComboMain</tabstop>
   <tabstop>toolbarStyleComboStructure</tabstop>
   <tabstop>toolbarStyleComboBrowse</tabstop>
@@ -1877,6 +1896,7 @@ Can be set to 0 for disabling completion.</string>
   <tabstop>toolbarStyleComboEditCell</tabstop>
   <tabstop>checkUseRemotes</tabstop>
   <tabstop>checkUpdates</tabstop>
+  <tabstop>buttonManageFileExtension</tabstop>
   <tabstop>encodingComboBox</tabstop>
   <tabstop>foreignKeysCheckBox</tabstop>
   <tabstop>checkHideSchemaLinebreaks</tabstop>
@@ -1886,6 +1906,9 @@ Can be set to 0 for disabling completion.</string>
   <tabstop>editDatabaseDefaultSqlText</tabstop>
   <tabstop>comboDataBrowserFont</tabstop>
   <tabstop>spinDataBrowserFontSize</tabstop>
+  <tabstop>spinSymbolLimit</tabstop>
+  <tabstop>spinCompleteThreshold</tabstop>
+  <tabstop>checkShowImagesInline</tabstop>
   <tabstop>fr_null_fg</tabstop>
   <tabstop>fr_null_bg</tabstop>
   <tabstop>txtNull</tabstop>
@@ -1902,20 +1925,25 @@ Can be set to 0 for disabling completion.</string>
   <tabstop>spinEditorFontSize</tabstop>
   <tabstop>spinLogFontSize</tabstop>
   <tabstop>spinTabSize</tabstop>
+  <tabstop>wrapComboBox</tabstop>
+  <tabstop>quoteComboBox</tabstop>
   <tabstop>checkAutoCompletion</tabstop>
+  <tabstop>checkCompleteUpper</tabstop>
   <tabstop>checkErrorIndicators</tabstop>
   <tabstop>checkHorizontalTiling</tabstop>
   <tabstop>listExtensions</tabstop>
   <tabstop>buttonAddExtension</tabstop>
   <tabstop>buttonRemoveExtension</tabstop>
   <tabstop>checkRegexDisabled</tabstop>
-  <tabstop>editRemoteCloneDirectory</tabstop>
-  <tabstop>buttonRemoteBrowseCloneDirectory</tabstop>
-  <tabstop>tableCaCerts</tabstop>
+  <tabstop>checkAllowLoadExtension</tabstop>
+  <tabstop>tabCertificates</tabstop>
   <tabstop>tableClientCerts</tabstop>
   <tabstop>buttonClientCertAdd</tabstop>
   <tabstop>buttonClientCertRemove</tabstop>
-  <tabstop>tabWidget</tabstop>
+  <tabstop>buttonProxy</tabstop>
+  <tabstop>editRemoteCloneDirectory</tabstop>
+  <tabstop>buttonRemoteBrowseCloneDirectory</tabstop>
+  <tabstop>tableCaCerts</tabstop>
  </tabstops>
  <resources>
   <include location="icons/icons.qrc"/>
@@ -1992,12 +2020,12 @@ Can be set to 0 for disabling completion.</string>
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>365</x>
-     <y>207</y>
+     <x>344</x>
+     <y>230</y>
     </hint>
     <hint type="destinationlabel">
-     <x>108</x>
-     <y>280</y>
+     <x>119</x>
+     <y>273</y>
     </hint>
    </hints>
   </connection>
@@ -2008,8 +2036,8 @@ Can be set to 0 for disabling completion.</string>
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>365</x>
-     <y>207</y>
+     <x>344</x>
+     <y>230</y>
     </hint>
     <hint type="destinationlabel">
      <x>365</x>
@@ -2024,8 +2052,8 @@ Can be set to 0 for disabling completion.</string>
    <slot>activateRemoteTab(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>161</x>
-     <y>172</y>
+     <x>231</x>
+     <y>393</y>
     </hint>
     <hint type="destinationlabel">
      <x>382</x>
@@ -2040,8 +2068,8 @@ Can be set to 0 for disabling completion.</string>
    <slot>addClientCertificate()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>578</x>
-     <y>315</y>
+     <x>722</x>
+     <y>110</y>
     </hint>
     <hint type="destinationlabel">
      <x>596</x>
@@ -2056,8 +2084,8 @@ Can be set to 0 for disabling completion.</string>
    <slot>removeClientCertificate()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>578</x>
-     <y>353</y>
+     <x>722</x>
+     <y>139</y>
     </hint>
     <hint type="destinationlabel">
      <x>597</x>
@@ -2072,8 +2100,8 @@ Can be set to 0 for disabling completion.</string>
    <slot>chooseRemoteCloneDirectory()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>567</x>
-     <y>54</y>
+     <x>732</x>
+     <y>538</y>
     </hint>
     <hint type="destinationlabel">
      <x>595</x>
@@ -2088,12 +2116,12 @@ Can be set to 0 for disabling completion.</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>474</x>
-     <y>464</y>
+     <x>642</x>
+     <y>450</y>
     </hint>
     <hint type="destinationlabel">
-     <x>474</x>
-     <y>492</y>
+     <x>642</x>
+     <y>480</y>
     </hint>
    </hints>
   </connection>
@@ -2104,8 +2132,8 @@ Can be set to 0 for disabling completion.</string>
    <slot>on_buttonBox_clicked(QAbstractButton*)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>385</x>
-     <y>591</y>
+     <x>394</x>
+     <y>584</y>
     </hint>
     <hint type="destinationlabel">
      <x>385</x>
@@ -2120,8 +2148,8 @@ Can be set to 0 for disabling completion.</string>
    <slot>configureProxy()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>385</x>
-     <y>591</y>
+     <x>225</x>
+     <y>506</y>
     </hint>
     <hint type="destinationlabel">
      <x>385</x>

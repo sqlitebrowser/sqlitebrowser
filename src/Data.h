@@ -21,10 +21,15 @@ bool startsWithBom(const QByteArray& data);
 // with a BOM an empty byte array is returned and the original data is not modified.
 QByteArray removeBom(QByteArray& data);
 
+// Check if a byte array contains an image. Returns the name of the image format for images or a null string for non-image data.
+QString isImageData(const QByteArray& data);
+
 QStringList toStringList(const QList<QByteArray>& list);
 
 QByteArray encodeString(const QByteArray& str, const QString& encoding);
 
 QByteArray decodeString(const QByteArray& str, const QString& encoding);
+
+QString humanReadableSize(unsigned long byteCount);
 
 #endif
