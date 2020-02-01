@@ -28,6 +28,7 @@
               command:            desktop-launch $SNAP/bin/sqlitebrowser
               desktop:            share/applications/sqlitebrowser.desktop
               environment:
+                DISABLE_WAYLAND:  1
                 TMPDIR:           $XDG_RUNTIME_DIR
               plugs:
                 # - browser-support
@@ -59,8 +60,8 @@
               - git
           parts:
               # wrappers:
-              #     plugin:         dump
-              #     source:         snap/
+              #     plugin:       dump
+              #     source:       snap/
               sqlitebrowser:
                   # source-type:  git
                   plugin:         cmake
@@ -98,6 +99,7 @@
                 - xdg-user-dirs
                 - ibus-gtk3
                 - libibus-1.0-5
+                - qtwayland5
               dump:
                   plugin:         dump
                   after:
