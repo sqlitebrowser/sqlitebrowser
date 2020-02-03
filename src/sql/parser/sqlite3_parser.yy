@@ -39,6 +39,7 @@
 			if(is_table_constraint)
 				table_constraint = other.table_constraint;
 			text = other.text;
+			generated_constraint = other.generated_constraint;
 
 			return *this;
 		}
@@ -58,6 +59,7 @@
 			Default,
 			Collate,
 			ForeignKey,
+			Generated,
 		};
 
 		ConstraintType type;
@@ -66,6 +68,7 @@
 
 		sqlb::ConstraintPtr table_constraint;
 		std::string text;
+		sqlb::GeneratedColumnConstraint generated_constraint;
 	};
 	using ColumnConstraintInfoVector = std::vector<ColumnConstraintInfo>;
 
@@ -135,6 +138,7 @@
 
 %token <std::string> ABORT "ABORT"
 %token <std::string> ACTION "ACTION"
+%token <std::string> ALWAYS "ALWAYS"
 %token <std::string> AND "AND"
 %token <std::string> AND_BETWEEN "AND BETWEEN"
 %token <std::string> AS "AS"
@@ -167,6 +171,7 @@
 %token <std::string> FILTER "FILTER"
 %token <std::string> FOLLOWING "FOLLOWING"
 %token <std::string> FOREIGN "FOREIGN"
+%token <std::string> GENERATED "GENERATED"
 %token <std::string> GLOB "GLOB"
 %token <std::string> IF "IF"
 %token <std::string> IGNORE "IGNORE"
@@ -201,6 +206,7 @@
 %token <std::string> ROWS "ROWS"
 %token <std::string> SELECT "SELECT"
 %token <std::string> SET "SET"
+%token <std::string> STORED "STORED"
 %token <std::string> TABLE "TABLE"
 %token <std::string> TEMP "TEMP"
 %token <std::string> TEMPORARY "TEMPORARY"
@@ -261,6 +267,8 @@
 %type <sqlb::TablePtr> createvirtualtable_stmt
 
 %type <std::string> optional_typename
+%type <std::string> optional_storage_identifier
+%type <bool> optional_always_generated
 %type <ColumnConstraintInfoVector> columnconstraint_list
 %type <ColumnConstraintInfo> columnconstraint
 %type <ColumndefData> columndef
@@ -333,6 +341,7 @@ id:
 allowed_keywords_as_identifier:
 	ABORT
 	| ACTION
+	| ALWAYS
 	| ASC
 	| CASCADE
 	| CAST
@@ -343,6 +352,7 @@ allowed_keywords_as_identifier:
 	| FAIL
 	| FILTER
 	| FOLLOWING
+	| GENERATED
 	| GLOB
 	| KEY
 	| LIKE
@@ -362,6 +372,7 @@ allowed_keywords_as_identifier:
 	| ROLLBACK
 	| ROWID
 	| ROWS
+	| STORED
 	| TEMPORARY
 	| TEMP
 	| UNBOUNDED
@@ -662,6 +673,17 @@ optional_typename:
 	| type_name				{ $$ = $1; }
 	;
 
+optional_storage_identifier:
+	%empty						{ $$ = "VIRTUAL"; }
+	| STORED					{ $$ = "STORED"; }
+	| VIRTUAL					{ $$ = "VIRTUAL"; }
+	;
+
+optional_always_generated:
+	%empty						{ $$ = false; }
+	| GENERATED ALWAYS				{ $$ = true; }
+	;
+
 columnconstraint:
 	optional_constraintname PRIMARY KEY optional_sort_order optional_conflictclause	{
 												$$.type = ColumnConstraintInfo::PrimaryKey;
@@ -757,6 +779,14 @@ columnconstraint:
 												$$.table_constraint = sqlb::ConstraintPtr(fk);
 												$$.fully_parsed = true;
 											}
+	| optional_constraintname optional_always_generated AS "(" expr ")" optional_storage_identifier	{		// TODO Solve shift/reduce conflict.
+												$$.type = ColumnConstraintInfo::Generated;
+												$$.is_table_constraint = false;
+												$$.generated_constraint.setExpression($5);
+												$$.generated_constraint.setStorage($7);
+												$$.generated_constraint.setName($1);
+												$$.fully_parsed = true;
+											}
 	;
 
 columnconstraint_list:
@@ -795,6 +825,20 @@ columndef:
 											f.setDefaultValue(c.text);
 										} else if(c.type == ColumnConstraintInfo::Collate) {
 											f.setCollation(c.text);
+										} else if(c.type == ColumnConstraintInfo::Generated) {
+											f.setGenerated(c.generated_constraint);
+
+											// This is a hack which removes any "GENERATED ALWAYS" from the end of the type name.
+											// As of now these are shifted to the type instead of reducing the type when seeing the GENERATED identifier.
+											// TODO Remove this once the grammar is conflict free
+											const std::string generated_always = "GENERATED ALWAYS";
+											if(f.type().size() >= generated_always.size() && f.type().compare(f.type().size() - generated_always.size(), generated_always.size(), generated_always) == 0)
+											{
+												std::string type = f.type().substr(0, f.type().size()-generated_always.size());
+												if(type.back() == ' ')
+													type.pop_back();
+												f.setType(type);
+											}
 										} else {
 											fully_parsed = false;
 										}

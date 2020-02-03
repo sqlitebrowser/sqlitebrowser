@@ -1,8 +1,8 @@
-// A Bison parser, made by GNU Bison 3.4.1.
+// A Bison parser, made by GNU Bison 3.5.1.
 
 // Skeleton interface for Bison LALR(1) parsers in C++
 
-// Copyright (C) 2002-2015, 2018-2019 Free Software Foundation, Inc.
+// Copyright (C) 2002-2015, 2018-2020 Free Software Foundation, Inc.
 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@
 
 #ifndef YY_YY_SQLITE3_PARSER_HPP_INCLUDED
 # define YY_YY_SQLITE3_PARSER_HPP_INCLUDED
-// //                    "%code requires" blocks.
+// "%code requires" blocks.
 #line 12 "sqlite3_parser.yy"
 
 	#include <string>
@@ -75,6 +75,7 @@
 			if(is_table_constraint)
 				table_constraint = other.table_constraint;
 			text = other.text;
+			generated_constraint = other.generated_constraint;
 
 			return *this;
 		}
@@ -94,6 +95,7 @@
 			Default,
 			Collate,
 			ForeignKey,
+			Generated,
 		};
 
 		ConstraintType type;
@@ -102,13 +104,14 @@
 
 		sqlb::ConstraintPtr table_constraint;
 		std::string text;
+		sqlb::GeneratedColumnConstraint generated_constraint;
 	};
 	using ColumnConstraintInfoVector = std::vector<ColumnConstraintInfo>;
 
 	// Colum definitions are a tuple of three elements: the Field object, a set of table constraints, and a bool to indicate whether parsing was complete
 	using ColumndefData = std::tuple<sqlb::Field, sqlb::ConstraintSet, bool>;
 
-#line 112 "sqlite3_parser.hpp"
+#line 115 "sqlite3_parser.hpp"
 
 # include <cassert>
 # include <cstdlib> // std::abort
@@ -155,28 +158,26 @@
 #endif
 # include "sqlite3_location.h"
 #include <typeinfo>
-#ifndef YYASSERT
+#ifndef YY_ASSERT
 # include <cassert>
-# define YYASSERT assert
+# define YY_ASSERT assert
 #endif
 
 
-#ifndef YY_ATTRIBUTE
-# if (defined __GNUC__                                               \
-      && (2 < __GNUC__ || (__GNUC__ == 2 && 96 <= __GNUC_MINOR__)))  \
-     || defined __SUNPRO_C && 0x5110 <= __SUNPRO_C
-#  define YY_ATTRIBUTE(Spec) __attribute__(Spec)
+#ifndef YY_ATTRIBUTE_PURE
+# if defined __GNUC__ && 2 < __GNUC__ + (96 <= __GNUC_MINOR__)
+#  define YY_ATTRIBUTE_PURE __attribute__ ((__pure__))
 # else
-#  define YY_ATTRIBUTE(Spec) /* empty */
+#  define YY_ATTRIBUTE_PURE
 # endif
 #endif
 
-#ifndef YY_ATTRIBUTE_PURE
-# define YY_ATTRIBUTE_PURE   YY_ATTRIBUTE ((__pure__))
-#endif
-
 #ifndef YY_ATTRIBUTE_UNUSED
-# define YY_ATTRIBUTE_UNUSED YY_ATTRIBUTE ((__unused__))
+# if defined __GNUC__ && 2 < __GNUC__ + (7 <= __GNUC_MINOR__)
+#  define YY_ATTRIBUTE_UNUSED __attribute__ ((__unused__))
+# else
+#  define YY_ATTRIBUTE_UNUSED
+# endif
 #endif
 
 /* Suppress unused-variable warnings by "using" E.  */
@@ -188,11 +189,11 @@
 
 #if defined __GNUC__ && ! defined __ICC && 407 <= __GNUC__ * 100 + __GNUC_MINOR__
 /* Suppress an incorrect diagnostic about yylval being uninitialized.  */
-# define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN \
-    _Pragma ("GCC diagnostic push") \
-    _Pragma ("GCC diagnostic ignored \"-Wuninitialized\"")\
+# define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN                            \
+    _Pragma ("GCC diagnostic push")                                     \
+    _Pragma ("GCC diagnostic ignored \"-Wuninitialized\"")              \
     _Pragma ("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
-# define YY_IGNORE_MAYBE_UNINITIALIZED_END \
+# define YY_IGNORE_MAYBE_UNINITIALIZED_END      \
     _Pragma ("GCC diagnostic pop")
 #else
 # define YY_INITIAL_VALUE(Value) Value
@@ -205,6 +206,27 @@
 # define YY_INITIAL_VALUE(Value) /* Nothing. */
 #endif
 
+#if defined __cplusplus && defined __GNUC__ && ! defined __ICC && 6 <= __GNUC__
+# define YY_IGNORE_USELESS_CAST_BEGIN                          \
+    _Pragma ("GCC diagnostic push")                            \
+    _Pragma ("GCC diagnostic ignored \"-Wuseless-cast\"")
+# define YY_IGNORE_USELESS_CAST_END            \
+    _Pragma ("GCC diagnostic pop")
+#endif
+#ifndef YY_IGNORE_USELESS_CAST_BEGIN
+# define YY_IGNORE_USELESS_CAST_BEGIN
+# define YY_IGNORE_USELESS_CAST_END
+#endif
+
+# ifndef YY_CAST
+#  ifdef __cplusplus
+#   define YY_CAST(Type, Val) static_cast<Type> (Val)
+#   define YY_REINTERPRET_CAST(Type, Val) reinterpret_cast<Type> (Val)
+#  else
+#   define YY_CAST(Type, Val) ((Type) (Val))
+#   define YY_REINTERPRET_CAST(Type, Val) ((Type) (Val))
+#  endif
+# endif
 # ifndef YY_NULLPTR
 #  if defined __cplusplus
 #   if 201103L <= __cplusplus
@@ -224,7 +246,7 @@
 
 #line 10 "sqlite3_parser.yy"
 namespace  sqlb { namespace parser  {
-#line 228 "sqlite3_parser.hpp"
+#line 250 "sqlite3_parser.hpp"
 
 
 
@@ -256,14 +278,14 @@ namespace  sqlb { namespace parser  {
     semantic_type (YY_RVREF (T) t)
       : yytypeid_ (&typeid (T))
     {
-      YYASSERT (sizeof (T) <= size);
+      YY_ASSERT (sizeof (T) <= size);
       new (yyas_<T> ()) T (YY_MOVE (t));
     }
 
     /// Destruction, allowed only if empty.
     ~semantic_type () YY_NOEXCEPT
     {
-      YYASSERT (!yytypeid_);
+      YY_ASSERT (!yytypeid_);
     }
 
 # if 201103L <= YY_CPLUSPLUS
@@ -272,8 +294,8 @@ namespace  sqlb { namespace parser  {
     T&
     emplace (U&&... u)
     {
-      YYASSERT (!yytypeid_);
-      YYASSERT (sizeof (T) <= size);
+      YY_ASSERT (!yytypeid_);
+      YY_ASSERT (sizeof (T) <= size);
       yytypeid_ = & typeid (T);
       return *new (yyas_<T> ()) T (std::forward <U>(u)...);
     }
@@ -283,8 +305,8 @@ namespace  sqlb { namespace parser  {
     T&
     emplace ()
     {
-      YYASSERT (!yytypeid_);
-      YYASSERT (sizeof (T) <= size);
+      YY_ASSERT (!yytypeid_);
+      YY_ASSERT (sizeof (T) <= size);
       yytypeid_ = & typeid (T);
       return *new (yyas_<T> ()) T ();
     }
@@ -294,8 +316,8 @@ namespace  sqlb { namespace parser  {
     T&
     emplace (const T& t)
     {
-      YYASSERT (!yytypeid_);
-      YYASSERT (sizeof (T) <= size);
+      YY_ASSERT (!yytypeid_);
+      YY_ASSERT (sizeof (T) <= size);
       yytypeid_ = & typeid (T);
       return *new (yyas_<T> ()) T (t);
     }
@@ -324,9 +346,9 @@ namespace  sqlb { namespace parser  {
     T&
     as () YY_NOEXCEPT
     {
-      YYASSERT (yytypeid_);
-      YYASSERT (*yytypeid_ == typeid (T));
-      YYASSERT (sizeof (T) <= size);
+      YY_ASSERT (yytypeid_);
+      YY_ASSERT (*yytypeid_ == typeid (T));
+      YY_ASSERT (sizeof (T) <= size);
       return *yyas_<T> ();
     }
 
@@ -335,9 +357,9 @@ namespace  sqlb { namespace parser  {
     const T&
     as () const YY_NOEXCEPT
     {
-      YYASSERT (yytypeid_);
-      YYASSERT (*yytypeid_ == typeid (T));
-      YYASSERT (sizeof (T) <= size);
+      YY_ASSERT (yytypeid_);
+      YY_ASSERT (*yytypeid_ == typeid (T));
+      YY_ASSERT (sizeof (T) <= size);
       return *yyas_<T> ();
     }
 
@@ -353,8 +375,8 @@ namespace  sqlb { namespace parser  {
     void
     swap (self_type& that) YY_NOEXCEPT
     {
-      YYASSERT (yytypeid_);
-      YYASSERT (*yytypeid_ == *that.yytypeid_);
+      YY_ASSERT (yytypeid_);
+      YY_ASSERT (*yytypeid_ == *that.yytypeid_);
       std::swap (as<T> (), that.as<T> ());
     }
 
@@ -441,6 +463,7 @@ namespace  sqlb { namespace parser  {
       // optional_unique
       // optional_temporary
       // optional_withoutrowid
+      // optional_always_generated
       char dummy4[sizeof (bool)];
 
       // tableconstraint
@@ -469,6 +492,7 @@ namespace  sqlb { namespace parser  {
 
       // "ABORT"
       // "ACTION"
+      // "ALWAYS"
       // "AND"
       // "AND BETWEEN"
       // "AS"
@@ -501,6 +525,7 @@ namespace  sqlb { namespace parser  {
       // "FILTER"
       // "FOLLOWING"
       // "FOREIGN"
+      // "GENERATED"
       // "GLOB"
       // "IF"
       // "IGNORE"
@@ -535,6 +560,7 @@ namespace  sqlb { namespace parser  {
       // "ROWS"
       // "SELECT"
       // "SET"
+      // "STORED"
       // "TABLE"
       // "TEMP"
       // "TEMPORARY"
@@ -582,6 +608,7 @@ namespace  sqlb { namespace parser  {
       // optional_exprlist_with_paren
       // optional_conflictclause
       // optional_typename
+      // optional_storage_identifier
       // optional_constraintname
       // fk_clause_part
       // fk_clause_part_list
@@ -664,91 +691,94 @@ namespace  sqlb { namespace parser  {
         TOK_BITWISERIGHT = 281,
         TOK_ABORT = 282,
         TOK_ACTION = 283,
-        TOK_AND = 284,
-        TOK_AND_BETWEEN = 285,
-        TOK_AS = 286,
-        TOK_ASC = 287,
-        TOK_AUTOINCREMENT = 288,
-        TOK_BETWEEN = 289,
-        TOK_CASCADE = 290,
-        TOK_CASE = 291,
-        TOK_CAST = 292,
-        TOK_CHECK = 293,
-        TOK_COLLATE = 294,
-        TOK_CONFLICT = 295,
-        TOK_CONSTRAINT = 296,
-        TOK_CREATE = 297,
-        TOK_CURRENT_DATE = 298,
-        TOK_CURRENT_TIME = 299,
-        TOK_CURRENT_TIMESTAMP = 300,
-        TOK_DEFAULT = 301,
-        TOK_DEFERRABLE = 302,
-        TOK_DEFERRED = 303,
-        TOK_DELETE = 304,
-        TOK_DESC = 305,
-        TOK_DISTINCT = 306,
-        TOK_ELSE = 307,
-        TOK_END = 308,
-        TOK_ESCAPE = 309,
-        TOK_EXISTS = 310,
-        TOK_FAIL = 311,
-        TOK_FALSE = 312,
-        TOK_FILTER = 313,
-        TOK_FOLLOWING = 314,
-        TOK_FOREIGN = 315,
-        TOK_GLOB = 316,
-        TOK_IF = 317,
-        TOK_IGNORE = 318,
-        TOK_IMMEDIATE = 319,
-        TOK_IN = 320,
-        TOK_INDEX = 321,
-        TOK_INITIALLY = 322,
-        TOK_INSERT = 323,
-        TOK_IS = 324,
-        TOK_ISNULL = 325,
-        TOK_KEY = 326,
-        TOK_LIKE = 327,
-        TOK_MATCH = 328,
-        TOK_NO = 329,
-        TOK_NOT = 330,
-        TOK_NOTNULL = 331,
-        TOK_NULL = 332,
-        TOK_ON = 333,
-        TOK_OR = 334,
-        TOK_OVER = 335,
-        TOK_PARTITION = 336,
-        TOK_PRECEDING = 337,
-        TOK_PRIMARY = 338,
-        TOK_RAISE = 339,
-        TOK_RANGE = 340,
-        TOK_REFERENCES = 341,
-        TOK_REGEXP = 342,
-        TOK_REPLACE = 343,
-        TOK_RESTRICT = 344,
-        TOK_ROLLBACK = 345,
-        TOK_ROWID = 346,
-        TOK_ROWS = 347,
-        TOK_SELECT = 348,
-        TOK_SET = 349,
-        TOK_TABLE = 350,
-        TOK_TEMP = 351,
-        TOK_TEMPORARY = 352,
-        TOK_THEN = 353,
-        TOK_TRUE = 354,
-        TOK_UNBOUNDED = 355,
-        TOK_UNIQUE = 356,
-        TOK_UPDATE = 357,
-        TOK_USING = 358,
-        TOK_VIRTUAL = 359,
-        TOK_WHEN = 360,
-        TOK_WHERE = 361,
-        TOK_WITHOUT = 362,
-        TOK_IDENTIFIER = 363,
-        TOK_NUMERIC = 364,
-        TOK_STRINGLITERAL = 365,
-        TOK_QUOTEDLITERAL = 366,
-        TOK_BLOBLITERAL = 367,
-        TOK_BINDPARAMETER = 368
+        TOK_ALWAYS = 284,
+        TOK_AND = 285,
+        TOK_AND_BETWEEN = 286,
+        TOK_AS = 287,
+        TOK_ASC = 288,
+        TOK_AUTOINCREMENT = 289,
+        TOK_BETWEEN = 290,
+        TOK_CASCADE = 291,
+        TOK_CASE = 292,
+        TOK_CAST = 293,
+        TOK_CHECK = 294,
+        TOK_COLLATE = 295,
+        TOK_CONFLICT = 296,
+        TOK_CONSTRAINT = 297,
+        TOK_CREATE = 298,
+        TOK_CURRENT_DATE = 299,
+        TOK_CURRENT_TIME = 300,
+        TOK_CURRENT_TIMESTAMP = 301,
+        TOK_DEFAULT = 302,
+        TOK_DEFERRABLE = 303,
+        TOK_DEFERRED = 304,
+        TOK_DELETE = 305,
+        TOK_DESC = 306,
+        TOK_DISTINCT = 307,
+        TOK_ELSE = 308,
+        TOK_END = 309,
+        TOK_ESCAPE = 310,
+        TOK_EXISTS = 311,
+        TOK_FAIL = 312,
+        TOK_FALSE = 313,
+        TOK_FILTER = 314,
+        TOK_FOLLOWING = 315,
+        TOK_FOREIGN = 316,
+        TOK_GENERATED = 317,
+        TOK_GLOB = 318,
+        TOK_IF = 319,
+        TOK_IGNORE = 320,
+        TOK_IMMEDIATE = 321,
+        TOK_IN = 322,
+        TOK_INDEX = 323,
+        TOK_INITIALLY = 324,
+        TOK_INSERT = 325,
+        TOK_IS = 326,
+        TOK_ISNULL = 327,
+        TOK_KEY = 328,
+        TOK_LIKE = 329,
+        TOK_MATCH = 330,
+        TOK_NO = 331,
+        TOK_NOT = 332,
+        TOK_NOTNULL = 333,
+        TOK_NULL = 334,
+        TOK_ON = 335,
+        TOK_OR = 336,
+        TOK_OVER = 337,
+        TOK_PARTITION = 338,
+        TOK_PRECEDING = 339,
+        TOK_PRIMARY = 340,
+        TOK_RAISE = 341,
+        TOK_RANGE = 342,
+        TOK_REFERENCES = 343,
+        TOK_REGEXP = 344,
+        TOK_REPLACE = 345,
+        TOK_RESTRICT = 346,
+        TOK_ROLLBACK = 347,
+        TOK_ROWID = 348,
+        TOK_ROWS = 349,
+        TOK_SELECT = 350,
+        TOK_SET = 351,
+        TOK_STORED = 352,
+        TOK_TABLE = 353,
+        TOK_TEMP = 354,
+        TOK_TEMPORARY = 355,
+        TOK_THEN = 356,
+        TOK_TRUE = 357,
+        TOK_UNBOUNDED = 358,
+        TOK_UNIQUE = 359,
+        TOK_UPDATE = 360,
+        TOK_USING = 361,
+        TOK_VIRTUAL = 362,
+        TOK_WHEN = 363,
+        TOK_WHERE = 364,
+        TOK_WITHOUT = 365,
+        TOK_IDENTIFIER = 366,
+        TOK_NUMERIC = 367,
+        TOK_STRINGLITERAL = 368,
+        TOK_QUOTEDLITERAL = 369,
+        TOK_BLOBLITERAL = 370,
+        TOK_BINDPARAMETER = 371
       };
     };
 
@@ -762,7 +792,7 @@ namespace  sqlb { namespace parser  {
     enum { empty_symbol = -2 };
 
     /// Internal symbol number for tokens (subsumed by symbol_number_type).
-    typedef unsigned char token_number_type;
+    typedef signed char token_number_type;
 
     /// A complete symbol.
     ///
@@ -994,179 +1024,184 @@ namespace  sqlb { namespace parser  {
         // Type destructor.
 switch (yytype)
     {
-      case 153: // columnconstraint
+      case 158: // columnconstraint
         value.template destroy< ColumnConstraintInfo > ();
         break;
 
-      case 154: // columnconstraint_list
+      case 159: // columnconstraint_list
         value.template destroy< ColumnConstraintInfoVector > ();
         break;
 
-      case 155: // columndef
+      case 160: // columndef
         value.template destroy< ColumndefData > ();
         break;
 
-      case 139: // optional_if_not_exists
-      case 141: // optional_unique
-      case 149: // optional_temporary
-      case 150: // optional_withoutrowid
+      case 142: // optional_if_not_exists
+      case 144: // optional_unique
+      case 152: // optional_temporary
+      case 153: // optional_withoutrowid
+      case 157: // optional_always_generated
         value.template destroy< bool > ();
         break;
 
-      case 163: // tableconstraint
+      case 168: // tableconstraint
         value.template destroy< sqlb::ConstraintPtr > ();
         break;
 
-      case 164: // tableconstraint_list
-      case 165: // optional_tableconstraint_list
+      case 169: // tableconstraint_list
+      case 170: // optional_tableconstraint_list
         value.template destroy< sqlb::ConstraintSet > ();
         break;
 
-      case 146: // createindex_stmt
+      case 149: // createindex_stmt
         value.template destroy< sqlb::IndexPtr > ();
         break;
 
-      case 144: // indexed_column
+      case 147: // indexed_column
         value.template destroy< sqlb::IndexedColumn > ();
         break;
 
-      case 145: // indexed_column_list
+      case 148: // indexed_column_list
         value.template destroy< sqlb::IndexedColumnVector > ();
         break;
 
-      case 158: // columnid_list
-      case 159: // optional_columnid_with_paren_list
+      case 163: // columnid_list
+      case 164: // optional_columnid_with_paren_list
         value.template destroy< sqlb::StringVector > ();
         break;
 
-      case 148: // createvirtualtable_stmt
-      case 166: // createtable_stmt
+      case 151: // createvirtualtable_stmt
+      case 171: // createtable_stmt
         value.template destroy< sqlb::TablePtr > ();
         break;
 
       case 27: // "ABORT"
       case 28: // "ACTION"
-      case 29: // "AND"
-      case 30: // "AND BETWEEN"
-      case 31: // "AS"
-      case 32: // "ASC"
-      case 33: // "AUTOINCREMENT"
-      case 34: // "BETWEEN"
-      case 35: // "CASCADE"
-      case 36: // "CASE"
-      case 37: // "CAST"
-      case 38: // "CHECK"
-      case 39: // "COLLATE"
-      case 40: // "CONFLICT"
-      case 41: // "CONSTRAINT"
-      case 42: // "CREATE"
-      case 43: // "CURRENT_DATE"
-      case 44: // "CURRENT_TIME"
-      case 45: // "CURRENT_TIMESTAMP"
-      case 46: // "DEFAULT"
-      case 47: // "DEFERRABLE"
-      case 48: // "DEFERRED"
-      case 49: // "DELETE"
-      case 50: // "DESC"
-      case 51: // "DISTINCT"
-      case 52: // "ELSE"
-      case 53: // "END"
-      case 54: // "ESCAPE"
-      case 55: // "EXISTS"
-      case 56: // "FAIL"
-      case 57: // "FALSE"
-      case 58: // "FILTER"
-      case 59: // "FOLLOWING"
-      case 60: // "FOREIGN"
-      case 61: // "GLOB"
-      case 62: // "IF"
-      case 63: // "IGNORE"
-      case 64: // "IMMEDIATE"
-      case 65: // "IN"
-      case 66: // "INDEX"
-      case 67: // "INITIALLY"
-      case 68: // "INSERT"
-      case 69: // "IS"
-      case 70: // "ISNULL"
-      case 71: // "KEY"
-      case 72: // "LIKE"
-      case 73: // "MATCH"
-      case 74: // "NO"
-      case 75: // "NOT"
-      case 76: // "NOTNULL"
-      case 77: // "NULL"
-      case 78: // "ON"
-      case 79: // "OR"
-      case 80: // "OVER"
-      case 81: // "PARTITION"
-      case 82: // "PRECEDING"
-      case 83: // "PRIMARY"
-      case 84: // "RAISE"
-      case 85: // "RANGE"
-      case 86: // "REFERENCES"
-      case 87: // "REGEXP"
-      case 88: // "REPLACE"
-      case 89: // "RESTRICT"
-      case 90: // "ROLLBACK"
-      case 91: // "ROWID"
-      case 92: // "ROWS"
-      case 93: // "SELECT"
-      case 94: // "SET"
-      case 95: // "TABLE"
-      case 96: // "TEMP"
-      case 97: // "TEMPORARY"
-      case 98: // "THEN"
-      case 99: // "TRUE"
-      case 100: // "UNBOUNDED"
-      case 101: // "UNIQUE"
-      case 102: // "UPDATE"
-      case 103: // "USING"
-      case 104: // "VIRTUAL"
-      case 105: // "WHEN"
-      case 106: // "WHERE"
-      case 107: // "WITHOUT"
-      case 108: // "identifier"
-      case 109: // "numeric"
-      case 110: // "string literal"
-      case 111: // "quoted literal"
-      case 112: // "blob literal"
-      case 113: // "bind parameter"
-      case 117: // literalvalue
-      case 118: // id
-      case 119: // allowed_keywords_as_identifier
-      case 120: // tableid
-      case 121: // columnid
-      case 122: // signednumber
-      case 123: // signednumber_or_numeric
-      case 124: // typename_namelist
-      case 125: // type_name
-      case 126: // unary_expr
-      case 127: // binary_expr
-      case 128: // like_expr
-      case 129: // exprlist_expr
-      case 130: // function_expr
-      case 131: // isnull_expr
-      case 132: // between_expr
-      case 133: // in_expr
-      case 134: // whenthenlist_expr
-      case 135: // case_expr
-      case 136: // raise_expr
-      case 137: // expr
-      case 138: // select_stmt
-      case 140: // optional_sort_order
-      case 142: // optional_where
-      case 143: // tableid_with_uninteresting_schema
-      case 147: // optional_exprlist_with_paren
-      case 151: // optional_conflictclause
-      case 152: // optional_typename
-      case 157: // optional_constraintname
-      case 160: // fk_clause_part
-      case 161: // fk_clause_part_list
-      case 162: // optional_fk_clause
+      case 29: // "ALWAYS"
+      case 30: // "AND"
+      case 31: // "AND BETWEEN"
+      case 32: // "AS"
+      case 33: // "ASC"
+      case 34: // "AUTOINCREMENT"
+      case 35: // "BETWEEN"
+      case 36: // "CASCADE"
+      case 37: // "CASE"
+      case 38: // "CAST"
+      case 39: // "CHECK"
+      case 40: // "COLLATE"
+      case 41: // "CONFLICT"
+      case 42: // "CONSTRAINT"
+      case 43: // "CREATE"
+      case 44: // "CURRENT_DATE"
+      case 45: // "CURRENT_TIME"
+      case 46: // "CURRENT_TIMESTAMP"
+      case 47: // "DEFAULT"
+      case 48: // "DEFERRABLE"
+      case 49: // "DEFERRED"
+      case 50: // "DELETE"
+      case 51: // "DESC"
+      case 52: // "DISTINCT"
+      case 53: // "ELSE"
+      case 54: // "END"
+      case 55: // "ESCAPE"
+      case 56: // "EXISTS"
+      case 57: // "FAIL"
+      case 58: // "FALSE"
+      case 59: // "FILTER"
+      case 60: // "FOLLOWING"
+      case 61: // "FOREIGN"
+      case 62: // "GENERATED"
+      case 63: // "GLOB"
+      case 64: // "IF"
+      case 65: // "IGNORE"
+      case 66: // "IMMEDIATE"
+      case 67: // "IN"
+      case 68: // "INDEX"
+      case 69: // "INITIALLY"
+      case 70: // "INSERT"
+      case 71: // "IS"
+      case 72: // "ISNULL"
+      case 73: // "KEY"
+      case 74: // "LIKE"
+      case 75: // "MATCH"
+      case 76: // "NO"
+      case 77: // "NOT"
+      case 78: // "NOTNULL"
+      case 79: // "NULL"
+      case 80: // "ON"
+      case 81: // "OR"
+      case 82: // "OVER"
+      case 83: // "PARTITION"
+      case 84: // "PRECEDING"
+      case 85: // "PRIMARY"
+      case 86: // "RAISE"
+      case 87: // "RANGE"
+      case 88: // "REFERENCES"
+      case 89: // "REGEXP"
+      case 90: // "REPLACE"
+      case 91: // "RESTRICT"
+      case 92: // "ROLLBACK"
+      case 93: // "ROWID"
+      case 94: // "ROWS"
+      case 95: // "SELECT"
+      case 96: // "SET"
+      case 97: // "STORED"
+      case 98: // "TABLE"
+      case 99: // "TEMP"
+      case 100: // "TEMPORARY"
+      case 101: // "THEN"
+      case 102: // "TRUE"
+      case 103: // "UNBOUNDED"
+      case 104: // "UNIQUE"
+      case 105: // "UPDATE"
+      case 106: // "USING"
+      case 107: // "VIRTUAL"
+      case 108: // "WHEN"
+      case 109: // "WHERE"
+      case 110: // "WITHOUT"
+      case 111: // "identifier"
+      case 112: // "numeric"
+      case 113: // "string literal"
+      case 114: // "quoted literal"
+      case 115: // "blob literal"
+      case 116: // "bind parameter"
+      case 120: // literalvalue
+      case 121: // id
+      case 122: // allowed_keywords_as_identifier
+      case 123: // tableid
+      case 124: // columnid
+      case 125: // signednumber
+      case 126: // signednumber_or_numeric
+      case 127: // typename_namelist
+      case 128: // type_name
+      case 129: // unary_expr
+      case 130: // binary_expr
+      case 131: // like_expr
+      case 132: // exprlist_expr
+      case 133: // function_expr
+      case 134: // isnull_expr
+      case 135: // between_expr
+      case 136: // in_expr
+      case 137: // whenthenlist_expr
+      case 138: // case_expr
+      case 139: // raise_expr
+      case 140: // expr
+      case 141: // select_stmt
+      case 143: // optional_sort_order
+      case 145: // optional_where
+      case 146: // tableid_with_uninteresting_schema
+      case 150: // optional_exprlist_with_paren
+      case 154: // optional_conflictclause
+      case 155: // optional_typename
+      case 156: // optional_storage_identifier
+      case 162: // optional_constraintname
+      case 165: // fk_clause_part
+      case 166: // fk_clause_part_list
+      case 167: // optional_fk_clause
         value.template destroy< std::string > ();
         break;
 
-      case 156: // columndef_list
+      case 161: // columndef_list
         value.template destroy< std::vector<ColumndefData> > ();
         break;
 
@@ -1226,9 +1261,6 @@ switch (yytype)
       /// \a empty when empty.
       symbol_number_type type_get () const YY_NOEXCEPT;
 
-      /// The token.
-      token_type token () const YY_NOEXCEPT;
-
       /// The symbol type.
       /// \a empty_symbol when empty.
       /// An int, not token_number_type, to be able to store empty_symbol.
@@ -1249,26 +1281,26 @@ switch (yytype)
       symbol_type (int tok, location_type l)
         : super_type(token_type (tok), std::move (l))
       {
-        YYASSERT (tok == token::TOK_EOF || tok == token::TOK_LPAREN || tok == token::TOK_RPAREN || tok == token::TOK_DOT || tok == token::TOK_COMMA || tok == token::TOK_SEMI || tok == token::TOK_PLUS || tok == token::TOK_MINUS || tok == token::TOK_STAR || tok == token::TOK_SLASH || tok == token::TOK_TILDE || tok == token::TOK_AMPERSAND || tok == token::TOK_PERCENT || tok == token::TOK_BITOR || tok == token::TOK_OROP || tok == token::TOK_EQUAL || tok == token::TOK_EQUAL2 || tok == token::TOK_GREATER || tok == token::TOK_GREATEREQUAL || tok == token::TOK_LOWER || tok == token::TOK_LOWEREQUAL || tok == token::TOK_UNEQUAL || tok == token::TOK_UNEQUAL2 || tok == token::TOK_BITWISELEFT || tok == token::TOK_BITWISERIGHT);
+        YY_ASSERT (tok == token::TOK_EOF || tok == token::TOK_LPAREN || tok == token::TOK_RPAREN || tok == token::TOK_DOT || tok == token::TOK_COMMA || tok == token::TOK_SEMI || tok == token::TOK_PLUS || tok == token::TOK_MINUS || tok == token::TOK_STAR || tok == token::TOK_SLASH || tok == token::TOK_TILDE || tok == token::TOK_AMPERSAND || tok == token::TOK_PERCENT || tok == token::TOK_BITOR || tok == token::TOK_OROP || tok == token::TOK_EQUAL || tok == token::TOK_EQUAL2 || tok == token::TOK_GREATER || tok == token::TOK_GREATEREQUAL || tok == token::TOK_LOWER || tok == token::TOK_LOWEREQUAL || tok == token::TOK_UNEQUAL || tok == token::TOK_UNEQUAL2 || tok == token::TOK_BITWISELEFT || tok == token::TOK_BITWISERIGHT);
       }
 #else
       symbol_type (int tok, const location_type& l)
         : super_type(token_type (tok), l)
       {
-        YYASSERT (tok == token::TOK_EOF || tok == token::TOK_LPAREN || tok == token::TOK_RPAREN || tok == token::TOK_DOT || tok == token::TOK_COMMA || tok == token::TOK_SEMI || tok == token::TOK_PLUS || tok == token::TOK_MINUS || tok == token::TOK_STAR || tok == token::TOK_SLASH || tok == token::TOK_TILDE || tok == token::TOK_AMPERSAND || tok == token::TOK_PERCENT || tok == token::TOK_BITOR || tok == token::TOK_OROP || tok == token::TOK_EQUAL || tok == token::TOK_EQUAL2 || tok == token::TOK_GREATER || tok == token::TOK_GREATEREQUAL || tok == token::TOK_LOWER || tok == token::TOK_LOWEREQUAL || tok == token::TOK_UNEQUAL || tok == token::TOK_UNEQUAL2 || tok == token::TOK_BITWISELEFT || tok == token::TOK_BITWISERIGHT);
+        YY_ASSERT (tok == token::TOK_EOF || tok == token::TOK_LPAREN || tok == token::TOK_RPAREN || tok == token::TOK_DOT || tok == token::TOK_COMMA || tok == token::TOK_SEMI || tok == token::TOK_PLUS || tok == token::TOK_MINUS || tok == token::TOK_STAR || tok == token::TOK_SLASH || tok == token::TOK_TILDE || tok == token::TOK_AMPERSAND || tok == token::TOK_PERCENT || tok == token::TOK_BITOR || tok == token::TOK_OROP || tok == token::TOK_EQUAL || tok == token::TOK_EQUAL2 || tok == token::TOK_GREATER || tok == token::TOK_GREATEREQUAL || tok == token::TOK_LOWER || tok == token::TOK_LOWEREQUAL || tok == token::TOK_UNEQUAL || tok == token::TOK_UNEQUAL2 || tok == token::TOK_BITWISELEFT || tok == token::TOK_BITWISERIGHT);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       symbol_type (int tok, std::string v, location_type l)
         : super_type(token_type (tok), std::move (v), std::move (l))
       {
-        YYASSERT (tok == token::TOK_ABORT || tok == token::TOK_ACTION || tok == token::TOK_AND || tok == token::TOK_AND_BETWEEN || tok == token::TOK_AS || tok == token::TOK_ASC || tok == token::TOK_AUTOINCREMENT || tok == token::TOK_BETWEEN || tok == token::TOK_CASCADE || tok == token::TOK_CASE || tok == token::TOK_CAST || tok == token::TOK_CHECK || tok == token::TOK_COLLATE || tok == token::TOK_CONFLICT || tok == token::TOK_CONSTRAINT || tok == token::TOK_CREATE || tok == token::TOK_CURRENT_DATE || tok == token::TOK_CURRENT_TIME || tok == token::TOK_CURRENT_TIMESTAMP || tok == token::TOK_DEFAULT || tok == token::TOK_DEFERRABLE || tok == token::TOK_DEFERRED || tok == token::TOK_DELETE || tok == token::TOK_DESC || tok == token::TOK_DISTINCT || tok == token::TOK_ELSE || tok == token::TOK_END || tok == token::TOK_ESCAPE || tok == token::TOK_EXISTS || tok == token::TOK_FAIL || tok == token::TOK_FALSE || tok == token::TOK_FILTER || tok == token::TOK_FOLLOWING || tok == token::TOK_FOREIGN || tok == token::TOK_GLOB || tok == token::TOK_IF || tok == token::TOK_IGNORE || tok == token::TOK_IMMEDIATE || tok == token::TOK_IN || tok == token::TOK_INDEX || tok == token::TOK_INITIALLY || tok == token::TOK_INSERT || tok == token::TOK_IS || tok == token::TOK_ISNULL || tok == token::TOK_KEY || tok == token::TOK_LIKE || tok == token::TOK_MATCH || tok == token::TOK_NO || tok == token::TOK_NOT || tok == token::TOK_NOTNULL || tok == token::TOK_NULL || tok == token::TOK_ON || tok == token::TOK_OR || tok == token::TOK_OVER || tok == token::TOK_PARTITION || tok == token::TOK_PRECEDING || tok == token::TOK_PRIMARY || tok == token::TOK_RAISE || tok == token::TOK_RANGE || tok == token::TOK_REFERENCES || tok == token::TOK_REGEXP || tok == token::TOK_REPLACE || tok == token::TOK_RESTRICT || tok == token::TOK_ROLLBACK || tok == token::TOK_ROWID || tok == token::TOK_ROWS || tok == token::TOK_SELECT || tok == token::TOK_SET || tok == token::TOK_TABLE || tok == token::TOK_TEMP || tok == token::TOK_TEMPORARY || tok == token::TOK_THEN || tok == token::TOK_TRUE || tok == token::TOK_UNBOUNDED || tok == token::TOK_UNIQUE || tok == token::TOK_UPDATE || tok == token::TOK_USING || tok == token::TOK_VIRTUAL || tok == token::TOK_WHEN || tok == token::TOK_WHERE || tok == token::TOK_WITHOUT || tok == token::TOK_IDENTIFIER || tok == token::TOK_NUMERIC || tok == token::TOK_STRINGLITERAL || tok == token::TOK_QUOTEDLITERAL || tok == token::TOK_BLOBLITERAL || tok == token::TOK_BINDPARAMETER);
+        YY_ASSERT (tok == token::TOK_ABORT || tok == token::TOK_ACTION || tok == token::TOK_ALWAYS || tok == token::TOK_AND || tok == token::TOK_AND_BETWEEN || tok == token::TOK_AS || tok == token::TOK_ASC || tok == token::TOK_AUTOINCREMENT || tok == token::TOK_BETWEEN || tok == token::TOK_CASCADE || tok == token::TOK_CASE || tok == token::TOK_CAST || tok == token::TOK_CHECK || tok == token::TOK_COLLATE || tok == token::TOK_CONFLICT || tok == token::TOK_CONSTRAINT || tok == token::TOK_CREATE || tok == token::TOK_CURRENT_DATE || tok == token::TOK_CURRENT_TIME || tok == token::TOK_CURRENT_TIMESTAMP || tok == token::TOK_DEFAULT || tok == token::TOK_DEFERRABLE || tok == token::TOK_DEFERRED || tok == token::TOK_DELETE || tok == token::TOK_DESC || tok == token::TOK_DISTINCT || tok == token::TOK_ELSE || tok == token::TOK_END || tok == token::TOK_ESCAPE || tok == token::TOK_EXISTS || tok == token::TOK_FAIL || tok == token::TOK_FALSE || tok == token::TOK_FILTER || tok == token::TOK_FOLLOWING || tok == token::TOK_FOREIGN || tok == token::TOK_GENERATED || tok == token::TOK_GLOB || tok == token::TOK_IF || tok == token::TOK_IGNORE || tok == token::TOK_IMMEDIATE || tok == token::TOK_IN || tok == token::TOK_INDEX || tok == token::TOK_INITIALLY || tok == token::TOK_INSERT || tok == token::TOK_IS || tok == token::TOK_ISNULL || tok == token::TOK_KEY || tok == token::TOK_LIKE || tok == token::TOK_MATCH || tok == token::TOK_NO || tok == token::TOK_NOT || tok == token::TOK_NOTNULL || tok == token::TOK_NULL || tok == token::TOK_ON || tok == token::TOK_OR || tok == token::TOK_OVER || tok == token::TOK_PARTITION || tok == token::TOK_PRECEDING || tok == token::TOK_PRIMARY || tok == token::TOK_RAISE || tok == token::TOK_RANGE || tok == token::TOK_REFERENCES || tok == token::TOK_REGEXP || tok == token::TOK_REPLACE || tok == token::TOK_RESTRICT || tok == token::TOK_ROLLBACK || tok == token::TOK_ROWID || tok == token::TOK_ROWS || tok == token::TOK_SELECT || tok == token::TOK_SET || tok == token::TOK_STORED || tok == token::TOK_TABLE || tok == token::TOK_TEMP || tok == token::TOK_TEMPORARY || tok == token::TOK_THEN || tok == token::TOK_TRUE || tok == token::TOK_UNBOUNDED || tok == token::TOK_UNIQUE || tok == token::TOK_UPDATE || tok == token::TOK_USING || tok == token::TOK_VIRTUAL || tok == token::TOK_WHEN || tok == token::TOK_WHERE || tok == token::TOK_WITHOUT || tok == token::TOK_IDENTIFIER || tok == token::TOK_NUMERIC || tok == token::TOK_STRINGLITERAL || tok == token::TOK_QUOTEDLITERAL || tok == token::TOK_BLOBLITERAL || tok == token::TOK_BINDPARAMETER);
       }
 #else
       symbol_type (int tok, const std::string& v, const location_type& l)
         : super_type(token_type (tok), v, l)
       {
-        YYASSERT (tok == token::TOK_ABORT || tok == token::TOK_ACTION || tok == token::TOK_AND || tok == token::TOK_AND_BETWEEN || tok == token::TOK_AS || tok == token::TOK_ASC || tok == token::TOK_AUTOINCREMENT || tok == token::TOK_BETWEEN || tok == token::TOK_CASCADE || tok == token::TOK_CASE || tok == token::TOK_CAST || tok == token::TOK_CHECK || tok == token::TOK_COLLATE || tok == token::TOK_CONFLICT || tok == token::TOK_CONSTRAINT || tok == token::TOK_CREATE || tok == token::TOK_CURRENT_DATE || tok == token::TOK_CURRENT_TIME || tok == token::TOK_CURRENT_TIMESTAMP || tok == token::TOK_DEFAULT || tok == token::TOK_DEFERRABLE || tok == token::TOK_DEFERRED || tok == token::TOK_DELETE || tok == token::TOK_DESC || tok == token::TOK_DISTINCT || tok == token::TOK_ELSE || tok == token::TOK_END || tok == token::TOK_ESCAPE || tok == token::TOK_EXISTS || tok == token::TOK_FAIL || tok == token::TOK_FALSE || tok == token::TOK_FILTER || tok == token::TOK_FOLLOWING || tok == token::TOK_FOREIGN || tok == token::TOK_GLOB || tok == token::TOK_IF || tok == token::TOK_IGNORE || tok == token::TOK_IMMEDIATE || tok == token::TOK_IN || tok == token::TOK_INDEX || tok == token::TOK_INITIALLY || tok == token::TOK_INSERT || tok == token::TOK_IS || tok == token::TOK_ISNULL || tok == token::TOK_KEY || tok == token::TOK_LIKE || tok == token::TOK_MATCH || tok == token::TOK_NO || tok == token::TOK_NOT || tok == token::TOK_NOTNULL || tok == token::TOK_NULL || tok == token::TOK_ON || tok == token::TOK_OR || tok == token::TOK_OVER || tok == token::TOK_PARTITION || tok == token::TOK_PRECEDING || tok == token::TOK_PRIMARY || tok == token::TOK_RAISE || tok == token::TOK_RANGE || tok == token::TOK_REFERENCES || tok == token::TOK_REGEXP || tok == token::TOK_REPLACE || tok == token::TOK_RESTRICT || tok == token::TOK_ROLLBACK || tok == token::TOK_ROWID || tok == token::TOK_ROWS || tok == token::TOK_SELECT || tok == token::TOK_SET || tok == token::TOK_TABLE || tok == token::TOK_TEMP || tok == token::TOK_TEMPORARY || tok == token::TOK_THEN || tok == token::TOK_TRUE || tok == token::TOK_UNBOUNDED || tok == token::TOK_UNIQUE || tok == token::TOK_UPDATE || tok == token::TOK_USING || tok == token::TOK_VIRTUAL || tok == token::TOK_WHEN || tok == token::TOK_WHERE || tok == token::TOK_WITHOUT || tok == token::TOK_IDENTIFIER || tok == token::TOK_NUMERIC || tok == token::TOK_STRINGLITERAL || tok == token::TOK_QUOTEDLITERAL || tok == token::TOK_BLOBLITERAL || tok == token::TOK_BINDPARAMETER);
+        YY_ASSERT (tok == token::TOK_ABORT || tok == token::TOK_ACTION || tok == token::TOK_ALWAYS || tok == token::TOK_AND || tok == token::TOK_AND_BETWEEN || tok == token::TOK_AS || tok == token::TOK_ASC || tok == token::TOK_AUTOINCREMENT || tok == token::TOK_BETWEEN || tok == token::TOK_CASCADE || tok == token::TOK_CASE || tok == token::TOK_CAST || tok == token::TOK_CHECK || tok == token::TOK_COLLATE || tok == token::TOK_CONFLICT || tok == token::TOK_CONSTRAINT || tok == token::TOK_CREATE || tok == token::TOK_CURRENT_DATE || tok == token::TOK_CURRENT_TIME || tok == token::TOK_CURRENT_TIMESTAMP || tok == token::TOK_DEFAULT || tok == token::TOK_DEFERRABLE || tok == token::TOK_DEFERRED || tok == token::TOK_DELETE || tok == token::TOK_DESC || tok == token::TOK_DISTINCT || tok == token::TOK_ELSE || tok == token::TOK_END || tok == token::TOK_ESCAPE || tok == token::TOK_EXISTS || tok == token::TOK_FAIL || tok == token::TOK_FALSE || tok == token::TOK_FILTER || tok == token::TOK_FOLLOWING || tok == token::TOK_FOREIGN || tok == token::TOK_GENERATED || tok == token::TOK_GLOB || tok == token::TOK_IF || tok == token::TOK_IGNORE || tok == token::TOK_IMMEDIATE || tok == token::TOK_IN || tok == token::TOK_INDEX || tok == token::TOK_INITIALLY || tok == token::TOK_INSERT || tok == token::TOK_IS || tok == token::TOK_ISNULL || tok == token::TOK_KEY || tok == token::TOK_LIKE || tok == token::TOK_MATCH || tok == token::TOK_NO || tok == token::TOK_NOT || tok == token::TOK_NOTNULL || tok == token::TOK_NULL || tok == token::TOK_ON || tok == token::TOK_OR || tok == token::TOK_OVER || tok == token::TOK_PARTITION || tok == token::TOK_PRECEDING || tok == token::TOK_PRIMARY || tok == token::TOK_RAISE || tok == token::TOK_RANGE || tok == token::TOK_REFERENCES || tok == token::TOK_REGEXP || tok == token::TOK_REPLACE || tok == token::TOK_RESTRICT || tok == token::TOK_ROLLBACK || tok == token::TOK_ROWID || tok == token::TOK_ROWS || tok == token::TOK_SELECT || tok == token::TOK_SET || tok == token::TOK_STORED || tok == token::TOK_TABLE || tok == token::TOK_TEMP || tok == token::TOK_TEMPORARY || tok == token::TOK_THEN || tok == token::TOK_TRUE || tok == token::TOK_UNBOUNDED || tok == token::TOK_UNIQUE || tok == token::TOK_UPDATE || tok == token::TOK_USING || tok == token::TOK_VIRTUAL || tok == token::TOK_WHEN || tok == token::TOK_WHERE || tok == token::TOK_WITHOUT || tok == token::TOK_IDENTIFIER || tok == token::TOK_NUMERIC || tok == token::TOK_STRINGLITERAL || tok == token::TOK_QUOTEDLITERAL || tok == token::TOK_BLOBLITERAL || tok == token::TOK_BINDPARAMETER);
       }
 #endif
     };
@@ -1711,6 +1743,21 @@ switch (yytype)
       make_ACTION (const std::string& v, const location_type& l)
       {
         return symbol_type (token::TOK_ACTION, v, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_ALWAYS (std::string v, location_type l)
+      {
+        return symbol_type (token::TOK_ALWAYS, std::move (v), std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_ALWAYS (const std::string& v, const location_type& l)
+      {
+        return symbol_type (token::TOK_ALWAYS, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -2191,6 +2238,21 @@ switch (yytype)
       make_FOREIGN (const std::string& v, const location_type& l)
       {
         return symbol_type (token::TOK_FOREIGN, v, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_GENERATED (std::string v, location_type l)
+      {
+        return symbol_type (token::TOK_GENERATED, std::move (v), std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_GENERATED (const std::string& v, const location_type& l)
+      {
+        return symbol_type (token::TOK_GENERATED, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -2706,6 +2768,21 @@ switch (yytype)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
+      make_STORED (std::string v, location_type l)
+      {
+        return symbol_type (token::TOK_STORED, std::move (v), std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_STORED (const std::string& v, const location_type& l)
+      {
+        return symbol_type (token::TOK_STORED, v, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
       make_TABLE (std::string v, location_type l)
       {
         return symbol_type (token::TOK_TABLE, std::move (v), std::move (l));
@@ -2995,8 +3072,8 @@ switch (yytype)
     parser (const parser&);
     parser& operator= (const parser&);
 
-    /// State numbers.
-    typedef int state_type;
+    /// Stored state numbers (used for stacks).
+    typedef short state_type;
 
     /// Generate an error message.
     /// \param yystate   the state where the error occurred.
@@ -3007,7 +3084,7 @@ switch (yytype)
     /// Compute post-reduction state.
     /// \param yystate   the current state
     /// \param yysym     the nonterminal to push on the stack
-    state_type yy_lr_goto_state_ (state_type yystate, int yysym);
+    static state_type yy_lr_goto_state_ (state_type yystate, int yysym);
 
     /// Whether the given \c yypact_ value indicates a defaulted state.
     /// \param yyvalue   the value to check
@@ -3021,40 +3098,42 @@ switch (yytype)
     static const short yytable_ninf_;
 
     /// Convert a scanner token number \a t to a symbol number.
-    static token_number_type yytranslate_ (token_type t);
+    /// In theory \a t should be a token_type, but character literals
+    /// are valid, yet not members of the token_type enum.
+    static token_number_type yytranslate_ (int t);
 
     // Tables.
-  // YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
-  // STATE-NUM.
-  static const short yypact_[];
+    // YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
+    // STATE-NUM.
+    static const short yypact_[];
 
-  // YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
-  // Performed when YYTABLE does not specify something else to do.  Zero
-  // means the default is an error.
-  static const unsigned short yydefact_[];
+    // YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
+    // Performed when YYTABLE does not specify something else to do.  Zero
+    // means the default is an error.
+    static const short yydefact_[];
 
-  // YYPGOTO[NTERM-NUM].
-  static const short yypgoto_[];
+    // YYPGOTO[NTERM-NUM].
+    static const short yypgoto_[];
 
-  // YYDEFGOTO[NTERM-NUM].
-  static const short yydefgoto_[];
+    // YYDEFGOTO[NTERM-NUM].
+    static const short yydefgoto_[];
 
-  // YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
-  // positive, shift that token.  If negative, reduce the rule whose
-  // number is the opposite.  If YYTABLE_NINF, syntax error.
-  static const short yytable_[];
+    // YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
+    // positive, shift that token.  If negative, reduce the rule whose
+    // number is the opposite.  If YYTABLE_NINF, syntax error.
+    static const short yytable_[];
 
-  static const short yycheck_[];
+    static const short yycheck_[];
 
-  // YYSTOS[STATE-NUM] -- The (internal number of the) accessing
-  // symbol of state STATE-NUM.
-  static const unsigned char yystos_[];
+    // YYSTOS[STATE-NUM] -- The (internal number of the) accessing
+    // symbol of state STATE-NUM.
+    static const unsigned char yystos_[];
 
-  // YYR1[YYN] -- Symbol number of symbol that rule YYN derives.
-  static const unsigned char yyr1_[];
+    // YYR1[YYN] -- Symbol number of symbol that rule YYN derives.
+    static const unsigned char yyr1_[];
 
-  // YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.
-  static const unsigned char yyr2_[];
+    // YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.
+    static const signed char yyr2_[];
 
 
     /// Convert the symbol name \a n to a form suitable for a diagnostic.
@@ -3064,8 +3143,8 @@ switch (yytype)
     /// For a symbol, its name in clear.
     static const char* const yytname_[];
 #if YYDEBUG
-  // YYRLINE[YYN] -- Source line where rule number YYN was defined.
-  static const unsigned short yyrline_[];
+    // YYRLINE[YYN] -- Source line where rule number YYN was defined.
+    static const short yyrline_[];
     /// Report on the debug stream that the rule \a r is going to be reduced.
     virtual void yy_reduce_print_ (int r);
     /// Print the state stack on the debug stream.
@@ -3117,7 +3196,8 @@ switch (yytype)
       symbol_number_type type_get () const YY_NOEXCEPT;
 
       /// The state number used to denote an empty symbol.
-      enum { empty_state = -1 };
+      /// We use the initial state, as it does not have a value.
+      enum { empty_state = 0 };
 
       /// The state.
       /// \a empty when empty.
@@ -3139,6 +3219,10 @@ switch (yytype)
       /// Assignment, needed by push_back by some old implementations.
       /// Moves the contents of that.
       stack_symbol_type& operator= (stack_symbol_type& that);
+
+      /// Assignment, needed by push_back by other implementations.
+      /// Needed by some other old implementations.
+      stack_symbol_type& operator= (const stack_symbol_type& that);
 #endif
     };
 
@@ -3151,6 +3235,7 @@ switch (yytype)
       typedef typename S::reverse_iterator iterator;
       typedef typename S::const_reverse_iterator const_iterator;
       typedef typename S::size_type size_type;
+      typedef typename std::ptrdiff_t index_type;
 
       stack (size_type n = 200)
         : seq_ (n)
@@ -3159,37 +3244,19 @@ switch (yytype)
       /// Random access.
       ///
       /// Index 0 returns the topmost element.
-      T&
-      operator[] (size_type i)
-      {
-        return seq_[size () - 1 - i];
-      }
-
-      /// Random access.
-      ///
-      /// Index 0 returns the topmost element.
-      T&
-      operator[] (int i)
-      {
-        return operator[] (size_type (i));
-      }
-
-      /// Random access.
-      ///
-      /// Index 0 returns the topmost element.
       const T&
-      operator[] (size_type i) const
+      operator[] (index_type i) const
       {
-        return seq_[size () - 1 - i];
+        return seq_[size_type (size () - 1 - i)];
       }
 
       /// Random access.
       ///
       /// Index 0 returns the topmost element.
-      const T&
-      operator[] (int i) const
+      T&
+      operator[] (index_type i)
       {
-        return operator[] (size_type (i));
+        return seq_[size_type (size () - 1 - i)];
       }
 
       /// Steal the contents of \a t.
@@ -3204,7 +3271,7 @@ switch (yytype)
 
       /// Pop elements from the stack.
       void
-      pop (int n = 1) YY_NOEXCEPT
+      pop (std::ptrdiff_t n = 1) YY_NOEXCEPT
       {
         for (; 0 < n; --n)
           seq_.pop_back ();
@@ -3218,10 +3285,16 @@ switch (yytype)
       }
 
       /// Number of elements on the stack.
-      size_type
+      index_type
       size () const YY_NOEXCEPT
       {
-        return seq_.size ();
+        return index_type (seq_.size ());
+      }
+
+      std::ptrdiff_t
+      ssize () const YY_NOEXCEPT
+      {
+        return std::ptrdiff_t (size ());
       }
 
       /// Iterator on top of the stack (going downwards).
@@ -3242,20 +3315,20 @@ switch (yytype)
       class slice
       {
       public:
-        slice (const stack& stack, int range)
+        slice (const stack& stack, index_type range)
           : stack_ (stack)
           , range_ (range)
         {}
 
         const T&
-        operator[] (int i) const
+        operator[] (index_type i) const
         {
           return stack_[range_ - i];
         }
 
       private:
         const stack& stack_;
-        int range_;
+        index_type range_;
       };
 
     private:
@@ -3290,16 +3363,18 @@ switch (yytype)
     /// Pop \a n symbols from the stack.
     void yypop_ (int n = 1);
 
+    /// Some specific tokens.
+    static const token_number_type yy_error_token_ = 1;
+    static const token_number_type yy_undef_token_ = 2;
+
     /// Constants.
     enum
     {
       yyeof_ = 0,
-      yylast_ = 3191,     ///< Last index in yytable_.
-      yynnts_ = 53,  ///< Number of nonterminal symbols.
+      yylast_ = 3407,     ///< Last index in yytable_.
+      yynnts_ = 55,  ///< Number of nonterminal symbols.
       yyfinal_ = 13, ///< Termination state number.
-      yyterror_ = 1,
-      yyerrcode_ = 256,
-      yyntokens_ = 114  ///< Number of tokens.
+      yyntokens_ = 117  ///< Number of tokens.
     };
 
 
@@ -3310,7 +3385,7 @@ switch (yytype)
 
   inline
   parser::token_number_type
-  parser::yytranslate_ (token_type t)
+  parser::yytranslate_ (int t)
   {
     // YYTRANSLATE[TOKEN-NUM] -- Symbol number corresponding to
     // TOKEN-NUM as returned by yylex.
@@ -3354,17 +3429,17 @@ switch (yytype)
       75,    76,    77,    78,    79,    80,    81,    82,    83,    84,
       85,    86,    87,    88,    89,    90,    91,    92,    93,    94,
       95,    96,    97,    98,    99,   100,   101,   102,   103,   104,
-     105,   106,   107,   108,   109,   110,   111,   112,   113
+     105,   106,   107,   108,   109,   110,   111,   112,   113,   114,
+     115,   116
     };
-    const unsigned user_token_number_max_ = 368;
-    const token_number_type undef_token_ = 2;
+    const int user_token_number_max_ = 371;
 
-    if (static_cast<int> (t) <= yyeof_)
+    if (t <= 0)
       return yyeof_;
-    else if (static_cast<unsigned> (t) <= user_token_number_max_)
+    else if (t <= user_token_number_max_)
       return translate_table[t];
     else
-      return undef_token_;
+      return yy_undef_token_;
   }
 
   // basic_symbol.
@@ -3377,179 +3452,184 @@ switch (yytype)
   {
     switch (this->type_get ())
     {
-      case 153: // columnconstraint
+      case 158: // columnconstraint
         value.move< ColumnConstraintInfo > (std::move (that.value));
         break;
 
-      case 154: // columnconstraint_list
+      case 159: // columnconstraint_list
         value.move< ColumnConstraintInfoVector > (std::move (that.value));
         break;
 
-      case 155: // columndef
+      case 160: // columndef
         value.move< ColumndefData > (std::move (that.value));
         break;
 
-      case 139: // optional_if_not_exists
-      case 141: // optional_unique
-      case 149: // optional_temporary
-      case 150: // optional_withoutrowid
+      case 142: // optional_if_not_exists
+      case 144: // optional_unique
+      case 152: // optional_temporary
+      case 153: // optional_withoutrowid
+      case 157: // optional_always_generated
         value.move< bool > (std::move (that.value));
         break;
 
-      case 163: // tableconstraint
+      case 168: // tableconstraint
         value.move< sqlb::ConstraintPtr > (std::move (that.value));
         break;
 
-      case 164: // tableconstraint_list
-      case 165: // optional_tableconstraint_list
+      case 169: // tableconstraint_list
+      case 170: // optional_tableconstraint_list
         value.move< sqlb::ConstraintSet > (std::move (that.value));
         break;
 
-      case 146: // createindex_stmt
+      case 149: // createindex_stmt
         value.move< sqlb::IndexPtr > (std::move (that.value));
         break;
 
-      case 144: // indexed_column
+      case 147: // indexed_column
         value.move< sqlb::IndexedColumn > (std::move (that.value));
         break;
 
-      case 145: // indexed_column_list
+      case 148: // indexed_column_list
         value.move< sqlb::IndexedColumnVector > (std::move (that.value));
         break;
 
-      case 158: // columnid_list
-      case 159: // optional_columnid_with_paren_list
+      case 163: // columnid_list
+      case 164: // optional_columnid_with_paren_list
         value.move< sqlb::StringVector > (std::move (that.value));
         break;
 
-      case 148: // createvirtualtable_stmt
-      case 166: // createtable_stmt
+      case 151: // createvirtualtable_stmt
+      case 171: // createtable_stmt
         value.move< sqlb::TablePtr > (std::move (that.value));
         break;
 
       case 27: // "ABORT"
       case 28: // "ACTION"
-      case 29: // "AND"
-      case 30: // "AND BETWEEN"
-      case 31: // "AS"
-      case 32: // "ASC"
-      case 33: // "AUTOINCREMENT"
-      case 34: // "BETWEEN"
-      case 35: // "CASCADE"
-      case 36: // "CASE"
-      case 37: // "CAST"
-      case 38: // "CHECK"
-      case 39: // "COLLATE"
-      case 40: // "CONFLICT"
-      case 41: // "CONSTRAINT"
-      case 42: // "CREATE"
-      case 43: // "CURRENT_DATE"
-      case 44: // "CURRENT_TIME"
-      case 45: // "CURRENT_TIMESTAMP"
-      case 46: // "DEFAULT"
-      case 47: // "DEFERRABLE"
-      case 48: // "DEFERRED"
-      case 49: // "DELETE"
-      case 50: // "DESC"
-      case 51: // "DISTINCT"
-      case 52: // "ELSE"
-      case 53: // "END"
-      case 54: // "ESCAPE"
-      case 55: // "EXISTS"
-      case 56: // "FAIL"
-      case 57: // "FALSE"
-      case 58: // "FILTER"
-      case 59: // "FOLLOWING"
-      case 60: // "FOREIGN"
-      case 61: // "GLOB"
-      case 62: // "IF"
-      case 63: // "IGNORE"
-      case 64: // "IMMEDIATE"
-      case 65: // "IN"
-      case 66: // "INDEX"
-      case 67: // "INITIALLY"
-      case 68: // "INSERT"
-      case 69: // "IS"
-      case 70: // "ISNULL"
-      case 71: // "KEY"
-      case 72: // "LIKE"
-      case 73: // "MATCH"
-      case 74: // "NO"
-      case 75: // "NOT"
-      case 76: // "NOTNULL"
-      case 77: // "NULL"
-      case 78: // "ON"
-      case 79: // "OR"
-      case 80: // "OVER"
-      case 81: // "PARTITION"
-      case 82: // "PRECEDING"
-      case 83: // "PRIMARY"
-      case 84: // "RAISE"
-      case 85: // "RANGE"
-      case 86: // "REFERENCES"
-      case 87: // "REGEXP"
-      case 88: // "REPLACE"
-      case 89: // "RESTRICT"
-      case 90: // "ROLLBACK"
-      case 91: // "ROWID"
-      case 92: // "ROWS"
-      case 93: // "SELECT"
-      case 94: // "SET"
-      case 95: // "TABLE"
-      case 96: // "TEMP"
-      case 97: // "TEMPORARY"
-      case 98: // "THEN"
-      case 99: // "TRUE"
-      case 100: // "UNBOUNDED"
-      case 101: // "UNIQUE"
-      case 102: // "UPDATE"
-      case 103: // "USING"
-      case 104: // "VIRTUAL"
-      case 105: // "WHEN"
-      case 106: // "WHERE"
-      case 107: // "WITHOUT"
-      case 108: // "identifier"
-      case 109: // "numeric"
-      case 110: // "string literal"
-      case 111: // "quoted literal"
-      case 112: // "blob literal"
-      case 113: // "bind parameter"
-      case 117: // literalvalue
-      case 118: // id
-      case 119: // allowed_keywords_as_identifier
-      case 120: // tableid
-      case 121: // columnid
-      case 122: // signednumber
-      case 123: // signednumber_or_numeric
-      case 124: // typename_namelist
-      case 125: // type_name
-      case 126: // unary_expr
-      case 127: // binary_expr
-      case 128: // like_expr
-      case 129: // exprlist_expr
-      case 130: // function_expr
-      case 131: // isnull_expr
-      case 132: // between_expr
-      case 133: // in_expr
-      case 134: // whenthenlist_expr
-      case 135: // case_expr
-      case 136: // raise_expr
-      case 137: // expr
-      case 138: // select_stmt
-      case 140: // optional_sort_order
-      case 142: // optional_where
-      case 143: // tableid_with_uninteresting_schema
-      case 147: // optional_exprlist_with_paren
-      case 151: // optional_conflictclause
-      case 152: // optional_typename
-      case 157: // optional_constraintname
-      case 160: // fk_clause_part
-      case 161: // fk_clause_part_list
-      case 162: // optional_fk_clause
+      case 29: // "ALWAYS"
+      case 30: // "AND"
+      case 31: // "AND BETWEEN"
+      case 32: // "AS"
+      case 33: // "ASC"
+      case 34: // "AUTOINCREMENT"
+      case 35: // "BETWEEN"
+      case 36: // "CASCADE"
+      case 37: // "CASE"
+      case 38: // "CAST"
+      case 39: // "CHECK"
+      case 40: // "COLLATE"
+      case 41: // "CONFLICT"
+      case 42: // "CONSTRAINT"
+      case 43: // "CREATE"
+      case 44: // "CURRENT_DATE"
+      case 45: // "CURRENT_TIME"
+      case 46: // "CURRENT_TIMESTAMP"
+      case 47: // "DEFAULT"
+      case 48: // "DEFERRABLE"
+      case 49: // "DEFERRED"
+      case 50: // "DELETE"
+      case 51: // "DESC"
+      case 52: // "DISTINCT"
+      case 53: // "ELSE"
+      case 54: // "END"
+      case 55: // "ESCAPE"
+      case 56: // "EXISTS"
+      case 57: // "FAIL"
+      case 58: // "FALSE"
+      case 59: // "FILTER"
+      case 60: // "FOLLOWING"
+      case 61: // "FOREIGN"
+      case 62: // "GENERATED"
+      case 63: // "GLOB"
+      case 64: // "IF"
+      case 65: // "IGNORE"
+      case 66: // "IMMEDIATE"
+      case 67: // "IN"
+      case 68: // "INDEX"
+      case 69: // "INITIALLY"
+      case 70: // "INSERT"
+      case 71: // "IS"
+      case 72: // "ISNULL"
+      case 73: // "KEY"
+      case 74: // "LIKE"
+      case 75: // "MATCH"
+      case 76: // "NO"
+      case 77: // "NOT"
+      case 78: // "NOTNULL"
+      case 79: // "NULL"
+      case 80: // "ON"
+      case 81: // "OR"
+      case 82: // "OVER"
+      case 83: // "PARTITION"
+      case 84: // "PRECEDING"
+      case 85: // "PRIMARY"
+      case 86: // "RAISE"
+      case 87: // "RANGE"
+      case 88: // "REFERENCES"
+      case 89: // "REGEXP"
+      case 90: // "REPLACE"
+      case 91: // "RESTRICT"
+      case 92: // "ROLLBACK"
+      case 93: // "ROWID"
+      case 94: // "ROWS"
+      case 95: // "SELECT"
+      case 96: // "SET"
+      case 97: // "STORED"
+      case 98: // "TABLE"
+      case 99: // "TEMP"
+      case 100: // "TEMPORARY"
+      case 101: // "THEN"
+      case 102: // "TRUE"
+      case 103: // "UNBOUNDED"
+      case 104: // "UNIQUE"
+      case 105: // "UPDATE"
+      case 106: // "USING"
+      case 107: // "VIRTUAL"
+      case 108: // "WHEN"
+      case 109: // "WHERE"
+      case 110: // "WITHOUT"
+      case 111: // "identifier"
+      case 112: // "numeric"
+      case 113: // "string literal"
+      case 114: // "quoted literal"
+      case 115: // "blob literal"
+      case 116: // "bind parameter"
+      case 120: // literalvalue
+      case 121: // id
+      case 122: // allowed_keywords_as_identifier
+      case 123: // tableid
+      case 124: // columnid
+      case 125: // signednumber
+      case 126: // signednumber_or_numeric
+      case 127: // typename_namelist
+      case 128: // type_name
+      case 129: // unary_expr
+      case 130: // binary_expr
+      case 131: // like_expr
+      case 132: // exprlist_expr
+      case 133: // function_expr
+      case 134: // isnull_expr
+      case 135: // between_expr
+      case 136: // in_expr
+      case 137: // whenthenlist_expr
+      case 138: // case_expr
+      case 139: // raise_expr
+      case 140: // expr
+      case 141: // select_stmt
+      case 143: // optional_sort_order
+      case 145: // optional_where
+      case 146: // tableid_with_uninteresting_schema
+      case 150: // optional_exprlist_with_paren
+      case 154: // optional_conflictclause
+      case 155: // optional_typename
+      case 156: // optional_storage_identifier
+      case 162: // optional_constraintname
+      case 165: // fk_clause_part
+      case 166: // fk_clause_part_list
+      case 167: // optional_fk_clause
         value.move< std::string > (std::move (that.value));
         break;
 
-      case 156: // columndef_list
+      case 161: // columndef_list
         value.move< std::vector<ColumndefData> > (std::move (that.value));
         break;
 
@@ -3568,179 +3648,184 @@ switch (yytype)
   {
     switch (this->type_get ())
     {
-      case 153: // columnconstraint
+      case 158: // columnconstraint
         value.copy< ColumnConstraintInfo > (YY_MOVE (that.value));
         break;
 
-      case 154: // columnconstraint_list
+      case 159: // columnconstraint_list
         value.copy< ColumnConstraintInfoVector > (YY_MOVE (that.value));
         break;
 
-      case 155: // columndef
+      case 160: // columndef
         value.copy< ColumndefData > (YY_MOVE (that.value));
         break;
 
-      case 139: // optional_if_not_exists
-      case 141: // optional_unique
-      case 149: // optional_temporary
-      case 150: // optional_withoutrowid
+      case 142: // optional_if_not_exists
+      case 144: // optional_unique
+      case 152: // optional_temporary
+      case 153: // optional_withoutrowid
+      case 157: // optional_always_generated
         value.copy< bool > (YY_MOVE (that.value));
         break;
 
-      case 163: // tableconstraint
+      case 168: // tableconstraint
         value.copy< sqlb::ConstraintPtr > (YY_MOVE (that.value));
         break;
 
-      case 164: // tableconstraint_list
-      case 165: // optional_tableconstraint_list
+      case 169: // tableconstraint_list
+      case 170: // optional_tableconstraint_list
         value.copy< sqlb::ConstraintSet > (YY_MOVE (that.value));
         break;
 
-      case 146: // createindex_stmt
+      case 149: // createindex_stmt
         value.copy< sqlb::IndexPtr > (YY_MOVE (that.value));
         break;
 
-      case 144: // indexed_column
+      case 147: // indexed_column
         value.copy< sqlb::IndexedColumn > (YY_MOVE (that.value));
         break;
 
-      case 145: // indexed_column_list
+      case 148: // indexed_column_list
         value.copy< sqlb::IndexedColumnVector > (YY_MOVE (that.value));
         break;
 
-      case 158: // columnid_list
-      case 159: // optional_columnid_with_paren_list
+      case 163: // columnid_list
+      case 164: // optional_columnid_with_paren_list
         value.copy< sqlb::StringVector > (YY_MOVE (that.value));
         break;
 
-      case 148: // createvirtualtable_stmt
-      case 166: // createtable_stmt
+      case 151: // createvirtualtable_stmt
+      case 171: // createtable_stmt
         value.copy< sqlb::TablePtr > (YY_MOVE (that.value));
         break;
 
       case 27: // "ABORT"
       case 28: // "ACTION"
-      case 29: // "AND"
-      case 30: // "AND BETWEEN"
-      case 31: // "AS"
-      case 32: // "ASC"
-      case 33: // "AUTOINCREMENT"
-      case 34: // "BETWEEN"
-      case 35: // "CASCADE"
-      case 36: // "CASE"
-      case 37: // "CAST"
-      case 38: // "CHECK"
-      case 39: // "COLLATE"
-      case 40: // "CONFLICT"
-      case 41: // "CONSTRAINT"
-      case 42: // "CREATE"
-      case 43: // "CURRENT_DATE"
-      case 44: // "CURRENT_TIME"
-      case 45: // "CURRENT_TIMESTAMP"
-      case 46: // "DEFAULT"
-      case 47: // "DEFERRABLE"
-      case 48: // "DEFERRED"
-      case 49: // "DELETE"
-      case 50: // "DESC"
-      case 51: // "DISTINCT"
-      case 52: // "ELSE"
-      case 53: // "END"
-      case 54: // "ESCAPE"
-      case 55: // "EXISTS"
-      case 56: // "FAIL"
-      case 57: // "FALSE"
-      case 58: // "FILTER"
-      case 59: // "FOLLOWING"
-      case 60: // "FOREIGN"
-      case 61: // "GLOB"
-      case 62: // "IF"
-      case 63: // "IGNORE"
-      case 64: // "IMMEDIATE"
-      case 65: // "IN"
-      case 66: // "INDEX"
-      case 67: // "INITIALLY"
-      case 68: // "INSERT"
-      case 69: // "IS"
-      case 70: // "ISNULL"
-      case 71: // "KEY"
-      case 72: // "LIKE"
-      case 73: // "MATCH"
-      case 74: // "NO"
-      case 75: // "NOT"
-      case 76: // "NOTNULL"
-      case 77: // "NULL"
-      case 78: // "ON"
-      case 79: // "OR"
-      case 80: // "OVER"
-      case 81: // "PARTITION"
-      case 82: // "PRECEDING"
-      case 83: // "PRIMARY"
-      case 84: // "RAISE"
-      case 85: // "RANGE"
-      case 86: // "REFERENCES"
-      case 87: // "REGEXP"
-      case 88: // "REPLACE"
-      case 89: // "RESTRICT"
-      case 90: // "ROLLBACK"
-      case 91: // "ROWID"
-      case 92: // "ROWS"
-      case 93: // "SELECT"
-      case 94: // "SET"
-      case 95: // "TABLE"
-      case 96: // "TEMP"
-      case 97: // "TEMPORARY"
-      case 98: // "THEN"
-      case 99: // "TRUE"
-      case 100: // "UNBOUNDED"
-      case 101: // "UNIQUE"
-      case 102: // "UPDATE"
-      case 103: // "USING"
-      case 104: // "VIRTUAL"
-      case 105: // "WHEN"
-      case 106: // "WHERE"
-      case 107: // "WITHOUT"
-      case 108: // "identifier"
-      case 109: // "numeric"
-      case 110: // "string literal"
-      case 111: // "quoted literal"
-      case 112: // "blob literal"
-      case 113: // "bind parameter"
-      case 117: // literalvalue
-      case 118: // id
-      case 119: // allowed_keywords_as_identifier
-      case 120: // tableid
-      case 121: // columnid
-      case 122: // signednumber
-      case 123: // signednumber_or_numeric
-      case 124: // typename_namelist
-      case 125: // type_name
-      case 126: // unary_expr
-      case 127: // binary_expr
-      case 128: // like_expr
-      case 129: // exprlist_expr
-      case 130: // function_expr
-      case 131: // isnull_expr
-      case 132: // between_expr
-      case 133: // in_expr
-      case 134: // whenthenlist_expr
-      case 135: // case_expr
-      case 136: // raise_expr
-      case 137: // expr
-      case 138: // select_stmt
-      case 140: // optional_sort_order
-      case 142: // optional_where
-      case 143: // tableid_with_uninteresting_schema
-      case 147: // optional_exprlist_with_paren
-      case 151: // optional_conflictclause
-      case 152: // optional_typename
-      case 157: // optional_constraintname
-      case 160: // fk_clause_part
-      case 161: // fk_clause_part_list
-      case 162: // optional_fk_clause
+      case 29: // "ALWAYS"
+      case 30: // "AND"
+      case 31: // "AND BETWEEN"
+      case 32: // "AS"
+      case 33: // "ASC"
+      case 34: // "AUTOINCREMENT"
+      case 35: // "BETWEEN"
+      case 36: // "CASCADE"
+      case 37: // "CASE"
+      case 38: // "CAST"
+      case 39: // "CHECK"
+      case 40: // "COLLATE"
+      case 41: // "CONFLICT"
+      case 42: // "CONSTRAINT"
+      case 43: // "CREATE"
+      case 44: // "CURRENT_DATE"
+      case 45: // "CURRENT_TIME"
+      case 46: // "CURRENT_TIMESTAMP"
+      case 47: // "DEFAULT"
+      case 48: // "DEFERRABLE"
+      case 49: // "DEFERRED"
+      case 50: // "DELETE"
+      case 51: // "DESC"
+      case 52: // "DISTINCT"
+      case 53: // "ELSE"
+      case 54: // "END"
+      case 55: // "ESCAPE"
+      case 56: // "EXISTS"
+      case 57: // "FAIL"
+      case 58: // "FALSE"
+      case 59: // "FILTER"
+      case 60: // "FOLLOWING"
+      case 61: // "FOREIGN"
+      case 62: // "GENERATED"
+      case 63: // "GLOB"
+      case 64: // "IF"
+      case 65: // "IGNORE"
+      case 66: // "IMMEDIATE"
+      case 67: // "IN"
+      case 68: // "INDEX"
+      case 69: // "INITIALLY"
+      case 70: // "INSERT"
+      case 71: // "IS"
+      case 72: // "ISNULL"
+      case 73: // "KEY"
+      case 74: // "LIKE"
+      case 75: // "MATCH"
+      case 76: // "NO"
+      case 77: // "NOT"
+      case 78: // "NOTNULL"
+      case 79: // "NULL"
+      case 80: // "ON"
+      case 81: // "OR"
+      case 82: // "OVER"
+      case 83: // "PARTITION"
+      case 84: // "PRECEDING"
+      case 85: // "PRIMARY"
+      case 86: // "RAISE"
+      case 87: // "RANGE"
+      case 88: // "REFERENCES"
+      case 89: // "REGEXP"
+      case 90: // "REPLACE"
+      case 91: // "RESTRICT"
+      case 92: // "ROLLBACK"
+      case 93: // "ROWID"
+      case 94: // "ROWS"
+      case 95: // "SELECT"
+      case 96: // "SET"
+      case 97: // "STORED"
+      case 98: // "TABLE"
+      case 99: // "TEMP"
+      case 100: // "TEMPORARY"
+      case 101: // "THEN"
+      case 102: // "TRUE"
+      case 103: // "UNBOUNDED"
+      case 104: // "UNIQUE"
+      case 105: // "UPDATE"
+      case 106: // "USING"
+      case 107: // "VIRTUAL"
+      case 108: // "WHEN"
+      case 109: // "WHERE"
+      case 110: // "WITHOUT"
+      case 111: // "identifier"
+      case 112: // "numeric"
+      case 113: // "string literal"
+      case 114: // "quoted literal"
+      case 115: // "blob literal"
+      case 116: // "bind parameter"
+      case 120: // literalvalue
+      case 121: // id
+      case 122: // allowed_keywords_as_identifier
+      case 123: // tableid
+      case 124: // columnid
+      case 125: // signednumber
+      case 126: // signednumber_or_numeric
+      case 127: // typename_namelist
+      case 128: // type_name
+      case 129: // unary_expr
+      case 130: // binary_expr
+      case 131: // like_expr
+      case 132: // exprlist_expr
+      case 133: // function_expr
+      case 134: // isnull_expr
+      case 135: // between_expr
+      case 136: // in_expr
+      case 137: // whenthenlist_expr
+      case 138: // case_expr
+      case 139: // raise_expr
+      case 140: // expr
+      case 141: // select_stmt
+      case 143: // optional_sort_order
+      case 145: // optional_where
+      case 146: // tableid_with_uninteresting_schema
+      case 150: // optional_exprlist_with_paren
+      case 154: // optional_conflictclause
+      case 155: // optional_typename
+      case 156: // optional_storage_identifier
+      case 162: // optional_constraintname
+      case 165: // fk_clause_part
+      case 166: // fk_clause_part_list
+      case 167: // optional_fk_clause
         value.copy< std::string > (YY_MOVE (that.value));
         break;
 
-      case 156: // columndef_list
+      case 161: // columndef_list
         value.copy< std::vector<ColumndefData> > (YY_MOVE (that.value));
         break;
 
@@ -3766,179 +3851,184 @@ switch (yytype)
     super_type::move (s);
     switch (this->type_get ())
     {
-      case 153: // columnconstraint
+      case 158: // columnconstraint
         value.move< ColumnConstraintInfo > (YY_MOVE (s.value));
         break;
 
-      case 154: // columnconstraint_list
+      case 159: // columnconstraint_list
         value.move< ColumnConstraintInfoVector > (YY_MOVE (s.value));
         break;
 
-      case 155: // columndef
+      case 160: // columndef
         value.move< ColumndefData > (YY_MOVE (s.value));
         break;
 
-      case 139: // optional_if_not_exists
-      case 141: // optional_unique
-      case 149: // optional_temporary
-      case 150: // optional_withoutrowid
+      case 142: // optional_if_not_exists
+      case 144: // optional_unique
+      case 152: // optional_temporary
+      case 153: // optional_withoutrowid
+      case 157: // optional_always_generated
         value.move< bool > (YY_MOVE (s.value));
         break;
 
-      case 163: // tableconstraint
+      case 168: // tableconstraint
         value.move< sqlb::ConstraintPtr > (YY_MOVE (s.value));
         break;
 
-      case 164: // tableconstraint_list
-      case 165: // optional_tableconstraint_list
+      case 169: // tableconstraint_list
+      case 170: // optional_tableconstraint_list
         value.move< sqlb::ConstraintSet > (YY_MOVE (s.value));
         break;
 
-      case 146: // createindex_stmt
+      case 149: // createindex_stmt
         value.move< sqlb::IndexPtr > (YY_MOVE (s.value));
         break;
 
-      case 144: // indexed_column
+      case 147: // indexed_column
         value.move< sqlb::IndexedColumn > (YY_MOVE (s.value));
         break;
 
-      case 145: // indexed_column_list
+      case 148: // indexed_column_list
         value.move< sqlb::IndexedColumnVector > (YY_MOVE (s.value));
         break;
 
-      case 158: // columnid_list
-      case 159: // optional_columnid_with_paren_list
+      case 163: // columnid_list
+      case 164: // optional_columnid_with_paren_list
         value.move< sqlb::StringVector > (YY_MOVE (s.value));
         break;
 
-      case 148: // createvirtualtable_stmt
-      case 166: // createtable_stmt
+      case 151: // createvirtualtable_stmt
+      case 171: // createtable_stmt
         value.move< sqlb::TablePtr > (YY_MOVE (s.value));
         break;
 
       case 27: // "ABORT"
       case 28: // "ACTION"
-      case 29: // "AND"
-      case 30: // "AND BETWEEN"
-      case 31: // "AS"
-      case 32: // "ASC"
-      case 33: // "AUTOINCREMENT"
-      case 34: // "BETWEEN"
-      case 35: // "CASCADE"
-      case 36: // "CASE"
-      case 37: // "CAST"
-      case 38: // "CHECK"
-      case 39: // "COLLATE"
-      case 40: // "CONFLICT"
-      case 41: // "CONSTRAINT"
-      case 42: // "CREATE"
-      case 43: // "CURRENT_DATE"
-      case 44: // "CURRENT_TIME"
-      case 45: // "CURRENT_TIMESTAMP"
-      case 46: // "DEFAULT"
-      case 47: // "DEFERRABLE"
-      case 48: // "DEFERRED"
-      case 49: // "DELETE"
-      case 50: // "DESC"
-      case 51: // "DISTINCT"
-      case 52: // "ELSE"
-      case 53: // "END"
-      case 54: // "ESCAPE"
-      case 55: // "EXISTS"
-      case 56: // "FAIL"
-      case 57: // "FALSE"
-      case 58: // "FILTER"
-      case 59: // "FOLLOWING"
-      case 60: // "FOREIGN"
-      case 61: // "GLOB"
-      case 62: // "IF"
-      case 63: // "IGNORE"
-      case 64: // "IMMEDIATE"
-      case 65: // "IN"
-      case 66: // "INDEX"
-      case 67: // "INITIALLY"
-      case 68: // "INSERT"
-      case 69: // "IS"
-      case 70: // "ISNULL"
-      case 71: // "KEY"
-      case 72: // "LIKE"
-      case 73: // "MATCH"
-      case 74: // "NO"
-      case 75: // "NOT"
-      case 76: // "NOTNULL"
-      case 77: // "NULL"
-      case 78: // "ON"
-      case 79: // "OR"
-      case 80: // "OVER"
-      case 81: // "PARTITION"
-      case 82: // "PRECEDING"
-      case 83: // "PRIMARY"
-      case 84: // "RAISE"
-      case 85: // "RANGE"
-      case 86: // "REFERENCES"
-      case 87: // "REGEXP"
-      case 88: // "REPLACE"
-      case 89: // "RESTRICT"
-      case 90: // "ROLLBACK"
-      case 91: // "ROWID"
-      case 92: // "ROWS"
-      case 93: // "SELECT"
-      case 94: // "SET"
-      case 95: // "TABLE"
-      case 96: // "TEMP"
-      case 97: // "TEMPORARY"
-      case 98: // "THEN"
-      case 99: // "TRUE"
-      case 100: // "UNBOUNDED"
-      case 101: // "UNIQUE"
-      case 102: // "UPDATE"
-      case 103: // "USING"
-      case 104: // "VIRTUAL"
-      case 105: // "WHEN"
-      case 106: // "WHERE"
-      case 107: // "WITHOUT"
-      case 108: // "identifier"
-      case 109: // "numeric"
-      case 110: // "string literal"
-      case 111: // "quoted literal"
-      case 112: // "blob literal"
-      case 113: // "bind parameter"
-      case 117: // literalvalue
-      case 118: // id
-      case 119: // allowed_keywords_as_identifier
-      case 120: // tableid
-      case 121: // columnid
-      case 122: // signednumber
-      case 123: // signednumber_or_numeric
-      case 124: // typename_namelist
-      case 125: // type_name
-      case 126: // unary_expr
-      case 127: // binary_expr
-      case 128: // like_expr
-      case 129: // exprlist_expr
-      case 130: // function_expr
-      case 131: // isnull_expr
-      case 132: // between_expr
-      case 133: // in_expr
-      case 134: // whenthenlist_expr
-      case 135: // case_expr
-      case 136: // raise_expr
-      case 137: // expr
-      case 138: // select_stmt
-      case 140: // optional_sort_order
-      case 142: // optional_where
-      case 143: // tableid_with_uninteresting_schema
-      case 147: // optional_exprlist_with_paren
-      case 151: // optional_conflictclause
-      case 152: // optional_typename
-      case 157: // optional_constraintname
-      case 160: // fk_clause_part
-      case 161: // fk_clause_part_list
-      case 162: // optional_fk_clause
+      case 29: // "ALWAYS"
+      case 30: // "AND"
+      case 31: // "AND BETWEEN"
+      case 32: // "AS"
+      case 33: // "ASC"
+      case 34: // "AUTOINCREMENT"
+      case 35: // "BETWEEN"
+      case 36: // "CASCADE"
+      case 37: // "CASE"
+      case 38: // "CAST"
+      case 39: // "CHECK"
+      case 40: // "COLLATE"
+      case 41: // "CONFLICT"
+      case 42: // "CONSTRAINT"
+      case 43: // "CREATE"
+      case 44: // "CURRENT_DATE"
+      case 45: // "CURRENT_TIME"
+      case 46: // "CURRENT_TIMESTAMP"
+      case 47: // "DEFAULT"
+      case 48: // "DEFERRABLE"
+      case 49: // "DEFERRED"
+      case 50: // "DELETE"
+      case 51: // "DESC"
+      case 52: // "DISTINCT"
+      case 53: // "ELSE"
+      case 54: // "END"
+      case 55: // "ESCAPE"
+      case 56: // "EXISTS"
+      case 57: // "FAIL"
+      case 58: // "FALSE"
+      case 59: // "FILTER"
+      case 60: // "FOLLOWING"
+      case 61: // "FOREIGN"
+      case 62: // "GENERATED"
+      case 63: // "GLOB"
+      case 64: // "IF"
+      case 65: // "IGNORE"
+      case 66: // "IMMEDIATE"
+      case 67: // "IN"
+      case 68: // "INDEX"
+      case 69: // "INITIALLY"
+      case 70: // "INSERT"
+      case 71: // "IS"
+      case 72: // "ISNULL"
+      case 73: // "KEY"
+      case 74: // "LIKE"
+      case 75: // "MATCH"
+      case 76: // "NO"
+      case 77: // "NOT"
+      case 78: // "NOTNULL"
+      case 79: // "NULL"
+      case 80: // "ON"
+      case 81: // "OR"
+      case 82: // "OVER"
+      case 83: // "PARTITION"
+      case 84: // "PRECEDING"
+      case 85: // "PRIMARY"
+      case 86: // "RAISE"
+      case 87: // "RANGE"
+      case 88: // "REFERENCES"
+      case 89: // "REGEXP"
+      case 90: // "REPLACE"
+      case 91: // "RESTRICT"
+      case 92: // "ROLLBACK"
+      case 93: // "ROWID"
+      case 94: // "ROWS"
+      case 95: // "SELECT"
+      case 96: // "SET"
+      case 97: // "STORED"
+      case 98: // "TABLE"
+      case 99: // "TEMP"
+      case 100: // "TEMPORARY"
+      case 101: // "THEN"
+      case 102: // "TRUE"
+      case 103: // "UNBOUNDED"
+      case 104: // "UNIQUE"
+      case 105: // "UPDATE"
+      case 106: // "USING"
+      case 107: // "VIRTUAL"
+      case 108: // "WHEN"
+      case 109: // "WHERE"
+      case 110: // "WITHOUT"
+      case 111: // "identifier"
+      case 112: // "numeric"
+      case 113: // "string literal"
+      case 114: // "quoted literal"
+      case 115: // "blob literal"
+      case 116: // "bind parameter"
+      case 120: // literalvalue
+      case 121: // id
+      case 122: // allowed_keywords_as_identifier
+      case 123: // tableid
+      case 124: // columnid
+      case 125: // signednumber
+      case 126: // signednumber_or_numeric
+      case 127: // typename_namelist
+      case 128: // type_name
+      case 129: // unary_expr
+      case 130: // binary_expr
+      case 131: // like_expr
+      case 132: // exprlist_expr
+      case 133: // function_expr
+      case 134: // isnull_expr
+      case 135: // between_expr
+      case 136: // in_expr
+      case 137: // whenthenlist_expr
+      case 138: // case_expr
+      case 139: // raise_expr
+      case 140: // expr
+      case 141: // select_stmt
+      case 143: // optional_sort_order
+      case 145: // optional_where
+      case 146: // tableid_with_uninteresting_schema
+      case 150: // optional_exprlist_with_paren
+      case 154: // optional_conflictclause
+      case 155: // optional_typename
+      case 156: // optional_storage_identifier
+      case 162: // optional_constraintname
+      case 165: // fk_clause_part
+      case 166: // fk_clause_part_list
+      case 167: // optional_fk_clause
         value.move< std::string > (YY_MOVE (s.value));
         break;
 
-      case 156: // columndef_list
+      case 161: // columndef_list
         value.move< std::vector<ColumndefData> > (YY_MOVE (s.value));
         break;
 
@@ -3996,35 +4086,9 @@ switch (yytype)
     return type;
   }
 
-  inline
-  parser::token_type
-  parser::by_type::token () const YY_NOEXCEPT
-  {
-    // YYTOKNUM[NUM] -- (External) token number corresponding to the
-    // (internal) symbol number NUM (which must be that of a token).  */
-    static
-    const unsigned short
-    yytoken_number_[] =
-    {
-       0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
-     265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
-     275,   276,   277,   278,   279,   280,   281,   282,   283,   284,
-     285,   286,   287,   288,   289,   290,   291,   292,   293,   294,
-     295,   296,   297,   298,   299,   300,   301,   302,   303,   304,
-     305,   306,   307,   308,   309,   310,   311,   312,   313,   314,
-     315,   316,   317,   318,   319,   320,   321,   322,   323,   324,
-     325,   326,   327,   328,   329,   330,   331,   332,   333,   334,
-     335,   336,   337,   338,   339,   340,   341,   342,   343,   344,
-     345,   346,   347,   348,   349,   350,   351,   352,   353,   354,
-     355,   356,   357,   358,   359,   360,   361,   362,   363,   364,
-     365,   366,   367,   368
-    };
-    return token_type (yytoken_number_[type]);
-  }
-
 #line 10 "sqlite3_parser.yy"
 } } //  sqlb::parser 
-#line 4028 "sqlite3_parser.hpp"
+#line 4092 "sqlite3_parser.hpp"
 
 
 

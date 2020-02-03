@@ -139,6 +139,7 @@ public:
         UniqueConstraintType,
         ForeignKeyConstraintType,
         CheckConstraintType,
+        GeneratedColumnConstraintType,
 
         NoType = 999,
     };
@@ -270,6 +271,30 @@ private:
     std::string m_expression;
 };
 
+class GeneratedColumnConstraint : public Constraint
+{
+public:
+    explicit GeneratedColumnConstraint(const std::string& expr = std::string(), const std::string& storage = "VIRTUAL")
+        : m_expression(expr),
+          m_storage(storage)
+    {
+    }
+
+    void setExpression(const std::string& expr) { m_expression = expr; }
+    const std::string& expression() const { return m_expression; }
+
+    void setStorage(const std::string& storage) { m_storage = storage; }
+    std::string storage() const { return m_storage.empty() ? "VIRTUAL" : m_storage; }
+
+    std::string toSql() const override;
+
+    ConstraintTypes type() const override { return GeneratedColumnConstraintType; }
+
+private:
+    std::string m_expression;
+    std::string m_storage;
+};
+
 class Field
 {
 public:
@@ -331,6 +356,10 @@ public:
     bool unique() const { return m_unique; }
     const std::string& collation() const { return m_collation; }
 
+    const GeneratedColumnConstraint& generated() const { return m_generated; }
+    GeneratedColumnConstraint& generated() { return m_generated; }
+    void setGenerated(const GeneratedColumnConstraint& gen) { m_generated = gen; }
+
 private:
     std::string m_name;
     std::string m_type;
@@ -339,6 +368,7 @@ private:
     std::string m_defaultvalue;
     bool m_unique;
     std::string m_collation;
+    GeneratedColumnConstraint m_generated;
 };
 
 class Table : public Object

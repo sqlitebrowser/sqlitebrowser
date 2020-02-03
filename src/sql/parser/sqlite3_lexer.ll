@@ -115,6 +115,7 @@ WS			[ \t\f]
 
 "ABORT"			return TOKEN(ABORT);
 "ACTION"		return TOKEN(ACTION);
+"ALWAYS"		return TOKEN(ALWAYS);
 "AS"			return TOKEN(AS);
 "ASC"			return TOKEN(ASC);
 "AUTOINCREMENT"		return TOKEN(AUTOINCREMENT);
@@ -144,6 +145,7 @@ WS			[ \t\f]
 "FILTER"		return TOKEN(FILTER);
 "FOLLOWING"		return TOKEN(FOLLOWING);
 "FOREIGN"		return TOKEN(FOREIGN);
+"GENERATED"		return TOKEN(GENERATED);
 "GLOB"			return TOKEN(GLOB);
 "IF"			return TOKEN(IF);
 "IGNORE"		return TOKEN(IGNORE);
@@ -178,6 +180,7 @@ WS			[ \t\f]
 "ROWS"			return TOKEN(ROWS);
 "SELECT"		return TOKEN(SELECT);
 "SET"			return TOKEN(SET);
+"STORED"		return TOKEN(STORED);
 "TABLE"			return TOKEN(TABLE);
 "TEMP"			return TOKEN(TEMP);
 "TEMPORARY"		return TOKEN(TEMPORARY);

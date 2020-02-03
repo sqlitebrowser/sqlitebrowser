@@ -1,8 +1,8 @@
-// A Bison parser, made by GNU Bison 3.4.1.
+// A Bison parser, made by GNU Bison 3.5.1.
 
 // Locations for Bison parsers in C++
 
-// Copyright (C) 2002-2015, 2018-2019 Free Software Foundation, Inc.
+// Copyright (C) 2002-2015, 2018-2020 Free Software Foundation, Inc.
 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -38,7 +38,6 @@
 #ifndef YY_YY_SQLITE3_LOCATION_H_INCLUDED
 # define YY_YY_SQLITE3_LOCATION_H_INCLUDED
 
-# include <algorithm> // std::max
 # include <iostream>
 # include <string>
 
@@ -56,16 +55,19 @@
 
 #line 10 "sqlite3_parser.yy"
 namespace  sqlb { namespace parser  {
-#line 60 "sqlite3_location.h"
+#line 59 "sqlite3_location.h"
 
   /// A point in a source file.
   class position
   {
   public:
+    /// Type for line and column numbers.
+    typedef int counter_type;
+
     /// Construct a position.
     explicit position (std::string* f = YY_NULLPTR,
-                       unsigned l = 1u,
-                       unsigned c = 1u)
+                       counter_type l = 1,
+                       counter_type c = 1)
       : filename (f)
       , line (l)
       , column (c)
@@ -74,8 +76,8 @@ namespace  sqlb { namespace parser  {
 
     /// Initialization.
     void initialize (std::string* fn = YY_NULLPTR,
-                     unsigned l = 1u,
-                     unsigned c = 1u)
+                     counter_type l = 1,
+                     counter_type c = 1)
     {
       filename = fn;
       line = l;
@@ -85,17 +87,17 @@ namespace  sqlb { namespace parser  {
     /** \name Line and Column related manipulators
      ** \{ */
     /// (line related) Advance to the COUNT next lines.
-    void lines (int count = 1)
+    void lines (counter_type count = 1)
     {
       if (count)
         {
-          column = 1u;
+          column = 1;
           line = add_ (line, count, 1);
         }
     }
 
     /// (column related) Advance to the COUNT next columns.
-    void columns (int count = 1)
+    void columns (counter_type count = 1)
     {
       column = add_ (column, count, 1);
     }
@@ -104,22 +106,21 @@ namespace  sqlb { namespace parser  {
     /// File name to which this position refers.
     std::string* filename;
     /// Current line number.
-    unsigned line;
+    counter_type line;
     /// Current column number.
-    unsigned column;
+    counter_type column;
 
   private:
     /// Compute max (min, lhs+rhs).
-    static unsigned add_ (unsigned lhs, int rhs, int min)
+    static counter_type add_ (counter_type lhs, counter_type rhs, counter_type min)
     {
-      return static_cast<unsigned> (std::max (min,
-                                              static_cast<int> (lhs) + rhs));
+      return lhs + rhs < min ? min : lhs + rhs;
     }
   };
 
   /// Add \a width columns, in place.
   inline position&
-  operator+= (position& res, int width)
+  operator+= (position& res, position::counter_type width)
   {
     res.columns (width);
     return res;
@@ -127,21 +128,21 @@ namespace  sqlb { namespace parser  {
 
   /// Add \a width columns.
   inline position
-  operator+ (position res, int width)
+  operator+ (position res, position::counter_type width)
   {
     return res += width;
   }
 
   /// Subtract \a width columns, in place.
   inline position&
-  operator-= (position& res, int width)
+  operator-= (position& res, position::counter_type width)
   {
     return res += -width;
   }
 
   /// Subtract \a width columns.
   inline position
-  operator- (position res, int width)
+  operator- (position res, position::counter_type width)
   {
     return res -= width;
   }
@@ -181,6 +182,8 @@ namespace  sqlb { namespace parser  {
   class location
   {
   public:
+    /// Type for line and column numbers.
+    typedef position::counter_type counter_type;
 
     /// Construct a location from \a b to \a e.
     location (const position& b, const position& e)
@@ -196,8 +199,8 @@ namespace  sqlb { namespace parser  {
 
     /// Construct a 0-width location in \a f, \a l, \a c.
     explicit location (std::string* f,
-                       unsigned l = 1u,
-                       unsigned c = 1u)
+                       counter_type l = 1,
+                       counter_type c = 1)
       : begin (f, l, c)
       , end (f, l, c)
     {}
@@ -205,8 +208,8 @@ namespace  sqlb { namespace parser  {
 
     /// Initialization.
     void initialize (std::string* f = YY_NULLPTR,
-                     unsigned l = 1u,
-                     unsigned c = 1u)
+                     counter_type l = 1,
+                     counter_type c = 1)
     {
       begin.initialize (f, l, c);
       end = begin;
@@ -222,13 +225,13 @@ namespace  sqlb { namespace parser  {
     }
 
     /// Extend the current location to the COUNT next columns.
-    void columns (int count = 1)
+    void columns (counter_type count = 1)
     {
       end += count;
     }
 
     /// Extend the current location to the COUNT next lines.
-    void lines (int count = 1)
+    void lines (counter_type count = 1)
     {
       end.lines (count);
     }
@@ -243,39 +246,45 @@ namespace  sqlb { namespace parser  {
   };
 
   /// Join two locations, in place.
-  inline location& operator+= (location& res, const location& end)
+  inline location&
+  operator+= (location& res, const location& end)
   {
     res.end = end.end;
     return res;
   }
 
   /// Join two locations.
-  inline location operator+ (location res, const location& end)
+  inline location
+  operator+ (location res, const location& end)
   {
     return res += end;
   }
 
   /// Add \a width columns to the end position, in place.
-  inline location& operator+= (location& res, int width)
+  inline location&
+  operator+= (location& res, location::counter_type width)
   {
     res.columns (width);
     return res;
   }
 
   /// Add \a width columns to the end position.
-  inline location operator+ (location res, int width)
+  inline location
+  operator+ (location res, location::counter_type width)
   {
     return res += width;
   }
 
   /// Subtract \a width columns to the end position, in place.
-  inline location& operator-= (location& res, int width)
+  inline location&
+  operator-= (location& res, location::counter_type width)
   {
     return res += -width;
   }
 
   /// Subtract \a width columns to the end position.
-  inline location operator- (location res, int width)
+  inline location
+  operator- (location res, location::counter_type width)
   {
     return res -= width;
   }
@@ -304,7 +313,8 @@ namespace  sqlb { namespace parser  {
   std::basic_ostream<YYChar>&
   operator<< (std::basic_ostream<YYChar>& ostr, const location& loc)
   {
-    unsigned end_col = 0 < loc.end.column ? loc.end.column - 1 : 0;
+    location::counter_type end_col
+      = 0 < loc.end.column ? loc.end.column - 1 : 0;
     ostr << loc.begin;
     if (loc.end.filename
         && (!loc.begin.filename
@@ -319,6 +329,6 @@ namespace  sqlb { namespace parser  {
 
 #line 10 "sqlite3_parser.yy"
 } } //  sqlb::parser 
-#line 323 "sqlite3_location.h"
+#line 333 "sqlite3_location.h"
 
 #endif // !YY_YY_SQLITE3_LOCATION_H_INCLUDED

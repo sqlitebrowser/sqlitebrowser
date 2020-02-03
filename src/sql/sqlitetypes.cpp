@@ -224,6 +224,16 @@ std::string CheckConstraint::toSql() const
     return result;
 }
 
+std::string GeneratedColumnConstraint::toSql() const
+{
+    std::string result;
+    if(!m_name.empty())
+        result = "CONSTRAINT " + escapeIdentifier(m_name) + " ";
+    result += "GENERATED ALWAYS AS (" + m_expression + ")" + " " + storage();
+
+    return result;
+}
+
 bool Field::operator==(const Field& rhs) const
 {
     if(m_name != rhs.m_name)
@@ -257,6 +267,8 @@ std::string Field::toString(const std::string& indent, const std::string& sep) c
         str += " UNIQUE";
     if(!m_collation.empty())
         str += " COLLATE " + m_collation;
+    if(!m_generated.expression().empty())
+        str += " " + m_generated.toSql();
     return str;
 }
 
