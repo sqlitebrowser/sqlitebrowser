@@ -869,9 +869,14 @@ void ExtendedTableWidget::vscrollbarChanged(int value)
 
 int ExtendedTableWidget::numVisibleRows() const
 {
+    if(!isVisible())
+        return 0;
+
     // Get the row numbers of the rows currently visible at the top and the bottom of the widget
     int row_top = rowAt(0) == -1 ? 0 : rowAt(0);
-    int row_bottom = rowAt(height()) == -1 ? model()->rowCount() : rowAt(height());
+    int row_bottom = verticalHeader()->visualIndexAt(height()) == -1 ? model()->rowCount() : (verticalHeader()->visualIndexAt(height()) - 1);
+    if(horizontalScrollBar()->isVisible())      // Assume the scrollbar covers about one row
+        row_bottom--;
 
     // Calculate the number of visible rows
     return row_bottom - row_top;
