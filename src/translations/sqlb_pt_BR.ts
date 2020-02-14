@@ -1126,7 +1126,7 @@ Mensagem da engine do banco de dados:
     <message>
         <location filename="../EditDialog.ui" line="56"/>
         <source>RTL Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Texto para a esquerda</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="71"/>
@@ -1159,17 +1159,19 @@ Mensagem da engine do banco de dados:
         <source>The text editor modes let you edit plain text, as well as JSON or XML data with syntax highlighting, automatic formatting and validation before saving.
 
 Errors are indicated with a red squiggle underline.</source>
-        <translation type="unfinished"></translation>
+        <translation>O modo do editor de texto deixa você editar tanto texto simples como JSON e XML com realce de sintaxe, formatação automática e validação antes de salvar.
+
+Erros são indicados com um sublinhado vermelho.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="157"/>
         <source>This Qt editor is used for right-to-left scripts, which are not supported by the default Text editor. The presence of right-to-left characters is detected and this editor mode is automatically selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Esse editor do QT é usado para scripts da direita para a esquerda, que não são suportados pelo editor de texto padrão. Quando a presença de caracteres da direita para a esquerda é detectada, esse modo é automaticamente selecionado.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="305"/>
         <source>Open preview dialog for printing the data currently stored in the cell</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir diálogo de prévia para impressão dos dados atualmente armazenados na célula</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="341"/>
@@ -1184,44 +1186,44 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditDialog.ui" line="401"/>
         <source>Word Wrap</source>
-        <translation type="unfinished"></translation>
+        <translation>Quebra de linha</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="404"/>
         <source>Wrap lines on word boundaries</source>
-        <translation type="unfinished"></translation>
+        <translation>Quebra de linha em limites de palavras</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="413"/>
         <location filename="../EditDialog.ui" line="419"/>
         <source>Open in default application or browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir em aplicação padrão ou navegador</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="416"/>
         <source>Open in application</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir em aplicação</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="422"/>
         <source>The value is interpreted as a file or URL and opened in the default application or web browser.</source>
-        <translation type="unfinished"></translation>
+        <translation>O valor é interpretado como um arquivo ou URL e aberto na aplicação padrão ou navegador.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="431"/>
         <source>Save file reference...</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvar referência de arquivo...</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="434"/>
         <source>Save reference to file</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvar referência para arquivo</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="458"/>
         <location filename="../EditDialog.ui" line="461"/>
         <source>Open in external application</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir em aplicação externa</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="338"/>
@@ -1231,13 +1233,13 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditDialog.ui" line="353"/>
         <source>&amp;Export...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Exportar...</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="368"/>
         <location filename="../EditDialog.ui" line="443"/>
         <source>&amp;Import...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Importar...</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="371"/>
@@ -1306,7 +1308,7 @@ Erros são indicados com um ondulado vermelho.</translation>
     <message>
         <location filename="../EditDialog.cpp" line="1239"/>
         <source>The data has been saved to a temporary file and has been opened with the default application. You can now edit the file and, when you are ready, apply the saved new data to the cell editor or cancel any changes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Os dados foram salvos em um arquivo temporário e este foi aberto com a aplicação padrão. Você pode agora editar os dados e, quando você estiver pronto, salvar suas mudanças para o editor de células ou cancelar quaisquer mudanças.</translation>
     </message>
     <message>
         <source>Text files (*.txt)</source>
