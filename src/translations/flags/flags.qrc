@@ -17,5 +17,6 @@
         <file alias="uk_UA">ua.png</file>
         <file alias="ar_EG">eg.png</file>
         <file alias="pl_PL">pl.png</file>
+        <file alias="ja_JP">jp.png</file>
     </qresource>
 </RCC>

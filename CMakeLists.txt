@@ -286,6 +286,7 @@ set(SQLB_TSS
 	"${CMAKE_SOURCE_DIR}/src/translations/sqlb_tr.ts"
 	"${CMAKE_SOURCE_DIR}/src/translations/sqlb_uk_UA.ts"
 	"${CMAKE_SOURCE_DIR}/src/translations/sqlb_it.ts"
+	"${CMAKE_SOURCE_DIR}/src/translations/sqlb_ja.ts"
 )
 
 # Windows image format plugin files
