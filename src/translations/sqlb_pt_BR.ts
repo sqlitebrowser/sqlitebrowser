@@ -404,19 +404,21 @@ O processo de encriptação pode demorar alguns minutos e você deve ter um back
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="109"/>
         <source>Custom display format must contain a function call applied to %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Formato de exibição customizado precisa conter uma função aplicada a %1</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="121"/>
         <source>Error in custom display format. Message from database engine:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro em formato de exibição customizado. Mensagem da engine da base de dados:
+
+%1</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="123"/>
         <source>Custom display format must return only one column but it returned %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Formato de exibição customizado precisa retornar apenas uma coluna mas retornou %1.</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="23"/>
@@ -474,7 +476,7 @@ O processo de encriptação pode demorar alguns minutos e você deve ter um back
     <message>
         <location filename="../CondFormatManager.ui" line="14"/>
         <source>Conditional Format Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Gerenciador de formato condicional</translation>
     </message>
     <message>
         <source>&amp;Up</source>
@@ -487,113 +489,113 @@ O processo de encriptação pode demorar alguns minutos e você deve ter um back
     <message>
         <location filename="../CondFormatManager.ui" line="20"/>
         <source>This dialog allows creating and editing conditional formats. Each cell style will be selected by the first accomplished condition for that cell data. Conditional formats can be moved up and down, where those at higher rows take precedence over those at lower. Syntax for conditions is the same as for filters and an empty condition applies to all values.</source>
-        <translation type="unfinished"></translation>
+        <translation>Esse diálogo permite a criação e edição de formatos condicionais. O estilo de cada célula será escolhido pela primeira condição satisfeita pelo valor daquela célula. Formatos condicionais podem ser movidos para cima e para baixo, tendo precedência os formatos localizados mais acima. A sintaxe para as condições é a mesma utilizada para os filtros e uma condição vazia é sempre satisfeita.</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="32"/>
         <source>Add new conditional format</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar novo formato condicional</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="35"/>
         <source>&amp;Add</source>
-        <translation type="unfinished">&amp;Adicionar</translation>
+        <translation>&amp;Adicionar</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="52"/>
         <source>Remove selected conditional format</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover formato condicional selecionado</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="55"/>
         <source>&amp;Remove</source>
-        <translation type="unfinished">&amp;Remover</translation>
+        <translation>&amp;Remover</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="72"/>
         <source>Move selected conditional format up</source>
-        <translation type="unfinished"></translation>
+        <translation>Mover formato condicional selecionado para cima</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="75"/>
         <source>Move &amp;up</source>
-        <translation type="unfinished"></translation>
+        <translation>Mover para &amp;cima</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="92"/>
         <source>Move selected conditional format down</source>
-        <translation type="unfinished"></translation>
+        <translation>Mover formato condicional selecionado para baixo</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="95"/>
         <source>Move &amp;down</source>
-        <translation type="unfinished"></translation>
+        <translation>Mover para &amp;baixo</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="158"/>
         <source>Foreground</source>
-        <translation type="unfinished">Plano de frente</translation>
+        <translation>Plano de frente</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="161"/>
         <source>Text color</source>
-        <translation type="unfinished">Cor do texto</translation>
+        <translation>Cor do texto</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="166"/>
         <source>Background</source>
-        <translation type="unfinished">Fundo</translation>
+        <translation>Fundo</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="169"/>
         <source>Background color</source>
-        <translation type="unfinished">Cor do plano de fundo</translation>
+        <translation>Cor do plano de fundo</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="174"/>
         <source>Font</source>
-        <translation type="unfinished">Fonte</translation>
+        <translation>Fonte</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="179"/>
         <source>Size</source>
-        <translation type="unfinished">Tamanho</translation>
+        <translation>Tamanho</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="187"/>
         <source>Bold</source>
-        <translation type="unfinished">Negrito</translation>
+        <translation>Negrito</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="199"/>
         <source>Italic</source>
-        <translation type="unfinished">Itálico</translation>
+        <translation>Itálico</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="211"/>
         <source>Underline</source>
-        <translation type="unfinished">Underline</translation>
+        <translation>Sublinhado</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="220"/>
         <source>Alignment</source>
-        <translation type="unfinished"></translation>
+        <translation>Alinhamento</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="225"/>
         <source>Condition</source>
-        <translation type="unfinished"></translation>
+        <translation>Condição</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.cpp" line="101"/>
         <location filename="../CondFormatManager.cpp" line="102"/>
         <source>Click to select color</source>
-        <translation type="unfinished"></translation>
+        <translation>Clique para selecionar a cor</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.cpp" line="246"/>
         <source>Are you sure you want to clear all the conditional formats of this field?</source>
-        <translation type="unfinished"></translation>
+        <translation>Você tem certeza de que deseja limpar todos os formatos condicionais deste campo?</translation>
     </message>
 </context>
 <context>
@@ -759,7 +761,7 @@ Aborting execution%3.</translation>
     <message>
         <location filename="../sqlitedb.cpp" line="722"/>
         <source>Database didn&apos;t close correctly, probably still busy</source>
-        <translation type="unfinished"></translation>
+        <translation>A base de dados não fechou corretamente, provavelmente ainda ocupada</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="768"/>
@@ -780,12 +782,12 @@ Aborting execution%3.</translation>
     <message>
         <location filename="../sqlitedb.cpp" line="1203"/>
         <source>didn&apos;t receive any output from %1</source>
-        <translation type="unfinished"></translation>
+        <translation>não recebeu nenhuma saída de %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1209"/>
         <source>could not execute command: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>não pode executar comando: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1367"/>
@@ -801,58 +803,62 @@ Aborting execution%3.</translation>
     <message>
         <location filename="../sqlitedb.cpp" line="1534"/>
         <source>No table with name &apos;%1&apos; exists in schema &apos;%2&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem uma tabela chamada &apos;%1&apos; existe no esquema &apos;%2&apos;.</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1544"/>
         <location filename="../sqlitedb.cpp" line="1565"/>
         <source>Cannot find column %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Não pode encontrar coluna %1.</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1578"/>
         <source>Creating savepoint failed. DB says: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Criação de savepoint falhou. BD diz: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1641"/>
         <source>Renaming the column failed. DB says:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Renomeação de coluna falhou. BD diz:
+%1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1669"/>
         <location filename="../sqlitedb.cpp" line="1821"/>
         <source>Releasing savepoint failed. DB says: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Liberação de savepoint falhou. BD diz: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1688"/>
         <source>Creating new table failed. DB says: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Criação de tabela falhou. BD diz: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1720"/>
         <source>Copying data to new table failed. DB says:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Cópia de dados para uma nova tabela falhou. BD diz:
+%1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1787"/>
         <source>Deleting old table failed. DB says: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Deletando tabela antiga falhou. BD diz: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1857"/>
         <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.
 Message from database engine:
 %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro renomeando tabela de &apos;%1&apos; para &apos;%2&apos;.
+Mensagem da engine do banco de dados:
+%3</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1952"/>
         <source>could not get list of db objects: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>não conseguiu listar objetos da BD: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1958"/>
