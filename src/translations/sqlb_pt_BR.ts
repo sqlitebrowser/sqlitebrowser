@@ -25,7 +25,7 @@
     <message>
         <location filename="../AboutDialog.cpp" line="22"/>
         <source>Built for </source>
-        <translation type="unfinished"></translation>
+        <translation>Compilado para </translation>
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="23"/>
@@ -181,7 +181,7 @@
     <message>
         <location filename="../Application.cpp" line="95"/>
         <source>  -O, --save-option [group/setting=value]	Run application saving this value for this setting</source>
-        <translation type="unfinished"></translation>
+        <translation>  -O, --save-option [grupo/configuração=valor]	Roda a aplicação salvando esse valor para essa configuração</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="97"/>
@@ -201,7 +201,7 @@
     <message>
         <location filename="../Application.cpp" line="121"/>
         <source>The -o/--option and -O/--save-option options require an argument in the form group/setting=value</source>
-        <translation type="unfinished"></translation>
+        <translation>As opções -o/--option e -O/--save-option requerem um argumento no formato grupo/configuração=valor</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="149"/>
@@ -241,7 +241,7 @@
     <message>
         <location filename="../Application.cpp" line="94"/>
         <source>  -o, --option [group/setting=value]	Run application with this setting temporarily set to value</source>
-        <translation type="unfinished"></translation>
+        <translation>  -o, --option [grupo/configuração=valor]	Roda a aplicação com esse valor para essa configuração temporariamente</translation>
     </message>
 </context>
 <context>
@@ -264,42 +264,42 @@
     <message>
         <location filename="../CipherDialog.ui" line="98"/>
         <source>Encr&amp;yption settings</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Configurações de encriptação</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="110"/>
         <source>SQLCipher &amp;3 defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Padrões do SQLCipher &amp;3</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="117"/>
         <source>SQLCipher &amp;4 defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Padrões do SQLCipher &amp;4</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="124"/>
         <source>Custo&amp;m</source>
-        <translation type="unfinished"></translation>
+        <translation>Custo&amp;mizado</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="146"/>
         <source>&amp;KDF iterations</source>
-        <translation type="unfinished"></translation>
+        <translation>Iterações &amp;KDF</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="166"/>
         <source>HMAC algorithm</source>
-        <translation type="unfinished"></translation>
+        <translation>Algoritmo de HMAC</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="195"/>
         <source>KDF algorithm</source>
-        <translation type="unfinished"></translation>
+        <translation>Algoritmo de KDF</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="224"/>
         <source>Plaintext Header Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamanho do cabeçalho de texto</translation>
     </message>
     <message>
         <source>Page &amp;size</source>
