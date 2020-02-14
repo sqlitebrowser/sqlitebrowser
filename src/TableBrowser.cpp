@@ -130,6 +130,8 @@ TableBrowser::TableBrowser(QWidget* parent) :
     connect(ui->dataTable->filterHeader(), &FilterTableHeader::sectionClicked, this, &TableBrowser::headerClicked);
     connect(ui->dataTable->filterHeader(), &QHeaderView::sectionDoubleClicked, ui->dataTable, &QTableView::selectColumn);
     connect(ui->dataTable->verticalScrollBar(), &QScrollBar::valueChanged, this, &TableBrowser::updateRecordsetLabel);
+    connect(ui->dataTable->horizontalHeader(), &QHeaderView::sectionResized, this, &TableBrowser::updateRecordsetLabel);
+    connect(ui->dataTable->verticalHeader(), &QHeaderView::sectionResized, this, &TableBrowser::updateRecordsetLabel);
     connect(ui->dataTable->horizontalHeader(), &QHeaderView::sectionResized, this, &TableBrowser::updateColumnWidth);
     connect(ui->dataTable->horizontalHeader(), &QHeaderView::customContextMenuRequested, this, &TableBrowser::showDataColumnPopupMenu);
     connect(ui->dataTable->verticalHeader(), &QHeaderView::customContextMenuRequested, this, &TableBrowser::showRecordPopupMenu);
@@ -714,9 +716,7 @@ void TableBrowser::updateRecordsetLabel()
     // Get all the numbers, i.e. the number of the first row and the last row as well as the total number of rows
     int from = ui->dataTable->verticalHeader()->visualIndexAt(0) + 1;
     int total = m_model->rowCount();
-    int to = ui->dataTable->verticalHeader()->visualIndexAt(ui->dataTable->height()) - 1;
-    if (to == -2)
-        to = total;
+    int to = from + ui->dataTable->numVisibleRows() - 1;
 
     // Update the validator of the goto row field
     gotoValidator->setRange(0, total);

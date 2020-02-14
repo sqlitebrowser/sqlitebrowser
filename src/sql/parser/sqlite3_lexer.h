@@ -602,7 +602,7 @@ extern int yylex (yyscan_t yyscanner);
 #undef yyTABLES_NAME
 #endif
 
-#line 235 "sqlite3_lexer.ll"
+#line 238 "sqlite3_lexer.ll"
 
 
 #line 609 "sqlite3_lexer.h"
