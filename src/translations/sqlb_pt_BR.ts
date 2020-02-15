@@ -4927,9 +4927,8 @@ Você pode arrastar comandos SQL da coluna Esquema e largá-los no editor SQL ou
         <translation>Banco de dados em memória</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="653"/>
         <source>You are still executing SQL statements. When closing the database now the execution will be stopped. maybe leaving the database in an incosistent state. Are you sure you want to close the database?</source>
-        <translation>Você ainda está executando comandos SQL. Fechar o banco de dados agora fará a execução parar, talvez deixando o banco de dados em um estado inconsistente. Você tem certeza de que deseja fechar o banco de dados?</translation>
+        <translation type="vanished">Você ainda está executando comandos SQL. Fechar o banco de dados agora fará a execução parar, talvez deixando o banco de dados em um estado inconsistente. Você tem certeza de que deseja fechar o banco de dados?</translation>
     </message>
     <message>
         <source>determining row count...</source>
