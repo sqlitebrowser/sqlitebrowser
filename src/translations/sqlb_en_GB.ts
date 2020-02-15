@@ -20,7 +20,7 @@
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="19"/>
-        <source> (based on SQLite %1)</source>
+        <source>SQLCipher Version %1 (based on SQLite %2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -30,17 +30,12 @@
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="22"/>
-        <source>Built for </source>
+        <source>Built for %1, running on %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="23"/>
         <source>Qt Version </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../AboutDialog.cpp" line="19"/>
-        <source>SQLCipher Version </source>
         <translation></translation>
     </message>
     <message>

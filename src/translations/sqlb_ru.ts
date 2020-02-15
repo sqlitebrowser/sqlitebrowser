@@ -23,9 +23,13 @@
         <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Обозреватель для SQLite - это бесплатная программа, с открытым исходным кодом, предназначенная для создания и редактирования баз данных SQLite.&lt;/p&gt;&lt;p&gt;Программа лицензирована по двум лицензиям: Mozilla Public License Version 2 и GNU General Public License Version 3 or later. Можно изменять или распространять её на условиях этих лицензий.&lt;/p&gt;&lt;p&gt;Лицензии можно просмотреть по ссылкам &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/a&gt; и &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;Дополнительную информацию о программе можно узнать на веб-сайте:&lt;br/&gt;&lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://sqlitebrowser.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Это программное обеспечение использует GPL/LGPL Qt Toolkit &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;Условия лицензии на Qt Toolkit &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Эта программа также использует набор иконок Silk от Марка Джеймса (Mark James), лицензированный под лицензией Creative Commons Attribution 2.5 and 3.0.&lt;br/&gt;Подробная информация по адресу &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../AboutDialog.cpp" line="19"/>
         <source> (based on SQLite %1)</source>
-        <translation> (базируется на SQLite %1)</translation>
+        <translation type="vanished"> (базируется на SQLite %1)</translation>
+    </message>
+    <message>
+        <location filename="../AboutDialog.cpp" line="19"/>
+        <source>SQLCipher Version %1 (based on SQLite %2)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="21"/>
@@ -34,7 +38,7 @@
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="22"/>
-        <source>Built for </source>
+        <source>Built for %1, running on %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -43,9 +47,8 @@
         <translation>Версия Qt </translation>
     </message>
     <message>
-        <location filename="../AboutDialog.cpp" line="19"/>
         <source>SQLCipher Version </source>
-        <translation>Версия SQLCipher </translation>
+        <translation type="vanished">Версия SQLCipher </translation>
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="17"/>

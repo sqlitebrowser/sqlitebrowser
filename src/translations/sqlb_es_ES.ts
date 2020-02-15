@@ -30,9 +30,13 @@
 </translation>
     </message>
     <message>
-        <location filename="../AboutDialog.cpp" line="19"/>
         <source> (based on SQLite %1)</source>
-        <translation> (basado en SQLite %1)</translation>
+        <translation type="vanished"> (basado en SQLite %1)</translation>
+    </message>
+    <message>
+        <location filename="../AboutDialog.cpp" line="19"/>
+        <source>SQLCipher Version %1 (based on SQLite %2)</source>
+        <translation>Versión de SQLCipher %1 (basado en SQLite %2)</translation>
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="21"/>
@@ -41,18 +45,13 @@
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="22"/>
-        <source>Built for </source>
-        <translation>Compilado para </translation>
+        <source>Built for %1, running on %2</source>
+        <translation>Compilado para %1, ejecutándose en %2</translation>
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="23"/>
         <source>Qt Version </source>
-        <translation>Versión de Qt</translation>
-    </message>
-    <message>
-        <location filename="../AboutDialog.cpp" line="19"/>
-        <source>SQLCipher Version </source>
-        <translation>Versión de SQLCipher </translation>
+        <translation>Versión de Qt </translation>
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="17"/>
@@ -1765,7 +1764,7 @@ Los errores se indican con un subrayado ondulado rojo.</translation>
     <message>
         <location filename="../EditTableDialog.ui" line="484"/>
         <source>Add a unique constraint</source>
-        <translation>Añadir una restricción de único"</translation>
+        <translation>Añadir una restricción de único&quot;</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="492"/>
