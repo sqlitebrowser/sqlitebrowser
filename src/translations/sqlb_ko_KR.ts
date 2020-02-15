@@ -4686,7 +4686,7 @@ If you answer no we will attempt to import the data in the SQL file to the curre
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2069"/>
-        <source>Could not open find resource file: %1</source>
+        <source>Could not find resource file: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6663,7 +6663,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="84"/>
-        <source>Find previous match with mapping</source>
+        <source>Find previous match with wrapping</source>
         <translation>맵핑된 이전 일치내역 검색하기</translation>
     </message>
     <message>
@@ -7239,7 +7239,7 @@ Hold %3Shift and click to jump there</source>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="269"/>
-        <source>Find previous match with mapping</source>
+        <source>Find previous match with wrapping</source>
         <translation type="unfinished">맵핑된 이전 일치내역 검색하기</translation>
     </message>
     <message>

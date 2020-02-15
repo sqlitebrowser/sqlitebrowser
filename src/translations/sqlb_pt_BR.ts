@@ -5142,7 +5142,7 @@ Você tem certeza que quer salvar o banco de dados?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2069"/>
-        <source>Could not open find resource file: %1</source>
+        <source>Could not find resource file: %1</source>
         <translation>Não pôde encontrar o arquivo de recursos: %1</translation>
     </message>
     <message>
@@ -6903,7 +6903,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="84"/>
-        <source>Find previous match with mapping</source>
+        <source>Find previous match with wrapping</source>
         <translation>Encontrar resultado anterior com mapeamento</translation>
     </message>
     <message>
@@ -7433,7 +7433,7 @@ Segure %3Shift e clique para ir para lá</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="269"/>
-        <source>Find previous match with mapping</source>
+        <source>Find previous match with wrapping</source>
         <translation>Encontrar resultado anterior com mapeamento</translation>
     </message>
     <message>

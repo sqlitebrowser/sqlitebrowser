@@ -4459,7 +4459,7 @@ Sei sicuro?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2069"/>
-        <source>Could not open find resource file: %1</source>
+        <source>Could not find resource file: %1</source>
         <translation>Non posso aprire il file di risorse: %1</translation>
     </message>
     <message>
@@ -6082,7 +6082,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="84"/>
-        <source>Find previous match with mapping</source>
+        <source>Find previous match with wrapping</source>
         <translation>Trova la corrispondenza precedente con reinizio</translation>
     </message>
     <message>
@@ -6621,7 +6621,7 @@ Tieni premuto %3Shift e clicca per saltare lì</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="269"/>
-        <source>Find previous match with mapping</source>
+        <source>Find previous match with wrapping</source>
         <translation type="unfinished">Trova la corrispondenza precedente con reinizio</translation>
     </message>
     <message>

@@ -81,7 +81,7 @@
              <string>Find previous match [Shift+F3]</string>
             </property>
             <property name="whatsThis">
-             <string>Find previous match with mapping</string>
+             <string>Find previous match with wrapping</string>
             </property>
             <property name="icon">
              <iconset resource="icons/icons.qrc">
