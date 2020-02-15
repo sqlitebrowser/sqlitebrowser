@@ -2274,7 +2274,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="996"/>
         <source>&lt;p&gt;Not all data has been loaded. &lt;b&gt;Do you want to load all data before selecting all the rows?&lt;/b&gt;&lt;p&gt;&lt;p&gt;Answering &lt;b&gt;No&lt;/b&gt; means that no more data will be loaded and the selection will not be performed.&lt;br/&gt;Answering &lt;b&gt;Yes&lt;/b&gt; might take some time while the data is loaded but the selection will be complete.&lt;/p&gt;Warning: Loading all the data might require a great amount of memory for big tables.</source>
-        <translation>&lt;p&gt;No se han cargado todos los datos. &lt;b&gt;&iquest;Quiere cargar todos los datos antes de seleccionar todas las filas?&lt;/b&gt;&lt;p&gt;&lt;p&gt;Responder &lt;b&gt;No&lt;/b&gt; significa que no se cargar&aacute;n mas datos y la selecci&oacute;n no se se realizar&aacute;.&lt;br/&gt;Responder &lt;b&gt;S&iacute;&lt;/b&gt; puede tardar un tiempo mientras los datos se cargan pero la selecci&oacute;n se realizar&aacute; en su totalidad.&lt;/p&gt;Precauci&oacute;n: Cargar todos los datos puede necesitar una gran cantidad de memoria para tablas grandes.</translation>
+        <translation>&lt;p&gt;No se han cargado todos los datos. &lt;b&gt;¿Quiere cargar todos los datos antes de seleccionar todas las filas?&lt;/b&gt;&lt;p&gt;&lt;p&gt;Responder &lt;b&gt;No&lt;/b&gt; significa que no se cargar&aacute;n mas datos y la selecci&oacute;n no se se realizar&aacute;.&lt;br/&gt;Responder &lt;b&gt;S&iacute;&lt;/b&gt; puede tardar un tiempo mientras los datos se cargan pero la selecci&oacute;n se realizar&aacute; en su totalidad.&lt;/p&gt;Precauci&oacute;n: Cargar todos los datos puede necesitar una gran cantidad de memoria para tablas grandes.</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="1073"/>
@@ -4927,8 +4927,8 @@ Si responde no se intentarán importar los datos del archivo SQL en la base de d
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2069"/>
-        <source>Could not open find resource file: %1</source>
-        <translation>No se pudo encontrar/abrir el archivo de recursos: %1</translation>
+        <source>Could not find resource file: %1</source>
+        <translation>No se pudo encontrar el archivo de recursos: %1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2383"/>
@@ -6830,7 +6830,7 @@ Si decide continuar, está avisado de que la base de datos se puede dañar.
     <message>
         <location filename="../RemoteDock.ui" line="127"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;You are currently using a built-in, read-only identity. For uploading your database, you need to configure and use your DBHub.io account.&lt;/p&gt;&lt;p&gt;No DBHub.io account yet? &lt;a href=&quot;https://dbhub.io/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Create one now&lt;/span&gt;&lt;/a&gt; and import your certificate &lt;a href=&quot;#preferences&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;here&lt;/span&gt;&lt;/a&gt; to share your databases.&lt;/p&gt;&lt;p&gt;For online help visit &lt;a href=&quot;https://dbhub.io/about&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;here&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Est&aacute; usando una identidad integrada de s&oacute;lo lectura. Para subir su base de datos necesita configurar y usar su cuenta DBHub.io.&lt;/p&gt;&lt;p&gt;&iquest;Todav&iacute;a no tiene una cuenta en DBHub.io? &lt;a href=&quot;https://dbhub.io/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Cree una ahora&lt;/span&gt;&lt;/a&gt; e importe su certificado &lt;a href=&quot;#preferences&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;aqu&iacute;&lt;/span&gt;&lt;/a&gt; para compartir sus bases de datos.&lt;/p&gt;&lt;p&gt;Tiene ayuda en l&iacute;nea &lt;a href=&quot;https://dbhub.io/about&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;aqu&iacute;&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Est&aacute; usando una identidad integrada de s&oacute;lo lectura. Para subir su base de datos necesita configurar y usar su cuenta DBHub.io.&lt;/p&gt;&lt;p&gt;¿Todav&iacute;a no tiene una cuenta en DBHub.io? &lt;a href=&quot;https://dbhub.io/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Cree una ahora&lt;/span&gt;&lt;/a&gt; e importe su certificado &lt;a href=&quot;#preferences&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;aqu&iacute;&lt;/span&gt;&lt;/a&gt; para compartir sus bases de datos.&lt;/p&gt;&lt;p&gt;Tiene ayuda en l&iacute;nea &lt;a href=&quot;https://dbhub.io/about&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;aqu&iacute;&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="137"/>
