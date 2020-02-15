@@ -650,8 +650,8 @@ bool MainWindow::fileClose()
     if(execute_sql_worker && execute_sql_worker->isRunning())
     {
         if(QMessageBox::warning(this, qApp->applicationName(),
-                                tr("You are still executing SQL statements. When closing the database now the execution will be stopped. maybe "
-                                   "leaving the database in an incosistent state. Are you sure you want to close the database?"),
+                                tr("You are still executing SQL statements. Closing the database now will stop their execution, possibly "
+                                   "leaving the database in an inconsistent state. Are you sure you want to close the database?"),
                                 QMessageBox::Yes, QMessageBox::Cancel | QMessageBox::Default | QMessageBox::Escape) == QMessageBox::Cancel)
             return false;
 

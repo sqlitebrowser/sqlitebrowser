@@ -1293,7 +1293,7 @@ Errors are indicated with a red squiggle underline.</source>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="1239"/>
-        <source>The data has been saved to a temporary file and has been opened with the default application.You can edit now the file and when your are ready, you can apply the saved new data to the cell editor or cancel any changes.</source>
+        <source>The data has been saved to a temporary file and has been opened with the default application. You can now edit the file and, when you are ready, apply the saved new data to the cell editor or cancel any changes.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3960,6 +3960,11 @@ Reason: %1</source>
         <translation>インメモリーデータベース</translation>
     </message>
     <message>
+        <location filename="../MainWindow.cpp" line="653"/>
+        <source>You are still executing SQL statements. Closing the database now will stop their execution, possibly leaving the database in an inconsistent state. Are you sure you want to close the database?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../MainWindow.cpp" line="2747"/>
         <source>Could not open project file for writing.
 Reason: %1</source>
@@ -4258,11 +4263,6 @@ Are you sure?</source>
 If you answer no we will attempt to import the data in the SQL file to the current database.</source>
         <translation>インポートしたデータを保持する新しいデータベースを作成しますか
 いいえを選択すると、SQLファイルからのデータを現在のデータベースにインポートしようとします。</translation>
-    </message>
-    <message>
-        <location filename="../MainWindow.cpp" line="653"/>
-        <source>You are still executing SQL statements. When closing the database now the execution will be stopped. maybe leaving the database in an incosistent state. Are you sure you want to close the database?</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="727"/>

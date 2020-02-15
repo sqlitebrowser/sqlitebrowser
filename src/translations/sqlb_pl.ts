@@ -1308,7 +1308,7 @@ Błędy są podkreślane czerwonym ślaczkiem.</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="1239"/>
-        <source>The data has been saved to a temporary file and has been opened with the default application.You can edit now the file and when your are ready, you can apply the saved new data to the cell editor or cancel any changes.</source>
+        <source>The data has been saved to a temporary file and has been opened with the default application. You can now edit the file and, when you are ready, apply the saved new data to the cell editor or cancel any changes.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4077,9 +4077,8 @@ Czy na pewno?</translation>
         <translation>Baza danych w-pamięci</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="653"/>
         <source>You are still executing SQL statements. When closing the database now the execution will be stopped. maybe leaving the database in an incosistent state. Are you sure you want to close the database?</source>
-        <translation>Nadal wykonujesz polecenia SQL. Wykonywanie tych poleceń zostanie zatrzymane, po zamknięciu bazy danych, co może spowodować w niej niespójności. Czy na pewno zamknąć tę bazę danych?</translation>
+        <translation type="vanished">Nadal wykonujesz polecenia SQL. Wykonywanie tych poleceń zostanie zatrzymane, po zamknięciu bazy danych, co może spowodować w niej niespójności. Czy na pewno zamknąć tę bazę danych?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="727"/>
@@ -4313,6 +4312,11 @@ Czy na pewno zapisać bazę danych?</translation>
 If you answer no we will attempt to import the data in the SQL file to the current database.</source>
         <translation>Czy utworzyć plik nowej bazy danych do przechowania zaimportowanych danych?
 Jeśli nie, to dane zostaną zaimportowane do pliku bieżącej bazy danych.</translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="653"/>
+        <source>You are still executing SQL statements. Closing the database now will stop their execution, possibly leaving the database in an inconsistent state. Are you sure you want to close the database?</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1386"/>

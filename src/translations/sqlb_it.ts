@@ -1311,7 +1311,7 @@ Gli errori sono indicati con una sottolineatura rossa ondulata.</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="1239"/>
-        <source>The data has been saved to a temporary file and has been opened with the default application.You can edit now the file and when your are ready, you can apply the saved new data to the cell editor or cancel any changes.</source>
+        <source>The data has been saved to a temporary file and has been opened with the default application. You can now edit the file and, when you are ready, apply the saved new data to the cell editor or cancel any changes.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4013,9 +4013,8 @@ Motivo: %1</translation>
         <translation type="vanished">. Somma: %1; Media: %2; Min: %3; Max: %4</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="653"/>
         <source>You are still executing SQL statements. When closing the database now the execution will be stopped. maybe leaving the database in an incosistent state. Are you sure you want to close the database?</source>
-        <translation>Sto ancora eseguendo degli SQL. Se chiudi ora il database l&apos;esecuzione verrà terminata lasciando potenzialmente il database in uno stato inconsistente. Sei sicuro di voler chiudere il database?</translation>
+        <translation type="vanished">Sto ancora eseguendo degli SQL. Se chiudi ora il database l&apos;esecuzione verrà terminata lasciando potenzialmente il database in uno stato inconsistente. Sei sicuro di voler chiudere il database?</translation>
     </message>
     <message>
         <source>Do you want to save the changes made to the project file %1?</source>
@@ -4325,6 +4324,11 @@ Sei sicuro?</translation>
 If you answer no we will attempt to import the data in the SQL file to the current database.</source>
         <translation>Vuoi creare un nuovo file di database per mantenere i dati importati?
 Se rispondi di no proveremo ad importare i dati del file SQL all&apos;interno del database corrente.</translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="653"/>
+        <source>You are still executing SQL statements. Closing the database now will stop their execution, possibly leaving the database in an inconsistent state. Are you sure you want to close the database?</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="727"/>

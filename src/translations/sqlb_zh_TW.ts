@@ -24,7 +24,7 @@
     </message>
     <message>
         <source>Qt Version</source>
-        <translation type="obsolete">Qt&#x2009;版本</translation>
+        <translation type="obsolete">Qt 版本</translation>
     </message>
     <message>
         <source>SQLite Version</source>
@@ -1262,11 +1262,6 @@ Errors are indicated with a red squiggle underline.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="1239"/>
-        <source>The data has been saved to a temporary file and has been opened with the default application.You can edit now the file and when your are ready, you can apply the saved new data to the cell editor or cancel any changes.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../EditDialog.cpp" line="352"/>
         <location filename="../EditDialog.cpp" line="371"/>
         <source>Image files (%1)</source>
@@ -1309,6 +1304,11 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditDialog.cpp" line="1058"/>
         <source>Type of data currently in cell: Valid JSON</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EditDialog.cpp" line="1239"/>
+        <source>The data has been saved to a temporary file and has been opened with the default application. You can now edit the file and, when you are ready, apply the saved new data to the cell editor or cancel any changes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4263,11 +4263,6 @@ Are you sure?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="653"/>
-        <source>You are still executing SQL statements. When closing the database now the execution will be stopped. maybe leaving the database in an incosistent state. Are you sure you want to close the database?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../MainWindow.cpp" line="812"/>
         <source>Are you sure you want to delete the table &apos;%1&apos;?
 All data associated with the table will be lost.</source>
@@ -4403,6 +4398,11 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="1170"/>
         <source>%1 rows returned in %2ms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="653"/>
+        <source>You are still executing SQL statements. Closing the database now will stop their execution, possibly leaving the database in an inconsistent state. Are you sure you want to close the database?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

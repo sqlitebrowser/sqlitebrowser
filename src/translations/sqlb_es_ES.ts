@@ -1385,7 +1385,7 @@ Los errores se indican con un subrayado ondulado rojo.</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="1239"/>
-        <source>The data has been saved to a temporary file and has been opened with the default application.You can edit now the file and when your are ready, you can apply the saved new data to the cell editor or cancel any changes.</source>
+        <source>The data has been saved to a temporary file and has been opened with the default application. You can now edit the file and, when you are ready, apply the saved new data to the cell editor or cancel any changes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4795,6 +4795,11 @@ Si responde no se intentarán importar los datos del archivo SQL en la base de d
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../MainWindow.cpp" line="653"/>
+        <source>You are still executing SQL statements. Closing the database now will stop their execution, possibly leaving the database in an inconsistent state. Are you sure you want to close the database?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../MainWindow.cpp" line="727"/>
         <source>Do you want to save the changes made to the project file &apos;%1&apos;?</source>
         <translation type="unfinished"></translation>
@@ -5011,11 +5016,6 @@ Razón: %1</translation>
     <message>
         <source>. Sum: %1; Average: %2; Min: %3; Max: %4</source>
         <translation type="obsolete">. Suma: %1; Media: %2; Mín: %3; Máx: %4</translation>
-    </message>
-    <message>
-        <location filename="../MainWindow.cpp" line="653"/>
-        <source>You are still executing SQL statements. When closing the database now the execution will be stopped. maybe leaving the database in an incosistent state. Are you sure you want to close the database?</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>determining row count...</source>

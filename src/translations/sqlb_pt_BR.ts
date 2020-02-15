@@ -1299,7 +1299,7 @@ Erros são indicados com um ondulado vermelho.</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="1239"/>
-        <source>The data has been saved to a temporary file and has been opened with the default application.You can edit now the file and when your are ready, you can apply the saved new data to the cell editor or cancel any changes.</source>
+        <source>The data has been saved to a temporary file and has been opened with the default application. You can now edit the file and, when you are ready, apply the saved new data to the cell editor or cancel any changes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3752,6 +3752,11 @@ If you answer no we will attempt to import the data in the SQL file to the curre
 Se você disser que não, tentaremos importar os dados do arquivo SQL para o banco de dados atual.</translation>
     </message>
     <message>
+        <location filename="../MainWindow.cpp" line="653"/>
+        <source>You are still executing SQL statements. Closing the database now will stop their execution, possibly leaving the database in an inconsistent state. Are you sure you want to close the database?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../MainWindow.cpp" line="727"/>
         <source>Do you want to save the changes made to the project file &apos;%1&apos;?</source>
         <translation type="unfinished"></translation>
@@ -4900,11 +4905,6 @@ Você pode arrastar comandos SQL da coluna Esquema e largá-los no editor SQL ou
         <location filename="../MainWindow.cpp" line="575"/>
         <source>In-Memory database</source>
         <translation>Banco de dados em memória</translation>
-    </message>
-    <message>
-        <location filename="../MainWindow.cpp" line="653"/>
-        <source>You are still executing SQL statements. When closing the database now the execution will be stopped. maybe leaving the database in an incosistent state. Are you sure you want to close the database?</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>determining row count...</source>
