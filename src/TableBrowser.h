@@ -35,7 +35,8 @@ struct BrowseDataTableSettings
     bool showRowid;
     QString encoding;
     QString plotXAxis;
-    QMap<QString, PlotDock::PlotSettings> plotYAxes;
+    QMap<QString, PlotDock::PlotSettings> plotY1Axes;
+    QMap<QString, PlotDock::PlotSettings> plotY2Axes;
     QString unlockViewPk;
     QMap<int, bool> hiddenColumns;
     std::vector<QString> globalFilters;
@@ -64,7 +65,8 @@ struct BrowseDataTableSettings
         if(stream.atEnd())
             return stream;
         stream >> object.plotXAxis;
-        stream >> object.plotYAxes;
+        stream >> object.plotY1Axes;
+        stream >> object.plotY2Axes;
         stream >> object.unlockViewPk;
 
         // Project files from versions before 3.11.0 didn't have these fields

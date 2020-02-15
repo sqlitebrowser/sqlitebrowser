@@ -81,8 +81,9 @@ private:
     {
         PlotColumnField = 0,
         PlotColumnX = 1,
-        PlotColumnY = 2,
-        PlotColumnType = 3,
+        PlotColumnY1 = 2,
+        PlotColumnY2 = 3,
+        PlotColumnType = 4,
     };
 
     Ui::PlotDock* ui;

@@ -2347,17 +2347,28 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, QXmlS
             }
         } else if(xml.name() == "plot_y_axes") {
             while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "plot_y_axes") {
-                QString yAxisName;
-                PlotDock::PlotSettings yAxisSettings;
-                if (xml.name() == "y_axis") {
-                    yAxisName = xml.attributes().value("name").toString();
-                    yAxisSettings.lineStyle = xml.attributes().value("line_style").toInt();
-                    yAxisSettings.pointShape = xml.attributes().value("point_shape").toInt();
-                    yAxisSettings.colour = QColor (xml.attributes().value("colour").toString());
-                    yAxisSettings.active = xml.attributes().value("active").toInt();
+                QString y1AxisName;
+                QString y2AxisName;
+                PlotDock::PlotSettings y1AxisSettings;
+                PlotDock::PlotSettings y2AxisSettings;
+                if (xml.name() == "y1_axis") {
+                    y1AxisName = xml.attributes().value("name").toString();
+                    y1AxisSettings.lineStyle = xml.attributes().value("line_style").toInt();
+                    y1AxisSettings.pointShape = xml.attributes().value("point_shape").toInt();
+                    y1AxisSettings.colour = QColor (xml.attributes().value("colour").toString());
+                    y1AxisSettings.active = xml.attributes().value("active").toInt();
                     xml.skipCurrentElement();
                 }
-                settings.plotYAxes[yAxisName] = yAxisSettings;
+                if (xml.name() == "y2_axis") {
+                  y2AxisName = xml.attributes().value("name").toString();
+                  y2AxisSettings.lineStyle = xml.attributes().value("line_style").toInt();
+                  y2AxisSettings.pointShape = xml.attributes().value("point_shape").toInt();
+                  y2AxisSettings.colour = QColor (xml.attributes().value("colour").toString());
+                  y2AxisSettings.active = xml.attributes().value("active").toInt();
+                  xml.skipCurrentElement();
+                }
+                settings.plotY1Axes[y1AxisName] = y1AxisSettings;
+                settings.plotY2Axes[y2AxisName] = y2AxisSettings;
             }
         } else if(xml.name() == "global_filter") {
             while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "global_filter")
@@ -2696,16 +2707,28 @@ static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, Q
         xml.writeEndElement();
     }
     xml.writeEndElement();
-    xml.writeStartElement("plot_y_axes");
-    for(auto iter=object.plotYAxes.constBegin(); iter!=object.plotYAxes.constEnd(); ++iter) {
+    xml.writeStartElement("plot_y1_axes");
+    for(auto iter=object.plotY1Axes.constBegin(); iter!=object.plotY1Axes.constEnd(); ++iter) {
         PlotDock::PlotSettings plotSettings = iter.value();
-        xml.writeStartElement("y_axis");
+        xml.writeStartElement("y2_axis");
         xml.writeAttribute("name", iter.key());
         xml.writeAttribute("line_style", QString::number(plotSettings.lineStyle));
         xml.writeAttribute("point_shape", QString::number(plotSettings.pointShape));
         xml.writeAttribute("colour", plotSettings.colour.name());
         xml.writeAttribute("active", QString::number(plotSettings.active));
         xml.writeEndElement();
+    }
+    xml.writeEndElement();
+    xml.writeStartElement("plot_y2_axes");
+    for(auto iter=object.plotY2Axes.constBegin(); iter!=object.plotY2Axes.constEnd(); ++iter) {
+      PlotDock::PlotSettings plotSettings = iter.value();
+      xml.writeStartElement("y2_axis");
+      xml.writeAttribute("name", iter.key());
+      xml.writeAttribute("line_style", QString::number(plotSettings.lineStyle));
+      xml.writeAttribute("point_shape", QString::number(plotSettings.pointShape));
+      xml.writeAttribute("colour", plotSettings.colour.name());
+      xml.writeAttribute("active", QString::number(plotSettings.active));
+      xml.writeEndElement();
     }
     xml.writeEndElement();
     xml.writeStartElement("global_filter");
