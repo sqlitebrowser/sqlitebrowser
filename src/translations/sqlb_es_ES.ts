@@ -1393,7 +1393,7 @@ Los errores se indican con un subrayado ondulado rojo.</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="1239"/>
-        <source>The data has been saved to a temporary file and has been opened with the default application.You can edit now the file and when your are ready, you can apply the saved new data to the cell editor or cancel any changes.</source>
+        <source>The data has been saved to a temporary file and has been opened with the default application. You can now edit the file and, when you are ready, apply the saved new data to the cell editor or cancel any changes.</source>
         <translation>Los datos se han guardado en un archivo temporal y se ha abierto con la aplicación por defecto. Ahora puede editar ese archivo y cuado termine puede aplicar los nuevos datos guardados a la celda o cancelar los cambios.</translation>
     </message>
     <message>
@@ -2552,7 +2552,7 @@ x~y	Rango: valores entre x e y</translation>
     <message>
         <location filename="../FindReplaceDialog.ui" line="116"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When checked, the pattern to find is interpreted as a UNIX regular expression. See &lt;a href=&quot;https://en.wikibooks.org/wiki/Regular_Expressions&quot;&gt;Regular Expression in Wikibooks&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Si se marca, el patrón buscado se interpreta como una expresión regular UNIX. Véase &lt;a href=&quot;https://es.wikipedia.org/wiki/Expresi%C3%B3n_regular&quot;&gt;«Expresión regular» en Wikipedia&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Si se marca, el patrón de búsqueda se interpreta como una expresión regular UNIX. Véase &lt;a href=&quot;https://es.wikipedia.org/wiki/Expresi%C3%B3n_regular&quot;&gt;«Expresión regular» en Wikipedia&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="119"/>
@@ -5033,7 +5033,7 @@ Razón: %1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="653"/>
-        <source>You are still executing SQL statements. When closing the database now the execution will be stopped. maybe leaving the database in an incosistent state. Are you sure you want to close the database?</source>
+        <source>You are still executing SQL statements. Closing the database now will stop their execution, possibly leaving the database in an inconsistent state. Are you sure you want to close the database?</source>
         <translation>Todavía se están ejecutando sentencias SQL. Al cerrar la base de datos se detendrá la ejecución. Esto puede dejar la base de datos en un estado inconsistente. ¿Está seguro de que quiere cerrar la base de datos?</translation>
     </message>
     <message>
@@ -6997,7 +6997,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="105"/>
         <source>The found pattern must be a whole word</source>
-        <translation>El patrón buscado debe ser una palabra completa</translation>
+        <translation>El patrón de búsqueda debe ser una palabra completa</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="108"/>
@@ -7017,7 +7017,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="131"/>
         <source>The found pattern must match in letter case</source>
-        <translation>El patrón busca debe coincidir en mayúsculas y minúsculas</translation>
+        <translation>El patrón de búsqueda debe coincidir en mayúsculas y minúsculas</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="134"/>
@@ -7042,12 +7042,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="158"/>
         <source>Interpret search pattern as a regular expression</source>
-        <translation>Interpretar el patrón buscado como una expresión regular</translation>
+        <translation>Interpretar el patrón de búsqueda como una expresión regular</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="161"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When checked, the pattern to find is interpreted as a UNIX regular expression. See &lt;a href=&quot;https://en.wikibooks.org/wiki/Regular_Expressions&quot;&gt;Regular Expression in Wikibooks&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Si se activa, el patrón buscado se interpreta como una expresión regular UNIX. Véase &lt;a href=&quot;https://es.wikipedia.org/wiki/Expresi%C3%B3n_regular&quot;&gt;«Expresión regular» en Wikipedia&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Si se activa, el patrón de búsqueda se interpreta como una expresión regular UNIX. Véase &lt;a href=&quot;https://es.wikipedia.org/wiki/Expresi%C3%B3n_regular&quot;&gt;«Expresión regular» en Wikipedia&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="164"/>
@@ -7613,12 +7613,12 @@ Mantenga pulsado %3Mayús. y haga clic para ir ahí</translation>
     <message>
         <location filename="../TableBrowser.ui" line="320"/>
         <source>Interpret search pattern as a regular expression</source>
-        <translation>Interpretar el patrón buscado como una expresión regular</translation>
+        <translation>Interpretar el patrón de búsqueda como una expresión regular</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="323"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When checked, the pattern to find is interpreted as a UNIX regular expression. See &lt;a href=&quot;https://en.wikibooks.org/wiki/Regular_Expressions&quot;&gt;Regular Expression in Wikibooks&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Si se marca, el patrón buscado se interpreta como una expresión regular UNIX. Véase &lt;a href=&quot;https://es.wikipedia.org/wiki/Expresi%C3%B3n_regular&quot;&gt;«Expresión regular» en Wikipedia&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Si se marca, el patrón de búsqueda se interpreta como una expresión regular UNIX. Véase &lt;a href=&quot;https://es.wikipedia.org/wiki/Expresi%C3%B3n_regular&quot;&gt;«Expresión regular» en Wikipedia&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="326"/>
