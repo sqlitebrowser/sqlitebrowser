@@ -1329,7 +1329,7 @@ Les erreurs sont signalées par un tilde rouge souligné.</translation>
     <message>
         <location filename="../EditDialog.cpp" line="1239"/>
         <source>The data has been saved to a temporary file and has been opened with the default application. You can now edit the file and, when you are ready, apply the saved new data to the cell editor or cancel any changes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Les données ont été enregistrées dans un fichier temporaire. Elles ont été ouvertes avec l&apos;application par défaut. Vous pouvez maintenant modifier le fichier et, lorsque vous serez prêt, appliquer les nouvelles données enregistrées à l&apos;éditeur de cellules ou annuler les modifications.</translation>
     </message>
     <message>
         <source>The data has been saved to a temporary file and has been opened with the default application.You can edit now the file and when your are ready, you can apply the saved new data to the cell editor or cancel any changes.</source>
@@ -4867,7 +4867,7 @@ Si vous répondez non, nous essaierons d&apos;importer les données du fichier S
     <message>
         <location filename="../MainWindow.cpp" line="653"/>
         <source>You are still executing SQL statements. Closing the database now will stop their execution, possibly leaving the database in an inconsistent state. Are you sure you want to close the database?</source>
-        <translation type="unfinished"></translation>
+        <translation>Des traitements SQL sont en cours d&apos;exécution. Fermer la Base de Données maintrenant arrêtera ces traitements. Cela risque de laisser la Base de Données dans un état incohérent. Êtes-vous sûr de vouloir fermer la Base de Données ?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="727"/>
