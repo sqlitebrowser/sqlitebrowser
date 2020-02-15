@@ -489,7 +489,7 @@ Si se modificaron cualquiera de los otros ajustes para este archivo de base de d
     <message>
         <location filename="../CondFormatManager.ui" line="14"/>
         <source>Conditional Format Manager</source>
-        <translation">Gestor de Formato Condicional</translation>
+        <translation>Gestor de Formato Condicional</translation>
     </message>
     <message>
         <source>&amp;Up</source>
@@ -7639,7 +7639,7 @@ Mantenga pulsado %3Mayús. y haga clic para ir ahí</translation>
     <message>
         <location filename="../TableBrowser.ui" line="390"/>
         <source>Replace with</source>
-        <translation">Reemplazar con</translation>
+        <translation>Reemplazar con</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="400"/>
