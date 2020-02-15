@@ -1236,8 +1236,8 @@ void EditDialog::openDataWithExternal()
         QMessageBox::StandardButton reply = QMessageBox::information
             (nullptr,
              QApplication::applicationName(),
-             tr("The data has been saved to a temporary file and has been opened with the default application."
-                "You can edit now the file and when your are ready, you can apply the saved new data to the cell editor or cancel any changes."),
+             tr("The data has been saved to a temporary file and has been opened with the default application. "
+                "You can now edit the file and, when you are ready, apply the saved new data to the cell editor or cancel any changes."),
              QMessageBox::Apply | QMessageBox::Cancel);
 
         QFile readFile(file.fileName());
