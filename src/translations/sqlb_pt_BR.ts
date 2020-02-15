@@ -3774,7 +3774,7 @@ Se você disser que não, tentaremos importar os dados do arquivo SQL para o ban
     <message>
         <location filename="../MainWindow.cpp" line="653"/>
         <source>You are still executing SQL statements. Closing the database now will stop their execution, possibly leaving the database in an inconsistent state. Are you sure you want to close the database?</source>
-        <translation type="unfinished"></translation>
+        <translation>Você ainda está executando comandos SQL. Fechar o banco de dados agora fará a execução parar, talvez deixando o banco de dados em um estado inconsistente. Você tem certeza de que deseja fechar o banco de dados?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="727"/>
@@ -5812,7 +5812,7 @@ Aviso: nem todos os dados foram obtidos da tabela ainda devido ao mecanismo de o
     <message>
         <location filename="../PreferencesDialog.cpp" line="398"/>
         <source>Extensions(*.so *.dylib *.dll);;All files(*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Extensões(*.so *.dylib *.dll);;Todos os arquivos(*)</translation>
     </message>
     <message>
         <source>Extensions(*.so *.dll);;All files(*)</source>
@@ -5956,17 +5956,17 @@ Aviso: nem todos os dados foram obtidos da tabela ainda devido ao mecanismo de o
     <message>
         <location filename="../PreferencesDialog.ui" line="817"/>
         <source>Threshold for completion and calculation on selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Limite de compleção e cálculo em seleção</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="827"/>
         <source>Show images in cell</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar imagens na célula</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="837"/>
         <source>Enable this option to show a preview of BLOBs containing image data in the cells. This can affect the performance of the data browser, however.</source>
-        <translation type="unfinished"></translation>
+        <translation>Habilite essa opção para mostrar uma prévia de BLOBs contendo dados de imagens nas células. Isso pode afetar a performance do visualizados de dados.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1635"/>
@@ -6125,47 +6125,47 @@ Aviso: nem todos os dados foram obtidos da tabela ainda devido ao mecanismo de o
     <message>
         <location filename="../PreferencesDialog.ui" line="392"/>
         <source>Main Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Janela principal</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="405"/>
         <source>Database Structure</source>
-        <translation type="unfinished">Estrutura do banco de dados</translation>
+        <translation>Estrutura do banco de dados</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="418"/>
         <source>Browse Data</source>
-        <translation type="unfinished">Navegar dados</translation>
+        <translation>Navegar dados</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="431"/>
         <source>Execute SQL</source>
-        <translation type="unfinished">Executar SQL</translation>
+        <translation>Executar SQL</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="494"/>
         <source>Edit Database Cell</source>
-        <translation type="unfinished">Editar célula do banco de dados</translation>
+        <translation>Editar célula do banco de dados</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="513"/>
         <source>When this value is changed, all the other color preferences are also set to matching colors.</source>
-        <translation type="unfinished"></translation>
+        <translation>Quando este valor é alterado, todas as outras preferências de cor são definidas para cores compatíveis.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="532"/>
         <source>Follow the desktop style</source>
-        <translation type="unfinished"></translation>
+        <translation>Seguir o estilo do desktop</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="537"/>
         <source>Dark style</source>
-        <translation type="unfinished"></translation>
+        <translation>Estilo escuro</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="545"/>
         <source>Application style</source>
-        <translation type="unfinished"></translation>
+        <translation>Estilo da aplicação</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="743"/>
@@ -6178,7 +6178,10 @@ Aviso: nem todos os dados foram obtidos da tabela ainda devido ao mecanismo de o
 Maximum number of rows in a table for enabling the value completion based on current values in the column.
 Maximum number of indexes in a selection for calculating sum and average.
 Can be set to 0 for disabling the functionalities.</source>
-        <translation type="unfinished"></translation>
+        <translation>Esse é o número máximo de itens permitidos para que algumas funcionalidades computacionalmente caras sejam habilitadas:
+Número máximo de linhas em uma tabela para habilitar compleção de valores baseada nos valores atualmente na coluna.
+Número máximo de índices em uma seleção para se calcular soma e média.
+Pode ser deixado em 0 para se desabilitar as funcionalidades.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="803"/>
@@ -6209,7 +6212,7 @@ Pode ser 0 para desabilitar preenchimento.</translation>
         <location filename="../PreferencesDialog.ui" line="995"/>
         <location filename="../PreferencesDialog.ui" line="1014"/>
         <source>Click to set this color</source>
-        <translation type="unfinished"></translation>
+        <translation>Clique para definir essa cor</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="915"/>
@@ -6304,12 +6307,12 @@ Pode ser 0 para desabilitar preenchimento.</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="1848"/>
         <source>Proxy</source>
-        <translation type="unfinished"></translation>
+        <translation>Proxy</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1855"/>
         <source>Configure</source>
-        <translation type="unfinished"></translation>
+        <translation>Configurar</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.cpp" line="666"/>
@@ -6326,12 +6329,12 @@ Todas as suas preferências serão perdidas e os valores padrão serão utilizad
     <message>
         <location filename="../PreferencesDialog.ui" line="1624"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite provides an SQL function for loading extensions from a shared library file. Activate this if you want to use the &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt; function from SQL code.&lt;/p&gt;&lt;p&gt;For security reasons, extension loading is turned off by default and must be enabled through this setting. You can always load extensions through the GUI, even though this option is disabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite provê uma função SQL para carregar extensões de um arquivo de biblioteca. Ative isso se você quer usar a função &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt; a partir de código SQL.&lt;/p&gt;&lt;p&gt;Por motivos de segurança, carregamento de extensões é desabilitado por padrão e precisa ser habilitado através dessa configuração. Você sempre pode carregar extensões através da interface gráfica, mesmo com essa opção desabilitada.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1627"/>
         <source>Allow loading extensions from SQL code</source>
-        <translation type="unfinished"></translation>
+        <translation>Permitir o carregamento de extensões a partir de código SQL</translation>
     </message>
 </context>
 <context>
@@ -6854,7 +6857,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="232"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Results of the last executed statements.&lt;/p&gt;&lt;p&gt;You may want to collapse this panel and use the &lt;span style=&quot; font-style:italic;&quot;&gt;SQL Log&lt;/span&gt; dock with &lt;span style=&quot; font-style:italic;&quot;&gt;User&lt;/span&gt; selection instead.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Resultados dos últimos comandos executados.&lt;/p&gt;&lt;p&gt;Você pode querer colapsar esse painel e usar o dock &lt;span style=&quot; font-style:italic;&quot;&gt;Log SQL&lt;/span&gt; com seleção &lt;span style=&quot; font-style:italic;&quot;&gt;Usuário&lt;/span&gt; em vez disso.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="253"/>
@@ -6978,23 +6981,23 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.cpp" line="237"/>
         <source>Couldn&apos;t read file: %1.</source>
-        <translation type="unfinished">Não pôde ler arquivo: %1.</translation>
+        <translation>Não pôde ler arquivo: %1.</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="267"/>
         <location filename="../SqlExecutionArea.cpp" line="285"/>
         <source>Couldn&apos;t save file: %1.</source>
-        <translation type="unfinished">Não pôde salvar arquivo: %1.</translation>
+        <translation>Não pôde salvar arquivo: %1.</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="295"/>
         <source>Your changes will be lost when reloading it!</source>
-        <translation type="unfinished"></translation>
+        <translation>Suas modificações serão perdidas quando recarregando!</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="301"/>
         <source>The file &quot;%1&quot; was modified by another program. Do you want to reload it?%2</source>
-        <translation type="unfinished"></translation>
+        <translation>O arquivo &quot;%1&quot; foi modificado por outro programa. Você quer recarregá-lo?%2</translation>
     </message>
 </context>
 <context>
@@ -7406,7 +7409,7 @@ Segure %3Shift e clique para ir para lá</translation>
  - Ctrl+&quot; for duplicating the current record.
  - Ctrl+&apos; for copying the value from the cell above.
  - Standard selection and copy/paste operations.</source>
-        <translation type="unfinished">Essa é a vista de tabela do banco de dados. Você pode fazer as seguintes ações:
+        <translation>Essa é a vista de tabela do banco de dados. Você pode fazer as seguintes ações:
  - Começar a escrever para editar o valor.
  - Clicar duas vezes em qualquer registro para editar seus conteúdos no editor de célula.
  - Alt+Del para deletar o conteúdo da célula para NULL.
@@ -7417,717 +7420,718 @@ Segure %3Shift e clique para ir para lá</translation>
     <message>
         <location filename="../TableBrowser.ui" line="253"/>
         <source>Text pattern to find considering the checks in this frame</source>
-        <translation type="unfinished">Padrão de texto para encontrar considerando os testes nesse frame</translation>
+        <translation>Padrão de texto para encontrar considerando os testes nesse frame</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="256"/>
         <source>Find in table</source>
-        <translation type="unfinished"></translation>
+        <translation>Encontrar na tabela</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="266"/>
         <source>Find previous match [Shift+F3]</source>
-        <translation type="unfinished">Encontrar resultado anterior [Shift+F3]</translation>
+        <translation>Encontrar resultado anterior [Shift+F3]</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="269"/>
         <source>Find previous match with mapping</source>
-        <translation type="unfinished">Encontrar resultado anterior com mapeamento</translation>
+        <translation>Encontrar resultado anterior com mapeamento</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="276"/>
         <source>Shift+F3</source>
-        <translation type="unfinished">Shift+F3</translation>
+        <translation>Shift+F3</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="283"/>
         <source>Find next match [Enter, F3]</source>
-        <translation type="unfinished">Encontrar próxima correspondência [Enter, F3]</translation>
+        <translation>Encontrar próxima correspondência [Enter, F3]</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="286"/>
         <source>Find next match with wrapping</source>
-        <translation type="unfinished">Encontrar próxima correspondência no arquivo inteiro</translation>
+        <translation>Encontrar próxima correspondência com quebra de linha</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="293"/>
         <source>F3</source>
-        <translation type="unfinished">F3</translation>
+        <translation>F3</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="300"/>
         <source>The found pattern must match in letter case</source>
-        <translation type="unfinished">O padrão encontrado precisa casar em capitalização</translation>
+        <translation>O padrão encontrado precisa casar em capitalização</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="303"/>
         <source>Case Sensitive</source>
-        <translation type="unfinished">Sensível à capitalização</translation>
+        <translation>Sensível à capitalização</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="310"/>
         <source>The found pattern must be a whole word</source>
-        <translation type="unfinished">O padrão encontrado precisa ser uma palavra inteira</translation>
+        <translation>O padrão encontrado precisa ser uma palavra inteira</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="313"/>
         <source>Whole Cell</source>
-        <translation type="unfinished"></translation>
+        <translation>Célula inteira</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="320"/>
         <source>Interpret search pattern as a regular expression</source>
-        <translation type="unfinished">Interpretar padrão de busca como expressão regular</translation>
+        <translation>Interpretar padrão de busca como expressão regular</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="323"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When checked, the pattern to find is interpreted as a UNIX regular expression. See &lt;a href=&quot;https://en.wikibooks.org/wiki/Regular_Expressions&quot;&gt;Regular Expression in Wikibooks&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Quando marcado, o padrão para ser encontrado é interpretado como uma expressão regular do UNIX. Veja &lt;a href=&quot;https://en.wikibooks.org/wiki/Regular_Expressions&quot;&gt;Regular Expression in Wikibooks&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="326"/>
         <source>Regular Expression</source>
-        <translation type="unfinished">Expressão Regular</translation>
+        <translation>Expressão regular</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="346"/>
         <location filename="../TableBrowser.ui" line="349"/>
         <source>Close Find Bar</source>
-        <translation type="unfinished">Fechar barra de busca</translation>
+        <translation>Fechar barra de busca</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="387"/>
         <source>Text to replace with</source>
-        <translation type="unfinished"></translation>
+        <translation>Texto para substituir com</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="390"/>
         <source>Replace with</source>
-        <translation type="unfinished"></translation>
+        <translation>Substituir com</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="400"/>
         <source>Replace next match</source>
-        <translation type="unfinished"></translation>
+        <translation>Substituir próxima correspondência</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="403"/>
         <location filename="../TableBrowser.ui" line="1054"/>
         <source>Replace</source>
-        <translation type="unfinished"></translation>
+        <translation>Substituir</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="410"/>
         <source>Replace all matches</source>
-        <translation type="unfinished"></translation>
+        <translation>Substituir todas as correspondências</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="413"/>
         <source>Replace all</source>
-        <translation type="unfinished"></translation>
+        <translation>Substituir todos</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="456"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll to the beginning&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rolar para o começo&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rolar para o começo&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="459"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates to the beginning in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicar nesse botão navega até o começo da vista de tabela acima.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicar nesse botão navega até o começo da vista de tabela acima.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="462"/>
         <source>|&lt;</source>
-        <translation type="unfinished">|&lt;</translation>
+        <translation>|&lt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="476"/>
         <source>Scroll one page upwards</source>
-        <translation type="unfinished">Rolar uma página para cima</translation>
+        <translation>Rolar uma página para cima</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="479"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates one page of records upwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicando nesse botão navega uma página de registros para cima.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicando nesse botão navega uma página de registros para cima.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="482"/>
         <source>&lt;</source>
-        <translation type="unfinished">&lt;</translation>
+        <translation>&lt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="493"/>
         <source>0 - 0 of 0</source>
-        <translation type="unfinished">0 - 0 de 0</translation>
+        <translation>0 - 0 de 0</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="503"/>
         <source>Scroll one page downwards</source>
-        <translation type="unfinished">Rolar uma página para baixo</translation>
+        <translation>Rolar uma página para baixo</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="506"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates one page of records downwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicando nesse botão navega uma página de registros para baixo.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicando nesse botão navega uma página de registros para baixo.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="509"/>
         <source>&gt;</source>
-        <translation type="unfinished">&gt;</translation>
+        <translation>&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="523"/>
         <source>Scroll to the end</source>
-        <translation type="unfinished">Rolar para o fim</translation>
+        <translation>Rolar para o fim</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="526"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Clicking this button navigates up to the end in the table view above.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Clicar nesse botão navega até o fim da vista de tabela acima.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Clicar nesse botão navega até o fim da vista de tabela acima.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="529"/>
         <source>&gt;|</source>
-        <translation type="unfinished">&gt;|</translation>
+        <translation>&gt;|</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="553"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click here to jump to the specified record&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clique aqui para pular para o registro especificado&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clique aqui para pular para o registro especificado&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="556"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button is used to navigate to the record number specified in the Go to area.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Esse botão navega para o registro especificado na área Ir para.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Esse botão navega para o registro especificado na área Ir para.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="559"/>
         <source>Go to:</source>
-        <translation type="unfinished">Ir para:</translation>
+        <translation>Ir para:</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="566"/>
         <source>Enter record number to browse</source>
-        <translation type="unfinished">Entre o número do registro para navegar</translation>
+        <translation>Entre o número do registro para navegar</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="569"/>
         <source>Type a record number in this area and click the Go to: button to display the record in the database view</source>
-        <translation type="unfinished">Digite o número de um registro nessa área e clique no botão Ir para: para exibir o registro na vista do banco de dados</translation>
+        <translation>Digite o número de um registro nessa área e clique no botão Ir para: para exibir o registro na vista do banco de dados</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="572"/>
         <source>1</source>
-        <translation type="unfinished">1</translation>
+        <translation>1</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="584"/>
         <source>Show rowid column</source>
-        <translation type="unfinished">Mostrar coluna rowid</translation>
+        <translation>Mostrar coluna rowid</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="587"/>
         <source>Toggle the visibility of the rowid column</source>
-        <translation type="unfinished">Alternar a visibilidade da coluna rowid</translation>
+        <translation>Alternar a visibilidade da coluna rowid</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="595"/>
         <source>Unlock view editing</source>
-        <translation type="unfinished">Liberar edição da vista</translation>
+        <translation>Liberar edição da vista</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="598"/>
         <source>This unlocks the current view for editing. However, you will need appropriate triggers for editing.</source>
-        <translation type="unfinished">Isso libera a vista atual para edição. Todavia, você vai precisar dos gatilhos apropriados para editar.</translation>
+        <translation>Isso libera a vista atual para edição. Todavia, você vai precisar dos gatilhos apropriados para editar.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="603"/>
         <source>Edit display format</source>
-        <translation type="unfinished">Editar formato de exibição</translation>
+        <translation>Editar formato de exibição</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="606"/>
         <source>Edit the display format of the data in this column</source>
-        <translation type="unfinished">Editar o formato de exibição dos dados nessa coluna</translation>
+        <translation>Editar o formato de exibição dos dados nessa coluna</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="615"/>
         <location filename="../TableBrowser.ui" line="651"/>
         <source>New Record</source>
-        <translation type="unfinished">Novo registro</translation>
+        <translation>Novo registro</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="618"/>
         <location filename="../TableBrowser.ui" line="621"/>
         <source>Insert a new record in the current table</source>
-        <translation type="unfinished">Inserir um novo registro na tabela atual</translation>
+        <translation>Inserir um novo registro na tabela atual</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="624"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button creates a new record in the database. Hold the mouse button to open a pop-up menu of different options:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt;: insert a new record with default values in the database.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Insert Values...&lt;/span&gt;: open a dialog for entering values before they are inserted in the database. This allows to enter values acomplishing the different constraints. This dialog is also open if the &lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt; option fails due to these constraints.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Esse botão cria um novo registro no banco de dados. Segure o botão do mouse para abrir um menu de opções diferentes:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Novo Registro&lt;/span&gt;: insere um novo registro com valores padrão no banco de dados.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Inserir Valores...&lt;/span&gt;: abre um diálogo para novos valores antes de serem inseridos no banco de dados. Isso permite a entrada de valores de acordo com as restrições. Esse diálogo também é abaerto se a opção&lt;span style=&quot; font-weight:600;&quot;&gt;Novo Registro&lt;/span&gt; falha devido a essas restrições.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Esse botão cria um novo registro no banco de dados. Segure o botão do mouse para abrir um menu de opções diferentes:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Novo Registro&lt;/span&gt;: insere um novo registro com valores padrão no banco de dados.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Inserir Valores...&lt;/span&gt;: abre um diálogo para novos valores antes de serem inseridos no banco de dados. Isso permite a entrada de valores de acordo com as restrições. Esse diálogo também é abaerto se a opção&lt;span style=&quot; font-weight:600;&quot;&gt;Novo Registro&lt;/span&gt; falha devido a essas restrições.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="633"/>
         <location filename="../TableBrowser.cpp" line="1012"/>
         <source>Delete Record</source>
-        <translation type="unfinished">Deletar registro</translation>
+        <translation>Deletar registro</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="636"/>
         <source>Delete the current record</source>
-        <translation type="unfinished">Deletar o registro atual</translation>
+        <translation>Deletar o registro atual</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="639"/>
         <location filename="../TableBrowser.ui" line="642"/>
         <source>This button deletes the record or records currently selected in the table</source>
-        <translation type="unfinished">Esse botão deleta o registro ou registros selecionados</translation>
+        <translation>Esse botão deleta o registro ou registros selecionados</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="654"/>
         <location filename="../TableBrowser.ui" line="657"/>
         <source>Insert new record using default values in browsed table</source>
-        <translation type="unfinished">Inserir novo registro usando valores padrão na tabela</translation>
+        <translation>Inserir novo registro usando valores padrão na tabela</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="662"/>
         <source>Insert Values...</source>
-        <translation type="unfinished">Inserir Valores...</translation>
+        <translation>Inserir valores...</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="665"/>
         <location filename="../TableBrowser.ui" line="668"/>
         <source>Open a dialog for inserting values in a new record</source>
-        <translation type="unfinished">Abre um diálogo para inserir valores em um novo registro</translation>
+        <translation>Abre um diálogo para inserir valores em um novo registro</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="673"/>
         <source>Export to &amp;CSV</source>
-        <translation type="unfinished">Exportar para &amp;CSV</translation>
+        <translation>Exportar para &amp;CSV</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="676"/>
         <location filename="../TableBrowser.ui" line="679"/>
         <source>Export the filtered data to CSV</source>
-        <translation type="unfinished">Exportar dados filtrados para CSV</translation>
+        <translation>Exportar dados filtrados para CSV</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="682"/>
         <source>This button exports the data of the browsed table as currently displayed (after filters, display formats and order column) as a CSV file.</source>
-        <translation type="unfinished">Esse botão exporta os dados da tabela como atualmente exibidos como um arquivo CSV.</translation>
+        <translation>Esse botão exporta os dados da tabela como atualmente exibidos como um arquivo CSV.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="687"/>
         <source>Save as &amp;view</source>
-        <translation type="unfinished">Salvar como &amp;vista</translation>
+        <translation>Salvar como &amp;vista</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="690"/>
         <location filename="../TableBrowser.ui" line="693"/>
         <source>Save the current filter, sort column and display formats as a view</source>
-        <translation type="unfinished">Salva o filtro, ordenação e formato como uma vista</translation>
+        <translation>Salva o filtro, ordenação e formato como uma vista</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="696"/>
         <source>This button saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.</source>
-        <translation type="unfinished">Esse botão salva as configurações da tabela exibida como uma vista SQL que você pode utilizar em comandos SQL depois.</translation>
+        <translation>Esse botão salva as configurações da tabela exibida como uma vista SQL que você pode utilizar em comandos SQL depois.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="705"/>
         <source>Save Table As...</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvar tabela como...</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="708"/>
         <location filename="../TableBrowser.ui" line="711"/>
         <source>Save the table as currently displayed</source>
-        <translation type="unfinished">Salva a tabela como atualmente exibida</translation>
+        <translation>Salva a tabela como atualmente exibida</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="714"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This popup menu provides the following options applying to the currently browsed and filtered table:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Export to CSV: this option exports the data of the browsed table as currently displayed (after filters, display formats and order column) to a CSV file.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Save as view: this option saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Esse Menu provê as seguintes opções para a tabela atual:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Exportar para CSV: essa opção exporta os dados como estão exibidos para um arquivo CSV.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Salvar como vista: essa opção salva a configuração atual da tabela como uma vista SQL que você depois pode consultar em comandos SQL.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Esse Menu provê as seguintes opções para a tabela atual:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Exportar para CSV: essa opção exporta os dados como estão exibidos para um arquivo CSV.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Salvar como vista: essa opção salva a configuração atual da tabela como uma vista SQL que você depois pode consultar em comandos SQL.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="719"/>
         <source>Hide column(s)</source>
-        <translation type="unfinished">Ocultar coluna(s)</translation>
+        <translation>Ocultar coluna(s)</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="722"/>
         <source>Hide selected column(s)</source>
-        <translation type="unfinished">Ocultar coluna(s) selecionada(s)</translation>
+        <translation>Ocultar coluna(s) selecionada(s)</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="727"/>
         <source>Show all columns</source>
-        <translation type="unfinished">Mostrar todas as colunas</translation>
+        <translation>Mostrar todas as colunas</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="730"/>
         <source>Show all columns that were hidden</source>
-        <translation type="unfinished">Mostrar todas as colunas ocultas</translation>
+        <translation>Mostrar todas as colunas ocultas</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="735"/>
         <location filename="../TableBrowser.cpp" line="1371"/>
         <source>Set encoding</source>
-        <translation type="unfinished">Definir codificação</translation>
+        <translation>Definir codificação</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="738"/>
         <source>Change the encoding of the text in the table cells</source>
-        <translation type="unfinished">Modificar a codificação do texto nas células da tabela</translation>
+        <translation>Modificar a codificação do texto nas células da tabela</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="743"/>
         <source>Set encoding for all tables</source>
-        <translation type="unfinished">Modificar codificação para todas as tabelas</translation>
+        <translation>Modificar codificação para todas as tabelas</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="746"/>
         <source>Change the default encoding assumed for all tables in the database</source>
-        <translation type="unfinished">Modificar a codificação padrão assumida para todas as tabelas no banco de dados</translation>
+        <translation>Modificar a codificação padrão assumida para todas as tabelas no banco de dados</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="755"/>
         <source>Clear Filters</source>
-        <translation type="unfinished"></translation>
+        <translation>Limpar filtros</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="758"/>
         <source>Clear all filters</source>
-        <translation type="unfinished">Limpar todos os filtros</translation>
+        <translation>Limpar todos os filtros</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="761"/>
         <location filename="../TableBrowser.ui" line="764"/>
         <source>This button clears all the filters set in the header input fields for the currently browsed table.</source>
-        <translation type="unfinished">Esse botão limpa todos os filtros definidos no cabeçalho para a tabela atualmente navegada.</translation>
+        <translation>Esse botão limpa todos os filtros definidos no cabeçalho para a tabela atualmente navegada.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="773"/>
         <source>Clear Sorting</source>
-        <translation type="unfinished"></translation>
+        <translation>Limpar ordenamento</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="776"/>
         <source>Reset the order of rows to the default</source>
-        <translation type="unfinished"></translation>
+        <translation>Resetar a ordem das linhas para o padrão</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="779"/>
         <location filename="../TableBrowser.ui" line="782"/>
         <source>This button clears the sorting columns specified for the currently browsed table and returns to the default order.</source>
-        <translation type="unfinished"></translation>
+        <translation>Esse botão limpa o ordenamento especificado para a tabela atual e volta para a ordem padrão.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="791"/>
         <source>Print</source>
-        <translation type="unfinished">Imprimir</translation>
+        <translation>Imprimir</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="794"/>
         <source>Print currently browsed table data</source>
-        <translation type="unfinished">Imprimir dados da tabela atual</translation>
+        <translation>Imprimir dados da tabela atual</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="800"/>
         <source>Print currently browsed table data. Print selection if more than one cell is selected.</source>
-        <translation type="unfinished">Imprimir dados da tabela atual. Imprime a seleção se mais de uma célula está selecionada.</translation>
+        <translation>Imprimir dados da tabela atual. Imprime a seleção se mais de uma célula está selecionada.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="803"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished">Ctrl+P</translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="815"/>
         <source>Refresh</source>
-        <translation type="unfinished">Atualizar</translation>
+        <translation>Atualizar</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="818"/>
         <source>Refresh the data in the selected table</source>
-        <translation type="unfinished">Atualizar os dados na tabela selecionada</translation>
+        <translation>Atualizar os dados na tabela selecionada</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="821"/>
         <source>This button refreshes the data in the currently selected table.</source>
-        <translation type="unfinished">Este botão atualiza os dados na tabela atualmente selecionada.</translation>
+        <translation>Este botão atualiza os dados na tabela atualmente selecionada.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="824"/>
         <source>F5</source>
-        <translation type="unfinished">F5</translation>
+        <translation>F5</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="839"/>
         <source>Find in cells</source>
-        <translation type="unfinished"></translation>
+        <translation>Encontrar em células</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="842"/>
         <source>Open the find tool bar which allows you to search for values in the table view below.</source>
-        <translation type="unfinished"></translation>
+        <translation>Abre a barra de ferramentas para buscar que permite que você busque por valores na vista da tabela abaixo.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="845"/>
         <source>Ctrl+F</source>
-        <translation type="unfinished">Ctrl+F</translation>
+        <translation>Ctrl+F</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="857"/>
         <location filename="../TableBrowser.ui" line="860"/>
         <source>Bold</source>
-        <translation type="unfinished">Negrito</translation>
+        <translation>Negrito</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="863"/>
         <source>Ctrl+B</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+B</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="875"/>
         <location filename="../TableBrowser.ui" line="878"/>
         <source>Italic</source>
-        <translation type="unfinished">Itálico</translation>
+        <translation>Itálico</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="890"/>
         <location filename="../TableBrowser.ui" line="893"/>
         <source>Underline</source>
-        <translation type="unfinished">Underline</translation>
+        <translation>Sublinhado</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="896"/>
         <source>Ctrl+U</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+U</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="908"/>
         <location filename="../TableBrowser.ui" line="911"/>
         <source>Align Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Alinhar à direita</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="923"/>
         <location filename="../TableBrowser.ui" line="926"/>
         <source>Align Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Alinhar à esquerda</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="938"/>
         <location filename="../TableBrowser.ui" line="941"/>
         <source>Center Horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Centralizar horizontalmente</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="953"/>
         <location filename="../TableBrowser.ui" line="956"/>
         <source>Justify</source>
-        <translation type="unfinished"></translation>
+        <translation>Justificar</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="965"/>
         <location filename="../TableBrowser.ui" line="968"/>
         <source>Edit Conditional Formats...</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar formatos condicionais...</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="971"/>
         <source>Edit conditional formats for the current column</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar os formatos condicionais para a coluna atual</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="980"/>
         <source>Clear Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Limpar formato</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="983"/>
         <source>Clear All Formats</source>
-        <translation type="unfinished"></translation>
+        <translation>Limpar todos os formatos</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="986"/>
         <location filename="../TableBrowser.ui" line="989"/>
         <source>Clear all cell formatting from selected cells and all conditional formats from selected columns</source>
-        <translation type="unfinished"></translation>
+        <translation>Limpa toda a formatação das células selecionadas e todos os formatos condicionais das colunas selecionadas</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="998"/>
         <location filename="../TableBrowser.ui" line="1001"/>
         <source>Font Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Cor do texto</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1010"/>
         <location filename="../TableBrowser.ui" line="1013"/>
         <source>Background Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Cor do plano de fundo</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1025"/>
         <source>Toggle Format Toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Alterar barra de ferramentas de formatação</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1028"/>
         <source>Show/hide format toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar/esconder barra de ferramentas de formatação</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1031"/>
         <location filename="../TableBrowser.ui" line="1034"/>
         <source>This button shows or hides the formatting toolbar of the Data Browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Esse botão mostra ou esconde a barra de ferramentas de formatação do navegador de dados</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1039"/>
         <source>Select column</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecionar coluna</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1042"/>
         <source>Ctrl+Space</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Space</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1057"/>
         <source>Replace text in cells</source>
-        <translation type="unfinished"></translation>
+        <translation>Substituir texto em células</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1060"/>
         <source>Ctrl+H</source>
-        <translation type="unfinished">Ctrl+H</translation>
+        <translation>Ctrl+H</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="42"/>
         <source>Filter in all columns</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtrar em todas as colunas</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="97"/>
         <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+R</translation>
     </message>
     <message numerus="yes">
         <location filename="../TableBrowser.cpp" line="434"/>
         <source>%n row(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n linha(s)</numerusform>
+            <numerusform>%n linhas</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../TableBrowser.cpp" line="436"/>
         <source>, %n column(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>, %n coluna(s)</numerusform>
+            <numerusform>, %n colunas</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="449"/>
         <source>. Sum: %1; Average: %2; Min: %3; Max: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>. Soma: %1; Média: %2; Mínimo: %3; Máximo: %4</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="667"/>
         <source>Conditional formats for &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatos condicionais para &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="736"/>
         <source>determining row count...</source>
-        <translation type="unfinished">determinando número de linhas...</translation>
+        <translation>determinando número de linhas...</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="739"/>
         <source>%1 - %2 of &gt;= %3</source>
-        <translation type="unfinished">%1 - %2 de &gt;= %3</translation>
+        <translation>%1 - %2 de &gt;= %3</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="742"/>
         <source>%1 - %2 of %3</source>
-        <translation type="unfinished">%1 - %2 de %3</translation>
+        <translation>%1 - %2 de %3</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="888"/>
         <source>Please enter a pseudo-primary key in order to enable editing on this view. This should be the name of a unique column in the view.</source>
-        <translation type="unfinished">Por favor, entre uma pseudo-chave primária para habilitar edição nessa vista. Isso deveria ser o nome de uma coluna única na vista.</translation>
+        <translation>Por favor, entre uma pseudo-chave primária para habilitar edição nessa vista. Isso deveria ser o nome de uma coluna única na vista.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1010"/>
         <source>Delete Records</source>
-        <translation type="unfinished">Deletar Registros</translation>
+        <translation>Deletar registros</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1157"/>
         <source>Duplicate records</source>
-        <translation type="unfinished">Duplicar registros</translation>
+        <translation>Duplicar registros</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1157"/>
         <source>Duplicate record</source>
-        <translation type="unfinished">Duplicar registro</translation>
+        <translation>Duplicar registro</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1161"/>
         <source>Ctrl+&quot;</source>
-        <translation type="unfinished">Ctrl+&quot;</translation>
+        <translation>Ctrl+&quot;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1180"/>
         <source>Adjust rows to contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajustar linhas aos conteúdos</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1235"/>
         <source>Error deleting record:
 %1</source>
-        <translation type="unfinished">Erro adicionando registro: %1</translation>
+        <translation>Erro deletando registro:
+%1</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1244"/>
         <source>Please select a record first</source>
-        <translation type="unfinished">Por favor, selecione um registro primeiro</translation>
+        <translation>Por favor, selecione um registro primeiro</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1351"/>
         <source>There is no filter set for this table. View will not be created.</source>
-        <translation type="unfinished">Não há filtro para essa tabela. Vista não será criada.</translation>
+        <translation>Não há filtro para essa tabela. Vista não será criada.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1367"/>
         <source>Please choose a new encoding for all tables.</source>
-        <translation type="unfinished">Por favor, escolha uma nova codificação para todas tabelas.</translation>
+        <translation>Por favor, escolha uma nova codificação para todas tabelas.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1369"/>
         <source>Please choose a new encoding for this table.</source>
-        <translation type="unfinished">Por favor, escolha uma nova codificação para essa tabela.</translation>
+        <translation>Por favor, escolha uma nova codificação para essa tabela.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1372"/>
         <source>%1
 Leave the field empty for using the database encoding.</source>
-        <translation type="unfinished">%1
+        <translation>%1
 Deixe o campo em branco para usar a codificação do banco de dados.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1384"/>
         <source>This encoding is either not valid or not supported.</source>
-        <translation type="unfinished">Essa codificação é inválida ou não é suportada.</translation>
+        <translation>Essa codificação é inválida ou não suportada.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1555"/>
         <source>%1 replacement(s) made.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 substituição(ões) feita(s).</translation>
     </message>
 </context>
 <context>
