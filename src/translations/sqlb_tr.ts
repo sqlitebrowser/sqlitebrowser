@@ -929,7 +929,7 @@ Veritabanı motoru mesajı:
     <message>
         <location filename="../EditDialog.ui" line="47"/>
         <source>This is the list of supported modes for the cell editor. Choose a mode for viewing or editing the data of the current cell.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu, hücre düzenleyicisi için desteklenen modların listesidir. Geçerli hücrenin verilerini görüntülemek veya düzenlemek için bir mod seçin.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="56"/>
@@ -961,7 +961,7 @@ Veritabanı motoru mesajı:
     <message>
         <location filename="../EditDialog.ui" line="90"/>
         <source>This checkable button enables or disables the automatic switching of the editor mode. When a new cell is selected or new data is imported and the automatic switching is enabled, the mode adjusts to the detected data type. You can then change the editor mode manually. If you want to keep this manually switched mode while moving through the cells, switch the button off.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu onay kutusu, editör modunun otomatik olarak değiştirilmesini etkinleştirir veya devre dışı bırakır. Bu kutucuk işaretliyken, yeni bir hücre seçildiğinde veya yeni veriler içe aktarıldığında, mod algılanan veri türüne göre ayarlanır. Daha sonra editör modunu manuel olarak değiştirebilirsiniz. Hücreler arasında hareket ederken bu manuel modu korumak isterseniz, kutucuğun işaretini kaldırın.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="93"/>
@@ -973,12 +973,14 @@ Veritabanı motoru mesajı:
         <source>The text editor modes let you edit plain text, as well as JSON or XML data with syntax highlighting, automatic formatting and validation before saving.
 
 Errors are indicated with a red squiggle underline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin editorü modları,otomatik biçimlendirme, metin, JSON veya XML verilerinizi vurgulu olarak düzenlemenizi ve kayıttan önce formatlamanızı ve doğrulamanızı sağlar . 
+
+Hatalar, kırmızı dalgalı alt çizgiyle belirtilir.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="157"/>
         <source>This Qt editor is used for right-to-left scripts, which are not supported by the default Text editor. The presence of right-to-left characters is detected and this editor mode is automatically selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Qt editör, varsayılan metin editörü tarafından desteklenmeyen  sağdan sola okunan dillde yazılmış betikleri için kullanılır.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="305"/>
@@ -993,17 +995,17 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditDialog.ui" line="344"/>
         <source>When enabled, the auto-format feature formats the data on loading, breaking the text in lines and indenting it for maximum readability. On data saving, the auto-format feature compacts the data removing end of lines, and unnecessary whitespace.</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkinleştirildiğinde, otomatik biçimlendirme özelliği yükleme sırasında verileri biçimlendirir, metni satırlara böler ve maksimum okunabilirlik için girintili yapar. Veri kaydederken otomatik biçimlendirme özelliği, satır sonu karakterlerini ve gereksiz boşlukları kaldırarak verileri sıkıştırır.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="401"/>
         <source>Word Wrap</source>
-        <translation type="unfinished"></translation>
+        <translation>Kelime Kaydırma</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="404"/>
         <source>Wrap lines on word boundaries</source>
-        <translation type="unfinished"></translation>
+        <translation>Kelime sınırlarında kelimeyi kaydırır</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="413"/>
@@ -1019,7 +1021,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditDialog.ui" line="422"/>
         <source>The value is interpreted as a file or URL and opened in the default application or web browser.</source>
-        <translation type="unfinished"></translation>
+        <translation>Değe,r bir dosya veya URL olarak yorumlanır ve varsayılan uygulamada veya web tarayıcısında açılır.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="431"/>
@@ -1149,7 +1151,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditDialog.ui" line="265"/>
         <source>This button saves the changes performed in the cell editor to the database cell.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu buton, hücre editöründe yapılan değişiklikleri veritabanı hücresine kaydeder.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="268"/>
@@ -1191,7 +1193,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditDialog.ui" line="219"/>
         <source>Type of data currently in cell</source>
-        <translation>Şuan da hücrenin içinde bulunan verinin tipi</translation>
+        <translation>Şu anda hücrenin içinde bulunan veri tipi</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="241"/>
@@ -1225,7 +1227,7 @@ Errors are indicated with a red squiggle underline.</source>
         <location filename="../EditDialog.cpp" line="249"/>
         <location filename="../EditDialog.cpp" line="258"/>
         <source>Try switching to Image or Binary mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>Görüntü veya İkili mod arasında geçiş yapın.</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="315"/>
@@ -1237,7 +1239,7 @@ Errors are indicated with a red squiggle underline.</source>
         <location filename="../EditDialog.cpp" line="316"/>
         <location filename="../EditDialog.cpp" line="325"/>
         <source>Try switching to Binary mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>İkili veri moduna geçmeyi deneyin.</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="352"/>
@@ -1253,7 +1255,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditDialog.cpp" line="383"/>
         <source>Choose a file to import</source>
-        <translation type="unfinished">İçe aktarmak için dosya seçiniz</translation>
+        <translation>İçe aktarmak için dosya seçiniz</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="422"/>
@@ -1268,32 +1270,32 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditDialog.cpp" line="527"/>
         <source>The cell contains invalid %1 data. Reason: %2. Do you really want to apply it to the cell?</source>
-        <translation type="unfinished"></translation>
+        <translation>Hücre geçersiz %1 verisi içeriyor. Sebep: %2. Bu değişikliği hücreye gerçekten uygulamak istiyor musunuz?</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="1020"/>
         <source>Type of data currently in cell: %1 Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Şu anda hücrenin içinde bulunan veri tipi: %1 Imajı</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="1026"/>
         <source>%1x%2 pixel(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1x%2 piksel</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="1037"/>
         <source>Type of data currently in cell: NULL</source>
-        <translation type="unfinished"></translation>
+        <translation>Şu anda hücrenin içinde bulunan veri tipi: NULL</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="1058"/>
         <source>Type of data currently in cell: Valid JSON</source>
-        <translation type="unfinished"></translation>
+        <translation>Şu anda hücrenin içinde bulunan veri tipi: Doğrulanmış JSON</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="1239"/>
         <source>The data has been saved to a temporary file and has been opened with the default application. You can now edit the file and, when you are ready, apply the saved new data to the cell editor or cancel any changes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Veriler geçici bir dosyaya kaydedildi ve varsayılan uygulama ile açıldı. Artık dosyayı düzenleyebilir ve hazır olduğunuzda, kaydedilen yeni verileri hücre editörüne uygulayabilir veya değişiklikleri iptal edebilirsiniz.</translation>
     </message>
     <message>
         <source>Type of data currently in cell: Null</source>
@@ -1458,7 +1460,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditTableDialog.ui" line="62"/>
         <source>Database sche&amp;ma</source>
-        <translation type="unfinished"></translation>
+        <translation>Veritabanı &amp;Şeması</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="106"/>
@@ -1489,27 +1491,27 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditTableDialog.ui" line="134"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Sil</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="154"/>
         <source>Move to top</source>
-        <translation type="unfinished"></translation>
+        <translation>En yukarı taşı</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="177"/>
         <source>Move up</source>
-        <translation type="unfinished"></translation>
+        <translation>Yukarı taşı</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="197"/>
         <source>Move down</source>
-        <translation type="unfinished"></translation>
+        <translation>Aşağı taşı</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="217"/>
         <source>Move to bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>En aşağı taşı</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="265"/>
@@ -1526,7 +1528,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditTableDialog.ui" line="275"/>
         <source>NN</source>
-        <translation type="unfinished"></translation>
+        <translation>NN</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="278"/>
@@ -1590,7 +1592,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditTableDialog.ui" line="323"/>
         <source>Collation</source>
-        <translation type="unfinished"></translation>
+        <translation>Karşılaştırma</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="328"/>
@@ -1602,64 +1604,64 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditTableDialog.ui" line="337"/>
         <source>Constraints</source>
-        <translation type="unfinished"></translation>
+        <translation>Kısıtlar</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="345"/>
         <source>Add constraint</source>
-        <translation type="unfinished"></translation>
+        <translation>Kısıt ekle</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="368"/>
         <source>Remove constraint</source>
-        <translation type="unfinished"></translation>
+        <translation>Kısıtı kaldır</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="404"/>
         <source>Columns</source>
-        <translation type="unfinished">Sütun</translation>
+        <translation>Sütunlar</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="419"/>
         <source>SQL</source>
-        <translation type="unfinished"></translation>
+        <translation>SQL</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="437"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Warning: &lt;/span&gt;There is something with this table definition that our parser doesn&apos;t fully understand. Modifying and saving this table might result in problems.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; &lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Uyarı: &lt;/span&gt;Bu tablo tanımında ayrıştırıcının tam olarak anlayamadığı bir şey var. Bu tabloyu değiştirmek ve kaydetmek sorunlara neden olabilir. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="461"/>
         <location filename="../EditTableDialog.cpp" line="273"/>
         <source>Primary Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Birincil Anahtar</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="464"/>
         <source>Add a primary key constraint</source>
-        <translation type="unfinished"></translation>
+        <translation>Birinci anahtar kısıtlaması ekle</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="476"/>
         <source>Add a foreign key constraint</source>
-        <translation type="unfinished"></translation>
+        <translation>Yabancı anahtar kısıtı ekle</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="484"/>
         <source>Add a unique constraint</source>
-        <translation type="unfinished"></translation>
+        <translation>Benzersiz kısıtı ekle</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="492"/>
         <source>Add a check constraint</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol kısıtı ekle</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="285"/>
         <location filename="../EditTableDialog.cpp" line="994"/>
         <source>There can only be one primary key for each table. Please modify the existing primary key instead.</source>
-        <translation type="unfinished"></translation>
+        <translation>Her tabloda yalnızca bir birincil anahtar bulunabilir. Mevcut birincil anahtarı düzenlemeyi denedin.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="338"/>
@@ -1670,7 +1672,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditTableDialog.cpp" line="465"/>
         <source>There already is a field with that name. Please rename it first or choose a different name for this field.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu isme sahip alan zaten var. Lütfen bu alan için farklı bir isim kullanın veya aynı isme sahip alanı yeniden adlandırın.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="589"/>
@@ -1686,12 +1688,13 @@ Errors are indicated with a red squiggle underline.</source>
         <location filename="../EditTableDialog.cpp" line="678"/>
         <source>Column &apos;%1&apos; has duplicate data.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; sütununda yinelenen veriler var.
+</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="679"/>
         <source>This makes it impossible to enable the &apos;Unique&apos; flag. Please remove the duplicate data, which will allow the &apos;Unique&apos; flag to then be enabled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Şu anda &apos;Benzersiz&apos; kısıtı eklenmesi imkansız.&apos;Benzersiz&apos; kısıtını ekleyebilmek için lütfen yinelenen değerleri silin.</translation>
     </message>
     <message>
         <source>Column `%1` has no unique data.
@@ -1701,7 +1704,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditTableDialog.cpp" line="492"/>
         <source>This column is referenced in a foreign key in table %1 and thus its name cannot be changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu sütun%1 tablosundaki yabancı bir anahtar tarafından referans alınıyor, bu nedenle adı değiştirilemez.</translation>
     </message>
     <message>
         <source>This makes it impossible to set this flag. Please change the table data first.</source>
@@ -2466,12 +2469,12 @@ x~y	Aralık: değerler x ve y arasında
     <message>
         <location filename="../ImportCsvDialog.ui" line="25"/>
         <source>Table na&amp;me</source>
-        <translation type="unfinished"></translation>
+        <translation>Tablo İs&amp;mi</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="38"/>
         <source>&amp;Column names in first line</source>
-        <translation>&amp;Sütun isimleri ilk satırda</translation>
+        <translation>İlk satır &amp;sütun isimleri içeriyor</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="55"/>
@@ -2502,7 +2505,7 @@ x~y	Aralık: değerler x ve y arasında
     <message>
         <location filename="../ImportCsvDialog.ui" line="228"/>
         <source>Other</source>
-        <translation>Diğer...</translation>
+        <translation>Diğer</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="130"/>
@@ -2513,13 +2516,13 @@ x~y	Aralık: değerler x ve y arasında
         <location filename="../ImportCsvDialog.ui" line="88"/>
         <location filename="../ImportCsvDialog.ui" line="158"/>
         <source>Other (printable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Diğer (yazdırılabilir)</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="93"/>
         <location filename="../ImportCsvDialog.ui" line="163"/>
         <source>Other (code)</source>
-        <translation type="unfinished"></translation>
+        <translation>Diğer (Kod)</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="143"/>
@@ -2559,7 +2562,7 @@ x~y	Aralık: değerler x ve y arasında
     <message>
         <location filename="../ImportCsvDialog.ui" line="274"/>
         <source>Separate tables</source>
-        <translation type="unfinished"></translation>
+        <translation>Tablolar ayrılmış</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="291"/>
@@ -2569,37 +2572,37 @@ x~y	Aralık: değerler x ve y arasında
     <message>
         <location filename="../ImportCsvDialog.ui" line="305"/>
         <source>When importing an empty value from the CSV file into an existing table with a default value for this column, that default value is inserted. Activate this option to insert an empty value instead.</source>
-        <translation type="unfinished"></translation>
+        <translation>CSV dosyasından boş bir değer alındığında, sütunun varsayılan değeri kullanılır. Varsayılan değer yerine boş bir değer eklemek için bu seçeneği etkinleştirin.</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="312"/>
         <source>Ignore default &amp;values</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Varsayılan değerleri yoksay</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="322"/>
         <source>Activate this option to stop the import when trying to import an empty value into a NOT NULL column without a default value.</source>
-        <translation type="unfinished"></translation>
+        <translation>Varsayılan değeri olmayan NOT NULL kısıtına sahip bir sütuna, boş bir değer içe aktarmaya çalışırken içe aktarmayı durdurmak için bu seçeneği etkinleştirin.</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="329"/>
         <source>Fail on missing values </source>
-        <translation type="unfinished"></translation>
+        <translation>Eksik değerde işlemi durdur </translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="339"/>
         <source>Disable data type detection</source>
-        <translation type="unfinished"></translation>
+        <translation>Veri tipi algılamayı devre dışı bırak</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="349"/>
         <source>Disable the automatic data type detection when creating a new table.</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni bir tablo oluştururken otomatik veri tipi algılamayı devre dışı bırakın.</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="356"/>
         <source>When importing into an existing table with a primary key, unique constraints or a unique index there is a chance for a conflict. This option allows you to select a strategy for that case: By default the import is aborted and rolled back but you can also choose to ignore and not import conflicting rows or to replace the existing row in the table.</source>
-        <translation type="unfinished"></translation>
+        <translation>Birincil anahtar, benzersiz kısıtı veya benzersiz index kısıtına sahip mevcut bir tablo içe aktarırken çakışma meydana gelebilir. Bu seçenek, bu durum için bir strateji seçmenize olanak tanır: Varsayılan olarak işlem iptal edilir ve geri alınır, ancak isterseniz çakışmaları yoksayıp içe aktarmazsınız veya yeni satırları mevcut olanlarla değiştirebilirsiniz.</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="360"/>
@@ -2609,33 +2612,33 @@ x~y	Aralık: değerler x ve y arasında
     <message>
         <location filename="../ImportCsvDialog.ui" line="365"/>
         <source>Ignore row</source>
-        <translation type="unfinished"></translation>
+        <translation>Satırı yoksay</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="370"/>
         <source>Replace existing row</source>
-        <translation type="unfinished"></translation>
+        <translation>Varolan kaydı değiştir</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="378"/>
         <source>Conflict strategy</source>
-        <translation type="unfinished"></translation>
+        <translation>Çakışma stratejisi</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="429"/>
         <location filename="../ImportCsvDialog.cpp" line="335"/>
         <source>Deselect All</source>
-        <translation type="unfinished"></translation>
+        <translation>Tüm seçimi iptal et</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="445"/>
         <source>Match Similar</source>
-        <translation type="unfinished"></translation>
+        <translation>Benzerleri Eşleştir</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.cpp" line="335"/>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Tümünü Seç</translation>
     </message>
     <message>
         <source>Inserting data...</source>
@@ -2660,12 +2663,12 @@ x~y	Aralık: değerler x ve y arasında
     <message>
         <location filename="../ImportCsvDialog.cpp" line="504"/>
         <source>There is already a table named &apos;%1&apos; and an import into an existing table is only possible if the number of columns match.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; isminde bir tablo zaten var, var olan bir tablo için içe aktarma, yalnızca sütun sayıları eşitse mümkün olabilir.</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.cpp" line="511"/>
         <source>There is already a table named &apos;%1&apos;. Do you want to import the data into it?</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; adında bir tablo zaten var. Verileri içe aktarmak istiyor musunuz?</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.cpp" line="538"/>
@@ -2680,12 +2683,12 @@ x~y	Aralık: değerler x ve y arasında
     <message>
         <location filename="../ImportCsvDialog.cpp" line="612"/>
         <source>importing CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>CSV İçe Aktarma</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.cpp" line="695"/>
         <source>Importing the file &apos;%1&apos; took %2ms. Of this %3ms were spent in the row function.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; dosyasını içe aktarmak %2ms sürdü. %3ms satır fonksiyonunda harcandı.</translation>
     </message>
     <message>
         <source>Missing field for record %1</source>
@@ -4006,7 +4009,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1445"/>
         <source>W&amp;hat&apos;s This?</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu &amp;nedir?</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1456"/>
@@ -4675,8 +4678,9 @@ Are you sure?</source>
         <source>A table in this database requires a special collation function &apos;%1&apos; that this application can&apos;t provide without further knowledge.
 If you choose to proceed, be aware bad things can happen to your database.
 Create a backup!</source>
-        <translation type="unfinished">Bu veritabanınındaki bir tablo özel &apos;%1&apos; koleksiyon fonksiyonu gerektirmektedir.
-Daha fazla bilgi olmadan program bunu sağlayamaz. Eğer bu şekilde devam edecekseniz, veritabanınıza kötü şeyler olabileceğinin farkında olun ve yedek oluşturun.</translation>
+        <translation>Bu veritabanınındaki bir tablo özel &apos;%1&apos; koleksiyon fonksiyonu gerektirmektedir.
+Daha fazla bilgi olmadan program bunu sağlayamaz. Eğer bu şekilde devam edecekseniz, veritabanınıza kötü şeyler olabileceğinin farkında olun ve yedek oluşturun.
+Bir yedek oluşturun!</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3015"/>
@@ -5082,7 +5086,7 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     <message>
         <location filename="../PreferencesDialog.ui" line="33"/>
         <source>Default &amp;location</source>
-        <translation>Varsayılan</translation>
+        <translation>Varsayılan &amp;dizin</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="96"/>
@@ -5092,7 +5096,7 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     <message>
         <location filename="../PreferencesDialog.ui" line="358"/>
         <source>Automatic &amp;updates</source>
-        <translation>Otomatik</translation>
+        <translation>Otomatik &amp;güncellemeler</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="348"/>
@@ -5173,7 +5177,7 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     <message>
         <location filename="../PreferencesDialog.ui" line="649"/>
         <source>Advanced</source>
-        <translation type="unfinished">Gelişmiş</translation>
+        <translation>Gelişmiş</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="679"/>
@@ -5237,7 +5241,7 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     <message>
         <location filename="../PreferencesDialog.ui" line="866"/>
         <source>Binary</source>
-        <translation type="unfinished">İkili</translation>
+        <translation>İkili veri</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1304"/>
@@ -5327,7 +5331,7 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     <message>
         <location filename="../PreferencesDialog.ui" line="431"/>
         <source>Execute SQL</source>
-        <translation type="unfinished">SQL kodunu yürüt</translation>
+        <translation>SQL kodunu yürüt</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="494"/>
@@ -5662,7 +5666,7 @@ Can be set to 0 for disabling completion.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="1670"/>
         <source>File</source>
-        <translation type="unfinished">File</translation>
+        <translation>Dosya</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1678"/>
@@ -5716,7 +5720,7 @@ Can be set to 0 for disabling completion.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="1312"/>
         <source>Foreground</source>
-        <translation type="unfinished"></translation>
+        <translation>Ön plan</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1359"/>
@@ -6811,12 +6815,12 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     <message>
         <location filename="../TableBrowser.ui" line="59"/>
         <source>Select a table to browse data</source>
-        <translation type="unfinished">Verileri görüntülemek için tablo seçiniz</translation>
+        <translation>Verileri görüntülemek için tablo seçiniz</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="62"/>
         <source>Use this list to select a table to be displayed in the database view</source>
-        <translation type="unfinished">Veritabanı görünümünde gösterilecek tabloyu seçmek için bu listeyi kullanın</translation>
+        <translation>Veritabanı görünümünde gösterilecek tabloyu seçmek için bu listeyi kullanın</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="177"/>
@@ -6852,7 +6856,7 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     <message>
         <location filename="../TableBrowser.ui" line="276"/>
         <source>Shift+F3</source>
-        <translation type="unfinished">Shift+F3</translation>
+        <translation>Shift+F3</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="283"/>
@@ -6867,7 +6871,7 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     <message>
         <location filename="../TableBrowser.ui" line="293"/>
         <source>F3</source>
-        <translation type="unfinished">F3</translation>
+        <translation>F3</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="300"/>
@@ -6944,17 +6948,17 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     <message>
         <location filename="../TableBrowser.ui" line="456"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll to the beginning&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Başa sürükle&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Başa sürükle&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="459"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates to the beginning in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bu butona basıldığında üstteki tablo görünümünün başlangıcına kaydırılır.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bu butona basıldığında üstteki tablo görünümünün başlangıcına kaydırılır.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="462"/>
         <source>|&lt;</source>
-        <translation type="unfinished">|&lt;</translation>
+        <translation>|&lt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="476"/>
@@ -6969,12 +6973,12 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     <message>
         <location filename="../TableBrowser.ui" line="482"/>
         <source>&lt;</source>
-        <translation type="unfinished">&lt;</translation>
+        <translation>&lt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="493"/>
         <source>0 - 0 of 0</source>
-        <translation type="unfinished">0 - 0 / 0</translation>
+        <translation>0 - 0 / 0</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="503"/>
@@ -6989,52 +6993,52 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     <message>
         <location filename="../TableBrowser.ui" line="509"/>
         <source>&gt;</source>
-        <translation type="unfinished">&gt;</translation>
+        <translation>&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="523"/>
         <source>Scroll to the end</source>
-        <translation type="unfinished">Sona sürükle</translation>
+        <translation>Sona sürükle</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="526"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Clicking this button navigates up to the end in the table view above.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Bu butona basıldığında üstteki tablo görünümünün en sonuna kaydırılır.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Bu butona basıldığında üstteki tablo görünümünün en sonuna kaydırılır.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="529"/>
         <source>&gt;|</source>
-        <translation type="unfinished">&gt;|</translation>
+        <translation>&gt;|</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="553"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click here to jump to the specified record&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;İstediğiniz kayda atlamak için buraya tıklayın&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;İstediğiniz kayda atlamak için buraya tıklayın&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="556"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button is used to navigate to the record number specified in the Go to area.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bu buton belirtilen kayıt numarasına gitmek için kullanılır.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bu buton belirtilen kayıt numarasına gitmek için kullanılır.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="559"/>
         <source>Go to:</source>
-        <translation type="unfinished">Bu kayda gidin:</translation>
+        <translation>Bu kayda gidin:</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="566"/>
         <source>Enter record number to browse</source>
-        <translation type="unfinished">Görüntülemek için kayıt numarasını giriniz</translation>
+        <translation>Görüntülemek için kayıt numarasını giriniz</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="569"/>
         <source>Type a record number in this area and click the Go to: button to display the record in the database view</source>
-        <translation type="unfinished">Bu alana veritabanı görünümünde görüntülemek istediğiniz kayıt numarasını giriniz ve Bu kayda gidin: butonuna tıklayınız</translation>
+        <translation>Bu alana veritabanı görünümünde görüntülemek istediğiniz kayıt numarasını giriniz ve Bu kayda gidin butonuna tıklayınız</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="572"/>
         <source>1</source>
-        <translation type="unfinished">1</translation>
+        <translation>1</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="584"/>
@@ -7070,13 +7074,13 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
         <location filename="../TableBrowser.ui" line="615"/>
         <location filename="../TableBrowser.ui" line="651"/>
         <source>New Record</source>
-        <translation type="unfinished">Yeni Kayıt</translation>
+        <translation>Yeni Kayıt</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="618"/>
         <location filename="../TableBrowser.ui" line="621"/>
         <source>Insert a new record in the current table</source>
-        <translation type="unfinished">Geçerli tabloya yeni kayıt ekle</translation>
+        <translation>Geçerli tabloya yeni bir kayıt ekle</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="624"/>
@@ -7087,12 +7091,12 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
         <location filename="../TableBrowser.ui" line="633"/>
         <location filename="../TableBrowser.cpp" line="1012"/>
         <source>Delete Record</source>
-        <translation type="unfinished">Kaydı Sil</translation>
+        <translation>Kaydı Sil</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="636"/>
         <source>Delete the current record</source>
-        <translation type="unfinished">Geçerli kaydı sil</translation>
+        <translation>Geçerli kaydı sil</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="639"/>
@@ -7120,7 +7124,7 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     <message>
         <location filename="../TableBrowser.ui" line="673"/>
         <source>Export to &amp;CSV</source>
-        <translation type="unfinished">&amp;CSV dosyası olarak dışa aktar</translation>
+        <translation>&amp;CSV dosyası olarak dışa aktar</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="676"/>
@@ -7136,7 +7140,7 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     <message>
         <location filename="../TableBrowser.ui" line="687"/>
         <source>Save as &amp;view</source>
-        <translation type="unfinished">&amp;Görünümü kaydet</translation>
+        <translation>&amp;Görünüm olarak kaydet</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="690"/>
@@ -7214,7 +7218,7 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     <message>
         <location filename="../TableBrowser.ui" line="758"/>
         <source>Clear all filters</source>
-        <translation type="unfinished">Tüm filtreleri temizle</translation>
+        <translation>Tüm filtreleri temizle</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="761"/>
@@ -7256,7 +7260,7 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     <message>
         <location filename="../TableBrowser.ui" line="803"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished">Ctrl+P</translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="815"/>
@@ -7271,12 +7275,12 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     <message>
         <location filename="../TableBrowser.ui" line="821"/>
         <source>This button refreshes the data in the currently selected table.</source>
-        <translation type="unfinished">Bu buton, seçilen tablodaki verileri yeniler.</translation>
+        <translation>Bu buton, seçilen tablodaki verileri yeniler.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="824"/>
         <source>F5</source>
-        <translation type="unfinished">F5</translation>
+        <translation>F5</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="839"/>
@@ -7297,7 +7301,7 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
         <location filename="../TableBrowser.ui" line="857"/>
         <location filename="../TableBrowser.ui" line="860"/>
         <source>Bold</source>
-        <translation type="unfinished">Kalın</translation>
+        <translation>Kalın</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="863"/>
@@ -7308,13 +7312,13 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
         <location filename="../TableBrowser.ui" line="875"/>
         <location filename="../TableBrowser.ui" line="878"/>
         <source>Italic</source>
-        <translation type="unfinished">İtalik</translation>
+        <translation>İtalik</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="890"/>
         <location filename="../TableBrowser.ui" line="893"/>
         <source>Underline</source>
-        <translation type="unfinished">Altı çizili</translation>
+        <translation>Altı çizili</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="896"/>
@@ -7467,7 +7471,7 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     <message>
         <location filename="../TableBrowser.cpp" line="742"/>
         <source>%1 - %2 of %3</source>
-        <translation type="unfinished">%1 - %2 / %3</translation>
+        <translation>%1 - %2 / %3</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="888"/>
@@ -7509,7 +7513,7 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     <message>
         <location filename="../TableBrowser.cpp" line="1244"/>
         <source>Please select a record first</source>
-        <translation type="unfinished">Lütfen öncelikle kaydı seçiniz</translation>
+        <translation>Lütfen öncelikle kaydı seçiniz</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1351"/>
