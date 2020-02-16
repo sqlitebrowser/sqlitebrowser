@@ -26,11 +26,12 @@
         <location filename="../AboutDialog.cpp" line="19"/>
         <location filename="../AboutDialog.cpp" line="21"/>
         <source>Version </source>
+        <translation>Versiyon </translation>
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="22"/>
         <source>Built for %1, running on %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 için derlendi, %2 üzerinde çalışıyor</translation>
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="23"/>
