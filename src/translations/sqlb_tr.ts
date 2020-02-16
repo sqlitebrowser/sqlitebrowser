@@ -5965,7 +5965,7 @@ Daha fazla bilgi olmadan program bunu sağlayamaz. Eğer bu şekilde devam edece
     <message>
         <location filename="../CondFormat.h" line="25"/>
         <source>Justify</source>
-        <translation>Satır uzunluğuna uyarla</translation>
+        <translation>İki yana yasla</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="13"/>
@@ -6474,12 +6474,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlUiLexer.cpp" line="68"/>
         <source>(X1,X2,...) The char(X1,X2,...,XN) function returns a string composed of characters having the unicode code point values of integers X1 through XN, respectively. </source>
-        <translation>(X1,X2,...) char(X1,X2,...,XN) fonksiyonu sırasıyla X1&apos;den XN&apos;e kadar olan tamsayıların unicode karakter karşılıklarından oluşan dizeyi döndürür.</translation>
+        <translation>(X1,X2,...) char(X1,X2,...,XN) fonksiyonu sırasıyla X1&apos;den XN&apos;e kadar olan tamsayıların unicode karakter karşılıklarından oluşan dizeyi döndürür. </translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="69"/>
         <source>(X,Y,...) The coalesce() function returns a copy of its first non-NULL argument, or NULL if all arguments are NULL</source>
-        <translation>(X,Y,...) coalesce() fonksiyonu NULL olmayan ilk argümanı döndürür. Eğer tüm argümanlar NULL ise NULL değerini döndürür.</translation>
+        <translation>(X,Y,...) coalesce() fonksiyonu NULL olmayan ilk argümanı döndürür. Eğer tüm argümanlar NULL ise NULL değerini döndürür</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="70"/>
@@ -6509,7 +6509,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlUiLexer.cpp" line="75"/>
         <source>(X) For a string value X, the length(X) function returns the number of characters (not bytes) in X prior to the first NUL character.</source>
-        <translation>(X) length() fonksiyonu X dize değeri için NULL ifadesine kadar olan karakter sayısını döndürür (bayt olarak değil). </translation>
+        <translation>(X) length() fonksiyonu X dize değeri için NULL ifadesine kadar olan karakter sayısını döndürür (bayt olarak değil).</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="76"/>
@@ -6533,13 +6533,14 @@ p, li { white-space: pre-wrap; }
         <location filename="../SqlUiLexer.cpp" line="78"/>
         <source>(X) The load_extension(X) function loads SQLite extensions out of the shared library file named X.
 Use of this function must be authorized from Preferences.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) load_extension(X) fonksiyonu, SQLite eklentilerini X adlı paylaşılan kitaplık dosyasından yükler. Bu işlevin kullanımına Tercihler&apos;den izin verilmelidir.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="79"/>
         <source>(X,Y) The load_extension(X) function loads SQLite extensions out of the shared library file named X using the entry point Y.
 Use of this function must be authorized from Preferences.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X, Y) load_extension(X) işlevi, Y giriş noktasını kullanarak X adlı paylaşılan kitaplık dosyasından SQLite eklentilerini yükler.
+Bu işlevin kullanımına Tercihler&apos;den izin verilmelidir.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="80"/>
@@ -6718,73 +6719,73 @@ Use of this function must be authorized from Preferences.</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="121"/>
         <source>() The number of the row within the current partition. Rows are numbered starting from 1 in the order defined by the ORDER BY clause in the window definition, or in arbitrary order otherwise.</source>
-        <translation type="unfinished"></translation>
+        <translation>() Geçerli bölümdeki satır sayısı. Satırlar, 1&apos;den başlayarak, tanım penceresinde ORDER BY ifadesi tarafından tanımlanan sırada veya aksi takdirde rastgele sırada numaralandırılır.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="122"/>
         <source>() The row_number() of the first peer in each group - the rank of the current row with gaps. If there is no ORDER BY clause, then all rows are considered peers and this function always returns 1.</source>
-        <translation type="unfinished"></translation>
+        <translation>() row_number() her gruptaki ilk eşin - boşlukları olan geçerli satırın sırası. ORDER BY ifadesi yoksa, tüm satırlar eş olarak kabul edilir ve bu işlev her zaman 1 değerini döndürür.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="123"/>
         <source>() The number of the current row&apos;s peer group within its partition - the rank of the current row without gaps. Partitions are numbered starting from 1 in the order defined by the ORDER BY clause in the window definition. If there is no ORDER BY clause, then all rows are considered peers and this function always returns 1. </source>
-        <translation type="unfinished"></translation>
+        <translation>() Geçerli satırın kendi bölümündeki eş grubunun sayısı - boşluklar olmadan geçerli satırın sırası. Bölümler, 1&apos;den başlayarak, tanım penceresindeki ORDER BY ifadesi tarafından tanımlanan sırada numaralandırılır. ORDER BY iifadesi yoksa, tüm satırlar eş olarak kabul edilir ve bu işlev her zaman 1 değerini döndürür. </translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="124"/>
         <source>() Despite the name, this function always returns a value between 0.0 and 1.0 equal to (rank - 1)/(partition-rows - 1), where rank is the value returned by built-in window function rank() and partition-rows is the total number of rows in the partition. If the partition contains only one row, this function returns 0.0. </source>
-        <translation type="unfinished"></translation>
+        <translation>() İsme rağmen, bu işlev her zaman 0.0 ile 1.0 arasında (sıralama - 1) / (bölüm satırları - 1) değerine bir değer döndürür; burada sıralama, yerleşik pencere rank() fonksiyonu ve bölüm- tarafından döndürülen değerdir. satırlar, bölümdeki toplam satır sayısıdır. Bölüm yalnızca bir satır içeriyorsa, bu işlev 0,0 değerini döndürür. </translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="125"/>
         <source>() The cumulative distribution. Calculated as row-number/partition-rows, where row-number is the value returned by row_number() for the last peer in the group and partition-rows the number of rows in the partition.</source>
-        <translation type="unfinished"></translation>
+        <translation>() Kümülatif dağılım. Satır-sayısı/bölüm-satırları olarak hesaplanır; burada satır-sayısı, gruptaki son eş için row_number() tarafından döndürülen değerdir ve bölüm-satırdaki bölüm sayısıdır.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="126"/>
         <source>(N) Argument N is handled as an integer. This function divides the partition into N groups as evenly as possible and assigns an integer between 1 and N to each group, in the order defined by the ORDER BY clause, or in arbitrary order otherwise. If necessary, larger groups occur first. This function returns the integer value assigned to the group that the current row is a part of.</source>
-        <translation type="unfinished"></translation>
+        <translation>(N) N argümanı bir tamsayı olarak ele alınır. Bu işlev, bölümü olabildiğince eşit bir şekilde N gruplarına böler ve ORDER BY ifadesi tarafından tanımlanan sırada veya aksi takdirde rasgele sırayla her gruba 1 ve N arasında bir tam sayı atar. Gerekirse, önce daha büyük gruplar oluşur. Bu işlev, geçerli satırın parçası olduğu gruba atanan tamsayı değerini döndürür.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="127"/>
         <source>(expr) Returns the result of evaluating expression expr against the previous row in the partition. Or, if there is no previous row (because the current row is the first), NULL.</source>
-        <translation type="unfinished"></translation>
+        <translation>(expr) Bölümdeki önceki satıra göre expr ifade değerlendirmesinin sonucunu döndürür. Veya, önceki satır yoksa (geçerli satır ilk satır olduğu için), NULL.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="128"/>
         <source>(expr,offset) If the offset argument is provided, then it must be a non-negative integer. In this case the value returned is the result of evaluating expr against the row offset rows before the current row within the partition. If offset is 0, then expr is evaluated against the current row. If there is no row offset rows before the current row, NULL is returned.</source>
-        <translation type="unfinished"></translation>
+        <translation>(expr,offset) Uzaklık değişkeni sağlanırsa, negatif olmayan bir tam sayı olmalıdır. Bu durumda, döndürülen değer, bölüm içindeki geçerli satırdan önce satır ofseti satırlarına göre ifade değerlendirmesinin sonucudur. Ofset 0 ise, ifade geçerli satıra göre değerlendirilir. Geçerli satırdan önce satır kaydırma satırları yoksa, NULL döndürülür.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="129"/>
         <location filename="../SqlUiLexer.cpp" line="132"/>
         <source>(expr,offset,default) If default is also provided, then it is returned instead of NULL if the row identified by offset does not exist.</source>
-        <translation type="unfinished"></translation>
+        <translation>(expr,offset,default) Varsayılan da sağlanmışsa, ofset ile tanımlanan satır yoksa NULL döndürülür.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="130"/>
         <source>(expr) Returns the result of evaluating expression expr against the next row in the partition. Or, if there is no next row (because the current row is the last), NULL.</source>
-        <translation type="unfinished"></translation>
+        <translation>(expr) Bölümdeki bir sonraki satıra göre expr ifade değerlendirmesinin sonucunu döndürür. Veya, bir sonraki satır yoksa (geçerli satır son olduğu için), NULL.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="131"/>
         <source>(expr,offset) If the offset argument is provided, then it must be a non-negative integer. In this case the value returned is the result of evaluating expr against the row offset rows after the current row within the partition. If offset is 0, then expr is evaluated against the current row. If there is no row offset rows after the current row, NULL is returned.</source>
-        <translation type="unfinished"></translation>
+        <translation>(expr,offset) Uzaklık değişkeni sağlanırsa, negatif olmayan bir tam sayı olmalıdır. Bu durumda, döndürülen değer, bölüm içindeki geçerli satırdan sonra ifade ofset satırlarına göre ifade değerlendirmesinin sonucudur. Ofset 0 ise, ifade geçerli satıra göre değerlendirilir. Geçerli satırdan sonra satır ofseti satırı yoksa, NULL döndürülür.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="133"/>
         <source>(expr) This built-in window function calculates the window frame for each row in the same way as an aggregate window function. It returns the value of expr evaluated against the first row in the window frame for each row.</source>
-        <translation type="unfinished"></translation>
+        <translation>(expr) Bu yerleşik pencere işlevi, her satır için pencere çerçevesini birleştirilmiş pencere işlevi ile aynı şekilde hesaplar. Her satır için pencere çerçevesindeki ilk satıra karşı değerlendirilen ifade değerini döndürür.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="134"/>
         <source>(expr) This built-in window function calculates the window frame for each row in the same way as an aggregate window function. It returns the value of expr evaluated against the last row in the window frame for each row.</source>
-        <translation type="unfinished"></translation>
+        <translation>(expr) Bu yerleşik pencere işlevi, her satır için pencere çerçevesini birleştirilmiş pencere işlevi ile aynı şekilde hesaplar. Her satır için pencere çerçevesindeki son satıra göre değerlendirilen ifade değerini döndürür.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="135"/>
         <source>(expr,N) This built-in window function calculates the window frame for each row in the same way as an aggregate window function. It returns the value of expr evaluated against the row N of the window frame. Rows are numbered within the window frame starting from 1 in the order defined by the ORDER BY clause if one is present, or in arbitrary order otherwise. If there is no Nth row in the partition, then NULL is returned.</source>
-        <translation type="unfinished"></translation>
+        <translation>(expr,N) Bu yerleşik pencere işlevi, her satır için pencere çerçevesini birleştirilmiş pencere işlevi ile aynı şekilde hesaplar. Pencere çerçevesinin N satırına göre değerlendirilen ifade değerini döndürür. Satırlar, pencere çerçevesi içinde 1&apos;den başlayarak, ORDER BY deyimi tarafından varsa veya başka bir şekilde rastgele sırada numaralandırılır. Bölümde N&apos;inci satırı yoksa, NULL döndürülür.</translation>
     </message>
 </context>
 <context>
@@ -6833,12 +6834,12 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     <message>
         <location filename="../TableBrowser.ui" line="14"/>
         <source>Browse Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Veriyi Görüntüle</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="43"/>
         <source>&amp;Table:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Tablo:</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="59"/>
@@ -6859,27 +6860,33 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
  - Ctrl+&quot; for duplicating the current record.
  - Ctrl+&apos; for copying the value from the cell above.
  - Standard selection and copy/paste operations.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu veritabanı tablosu görünümüdür. Aşağıdaki işlemleri yapabilirsiniz:
+&#xa0; - Satır içi değeri düzenlemek için yazmaya başlayın.
+&#xa0; - İçeriklerini hücre düzenleyici penceresinde düzenlemek için herhangi bir kaydı çift tıklayın.
+&#xa0; - Hücre içeriğini NULL&apos;a dönüştürmek için Alt + Del tuşlarına basın.
+&#xa0; - Geçerli kaydı çoğaltmak için Ctrl + &quot;tuşlarına basın.
+&#xa0; - Yukarıdaki hücreden değeri kopyalamak için Ctrl + &apos;.
+&#xa0; - Standart seçim ve kopyalama / yapıştırma işlemleri.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="253"/>
         <source>Text pattern to find considering the checks in this frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu çerçevedeki kontrolleri baz alarak bulmak için metin deseni</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="256"/>
         <source>Find in table</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabloda ara</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="266"/>
         <source>Find previous match [Shift+F3]</source>
-        <translation type="unfinished"></translation>
+        <translation>Önceki eşleşmeyi bul [Shift,F3]</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="269"/>
         <source>Find previous match with wrapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Sarmalayarak bir önceki eşleşmeyi bul</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="276"/>
@@ -6889,12 +6896,12 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     <message>
         <location filename="../TableBrowser.ui" line="283"/>
         <source>Find next match [Enter, F3]</source>
-        <translation type="unfinished"></translation>
+        <translation>Sonraki eşleşmeyi bul [Enter, F3]</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="286"/>
         <source>Find next match with wrapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Sarmalayarak bir sonraki eşleşmeyi bul</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="293"/>
@@ -6904,74 +6911,74 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     <message>
         <location filename="../TableBrowser.ui" line="300"/>
         <source>The found pattern must match in letter case</source>
-        <translation type="unfinished"></translation>
+        <translation>Bulunan desen büyük küçük harfe duyarlı şekilde eşleşmelidir</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="303"/>
         <source>Case Sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>Büyük Küçük Harfe Duyarlı</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="310"/>
         <source>The found pattern must be a whole word</source>
-        <translation type="unfinished"></translation>
+        <translation>Bulunan kalıp tam bir kelime olmalıdır</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="313"/>
         <source>Whole Cell</source>
-        <translation type="unfinished"></translation>
+        <translation>Tüm hücre</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="320"/>
         <source>Interpret search pattern as a regular expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Arama desenini düzenliifade olarak yorumlama</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="323"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When checked, the pattern to find is interpreted as a UNIX regular expression. See &lt;a href=&quot;https://en.wikibooks.org/wiki/Regular_Expressions&quot;&gt;Regular Expression in Wikibooks&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; İşaretlendiğinde, girilen desen UNIX düzenli ifadesi olarak yorumlanır. &lt;a href=&quot;https://en.wikibooks.org/wiki/Regular_Expressions&quot; &gt;Wikibooks&lt;/a &gt; üzerinden düzenli ifadeleri inceleyebilirsiniz. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="326"/>
         <source>Regular Expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Düzenli İfade (RegEx)</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="346"/>
         <location filename="../TableBrowser.ui" line="349"/>
         <source>Close Find Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Arama Çubuğunu Kapat</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="387"/>
         <source>Text to replace with</source>
-        <translation type="unfinished"></translation>
+        <translation>Değiştirilecek metin</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="390"/>
         <source>Replace with</source>
-        <translation type="unfinished"></translation>
+        <translation>Şununla değiştir</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="400"/>
         <source>Replace next match</source>
-        <translation type="unfinished"></translation>
+        <translation>Sonraki eşleşmeyi değiştir</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="403"/>
         <location filename="../TableBrowser.ui" line="1054"/>
         <source>Replace</source>
-        <translation type="unfinished"></translation>
+        <translation>Değiştir</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="410"/>
         <source>Replace all matches</source>
-        <translation type="unfinished"></translation>
+        <translation>Tüm eşleşenleri değiştir</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="413"/>
         <source>Replace all</source>
-        <translation type="unfinished"></translation>
+        <translation>Tümünü Değiştir</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="456"/>
@@ -6991,12 +6998,12 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     <message>
         <location filename="../TableBrowser.ui" line="476"/>
         <source>Scroll one page upwards</source>
-        <translation type="unfinished"></translation>
+        <translation>Bir sayfa yukarı kaydır</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="479"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates one page of records upwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bu butona tıklamak, yukarıdaki tablo görünümünde kayıt sayfasını yukarı doğru kaydırır.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="482"/>
@@ -7011,12 +7018,12 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     <message>
         <location filename="../TableBrowser.ui" line="503"/>
         <source>Scroll one page downwards</source>
-        <translation type="unfinished"></translation>
+        <translation>Bir sayfa aşağı kaydır</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="506"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates one page of records downwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bu butona tıklamak, yukarıdaki tablo görünümünde kayıt sayfasını aşağıya doğru kaydırır.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="509"/>
@@ -7071,32 +7078,32 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     <message>
         <location filename="../TableBrowser.ui" line="584"/>
         <source>Show rowid column</source>
-        <translation type="unfinished"></translation>
+        <translation>rowid sütununu göster</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="587"/>
         <source>Toggle the visibility of the rowid column</source>
-        <translation type="unfinished"></translation>
+        <translation>Rowid sütununun görünürlüğünü ayarla</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="595"/>
         <source>Unlock view editing</source>
-        <translation type="unfinished"></translation>
+        <translation>Görünüm düzenlemenin kilidini aç</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="598"/>
         <source>This unlocks the current view for editing. However, you will need appropriate triggers for editing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu, geçerli görünümün düzenleme için kilidini açar. Ancak, düzenleme için uygun tetikleyicilere ihtiyacınız olacaktır.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="603"/>
         <source>Edit display format</source>
-        <translation type="unfinished"></translation>
+        <translation>Görüntüleme formatını düzenle</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="606"/>
         <source>Edit the display format of the data in this column</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu sütundaki verilerin görüntüleme biçimini düzenleyin</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="615"/>
@@ -7113,7 +7120,7 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     <message>
         <location filename="../TableBrowser.ui" line="624"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button creates a new record in the database. Hold the mouse button to open a pop-up menu of different options:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt;: insert a new record with default values in the database.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Insert Values...&lt;/span&gt;: open a dialog for entering values before they are inserted in the database. This allows to enter values acomplishing the different constraints. This dialog is also open if the &lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt; option fails due to these constraints.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; Bu düğme veritabanında yeni bir kayıt oluşturur. Farklı seçeneklerin olduğu açılır menüsüyü görüntülemek için fare düğmesini basılı tutun: &lt;/p&gt; &lt;ul&gt; &lt;li&gt; &lt;span style=&quot; font-weight:600;&quot;&gt;Yeni Kayıt&lt;/span&gt;: veritabanına varsayılan değerleri olan yeni bir kayıt ekler. &lt;/li&gt; &lt;li&gt; &lt;span style=&quot; font-weight:600;&quot;&gt;Değerler Ekleyin...&lt;/span&gt;: veritabanına eklenmeden önce değerleri girmek için bir iletişim kutusu açın. Bu, farklı kısıtlamaları karşılayan değerlerin girilmesine izin verir. Bu iletişim kutusu, bu kısıtlamalar nedeniyle &lt;span style=&quot; font-weight:600;&quot;&gt;Yeni Kayıt&lt;/span&gt; seçeneği başarısız olursa da açılır. &lt;/li&gt; &lt;/ul&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="633"/>
@@ -7130,24 +7137,24 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
         <location filename="../TableBrowser.ui" line="639"/>
         <location filename="../TableBrowser.ui" line="642"/>
         <source>This button deletes the record or records currently selected in the table</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu buton tabloda seçili olan kaydı veya kayıtları siler</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="654"/>
         <location filename="../TableBrowser.ui" line="657"/>
         <source>Insert new record using default values in browsed table</source>
-        <translation type="unfinished"></translation>
+        <translation>Görüntülenen tablosundaki varsayılan değerleri kullanarak yeni kayıt ekle</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="662"/>
         <source>Insert Values...</source>
-        <translation type="unfinished"></translation>
+        <translation>Değerler Ekle...</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="665"/>
         <location filename="../TableBrowser.ui" line="668"/>
         <source>Open a dialog for inserting values in a new record</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni bir kayda değer eklemek için bir iletişim kutusu açın</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="673"/>
@@ -7158,12 +7165,12 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
         <location filename="../TableBrowser.ui" line="676"/>
         <location filename="../TableBrowser.ui" line="679"/>
         <source>Export the filtered data to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtrelenmiş veriyi CSV olarak dışa aktar</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="682"/>
         <source>This button exports the data of the browsed table as currently displayed (after filters, display formats and order column) as a CSV file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu buton, görüntülenen tablonun verilerini şu anda görüntülendiği şekliyle (filtrelerden, görüntüleme biçimlerinden ve sütunların sıralamasına kadar) bir CSV dosyası olarak dışa aktarır.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="687"/>
@@ -7174,74 +7181,74 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
         <location filename="../TableBrowser.ui" line="690"/>
         <location filename="../TableBrowser.ui" line="693"/>
         <source>Save the current filter, sort column and display formats as a view</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçerli filtreyi, sütunu ve görüntüleme biçimlerini bir görünüm olarak kaydedin</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="696"/>
         <source>This button saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu buton, görüntülenen tablonun geçerli ayarlarını (filtreler, görüntü formatları ve sütunların sırasına kadar) daha sonra göz atabileceğiniz veya SQL ifadelerinde kullanabileceğiniz bir SQL görünümü olarak kaydeder.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="705"/>
         <source>Save Table As...</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabloyu Farklı Kaydet...</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="708"/>
         <location filename="../TableBrowser.ui" line="711"/>
         <source>Save the table as currently displayed</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabloyu şu anda gösterilen şekilde kaydet</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="714"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This popup menu provides the following options applying to the currently browsed and filtered table:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Export to CSV: this option exports the data of the browsed table as currently displayed (after filters, display formats and order column) to a CSV file.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Save as view: this option saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; Bu açılır menü, o anda görüntülenen ve filtrelenen tablo için geçerli olan aşağıdaki seçenekleri sunar: &lt;/p&gt; &lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot; &gt; &lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot; &gt; CSV olarak Dışa Aktar: Bu seçenek, görüntülenen tablonun verilerini şu anda görüntülendiği şekliyle (filtrelerden, görüntüleme biçimlerinden ve sipariş sütunun sıralamasına kadar) bir CSV dosyasına aktarır. &lt;/li&gt; &lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot; &gt; Görünüm olarak kaydet: Bu seçenek, göz atılan tablonun geçerli ayarlarını (filtreler, görüntü formatları ve sipariş sütun sıralamasına kadar) daha sonra göz atabileceğiniz veya SQL ifadelerinde kullanabileceğiniz bir SQL görünümü olarak kaydeder. &lt;/li&gt; &lt;/ul&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="719"/>
         <source>Hide column(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Sütunları gizle</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="722"/>
         <source>Hide selected column(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilen sütunları gizle</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="727"/>
         <source>Show all columns</source>
-        <translation type="unfinished"></translation>
+        <translation>Tüm sütunları göster</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="730"/>
         <source>Show all columns that were hidden</source>
-        <translation type="unfinished"></translation>
+        <translation>Gizlenen tüm sütunları göster</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="735"/>
         <location filename="../TableBrowser.cpp" line="1371"/>
         <source>Set encoding</source>
-        <translation type="unfinished"></translation>
+        <translation>Kodlama seç</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="738"/>
         <source>Change the encoding of the text in the table cells</source>
-        <translation type="unfinished"></translation>
+        <translation>Tablo hücrelerindeki metnin kodlamasını değiştirme</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="743"/>
         <source>Set encoding for all tables</source>
-        <translation type="unfinished"></translation>
+        <translation>Tüm tablolar için kodlama seç</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="746"/>
         <source>Change the default encoding assumed for all tables in the database</source>
-        <translation type="unfinished"></translation>
+        <translation>Veritabanındaki tüm tablolar için varsayılan kodlamayı değiştirme</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="755"/>
         <source>Clear Filters</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtreleri Temizle</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="758"/>
@@ -7252,38 +7259,38 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
         <location filename="../TableBrowser.ui" line="761"/>
         <location filename="../TableBrowser.ui" line="764"/>
         <source>This button clears all the filters set in the header input fields for the currently browsed table.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu buton, o anda görüntülenen tablonun başlık giriş alanlarında ayarlanan tüm filtreleri temizler.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="773"/>
         <source>Clear Sorting</source>
-        <translation type="unfinished"></translation>
+        <translation>Sıralamayı Temizle</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="776"/>
         <source>Reset the order of rows to the default</source>
-        <translation type="unfinished"></translation>
+        <translation>Satırların sırasını varsayılana sıfırla</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="779"/>
         <location filename="../TableBrowser.ui" line="782"/>
         <source>This button clears the sorting columns specified for the currently browsed table and returns to the default order.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu buton, o anda görüntülenen tablo için belirtilen sıralama sütunlarını temizler ve varsayılan sıraya geri döner.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="791"/>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazdır</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="794"/>
         <source>Print currently browsed table data</source>
-        <translation type="unfinished"></translation>
+        <translation>Şu anda görüntülenen tablo verilerini yazdır</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="800"/>
         <source>Print currently browsed table data. Print selection if more than one cell is selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Şu anda görüntülenen tablo verilerini yazdırın. Birden fazla hücre seçilirse seçimi yazdırın.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="803"/>
@@ -7293,12 +7300,12 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     <message>
         <location filename="../TableBrowser.ui" line="815"/>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>Yenile</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="818"/>
         <source>Refresh the data in the selected table</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilen tablodaki verileri yenile</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="821"/>
@@ -7313,17 +7320,17 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     <message>
         <location filename="../TableBrowser.ui" line="839"/>
         <source>Find in cells</source>
-        <translation type="unfinished"></translation>
+        <translation>Hücrelerde ara</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="842"/>
         <source>Open the find tool bar which allows you to search for values in the table view below.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aşağıdaki tablo görünümünde değerleri aramanıza izin veren bul araç çubuğunu açın.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="845"/>
         <source>Ctrl+F</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+F</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="857"/>
@@ -7334,7 +7341,7 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     <message>
         <location filename="../TableBrowser.ui" line="863"/>
         <source>Ctrl+B</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+B</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="875"/>
@@ -7351,150 +7358,150 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     <message>
         <location filename="../TableBrowser.ui" line="896"/>
         <source>Ctrl+U</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+U</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="908"/>
         <location filename="../TableBrowser.ui" line="911"/>
         <source>Align Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Sağa Hizala</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="923"/>
         <location filename="../TableBrowser.ui" line="926"/>
         <source>Align Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Sola Hizala</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="938"/>
         <location filename="../TableBrowser.ui" line="941"/>
         <source>Center Horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Yatayda Ortala</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="953"/>
         <location filename="../TableBrowser.ui" line="956"/>
         <source>Justify</source>
-        <translation type="unfinished"></translation>
+        <translation>İki yana yasla</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="965"/>
         <location filename="../TableBrowser.ui" line="968"/>
         <source>Edit Conditional Formats...</source>
-        <translation type="unfinished"></translation>
+        <translation>Koşullu Biçimlendirmeyi Düzenle...</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="971"/>
         <source>Edit conditional formats for the current column</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçerli sütun için koşullu biçimlendirmeyi düzenle</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="980"/>
         <source>Clear Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Biçimlendirmeleri Temizle</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="983"/>
         <source>Clear All Formats</source>
-        <translation type="unfinished"></translation>
+        <translation>Tüm Biçimlendirmeleri Temizle</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="986"/>
         <location filename="../TableBrowser.ui" line="989"/>
         <source>Clear all cell formatting from selected cells and all conditional formats from selected columns</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilen hücrelerdeki tüm hücre biçimlendirmelerini ve seçilen sütunlardaki tüm koşullu biçimleri temizle</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="998"/>
         <location filename="../TableBrowser.ui" line="1001"/>
         <source>Font Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazı Rengi</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1010"/>
         <location filename="../TableBrowser.ui" line="1013"/>
         <source>Background Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Arka Plan Rengi</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1025"/>
         <source>Toggle Format Toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Biçim Araç Çubuğunu Aç/Kapat</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1028"/>
         <source>Show/hide format toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Biçim araç çubuğunu göster/gizle</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1031"/>
         <location filename="../TableBrowser.ui" line="1034"/>
         <source>This button shows or hides the formatting toolbar of the Data Browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu düğme Veri Görüntüleyici&apos;nin biçimlendirme araç çubuğunu gösterir veya gizler</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1039"/>
         <source>Select column</source>
-        <translation type="unfinished"></translation>
+        <translation>Sütun seç</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1042"/>
         <source>Ctrl+Space</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Space</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1057"/>
         <source>Replace text in cells</source>
-        <translation type="unfinished"></translation>
+        <translation>Hücrelerdeki metinleri değiştir</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1060"/>
         <source>Ctrl+H</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+H</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="42"/>
         <source>Filter in all columns</source>
-        <translation type="unfinished"></translation>
+        <translation>Tüm sütunları filtrele</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="97"/>
         <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+R</translation>
     </message>
     <message numerus="yes">
         <location filename="../TableBrowser.cpp" line="434"/>
         <source>%n row(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n satır</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../TableBrowser.cpp" line="436"/>
         <source>, %n column(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>, %n sütun</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="449"/>
         <source>. Sum: %1; Average: %2; Min: %3; Max: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>. Toplam: %1; Ortalama: %2; Min: %3; Maks: %4</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="667"/>
         <source>Conditional formats for &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; için koşullu biçimlendirme</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="736"/>
         <source>determining row count...</source>
-        <translation type="unfinished"></translation>
+        <translation>satır sayısı belirleniyor...</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="739"/>
         <source>%1 - %2 of &gt;= %3</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 - %2 &gt;= %3</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="742"/>
@@ -7504,32 +7511,32 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     <message>
         <location filename="../TableBrowser.cpp" line="888"/>
         <source>Please enter a pseudo-primary key in order to enable editing on this view. This should be the name of a unique column in the view.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu görünümde düzenlemeyi etkinleştirmek için lütfen sözde birincil anahtar girin. Bu, görünümdeki benzersiz bir sütunun adı olmalıdır.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1010"/>
         <source>Delete Records</source>
-        <translation type="unfinished"></translation>
+        <translation>Kayıtları Sil</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1157"/>
         <source>Duplicate records</source>
-        <translation type="unfinished"></translation>
+        <translation>Yinelenen kayıtlar</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1157"/>
         <source>Duplicate record</source>
-        <translation type="unfinished"></translation>
+        <translation>Yinelenen kayıt</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1161"/>
         <source>Ctrl+&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+&quot;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1180"/>
         <source>Adjust rows to contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Satırları içeriklere göre ayarlama</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1235"/>
@@ -7546,33 +7553,34 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     <message>
         <location filename="../TableBrowser.cpp" line="1351"/>
         <source>There is no filter set for this table. View will not be created.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu tablo için ayarlanmış filtre yok. Görünüm oluşturulmaz.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1367"/>
         <source>Please choose a new encoding for all tables.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lütfen tüm tablolar için yeni bir kodlama seçin.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1369"/>
         <source>Please choose a new encoding for this table.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lütfen bu tablo için yeni bir kodlama seçin.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1372"/>
         <source>%1
 Leave the field empty for using the database encoding.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1
+Veritabanı kodlamasını kullanmak için alanı boş bırakın.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1384"/>
         <source>This encoding is either not valid or not supported.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu kodlama geçerli değil veya desteklenmiyor.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1555"/>
         <source>%1 replacement(s) made.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 değişimi yapıldı.</translation>
     </message>
 </context>
 <context>
