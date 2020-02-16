@@ -869,7 +869,7 @@ void ExtendedTableWidget::vscrollbarChanged(int value)
 
 int ExtendedTableWidget::numVisibleRows() const
 {
-    if(!isVisible())
+    if(!isVisible() || !model() || !verticalHeader())
         return 0;
 
     // Get the row numbers of the rows currently visible at the top and the bottom of the widget

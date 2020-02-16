@@ -25,13 +25,21 @@
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="19"/>
-        <source>SQLCipher Version </source>
-        <translation>Versione SQLCipher </translation>
+        <source>SQLCipher Version %1 (based on SQLite %2)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AboutDialog.cpp" line="19"/>
+        <location filename="../AboutDialog.cpp" line="22"/>
+        <source>Built for %1, running on %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SQLCipher Version </source>
+        <translation type="vanished">Versione SQLCipher </translation>
+    </message>
+    <message>
         <source> (based on SQLite %1)</source>
-        <translation> (basato su SQLite %1)</translation>
+        <translation type="vanished"> (basato su SQLite %1)</translation>
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="21"/>
@@ -39,9 +47,8 @@
         <translation>Versione </translation>
     </message>
     <message>
-        <location filename="../AboutDialog.cpp" line="22"/>
         <source>Built for </source>
-        <translation>Compilato per </translation>
+        <translation type="vanished">Compilato per </translation>
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="23"/>

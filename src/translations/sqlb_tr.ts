@@ -24,18 +24,13 @@
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="19"/>
-        <source> (based on SQLite %1)</source>
-        <translation> (SQLite %1 tabanlı)</translation>
-    </message>
-    <message>
         <location filename="../AboutDialog.cpp" line="21"/>
         <source>Version </source>
-        <translation>Versiyon </translation>
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="22"/>
-        <source>Built for </source>
-        <translation>Derleme mimarisi: </translation>
+        <source>Built for %1, running on %2</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="23"/>
@@ -43,9 +38,8 @@
         <translation>Qt Versiyonu </translation>
     </message>
     <message>
-        <location filename="../AboutDialog.cpp" line="19"/>
         <source>SQLCipher Version </source>
-        <translation>SQLCipher Versiyonu </translation>
+        <translation type="vanished">SQLCipher Versiyonu </translation>
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="17"/>

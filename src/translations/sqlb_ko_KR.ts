@@ -24,9 +24,13 @@
         <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite는 오픈소스, 프리웨어 시각화 툴로 SQLite 데이터베이스 파일을 생성하고, 설계하고 수정할 수 있습니다.&lt;/p&gt;&lt;p&gt;이 프로그램은 두 가지 라이센스를 따르는데 Mozilla Public License Version 2와 GNU General Public License Version 3 또는 그 이후 버전의 라이센스를 따릅니다. 여러분은 이 라이센스 하에서 수정하거나 재배포 할 수 있습니다.&lt;/p&gt;&lt;p&gt;자세한 내용은 &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/a&gt; 과 &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/span&gt;&lt;/a&gt; 를 참고하시기 바랍니다.&lt;/p&gt;&lt;p&gt;이 프로그램에 대한 추가 정보를 알고 싶으시면 우리 웹사이트에 방문하세요: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://sqlitebrowser.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;이 소프트웨어는 &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;의 GPL/LGPL Qt Toolkit을 사용합니다.&lt;/span&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;라이센스 조건과 정보는 &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; 에서 보실 수 있습니다.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;또한 이 프로그램은 Mark James가 제작한 실크 아이콘 세트를 Creative Commons Attribution 2.5와 3.0 버전 라이센스 하에서 사용하고 있습니다.&lt;br/&gt;자세한 것은 &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; 를 참고하세요.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../AboutDialog.cpp" line="19"/>
         <source> (based on SQLite %1)</source>
-        <translation>(SQLite %1 버전에 기반)</translation>
+        <translation type="vanished">(SQLite %1 버전에 기반)</translation>
+    </message>
+    <message>
+        <location filename="../AboutDialog.cpp" line="19"/>
+        <source>SQLCipher Version %1 (based on SQLite %2)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="21"/>
@@ -35,7 +39,7 @@
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="22"/>
-        <source>Built for </source>
+        <source>Built for %1, running on %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -44,9 +48,8 @@
         <translation>Qt 버전</translation>
     </message>
     <message>
-        <location filename="../AboutDialog.cpp" line="19"/>
         <source>SQLCipher Version </source>
-        <translation>SQLCipher 버전</translation>
+        <translation type="vanished">SQLCipher 버전</translation>
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="17"/>

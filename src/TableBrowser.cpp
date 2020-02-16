@@ -746,7 +746,7 @@ void TableBrowser::updateRecordsetLabel()
 
     // Enable editing only for tables or views with editing unlocked for which the row count is already available
     sqlb::ObjectIdentifier current_table = currentlyBrowsedTableName();
-    bool is_table_or_unlocked_view = !m_model->query().empty() && db->getObjectByName(current_table) && (
+    bool is_table_or_unlocked_view = !current_table.isEmpty() && !m_model->query().empty() && db->getObjectByName(current_table) && (
                 (db->getObjectByName(current_table)->type() == sqlb::Object::View && m_model->hasPseudoPk()) ||
                 (db->getObjectByName(current_table)->type() == sqlb::Object::Table));
     enableEditing(m_model->rowCountAvailable() != SqliteTableModel::RowCount::Unknown && is_table_or_unlocked_view);
