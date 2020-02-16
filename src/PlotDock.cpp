@@ -492,6 +492,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                         // set some graph styles not supported by the abstract plottable
                         graph->setLineStyle(static_cast<QCPGraph::LineStyle>(ui->comboLineType->currentIndex()));
                         graph->setScatterStyle(scatterStyle);
+                        plottable->setPen(QPen(item->backgroundColor(PlotColumnY1)));
                       }
                       if(y2ItemBool){
                         QCPGraph* graph = ui->plotWidget->addGraph(ui->plotWidget->xAxis, ui->plotWidget->yAxis2);
@@ -500,6 +501,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                         // set some graph styles not supported by the abstract plottable
                         graph->setLineStyle(static_cast<QCPGraph::LineStyle>(ui->comboLineType->currentIndex()));
                         graph->setScatterStyle(scatterStyle);
+                        plottable->setPen(QPen(item->backgroundColor(PlotColumnY2)));
                       }
                     } else {
                       if(y1ItemBool){
@@ -512,6 +514,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                         else
                             curve->setLineStyle(QCPCurve::lsLine);
                         curve->setScatterStyle(scatterStyle);
+                        plottable->setPen(QPen(item->backgroundColor(PlotColumnY1)));
                       }
                       if(y2ItemBool){
                         QCPCurve* curve = new QCPCurve(ui->plotWidget->xAxis, ui->plotWidget->yAxis2);
@@ -523,12 +526,9 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                         else
                           curve->setLineStyle(QCPCurve::lsLine);
                         curve->setScatterStyle(scatterStyle);
+                        plottable->setPen(QPen(item->backgroundColor(PlotColumnY2)));
                       }
                     }
-                    if(y1ItemBool)
-                      plottable->setPen(QPen(item->backgroundColor(PlotColumnY1)));
-                    else
-                      plottable->setPen(QPen(item->backgroundColor(PlotColumnY2)));
                 }
 
                 plottable->setSelectable(QCP::stDataRange);
