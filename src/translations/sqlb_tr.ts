@@ -2743,12 +2743,12 @@ x~y	Aralık: değerler x ve y arasında
     <message>
         <location filename="../MainWindow.ui" line="1766"/>
         <source>Opens the SQLCipher FAQ in a browser window</source>
-        <translation type="unfinished"></translation>
+        <translation>SQLCipher Hakkında SSS bölümünü tarayıcı penceresinde açar</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1774"/>
         <source>Export one or more table(s) to a JSON file</source>
-        <translation type="unfinished"></translation>
+        <translation>Bir veya daha fazla tabloyu JSON dosyası olarak dışa aktarın</translation>
     </message>
     <message>
         <source>F5</source>
@@ -2989,7 +2989,7 @@ x~y	Aralık: değerler x ve y arasında
     <message>
         <location filename="../MainWindow.ui" line="1789"/>
         <source>Open an existing database file in read only mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Mevcut bir veritabanı dosyasını salt okunur modda açar</translation>
     </message>
     <message>
         <source>E&amp;xecute SQL</source>
@@ -3033,7 +3033,7 @@ x~y	Aralık: değerler x ve y arasında
     <message>
         <location filename="../MainWindow.ui" line="869"/>
         <source>Edit Database &amp;Cell</source>
-        <translation type="unfinished"></translation>
+        <translation>Veritabanı Hü&amp;cresini Düzenle</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1024"/>
@@ -3043,7 +3043,7 @@ x~y	Aralık: değerler x ve y arasında
     <message>
         <location filename="../MainWindow.ui" line="1070"/>
         <source>&amp;Remote</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Uzak Bilgisayar</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1542"/>
@@ -3054,7 +3054,7 @@ x~y	Aralık: değerler x ve y arasında
     <message>
         <location filename="../MainWindow.ui" line="1551"/>
         <source>This button executes the SQL statement present in the current editor line</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu buton, geçerli editör satırında bulunan SQL ifadesini yürütür</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1554"/>
@@ -3064,7 +3064,7 @@ x~y	Aralık: değerler x ve y arasında
     <message>
         <location filename="../MainWindow.ui" line="1637"/>
         <source>Sa&amp;ve Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Projeyi &amp;Kaydet</translation>
     </message>
     <message>
         <source>SQL Log</source>
@@ -3483,7 +3483,9 @@ x~y	Aralık: değerler x ve y arasında
         <source>This is the structure of the opened database.
 You can drag SQL statements from an object row and drop them into other applications or into another instance of &apos;DB Browser for SQLite&apos;.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Bu, açılan veritabanının yapısıdır.
+SQL ifadelerini bir nesne satırından sürükleyip başka uygulamalara veya &apos;DB Browser for SQLite programının başka bir penceresine bırakabilirsiniz.
+</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="118"/>
@@ -3495,12 +3497,12 @@ You can drag SQL statements from an object row and drop them into other applicat
     <message>
         <location filename="../MainWindow.ui" line="2068"/>
         <source>Un/comment block of SQL code</source>
-        <translation type="unfinished"></translation>
+        <translation>Kod bloğunu yorum satırına dönüştür/yorum satırını iptal et</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2071"/>
         <source>Un/comment block</source>
-        <translation type="unfinished"></translation>
+        <translation>Yorum satırına dönüştür/yorum satırını iptal et</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2074"/>
@@ -3520,7 +3522,7 @@ You can drag SQL statements from an object row and drop them into other applicat
     <message>
         <location filename="../MainWindow.ui" line="2092"/>
         <source>Stop SQL execution</source>
-        <translation type="unfinished"></translation>
+        <translation>SQL yürütmesini durdur</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2095"/>
@@ -3530,7 +3532,7 @@ You can drag SQL statements from an object row and drop them into other applicat
     <message>
         <location filename="../MainWindow.ui" line="2098"/>
         <source>Stop the currently running SQL script</source>
-        <translation type="unfinished"></translation>
+        <translation>Şu anda çalışan SQL betiğini durdur</translation>
     </message>
     <message>
         <source>...</source>
@@ -3546,7 +3548,7 @@ You can drag SQL statements from an object row and drop them into other applicat
     <message>
         <location filename="../MainWindow.ui" line="256"/>
         <source>Warning: this pragma is not readable and this value has been inferred. Writing the pragma might overwrite a redefined LIKE provided by an SQLite extension.</source>
-        <translation type="unfinished"></translation>
+        <translation>Uyarı: Bu pragma okunamaz ve bu değer çıkartıldı. Bu pragmayı yazmak, bir SQLite eklentisi tarafından sağlanan yeniden tanımlanmış bir LIKE&apos;nin üzerine yazabilir.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="679"/>
@@ -3563,32 +3565,32 @@ You can drag SQL statements from an object row and drop them into other applicat
     <message>
         <location filename="../MainWindow.ui" line="881"/>
         <source>SQL &amp;Log</source>
-        <translation type="unfinished"></translation>
+        <translation>SQL &amp;Günlüğü</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="899"/>
         <source>Show S&amp;QL submitted by</source>
-        <translation type="unfinished"></translation>
+        <translation>Şuna ait S&amp;QL&apos;i göster</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="926"/>
         <source>Error Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata Günlüğü</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="953"/>
         <source>This button clears the contents of the SQL logs</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu buton SQL günlüğünün içeriğini temizler</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="965"/>
         <source>This panel lets you examine a log of all SQL commands issued by the application or by yourself</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu panel, uygulama veya kendiniz tarafından verilen tüm SQL komutlarının bir günlüğünü incelemenizi sağlar</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1013"/>
         <source>&amp;Plot</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Çizim</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1037"/>
@@ -3596,13 +3598,16 @@ You can drag SQL statements from an object row and drop them into other applicat
 You can drag multiple object names from the Name column and drop them into the SQL editor and you can adjust the properties of the dropped names using the context menu. This would help you in composing SQL statements.
 You can drag SQL statements from the Schema column and drop them into the SQL editor or into other applications.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Bu, açılan veritabanının yapısıdır.
+Birden çok nesne adını Ad sütunundan sürükleyip SQL editörüne bırakabilir ve bırakılan adların özelliklerini bağlam menüsünü kullanarak ayarlayabilirsiniz. Bu, SQL ifadeleri oluşturmanıza yardımcı olacaktır.
+SQL deyimlerini Şema sütunundan sürükleyip SQL editörüne veya diğer uygulamalara bırakabilirsiniz.
+</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1079"/>
         <location filename="../MainWindow.ui" line="1898"/>
         <source>Project Toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Proje Araç Çubuğu</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1098"/>
@@ -3619,7 +3624,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1181"/>
         <source>This button closes the connection to the currently open database file</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu buton, şu anda açık olan veritabanı dosyasına ait bağlantıyı kapatır</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1184"/>
@@ -3629,7 +3634,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1199"/>
         <source>&amp;Revert Changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Değişiklikleri &amp;Geri Al</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1223"/>
@@ -3644,12 +3649,12 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1491"/>
         <source>Execute all/selected SQL</source>
-        <translation type="unfinished"></translation>
+        <translation>Tüm/seçin SQL sorgusunu yürüt</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1494"/>
         <source>This button executes the currently selected SQL statements. If no text is selected, all SQL statements are executed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu buton seçili olan SQL ifadesini yürütür. Hiçbir metin seçilmezse, tüm SQL ifadeleri yürütülür.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1530"/>
@@ -3659,12 +3664,12 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1545"/>
         <source>Execute line</source>
-        <translation type="unfinished"></translation>
+        <translation>Tek satır yürüt</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1574"/>
         <source>&amp;Wiki</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Wiki</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1577"/>
@@ -3679,7 +3684,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1601"/>
         <source>Feature Re&amp;quest...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Özellik Talebi...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1613"/>
@@ -3689,17 +3694,17 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1625"/>
         <source>&amp;Donate on Patreon...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Patreon üzerinden Bağış Yapın...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1646"/>
         <source>This button lets you save all the settings associated to the open DB to a DB4S project file</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu buton, açık veritabanı ile ilişkili tüm ayarları bir DB4S proje dosyasına kaydetmenizi sağlar</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1658"/>
         <source>Open &amp;Project...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Proje Aç...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1667"/>
@@ -3720,27 +3725,27 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1691"/>
         <source>This button lets you add another database file to the current database connection</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu buton, geçerli veritabanı bağlantısına başka bir veritabanı dosyası eklemenizi sağlar</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1703"/>
         <source>&amp;Set Encryption...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Şifreleme Belirtle...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1763"/>
         <source>SQLCipher &amp;FAQ</source>
-        <translation type="unfinished"></translation>
+        <translation>SQLCipher &amp;SSS</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1771"/>
         <source>Table(&amp;s) to JSON...</source>
-        <translation type="unfinished"></translation>
+        <translation>Tablodan &amp;JSON dosyasına...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1786"/>
         <source>Open Data&amp;base Read Only...</source>
-        <translation type="unfinished"></translation>
+        <translation>Salt &amp;Okunur Veritabanı Aç...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1798"/>
@@ -3750,7 +3755,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1810"/>
         <source>Save results</source>
-        <translation type="unfinished"></translation>
+        <translation>Sonuçları kaydet</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1813"/>
@@ -3760,13 +3765,13 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1816"/>
         <source>This button lets you save the results of the last executed query</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu buton son yürütülen sorgunun sonuçlarını kaydetmenizi sağlar</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1828"/>
         <location filename="../MainWindow.ui" line="1834"/>
         <source>Find text in SQL editor</source>
-        <translation type="unfinished"></translation>
+        <translation>SQL editörünte metin ara</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1831"/>
@@ -3776,7 +3781,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1837"/>
         <source>This button opens the search bar of the editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu buton editörün arama çubuğunu açar</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1840"/>
@@ -3787,7 +3792,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <location filename="../MainWindow.ui" line="1855"/>
         <location filename="../MainWindow.ui" line="1861"/>
         <source>Find or replace text in SQL editor</source>
-        <translation type="unfinished"></translation>
+        <translation>SQL editöründe metin bul veya değiştir</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1858"/>
@@ -3797,7 +3802,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1864"/>
         <source>This button opens the find/replace dialog for the current editor tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu buton, geçerli editör sekmesi için bul / değiştir iletişim kutusunu açar</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1867"/>
@@ -3827,7 +3832,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1901"/>
         <source>Shows or hides the Project toolbar.</source>
-        <translation type="unfinished"></translation>
+        <translation>Proje araç çubuğunu gösterir veya gizler.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1916"/>
@@ -3837,29 +3842,29 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1942"/>
         <source>New In-&amp;Memory Database</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Yeni Bellek İçi Veritabanı</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1950"/>
         <source>Drag &amp;&amp; Drop Qualified Names</source>
-        <translation type="unfinished"></translation>
+        <translation>Nitelikli İsimleri Sürükle &amp;&amp; Bırak</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1953"/>
         <location filename="../MainWindow.ui" line="1956"/>
         <source>Use qualified names (e.g. &quot;Table&quot;.&quot;Field&quot;) when dragging the objects and dropping them into the editor </source>
-        <translation type="unfinished"></translation>
+        <translation>Nesneleri sürükleyip düzenleyiciye bırakırken özel isimleri kullanın (örn. &quot;Tablo&quot;. &quot;Alan&quot;) </translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1964"/>
         <source>Drag &amp;&amp; Drop Enquoted Names</source>
-        <translation type="unfinished"></translation>
+        <translation>İsimleri Sürükle &amp;&amp; Bırak</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1967"/>
         <location filename="../MainWindow.ui" line="1970"/>
         <source>Use escaped identifiers (e.g. &quot;Table1&quot;) when dragging the objects and dropping them into the editor </source>
-        <translation type="unfinished"></translation>
+        <translation>Nesneleri sürükleyip editöre bırakırken çıkış karakter belirleyicilerini kullanın(ör. &quot;Tablo1&quot;) kullanın </translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1975"/>
@@ -3869,32 +3874,32 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1978"/>
         <source>Runs the integrity_check pragma over the opened database and returns the results in the Execute SQL tab. This pragma does an integrity check of the entire database.</source>
-        <translation type="unfinished"></translation>
+        <translation>integrity_check pragmasını açılan veritabanı üzerinde çalıştırır ve &apos;SQL Kodunu Yürüt&apos; sekmesinde sonuçları döndürür. Bu pragma veritabanının tamamının bütünlüğünü kontrol eder.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1983"/>
         <source>&amp;Foreign-Key Check</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Yabancı anahtar kontrolü</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1986"/>
         <source>Runs the foreign_key_check pragma over the opened database and returns the results in the Execute SQL tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Foreign_key_check pragmasını açık veritabanı üzerinde çalıştırır ve &apos;SQL Kodunu Yürüt&apos; sekmesinde sonuçları döndürür</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1991"/>
         <source>&amp;Quick Integrity Check</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Hızlı Bütünlük Testi</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1994"/>
         <source>Run a quick integrity check over the open DB</source>
-        <translation type="unfinished"></translation>
+        <translation>Açık veritabanı üzerinde hızlı bir bütünlük denetimi yapın</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1997"/>
         <source>Runs the quick_check pragma over the opened database and returns the results in the Execute SQL tab. This command does most of the checking of PRAGMA integrity_check but runs much faster.</source>
-        <translation type="unfinished"></translation>
+        <translation>quick_check pragmasını açık veritabanı üzerinde çalıştırır ve &apos;SQL Kodunu Yürüt&apos; sekmesinde sonuçları döndürür. Bu komut PRAGMA integrity_check denetiminin çoğunu yapar, ancak çok daha hızlı çalışır.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2002"/>
@@ -3909,57 +3914,57 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="2008"/>
         <source>Runs the optimize pragma over the opened database. This pragma might perform optimizations that will improve the performance of future queries.</source>
-        <translation type="unfinished"></translation>
+        <translation>Açılan veritabanı üzerinden optimizasyon pragmasını çalıştırır. Bu uygulama gelecekteki sorguların performansını artırmaya yardımcı olabilir.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2017"/>
         <location filename="../MainWindow.ui" line="2044"/>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazdır</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2020"/>
         <source>Print text from current SQL editor tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçerli SQL düzenleyici sekmesinden metni yazdırın</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2026"/>
         <source>Open a dialog for printing the text in the current SQL editor tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçerli SQL düzenleyici sekmesindeki metni yazdırmak için bir iletişim kutusu açın</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2047"/>
         <source>Print the structure of the opened database</source>
-        <translation type="unfinished"></translation>
+        <translation>Şu anda açık olan veritabanı yapısını yazdırın</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2053"/>
         <source>Open a dialog for printing the structure of the opened database</source>
-        <translation type="unfinished"></translation>
+        <translation>Açılan veritabanının yapısını yazdırmak için bir  bir iletişim kutusu açın</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2107"/>
         <source>&amp;Save Project As...</source>
-        <translation type="unfinished"></translation>
+        <translation>Projeyi &amp;Farklı Kaydet...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2110"/>
         <location filename="../MainWindow.ui" line="2113"/>
         <location filename="../MainWindow.ui" line="2116"/>
         <source>Save the project in a file selected in a dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Projeyi iletişim kutusunda seçilen bir dosyaya kaydedin</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2125"/>
         <source>Save A&amp;ll</source>
-        <translation type="unfinished"></translation>
+        <translation>Tümünü &amp;Kaydet</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2128"/>
         <location filename="../MainWindow.ui" line="2131"/>
         <location filename="../MainWindow.ui" line="2134"/>
         <source>Save DB file, project file and opened SQL files</source>
-        <translation type="unfinished"></translation>
+        <translation>Veritabanı dosyasını, proje dosyasını ve açılan SQL dosyalarını kaydedin</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2137"/>
@@ -3974,7 +3979,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1288"/>
         <source>&amp;Table from CSV file...</source>
-        <translation type="unfinished"></translation>
+        <translation>CSV dosyasından &amp;tablo...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1302"/>
@@ -3984,7 +3989,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1316"/>
         <source>&amp;Table(s) as CSV file...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Tablodan CSV dosyası olarak...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1337"/>
@@ -4019,7 +4024,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1476"/>
         <source>This button opens a new tab for the SQL editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu buton SQL editörü için yeni bir sekme açar</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1488"/>
@@ -4034,7 +4039,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1509"/>
         <source>This button opens a file containing SQL statements and loads it in a new editor tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu buton SQL ifadeleri içeren bir dosya açar ve yeni bir editör sekmesine yükler</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1518"/>
@@ -4111,7 +4116,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1733"/>
         <source>This button saves the content of the current SQL editor tab to a file</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu buton geçerli SQL editörü sekmesinin içeriğini bir dosyaya kaydeder</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1742"/>
@@ -4157,12 +4162,12 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.cpp" line="369"/>
         <source>Encrypted</source>
-        <translation type="unfinished"></translation>
+        <translation>Şifrelenmiş</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="376"/>
         <source>Read only</source>
-        <translation type="unfinished"></translation>
+        <translation>Salt okunur</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="377"/>
@@ -4266,7 +4271,9 @@ All data associated with the %1 will be lost.</source>
         <source>Error while saving the database file. This means that not all changes to the database were saved. You need to resolve the following error first.
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Veritabanı dosyası kaydedilirken hata oluştu. Bu, veritabanındaki tüm değişikliklerin kaydedilmediği anlamına gelir. Önce aşağıdaki hatayı çözmeniz gerekir.
+
+%1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1333"/>
@@ -4291,7 +4298,7 @@ All data associated with the %1 will be lost.</source>
     <message>
         <location filename="../MainWindow.cpp" line="1654"/>
         <source>Open Database or Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Veritabanı veya Proje Açın</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1655"/>
@@ -4306,14 +4313,14 @@ All data associated with the %1 will be lost.</source>
     <message numerus="yes">
         <location filename="../MainWindow.cpp" line="1659"/>
         <source>Select the action to apply to the dropped file(s). &lt;br/&gt;Note: only &apos;Import&apos; will process more than one file.</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Bırakılan dosyalara uygulanacak eylemi seçin. &lt;br/&gt;Not: yalnızca &apos;İçe Aktar&apos; birden fazla dosyayı işleyecektir.</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1834"/>
         <source>Do you want to save the changes made to SQL tabs in the project file &apos;%1&apos;?</source>
-        <translation type="unfinished"></translation>
+        <translation>SQL sekmelerinde yapılan değişiklikleri &apos;%1&apos;  proje dosyasına kaydetmek istiyor musunuz?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1959"/>
@@ -4340,7 +4347,7 @@ Eğer cevabınız hayır ise biz SQL dosyasındaki verileri geçerli veritabanı
     <message>
         <location filename="../MainWindow.cpp" line="727"/>
         <source>Do you want to save the changes made to the project file &apos;%1&apos;?</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; proje dosyasında yapılan değişiklikleri kaydetmek istiyor musunuz?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1386"/>
@@ -4365,7 +4372,7 @@ Eğer cevabınız hayır ise biz SQL dosyasındaki verileri geçerli veritabanı
     <message>
         <location filename="../MainWindow.cpp" line="1484"/>
         <source>Modify View</source>
-        <translation type="unfinished"></translation>
+        <translation>Görünümü Düzenle</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1486"/>
@@ -4385,7 +4392,7 @@ Eğer cevabınız hayır ise biz SQL dosyasındaki verileri geçerli veritabanı
     <message>
         <location filename="../MainWindow.cpp" line="1490"/>
         <source>Modify Index</source>
-        <translation type="unfinished"></translation>
+        <translation>Index&apos;i Düzenle</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1493"/>
@@ -4399,17 +4406,17 @@ Eğer cevabınız hayır ise biz SQL dosyasındaki verileri geçerli veritabanı
     <message>
         <location filename="../MainWindow.cpp" line="1833"/>
         <source>Do you want to save the changes made to SQL tabs in a new project file?</source>
-        <translation type="unfinished"></translation>
+        <translation>SQL sekmelerinde yapılan değişiklikleri yeni bir proje dosyasına kaydetmek istiyor musunuz?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1854"/>
         <source>Do you want to save the changes made to the SQL file %1?</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 SQL dosyasında yapılan değişiklikleri kaydetmek istiyor musunuz?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1876"/>
         <source>The statements in this tab are still executing. Closing the tab will stop the execution. This might leave the database in an inconsistent state. Are you sure you want to close the tab?</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu sekmedeki sorgular hala yürütülüyor. Sekmenin kapatılması yürütmeyi durdurur. Bu durum, veritabanını tutarsız bir durumda bırakabilir. Sekmeyi kapatmak istediğinizden emin misiniz?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2069"/>
@@ -4424,7 +4431,7 @@ Eğer cevabınız hayır ise biz SQL dosyasındaki verileri geçerli veritabanı
     <message>
         <location filename="../MainWindow.cpp" line="2515"/>
         <source>This project file is using an old file format because it was created using DB Browser for SQLite version 3.10 or lower. Loading this file format is still fully supported but we advice you to convert all your project files to the new file format because support for older formats might be dropped at some point in the future. You can convert your files by simply opening and re-saving them.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu proje dosyası eski bir formatta, çünkü DB Browser for SQLite 3.10 veya daha düşük bir sürüm ile oluşturulmuş. Bu dosya biçiminin yüklenmesi hala tam olarak desteklenmektedir, ancak gelecekte daha eski biçimlere yönelik destek azalabileceğinden, tüm proje dosyalarınızı yeni dosya biçimine dönüştürmenizi öneririz. Dosyalarınızı açıp yeniden kaydederek dönüştürebilirsiniz.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2747"/>
@@ -4448,7 +4455,7 @@ Bunu yapmak istediğinize emin misiniz?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="317"/>
         <source>Reset Window Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Pencere Düzenini Sıfırla</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="318"/>
@@ -4458,7 +4465,7 @@ Bunu yapmak istediğinize emin misiniz?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="355"/>
         <source>The database is currenctly busy.</source>
-        <translation type="unfinished"></translation>
+        <translation>Verştabanı şu anda meşgul.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="361"/>
@@ -4475,7 +4482,7 @@ Nedeni: %1</translation>
     <message>
         <location filename="../MainWindow.cpp" line="575"/>
         <source>In-Memory database</source>
-        <translation type="unfinished"></translation>
+        <translation>Bellek İçi Veritabanı</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="812"/>
@@ -4502,34 +4509,36 @@ Tabloyla ilişkili tüm veriler kaybedilecektir.</translation>
     <message>
         <location filename="../MainWindow.cpp" line="829"/>
         <source>Error: could not delete the table.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata: tablo silinemedi.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="831"/>
         <source>Error: could not delete the view.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata: görünüm silinemedi.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="833"/>
         <source>Error: could not delete the trigger.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata: tetikleyici silinemedi.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="835"/>
         <source>Error: could not delete the index.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata: index silinemedi.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="837"/>
         <source>Message from database engine:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Veritabanı motorundan mesaj:
+%1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="866"/>
         <source>Editing the table requires to save all pending changes now.
 Are you sure you want to save the database?</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabloyu düzenlemek için bekleyen tüm değişikliklerin şimdi kaydedilmesi gerekir.
+Veritabanını kaydetmek istediğinizden emin misiniz?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1000"/>
@@ -4566,28 +4575,29 @@ Are you sure you want to save the database?</source>
     <message>
         <location filename="../MainWindow.cpp" line="1110"/>
         <source>Result: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Sonuç: %1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1113"/>
         <source>Result: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Sonuç: %2</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1176"/>
         <source>Setting PRAGMA values or vacuuming will commit your current transaction.
 Are you sure?</source>
-        <translation type="unfinished"></translation>
+        <translation>PRAGMA değerlerini ayarlamak veya vakumlamak mevcut işleminizi kaydeder.
+Emin misiniz?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3289"/>
         <source>Rename Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Sekmeyi Yeniden Adlandır</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3295"/>
         <source>Duplicate Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Sekmeyi Klonla</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3325"/>
@@ -4602,12 +4612,12 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="3346"/>
         <source>There was an error opening &apos;%1&apos;...</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; açılırken hata oluştu...</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3349"/>
         <source>Value is not a valid URL or filename: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçersiz bir URL veya dosya adı: %1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1170"/>
@@ -4622,7 +4632,7 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="1413"/>
         <source>Import completed. Some foreign key constraints are violated. Please fix them before saving.</source>
-        <translation type="unfinished"></translation>
+        <translation>İçe aktarma tamamlandı. Bazı yabancı anahtar kısıtları ihlal edildi. Lütfen kaydetmeden önce bunları çözün.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1958"/>
@@ -4662,7 +4672,7 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="2161"/>
         <source>New version available.</source>
-        <translation>Yeni sürüm güncellemesi mevcut.</translation>
+        <translation>Yeni sürüm  mevcut.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2162"/>
@@ -4696,7 +4706,7 @@ Bir yedek oluşturun!</translation>
     <message>
         <location filename="../MainWindow.cpp" line="3024"/>
         <source>Set a new name for the SQL tab. Use the &apos;&amp;&amp;&apos; character to allow using the following character as a keyboard shortcut.</source>
-        <translation type="unfinished"></translation>
+        <translation>SQL sekmesi için yeni bir ad belirleyin. Aşağıdaki karakteri klavye kısayolu olarak kullanmak için &apos;&amp;&amp;&apos; karakterini kullanın.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3076"/>
@@ -4721,12 +4731,12 @@ Bir yedek oluşturun!</translation>
     <message>
         <location filename="../MainWindow.cpp" line="3094"/>
         <source>This action will open a new SQL tab for running:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu işlem çalıştırmak için yeni bir SQL sekmesi açar:</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3096"/>
         <source>Press Help for opening the corresponding SQLite reference page.</source>
-        <translation type="unfinished"></translation>
+        <translation>İlgili SQLite referans sayfasını açmak için Yardım&apos;a basın.</translation>
     </message>
     <message>
         <source>Choose a axis color</source>
@@ -4748,7 +4758,7 @@ Bir yedek oluşturun!</translation>
     <message>
         <location filename="../MainWindow.cpp" line="885"/>
         <source>Error checking foreign keys after table modification. The changes will be reverted.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tablo değişikliğinden sonra yabancı anahtarlar kontrol edilirken hata oluştu. Değişiklikler geri alınacak.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="888"/>
