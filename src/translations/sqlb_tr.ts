@@ -1484,7 +1484,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditTableDialog.ui" line="114"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekle</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="134"/>
@@ -2197,97 +2197,108 @@ The following operators are also supported:
 &lt;&gt;	Unequal: exact inverse match
 x~y	Range: values between x and y
 /regexp/	Values matching the regular expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu giriş alanları, seçili tabloda hızlı filtreler gerçekleştirmenizi sağlar.
+Varsayılan olarak,  metin içeren satırlar filtrelenir.
+Ayrıca aşağıdaki operatörler de destekleniyor:
+%	Joker
+&gt;	Büyüktür
+&lt;	Küçüktür
+&gt;=	Büyük eşit
+&lt;=	Küçük eşit
+=	Eşittir
+&lt;&gt;	Eşit değil
+x~y	Aralık: değerler x ve y arasında
+/regexp/	Kurallı ifadelerle(RegExp) eşleşen değerler</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="182"/>
         <source>Clear All Conditional Formats</source>
-        <translation type="unfinished"></translation>
+        <translation>Tüm Koşullu Biçimleri Temizle</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="187"/>
         <source>Use for Conditional Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Koşullu Biçim için Kullan</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="192"/>
         <source>Edit Conditional Formats...</source>
-        <translation type="unfinished"></translation>
+        <translation>Koşullu Biçimleri Düzenle...</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="112"/>
         <source>Set Filter Expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtre İfadesi Ayarla</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="114"/>
         <source>What&apos;s This?</source>
-        <translation type="unfinished">Bu nedir?</translation>
+        <translation>Bu nedir?</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="119"/>
         <source>Is NULL</source>
-        <translation type="unfinished"></translation>
+        <translation>NULL mu</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="124"/>
         <source>Is not NULL</source>
-        <translation type="unfinished"></translation>
+        <translation>NULL değil mi</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="129"/>
         <source>Is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Boş mu</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="134"/>
         <source>Is not empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Boş değil mi</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="139"/>
         <source>Not containing...</source>
-        <translation type="unfinished"></translation>
+        <translation>İçermiyor...</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="143"/>
         <source>Equal to...</source>
-        <translation type="unfinished"></translation>
+        <translation>Şuna eşit...</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="147"/>
         <source>Not equal to...</source>
-        <translation type="unfinished"></translation>
+        <translation>Şuna eşit değil...</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="151"/>
         <source>Greater than...</source>
-        <translation type="unfinished"></translation>
+        <translation>Büyüktür...</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="155"/>
         <source>Less than...</source>
-        <translation type="unfinished"></translation>
+        <translation>Küçüktür...</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="159"/>
         <source>Greater or equal...</source>
-        <translation type="unfinished"></translation>
+        <translation>Büyük eşit...</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="163"/>
         <source>Less or equal...</source>
-        <translation type="unfinished"></translation>
+        <translation>Küçük eşit...</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="167"/>
         <source>In range...</source>
-        <translation type="unfinished"></translation>
+        <translation>Aralıkta mı...</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="172"/>
         <source>Regular expression...</source>
-        <translation type="unfinished"></translation>
+        <translation>Düzenli ifade (RegEx)...</translation>
     </message>
 </context>
 <context>
@@ -2295,137 +2306,137 @@ x~y	Range: values between x and y
     <message>
         <location filename="../FindReplaceDialog.ui" line="14"/>
         <source>Find and Replace</source>
-        <translation type="unfinished"></translation>
+        <translation>Bul ve Değiştir</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="43"/>
         <source>Fi&amp;nd text:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Aranan Metin:</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="56"/>
         <source>Re&amp;place with:</source>
-        <translation type="unfinished"></translation>
+        <translation>Şununla d&amp;eğiştir:</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="69"/>
         <source>Match &amp;exact case</source>
-        <translation type="unfinished"></translation>
+        <translation>Büyük kü&amp;çük harfe duyarlı</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="79"/>
         <source>Match &amp;only whole words</source>
-        <translation type="unfinished"></translation>
+        <translation>Kelimenin ta&amp;mamını eşleştir</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="86"/>
         <source>When enabled, the search continues from the other end when it reaches one end of the page</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkinleştirildiğinde, arama sayfanın bir ucuna ulaştığında diğer uçtan devam eder</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="89"/>
         <source>&amp;Wrap around</source>
-        <translation type="unfinished"></translation>
+        <translation>Ba&amp;şa dön</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="96"/>
         <source>When set, the search goes backwards from cursor position, otherwise it goes forward</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayarlandığında, arama imleç konumundan geriye doğru gider, aksi takdirde ileri gider</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="99"/>
         <source>Search &amp;backwards</source>
-        <translation type="unfinished"></translation>
+        <translation>Geri&amp;ye doğru ara</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="106"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When checked, the pattern to find is searched only in the current selection.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;İşaretlendiğinde, girilen desen yalnızca geçerli seçimde aranır.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="109"/>
         <source>&amp;Selection only</source>
-        <translation type="unfinished"></translation>
+        <translation>Sadece se&amp;çimde ara</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="116"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When checked, the pattern to find is interpreted as a UNIX regular expression. See &lt;a href=&quot;https://en.wikibooks.org/wiki/Regular_Expressions&quot;&gt;Regular Expression in Wikibooks&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; İşaretlendiğinde, girilen desen UNIX düzenli ifadesi olarak yorumlanır. &lt;a href=&quot;https://en.wikibooks.org/wiki/Regular_Expressions&quot; &gt;Wikibooks&lt;/a &gt; üzerinden düzenli ifadeleri inceleyebilirsiniz. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="119"/>
         <source>Use regular e&amp;xpressions</source>
-        <translation type="unfinished"></translation>
+        <translation>Düzenli ifadeleri &amp;kullan</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="139"/>
         <source>Find the next occurrence from the cursor position and in the direction set by &quot;Search backwards&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>İmleç konumundan itibaren belirtilen yönde bir sonraki eşleşmeyi bulur</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="142"/>
         <source>&amp;Find Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Sonrakini &amp;Bul</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="145"/>
         <source>F3</source>
-        <translation type="unfinished">F3</translation>
+        <translation>F3</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="152"/>
         <source>&amp;Replace</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Değiştir</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="159"/>
         <source>Highlight all the occurrences of the text in the page</source>
-        <translation type="unfinished"></translation>
+        <translation>Eşleşen tüm kelimeleri vurgula</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="162"/>
         <source>F&amp;ind All</source>
-        <translation type="unfinished"></translation>
+        <translation>Tüm&amp;ünü Bul</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="169"/>
         <source>Replace all the occurrences of the text in the page</source>
-        <translation type="unfinished"></translation>
+        <translation>Sayfadaki bulunan metinlerin tümünü değiştir</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="172"/>
         <source>Replace &amp;All</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Tümünü Değiştir</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.cpp" line="85"/>
         <source>The searched text was not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Aranan metin bulunamadı</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.cpp" line="157"/>
         <source>The searched text was not found.</source>
-        <translation type="unfinished"></translation>
+        <translation>The searched text was not found.</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.cpp" line="163"/>
         <source>The searched text was found one time.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aranan metin bir kez bulundu.</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.cpp" line="169"/>
         <source>The searched text was found %1 times.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aranan metin %1 kez bulundu.</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.cpp" line="161"/>
         <source>The searched text was replaced one time.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aranan metin bir kez değiştirildi.</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.cpp" line="167"/>
         <source>The searched text was replaced %1 times.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aranan metin %1 kez değiştirildi.</translation>
     </message>
 </context>
 <context>
@@ -6320,7 +6331,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="151"/>
         <source>F3</source>
-        <translation type="unfinished">F3</translation>
+        <translation>F3</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="158"/>
@@ -7492,7 +7503,8 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
         <location filename="../TableBrowser.cpp" line="1235"/>
         <source>Error deleting record:
 %1</source>
-        <translation type="unfinished">Kayıt silme hatası: </translation>
+        <translation>Kayıt silme hatası:
+%1</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1244"/>
