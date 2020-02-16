@@ -4798,27 +4798,27 @@ Bir yedek oluşturun!</translation>
     <message>
         <location filename="../PlotDock.ui" line="14"/>
         <source>Plot</source>
-        <translation type="unfinished">Plan</translation>
+        <translation>Grafik Çizimi</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="30"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This pane shows the list of columns of the currently browsed table or the just executed query. You can select the columns that you want to be used as X or Y axis for the plot pane below. The table shows detected axis type that will affect the resulting plot. For the Y axis you can only select numeric columns, but for the X axis you will be able to select:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Date/Time&lt;/span&gt;: strings with format &amp;quot;yyyy-MM-dd hh:mm:ss&amp;quot; or &amp;quot;yyyy-MM-ddThh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Date&lt;/span&gt;: strings with format &amp;quot;yyyy-MM-dd&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Time&lt;/span&gt;: strings with format &amp;quot;hh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Label&lt;/span&gt;: other string formats. Selecting this column as X axis will produce a Bars plot with the column values as labels for the bars&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Numeric&lt;/span&gt;: integer or real values&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Double-clicking the Y cells you can change the used color for that graph.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; Bu bölme, o anda taranan tablonun sütunları listesini veya yürütülen sorguyu gösterir. Aşağıdaki çizim bölmesi için X veya Y ekseni olarak kullanılmasını istediğiniz sütunları seçebilirsiniz. Tablo, ortaya çıkan grafiği etkileyecek algılanan eksen tipini gösterir. Y ekseni için yalnızca sayısal sütunlar seçebilirsiniz, ancak X ekseni için aşağıdakileri seçebilirsiniz: &lt;/p&gt; &lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot; &gt; &lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot; &gt; &lt;span style=&quot; font-weight:600;&quot;&gt;Tarih/Saat&lt;/span&gt;: &amp;quot;yyyy-MM-dd hh:mm:ss&amp;quot; veya &amp;quot;yyyy-MM-ddThh:mm:ss&amp;quot; ve string formatında &lt;/li&gt; &lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot; &gt; &lt;span style=&quot; font-weight:600;&quot;&gt;Tarih&lt;/span&gt;: &amp;quot;yyyy-MM-dd&amp;quot; ve string formatında &lt;/li&gt; &lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot; &gt; &lt;span style=&quot; font-weight:600;&quot;&gt;Saat&lt;/span&gt;: &amp;quot;hh:mm:ss&amp;quot; ve string formatında &lt;/li&gt; &lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot; &gt; &lt;span style=&quot; font-weight:600;&quot;&gt;Başlık&lt;/span&gt;: diğer string formatları. Bu sütunun X ekseni için seçilmesi, sütun değerlerinin çubukları için etiket oluşturur. &lt;/li&gt; &lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot; &gt; &lt;span style=&quot; font-weight:600;&quot;&gt;Nümerik&lt;/span&gt;: integer veya real tipindeki değerler &lt;/li&gt; &lt;/ul&gt; &lt;p&gt; Y hücrelerini çift tıklatarak o grafik için kullanılan rengi değiştirebilirsiniz. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="46"/>
         <source>Columns</source>
-        <translation type="unfinished">Sütun</translation>
+        <translation>Sütun</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="51"/>
         <source>X</source>
-        <translation type="unfinished">X</translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="56"/>
         <source>Y</source>
-        <translation type="unfinished">Y</translation>
+        <translation>Y</translation>
     </message>
     <message>
         <source>_</source>
@@ -4827,7 +4827,7 @@ Bir yedek oluşturun!</translation>
     <message>
         <location filename="../PlotDock.ui" line="61"/>
         <source>Axis Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksen Tipi</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="73"/>
@@ -4838,141 +4838,147 @@ Click on points to select them in the plot and in the table. Ctrl+Click for sele
 Use mouse-wheel for zooming and mouse drag for changing the axis range.
 
 Select the axes or axes labels to drag and zoom only in that orientation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Yukarıdaki x ve y değerlerini seçtiğinizde çizilen bir grafik.
+
+Noktaları grafikte ve tabloda seçmek için üzerine tıklayın. Nokta aralığı seçmek için Ctrl+Tıklama yapın.
+
+Yakınlaştırma için fare tekerleğini ve eksen aralığını değiştirmek için fare tekerini kullanın.
+
+Yalnızca geçerli yönde sürüklemek ve yakınlaştırmak için eksen veya eksen etiketlerini seçin.</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="89"/>
         <source>Line type:</source>
-        <translation type="unfinished">Çizgi Tipi:</translation>
+        <translation>Çizgi Tipi:</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="130"/>
         <location filename="../PlotDock.ui" line="189"/>
         <source>None</source>
-        <translation type="unfinished">None</translation>
+        <translation>Hiçbiri</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="135"/>
         <source>Line</source>
-        <translation type="unfinished">Çizgi</translation>
+        <translation>Çizgi</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="140"/>
         <source>StepLeft</source>
-        <translation type="unfinished">Sola Basamakla</translation>
+        <translation>Sola Basamakla</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="145"/>
         <source>StepRight</source>
-        <translation type="unfinished">Sağa Basamakla</translation>
+        <translation>Sağa Basamakla</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="150"/>
         <source>StepCenter</source>
-        <translation type="unfinished">Merkeze Basamakla</translation>
+        <translation>Merkeze Basamakla</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="155"/>
         <source>Impulse</source>
-        <translation type="unfinished">Kaydırmalı</translation>
+        <translation>Kaydırmalı</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="163"/>
         <source>Point shape:</source>
-        <translation type="unfinished">Nokta Şekli:</translation>
+        <translation>Nokta şekli:</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="194"/>
         <source>Cross</source>
-        <translation type="unfinished">Çarpı</translation>
+        <translation>Çarpı</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="199"/>
         <source>Plus</source>
-        <translation type="unfinished">Artı</translation>
+        <translation>Artı</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="204"/>
         <source>Circle</source>
-        <translation type="unfinished">Daire</translation>
+        <translation>Daire</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="209"/>
         <source>Disc</source>
-        <translation type="unfinished">Disk</translation>
+        <translation>Disk</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="214"/>
         <source>Square</source>
-        <translation type="unfinished">Kare</translation>
+        <translation>Kare</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="219"/>
         <source>Diamond</source>
-        <translation type="unfinished">Elmas</translation>
+        <translation>Elmas</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="224"/>
         <source>Star</source>
-        <translation type="unfinished">Yıldız</translation>
+        <translation>Yıldız</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="229"/>
         <source>Triangle</source>
-        <translation type="unfinished">Üçgen</translation>
+        <translation>Üçgen</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="234"/>
         <source>TriangleInverted</source>
-        <translation type="unfinished">Ters Üçgen</translation>
+        <translation>Ters Üçgen</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="239"/>
         <source>CrossSquare</source>
-        <translation type="unfinished">Çapraz Kare</translation>
+        <translation>Çapraz Kare</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="244"/>
         <source>PlusSquare</source>
-        <translation type="unfinished">Kare İçinde Artı</translation>
+        <translation>Kare İçinde Artı</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="249"/>
         <source>CrossCircle</source>
-        <translation type="unfinished">Daire İçinde Çarpı</translation>
+        <translation>Daire İçinde Çarpı</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="254"/>
         <source>PlusCircle</source>
-        <translation type="unfinished">Daire İçinde Artı</translation>
+        <translation>Daire İçinde Artı</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="259"/>
         <source>Peace</source>
-        <translation type="unfinished">Barış Simgesi</translation>
+        <translation>Barış Simgesi</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="280"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save current plot...&lt;/p&gt;&lt;p&gt;File format chosen by extension (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Geçerli planı kaydedin...&lt;/p&gt;&lt;p&gt;Dosya formatı eklenti tarafından seçilmiş (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Geçerli çizimi kaydet...&lt;/p&gt;&lt;p&gt;Uzantıya göre seçilen dosya formatları (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="283"/>
         <source>Save current plot...</source>
-        <translation type="unfinished">Geçerli planı kaydet...</translation>
+        <translation>Geçerli çizimi kaydet...</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="309"/>
         <location filename="../PlotDock.cpp" line="474"/>
         <source>Load all data and redraw plot</source>
-        <translation type="unfinished"></translation>
+        <translation>Tüm verileri yükle ve grafiği yeniden çiz</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="224"/>
         <location filename="../PlotDock.cpp" line="443"/>
         <location filename="../PlotDock.cpp" line="456"/>
         <source>Row #</source>
-        <translation type="unfinished"></translation>
+        <translation>Satır #</translation>
     </message>
     <message>
         <source>Choose a axis color</source>
@@ -4981,84 +4987,85 @@ Select the axes or axes labels to drag and zoom only in that orientation.</sourc
     <message>
         <location filename="../PlotDock.cpp" line="74"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopyala</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="81"/>
         <source>Print...</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazdır...</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="88"/>
         <source>Show legend</source>
-        <translation type="unfinished"></translation>
+        <translation>Göstergeyi göster</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="94"/>
         <source>Stacked bars</source>
-        <translation type="unfinished"></translation>
+        <translation>Yığılmış çubuklar</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="173"/>
         <source>Date/Time</source>
-        <translation type="unfinished"></translation>
+        <translation>Tarih/Saat</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="176"/>
         <source>Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Tarih</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="179"/>
         <source>Time</source>
-        <translation type="unfinished"></translation>
+        <translation>Saat</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="182"/>
         <location filename="../PlotDock.cpp" line="226"/>
         <source>Numeric</source>
-        <translation type="unfinished"></translation>
+        <translation>Nümerik</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="185"/>
         <source>Label</source>
-        <translation type="unfinished"></translation>
+        <translation>Etiket</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="189"/>
         <source>Invalid</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçersiz</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="469"/>
         <source>Load all data and redraw plot.
 Warning: not all data has been fetched from the table yet due to the partial fetch mechanism.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tüm verileri yükle ve grafiği yeniden çiz.
+Uyarı: Kısmi yükleme mekanizması nedeniyle tüm veriler tablodan henüz alınmadı.</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="555"/>
         <source>Choose an axis color</source>
-        <translation type="unfinished"></translation>
+        <translation>Bir eksen rengi seçin</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="589"/>
         <source>Choose a filename to save under</source>
-        <translation type="unfinished">Kaydetmek için dosya ismi seçiniz</translation>
+        <translation>Altına kaydetmek için dosya ismi seçiniz</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="590"/>
         <source>PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;All Files(*)</source>
-        <translation type="unfinished">PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;Tüm dosyalar(*)</translation>
+        <translation>PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;Tüm dosyalar(*)</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="626"/>
         <source>There are curves in this plot and the selected line style can only be applied to graphs sorted by X. Either sort the table or query by X to remove curves or select one of the styles supported by curves: None or Line.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu grafikte eğriler var ve seçilen çizgi stili yalnızca X&apos;e göre sıralanmış grafiklere uygulanabilir. Eğrileri kaldırmak için tabloyu veya sorguyu X&apos;e göre sıralayın veya eğriler tarafından desteklenen stillerden birini seçin: &apos;Hiçbiri&apos; veya &apos;Çizgi&apos;.</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="738"/>
         <source>Loading all remaining data for this table took %1ms.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu tablo için kalan tüm verilerin yüklenmesi %1ms sürdü.</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -5129,7 +5136,7 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     <message>
         <location filename="../PreferencesDialog.ui" line="338"/>
         <source>Show remote options</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzak bilgisayar opsiyonlarını göster</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="556"/>
@@ -5183,12 +5190,12 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     <message>
         <location filename="../PreferencesDialog.ui" line="609"/>
         <source>Remove line breaks in schema &amp;view</source>
-        <translation type="unfinished"></translation>
+        <translation>Şema &amp;görünümde satır sonlarını kaldır</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="629"/>
         <source>Prefetch block si&amp;ze</source>
-        <translation type="unfinished"></translation>
+        <translation>Önceden getirme blo&amp;k boyutu</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="649"/>
@@ -5198,57 +5205,57 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     <message>
         <location filename="../PreferencesDialog.ui" line="679"/>
         <source>SQ&amp;L to execute after opening database</source>
-        <translation type="unfinished"></translation>
+        <translation>Veritabanı açıldıktan sonra yürütülecek SQ&amp;L</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="705"/>
         <source>Default field type</source>
-        <translation type="unfinished"></translation>
+        <translation>Varsayılan dosya tipi</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="724"/>
         <source>Font</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazı</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="730"/>
         <source>&amp;Font</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Yazı</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="759"/>
         <source>Content</source>
-        <translation type="unfinished"></translation>
+        <translation>İçerik</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="765"/>
         <source>Symbol limit in cell</source>
-        <translation type="unfinished"></translation>
+        <translation>Hücredeki sembol limiti</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="817"/>
         <source>Threshold for completion and calculation on selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçimdeki tamamlama ve hesaplama eşiği</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="827"/>
         <source>Show images in cell</source>
-        <translation type="unfinished"></translation>
+        <translation>Resimleri hücrede göster</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="837"/>
         <source>Enable this option to show a preview of BLOBs containing image data in the cells. This can affect the performance of the data browser, however.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hücrelerde görüntü verileri içeren BLOB tipindeki verilerin önizlemesini göstermek için bu seçeneği etkinleştirin. Ancak bu, veri görüntüleyicisinin performansını etkileyebilir.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="876"/>
         <source>NULL</source>
-        <translation type="unfinished"></translation>
+        <translation>NULL</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="886"/>
         <source>Regular</source>
-        <translation type="unfinished"></translation>
+        <translation>Kurallı</translation>
     </message>
     <message>
         <source>Text</source>
@@ -5262,17 +5269,17 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     <message>
         <location filename="../PreferencesDialog.ui" line="1304"/>
         <source>Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Arka plan</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1093"/>
         <source>Filters</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtreler</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="128"/>
         <source>Toolbar style</source>
-        <translation type="unfinished"></translation>
+        <translation>Araç çubuğu stili</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="160"/>
@@ -5281,7 +5288,7 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <location filename="../PreferencesDialog.ui" line="310"/>
         <location filename="../PreferencesDialog.ui" line="466"/>
         <source>Only display the icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Sadece ikonu göster</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="165"/>
@@ -5290,7 +5297,7 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <location filename="../PreferencesDialog.ui" line="315"/>
         <location filename="../PreferencesDialog.ui" line="471"/>
         <source>Only display the text</source>
-        <translation type="unfinished"></translation>
+        <translation>Sadece metni göster</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="170"/>
@@ -5299,7 +5306,7 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <location filename="../PreferencesDialog.ui" line="320"/>
         <location filename="../PreferencesDialog.ui" line="476"/>
         <source>The text appears beside the icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin simgenin yanında görünsün</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="175"/>
@@ -5308,7 +5315,7 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <location filename="../PreferencesDialog.ui" line="325"/>
         <location filename="../PreferencesDialog.ui" line="481"/>
         <source>The text appears under the icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin simgenin altında görünsün</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="180"/>
@@ -5317,72 +5324,72 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <location filename="../PreferencesDialog.ui" line="330"/>
         <location filename="../PreferencesDialog.ui" line="486"/>
         <source>Follow the style</source>
-        <translation type="unfinished"></translation>
+        <translation>Stili baz al</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="375"/>
         <source>DB file extensions</source>
-        <translation type="unfinished"></translation>
+        <translation>Veritabanı dosya uzantıları</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="385"/>
         <source>Manage</source>
-        <translation type="unfinished"></translation>
+        <translation>Yönet</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="392"/>
         <source>Main Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Ana Pencere</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="405"/>
         <source>Database Structure</source>
-        <translation type="unfinished"></translation>
+        <translation>Veritabanı Yapısı</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="418"/>
         <source>Browse Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Verileri Görüntüle</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="431"/>
         <source>Execute SQL</source>
-        <translation>SQL kodunu yürüt</translation>
+        <translation>SQL kodunu yürütme</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="494"/>
         <source>Edit Database Cell</source>
-        <translation type="unfinished"></translation>
+        <translation>Veritabanı Hücresini Düzenleme</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="513"/>
         <source>When this value is changed, all the other color preferences are also set to matching colors.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu değer değiştirildiğinde, diğer tüm renk tercihleri de eşleşen renklere ayarlanır.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="532"/>
         <source>Follow the desktop style</source>
-        <translation type="unfinished"></translation>
+        <translation>Masaüstü stilini baz al</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="537"/>
         <source>Dark style</source>
-        <translation type="unfinished"></translation>
+        <translation>Koyu Tema</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="545"/>
         <source>Application style</source>
-        <translation type="unfinished"></translation>
+        <translation>Uygulama stili</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="619"/>
         <source>When enabled, the line breaks in the Schema column of the DB Structure tab, dock and printed output are removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkinleştirildiğinde, Veritabanı Yapısı sekmesinin Şema sütununda satır sonu karakterleri ve yazdırılan çıktılar kaldırılır.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="743"/>
         <source>Font si&amp;ze</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazı B&amp;oyutu</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="797"/>
@@ -5390,33 +5397,37 @@ Warning: not all data has been fetched from the table yet due to the partial fet
 Maximum number of rows in a table for enabling the value completion based on current values in the column.
 Maximum number of indexes in a selection for calculating sum and average.
 Can be set to 0 for disabling the functionalities.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu, bazı hesaplama açısından pahalı işlevlerin etkinleştirilmesine izin verilen maksimum öğe sayısıdır:
+Sütundaki geçerli değerlere dayalı olarak değer tamamlamayı etkinleştirmek için bir tablodaki maksimum satır sayısı.
+Toplam ve ortalamayı hesaplamak için bir seçimdeki maksimum index sayısı.
+İşlevleri devre dışı bırakmak için 0 olarak ayarlanabilir.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="803"/>
         <source>This is the maximum number of rows in a table for enabling the value completion based on current values in the column.
 Can be set to 0 for disabling completion.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu, sütundaki geçerli değerlere dayalı olarak değer tamamlamayı etkinleştirmek için bir tablodaki maksimum satır sayısıdır.
+Tamamlamayı devre dışı bırakmak için 0 olarak ayarlanabilir.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1848"/>
         <source>Proxy</source>
-        <translation type="unfinished"></translation>
+        <translation>Proxy</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1855"/>
         <source>Configure</source>
-        <translation type="unfinished"></translation>
+        <translation>Yapılandır</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="847"/>
         <source>Field display</source>
-        <translation type="unfinished"></translation>
+        <translation>Alan görünümü</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="853"/>
         <source>Displayed &amp;text</source>
-        <translation type="unfinished"></translation>
+        <translation>Görün&amp;tülenen metin</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="899"/>
@@ -5426,37 +5437,37 @@ Can be set to 0 for disabling completion.</source>
         <location filename="../PreferencesDialog.ui" line="995"/>
         <location filename="../PreferencesDialog.ui" line="1014"/>
         <source>Click to set this color</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu rengi ayarlamak için tıklayın</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="915"/>
         <source>Text color</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin rengi</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="944"/>
         <source>Background color</source>
-        <translation type="unfinished"></translation>
+        <translation>Arka plan rengi</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1059"/>
         <source>Preview only (N/A)</source>
-        <translation type="unfinished"></translation>
+        <translation>Sadece önizleme (N/A)</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1106"/>
         <source>Escape character</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaçış karakteri</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1116"/>
         <source>Delay time (&amp;ms)</source>
-        <translation type="unfinished"></translation>
+        <translation>Gecikme süresi (&amp;ms)</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1126"/>
         <source>Set the waiting time before a new filter value is applied. Can be set to 0 for disabling waiting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni bir filtre değeri uygulanmadan önce bekleme süresini ayarlayın. Beklemeyi devre dışı bırakmak için 0 olarak ayarlanabilir.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1142"/>
@@ -5548,136 +5559,136 @@ Can be set to 0 for disabling completion.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="1376"/>
         <source>Tab size</source>
-        <translation type="unfinished"></translation>
+        <translation>TAB karakter boyutu</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1399"/>
         <source>&amp;Wrap lines</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Satırları kaydır</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1410"/>
         <source>Never</source>
-        <translation type="unfinished"></translation>
+        <translation>Asla</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1415"/>
         <source>At word boundaries</source>
-        <translation type="unfinished"></translation>
+        <translation>Kelime dahilinde</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1420"/>
         <source>At character boundaries</source>
-        <translation type="unfinished"></translation>
+        <translation>Karakter dahilinde</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1425"/>
         <source>At whitespace boundaries</source>
-        <translation type="unfinished"></translation>
+        <translation>Beyaz boşluk dahilinde</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1433"/>
         <source>&amp;Quotes for identifiers</source>
-        <translation type="unfinished"></translation>
+        <translation>Tanımlıyıcılar için &amp;tırnaklar</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1443"/>
         <source>Choose the quoting mechanism used by the application for identifiers in SQL code.</source>
-        <translation type="unfinished"></translation>
+        <translation>Uygulama tarafından SQL kodundaki tanımlayıcılar için kullanılan tırnak stilini seçin.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1450"/>
         <source>&quot;Double quotes&quot; - Standard SQL (recommended)</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;Çift tırnak&quot; - Standart SQL (önerilir)</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1455"/>
         <source>`Grave accents` - Traditional MySQL quotes</source>
-        <translation type="unfinished"></translation>
+        <translation>`Ters tırnaklar` - Geleneksel MySQL tırnakları</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1460"/>
         <source>[Square brackets] - Traditional MS SQL Server quotes</source>
-        <translation type="unfinished"></translation>
+        <translation>[Köşeli parantezler] - Geleneksel MS SQL Server</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1485"/>
         <source>Keywords in &amp;UPPER CASE</source>
-        <translation type="unfinished"></translation>
+        <translation>Anahtar kelimeler B&amp;ÜYÜK HARFLİ</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1495"/>
         <source>When set, the SQL keywords are completed in UPPER CASE letters.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayarlandığında, SQL anahtar kelimeleri BÜYÜK HARFLERLE tamamlanır.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1515"/>
         <source>When set, the SQL code lines that caused errors during the last execution are highlighted and the results frame indicates the error in the background</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayarlandığında, son yürütme sırasında hatalara neden olan SQL kod satırları vurgulanır ve sonuç çerçevesi arka plandaki hatayı gösterir</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1624"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite provides an SQL function for loading extensions from a shared library file. Activate this if you want to use the &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt; function from SQL code.&lt;/p&gt;&lt;p&gt;For security reasons, extension loading is turned off by default and must be enabled through this setting. You can always load extensions through the GUI, even though this option is disabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; SQLite, paylaşılmış kütüphane dosyasından eklenti yüklemeye yarayan bir fonksiyon sunar. &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt; fonksiyonunu SQL kodu içerisinde kullanmak istiyorsanız fonksiyonu aktive edin. &lt;/p&gt; &lt;p&gt; Güvenlik nedeniyle, uzantı yüklemesi varsayılan olarak kapalıdır ve bu ayar ile etkinleştirilmelidir. Bu seçenek devre dışı bırakılmış olsa bile, uzantıları her zaman GUI üzerinden yükleyebilirsiniz. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1627"/>
         <source>Allow loading extensions from SQL code</source>
-        <translation type="unfinished"></translation>
+        <translation>SQL kodundan eklenti yüklemeye izin ver</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1635"/>
         <source>Remote</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzak Bilgisayar</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1746"/>
         <source>CA certificates</source>
-        <translation type="unfinished"></translation>
+        <translation>CA sertifikaları</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1675"/>
         <location filename="../PreferencesDialog.ui" line="1771"/>
         <source>Subject CN</source>
-        <translation type="unfinished"></translation>
+        <translation>CN Konusu</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1774"/>
         <source>Common Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Yaygın İsim</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1779"/>
         <source>Subject O</source>
-        <translation type="unfinished"></translation>
+        <translation>Konu O</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1782"/>
         <source>Organization</source>
-        <translation type="unfinished"></translation>
+        <translation>Organizasyon</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1691"/>
         <location filename="../PreferencesDialog.ui" line="1787"/>
         <source>Valid from</source>
-        <translation type="unfinished"></translation>
+        <translation>Şundan tarihten itibaren geçerli</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1696"/>
         <location filename="../PreferencesDialog.ui" line="1792"/>
         <source>Valid to</source>
-        <translation type="unfinished"></translation>
+        <translation>Şu tarihe kadar geçerli</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1701"/>
         <location filename="../PreferencesDialog.ui" line="1797"/>
         <source>Serial number</source>
-        <translation type="unfinished"></translation>
+        <translation>Seri numarası</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1645"/>
         <source>Your certificates</source>
-        <translation type="unfinished"></translation>
+        <translation>Sertifikalarınız</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1670"/>
@@ -5687,22 +5698,22 @@ Can be set to 0 for disabling completion.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="1678"/>
         <source>Subject Common Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Ortak Konu Adı</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1683"/>
         <source>Issuer CN</source>
-        <translation type="unfinished"></translation>
+        <translation>CN Sağlayıcısı</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1686"/>
         <source>Issuer Common Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Ortak Sağlayıcı Adı</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1811"/>
         <source>Clone databases into</source>
-        <translation type="unfinished"></translation>
+        <translation>Veritabanını şuraya kopyala</translation>
     </message>
     <message>
         <source>Tab size:</source>
@@ -5716,22 +5727,22 @@ Can be set to 0 for disabling completion.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="1505"/>
         <source>Error indicators</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata belirteçleri</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1525"/>
         <source>Hori&amp;zontal tiling</source>
-        <translation type="unfinished"></translation>
+        <translation>Ya&amp;tay Döşeme</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1535"/>
         <source>If enabled the SQL code editor and the result table view are shown side by side instead of one over the other.</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkinleştirilirse, SQL kod düzenleyicisi ve sonuç tablosu görünümü üst üste yerine yan yana gösterilir.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1468"/>
         <source>Code co&amp;mpletion</source>
-        <translation type="unfinished"></translation>
+        <translation>Kod ta&amp;mamlama</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1312"/>
@@ -5741,7 +5752,7 @@ Can be set to 0 for disabling completion.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="1359"/>
         <source>SQL &amp;results font size</source>
-        <translation type="unfinished"></translation>
+        <translation>S&amp;QL sonuçları yazı tipi boyutu</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1548"/>
@@ -5796,28 +5807,29 @@ Can be set to 0 for disabling completion.</source>
     <message>
         <location filename="../PreferencesDialog.cpp" line="398"/>
         <source>Extensions(*.so *.dylib *.dll);;All files(*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Eklentiler(*.so *.dylib *.dll);;Tüm dosyalar(*)</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.cpp" line="556"/>
         <source>Import certificate file</source>
-        <translation type="unfinished"></translation>
+        <translation>Sertifika dosyası içe aktar</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.cpp" line="564"/>
         <source>No certificates found in this file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu dosyada sertifika bulunamadı.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.cpp" line="581"/>
         <source>Are you sure you want do remove this certificate? All certificate data will be deleted from the application settings!</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu sertifikayı kaldırmak istediğinizden emin misiniz? Tüm sertifika verileri uygulama ayarlarından silinecektir!</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.cpp" line="666"/>
         <source>Are you sure you want to clear all the saved settings?
 All your preferences will be lost and default values will be used.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaydedilen tüm ayarları silmek istediğinizden emin misiniz?
+Tüm tercihleriniz kaybolacak ve varsayılan değerler kullanılacak.</translation>
     </message>
 </context>
 <context>
@@ -6296,57 +6308,57 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="81"/>
         <source>Find previous match [Shift+F3]</source>
-        <translation type="unfinished"></translation>
+        <translation>Önceki eşleşmeyi bul [Shift, F3]</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="84"/>
         <source>Find previous match with wrapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Sarmalayarak bir önceki eşleşmeyi bul</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="91"/>
         <source>Shift+F3</source>
-        <translation type="unfinished">Shift+F3</translation>
+        <translation>Shift+F3</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="105"/>
         <source>The found pattern must be a whole word</source>
-        <translation type="unfinished"></translation>
+        <translation>Bulunan desen tam bir kelime olmalıdır</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="108"/>
         <source>Whole Words</source>
-        <translation type="unfinished"></translation>
+        <translation>Kelimenin Tamamı</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="118"/>
         <source>Text pattern to find considering the checks in this frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu alandaki kontrolleri baz alarak bulunacak metin deseni</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="121"/>
         <source>Find in editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editörde ara</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="131"/>
         <source>The found pattern must match in letter case</source>
-        <translation type="unfinished"></translation>
+        <translation>Bulunan desen büyük küçük harfe duyarlı olmalıdır</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="134"/>
         <source>Case Sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>Büyük küçük harfe duyarı</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="141"/>
         <source>Find next match [Enter, F3]</source>
-        <translation type="unfinished"></translation>
+        <translation>Sonraki eşleşmeyi bul [Enter, F3]</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="144"/>
         <source>Find next match with wrapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Sarmalayarak bir sonraki eşleşmeyi bul</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="151"/>
@@ -6356,28 +6368,28 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="158"/>
         <source>Interpret search pattern as a regular expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Arama desenini düzenli ifade(RegEx) olarak yorumla</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="161"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When checked, the pattern to find is interpreted as a UNIX regular expression. See &lt;a href=&quot;https://en.wikibooks.org/wiki/Regular_Expressions&quot;&gt;Regular Expression in Wikibooks&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; İşaretlendiğinde, girilen desen UNIX düzenli ifadesi olarak yorumlanır. &lt;a href=&quot;https://en.wikibooks.org/wiki/Regular_Expressions&quot; &gt;Wikibooks&lt;/a &gt; üzerinden düzenli ifadeleri inceleyebilirsiniz. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="164"/>
         <source>Regular Expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Kurallı İfade (RegEx)</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="184"/>
         <location filename="../SqlExecutionArea.ui" line="187"/>
         <source>Close Find Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Araba çubuğunu kapat</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="232"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Results of the last executed statements.&lt;/p&gt;&lt;p&gt;You may want to collapse this panel and use the &lt;span style=&quot; font-style:italic;&quot;&gt;SQL Log&lt;/span&gt; dock with &lt;span style=&quot; font-style:italic;&quot;&gt;User&lt;/span&gt; selection instead.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;Son yürütülen ifadelerin sonuçları.&lt;/p&gt; &lt;p&gt; Bu paneli daraltmak ve bunun yerine &lt;span style=&quot; font-style:italic;&quot;&gt;SQL Log Günlüğünü&lt;/span&gt; &lt;span style=&quot; font-style:italic;&quot;&gt;Kullanıcı&lt;/span&gt; seçimi ile kullanmak isteyebilirsiniz. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="253"/>
@@ -6420,23 +6432,23 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.cpp" line="237"/>
         <source>Couldn&apos;t read file: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya okunamadı: %1.</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="267"/>
         <location filename="../SqlExecutionArea.cpp" line="285"/>
         <source>Couldn&apos;t save file: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya kaydedilemedi: %1.</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="295"/>
         <source>Your changes will be lost when reloading it!</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeniden yüklerken değişiklikleriniz kaybolacak!</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="301"/>
         <source>The file &quot;%1&quot; was modified by another program. Do you want to reload it?%2</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; dosyası başka bir program tarafından değiştirildi. Yeniden yüklemek istiyor musunuz?%2</translation>
     </message>
 </context>
 <context>
