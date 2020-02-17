@@ -267,7 +267,7 @@ std::string Field::toString(const std::string& indent, const std::string& sep) c
         str += " UNIQUE";
     if(!m_collation.empty())
         str += " COLLATE " + m_collation;
-    if(!m_generated.expression().empty())
+    if(!m_generated.empty())
         str += " " + m_generated.toSql();
     return str;
 }

@@ -280,6 +280,8 @@ public:
     {
     }
 
+    bool empty() const { return m_expression.empty(); }
+
     void setExpression(const std::string& expr) { m_expression = expr; }
     const std::string& expression() const { return m_expression; }
 

@@ -1270,6 +1270,10 @@ std::string DBBrowserDB::emptyInsertStmt(const std::string& schemaName, const sq
     sqlb::StringVector fields;
     for(const sqlb::Field& f : t.fields)
     {
+        // Never insert into a generated column
+        if(!f.generated().empty())
+            continue;
+
         sqlb::ConstraintPtr pk = t.constraint({f.name()}, sqlb::Constraint::PrimaryKeyConstraintType);
         if(pk)
         {
