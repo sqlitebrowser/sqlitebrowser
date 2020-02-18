@@ -204,7 +204,9 @@ private:
     std::vector<int> m_vDataTypes;
     std::map<size_t, std::vector<CondFormat>> m_mCondFormats;
     std::map<size_t, std::vector<CondFormat>> m_mRowIdFormats;
+
     sqlb::Query m_query;
+    std::shared_ptr<sqlb::Table> m_table_of_query;  // This holds a pointer to the table object which is queried in the m_query object
 
     QString m_encoding;
 

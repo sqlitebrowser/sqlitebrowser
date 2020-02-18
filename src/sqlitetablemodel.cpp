@@ -109,6 +109,7 @@ void SqliteTableModel::reset()
 
     m_sQuery.clear();
     m_query.clear();
+    m_table_of_query.reset();
     m_headers.clear();
     m_vDataTypes.clear();
     m_mCondFormats.clear();
@@ -124,20 +125,20 @@ void SqliteTableModel::setQuery(const sqlb::Query& query)
 
     // Save the query
     m_query = query;
+    m_table_of_query = m_db.getObjectByName<sqlb::Table>(query.table());
 
     // The first column is the rowid column and therefore is always of type integer
     m_vDataTypes.emplace_back(SQLITE_INTEGER);
 
     // Get the data types of all other columns as well as the column names
-    sqlb::TablePtr t = m_db.getObjectByName<sqlb::Table>(query.table());
-    if(t && t->fields.size()) // It is a table and parsing was OK
+    if(m_table_of_query && m_table_of_query->fields.size()) // It is a table and parsing was OK
     {
-        sqlb::StringVector rowids = t->rowidColumns();
+        sqlb::StringVector rowids = m_table_of_query->rowidColumns();
         m_query.setRowIdColumns(rowids);
         m_headers.push_back(sqlb::joinStringVector(rowids, ","));
 
         // Store field names and affinity data types
-        for(const sqlb::Field& fld : t->fields)
+        for(const sqlb::Field& fld : m_table_of_query->fields)
         {
             m_headers.push_back(fld.name());
             m_vDataTypes.push_back(fld.affinity());
@@ -436,21 +437,16 @@ sqlb::ForeignKeyClause SqliteTableModel::getForeignKeyClause(size_t column) cons
     if(m_query.table().isEmpty())
         return empty_foreign_key_clause;
 
-    // Retrieve database object and check if it is a table. If it isn't stop here and don't return a foreign
-    // key. This happens for views which don't have foreign keys (though we might want to think about how we
-    // can check for foreign keys in the underlying tables for some purposes like tool tips).
-    sqlb::ObjectPtr obj = m_db.getObjectByName(m_query.table());
-    if(obj->type() != sqlb::Object::Table)
-        return empty_foreign_key_clause;
-
-    // Convert object to a table and check if the column number is in the valid range
-    sqlb::TablePtr tbl = std::dynamic_pointer_cast<sqlb::Table>(obj);
-    if(tbl && tbl->name().size() && column < tbl->fields.size())
+    // Check if database object is a table. If it isn't stop here and don't return a foreign key.
+    // This happens for views which don't have foreign keys (though we might want to think about
+    // how we can check for foreign keys in the underlying tables for some purposes like tool tips).
+    // If it is a table, heck if the column number is in the valid range.
+    if(m_table_of_query && m_table_of_query->name().size() && column < m_table_of_query->fields.size())
     {
         // Note that the rowid column has number -1 here, it can safely be excluded since there will never be a
         // foreign key on that column.
 
-        sqlb::ConstraintPtr ptr = tbl->constraint({tbl->fields.at(column).name()}, sqlb::Constraint::ForeignKeyConstraintType);
+        sqlb::ConstraintPtr ptr = m_table_of_query->constraint({m_table_of_query->fields.at(column).name()}, sqlb::Constraint::ForeignKeyConstraintType);
         if(ptr)
             return *(std::dynamic_pointer_cast<sqlb::ForeignKeyClause>(ptr));
     }
@@ -490,11 +486,10 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
         // used in a primary key. Otherwise SQLite will always output an 'datatype mismatch' error.
         if(newValue == "" && !newValue.isNull())
         {
-            sqlb::TablePtr table = m_db.getObjectByName<sqlb::Table>(m_query.table());
-            if(table)
+            if(m_table_of_query)
             {
-                auto field = sqlb::findField(table, m_headers.at(column));
-                const auto pk = table->primaryKey();
+                auto field = sqlb::findField(m_table_of_query, m_headers.at(column));
+                const auto pk = m_table_of_query->primaryKey();
                 if(pk && contains(pk->columnList(), field->name()) && field->isInteger())
                     newValue = "0";
             }
@@ -712,11 +707,9 @@ QModelIndex SqliteTableModel::dittoRecord(int old_row)
     size_t firstEditedColumn = 0;
     int new_row = rowCount() - 1;
 
-    sqlb::TablePtr t = m_db.getObjectByName<sqlb::Table>(m_query.table());
-
-    const auto pk = t->primaryKey();
-    for (size_t col = 0; col < t->fields.size(); ++col) {
-        if(!pk || !contains(pk->columnList(), t->fields.at(col).name())) {
+    const auto pk = m_table_of_query->primaryKey();
+    for (size_t col = 0; col < m_table_of_query->fields.size(); ++col) {
+        if(!pk || !contains(pk->columnList(), m_table_of_query->fields.at(col).name())) {
             if (!firstEditedColumn)
                 firstEditedColumn = col + 1;
 
@@ -978,7 +971,7 @@ bool SqliteTableModel::isEditable() const
 {
     return !m_query.table().isEmpty() &&
             m_db.isOpen() &&
-            ((m_db.getObjectByName(m_query.table()) && m_db.getObjectByName(m_query.table())->type() == sqlb::Object::Types::Table) || m_query.hasCustomRowIdColumn());
+            (m_table_of_query || m_query.hasCustomRowIdColumn());
 }
 
 void SqliteTableModel::triggerCacheLoad (int row) const
