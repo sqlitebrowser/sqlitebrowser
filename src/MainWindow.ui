@@ -39,9 +39,6 @@
       <property name="currentIndex">
        <number>0</number>
       </property>
-      <property name="tabsClosable">
-       <bool>true</bool>
-      </property>
       <property name="movable">
        <bool>true</bool>
       </property>
@@ -124,6 +121,9 @@ You can drag SQL statements from an object row and drop them into other applicat
         <string>Browse Data</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_2">
+        <property name="spacing">
+         <number>3</number>
+        </property>
         <property name="leftMargin">
          <number>3</number>
         </property>
@@ -137,222 +137,7 @@ You can drag SQL statements from an object row and drop them into other applicat
          <number>3</number>
         </property>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
-           <widget class="QLabel" name="label">
-            <property name="text">
-             <string>&amp;Table:</string>
-            </property>
-            <property name="buddy">
-             <cstring>comboBrowseTable</cstring>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QComboBox" name="comboBrowseTable">
-            <property name="toolTip">
-             <string>Select a table to browse data</string>
-            </property>
-            <property name="whatsThis">
-             <string>Use this list to select a table to be displayed in the database view</string>
-            </property>
-            <property name="maxVisibleItems">
-             <number>30</number>
-            </property>
-            <property name="sizeAdjustPolicy">
-             <enum>QComboBox::AdjustToContents</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolBar" name="browseToolbar">
-            <property name="toolButtonStyle">
-             <enum>Qt::ToolButtonIconOnly</enum>
-            </property>
-            <addaction name="actionRefresh"/>
-            <addaction name="actionClearFilters"/>
-            <addaction name="actionSaveFilterAsPopup"/>
-            <addaction name="actionPrintTable"/>
-            <addaction name="separator"/>
-            <addaction name="actionNewRecord"/>
-            <addaction name="actionDeleteRecord"/>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::MinimumExpanding</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>0</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <widget class="ExtendedTableWidget" name="dataTable">
-          <property name="acceptDrops">
-           <bool>true</bool>
-          </property>
-          <property name="whatsThis">
-           <string>This is the database table view. You can do the following actions:
- - Start writing for editing inline the value.
- - Double-click any record to edit its contents in the cell editor window.
- - Alt+Del for deleting the cell content to NULL.
- - Ctrl+&quot; for duplicating the current record.
- - Ctrl+' for copying the value from the cell above.
- - Standard selection and copy/paste operations.</string>
-          </property>
-          <property name="editTriggers">
-           <set>QAbstractItemView::NoEditTriggers</set>
-          </property>
-          <property name="dragDropMode">
-           <enum>QAbstractItemView::DragDrop</enum>
-          </property>
-          <property name="defaultDropAction">
-           <enum>Qt::CopyAction</enum>
-          </property>
-          <property name="selectionMode">
-           <enum>QAbstractItemView::ContiguousSelection</enum>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <item>
-           <widget class="QToolButton" name="buttonBegin">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll to the beginning&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="whatsThis">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates to the beginning in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="text">
-             <string>|&lt;</string>
-            </property>
-            <property name="icon">
-             <iconset resource="icons/icons.qrc">
-              <normaloff>:/icons/resultset_first.png</normaloff>:/icons/resultset_first.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="buttonPrevious">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="toolTip">
-             <string>Scroll one page upwards</string>
-            </property>
-            <property name="whatsThis">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates one page of records upwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="text">
-             <string>&lt;</string>
-            </property>
-            <property name="icon">
-             <iconset resource="icons/icons.qrc">
-              <normaloff>:/icons/resultset_previous.png</normaloff>:/icons/resultset_previous.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="labelRecordset">
-            <property name="text">
-             <string>0 - 0 of 0</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="buttonNext">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="toolTip">
-             <string>Scroll one page downwards</string>
-            </property>
-            <property name="whatsThis">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates one page of records downwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="text">
-             <string>&gt;</string>
-            </property>
-            <property name="icon">
-             <iconset resource="icons/icons.qrc">
-              <normaloff>:/icons/run</normaloff>:/icons/run</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="buttonEnd">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="toolTip">
-             <string>Scroll to the end</string>
-            </property>
-            <property name="whatsThis">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Clicking this button navigates up to the end in the table view above.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="text">
-             <string>&gt;|</string>
-            </property>
-            <property name="icon">
-             <iconset resource="icons/icons.qrc">
-              <normaloff>:/icons/run_line</normaloff>:/icons/run_line</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QPushButton" name="buttonGoto">
-            <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click here to jump to the specified record&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="whatsThis">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button is used to navigate to the record number specified in the Go to area.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="text">
-             <string>Go to:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="editGoto">
-            <property name="toolTip">
-             <string>Enter record number to browse</string>
-            </property>
-            <property name="whatsThis">
-             <string>Type a record number in this area and click the Go to: button to display the record in the database view</string>
-            </property>
-            <property name="text">
-             <string>1</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         <widget class="TableBrowser" name="tableBrowser" native="true"/>
         </item>
        </layout>
       </widget>
@@ -939,11 +724,11 @@ You can drag SQL statements from an object row and drop them into other applicat
           <property name="currentIndex">
            <number>-1</number>
           </property>
-          <property name="tabsClosable">
-           <bool>true</bool>
-          </property>
           <property name="movable">
            <bool>true</bool>
+          </property>
+          <property name="contextMenuPolicy">
+           <enum>Qt::CustomContextMenu</enum>
           </property>
          </widget>
         </item>
@@ -1396,7 +1181,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>This button closes the connection to the currently open database file</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+W</string>
+    <string>Ctrl+F4</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -1788,6 +1573,9 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    <property name="text">
     <string>&amp;Wiki</string>
    </property>
+   <property name="shortcut">
+    <string>F1</string>
+   </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
    </property>
@@ -1966,41 +1754,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>Copy the CREATE statement of the item to the clipboard</string>
    </property>
   </action>
-  <action name="actionBrowseTableEditDisplayFormat">
-   <property name="text">
-    <string>Edit display format</string>
-   </property>
-   <property name="toolTip">
-    <string>Edit the display format of the data in this column</string>
-   </property>
-  </action>
-  <action name="actionShowRowidColumn">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Show rowid column</string>
-   </property>
-   <property name="toolTip">
-    <string>Toggle the visibility of the rowid column</string>
-   </property>
-  </action>
-  <action name="actionSetTableEncoding">
-   <property name="text">
-    <string>Set encoding</string>
-   </property>
-   <property name="toolTip">
-    <string>Change the encoding of the text in the table cells</string>
-   </property>
-  </action>
-  <action name="actionSetAllTablesEncoding">
-   <property name="text">
-    <string>Set encoding for all tables</string>
-   </property>
-   <property name="toolTip">
-    <string>Change the default encoding assumed for all tables in the database</string>
-   </property>
-  </action>
   <action name="actionSqlCipherFaq">
    <property name="icon">
     <iconset resource="icons/icons.qrc">
@@ -2024,27 +1777,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <enum>QAction::NoRole</enum>
    </property>
   </action>
-  <action name="actionRefresh">
-   <property name="icon">
-    <iconset resource="icons/icons.qrc">
-     <normaloff>:/icons/refresh</normaloff>:/icons/refresh</iconset>
-   </property>
-   <property name="text">
-    <string>Refresh</string>
-   </property>
-   <property name="toolTip">
-    <string>Refresh the data in the selected table</string>
-   </property>
-   <property name="statusTip">
-    <string>This button refreshes the data in the currently selected table.</string>
-   </property>
-   <property name="shortcut">
-    <string>F5</string>
-   </property>
-   <property name="shortcutContext">
-    <enum>Qt::WidgetShortcut</enum>
-   </property>
-  </action>
   <action name="fileOpenReadOnlyAction">
    <property name="icon">
     <iconset resource="icons/icons.qrc">
@@ -2062,19 +1794,11 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    <property name="whatsThis">
     <string>This option is used to open an existing database file.</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+O</string>
+   </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
-   </property>
-  </action>
-  <action name="actionUnlockViewEditing">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Unlock view editing</string>
-   </property>
-   <property name="toolTip">
-    <string>This unlocks the current view for editing. However, you will need appropriate triggers for editing.</string>
    </property>
   </action>
   <action name="actionSqlResultsSave">
@@ -2114,6 +1838,9 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    </property>
    <property name="shortcut">
     <string>Ctrl+F</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WidgetShortcut</enum>
    </property>
   </action>
   <action name="actionSqlFindReplace">
@@ -2156,22 +1883,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>Save as view</string>
    </property>
   </action>
-  <action name="actionHideColumns">
-   <property name="text">
-    <string>Hide column(s)</string>
-   </property>
-   <property name="toolTip">
-    <string>Hide selected column(s)</string>
-   </property>
-  </action>
-  <action name="actionShowAllColumns">
-   <property name="text">
-    <string>Show all columns</string>
-   </property>
-   <property name="toolTip">
-    <string>Show all columns that were hidden</string>
-   </property>
-  </action>
   <action name="viewProjectToolbarAction">
    <property name="checkable">
     <bool>true</bool>
@@ -2205,34 +1916,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>Extra DB Toolbar</string>
    </property>
   </action>
-  <action name="actionFilteredTableExportCsv">
-   <property name="text">
-    <string>Export to &amp;CSV</string>
-   </property>
-   <property name="toolTip">
-    <string>Export the filtered data to CSV</string>
-   </property>
-   <property name="statusTip">
-    <string>Export the filtered data to CSV</string>
-   </property>
-   <property name="whatsThis">
-    <string>This button exports the data of the browsed table as currently displayed (after filters, display formats and order column) as a CSV file.</string>
-   </property>
-  </action>
-  <action name="actionFilterSaveAsView">
-   <property name="text">
-    <string>Save as &amp;view</string>
-   </property>
-   <property name="toolTip">
-    <string>Save the current filter, sort column and display formats as a view</string>
-   </property>
-   <property name="statusTip">
-    <string>Save the current filter, sort column and display formats as a view</string>
-   </property>
-   <property name="whatsThis">
-    <string>This button saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.</string>
-   </property>
-  </action>
   <action name="fileOpenActionPopup">
    <property name="icon">
     <iconset resource="icons/icons.qrc">
@@ -2252,32 +1935,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    </property>
    <property name="menuRole">
     <enum>QAction::TextHeuristicRole</enum>
-   </property>
-  </action>
-  <action name="insertValuesAction">
-   <property name="text">
-    <string>Insert Values...</string>
-   </property>
-   <property name="toolTip">
-    <string>Open a dialog for inserting values in a new record</string>
-   </property>
-   <property name="statusTip">
-    <string>Open a dialog for inserting values in a new record</string>
-   </property>
-  </action>
-  <action name="newRecordAction">
-   <property name="icon">
-    <iconset resource="icons/icons.qrc">
-     <normaloff>:/icons/add_record</normaloff>:/icons/add_record</iconset>
-   </property>
-   <property name="text">
-    <string>New Record</string>
-   </property>
-   <property name="toolTip">
-    <string>Insert new record using default values in browsed table</string>
-   </property>
-   <property name="statusTip">
-    <string>Insert new record using default values in browsed table</string>
    </property>
   </action>
   <action name="fileNewInMemoryDatabaseAction">
@@ -2441,102 +2098,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>Stop the currently running SQL script</string>
    </property>
   </action>
-  <action name="actionPrintTable">
-   <property name="icon">
-    <iconset resource="icons/icons.qrc">
-     <normaloff>:/icons/print</normaloff>:/icons/print</iconset>
-   </property>
-   <property name="text">
-    <string>Print</string>
-   </property>
-   <property name="toolTip">
-    <string>Print currently browsed table data</string>
-   </property>
-   <property name="statusTip">
-    <string/>
-   </property>
-   <property name="whatsThis">
-    <string>Print currently browsed table data. Print selection if more than one cell is selected.</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+P</string>
-   </property>
-   <property name="shortcutContext">
-    <enum>Qt::WidgetShortcut</enum>
-   </property>
-  </action>
-  <action name="actionClearFilters">
-   <property name="icon">
-    <iconset resource="icons/icons.qrc">
-     <normaloff>:/icons/clear_filters</normaloff>:/icons/clear_filters</iconset>
-   </property>
-   <property name="text">
-    <string>Clear Filters</string>
-   </property>
-   <property name="toolTip">
-    <string>Clear all filters</string>
-   </property>
-   <property name="statusTip">
-    <string>This button clears all the filters set in the header input fields for the currently browsed table.</string>
-   </property>
-   <property name="whatsThis">
-    <string>This button clears all the filters set in the header input fields for the currently browsed table.</string>
-   </property>
-  </action>
-  <action name="actionSaveFilterAsPopup">
-   <property name="icon">
-    <iconset resource="icons/icons.qrc">
-     <normaloff>:/icons/save_table</normaloff>:/icons/save_table</iconset>
-   </property>
-   <property name="text">
-    <string>Save Table As...</string>
-   </property>
-   <property name="toolTip">
-    <string>Save the table as currently displayed</string>
-   </property>
-   <property name="statusTip">
-    <string>Save the table as currently displayed</string>
-   </property>
-   <property name="whatsThis">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This popup menu provides the following options applying to the currently browsed and filtered table:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Export to CSV: this option exports the data of the browsed table as currently displayed (after filters, display formats and order column) to a CSV file.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Save as view: this option saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</string>
-   </property>
-  </action>
-  <action name="actionNewRecord">
-   <property name="icon">
-    <iconset resource="icons/icons.qrc">
-     <normaloff>:/icons/add_record</normaloff>:/icons/add_record</iconset>
-   </property>
-   <property name="text">
-    <string>New Record</string>
-   </property>
-   <property name="toolTip">
-    <string>Insert a new record in the current table</string>
-   </property>
-   <property name="statusTip">
-    <string>Insert a new record in the current table</string>
-   </property>
-   <property name="whatsThis">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button creates a new record in the database. Hold the mouse button to open a pop-up menu of different options:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt;: insert a new record with default values in the database.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Insert Values...&lt;/span&gt;: open a dialog for entering values before they are inserted in the database. This allows to enter values acomplishing the different constraints. This dialog is also open if the &lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt; option fails due to these constraints.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</string>
-   </property>
-  </action>
-  <action name="actionDeleteRecord">
-   <property name="icon">
-    <iconset resource="icons/icons.qrc">
-     <normaloff>:/icons/delete_record</normaloff>:/icons/delete_record</iconset>
-   </property>
-   <property name="text">
-    <string>Delete Record</string>
-   </property>
-   <property name="toolTip">
-    <string>Delete the current record</string>
-   </property>
-   <property name="statusTip">
-    <string>This button deletes the record or records currently selected in the table</string>
-   </property>
-   <property name="whatsThis">
-    <string>This button deletes the record or records currently selected in the table</string>
-   </property>
-  </action>
   <action name="actionSaveProjectAs">
    <property name="icon">
     <iconset resource="icons/icons.qrc">
@@ -2576,6 +2137,15 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>Ctrl+Shift+S</string>
    </property>
   </action>
+  <action name="actionPopupSchemaDockBrowseTable">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/table</normaloff>:/icons/table</iconset>
+   </property>
+   <property name="text">
+    <string>Browse Table</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -2585,18 +2155,15 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>ExtendedTableWidget</class>
-   <extends>QTableWidget</extends>
-   <header>ExtendedTableWidget.h</header>
-   <slots>
-    <signal>foreignKeyClicked(QString,QString,QByteArray)</signal>
-    <signal>foreignKeyClicked(sqlb::ObjectIdentifier,QString,QByteArray)</signal>
-   </slots>
-  </customwidget>
-  <customwidget>
    <class>ExtendedScintilla</class>
    <extends>QTextEdit</extends>
    <header>ExtendedScintilla.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TableBrowser</class>
+   <extends>QWidget</extends>
+   <header>TableBrowser.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
@@ -2606,14 +2173,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
   <tabstop>comboLogSubmittedBy</tabstop>
   <tabstop>buttonLogClear</tabstop>
   <tabstop>treeSchemaDock</tabstop>
-  <tabstop>comboBrowseTable</tabstop>
-  <tabstop>dataTable</tabstop>
-  <tabstop>buttonBegin</tabstop>
-  <tabstop>buttonPrevious</tabstop>
-  <tabstop>buttonNext</tabstop>
-  <tabstop>buttonEnd</tabstop>
-  <tabstop>buttonGoto</tabstop>
-  <tabstop>editGoto</tabstop>
   <tabstop>scrollareaPragmas</tabstop>
   <tabstop>comboboxPragmaAutoVacuum</tabstop>
   <tabstop>checkboxPragmaAutomaticIndex</tabstop>
@@ -2696,102 +2255,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <hint type="sourcelabel">
      <x>-1</x>
      <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBrowseTable</sender>
-   <signal>activated(QString)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>populateTable()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>118</x>
-     <y>141</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionDeleteRecord</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>deleteRecord()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonPrevious</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>navigatePrevious()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>86</x>
-     <y>539</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonNext</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>navigateNext()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>183</x>
-     <y>539</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonGoto</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>navigateGoto()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>365</x>
-     <y>539</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>editGoto</sender>
-   <signal>returnPressed()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>navigateGoto()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>506</x>
-     <y>538</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -3216,22 +2679,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    </hints>
   </connection>
   <connection>
-   <sender>dataTable</sender>
-   <signal>doubleClicked(QModelIndex)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>doubleClickTable(QModelIndex)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>399</x>
-     <y>211</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>tabSqlAreas</sender>
    <signal>tabCloseRequested(int)</signal>
    <receiver>MainWindow</receiver>
@@ -3472,38 +2919,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    </hints>
   </connection>
   <connection>
-   <sender>buttonEnd</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>navigateEnd()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>223</x>
-     <y>539</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>499</x>
-     <y>314</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonBegin</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>navigateBegin()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>50</x>
-     <y>539</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>499</x>
-     <y>314</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>actionEditBrowseTable</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
@@ -3536,86 +2951,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    </hints>
   </connection>
   <connection>
-   <sender>dataTable</sender>
-   <signal>foreignKeyClicked(sqlb::ObjectIdentifier,QString,QByteArray)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>jumpToRow(sqlb::ObjectIdentifier,QString,QByteArray)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>70</x>
-     <y>242</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>518</x>
-     <y>314</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionBrowseTableEditDisplayFormat</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>editDataColumnDisplayFormat()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>518</x>
-     <y>314</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionShowRowidColumn</sender>
-   <signal>triggered(bool)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>showRowidColumn(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>518</x>
-     <y>314</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionSetTableEncoding</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>browseDataSetTableEncoding()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>518</x>
-     <y>314</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionSetAllTablesEncoding</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>browseDataSetDefaultTableEncoding()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>518</x>
-     <y>314</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>fileExportJsonAction</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
@@ -3632,42 +2967,10 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    </hints>
   </connection>
   <connection>
-   <sender>actionRefresh</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>refresh()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>518</x>
-     <y>314</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>fileOpenReadOnlyAction</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>fileOpenReadOnly()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>518</x>
-     <y>314</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionUnlockViewEditing</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>unlockViewEditing(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -3700,22 +3003,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>saveSqlResultsAsView()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>518</x>
-     <y>314</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionHideColumns</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>hideColumns()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -3824,38 +3111,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    </hints>
   </connection>
   <connection>
-   <sender>actionFilteredTableExportCsv</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>exportFilteredTable()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>518</x>
-     <y>314</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionFilterSaveAsView</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>saveFilterAsView()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>518</x>
-     <y>314</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>fileOpenActionPopup</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
@@ -3868,38 +3123,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <hint type="destinationlabel">
      <x>518</x>
      <y>314</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>newRecordAction</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>addRecord()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>518</x>
-     <y>314</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>insertValuesAction</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>insertValues()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
     </hint>
    </hints>
   </connection>
@@ -3948,22 +3171,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <hint type="destinationlabel">
      <x>518</x>
      <y>314</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionPrintTable</sender>
-   <signal>triggered()</signal>
-   <receiver>dataTable</receiver>
-   <slot>openPrintDialog()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>326</x>
-     <y>347</y>
     </hint>
    </hints>
   </connection>
@@ -4320,18 +3527,18 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    </hints>
   </connection>
   <connection>
-   <sender>actionNewRecord</sender>
-   <signal>triggered()</signal>
+   <sender>tabSqlAreas</sender>
+   <signal>customContextMenuRequested(QPoint)</signal>
    <receiver>MainWindow</receiver>
-   <slot>addRecord()</slot>
+   <slot>showContextMenuSqlTabBar(QPoint)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>518</x>
-     <y>314</y>
+     <x>20</x>
+     <y>20</y>
     </hint>
    </hints>
   </connection>
@@ -4339,20 +3546,10 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
  <slots>
   <slot>fileOpen()</slot>
   <slot>fileClose()</slot>
-  <slot>populateTable()</slot>
-  <slot>addRecord()</slot>
-  <slot>deleteRecord()</slot>
-  <slot>navigatePrevious()</slot>
-  <slot>navigateNext()</slot>
-  <slot>navigateBegin()</slot>
-  <slot>navigateEnd()</slot>
-  <slot>navigateGoto()</slot>
   <slot>browseFind(bool)</slot>
   <slot>refresh()</slot>
   <slot>compact()</slot>
   <slot>helpWhatsThis()</slot>
-  <slot>doubleClickTable(QModelIndex)</slot>
-  <slot>browseTableHeaderClicked(int)</slot>
   <slot>mainTabSelected(int)</slot>
   <slot>executeQuery()</slot>
   <slot>importTableFromCSV()</slot>
@@ -4390,20 +3587,14 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
   <slot>saveSqlFileAs()</slot>
   <slot>switchToBrowseDataTab()</slot>
   <slot>copyCurrentCreateStatement()</slot>
-  <slot>jumpToRow(sqlb::ObjectIdentifier,QString,QByteArray)</slot>
-  <slot>editDataColumnDisplayFormat()</slot>
-  <slot>showRowidColumn(bool)</slot>
-  <slot>browseDataSetTableEncoding()</slot>
-  <slot>browseDataSetDefaultTableEncoding()</slot>
   <slot>browseDataFetchAllData()</slot>
   <slot>exportTableToJson()</slot>
   <slot>fileOpenReadOnly()</slot>
-  <slot>unlockViewEditing(bool)</slot>
   <slot>saveSqlResultsAsCsv()</slot>
   <slot>saveSqlResultsAsView()</slot>
   <slot>changeSqlTab(int)</slot>
-  <slot>hideColumns()</slot>
   <slot>renameSqlTab(int)</slot>
   <slot>fileNewInMemoryDatabase()</slot>
+  <slot>showContextMenuSqlTabBar(QPoint)</slot>
  </slots>
 </ui>

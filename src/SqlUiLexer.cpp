@@ -3,7 +3,7 @@
 #include "SqlUiLexer.h"
 #include "Qsci/qsciapis.h"
 #include "Settings.h"
-#include "sql/sqlitetypes.h"
+#include "sqlitedb.h"
 
 SqlUiLexer::SqlUiLexer(QObject* parent) :
     QsciLexerSQL(parent)
@@ -24,7 +24,7 @@ void SqlUiLexer::setupAutoCompletion()
     keywordPatterns
             // Keywords
             << "ABORT" << "ACTION" << "ADD" << "AFTER" << "ALL"
-            << "ALTER" << "ANALYZE" << "AND" << "AS" << "ASC"
+            << "ALTER" << "ALWAYS" << "ANALYZE" << "AND" << "AS" << "ASC"
             << "ATTACH" << "AUTOINCREMENT" << "BEFORE" << "BEGIN" << "BETWEEN"
             << "BY" << "CASCADE" << "CASE" << "CAST" << "CHECK"
             << "COLLATE" << "COLUMN" << "COMMIT" << "CONFLICT" << "CONSTRAINT"
@@ -33,7 +33,7 @@ void SqlUiLexer::setupAutoCompletion()
             << "DESC" << "DETACH" << "DISTINCT" << "DO" << "DROP" << "EACH"
             << "ELSE" << "END" << "ESCAPE" << "EXCEPT" << "EXCLUSIVE"
             << "EXISTS" << "EXPLAIN" << "FAIL" << "FILTER" << "FOLLOWING" << "FOR" << "FOREIGN"
-            << "FROM" << "FULL" << "GLOB" << "GROUP" << "HAVING"
+            << "FROM" << "FULL" << "GENERATED" << "GLOB" << "GROUP" << "HAVING"
             << "IF" << "IGNORE" << "IMMEDIATE" << "IN" << "INDEX"
             << "INDEXED" << "INITIALLY" << "INNER" << "INSERT" << "INSTEAD"
             << "INTERSECT" << "INTO" << "IS" << "ISNULL" << "JOIN"
@@ -43,7 +43,7 @@ void SqlUiLexer::setupAutoCompletion()
             << "OUTER" << "OVER" << "PARTITION" << "PLAN" << "PRAGMA" << "PRECEDING" << "PRIMARY" << "QUERY"
             << "RAISE" << "RANGE" << "RECURSIVE" << "REFERENCES" << "REGEXP" << "REINDEX" << "RELEASE"
             << "RENAME" << "REPLACE" << "RESTRICT" << "RIGHT" << "ROLLBACK"
-            << "ROWID" << "ROW" << "ROWS" << "SAVEPOINT" << "SELECT" << "SET" << "TABLE"
+            << "ROWID" << "ROW" << "ROWS" << "SAVEPOINT" << "SELECT" << "SET" << "STORED" << "TABLE"
             << "TEMP" << "TEMPORARY" << "THEN" << "TO" << "TRANSACTION"
             << "TRIGGER" << "UNBOUNDED" << "UNION" << "UNIQUE" << "UPDATE" << "USING"
             << "VACUUM" << "VALUES" << "VIEW" << "VIRTUAL" << "WHEN"
@@ -155,24 +155,24 @@ void SqlUiLexer::setTableNames(const QualifiedTablesMap& tables)
     autocompleteApi->clear();
     listTables.clear();
     setupAutoCompletion();
-    for(auto itSchemas=tables.constBegin();itSchemas!=tables.constEnd();++itSchemas)
+    for(const auto& itSchemas : tables)
     {
-        for(auto itTables=itSchemas.value().constBegin();itTables!=itSchemas.value().constEnd();++itTables)
+        for(const auto& itTables : itSchemas.second)
         {
             // Completion for schema.table
-            autocompleteApi->add(itSchemas.key() + "?" + QString::number(SqlUiLexer::ApiCompleterIconIdSchema) + "." +
-                                 itTables.key() + "?" + QString::number(SqlUiLexer::ApiCompleterIconIdTable));
+            autocompleteApi->add(itSchemas.first + "?" + QString::number(SqlUiLexer::ApiCompleterIconIdSchema) + "." +
+                                 itTables.first + "?" + QString::number(SqlUiLexer::ApiCompleterIconIdTable));
 
-            for(const QString& field : itTables.value()) {
+            for(const QString& field : itTables.second) {
                 // Completion for table.field
-                autocompleteApi->add(itTables.key() + "?" + QString::number(SqlUiLexer::ApiCompleterIconIdTable) + "." +
+                autocompleteApi->add(itTables.first + "?" + QString::number(SqlUiLexer::ApiCompleterIconIdTable) + "." +
                                      field + "?" + QString::number(SqlUiLexer::ApiCompleterIconIdColumn));
 
                 // Completion for isolated field
                 autocompleteApi->add(field + "?" + QString::number(SqlUiLexer::ApiCompleterIconIdColumn));
             }
             // Store the table name list in order to highlight them in a different colour
-            listTables.append(itTables.key());
+            listTables.append(itTables.first);
         }
     }
     autocompleteApi->prepare();

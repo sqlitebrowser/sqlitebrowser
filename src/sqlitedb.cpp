@@ -13,15 +13,21 @@
 #include <QInputDialog>
 #include <QFileInfo>
 #include <QDir>
-#include <QDateTime>
 #include <QDebug>
 #include <QThread>
-#include <functional>
-#include <atomic>
-#include <algorithm>
-#include <cctype>
+#include <QRegularExpression>
+#include <json.hpp>
 
-QStringList DBBrowserDB::Datatypes = QStringList() << "INTEGER" << "TEXT" << "BLOB" << "REAL" << "NUMERIC";
+#include <algorithm>
+#include <array>
+#include <atomic>
+#include <cctype>
+#include <chrono>
+#include <functional>
+
+using json = nlohmann::json;
+
+QStringList DBBrowserDB::Datatypes = {"INTEGER", "TEXT", "BLOB", "REAL", "NUMERIC"};
 
 // Helper template to allow turning member functions into a C-style function pointer
 // See https://stackoverflow.com/questions/19808054/convert-c-function-pointer-to-c-function-pointer/19809787
@@ -36,28 +42,68 @@ struct Callback<Ret(Params...)> {
 template <typename Ret, typename... Params>
 std::function<Ret(Params...)> Callback<Ret(Params...)>::func;
 
+namespace sqlb {
+QString escapeIdentifier(const QString& id)
+{
+    return QString::fromStdString(escapeIdentifier(id.toStdString()));
+}
+QString escapeString(const QString& literal)
+{
+    return QString::fromStdString(escapeString(literal.toStdString()));
+}
+}
+
 // collation callbacks
 int collCompare(void* /*pArg*/, int sizeA, const void* sA, int sizeB, const void* sB)
 {
     if(sizeA == sizeB)
-        return memcmp(sA, sB, sizeA);
+        return memcmp(sA, sB, static_cast<size_t>(sizeA));
     return sizeA - sizeB;
 }
 
 static int sqlite_compare_utf16( void* /*arg*/,int size1, const void *str1, int size2, const void* str2)
 {
-    const QString string1 = QString::fromRawData(reinterpret_cast<const QChar*>(str1), size1 / sizeof(QChar));
-    const QString string2 = QString::fromRawData(reinterpret_cast<const QChar*>(str2), size2 / sizeof(QChar));
+    const QString string1 = QString::fromRawData(reinterpret_cast<const QChar*>(str1), static_cast<int>(static_cast<size_t>(size1) / sizeof(QChar)));
+    const QString string2 = QString::fromRawData(reinterpret_cast<const QChar*>(str2), static_cast<int>(static_cast<size_t>(size2) / sizeof(QChar)));
 
     return QString::compare(string1, string2, Qt::CaseSensitive);
 }
 
 static int sqlite_compare_utf16ci( void* /*arg*/,int size1, const void *str1, int size2, const void* str2)
 {
-    const QString string1 = QString::fromRawData(reinterpret_cast<const QChar*>(str1), size1 / sizeof(QChar));
-    const QString string2 = QString::fromRawData(reinterpret_cast<const QChar*>(str2), size2 / sizeof(QChar));
+    const QString string1 = QString::fromRawData(reinterpret_cast<const QChar*>(str1), static_cast<int>(static_cast<size_t>(size1) / sizeof(QChar)));
+    const QString string2 = QString::fromRawData(reinterpret_cast<const QChar*>(str2), static_cast<int>(static_cast<size_t>(size2) / sizeof(QChar)));
 
     return QString::compare(string1, string2, Qt::CaseInsensitive);
+}
+
+static void sqlite_make_single_value(sqlite3_context* ctx, int num_arguments, sqlite3_value* arguments[])
+{
+    json array;
+    for(int i=0;i<num_arguments;i++)
+        array.push_back(reinterpret_cast<const char*>(sqlite3_value_text(arguments[i])));
+
+    std::string output = array.dump();
+    char* output_str = new char[output.size()+1];
+    std::strcpy(output_str, output.c_str());
+
+    sqlite3_result_text(ctx, output_str, static_cast<int>(output.length()), [](void* ptr) {
+        char* cptr = static_cast<char*>(ptr);
+        delete cptr;
+    });
+}
+
+DBBrowserDB::DBBrowserDB() :
+    _db(nullptr),
+    db_used(false),
+    isEncrypted(false),
+    isReadOnly(false),
+    dontCheckForStructureUpdates(false)
+{
+    // Register error log callback. This needs to be done before SQLite is first used
+    Callback<void(void*, int, const char*)>::func = std::bind(&DBBrowserDB::errorLogCallback, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+    void (*log_callback)(void*, int, const char*) = static_cast<decltype(log_callback)>(Callback<void(void*, int, const char*)>::callback);
+    sqlite3_config(SQLITE_CONFIG_LOG, log_callback, nullptr);
 }
 
 void DBBrowserDB::collationNeeded(void* /*pData*/, sqlite3* /*db*/, int eTextRep, const char* sCollationName)
@@ -83,21 +129,39 @@ void DBBrowserDB::errorLogCallback(void* /*user_data*/, int error_code, const ch
 
 static void regexp(sqlite3_context* ctx, int /*argc*/, sqlite3_value* argv[])
 {
+    // This is a cache for the last 50 regular expressions. Compiling them takes some time, so we want to cache the compiled
+    // regular expressions for performance purposes.
+    static std::array<std::pair<QString, QRegularExpression>, 50> regex_cache;
+
+    // Check if pattern is in cache
+    QString pattern{reinterpret_cast<const char*>(sqlite3_value_text(argv[0]))};
+    QRegularExpression regex;
+    const auto it = std::find_if(regex_cache.begin(), regex_cache.end(), [pattern](const std::pair<QString, QRegularExpression>& val) {
+        return val.first == pattern;
+    });
+    if(it == regex_cache.end())
+    {
+        // Pattern is not in cache. Create a new regular expressions object, compile it, and insert it into the cache
+        regex.setPattern(pattern);
+        regex.setPatternOptions(QRegularExpression::UseUnicodePropertiesOption);
+        if(!regex.isValid())
+            return sqlite3_result_error(ctx, "invalid operand", -1);
+        regex.optimize();
+
+        static size_t regex_cache_size;
+        regex_cache_size = (regex_cache_size + 1) % regex_cache.size();
+        regex_cache[regex_cache_size] = {pattern, regex};
+    } else {
+        // Pattern is in the cache. Just retrieve it
+        regex = it->second;
+    }
+
     // Get arguments and check their values
-    QRegExp arg1(reinterpret_cast<const char*>(sqlite3_value_text(argv[0])));
-    QString arg2(reinterpret_cast<const char*>(sqlite3_value_text(argv[1])));
-    if(!arg1.isValid())
-        return sqlite3_result_error(ctx, "invalid operand", -1);
+    QString arg2{reinterpret_cast<const char*>(sqlite3_value_text(argv[1]))};
 
-    // Set the pattern matching syntax to a Perl-like one. This is the default in Qt 4.x but Qt 5
-    // changes this to a greedy one (QRegExp::RegExp2). To make sure the behaviour of our application
-    // doesn't change depending on the build environment, we make sure to always set the same pattern
-    // matching syntax.
-    arg1.setPatternSyntax(QRegExp::RegExp);
-
-    // Perform the actual matching and return the result. Note that Qt's QRegExp returns -1 if the regex
-    // doesn't match and the position in the string otherwise; SQLite expects a 0 for not found and a 1 for found.
-    sqlite3_result_int(ctx, arg1.indexIn(arg2) >= 0);
+    // Perform the actual matching and return the result.
+    // SQLite expects a 0 for not found and a 1 for found.
+    sqlite3_result_int(ctx, regex.match(arg2).hasMatch());
 }
 
 bool DBBrowserDB::isOpen ( ) const
@@ -122,12 +186,6 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
     if(tryEncryptionSettings(db, &isEncrypted, cipherSettings) == false)
         return false;
 
-    // Register error log callback. We need to make sure SQLite is being shut down before calling sqlite3_config.
-    sqlite3_shutdown();
-    Callback<void(void*, int, const char*)>::func = std::bind(&DBBrowserDB::errorLogCallback, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-    void (*log_callback)(void*, int, const char*) = static_cast<decltype(log_callback)>(Callback<void(void*, int, const char*)>::callback);
-    sqlite3_config(SQLITE_CONFIG_LOG, log_callback, nullptr);
-
     // Open database file
     if(sqlite3_open_v2(db.toUtf8(), &_db, readOnly ? SQLITE_OPEN_READONLY : SQLITE_OPEN_READWRITE, nullptr) != SQLITE_OK)
     {
@@ -139,11 +197,12 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
 #ifdef ENABLE_SQLCIPHER
     if(isEncrypted && cipherSettings)
     {
-        executeSQL(QString("PRAGMA key = %1").arg(cipherSettings->getPassword()), false, false);
-        executeSQL(QString("PRAGMA cipher_page_size = %1;").arg(cipherSettings->getPageSize()), false, false);
-        executeSQL(QString("PRAGMA kdf_iter = %1;").arg(cipherSettings->getKdfIterations()), false, false);
-        executeSQL(QString("PRAGMA cipher_hmac_algorithm = %1;").arg(cipherSettings->getHmacAlgorithm()), false, false);
-        executeSQL(QString("PRAGMA cipher_kdf_algorithm = %1;").arg(cipherSettings->getKdfAlgorithm()), false, false);
+        executeSQL("PRAGMA key = " + cipherSettings->getPassword(), false, false);
+        executeSQL("PRAGMA cipher_page_size = " + std::to_string(cipherSettings->getPageSize()), false, false);
+        executeSQL("PRAGMA kdf_iter = " + std::to_string(cipherSettings->getKdfIterations()), false, false);
+        executeSQL("PRAGMA cipher_hmac_algorithm = " + cipherSettings->getHmacAlgorithm(), false, false);
+        executeSQL("PRAGMA cipher_kdf_algorithm = " + cipherSettings->getKdfAlgorithm(), false, false);
+        executeSQL("PRAGMA cipher_plaintext_header_size = " + std::to_string(cipherSettings->getPlaintextHeaderSize()), false, false);
     }
 #endif
     delete cipherSettings;
@@ -167,6 +226,19 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
         // Register REGEXP function
         if(Settings::getValue("extensions", "disableregex").toBool() == false)
             sqlite3_create_function(_db, "REGEXP", 2, SQLITE_UTF8, nullptr, regexp, nullptr, nullptr);
+
+        // Register our internal helper function for putting multiple values into a single column
+        sqlite3_create_function_v2(
+            _db,
+            "sqlb_make_single_value",
+            -1,
+            SQLITE_UTF8 | SQLITE_DETERMINISTIC,
+            nullptr,
+            sqlite_make_single_value,
+            nullptr,
+            nullptr,
+            nullptr
+        );
 
         // Check if file is read only. In-memory databases are never read only
         if(db == ":memory:")
@@ -207,25 +279,21 @@ bool DBBrowserDB::attach(const QString& filePath, QString attach_as)
     waitForDbRelease();
 
     // Check if this file has already been attached and abort if this is the case
-    QString sql = "PRAGMA database_list;";
-    logSQL(sql, kLogMsg_App);
-    sqlite3_stmt* db_vm;
-    if(sqlite3_prepare_v2(_db, sql.toUtf8(), sql.toUtf8().length(), &db_vm, nullptr) == SQLITE_OK)
-    {
-        // Loop through all the databases
-        QFileInfo fi(filePath);
-        while(sqlite3_step(db_vm) == SQLITE_ROW)
+    QFileInfo fi(filePath);
+    bool ok = executeSQL("PRAGMA database_list", false, true, [fi](int, std::vector<QByteArray> values, std::vector<QByteArray>) -> bool {
+        QFileInfo path(values.at(2));
+        if(fi == path)
         {
-            QFileInfo path(QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(db_vm, 2))));
-            if(fi == path)
-            {
-                QString schema = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(db_vm, 1)));
-                QMessageBox::information(nullptr, qApp->applicationName(), tr("This database has already been attached. Its schema name is '%1'.").arg(schema));
-                return false;
-            }
+            QString schema = values.at(1);
+            QMessageBox::information(nullptr, qApp->applicationName(), tr("This database has already been attached. Its schema name is '%1'.").arg(schema));
+            return true;
         }
-        sqlite3_finalize(db_vm);
-    }
+
+        return false;
+    });
+
+    if(ok == false)
+        return false;
 
     // Ask for name to be given to the attached database if none was provided
     if(attach_as.isEmpty())
@@ -246,7 +314,7 @@ bool DBBrowserDB::attach(const QString& filePath, QString attach_as)
         return false;
 
     // Attach database
-    QString key;
+    std::string key;
     if(cipherSettings && is_encrypted)
         key = "KEY " + cipherSettings->getPassword();
     else
@@ -255,29 +323,34 @@ bool DBBrowserDB::attach(const QString& filePath, QString attach_as)
     // Only apply cipher settings if the database is encrypted
     if(cipherSettings && is_encrypted)
     {
-        if(!executeSQL(QString("PRAGMA cipher_default_page_size = %1").arg(cipherSettings->getPageSize()), false))
+        if(!executeSQL("PRAGMA cipher_default_page_size = " + std::to_string(cipherSettings->getPageSize()), false))
         {
             QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
             return false;
         }
-        if(!executeSQL(QString("PRAGMA cipher_default_kdf_iter = %1").arg(cipherSettings->getKdfIterations()), false))
+        if(!executeSQL("PRAGMA cipher_default_kdf_iter = " + std::to_string(cipherSettings->getKdfIterations()), false))
         {
             QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
             return false;
         }
-        if(!executeSQL(QString("PRAGMA cipher_hmac_algorithm = %1").arg(cipherSettings->getHmacAlgorithm()), false))
+        if(!executeSQL("PRAGMA cipher_hmac_algorithm = " + cipherSettings->getHmacAlgorithm(), false))
         {
             QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
             return false;
         }
-        if(!executeSQL(QString("PRAGMA cipher_kdf_algorithm = %1").arg(cipherSettings->getKdfAlgorithm()), false))
+        if(!executeSQL("PRAGMA cipher_kdf_algorithm = " + cipherSettings->getKdfAlgorithm(), false))
+        {
+            QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
+            return false;
+        }
+        if(!executeSQL("PRAGMA cipher_plaintext_header_size = " + std::to_string(cipherSettings->getPlaintextHeaderSize()), false))
         {
             QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
             return false;
         }
     }
 
-    if(!executeSQL(QString("ATTACH '%1' AS %2 %3").arg(filePath).arg(sqlb::escapeIdentifier(attach_as)).arg(key), false))
+    if(!executeSQL("ATTACH " + sqlb::escapeString(filePath.toStdString()) + " AS " + sqlb::escapeIdentifier(attach_as.toStdString()) + " " + key, false))
     {
         QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
         return false;
@@ -287,7 +360,7 @@ bool DBBrowserDB::attach(const QString& filePath, QString attach_as)
     delete cipherSettings;
 #else
     // Attach database
-    if(!executeSQL(QString("ATTACH '%1' AS %2").arg(filePath).arg(sqlb::escapeIdentifier(attach_as)), false))
+    if(!executeSQL("ATTACH " + sqlb::escapeString(filePath.toStdString()) + " AS " + sqlb::escapeIdentifier(attach_as.toStdString()), false))
     {
         QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
         return false;
@@ -300,7 +373,7 @@ bool DBBrowserDB::attach(const QString& filePath, QString attach_as)
     return true;
 }
 
-bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted, CipherSettings*& cipherSettings)
+bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted, CipherSettings*& cipherSettings) const
 {
     lastErrorMessage = tr("Invalid file format");
 
@@ -318,7 +391,8 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
     QString sqlite_version, sqlcipher_version;
     getSqliteVersion(sqlite_version, sqlcipher_version);
     int enc_default_page_size, enc_default_kdf_iter;
-    QString enc_default_hmac_algorithm, enc_default_kdf_algorithm;
+    int enc_default_plaintext_header_size = 0;
+    std::string enc_default_hmac_algorithm, enc_default_kdf_algorithm;
     if(sqlcipher_version.startsWith('4'))
     {
         enc_default_page_size = 4096;
@@ -337,11 +411,10 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
     cipherSettings = nullptr;
     while(true)
     {
-        QString statement = "SELECT COUNT(*) FROM sqlite_master;";
-        QByteArray utf8Statement = statement.toUtf8();
+        const std::string statement = "SELECT COUNT(*) FROM sqlite_master;";
         sqlite3_stmt* vm;
         const char* tail;
-        int err = sqlite3_prepare_v2(dbHandle, utf8Statement, utf8Statement.length(), &vm, &tail);
+        int err = sqlite3_prepare_v2(dbHandle, statement.c_str(), static_cast<int>(statement.size()), &vm, &tail);
         if(err == SQLITE_BUSY || err == SQLITE_PERM || err == SQLITE_NOMEM || err == SQLITE_IOERR || err == SQLITE_CORRUPT || err == SQLITE_CANTOPEN)
         {
             lastErrorMessage = QString::fromUtf8(sqlite3_errmsg(dbHandle));
@@ -375,15 +448,16 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
 
                 if (foundDotenvPassword)
                 {
-                    QString password = passwordValue.toString();
+                    std::string password = passwordValue.toString().toStdString();
 
                     QVariant keyFormatValue = dotenv.value(databaseFileName + "_keyFormat", QVariant(CipherSettings::KeyFormats::Passphrase));
                     CipherSettings::KeyFormats keyFormat = CipherSettings::getKeyFormat(keyFormatValue.toInt());
 
                     int pageSize = dotenv.value(databaseFileName + "_pageSize", enc_default_page_size).toInt();
                     int kdfIterations = dotenv.value(databaseFileName + "_kdfIter", enc_default_kdf_iter).toInt();
-                    QString hmacAlgorithm = dotenv.value(databaseFileName + "_hmacAlgorithm", enc_default_hmac_algorithm).toString();
-                    QString kdfAlgorithm = dotenv.value(databaseFileName + "_kdfAlgorithm", enc_default_kdf_algorithm).toString();
+                    int plaintextHeaderSize = dotenv.value(databaseFileName + "_plaintextHeaderSize", enc_default_plaintext_header_size).toInt();
+                    std::string hmacAlgorithm = dotenv.value(databaseFileName + "_hmacAlgorithm", QString::fromStdString(enc_default_hmac_algorithm)).toString().toStdString();
+                    std::string kdfAlgorithm = dotenv.value(databaseFileName + "_kdfAlgorithm", QString::fromStdString(enc_default_kdf_algorithm)).toString().toStdString();
 
                     delete cipherSettings;
                     cipherSettings = new CipherSettings();
@@ -394,12 +468,13 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
                     cipherSettings->setKdfIterations(kdfIterations);
                     cipherSettings->setHmacAlgorithm(hmacAlgorithm);
                     cipherSettings->setKdfAlgorithm(kdfAlgorithm);
+                    cipherSettings->setPlaintextHeaderSize(plaintextHeaderSize);
                 }
             }
 
             if(foundDotenvPassword)
             {
-                // Skip the CipherDialog prompt for now to test if the dotenv password was correct
+                // Skip the CipherDialog prompt for now to test if the dotenv settings are correct
             } else {
 	            CipherDialog *cipherDialog = new CipherDialog(nullptr, false);
 	            if(cipherDialog->exec())
@@ -425,17 +500,19 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
             }
 
             // Set the key
-            sqlite3_exec(dbHandle, QString("PRAGMA key = %1").arg(cipherSettings->getPassword()).toUtf8(), nullptr, nullptr, nullptr);
+            sqlite3_exec(dbHandle, ("PRAGMA key = " + cipherSettings->getPassword()).c_str(), nullptr, nullptr, nullptr);
 
             // Set the page size if it differs from the default value
             if(cipherSettings->getPageSize() != enc_default_page_size)
-                sqlite3_exec(dbHandle, QString("PRAGMA cipher_page_size = %1;").arg(cipherSettings->getPageSize()).toUtf8(), nullptr, nullptr, nullptr);
+                sqlite3_exec(dbHandle, ("PRAGMA cipher_page_size = " + std::to_string(cipherSettings->getPageSize())).c_str(), nullptr, nullptr, nullptr);
             if(cipherSettings->getKdfIterations() != enc_default_kdf_iter)
-                sqlite3_exec(dbHandle, QString("PRAGMA kdf_iter = %1;").arg(cipherSettings->getKdfIterations()).toUtf8(), nullptr, nullptr, nullptr);
+                sqlite3_exec(dbHandle, ("PRAGMA kdf_iter = " + std::to_string(cipherSettings->getKdfIterations())).c_str(), nullptr, nullptr, nullptr);
             if(cipherSettings->getHmacAlgorithm() != enc_default_hmac_algorithm)
-                sqlite3_exec(dbHandle, QString("PRAGMA cipher_hmac_algorithm = %1;").arg(cipherSettings->getHmacAlgorithm()).toUtf8(), nullptr, nullptr, nullptr);
+                sqlite3_exec(dbHandle, ("PRAGMA cipher_hmac_algorithm = " + cipherSettings->getHmacAlgorithm()).c_str(), nullptr, nullptr, nullptr);
             if(cipherSettings->getKdfAlgorithm() != enc_default_kdf_algorithm)
-                sqlite3_exec(dbHandle, QString("PRAGMA cipher_kdf_algorithm = %1;").arg(cipherSettings->getKdfAlgorithm()).toUtf8(), nullptr, nullptr, nullptr);
+                sqlite3_exec(dbHandle, ("PRAGMA cipher_kdf_algorithm = " + cipherSettings->getKdfAlgorithm()).c_str(), nullptr, nullptr, nullptr);
+            if(cipherSettings->getPlaintextHeaderSize() != enc_default_plaintext_header_size)
+                sqlite3_exec(dbHandle, ("PRAGMA cipher_plaintext_header_size = " + std::to_string(cipherSettings->getPlaintextHeaderSize())).c_str(), nullptr, nullptr, nullptr);
 
             *encrypted = true;
 #else
@@ -477,58 +554,58 @@ void DBBrowserDB::getSqliteVersion(QString& sqlite, QString& sqlcipher)
 #endif
 }
 
-bool DBBrowserDB::setSavepoint(const QString& pointname)
+bool DBBrowserDB::setSavepoint(const std::string& pointname)
 {
     if(!isOpen())
         return false;
-    if(savepointList.contains(pointname))
+    if(isReadOnly) {
+        qWarning() << "setSavepoint: not done. DB is read-only";
+        return false;
+    }
+    if(contains(savepointList, pointname))
         return true;
 
-    QString query = QString("SAVEPOINT %1;").arg(sqlb::escapeIdentifier(pointname));
-    executeSQL(query, false, false);
-    savepointList.append(pointname);
+    executeSQL("SAVEPOINT " + sqlb::escapeIdentifier(pointname) + ";", false, true);
+    savepointList.push_back(pointname);
     emit dbChanged(getDirty());
 
     return true;
 }
 
-bool DBBrowserDB::releaseSavepoint(const QString& pointname)
+bool DBBrowserDB::releaseSavepoint(const std::string& pointname)
 {
     if(!isOpen())
         return false;
-    if(savepointList.contains(pointname) == false)
+    if(contains(savepointList, pointname) == false)
         // If there is no such savepoint in the list,
         // we have already released it, so in this case
         // the operation should be successfull
         return true;
 
-    QString query = QString("RELEASE %1;").arg(sqlb::escapeIdentifier(pointname));
-    if(!executeSQL(query, false, false))
+    if(!executeSQL("RELEASE " + sqlb::escapeIdentifier(pointname) + ";", false, true))
         return false;
     // SQLite releases all savepoints that were created between
     // creation of given savepoint and releasing of it,
     // so we should too
-    int point_index = savepointList.lastIndexOf(pointname);
-    savepointList.erase(savepointList.begin()+point_index, savepointList.end());
+    auto it = std::find(savepointList.rbegin(), savepointList.rend(), pointname).base() - 1;
+    savepointList.erase(it, savepointList.end());
     emit dbChanged(getDirty());
 
     return true;
 }
 
-bool DBBrowserDB::revertToSavepoint(const QString& pointname)
+bool DBBrowserDB::revertToSavepoint(const std::string& pointname)
 {
-    if(!isOpen() || savepointList.contains(pointname) == false)
+    if(!isOpen() || contains(savepointList, pointname) == false)
         return false;
 
-    QString query = QString("ROLLBACK TO SAVEPOINT %1;").arg(sqlb::escapeIdentifier(pointname));
-    executeSQL(query, false, false);
-    query = QString("RELEASE %1;").arg(sqlb::escapeIdentifier(pointname));
-    executeSQL(query, false, false);
+    executeSQL("ROLLBACK TO SAVEPOINT " + sqlb::escapeIdentifier(pointname) + ";", false, true);
+    executeSQL("RELEASE " + sqlb::escapeIdentifier(pointname) + ";", false, true);
     // SQLite releases all savepoints that were created between
     // creation of given savepoint and releasing of it,
     // so we should too
-    int point_index = savepointList.lastIndexOf(pointname);
-    savepointList.erase(savepointList.begin()+point_index, savepointList.end());
+    auto it = std::find(savepointList.rbegin(), savepointList.rend(), pointname).base() - 1;
+    savepointList.erase(it, savepointList.end());
     emit dbChanged(getDirty());
 
     return true;
@@ -541,24 +618,24 @@ bool DBBrowserDB::releaseAllSavepoints()
 
     waitForDbRelease();
 
-    for(const QString& point : savepointList)
+    while(!savepointList.empty())
     {
-        if(!releaseSavepoint(point))
+        if(!releaseSavepoint(savepointList.front()))
             return false;
     }
 
     // When still in a transaction, commit that too
     if(sqlite3_get_autocommit(_db) == 0)
-        executeSQL("COMMIT;", false, false);
+        executeSQL("COMMIT;", false, true);
 
     return true;
 }
 
 bool DBBrowserDB::revertAll()
 {
-    for(const QString& point : savepointList)
+    while(!savepointList.empty())
     {
-        if(!revertToSavepoint(point))
+        if(!revertToSavepoint(savepointList.front()))
             return false;
     }
     return true;
@@ -628,7 +705,7 @@ bool DBBrowserDB::close()
                 reply = QMessageBox::question(nullptr,
                                               QApplication::applicationName(),
                                               tr("Do you want to save the changes made to the database file %1?").arg(curDBFilename),
-                                              QMessageBox::Save | QMessageBox::No | QMessageBox::Cancel);
+                                              QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
             }
 
             // If the user clicked the cancel button stop here and return false
@@ -655,7 +732,7 @@ bool DBBrowserDB::close()
     return true;
 }
 
-DBBrowserDB::db_pointer_type DBBrowserDB::get(QString user, bool force_wait)
+DBBrowserDB::db_pointer_type DBBrowserDB::get(const QString& user, bool force_wait)
 {
     if(!_db)
         return nullptr;
@@ -669,7 +746,7 @@ DBBrowserDB::db_pointer_type DBBrowserDB::get(QString user, bool force_wait)
     return db_pointer_type(_db, DatabaseReleaser(this));
 }
 
-void DBBrowserDB::waitForDbRelease(ChoiceOnUse choice)
+void DBBrowserDB::waitForDbRelease(ChoiceOnUse choice) const
 {
     if(!_db)
         return;
@@ -705,12 +782,12 @@ void DBBrowserDB::waitForDbRelease(ChoiceOnUse choice)
 }
 
 bool DBBrowserDB::dump(const QString& filePath,
-    const QStringList& tablesToDump,
+    const std::vector<std::string>& tablesToDump,
     bool insertColNames,
     bool insertNewSyntx,
     bool exportSchema,
     bool exportData,
-    bool keepOldSchema)
+    bool keepOldSchema) const
 {
     waitForDbRelease();
 
@@ -721,26 +798,23 @@ bool DBBrowserDB::dump(const QString& filePath,
         QApplication::setOverrideCursor(Qt::WaitCursor);
 
         // Count the total number of all records in all tables for the progress dialog
-        size_t numRecordsTotal = 0, numRecordsCurrent = 0;
-        objectMap objMap = schemata["main"];            // We only always export the main database, not the attached databases
-        QList<sqlb::ObjectPtr> tables = objMap.values("table");
-        for(QMutableListIterator<sqlb::ObjectPtr> it(tables);it.hasNext();)
+        size_t numRecordsTotal = 0;
+        objectMap objMap = schemata.at("main");             // We only always export the main database, not the attached databases
+        std::vector<sqlb::ObjectPtr> tables;
+        auto all_tables = objMap.equal_range("table");
+        for(auto it=all_tables.first;it!=all_tables.second;++it)
         {
-            it.next();
-
-            // Remove the sqlite_stat1 and the sqlite_sequence tables if they exist. Also remove any tables which are not selected for export.
-            if(it.value()->name() == "sqlite_stat1" || it.value()->name() == "sqlite_sequence" || !tablesToDump.contains(it.value()->name()))
+            // Never export the sqlite_stat1 and the sqlite_sequence tables if they exist. Also only export any tables which are selected for export.
+            if(it->second->name() != "sqlite_stat1" && it->second->name() != "sqlite_sequence" && contains(tablesToDump, it->second->name()))
             {
-                it.remove();
-            } else {
-                // Otherwise get the number of records in this table
-                numRecordsTotal += querySingleValueFromDb(QString("SELECT COUNT(*) FROM %1;")
-                                                         .arg(sqlb::ObjectIdentifier("main", it.value()->name()).toString())).toUInt();
+                // Get the number of records in this table and remember to export it
+                tables.push_back(it->second);
+                numRecordsTotal += querySingleValueFromDb("SELECT COUNT(*) FROM " + sqlb::ObjectIdentifier("main", it->second->name()).toString()).toUInt();
             }
         }
 
         QProgressDialog progress(tr("Exporting database to SQL file..."),
-                                 tr("Cancel"), 0, numRecordsTotal);
+                                 tr("Cancel"), 0, static_cast<int>(numRecordsTotal));
         progress.setWindowModality(Qt::ApplicationModal);
         progress.show();
         qApp->processEvents();
@@ -755,37 +829,37 @@ bool DBBrowserDB::dump(const QString& filePath,
         // make sure foreign keys are working properly.
         if(exportSchema)
         {
-            for(auto it : tables)
+            for(const auto& it : tables)
             {
                 // Write the SQL string used to create this table to the output file
                 if(!keepOldSchema)
-                    stream << QString("DROP TABLE IF EXISTS %1;\n").arg(sqlb::escapeIdentifier(it->name()));
+                    stream << QString("DROP TABLE IF EXISTS %1;\n").arg(QString::fromStdString(sqlb::escapeIdentifier(it->name())));
 
                 if(it->fullyParsed())
-                    stream << it->sql("main", true) << "\n";
+                    stream << QString::fromStdString(it->sql("main", true)) << "\n";
                 else
-                    stream << it->originalSql() << ";\n";
+                    stream << QString::fromStdString(it->originalSql()) << ";\n";
                 }
         }
 
         // Now export the data as well
         if(exportData)
         {
-            for(auto it : tables)
+            for(const auto& it : tables)
             {
                 // get columns
-                QStringList cols(std::dynamic_pointer_cast<sqlb::Table>(it)->fieldNames());
+                sqlb::StringVector cols = std::dynamic_pointer_cast<sqlb::Table>(it)->fieldNames();
 
-                QString sQuery = QString("SELECT * FROM %1;").arg(sqlb::escapeIdentifier(it->name()));
-                QByteArray utf8Query = sQuery.toUtf8();
+                std::string sQuery = "SELECT * FROM " + sqlb::escapeIdentifier(it->name());
                 sqlite3_stmt *stmt;
                 QString lineSep(QString(")%1\n").arg(insertNewSyntx?',':';'));
 
-                int status = sqlite3_prepare_v2(_db, utf8Query.data(), utf8Query.size(), &stmt, nullptr);
+                int status = sqlite3_prepare_v2(_db, sQuery.c_str(), static_cast<int>(sQuery.size()), &stmt, nullptr);
                 if(SQLITE_OK == status)
                 {
                     int columns = sqlite3_column_count(stmt);
                     size_t counter = 0;
+                    size_t numRecordsCurrent = 0;
                     qApp->processEvents();
                     while(sqlite3_step(stmt) == SQLITE_ROW)
                     {
@@ -793,9 +867,9 @@ bool DBBrowserDB::dump(const QString& filePath,
 
                         if (!insertNewSyntx || !counter)
                         {
-                            stream << "INSERT INTO " << sqlb::escapeIdentifier(it->name());
+                            stream << "INSERT INTO " << QString::fromStdString(sqlb::escapeIdentifier(it->name()));
                             if (insertColNames)
-                                stream << " (" << sqlb::escapeIdentifier(cols).join(",") << ")";
+                                stream << " (" << QString::fromStdString(sqlb::joinStringVector(sqlb::escapeIdentifier(cols), ",")) << ")";
                             stream << " VALUES (";
                         }
                         else
@@ -821,7 +895,7 @@ bool DBBrowserDB::dump(const QString& filePath,
                                 {
                                 case SQLITE_TEXT:
                                 case SQLITE_BLOB:
-                                    stream << "'" << bcontent.replace("'", "''") << "'";
+                                    stream << sqlb::escapeString(bcontent);
                                 break;
                                 case SQLITE_NULL:
                                     stream << "NULL";
@@ -840,7 +914,7 @@ bool DBBrowserDB::dump(const QString& filePath,
                                 stream << ',';
                         }
 
-                        progress.setValue(++numRecordsCurrent);
+                        progress.setValue(static_cast<int>(++numRecordsCurrent));
                         if(counter % 5000 == 0)
                             qApp->processEvents();
                         counter++;
@@ -863,29 +937,31 @@ bool DBBrowserDB::dump(const QString& filePath,
         // Finally export all objects other than tables
         if(exportSchema)
         {
-            for(auto it : objMap)
+            for(const auto& obj : objMap)
             {
+                const auto& it = obj.second;
+
                 // Make sure it's not a table again
                 if(it->type() == sqlb::Object::Types::Table)
                     continue;
 
                 // If this object is based on a table (e.g. is an index for that table) it depends on the existence of this table.
                 // So if we didn't export the base table this depends on, don't export this object either.
-                if(!it->baseTable().isEmpty() && !tablesToDump.contains(it->baseTable()))
+                if(!it->baseTable().empty() && !contains(tablesToDump, it->baseTable()))
                     continue;
 
                 // Write the SQL string used to create this object to the output file
-                if(!it->originalSql().isEmpty())
+                if(!it->originalSql().empty())
                 {
                     if(!keepOldSchema)
-                        stream << QString("DROP %1 IF EXISTS %2;\n")
-                                  .arg(sqlb::Object::typeToString(it->type()).toUpper())
-                                  .arg(sqlb::escapeIdentifier(it->name()));
+                        stream << QString("DROP %1 IF EXISTS %2;\n").arg(
+                                  QString::fromStdString(sqlb::Object::typeToString(it->type())).toUpper(),
+                                  QString::fromStdString(sqlb::escapeIdentifier(it->name())));
 
                     if(it->fullyParsed())
-                        stream << it->sql("main", true) << "\n";
+                        stream << QString::fromStdString(it->sql("main", true)) << "\n";
                     else
-                        stream << it->originalSql() << ";\n";
+                        stream << QString::fromStdString(it->originalSql()) << ";\n";
                 }
             }
         }
@@ -905,19 +981,19 @@ bool DBBrowserDB::dump(const QString& filePath,
 // to C++ classes and calls user callback.
 int DBBrowserDB::callbackWrapper (void* callback, int numberColumns, char** values, char** columnNames)
 {
-    QStringList valuesList;
-    QStringList namesList;
+    std::vector<QByteArray> valuesList;
+    std::vector<QByteArray> namesList;
 
     for (int i=0; i<numberColumns; i++) {
-        valuesList << QString(values[i]);
-        namesList << QString(columnNames[i]);
+        valuesList.emplace_back(values[i]);
+        namesList.emplace_back(columnNames[i]);
     }
 
     execCallback userCallback = *(static_cast<execCallback*>(callback));
     return userCallback(numberColumns, valuesList, namesList);
 }
 
-bool DBBrowserDB::executeSQL(QString statement, bool dirtyDB, bool logsql, execCallback callback)
+bool DBBrowserDB::executeSQL(const std::string& statement, bool dirtyDB, bool logsql, execCallback callback)
 {
     waitForDbRelease();
     if(!_db)
@@ -926,25 +1002,23 @@ bool DBBrowserDB::executeSQL(QString statement, bool dirtyDB, bool logsql, execC
         return false;
     }
 
-    statement = statement.trimmed();
-
-    if (logsql) logSQL(statement, kLogMsg_App);
+    if (logsql) logSQL(QString::fromStdString(statement), kLogMsg_App);
     if (dirtyDB) setSavepoint();
 
     char* errmsg;
-    if (SQLITE_OK == sqlite3_exec(_db, statement.toUtf8(), callback ? callbackWrapper : nullptr, &callback, &errmsg))
+    if (SQLITE_OK == sqlite3_exec(_db, statement.c_str(), callback ? callbackWrapper : nullptr, &callback, &errmsg))
     {
         // Update DB structure after executing an SQL statement. But try to avoid doing unnecessary updates.
-        if(!dontCheckForStructureUpdates && (statement.startsWith("ALTER", Qt::CaseInsensitive) ||
-                statement.startsWith("CREATE", Qt::CaseInsensitive) ||
-                statement.startsWith("DROP", Qt::CaseInsensitive) ||
-                statement.startsWith("ROLLBACK", Qt::CaseInsensitive)))
+        if(!dontCheckForStructureUpdates && (starts_with_ci(statement, "ALTER") ||
+                starts_with_ci(statement, "CREATE") ||
+                starts_with_ci(statement, "DROP") ||
+                starts_with_ci(statement, "ROLLBACK")))
             updateSchema();
 
         return true;
     } else {
-        lastErrorMessage = QString("%1 (%2)").arg(QString::fromUtf8(errmsg)).arg(statement);
-        qWarning() << "executeSQL: " << statement << "->" << errmsg;
+        lastErrorMessage = QString("%1 (%2)").arg(QString::fromUtf8(errmsg), QString::fromStdString(statement));
+        qWarning() << "executeSQL: " << lastErrorMessage;
         sqlite3_free(errmsg);
 
         return false;
@@ -980,13 +1054,13 @@ bool DBBrowserDB::executeMultiSQL(QByteArray query, bool dirty, bool log)
     unsigned int line = 0;
     bool structure_updated = false;
     int last_progress_value = -1;
-    QString savepoint_name;
+    std::string savepoint_name;
     while(tail && *tail != 0 && (res == SQLITE_OK || res == SQLITE_DONE))
     {
         line++;
 
         // Update progress dialog, keep UI responsive. Make sure to not spend too much time updating the progress dialog in case there are many small statements.
-        int progress_value = static_cast<int>(static_cast<float>(tail - tail_start) / total_tail_length * 100.0f);
+        int progress_value = static_cast<int>(static_cast<float>(tail - tail_start) / static_cast<float>(total_tail_length) * 100.0f);
         if(progress_value > last_progress_value)
         {
             progress.setValue(progress_value);
@@ -1024,7 +1098,7 @@ bool DBBrowserDB::executeMultiSQL(QByteArray query, bool dirty, bool log)
                 }
 
                 // Set DB to dirty and create a restore point if we haven't done that yet
-                if(savepoint_name.isNull())
+                if(savepoint_name.empty())
                 {
                     savepoint_name = generateSavepointName("execmultisql");
                     setSavepoint(savepoint_name);
@@ -1048,7 +1122,7 @@ bool DBBrowserDB::executeMultiSQL(QByteArray query, bool dirty, bool log)
         }
 
         // Execute next statement
-        res = sqlite3_prepare_v2(_db, tail, tail_end - tail + 1, &vm, &tail);
+        res = sqlite3_prepare_v2(_db, tail, static_cast<int>(tail_end - tail + 1), &vm, &tail);
         if(res == SQLITE_OK)
         {
             switch(sqlite3_step(vm))
@@ -1064,10 +1138,10 @@ bool DBBrowserDB::executeMultiSQL(QByteArray query, bool dirty, bool log)
                 // In case of *any* error abort the execution and roll back the transaction
 
                 // Make sure to save the error message first before any other function can mess around with it
-                lastErrorMessage = tr("Error in statement #%1: %2.\nAborting execution%3.")
-                        .arg(line)
-                        .arg(sqlite3_errmsg(_db))
-                        .arg(dirty ? tr(" and rolling back") : "");
+                lastErrorMessage = tr("Error in statement #%1: %2.\nAborting execution%3.").arg(
+                        QString::number(line),
+                        sqlite3_errmsg(_db),
+                        dirty ? tr(" and rolling back") : "");
                 qWarning() << lastErrorMessage;
 
                 // Clean up
@@ -1077,10 +1151,10 @@ bool DBBrowserDB::executeMultiSQL(QByteArray query, bool dirty, bool log)
                 return false;
             }
         } else {
-            lastErrorMessage = tr("Error in statement #%1: %2.\nAborting execution%3.")
-                    .arg(line)
-                    .arg(sqlite3_errmsg(_db))
-                    .arg(dirty ? tr(" and rolling back") : "");
+            lastErrorMessage = tr("Error in statement #%1: %2.\nAborting execution%3.").arg(
+                    QString::number(line),
+                    sqlite3_errmsg(_db),
+                    dirty ? tr(" and rolling back") : "");
             qWarning() << lastErrorMessage;
             if(dirty)
                 revertToSavepoint(savepoint_name);
@@ -1096,22 +1170,26 @@ bool DBBrowserDB::executeMultiSQL(QByteArray query, bool dirty, bool log)
     return true;
 }
 
-QByteArray DBBrowserDB::querySingleValueFromDb(const QString& sql, bool log, ChoiceOnUse choice)
+QByteArray DBBrowserDB::querySingleValueFromDb(const std::string& sql, bool log, ChoiceOnUse choice) const
 {
     waitForDbRelease(choice);
     if(!_db)
         return QByteArray();
 
     if(log)
-        logSQL(sql, kLogMsg_App);
+        logSQL(QString::fromStdString(sql), kLogMsg_App);
 
     QByteArray retval;
 
-    QByteArray utf8Query = sql.toUtf8();
     sqlite3_stmt* stmt;
-    if(sqlite3_prepare_v2(_db, utf8Query, utf8Query.size(), &stmt, nullptr) == SQLITE_OK)
+    if(sqlite3_prepare_v2(_db, sql.c_str(), static_cast<int>(sql.size()), &stmt, nullptr) == SQLITE_OK)
     {
-        if(sqlite3_step(stmt) == SQLITE_ROW)
+        // Execute the statement. We distinguish three types of results:
+        // SQLITE_ROW in case some data was returned from the database. This data is then used as a return value.
+        // SQLITE_DONE in case the statement executed successfully but did not return any data. We do nothing in this case, leaving the return value empty.
+        // Any other case is an error, so we need to prepare an error message.
+        int result = sqlite3_step(stmt);
+        if(result == SQLITE_ROW)
         {
             if(sqlite3_column_count(stmt) > 0 && sqlite3_column_type(stmt, 0) != SQLITE_NULL)
             {
@@ -1121,8 +1199,8 @@ QByteArray DBBrowserDB::querySingleValueFromDb(const QString& sql, bool log, Cho
                 else
                     retval = "";
             }
-        } else {
-            lastErrorMessage = tr("didn't receive any output from %1").arg(sql);
+        } else if(result != SQLITE_DONE) {
+            lastErrorMessage = tr("didn't receive any output from %1").arg(QString::fromStdString(sql));
             qWarning() << lastErrorMessage;
         }
 
@@ -1135,21 +1213,24 @@ QByteArray DBBrowserDB::querySingleValueFromDb(const QString& sql, bool log, Cho
     return retval;
 }
 
-bool DBBrowserDB::getRow(const sqlb::ObjectIdentifier& table, const QString& rowid, QVector<QByteArray>& rowdata)
+bool DBBrowserDB::getRow(const sqlb::ObjectIdentifier& table, const QString& rowid, std::vector<QByteArray>& rowdata) const
 {
     waitForDbRelease();
     if(!_db)
         return false;
 
-    QString sQuery = QString("SELECT * FROM %1 WHERE %2='%3';")
-            .arg(table.toString())
-            .arg(sqlb::escapeIdentifier(getObjectByName<sqlb::Table>(table)->rowidColumn()))
-            .arg(rowid);
+    std::string query = "SELECT * FROM " + table.toString() + " WHERE ";
 
-    QByteArray utf8Query = sQuery.toUtf8();
+    // For a single rowid column we can use a simple WHERE condition, for multiple rowid columns we have to use sqlb_make_single_value to decode the composed rowid values.
+    sqlb::StringVector pks = getObjectByName<sqlb::Table>(table)->rowidColumns();
+    if(pks.size() == 1)
+        query += sqlb::escapeIdentifier(pks.front()) + "='" + rowid.toStdString() + "'";
+    else
+        query += "sqlb_make_single_value(" + sqlb::joinStringVector(sqlb::escapeIdentifier(pks), ",") + ")=" + sqlb::escapeString(rowid.toStdString());
+
     sqlite3_stmt *stmt;
     bool ret = false;
-    if(sqlite3_prepare_v2(_db, utf8Query, utf8Query.size(), &stmt, nullptr) == SQLITE_OK)
+    if(sqlite3_prepare_v2(_db, query.c_str(), static_cast<int>(query.size()), &stmt, nullptr) == SQLITE_OK)
     {
         // even this is a while loop, the statement should always only return 1 row
         while(sqlite3_step(stmt) == SQLITE_ROW)
@@ -1158,13 +1239,13 @@ bool DBBrowserDB::getRow(const sqlb::ObjectIdentifier& table, const QString& row
             {
                 if(sqlite3_column_type(stmt, i) == SQLITE_NULL)
                 {
-                    rowdata.append(QByteArray());
+                    rowdata.emplace_back();
                 } else {
                     int bytes = sqlite3_column_bytes(stmt, i);
                     if(bytes)
-                        rowdata.append(QByteArray(static_cast<const char*>(sqlite3_column_blob(stmt, i)), bytes));
+                        rowdata.emplace_back(static_cast<const char*>(sqlite3_column_blob(stmt, i)), bytes);
                     else
-                        rowdata.append(QByteArray(""));
+                        rowdata.emplace_back("");
                 }
             }
             ret = true;
@@ -1175,67 +1256,56 @@ bool DBBrowserDB::getRow(const sqlb::ObjectIdentifier& table, const QString& row
     return ret;
 }
 
-QString DBBrowserDB::max(const sqlb::ObjectIdentifier& tableName, const sqlb::Field& field) const
+unsigned long DBBrowserDB::max(const sqlb::ObjectIdentifier& tableName, const std::string& field) const
 {
-    QString sQuery = QString("SELECT MAX(CAST(%2 AS INTEGER)) FROM %1;").arg(tableName.toString()).arg(sqlb::escapeIdentifier(field.name()));
-    QByteArray utf8Query = sQuery.toUtf8();
-    sqlite3_stmt *stmt;
-    QString ret = "0";
-
-    if(sqlite3_prepare_v2(_db, utf8Query, utf8Query.size(), &stmt, nullptr) == SQLITE_OK)
-    {
-        // even this is a while loop, the statement should always only return 1 row
-        while(sqlite3_step(stmt) == SQLITE_ROW)
-        {
-            if(sqlite3_column_count(stmt) == 1)
-                ret = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0)));
-        }
-    }
-    sqlite3_finalize(stmt);
-
-    return ret;
+    std::string query = "SELECT MAX(CAST(" + sqlb::escapeIdentifier(field) + " AS INTEGER)) FROM " + tableName.toString();
+    return querySingleValueFromDb(query).toULong();
 }
 
-QString DBBrowserDB::emptyInsertStmt(const QString& schemaName, const sqlb::Table& t, const QString& pk_value) const
+std::string DBBrowserDB::emptyInsertStmt(const std::string& schemaName, const sqlb::Table& t, const QString& pk_value) const
 {
-    QString stmt = QString("INSERT INTO %1.%2").arg(sqlb::escapeIdentifier(schemaName)).arg(sqlb::escapeIdentifier(t.name()));
+    std::string stmt = "INSERT INTO " + sqlb::escapeIdentifier(schemaName) + "." + sqlb::escapeIdentifier(t.name());
 
-    QStringList vals;
-    QStringList fields;
+    sqlb::StringVector vals;
+    sqlb::StringVector fields;
     for(const sqlb::Field& f : t.fields)
     {
+        // Never insert into a generated column
+        if(!f.generated().empty())
+            continue;
+
         sqlb::ConstraintPtr pk = t.constraint({f.name()}, sqlb::Constraint::PrimaryKeyConstraintType);
         if(pk)
         {
-            fields << f.name();
+            fields.push_back(f.name());
 
             if(!pk_value.isNull())
             {
-                vals << (f.isText()? "'" + pk_value + "'" : pk_value);
+                vals.push_back(f.isText()? "'" + pk_value.toStdString() + "'" : pk_value.toStdString());
             } else {
                 if(f.notnull())
                 {
-                    QString maxval = this->max(sqlb::ObjectIdentifier(schemaName, t.name()), f);
-                    QString newval = QString::number(maxval.toLongLong() + 1);
-                    vals << (f.isText()? "'" + newval + "'" : newval);
+                    unsigned long maxval = this->max(sqlb::ObjectIdentifier(schemaName, t.name()), f.name());
+                    std::string newval = std::to_string(maxval + 1);
+                    vals.push_back(f.isText()? "'" + newval + "'" : newval);
                 } else {
-                    vals << "NULL";
+                    vals.push_back("NULL");
                 }
             }
         } else if(f.notnull() && f.defaultValue().length() == 0) {
-            fields << f.name();
+            fields.push_back(f.name());
 
             if(f.isInteger())
-                vals << "0";
+                vals.push_back("0");
             else
-                vals << "''";
+                vals.push_back("''");
         } else {
             // don't insert into fields with a default value
             // or we will never see it.
             if(f.defaultValue().length() == 0)
             {
-                fields << f.name();
-                vals << "NULL";
+                fields.push_back(f.name());
+                vals.push_back("NULL");
             }
         }
     }
@@ -1245,9 +1315,9 @@ QString DBBrowserDB::emptyInsertStmt(const QString& schemaName, const sqlb::Tabl
         stmt.append(" DEFAULT VALUES;");
     } else {
         stmt.append("(");
-        stmt.append(sqlb::escapeIdentifier(fields).join(","));
+        stmt.append(sqlb::joinStringVector(sqlb::escapeIdentifier(fields), ","));
         stmt.append(") VALUES (");
-        stmt.append(vals.join(","));
+        stmt.append(sqlb::joinStringVector(vals, ","));
         stmt.append(");");
     }
 
@@ -1266,11 +1336,13 @@ QString DBBrowserDB::addRecord(const sqlb::ObjectIdentifier& tablename)
 
     // For tables without rowid we have to set the primary key by ourselves. We do so by querying for the largest value in the PK column
     // and adding one to it.
-    QString sInsertstmt;
+    std::string sInsertstmt;
     QString pk_value;
-    if(table->isWithoutRowidTable())
+    if(table->withoutRowidTable())
     {
-        pk_value = QString::number(max(tablename, *sqlb::findField(table, table->rowidColumn())).toLongLong() + 1);
+        // For multiple rowid columns we just use the value of the last one and increase that one by one. If this doesn't yield a valid combination
+        // the insert record dialog should pop up automatically.
+        pk_value = QString::number(max(tablename, table->rowidColumns().back()) + 1);
         sInsertstmt = emptyInsertStmt(tablename.schema(), *table, pk_value);
     } else {
         sInsertstmt = emptyInsertStmt(tablename.schema(), *table);
@@ -1281,33 +1353,46 @@ QString DBBrowserDB::addRecord(const sqlb::ObjectIdentifier& tablename)
         qWarning() << "addRecord: " << lastErrorMessage;
         return QString();
     } else {
-        if(table->isWithoutRowidTable())
+        if(table->withoutRowidTable())
             return pk_value;
         else
             return QString::number(sqlite3_last_insert_rowid(_db));
     }
 }
 
-bool DBBrowserDB::deleteRecords(const sqlb::ObjectIdentifier& table, const QStringList& rowids, const QString& pseudo_pk)
+bool DBBrowserDB::deleteRecords(const sqlb::ObjectIdentifier& table, const std::vector<QString>& rowids, const sqlb::StringVector& pseudo_pk)
 {
     if (!isOpen()) return false;
 
     // Get primary key of the object to edit.
-    QString pk = primaryKeyForEditing(table, pseudo_pk);
-    if(pk.isNull())
+    sqlb::StringVector pks = primaryKeyForEditing(table, pseudo_pk);
+    if(pks.empty())
     {
         lastErrorMessage = tr("Cannot delete this object");
         return false;
     }
 
-    QStringList quoted_rowids;
+    // Quote all values in advance
+    std::vector<std::string> quoted_rowids;
     for(QString rowid : rowids)
-        quoted_rowids.append("'" + rowid.replace("'", "''") + "'");
+        quoted_rowids.push_back(sqlb::escapeString(rowid.toStdString()));
 
-    QString statement = QString("DELETE FROM %1 WHERE %2 IN (%3);")
-            .arg(table.toString())
-            .arg(pk)
-            .arg(quoted_rowids.join(", "));
+    // For a single rowid column we can use a SELECT ... IN(...) statement which is faster.
+    // For multiple rowid columns we have to use sqlb_make_single_value to decode the composed rowid values.
+    std::string statement;
+    if(pks.size() == 1)
+    {
+        statement = "DELETE FROM " + table.toString() + " WHERE " + pks.at(0) + " IN ("+ sqlb::joinStringVector(quoted_rowids, ", ") + ");";
+    } else {
+        statement = "DELETE FROM " + table.toString() + " WHERE ";
+
+        statement += "sqlb_make_single_value(";
+        for(const auto& pk : pks)
+            statement += sqlb::escapeIdentifier(pk) + ",";
+        statement.erase(statement.end()-1);
+        statement += ") IN (" + sqlb::joinStringVector(quoted_rowids, ", ") + ")";
+    }
+
     if(executeSQL(statement))
     {
         return true;
@@ -1317,27 +1402,29 @@ bool DBBrowserDB::deleteRecords(const sqlb::ObjectIdentifier& table, const QStri
     }
 }
 
-bool DBBrowserDB::updateRecord(const sqlb::ObjectIdentifier& table, const QString& column,
-                               const QString& rowid, const QByteArray& value, bool itsBlob, const QString& pseudo_pk)
+bool DBBrowserDB::updateRecord(const sqlb::ObjectIdentifier& table, const std::string& column,
+                               const QString& rowid, const QByteArray& value, int force_type, const sqlb::StringVector& pseudo_pk)
 {
     waitForDbRelease();
     if (!isOpen()) return false;
 
     // Get primary key of the object to edit.
-    QString pk = primaryKeyForEditing(table, pseudo_pk);
-    if(pk.isNull())
+    sqlb::StringVector pks = primaryKeyForEditing(table, pseudo_pk);
+    if(pks.empty())
     {
         lastErrorMessage = tr("Cannot set data on this object");
         return false;
     }
 
-    QString sql = QString("UPDATE %1 SET %2=? WHERE %3='%4';")
-            .arg(table.toString())
-            .arg(sqlb::escapeIdentifier(column))
-            .arg(sqlb::escapeIdentifier(pk))
-            .arg(QString(rowid).replace("'", "''"));
+    std::string sql = "UPDATE " + table.toString() + " SET " + sqlb::escapeIdentifier(column) + "=? WHERE ";
 
-    logSQL(sql, kLogMsg_App);
+    // For a single rowid column we can use a simple WHERE condition, for multiple rowid columns we have to use sqlb_make_single_value to decode the composed rowid values.
+    if(pks.size() == 1)
+        sql += sqlb::escapeIdentifier(pks.front()) + "=" + sqlb::escapeString(rowid.toStdString());
+    else
+        sql += "sqlb_make_single_value(" + sqlb::joinStringVector(sqlb::escapeIdentifier(pks), ",") + ")=" + sqlb::escapeString(rowid.toStdString());
+
+    logSQL(QString::fromStdString(sql), kLogMsg_App);
     setSavepoint();
 
     // If we get a NULL QByteArray we insert a NULL value, and for that
@@ -1346,16 +1433,20 @@ bool DBBrowserDB::updateRecord(const sqlb::ObjectIdentifier& table, const QStrin
 
     sqlite3_stmt* stmt;
     int success = 1;
-    if(sqlite3_prepare_v2(_db, sql.toUtf8(), -1, &stmt, nullptr) != SQLITE_OK)
+    if(sqlite3_prepare_v2(_db, sql.c_str(), static_cast<int>(sql.size()), &stmt, nullptr) != SQLITE_OK)
         success = 0;
     if(success == 1) {
-        if(itsBlob)
+        if(force_type == SQLITE_BLOB)
         {
             if(sqlite3_bind_blob(stmt, 1, rawValue, value.length(), SQLITE_STATIC))
                 success = -1;
-        }
-        else
-        {
+        } else if(force_type == SQLITE_INTEGER) {
+            if(sqlite3_bind_int64(stmt, 1, value.toLongLong()))
+                success = -1;
+        } else if(force_type == SQLITE_FLOAT) {
+            if(sqlite3_bind_double(stmt, 1, value.toDouble()))
+                success = -1;
+        } else {
             if(sqlite3_bind_text(stmt, 1, rawValue, value.length(), SQLITE_STATIC))
                 success = -1;
         }
@@ -1375,22 +1466,22 @@ bool DBBrowserDB::updateRecord(const sqlb::ObjectIdentifier& table, const QStrin
     }
 }
 
-QString DBBrowserDB::primaryKeyForEditing(const sqlb::ObjectIdentifier& table, const QString& pseudo_pk) const
+sqlb::StringVector DBBrowserDB::primaryKeyForEditing(const sqlb::ObjectIdentifier& table, const sqlb::StringVector& pseudo_pk) const
 {
     // This function returns the primary key of the object to edit. For views we support 'pseudo' primary keys which must be specified manually.
     // If no pseudo pk is specified we'll take the rowid column of the table instead. If this neither a table nor was a pseudo-PK specified,
     // it is most likely a view that hasn't been configured for editing yet. In this case we return a null string to abort.
 
-    if(pseudo_pk.isEmpty())
+    if(pseudo_pk.empty())
     {
         sqlb::TablePtr tbl = getObjectByName<sqlb::Table>(table);
         if(tbl)
-            return tbl->rowidColumn();
+            return tbl->rowidColumns();
     } else {
         return pseudo_pk;
     }
 
-    return QString();
+    return sqlb::StringVector();
 }
 
 bool DBBrowserDB::createTable(const sqlb::ObjectIdentifier& name, const sqlb::FieldVector& structure)
@@ -1406,13 +1497,10 @@ bool DBBrowserDB::createTable(const sqlb::ObjectIdentifier& name, const sqlb::Fi
 
 bool DBBrowserDB::addColumn(const sqlb::ObjectIdentifier& tablename, const sqlb::Field& field)
 {
-    QString sql = QString("ALTER TABLE %1 ADD COLUMN %2").arg(tablename.toString()).arg(field.toString());
-
-    // Execute it and update the schema
-    return executeSQL(sql);
+    return executeSQL("ALTER TABLE " + tablename.toString() + " ADD COLUMN " + field.toString());
 }
 
-bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb::Table& new_table, AlterTableTrackColumns track_columns, QString newSchemaName)
+bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb::Table& new_table, AlterTableTrackColumns track_columns, std::string newSchemaName)
 {
     // This function is split into three different parts:
     // Part 1 checks the arguments and prepares them for processing. It also prepares the transaction etc.
@@ -1424,21 +1512,21 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
     //
 
     // If no new schema name has been set, we just use the old schema name
-    if(newSchemaName.isNull())
+    if(newSchemaName.empty())
     {
         newSchemaName = tablename.schema();
 
         // When renaming the table in the current schema, check if it doesn't exist already in there
         if(tablename.name() != new_table.name() && getObjectByName(sqlb::ObjectIdentifier(newSchemaName, new_table.name())) != nullptr)
         {
-            lastErrorMessage = tr("A table with the name '%1' already exists in schema '%2'.").arg(new_table.name()).arg(newSchemaName);
+            lastErrorMessage = tr("A table with the name '%1' already exists in schema '%2'.").arg(QString::fromStdString(new_table.name()), QString::fromStdString(newSchemaName));
             return false;
         }
     } else {
         // We're moving the table to a different schema. So check first if it doesn't already exist in the new schema.
         if(newSchemaName != tablename.schema() && getObjectByName(sqlb::ObjectIdentifier(newSchemaName, new_table.name())) != nullptr)
         {
-            lastErrorMessage = tr("A table with the name '%1' already exists in schema '%2'.").arg(new_table.name()).arg(newSchemaName);
+            lastErrorMessage = tr("A table with the name '%1' already exists in schema '%2'.").arg(QString::fromStdString(new_table.name()), QString::fromStdString(newSchemaName));
             return false;
         }
     }
@@ -1447,17 +1535,17 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
     sqlb::TablePtr old_table_ptr = getObjectByName<sqlb::Table>(tablename);
     if(old_table_ptr == nullptr)
     {
-        lastErrorMessage = tr("No table with name '%1' exists in schema '%2'.").arg(tablename.name()).arg(tablename.schema());
+        lastErrorMessage = tr("No table with name '%1' exists in schema '%2'.").arg(QString::fromStdString(tablename.name()), QString::fromStdString(tablename.schema()));
         return false;
     }
-    sqlb::Table old_table = *old_table_ptr;
+    sqlb::Table old_table(*old_table_ptr);
 
     // Check if tracked fields actually exist in the old table
-    for(const auto& old_name : track_columns.keys())
+    for(const auto& old_it : track_columns)
     {
-        if(!old_name.isNull() && sqlb::findField(old_table, old_name) == old_table.fields.end())
+        if(!old_it.first.isNull() && sqlb::findField(old_table, old_it.first.toStdString()) == old_table.fields.end())
         {
-            lastErrorMessage = tr("Cannot find column %1.").arg(old_name);
+            lastErrorMessage = tr("Cannot find column %1.").arg(old_it.first);
             return false;
         }
     }
@@ -1466,19 +1554,19 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
     // We do this before checking if all tracked fields are in the new table to make sure the following check includes them.
     for(const auto& field : old_table.fields)
     {
-        if(!track_columns.keys().contains(field.name()))
+        if(track_columns.find(QString::fromStdString(field.name())) == track_columns.end())
         {
             // If a field isn't tracked, add it to the list and indicate explicitly that it has the same name in the new table
-            track_columns[field.name()] = field.name();
+            track_columns[QString::fromStdString(field.name())] = QString::fromStdString(field.name());
         }
     }
 
     // Check if tracked fields actually exist in the new table
-    for(const auto& new_name : track_columns.values())
+    for(const auto& new_name_it : track_columns)
     {
-        if(!new_name.isNull() && sqlb::findField(new_table, new_name) == new_table.fields.end())
+        if(!new_name_it.second.isNull() && sqlb::findField(new_table, new_name_it.second.toStdString()) == new_table.fields.end())
         {
-            lastErrorMessage = tr("Cannot find column %1.").arg(new_name);
+            lastErrorMessage = tr("Cannot find column %1.").arg(new_name_it.second);
             return false;
         }
     }
@@ -1488,7 +1576,7 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
         return true;
 
     // Create savepoint to be able to go back to it in case of any error
-    QString savepointName = generateSavepointName("renamecolumn");
+    std::string savepointName = generateSavepointName("renamecolumn");
     if(!setSavepoint(savepointName))
     {
         lastErrorMessage = tr("Creating savepoint failed. DB says: %1").arg(lastErrorMessage);
@@ -1518,14 +1606,15 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
     }
 
     // Add columns if necessary
-    const auto new_fields = track_columns.values(QString());
     for(const auto& field : new_table.fields)
     {
         // We loop through all the fields of the new table schema and check for each of them if they are new.
         // If so, we add that field. The reason for looping through the new table schema instead of the track_columns
         // map is that this way we make sure to preserve their order which increases our chances that we are done after
         // this step.
-        if(new_fields.contains(field.name()))
+        if(std::any_of(track_columns.begin(), track_columns.end(), [&field](const std::pair<QString, QString>& p) {
+                       return p.first.isNull() && p.second.toStdString() == field.name();
+        }))
         {
             if(!addColumn(sqlb::ObjectIdentifier(tablename.schema(), new_table.name()), field))
             {
@@ -1543,15 +1632,15 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
     // map for tracking column names here which uses the update column names as the old names too. This is to
     // make sure we are using the new table layout for later updates.
     AlterTableTrackColumns new_track_columns;
-    for(const auto& old_name : track_columns.keys())
+    for(const auto& old_name_it : track_columns)
     {
+        QString old_name = old_name_it.first;
+
         QString new_name = track_columns[old_name];
         if(!old_name.isNull() && !new_name.isNull() && new_name != old_name)
         {
-            if(!executeSQL(QString("ALTER TABLE %1 RENAME COLUMN %2 TO %3;")
-                           .arg(sqlb::ObjectIdentifier(tablename.schema(), new_table.name()).toString())
-                           .arg(sqlb::escapeIdentifier(old_name))
-                           .arg(sqlb::escapeIdentifier(new_name))))
+            if(!executeSQL("ALTER TABLE " + sqlb::ObjectIdentifier(tablename.schema(), new_table.name()).toString() + " RENAME COLUMN " +
+                           sqlb::escapeIdentifier(old_name.toStdString()) + " TO " + sqlb::escapeIdentifier(new_name.toStdString())))
             {
                 QString error(tr("Renaming the column failed. DB says:\n%1").arg(lastErrorMessage));
                 revertToSavepoint(savepointName);
@@ -1560,9 +1649,9 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
             }
 
             changed_something = true;
-            new_track_columns.insert(new_name, new_name);
+            new_track_columns.insert({new_name, new_name});
         } else {
-            new_track_columns.insert(old_name, new_name);
+            new_track_columns.insert({old_name, new_name});
         }
     }
     track_columns.swap(new_track_columns);
@@ -1595,8 +1684,8 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
     //
 
     // Create a new table with the desired schema and a name that doesn't exist yet
-    QString new_table_name = new_table.name();
-    sqlb::Table new_table_with_random_name = new_table;
+    std::string new_table_name = new_table.name();
+    sqlb::Table new_table_with_random_name(new_table);
     new_table_with_random_name.setName(generateTemporaryTableName(newSchemaName));
     if(!executeSQL(new_table_with_random_name.sql(newSchemaName), true, true))
     {
@@ -1607,10 +1696,12 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
     }
 
     // Assemble list of column names to copy from in the old table and list of column names to into into in the new table
-    QStringList copy_values_from;
-    QStringList copy_values_to;
-    for(const auto& from : track_columns.keys())
+    sqlb::StringVector copy_values_from;
+    sqlb::StringVector copy_values_to;
+    for(const auto& from_it : track_columns)
     {
+        const auto& from = from_it.first;
+
         // Ignore new fields
         if(from.isNull())
             continue;
@@ -1620,18 +1711,15 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
         if(to.isNull())
             continue;
 
-        copy_values_from.push_back(from);
-        copy_values_to.push_back(to);
+        copy_values_from.push_back(from.toStdString());
+        copy_values_to.push_back(to.toStdString());
     }
 
     // Copy the data from the old table to the new one
-    if(!executeSQL(QString("INSERT INTO %1.%2 (%3) SELECT %4 FROM %5.%6;")
-                   .arg(sqlb::escapeIdentifier(newSchemaName))
-                   .arg(sqlb::escapeIdentifier(new_table_with_random_name.name()))
-                   .arg(sqlb::escapeIdentifier(copy_values_to).join(","))
-                   .arg(sqlb::escapeIdentifier(copy_values_from).join(","))
-                   .arg(sqlb::escapeIdentifier(tablename.schema()))
-                   .arg(sqlb::escapeIdentifier(old_table.name()))))
+    if(!executeSQL("INSERT INTO " + sqlb::escapeIdentifier(newSchemaName) + "." + sqlb::escapeIdentifier(new_table_with_random_name.name()) +
+                   " (" + sqlb::joinStringVector(sqlb::escapeIdentifier(copy_values_to), ",") + ") SELECT " +
+                   sqlb::joinStringVector(sqlb::escapeIdentifier(copy_values_from), ",") + " FROM " +
+                   sqlb::escapeIdentifier(tablename.schema()) + "." + sqlb::escapeIdentifier(old_table.name())))
     {
         QString error(tr("Copying data to new table failed. DB says:\n%1").arg(lastErrorMessage));
         revertToSavepoint(savepointName);
@@ -1640,9 +1728,11 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
     }
 
     // Save all indices, triggers and views associated with this table because SQLite deletes them when we drop the table in the next step
-    QStringList otherObjectsSql;
-    for(auto it : schemata[tablename.schema()])
+    std::vector<std::string> otherObjectsSql;
+    for(const auto& schema : schemata[tablename.schema()])
     {
+        const auto& it = schema.second;
+
         // If this object references the table and it's not the table itself save it's SQL string
         if(it->baseTable() == old_table.name() && it->type() != sqlb::Object::Types::Table)
         {
@@ -1654,9 +1744,10 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
 
                 // Loop through all changes to the table schema. For indices only the column names are relevant, so it suffices to look at the
                 // list of tracked columns
-                for(const auto& from : track_columns)
+                for(const auto& from_it : track_columns)
                 {
-                    QString to = track_columns[from];
+                    const auto& from = from_it.first;
+                    const auto& to = from_it.second;
 
                     // Are we updating the field name or are we removing the field entirely?
                     if(!to.isNull())
@@ -1664,12 +1755,12 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
                         // We're updating the field name. So search for it in the index and replace it whereever it is found
                         for(size_t i=0;i<idx->fields.size();i++)
                         {
-                            if(idx->fields[i].name() == from)
-                                idx->fields[i].setName(to);
+                            if(idx->fields[i].name() == from.toStdString())
+                                idx->fields[i].setName(to.toStdString());
                         }
                     } else {
                         // We're removing a field. So remove it from any indices, too.
-                        while(sqlb::removeField(idx, from))
+                        while(sqlb::removeField(idx, from.toStdString()))
                             ;
                     }
                 }
@@ -1677,11 +1768,11 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
                 // Only try to add the index later if it has any columns remaining. Also use the new schema name here, too, to basically move
                 // any index that references the table to the same new schema as the table.
                 if(idx->fields.size())
-                    otherObjectsSql << idx->sql(newSchemaName);
+                    otherObjectsSql.push_back(idx->sql(newSchemaName));
             } else {
                 // If it's a view or a trigger we don't have any chance to corrections yet. Just store the statement as is and
                 // hope for the best.
-                otherObjectsSql << it->originalSql().trimmed() + ";";
+                otherObjectsSql.push_back(it->originalSql() + ";");
             }
         }
     }
@@ -1695,7 +1786,7 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
     setPragma("defer_foreign_keys", "1");
 
     // Delete the old table
-    if(!executeSQL(QString("DROP TABLE %1.%2;").arg(sqlb::escapeIdentifier(tablename.schema())).arg(sqlb::escapeIdentifier(old_table.name())), true, true))
+    if(!executeSQL("DROP TABLE " + sqlb::escapeIdentifier(tablename.schema()) + "." + sqlb::escapeIdentifier(old_table.name()), true, true))
     {
         QString error(tr("Deleting old table failed. DB says: %1").arg(lastErrorMessage));
         revertToSavepoint(savepointName);
@@ -1714,18 +1805,18 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
     setPragma("defer_foreign_keys", foreignKeysOldSettings);
 
     // Restore the saved triggers, views and indices
-    QString errored_sqls;
-    for(const QString& sql : otherObjectsSql)
+    std::string errored_sqls;
+    for(const std::string& sql : otherObjectsSql)
     {
         if(!executeSQL(sql, true, true))
             errored_sqls += sql + "\n";
     }
-    if(!errored_sqls.isEmpty())
+    if(!errored_sqls.empty())
     {
         QMessageBox::information(nullptr, qApp->applicationName(), tr("Restoring some of the objects associated with this table failed. "
                                                                       "This is most likely because some column names changed. "
                                                                       "Here's the SQL statement which you might want to fix and execute manually:\n\n")
-                                 + errored_sqls);
+                                 + QString::fromStdString(errored_sqls));
     }
 
     // Release the savepoint - everything went fine
@@ -1740,7 +1831,7 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
     return true;
 }
 
-bool DBBrowserDB::renameTable(const QString& schema, const QString& from_table, const QString& to_table)
+bool DBBrowserDB::renameTable(const std::string& schema, const std::string& from_table, const std::string& to_table)
 {
     // Do nothing if table names are the same
     if(from_table == to_table)
@@ -1748,10 +1839,10 @@ bool DBBrowserDB::renameTable(const QString& schema, const QString& from_table, 
 
     // Check if table names only differ in case. If they do, we have to rename the table twice because SQLite can't rename 'table' to 'Table'.
     // To solve this we rename 'table' to 'some temp name' and then 'some temp name' to 'Table'.
-    if(from_table.compare(to_table, Qt::CaseInsensitive) == 0)
+    if(compare_ci(from_table, to_table))
     {
         // Generate a temporary table name and rename the table via that by recusrively calling this function
-        QString temp_name = generateTemporaryTableName(schema);
+        std::string temp_name = generateTemporaryTableName(schema);
         if(!renameTable(schema, from_table, temp_name))
             return false;
         if(!renameTable(schema, temp_name, to_table))
@@ -1764,14 +1855,11 @@ bool DBBrowserDB::renameTable(const QString& schema, const QString& from_table, 
     // The old and the new table names differ (and that not only in case)
 
     // Rename the table
-    QString sql = QString("ALTER TABLE %1.%2 RENAME TO %3")
-            .arg(sqlb::escapeIdentifier(schema))
-            .arg(sqlb::escapeIdentifier(from_table))
-            .arg(sqlb::escapeIdentifier(to_table));
+    std::string sql = "ALTER TABLE " + sqlb::escapeIdentifier(schema) + "." + sqlb::escapeIdentifier(from_table) + " RENAME TO " + sqlb::escapeIdentifier(to_table);
     if(!executeSQL(sql))
     {
-        QString error = tr("Error renaming table '%1' to '%2'."
-            "Message from database engine:\n%3").arg(from_table).arg(to_table).arg(lastErrorMessage);
+        QString error = tr("Error renaming table '%1' to '%2'.\n"
+            "Message from database engine:\n%3").arg(QString::fromStdString(from_table), QString::fromStdString(to_table), lastErrorMessage);
         lastErrorMessage = error;
         qWarning() << lastErrorMessage;
         return false;
@@ -1780,40 +1868,10 @@ bool DBBrowserDB::renameTable(const QString& schema, const QString& from_table, 
     }
 }
 
-objectMap DBBrowserDB::getBrowsableObjects(const QString& schema) const
-{
-    objectMap res;
-
-    for(auto it=schemata[schema].constBegin();it!=schemata[schema].constEnd();++it)
-    {
-        if(it.key() == "table" || it.key() == "view")
-            res.insert(it.key(), it.value());
-    }
-
-    return res;
-}
-
-void DBBrowserDB::logSQL(QString statement, LogMessageType msgtype)
+void DBBrowserDB::logSQL(const QString& statement, LogMessageType msgtype) const
 {
     // Remove any leading and trailing spaces, tabs, or line breaks first
-    statement = statement.trimmed();
-
-    // Replace binary log messages by a placeholder text instead of printing gibberish
-    for(int i=0;i<statement.size();i++)
-    {
-        QChar ch = statement[i];
-        if(ch < 32 && ch != '\n' && ch != '\r' && ch != '\t')
-        {
-            statement.truncate(i>0?i-1:0);
-            statement.append(tr("... <string can not be logged, contains binary data> ..."));
-
-            // early exit if we detect a binary character,
-            // to prevent checking all characters in a potential big string
-            break;
-        }
-    }
-
-    emit sqlExecuted(statement, msgtype);
+    emit sqlExecuted(statement.trimmed(), msgtype);
 }
 
 void DBBrowserDB::updateSchema()
@@ -1827,113 +1885,98 @@ void DBBrowserDB::updateSchema()
         return;
 
     // Get a list of all databases. This list always includes the main and the temp database but can include more items if there are attached databases
-    QString db_statement = "PRAGMA database_list;";
-    QByteArray db_utf8Statement = db_statement.toUtf8();
-    logSQL(db_statement, kLogMsg_App);
-    sqlite3_stmt* db_vm;
-    if(sqlite3_prepare_v2(_db, db_utf8Statement, db_utf8Statement.length(), &db_vm, nullptr) == SQLITE_OK)
-    {
-        // Loop through all the databases
-        while(sqlite3_step(db_vm) == SQLITE_ROW)
-        {
-            // Get the schema name which is in column 1 (counting starts with 0). 0 contains an ID and 2 the file path.
-            QString schema_name = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(db_vm, 1)));
+    if(!executeSQL("PRAGMA database_list;", false, true, [this](int, std::vector<QByteArray> db_values, std::vector<QByteArray>) -> bool {
+        // Get the schema name which is in column 1 (counting starts with 0). 0 contains an ID and 2 the file path.
+        const std::string schema_name = db_values.at(1).toStdString();
 
-            // Always add the schema to the map. This makes sure it's even then added when there are no objects in the database
-            schemata[schema_name] = objectMap();
+        // Always add the schema to the map. This makes sure it's even then added when there are no objects in the database
+        schemata[schema_name] = objectMap();
 
-            // Get a list of all the tables for the current database schema. We need to do this differently for normal databases and the temporary schema
-            // because SQLite doesn't understand the "temp.sqlite_master" notation.
-            QString statement;
-            if(schema_name == "temp")
-                statement = QString("SELECT type,name,sql,tbl_name FROM sqlite_temp_master;");
-            else
-                statement = QString("SELECT type,name,sql,tbl_name FROM %1.sqlite_master;").arg(sqlb::escapeIdentifier(schema_name));
-            QByteArray utf8Statement = statement.toUtf8();
-            logSQL(statement, kLogMsg_App);
+        // Get a list of all the tables for the current database schema. We need to do this differently for normal databases and the temporary schema
+        // because SQLite doesn't understand the "temp.sqlite_master" notation.
+        std::string statement;
+        if(schema_name == "temp")
+            statement = "SELECT type,name,sql,tbl_name FROM sqlite_temp_master;";
+        else
+            statement = "SELECT type,name,sql,tbl_name FROM " + sqlb::escapeIdentifier(schema_name) + ".sqlite_master;";
 
-            sqlite3_stmt* vm;
-            int err = sqlite3_prepare_v2(_db, utf8Statement, utf8Statement.length(), &vm, nullptr);
-            if(err == SQLITE_OK)
+        if(!executeSQL(statement, false, true, [this, schema_name](int, std::vector<QByteArray> values, std::vector<QByteArray>) -> bool {
+            const std::string val_type = values.at(0).toStdString();
+            const std::string val_name = values.at(1).toStdString();
+            std::string val_sql = values.at(2).toStdString();
+            const std::string val_tblname = values.at(3).toStdString();
+
+            if(!val_sql.empty())
             {
-                while(sqlite3_step(vm) == SQLITE_ROW)
-                {
-                    QString val_type = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(vm, 0)));
-                    QString val_name = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(vm, 1)));
-                    QString val_sql = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(vm, 2)));
-                    QString val_tblname = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(vm, 3)));
-                    val_sql.replace("\r", "");
+               val_sql.erase(std::remove(val_sql.begin(), val_sql.end(), '\r'), val_sql.end());
 
-                    if(!val_sql.isEmpty())
-                    {
-                        sqlb::ObjectPtr object;
-                        if(val_type == "table")
-                            object = sqlb::Table::parseSQL(val_sql);
-                        else if(val_type == "index")
-                            object = sqlb::Index::parseSQL(val_sql);
-                        else if(val_type == "trigger")
-                            object = sqlb::Trigger::parseSQL(val_sql);
-                        else if(val_type == "view")
-                            object = sqlb::View::parseSQL(val_sql);
-                        else
-                            continue;
+               sqlb::ObjectPtr object;
+               if(val_type == "table")
+                   object = sqlb::Table::parseSQL(val_sql);
+               else if(val_type == "index")
+                   object = sqlb::Index::parseSQL(val_sql);
+               else if(val_type == "trigger")
+                   object = sqlb::Trigger::parseSQL(val_sql);
+               else if(val_type == "view")
+                   object = sqlb::View::parseSQL(val_sql);
+               else
+                   return false;
 
-                        // If parsing wasn't successful set the object name manually, so that at least the name is going to be correct
-                        if(!object->fullyParsed())
-                            object->setName(val_name);
+               // If parsing wasn't successful set the object name manually, so that at least the name is going to be correct
+               if(!object->fullyParsed())
+                   object->setName(val_name);
 
-                        // For virtual tables and views query the column list using the SQLite pragma because for both we can't yet rely on our grammar parser
-                        if((object->type() == sqlb::Object::Types::Table && std::dynamic_pointer_cast<sqlb::Table>(object)->isVirtual()) || object->type() == sqlb::Object::Types::View)
-                        {
-                            auto columns = queryColumnInformation(schema_name, val_name);
+               // For virtual tables and views query the column list using the SQLite pragma because for both we can't yet rely on our grammar parser
+               if((object->type() == sqlb::Object::Types::Table && std::dynamic_pointer_cast<sqlb::Table>(object)->isVirtual()) || object->type() == sqlb::Object::Types::View)
+               {
+                   const auto columns = queryColumnInformation(schema_name, val_name);
 
-                            if(object->type() == sqlb::Object::Types::Table)
-                            {
-                                sqlb::TablePtr tab = std::dynamic_pointer_cast<sqlb::Table>(object);
-                                for(const auto& column : columns)
-                                    tab->fields.emplace_back(column.first, column.second);
-                            } else {
-                                sqlb::ViewPtr view = std::dynamic_pointer_cast<sqlb::View>(object);
-                                for(const auto& column : columns)
-                                    view->fields.emplace_back(column.first, column.second);
-                            }
-                        } else if(object->type() == sqlb::Object::Types::Trigger) {
-                            // For triggers set the name of the table the trigger operates on here because we don't have a parser for trigger statements yet.
-                            sqlb::TriggerPtr trg = std::dynamic_pointer_cast<sqlb::Trigger>(object);
-                            trg->setTable(val_tblname);
-                        }
+                   if(object->type() == sqlb::Object::Types::Table)
+                   {
+                       sqlb::TablePtr tab = std::dynamic_pointer_cast<sqlb::Table>(object);
+                       for(const auto& column : columns)
+                           tab->fields.emplace_back(column.first, column.second);
+                   } else {
+                       sqlb::ViewPtr view = std::dynamic_pointer_cast<sqlb::View>(object);
+                       for(const auto& column : columns)
+                           view->fields.emplace_back(column.first, column.second);
+                   }
+               } else if(object->type() == sqlb::Object::Types::Trigger) {
+                   // For triggers set the name of the table the trigger operates on here because we don't have a parser for trigger statements yet.
+                   sqlb::TriggerPtr trg = std::dynamic_pointer_cast<sqlb::Trigger>(object);
+                   trg->setTable(val_tblname);
+               }
 
-                        schemata[schema_name].insert(val_type, object);
-                    }
-                }
-                sqlite3_finalize(vm);
-            } else {
-                qWarning() << tr("could not get list of db objects: %1, %2").arg(err).arg(sqlite3_errmsg(_db));
+                schemata[schema_name].insert({val_type, object});
             }
+
+            return false;
+        }))
+        {
+            qWarning() << tr("could not get list of db objects: %1").arg(sqlite3_errmsg(_db));
         }
 
-        sqlite3_finalize(db_vm);
-    } else {
+        return false;
+    }))
+    {
         qWarning() << tr("could not get list of databases: %1").arg(sqlite3_errmsg(_db));
     }
 
     emit structureUpdated();
 }
 
-QString DBBrowserDB::getPragma(const QString& pragma)
+QString DBBrowserDB::getPragma(const std::string& pragma) const
 {
-    QString sql;
     if (pragma=="case_sensitive_like")
-        sql = "SELECT 'x' NOT LIKE 'X'";
+        return querySingleValueFromDb("SELECT 'x' NOT LIKE 'X';");
     else
-        sql = QString("PRAGMA %1").arg(pragma);
-    return querySingleValueFromDb(sql);
+        return querySingleValueFromDb("PRAGMA " + pragma + ";");
 }
 
-bool DBBrowserDB::setPragma(const QString& pragma, const QString& value)
+bool DBBrowserDB::setPragma(const std::string& pragma, const QString& value)
 {
     // Set the pragma value
-    QString sql = QString("PRAGMA %1 = '%2';").arg(pragma).arg(value);
+    std::string sql = "PRAGMA " + pragma + " = '" + value.toStdString() + "';";
 
     // In general, we want to commit changes before running pragmas because most of them can't be rolled back and some of them
     // even fail when run in a transaction. However, the defer_foreign_keys pragma has neither problem and we need it to be settable
@@ -1944,7 +1987,7 @@ bool DBBrowserDB::setPragma(const QString& pragma, const QString& value)
 
     bool res = executeSQL(sql, false, true); // PRAGMA statements are usually not transaction bound, so we can't revert
     if( !res )
-        qWarning() << tr("Error setting pragma %1 to %2: %3").arg(pragma).arg(value).arg(lastErrorMessage);
+        qWarning() << tr("Error setting pragma %1 to %2: %3").arg(QString::fromStdString(pragma), value, lastErrorMessage);
 
     // If this is the page_size or the auto_vacuum pragma being set, we need to execute the vacuum command right after the pragma statement or the new
     // settings won't be saved.
@@ -1954,7 +1997,7 @@ bool DBBrowserDB::setPragma(const QString& pragma, const QString& value)
     return res;
 }
 
-bool DBBrowserDB::setPragma(const QString& pragma, const QString& value, QString& originalvalue)
+bool DBBrowserDB::setPragma(const std::string& pragma, const QString& value, QString& originalvalue)
 {
     if( originalvalue != value )
     {
@@ -1967,7 +2010,7 @@ bool DBBrowserDB::setPragma(const QString& pragma, const QString& value, QString
     return false;
 }
 
-bool DBBrowserDB::setPragma(const QString& pragma, int value, int& originalvalue)
+bool DBBrowserDB::setPragma(const std::string& pragma, int value, int& originalvalue)
 {
     if( originalvalue != value )
     {
@@ -2032,24 +2075,24 @@ void DBBrowserDB::loadExtensionsFromSettings()
     }
 }
 
-QVector<QPair<QString, QString>> DBBrowserDB::queryColumnInformation(const QString& schema_name, const QString& object_name)
+std::vector<std::pair<std::string, std::string>> DBBrowserDB::queryColumnInformation(const std::string& schema_name, const std::string& object_name) const
 {
     waitForDbRelease();
 
-    QVector<QPair<QString, QString>> result;
-    QString statement = QString("PRAGMA %1.TABLE_INFO(%2);").arg(sqlb::escapeIdentifier(schema_name)).arg(sqlb::escapeIdentifier(object_name));
-    logSQL(statement, kLogMsg_App);
+    std::vector<std::pair<std::string, std::string>> result;
+    std::string statement = "PRAGMA " + sqlb::escapeIdentifier(schema_name) + ".TABLE_INFO(" + sqlb::escapeIdentifier(object_name) + ");";
+    logSQL(QString::fromStdString(statement), kLogMsg_App);
 
     sqlite3_stmt* vm;
     const char* tail;
-    if(sqlite3_prepare_v2(_db, statement.toUtf8(), statement.length(), &vm, &tail) == SQLITE_OK)
+    if(sqlite3_prepare_v2(_db, statement.c_str(), static_cast<int>(statement.size()), &vm, &tail) == SQLITE_OK)
     {
         while(sqlite3_step(vm) == SQLITE_ROW)
         {
-            QString name = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(vm, 1)));
-            QString type = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(vm, 2)));
+            std::string name = reinterpret_cast<const char*>(sqlite3_column_text(vm, 1));
+            std::string type = reinterpret_cast<const char*>(sqlite3_column_text(vm, 2));
 
-            result.push_back(qMakePair(name, type));
+            result.push_back(std::make_pair(name, type));
         }
         sqlite3_finalize(vm);
     } else{
@@ -2059,13 +2102,13 @@ QVector<QPair<QString, QString>> DBBrowserDB::queryColumnInformation(const QStri
     return result;
 }
 
-QString DBBrowserDB::generateSavepointName(const QString& identifier) const
+std::string DBBrowserDB::generateSavepointName(const std::string& identifier) const
 {
     // Generate some sort of unique name for a savepoint for internal use.
-    return QString("db4s_%1_%2").arg(identifier).arg(QDateTime::currentMSecsSinceEpoch());
+    return "db4s_" + identifier + "_" + std::to_string(std::chrono::system_clock::now().time_since_epoch().count());
 }
 
-QString DBBrowserDB::generateTemporaryTableName(const QString& schema) const
+std::string DBBrowserDB::generateTemporaryTableName(const std::string& schema) const
 {
     // We're using a static variable as a counter here instead of checking from the beginning onwards every time. This has
     // two reasons: 1) It makes the function thread-safe, and 2) it saves us some time because in case older temporary tables
@@ -2074,7 +2117,7 @@ QString DBBrowserDB::generateTemporaryTableName(const QString& schema) const
 
     while(true)
     {
-        QString table_name = QString("sqlb_temp_table_%1").arg(++counter);
+        std::string table_name = "sqlb_temp_table_" + std::to_string(++counter);
         if(!getObjectByName(sqlb::ObjectIdentifier(schema, table_name)))
             return table_name;
     }

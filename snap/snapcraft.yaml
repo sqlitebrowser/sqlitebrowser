@@ -28,19 +28,16 @@
               command:            desktop-launch $SNAP/bin/sqlitebrowser
               desktop:            share/applications/sqlitebrowser.desktop
               environment:
+                DISABLE_WAYLAND:  1
                 TMPDIR:           $XDG_RUNTIME_DIR
               plugs:
-                # - browser-support
                 - desktop
                 - gsettings
                 - home
-                # - network
-                # - opengl
                 - unity7
                 - wayland
                 - x11
                 - removable-media
-                # - ssh-keys
 
           build-packages:
               - build-essential
@@ -50,22 +47,15 @@
               - qttools5-dev-tools
               - libsqlite3-dev
               - cmake
-              - libantlr-dev
               - libsqlcipher-dev
               - libqcustomplot-dev
-              # - libx11-xcb1
-              # - libx11-xcb-dev
-              # - libxcb-xkb-dev
+
               - libqt5scintilla2-dev
               - git
           parts:
-              # wrappers:
-              #     plugin:         dump
-              #     source:         snap/
               sqlitebrowser:
-                  # source-type:  git
                   plugin:         cmake
-                  configflags:    ["-DUSE_QT5=True", "-Dsqlcipher=1", "-Wno-dev"]
+                  configflags:    ["-DUSE_QT5=True", "-Dsqlcipher=1", "-Wno-dev","-DSQLITE_ENABLE_JSON1=1"]
                   source:         .
               desktop-qt5:
                 build-packages:
@@ -79,7 +69,6 @@
                 source-subdir:    qt
                 stage-packages:
                 - libxkbcommon0
-                # - qt5-gtk-platformtheme
                 - ttf-ubuntu-font-family
                 - dmz-cursor-theme
                 - light-themes
@@ -105,19 +94,8 @@
                   - desktop-qt5
                   - sqlitebrowser
                   stage-packages:
-                  # - qtbase5-dev
-                  # - libqt5gui5
-                  # - libqt4gui4
-                  # - libxkbcommon0
-                  # - libxkbfile1
-                  # - gtk2-engines
                   - libc6
-                  # - gtk2-engines-oxygen
-                  # - gtk3-engines-breeze
                   - libgcc1
-                  # - libqcustomplot1.3
-                  # - libqt5network5
-                  # - libqt5scintilla2-12v5
                   - libsqlite3-0
                   - libstdc++6
                   - libsqlcipher-dev
@@ -126,7 +104,7 @@
                   - libgail-3-0
                   - libgail-3-dev
                   - libgail-dev
-                  # - qt5-gtk-platformtheme
+                  - qtwayland5
                   filesets:
                       wanted:
                       - bin/*

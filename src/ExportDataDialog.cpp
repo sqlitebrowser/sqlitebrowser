@@ -4,6 +4,7 @@
 #include "Settings.h"
 #include "sqlite.h"
 #include "FileDialog.h"
+#include "IconCache.h"
 
 #include <QFile>
 #include <QTextStream>
@@ -13,7 +14,7 @@
 
 using json = nlohmann::json;
 
-ExportDataDialog::ExportDataDialog(DBBrowserDB& db, ExportFormats format, QWidget* parent, const QString& query, const sqlb::ObjectIdentifier& selection)
+ExportDataDialog::ExportDataDialog(DBBrowserDB& db, ExportFormats format, QWidget* parent, const std::string& query, const sqlb::ObjectIdentifier& selection)
     : QDialog(parent),
       ui(new Ui::ExportDataDialog),
       pdb(db),
@@ -40,17 +41,24 @@ ExportDataDialog::ExportDataDialog(DBBrowserDB& db, ExportFormats format, QWidge
     showCustomCharEdits();
 
     // If a SQL query was specified hide the table combo box. If not fill it with tables to export
-    if(query.isEmpty())
+    if(query.empty())
     {
         // Get list of tables to export
-        for(auto it=pdb.schemata.constBegin();it!=pdb.schemata.constEnd();++it)
+        for(const auto& it : pdb.schemata)
         {
-            QList<sqlb::ObjectPtr> tables = it->values("table") + it->values("view");
-            for(auto jt=tables.constBegin();jt!=tables.constEnd();++jt)
+            const auto tables = it.second.equal_range("table");
+            const auto views = it.second.equal_range("view");
+            std::map<std::string, sqlb::ObjectPtr> objects;
+            for(auto jt=tables.first;jt!=tables.second;++jt)
+                objects.insert({jt->second->name(), jt->second});
+            for(auto jt=views.first;jt!=views.second;++jt)
+                objects.insert({jt->second->name(), jt->second});
+
+            for(const auto& jt : objects)
             {
-                sqlb::ObjectIdentifier obj(it.key(), (*jt)->name());
-                QListWidgetItem* item = new QListWidgetItem(QIcon(QString(":icons/%1").arg(sqlb::Object::typeToString((*jt)->type()))), obj.toDisplayString());
-                item->setData(Qt::UserRole, obj.toVariant());
+                sqlb::ObjectIdentifier obj(it.first, jt.second->name());
+                QListWidgetItem* item = new QListWidgetItem(IconCache::get(sqlb::Object::typeToString(jt.second->type())), QString::fromStdString(obj.toDisplayString()));
+                item->setData(Qt::UserRole, QString::fromStdString(obj.toSerialised()));
                 ui->listTables->addItem(item);
             }
         }
@@ -63,7 +71,7 @@ ExportDataDialog::ExportDataDialog(DBBrowserDB& db, ExportFormats format, QWidge
         } else {
             for(int i=0;i<ui->listTables->count();i++)
             {
-                if(sqlb::ObjectIdentifier(ui->listTables->item(i)->data(Qt::UserRole)) == selection)
+                if(sqlb::ObjectIdentifier(ui->listTables->item(i)->data(Qt::UserRole).toString().toStdString()) == selection)
                 {
                     ui->listTables->setCurrentRow(i);
                     break;
@@ -83,7 +91,7 @@ ExportDataDialog::~ExportDataDialog()
     delete ui;
 }
 
-bool ExportDataDialog::exportQuery(const QString& sQuery, const QString& sFilename)
+bool ExportDataDialog::exportQuery(const std::string& sQuery, const QString& sFilename)
 {
     switch(m_format)
     {
@@ -91,12 +99,12 @@ bool ExportDataDialog::exportQuery(const QString& sQuery, const QString& sFilena
         return exportQueryCsv(sQuery, sFilename);
     case ExportFormatJson:
         return exportQueryJson(sQuery, sFilename);
-    default:
-        return false;
     }
+
+    return false;
 }
 
-bool ExportDataDialog::exportQueryCsv(const QString& sQuery, const QString& sFilename)
+bool ExportDataDialog::exportQueryCsv(const std::string& sQuery, const QString& sFilename)
 {
     // Prepare the quote and separating characters
     QChar quoteChar = currentQuoteChar();
@@ -114,11 +122,10 @@ bool ExportDataDialog::exportQueryCsv(const QString& sQuery, const QString& sFil
         // Open text stream to the file
         QTextStream stream(&file);
 
-        QByteArray utf8Query = sQuery.toUtf8();
-        sqlite3_stmt *stmt;
-
         auto pDb = pdb.get(tr("exporting CSV"));
-        int status = sqlite3_prepare_v2(pDb.get(), utf8Query.data(), utf8Query.size(), &stmt, nullptr);
+
+        sqlite3_stmt* stmt;
+        int status = sqlite3_prepare_v2(pDb.get(), sQuery.c_str(), static_cast<int>(sQuery.size()), &stmt, nullptr);
         if(SQLITE_OK == status)
         {
             if(ui->checkHeader->isChecked())
@@ -192,17 +199,16 @@ bool ExportDataDialog::exportQueryCsv(const QString& sQuery, const QString& sFil
     return true;
 }
 
-bool ExportDataDialog::exportQueryJson(const QString& sQuery, const QString& sFilename)
+bool ExportDataDialog::exportQueryJson(const std::string& sQuery, const QString& sFilename)
 {
     // Open file
     QFile file(sFilename);
     if(file.open(QIODevice::WriteOnly))
     {
-        QByteArray utf8Query = sQuery.toUtf8();
-        sqlite3_stmt *stmt;
-
         auto pDb = pdb.get(tr("exporting JSON"));
-        int status = sqlite3_prepare_v2(pDb.get(), utf8Query.data(), utf8Query.size(), &stmt, nullptr);
+
+        sqlite3_stmt* stmt;
+        int status = sqlite3_prepare_v2(pDb.get(), sQuery.c_str(), static_cast<int>(sQuery.size()), &stmt, nullptr);
 
         json json_table;
 
@@ -211,21 +217,21 @@ bool ExportDataDialog::exportQueryJson(const QString& sQuery, const QString& sFi
             QApplication::setOverrideCursor(Qt::WaitCursor);
             int columns = sqlite3_column_count(stmt);
             size_t counter = 0;
-            QList<QString> column_names;
+            std::vector<std::string> column_names;
             while(sqlite3_step(stmt) == SQLITE_ROW)
             {
                 // Get column names if we didn't do so before
                 if(!column_names.size())
                 {
                     for(int i=0;i<columns;++i)
-                        column_names.push_back(QString::fromUtf8(sqlite3_column_name(stmt, i)));
+                        column_names.push_back(sqlite3_column_name(stmt, i));
                 }
 
                 json json_row;
                 for(int i=0;i<columns;++i)
                 {
                     int type = sqlite3_column_type(stmt, i);
-                    std::string column_name = column_names[i].toStdString();
+                    std::string column_name = column_names[static_cast<size_t>(i)];
 
                     switch (type) {
                     case SQLITE_INTEGER: {
@@ -289,28 +295,34 @@ bool ExportDataDialog::exportQueryJson(const QString& sQuery, const QString& sFi
 
 void ExportDataDialog::accept()
 {
-    QString file_dialog_filter;
+    QStringList file_dialog_filter;
     QString default_file_extension;
     switch(m_format)
     {
     case ExportFormatCsv:
-        file_dialog_filter = tr("Text files(*.csv *.txt)");
-        default_file_extension = ".csv";
+        file_dialog_filter << FILE_FILTER_CSV
+                           << FILE_FILTER_TSV
+                           << FILE_FILTER_DSV
+                           << FILE_FILTER_TXT
+                           << FILE_FILTER_ALL;
+        default_file_extension = FILE_EXT_CSV_DEFAULT;
         break;
     case ExportFormatJson:
-        file_dialog_filter = tr("Text files(*.json *.js *.txt)");
-        default_file_extension = ".json";
+        file_dialog_filter << FILE_FILTER_JSON
+                           << FILE_FILTER_TXT
+                           << FILE_FILTER_ALL;
+        default_file_extension = FILE_EXT_JSON_DEFAULT;
         break;
     }
 
-    if(!m_sQuery.isEmpty())
+    if(!m_sQuery.empty())
     {
         // called from sqlexecute query tab
         QString sFilename = FileDialog::getSaveFileName(
                 CreateDataFile,
                 this,
                 tr("Choose a filename to export data"),
-                file_dialog_filter);
+                file_dialog_filter.join(";;"));
         if(sFilename.isEmpty())
         {
             close();
@@ -337,7 +349,7 @@ void ExportDataDialog::accept()
                     CreateDataFile,
                     this,
                     tr("Choose a filename to export data"),
-                    file_dialog_filter,
+                    file_dialog_filter.join(";;"),
                     selectedItems.at(0)->text() + default_file_extension);
             if(fileName.isEmpty())
             {
@@ -369,7 +381,7 @@ void ExportDataDialog::accept()
         {
             // if we are called from execute sql tab, query is already set
             // and we only export 1 select
-            QString sQuery = QString("SELECT * FROM %1;").arg(sqlb::ObjectIdentifier(selectedItems.at(i)->data(Qt::UserRole)).toString());
+            std::string sQuery = "SELECT * FROM " + sqlb::ObjectIdentifier(selectedItems.at(i)->data(Qt::UserRole).toString().toStdString()).toString() + ";";
             exportQuery(sQuery, filenames.at(i));
         }
     }

@@ -1,6 +1,8 @@
 #include "FileExtensionManager.h"
 #include "ui_FileExtensionManager.h"
 
+#include <set>
+
 FileExtensionManager::FileExtensionManager(QStringList init, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FileExtensionManager)
@@ -46,21 +48,12 @@ void FileExtensionManager::addItem()
 
 void FileExtensionManager::removeItem()
 {
-    QList<int> selectedRows;
+    std::set<int> selectedRows;
     for (const QTableWidgetItem* item : ui->tableExtensions->selectedItems())
-    {
-        if (selectedRows.contains(item->row()) == false)
-        {
-            selectedRows.append(item->row());
-        }
-    }
+        selectedRows.insert(item->row());
 
-    qSort(selectedRows);
-
-    for (int i = selectedRows.size()-1; i >= 0; --i)
-    {
-        ui->tableExtensions->removeRow(selectedRows[i]);
-    }
+    for(int row : selectedRows)
+        ui->tableExtensions->removeRow(row);
 }
 
 void FileExtensionManager::upItem()
@@ -99,12 +92,12 @@ void FileExtensionManager::downItem()
     ui->tableExtensions->selectRow(selectedRow+1);
 }
 
-QStringList FileExtensionManager::getDBFileExtensions()
+QStringList FileExtensionManager::getDBFileExtensions() const
 {
     QStringList result;
     for (int i = 0; i < ui->tableExtensions->rowCount(); ++i)
     {
-        result.append(QString("%1 (%2)").arg(ui->tableExtensions->item(i, 0)->text()).arg(ui->tableExtensions->item(i, 1)->text()));
+        result.append(QString("%1 (%2)").arg(ui->tableExtensions->item(i, 0)->text(), ui->tableExtensions->item(i, 1)->text()));
     }
     return result;
 }

@@ -3,7 +3,7 @@
 #include "sqlitedb.h"
 
 #include <QPushButton>
-#include <QRegExpValidator>
+#include <QRegularExpressionValidator>
 
 #include <QtCore/qmath.h>
 
@@ -11,7 +11,7 @@ CipherDialog::CipherDialog(QWidget* parent, bool encrypt) :
     QDialog(parent),
     ui(new Ui::CipherDialog),
     encryptMode(encrypt),
-    rawKeyValidator(new QRegExpValidator(QRegExp("0x[a-fA-F0-9]+")))
+    rawKeyValidator(new QRegularExpressionValidator(QRegularExpression("\\A(0x[a-fA-F0-9]+)\\Z")))
 {
     ui->setupUi(this);
 
@@ -61,7 +61,7 @@ CipherDialog::~CipherDialog()
 CipherSettings CipherDialog::getCipherSettings() const
 {
     CipherSettings::KeyFormats keyFormat = CipherSettings::getKeyFormat(ui->comboKeyFormat->currentIndex());
-    QString password = ui->editPassword->text();
+    std::string password = ui->editPassword->text().toStdString();
     int pageSize = ui->comboPageSize->itemData(ui->comboPageSize->currentIndex()).toInt();
 
     CipherSettings cipherSettings;
@@ -70,8 +70,9 @@ CipherSettings CipherDialog::getCipherSettings() const
     cipherSettings.setPassword(password);
     cipherSettings.setPageSize(pageSize);
     cipherSettings.setKdfIterations(ui->spinKdfIterations->value());
-    cipherSettings.setHmacAlgorithm(QString("HMAC_") + ui->comboHmacAlgorithm->currentText());
-    cipherSettings.setKdfAlgorithm(QString("PBKDF2_HMAC_") + ui->comboKdfAlgorithm->currentText());
+    cipherSettings.setHmacAlgorithm("HMAC_" + ui->comboHmacAlgorithm->currentText().toStdString());
+    cipherSettings.setKdfAlgorithm("PBKDF2_HMAC_" + ui->comboKdfAlgorithm->currentText().toStdString());
+    cipherSettings.setPlaintextHeaderSize(ui->plaintextHeaderSize->value());
 
     return cipherSettings;
 }
@@ -113,22 +114,26 @@ void CipherDialog::toggleEncryptionSettings()
         ui->spinKdfIterations->setValue(64000);
         ui->comboHmacAlgorithm->setCurrentText("SHA1");
         ui->comboKdfAlgorithm->setCurrentText("SHA1");
+        ui->plaintextHeaderSize->setValue(0);
 
         ui->comboPageSize->setEnabled(false);
         ui->spinKdfIterations->setEnabled(false);
         ui->comboHmacAlgorithm->setEnabled(false);
         ui->comboKdfAlgorithm->setEnabled(false);
+        ui->plaintextHeaderSize->setEnabled(false);
     } else if(ui->radioEncryptionSqlCipher4->isChecked()) {
         // SQLCipher4
         ui->comboPageSize->setCurrentText(QLocale().toString(4096));
         ui->spinKdfIterations->setValue(256000);
         ui->comboHmacAlgorithm->setCurrentText("SHA512");
         ui->comboKdfAlgorithm->setCurrentText("SHA512");
+        ui->plaintextHeaderSize->setValue(0);
 
         ui->comboPageSize->setEnabled(false);
         ui->spinKdfIterations->setEnabled(false);
         ui->comboHmacAlgorithm->setEnabled(false);
         ui->comboKdfAlgorithm->setEnabled(false);
+        ui->plaintextHeaderSize->setEnabled(false);
     } else if(ui->radioEncryptionCustom->isChecked()) {
         // Custom
 
@@ -136,5 +141,6 @@ void CipherDialog::toggleEncryptionSettings()
         ui->spinKdfIterations->setEnabled(true);
         ui->comboHmacAlgorithm->setEnabled(true);
         ui->comboKdfAlgorithm->setEnabled(true);
+        ui->plaintextHeaderSize->setEnabled(true);
     }
 }

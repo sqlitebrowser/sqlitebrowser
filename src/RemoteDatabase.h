@@ -4,11 +4,11 @@
 #include <QObject>
 #include <QtNetwork/QSslConfiguration>
 
+#include <map>
+
 class QNetworkAccessManager;
 class QNetworkConfigurationManager;
-class QString;
 class QNetworkReply;
-class QSslError;
 class QProgressDialog;
 class QNetworkRequest;
 class QHttpMultiPart;
@@ -32,7 +32,7 @@ public:
     };
 
     const QList<QSslCertificate>& caCertificates() const;
-    const QMap<QString, QSslCertificate>& clientCertificates() const { return m_clientCertFiles; }
+    const std::map<QString, QSslCertificate>& clientCertificates() const { return m_clientCertFiles; }
     QString getInfoFromClientCert(const QString& cert, CertInfo info) const;
 
     enum RequestType
@@ -63,11 +63,11 @@ signals:
     // a directory listing or the licence list.
     void gotDirList(QString json, QVariant userdata);
     void gotCurrentVersion(QString version, QString url);
-    void gotLicenceList(QMap<QString, QString> licences);
-    void gotBranchList(QStringList branches, QString default_branch);
+    void gotLicenceList(std::vector<std::pair<std::string, std::string>> licences);
+    void gotBranchList(std::vector<std::string> branches, std::string default_branch);
 
     // The uploadFinished() signal is emitted when a push() call is finished, i.e. a database upload has completed.
-    void uploadFinished(QString url);
+    void uploadFinished(std::string url);
 
 private:
     void gotEncrypted(QNetworkReply* reply);
@@ -79,14 +79,14 @@ private:
 
     // Helper functions for managing the list of locally available databases
     void localAssureOpened();
-    QString localAdd(QString filename, QString identity, const QUrl& url, const QString& new_commit_id);
+    QString localAdd(QString filename, QString identity, const QUrl& url, const std::string& new_commit_id);
     QString localExists(const QUrl& url, QString identity);
     QString localCheckFile(const QString& local_file);
-    QString localLastCommitId(QString clientCert, const QUrl& url);
+    std::string localLastCommitId(QString clientCert, const QUrl& url);
 
     // Helper functions for building multi-part HTTP requests
-    void addPart(QHttpMultiPart* multipart, const QString& name, const QString& value);
-    void addPart(QHttpMultiPart* multipart, const QString& name, QFile* file, const QString& filename);
+    void addPart(QHttpMultiPart* multipart, const QString& name, const QString& value) const;
+    void addPart(QHttpMultiPart* multipart, const QString& name, QFile* file, const QString& filename) const;
 
     // Before using a new client certificate we need to clear the access and authentication cache of the network manager
     // object. Otherwise Qt might reuse the old certificate if the requested URL has been used before.
@@ -96,7 +96,7 @@ private:
     QNetworkConfigurationManager* m_configurationManager;
     QProgressDialog* m_progress;
     QSslConfiguration m_sslConfiguration;
-    QMap<QString, QSslCertificate> m_clientCertFiles;
+    std::map<QString, QSslCertificate> m_clientCertFiles;
     sqlite3* m_dbLocal;
 };
 

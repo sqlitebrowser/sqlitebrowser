@@ -12,24 +12,28 @@ set(TESTSQLOBJECTS_SRC
     ../RowLoader.cpp
     ../sql/sqlitetypes.cpp
     ../sql/Query.cpp
+    ../sql/ObjectIdentifier.cpp
     ../csvparser.cpp
-    ../grammar/Sqlite3Lexer.cpp
-    ../grammar/Sqlite3Parser.cpp
     ../Settings.cpp
     testsqlobjects.cpp
     ../Data.cpp
     ../CipherSettings.cpp
     ../DotenvFormat.cpp
     ../CondFormat.cpp
+    ../sql/parser/ParserDriver.cpp
+    ../sql/parser/sqlite3_lexer.cpp
+    ../sql/parser/sqlite3_parser.cpp
 )
 
 set(TESTSQLOBJECTS_HDR
-    ../grammar/sqlite3TokenTypes.hpp
-    ../grammar/Sqlite3Lexer.hpp
-    ../grammar/Sqlite3Parser.hpp
     ../sql/sqlitetypes.h
     ../sql/Query.h
+    ../sql/ObjectIdentifier.h
     ../Data.h
+    ../sql/parser/ParserDriver.h
+    ../sql/parser/sqlite3_lexer.h
+    ../sql/parser/sqlite3_location.h
+    ../sql/parser/sqlite3_parser.hpp
 )
 
 set(TESTSQLOBJECTS_MOC_HDR
@@ -57,15 +61,7 @@ target_link_libraries(test-sqlobjects Qt5::Test Qt5::Widgets Qt5::Gui)
 
 set(QT_LIBRARIES "")
 
-if(NOT ANTLR2_FOUND)
-    add_dependencies(test-sqlobjects antlr)
-endif()
 target_link_libraries(test-sqlobjects ${QT_LIBRARIES} ${LIBSQLITE})
-if(ANTLR2_FOUND)
-    target_link_libraries(test-sqlobjects ${ANTLR2_LIBRARIES})
-else()
-    target_link_libraries(test-sqlobjects antlr)
-endif()
 target_link_libraries(test-sqlobjects ${LPTHREAD})
 add_test(test-sqlobjects test-sqlobjects)
 
@@ -98,23 +94,27 @@ set(TESTREGEX_SRC
     ../RowLoader.cpp
     ../sql/sqlitetypes.cpp
     ../sql/Query.cpp
-    ../grammar/Sqlite3Lexer.cpp
-    ../grammar/Sqlite3Parser.cpp
+    ../sql/ObjectIdentifier.cpp
     ../Settings.cpp
     TestRegex.cpp
     ../Data.cpp
     ../CipherSettings.cpp
     ../DotenvFormat.cpp
     ../CondFormat.cpp
+    ../sql/parser/ParserDriver.cpp
+    ../sql/parser/sqlite3_lexer.cpp
+    ../sql/parser/sqlite3_parser.cpp
 )
 
 set(TESTREGEX_HDR
-    ../grammar/sqlite3TokenTypes.hpp
-    ../grammar/Sqlite3Lexer.hpp
-    ../grammar/Sqlite3Parser.hpp
     ../sql/sqlitetypes.h
     ../sql/Query.h
+    ../sql/ObjectIdentifier.h
     ../Data.h
+    ../sql/parser/ParserDriver.h
+    ../sql/parser/sqlite3_lexer.h
+    ../sql/parser/sqlite3_location.h
+    ../sql/parser/sqlite3_parser.hpp
 )
 
 set(TESTREGEX_MOC_HDR
@@ -138,15 +138,7 @@ target_link_libraries(test-regex Qt5::Test Qt5::Core Qt5::Gui Qt5::Widgets)
 
 set(QT_LIBRARIES "")
 
-if(NOT ANTLR2_FOUND)
-    add_dependencies(test-regex antlr)
-endif()
 target_link_libraries(test-regex ${QT_LIBRARIES} ${LIBSQLITE})
-if(ANTLR2_FOUND)
-    target_link_libraries(test-regex ${ANTLR2_LIBRARIES})
-else()
-    target_link_libraries(test-regex antlr)
-endif()
 target_link_libraries(test-regex ${LPTHREAD})
 add_test(test-regex test-regex)
 

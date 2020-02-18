@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <cstddef>
 
+class QByteArray;
 class QTextStream;
 
 /*!
@@ -15,10 +16,10 @@ class QTextStream;
 class CSVProgress
 {
 public:
-    virtual ~CSVProgress() { }
+    virtual ~CSVProgress() = default;
 
     virtual void start() = 0;
-    virtual bool update(unsigned long long pos) = 0;
+    virtual bool update(int64_t pos) = 0;
     virtual void end() = 0;
 };
 
@@ -50,9 +51,9 @@ struct CSVRow
 class CSVParser
 {
 public:
-    typedef std::function<bool(size_t, CSVRow)> csvRowFunction;
+    using csvRowFunction = std::function<bool(size_t, CSVRow)>;
 
-    CSVParser(bool trimfields = true, char fieldseparator = ',', char quotechar = '"');
+    CSVParser(bool trimfields = true, char32_t fieldseparator = ',', char32_t quotechar = '"');
     ~CSVParser();
 
     enum ParserResult
@@ -84,11 +85,15 @@ private:
 
 private:
     bool m_bTrimFields;
-    char m_cFieldSeparator;
-    char m_cQuoteChar;
+    char m_cFieldSeparator[4];
+    char m_cQuoteChar[4];
+    int m_iNumExtraBytesFieldSeparator;
+    int m_iNumExtraBytesQuoteChar;
     CSVProgress* m_pCSVProgress;
 
-    unsigned long m_nBufferSize;        //! internal buffer read size
+    int64_t m_nBufferSize;        //! internal buffer read size
+
+    bool look_ahead(QTextStream& stream, QByteArray& sBuffer, const char** it, const char** sBufferEnd, char expected);
 };
 
 #endif

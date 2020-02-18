@@ -2,7 +2,8 @@
 #define FindReplaceDialog_H
 
 #include <QDialog>
-#include <QAbstractButton>
+
+class QAbstractButton;
 
 class ExtendedScintilla;
 
@@ -20,6 +21,7 @@ public:
     ~FindReplaceDialog() override;
     void setExtendedScintilla(ExtendedScintilla* scintilla);
     void show();
+    void showFindReplaceDialog(bool hasReplace);
 
 private slots:
     bool findNext();

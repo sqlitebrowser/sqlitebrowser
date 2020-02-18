@@ -2,8 +2,9 @@
 #define DOCKTEXTEDIT_H
 
 #include "ExtendedScintilla.h"
-#include <Qsci/qscilexerjson.h>
-#include <Qsci/qscilexerxml.h>
+
+class QsciLexerJSON;
+class QsciLexerXML;
 
 /**
  * @brief The DockTextEdit class
@@ -15,7 +16,6 @@ class DockTextEdit : public ExtendedScintilla
 
 public:
     explicit DockTextEdit(QWidget *parent = nullptr);
-    ~DockTextEdit() override;
 
     // Enumeration of supported languages
     enum Language
@@ -26,7 +26,7 @@ public:
     };
 
     void setLanguage(Language lang);
-    Language language() { return m_language; }
+    Language language() const { return m_language; }
 
     // Disables the line-number margin and sets this text in the first line.
     void setTextInMargin(const QString& text);

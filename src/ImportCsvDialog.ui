@@ -85,7 +85,12 @@
          </item>
          <item>
           <property name="text">
-           <string>Other</string>
+           <string>Other (printable)</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Other (code)</string>
           </property>
          </item>
         </widget>
@@ -94,6 +99,13 @@
         <widget class="QLineEdit" name="editCustomSeparator">
          <property name="maxLength">
           <number>1</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="spinBoxSeparator">
+         <property name="maximum">
+          <number>1114112</number>
          </property>
         </widget>
        </item>
@@ -143,7 +155,12 @@
          </item>
          <item>
           <property name="text">
-           <string>Other</string>
+           <string>Other (printable)</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Other (code)</string>
           </property>
          </item>
         </widget>
@@ -152,6 +169,13 @@
         <widget class="QLineEdit" name="editCustomQuote">
          <property name="maxLength">
           <number>1</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="spinBoxQuote">
+         <property name="maximum">
+          <number>1114112</number>
          </property>
         </widget>
        </item>
@@ -712,6 +736,38 @@
     <hint type="sourcelabel">
      <x>265</x>
      <y>241</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>393</x>
+     <y>358</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxQuote</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>ImportCsvDialog</receiver>
+   <slot>updatePreview()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>529</x>
+     <y>111</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>393</x>
+     <y>358</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxSeparator</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>ImportCsvDialog</receiver>
+   <slot>updatePreview()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>529</x>
+     <y>77</y>
     </hint>
     <hint type="destinationlabel">
      <x>393</x>

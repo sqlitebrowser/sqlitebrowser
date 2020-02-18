@@ -30,6 +30,7 @@ private slots:
     void fetchDatabase(const QModelIndex& idx);
     void pushDatabase();
     void newDirectoryNode(const QModelIndex& parent);
+    void switchToMainView();
 
 private:
     Ui::RemoteDock* ui;

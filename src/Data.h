@@ -10,6 +10,9 @@
 // text but makes it less reliable
 bool isTextOnly(QByteArray data, const QString& encoding = QString(), bool quickTest = false);
 
+// This returns true if text contains some character whose direction is right-to-left.
+bool containsRightToLeft(const QString& text);
+
 // This function returns true if the data in the data parameter starts with a Unicode BOM. Otherwise it returns false.
 bool startsWithBom(const QByteArray& data);
 
@@ -18,10 +21,15 @@ bool startsWithBom(const QByteArray& data);
 // with a BOM an empty byte array is returned and the original data is not modified.
 QByteArray removeBom(QByteArray& data);
 
-QStringList toStringList(const QList<QByteArray> list);
+// Check if a byte array contains an image. Returns the name of the image format for images or a null string for non-image data.
+QString isImageData(const QByteArray& data);
+
+QStringList toStringList(const QList<QByteArray>& list);
 
 QByteArray encodeString(const QByteArray& str, const QString& encoding);
 
 QByteArray decodeString(const QByteArray& str, const QString& encoding);
+
+QString humanReadableSize(unsigned long byteCount);
 
 #endif

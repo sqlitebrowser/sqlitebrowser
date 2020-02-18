@@ -6,11 +6,11 @@
 #include <QMenu>
 #include <QWhatsThis>
 
-FilterLineEdit::FilterLineEdit(QWidget* parent, QList<FilterLineEdit*>* filters, int columnnum) : QLineEdit(parent), filterList(filters), columnNumber(columnnum)
+FilterLineEdit::FilterLineEdit(QWidget* parent, std::vector<FilterLineEdit*>* filters, size_t columnnum) : QLineEdit(parent), filterList(filters), columnNumber(columnnum)
 {
     setPlaceholderText(tr("Filter"));
     setClearButtonEnabled(true);
-    setProperty("column", columnnum);            // Store the column number for later use
+    setProperty("column", static_cast<int>(columnnum));            // Store the column number for later use
 
     // Introduce a timer for delaying the signal triggered whenever the user changes the filter value.
     // The idea here is that the textChanged() event isn't connected to the update filter slot directly anymore
@@ -19,8 +19,8 @@ FilterLineEdit::FilterLineEdit(QWidget* parent, QList<FilterLineEdit*>* filters,
     // delayedSignalTimerTriggered() method which then stops the timer and emits the delayed signal.
     delaySignalTimer = new QTimer(this);
     delaySignalTimer->setInterval(Settings::getValue("databrowser", "filter_delay").toInt());  // This is the milliseconds of not-typing we want to wait before triggering
-    connect(this, SIGNAL(textChanged(QString)), delaySignalTimer, SLOT(start()));
-    connect(delaySignalTimer, SIGNAL(timeout()), this, SLOT(delayedSignalTimerTriggered()));
+    connect(this, &FilterLineEdit::textChanged, delaySignalTimer, static_cast<void (QTimer::*)()>(&QTimer::start));
+    connect(delaySignalTimer, &QTimer::timeout, this, &FilterLineEdit::delayedSignalTimerTriggered);
 
     setWhatsThis(tr("These input fields allow you to perform quick filters in the currently selected table.\n"
                     "By default, the rows containing the input text are filtered out.\n"
@@ -37,11 +37,11 @@ FilterLineEdit::FilterLineEdit(QWidget* parent, QList<FilterLineEdit*>* filters,
 
     // Immediately emit the delayed filter value changed signal if the user presses the enter or the return key or
     // the line edit widget loses focus
-    connect(this, SIGNAL(editingFinished()), this, SLOT(delayedSignalTimerTriggered()));
+    connect(this, &FilterLineEdit::editingFinished, this, &FilterLineEdit::delayedSignalTimerTriggered);
 
     // Prepare for adding the What's This information and filter helper actions to the context menu
     setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(this, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showContextMenu(const QPoint &)));
+    connect(this, &FilterLineEdit::customContextMenuRequested, this, &FilterLineEdit::showContextMenu);
 }
 
 void FilterLineEdit::delayedSignalTimerTriggered()
@@ -65,13 +65,13 @@ void FilterLineEdit::keyReleaseEvent(QKeyEvent* event)
 {
     if(event->key() == Qt::Key_Tab)
     {
-        if(columnNumber < filterList->size() - 1)
+        if(filterList && columnNumber < filterList->size() - 1)
         {
             filterList->at(columnNumber + 1)->setFocus();
             event->accept();
         }
     } else if(event->key() == Qt::Key_Backtab) {
-        if(columnNumber > 0)
+        if(filterList && columnNumber > 0)
         {
             filterList->at(columnNumber - 1)->setFocus();
             event->accept();
@@ -107,24 +107,6 @@ void FilterLineEdit::showContextMenu(const QPoint &pos)
 
     // This has to be created here, otherwise the set of enabled options would not update accordingly.
     QMenu* editContextMenu = createStandardContextMenu();
-    editContextMenu->addSeparator();
-
-    QAction* conditionalFormatAction;
-    if (text().isEmpty()) {
-        conditionalFormatAction = new QAction(QIcon(":/icons/clear_cond_formats"), tr("Clear All Conditional Formats"), editContextMenu);
-        connect(conditionalFormatAction, &QAction::triggered, [&]() {
-                emit clearAllCondFormats();
-        });
-    } else {
-        conditionalFormatAction = new QAction(QIcon(":/icons/cond_formats"), tr("Use for Conditional Format"), editContextMenu);
-        connect(conditionalFormatAction, &QAction::triggered, [&]() {
-                emit addFilterAsCondFormat(text());
-        });
-    }
-    QAction* editCondFormatsAction = new QAction(QIcon(":/icons/edit_cond_formats"), tr("Edit Conditional Formats..."), editContextMenu);
-    connect(editCondFormatsAction, &QAction::triggered, [&]() {
-        emit editCondFormats();
-    });
     editContextMenu->addSeparator();
 
     QMenu* filterMenu = editContextMenu->addMenu(tr("Set Filter Expression"));
@@ -192,8 +174,31 @@ void FilterLineEdit::showContextMenu(const QPoint &pos)
             setFilterHelper(QString ("/"), QString ("/"));
         });
 
-    editContextMenu->addAction(conditionalFormatAction);
-    editContextMenu->addAction(editCondFormatsAction);
+
+    if(!no_conditional_format)
+    {
+        QAction* conditionalFormatAction;
+        if (text().isEmpty()) {
+            conditionalFormatAction = new QAction(QIcon(":/icons/clear_cond_formats"), tr("Clear All Conditional Formats"), editContextMenu);
+            connect(conditionalFormatAction, &QAction::triggered, [&]() {
+                    emit clearAllCondFormats();
+            });
+        } else {
+            conditionalFormatAction = new QAction(QIcon(":/icons/add_cond_format"), tr("Use for Conditional Format"), editContextMenu);
+            connect(conditionalFormatAction, &QAction::triggered, [&]() {
+                    emit addFilterAsCondFormat(text());
+            });
+        }
+        QAction* editCondFormatsAction = new QAction(QIcon(":/icons/edit_cond_formats"), tr("Edit Conditional Formats..."), editContextMenu);
+        connect(editCondFormatsAction, &QAction::triggered, [&]() {
+            emit editCondFormats();
+        });
+        editContextMenu->addSeparator();
+
+        editContextMenu->addAction(conditionalFormatAction);
+        editContextMenu->addAction(editCondFormatsAction);
+    }
+
 
     filterMenu->addAction(whatsThisAction);
     filterMenu->addSeparator();

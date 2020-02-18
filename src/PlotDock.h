@@ -5,11 +5,12 @@
 
 #include <QDialog>
 #include <QVariant>
-#include <QMenu>
+
+class QMenu;
+class QPrinter;
+class QTreeWidgetItem;
 
 class SqliteTableModel;
-class QTreeWidgetItem;
-class QPrinter;
 struct BrowseDataTableSettings;
 
 namespace Ui {
@@ -99,7 +100,7 @@ private:
      * \param column index of the column to check
      * \return the guessed datatype
      */
-    QVariant::Type guessDataType(SqliteTableModel* model, int column);
+    QVariant::Type guessDataType(SqliteTableModel* model, int column) const;
     void adjustBars();
 
 private slots:

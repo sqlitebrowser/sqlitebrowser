@@ -3,7 +3,7 @@
 
 #include "Qsci/qscilexersql.h"
 
-#include <QMap>
+#include <map>
 
 class QsciAPIs;
 
@@ -23,8 +23,8 @@ public:
         ApiCompleterIconIdSchema,
     };
 
-    typedef QMap<QString, QList<QString> > TablesAndColumnsMap;
-    typedef QMap<QString, TablesAndColumnsMap > QualifiedTablesMap;
+    using TablesAndColumnsMap = std::map<QString, std::vector<QString>>;
+    using QualifiedTablesMap = std::map<QString, TablesAndColumnsMap>;
 
     void setTableNames(const QualifiedTablesMap& tables);
 

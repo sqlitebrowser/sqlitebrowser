@@ -15,7 +15,7 @@ public:
     explicit FileExtensionManager(QStringList init, QWidget *parent = nullptr);
     ~FileExtensionManager() override;
 
-    QStringList getDBFileExtensions();
+    QStringList getDBFileExtensions() const;
 
 private:
     Ui::FileExtensionManager *ui;

@@ -1,4 +1,4 @@
-#include "sql/sqlitetypes.h"
+#include "sql/ObjectIdentifier.h"
 #include "sqltextedit.h"
 #include "Settings.h"
 #include "SqlUiLexer.h"
@@ -45,10 +45,6 @@ SqlTextEdit::SqlTextEdit(QWidget* parent) :
     reloadSettings();
 }
 
-SqlTextEdit::~SqlTextEdit()
-{
-}
-
 void SqlTextEdit::reloadSettings()
 {
     // Enable auto completion if it hasn't been disabled
@@ -82,7 +78,8 @@ void SqlTextEdit::reloadSettings()
         break;
     case sqlb::GraveAccents:
         sqlLexer->setQuotedIdentifiers(true);
-        // Fall through, treat quoted string as literal string
+        setupSyntaxHighlightingFormat(sqlLexer, "string", QsciLexerSQL::DoubleQuotedString);    // treat quoted string as literal string
+        break;
     case sqlb::SquareBrackets:
         setupSyntaxHighlightingFormat(sqlLexer, "string", QsciLexerSQL::DoubleQuotedString);
         break;

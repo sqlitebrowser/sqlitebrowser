@@ -20,6 +20,7 @@ public:
     ~EditDialog() override;
 
     void setCurrentIndex(const QModelIndex& idx);
+    QPersistentModelIndex currentIndex() { return m_currentIndex; };
 
 public slots:
     void setFocus();
@@ -31,17 +32,17 @@ protected:
     void showEvent(QShowEvent* ev) override;
 
 private slots:
-    void importData();
+    void importData(bool asLink = false);
     void exportData();
     void setNull();
     void updateApplyButton();
     void accept() override;
-    void loadData(const QByteArray& data);
+    void loadData(const QByteArray& bArrdata);
     void toggleOverwriteMode();
     void editModeChanged(int newMode);
     void editTextChanged();
     void switchEditorMode(bool autoSwitchForType);
-    void updateCellInfoAndMode(const QByteArray& data);
+    void updateCellInfoAndMode(const QByteArray& bArrdata);
     void setMustIndentAndCompact(bool enable);
     void openPrintDialog();
     void openPrintImageDialog();
@@ -49,13 +50,14 @@ private slots:
     void setWordWrapping(bool value);
 
 signals:
-    void recordTextUpdated(const QPersistentModelIndex& idx, const QByteArray& data, bool isBlob);
+    void recordTextUpdated(const QPersistentModelIndex& idx, const QByteArray& bArrdata, bool isBlob);
+    void requestUrlOrFileOpen(const QString& urlString);
 
 private:
     Ui::EditDialog* ui;
     QHexEdit* hexEdit;
     DockTextEdit* sciEdit;
-    QPersistentModelIndex currentIndex;
+    QPersistentModelIndex m_currentIndex;
     int dataSource;
     int dataType;
     bool isReadOnly;
@@ -63,6 +65,7 @@ private:
     QByteArray removedBom;
 
     enum DataSources {
+        QtBuffer,
         HexBuffer,
         SciBuffer
     };
@@ -75,25 +78,29 @@ private:
         Text,
         JSON,
         SVG,
-        XML
+        XML,
+        RtlText
     };
 
     // Edit modes and editor stack (this must be aligned with the UI).
     // Note that text modes (plain, JSON and XML) share the Scintilla widget,
     // Consequently the editor stack range is TextEditor..ImageViewer.
     enum EditModes {
+        // Modes with their own widget in the stack:
         TextEditor = 0,
-        HexEditor = 1,
-        ImageViewer = 2,
-        JsonEditor = 3,
-        XmlEditor = 4
+        RtlTextEditor = 1,
+        HexEditor = 2,
+        ImageViewer = 3,
+        // Modes in the Scintilla editor:
+        JsonEditor = 4,
+        XmlEditor = 5
     };
 
-    int checkDataType(const QByteArray& data);
-    QString humanReadableSize(double byteCount) const;
-    bool promptInvalidData(const QString& dataType, const QString& errorString);
-    void setDataInBuffer(const QByteArray& data, DataSources source);
+    int checkDataType(const QByteArray& bArrdata) const;
+    bool promptInvalidData(const QString& data_type, const QString& errorString);
+    void setDataInBuffer(const QByteArray& bArrdata, DataSources source);
     void setStackCurrentIndex(int editMode);
+    void openDataWithExternal();
 };
 
 #endif

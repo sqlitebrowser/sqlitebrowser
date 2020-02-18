@@ -9,6 +9,7 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QShortcut>
+#include <QFile>
 
 SqlExecutionArea::SqlExecutionArea(DBBrowserDB& _db, QWidget* parent) :
     QWidget(parent),
@@ -21,24 +22,34 @@ SqlExecutionArea::SqlExecutionArea(DBBrowserDB& _db, QWidget* parent) :
     ui->setupUi(this);
 
     // Create model
-    model = new SqliteTableModel(db, this, Settings::getValue("db", "prefetchsize").toInt());
+    model = new SqliteTableModel(db, this);
     ui->tableResult->setModel(model);
     connect(model, &SqliteTableModel::finishedFetch, this, &SqlExecutionArea::fetchedData);
 
     ui->findFrame->hide();
 
     QShortcut* shortcutHideFind = new QShortcut(QKeySequence("ESC"), ui->findLineEdit);
-    connect(shortcutHideFind, SIGNAL(activated()), this, SLOT(hideFindFrame()));
+    connect(shortcutHideFind, &QShortcut::activated, this, &SqlExecutionArea::hideFindFrame);
 
-    connect(ui->findLineEdit, SIGNAL(textChanged(const QString &)),
-            this, SLOT(findLineEdit_textChanged(const QString &)));
-    connect(ui->previousToolButton, SIGNAL(clicked()), this, SLOT(findPrevious()));
-    connect(ui->nextToolButton, SIGNAL(clicked()), this, SLOT(findNext()));
-    connect(ui->findLineEdit, SIGNAL(returnPressed()), this, SLOT(findNext()));
-    connect(ui->hideFindButton, SIGNAL(clicked()), this, SLOT(hideFindFrame()));
+    connect(ui->findLineEdit, &QLineEdit::textChanged, this, &SqlExecutionArea::findLineEdit_textChanged);
+    connect(ui->previousToolButton, &QToolButton::clicked, this, &SqlExecutionArea::findPrevious);
+    connect(ui->nextToolButton, &QToolButton::clicked, this, &SqlExecutionArea::findNext);
+    connect(ui->findLineEdit, &QLineEdit::returnPressed, this, &SqlExecutionArea::findNext);
+    connect(ui->hideFindButton, &QToolButton::clicked, this, &SqlExecutionArea::hideFindFrame);
+
+    connect(&fileSystemWatch, &QFileSystemWatcher::fileChanged, this, &SqlExecutionArea::fileChanged);
+
+    // Save to settings when sppliter is moved, but only to memory.
+    connect(ui->splitter, &QSplitter::splitterMoved, this,  [this]() {
+            Settings::setValue("editor", "splitter1_sizes", ui->splitter->saveState(), /* dont_save_to_disk */ true);
+        });
+    connect(ui->splitter_2, &QSplitter::splitterMoved, this, [this]() {
+            Settings::setValue("editor", "splitter2_sizes", ui->splitter_2->saveState(), /* dont_save_to_disk */ true);
+        });
 
     // Set collapsible the editErrors panel
     ui->splitter_2->setCollapsible(1, true);
+
     // Load settings
     reloadSettings();
 }
@@ -56,6 +67,11 @@ QString SqlExecutionArea::getSql() const
 QString SqlExecutionArea::getSelectedSql() const
 {
     return ui->editEditor->selectedText().trimmed().replace(QChar(0x2029), '\n');
+}
+
+void SqlExecutionArea::setSql(const QString& sql)
+{
+    ui->editEditor->setText(sql);
 }
 
 void SqlExecutionArea::finishExecution(const QString& result, const bool ok)
@@ -84,7 +100,7 @@ void SqlExecutionArea::fetchedData()
 
     // Set column widths according to their contents but make sure they don't exceed a certain size
     ui->tableResult->resizeColumnsToContents();
-    for(int i=0;i<model->columnCount();i++)
+    for(int i = 0; i < model->columnCount(); i++)
     {
         if(ui->tableResult->columnWidth(i) > 300)
             ui->tableResult->setColumnWidth(i, 300);
@@ -130,8 +146,11 @@ void SqlExecutionArea::reloadSettings()
     else
         ui->splitter->setOrientation(Qt::Vertical);
 
-    // Set prefetch settings
-    model->setChunkSize(Settings::getValue("db", "prefetchsize").toInt());
+    ui->splitter->restoreState(Settings::getValue("editor", "splitter1_sizes").toByteArray());
+    ui->splitter_2->restoreState(Settings::getValue("editor", "splitter2_sizes").toByteArray());
+
+    // Reload model settings
+    model->reloadSettings();
 
     // Check if error indicators are enabled for the not-ok background clue
     showErrorIndicators = Settings::getValue("editor", "error_indicators").toBool();
@@ -152,7 +171,7 @@ void SqlExecutionArea::find(QString expr, bool forward)
        forward);
 
     // Set reddish background when not found
-    if (found || expr == "")
+    if (found || expr.isEmpty())
         ui->findLineEdit->setStyleSheet("");
     else
         ui->findLineEdit->setStyleSheet("QLineEdit {color: white; background-color: rgb(255, 102, 102)}");
@@ -206,4 +225,93 @@ void SqlExecutionArea::setFindFrameVisibility(bool show)
     } else {
         hideFindFrame();
     }
+}
+
+void SqlExecutionArea::openFile(const QString& filename)
+{
+    // Open file for reading
+    QFile f(filename);
+    f.open(QIODevice::ReadOnly);
+    if(!f.isOpen())
+    {
+        QMessageBox::warning(this, qApp->applicationName(), tr("Couldn't read file: %1.").arg(f.errorString()));
+        return;
+    }
+
+    // Read in the entire file
+    ui->editEditor->setText(f.readAll());
+
+    // No modifications yet
+    ui->editEditor->setModified(false);
+
+    // Remember file name
+    sqlFileName = filename;
+
+    // Start watching this file for changes and unwatch the previously watched file, if any
+    if(!fileSystemWatch.files().empty())
+        fileSystemWatch.removePaths(fileSystemWatch.files());
+    fileSystemWatch.addPath(filename);
+}
+
+void SqlExecutionArea::saveFile(const QString& filename)
+{
+    // Unwatch all files now. By unwathing them before the actual saving, we are not notified of our own changes
+    if(!fileSystemWatch.files().empty())
+        fileSystemWatch.removePaths(fileSystemWatch.files());
+
+    // Open file for writing
+    QFile f(filename);
+    f.open(QIODevice::WriteOnly);
+    if(!f.isOpen())
+    {
+        QMessageBox::warning(this, qApp->applicationName(), tr("Couldn't save file: %1.").arg(f.errorString()));
+        return;
+    }
+
+    // Write to the file
+    if(f.write(getSql().toUtf8()) != -1)
+    {
+        // Close file now. If we let the destructor close it, we can get change notifications.
+        f.close();
+        // Set modified to false so we can get control of unsaved changes when closing.
+        ui->editEditor->setModified(false);
+
+        // Remember file name
+        sqlFileName = filename;
+
+        // Start watching this file
+        fileSystemWatch.addPath(filename);
+    } else {
+        QMessageBox::warning(this, qApp->applicationName(), tr("Couldn't save file: %1.").arg(f.errorString()));
+        return;
+    }
+}
+
+void SqlExecutionArea::fileChanged(const QString& filename)
+{
+    // Check if there are unsaved changes in the file
+    QString changes;
+    if(ui->editEditor->isModified())
+        changes = QString(" ") + tr("Your changes will be lost when reloading it!");
+
+    // Ask user whether to realod the modified file
+    if(QMessageBox::question(
+                this,
+                qApp->applicationName(),
+                tr("The file \"%1\" was modified by another program. Do you want to reload it?%2").arg(filename, changes),
+                QMessageBox::Yes | QMessageBox::Ignore) == QMessageBox::Yes)
+    {
+        // Read in the file
+        openFile(filename);
+    } else {
+        // The file does not match the file on the disk anymore. So set the modified flag
+        ui->editEditor->setModified(true);
+    }
+}
+
+void SqlExecutionArea::saveState() {
+
+    // Save to disk last stored splitter sizes
+    Settings::setValue("editor", "splitter1_sizes", Settings::getValue("editor", "splitter1_sizes"));
+    Settings::setValue("editor", "splitter2_sizes", Settings::getValue("editor", "splitter2_sizes"));
 }

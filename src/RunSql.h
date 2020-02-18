@@ -54,6 +54,7 @@ signals:
     void statementErrored(QString message, int from_position, int to_position);
     void statementExecuted(QString message, int from_position, int to_position);
     void statementReturnsRows(QString query, int from_position, int to_position, qint64 time_in_ms);
+    void structureUpdated();
 
     /**
      * This signal must be connected with a Qt::BlockingQueuedConnection in order to work as expected!

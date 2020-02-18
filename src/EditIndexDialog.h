@@ -1,6 +1,7 @@
 #ifndef EDITINDEXDIALOG_H
 #define EDITINDEXDIALOG_H
 
+#include "sql/ObjectIdentifier.h"
 #include "sql/sqlitetypes.h"
 
 #include <QDialog>
@@ -38,7 +39,7 @@ private:
     sqlb::Index index;
     bool newIndex;
     Ui::EditIndexDialog* ui;
-    QString m_sRestorePointName;
+    std::string m_sRestorePointName;
 
     void updateColumnLists();
     void updateSqlText();

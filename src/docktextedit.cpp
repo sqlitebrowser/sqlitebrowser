@@ -2,6 +2,8 @@
 #include "Settings.h"
 
 #include <Qsci/qscistyle.h>
+#include <Qsci/qscilexerjson.h>
+#include <Qsci/qscilexerxml.h>
 
 QsciLexerJSON* DockTextEdit::jsonLexer = nullptr;
 QsciLexerXML* DockTextEdit::xmlLexer = nullptr;
@@ -23,10 +25,6 @@ DockTextEdit::DockTextEdit(QWidget* parent) :
 
     // Do rest of initialisation
     reloadSettings();
-}
-
-DockTextEdit::~DockTextEdit()
-{
 }
 
 void DockTextEdit::reloadSettings()
@@ -113,5 +111,5 @@ void DockTextEdit::clearTextInMargin()
     clearMarginText();
     setMarginLineNumbers(0, true);
     reloadCommonSettings();
-    linesChanged();
+    emit linesChanged();
 }

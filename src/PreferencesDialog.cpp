@@ -6,6 +6,7 @@
 #include "MainWindow.h"
 #include "RemoteDatabase.h"
 #include "FileExtensionManager.h"
+#include "ProxyDialog.h"
 
 #include <QDir>
 #include <QColorDialog>
@@ -16,6 +17,7 @@
 PreferencesDialog::PreferencesDialog(QWidget* parent, Tabs tab)
     : QDialog(parent),
       ui(new Ui::PreferencesDialog),
+      m_proxyDialog(new ProxyDialog(this)),
       m_dbFileExtensions(Settings::getValue("General", "DBFileExtensions").toString().split(";;"))
 {
     ui->setupUi(this);
@@ -31,8 +33,8 @@ PreferencesDialog::PreferencesDialog(QWidget* parent, Tabs tab)
     ui->fr_null_bg->installEventFilter(this);
     ui->fr_null_fg->installEventFilter(this);
 
-    connect(ui->comboDataBrowserFont, SIGNAL(currentIndexChanged(int)), this, SLOT(updatePreviewFont()));
-    connect(ui->spinDataBrowserFontSize, SIGNAL(valueChanged(int)), this, SLOT(updatePreviewFont()));
+    connect(ui->comboDataBrowserFont, static_cast<void (QFontComboBox::*)(int)>(&QFontComboBox::currentIndexChanged), this, &PreferencesDialog::updatePreviewFont);
+    connect(ui->spinDataBrowserFontSize, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &PreferencesDialog::updatePreviewFont);
 
 #ifndef CHECKNEWVERSION
     ui->labelUpdates->setVisible(false);
@@ -107,6 +109,7 @@ void PreferencesDialog::loadSettings()
 
     ui->spinSymbolLimit->setValue(Settings::getValue("databrowser", "symbol_limit").toInt());
     ui->spinCompleteThreshold->setValue(Settings::getValue("databrowser", "complete_threshold").toInt());
+    ui->checkShowImagesInline->setChecked(Settings::getValue("databrowser", "image_preview").toBool());
     ui->txtNull->setText(Settings::getValue("databrowser", "null_text").toString());
     ui->txtBlob->setText(Settings::getValue("databrowser", "blob_text").toString());
     ui->editFilterEscape->setText(Settings::getValue("databrowser", "filter_escape").toString());
@@ -114,7 +117,7 @@ void PreferencesDialog::loadSettings()
 
     for(int i=0; i < ui->treeSyntaxHighlighting->topLevelItemCount(); ++i)
     {
-        QString name = ui->treeSyntaxHighlighting->topLevelItem(i)->text(0);
+        std::string name = ui->treeSyntaxHighlighting->topLevelItem(i)->text(0).toStdString();
         QString colorname = Settings::getValue("syntaxhighlighter", name + "_colour").toString();
         QColor color = QColor(colorname);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setTextColor(2, color);
@@ -215,6 +218,7 @@ void PreferencesDialog::saveSettings()
 
     Settings::setValue("databrowser", "font", ui->comboDataBrowserFont->currentText());
     Settings::setValue("databrowser", "fontsize", ui->spinDataBrowserFontSize->value());
+    Settings::setValue("databrowser", "image_preview", ui->checkShowImagesInline->isChecked());
     saveColorSetting(ui->fr_null_fg, "null_fg");
     saveColorSetting(ui->fr_null_bg, "null_bg");
     saveColorSetting(ui->fr_reg_fg, "reg_fg");
@@ -230,7 +234,7 @@ void PreferencesDialog::saveSettings()
 
     for(int i=0; i < ui->treeSyntaxHighlighting->topLevelItemCount(); ++i)
     {
-        QString name = ui->treeSyntaxHighlighting->topLevelItem(i)->text(0);
+        std::string name = ui->treeSyntaxHighlighting->topLevelItem(i)->text(0).toStdString();
         Settings::setValue("syntaxhighlighter", name + "_colour", ui->treeSyntaxHighlighting->topLevelItem(i)->text(2));
         Settings::setValue("syntaxhighlighter", name + "_bold", ui->treeSyntaxHighlighting->topLevelItem(i)->checkState(3) == Qt::Checked);
         Settings::setValue("syntaxhighlighter", name + "_italic", ui->treeSyntaxHighlighting->topLevelItem(i)->checkState(4) == Qt::Checked);
@@ -325,6 +329,8 @@ void PreferencesDialog::saveSettings()
     Settings::setValue("General", "toolbarStyleEditCell", ui->toolbarStyleComboEditCell->currentIndex());
 
     Settings::setValue("General", "DBFileExtensions", m_dbFileExtensions.join(";;") );
+
+    m_proxyDialog->saveSettings();
 
     accept();
 
@@ -466,7 +472,7 @@ void PreferencesDialog::fillLanguageBox()
     ui->languageComboBox->setCurrentIndex(0);
 }
 
-void PreferencesDialog::loadColorSetting(QFrame *frame, const QString & settingName)
+void PreferencesDialog::loadColorSetting(QFrame *frame, const std::string& settingName)
 {
     QColor color = QColor(Settings::getValue("databrowser", settingName + "_colour").toString());
     setColorSetting(frame, color);
@@ -475,33 +481,26 @@ void PreferencesDialog::loadColorSetting(QFrame *frame, const QString & settingN
 void PreferencesDialog::setColorSetting(QFrame *frame, const QColor &color)
 {
     QPalette::ColorRole role;
-    QString style;
     QLineEdit *line;
 
     if (frame == ui->fr_bin_bg) {
         line = ui->txtBlob;
         role = line->backgroundRole();
-        style = QString("background-color");
     } else if (frame ==  ui->fr_bin_fg) {
         line = ui->txtBlob;
         role = line->foregroundRole();
-        style = QString("color");
     } else if (frame ==  ui->fr_reg_bg) {
         line = ui->txtRegular;
         role = line->backgroundRole();
-        style = QString("background-color");
     } else if (frame ==  ui->fr_reg_fg) {
         line = ui->txtRegular;
         role = line->foregroundRole();
-        style = QString("color");
     } else if (frame ==  ui->fr_null_bg) {
         line = ui->txtNull;
         role = line->backgroundRole();
-        style = QString("background-color");
     } else if (frame ==  ui->fr_null_fg) {
         line = ui->txtNull;
         role = line->foregroundRole();
-        style = QString("color");
     } else
         return;
 
@@ -519,7 +518,7 @@ void PreferencesDialog::setColorSetting(QFrame *frame, const QColor &color)
                                                                        palette.color(line->backgroundRole()).name()));
 }
 
-void PreferencesDialog::saveColorSetting(QFrame *frame, const QString & settingName)
+void PreferencesDialog::saveColorSetting(QFrame* frame, const std::string& settingName)
 {
     Settings::setValue("databrowser", settingName + "_colour",
         frame->palette().color(frame->backgroundRole()));
@@ -537,7 +536,7 @@ void PreferencesDialog::adjustColorsToStyle(int style)
 
     for(int i=0; i < ui->treeSyntaxHighlighting->topLevelItemCount(); ++i)
     {
-        QString name = ui->treeSyntaxHighlighting->topLevelItem(i)->text(0);
+        std::string name = ui->treeSyntaxHighlighting->topLevelItem(i)->text(0).toStdString();
         QColor color = Settings::getDefaultColorValue("syntaxhighlighter", name + "_colour", appStyle);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setTextColor(2, color);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setBackgroundColor(2, color);
@@ -671,4 +670,9 @@ void PreferencesDialog::on_buttonBox_clicked(QAbstractButton* button)
             accept();
         }
     }
+}
+
+void PreferencesDialog::configureProxy()
+{
+    m_proxyDialog->show();
 }

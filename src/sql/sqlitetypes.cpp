@@ -1,124 +1,27 @@
 #include "sqlitetypes.h"
-#include "grammar/Sqlite3Lexer.hpp"
-#include "grammar/Sqlite3Parser.hpp"
+#include "ObjectIdentifier.h"
+#include "parser/ParserDriver.h"
 
-#include <sstream>
 #include <iostream>
-#include <clocale>          // This include seems to only be necessary for the Windows build
+#include <iterator>
+#include <numeric>
 
 namespace sqlb {
 
-static escapeQuoting customQuoting = DoubleQuotes;
-
-void setIdentifierQuoting(escapeQuoting toQuoting)
+StringVector escapeIdentifier(StringVector ids)
 {
-    customQuoting = toQuoting;
+    std::transform(ids.begin(), ids.end(), ids.begin(), [](const std::string& id) {
+        return escapeIdentifier(id);
+    });
+    return ids;
 }
 
-QString escapeIdentifier(QString id)
+std::string joinStringVector(const StringVector& vec, const std::string& delim)
 {
-    switch(customQuoting) {
-    case GraveAccents:
-        return '`' + id.replace('`', "``") + '`';
-    case SquareBrackets:
-        // There aren't any escaping possibilities for square brackets inside the identifier,
-        // so we rely on the user to not enter these characters when this kind of quoting is
-        // selected.
-        return '[' + id + ']';
-    case DoubleQuotes:
-    default:
-        // This may produce a 'control reaches end of non-void function' warning if the
-        // default branch is removed, even though we have covered all possibilities in the
-        // switch statement.
-        return '"' + id.replace('"', "\"\"") + '"';
-    }
+    return std::accumulate(vec.begin(), vec.end(), std::string(), [delim](const std::string& so_far, const std::string& s) {
+        return so_far.empty() ? s : so_far + delim + s;
+    });
 }
-
-std::string escapeIdentifier(std::string id)
-{
-    return escapeIdentifier(QString::fromStdString(id)).toStdString();
-}
-
-QStringList escapeIdentifier(const QStringList& ids)
-{
-    QStringList ret;
-    for(const QString& id : ids)
-        ret.push_back(escapeIdentifier(id));
-    return ret;
-}
-
-/**
- * @brief The SetLocaleToC class
- * This is a stupid helper class which sets the current locale as used by the C++ standard library to the C locale.
- * Upon destruction it resets it to whatever the previous locale was. This is used to work around a problem in Antlr's
- * string comparison which because it is case-independent relies on the current locale. However, when parsind SQL
- * statements we don't want the locale to interfere here. Especially the Turkish locale is problematic here because
- * of the dotted I problem.
- */
-class SetLocaleToC
-{
-public:
-    SetLocaleToC()
-    {
-        // Query current locale and save it
-        oldLocale = std::setlocale(LC_CTYPE, nullptr);
-
-        // Set locale for standard library functions
-        std::setlocale(LC_CTYPE, "C.UTF-8");
-    }
-
-    ~SetLocaleToC()
-    {
-        // Reset old locale
-        std::setlocale(LC_CTYPE, oldLocale.c_str());
-    }
-
-private:
-    std::string oldLocale;
-};
-
-/**
- * @brief The CreateTableWalker class
- * Goes trough the createtable AST and returns
- * Table object.
- */
-class CreateTableWalker
-{
-public:
-    explicit CreateTableWalker(antlr::RefAST r)
-        : m_root(r)
-    {}
-
-    TablePtr table();
-
-private:
-    void parsecolumn(Table* table, antlr::RefAST c);
-    QString parseConflictClause(antlr::RefAST c);
-
-private:
-    antlr::RefAST m_root;
-};
-
-/**
- * @brief The CreateIndexWalker class
- * Goes trough the createtable AST and returns
- * Index object.
- */
-class CreateIndexWalker
-{
-public:
-    explicit CreateIndexWalker(antlr::RefAST r)
-        : m_root(r)
-    {}
-
-    IndexPtr index();
-
-private:
-    void parsecolumn(Index* index, antlr::RefAST c);
-
-private:
-    antlr::RefAST m_root;
-};
 
 bool Object::operator==(const Object& rhs) const
 {
@@ -132,7 +35,7 @@ bool Object::operator==(const Object& rhs) const
     return true;
 }
 
-QString Object::typeToString(Types type)
+std::string Object::typeToString(Types type)
 {
     switch(type)
     {
@@ -141,7 +44,34 @@ QString Object::typeToString(Types type)
     case Types::View: return "view";
     case Types::Trigger: return "trigger";
     }
-    return QString();
+    return std::string();
+}
+
+ConstraintPtr Constraint::makeConstraint(ConstraintTypes type)
+{
+    switch(type)
+    {
+    case PrimaryKeyConstraintType:
+        return std::make_shared<PrimaryKeyConstraint>();
+    case UniqueConstraintType:
+        return std::make_shared<UniqueConstraint>();
+    case ForeignKeyConstraintType:
+        return std::make_shared<ForeignKeyClause>();
+    case CheckConstraintType:
+        return std::make_shared<CheckConstraint>();
+    default:
+        return nullptr;
+    }
+}
+
+void Constraint::replaceInColumnList(const std::string& from, const std::string& to)
+{
+    std::replace(column_list.begin(), column_list.end(), from, to);
+}
+
+void Constraint::removeFromColumnList(const std::string& key)
+{
+    column_list.erase(std::remove(column_list.begin(), column_list.end(), key), column_list.end());
 }
 
 bool ForeignKeyClause::isSet() const
@@ -149,18 +79,18 @@ bool ForeignKeyClause::isSet() const
     return m_override.size() || m_table.size();
 }
 
-QString ForeignKeyClause::toString() const
+std::string ForeignKeyClause::toString() const
 {
     if(!isSet())
-        return QString();
+        return std::string();
 
     if(m_override.size())
         return m_override;
 
-    QString result = escapeIdentifier(m_table);
+    std::string result = escapeIdentifier(m_table);
 
     if(m_columns.size())
-        result += "(" + escapeIdentifier(m_columns).join(",") + ")";
+        result += "(" + joinStringVector(escapeIdentifier(m_columns), ",") + ")";
 
     if(m_constraint.size())
         result += " " + m_constraint;
@@ -168,50 +98,138 @@ QString ForeignKeyClause::toString() const
     return result;
 }
 
-void ForeignKeyClause::setFromString(const QString& fk)
+void ForeignKeyClause::setFromString(const std::string& fk)
 {
     m_override = fk;
 }
 
-QString ForeignKeyClause::toSql(const QStringList& applyOn) const
+std::string ForeignKeyClause::toSql() const
 {
-    QString result;
-    if(!m_name.isNull())
-        result += QString("CONSTRAINT %1 ").arg(escapeIdentifier(m_name));
-    result += QString("FOREIGN KEY(%1) REFERENCES %2").arg(escapeIdentifier(applyOn).join(",")).arg(this->toString());
+    std::string result;
+    if(!m_name.empty())
+        result = "CONSTRAINT " + escapeIdentifier(m_name) + " ";
+    result += "FOREIGN KEY(" + joinStringVector(escapeIdentifier(column_list), ",") + ") REFERENCES " + this->toString();
 
     return result;
 }
 
-QString UniqueConstraint::toSql(const QStringList& applyOn) const
+UniqueConstraint::UniqueConstraint(const IndexedColumnVector& columns) :
+    m_columns(columns)
 {
-    QString result;
-    if(!m_name.isNull())
-        result += QString("CONSTRAINT %1 ").arg(escapeIdentifier(m_name));
-    result += QString("UNIQUE(%1)").arg(escapeIdentifier(applyOn).join(","));
-
-    return result;
+    // Extract column names and give them to the column list in the base class
+    for(const auto& c : columns)
+        column_list.push_back(c.name());
 }
 
-QString PrimaryKeyConstraint::toSql(const QStringList& applyOn) const
+UniqueConstraint::UniqueConstraint(const StringVector& columns) :
+    Constraint(columns)
 {
-    QString result;
-    if(!m_name.isNull())
-        result += QString("CONSTRAINT %1 ").arg(escapeIdentifier(m_name));
-    result += QString("PRIMARY KEY(%1)").arg(escapeIdentifier(applyOn).join(","));
+    setColumnList(columns);
+}
 
-    if(!m_conflictAction.isEmpty())
+void UniqueConstraint::setColumnList(const StringVector& list)
+{
+    Constraint::setColumnList(list);
+
+    // Create our own column list without sort orders etc
+    m_columns.clear();
+    for(const auto& c : list)
+        m_columns.push_back(IndexedColumn(c, false));
+}
+
+void UniqueConstraint::addToColumnList(const std::string& key)
+{
+    Constraint::addToColumnList(key);
+
+    // Also add to our own column list
+    m_columns.push_back(IndexedColumn(key, false));
+}
+
+void UniqueConstraint::replaceInColumnList(const std::string& from, const std::string& to)
+{
+    Constraint::replaceInColumnList(from, to);
+
+    for(auto& c : m_columns)
+    {
+        if(c.name() == from)
+            c.setName(to);
+    }
+}
+
+void UniqueConstraint::removeFromColumnList(const std::string& key)
+{
+    Constraint::removeFromColumnList(key);
+
+    m_columns.erase(std::remove_if(m_columns.begin(), m_columns.end(), [key](const IndexedColumn& c) {
+        if(c.name() == key)
+            return true;
+        else
+            return false;
+    }), m_columns.end());
+}
+
+std::string UniqueConstraint::toSql() const
+{
+    std::string result;
+    if(!m_name.empty())
+        result = "CONSTRAINT " + escapeIdentifier(m_name) + " ";
+
+    std::vector<std::string> u_columns;
+    for(const auto& c : m_columns)
+        u_columns.push_back(c.toString("", " "));
+    result += "UNIQUE(" + joinStringVector(u_columns, ",") + ")";
+
+    if(!m_conflictAction.empty())
         result += " ON CONFLICT " + m_conflictAction;
 
     return result;
 }
 
-QString CheckConstraint::toSql(const QStringList&) const
+PrimaryKeyConstraint::PrimaryKeyConstraint(const IndexedColumnVector& columns) :
+    UniqueConstraint(columns),
+    m_auto_increment(false)
 {
-    QString result;
-    if(!m_name.isNull())
-        result += QString("CONSTRAINT %1 ").arg(escapeIdentifier(m_name));
-    result += QString("CHECK(%1)").arg(m_expression);
+}
+
+PrimaryKeyConstraint::PrimaryKeyConstraint(const StringVector& columns) :
+    UniqueConstraint(columns),
+    m_auto_increment(false)
+{
+}
+
+std::string PrimaryKeyConstraint::toSql() const
+{
+    std::string result;
+    if(!m_name.empty())
+        result = "CONSTRAINT " + escapeIdentifier(m_name) + " ";
+
+    std::vector<std::string> pk_columns;
+    for(const auto& c : m_columns)
+        pk_columns.push_back(c.toString("", " "));
+    result += "PRIMARY KEY(" + joinStringVector(pk_columns, ",") + (m_auto_increment ? " AUTOINCREMENT" : "") + ")";
+
+    if(!m_conflictAction.empty())
+        result += " ON CONFLICT " + m_conflictAction;
+
+    return result;
+}
+
+std::string CheckConstraint::toSql() const
+{
+    std::string result;
+    if(!m_name.empty())
+        result = "CONSTRAINT " + escapeIdentifier(m_name) + " ";
+    result += "CHECK(" + m_expression + ")";
+
+    return result;
+}
+
+std::string GeneratedColumnConstraint::toSql() const
+{
+    std::string result;
+    if(!m_name.empty())
+        result = "CONSTRAINT " + escapeIdentifier(m_name) + " ";
+    result += "GENERATED ALWAYS AS (" + m_expression + ")" + " " + storage();
 
     return result;
 }
@@ -228,8 +246,6 @@ bool Field::operator==(const Field& rhs) const
         return false;
     if(m_defaultvalue != rhs.m_defaultvalue)
         return false;
-    if(m_autoincrement != rhs.m_autoincrement)
-        return false;
     if(m_unique != rhs.m_unique)
         return false;
     if(m_collation != rhs.m_collation)
@@ -238,93 +254,94 @@ bool Field::operator==(const Field& rhs) const
     return true;
 }
 
-QString Field::toString(const QString& indent, const QString& sep) const
+std::string Field::toString(const std::string& indent, const std::string& sep) const
 {
-    QString str = indent + escapeIdentifier(m_name) + sep + m_type;
+    std::string str = indent + escapeIdentifier(m_name) + sep + m_type;
     if(m_notnull)
         str += " NOT NULL";
-    if(!m_defaultvalue.isEmpty())
-        str += QString(" DEFAULT %1").arg(m_defaultvalue);
-    if(!m_check.isEmpty())
+    if(!m_defaultvalue.empty())
+        str += " DEFAULT " + m_defaultvalue;
+    if(!m_check.empty())
         str += " CHECK(" + m_check + ")";
-    if(m_autoincrement)
-        str += " PRIMARY KEY AUTOINCREMENT";
     if(m_unique)
         str += " UNIQUE";
-    if(!m_collation.isEmpty())
+    if(!m_collation.empty())
         str += " COLLATE " + m_collation;
+    if(!m_generated.empty())
+        str += " " + m_generated.toSql();
     return str;
 }
 
 bool Field::isText() const
 {
-    QString norm = m_type.trimmed().toLower();
-
-    return     norm.startsWith("character")
-            || norm.startsWith("varchar")
-            || norm.startsWith("varying character")
-            || norm.startsWith("nchar")
-            || norm.startsWith("native character")
-            || norm.startsWith("nvarchar")
-            || norm == "text"
-            || norm == "clob";
+    if(starts_with_ci(m_type, "character")) return true;
+    if(starts_with_ci(m_type, "varchar")) return true;
+    if(starts_with_ci(m_type, "varying character")) return true;
+    if(starts_with_ci(m_type, "nchar")) return true;
+    if(starts_with_ci(m_type, "native character")) return true;
+    if(starts_with_ci(m_type, "nvarchar")) return true;
+    if(compare_ci(m_type, "text")) return true;
+    if(compare_ci(m_type, "clob")) return true;
+    return false;
 }
 
 bool Field::isInteger() const
 {
-    QString norm = m_type.trimmed().toLower();
-
-    return     norm == "int"
-            || norm == "integer"
-            || norm == "tinyint"
-            || norm == "smallint"
-            || norm == "mediumint"
-            || norm == "bigint"
-            || norm == "unsigned big int"
-            || norm == "int2"
-            || norm == "int8";
+    if(compare_ci(m_type, "int")) return true;
+    if(compare_ci(m_type, "integer")) return true;
+    if(compare_ci(m_type, "tinyint")) return true;
+    if(compare_ci(m_type, "smallint")) return true;
+    if(compare_ci(m_type, "mediumint")) return true;
+    if(compare_ci(m_type, "bigint")) return true;
+    if(compare_ci(m_type, "unsigned big int")) return true;
+    if(compare_ci(m_type, "int2")) return true;
+    if(compare_ci(m_type, "int8")) return true;
+    return false;
 }
 
 bool Field::isReal() const
 {
-    QString norm = m_type.trimmed().toLower();
-
-    return     norm == "real"
-            || norm == "double"
-            || norm == "double precision"
-            || norm == "float";
+    if(compare_ci(m_type, "real")) return true;
+    if(compare_ci(m_type, "double")) return true;
+    if(compare_ci(m_type, "double precision")) return true;
+    if(compare_ci(m_type, "float")) return true;
+    return false;
 }
 
 bool Field::isNumeric() const
 {
-    QString norm = m_type.trimmed().toLower();
-
-    return     norm.startsWith("decimal")
-            || norm == "numeric"
-            || norm == "boolean"
-            || norm == "date"
-            || norm == "datetime";
+    if(starts_with_ci(m_type, "decimal")) return true;
+    if(compare_ci(m_type, "numeric")) return true;
+    if(compare_ci(m_type, "boolean")) return true;
+    if(compare_ci(m_type, "date")) return true;
+    if(compare_ci(m_type, "datetime")) return true;
+    return false;
 }
 
 bool Field::isBlob() const
 {
-    QString norm = m_type.trimmed().toLower();
-
-    return     norm.isEmpty()
-            || norm == "blob";
+    if(m_type.empty()) return true;
+    if(compare_ci(m_type, "blob")) return true;
+    return false;
 }
 
-QString Field::affinity() const
+Field::Affinity Field::affinity() const
 {
-    if (isInteger()) return "INTEGER";
+    if (isInteger()) return IntegerAffinity;
 
-    if (isText()) return "TEXT";
+    if (isText()) return TextAffinity;
 
-    if (isBlob()) return "BLOB";
+    if (isBlob()) return BlobAffinity;
 
-    if (isReal()) return "REAL";
+    if (isReal() || isNumeric()) return FloatAffinity;
 
-    return "NUMERIC";
+    return BlobAffinity;
+}
+
+Table::Table(const Table& table)
+    : Object(table.name())
+{
+    *this = table;
 }
 
 Table& Table::operator=(const Table& rhs)
@@ -332,8 +349,8 @@ Table& Table::operator=(const Table& rhs)
     // Base class
     Object::operator=(rhs);
 
-    // Just assign the strings
-    m_rowidColumn = rhs.m_rowidColumn;
+    // Just assign the simple values
+    m_withoutRowid = rhs.m_withoutRowid;
     m_virtual = rhs.m_virtual;
 
     // Clear the fields and the constraints first in order to avoid duplicates and/or old data in the next step
@@ -342,8 +359,7 @@ Table& Table::operator=(const Table& rhs)
 
     // Make copies of the fields and the constraints. This is necessary in order to avoid any unwanted changes to the application's main database
     // schema representation just by modifying a reference to the fields or constraints and thinking it operates on a copy.
-    for(const Field& f : rhs.fields)
-        fields.push_back(f);
+    std::copy(rhs.fields.begin(), rhs.fields.end(), std::back_inserter(fields));
     m_constraints = rhs.m_constraints;
 
     return *this;
@@ -354,70 +370,45 @@ bool Table::operator==(const Table& rhs) const
     if(!Object::operator==(rhs))
         return false;
 
-    if(m_rowidColumn != rhs.m_rowidColumn)
+    if(m_withoutRowid != rhs.m_withoutRowid)
         return false;
     if(m_virtual != rhs.m_virtual)
         return false;
     if(fields != rhs.fields)
         return false;
-
-    // We need to compare the constraint maps manually here. The reason is that the values are pointers and the default implementation
-    // would compare the pointers not the actual objects.
-    if(m_constraints.size() != rhs.m_constraints.size())
+    if(m_constraints != rhs.m_constraints)
         return false;
-    for(auto it=m_constraints.cbegin();it!=m_constraints.end();++it)
-    {
-        // For each element in this map we get the list of all elements with the same key from the other map.
-        // Then we loop through that list and check if we find an element of the same type which produces the same SQL substring. We use this
-        // approach to avoid casting both objects to their actual type, then dereferencing it etc.
-        auto range = rhs.m_constraints.equal_range(it->first);
-        bool found_something = false;
-        for(auto jt=range.first;jt!=range.second;++jt)
-        {
-            if(it->second->type() == jt->second->type() && it->second->toSql(it->first) == jt->second->toSql(jt->first))
-            {
-                found_something = true;
-                break;
-            }
-        }
-
-        // If no match was found, the constraint maps aren't equal
-        if(!found_something)
-            return false;
-    }
 
     return true;
 }
 
-Table::field_iterator Table::findPk()
+StringVector Table::fieldList() const
 {
-    // TODO This is a stupid function (and always was) which should be fixed/improved
+    StringVector sl;
 
-    QStringList pk = primaryKey();
-    if(pk.empty())
-        return fields.end();
+    for(const Field& f : fields)
+        sl.push_back(f.toString());
+
+    return sl;
+}
+
+StringVector Table::fieldNames() const
+{
+    StringVector sl;
+
+    for(const Field& f : fields)
+        sl.push_back(f.name());
+
+    return sl;
+}
+
+StringVector Table::rowidColumns() const
+{
+    // For WITHOUT ROWID tables this function returns the names of the primary key column. For ordinary tables with a rowid column, it returns "_rowid_"
+    if(m_withoutRowid)
+        return const_cast<Table*>(this)->primaryKey()->columnList();
     else
-        return findField(this, pk.at(0));
-}
-
-QStringList Table::fieldList() const
-{
-    QStringList sl;
-
-    for(const Field& f : fields)
-        sl << f.toString();
-
-    return sl;
-}
-
-QStringList Table::fieldNames() const
-{
-    QStringList sl;
-
-    for(const Field& f : fields)
-        sl << f.name();
-
-    return sl;
+        return {"_rowid_"};
 }
 
 FieldInfoList Table::fieldInformation() const
@@ -428,812 +419,180 @@ FieldInfoList Table::fieldInformation() const
     return result;
 }
 
-bool Table::hasAutoIncrement() const
+TablePtr Table::parseSQL(const std::string& sSQL)
 {
-    for(const Field& f : fields) {
-        if(f.autoIncrement())
-            return true;
-    }
-    return false;
-}
-
-TablePtr Table::parseSQL(const QString& sSQL)
-{
-    SetLocaleToC locale;
-
-    std::stringstream s;
-    s << sSQL.toStdString();
-    Sqlite3Lexer lex(s);
-
-    Sqlite3Parser parser(lex);
-
-    antlr::ASTFactory ast_factory;
-    parser.initializeASTFactory(ast_factory);
-    parser.setASTFactory(&ast_factory);
-
-    try
+    parser::ParserDriver drv;
+    if(!drv.parse(sSQL))
     {
-        parser.createtable();
-        CreateTableWalker ctw(parser.getAST());
-
-        auto t = ctw.table();
+        TablePtr t = std::dynamic_pointer_cast<Table>(drv.result);
         t->setOriginalSql(sSQL);
         return t;
+    } else {
+        std::cerr << "Sqlite parse error: " << sSQL << std::endl;
+        return std::make_shared<Table>("");
     }
-    catch(antlr::ANTLRException& ex)
-    {
-        std::cerr << "Sqlite parse error: " << ex.toString() << "(" << sSQL.toStdString() << ")" << std::endl;
-    }
-    catch(...)
-    {
-        std::cerr << "Sqlite parse error: " << sSQL.toStdString() << std::endl; //TODO
-    }
-
-    return TablePtr(new Table(""));
 }
 
-QString Table::sql(const QString& schema, bool ifNotExists) const
+std::string Table::sql(const std::string& schema, bool ifNotExists) const
 {
     // Special handling for virtual tables: just build an easy create statement and copy the using part in there
     if(isVirtual())
-        return QString("CREATE VIRTUAL TABLE %1 USING %2;").arg(ObjectIdentifier(schema, m_name).toString(true)).arg(m_virtual);
+        return "CREATE VIRTUAL TABLE " + ObjectIdentifier(schema, m_name).toString(true) + " USING " +  m_virtual + ";";
 
     // This is a normal table, not a virtual one
-    QString sql = QString("CREATE TABLE%1 %2 (\n")
-            .arg(ifNotExists ? QString(" IF NOT EXISTS") : QString(""))
-            .arg(ObjectIdentifier(schema, m_name).toString(true));
+    std::string sql = "CREATE TABLE ";
+    if(ifNotExists)
+        sql += "IF NOT EXISTS ";
+    sql += ObjectIdentifier(schema, m_name).toString(true);
+    sql += " (\n";
 
-    sql += fieldList().join(",\n");
+    sql += joinStringVector(fieldList(), ",\n");
 
     // Constraints
-    ConstraintMap::const_iterator it = m_constraints.cbegin();
-    bool autoincrement = hasAutoIncrement();
-    while(it != m_constraints.cend())
+    for(const auto& it : m_constraints)
     {
-        // Ignore auto increment primary key constraint
-        if((!autoincrement || it->second->type() != Constraint::PrimaryKeyConstraintType))
+        // Ignore all constraints without any fields, except for check constraints which don't rely on a field vector
+        if(!it->columnList().empty() || it->type() == Constraint::CheckConstraintType)
         {
-            // Ignore all constraints without any fields, except for check constraints which don't rely on a field vector
-            if(!(it->first.empty() && it->second->type() != Constraint::CheckConstraintType))
-            {
-                sql += QString(",\n\t");
-                sql += it->second->toSql(it->first);
-            }
+            sql += ",\n\t";
+            sql += it->toSql();
         }
-        ++it;
     }
 
     sql += "\n)";
 
     // without rowid
-    if(isWithoutRowidTable())
+    if(withoutRowidTable())
         sql += " WITHOUT ROWID";
 
     return sql + ";";
 }
 
-void Table::addConstraint(QStringList fields, ConstraintPtr constraint)
+void Table::addConstraint(ConstraintPtr constraint)
 {
-    m_constraints.insert({fields, constraint});
+    m_constraints.insert(constraint);
 }
 
-void Table::setConstraint(QStringList fields, ConstraintPtr constraint)
+void Table::setConstraint(ConstraintPtr constraint)
 {
     // Delete any old constraints of this type for these fields
-    removeConstraints(fields, constraint->type());
+    removeConstraints(constraint->columnList(), constraint->type());
 
     // Add the new constraint to the table, effectively overwriting all old constraints for that fields/type combination
-    addConstraint(fields, constraint);
+    addConstraint(constraint);
 }
 
-void Table::removeConstraints(QStringList fields, Constraint::ConstraintTypes type)
+void Table::removeConstraint(ConstraintPtr constraint)
+{
+    for(auto it = m_constraints.begin();it!=m_constraints.end();++it)
+    {
+        if((*it)->toSql() == constraint->toSql())
+        {
+            m_constraints.erase(it);
+
+            // Only remove the first constraint matching these criteria
+            return;
+        }
+    }
+}
+
+void Table::removeConstraints(const StringVector& vStrFields, Constraint::ConstraintTypes type)
 {
     for(auto it = m_constraints.begin();it!=m_constraints.end();)
     {
-        if(it->first == fields && it->second->type() == type)
+        if((*it)->columnList() == vStrFields && (*it)->type() == type)
             m_constraints.erase(it++);
         else
             ++it;
     }
 }
 
-ConstraintPtr Table::constraint(QStringList fields, Constraint::ConstraintTypes type) const
+ConstraintPtr Table::constraint(const StringVector& vStrFields, Constraint::ConstraintTypes type) const
 {
-    auto list = constraints(fields, type);
+    auto list = constraints(vStrFields, type);
     if(list.size())
         return list.at(0);
     else
         return ConstraintPtr(nullptr);
 }
 
-std::vector<ConstraintPtr> Table::constraints(QStringList fields, Constraint::ConstraintTypes type) const
+std::vector<ConstraintPtr> Table::constraints(const StringVector& vStrFields, Constraint::ConstraintTypes type) const
 {
-    ConstraintMap::const_iterator begin, end;
-    if(fields.empty())
-    {
-        begin = m_constraints.begin();
-        end = m_constraints.end();
-    } else {
-        std::tie(begin, end) = m_constraints.equal_range(fields);
-    }
-
     std::vector<ConstraintPtr> clist;
-    std::transform(begin, end, std::back_inserter(clist), [](std::pair<QStringList, ConstraintPtr> elem){return elem.second;});
-
-    if(type == Constraint::NoType)
+    for(const auto& it : m_constraints)
     {
-        return clist;
-    } else {
-        std::vector<ConstraintPtr> clist_typed;
-        for(const ConstraintPtr& ptr : clist)
-        {
-            if(ptr->type() == type)
-                clist_typed.push_back(ptr);
-        }
-        return clist_typed;
+        if((type == Constraint::NoType || it->type() == type) && (vStrFields.empty() || it->columnList() == vStrFields))
+            clist.push_back(it);
     }
+    return clist;
 }
 
-void Table::setConstraints(const ConstraintMap& constraints)
+void Table::setConstraints(const ConstraintSet& constraints)
 {
     m_constraints = constraints;
 }
 
-QStringList& Table::primaryKeyRef()
+void Table::replaceConstraint(ConstraintPtr from, ConstraintPtr to)
 {
-    return const_cast<QStringList&>(static_cast<const Table*>(this)->primaryKey());
+    auto it = m_constraints.find(from);
+    if(it == m_constraints.end())
+            return;
+
+    m_constraints.erase(it);    // Erase old constraint
+    m_constraints.insert(to);   // Insert new constraint
 }
 
-const QStringList& Table::primaryKey() const
+std::shared_ptr<PrimaryKeyConstraint> Table::primaryKey()
 {
-    auto it = m_constraints.cbegin();
-    while(it != m_constraints.cend())
-    {
-        if(it->second->type() == Constraint::PrimaryKeyConstraintType)
-            return it->first;
-        ++it;
-    }
-
-    static QStringList emptyFieldVector;
-    return emptyFieldVector;
+    const auto c = constraint({}, Constraint::PrimaryKeyConstraintType);
+    if(c)
+        return std::dynamic_pointer_cast<PrimaryKeyConstraint>(c);
+    else
+        return nullptr;
 }
 
-void Table::removeKeyFromAllConstraints(const QString& key)
+void Table::removeKeyFromAllConstraints(const std::string& key)
 {
-    // First remove all constraints with exactly that one key
-    m_constraints.erase({key});
-
-    // Then delete all occurrences of the key in compound columns
+    // Update all constraints
     for(auto it=m_constraints.begin();it!=m_constraints.end();)
     {
-        if(it->first.contains(key))
+        // Check if they contain the old key name
+        if(contains((*it)->columnList(), key))
         {
-            QStringList k = it->first;
-            k.removeAll(key);
-            m_constraints.insert({k, it->second});
-            it = m_constraints.erase(it);
+            // If so, remove it from the column list
+            (*it)->removeFromColumnList(key);
+
+            // If the column list is empty now, remove the entire constraint. Otherwise save the updated column list
+            if((*it)->columnList().empty())
+                it = m_constraints.erase(it);
+            else
+                ++it;
         } else {
             ++it;
         }
     }
 }
 
-void Table::renameKeyInAllConstraints(const QString& key, const QString& to)
+void Table::renameKeyInAllConstraints(const std::string& key, const std::string& to)
 {
     // Do nothing if the key hasn't really changed
     if(key == to)
         return;
 
     // Find all occurrences of the key and change it to the new one
-    for(auto it=m_constraints.begin();it!=m_constraints.end();)
+    for(auto& it : m_constraints)
     {
-        if(it->first.contains(key))
-        {
-            QStringList k = it->first;
-            k.replaceInStrings(QRegExp("^" + key + "$"), to);
-            m_constraints.insert({k, it->second});
-            it = m_constraints.erase(it);
-        } else {
-            ++it;
-        }
+        if(contains(it->columnList(), key))
+            it->replaceInColumnList(key, to);
     }
 }
 
-namespace
+
+
+std::string IndexedColumn::toString(const std::string& indent, const std::string& sep) const
 {
-QString identifier(antlr::RefAST ident)
-{
-    QString sident = ident->getText().c_str();
-    if(ident->getType() == sqlite3TokenTypes::QUOTEDID ||
-       ident->getType() == Sqlite3Lexer::QUOTEDLITERAL ||
-       ident->getType() == sqlite3TokenTypes::STRINGLITERAL)
-    {
-        // Remember the way the identifier is quoted
-        QChar quoteChar = sident.at(0);
-
-        // Remove first and final character, i.e. the quotes
-        sident.remove(0, 1);
-        sident.chop(1);
-
-        // Replace all remaining occurences of two succeeding quote characters and replace them
-        // by a single instance. This is done because two quotes can be used as a means of escaping
-        // the quote character, thus only the visual representation has its two quotes, the actual
-        // name contains only one.
-        sident.replace(QString(quoteChar) + quoteChar, quoteChar);
-    }
-
-    return sident;
-}
-
-QString textAST(antlr::RefAST t)
-{
-    // When this is called for a KEYWORDASTABLENAME token, we must take the child's content to get the actual value
-    // instead of 'KEYWORDASTABLENAME' as a string. The same applies for  KEYWORDASCOLUMNNAME tokens.
-    if(t != antlr::nullAST && (t->getType() == sqlite3TokenTypes::KEYWORDASTABLENAME || t->getType() == sqlite3TokenTypes::KEYWORDASCOLUMNNAME))
-        return t->getFirstChild()->getText().c_str();
-    else
-        return t->getText().c_str();
-}
-
-QString concatTextAST(antlr::RefAST t, bool withspace = false)
-{
-    QStringList stext;
-    while(t != antlr::nullAST)
-    {
-        stext.append(textAST(t));
-        t = t->getNextSibling();
-    }
-    return stext.join(withspace ? " " : "");
-}
-
-QString concatExprAST(antlr::RefAST t)
-{
-    QString expr;
-
-    int num_paren = 1;
-    while(t)
-    {
-        if(t->getType() == sqlite3TokenTypes::LPAREN)
-            num_paren++;
-        else if(t->getType() == sqlite3TokenTypes::RPAREN)
-            num_paren--;
-
-        if(num_paren == 0)
-            break;
-
-        switch(t->getType())
-        {
-        case sqlite3TokenTypes::AND:
-        case sqlite3TokenTypes::OR:
-        case sqlite3TokenTypes::IN:
-        case sqlite3TokenTypes::LIKE:
-        case sqlite3TokenTypes::MATCH:
-        case sqlite3TokenTypes::REGEXP:
-        case sqlite3TokenTypes::EXISTS:
-        case sqlite3TokenTypes::GLOB:
-        case sqlite3TokenTypes::BETWEEN:
-            expr.append(" " + textAST(t) + " ");
-            break;
-        case sqlite3TokenTypes::NOT:
-            expr.append(" " + textAST(t));
-            break;
-        default:
-            expr.append(textAST(t));
-        }
-
-        t = t->getNextSibling();
-    }
-
-    return expr.trimmed();
-}
-}
-
-namespace {
-QString tablename(const antlr::RefAST& n)
-{
-    if(n->getType() == sqlite3TokenTypes::KEYWORDASTABLENAME)
-        return concatTextAST(n->getFirstChild());
-    else
-        return identifier(n);
-}
-QString columnname(const antlr::RefAST& n)
-{
-    if(n->getType() == sqlite3TokenTypes::KEYWORDASCOLUMNNAME)
-        return concatTextAST(n->getFirstChild());
-    else if(n->getType() == sqlite3TokenTypes::INDEXEDCOLUMN)
-        return columnname(n->getFirstChild());
-    else
-        return identifier(n);
-}
-}
-
-TablePtr CreateTableWalker::table()
-{
-    Table* tab = new Table("");
-    tab->setFullyParsed(true);
-
-    if( m_root ) //CREATE TABLE
-    {
-        antlr::RefAST s = m_root->getFirstChild();
-
-        // If the primary tree isn't filled, this isn't a normal CREATE TABLE statement. Switch to the next alternative tree.
-        if(s == nullptr)
-            s = m_root->getNextSibling();
-
-        // Skip to table name
-        bool is_virtual_table = false;
-        while(s->getType() != Sqlite3Lexer::ID &&
-              s->getType() != Sqlite3Lexer::QUOTEDID &&
-              s->getType() != Sqlite3Lexer::QUOTEDLITERAL &&
-              s->getType() != Sqlite3Lexer::STRINGLITERAL &&
-              s->getType() != sqlite3TokenTypes::KEYWORDASTABLENAME)
-        {
-            // Is this one of these virtual tables?
-            if(s->getType() == Sqlite3Lexer::VIRTUAL)
-                is_virtual_table = true;
-
-            s = s->getNextSibling();
-        }
-
-        // Extract and set table name
-        tab->setName(tablename(s));
-
-        // Special handling for virtual tables. If this is a virtual table, extract the USING part and skip all the
-        // rest of this function because virtual tables don't have column definitons
-        if(is_virtual_table)
-        {
-            s = s->getNextSibling(); // USING
-            s = s->getNextSibling(); // module name
-            tab->setVirtualUsing(concatTextAST(s, true));
-            tab->setFullyParsed(false);
-
-            return TablePtr(tab);
-        }
-
-        // This is a normal table, not a virtual one
-        s = s->getNextSibling(); // LPAREN
-        s = s->getNextSibling(); // first column name
-        antlr::RefAST column = s;
-        // loop columndefs
-        while(column != antlr::nullAST && column->getType() == sqlite3TokenTypes::COLUMNDEF)
-        {
-            parsecolumn(tab, column->getFirstChild());
-            column = column->getNextSibling(); //COMMA or RPAREN
-            column = column->getNextSibling(); //null or tableconstraint
-
-            s = s->getNextSibling();            // COLUMNDEF
-            s = s->getNextSibling();            // COMMA or RPAREN
-        }
-
-        // now we are finished or it is a tableconstraint
-        while(s != antlr::nullAST)
-        {
-            // Is this a 'without rowid' definiton?
-            if(s->getType() != sqlite3TokenTypes::WITHOUT)
-            {
-                // It's not, so treat this as table constraints
-
-                antlr::RefAST tc = s->getFirstChild();
-
-                // Extract constraint name, if there is any
-                QString constraint_name;
-                if(tc->getType() == sqlite3TokenTypes::CONSTRAINT)
-                {
-                    tc = tc->getNextSibling();          // CONSTRAINT
-                    constraint_name = identifier(tc);
-                    tc = tc->getNextSibling();          // identifier
-                }
-
-                switch(tc->getType())
-                {
-                case sqlite3TokenTypes::PRIMARY:
-                {
-                    PrimaryKeyConstraint* pk = new PrimaryKeyConstraint;
-                    pk->setName(constraint_name);
-
-                    tc = tc->getNextSibling()->getNextSibling(); // skip primary and key
-                    tc = tc->getNextSibling(); // skip LPAREN
-
-                    QStringList fields;
-                    do
-                    {
-                        antlr::RefAST indexed_column = tc->getFirstChild();
-
-                        QString col = columnname(indexed_column);
-                        fields.push_back(col);
-
-                        indexed_column = indexed_column->getNextSibling();
-                        if(indexed_column != antlr::nullAST
-                                && (indexed_column->getType() == sqlite3TokenTypes::ASC
-                                    || indexed_column->getType() == sqlite3TokenTypes::DESC))
-                        {
-                            // TODO save ASC / DESC information?
-                            tab->setFullyParsed(false);
-                            indexed_column = indexed_column->getNextSibling();
-                        }
-
-                        if(indexed_column != antlr::nullAST && indexed_column->getType() == sqlite3TokenTypes::COLLATE)
-                        {
-                            indexed_column = indexed_column->getNextSibling();      // COLLATE
-                            // TODO save collation name
-                            tab->setFullyParsed(false);
-                            indexed_column = indexed_column->getNextSibling();      // collation name
-                        }
-
-                        if(indexed_column != antlr::nullAST && indexed_column->getType() == sqlite3TokenTypes::AUTOINCREMENT)
-                        {
-                            auto field = findField(tab, col);
-                            field->setAutoIncrement(true);
-                            indexed_column = indexed_column->getNextSibling();
-                        }
-
-                        tc = tc->getNextSibling();      // indexed column
-
-                        while(tc != antlr::nullAST && tc->getType() == sqlite3TokenTypes::COMMA)
-                        {
-                            tc = tc->getNextSibling(); // skip ident and comma
-                        }
-                    } while(tc != antlr::nullAST && tc->getType() != sqlite3TokenTypes::RPAREN);
-
-                    // We're either done now or there is a conflict clause
-                    tc = tc->getNextSibling();          // skip RPAREN
-                    pk->setConflictAction(parseConflictClause(tc));
-
-                    tab->addConstraint(fields, ConstraintPtr(pk));
-                }
-                break;
-                case sqlite3TokenTypes::UNIQUE:
-                {
-                    UniqueConstraint* unique = new UniqueConstraint;
-                    unique->setName(constraint_name);
-
-                    tc = tc->getNextSibling(); // skip UNIQUE
-                    tc = tc->getNextSibling(); // skip LPAREN
-                    QStringList fields;
-                    do
-                    {
-                        antlr::RefAST indexed_column = tc->getFirstChild();
-
-                        QString col = columnname(indexed_column);
-                        auto field = findField(tab, col);
-                        fields.push_back(field->name());
-
-                        indexed_column = indexed_column->getNextSibling();
-                        if(indexed_column != antlr::nullAST
-                                && (indexed_column->getType() == sqlite3TokenTypes::ASC
-                                    || indexed_column->getType() == sqlite3TokenTypes::DESC))
-                        {
-                            // TODO save ASC / DESC information?
-                            tab->setFullyParsed(false);
-                            indexed_column = indexed_column->getNextSibling();
-                        }
-
-                        if(indexed_column != antlr::nullAST && indexed_column->getType() == sqlite3TokenTypes::COLLATE)
-                        {
-                            indexed_column = indexed_column->getNextSibling();      // COLLATE
-                            // TODO save collation name
-                            tab->setFullyParsed(false);
-                            indexed_column = indexed_column->getNextSibling();      // collation name
-                        }
-
-                        tc = tc->getNextSibling();      // indexed column
-
-                        while(tc != antlr::nullAST && tc->getType() == sqlite3TokenTypes::COMMA)
-                        {
-                            tc = tc->getNextSibling(); // skip ident and comma
-                        }
-                    } while(tc != antlr::nullAST && tc->getType() != sqlite3TokenTypes::RPAREN);
-
-                    if(fields.size() == 1 && constraint_name.isEmpty())
-                    {
-                        findField(tab, fields[0])->setUnique(true);
-                        delete unique;
-                    } else {
-                        tab->addConstraint(fields, ConstraintPtr(unique));
-                    }
-                }
-                break;
-                case sqlite3TokenTypes::FOREIGN:
-                {
-                    ForeignKeyClause* fk = new ForeignKeyClause;
-                    fk->setName(constraint_name);
-
-                    tc = tc->getNextSibling();  // FOREIGN
-                    tc = tc->getNextSibling();  // KEY
-                    tc = tc->getNextSibling();  // LPAREN
-
-                    QStringList fields;
-                    do
-                    {
-                        QString col = columnname(tc);
-                        fields.push_back(findField(tab, col)->name());
-
-                        tc = tc->getNextSibling();
-
-                        while(tc != antlr::nullAST && tc->getType() == sqlite3TokenTypes::COMMA)
-                            tc = tc->getNextSibling(); // skip ident and comma
-                    } while(tc != antlr::nullAST && tc->getType() != sqlite3TokenTypes::RPAREN);
-
-                    tc = tc->getNextSibling();
-                    tc = tc->getNextSibling();  // REFERENCES
-
-                    fk->setTable(identifier(tc));
-                    tc = tc->getNextSibling();       // identifier
-
-                    if(tc != antlr::nullAST && tc->getType() == sqlite3TokenTypes::LPAREN)
-                    {
-                        tc = tc->getNextSibling();  // LPAREN
-
-                        QStringList fk_cols;
-                        while(tc != antlr::nullAST && tc->getType() != sqlite3TokenTypes::RPAREN)
-                        {
-                            if(tc->getType() != sqlite3TokenTypes::COMMA)
-                                fk_cols.push_back(identifier(tc));
-                            tc = tc->getNextSibling();
-                        }
-                        fk->setColumns(fk_cols);
-
-                        tc = tc->getNextSibling();  // RPAREN
-                    }
-
-                    fk->setConstraint(concatTextAST(tc, true));
-                    tab->addConstraint(fields, ConstraintPtr(fk));
-                }
-                break;
-                case sqlite3TokenTypes::CHECK:
-                {
-                    CheckConstraint* check = new CheckConstraint;
-                    check->setName(constraint_name);
-
-                    tc = tc->getNextSibling(); // skip CHECK
-                    tc = tc->getNextSibling(); // skip LPAREN
-
-                    check->setExpression(concatExprAST(tc));
-                    tab->addConstraint(QStringList(), ConstraintPtr(check));
-                }
-                break;
-                default:
-                {
-                    std::cout << "unknown table constraint in " << tab->name().toStdString() << std::endl;
-                    tab->setFullyParsed(false);
-                }
-                    break;
-                }
-
-                s = s->getNextSibling(); //COMMA or RPAREN
-                if(s->getType() == sqlite3TokenTypes::COMMA || s->getType() == sqlite3TokenTypes::RPAREN)
-                    s = s->getNextSibling();
-            } else {
-                // It is
-
-                s = s->getNextSibling();    // WITHOUT
-                s = s->getNextSibling();    // ROWID
-
-                tab->setRowidColumn(tab->findPk()->name());
-            }
-        }
-    }
-
-    return TablePtr(tab);
-}
-
-void CreateTableWalker::parsecolumn(Table* table, antlr::RefAST c)
-{
-    QString colname;
-    QString type = "TEXT";
-    bool autoincrement = false;
-    bool notnull = false;
-    bool unique = false;
-    QString defaultvalue;
-    QString check;
-    QString collation;
-    sqlb::PrimaryKeyConstraint* primaryKey = nullptr;
-    std::vector<sqlb::ForeignKeyClause*> foreignKeys;
-
-    colname = columnname(c);
-    c = c->getNextSibling(); //type?
-    if(c != antlr::nullAST && c->getType() == sqlite3TokenTypes::TYPE_NAME)
-    {
-        antlr::RefAST t = c->getFirstChild();
-
-        if(t != antlr::nullAST)
-        {
-            type.clear();
-        }
-
-        while(t != antlr::nullAST)
-        {
-            int thisType = t->getType();
-            type.append(textAST(t));
-            t = t->getNextSibling();
-            if(t != antlr::nullAST)
-            {
-                int nextType = t->getType();
-                if(nextType != sqlite3TokenTypes::LPAREN && nextType != sqlite3TokenTypes::RPAREN &&
-                   thisType != sqlite3TokenTypes::LPAREN)
-                {
-                    type.append(" ");
-                }
-            }
-        }
-        c = c->getNextSibling();
-    }
-
-    // finished with type parsing
-    // now columnconstraints
-    while(c != antlr::nullAST)
-    {
-        antlr::RefAST con = c->getFirstChild();
-
-        // Extract constraint name, if there is any
-        QString constraint_name;
-        if(con->getType() == sqlite3TokenTypes::CONSTRAINT)
-        {
-            con = con->getNextSibling();          // CONSTRAINT
-            constraint_name = identifier(con);
-            con = con->getNextSibling();          // identifier
-        }
-
-        switch(con->getType())
-        {
-        case sqlite3TokenTypes::PRIMARY:
-        {
-            // If we have already allocated a primary key object, delete it first. This should never happen in real world situations because
-            // SQLite only supports one primary key constraint per field.
-            if(primaryKey)
-                delete primaryKey;
-
-            primaryKey = new PrimaryKeyConstraint;
-            primaryKey->setName(constraint_name);
-
-            con = con->getNextSibling()->getNextSibling(); // skip KEY
-            if(con != antlr::nullAST && (con->getType() == sqlite3TokenTypes::ASC
-                                         || con->getType() == sqlite3TokenTypes::DESC))
-            {
-                table->setFullyParsed(false);
-                con = con->getNextSibling(); //skip
-            }
-
-            primaryKey->setConflictAction(parseConflictClause(con));
-
-            if(con != antlr::nullAST && con->getType() == sqlite3TokenTypes::AUTOINCREMENT)
-                autoincrement = true;
-        }
-        break;
-        case sqlite3TokenTypes::NOT:
-        {
-            // TODO Support constraint names here
-            if(!constraint_name.isEmpty())
-                table->setFullyParsed(false);
-
-            notnull = true;
-        }
-        break;
-        case sqlite3TokenTypes::NULL_T:
-        {
-            notnull = false;
-        }
-        break;
-        case sqlite3TokenTypes::CHECK:
-        {
-            // TODO Support constraint names here
-            if(!constraint_name.isEmpty())
-                table->setFullyParsed(false);
-
-            con = con->getNextSibling(); //CHECK
-            con = con->getNextSibling(); //LPAREN
-
-            check = concatExprAST(con);
-        }
-        break;
-        case sqlite3TokenTypes::DEFAULT:
-        {
-            // TODO Support constraint names here
-            if(!constraint_name.isEmpty())
-                table->setFullyParsed(false);
-
-            con = con->getNextSibling(); //SIGNEDNUMBER,STRING,LPAREN
-            defaultvalue = concatTextAST(con);
-        }
-        break;
-        case sqlite3TokenTypes::UNIQUE:
-        {
-            // TODO Support constraint names here
-            if(!constraint_name.isEmpty())
-                table->setFullyParsed(false);
-
-            unique = true;
-        }
-        break;
-        case sqlite3TokenTypes::REFERENCES:
-        {
-            con = con->getNextSibling();    // REFERENCES
-
-            sqlb::ForeignKeyClause* foreignKey = new ForeignKeyClause;
-            foreignKey->setTable(identifier(con));
-            foreignKey->setName(constraint_name);
-            con = con->getNextSibling();    // identifier
-
-            if(con != antlr::nullAST && con->getType() == sqlite3TokenTypes::LPAREN)
-            {
-                con = con->getNextSibling();    // LPAREN
-
-                QStringList fk_cols;
-                while(con != antlr::nullAST && con->getType() != sqlite3TokenTypes::RPAREN)
-                {
-                    if(con->getType() != sqlite3TokenTypes::COMMA)
-                        fk_cols.push_back(identifier(con));
-                    con = con->getNextSibling();
-                }
-                foreignKey->setColumns(fk_cols);
-
-                con = con->getNextSibling();    // RPAREN
-            }
-
-            foreignKey->setConstraint(concatTextAST(con, true));
-            foreignKeys.push_back(foreignKey);
-        }
-        break;
-        case sqlite3TokenTypes::COLLATE:
-        {
-            con = con->getNextSibling();    // COLLATE
-            collation = identifier(con);
-            con = con->getNextSibling();    // collation name
-        }
-        break;
-        default:
-        {
-            std::cout << "unknown column constraint in " << table->name().toStdString() << "." << colname.toStdString() << std::endl;
-            table->setFullyParsed(false);
-        }
-        break;
-        }
-        c = c->getNextSibling();
-    }
-
-    Field f(colname, type, notnull, defaultvalue, check, unique, collation);
-    f.setAutoIncrement(autoincrement);
-    table->fields.push_back(f);
-
-    for(sqlb::ForeignKeyClause* fk : foreignKeys)
-        table->addConstraint({f.name()}, ConstraintPtr(fk));
-    if(primaryKey)
-    {
-        QStringList v;
-        if(table->constraint(v, Constraint::PrimaryKeyConstraintType))
-        {
-            table->primaryKeyRef().push_back(f.name());
-
-            // Delete useless primary key constraint. There already is a primary key object for this table, we
-            // don't need another one.
-            delete primaryKey;
-        } else {
-            table->addConstraint({f.name()}, ConstraintPtr(primaryKey));
-        }
-    }
-}
-
-QString CreateTableWalker::parseConflictClause(antlr::RefAST c)
-{
-    QString conflictAction;
-
-    if(c != antlr::nullAST && c->getType() == sqlite3TokenTypes::ON && c->getNextSibling()->getType() == sqlite3TokenTypes::CONFLICT)
-    {
-        c = c->getNextSibling();      // skip ON
-        c = c->getNextSibling();      // skip CONFLICT
-        conflictAction = identifier(c);
-        c = c->getNextSibling();      // skip action
-    }
-
-    return conflictAction;
-}
-
-
-
-QString IndexedColumn::toString(const QString& indent, const QString& sep) const
-{
-    QString name = m_isExpression ? m_name : escapeIdentifier(m_name);
-    QString order = (m_order.isEmpty() ? QString("") : (sep + m_order));
+    std::string name = m_isExpression ? m_name : escapeIdentifier(m_name);
+    std::string order = (m_order.empty() ? "" : (sep + m_order));
     return indent + name + order;
 }
 
@@ -1248,38 +607,43 @@ Index& Index::operator=(const Index& rhs)
     m_whereExpr = rhs.m_whereExpr;
 
     // Make copies of the column
-    for(const IndexedColumn& c : rhs.fields)
-        fields.push_back(c);
+    std::copy(rhs.fields.begin(), rhs.fields.end(), std::back_inserter(fields));
 
     return *this;
 }
 
-QStringList Index::columnSqlList() const
+StringVector Index::columnSqlList() const
 {
-    QStringList sl;
+    StringVector sl;
 
     for(const IndexedColumn& c : fields)
-        sl << c.toString();
+        sl.push_back(c.toString());
 
     return sl;
 }
 
-QString Index::sql(const QString& schema, bool ifNotExists) const
+std::string Index::sql(const std::string& schema, bool ifNotExists) const
 {
     // Start CREATE (UNIQUE) INDEX statement
-    QString sql = QString("CREATE %1INDEX%2 %3 ON %4 (\n")
-            .arg(m_unique ? QString("UNIQUE ") : QString(""))
-            .arg(ifNotExists ? QString(" IF NOT EXISTS") : QString(""))
-            .arg(ObjectIdentifier(schema, m_name).toString(true))
-            .arg(sqlb::escapeIdentifier(m_table));
+    std::string sql;
+    if(m_unique)
+        sql = "CREATE UNIQUE INDEX ";
+    else
+        sql = "CREATE INDEX ";
+    if(ifNotExists)
+        sql += "IF NOT EXISTS ";
+    sql += ObjectIdentifier(schema, m_name).toString(true);
+    sql += " ON ";
+    sql += sqlb::escapeIdentifier(m_table);
+    sql += " (\n";
 
     // Add column list
-    sql += columnSqlList().join(",\n");
+    sql += joinStringVector(columnSqlList(), ",\n");
 
     // Add partial index bit
-    sql += QString("\n)");
-    if(!m_whereExpr.isEmpty())
-        sql += QString(" WHERE ") + m_whereExpr;
+    sql += "\n)";
+    if(!m_whereExpr.empty())
+        sql += " WHERE " + m_whereExpr;
 
     return sql + ";";
 }
@@ -1292,178 +656,37 @@ FieldInfoList Index::fieldInformation() const
     return result;
 }
 
-IndexPtr Index::parseSQL(const QString& sSQL)
+IndexPtr Index::parseSQL(const std::string& sSQL)
 {
-    SetLocaleToC locale;
-
-    std::stringstream s;
-    s << sSQL.toStdString();
-    Sqlite3Lexer lex(s);
-
-    Sqlite3Parser parser(lex);
-
-    antlr::ASTFactory ast_factory;
-    parser.initializeASTFactory(ast_factory);
-    parser.setASTFactory(&ast_factory);
-
-    try
+    parser::ParserDriver drv;
+    if(!drv.parse(sSQL))
     {
-        parser.createindex();
-        CreateIndexWalker ctw(parser.getAST());
-
-        auto i = ctw.index();
+        IndexPtr i = std::dynamic_pointer_cast<Index>(drv.result);
         i->setOriginalSql(sSQL);
         return i;
-    }
-    catch(antlr::ANTLRException& ex)
-    {
-        std::cerr << "Sqlite parse error: " << ex.toString() << "(" << sSQL.toStdString() << ")" << std::endl;
-    }
-    catch(...)
-    {
-        std::cerr << "Sqlite parse error: " << sSQL.toStdString() << std::endl; //TODO
-    }
-
-    return IndexPtr(new Index(""));
-}
-
-IndexPtr CreateIndexWalker::index()
-{
-    Index* index = new Index("");
-    index->setFullyParsed(true);
-
-    if(m_root)  // CREATE INDEX
-    {
-        antlr::RefAST s = m_root->getFirstChild();
-
-        // Skip to index name
-        while(s->getType() != Sqlite3Lexer::ID &&
-              s->getType() != Sqlite3Lexer::QUOTEDID &&
-              s->getType() != Sqlite3Lexer::QUOTEDLITERAL &&
-              s->getType() != Sqlite3Lexer::STRINGLITERAL &&
-              s->getType() != sqlite3TokenTypes::KEYWORDASTABLENAME)
-        {
-            // Is this a unique index?
-            if(s->getType() == Sqlite3Lexer::UNIQUE)
-                index->setUnique(true);
-
-            s = s->getNextSibling();
-        }
-
-        // Extract and set index name
-        index->setName(tablename(s));
-
-        // Get table name
-        s = s->getNextSibling(); // ON
-        s = s->getNextSibling(); // table name
-        index->setTable(tablename(s));
-
-        s = s->getNextSibling(); // LPAREN
-        s = s->getNextSibling(); // first column name
-        antlr::RefAST column = s;
-        // loop columndefs
-        while(column != antlr::nullAST && column->getType() == sqlite3TokenTypes::INDEXEDCOLUMN)
-        {
-            parsecolumn(index, column->getFirstChild());
-            column = column->getNextSibling(); // COMMA or RPAREN
-            column = column->getNextSibling(); // null or WHERE
-
-            s = s->getNextSibling();            // COLUMNDEF
-            s = s->getNextSibling();            // COMMA or RPAREN
-        }
-
-        // Now we are finished or it is a partial index
-        if(s != antlr::nullAST)
-        {
-            // This should be a 'where' then
-            if(s->getType() != sqlite3TokenTypes::WHERE)
-            {
-                // It is something else
-                index->setFullyParsed(false);
-            } else {
-                s = s->getNextSibling();        // expr
-                index->setWhereExpr(concatTextAST(s, true));
-            }
-        }
-    }
-
-    return IndexPtr(index);
-}
-
-void CreateIndexWalker::parsecolumn(Index* index, antlr::RefAST c)
-{
-    QString name;
-    bool isExpression;
-    QString order;
-
-    // First count the number of nodes used for the name or the expression. We reach the end of the name nodes list when we either
-    // get to the end of the list, get to a COMMA or a RPAREN, or get to the COLLATE keyword or get to the ASC/DESC keywords.
-    // Then see how many items there are: if it's one it's a normal index column with only a column name. In this case get the identifier.
-    // If it's more than one item it's an expression. In this case get all the items as they are.
-    int number_of_name_items = 0;
-    antlr::RefAST n = c;
-    while(n != antlr::nullAST
-          && n->getType() != sqlite3TokenTypes::COLLATE
-          && n->getType() != sqlite3TokenTypes::ASC
-          && n->getType() != sqlite3TokenTypes::DESC
-          && n->getType() != sqlite3TokenTypes::COMMA
-          && n->getType() != sqlite3TokenTypes::RPAREN)
-    {
-        number_of_name_items++;
-        n = n->getNextSibling();
-    }
-    if(number_of_name_items == 1)
-    {
-        name = identifier(c);
-        isExpression = false;
-        c = c->getNextSibling();
     } else {
-        for(int i=0;i<number_of_name_items;i++)
-        {
-            name += c->getText().c_str() + QString(" ");
-            c = c->getNextSibling();
-        }
-        name.chop(1);
-        isExpression = true;
+        std::cerr << "Sqlite parse error: " << sSQL << std::endl;
+        return std::make_shared<Index>("");
     }
-
-    // Parse the rest of the column definition
-    while(c != antlr::nullAST)
-    {
-        switch(c->getType())
-        {
-        case sqlite3TokenTypes::ASC:
-        case sqlite3TokenTypes::DESC:
-            order = c->getText().c_str();
-            break;
-        default:
-            // TODO Add support for COLLATE
-            index->setFullyParsed(false);
-        }
-
-        c = c->getNextSibling();
-    }
-
-    index->fields.emplace_back(name, isExpression, order);
 }
 
 
 
-ViewPtr View::parseSQL(const QString& sSQL)
+ViewPtr View::parseSQL(const std::string& sSQL)
 {
     // TODO
 
-    auto v = ViewPtr(new View(""));
+    auto v = std::make_shared<View>("");
     v->setOriginalSql(sSQL);
     return v;
 }
 
-QStringList View::fieldNames() const
+StringVector View::fieldNames() const
 {
-    QStringList sl;
+    StringVector sl;
 
     for(const Field& f : fields)
-        sl << f.name();
+        sl.push_back(f.name());
 
     return sl;
 }
@@ -1477,11 +700,11 @@ FieldInfoList View::fieldInformation() const
 }
 
 
-TriggerPtr Trigger::parseSQL(const QString& sSQL)
+TriggerPtr Trigger::parseSQL(const std::string& sSQL)
 {
     // TODO
 
-    auto t = TriggerPtr(new Trigger(""));
+    auto t = std::make_shared<Trigger>("");
     t->setOriginalSql(sSQL);
     return t;
 }

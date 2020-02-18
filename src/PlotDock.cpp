@@ -3,10 +3,30 @@
 #include "Settings.h"
 #include "sqlitetablemodel.h"
 #include "FileDialog.h"
-#include "MainWindow.h"     // Just for BrowseDataTableSettings, not for the actual main window class
+#include "TableBrowser.h"     // Just for BrowseDataTableSettings, not for the actual table browser class
 
 #include <QPrinter>
 #include <QPrintPreviewDialog>
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+#include <QRandomGenerator>
+#endif
+
+// Enable this line to show the most basic performance stats after pressing the fetch-all-data button. Please keep in mind that while these
+// numbers might help to estimate the performance of the data loading procedure, this is not a proper benchmark.
+//#define LOAD_DATA_BENCHMARK
+
+#ifdef LOAD_DATA_BENCHMARK
+#include <QElapsedTimer>
+#endif
+
+static int random_number(int from, int to)
+{
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+    return QRandomGenerator::global()->bounded(from, to);
+#else
+    return qrand() % to + from;
+#endif
+}
 
 PlotDock::PlotDock(QWidget* parent)
     : QDialog(parent),
@@ -28,11 +48,11 @@ PlotDock::PlotDock(QWidget* parent)
 
     // Connect signals
     connect(ui->treePlotColumns, &QTreeWidget::itemChanged, this, &PlotDock::on_treePlotColumns_itemChanged);
-    connect(ui->plotWidget, SIGNAL(selectionChangedByUser()), this, SLOT(selectionChanged()));
+    connect(ui->plotWidget, &QCustomPlot::selectionChangedByUser, this, &PlotDock::selectionChanged);
 
     // connect slots that takes care that when an axis is selected, only that direction can be dragged and zoomed:
-    connect(ui->plotWidget, SIGNAL(mousePress(QMouseEvent*)), this, SLOT(mousePress()));
-    connect(ui->plotWidget, SIGNAL(mouseWheel(QWheelEvent*)), this, SLOT(mouseWheel()));
+    connect(ui->plotWidget, &QCustomPlot::mousePress, this, &PlotDock::mousePress);
+    connect(ui->plotWidget, &QCustomPlot::mouseWheel, this, &PlotDock::mouseWheel);
 
     // Enable: click on items to select them, Ctrl+Click for multi-selection, mouse-wheel for zooming and mouse drag for
     // changing the visible range.
@@ -41,7 +61,7 @@ PlotDock::PlotDock(QWidget* parent)
     ui->plotWidget->setSelectionRectMode(QCP::srmNone);
 
     QShortcut* shortcutCopy = new QShortcut(QKeySequence::Copy, ui->plotWidget, nullptr, nullptr, Qt::WidgetShortcut);
-    connect(shortcutCopy, SIGNAL(activated()), this, SLOT(copy()));
+    connect(shortcutCopy, &QShortcut::activated, this, &PlotDock::copy);
 
     QShortcut* shortcutPrint = new QShortcut(QKeySequence::Print, ui->plotWidget, nullptr, nullptr, Qt::WidgetShortcut);
     connect(shortcutPrint, &QShortcut::activated, this, &PlotDock::openPrintDialog);
@@ -69,13 +89,13 @@ PlotDock::PlotDock(QWidget* parent)
     showLegendAction->setCheckable(true);
     m_contextMenu->addAction(showLegendAction);
 
-    connect(showLegendAction, SIGNAL(toggled(bool)), this, SLOT(toggleLegendVisible(bool)));
+    connect(showLegendAction, &QAction::toggled, this, &PlotDock::toggleLegendVisible);
 
     QAction* stackedBarsAction = new QAction(tr("Stacked bars"), m_contextMenu);
     stackedBarsAction->setCheckable(true);
     m_contextMenu->addAction(stackedBarsAction);
 
-    connect(stackedBarsAction, SIGNAL(toggled(bool)), this, SLOT(toggleStackedBars(bool)));
+    connect(stackedBarsAction, &QAction::toggled, this, &PlotDock::toggleStackedBars);
 
     connect(ui->plotWidget, &QTableView::customContextMenuRequested,
             [=](const QPoint& pos) {
@@ -173,7 +193,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                     // in the PlotColumnType, both using the User Role.
                     columnitem->setData(PlotColumnField, Qt::UserRole, i);
                     columnitem->setData(PlotColumnType, Qt::UserRole, static_cast<int>(columntype));
-                    columnitem->setText(PlotColumnField, model->headerData(i, Qt::Horizontal).toString());
+                    columnitem->setText(PlotColumnField, model->headerData(i, Qt::Horizontal, Qt::EditRole).toString());
 
                     // restore previous check state
                     if(mapItemsY.contains(columnitem->text(PlotColumnField)))
@@ -311,36 +331,43 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                 for(int j = 0; j < nrows; ++j)
                 {
                     tdata[j] = j;
-                    // convert x type axis if it's datetime
-                    switch (xtype) {
-                    case QVariant::DateTime:
-                    case QVariant::Date: {
-                        QString s = model->data(model->index(j, x)).toString();
-                        QDateTime d = QDateTime::fromString(s, Qt::ISODate);
-                        xdata[j] = d.toMSecsSinceEpoch() / 1000.0;
-                        break;
-                    }
-                    case QVariant::Time: {
-                        QString s = model->data(model->index(j, x)).toString();
-                        QTime t = QTime::fromString(s);
-                        xdata[j] = t.msecsSinceStartOfDay() / 1000.0;
-                        break;
-                    }
-                    case QVariant::String: {
-                        xdata[j] = j+1;
-                        labels << model->data(model->index(j, x)).toString();
-                        break;
-                    }
-                    default: {
-                        // Get the x value for this point. If the selected column is -1, i.e. the row number, just use the current row number from the loop
-                        // instead of retrieving some value from the model.
-                        if(x == RowNumId)
-                            xdata[j] = j+1;
-                        else
-                            xdata[j] = model->data(model->index(j, x)).toDouble();
-                    }
-                    }
 
+                    // NULL values produce gaps in the graph. We use NaN values in
+                    // that case as required by QCustomPlot.
+                    if(x != RowNumId && model->data(model->index(j, x), Qt::EditRole).isNull())
+                        xdata[j] = qQNaN();
+                    else {
+
+                        // convert x type axis if it's datetime
+                        switch (xtype) {
+                        case QVariant::DateTime:
+                        case QVariant::Date: {
+                            QString s = model->data(model->index(j, x)).toString();
+                            QDateTime d = QDateTime::fromString(s, Qt::ISODate);
+                            xdata[j] = static_cast<double>(d.toMSecsSinceEpoch()) / 1000.0;
+                            break;
+                        }
+                        case QVariant::Time: {
+                            QString s = model->data(model->index(j, x)).toString();
+                            QTime t = QTime::fromString(s);
+                            xdata[j] = t.msecsSinceStartOfDay() / 1000.0;
+                            break;
+                        }
+                        case QVariant::String: {
+                            xdata[j] = j+1;
+                            labels << model->data(model->index(j, x)).toString();
+                            break;
+                        }
+                        default: {
+                            // Get the x value for this point. If the selected column is -1, i.e. the row number, just use the current row number from the loop
+                            // instead of retrieving some value from the model.
+                            if(x == RowNumId)
+                                xdata[j] = j+1;
+                            else
+                                xdata[j] = model->data(model->index(j, x)).toDouble();
+                        }
+                        }
+                    }
                     if (j != 0)
                         isSorted &= (xdata[j-1] <= xdata[j]);
 
@@ -415,7 +442,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                 if(column == RowNumId)
                     yAxisLabels << tr("Row #");
                 else
-                    yAxisLabels << model->headerData(column, Qt::Horizontal).toString();
+                    yAxisLabels << model->headerData(column, Qt::Horizontal, Qt::EditRole).toString();
             }
         }
 
@@ -428,7 +455,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
         if(x == RowNumId)
             ui->plotWidget->xAxis->setLabel(tr("Row #"));
         else
-            ui->plotWidget->xAxis->setLabel(model->headerData(x, Qt::Horizontal).toString());
+            ui->plotWidget->xAxis->setLabel(model->headerData(x, Qt::Horizontal, Qt::EditRole).toString());
         ui->plotWidget->yAxis->setLabel(yAxisLabels.join("|"));
     }
 
@@ -524,7 +551,7 @@ void PlotDock::on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem* item, int c
         // On double click open the colordialog
         QColorDialog colordialog(this);
         QColor curbkcolor = item->backgroundColor(column);
-        QColor precolor = !curbkcolor.isValid() ? static_cast<Qt::GlobalColor>(qrand() % 13 + 5) : curbkcolor;
+        QColor precolor = !curbkcolor.isValid() ? static_cast<Qt::GlobalColor>(random_number(5, 13)) : curbkcolor;
         QColor color = colordialog.getColor(precolor, this, tr("Choose an axis color"));
         if(color.isValid())
         {
@@ -662,13 +689,13 @@ void PlotDock::on_comboPointShape_currentIndexChanged(int index)
     }
 }
 
-QVariant::Type PlotDock::guessDataType(SqliteTableModel* model, int column)
+QVariant::Type PlotDock::guessDataType(SqliteTableModel* model, int column) const
 {
     QVariant::Type type = QVariant::Invalid;
     for(int i = 0; i < std::min(10, model->rowCount()) && type != QVariant::String; ++i)
     {
-        QVariant data = model->data(model->index(i, column), Qt::EditRole);
-        if(data.isNull() || data.convert(QVariant::Double))
+        QVariant varData = model->data(model->index(i, column), Qt::EditRole);
+        if(varData.isNull() || varData.convert(QVariant::Double))
         {
             type = QVariant::Double;
         } else {
@@ -697,8 +724,20 @@ void PlotDock::fetchAllData()
 {
     if(m_currentPlotModel)
     {
+#ifdef LOAD_DATA_BENCHMARK
+    // If benchmark mode is enabled start measuring the performance now
+    QElapsedTimer timer;
+    timer.start();
+#endif
+
         // Make sure all data is loaded
         m_currentPlotModel->completeCache();
+
+#ifdef LOAD_DATA_BENCHMARK
+    QMessageBox::information(this, qApp->applicationName(),
+                             tr("Loading all remaining data for this table took %1ms.")
+                             .arg(timer.elapsed()));
+#endif
 
         // Update plot
         updatePlot(m_currentPlotModel, m_currentTableSettings);
@@ -708,9 +747,9 @@ void PlotDock::fetchAllData()
 void PlotDock::selectionChanged()
 {
 
-    for (QCPAbstractPlottable* plottable : ui->plotWidget->selectedPlottables()) {
+    for (const QCPAbstractPlottable* plottable : ui->plotWidget->selectedPlottables()) {
 
-        for (QCPDataRange dataRange : plottable->selection().dataRanges()) {
+        for (const QCPDataRange& dataRange : plottable->selection().dataRanges()) {
 
             int index = dataRange.begin();
             if (dataRange.length() != 0) {

@@ -1,3 +1,25 @@
+#### Version 2.0.1 released on 25.06.18 ####
+
+Bugfixes:
+  - Default filling order of QCPLayoutGrid is now foColumnsFirst instead of foRowsFirst, as intended and consistent with QCP1.
+    Note that this also changes the indexing order of e.g. QCustomPlot::axisRect(int index), compared with 2.0.0. You can change
+    the filling and thus indexing order yourself by calling QCPLayoutGrid::setFillOrder.
+  - fixed bug in QCPColorMap, when using alpha in the gradient color stops. Used to draw falsely black data points when the associated data value is exactly
+    on the first or last color stop.
+  - QCPDataSelection::enforceType(stDataRange) would erroneously add an empty data range to the selection, if the selection was already empty.
+    This in turn would cause isEmpty() to erroneously return false.
+  - fixed hypothetical crash when selectTest is called on a QCPItemCurve which has all of its points at the same position
+    
+Other:
+  - Various documentation improvements and clarifications
+  - Prevent conflict with windows.h min/max macros if user forgets to define NOMINMAX
+  - compiling QCP shared libraries with static Qt is now easier
+  - added defines QCUSTOMPLOT_VERSION and QCUSTOMPLOT_VERSION_STR (the same way Qt does) to provide the used QCP version number
+  - added missing Q_DECL_OVERRIDE declarations, thus preventing warnings some compiler settings
+  - QCPAxisTicker and subclasses are no longer copyable by value, as intended
+  - QCPBarsGroup constructor is now explicit, as intended
+  - Qt 5.11 compatibility
+
 #### Version 2.0.0 released on 04.09.17 ####
 
 Added major features:

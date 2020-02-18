@@ -19,8 +19,8 @@ namespace {
 RowLoader::RowLoader (
     std::function<std::shared_ptr<sqlite3>(void)> db_getter_,
     std::function<void(QString)> statement_logger_,
-    QStringList & headers_,
-    QMutex & cache_mutex_,
+    std::vector<std::string> & headers_,
+    std::mutex & cache_mutex_,
     Cache & cache_data_
     )
     : db_getter(db_getter_), statement_logger(statement_logger_), headers(headers_)
@@ -35,7 +35,7 @@ RowLoader::RowLoader (
 {
 }
 
-void RowLoader::setQuery (QString new_query, QString newCountQuery)
+void RowLoader::setQuery (const QString& new_query, const QString& newCountQuery)
 {
     std::lock_guard<std::mutex> lk(m);
     query = new_query;
@@ -59,7 +59,7 @@ void RowLoader::triggerRowCountDetermination(int token)
         if(nrows >= 0)
             emit rowCountComplete(token, nrows);
 
-        std::lock_guard<std::mutex> lk(m);
+        std::lock_guard<std::mutex> lk2(m);
         nosync_taskDone();
     });
 }
@@ -76,7 +76,7 @@ std::shared_ptr<sqlite3> RowLoader::getDb () const
     return pDb;
 }
 
-int RowLoader::countRows()
+int RowLoader::countRows() const
 {
     int retval = -1;
 
@@ -99,15 +99,10 @@ int RowLoader::countRows()
         QByteArray utf8Query = countQuery.toUtf8();
 
         sqlite3_stmt* stmt;
-        int status = sqlite3_prepare_v2(pDb.get(), utf8Query, utf8Query.size(), &stmt, nullptr);
-        if(status == SQLITE_OK)
+        if(sqlite3_prepare_v2(pDb.get(), utf8Query, utf8Query.size(), &stmt, nullptr) == SQLITE_OK)
         {
-            status = sqlite3_step(stmt);
-            if(status == SQLITE_ROW)
-            {
-                QString sCount = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0)));
-                retval = sCount.toInt();
-            }
+            if(sqlite3_step(stmt) == SQLITE_ROW)
+                retval = sqlite3_column_int(stmt, 0);
             sqlite3_finalize(stmt);
         } else {
             qWarning() << "Count query failed: " << countQuery;
@@ -223,38 +218,33 @@ void RowLoader::process (Task & t)
 
     QByteArray utf8Query = sLimitQuery.toUtf8();
     sqlite3_stmt *stmt;
-
-    int status = sqlite3_prepare_v2(pDb.get(), utf8Query, utf8Query.size(), &stmt, nullptr);
-
     auto row = t.row_begin;
-
-    if(SQLITE_OK == status)
+    if(sqlite3_prepare_v2(pDb.get(), utf8Query, utf8Query.size(), &stmt, nullptr) == SQLITE_OK)
     {
-        const int num_columns = headers.size();
+        const size_t num_columns = headers.size();
 
         while(!t.cancel && sqlite3_step(stmt) == SQLITE_ROW)
         {
-            Cache::value_type rowdata;
-            for(int i=0;i<num_columns;++i)
+            // Construct a new row object with the right number of columns
+            Cache::value_type rowdata(num_columns);
+            for(size_t i=0;i<num_columns;++i)
             {
-                if(sqlite3_column_type(stmt, i) == SQLITE_NULL)
+                // No need to do anything for NULL values because we can just use the already default constructed value
+                if(sqlite3_column_type(stmt, static_cast<int>(i)) != SQLITE_NULL)
                 {
-                    rowdata.append(QByteArray());
-                } else {
-                    int bytes = sqlite3_column_bytes(stmt, i);
+                    int bytes = sqlite3_column_bytes(stmt, static_cast<int>(i));
                     if(bytes)
-                        rowdata.append(QByteArray(static_cast<const char*>(sqlite3_column_blob(stmt, i)), bytes));
+                        rowdata[i] = QByteArray(static_cast<const char*>(sqlite3_column_blob(stmt, static_cast<int>(i))), bytes);
                     else
-                        rowdata.append(QByteArray(""));
+                        rowdata[i] = "";
                 }
             }
-            QMutexLocker lk(&cache_mutex);
+            std::lock_guard<std::mutex> lk(cache_mutex);
             cache_data.set(row++, std::move(rowdata));
         }
 
         sqlite3_finalize(stmt);
     }
 
-    if(row != t.row_begin)
-        emit fetched(t.token, t.row_begin, row);
+    emit fetched(t.token, t.row_begin, row);
 }

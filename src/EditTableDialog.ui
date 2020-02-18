@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>650</width>
+    <width>652</width>
     <height>600</height>
    </rect>
   </property>
@@ -59,7 +59,7 @@
          <item row="0" column="0">
           <widget class="QLabel" name="label">
            <property name="text">
-            <string>Database schema</string>
+            <string>Database sche&amp;ma</string>
            </property>
            <property name="buddy">
             <cstring>comboSchema</cstring>
@@ -93,219 +93,342 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupFields">
-     <property name="title">
-      <string>Fields</string>
+    <widget class="QSplitter" name="splitter">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
+     <widget class="QTabWidget" name="groupDefinition">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="groupFieldsPage1">
+       <attribute name="title">
+        <string>Fields</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="QToolButton" name="addFieldButton">
-          <property name="text">
-           <string>Add field</string>
-          </property>
-          <property name="icon">
-           <iconset resource="icons/icons.qrc">
-            <normaloff>:/icons/field_add</normaloff>:/icons/field_add</iconset>
-          </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonTextBesideIcon</enum>
-          </property>
-          <property name="autoRaise">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QToolButton" name="removeFieldButton">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="text">
-           <string>Remove field</string>
-          </property>
-          <property name="icon">
-           <iconset resource="icons/icons.qrc">
-            <normaloff>:/icons/field_delete</normaloff>:/icons/field_delete</iconset>
-          </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonTextBesideIcon</enum>
-          </property>
-          <property name="autoRaise">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QToolButton" name="buttonMoveUp">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="text">
-           <string>Move field up</string>
-          </property>
-          <property name="icon">
-           <iconset resource="icons/icons.qrc">
-            <normaloff>:/icons/up</normaloff>:/icons/up</iconset>
-          </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonTextBesideIcon</enum>
-          </property>
-          <property name="autoRaise">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QToolButton" name="buttonMoveDown">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="text">
-           <string>Move field down</string>
-          </property>
-          <property name="icon">
-           <iconset resource="icons/icons.qrc">
-            <normaloff>:/icons/down</normaloff>:/icons/down</iconset>
-          </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonTextBesideIcon</enum>
-          </property>
-          <property name="autoRaise">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="horizontalSpacer">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <widget class="QWidget" name="widget" native="true">
-        <layout class="QVBoxLayout" name="verticalLayout_4">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QSplitter" name="splitter">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <widget class="QTreeWidget" name="treeWidget">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QToolButton" name="addFieldButton">
+            <property name="text">
+             <string>Add</string>
             </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>140</height>
-             </size>
+            <property name="icon">
+             <iconset resource="icons/icons.qrc">
+              <normaloff>:/icons/field_add</normaloff>:/icons/field_add</iconset>
             </property>
-            <property name="rootIsDecorated">
-             <bool>false</bool>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
             </property>
-            <column>
-             <property name="text">
-              <string>Name</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Type</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>NN</string>
-             </property>
-             <property name="toolTip">
-              <string>Not null</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>PK</string>
-             </property>
-             <property name="toolTip">
-              <string>Primary key</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>AI</string>
-             </property>
-             <property name="toolTip">
-              <string>Autoincrement</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>U</string>
-             </property>
-             <property name="toolTip">
-              <string>Unique</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Default</string>
-             </property>
-             <property name="toolTip">
-              <string>Default value</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Check</string>
-             </property>
-             <property name="toolTip">
-              <string>Check constraint</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Foreign Key</string>
-             </property>
-            </column>
-           </widget>
-           <widget class="SqlTextEdit" name="sqlTextEdit">
-            <property name="readOnly">
+            <property name="autoRaise">
              <bool>true</bool>
             </property>
            </widget>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-     </layout>
+          </item>
+          <item>
+           <widget class="QToolButton" name="removeFieldButton">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Remove</string>
+            </property>
+            <property name="icon">
+             <iconset resource="icons/icons.qrc">
+              <normaloff>:/icons/field_delete</normaloff>:/icons/field_delete</iconset>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="buttonMoveTop">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Move to top</string>
+            </property>
+            <property name="icon">
+             <iconset resource="icons/icons.qrc">
+              <normaloff>:/icons/arrow_top</normaloff>:/icons/arrow_top</iconset>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+            <property name="arrowType">
+             <enum>Qt::NoArrow</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="buttonMoveUp">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Move up</string>
+            </property>
+            <property name="icon">
+             <iconset resource="icons/icons.qrc">
+              <normaloff>:/icons/up</normaloff>:/icons/up</iconset>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="buttonMoveDown">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Move down</string>
+            </property>
+            <property name="icon">
+             <iconset resource="icons/icons.qrc">
+              <normaloff>:/icons/down</normaloff>:/icons/down</iconset>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="buttonMoveBottom">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Move to bottom</string>
+            </property>
+            <property name="icon">
+             <iconset resource="icons/icons.qrc">
+              <normaloff>:/icons/arrow_bottom</normaloff>:/icons/arrow_bottom</iconset>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QTreeWidget" name="treeWidget">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>140</height>
+           </size>
+          </property>
+          <property name="rootIsDecorated">
+           <bool>false</bool>
+          </property>
+          <column>
+           <property name="text">
+            <string>Name</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Type</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>NN</string>
+           </property>
+           <property name="toolTip">
+            <string>Not null</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>PK</string>
+           </property>
+           <property name="toolTip">
+            <string>Primary key</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>AI</string>
+           </property>
+           <property name="toolTip">
+            <string>Autoincrement</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>U</string>
+           </property>
+           <property name="toolTip">
+            <string>Unique</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Default</string>
+           </property>
+           <property name="toolTip">
+            <string>Default value</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Check</string>
+           </property>
+           <property name="toolTip">
+            <string>Check constraint</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Collation</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Foreign Key</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Constraints</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QToolButton" name="buttonAddConstraint">
+            <property name="text">
+             <string>Add constraint</string>
+            </property>
+            <property name="icon">
+             <iconset resource="icons/icons.qrc">
+              <normaloff>:/icons/field_add</normaloff>:/icons/field_add</iconset>
+            </property>
+            <property name="popupMode">
+             <enum>QToolButton::InstantPopup</enum>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="buttonRemoveConstraint">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Remove constraint</string>
+            </property>
+            <property name="icon">
+             <iconset resource="icons/icons.qrc">
+              <normaloff>:/icons/field_delete</normaloff>:/icons/field_delete</iconset>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="tableConstraints">
+          <property name="horizontalScrollMode">
+           <enum>QAbstractItemView::ScrollPerPixel</enum>
+          </property>
+          <column>
+           <property name="text">
+            <string>Columns</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Type</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Name</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>SQL</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+     <widget class="SqlTextEdit" name="sqlTextEdit" native="true">
+      <property name="readOnly" stdset="0">
+       <bool>true</bool>
+      </property>
+     </widget>
     </widget>
    </item>
    <item>
@@ -329,11 +452,51 @@
     </widget>
    </item>
   </layout>
+  <action name="actionAddPrimaryKey">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/field_key</normaloff>:/icons/field_key</iconset>
+   </property>
+   <property name="text">
+    <string>Primary Key</string>
+   </property>
+   <property name="toolTip">
+    <string>Add a primary key constraint</string>
+   </property>
+  </action>
+  <action name="actionAddForeignKey">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/field_fk</normaloff>:/icons/field_fk</iconset>
+   </property>
+   <property name="text">
+    <string>Foreign Key</string>
+   </property>
+   <property name="toolTip">
+    <string>Add a foreign key constraint</string>
+   </property>
+  </action>
+  <action name="actionAddUniqueConstraint">
+   <property name="text">
+    <string>Unique</string>
+   </property>
+   <property name="toolTip">
+    <string>Add a unique constraint</string>
+   </property>
+  </action>
+  <action name="actionAddCheckConstraint">
+   <property name="text">
+    <string>Check</string>
+   </property>
+   <property name="toolTip">
+    <string>Add a check constraint</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
    <class>SqlTextEdit</class>
-   <extends>QAbstractScrollArea</extends>
+   <extends>QWidget</extends>
    <header>sqltextedit.h</header>
    <container>1</container>
   </customwidget>
@@ -343,12 +506,18 @@
   <tabstop>buttonMore</tabstop>
   <tabstop>comboSchema</tabstop>
   <tabstop>checkWithoutRowid</tabstop>
+  <tabstop>groupDefinition</tabstop>
   <tabstop>addFieldButton</tabstop>
   <tabstop>removeFieldButton</tabstop>
+  <tabstop>buttonMoveTop</tabstop>
   <tabstop>buttonMoveUp</tabstop>
   <tabstop>buttonMoveDown</tabstop>
+  <tabstop>buttonMoveBottom</tabstop>
   <tabstop>treeWidget</tabstop>
   <tabstop>sqlTextEdit</tabstop>
+  <tabstop>buttonAddConstraint</tabstop>
+  <tabstop>buttonRemoveConstraint</tabstop>
+  <tabstop>tableConstraints</tabstop>
  </tabstops>
  <resources>
   <include location="icons/icons.qrc"/>
@@ -409,8 +578,8 @@
    <slot>addField()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>94</x>
-     <y>253</y>
+     <x>78</x>
+     <y>255</y>
     </hint>
     <hint type="destinationlabel">
      <x>79</x>
@@ -425,8 +594,8 @@
    <slot>removeField()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>222</x>
-     <y>253</y>
+     <x>167</x>
+     <y>255</y>
     </hint>
     <hint type="destinationlabel">
      <x>249</x>
@@ -493,8 +662,8 @@
      <y>78</y>
     </hint>
     <hint type="destinationlabel">
-     <x>117</x>
-     <y>176</y>
+     <x>138</x>
+     <y>172</y>
     </hint>
    </hints>
   </connection>
@@ -505,8 +674,8 @@
    <slot>setWithoutRowid(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>344</x>
-     <y>143</y>
+     <x>485</x>
+     <y>160</y>
     </hint>
     <hint type="destinationlabel">
      <x>324</x>
@@ -537,12 +706,60 @@
    <slot>changeSchema(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>186</x>
-     <y>155</y>
+     <x>327</x>
+     <y>139</y>
     </hint>
     <hint type="destinationlabel">
      <x>647</x>
      <y>157</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonRemoveConstraint</sender>
+   <signal>clicked()</signal>
+   <receiver>EditTableDialog</receiver>
+   <slot>removeConstraint()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>295</x>
+     <y>255</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>647</x>
+     <y>157</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonMoveTop</sender>
+   <signal>clicked()</signal>
+   <receiver>EditTableDialog</receiver>
+   <slot>moveTop()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>207</x>
+     <y>240</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>202</x>
+     <y>190</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonMoveBottom</sender>
+   <signal>clicked()</signal>
+   <receiver>EditTableDialog</receiver>
+   <slot>moveBottom()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>530</x>
+     <y>246</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>400</x>
+     <y>186</y>
     </hint>
    </hints>
   </connection>
@@ -558,5 +775,8 @@
   <slot>moveDown()</slot>
   <slot>setWithoutRowid(bool)</slot>
   <slot>changeSchema(QString)</slot>
+  <slot>removeConstraint()</slot>
+  <slot>moveTop()</slot>
+  <slot>moveBottom()</slot>
  </slots>
 </ui>

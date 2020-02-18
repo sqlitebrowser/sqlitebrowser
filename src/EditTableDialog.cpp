@@ -4,13 +4,18 @@
 #include "ui_EditTableDialog.h"
 #include "sqlitetablemodel.h"
 #include "sqlitedb.h"
+#include "SelectItemsPopup.h"
 
-#include <QMessageBox>
-#include <QPushButton>
 #include <QComboBox>
 #include <QDateTime>
 #include <QKeyEvent>
+#include <QMenu>
+#include <QMessageBox>
+#include <QPushButton>
+
 #include <algorithm>
+
+Q_DECLARE_METATYPE(sqlb::ConstraintPtr)
 
 EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& tableName, bool createTable, QWidget* parent)
     : QDialog(parent),
@@ -24,11 +29,34 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
     // Create UI
     ui->setupUi(this);
     ui->widgetExtension->setVisible(false);
-    connect(ui->treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*,int)),this,SLOT(itemChanged(QTreeWidgetItem*,int)));
+    connect(ui->treeWidget, &QTreeWidget::itemChanged, this, &EditTableDialog::fieldItemChanged);
+    connect(ui->tableConstraints, &QTableWidget::itemChanged, this, &EditTableDialog::constraintItemChanged);
 
     // Set item delegate for foreign key column
     m_fkEditorDelegate = new ForeignKeyEditorDelegate(db, m_table, this);
     ui->treeWidget->setItemDelegateForColumn(kForeignKey, m_fkEditorDelegate);
+
+    // Set up popup menu for adding constraints
+    QMenu* constraint_menu = new QMenu(this);
+    constraint_menu->addAction(ui->actionAddPrimaryKey);
+    constraint_menu->addAction(ui->actionAddForeignKey);
+    constraint_menu->addAction(ui->actionAddUniqueConstraint);
+    constraint_menu->addAction(ui->actionAddCheckConstraint);
+    connect(ui->actionAddPrimaryKey, &QAction::triggered, [this]() { addConstraint(sqlb::Constraint::PrimaryKeyConstraintType); });
+    connect(ui->actionAddForeignKey, &QAction::triggered, [this]() { addConstraint(sqlb::Constraint::ForeignKeyConstraintType); });
+    connect(ui->actionAddUniqueConstraint, &QAction::triggered, [this]() { addConstraint(sqlb::Constraint::UniqueConstraintType); });
+    connect(ui->actionAddCheckConstraint, &QAction::triggered, [this]() { addConstraint(sqlb::Constraint::CheckConstraintType); });
+    ui->buttonAddConstraint->setMenu(constraint_menu);
+
+    // Get list of all collations
+    db.executeSQL("PRAGMA collation_list;", false, true, [this](int column_count, std::vector<QByteArray> columns, std::vector<QByteArray>) -> bool {
+        if(column_count >= 2)
+            m_collationList.push_back(columns.at(1));
+        return false;
+    });
+    if(!m_collationList.contains(""))
+        m_collationList.push_back("");
+    m_collationList.sort();
 
     // Editing an existing table?
     if(m_bNewTable == false)
@@ -39,33 +67,83 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
 
         // Initialise the list of tracked columns for table layout changes
         for(const auto& field : m_table.fields)
-            trackColumns[field.name()] = field.name();
+            trackColumns[QString::fromStdString(field.name())] = QString::fromStdString(field.name());
 
         // Set without rowid checkbox and schema dropdown. No need to trigger any events here as we're only loading a table exactly as it is stored by SQLite, so no need
         // for error checking etc.
         ui->checkWithoutRowid->blockSignals(true);
-        ui->checkWithoutRowid->setChecked(m_table.isWithoutRowidTable());
+        ui->checkWithoutRowid->setChecked(m_table.withoutRowidTable());
         ui->checkWithoutRowid->blockSignals(false);
         ui->comboSchema->blockSignals(true);
-        ui->comboSchema->addItems(pdb.schemata.keys());         // Load list of database schemata
-        ui->comboSchema->setCurrentText(curTable.schema());
+        for(const auto& n : pdb.schemata)                       // Load list of database schemata
+            ui->comboSchema->addItem(QString::fromStdString(n.first));
+        ui->comboSchema->setCurrentText(QString::fromStdString(curTable.schema()));
         ui->comboSchema->blockSignals(false);
 
         populateFields();
+        populateConstraints();
     } else {
-        ui->comboSchema->addItems(pdb.schemata.keys());         // Load list of database schemata
+        for(const auto& n : pdb.schemata)                       // Load list of database schemata
+            ui->comboSchema->addItem(QString::fromStdString(n.first));
         ui->comboSchema->setCurrentText("main");                // Always create tables in the main schema by default
         ui->labelEditWarning->setVisible(false);
     }
+
+    // Enable/disable remove constraint button depending on whether a constraint is selected
+    connect(ui->tableConstraints, &QTableWidget::itemSelectionChanged, [this]() {
+        bool hasSelection = ui->tableConstraints->selectionModel()->hasSelection();
+        ui->buttonRemoveConstraint->setEnabled(hasSelection);
+    });
 
     // And create a savepoint
     pdb.setSavepoint(m_sRestorePointName);
 
     // Update UI
-    ui->editTableName->setText(curTable.name());
+    ui->editTableName->setText(QString::fromStdString(curTable.name()));
     updateColumnWidth();
 
+    // Allow editing of constraint columns by double clicking the columns column of the constraints table
+    connect(ui->tableConstraints, &QTableWidget::itemDoubleClicked, [this](QTableWidgetItem* item) {
+        // Check whether the double clicked item is in the columns column
+        if(item->column() == kConstraintColumns)
+        {
+            sqlb::ConstraintPtr constraint = ui->tableConstraints->item(item->row(), kConstraintColumns)->data(Qt::UserRole).value<sqlb::ConstraintPtr>();
+
+            // Do not allow editing the columns list of a CHECK constraint because CHECK constraints are independent of column lists
+            if(constraint->type() == sqlb::Constraint::CheckConstraintType)
+                return;
+
+            // Show the select items popup dialog
+            SelectItemsPopup* dialog = new SelectItemsPopup(m_table.fieldNames(), item->data(Qt::UserRole).value<sqlb::ConstraintPtr>()->columnList(), this);
+            QRect item_rect = ui->tableConstraints->visualItemRect(item);
+            dialog->move(ui->tableConstraints->mapToGlobal(QPoint(ui->tableConstraints->x() + item_rect.x(),
+                                                                  ui->tableConstraints->y() + item_rect.y() + item_rect.height() / 2)));
+            dialog->show();
+
+            // When clicking the Apply button in the popup dialog, save the new columns list
+            connect(dialog, &SelectItemsPopup::accepted, [this, dialog, constraint]() {
+                // Check if column selection changed at all
+                sqlb::StringVector new_columns = dialog->selectedItems();
+                if(constraint->columnList() != new_columns)
+                {
+                    // Remove the constraint with the old columns and add a new one with the new columns
+                    m_table.removeConstraint(constraint);
+                    constraint->setColumnList(new_columns);
+                    m_table.addConstraint(constraint);
+
+                    // Update the UI
+                    populateFields();
+                    populateConstraints();
+                    updateSqlText();
+                }
+            });
+        }
+    });
+
+    // (De-)activate fields
     checkInput();
+
+    ui->sqlTextEdit->setReadOnly(true);
 }
 
 EditTableDialog::~EditTableDialog()
@@ -95,62 +173,154 @@ void EditTableDialog::updateColumnWidth()
     ui->treeWidget->setColumnWidth(kAutoIncrement, 30);
     ui->treeWidget->setColumnWidth(kUnique, 30);
     ui->treeWidget->setColumnWidth(kForeignKey, 500);
+
+    ui->tableConstraints->setColumnWidth(kConstraintColumns, 180);
+    ui->tableConstraints->setColumnWidth(kConstraintType, 130);
+    ui->tableConstraints->setColumnWidth(kConstraintName, 130);
+    ui->tableConstraints->setColumnWidth(kConstraintSql, 300);
 }
 
 void EditTableDialog::populateFields()
 {
-    // disconnect the itemChanged signal or the table item will
-    // be updated while filling the treewidget
-    disconnect(ui->treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*,int)),
-               this,SLOT(itemChanged(QTreeWidgetItem*,int)));
+    // Disable the itemChanged signal or the table item will be updated while filling the treewidget
+    ui->treeWidget->blockSignals(true);
 
     ui->treeWidget->clear();
     const auto& fields = m_table.fields;
-    QStringList pk = m_table.primaryKey();
+    const auto pk = m_table.primaryKey();
     for(const sqlb::Field& f : fields)
     {
         QTreeWidgetItem *tbitem = new QTreeWidgetItem(ui->treeWidget);
         tbitem->setFlags(tbitem->flags() | Qt::ItemIsEditable);
-        tbitem->setText(kName, f.name());
+        tbitem->setText(kName, QString::fromStdString(f.name()));
         QComboBox* typeBox = new QComboBox(ui->treeWidget);
-        typeBox->setProperty("column", f.name());
+        typeBox->setProperty("column", QString::fromStdString(f.name()));
         typeBox->setEditable(true);
         typeBox->addItems(DBBrowserDB::Datatypes);
-        int index = typeBox->findText(f.type(), Qt::MatchExactly);
+        int index = typeBox->findText(QString::fromStdString(f.type()), Qt::MatchExactly);
         if(index == -1)
         {
             // non standard named type
-            typeBox->addItem(f.type());
+            typeBox->addItem(QString::fromStdString(f.type()));
             index = typeBox->count() - 1;
         }
         typeBox->setCurrentIndex(index);
         typeBox->installEventFilter(this);
-        connect(typeBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateTypes()));
+        connect(typeBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateTypeAndCollation()));
         ui->treeWidget->setItemWidget(tbitem, kType, typeBox);
 
         tbitem->setCheckState(kNotNull, f.notnull() ? Qt::Checked : Qt::Unchecked);
-        tbitem->setCheckState(kPrimaryKey, contains(pk, f.name()) ? Qt::Checked : Qt::Unchecked);
-        tbitem->setCheckState(kAutoIncrement, f.autoIncrement() ? Qt::Checked : Qt::Unchecked);
+        tbitem->setCheckState(kPrimaryKey, pk && contains(pk->columnList(), f.name()) ? Qt::Checked : Qt::Unchecked);
+        tbitem->setCheckState(kAutoIncrement, pk && pk->autoIncrement() && contains(pk->columnList(), f.name()) ? Qt::Checked : Qt::Unchecked);
         tbitem->setCheckState(kUnique, f.unique() ? Qt::Checked : Qt::Unchecked);
 
         // For the default value check if it is surrounded by parentheses and if that's the case
         // add a '=' character before the entire string to match the input format we're expecting
         // from the user when using functions in the default value field.
-        if(f.defaultValue().startsWith('(') && f.defaultValue().endsWith(')'))
-            tbitem->setText(kDefault, "=" + f.defaultValue());
+        if(f.defaultValue().front() == '(' && f.defaultValue().back() == ')')
+            tbitem->setText(kDefault, "=" + QString::fromStdString(f.defaultValue()));
         else
-            tbitem->setText(kDefault, f.defaultValue());
+            tbitem->setText(kDefault, QString::fromStdString(f.defaultValue()));
 
-        tbitem->setText(kCheck, f.check());
+        tbitem->setText(kCheck, QString::fromStdString(f.check()));
+
+        QComboBox* collationBox = new QComboBox(ui->treeWidget);
+        collationBox->setProperty("column", QString::fromStdString(f.name()));
+        collationBox->addItems(m_collationList);
+        index = collationBox->findText(QString::fromStdString(f.collation()), Qt::MatchCaseSensitive);
+        if(index == -1)
+        {
+            // some non-existing collation
+            collationBox->addItem(QString::fromStdString(f.collation()));
+            index = collationBox->count() - 1;
+        }
+        collationBox->setCurrentIndex(index);
+        collationBox->installEventFilter(this);
+        connect(collationBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateTypeAndCollation()));
+        ui->treeWidget->setItemWidget(tbitem, kCollation, collationBox);
 
         auto fk = std::dynamic_pointer_cast<sqlb::ForeignKeyClause>(m_table.constraint({f.name()}, sqlb::Constraint::ForeignKeyConstraintType));
         if(fk)
-            tbitem->setText(kForeignKey, fk->toString());
+            tbitem->setText(kForeignKey, QString::fromStdString(fk->toString()));
         ui->treeWidget->addTopLevelItem(tbitem);
     }
 
     // and reconnect
-    connect(ui->treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*,int)),this,SLOT(itemChanged(QTreeWidgetItem*,int)));
+    ui->treeWidget->blockSignals(false);
+}
+
+void EditTableDialog::populateConstraints()
+{
+    // Disable the itemChanged signal or the table item will be updated while filling the treewidget
+    ui->tableConstraints->blockSignals(true);
+
+    const auto& constraints = m_table.allConstraints();
+
+    ui->tableConstraints->setRowCount(static_cast<int>(constraints.size()));
+    int row = 0;
+    for(const auto& constraint : constraints)
+    {
+        const auto columns = constraint->columnList();
+
+        // Columns
+        QTableWidgetItem* column = new QTableWidgetItem(QString::fromStdString(sqlb::joinStringVector(columns, ",")));
+        column->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+        column->setData(Qt::UserRole, QVariant::fromValue<sqlb::ConstraintPtr>(constraint));      // Remember address of constraint object. This is used for modifying it later
+        ui->tableConstraints->setItem(row, kConstraintColumns, column);
+
+        // Type
+        QComboBox* type = new QComboBox(this);
+        type->addItem(tr("Primary Key"));       // NOTE: The order of the items here have to match the order in the sqlb::Constraint::ConstraintTypes enum!
+        type->addItem(tr("Unique"));
+        type->addItem(tr("Foreign Key"));
+        type->addItem(tr("Check"));
+        type->setCurrentIndex(constraint->type());
+        connect(type, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), [this, type, constraint](int index) {
+            // Handle change of constraint type. Effectively this means removing the old constraint and replacing it by an entirely new one.
+            // Only the column list and the name can be migrated to the new constraint.
+
+            // Make sure there is only one primary key at a time
+            if(index == 0 && m_table.primaryKey())
+            {
+                QMessageBox::warning(this, qApp->applicationName(), tr("There can only be one primary key for each table. Please modify the existing primary "
+                                                                       "key instead."));
+
+                // Set combo box back to original constraint type
+                type->blockSignals(true);
+                type->setCurrentIndex(constraint->type());
+                type->blockSignals(false);
+                return;
+            }
+
+            // Create new constraint depending on selected type
+            sqlb::ConstraintPtr new_constraint = sqlb::Constraint::makeConstraint(static_cast<sqlb::Constraint::ConstraintTypes>(index));
+            new_constraint->setName(constraint->name());
+            new_constraint->setColumnList(constraint->columnList());
+
+            // Replace old by new constraint
+            m_table.replaceConstraint(constraint, new_constraint);
+
+            // Update SQL and view
+            populateFields();
+            populateConstraints();
+            updateSqlText();
+        });
+        ui->tableConstraints->setCellWidget(row, kConstraintType, type);
+
+        // Name
+        QTableWidgetItem* name = new QTableWidgetItem(QString::fromStdString(constraint->name()));
+        name->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
+        ui->tableConstraints->setItem(row, kConstraintName, name);
+
+        // SQL
+        QTableWidgetItem* sql = new QTableWidgetItem(QString::fromStdString(constraint->toSql()));
+        sql->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+        ui->tableConstraints->setItem(row, kConstraintSql, sql);
+
+        row++;
+    }
+
+    ui->tableConstraints->blockSignals(false);
 }
 
 void EditTableDialog::accept()
@@ -160,7 +330,7 @@ void EditTableDialog::accept()
     if(m_bNewTable)
     {
         // Creation of new table
-        if(!pdb.executeSQL(m_table.sql(ui->comboSchema->currentText())))
+        if(!pdb.executeSQL(m_table.sql(ui->comboSchema->currentText().toStdString())))
         {
             QMessageBox::warning(
                 this,
@@ -172,7 +342,7 @@ void EditTableDialog::accept()
         // Editing of old table
 
         // Apply all changes to the actual table in the database
-        if(!pdb.alterTable(curTable, m_table, trackColumns, ui->comboSchema->currentText()))
+        if(!pdb.alterTable(curTable, m_table, trackColumns, ui->comboSchema->currentText().toStdString()))
         {
             QMessageBox::warning(this, QApplication::applicationName(), pdb.lastError());
             return;
@@ -192,21 +362,20 @@ void EditTableDialog::reject()
 
 void EditTableDialog::updateSqlText()
 {
-    ui->sqlTextEdit->setText(m_table.sql(ui->comboSchema->currentText()));
+    ui->sqlTextEdit->setText(QString::fromStdString(m_table.sql(ui->comboSchema->currentText().toStdString())));
 }
 
 void EditTableDialog::checkInput()
 {
-    QString normTableName = ui->editTableName->text();
+    std::string normTableName = ui->editTableName->text().toStdString();
     bool valid = true;
-    if(normTableName.isEmpty())
+    if(normTableName.empty())
         valid = false;
     if(ui->treeWidget->topLevelItemCount() == 0)
         valid = false;
     if (normTableName != m_table.name()) {
-        const QString oldTableName = m_table.name();
+        const std::string oldTableName = m_table.name();
         m_table.setName(normTableName);
-        m_fkEditorDelegate->updateTablesList(oldTableName);
 
         // update fk's that refer to table itself recursively
         const auto& fields = m_table.fields;
@@ -223,19 +392,33 @@ void EditTableDialog::checkInput()
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(valid);
 }
 
-void EditTableDialog::updateTypes(QObject *object)
+void EditTableDialog::updateTypeAndCollation(QObject* object)
 {
-    QComboBox* typeBox = qobject_cast<QComboBox*>(object);
-    if(typeBox)
+    // Get sender combo box and retrieve field name from it
+    QComboBox* combo = qobject_cast<QComboBox*>(object);
+    if(!combo)
+        return;
+    QString column = combo->property("column").toString();
+
+    // Get type *and* collation combo box for this field
+    auto item = ui->treeWidget->findItems(column, Qt::MatchExactly, kName);
+    if(item.size() != 1)
+        return;
+    QComboBox* typeBox = qobject_cast<QComboBox*>(ui->treeWidget->itemWidget(item.front(), kType));
+    QComboBox* collationBox = qobject_cast<QComboBox*>(ui->treeWidget->itemWidget(item.front(), kCollation));
+
+    // Update table
+    if(typeBox && collationBox)
     {
         QString type = typeBox->currentText();
-        QString column = typeBox->property("column").toString();
+        QString collation = collationBox->currentText();
 
         for(size_t index=0; index < m_table.fields.size(); ++index)
         {
-            if(m_table.fields.at(index).name() == column)
+            if(m_table.fields.at(index).name() == column.toStdString())
             {
-                m_table.fields.at(index).setType(type);
+                m_table.fields.at(index).setType(type.toStdString());
+                m_table.fields.at(index).setCollation(collation.toStdString());
                 break;
             }
         }
@@ -244,27 +427,27 @@ void EditTableDialog::updateTypes(QObject *object)
     }
 }
 
-void EditTableDialog::updateTypes()
+void EditTableDialog::updateTypeAndCollation()
 {
-    updateTypes(sender());
+    updateTypeAndCollation(sender());
 }
 
 bool EditTableDialog::eventFilter(QObject *object, QEvent *event)
 {
     if(event->type() == QEvent::FocusOut)
     {
-        updateTypes(object);
+        updateTypeAndCollation(object);
     }
     return false;
 }
 
-void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
+void EditTableDialog::fieldItemChanged(QTreeWidgetItem *item, int column)
 {
-    int index = ui->treeWidget->indexOfTopLevelItem(item);
-    if(index < static_cast<int>(m_table.fields.size()))
+    size_t index = static_cast<size_t>(ui->treeWidget->indexOfTopLevelItem(item));
+    if(index < m_table.fields.size())
     {
         sqlb::Field& field = m_table.fields.at(index);
-        QString oldFieldName = field.name();
+        QString oldFieldName = QString::fromStdString(field.name());
 
         switch(column)
         {
@@ -276,8 +459,8 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
             // with different case. Example: if I rename column 'COLUMN' to 'column', findField() is going to return the current field number
             // because it's doing a case-independent search and it can't return another field number because SQLite prohibits duplicate field
             // names (no matter the case). So when this happens we just allow the renaming because there's no harm to be expected from it.
-            auto foundField = sqlb::findField(m_table, item->text(column));
-            if(foundField != m_table.fields.end() && foundField-m_table.fields.begin() != index)
+            auto foundField = sqlb::findField(m_table, item->text(column).toStdString());
+            if(foundField != m_table.fields.end() && foundField-m_table.fields.begin() != static_cast<int>(index))
             {
                 QMessageBox::warning(this, qApp->applicationName(), tr("There already is a field with that name. Please rename it first or choose a different "
                                                                        "name for this field."));
@@ -291,20 +474,24 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
             // When editing an exiting table, check if any foreign keys would cause trouble in case this name is edited
             if(!m_bNewTable)
             {
-                QStringList pk = m_table.primaryKey();
-                for(const sqlb::ObjectPtr& fkobj : pdb.schemata[curTable.schema()].values("table"))
+                const auto pk = m_table.primaryKey();
+                const auto tables = pdb.schemata[curTable.schema()].equal_range("table");
+                for(auto it=tables.first;it!=tables.second;++it)
                 {
-                    auto fks = std::dynamic_pointer_cast<sqlb::Table>(fkobj)->constraints(QStringList(), sqlb::Constraint::ForeignKeyConstraintType);
+                    const sqlb::ObjectPtr& fkobj = it->second;
+
+
+                    auto fks = std::dynamic_pointer_cast<sqlb::Table>(fkobj)->constraints({}, sqlb::Constraint::ForeignKeyConstraintType);
                     for(const sqlb::ConstraintPtr& fkptr : fks)
                     {
                         auto fk = std::dynamic_pointer_cast<sqlb::ForeignKeyClause>(fkptr);
                         if(fk->table() == m_table.name())
                         {
-                            if(fk->columns().contains(field.name()) || contains(pk, field.name()))
+                            if(contains(fk->columns(), field.name()) || (pk && contains(pk->columnList(), field.name())))
                             {
                                 QMessageBox::warning(this, qApp->applicationName(), tr("This column is referenced in a foreign key in table %1 and thus "
                                                                                        "its name cannot be changed.")
-                                                     .arg(fkobj->name()));
+                                                     .arg(QString::fromStdString(fkobj->name())));
                                 // Reset the name to the old value but avoid calling this method again for that automatic change
                                 ui->treeWidget->blockSignals(true);
                                 item->setText(column, oldFieldName);
@@ -316,37 +503,48 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                 }
             }
 
-            field.setName(item->text(column));
-            m_table.renameKeyInAllConstraints(oldFieldName, item->text(column));
+            field.setName(item->text(column).toStdString());
+            m_table.renameKeyInAllConstraints(oldFieldName.toStdString(), item->text(column).toStdString());
             qobject_cast<QComboBox*>(ui->treeWidget->itemWidget(item, kType))->setProperty("column", item->text(column));
+            qobject_cast<QComboBox*>(ui->treeWidget->itemWidget(item, kCollation))->setProperty("column", item->text(column));
 
             // Update the field name in the map of old column names to new column names
             if(!m_bNewTable)
             {
-                for(const auto& key : trackColumns.keys())
+                for(const auto& it : trackColumns)
                 {
-                    if(trackColumns[key] == oldFieldName)
-                        trackColumns[key] = field.name();
+                    if(trackColumns[it.first] == oldFieldName)
+                        trackColumns[it.first] = QString::fromStdString(field.name());
                 }
             }
+
+            // Update the constraints view
+            populateConstraints();
             } break;
         case kType:
-            // see updateTypes() SLOT
+        case kCollation:
+            // see updateTypeAndCollation() SLOT
             break;
         case kPrimaryKey:
         {
             // Check if there already is a primary key
-            if(m_table.constraint(QStringList(), sqlb::Constraint::PrimaryKeyConstraintType))
+            auto pk = m_table.primaryKey();
+            if(pk)
             {
                 // There already is a primary key for this table. So edit that one as there always can only be one primary key anyway.
-                QStringList& pk = m_table.primaryKeyRef();
                 if(item->checkState(column) == Qt::Checked)
-                    pk.push_back(field.name());
-                else
-                    pk.erase(std::remove(pk.begin(), pk.end(), field.name()), pk.end());
+                {
+                    pk->addToColumnList(field.name());
+                } else {
+                    pk->removeFromColumnList(field.name());
+
+                    // If this is now a primary key constraint without any columns, remove it entirely
+                    if(pk->columnList().empty())
+                        m_table.removeConstraints({}, sqlb::Constraint::PrimaryKeyConstraintType);
+                }
             } else if(item->checkState(column) == Qt::Checked) {
                 // There is no primary key in the table yet. This means we need to add a default one.
-                m_table.addConstraint({field.name()}, sqlb::ConstraintPtr(new sqlb::PrimaryKeyConstraint()));
+                m_table.addConstraint(sqlb::ConstraintPtr(new sqlb::PrimaryKeyConstraint({field.name()})));
             }
 
             if(item->checkState(column) == Qt::Checked)
@@ -361,6 +559,9 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
             } else {
                 item->setCheckState(kAutoIncrement, Qt::Unchecked);
             }
+
+            // Update the constraints view
+            populateConstraints();
         }
         break;
         case kNotNull:
@@ -372,10 +573,10 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                 // we need to check for this case and cancel here. Maybe we can think of some way to modify the INSERT INTO ... SELECT statement
                 // to at least replace all troublesome NULL values by the default value
                 SqliteTableModel m(pdb, this);
-                m.setQuery(QString("SELECT COUNT(%1) FROM %2 WHERE %3 IS NULL;")
-                           .arg(sqlb::escapeIdentifier(pdb.getObjectByName<sqlb::Table>(curTable)->rowidColumn()))
-                           .arg(curTable.toString())
-                           .arg(sqlb::escapeIdentifier(field.name())));
+                m.setQuery(QString("SELECT COUNT(%1) FROM %2 WHERE coalesce(NULL,%3) IS NULL;").arg(
+                           QString::fromStdString(sqlb::joinStringVector(sqlb::escapeIdentifier(pdb.getObjectByName<sqlb::Table>(curTable)->rowidColumns()), ",")),
+                           QString::fromStdString(curTable.toString()),
+                           QString::fromStdString(sqlb::escapeIdentifier(field.name()))));
                 if(!m.completeCache())
                 {
                     // If we couldn't load all data because the cancel button was clicked, just unset the checkbox again and stop.
@@ -403,10 +604,10 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                 if(!m_bNewTable)
                 {
                     SqliteTableModel m(pdb, this);
-                    m.setQuery(QString("SELECT COUNT(*) FROM %1 WHERE %2 <> CAST(%3 AS INTEGER);")
-                               .arg(curTable.toString())
-                               .arg(sqlb::escapeIdentifier(field.name()))
-                               .arg(sqlb::escapeIdentifier(field.name())));
+                    m.setQuery(QString("SELECT COUNT(*) FROM %1 WHERE %2 <> CAST(%3 AS INTEGER);").arg(
+                               QString::fromStdString(curTable.toString()),
+                               QString::fromStdString(sqlb::escapeIdentifier(field.name())),
+                               QString::fromStdString(sqlb::escapeIdentifier(field.name()))));
                     if(!m.completeCache())
                     {
                         // If we couldn't load all data because the cancel button was clicked, just unset the checkbox again and stop.
@@ -440,7 +641,8 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                     }
                 }
             }
-            field.setAutoIncrement(ischecked);
+            if(m_table.primaryKey())
+                m_table.primaryKey()->setAutoIncrement(ischecked);
         }
         break;
         case kUnique:
@@ -450,7 +652,9 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
             {
                 // Because our renameColumn() function fails when setting a column to unique when it already contains the same values
                 SqliteTableModel m(pdb, this);
-                m.setQuery(QString("SELECT COUNT(%2) FROM %1;").arg(curTable.toString()).arg(sqlb::escapeIdentifier(field.name())));
+                m.setQuery(QString("SELECT COUNT(%2) FROM %1;").arg(
+                               QString::fromStdString(curTable.toString()),
+                               QString::fromStdString(sqlb::escapeIdentifier(field.name()))));
                 if(!m.completeCache())
                 {
                     // If we couldn't load all data because the cancel button was clicked, just unset the checkbox again and stop.
@@ -458,7 +662,9 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                     return;
                 }
                 int rowcount = m.data(m.index(0, 0)).toInt();
-                m.setQuery(QString("SELECT COUNT(DISTINCT %2) FROM %1;").arg(curTable.toString()).arg(sqlb::escapeIdentifier(field.name())));
+                m.setQuery(QString("SELECT COUNT(DISTINCT %2) FROM %1;").arg(
+                               QString::fromStdString(curTable.toString()),
+                               QString::fromStdString(sqlb::escapeIdentifier(field.name()))));
                 if(!m.completeCache())
                 {
                     // If we couldn't load all data because the cancel button was clicked, just unset the checkbox again and stop.
@@ -469,7 +675,7 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                 if(rowcount != uniquecount)
                 {
                     // There is a NULL value, so print an error message, uncheck the combobox, and return here
-                    QMessageBox::information(this, qApp->applicationName(), tr("Column '%1' has duplicate data.\n").arg(field.name())
+                    QMessageBox::information(this, qApp->applicationName(), tr("Column '%1' has duplicate data.\n").arg(QString::fromStdString(field.name()))
                                              + tr("This makes it impossible to enable the 'Unique' flag. Please remove the duplicate data, which will allow the 'Unique' flag to then be enabled."));
                     item->setCheckState(column, Qt::Unchecked);
                     return;
@@ -499,17 +705,17 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
                         {
                             new_value = new_value.trimmed().mid(1); // Leave the brackets as they are needed for a valid SQL expression
                         } else {
-                            new_value = QString("'%1'").arg(new_value.replace("'", "''"));
+                            new_value = sqlb::escapeString(new_value);
                             item->setText(column, new_value);
                         }
                     }
                 }
             }
-            field.setDefaultValue(new_value);
+            field.setDefaultValue(new_value.toStdString());
         }
         break;
         case kCheck:
-            field.setCheck(item->text(column));
+            field.setCheck(item->text(column).toStdString());
             break;
         case kForeignKey:
             // handled in delegate
@@ -517,6 +723,24 @@ void EditTableDialog::itemChanged(QTreeWidgetItem *item, int column)
         }
     }
 
+    checkInput();
+}
+
+void EditTableDialog::constraintItemChanged(QTableWidgetItem* item)
+{
+    // Find modified constraint
+    sqlb::ConstraintPtr constraint = ui->tableConstraints->item(item->row(), kConstraintColumns)->data(Qt::UserRole).value<sqlb::ConstraintPtr>();
+
+    // Which column has been modified?
+    switch(item->column())
+    {
+    case kConstraintName:
+        constraint->setName(item->text().toStdString());
+        break;
+    }
+
+    // Update SQL
+    ui->tableConstraints->item(item->row(), kConstraintSql)->setText(QString::fromStdString(constraint->toSql()));
     checkInput();
 }
 
@@ -528,14 +752,14 @@ void EditTableDialog::addField()
     // Find an unused name for the field by starting with 'Fieldx' where x is the number of fields + 1.
     // If this name happens to exist already, increase x by one until we find an unused name.
     {
-        unsigned int field_number = ui->treeWidget->topLevelItemCount();
-        QString field_name;
+        int field_number = ui->treeWidget->topLevelItemCount();
+        std::string field_name;
         do
         {
-            field_name = "Field" + QString::number(field_number);
+            field_name = "Field" + std::to_string(field_number);
             field_number++;
         } while(sqlb::findField(m_table, field_name) != m_table.fields.end());
-        tbitem->setText(kName, field_name);
+        tbitem->setText(kName, QString::fromStdString(field_name));
     }
 
     QComboBox* typeBox = new QComboBox(ui->treeWidget);
@@ -552,7 +776,15 @@ void EditTableDialog::addField()
 
     ui->treeWidget->setItemWidget(tbitem, kType, typeBox);
     typeBox->installEventFilter(this);
-    connect(typeBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateTypes()));
+    connect(typeBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateTypeAndCollation()));
+
+    QComboBox* collationBox = new QComboBox(ui->treeWidget);
+    collationBox->setProperty("column", tbitem->text(kName));
+    collationBox->addItems(m_collationList);
+    collationBox->setCurrentIndex(collationBox->findText(""));
+    ui->treeWidget->setItemWidget(tbitem, kCollation, collationBox);
+    collationBox->installEventFilter(this);
+    connect(collationBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateTypeAndCollation()));
 
     tbitem->setCheckState(kNotNull, Qt::Unchecked);
     tbitem->setCheckState(kPrimaryKey, Qt::Unchecked);
@@ -564,11 +796,11 @@ void EditTableDialog::addField()
     ui->treeWidget->editItem(tbitem, 0);
 
     // add field to table object
-    m_table.fields.emplace_back(tbitem->text(kName), typeBox->currentText());
+    m_table.fields.emplace_back(tbitem->text(kName).toStdString(), typeBox->currentText().toStdString());
 
     // Add the new column to the list of tracked columns to indicate it has been added
     if(!m_bNewTable)
-        trackColumns.insert(QString(), tbitem->text(kName));
+        trackColumns.insert({QString(), tbitem->text(kName)});
 
     checkInput();
 }
@@ -588,17 +820,20 @@ void EditTableDialog::removeField()
 
         // Update the map of tracked columns to indicate the column is deleted
         QString name = ui->treeWidget->currentItem()->text(0);
-        for(const auto& key : trackColumns.keys())
+        for(const auto& it : trackColumns)
         {
-            if(trackColumns[key] == name)
-                trackColumns[key] = QString();
+            if(trackColumns[it.first] == name)
+                trackColumns[it.first] = QString();
         }
     }
 
     // Just delete that item. At this point there is no DB table to edit or data to be lost anyway
     m_table.fields.erase(m_table.fields.begin() + ui->treeWidget->indexOfTopLevelItem(ui->treeWidget->currentItem()));
-    m_table.removeKeyFromAllConstraints(ui->treeWidget->currentItem()->text(kName));
+    m_table.removeKeyFromAllConstraints(ui->treeWidget->currentItem()->text(kName).toStdString());
     delete ui->treeWidget->currentItem();
+
+    // Update the constraints view
+    populateConstraints();
 
     checkInput();
 }
@@ -616,46 +851,77 @@ void EditTableDialog::fieldSelectionChanged()
     if(hasSelection)
     {
         ui->buttonMoveUp->setEnabled(ui->treeWidget->selectionModel()->currentIndex().row() != 0);
+        ui->buttonMoveTop->setEnabled(ui->buttonMoveUp->isEnabled());
         ui->buttonMoveDown->setEnabled(ui->treeWidget->selectionModel()->currentIndex().row() != ui->treeWidget->topLevelItemCount() - 1);
+        ui->buttonMoveBottom->setEnabled(ui->buttonMoveDown->isEnabled());
     }
 }
 
 void EditTableDialog::moveUp()
 {
-    moveCurrentField(false);
+    moveCurrentField(MoveUp);
 }
 
 void EditTableDialog::moveDown()
 {
-    moveCurrentField(true);
+    moveCurrentField(MoveDown);
 }
 
-void EditTableDialog::moveCurrentField(bool down)
+void EditTableDialog::moveTop()
+{
+    moveCurrentField(MoveTop);
+}
+
+void EditTableDialog::moveBottom()
+{
+    moveCurrentField(MoveBottom);
+}
+
+void EditTableDialog::moveCurrentField(MoveFieldDirection dir)
 {
     int currentRow = ui->treeWidget->currentIndex().row();
-    int newRow = currentRow + (down ? 1 : -1);
+    int newRow;
+    if(dir == MoveUp)
+        newRow = currentRow - 1;
+    else if(dir == MoveDown)
+        newRow = currentRow + 1;
+    else if(dir == MoveTop)
+        newRow = 0;
+    else if(dir == MoveBottom)
+        newRow = ui->treeWidget->topLevelItemCount() - 1;
+    else
+        return;
 
-    // Save the combobox first by making a copy
-    QComboBox* oldCombo = qobject_cast<QComboBox*>(ui->treeWidget->itemWidget(ui->treeWidget->topLevelItem(currentRow), kType));
-    QComboBox* newCombo = new QComboBox(ui->treeWidget);
-    newCombo->setProperty("column", oldCombo->property("column"));
-    newCombo->installEventFilter(this);
-    connect(newCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateTypes()));
-    newCombo->setEditable(true);
-    for(int i=0; i < oldCombo->count(); ++i)
-        newCombo->addItem(oldCombo->itemText(i));
-    newCombo->setCurrentIndex(oldCombo->currentIndex());
+    // Save the comboboxes first by making copies
+    QComboBox* newCombo[2];
+    for(int c=0;c<2;c++)
+    {
+        int column = (c == 0 ? kType : kCollation);
+
+        QComboBox* oldCombo = qobject_cast<QComboBox*>(ui->treeWidget->itemWidget(ui->treeWidget->topLevelItem(currentRow), column));
+        newCombo[c] = new QComboBox(ui->treeWidget);
+        newCombo[c]->setProperty("column", oldCombo->property("column"));
+        newCombo[c]->installEventFilter(this);
+        connect(newCombo[c], SIGNAL(currentIndexChanged(int)), this, SLOT(updateTypeAndCollation()));
+        newCombo[c]->setEditable(oldCombo->isEditable());
+        for(int i=0; i < oldCombo->count(); ++i)
+            newCombo[c]->addItem(oldCombo->itemText(i));
+        newCombo[c]->setCurrentIndex(oldCombo->currentIndex());
+    }
 
     // Now, just remove the item and insert it at it's new position, then restore the combobox
     QTreeWidgetItem* item = ui->treeWidget->takeTopLevelItem(currentRow);
     ui->treeWidget->insertTopLevelItem(newRow, item);
-    ui->treeWidget->setItemWidget(item, kType, newCombo);
+    ui->treeWidget->setItemWidget(item, kType, newCombo[0]);
+    ui->treeWidget->setItemWidget(item, kCollation, newCombo[1]);
 
     // Select the old item at its new position
     ui->treeWidget->setCurrentIndex(ui->treeWidget->currentIndex().sibling(newRow, 0));
 
     // Finally update the table SQL
-    std::swap(m_table.fields[newRow], m_table.fields[currentRow]);
+    sqlb::Field temp = m_table.fields[static_cast<size_t>(currentRow)];
+    m_table.fields.erase(m_table.fields.begin() + currentRow);
+    m_table.fields.insert(m_table.fields.begin() + newRow, temp);
 
     // Update the SQL preview
     updateSqlText();
@@ -666,8 +932,8 @@ void EditTableDialog::setWithoutRowid(bool without_rowid)
     if(without_rowid)
     {
         // Before setting the without rowid flag, first perform a check to see if the table meets all the required criteria for without rowid tables
-        auto pk = m_table.findPk();
-        if(pk == m_table.fields.end() || pk->autoIncrement())
+        const auto pk = m_table.primaryKey();
+        if(!pk || pk->autoIncrement())
         {
             QMessageBox::information(this, QApplication::applicationName(),
                                      tr("Please add a field which meets the following criteria before setting the without rowid flag:\n"
@@ -682,11 +948,11 @@ void EditTableDialog::setWithoutRowid(bool without_rowid)
             return;
         }
 
-        // If it does, override the the rowid column name of the table object with the name of the primary key.
-        m_table.setRowidColumn(pk->name());
+        // If it does, set the without rowid flag of the table
+        m_table.setWithoutRowidTable(true);
     } else {
-        // If the without rowid flag is unset no further checks are required. Just set the rowid column name back to "_rowid_"
-        m_table.setRowidColumn("_rowid_");
+        // If the without rowid flag is unset no further checks are required. Just unset the without rowid flag
+        m_table.setWithoutRowidTable(false);
     }
 
     // Update the SQL preview
@@ -696,5 +962,47 @@ void EditTableDialog::setWithoutRowid(bool without_rowid)
 void EditTableDialog::changeSchema(const QString& /*schema*/)
 {
     // Update the SQL preview
+    updateSqlText();
+}
+
+void EditTableDialog::removeConstraint()
+{
+    // Is there any item selected to delete?
+    if(!ui->tableConstraints->currentItem())
+        return;
+
+    // Find constraint to delete
+    int row = ui->tableConstraints->currentRow();
+    sqlb::ConstraintPtr constraint = ui->tableConstraints->item(row, kConstraintColumns)->data(Qt::UserRole).value<sqlb::ConstraintPtr>();
+
+    // Remove the constraint. If there is more than one constraint with this combination of columns and constraint type, only delete the first one.
+    m_table.removeConstraint(constraint);
+    ui->tableConstraints->removeRow(ui->tableConstraints->currentRow());
+
+    // Update SQL and view
+    updateSqlText();
+    populateFields();
+}
+
+void EditTableDialog::addConstraint(sqlb::Constraint::ConstraintTypes type)
+{
+    // There can only be one primary key
+    if(type == sqlb::Constraint::PrimaryKeyConstraintType)
+    {
+        if(m_table.primaryKey())
+        {
+            QMessageBox::information(this, qApp->applicationName(), tr("There can only be one primary key for each table. Please modify the existing primary "
+                                                                       "key instead."));
+            return;
+        }
+    }
+
+    // Create new constraint
+    sqlb::ConstraintPtr constraint = sqlb::Constraint::makeConstraint(type);
+    m_table.addConstraint(constraint);
+
+    // Update SQL and view
+    populateFields();
+    populateConstraints();
     updateSqlText();
 }

@@ -1,7 +1,7 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-#include <QHash>
+#include <unordered_map>
 #include <QVariant>
 
 class Settings
@@ -14,22 +14,22 @@ public:
         FollowDesktopStyle,
         DarkStyle
     };
-    static QVariant getValue(const QString& group, const QString& name);
-    static void setValue(const QString& group, const QString& name, const QVariant& value, bool dont_save_to_disk = false);
+    static QVariant getValue(const std::string& group, const std::string& name);
+    static void setValue(const std::string& group, const std::string& name, const QVariant& value, bool dont_save_to_disk = false);
     static void restoreDefaults();
 
 private:
-    Settings() { } // class is fully static
+    Settings() = delete;    // class is fully static
 
     // This works similar to getValue but returns the default value instead of the value set by the user
-    static QVariant getDefaultValue(const QString& group, const QString& name);
+    static QVariant getDefaultValue(const std::string& group, const std::string& name);
 
     // This works similar to getDefaultValue but returns the default color value based on the passed application style
     // instead of the current palette.
-    static QColor getDefaultColorValue(const QString& group, const QString& name, AppStyle style);
+    static QColor getDefaultColorValue(const std::string& group, const std::string& name, AppStyle style);
 
     // Cache for storing the settings to avoid repeatedly reading the settings file all the time
-    static QHash<QString, QVariant> m_hCache;
+    static std::unordered_map<std::string, QVariant> m_hCache;
 };
 
 #endif

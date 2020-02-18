@@ -33,7 +33,7 @@ matrix:
 
 before_install:
 - sudo apt-get update -qq
-- sudo apt-get --force-yes install build-essential git-core cmake libsqlite3-dev qt5-default qttools5-dev-tools libsqlcipher-dev qtbase5-dev libantlr-dev libqt5scintilla2-dev libqcustomplot-dev qttools5-dev
+- sudo apt-get --force-yes install build-essential git-core cmake libsqlite3-dev qt5-default qttools5-dev-tools libsqlcipher-dev qtbase5-dev libqt5scintilla2-dev libqcustomplot-dev qttools5-dev
 
 
 install:
@@ -54,7 +54,7 @@ script:
 - make
 - ctest -V
 - cd ../appbuild
-- cmake -DCMAKE_INSTALL_PREFIX:PATH=../appdir/usr -Wno-dev -Dsqlcipher=1 ..
+- cmake -DCMAKE_INSTALL_PREFIX:PATH=../appdir/usr -Wno-dev -Dsqlcipher=1 -DSQLITE_ENABLE_JSON1=1 ..
 - make install
 - cd ..
 - git rev-list master --count

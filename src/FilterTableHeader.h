@@ -2,9 +2,8 @@
 #define FILTERTABLEHEADER_H
 
 #include <QHeaderView>
-#include <QList>
+#include <vector>
 
-class QLineEdit;
 class QTableView;
 class FilterLineEdit;
 
@@ -15,19 +14,19 @@ class FilterTableHeader : public QHeaderView
 public:
     explicit FilterTableHeader(QTableView* parent = nullptr);
     QSize sizeHint() const override;
-    bool hasFilters() const {return (filterWidgets.count() > 0);}
+    bool hasFilters() const {return (filterWidgets.size() > 0);}
     
 public slots:
-    void generateFilters(int number, bool showFirst = false);
+    void generateFilters(size_t number, bool showFirst = false);
     void adjustPositions();
     void clearFilters();
-    void setFilter(int column, const QString& value);
+    void setFilter(size_t column, const QString& value);
 
 signals:
-    void filterChanged(int column, QString value);
-    void addCondFormat(int column, QString filter);
-    void clearAllCondFormats(int column);
-    void editCondFormats(int column);
+    void filterChanged(size_t column, QString value);
+    void addCondFormat(size_t column, QString filter);
+    void allCondFormatsCleared(size_t column);
+    void condFormatsEdited(size_t column);
 
 protected:
     void updateGeometries() override;
@@ -39,7 +38,7 @@ private slots:
     void editCondFormats();
 
 private:
-    QList<FilterLineEdit*> filterWidgets;
+    std::vector<FilterLineEdit*> filterWidgets;
 };
 
 #endif

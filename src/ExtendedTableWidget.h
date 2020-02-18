@@ -2,16 +2,17 @@
 #define EXTENDEDTABLEWIDGET_H
 
 #include <QTableView>
-#include <QSet>
-#include <QDropEvent>
-#include <QDragMoveEvent>
 #include <QStyledItemDelegate>
 #include <QSortFilterProxyModel>
+#include <unordered_set>
 
 #include "sql/Query.h"
 
 class QMenu;
 class QMimeData;
+class QDropEvent;
+class QDragMoveEvent;
+
 class FilterTableHeader;
 namespace sqlb { class ObjectIdentifier; }
 
@@ -24,7 +25,7 @@ public:
     explicit UniqueFilterModel(QObject* parent = nullptr);
     bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
  private:
-    QSet<QString> m_uniqueValues;
+    std::unordered_set<std::string> m_uniqueValues;
 };
 
 // We use this class to provide editor widgets for the ExtendedTableWidget. It's used for every cell in the table view.
@@ -51,8 +52,12 @@ public:
     FilterTableHeader* filterHeader() { return m_tableHeader; }
 
 public:
-    QSet<int> selectedCols();
-    int numVisibleRows();
+    // Get set of selected columns (all cells in column has to be selected)
+    std::unordered_set<size_t> selectedCols() const;
+    // Get set of columns traversed by selection (only some cells in column has to be selected)
+    std::unordered_set<size_t> colsInSelection() const;
+
+    int numVisibleRows() const;
 
     void sortByColumns(const std::vector<sqlb::SortedColumn>& columns);
 
@@ -64,22 +69,25 @@ public slots:
     void openPrintDialog();
 
 signals:
-    void foreignKeyClicked(const sqlb::ObjectIdentifier& table, const QString& column, const QByteArray& value);
+    void foreignKeyClicked(const sqlb::ObjectIdentifier& table, const std::string& column, const QByteArray& value);
     void switchTable(bool next);    // 'next' parameter is set to true if next table should be selected and to false if previous table should be selected
     void openFileFromDropEvent(QString);
     void selectedRowsToBeDeleted();
     void editCondFormats(int column);
+    void currentIndexChanged(const QModelIndex &current, const QModelIndex &previous);
+    void requestUrlOrFileOpen(const QString& urlString);
 
 private:
     void copyMimeData(const QModelIndexList& fromIndices, QMimeData* mimeData, const bool withHeaders, const bool inSQL);
     void copy(const bool withHeaders, const bool inSQL);
     void paste();
 
-    void useAsFilter(const QString& filterOperator, bool binary = false, const QString& operatorSuffix = "");
+    void useAsFilter(const QString& filterOperator, bool binary = false, const QString& operatorSuffix = QString());
     void duplicateUpperCell();
 
-    typedef QList<QByteArray> QByteArrayList;
-    static QList<QByteArrayList> m_buffer;
+    void setToNull(const QModelIndexList& indices);
+
+    static std::vector<std::vector<QByteArray>> m_buffer;
     static QString m_generatorStamp;
 
 private slots:
@@ -92,6 +100,7 @@ protected:
     void dragEnterEvent(QDragEnterEvent* event) override;
     void dragMoveEvent(QDragMoveEvent* event) override;
     void dropEvent(QDropEvent* event) override;
+    void currentChanged(const QModelIndex &current, const QModelIndex &previous) override;
 
     FilterTableHeader* m_tableHeader;
     QMenu* m_contextMenu;

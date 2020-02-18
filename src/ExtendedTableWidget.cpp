@@ -4,6 +4,7 @@
 #include "sql/sqlitetypes.h"
 #include "Settings.h"
 #include "sqlitedb.h"
+#include "CondFormat.h"
 
 #include <QApplication>
 #include <QClipboard>
@@ -22,20 +23,18 @@
 #include <QTextDocument>
 #include <QCompleter>
 #include <QComboBox>
+#include <QShortcut>
 
 #include <limits>
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 4, 0)
-    typedef QList<QByteArray> QByteArrayList;
-#endif
-
-QList<QByteArrayList> ExtendedTableWidget::m_buffer;
+using BufferRow = std::vector<QByteArray>;
+std::vector<BufferRow> ExtendedTableWidget::m_buffer;
 QString ExtendedTableWidget::m_generatorStamp;
 
 namespace
 {
 
-QList<QByteArrayList> parseClipboard(QString clipboard)
+std::vector<BufferRow> parseClipboard(QString clipboard)
 {
     // Remove trailing line break from the clipboard text. This is necessary because some applications append an extra
     // line break to the clipboard contents which we would then interpret as regular data, setting the first field of the
@@ -50,11 +49,11 @@ QList<QByteArrayList> parseClipboard(QString clipboard)
         clipboard.chop(1);
 
     // Make sure there is some data in the clipboard
-    QList<QByteArrayList> result;
+    std::vector<BufferRow> result;
     if(clipboard.isEmpty())
         return result;
 
-    result.push_back(QByteArrayList());
+    result.push_back(BufferRow());
 
     QRegExp re("(\"(?:[^\t\"]+|\"\"[^\"]*\"\")*)\"|(\t|\r?\n)");
     int offset = 0;
@@ -69,7 +68,7 @@ QList<QByteArrayList> parseClipboard(QString clipboard)
             if(QRegExp("\".*\"").exactMatch(text))
                 text = text.mid(1, text.length() - 2);
             text.replace("\"\"", "\"");
-            result.last().push_back(text.toUtf8());
+            result.back().push_back(text.toUtf8());
             break;
         }
 
@@ -81,18 +80,18 @@ QList<QByteArrayList> parseClipboard(QString clipboard)
         QString ws = re.cap(2);
         // if two whitespaces in row - that's an empty cell
         if (!(pos - whitespace_offset)) {
-            result.last().push_back(QByteArray());
+            result.back().push_back(QByteArray());
         } else {
             text = clipboard.mid(whitespace_offset, pos - whitespace_offset);
             if(QRegExp("\".*\"").exactMatch(text))
                 text = text.mid(1, text.length() - 2);
             text.replace("\"\"", "\"");
-            result.last().push_back(text.toUtf8());
+            result.back().push_back(text.toUtf8());
         }
 
         if (ws.endsWith("\n"))
             // create new row
-            result.push_back(QByteArrayList());
+            result.push_back(BufferRow());
 
         whitespace_offset = offset = pos + ws.length();
     }
@@ -110,9 +109,9 @@ UniqueFilterModel::UniqueFilterModel(QObject* parent)
 bool UniqueFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
     QModelIndex index = sourceModel()->index(sourceRow, filterKeyColumn(), sourceParent);
-    const QString& value = index.data(Qt::EditRole).toString();
+    const std::string value = index.data(Qt::EditRole).toString().toStdString();
 
-    if (!value.isEmpty() && !m_uniqueValues.contains(value)) {
+    if (!value.empty() && m_uniqueValues.find(value) == m_uniqueValues.end()) {
         const_cast<UniqueFilterModel*>(this)->m_uniqueValues.insert(value);
         return true;
     }
@@ -130,29 +129,29 @@ QWidget* ExtendedTableWidgetEditorDelegate::createEditor(QWidget* parent, const 
 {
 
     SqliteTableModel* m = qobject_cast<SqliteTableModel*>(const_cast<QAbstractItemModel*>(index.model()));
-    sqlb::ForeignKeyClause fk = m->getForeignKeyClause(index.column()-1);
+    sqlb::ForeignKeyClause fk = m->getForeignKeyClause(static_cast<size_t>(index.column()-1));
 
     if(fk.isSet()) {
 
         sqlb::ObjectIdentifier foreignTable = sqlb::ObjectIdentifier(m->currentTableName().schema(), fk.table());
 
-        QString column;
+        std::string column;
         // If no column name is set, assume the primary key is meant
-        if(fk.columns().isEmpty()) {
+        if(fk.columns().empty()) {
             sqlb::TablePtr obj = m->db().getObjectByName<sqlb::Table>(foreignTable);
-            column = obj->findPk()->name();
+            column = obj->primaryKey()->columnList().front();
         } else
             column = fk.columns().at(0);
 
         sqlb::TablePtr currentTable = m->db().getObjectByName<sqlb::Table>(m->currentTableName());
-        QString query = QString("SELECT %1 FROM %2").arg(sqlb::escapeIdentifier(column)).arg(foreignTable.toString());
+        QString query = QString("SELECT %1 FROM %2").arg(QString::fromStdString(sqlb::escapeIdentifier(column)), QString::fromStdString(foreignTable.toString()));
 
         // if the current column of the current table does NOT have not-null constraint,
         // the NULL is united to the query to get the possible values in the combo-box.
-        if (!currentTable->fields.at(index.column()-1).notnull())
+        if (!currentTable->fields.at(static_cast<size_t>(index.column())-1).notnull())
             query.append (" UNION SELECT NULL");
 
-        SqliteTableModel* fkModel = new SqliteTableModel(m->db(), parent, m->chunkSize(), m->encoding());
+        SqliteTableModel* fkModel = new SqliteTableModel(m->db(), parent, m->encoding());
         fkModel->setQuery(query);
 
         QComboBox* combo = new QComboBox(parent);
@@ -230,12 +229,16 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     // Force ScrollPerItem, so scrolling shows all table rows
     setVerticalScrollMode(ExtendedTableWidget::ScrollPerItem);
 
-    connect(verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(vscrollbarChanged(int)));
-    connect(this, SIGNAL(clicked(QModelIndex)), this, SLOT(cellClicked(QModelIndex)));
+    connect(verticalScrollBar(), &QScrollBar::valueChanged, this, &ExtendedTableWidget::vscrollbarChanged);
+    connect(this, &ExtendedTableWidget::clicked, this, &ExtendedTableWidget::cellClicked);
 
     // Set up filter row
     m_tableHeader = new FilterTableHeader(this);
     setHorizontalHeader(m_tableHeader);
+
+    // Disconnect clicking in header to select column, since we will use it for sorting.
+    // Note that, in order to work, this cannot be converted to the standard C++11 format.
+    disconnect(m_tableHeader, SIGNAL(sectionPressed(int)),this, SLOT(selectColumn(int)));
 
     // Set up vertical header context menu
     verticalHeader()->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -363,8 +366,7 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     });
 
     connect(nullAction, &QAction::triggered, [&]() {
-        for(const QModelIndex& index : selectedIndexes())
-            model()->setData(index, QVariant());
+       setToNull(selectedIndexes());
     });
     connect(copyAction, &QAction::triggered, [&]() {
        copy(false, false);
@@ -382,8 +384,22 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
        openPrintDialog();
     });
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
-    // This work arounds QTBUG-73721 and should be removed or limited in version scope when it is fixed.
+    // Add spreadsheet shortcuts for selecting entire columns or entire rows.
+    QShortcut* selectColumnShortcut = new QShortcut(QKeySequence("Ctrl+Space"), this);
+    connect(selectColumnShortcut, &QShortcut::activated, [this]() {
+        if(!hasFocus() || selectionModel()->selectedIndexes().isEmpty())
+            return;
+        selectionModel()->select(QItemSelection(selectionModel()->selectedIndexes().first(), selectionModel()->selectedIndexes().last()), QItemSelectionModel::Select | QItemSelectionModel::Columns);
+    });
+    QShortcut* selectRowShortcut = new QShortcut(QKeySequence("Shift+Space"), this);
+    connect(selectRowShortcut, &QShortcut::activated, [this]() {
+        if(!hasFocus() || selectionModel()->selectedIndexes().isEmpty())
+            return;
+        selectionModel()->select(QItemSelection(selectionModel()->selectedIndexes().first(), selectionModel()->selectedIndexes().last()), QItemSelectionModel::Select | QItemSelectionModel::Rows);
+    });
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0) && QT_VERSION < QT_VERSION_CHECK(5, 12, 3)
+    // This work arounds QTBUG-73721 and it is applied only for the affected version range.
     setWordWrap(false);
 #endif
 }
@@ -424,9 +440,9 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
     // If a single cell is selected which contains an image, copy it to the clipboard
     if (!inSQL && !withHeaders && indices.size() == 1) {
         QImage img;
-        QVariant data = m->data(indices.first(), Qt::EditRole);
+        QVariant varData = m->data(indices.first(), Qt::EditRole);
 
-        if (img.loadFromData(data.toByteArray()))
+        if (img.loadFromData(varData.toByteArray()))
         {
             // If it's an image, copy the image data to the clipboard
             mimeData->setImageData(img);
@@ -440,7 +456,7 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
 
     // Copy selected data into internal copy-paste buffer
     int last_row = indices.first().row();
-    QByteArrayList lst;
+    BufferRow lst;
     for(int i=0;i<indices.size();i++)
     {
         if(indices.at(i).row() != last_row)
@@ -448,7 +464,7 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
             m_buffer.push_back(lst);
             lst.clear();
         }
-        lst << indices.at(i).data(Qt::EditRole).toByteArray();
+        lst.push_back(indices.at(i).data(Qt::EditRole).toByteArray());
         last_row = indices.at(i).row();
     }
     m_buffer.push_back(lst);
@@ -470,8 +486,6 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
 
     int currentRow = indices.first().row();
 
-    const QString fieldSepHtml = "</td><td>";
-    const QString rowSepHtml = "</td></tr><tr><td>";
     const QString fieldSepText = "\t";
 #ifdef Q_OS_WIN
     const QString rowSepText = "\r\n";
@@ -479,13 +493,13 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
     const QString rowSepText = "\n";
 #endif
 
-    QString sqlInsertStatement = QString("INSERT INTO %1 (").arg(m->currentTableName().toString());
+    QString sqlInsertStatement = QString("INSERT INTO %1 (").arg(QString::fromStdString(m->currentTableName().toString()));
     // Table headers
     if (withHeaders || inSQL) {
         htmlResult.append("<tr><th>");
         int firstColumn = indices.front().column();
         for(int i = firstColumn; i <= indices.back().column(); i++) {
-            QByteArray headerText = model()->headerData(i, Qt::Horizontal, Qt::DisplayRole).toByteArray();
+            QByteArray headerText = model()->headerData(i, Qt::Horizontal, Qt::EditRole).toByteArray();
             if (i != firstColumn) {
                 result.append(fieldSepText);
                 htmlResult.append("</th><th>");
@@ -503,26 +517,46 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
 
     // Table data rows
     for(const QModelIndex& index : indices) {
+        QFont font;
+        font.fromString(index.data(Qt::FontRole).toString());
+        const QString fontStyle(font.italic() ? "italic" : "normal");
+        const QString fontWeigth(font.bold() ? "bold" : "normal");
+        const QString fontDecoration(font.underline() ? " text-decoration: underline;" : "");
+        const QColor bgColor(index.data(Qt::BackgroundRole).toString());
+        const QColor fgColor(index.data(Qt::ForegroundRole).toString());
+        const Qt::Alignment align(index.data(Qt::TextAlignmentRole).toInt());
+        const QString textAlign(CondFormat::alignmentTexts().at(CondFormat::fromCombinedAlignment(align)).toLower());
+        const QString style = QString("font-family: '%1'; font-size: %2pt; font-style: %3; font-weight: %4;%5 "
+                                      "background-color: %6; color: %7; text-align: %8").arg(
+                    font.family().toHtmlEscaped(),
+                    QString::number(font.pointSize()),
+                    fontStyle,
+                    fontWeigth,
+                    fontDecoration,
+                    bgColor.name(),
+                    fgColor.name(),
+                    textAlign);
+
         // Separators. For first cell, only opening table row tags must be added for the HTML and nothing for the text version.
         if (indices.first() == index) {
-            htmlResult.append("<tr><td>");
+            htmlResult.append(QString("<tr><td style=\"%1\">").arg(style));
             sqlResult.append(sqlInsertStatement);
         } else if (index.row() != currentRow) {
             result.append(rowSepText);
-            htmlResult.append(rowSepHtml);
+            htmlResult.append(QString("</td></tr><tr><td style=\"%1\">").arg(style));
             sqlResult.append(");" + rowSepText + sqlInsertStatement);
         } else {
             result.append(fieldSepText);
-            htmlResult.append(fieldSepHtml);
+            htmlResult.append(QString("</td><td style=\"%1\">").arg(style));
             sqlResult.append(", ");
         }
         currentRow = index.row();
 
         QImage img;
-        QVariant data = index.data(Qt::EditRole);
+        QVariant bArrdata = index.data(Qt::EditRole);
 
         // Table cell data: image? Store it as an embedded image in HTML
-        if (!inSQL && img.loadFromData(data.toByteArray()))
+        if (!inSQL && img.loadFromData(bArrdata.toByteArray()))
         {
             QByteArray ba;
             QBuffer buffer(&ba);
@@ -538,7 +572,7 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
         } else {
             QByteArray text;
             if (!m->isBinary(index)) {
-                text = data.toByteArray();
+                text = bArrdata.toByteArray();
 
                 // Table cell data: text
                 if (text.contains('\n') || text.contains('\t'))
@@ -547,10 +581,10 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
                     htmlResult.append(QString(text).toHtmlEscaped());
 
                 result.append(text);
-                sqlResult.append("'" + text.replace("'", "''") + "'");
+                sqlResult.append(sqlb::escapeString(text));
             } else
                 // Table cell data: binary. Save as BLOB literal in SQL
-                sqlResult.append( "X'" + data.toByteArray().toHex() + "'" );
+                sqlResult.append( "X'" + bArrdata.toByteArray().toHex() + "'" );
 
         }
     }
@@ -610,10 +644,10 @@ void ExtendedTableWidget::paste()
     // If data in system clipboard is ours and the internal copy-paste buffer is filled, use the internal buffer; otherwise parse the
     // system clipboard contents (case for data copied by other application).
 
-    QList<QByteArrayList> clipboardTable;
-    QList<QByteArrayList>* source;
+    std::vector<BufferRow> clipboardTable;
+    std::vector<BufferRow>* source;
 
-    if(mimeClipboard->hasHtml() && mimeClipboard->html().contains(m_generatorStamp) && !m_buffer.isEmpty())
+    if(mimeClipboard->hasHtml() && mimeClipboard->html().contains(m_generatorStamp) && !m_buffer.empty())
     {
         source = &m_buffer;
     } else {
@@ -626,8 +660,8 @@ void ExtendedTableWidget::paste()
         return;
 
     // Starting from assumption that selection is rectangular, and then first index is upper-left corner and last is lower-right.
-    int rows = source->size();
-    int columns = source->first().size();
+    int rows = static_cast<int>(source->size());
+    int columns = static_cast<int>(source->front().size());
 
     int firstRow = indices.front().row();
     int firstColumn = indices.front().column();
@@ -641,11 +675,11 @@ void ExtendedTableWidget::paste()
     // Special case: if there is only one cell of data to be pasted, paste it into all selected fields
     if(rows == 1 && columns == 1)
     {
-        QByteArray data = source->first().first();
+        QByteArray bArrdata = source->front().front();
         for(int row=firstRow;row<firstRow+selectedRows;row++)
         {
             for(int column=firstColumn;column<firstColumn+selectedColumns;column++)
-                m->setData(m->index(row, column), data);
+                m->setData(m->index(row, column), bArrdata);
         }
         return;
     }
@@ -667,7 +701,7 @@ void ExtendedTableWidget::paste()
 
     // Copy the data cell by cell and as-is from the source buffer to the table
     int row = firstRow;
-    for(const QByteArrayList& source_row : *source)
+    for(const auto& source_row : *source)
     {
         int column = firstColumn;
         for(const QByteArray& source_cell : source_row)
@@ -694,14 +728,14 @@ void ExtendedTableWidget::useAsFilter(const QString& filterOperator, bool binary
     if (!index.isValid() || !selectionModel()->hasSelection() || m->isBinary(index))
         return;
 
-    QVariant data = model()->data(index, Qt::EditRole);
+    QVariant bArrdata = model()->data(index, Qt::EditRole);
     QString value;
-    if (data.isNull())
+    if (bArrdata.isNull())
         value = "NULL";
-    else if (data.toString().isEmpty())
+    else if (bArrdata.toString().isEmpty())
         value = "''";
     else
-        value = data.toString();
+        value = bArrdata.toString();
 
     // When Containing filter is requested (empty operator) and the value starts with
     // an operator character, the character is escaped.
@@ -710,10 +744,11 @@ void ExtendedTableWidget::useAsFilter(const QString& filterOperator, bool binary
 
     // If binary operator, the cell data is used as first value and
     // the second value must be added by the user.
+    size_t column = static_cast<size_t>(index.column());
     if (binary)
-        m_tableHeader->setFilter(index.column(), value + filterOperator);
+        m_tableHeader->setFilter(column, value + filterOperator);
     else
-        m_tableHeader->setFilter(index.column(), filterOperator + value + operatorSuffix);
+        m_tableHeader->setFilter(column, filterOperator + value + operatorSuffix);
 }
 
 void ExtendedTableWidget::duplicateUpperCell()
@@ -778,8 +813,7 @@ void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
             if(event->modifiers().testFlag(Qt::AltModifier))
             {
                 // When pressing Alt+Delete set the value to NULL
-                for(const QModelIndex& index : selectedIndexes())
-                    model()->setData(index, QVariant());
+                setToNull(selectedIndexes());
             } else {
                 // When pressing Delete only set the value to empty string
                 for(const QModelIndex& index : selectedIndexes())
@@ -833,22 +867,35 @@ void ExtendedTableWidget::vscrollbarChanged(int value)
     }
 }
 
-int ExtendedTableWidget::numVisibleRows()
+int ExtendedTableWidget::numVisibleRows() const
 {
+    if(!isVisible() || !model() || !verticalHeader())
+        return 0;
+
     // Get the row numbers of the rows currently visible at the top and the bottom of the widget
     int row_top = rowAt(0) == -1 ? 0 : rowAt(0);
-    int row_bottom = rowAt(height()) == -1 ? model()->rowCount() : rowAt(height());
+    int row_bottom = verticalHeader()->visualIndexAt(height()) == -1 ? model()->rowCount() : (verticalHeader()->visualIndexAt(height()) - 1);
+    if(horizontalScrollBar()->isVisible())      // Assume the scrollbar covers about one row
+        row_bottom--;
 
     // Calculate the number of visible rows
     return row_bottom - row_top;
 }
 
-QSet<int> ExtendedTableWidget::selectedCols()
+std::unordered_set<size_t> ExtendedTableWidget::selectedCols() const
 {
-    QSet<int> selectedCols;
-    for(const QModelIndex & idx : selectedIndexes())
-        selectedCols.insert(idx.column());
+    std::unordered_set<size_t> selectedCols;
+    for(const auto& idx : selectionModel()->selectedColumns())
+        selectedCols.insert(static_cast<size_t>(idx.column()));
     return selectedCols;
+}
+
+std::unordered_set<size_t> ExtendedTableWidget::colsInSelection() const
+{
+    std::unordered_set<size_t> colsInSelection;
+    for(const QModelIndex & idx : selectedIndexes())
+        colsInSelection.insert(static_cast<size_t>(idx.column()));
+    return colsInSelection;
 }
 
 void ExtendedTableWidget::cellClicked(const QModelIndex& index)
@@ -857,12 +904,20 @@ void ExtendedTableWidget::cellClicked(const QModelIndex& index)
     if(qApp->keyboardModifiers().testFlag(Qt::ControlModifier) && qApp->keyboardModifiers().testFlag(Qt::ShiftModifier) && model())
     {
         SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
-        sqlb::ForeignKeyClause fk = m->getForeignKeyClause(index.column()-1);
+        sqlb::ForeignKeyClause fk = m->getForeignKeyClause(static_cast<size_t>(index.column()-1));
 
         if(fk.isSet())
             emit foreignKeyClicked(sqlb::ObjectIdentifier(m->currentTableName().schema(), fk.table()),
                                    fk.columns().size() ? fk.columns().at(0) : "",
                                    m->data(index, Qt::EditRole).toByteArray());
+        else {
+            // If this column does not have a foreign-key, try to interpret it as a filename/URL and open it in external application.
+
+            // TODO: Qt is doing a contiguous selection when Control+Click is pressed. It should be disabled, but at least moving the
+            // current index gives better result.
+            setCurrentIndex(index);
+            emit requestUrlOrFileOpen(model()->data(index, Qt::EditRole).toString());
+        }
     }
 }
 
@@ -969,20 +1024,18 @@ void ExtendedTableWidget::openPrintDialog()
     // the table with headers. We can then print it using an HTML text document.
     copyMimeData(indices, mimeData, true, false);
 
-    QTextDocument *document = new QTextDocument();
-    document->setHtml(mimeData->html());
-
     QPrinter printer;
     QPrintPreviewDialog *dialog = new QPrintPreviewDialog(&printer);
 
-    connect(dialog, &QPrintPreviewDialog::paintRequested, [&](QPrinter *previewPrinter) {
-        document->print(previewPrinter);
+    connect(dialog, &QPrintPreviewDialog::paintRequested, [mimeData](QPrinter *previewPrinter) {
+        QTextDocument document;
+        document.setHtml(mimeData->html());
+        document.print(previewPrinter);
     });
 
     dialog->exec();
 
     delete dialog;
-    delete document;
     delete mimeData;
 }
 
@@ -995,7 +1048,34 @@ void ExtendedTableWidget::sortByColumns(const std::vector<sqlb::SortedColumn>& c
     // Are we using a SqliteTableModel as a model? These support multiple sort columns. Other models might not; for those we just use the first sort column
     SqliteTableModel* sqlite_model = dynamic_cast<SqliteTableModel*>(model());
     if(sqlite_model == nullptr)
-        model()->sort(columns.front().column, columns.front().direction == sqlb::Ascending ? Qt::AscendingOrder : Qt::DescendingOrder);
+        model()->sort(static_cast<int>(columns.front().column), columns.front().direction == sqlb::Ascending ? Qt::AscendingOrder : Qt::DescendingOrder);
     else
         sqlite_model->sort(columns);
+}
+
+void ExtendedTableWidget::currentChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+    QTableView::currentChanged(current, previous);
+    emit currentIndexChanged(current, previous);
+}
+
+void ExtendedTableWidget::setToNull(const QModelIndexList& indices)
+{
+    SqliteTableModel* m = qobject_cast<SqliteTableModel*>(const_cast<QAbstractItemModel*>(model()));
+    sqlb::TablePtr currentTable = m->db().getObjectByName<sqlb::Table>(m->currentTableName());
+
+    // Check if some column in the selection has a NOT NULL constraint, before trying to update the cells.
+    if(currentTable)
+        for(const QModelIndex& index : indices) {
+            const sqlb::Field& field = currentTable->fields.at(static_cast<size_t>(index.column())-1);
+            if(field.notnull()) {
+                QMessageBox::warning(nullptr, qApp->applicationName(),
+                                     tr("Cannot set selection to NULL. Column %1 has a NOT NULL constraint.").
+                                     arg(QString::fromStdString(field.name())));
+                return;
+            }
+        }
+
+    for(const QModelIndex& index : indices)
+        model()->setData(index, QVariant());
 }
