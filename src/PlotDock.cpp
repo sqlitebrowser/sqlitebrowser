@@ -103,6 +103,9 @@ PlotDock::PlotDock(QWidget* parent)
         m_contextMenu->popup(ui->plotWidget->mapToGlobal(pos));
     });
 
+    // Initialise the y axes and plotcolumn indices for y axes
+    yAxes = {ui->plotWidget->yAxis, ui->plotWidget->yAxis2};
+    PlotColumnY = {PlotColumnY1, PlotColumnY2};
 }
 
 PlotDock::~PlotDock()
@@ -135,8 +138,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
 
         // save current selected columns, so we can restore them after the update
         QString sItemX; // selected X column
-        QMap<QString, PlotSettings> mapItemsY1; // selected Y columns with color
-        QMap<QString, PlotSettings> mapItemsY2; // selected Y columns with color
+        QList<QMap<QString, PlotSettings>> mapItemsY = {QMap<QString, PlotSettings>(), QMap<QString, PlotSettings>()};
 
         if(keepOrResetSelection)
         {
@@ -147,18 +149,16 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                 if(item->checkState(PlotColumnX) == Qt::Checked)
                     sItemX = item->text(PlotColumnField);
 
-                if(item->checkState(PlotColumnY1) == Qt::Checked)
-                    mapItemsY1[item->text(PlotColumnField)] = PlotSettings(0, 0, item->backgroundColor(PlotColumnY1), item->checkState(PlotColumnY1) == Qt::Checked);
+                for(int y_ind = 0; y_ind < 2; y_ind++)
+                  if(item->checkState(PlotColumnY[y_ind]) == Qt::Checked)
+                    mapItemsY[y_ind][item->text(PlotColumnField)] = PlotSettings(0, 0, item->backgroundColor(PlotColumnY[y_ind]), item->checkState(PlotColumnY[y_ind]) == Qt::Checked);
 
-                if(item->checkState(PlotColumnY2) == Qt::Checked)
-                  mapItemsY2[item->text(PlotColumnField)] = PlotSettings(0, 0, item->backgroundColor(PlotColumnY2), item->checkState(PlotColumnY2) == Qt::Checked);
             }
         } else {
             // Get the plot columns to select from the stored browse table information
             sItemX = m_currentTableSettings->plotXAxis;
-
-            mapItemsY1 = m_currentTableSettings->plotY1Axes;
-            mapItemsY2 = m_currentTableSettings->plotY2Axes;
+            mapItemsY[0] = m_currentTableSettings->plotYAxes[0];
+            mapItemsY[1] = m_currentTableSettings->plotYAxes[1];
         }
 
         ui->treePlotColumns->clear();
@@ -201,23 +201,17 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                     columnitem->setText(PlotColumnField, model->headerData(i, Qt::Horizontal, Qt::EditRole).toString());
 
                     // restore previous check state
-                    if(mapItemsY1.contains(columnitem->text(PlotColumnField)))
-                    {
-                        columnitem->setCheckState(PlotColumnY1, mapItemsY1[columnitem->text(PlotColumnField)].active ? Qt::Checked : Qt::Unchecked);
-                        columnitem->setBackgroundColor(PlotColumnY1, mapItemsY1[columnitem->text(PlotColumnField)].colour);
-                    } else {
-                        if (columntype == QVariant::Double)
-                            columnitem->setCheckState(PlotColumnY1, Qt::Unchecked);
-                    }
-
-                    if(mapItemsY2.contains(columnitem->text(PlotColumnField)))
+                    for(int y_ind = 0; y_ind < 2; y_ind++)
                       {
-                        columnitem->setCheckState(PlotColumnY2, mapItemsY2[columnitem->text(PlotColumnField)].active ? Qt::Checked : Qt::Unchecked);
-                        columnitem->setBackgroundColor(PlotColumnY2, mapItemsY2[columnitem->text(PlotColumnField)].colour);
-                      } else {
-                      if (columntype == QVariant::Double)
-                        columnitem->setCheckState(PlotColumnY2, Qt::Unchecked);
-                    }
+                        if(mapItemsY[y_ind].contains(columnitem->text(PlotColumnField)))
+                        {
+                          columnitem->setCheckState(PlotColumnY[y_ind], mapItemsY[y_ind][columnitem->text(PlotColumnField)].active ? Qt::Checked : Qt::Unchecked);
+                          columnitem->setBackgroundColor(PlotColumnY[y_ind], mapItemsY[y_ind][columnitem->text(PlotColumnField)].colour);
+                        } else {
+                        if (columntype == QVariant::Double)
+                          columnitem->setCheckState(PlotColumnY[y_ind], Qt::Unchecked);
+                        }
+                      }
 
                     if(sItemX == columnitem->text(PlotColumnField))
                         columnitem->setCheckState(PlotColumnX, Qt::Checked);
@@ -240,20 +234,15 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                 columnitem->setText(PlotColumnType, tr("Numeric"));
 
                 // restore previous check state
-                if(mapItemsY1.contains(columnitem->text(PlotColumnField)))
+                for(int y_ind = 0; y_ind < 2; y_ind++)
                 {
-                    columnitem->setCheckState(PlotColumnY1, mapItemsY1[columnitem->text(PlotColumnField)].active ? Qt::Checked : Qt::Unchecked);
-                    columnitem->setBackgroundColor(PlotColumnY1, mapItemsY1[columnitem->text(PlotColumnField)].colour);
-                } else {
-                    columnitem->setCheckState(PlotColumnY1, Qt::Unchecked);
-                }
-
-                if(mapItemsY2.contains(columnitem->text(PlotColumnField)))
-                  {
-                    columnitem->setCheckState(PlotColumnY2, mapItemsY2[columnitem->text(PlotColumnField)].active ? Qt::Checked : Qt::Unchecked);
-                    columnitem->setBackgroundColor(PlotColumnY2, mapItemsY2[columnitem->text(PlotColumnField)].colour);
-                  } else {
-                  columnitem->setCheckState(PlotColumnY2, Qt::Unchecked);
+                    if(mapItemsY[y_ind].contains(columnitem->text(PlotColumnField)))
+                    {
+                      columnitem->setCheckState(PlotColumnY[y_ind], mapItemsY[y_ind][columnitem->text(PlotColumnField)].active ? Qt::Checked : Qt::Unchecked);
+                      columnitem->setBackgroundColor(PlotColumnY[y_ind], mapItemsY[y_ind][columnitem->text(PlotColumnField)].colour);
+                    } else {
+                    columnitem->setCheckState(PlotColumnY[y_ind], Qt::Unchecked);
+                    }
                 }
 
                 if(sItemX == columnitem->text(PlotColumnField))
@@ -266,8 +255,8 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
             }
         }
 
-        ui->plotWidget->yAxis->setLabel("Y1");
-        ui->plotWidget->yAxis2->setLabel("Y2");
+        yAxes[0]->setLabel("Y1");
+        yAxes[1]->setLabel("Y2");
         ui->plotWidget->xAxis->setLabel("X");
         ui->treePlotColumns->blockSignals(false);
     }
@@ -283,14 +272,13 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
         xitem = nullptr;
     }
 
-    QStringList y1AxisLabels;
-    QStringList y2AxisLabels;
+    QList<QStringList> yAxisLabels = {QStringList(), QStringList()};
 
     // Clear graphs and axis labels
     ui->plotWidget->clearPlottables();
     ui->plotWidget->xAxis->setLabel(QString());
-    ui->plotWidget->yAxis->setLabel(QString());
-    ui->plotWidget->yAxis2->setLabel(QString());
+    yAxes[0]->setLabel(QString());
+    yAxes[1]->setLabel(QString());
 
     if(xitem)
     {
@@ -342,20 +330,16 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
         for(int i = 0; i < ui->treePlotColumns->topLevelItemCount(); ++i)
         {
             QTreeWidgetItem* item = ui->treePlotColumns->topLevelItem(i);
-            bool y1ItemBool=false, y2ItemBool=false;
-            if(item->checkState((PlotColumnY1)) == Qt::Checked || item->checkState((PlotColumnY2)) == Qt::Checked)
+            QList<bool> yItemBool = {false, false};
+
+            if(item->checkState((PlotColumnY[0])) == Qt::Checked || item->checkState((PlotColumnY[1])) == Qt::Checked)
             {
+                for(int y_ind = 0; y_ind < 2; y_ind++)
+                    if(item->checkState((PlotColumnY[y_ind])) == Qt::Checked)
+                        yItemBool[y_ind] = true;
 
-              // Booleans updated for the current item to be plotted in y1 / y2
-              if(item->checkState((PlotColumnY1)) == Qt::Checked){
-                y1ItemBool = true;
-              }
-
-              if(item->checkState((PlotColumnY2)) == Qt::Checked){
-                y2ItemBool = true;
-                displayY2Axis = true;
-              }
-
+                if(yItemBool[1])
+                    displayY2Axis = true;
                 // regain the model column index
                 int column = item->data(PlotColumnField, Qt::UserRole).toInt();
 
@@ -367,8 +351,12 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
 
                 auto nrows = model->rowCount();
 
-                QVector<double> xdata(nrows), y1data(nrows), tdata(nrows), y2data(nrows);
+                QList<QVector<double>> ydata;
+                ydata = {QVector<double>(nrows), QVector<double>(nrows)};
+
+                QVector<double> xdata(nrows), tdata(nrows);
                 QVector<QString> labels;
+
                 for(int j = 0; j < nrows; ++j)
                 {
                     tdata[j] = j;
@@ -420,21 +408,16 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                     else
                         pointdata = model->data(model->index(j, column), Qt::EditRole);
 
-                    if(pointdata.isNull()){
-                      if(y1ItemBool){
-                        y1data[j] = qQNaN();
-                      }
-                      if(y2ItemBool){
-                        y2data[j] = qQNaN();
-                      }
-                    }
-                    else{
-                      if(y1ItemBool){
-                        y1data[j] = pointdata.toDouble();
-                      }
-                      if(y2ItemBool){
-                        y2data[j] = pointdata.toDouble();
-                      }
+                    for(int y_ind = 0; y_ind < 2; y_ind++)
+                    {
+                        if(pointdata.isNull()){
+                            if(yItemBool[y_ind])
+                                ydata[y_ind][j] = qQNaN();
+                        }
+                        else{
+                            if(yItemBool[y_ind])
+                                ydata[y_ind][j] = pointdata.toDouble();
+                        }
                     }
                 }
 
@@ -455,98 +438,72 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                 // TODO: how to make the user aware of this without disturbing.
                 if (xtype == QVariant::String) {
 
-                  if(y1ItemBool){
-                    QCPBars* bars = new QCPBars(ui->plotWidget->xAxis, ui->plotWidget->yAxis);
-                    plottable = bars;
-                    bars->setData(xdata, y1data);
-                    // Set ticker once
-                    if (ui->plotWidget->plottableCount() == 1) {
-                        QSharedPointer<QCPAxisTickerText> ticker(new QCPAxisTickerText);
-                        ticker->addTicks(xdata, labels);
-                        ui->plotWidget->xAxis->setTicker(ticker);
+                    for(int y_ind = 0; y_ind < 2; y_ind++)
+                    {
+                        if(yItemBool[y_ind])
+                        {
+                            QCPBars* bars = new QCPBars(ui->plotWidget->xAxis, yAxes[y_ind]);
+                            plottable = bars;
+                            bars->setData(xdata, ydata[y_ind]);
+                            // Set ticker once
+                            if (ui->plotWidget->plottableCount() == 1) {
+                                QSharedPointer<QCPAxisTickerText> ticker(new QCPAxisTickerText);
+                                ticker->addTicks(xdata, labels);
+                                ui->plotWidget->xAxis->setTicker(ticker);
+                            }
+                            QColor color = item->backgroundColor(PlotColumnY[y_ind]);
+                            bars->setBrush(color);
+                            plottable->setPen(QPen(color.darker(150)));
+                        }
                     }
-                    QColor color = item->backgroundColor(PlotColumnY1);
-                    bars->setBrush(color);
-                    plottable->setPen(QPen(color.darker(150)));
-                  }
-                  if(y2ItemBool){
-                    QCPBars* bars = new QCPBars(ui->plotWidget->xAxis, ui->plotWidget->yAxis2);
-                    plottable = bars;
-                    bars->setData(xdata, y2data);
-                    // Set ticker once
-                    if (ui->plotWidget->plottableCount() == 1) {
-                      QSharedPointer<QCPAxisTickerText> ticker(new QCPAxisTickerText);
-                      ticker->addTicks(xdata, labels);
-                      ui->plotWidget->xAxis->setTicker(ticker);
-                    }
-                    QColor color = item->backgroundColor(PlotColumnY2);
-                    bars->setBrush(color);
-                    plottable->setPen(QPen(color.darker(150)));
-                  }
                 } else {
                     if (isSorted) {
-                      if(y1ItemBool){
-                        QCPGraph* graph = ui->plotWidget->addGraph(ui->plotWidget->xAxis, ui->plotWidget->yAxis);
-                        plottable = graph;
-                        graph->setData(xdata, y1data, /*alreadySorted*/ true);
-                        // set some graph styles not supported by the abstract plottable
-                        graph->setLineStyle(static_cast<QCPGraph::LineStyle>(ui->comboLineType->currentIndex()));
-                        graph->setScatterStyle(scatterStyle);
-                        plottable->setPen(QPen(item->backgroundColor(PlotColumnY1)));
-                      }
-                      if(y2ItemBool){
-                        QCPGraph* graph = ui->plotWidget->addGraph(ui->plotWidget->xAxis, ui->plotWidget->yAxis2);
-                        plottable = graph;
-                        graph->setData(xdata, y2data, /*alreadySorted*/ true);
-                        // set some graph styles not supported by the abstract plottable
-                        graph->setLineStyle(static_cast<QCPGraph::LineStyle>(ui->comboLineType->currentIndex()));
-                        graph->setScatterStyle(scatterStyle);
-                        plottable->setPen(QPen(item->backgroundColor(PlotColumnY2)));
-                      }
+                        for(int y_ind = 0; y_ind < 2; y_ind++)
+                        {
+                            if(yItemBool[y_ind])
+                            {
+                                QCPGraph* graph = ui->plotWidget->addGraph(ui->plotWidget->xAxis, yAxes[y_ind]);
+                                plottable = graph;
+                                graph->setData(xdata, ydata[y_ind], /*alreadySorted*/ true);
+                                // set some graph styles not supported by the abstract plottable
+                                graph->setLineStyle(static_cast<QCPGraph::LineStyle>(ui->comboLineType->currentIndex()));
+                                graph->setScatterStyle(scatterStyle);
+                                plottable->setPen(QPen(item->backgroundColor(PlotColumnY[y_ind])));
+                            }
+                        }
                     } else {
-                      if(y1ItemBool){
-                        QCPCurve* curve = new QCPCurve(ui->plotWidget->xAxis, ui->plotWidget->yAxis);
-                        plottable = curve;
-                        curve->setData(tdata, xdata, y1data, /*alreadySorted*/ true);
-                        // set some curve styles not supported by the abstract plottable
-                        if (ui->comboLineType->currentIndex() == QCPCurve::lsNone)
-                            curve->setLineStyle(QCPCurve::lsNone);
-                        else
-                            curve->setLineStyle(QCPCurve::lsLine);
-                        curve->setScatterStyle(scatterStyle);
-                        plottable->setPen(QPen(item->backgroundColor(PlotColumnY1)));
-                      }
-                      if(y2ItemBool){
-                        QCPCurve* curve = new QCPCurve(ui->plotWidget->xAxis, ui->plotWidget->yAxis2);
-                        plottable = curve;
-                        curve->setData(tdata, xdata, y2data, /*alreadySorted*/ true);
-                        // set some curve styles not supported by the abstract plottable
-                        if (ui->comboLineType->currentIndex() == QCPCurve::lsNone)
-                          curve->setLineStyle(QCPCurve::lsNone);
-                        else
-                          curve->setLineStyle(QCPCurve::lsLine);
-                        curve->setScatterStyle(scatterStyle);
-                        plottable->setPen(QPen(item->backgroundColor(PlotColumnY2)));
-                      }
+                        for(int y_ind = 0; y_ind < 2; y_ind++)
+                        {
+                            if(yItemBool[y_ind])
+                            {
+                                QCPCurve* curve = new QCPCurve(ui->plotWidget->xAxis, yAxes[y_ind]);
+                                plottable = curve;
+                                curve->setData(tdata, xdata, ydata[y_ind], /*alreadySorted*/ true);
+                                // set some curve styles not supported by the abstract plottable
+                                if (ui->comboLineType->currentIndex() == QCPCurve::lsNone)
+                                    curve->setLineStyle(QCPCurve::lsNone);
+                                else
+                                    curve->setLineStyle(QCPCurve::lsLine);
+                                curve->setScatterStyle(scatterStyle);
+                                plottable->setPen(QPen(item->backgroundColor(PlotColumnY[y_ind])));
+                            }
+                        }
                     }
                 }
 
                 plottable->setSelectable(QCP::stDataRange);
                 plottable->setName(item->text(PlotColumnField));
 
-                if(y1ItemBool){
-                  // gather Y label column names
-                  if(column == RowNumId)
-                    y1AxisLabels << tr("Row #");
-                  else
-                    y1AxisLabels << model->headerData(column, Qt::Horizontal, Qt::EditRole).toString();
-                }
-                if(y2ItemBool){
-                  // gather Y label column names
-                  if(column == RowNumId)
-                    y2AxisLabels << tr("Row #");
-                  else
-                    y2AxisLabels << model->headerData(column, Qt::Horizontal, Qt::EditRole).toString();
+                for(int y_ind = 0; y_ind < 2; y_ind++)
+                {
+                    if(yItemBool[y_ind])
+                    {
+                        // gather Y label column names
+                        if(column == RowNumId)
+                            yAxisLabels[y_ind] << tr("Row #");
+                        else
+                            yAxisLabels[y_ind] << model->headerData(column, Qt::Horizontal, Qt::EditRole).toString();
+                    }
                 }
             }
         }
@@ -561,14 +518,15 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
             ui->plotWidget->xAxis->setLabel(tr("Row #"));
         else
             ui->plotWidget->xAxis->setLabel(model->headerData(x, Qt::Horizontal, Qt::EditRole).toString());
-        ui->plotWidget->yAxis->setLabel(y1AxisLabels.join("|"));
-        ui->plotWidget->yAxis2->setLabel(y2AxisLabels.join("|"));
+        for(int y_ind = 0; y_ind < 2; y_ind++)
+            yAxes[y_ind]->setLabel(yAxisLabels[y_ind].join("|"));
+
         if(displayY2Axis){
-          ui->plotWidget->yAxis2->setVisible(true);
-          ui->plotWidget->yAxis2->setTickLabels(true);
+          yAxes[1]->setVisible(true);
+          yAxes[1]->setTickLabels(true);
         }else{
-          ui->plotWidget->yAxis2->setVisible(false);
-          ui->plotWidget->yAxis2->setTickLabels(false);
+          yAxes[1]->setVisible(false);
+          yAxes[1]->setTickLabels(false);
         }
     }
 
@@ -618,62 +576,40 @@ void PlotDock::on_treePlotColumns_itemChanged(QTreeWidgetItem* changeitem, int c
             else
                 m_currentTableSettings->plotXAxis = QString();
         }
-    } else if(column == PlotColumnY1 || column == PlotColumnY2) {
+    } else if(column == PlotColumnY[0] || column == PlotColumnY[1]) {
         // Save check state of this column
-      if(column == PlotColumnY1){
-        if(m_currentTableSettings)
-          {
-            PlotSettings& plot_settings = m_currentTableSettings->plotY1Axes[changeitem->text(PlotColumnField)];
-            plot_settings.active = (changeitem->checkState(column) == Qt::Checked);
-          }
+        for(int y_ind = 0; y_ind < 2; y_ind++)
+        {
+            if(column == PlotColumnY[y_ind])
+            {
+                if(m_currentTableSettings)
+                {
+                    PlotSettings& plot_settings = m_currentTableSettings->plotYAxes[y_ind][changeitem->text(PlotColumnField)];
+                    plot_settings.active = (changeitem->checkState(column) == Qt::Checked);
+                }
 
-        if(changeitem->checkState(column) == Qt::Checked)
-          {
-            // Generate a default colour if none isn't set yet
-            QColor colour = changeitem->backgroundColor(column);
-            if(!colour.isValid())
-              colour = m_graphPalette.nextSerialColor(true);
+                if(changeitem->checkState(column) == Qt::Checked)
+                {
+                    // Generate a default colour if none isn't set yet
+                    QColor colour = changeitem->backgroundColor(column);
+                    if(!colour.isValid())
+                        colour = m_graphPalette.nextSerialColor(true);
 
-            // Set colour
-            changeitem->setBackgroundColor(column, colour);
+                    // Set colour
+                    changeitem->setBackgroundColor(column, colour);
 
-            // Save settings for this table
-            if(m_currentTableSettings)
-              {
-                PlotSettings& plot_settings = m_currentTableSettings->plotY1Axes[changeitem->text(PlotColumnField)];
-                plot_settings.colour = colour;
-                plot_settings.lineStyle = ui->comboLineType->currentIndex();
-                plot_settings.pointShape = (ui->comboPointShape->currentIndex() > 0 ? (ui->comboPointShape->currentIndex()+1) : ui->comboPointShape->currentIndex());
-              }
-          }
-      }
-      if(column == PlotColumnY2){
-        if(m_currentTableSettings)
-          {
-            PlotSettings& plot_settings = m_currentTableSettings->plotY2Axes[changeitem->text(PlotColumnField)];
-            plot_settings.active = (changeitem->checkState(column) == Qt::Checked);
-          }
+                    // Save settings for this table
+                    if(m_currentTableSettings)
+                    {
+                        PlotSettings& plot_settings = m_currentTableSettings->plotYAxes[y_ind][changeitem->text(PlotColumnField)];
+                        plot_settings.colour = colour;
+                        plot_settings.lineStyle = ui->comboLineType->currentIndex();
+                        plot_settings.pointShape = (ui->comboPointShape->currentIndex() > 0 ? (ui->comboPointShape->currentIndex()+1) : ui->comboPointShape->currentIndex());
+                    }
+                }
+            }
+        }
 
-        if(changeitem->checkState(column) == Qt::Checked)
-          {
-            // Generate a default colour if none isn't set yet
-            QColor colour = changeitem->backgroundColor(column);
-            if(!colour.isValid())
-              colour = m_graphPalette.nextSerialColor(true);
-
-            // Set colour
-            changeitem->setBackgroundColor(column, colour);
-
-            // Save settings for this table
-            if(m_currentTableSettings)
-              {
-                PlotSettings& plot_settings = m_currentTableSettings->plotY2Axes[changeitem->text(PlotColumnField)];
-                plot_settings.colour = colour;
-                plot_settings.lineStyle = ui->comboLineType->currentIndex();
-                plot_settings.pointShape = (ui->comboPointShape->currentIndex() > 0 ? (ui->comboPointShape->currentIndex()+1) : ui->comboPointShape->currentIndex());
-              }
-          }
-      }
     }
 
     ui->treePlotColumns->blockSignals(false);
@@ -688,63 +624,36 @@ void PlotDock::on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem* item, int c
 
     int type = item->data(PlotColumnType, Qt::UserRole).toInt();
 
-    if(column == PlotColumnY1 && type == QVariant::Double)
+    for(int y_ind = 0; y_ind < 2; y_ind++)
     {
-        // On double click open the colordialog
-        QColorDialog colordialog(this);
-        QColor curbkcolor = item->backgroundColor(column);
-        QColor precolor = !curbkcolor.isValid() ? static_cast<Qt::GlobalColor>(random_number(5, 13)) : curbkcolor;
-        QColor color = colordialog.getColor(precolor, this, tr("Choose an axis color"));
-        if(color.isValid())
+        if(column == PlotColumnY[y_ind] && type == QVariant::Double)
         {
-            item->setCheckState(column, Qt::Checked);
-            item->setBackgroundColor(column, color);
-
-            // Save settings for this table
-            if(m_currentTableSettings)
+            // On double click open the colordialog
+            QColorDialog colordialog(this);
+            QColor curbkcolor = item->backgroundColor(column);
+            QColor precolor = !curbkcolor.isValid() ? static_cast<Qt::GlobalColor>(random_number(5, 13)) : curbkcolor;
+            QColor color = colordialog.getColor(precolor, this, tr("Choose an axis color"));
+            if(color.isValid())
             {
-                PlotSettings& plot_settings = m_currentTableSettings->plotY1Axes[item->text(PlotColumnField)];
-                plot_settings.active = (item->checkState(column) == Qt::Checked);
-                plot_settings.colour = color;
-                plot_settings.lineStyle = ui->comboLineType->currentIndex();
-                plot_settings.pointShape = (ui->comboPointShape->currentIndex() > 0 ? (ui->comboPointShape->currentIndex()+1) : ui->comboPointShape->currentIndex());
+                item->setCheckState(column, Qt::Checked);
+                item->setBackgroundColor(column, color);
+
+                // Save settings for this table
+                if(m_currentTableSettings)
+                {
+                    PlotSettings& plot_settings = m_currentTableSettings->plotYAxes[y_ind][item->text(PlotColumnField)];
+                    plot_settings.active = (item->checkState(column) == Qt::Checked);
+                    plot_settings.colour = color;
+                    plot_settings.lineStyle = ui->comboLineType->currentIndex();
+                    plot_settings.pointShape = (ui->comboPointShape->currentIndex() > 0 ? (ui->comboPointShape->currentIndex()+1) : ui->comboPointShape->currentIndex());
+                }
+            } else {
+                item->setCheckState(column, Qt::Unchecked);
+
+                // Save settings for this table
+                if(m_currentTableSettings)
+                    m_currentTableSettings->plotYAxes[y_ind].remove(item->text(PlotColumnField));
             }
-        } else {
-            item->setCheckState(column, Qt::Unchecked);
-
-            // Save settings for this table
-            if(m_currentTableSettings)
-                m_currentTableSettings->plotY1Axes.remove(item->text(PlotColumnField));
-        }
-    }
-
-    if(column == PlotColumnY2 && type == QVariant::Double)
-    {
-        // On double click open the colordialog
-        QColorDialog colordialog(this);
-        QColor curbkcolor = item->backgroundColor(column);
-        QColor precolor = !curbkcolor.isValid() ? static_cast<Qt::GlobalColor>(random_number(5, 13)) : curbkcolor;
-        QColor color = colordialog.getColor(precolor, this, tr("Choose an axis color"));
-        if(color.isValid())
-        {
-            item->setCheckState(column, Qt::Checked);
-            item->setBackgroundColor(column, color);
-
-            // Save settings for this table
-            if(m_currentTableSettings)
-            {
-                PlotSettings& plot_settings = m_currentTableSettings->plotY2Axes[item->text(PlotColumnField)];
-                plot_settings.active = (item->checkState(column) == Qt::Checked);
-                plot_settings.colour = color;
-                plot_settings.lineStyle = ui->comboLineType->currentIndex();
-                plot_settings.pointShape = (ui->comboPointShape->currentIndex() > 0 ? (ui->comboPointShape->currentIndex()+1) : ui->comboPointShape->currentIndex());
-            }
-        } else {
-            item->setCheckState(column, Qt::Unchecked);
-
-            // Save settings for this table
-            if(m_currentTableSettings)
-                m_currentTableSettings->plotY2Axes.remove(item->text(PlotColumnField));
         }
     }
 
@@ -816,20 +725,16 @@ void PlotDock::on_comboLineType_currentIndexChanged(int index)
     // Save settings for this table
     if(m_currentTableSettings)
     {
-        QMap<QString, PlotSettings>& graphs = m_currentTableSettings->plotY1Axes;
-        auto it = graphs.begin();
-        while(it != graphs.end())
+        for(int y_ind = 0; y_ind < 2; y_ind++)
         {
-            it.value().lineStyle = lineStyle;
-            ++it;
+            QMap<QString, PlotSettings>& graphs = m_currentTableSettings->plotYAxes[y_ind];
+            auto it = graphs.begin();
+            while(it != graphs.end())
+            {
+                it.value().lineStyle = lineStyle;
+                ++it;
+            }
         }
-        graphs = m_currentTableSettings->plotY2Axes;
-        it = graphs.begin();
-        while(it != graphs.end())
-          {
-            it.value().lineStyle = lineStyle;
-            ++it;
-          }
     }
 }
 
@@ -858,20 +763,16 @@ void PlotDock::on_comboPointShape_currentIndexChanged(int index)
     // Save settings for this table
     if(m_currentTableSettings)
     {
-        QMap<QString, PlotSettings>& graphs = m_currentTableSettings->plotY1Axes;
-        auto it = graphs.begin();
-        while(it != graphs.end())
+        for(int y_ind = 0; y_ind < 2; y_ind++)
         {
-            it.value().pointShape = shape;
-            ++it;
+            QMap<QString, PlotSettings>& graphs = m_currentTableSettings->plotYAxes[y_ind];
+            auto it = graphs.begin();
+            while(it != graphs.end())
+            {
+                it.value().pointShape = shape;
+                ++it;
+            }
         }
-        graphs = m_currentTableSettings->plotY2Axes;
-        it = graphs.begin();
-        while(it != graphs.end())
-          {
-            it.value().pointShape = shape;
-            ++it;
-          }
     }
 }
 
@@ -961,22 +862,22 @@ void PlotDock::mousePress()
         QList< QCPAxis *> axList = {ui->plotWidget->xAxis};
         ui->plotWidget->axisRect()->setRangeDragAxes(axList);
       }
-    else if (ui->plotWidget->yAxis->selectedParts().testFlag(QCPAxis::spAxis) ||
-             ui->plotWidget->yAxis->selectedParts().testFlag(QCPAxis::spTickLabels) ||
-             ui->plotWidget->yAxis->selectedParts().testFlag(QCPAxis::spAxisLabel))
+    else if (yAxes[0]->selectedParts().testFlag(QCPAxis::spAxis) ||
+             yAxes[0]->selectedParts().testFlag(QCPAxis::spTickLabels) ||
+             yAxes[0]->selectedParts().testFlag(QCPAxis::spAxisLabel))
     {
-      QList< QCPAxis *> axList = {ui->plotWidget->yAxis};
+      QList< QCPAxis *> axList = {yAxes[0]};
       ui->plotWidget->axisRect()->setRangeDragAxes(axList);
     }
-    else if (ui->plotWidget->yAxis2->selectedParts().testFlag(QCPAxis::spAxis) ||
-             ui->plotWidget->yAxis2->selectedParts().testFlag(QCPAxis::spTickLabels) ||
-             ui->plotWidget->yAxis2->selectedParts().testFlag(QCPAxis::spAxisLabel))
+    else if (yAxes[1]->selectedParts().testFlag(QCPAxis::spAxis) ||
+             yAxes[1]->selectedParts().testFlag(QCPAxis::spTickLabels) ||
+             yAxes[1]->selectedParts().testFlag(QCPAxis::spAxisLabel))
       {
-      QList< QCPAxis *> axList = {ui->plotWidget->yAxis2};
+      QList< QCPAxis *> axList = {yAxes[1]};
       ui->plotWidget->axisRect()->setRangeDragAxes(axList);
       }
     else{
-      QList< QCPAxis *> axList = {ui->plotWidget->xAxis,ui->plotWidget->yAxis, ui->plotWidget->yAxis2};
+      QList< QCPAxis *> axList = {ui->plotWidget->xAxis,yAxes[0], yAxes[1]};
       ui->plotWidget->axisRect()->setRangeDragAxes(axList);
     }
 }
@@ -995,23 +896,23 @@ void PlotDock::mouseWheel()
         QList< QCPAxis *> axList = {ui->plotWidget->xAxis};
         ui->plotWidget->axisRect()->setRangeZoomAxes(axList);
       }
-    else if (ui->plotWidget->yAxis->selectedParts().testFlag(QCPAxis::spAxis) ||
-             ui->plotWidget->yAxis->selectedParts().testFlag(QCPAxis::spTickLabels) ||
-             ui->plotWidget->yAxis->selectedParts().testFlag(QCPAxis::spAxisLabel))
+    else if (yAxes[0]->selectedParts().testFlag(QCPAxis::spAxis) ||
+             yAxes[0]->selectedParts().testFlag(QCPAxis::spTickLabels) ||
+             yAxes[0]->selectedParts().testFlag(QCPAxis::spAxisLabel))
     {
-      QList< QCPAxis *> axList = {ui->plotWidget->yAxis};
+      QList< QCPAxis *> axList = {yAxes[0]};
       ui->plotWidget->axisRect()->setRangeZoomAxes(axList);
     }
-    else if (ui->plotWidget->yAxis2->selectedParts().testFlag(QCPAxis::spAxis) ||
-             ui->plotWidget->yAxis2->selectedParts().testFlag(QCPAxis::spTickLabels) ||
-             ui->plotWidget->yAxis2->selectedParts().testFlag(QCPAxis::spAxisLabel))
+    else if (yAxes[1]->selectedParts().testFlag(QCPAxis::spAxis) ||
+             yAxes[1]->selectedParts().testFlag(QCPAxis::spTickLabels) ||
+             yAxes[1]->selectedParts().testFlag(QCPAxis::spAxisLabel))
       {
-        QList< QCPAxis *> axList = {ui->plotWidget->yAxis2};
+        QList< QCPAxis *> axList = {yAxes[1]};
         ui->plotWidget->axisRect()->setRangeZoomAxes(axList);
       }
 
     else{
-      QList< QCPAxis *> axList = {ui->plotWidget->xAxis,ui->plotWidget->yAxis, ui->plotWidget->yAxis2};
+      QList< QCPAxis *> axList = {ui->plotWidget->xAxis,yAxes[0], yAxes[1]};
       ui->plotWidget->axisRect()->setRangeZoomAxes(axList);
     }
 }

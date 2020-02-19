@@ -2359,7 +2359,7 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, QXmlS
                     y1AxisSettings.active = xml.attributes().value("active").toInt();
                     xml.skipCurrentElement();
                 }
-                settings.plotY1Axes[y1AxisName] = y1AxisSettings;
+                settings.plotYAxes[0][y1AxisName] = y1AxisSettings;
                 if (xml.name() == "y2_axis") {
                   y2AxisName = xml.attributes().value("name").toString();
                   y2AxisSettings.lineStyle = xml.attributes().value("line_style").toInt();
@@ -2368,7 +2368,7 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, QXmlS
                   y2AxisSettings.active = xml.attributes().value("active").toInt();
                   xml.skipCurrentElement();
                 }
-                settings.plotY2Axes[y2AxisName] = y2AxisSettings;
+                settings.plotYAxes[1][y2AxisName] = y2AxisSettings;
             }
         } else if(xml.name() == "global_filter") {
             while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "global_filter")
@@ -2708,7 +2708,7 @@ static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, Q
     }
     xml.writeEndElement();
     xml.writeStartElement("plot_y_axes");
-    for(auto iter=object.plotY1Axes.constBegin(); iter!=object.plotY1Axes.constEnd(); ++iter) {
+    for(auto iter=object.plotYAxes[0].constBegin(); iter!=object.plotYAxes[0].constEnd(); ++iter) {
         PlotDock::PlotSettings plotSettings = iter.value();
         xml.writeStartElement("y_axis");
         xml.writeAttribute("name", iter.key());
@@ -2718,7 +2718,7 @@ static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, Q
         xml.writeAttribute("active", QString::number(plotSettings.active));
         xml.writeEndElement();
     }
-    for(auto iter=object.plotY2Axes.constBegin(); iter!=object.plotY2Axes.constEnd(); ++iter) {
+    for(auto iter=object.plotYAxes[1].constBegin(); iter!=object.plotYAxes[1].constEnd(); ++iter) {
       PlotDock::PlotSettings plotSettings = iter.value();
       xml.writeStartElement("y2_axis");
       xml.writeAttribute("name", iter.key());
