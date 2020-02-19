@@ -65,10 +65,7 @@ struct BrowseDataTableSettings
         if(stream.atEnd())
             return stream;
         stream >> object.plotXAxis;
-        stream >> object.plotY1Axes;
-        stream >> object.plotY2Axes;
         stream >> object.plotYAxes[0];
-        stream >> object.plotYAxes[1];
         stream >> object.unlockViewPk;
 
         // Project files from versions before 3.11.0 didn't have these fields
