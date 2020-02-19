@@ -126,25 +126,29 @@
         <location filename="../AddRecordDialog.cpp" line="237"/>
         <source>Unique constraint
 </source>
-        <translation>Unique-Constraint</translation>
+        <translation>Unique-Constraint
+</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="240"/>
         <source>Check constraint:	 %1
 </source>
-        <translation>Prüfungsconstraint:	 %1</translation>
+        <translation>Prüfungsconstraint:	 %1
+</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="244"/>
         <source>Foreign key:	 %1
 </source>
-        <translation>Fremdschlüssel:	 %1</translation>
+        <translation>Fremdschlüssel:	 %1
+</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="253"/>
         <source>Default value:	 %1
 </source>
-        <translation>Standardwert:	 %1</translation>
+        <translation>Standardwert:	 %1
+</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="279"/>
