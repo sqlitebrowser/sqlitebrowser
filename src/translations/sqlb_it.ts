@@ -4313,7 +4313,7 @@ Sei sicuro?</translation>
         <location filename="../MainWindow.cpp" line="1659"/>
         <source>Select the action to apply to the dropped file(s). &lt;br/&gt;Note: only &apos;Import&apos; will process more than one file.</source>
         <translation>
-            <numerusform>Seleziona l&apos;azione da applicare o il(i) file(s) scartati. &lt;br/&gt;Nota: solo &apos;Importa&apos; processa più di un file.</numerusform>
+            <numerusform>Seleziona l&apos;azione da applicare al(ai) file(s) scartato(i). &lt;br/&gt;Nota: solo &apos;Importa&apos; processa più di un file.</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
@@ -6787,7 +6787,7 @@ Tieni premuto %3Shift e clicca per saltare lì</translation>
     <message>
         <location filename="../TableBrowser.ui" line="526"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates up to the end in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cliccando questo pulsante la vista scorre al fondo della tabella.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="529"/>
@@ -6873,7 +6873,7 @@ Tieni premuto %3Shift e clicca per saltare lì</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="633"/>
-        <location filename="../TableBrowser.cpp" line="1012"/>
+        <location filename="../TableBrowser.cpp" line="1014"/>
         <source>Delete Record</source>
         <translation>Elimina Riga</translation>
     </message>
@@ -6975,7 +6975,7 @@ Tieni premuto %3Shift e clicca per saltare lì</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="735"/>
-        <location filename="../TableBrowser.cpp" line="1371"/>
+        <location filename="../TableBrowser.cpp" line="1373"/>
         <source>Set encoding</source>
         <translation>Imposta codifica</translation>
     </message>
@@ -7222,16 +7222,16 @@ Tieni premuto %3Shift e clicca per saltare lì</translation>
         <location filename="../TableBrowser.cpp" line="434"/>
         <source>%n row(s)</source>
         <translation>
-            <numerusform>%n riga(ghe)</numerusform>
-            <numerusform></numerusform>
+            <numerusform>%n riga</numerusform>
+            <numerusform>%n righe</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../TableBrowser.cpp" line="436"/>
         <source>, %n column(s)</source>
         <translation>
-            <numerusform>, %n colonna(e)</numerusform>
-            <numerusform></numerusform>
+            <numerusform>, %n colonna</numerusform>
+            <numerusform>, %n colonne</numerusform>
         </translation>
     </message>
     <message>
@@ -7245,91 +7245,91 @@ Tieni premuto %3Shift e clicca per saltare lì</translation>
         <translation>Formattazione condizionale per &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="736"/>
+        <location filename="../TableBrowser.cpp" line="738"/>
         <source>determining row count...</source>
         <translation>determino il numero di righe...</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="739"/>
+        <location filename="../TableBrowser.cpp" line="741"/>
         <source>%1 - %2 of &gt;= %3</source>
         <translation>%1 - %2 di &gt;= %3</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="742"/>
+        <location filename="../TableBrowser.cpp" line="744"/>
         <source>%1 - %2 of %3</source>
         <translation>%1 - %2 di %3</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="888"/>
+        <location filename="../TableBrowser.cpp" line="890"/>
         <source>Please enter a pseudo-primary key in order to enable editing on this view. This should be the name of a unique column in the view.</source>
         <translation>Si prega d&apos;inserire una pseudo-chiave primaria in modo da abilitare le modifiche su questa vista. Deve corrispondere al nome di una colonna univoca nella vista.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1010"/>
+        <location filename="../TableBrowser.cpp" line="1012"/>
         <source>Delete Records</source>
         <translation>Elimina i Records</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1157"/>
+        <location filename="../TableBrowser.cpp" line="1159"/>
         <source>Duplicate records</source>
         <translation>Duplica i records</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1157"/>
+        <location filename="../TableBrowser.cpp" line="1159"/>
         <source>Duplicate record</source>
         <translation>Duplica il record</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1161"/>
+        <location filename="../TableBrowser.cpp" line="1163"/>
         <source>Ctrl+&quot;</source>
         <translation>Ctrl+&quot;</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1180"/>
+        <location filename="../TableBrowser.cpp" line="1182"/>
         <source>Adjust rows to contents</source>
         <translation>Adatta le righe al contenuto</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1235"/>
+        <location filename="../TableBrowser.cpp" line="1237"/>
         <source>Error deleting record:
 %1</source>
         <translation>Errore eliminando le righe:
 %1</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1244"/>
+        <location filename="../TableBrowser.cpp" line="1246"/>
         <source>Please select a record first</source>
         <translation>Si prega di selezionare prima un record</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1351"/>
+        <location filename="../TableBrowser.cpp" line="1353"/>
         <source>There is no filter set for this table. View will not be created.</source>
         <translation>Non c&apos;è filtro impostato per questa tabella. La vista non sarà creata.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1367"/>
+        <location filename="../TableBrowser.cpp" line="1369"/>
         <source>Please choose a new encoding for all tables.</source>
         <translation>Si prega di scegliere una nuova codifica per tutte le tabelle.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1369"/>
+        <location filename="../TableBrowser.cpp" line="1371"/>
         <source>Please choose a new encoding for this table.</source>
         <translation>Si prega di scegliere una nuova codifica per questa tabella.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1372"/>
+        <location filename="../TableBrowser.cpp" line="1374"/>
         <source>%1
 Leave the field empty for using the database encoding.</source>
         <translation>%1
 Lasciare il campo vuoto per utilizzare la codifica del database.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1384"/>
+        <location filename="../TableBrowser.cpp" line="1386"/>
         <source>This encoding is either not valid or not supported.</source>
         <translation>Questa codifica non è valida o non è supportata.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1555"/>
+        <location filename="../TableBrowser.cpp" line="1557"/>
         <source>%1 replacement(s) made.</source>
         <translation>%1 sostituzione(i) effettuata(e).</translation>
     </message>
