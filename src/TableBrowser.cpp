@@ -717,6 +717,8 @@ void TableBrowser::updateRecordsetLabel()
     int from = ui->dataTable->verticalHeader()->visualIndexAt(0) + 1;
     int total = m_model->rowCount();
     int to = from + ui->dataTable->numVisibleRows() - 1;
+    if(to < 0)
+            to = 0;
 
     // Update the validator of the goto row field
     gotoValidator->setRange(0, total);
