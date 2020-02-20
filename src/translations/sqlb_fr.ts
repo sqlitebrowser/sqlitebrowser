@@ -726,69 +726,69 @@ Exécution de %3 abandonnée.</translation>
         <translation>ne peut pas exécuter les commandes : %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1367"/>
+        <location filename="../sqlitedb.cpp" line="1371"/>
         <source>Cannot delete this object</source>
         <translation>Impossible de supprimer cet objet</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1411"/>
+        <location filename="../sqlitedb.cpp" line="1415"/>
         <source>Cannot set data on this object</source>
         <translatorcomment>170726 MVT Has to be checked in real context</translatorcomment>
         <translation>Définition des données impossible pour cet objet</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1518"/>
-        <location filename="../sqlitedb.cpp" line="1525"/>
+        <location filename="../sqlitedb.cpp" line="1522"/>
+        <location filename="../sqlitedb.cpp" line="1529"/>
         <source>A table with the name &apos;%1&apos; already exists in schema &apos;%2&apos;.</source>
         <translation>Une table portant le nom &quot; %1 &quot; existe déjà dans le schéma &quot; %2 &quot;.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1534"/>
+        <location filename="../sqlitedb.cpp" line="1538"/>
         <source>No table with name &apos;%1&apos; exists in schema &apos;%2&apos;.</source>
         <translation>Il n&apos;existe pas de table nommée &quot; %1 &quot; dans le schéma &quot; %2 &quot;.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1544"/>
-        <location filename="../sqlitedb.cpp" line="1565"/>
+        <location filename="../sqlitedb.cpp" line="1548"/>
+        <location filename="../sqlitedb.cpp" line="1569"/>
         <source>Cannot find column %1.</source>
         <translation>La colonne %1 n&apos;a pas été trouvée.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1578"/>
+        <location filename="../sqlitedb.cpp" line="1582"/>
         <source>Creating savepoint failed. DB says: %1</source>
         <translation>La création du point de restauration a échoué. DB indique : %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1641"/>
+        <location filename="../sqlitedb.cpp" line="1645"/>
         <source>Renaming the column failed. DB says:
 %1</source>
         <translation>Le changement de nom de la colonne a échoué. DB indique :
 %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1669"/>
-        <location filename="../sqlitedb.cpp" line="1821"/>
+        <location filename="../sqlitedb.cpp" line="1673"/>
+        <location filename="../sqlitedb.cpp" line="1825"/>
         <source>Releasing savepoint failed. DB says: %1</source>
         <translation>La libération du point de sauvegarde a échoué. DB indique : %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1688"/>
+        <location filename="../sqlitedb.cpp" line="1692"/>
         <source>Creating new table failed. DB says: %1</source>
         <translation>La création d&apos;une nouvelle table a échoué. DB indique : %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1720"/>
+        <location filename="../sqlitedb.cpp" line="1724"/>
         <source>Copying data to new table failed. DB says:
 %1</source>
         <translation>La copie des données dans une nouvelle table a échoué. DB indique : %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1787"/>
+        <location filename="../sqlitedb.cpp" line="1791"/>
         <source>Deleting old table failed. DB says: %1</source>
         <translation>La suppression d&apos;une ancienne table a échoué. DB indique : %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1857"/>
+        <location filename="../sqlitedb.cpp" line="1861"/>
         <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.
 Message from database engine:
 %3</source>
@@ -797,7 +797,7 @@ Message du moteur de Base de Données :
 %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1952"/>
+        <location filename="../sqlitedb.cpp" line="1956"/>
         <source>could not get list of db objects: %1</source>
         <translation>La liste des objets de la Base de Données ne peut être obtenue : %1</translation>
     </message>
@@ -827,7 +827,7 @@ Message du moteur de Base de Données :
 %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1812"/>
+        <location filename="../sqlitedb.cpp" line="1816"/>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 
 </source>
@@ -851,17 +851,17 @@ Message du moteur de Base de Données :
         <translation type="vanished">... &lt;la Chaîne de caractère ne peut être journalisée. Elle contient des données binaires&gt; ...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1958"/>
+        <location filename="../sqlitedb.cpp" line="1962"/>
         <source>could not get list of databases: %1</source>
         <translation>n&apos;a pas pu obtenir la liste des bases de données : %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="2070"/>
+        <location filename="../sqlitedb.cpp" line="2074"/>
         <source>Error loading extension: %1</source>
         <translation>Erreur lors du chargement de l&apos;extension %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="2095"/>
+        <location filename="../sqlitedb.cpp" line="2099"/>
         <source>could not get column information</source>
         <translatorcomment>170726 MVT Has to be checked in real context</translatorcomment>
         <translation>ne peut obtenir les informations sur la colonne</translation>
@@ -887,12 +887,12 @@ Message du moteur de Base de Données :
         <translation type="vanished">ne peut pas exécuter les commandes du pragma : %1, %2</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1986"/>
+        <location filename="../sqlitedb.cpp" line="1990"/>
         <source>Error setting pragma %1 to %2: %3</source>
         <translation>Erreur dans les paramètres des pragma %1 à %2 : %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="2032"/>
+        <location filename="../sqlitedb.cpp" line="2036"/>
         <source>File not found.</source>
         <translation>Fichier non trouvé.</translation>
     </message>
@@ -6759,24 +6759,20 @@ Faites une sauvegarde !</translation>
         <translation>Extensions (*.so *.dylib *.dll)</translation>
     </message>
     <message>
-        <location filename="../RemoteModel.cpp" line="10"/>
         <source>Name</source>
-        <translation>Nom</translation>
+        <translation type="vanished">Nom</translation>
     </message>
     <message>
-        <location filename="../RemoteModel.cpp" line="10"/>
         <source>Commit</source>
-        <translation>Commit</translation>
+        <translation type="vanished">Commit</translation>
     </message>
     <message>
-        <location filename="../RemoteModel.cpp" line="10"/>
         <source>Last modified</source>
-        <translation>Dernière modification</translation>
+        <translation type="vanished">Dernière modification</translation>
     </message>
     <message>
-        <location filename="../RemoteModel.cpp" line="10"/>
         <source>Size</source>
-        <translation>Taille</translation>
+        <translation type="vanished">Taille</translation>
     </message>
 </context>
 <context>
@@ -6930,24 +6926,28 @@ Faites une sauvegarde !</translation>
 <context>
     <name>RemoteModel</name>
     <message>
+        <location filename="../RemoteModel.cpp" line="103"/>
         <source>Name</source>
-        <translation type="vanished">Nom</translation>
+        <translation>Nom</translation>
     </message>
     <message>
         <source>Version</source>
         <translation type="vanished">Version</translation>
     </message>
     <message>
+        <location filename="../RemoteModel.cpp" line="103"/>
         <source>Last modified</source>
-        <translation type="vanished">Dernière modification</translation>
+        <translation>Dernière modification</translation>
     </message>
     <message>
+        <location filename="../RemoteModel.cpp" line="103"/>
         <source>Size</source>
-        <translation type="vanished">Taille</translation>
+        <translation>Taille</translation>
     </message>
     <message>
+        <location filename="../RemoteModel.cpp" line="103"/>
         <source>Commit</source>
-        <translation type="vanished">Commit</translation>
+        <translation>Commit</translation>
     </message>
     <message>
         <source>bytes</source>
@@ -7567,36 +7567,36 @@ Appuyez simultanément sur Ctrl+Maj et cliquez pour arriver ici</translation>
         <translation>Lecture des enregistrements</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="336"/>
+        <location filename="../sqlitetablemodel.cpp" line="337"/>
         <source>loading...</source>
         <translation>chargement...</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="401"/>
+        <location filename="../sqlitetablemodel.cpp" line="402"/>
         <source>References %1(%2)
 Hold %3Shift and click to jump there</source>
         <translation>Références %1(%2)
 Appuyez simultanément sur %3+Maj et cliquez pour arriver ici</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="560"/>
+        <location filename="../sqlitetablemodel.cpp" line="555"/>
         <source>Error changing data:
 %1</source>
         <translation>Erreur lors du changement des données :
 %1</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="803"/>
+        <location filename="../sqlitetablemodel.cpp" line="796"/>
         <source>retrieving list of columns</source>
         <translation>récupération de la liste des colonnes</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="1017"/>
+        <location filename="../sqlitetablemodel.cpp" line="1023"/>
         <source>Fetching data...</source>
         <translation>Récupération des données...</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="1018"/>
+        <location filename="../sqlitetablemodel.cpp" line="1024"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>

@@ -5800,24 +5800,20 @@ Tutte le tue preferenze andranno perse e verranno utilizzati i valori predefinit
         <translation>Giustificato</translation>
     </message>
     <message>
-        <location filename="../RemoteModel.cpp" line="10"/>
         <source>Name</source>
-        <translation>Nome</translation>
+        <translation type="vanished">Nome</translation>
     </message>
     <message>
-        <location filename="../RemoteModel.cpp" line="10"/>
         <source>Commit</source>
-        <translation>Commit</translation>
+        <translation type="vanished">Commit</translation>
     </message>
     <message>
-        <location filename="../RemoteModel.cpp" line="10"/>
         <source>Last modified</source>
-        <translation>Ultima modifca</translation>
+        <translation type="vanished">Ultima modifca</translation>
     </message>
     <message>
-        <location filename="../RemoteModel.cpp" line="10"/>
         <source>Size</source>
-        <translation>Dimensione</translation>
+        <translation type="vanished">Dimensione</translation>
     </message>
 </context>
 <context>
@@ -5951,20 +5947,24 @@ Tutte le tue preferenze andranno perse e verranno utilizzati i valori predefinit
 <context>
     <name>RemoteModel</name>
     <message>
+        <location filename="../RemoteModel.cpp" line="103"/>
         <source>Name</source>
-        <translation type="vanished">Nome</translation>
+        <translation>Nome</translation>
     </message>
     <message>
+        <location filename="../RemoteModel.cpp" line="103"/>
         <source>Commit</source>
-        <translation type="vanished">Commit</translation>
+        <translation>Commit</translation>
     </message>
     <message>
+        <location filename="../RemoteModel.cpp" line="103"/>
         <source>Last modified</source>
-        <translation type="vanished">Ultima modifca</translation>
+        <translation>Ultima modifca</translation>
     </message>
     <message>
+        <location filename="../RemoteModel.cpp" line="103"/>
         <source>Size</source>
-        <translation type="vanished">Dimensione</translation>
+        <translation>Dimensione</translation>
     </message>
     <message>
         <source>bytes</source>
@@ -6540,36 +6540,36 @@ L&apos;utilizzo di questa funzione dev&apos;essere permesso tramite le Preferenz
         <translation>leggo le righe</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="336"/>
+        <location filename="../sqlitetablemodel.cpp" line="337"/>
         <source>loading...</source>
         <translation>caricamento...</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="401"/>
+        <location filename="../sqlitetablemodel.cpp" line="402"/>
         <source>References %1(%2)
 Hold %3Shift and click to jump there</source>
         <translation>Riferimenti %1(%2)
 Tieni premuto %3Shift e clicca per saltare lì</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="560"/>
+        <location filename="../sqlitetablemodel.cpp" line="555"/>
         <source>Error changing data:
 %1</source>
         <translation>Errore nella modifica dei dati:
 %1</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="803"/>
+        <location filename="../sqlitetablemodel.cpp" line="796"/>
         <source>retrieving list of columns</source>
         <translation>recupero la lista delle colonne</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="1017"/>
+        <location filename="../sqlitetablemodel.cpp" line="1023"/>
         <source>Fetching data...</source>
         <translation>Recupero dati...</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="1018"/>
+        <location filename="../sqlitetablemodel.cpp" line="1024"/>
         <source>Cancel</source>
         <translation>Annulla</translation>
     </message>

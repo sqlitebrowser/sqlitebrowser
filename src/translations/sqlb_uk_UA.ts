@@ -696,74 +696,74 @@ Aborting execution%3.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1367"/>
+        <location filename="../sqlitedb.cpp" line="1371"/>
         <source>Cannot delete this object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1411"/>
+        <location filename="../sqlitedb.cpp" line="1415"/>
         <source>Cannot set data on this object</source>
         <translation>Не вдається встановити дані в цей об&apos;єкт</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1518"/>
-        <location filename="../sqlitedb.cpp" line="1525"/>
+        <location filename="../sqlitedb.cpp" line="1522"/>
+        <location filename="../sqlitedb.cpp" line="1529"/>
         <source>A table with the name &apos;%1&apos; already exists in schema &apos;%2&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1534"/>
+        <location filename="../sqlitedb.cpp" line="1538"/>
         <source>No table with name &apos;%1&apos; exists in schema &apos;%2&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1544"/>
-        <location filename="../sqlitedb.cpp" line="1565"/>
+        <location filename="../sqlitedb.cpp" line="1548"/>
+        <location filename="../sqlitedb.cpp" line="1569"/>
         <source>Cannot find column %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1578"/>
+        <location filename="../sqlitedb.cpp" line="1582"/>
         <source>Creating savepoint failed. DB says: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1641"/>
+        <location filename="../sqlitedb.cpp" line="1645"/>
         <source>Renaming the column failed. DB says:
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1669"/>
-        <location filename="../sqlitedb.cpp" line="1821"/>
+        <location filename="../sqlitedb.cpp" line="1673"/>
+        <location filename="../sqlitedb.cpp" line="1825"/>
         <source>Releasing savepoint failed. DB says: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1688"/>
+        <location filename="../sqlitedb.cpp" line="1692"/>
         <source>Creating new table failed. DB says: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1720"/>
+        <location filename="../sqlitedb.cpp" line="1724"/>
         <source>Copying data to new table failed. DB says:
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1787"/>
+        <location filename="../sqlitedb.cpp" line="1791"/>
         <source>Deleting old table failed. DB says: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1857"/>
+        <location filename="../sqlitedb.cpp" line="1861"/>
         <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.
 Message from database engine:
 %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1952"/>
+        <location filename="../sqlitedb.cpp" line="1956"/>
         <source>could not get list of db objects: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -772,7 +772,7 @@ Message from database engine:
         <translation type="vanished">renameColumn: не вдається знайти стовпець %1.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1812"/>
+        <location filename="../sqlitedb.cpp" line="1816"/>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 
 </source>
@@ -789,17 +789,17 @@ Message from database engine:
         <translation type="vanished">... &lt;рядок не можна записати в лог-файл, який містить двійкові дані&gt; ...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1958"/>
+        <location filename="../sqlitedb.cpp" line="1962"/>
         <source>could not get list of databases: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="2070"/>
+        <location filename="../sqlitedb.cpp" line="2074"/>
         <source>Error loading extension: %1</source>
         <translation type="unfinished">Помилка завантаження розширення: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="2095"/>
+        <location filename="../sqlitedb.cpp" line="2099"/>
         <source>could not get column information</source>
         <translation>неможливо отримати інформацію про стовпець</translation>
     </message>
@@ -874,12 +874,12 @@ Aborting execution.</source>
         <translation type="vanished">неможливо виконати комманду-прагму: %1, %2</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1986"/>
+        <location filename="../sqlitedb.cpp" line="1990"/>
         <source>Error setting pragma %1 to %2: %3</source>
         <translation>Помилка встановлення Прагми %1 в %2: %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="2032"/>
+        <location filename="../sqlitedb.cpp" line="2036"/>
         <source>File not found.</source>
         <translation>Файл не знайдено.</translation>
     </message>
@@ -6289,24 +6289,16 @@ Create a backup!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RemoteModel.cpp" line="10"/>
         <source>Name</source>
-        <translation type="unfinished">Ім&apos;я</translation>
+        <translation type="obsolete">Ім&apos;я</translation>
     </message>
     <message>
-        <location filename="../RemoteModel.cpp" line="10"/>
-        <source>Commit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../RemoteModel.cpp" line="10"/>
         <source>Last modified</source>
-        <translation type="unfinished">Востаннє змінений</translation>
+        <translation type="obsolete">Востаннє змінений</translation>
     </message>
     <message>
-        <location filename="../RemoteModel.cpp" line="10"/>
         <source>Size</source>
-        <translation type="unfinished">Розмір</translation>
+        <translation type="obsolete">Розмір</translation>
     </message>
 </context>
 <context>
@@ -6456,20 +6448,28 @@ Create a backup!</source>
 <context>
     <name>RemoteModel</name>
     <message>
+        <location filename="../RemoteModel.cpp" line="103"/>
         <source>Name</source>
-        <translation type="vanished">Ім&apos;я</translation>
+        <translation>Ім&apos;я</translation>
     </message>
     <message>
         <source>Version</source>
         <translation type="vanished">Версія</translation>
     </message>
     <message>
+        <location filename="../RemoteModel.cpp" line="103"/>
         <source>Last modified</source>
-        <translation type="vanished">Востаннє змінений</translation>
+        <translation>Востаннє змінений</translation>
     </message>
     <message>
+        <location filename="../RemoteModel.cpp" line="103"/>
         <source>Size</source>
-        <translation type="vanished">Розмір</translation>
+        <translation>Розмір</translation>
+    </message>
+    <message>
+        <location filename="../RemoteModel.cpp" line="103"/>
+        <source>Commit</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>bytes</source>
@@ -7103,35 +7103,35 @@ Hold Ctrl+Shift and click to jump there</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="336"/>
+        <location filename="../sqlitetablemodel.cpp" line="337"/>
         <source>loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="401"/>
+        <location filename="../sqlitetablemodel.cpp" line="402"/>
         <source>References %1(%2)
 Hold %3Shift and click to jump there</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="560"/>
+        <location filename="../sqlitetablemodel.cpp" line="555"/>
         <source>Error changing data:
 %1</source>
         <translation>Помилка зміни даних:
 %1</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="803"/>
+        <location filename="../sqlitetablemodel.cpp" line="796"/>
         <source>retrieving list of columns</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="1017"/>
+        <location filename="../sqlitetablemodel.cpp" line="1023"/>
         <source>Fetching data...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="1018"/>
+        <location filename="../sqlitetablemodel.cpp" line="1024"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>

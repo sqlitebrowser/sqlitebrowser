@@ -16,7 +16,7 @@
     <message>
         <location filename="../AboutDialog.ui" line="102"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Silk icon set by Mark James licensed under a Creative Commons Attribution 2.5 and 3.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite は SQLite データベースを作成、デザイン、編集できる、オープンソースで無料のヴィジュアルツールです。&lt;/p&gt;&lt;p&gt;このソフトウェアは Mozilla Public License Version 2　と the GNU General Public License Version 3 (もしくはそれ以降のもの) の2つでライセンスされています。あなたはこれらのライセンスの条件の下でこのソフトウェアを変更、もしくは、再配布できます。&lt;/p&gt;&lt;p&gt;詳細は &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; と &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; をご覧ください。&lt;/p&gt;&lt;p&gt;このプログラムのさらなる情報は、私たちのウェブサイトをご覧ください。: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;このソフトウェアは GPL/LGPL Qt Toolkit を使用しています。 &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;ライセンス条項や情報は &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; をご覧ください。&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;また、 Mark James の Silk icon set を Creative Commons Attribution 2.5 and 3.0 license の元で使用しています。&lt;br/&gt;詳細は &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; をご覧ください。&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite は SQLite データベースを作成、デザイン、編集できる、オープンソースで無料のヴィジュアルツールです。&lt;/p&gt;&lt;p&gt;このソフトウェアは Mozilla Public License Version 2&#x3000;と the GNU General Public License Version 3 (もしくはそれ以降のもの) の2つでライセンスされています。あなたはこれらのライセンスの条件の下でこのソフトウェアを変更、もしくは、再配布できます。&lt;/p&gt;&lt;p&gt;詳細は &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; と &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; をご覧ください。&lt;/p&gt;&lt;p&gt;このプログラムのさらなる情報は、私たちのウェブサイトをご覧ください。: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;このソフトウェアは GPL/LGPL Qt Toolkit を使用しています。 &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;ライセンス条項や情報は &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; をご覧ください。&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;また、 Mark James の Silk icon set を Creative Commons Attribution 2.5 and 3.0 license の元で使用しています。&lt;br/&gt;詳細は &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; をご覧ください。&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="17"/>
@@ -673,69 +673,69 @@ Aborting execution%3.</source>
         <translation>コマンド: %1 を実行できませんでした</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1367"/>
+        <location filename="../sqlitedb.cpp" line="1371"/>
         <source>Cannot delete this object</source>
         <translation>このオブジェクトは削除できません</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1411"/>
+        <location filename="../sqlitedb.cpp" line="1415"/>
         <source>Cannot set data on this object</source>
         <translation>このオブジェクトにデータ設定はできません</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1518"/>
-        <location filename="../sqlitedb.cpp" line="1525"/>
+        <location filename="../sqlitedb.cpp" line="1522"/>
+        <location filename="../sqlitedb.cpp" line="1529"/>
         <source>A table with the name &apos;%1&apos; already exists in schema &apos;%2&apos;.</source>
         <translation>名前が &apos;%1&apos; のテーブルはスキーマ &apos;%2&apos; に既に存在します。</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1534"/>
+        <location filename="../sqlitedb.cpp" line="1538"/>
         <source>No table with name &apos;%1&apos; exists in schema &apos;%2&apos;.</source>
         <translation>スキーマ &apos;%2&apos; に名前が &apos;%1&apos; のテーブルがありません。</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1544"/>
-        <location filename="../sqlitedb.cpp" line="1565"/>
+        <location filename="../sqlitedb.cpp" line="1548"/>
+        <location filename="../sqlitedb.cpp" line="1569"/>
         <source>Cannot find column %1.</source>
         <translation>カラム %1 が見つかりません。</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1578"/>
+        <location filename="../sqlitedb.cpp" line="1582"/>
         <source>Creating savepoint failed. DB says: %1</source>
         <translation>セーブポイントの作成に失敗。DBの反応: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1641"/>
+        <location filename="../sqlitedb.cpp" line="1645"/>
         <source>Renaming the column failed. DB says:
 %1</source>
         <translation>カラム名変更に失敗。DBの反応:
 %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1669"/>
-        <location filename="../sqlitedb.cpp" line="1821"/>
+        <location filename="../sqlitedb.cpp" line="1673"/>
+        <location filename="../sqlitedb.cpp" line="1825"/>
         <source>Releasing savepoint failed. DB says: %1</source>
         <translation>セーブポイントの解放に失敗。DBの反応: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1688"/>
+        <location filename="../sqlitedb.cpp" line="1692"/>
         <source>Creating new table failed. DB says: %1</source>
         <translation>新しいテーブルの作成に失敗。DBの反応: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1720"/>
+        <location filename="../sqlitedb.cpp" line="1724"/>
         <source>Copying data to new table failed. DB says:
 %1</source>
         <translation>新しいテーブルへのデータのコピーに失敗。DBの反応:
 %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1787"/>
+        <location filename="../sqlitedb.cpp" line="1791"/>
         <source>Deleting old table failed. DB says: %1</source>
         <translation>古いテーブルの削除に失敗。DBの反応: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1857"/>
+        <location filename="../sqlitedb.cpp" line="1861"/>
         <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.
 Message from database engine:
 %3</source>
@@ -744,7 +744,7 @@ Message from database engine:
 %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1952"/>
+        <location filename="../sqlitedb.cpp" line="1956"/>
         <source>could not get list of db objects: %1</source>
         <translation>DBオブジェクトの一覧を取得できません: %1</translation>
     </message>
@@ -770,7 +770,7 @@ Message from database engine:
         <translation type="vanished">カラム名変更: 古いテーブルの削除に失敗。DBの反応: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1812"/>
+        <location filename="../sqlitedb.cpp" line="1816"/>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 
 </source>
@@ -798,7 +798,7 @@ Restoring some of the objects associated with this table failed. This is most li
         <translation type="vanished">DBオブジェクトの一覧を取得できません: %1, %2</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1958"/>
+        <location filename="../sqlitedb.cpp" line="1962"/>
         <source>could not get list of databases: %1</source>
         <translation>データベースの一覧を取得できません: %1</translation>
     </message>
@@ -811,22 +811,22 @@ Restoring some of the objects associated with this table failed. This is most li
         <translation type="vanished">プラグマを実行できませんでした: %1, %2</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1986"/>
+        <location filename="../sqlitedb.cpp" line="1990"/>
         <source>Error setting pragma %1 to %2: %3</source>
         <translation>プラグマ %1 を %2 に設定時にエラー: %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="2032"/>
+        <location filename="../sqlitedb.cpp" line="2036"/>
         <source>File not found.</source>
         <translation>ファイルが見つかりません。</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="2070"/>
+        <location filename="../sqlitedb.cpp" line="2074"/>
         <source>Error loading extension: %1</source>
         <translation>拡張の読み込みでエラー: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="2095"/>
+        <location filename="../sqlitedb.cpp" line="2099"/>
         <source>could not get column information</source>
         <translation>カラム情報が取得できませんでした</translation>
     </message>
@@ -5742,24 +5742,20 @@ All your preferences will be lost and default values will be used.</source>
         <translation>拡張 (*.so *.dylib *.dll)</translation>
     </message>
     <message>
-        <location filename="../RemoteModel.cpp" line="10"/>
         <source>Name</source>
-        <translation>名前</translation>
+        <translation type="vanished">名前</translation>
     </message>
     <message>
-        <location filename="../RemoteModel.cpp" line="10"/>
         <source>Commit</source>
-        <translation>コミット</translation>
+        <translation type="vanished">コミット</translation>
     </message>
     <message>
-        <location filename="../RemoteModel.cpp" line="10"/>
         <source>Last modified</source>
-        <translation>最終変更</translation>
+        <translation type="vanished">最終変更</translation>
     </message>
     <message>
-        <location filename="../RemoteModel.cpp" line="10"/>
         <source>Size</source>
-        <translation>サイズ</translation>
+        <translation type="vanished">サイズ</translation>
     </message>
 </context>
 <context>
@@ -5890,20 +5886,24 @@ DB4S設定のリモートタブに行き、新しい証明書をDB4Sに追加す
 <context>
     <name>RemoteModel</name>
     <message>
+        <location filename="../RemoteModel.cpp" line="103"/>
         <source>Name</source>
-        <translation type="vanished">名前</translation>
+        <translation>名前</translation>
     </message>
     <message>
+        <location filename="../RemoteModel.cpp" line="103"/>
         <source>Commit</source>
-        <translation type="vanished">コミット</translation>
+        <translation>コミット</translation>
     </message>
     <message>
+        <location filename="../RemoteModel.cpp" line="103"/>
         <source>Last modified</source>
-        <translation type="vanished">最終変更</translation>
+        <translation>最終変更</translation>
     </message>
     <message>
+        <location filename="../RemoteModel.cpp" line="103"/>
         <source>Size</source>
-        <translation type="vanished">サイズ</translation>
+        <translation>サイズ</translation>
     </message>
     <message>
         <source>bytes</source>
@@ -6483,36 +6483,36 @@ Use of this function must be authorized from Preferences.</source>
         <translation>行を読み込み中</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="336"/>
+        <location filename="../sqlitetablemodel.cpp" line="337"/>
         <source>loading...</source>
         <translation>読み込み中...</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="401"/>
+        <location filename="../sqlitetablemodel.cpp" line="402"/>
         <source>References %1(%2)
 Hold %3Shift and click to jump there</source>
         <translation>これを参照 %1(%2)
 %3Shift を保持しクリックでジャンプ</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="560"/>
+        <location filename="../sqlitetablemodel.cpp" line="555"/>
         <source>Error changing data:
 %1</source>
         <translation>データの変更でエラー:
 %1</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="803"/>
+        <location filename="../sqlitetablemodel.cpp" line="796"/>
         <source>retrieving list of columns</source>
         <translation>カラムの一覧を取得中</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="1017"/>
+        <location filename="../sqlitetablemodel.cpp" line="1023"/>
         <source>Fetching data...</source>
         <translation>データを取得中...</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="1018"/>
+        <location filename="../sqlitetablemodel.cpp" line="1024"/>
         <source>Cancel</source>
         <translation>キャンセル</translation>
     </message>
