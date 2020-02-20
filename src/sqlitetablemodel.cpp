@@ -457,7 +457,7 @@ sqlb::ForeignKeyClause SqliteTableModel::getForeignKeyClause(size_t column) cons
 bool SqliteTableModel::setData(const QModelIndex& index, const QVariant& value, int role)
 {
     // Don't even try setting any data if we're not browsing a table, i.e. the model data comes from a custom query
-    if(!isEditable())
+    if(!isEditable(index))
         return false;
 
     // This function is for in-place editing.
@@ -575,7 +575,7 @@ Qt::ItemFlags SqliteTableModel::flags(const QModelIndex& index) const
             custom_display_format = m_query.selectedColumns().at(static_cast<size_t>(index.column())-1).selector != m_query.selectedColumns().at(static_cast<size_t>(index.column())-1).original_column;
     }
 
-    if(!isBinary(index) && !custom_display_format)
+    if(!isBinary(index) && !custom_display_format && isEditable(index))
         ret |= Qt::ItemIsEditable;
     return ret;
 }
@@ -967,11 +967,24 @@ bool SqliteTableModel::hasPseudoPk() const
     return m_query.hasCustomRowIdColumn();
 }
 
-bool SqliteTableModel::isEditable() const
+bool SqliteTableModel::isEditable(const QModelIndex& index) const
 {
-    return !m_query.table().isEmpty() &&
-            m_db.isOpen() &&
-            (m_table_of_query || m_query.hasCustomRowIdColumn());
+    if(m_query.table().isEmpty())
+        return false;
+    if(!m_db.isOpen())
+        return false;
+    if(!m_table_of_query && !m_query.hasCustomRowIdColumn())
+        return false;
+
+    // Extra check when the index parameter is set and pointing to a generated column in a table
+    if(index.isValid() && m_table_of_query)
+    {
+        const auto field = sqlb::findField(m_table_of_query, m_headers.at(static_cast<size_t>(index.column())));
+        if(field != m_table_of_query->fields.cend() && !field->generated().empty())
+            return false;
+    }
+
+    return true;
 }
 
 void SqliteTableModel::triggerCacheLoad (int row) const

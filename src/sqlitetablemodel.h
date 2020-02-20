@@ -105,10 +105,15 @@ public:
 
     sqlb::ForeignKeyClause getForeignKeyClause(size_t column) const;
 
-    // This returns true if the model is set up for editing. The model is able to operate in more or less two different modes, table browsing
-    // and query browsing. We only support editing data for the table browsing mode and not for the query mode. This function returns true if
-    // the model is currently editable, i.e. it's running in table mode and it isn't a view.
-    bool isEditable() const;
+    // This returns true if the model and, if set, the index can be edited. Not specifying the index parameter asks whether the model can
+    // be edited in general (i.e. inserting and deleting rows as well as updating some cells). Specifying the index parameter asks whether
+    // this specific index can be edited.
+    // The model is able to operate in more or less two different modes, table browsing and query browsing. We only support editing data
+    // in the table browsing mode but not for the query mode. This function returns true if the model is currently editable, i.e. it's
+    // running in the table mode and isn't browsing a view, unless this view is set up for editing by specifying a pseudo PK.
+    // When the index parameter is set, the same checks are performed but additionally the function checks whether this specific index
+    // can be edited. This makes a difference for generated columns which are in (editable) tables but cannot be modified anyway.
+    bool isEditable(const QModelIndex& index = QModelIndex()) const;
 
     // Helper function for removing all comments from a SQL query
     static void removeCommentsFromQuery(QString& query);
