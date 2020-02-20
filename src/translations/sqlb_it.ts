@@ -4313,7 +4313,7 @@ Sei sicuro?</translation>
         <location filename="../MainWindow.cpp" line="1659"/>
         <source>Select the action to apply to the dropped file(s). &lt;br/&gt;Note: only &apos;Import&apos; will process more than one file.</source>
         <translation>
-            <numerusform>Seleziona l&apos;azione da applicare o il(i) file(s) scartati. &lt;br/&gt;Nota: solo &apos;Importa&apos; processa più di un file.</numerusform>
+            <numerusform>Seleziona l&apos;azione da applicare al(ai) file(s) scartato(i). &lt;br/&gt;Nota: solo &apos;Importa&apos; processa più di un file.</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
@@ -6787,7 +6787,7 @@ Tieni premuto %3Shift e clicca per saltare lì</translation>
     <message>
         <location filename="../TableBrowser.ui" line="526"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates up to the end in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cliccando questo pulsante la vista scorre al fondo della tabella.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="529"/>
@@ -7222,16 +7222,16 @@ Tieni premuto %3Shift e clicca per saltare lì</translation>
         <location filename="../TableBrowser.cpp" line="434"/>
         <source>%n row(s)</source>
         <translation>
-            <numerusform>%n riga(ghe)</numerusform>
-            <numerusform></numerusform>
+            <numerusform>%n riga</numerusform>
+            <numerusform>%n righe</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../TableBrowser.cpp" line="436"/>
         <source>, %n column(s)</source>
         <translation>
-            <numerusform>, %n colonna(e)</numerusform>
-            <numerusform></numerusform>
+            <numerusform>, %n colonna</numerusform>
+            <numerusform>, %n colonne</numerusform>
         </translation>
     </message>
     <message>
