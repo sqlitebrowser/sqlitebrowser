@@ -466,8 +466,8 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
                     cipherSettings->setPassword(password);
                     cipherSettings->setPageSize(pageSize);
                     cipherSettings->setKdfIterations(kdfIterations);
-                    cipherSettings->setHmacAlgorithm(hmacAlgorithm);
-                    cipherSettings->setKdfAlgorithm(kdfAlgorithm);
+                    cipherSettings->setHmacAlgorithm("HMAC_" + hmacAlgorithm);
+                    cipherSettings->setKdfAlgorithm("PBKDF2_HMAC_" + kdfAlgorithm);
                     cipherSettings->setPlaintextHeaderSize(plaintextHeaderSize);
                 }
             }
@@ -502,7 +502,7 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
             // Set the key
             sqlite3_exec(dbHandle, ("PRAGMA key = " + cipherSettings->getPassword()).c_str(), nullptr, nullptr, nullptr);
 
-            // Set the page size if it differs from the default value
+            // Set the settings if they differ from the default values
             if(cipherSettings->getPageSize() != enc_default_page_size)
                 sqlite3_exec(dbHandle, ("PRAGMA cipher_page_size = " + std::to_string(cipherSettings->getPageSize())).c_str(), nullptr, nullptr, nullptr);
             if(cipherSettings->getKdfIterations() != enc_default_kdf_iter)
