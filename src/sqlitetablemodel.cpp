@@ -419,8 +419,8 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
         if(m_imagePreviewEnabled && !isImageData(data).isNull())
         {
             QImage img;
-            img.loadFromData(data);
-            return QPixmap::fromImage(img);
+            if(img.loadFromData(data))
+                return QPixmap::fromImage(img);
         }
     }
 
@@ -796,16 +796,17 @@ std::vector<std::string> SqliteTableModel::getColumns(std::shared_ptr<sqlite3> p
         pDb = m_db.get(tr("retrieving list of columns"));
 
     sqlite3_stmt* stmt;
-    int status = sqlite3_prepare_v2(pDb.get(), sQuery.c_str(), static_cast<int>(sQuery.size()), &stmt, nullptr);
     std::vector<std::string> listColumns;
-    if(SQLITE_OK == status)
+    if(sqlite3_prepare_v2(pDb.get(), sQuery.c_str(), static_cast<int>(sQuery.size()), &stmt, nullptr) == SQLITE_OK)
     {
-        sqlite3_step(stmt);
-        int columns = sqlite3_data_count(stmt);
-        for(int i = 0; i < columns; ++i)
+        if(sqlite3_step(stmt) == SQLITE_ROW)
         {
-            listColumns.push_back(sqlite3_column_name(stmt, i));
-            fieldsTypes.push_back(sqlite3_column_type(stmt, i));
+            int columns = sqlite3_data_count(stmt);
+            for(int i = 0; i < columns; ++i)
+            {
+                listColumns.push_back(sqlite3_column_name(stmt, i));
+                fieldsTypes.push_back(sqlite3_column_type(stmt, i));
+            }
         }
     }
     sqlite3_finalize(stmt);

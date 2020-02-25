@@ -328,8 +328,7 @@ void TableBrowser::init(DBBrowserDB* _db)
 void TableBrowser::reset()
 {
     // Reset the model
-    if(m_model)
-        m_model->reset();
+    m_model->reset();
 
     // Remove all stored table information browse data tab
     m_settings.clear();
