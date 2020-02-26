@@ -46,10 +46,10 @@ Application::Application(int& argc, char** argv) :
         // 2) the application translations directory.
         m_translatorQt = new QTranslator(this);
 
-        ok = m_translatorQt->load("qtbase_" + name,
+        ok = m_translatorQt->load("qt_" + name,
                                   QLibraryInfo::location(QLibraryInfo::TranslationsPath));
         if (ok == false)
-            ok = m_translatorQt->load("qtbase_" + name, "translations");
+            ok = m_translatorQt->load("qt_" + name, "translations");
         if (ok == true)
             installTranslator(m_translatorQt);
     } else {
