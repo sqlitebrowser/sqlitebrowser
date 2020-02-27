@@ -6286,67 +6286,67 @@ Create a backup!</source>
     <message>
         <location filename="../FileDialog.h" line="20"/>
         <source>SQL Files (*.sql)</source>
-        <translation type="unfinished"></translation>
+        <translation>SQL 文件 (*.sql)</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="24"/>
         <source>All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>所有文件 (*)</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="27"/>
         <source>Text Files (*.txt)</source>
-        <translation type="unfinished"></translation>
+        <translation>纯文本文件 (*.txt)</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="31"/>
         <source>Comma-Separated Values Files (*.csv)</source>
-        <translation type="unfinished"></translation>
+        <translation>CSV (逗号分隔)(*.csv)</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="33"/>
         <source>Tab-Separated Values Files (*.tsv)</source>
-        <translation type="unfinished"></translation>
+        <translation>TSV (制表符分隔)(*.tsv)</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="34"/>
         <source>Delimiter-Separated Values Files (*.dsv)</source>
-        <translation type="unfinished"></translation>
+        <translation>DSV (分隔符分隔)(*.dsv)</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="35"/>
         <source>Concordance DAT files (*.dat)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Concordance DAT 文件 (*.dat)</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="38"/>
         <source>JSON Files (*.json *.js)</source>
-        <translation type="unfinished"></translation>
+        <translation>JSON 文件 (*.json *.js)</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="42"/>
         <source>XML Files (*.xml)</source>
-        <translation type="unfinished"></translation>
+        <translation>XML 文件 (*.xml)</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="46"/>
         <source>Binary Files (*.bin *.dat)</source>
-        <translation type="unfinished"></translation>
+        <translation>二进制文件 (*.bin *.dat)</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="50"/>
         <source>SVG Files (*.svg)</source>
-        <translation type="unfinished"></translation>
+        <translation>SVG 文件 (*.svg)</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="54"/>
         <source>Hex Dump Files (*.dat *.bin)</source>
-        <translation type="unfinished"></translation>
+        <translation>十六进制转储文件 (*.dat *.bin)</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="57"/>
         <source>Extensions (*.so *.dylib *.dll)</source>
-        <translation type="unfinished"></translation>
+        <translation>扩展 (*.so *.dylib *.dll)</translation>
     </message>
     <message>
         <source>Name</source>
@@ -6481,7 +6481,7 @@ Create a backup!</source>
     <message>
         <location filename="../RemoteDock.ui" line="49"/>
         <source>Go</source>
-        <translation type="unfinished"></translation>
+        <translation>连接</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="73"/>
@@ -6501,12 +6501,12 @@ Create a backup!</source>
     <message>
         <location filename="../RemoteDock.ui" line="137"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>返回</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="67"/>
         <source>Public</source>
-        <translation type="unfinished">公有</translation>
+        <translation>公用证书</translation>
     </message>
 </context>
 <context>
@@ -6574,7 +6574,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../RemotePushDialog.ui" line="83"/>
         <source>Public</source>
-        <translation>公有</translation>
+        <translation>公开</translation>
     </message>
     <message>
         <location filename="../RemotePushDialog.ui" line="96"/>
@@ -6611,22 +6611,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../RunSql.cpp" line="120"/>
         <source>Execution aborted by user</source>
-        <translation type="unfinished">操作被用户终止</translation>
+        <translation>操作被用户终止</translation>
     </message>
     <message>
         <location filename="../RunSql.cpp" line="205"/>
         <source>, %1 rows affected</source>
-        <translation type="unfinished">，%1 行数据受影响</translation>
+        <translation>，%1 行数据受影响</translation>
     </message>
     <message>
         <location filename="../RunSql.cpp" line="219"/>
         <source>query executed successfully. Took %1ms%2</source>
-        <translation type="unfinished">查询执行成功。耗时 %1ms%2</translation>
+        <translation>查询执行成功。耗时 %1ms%2</translation>
     </message>
     <message>
         <location filename="../RunSql.cpp" line="297"/>
         <source>executing query</source>
-        <translation type="unfinished">执行查询</translation>
+        <translation>执行查询</translation>
     </message>
 </context>
 <context>
@@ -6634,12 +6634,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SelectItemsPopup.ui" line="34"/>
         <source>A&amp;vailable</source>
-        <translation type="unfinished"></translation>
+        <translation>可用(&amp;V)</translation>
     </message>
     <message>
         <location filename="../SelectItemsPopup.ui" line="105"/>
         <source>Sele&amp;cted</source>
-        <translation type="unfinished"></translation>
+        <translation>已选(&amp;C)</translation>
     </message>
 </context>
 <context>
@@ -6662,7 +6662,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="91"/>
         <source>Shift+F3</source>
-        <translation type="unfinished">Shift+F3</translation>
+        <translation>Shift+F3</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="105"/>
@@ -6707,7 +6707,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="151"/>
         <source>F3</source>
-        <translation type="unfinished">F3</translation>
+        <translation>F3</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="158"/>
@@ -6776,23 +6776,23 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.cpp" line="237"/>
         <source>Couldn&apos;t read file: %1.</source>
-        <translation type="unfinished">无法读取文件: %1</translation>
+        <translation>无法读取文件: %1。</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="267"/>
         <location filename="../SqlExecutionArea.cpp" line="285"/>
         <source>Couldn&apos;t save file: %1.</source>
-        <translation type="unfinished">无法保存文件: %1</translation>
+        <translation>无法保存文件: %1。</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="295"/>
         <source>Your changes will be lost when reloading it!</source>
-        <translation type="unfinished"></translation>
+        <translation>重新加载时，你的更改将会丢失！</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="301"/>
         <source>The file &quot;%1&quot; was modified by another program. Do you want to reload it?%2</source>
-        <translation type="unfinished"></translation>
+        <translation>文件 &quot;%1&quot; 已被其他程序修改。是否要重新加载？%2</translation>
     </message>
 </context>
 <context>
@@ -6800,7 +6800,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../sqltextedit.cpp" line="41"/>
         <source>Ctrl+/</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+/</translation>
     </message>
 </context>
 <context>
