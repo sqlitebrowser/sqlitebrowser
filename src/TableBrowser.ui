@@ -841,9 +841,6 @@
    <property name="toolTip">
     <string>Open the find tool bar which allows you to search for values in the table view below.</string>
    </property>
-   <property name="shortcut">
-    <string>Ctrl+F</string>
-   </property>
   </action>
   <action name="actionBold">
    <property name="checkable">
@@ -1055,9 +1052,6 @@
    </property>
    <property name="toolTip">
     <string>Replace text in cells</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+H</string>
    </property>
   </action>
  </widget>

@@ -257,6 +257,8 @@ TableBrowser::TableBrowser(QWidget* parent) :
     QShortcut* shortcutHideFindFrame = new QShortcut(QKeySequence("ESC"), ui->editFindExpression);
     connect(shortcutHideFindFrame, &QShortcut::activated, ui->buttonFindClose, &QToolButton::click);
 
+    QShortcut* shortcutActionFind = new QShortcut(QKeySequence("Ctrl+F"), this, nullptr, nullptr, Qt::WidgetWithChildrenShortcut);
+    connect(shortcutActionFind, &QShortcut::activated, ui->actionFind, &QAction::trigger);
     connect(ui->actionFind, &QAction::triggered, [this](bool checked) {
        if(checked)
        {
@@ -268,6 +270,9 @@ TableBrowser::TableBrowser(QWidget* parent) :
            ui->buttonFindClose->click();
        }
     });
+
+    QShortcut* shortcutActionReplace = new QShortcut(QKeySequence("Ctrl+H"), this, nullptr, nullptr, Qt::WidgetWithChildrenShortcut);
+    connect(shortcutActionReplace, &QShortcut::activated, ui->actionReplace, &QAction::trigger);
     connect(ui->actionReplace, &QAction::triggered, [this](bool checked) {
        if(checked)
        {
