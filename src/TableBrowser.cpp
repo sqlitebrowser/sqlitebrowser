@@ -93,6 +93,11 @@ TableBrowser::TableBrowser(QWidget* parent) :
         updateTable();
     });
 
+    // This is a workaround needed for QDarkStyleSheet.
+    // See https://github.com/ColinDuquesnoy/QDarkStyleSheet/issues/169
+    QStyledItemDelegate* styledItemDelegate = new QStyledItemDelegate(ui->comboBrowseTable);
+    ui->comboBrowseTable->setItemDelegate(styledItemDelegate);
+
     // Add the documentation of shortcuts, which aren't otherwise visible in the user interface, to some buttons.
     addShortcutsTooltip(ui->actionRefresh, {QKeySequence(tr("Ctrl+R"))});
     addShortcutsTooltip(ui->actionPrintTable);
