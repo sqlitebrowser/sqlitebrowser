@@ -446,16 +446,16 @@ void MainWindow::init()
 
     // Connect tool pragmas
     connect(ui->actionIntegrityCheck, &QAction::triggered, [this]() {
-            runSqlNewTab("PRAGMA integrity_check;", ui->actionIntegrityCheck->text());
+            runSqlNewTab("PRAGMA integrity_check;", ui->actionIntegrityCheck->text(), "https://www.sqlite.org/pragma.html#pragma_integrity_check");
     });
     connect(ui->actionQuickCheck, &QAction::triggered, [this]() {
-            runSqlNewTab("PRAGMA quick_check;", ui->actionQuickCheck->text());
+            runSqlNewTab("PRAGMA quick_check;", ui->actionQuickCheck->text(), "https://www.sqlite.org/pragma.html#pragma_quick_check");
     });
     connect(ui->actionForeignKeyCheck, &QAction::triggered, [this]() {
-            runSqlNewTab("PRAGMA foreign_key_check;", ui->actionForeignKeyCheck->text());
+            runSqlNewTab("PRAGMA foreign_key_check;", ui->actionForeignKeyCheck->text(), "https://www.sqlite.org/pragma.html#pragma_foreign_key_check");
     });
     connect(ui->actionOptimize, &QAction::triggered, [this]() {
-            runSqlNewTab("PRAGMA optimize;", ui->actionOptimize->text());
+            runSqlNewTab("PRAGMA optimize;", ui->actionOptimize->text(), "https://www.sqlite.org/pragma.html#pragma_optimize");
     });
 
     // Action for switching the table via the Database Structure tab
@@ -924,6 +924,18 @@ void MainWindow::editObject()
         EditIndexDialog dialog(db, name, false, this);
         if(dialog.exec())
             populateTable();
+    } else if(type == "view") {
+        sqlb::ViewPtr view = db.getObjectByName<sqlb::View>(name);
+        runSqlNewTab(QString("DROP VIEW %1;\n%2").arg(QString::fromStdString(name.toString())).arg(QString::fromStdString(view->sql())),
+                     tr("Edit View %1").arg(QString::fromStdString(name.toDisplayString())),
+                     "https://www.sqlite.org/lang_createview.html",
+                     /* autoRun */ false);
+    } else if(type == "trigger") {
+        sqlb::TriggerPtr trigger = db.getObjectByName<sqlb::Trigger>(name);
+        runSqlNewTab(QString("DROP TRIGGER %1;\n%2").arg(QString::fromStdString(name.toString())).arg(QString::fromStdString(trigger->sql())),
+                     tr("Edit Trigger %1").arg(QString::fromStdString(name.toDisplayString())),
+                     "https://www.sqlite.org/lang_createtrigger.html",
+                     /* autoRun */ false);
     }
 }
 
@@ -1524,13 +1536,9 @@ void MainWindow::changeTreeSelection()
     ui->editModifyObjectAction->setVisible(true);
 
     // Activate actions
-    if(type == "table" || type == "index")
-    {
-        ui->editDeleteObjectAction->setEnabled(!db.readOnly());
-        ui->editModifyObjectAction->setEnabled(!db.readOnly());
-    } else if(type == "view" || type == "trigger") {
-        ui->editDeleteObjectAction->setEnabled(!db.readOnly());
-    }
+    ui->editDeleteObjectAction->setEnabled(!db.readOnly());
+    ui->editModifyObjectAction->setEnabled(!db.readOnly());
+
     if(type == "table" || type == "view")
     {
         ui->actionEditBrowseTable->setEnabled(true);
@@ -3135,11 +3143,18 @@ void MainWindow::saveAsView(const std::string& query)
         QMessageBox::warning(this, qApp->applicationName(), tr("Error creating view: %1").arg(db.lastError()));
 }
 
-void MainWindow::runSqlNewTab(const QString& query, const QString& title)
+void MainWindow::runSqlNewTab(const QString& query, const QString& title, const QString& helpUrl, const bool autoRun)
 {
-    QString message = tr("This action will open a new SQL tab for running:") +
-                         QString("<br/><tt>%1</tt><p/>").arg(query) +
-                         tr("Press Help for opening the corresponding SQLite reference page.");
+    QString message;
+
+    if(autoRun)
+        message = tr("This action will open a new SQL tab for running:");
+    else
+        message = tr("This action will open a new SQL tab with the following statements for you to edit and run:");
+
+    message += QString("<blockquote><tt>%1</tt></blockquote>").arg(query) +
+               tr("Press Help for opening the corresponding SQLite reference page.");
+
     QString windowTitle = title;
     windowTitle.remove('&');
 
@@ -3152,13 +3167,12 @@ void MainWindow::runSqlNewTab(const QString& query, const QString& title)
         int index = openSqlTab();
         ui->tabSqlAreas->setTabText(index, title);
         qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index))->getEditor()->setText(query);
-        executeQuery();
+        if(autoRun)
+            executeQuery();
         break;
     }
     case QMessageBox::Help: {
-        QString anchor = query.toLower();
-        anchor.replace(" ", "_").chop(1);
-        QDesktopServices::openUrl(QUrl(QString("https://www.sqlite.org/pragma.html#") + anchor));
+        QDesktopServices::openUrl(QUrl(helpUrl));
         break;
     }
     default:
