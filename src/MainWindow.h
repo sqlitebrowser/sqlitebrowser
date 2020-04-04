@@ -195,7 +195,7 @@ private slots:
     void openFindReplaceDialog();
     void toggleSqlBlockComment();
     void openSqlPrintDialog();
-    void runSqlNewTab(const QString& query, const QString& title);
+    void runSqlNewTab(const QString& query, const QString& title, const QString& helpUrl, const bool autoRun = true);
     void printDbStructure();
     void updateDatabaseBusyStatus(bool busy, const QString& user);
     void openPreferences();
