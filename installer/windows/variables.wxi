@@ -55,7 +55,7 @@
     -->
 
     <?if $(sys.BUILDARCH)="x64"?>
-        <?define QtPath="C:\dev\Qt\5.12.6\msvc2017_64" ?>
+        <?define QtPath="C:\dev\Qt\5.12.8\5.12.8\msvc2017_64" ?>
         <?define SQLitePath="C:\dev\SQLite-Win64" ?>
         <?define SQLCipherPath="C:\git_repos\SQLCipher-Win64" ?>
         <?define OpenSSLPath="C:\dev\OpenSSL-Win64" ?>
