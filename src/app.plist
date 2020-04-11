@@ -55,7 +55,7 @@
 	<key>CFBundleExecutable</key>
 	<string>@EXECUTABLE@</string>
 	<key>CFBundleGetInfoString</key>
-	<string>3.11.99</string>
+	<string>3.11.100</string>
 	<key>CFBundleIconFile</key>
 	<string>@ICON@</string>
 	<key>CFBundleIdentifier</key>
@@ -67,11 +67,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.11.99</string>
+	<string>3.11.100</string>
 	<key>CFBundleSignature</key>
 	<string>SqLB</string>
 	<key>CFBundleVersion</key>
-	<string>3.11.99</string>
+	<string>3.11.100</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>NSHighResolutionCapable</key>
