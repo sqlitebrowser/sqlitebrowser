@@ -378,16 +378,6 @@
        inkscape:collect="always" />
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#linearGradient4176"
-       id="linearGradient3931"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="translate(-1.142857e-6,-1.714284)"
-       x1="17.160095"
-       y1="14.004482"
-       x2="37.969398"
-       y2="56.575912" />
-    <linearGradient
-       inkscape:collect="always"
        xlink:href="#linearGradient4162-3"
        id="linearGradient3933"
        gradientUnits="userSpaceOnUse"
@@ -546,12 +536,6 @@
     <g
        id="g3916"
        transform="matrix(1.2605247,0,0,1,-5.9483559,-2.525382)">
-      <path
-         sodipodi:nodetypes="csszssz"
-         id="path4174"
-         d="m 23.946122,7.9712859 c -7.327758,0 -13.286026,2.6129201 -13.286027,5.8272051 0,0.230651 0,21.88606 0,22.126271 0,3.214287 5.958268,5.827205 13.286027,5.827205 7.327758,0 13.523277,-2.612919 13.523275,-5.827205 0,-0.190256 0,-21.936013 0,-22.126271 0,-3.214286 -6.195518,-5.8272051 -13.523275,-5.8272051 z"
-         style="color:#000000;display:block;overflow:visible;visibility:visible;opacity:0.544304;fill:none;stroke:url(#linearGradient3931);stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none"
-         inkscape:connector-curvature="0" />
       <g
          id="g3795-5"
          transform="translate(0.01853025,20.001561)">
