@@ -3,17 +3,17 @@
 # Builds and uploads DB Browser for SQLite nightlies,
 # after updating the Homebrew dependencies
 
-QTVER="5.11.3"
+QTVER="5.12.8"
 BRANCH="master"
 BREW="/usr/local/bin/brew"
 BUILD_TYPE="release"
 DATE=`date "+%Y%m%d"`
 LOG="$HOME/db4s_nightlies/nightly-$DATE.log"
-LRELEASE="$HOME/Qt/${QTVER}/clang_64/bin/lrelease"
-LUPDATE="$HOME/Qt/${QTVER}/clang_64/bin/lupdate"
-MACDEPLOYQT="$HOME/Qt/${QTVER}/clang_64/bin/macdeployqt"
+LRELEASE="$HOME/Qt/${QTVER}/${QTVER}/clang_64/bin/lrelease"
+LUPDATE="$HOME/Qt/${QTVER}/${QTVER}/clang_64/bin/lupdate"
+MACDEPLOYQT="$HOME/Qt/${QTVER}/${QTVER}/clang_64/bin/macdeployqt"
 PATH="$PATH:/usr/local/bin:/usr/sbin"
-QMAKE="$HOME/Qt/${QTVER}/clang_64/bin/qmake"
+QMAKE="$HOME/Qt/${QTVER}/${QTVER}/clang_64/bin/qmake"
 
 # Add the sensitive values we don't want to store in this script file
 source ~/.db4s_secure
@@ -114,12 +114,12 @@ cp LICENSE LICENSE-PLUGINS src/DB\ Browser\ for\ SQLite.app/Contents/Resources/ 
 # Copy the translation files to the .dmg
 mkdir -p src/DB\ Browser\ for\ SQLite.app/Contents/translations >>$LOG 2>&1
 for i in ar zh_CN zh_TW cs en fr de it ko pl pt ru es uk; do
-  cp -v $HOME/Qt/${QTVER}/clang_64/translations/qt_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
-  cp -v $HOME/Qt/${QTVER}/clang_64/translations/qtbase_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
-  cp -v $HOME/Qt/${QTVER}/clang_64/translations/qtmultimedia_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
-  cp -v $HOME/Qt/${QTVER}/clang_64/translations/qtquick1_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
-  cp -v $HOME/Qt/${QTVER}/clang_64/translations/qtscript_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
-  cp -v $HOME/Qt/${QTVER}/clang_64/translations/qtxmlpatterns_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
+  cp -v $HOME/Qt/${QTVER}/${QTVER}/clang_64/translations/qt_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
+  cp -v $HOME/Qt/${QTVER}/${QTVER}/clang_64/translations/qtbase_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
+  cp -v $HOME/Qt/${QTVER}/${QTVER}/clang_64/translations/qtmultimedia_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
+  cp -v $HOME/Qt/${QTVER}/${QTVER}/clang_64/translations/qtquick1_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
+  cp -v $HOME/Qt/${QTVER}/${QTVER}/clang_64/translations/qtscript_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
+  cp -v $HOME/Qt/${QTVER}/${QTVER}/clang_64/translations/qtxmlpatterns_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
 done
 
 # Unlock the local security keychain, so signing can be done
@@ -190,12 +190,12 @@ cp LICENSE LICENSE-PLUGINS src/DB\ Browser\ for\ SQLite.app/Contents/Resources/ 
 # Copy the translation files to the .dmg
 mkdir -p src/DB\ Browser\ for\ SQLite.app/Contents/translations >>$LOG 2>&1
 for i in ar zh_CN zh_TW cs en fr de it ko pl pt ru es uk; do
-  cp -v $HOME/Qt/${QTVER}/clang_64/translations/qt_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
-  cp -v $HOME/Qt/${QTVER}/clang_64/translations/qtbase_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
-  cp -v $HOME/Qt/${QTVER}/clang_64/translations/qtmultimedia_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
-  cp -v $HOME/Qt/${QTVER}/clang_64/translations/qtquick1_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
-  cp -v $HOME/Qt/${QTVER}/clang_64/translations/qtscript_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
-  cp -v $HOME/Qt/${QTVER}/clang_64/translations/qtxmlpatterns_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
+  cp -v $HOME/Qt/${QTVER}/${QTVER}/clang_64/translations/qt_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
+  cp -v $HOME/Qt/${QTVER}/${QTVER}/clang_64/translations/qtbase_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
+  cp -v $HOME/Qt/${QTVER}/${QTVER}/clang_64/translations/qtmultimedia_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
+  cp -v $HOME/Qt/${QTVER}/${QTVER}/clang_64/translations/qtquick1_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
+  cp -v $HOME/Qt/${QTVER}/${QTVER}/clang_64/translations/qtscript_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
+  cp -v $HOME/Qt/${QTVER}/${QTVER}/clang_64/translations/qtxmlpatterns_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
 done
 
 # Unlock the local security keychain, so signing can be done
@@ -225,10 +225,8 @@ fi
 # Upload nightly builds and the build log thus far
 echo Upload nightly builds >>$LOG 2>&1
 rsync -aP $HOME/db4s_nightlies/DB\ Browser\ for\ SQLite*${DATE}.dmg ${LOG} ${UPLOAD_SERVER}:/nightlies/osx/ >>$LOG 2>&1
-
-# Add the new builds to the "latest" directory
-ssh ${UPLOAD_SERVER} "cd /nightlies/latest; rm -f *dmg" >>$LOG 2>&1
-ssh ${UPLOAD_SERVER} "cd /nightlies/latest; cp /nightlies/osx/DB\ Browser\ for\ SQLite_${DATE}.dmg /nightlies/latest/DB.Browser.for.SQLite.dmg" >>$LOG 2>&1
-ssh ${UPLOAD_SERVER} "cd /nightlies/latest; cp /nightlies/osx/DB\ Browser\ for\ SQLite-sqlcipher_${DATE}.dmg /nightlies/latest/DB.Browser.for.SQLite-sqlcipher.dmg" >>$LOG 2>&1
+ssh -q ${UPLOAD_SERVER} "cd /nightlies/latest; rm -f *dmg" >>$LOG 2>&1
+ssh -q ${UPLOAD_SERVER} "cd /nightlies/latest; cp /nightlies/osx/DB\ Browser\ for\ SQLite_${DATE}.dmg /nightlies/latest/DB.Browser.for.SQLite.dmg" >>$LOG 2>&1
+ssh -q ${UPLOAD_SERVER} "cd /nightlies/latest; cp /nightlies/osx/DB\ Browser\ for\ SQLite-sqlcipher_${DATE}.dmg /nightlies/latest/DB.Browser.for.SQLite-sqlcipher.dmg" >>$LOG 2>&1
 
 echo Done! >>$LOG 2>&1
