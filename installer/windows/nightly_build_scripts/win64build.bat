@@ -90,12 +90,11 @@ cmake -G "Visual Studio 15 2017 Win64" -Wno-dev C:\\git_repos\\sqlitebrowser
 :: Build package
 devenv /Build Release sqlitebrowser.sln /project "ALL_BUILD"
 
-
 :: WIN64 SQLCIPHER BUILD PROCEDURE
 
 :: Build SQLCipher x64
 CD %SQLCIPHER_DIR%
-nmake /f Makefile.msc sqlcipher.dll USE_AMALGAMATION=1 NO_TCL=1 SQLITE3DLL=sqlcipher.dll SQLITE3LIB=sqlcipher.lib SQLITE3EXE=sqlcipher.exe LTLINKOPTS="C:\dev\OpenSSL-Win64\lib\libeay32.lib" OPT_FEATURE_FLAGS="-DSQLITE_TEMP_STORE=2 -DSQLITE_HAS_CODEC=1 -DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_FTS5=1 -DSQLITE_ENABLE_FTS3_PARENTHESIS=1 -DSQLITE_ENABLE_STAT4=1 -DSQLITE_SOUNDEX=1 -DSQLITE_ENABLE_JSON1=1 -DSQLITE_ENABLE_GEOPOLY=1 -DSQLITE_ENABLE_RTREE=1 -DSQLCIPHER_CRYPTO_OPENSSL=1 -DSQLITE_MAX_ATTACHED=125 -IC:\dev\OpenSSL-Win64\include"
+nmake /f Makefile.msc sqlcipher.dll USE_AMALGAMATION=1 NO_TCL=1 SQLITE3DLL=sqlcipher.dll SQLITE3LIB=sqlcipher.lib SQLITE3EXE=sqlcipher.exe LTLINKOPTS="C:\dev\OpenSSL-Win64\lib\libcrypto.lib" OPT_FEATURE_FLAGS="-DSQLITE_TEMP_STORE=2 -DSQLITE_HAS_CODEC=1 -DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_FTS5=1 -DSQLITE_ENABLE_FTS3_PARENTHESIS=1 -DSQLITE_ENABLE_STAT4=1 -DSQLITE_SOUNDEX=1 -DSQLITE_ENABLE_JSON1=1 -DSQLITE_ENABLE_GEOPOLY=1 -DSQLITE_ENABLE_RTREE=1 -DSQLCIPHER_CRYPTO_OPENSSL=1 -DSQLITE_MAX_ATTACHED=125 -IC:\dev\OpenSSL-Win64\include"
 
 :: Run CMake for SQLCipher x64
 CD C:\\builds
@@ -123,7 +122,6 @@ msiexec /a "DB.Browser.for.SQLite-%RUN_DATE%-win64.msi" /q TARGETDIR=%CD%\zip
 MOVE %CD%\zip\System64\* "%CD%\zip\DB Browser for SQLite"
 %ZIP_EXE% a "DB.Browser.for.SQLite-%RUN_DATE%-win64.zip" "%CD%\zip\DB Browser for SQLite"
 RMDIR /S /Q %CD%\zip
-
 
 :: Save the last commit hash to 'commit.txt' and upload it to the nightlies server
 CD C:\\git_repos\\sqlitebrowser
