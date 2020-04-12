@@ -88,8 +88,8 @@
                     <Component><File Source="$(var.QtPath)\bin\Qt5PrintSupport.dll" /></Component>
                     <Component><File Source="$(var.QtPath)\bin\Qt5Widgets.dll" /></Component>
                     <Component><File Source="$(var.QtPath)\bin\Qt5Xml.dll" /></Component>
-                    <Component><File Source="$(var.OpenSSLPath)\libcrypto-1_1.dll" /></Component>
-                    <Component><File Source="$(var.OpenSSLPath)\libssl-1_1.dll" /></Component>
+                    <Component><File Id="libcrypto.dll" Source="$(var.OpenSSLPath)\libcrypto-1_1.dll" /></Component>
+                    <Component><File Id="libssl.dll" Source="$(var.OpenSSLPath)\libssl-1_1.dll" /></Component>
                     <Component><File Source="$(var.SQLCipherPath)\sqlcipher.dll" /></Component>
                     <Component><File Source="$(var.SQLitePath)\sqlite3.dll" /></Component>
                     <Component><File Source="$(var.SQLiteExePath)\DB Browser for SQLite.exe" Checksum="yes" /></Component>
@@ -181,8 +181,8 @@
             <ComponentRef Id="Qt5Widgets.dll" />
             <ComponentRef Id="Qt5Xml.dll" />
             <!-- OpenSSL -->
-            <ComponentRef Id="libcrypto-1_1.dll" />
-            <ComponentRef Id="libssl-1_1.dll" />
+            <ComponentRef Id="libcrypto.dll" />
+            <ComponentRef Id="libssl.dll" />
             <!-- SQLite & SQLCipher -->
             <ComponentRef Id="sqlcipher.dll" />
             <ComponentRef Id="sqlite3.dll" />
