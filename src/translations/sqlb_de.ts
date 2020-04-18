@@ -3104,7 +3104,7 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
  - Doppelt auf einen Eintrag klicken, um dessen Inhalte im Zelleneditor-Fenster zu bearbeiten.
  - Alt+Entf zum Löschen des Zellinhaltes zu NULL.
  - Strg+&quot; zur Duplizierung des aktuellen Eintrags.
- - Ctrl+&apos; zum Kopieren des Wertes der darüberliegenden Zelle.
+ - Strg+&apos; zum Kopieren des Wertes der darüberliegenden Zelle.
  - Standardmäßige Auswahl- und Kopieren/Einfügen-Operationen.</translation>
     </message>
     <message>
@@ -4532,7 +4532,7 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     <message>
         <location filename="../MainWindow.ui" line="1497"/>
         <source>Ctrl+Return</source>
-        <translation>Strg+Return</translation>
+        <translation>Strg+Enter</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="272"/>
@@ -7458,7 +7458,7 @@ Die Verwendung dieser Funktion muss in den Einstellungen authorisiert werden.</t
         <source>References %1(%2)
 Hold Ctrl+Shift and click to jump there</source>
         <translation type="vanished">Referenzen %1(%2)
-Strg+Shift halten und klicken, um hierher zu springen</translation>
+Strg+Umschalt halten und klicken, um hierher zu springen</translation>
     </message>
     <message>
         <location filename="../sqlitetablemodel.cpp" line="34"/>
@@ -7536,7 +7536,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
  - Doppelt auf einen Eintrag klicken, um dessen Inhalte im Zelleneditor-Fenster zu bearbeiten.
  - Alt+Entf zum Löschen des Zellinhaltes zu NULL.
  - Strg+&quot; zur Duplizierung des aktuellen Eintrags.
- - Ctrl+&apos; zum Kopieren des Wertes der darüberliegenden Zelle.
+ - Strg+&apos; zum Kopieren des Wertes der darüberliegenden Zelle.
  - Standardmäßige Auswahl- und Kopieren/Einfügen-Operationen.</translation>
     </message>
     <message>
@@ -8122,7 +8122,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="1042"/>
         <source>Ctrl+Space</source>
-        <translation>Strg+Space</translation>
+        <translation>Strg+Leertaste</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1057"/>
