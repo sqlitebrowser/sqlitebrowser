@@ -832,7 +832,7 @@ DB meldet:
     </message>
     <message>
         <source>... &lt;string can not be logged, contains binary data&gt; ...</source>
-        <translation type="vanished">... &lt;String kann nicht geloggt werden, enthält binäre Daten&gt; ...</translation>
+        <translation type="vanished">... &lt;String kann nicht protokolliert werden, er enthält binäre Daten&gt; ...</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1962"/>
@@ -3121,7 +3121,7 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     <message>
         <location filename="../MainWindow.ui" line="926"/>
         <source>Error Log</source>
-        <translation>Fehlerlog</translation>
+        <translation>Fehlerprotokoll</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1184"/>
@@ -3746,12 +3746,12 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     <message>
         <location filename="../MainWindow.ui" line="953"/>
         <source>This button clears the contents of the SQL logs</source>
-        <translation>Dieser Button löscht den Inhalt der SQL-Logs</translation>
+        <translation>Dieser Button löscht die Inhalte der SQL-Protokolle</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="965"/>
         <source>This panel lets you examine a log of all SQL commands issued by the application or by yourself</source>
-        <translation>Dieses Panel erlaubt Ihnen das Betrachten eines Logs aller SQL-Kommandos, die von der Anwendung oder von Ihnen selbst ausgegangen sind</translation>
+        <translation>Dieses Panel erlaubt Ihnen das Betrachten eines Protokolls aller SQL-Kommandos, die von der Anwendung oder von Ihnen selbst ausgegangen sind</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1024"/>
@@ -3882,7 +3882,7 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     </message>
     <message>
         <source>SQL Log</source>
-        <translation type="obsolete">SQL-Log</translation>
+        <translation type="obsolete">SQL-Protokoll</translation>
     </message>
     <message>
         <source>&amp;Show SQL submitted by</source>
@@ -4331,7 +4331,7 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     <message>
         <location filename="../MainWindow.ui" line="881"/>
         <source>SQL &amp;Log</source>
-        <translation>SQL-&amp;Log</translation>
+        <translation>SQL-&amp;Protokoll</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="899"/>
@@ -5876,7 +5876,7 @@ Warnung: es wurden aufgrund der partiellen Abrufmechanismus noch nicht alle Date
     </message>
     <message>
         <source>SQL &amp;log font size</source>
-        <translation type="vanished">SQL-&amp;Log Schriftgröße</translation>
+        <translation type="vanished">SQL-&amp;Protokoll Schriftgröße</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1376"/>
@@ -6507,7 +6507,7 @@ Ausführung wird abgebrochen.</translation>
     </message>
     <message>
         <source>... &lt;string can not be logged, contains binary data&gt; ...</source>
-        <translation type="obsolete">... &lt;String kann nicht geloggt werden, enthält binäre Daten&gt; ...</translation>
+        <translation type="obsolete">... &lt;String kann nicht protokolliert werden, er enthält binäre Daten&gt; ...</translation>
     </message>
     <message>
         <source>unknown object type %1</source>
@@ -7051,7 +7051,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="232"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Results of the last executed statements.&lt;/p&gt;&lt;p&gt;You may want to collapse this panel and use the &lt;span style=&quot; font-style:italic;&quot;&gt;SQL Log&lt;/span&gt; dock with &lt;span style=&quot; font-style:italic;&quot;&gt;User&lt;/span&gt; selection instead.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ergebnisse der zuletzt ausgeführten Statements.&lt;/p&gt;&lt;p&gt;Dieses Panel kann zusammengeklappt und stattdessen der &lt;span style=&quot; font-style:italic;&quot;&gt;SQL-Log&lt;/span&gt;-Dock mit der Auswahl &lt;span style=&quot; font-style:italic;&quot;&gt;Benutzer&lt;/span&gt; verwendet werden.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ergebnisse der zuletzt ausgeführten Statements.&lt;/p&gt;&lt;p&gt;Dieses Panel kann zusammengeklappt und stattdessen der &lt;span style=&quot; font-style:italic;&quot;&gt;SQL-Protokoll&lt;/span&gt;-Dock mit der Auswahl &lt;span style=&quot; font-style:italic;&quot;&gt;Benutzer&lt;/span&gt; verwendet werden.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="253"/>
