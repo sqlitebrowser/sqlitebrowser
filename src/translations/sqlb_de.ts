@@ -2668,7 +2668,7 @@ x~y	Bereich: Werte zwischen x und y
     <message>
         <location filename="../ImportCsvDialog.ui" line="228"/>
         <source>Other</source>
-        <translation>Anderer</translation>
+        <translation>Andere</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="130"/>
@@ -2679,13 +2679,13 @@ x~y	Bereich: Werte zwischen x und y
         <location filename="../ImportCsvDialog.ui" line="88"/>
         <location filename="../ImportCsvDialog.ui" line="158"/>
         <source>Other (printable)</source>
-        <translation>Anderer (darstellbar)</translation>
+        <translation>Anderes (darstellbar)</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="93"/>
         <location filename="../ImportCsvDialog.ui" line="163"/>
         <source>Other (code)</source>
-        <translation>Anderer (Code)</translation>
+        <translation>Anderes (Code)</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="143"/>
@@ -4249,12 +4249,12 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     <message>
         <location filename="../MainWindow.ui" line="1430"/>
         <source>&amp;DB Toolbar</source>
-        <translation>&amp;DB Toolbar</translation>
+        <translation>&amp;DB-Werkzeugleiste</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1433"/>
         <source>Shows or hides the Database toolbar.</source>
-        <translation>Zeigt oder versteckt die Datenbank-Toolbar.</translation>
+        <translation>Zeigt oder versteckt die Datenbank-Werkzeugleiste.</translation>
     </message>
     <message>
         <source>What&apos;s This?</source>
@@ -4322,7 +4322,7 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     <message>
         <location filename="../MainWindow.ui" line="850"/>
         <source>DB Toolbar</source>
-        <translation>DB Toolbar</translation>
+        <translation>DB-Werkzeugleiste</translation>
     </message>
     <message>
         <source>Edit Database Cell</source>
@@ -7999,7 +7999,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="842"/>
         <source>Open the find tool bar which allows you to search for values in the table view below.</source>
-        <translation>Die Such-Toolbar öffnen, welche das Suchen nach Werten in der Tabellenansicht unten erlaubt.</translation>
+        <translation>Die Such-Werkzeugleiste öffnen, welche das Suchen nach Werten in der Tabellenansicht unten erlaubt.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="845"/>
@@ -8100,18 +8100,18 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="1025"/>
         <source>Toggle Format Toolbar</source>
-        <translation>Formatierungs-Toolbar umschalten</translation>
+        <translation>Format-Werkzeugleiste umschalten</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1028"/>
         <source>Show/hide format toolbar</source>
-        <translation>Formatierungs-Toolbar anzeigen/verstecken</translation>
+        <translation>Format-Werkzeugleiste anzeigen/verstecken</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1031"/>
         <location filename="../TableBrowser.ui" line="1034"/>
         <source>This button shows or hides the formatting toolbar of the Data Browser</source>
-        <translation>Dieser Button zeigt oder versteckt die Formatierungs-Toolbar im Datenbrowser</translation>
+        <translation>Dieser Button zeigt oder versteckt die Format-Werkzeugleiste im Datenbrowser</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1039"/>
