@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="de">
 <context>
@@ -108,12 +107,12 @@
     <message>
         <location filename="../AddRecordDialog.ui" line="93"/>
         <source>When you edit the values in the upper frame, the SQL query for inserting this new record is shown here. You can edit manually the query before saving.</source>
-        <translation>Wenn Sie die Werte im oberen Teil ändern, wird hier das SQL-Query für das Einfügen des neuen Datensatzes angezeigt. Sie können das Query vor dem Speichern manuell bearbeiten.</translation>
+        <translation>Wenn Sie die Werte im oberen Teil ändern, wird hier die SQL-Abfrage für das Einfügen des neuen Datensatzes angezeigt. Sie können die Abfrage vor dem Speichern manuell bearbeiten.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="110"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Save&lt;/span&gt; will submit the shown SQL statement to the database for inserting the new record.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Restore Defaults&lt;/span&gt; will restore the initial values in the &lt;span style=&quot; font-weight:600;&quot;&gt;Value&lt;/span&gt; column.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Cancel&lt;/span&gt; will close this dialog without executing the query.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Speichern&lt;/span&gt; führt die angezeigte SQL-Anweisung aus und fügt damit den neuen Datensatz in die Datenbank ein.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Voreinstellungen&lt;/span&gt; wird die ursprünglichen Werte der &lt;span style=&quot; font-weight:600;&quot;&gt;Wert&lt;/span&gt;-Spalte wiederherstellen.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Abbrechen&lt;/span&gt; schließt diesen Dialog, ohne die SQL-Anweisung auszuführen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Speichern&lt;/span&gt; führt die angezeigte SQL-Anweisung aus und fügt damit den neuen Datensatz in die Datenbank ein.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Voreinstellungen&lt;/span&gt; wird die ursprünglichen Werte der &lt;span style=&quot; font-weight:600;&quot;&gt;Wert&lt;/span&gt;-Spalte wiederherstellen.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Abbrechen&lt;/span&gt; schließt diesen Dialog, ohne die SQL-Abfrage auszuführen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="234"/>
@@ -502,7 +501,7 @@ Falls weitere Einstellungen für diese Datenbank-Datei vorgenommen worden sind, 
     <message>
         <location filename="../CondFormatManager.ui" line="20"/>
         <source>This dialog allows creating and editing conditional formats. Each cell style will be selected by the first accomplished condition for that cell data. Conditional formats can be moved up and down, where those at higher rows take precedence over those at lower. Syntax for conditions is the same as for filters and an empty condition applies to all values.</source>
-        <translation>Dieser Dialog erlaubt das Erstellen und Bearbeiten bedingter Formatierungen. Jeder Zellenstil wird anhand der ersten erfüllten Bedingung für diese Zelldaten ausgewählt. Bedingte Formatierungen können nach oben und unten bewegt werden, wobei jene weiter oben Vorrang vor jenen weiter unten haben. Der Syntax für Bedingungen ist der gleiche wie bei Filtern und eine leere Bedingung trifft auf alle Werte zu.</translation>
+        <translation>Dieser Dialog erlaubt das Erstellen und Bearbeiten bedingter Formatierungen. Jeder Zellenstil wird anhand der ersten erfüllten Bedingung für diese Zelldaten ausgewählt. Bedingte Formatierungen können nach oben und unten bewegt werden, wobei jene weiter oben Vorrang vor jenen weiter unten haben. Die Syntax für Bedingungen ist die gleiche wie bei Filtern und eine leere Bedingung trifft auf alle Werte zu.</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="32"/>
@@ -3262,7 +3261,7 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     <message>
         <location filename="../MainWindow.ui" line="1816"/>
         <source>This button lets you save the results of the last executed query</source>
-        <translation>Dieser Button erlaubt Ihnen das Speichern der Ergebnisse der zuletzt ausgeführten Query</translation>
+        <translation>Dieser Button erlaubt Ihnen das Speichern der Ergebnisse der zuletzt ausgeführten Abfrage</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1828"/>
@@ -4652,7 +4651,7 @@ Alle mit %1 verbundenen Daten gehen verloren.</translation>
     </message>
     <message>
         <source>Query executed successfully: %1 (took %2ms%3)</source>
-        <translation type="vanished">Query erfolgreich ausgeführt: %1 (innerhalb von %2ms%3)</translation>
+        <translation type="vanished">Abfrage erfolgreich ausgeführt: %1 (innerhalb von %2ms%3)</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1324"/>
@@ -4730,11 +4729,11 @@ Lassen Sie das Feld leer, um die Datenbankodierung zu verwenden.</translation>
     </message>
     <message>
         <source>Error executing query: %1</source>
-        <translation type="vanished">Fehler beim Ausführen der Anfrage: %1</translation>
+        <translation type="vanished">Fehler beim Ausführen der Abfrage: %1</translation>
     </message>
     <message>
         <source>Query executed successfully: %1 (took %2ms)</source>
-        <translation type="obsolete">Anfrage erfolgreich ausgeführt: %1 (in %2ms)</translation>
+        <translation type="obsolete">Abfrage erfolgreich ausgeführt: %1 (in %2ms)</translation>
     </message>
     <message>
         <source>Choose a text file</source>
@@ -5002,7 +5001,7 @@ Sind Sie sich sicher?</translation>
     </message>
     <message>
         <source>executing query</source>
-        <translation type="vanished">führe Query aus</translation>
+        <translation type="vanished">führe Abfrage aus</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1170"/>
@@ -5011,7 +5010,7 @@ Sind Sie sich sicher?</translation>
     </message>
     <message>
         <source>query executed successfully. Took %1ms%2</source>
-        <translation type="vanished">Query erfolgreich ausgeführt. Benötigte %1ms%2</translation>
+        <translation type="vanished">Abfrage erfolgreich ausgeführt. Benötigte %1ms%2</translation>
     </message>
     <message>
         <source>-- At line %1:
@@ -5296,7 +5295,7 @@ Erstellen Sie ein Backup!</translation>
     <message>
         <location filename="../PlotDock.ui" line="30"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This pane shows the list of columns of the currently browsed table or the just executed query. You can select the columns that you want to be used as X or Y axis for the plot pane below. The table shows detected axis type that will affect the resulting plot. For the Y axis you can only select numeric columns, but for the X axis you will be able to select:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Date/Time&lt;/span&gt;: strings with format &amp;quot;yyyy-MM-dd hh:mm:ss&amp;quot; or &amp;quot;yyyy-MM-ddThh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Date&lt;/span&gt;: strings with format &amp;quot;yyyy-MM-dd&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Time&lt;/span&gt;: strings with format &amp;quot;hh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Label&lt;/span&gt;: other string formats. Selecting this column as X axis will produce a Bars plot with the column values as labels for the bars&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Numeric&lt;/span&gt;: integer or real values&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Double-clicking the Y cells you can change the used color for that graph.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dieses Pane zeigt die Liste der Spalten der aktuell ausgewählten Tabelle oder des soeben ausgeführtne Queries. Sie können die für die X- und Y-Achse gewünschten Spalten für das Plot-Pane unten auswählen. Die Tabelle zeigt den erkannten Axentyp, der den entstehenden Plot beeinflusst. Für die Y-Achse sind nur numerische Spalten zulässig, während Sie für die X-Achse aus folgenden Optionen auswählen können:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Datum/Zeit&lt;/span&gt;: Strings im Format &amp;quot;yyyy-MM-dd hh:mm:ss&amp;quot; or &amp;quot;yyyy-MM-ddThh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Datum&lt;/span&gt;: Strings im Format &amp;quot;yyyy-MM-dd&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Zeit&lt;/span&gt;: Strings im Format &amp;quot;hh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Beschriftung&lt;/span&gt;: andere Stringformate. Die Auswahl dieser Spalte als X-Achse erzeugt einen Barplot mit den Spaltenwerten als Beschriftungen der Bars.&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Numerisch&lt;/span&gt;: Integer- oder Real-Werte&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Ein Doppelklick auf die Y-Zellen ermöglicht Ihnen das Ändern der für den Graph verwendeten Farbe.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dieses Pane zeigt die Liste der Spalten der aktuell ausgewählten Tabelle oder des soeben ausgeführten Abfrage. Sie können die für die X- und Y-Achse gewünschten Spalten für das Plot-Pane unten auswählen. Die Tabelle zeigt den erkannten Axentyp, der den entstehenden Plot beeinflusst. Für die Y-Achse sind nur numerische Spalten zulässig, während Sie für die X-Achse aus folgenden Optionen auswählen können:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Datum/Zeit&lt;/span&gt;: Strings im Format &amp;quot;yyyy-MM-dd hh:mm:ss&amp;quot; or &amp;quot;yyyy-MM-ddThh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Datum&lt;/span&gt;: Strings im Format &amp;quot;yyyy-MM-dd&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Zeit&lt;/span&gt;: Strings im Format &amp;quot;hh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Beschriftung&lt;/span&gt;: andere Stringformate. Die Auswahl dieser Spalte als X-Achse erzeugt einen Barplot mit den Spaltenwerten als Beschriftungen der Bars.&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Numerisch&lt;/span&gt;: Integer- oder Real-Werte&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Ein Doppelklick auf die Y-Zellen ermöglicht Ihnen das Ändern der für den Graph verwendeten Farbe.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="46"/>
