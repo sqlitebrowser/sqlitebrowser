@@ -2745,7 +2745,7 @@ x~y	Bereich: Werte zwischen x und y
     <message>
         <location filename="../ImportCsvDialog.ui" line="322"/>
         <source>Activate this option to stop the import when trying to import an empty value into a NOT NULL column without a default value.</source>
-        <translation>Aktivieren Sie diese Option, um den Import zu stoppen, falls ein leerer Wert in eine NOT-NULL-Spalte ohne Standardwert importiert werden soll.</translation>
+        <translation>Aktivieren Sie diese Option, um den Import zu abzubrechen, falls ein leerer Wert in eine NOT-NULL-Spalte ohne Standardwert importiert werden soll.</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="329"/>
@@ -3052,7 +3052,7 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     <message>
         <location filename="../MainWindow.ui" line="2098"/>
         <source>Stop the currently running SQL script</source>
-        <translation>Das aktuelle laufende SQL-Skript stoppen</translation>
+        <translation>Das aktuelle laufende SQL-Skript abbrechen</translation>
     </message>
     <message>
         <source>Clear all filters</source>
@@ -4788,7 +4788,7 @@ Bei der Antwort NEIN werden die Daten in die SQL-Datei der aktuellen Datenbank i
     <message>
         <location filename="../MainWindow.cpp" line="653"/>
         <source>You are still executing SQL statements. Closing the database now will stop their execution, possibly leaving the database in an inconsistent state. Are you sure you want to close the database?</source>
-        <translation>Es werden aktuell SQL-Statements ausgeführt. Das Schließen der Datenbank wird deren Ausführung stoppen, was die Datenbank möglicherweise in einem inkonsistenten Zustand belässt. Soll die Datenbank wirklich geschlossen werden?</translation>
+        <translation>Es werden aktuell SQL-Statements ausgeführt. Das Schließen der Datenbank wird deren Ausführung abbrechen, was die Datenbank möglicherweise in einem inkonsistenten Zustand belässt. Soll die Datenbank wirklich geschlossen werden?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="727"/>
@@ -4918,7 +4918,7 @@ Möchten Sie die Datenbank wirklich speichern?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="1000"/>
         <source>You are already executing SQL statements. Do you want to stop them in order to execute the current statements instead? Note that this might leave the database in an inconsistent state.</source>
-        <translation>Es werden bereits SQL-Statements ausgeführt. Sollen diese gestoppt werden, um stattdessen die aktuellen Statements auszuführen? Dies führt möglicherweise zu einem inkonsistenten Zustand der Datenbank.</translation>
+        <translation>Es werden bereits SQL-Statements ausgeführt. Sollen diese abgebrochen werden, um stattdessen die aktuellen Statements auszuführen? Dies führt möglicherweise zu einem inkonsistenten Zustand der Datenbank.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1047"/>
@@ -5096,7 +5096,7 @@ Sind Sie sich sicher?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="1876"/>
         <source>The statements in this tab are still executing. Closing the tab will stop the execution. This might leave the database in an inconsistent state. Are you sure you want to close the tab?</source>
-        <translation>Es werden aktuell SQL-Statements ausgeführt. Das Schließen des Tabs wird deren Ausführung stoppen, was die Datenbank möglicherweise in einem inkonsistenten Zustand belässt. Soll der Tab wirklich geschlossen werden?</translation>
+        <translation>Es werden aktuell SQL-Statements ausgeführt. Das Schließen des Tabs wird deren Ausführung abbrechen, was die Datenbank möglicherweise in einem inkonsistenten Zustand belässt. Soll der Tab wirklich geschlossen werden?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1958"/>
@@ -5556,7 +5556,7 @@ Warnung: es wurden aufgrund der partiellen Abrufmechanismus noch nicht alle Date
     <message>
         <location filename="../PlotDock.cpp" line="626"/>
         <source>There are curves in this plot and the selected line style can only be applied to graphs sorted by X. Either sort the table or query by X to remove curves or select one of the styles supported by curves: None or Line.</source>
-        <translation>Dieser Plot enthält Kurven und der ausgewählte Linienstil kann nur auf nach X sortierte Graphen angewendet werden. Sortieren Sie entweder die Tabelle oder Query nach X oder entfernen Sie die Kurven oder wählen Sie eine der Stile, die von Kurven unterstützt werden: Keiner oder Linie.</translation>
+        <translation>Dieser Plot enthält Kurven und der ausgewählte Linienstil kann nur auf nach X sortierte Graphen angewendet werden. Sortieren Sie entweder die Tabelle oder Abfrage nach X oder entfernen Sie die Kurven oder wählen Sie eine der Stile, die von Kurven unterstützt werden: Keiner oder Linie.</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="738"/>
@@ -6939,12 +6939,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../RunSql.cpp" line="219"/>
         <source>query executed successfully. Took %1ms%2</source>
-        <translation>Query erfolgreich ausgeführt. Benötigte %1ms%2</translation>
+        <translation>Abfrage erfolgreich ausgeführt. Benötigte %1ms%2</translation>
     </message>
     <message>
         <location filename="../RunSql.cpp" line="297"/>
         <source>executing query</source>
-        <translation>führe Query aus</translation>
+        <translation>führe Abfrage aus</translation>
     </message>
 </context>
 <context>
