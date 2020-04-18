@@ -108,7 +108,7 @@
     <message>
         <location filename="../AddRecordDialog.ui" line="93"/>
         <source>When you edit the values in the upper frame, the SQL query for inserting this new record is shown here. You can edit manually the query before saving.</source>
-        <translation>Wenn Sie die Werte im oberen Teil ändern, wird hier das SQL-Query für das Einfügen des neuen Datensatz angezeigt. Sie können das Query vor dem Speichern manuell bearbeiten.</translation>
+        <translation>Wenn Sie die Werte im oberen Teil ändern, wird hier das SQL-Query für das Einfügen des neuen Datensatzes angezeigt. Sie können das Query vor dem Speichern manuell bearbeiten.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="110"/>
@@ -126,14 +126,14 @@
         <location filename="../AddRecordDialog.cpp" line="237"/>
         <source>Unique constraint
 </source>
-        <translation>Eindeutigkeitsprüfung
+        <translation>UNIQUE-Beschränkung
 </translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="240"/>
         <source>Check constraint:	 %1
 </source>
-        <translation>Prüfbeschränkung:	 %1
+        <translation>CHECK-Beschränkung:	 %1
 </translation>
     </message>
     <message>
@@ -155,7 +155,7 @@
         <source>Error adding record. Message from database engine:
 
 %1</source>
-        <translation>Fehler beim Hinzufügen des Datensatzes. Mitteilung der Datenbank-Engine:
+        <translation>Fehler beim Hinzufügen des Datensatzes. DB meldet:
 
 %1</translation>
     </message>
@@ -444,7 +444,7 @@ Falls weitere Einstellungen für diese Datenbank-Datei vorgenommen worden sind, 
         <source>Error in custom display format. Message from database engine:
 
 %1</source>
-        <translation>Fehler im benutzerdefinierten Anzeigeformat. Meldung von Datenbank:
+        <translation>Fehler im benutzerdefinierten Anzeigeformat. DB meldet:
 
 %1</translation>
     </message>
@@ -782,7 +782,7 @@ Ausführung wird abgebrochen %3.</translation>
 Message from database engine:
 %3</source>
         <translation>Fehler beim Umbenennen der Tabelle &apos;%1&apos; zu &apos;%2&apos;.
-Meldung von Datenbank:
+DB meldet:
 %3</translation>
     </message>
     <message>
@@ -828,7 +828,7 @@ Meldung von Datenbank:
     <message>
         <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.Message from database engine:
 %3</source>
-        <translation type="vanished">Fehler beim Umbenennen der Tabelle &apos;%1&apos; zu &apos;%2&apos;. Meldung von Datenbank:
+        <translation type="vanished">Fehler beim Umbenennen der Tabelle &apos;%1&apos; zu &apos;%2&apos;. DB meldet:
 %3</translation>
     </message>
     <message>
@@ -1676,12 +1676,12 @@ Fehler werden durch eine rote Wellenlinie gekennzeichnet.</translation>
     <message>
         <location filename="../EditTableDialog.ui" line="318"/>
         <source>Check constraint</source>
-        <translation>Prüfbeschränkung</translation>
+        <translation>CHECK-Beschränkung</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="323"/>
         <source>Collation</source>
-        <translation>Kollation</translation>
+        <translation>Sortierung</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="328"/>
@@ -1739,12 +1739,12 @@ Fehler werden durch eine rote Wellenlinie gekennzeichnet.</translation>
     <message>
         <location filename="../EditTableDialog.ui" line="484"/>
         <source>Add a unique constraint</source>
-        <translation>Eine Eindeutigkeitsprüfung hinzufügen</translation>
+        <translation>Eine UNIQUE-Beschränkung hinzufügen</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="492"/>
         <source>Add a check constraint</source>
-        <translation>Eine Prüfbeschränkung hinzufügen</translation>
+        <translation>Eine CHECK-Beschränkung hinzufügen</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Warning: &lt;/span&gt;There is something with this table definition that our parser doesn&apos;t fully understand. Modifying and saving this table might result it in problems.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -1754,7 +1754,7 @@ Fehler werden durch eine rote Wellenlinie gekennzeichnet.</translation>
         <location filename="../EditTableDialog.cpp" line="338"/>
         <source>Error creating table. Message from database engine:
 %1</source>
-        <translation>Fehler beim Erstellen der Tabelle. Meldung der Datenbank:
+        <translation>Fehler beim Erstellen der Tabelle. DB meldet:
 %1</translation>
     </message>
     <message>
@@ -2534,7 +2534,7 @@ x~y	Bereich: Werte zwischen x und y
     <message>
         <location filename="../FindReplaceDialog.ui" line="139"/>
         <source>Find the next occurrence from the cursor position and in the direction set by &quot;Search backwards&quot;</source>
-        <translation>Das nächste Auftreten ausgehend von der Cursorpositoin und in der durch &quot;Rückwärts suchen&quot; gesetzten Richtung finden</translation>
+        <translation>Das nächste Auftreten ausgehend von der Cursorposition und in der durch &quot;Rückwärts suchen&quot; gesetzten Richtung finden</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="142"/>
@@ -2766,7 +2766,7 @@ x~y	Bereich: Werte zwischen x und y
     <message>
         <location filename="../ImportCsvDialog.ui" line="356"/>
         <source>When importing into an existing table with a primary key, unique constraints or a unique index there is a chance for a conflict. This option allows you to select a strategy for that case: By default the import is aborted and rolled back but you can also choose to ignore and not import conflicting rows or to replace the existing row in the table.</source>
-        <translation>Beim Import von Daten in eine existierende Tabelle mit einem Primärschlüssel, Eindeutigkeitsprüfungen oder einem Eindeutigkeits-Index sind Konflikte möglich. Diese Option erlaubt die Auswahl einer Konflikt-Strategie: Standardmäßig wird der Import abgebrochen und zurückgerollt, aber es besteht auch die Option Konflikt auslösende Zeilen zu Ignorieren und damit nicht zu importieren oder existierende Zeilen der Tabelle zu ersetzen.</translation>
+        <translation>Beim Import von Daten in eine existierende Tabelle mit einem Primärschlüssel, UNIQUE-Beschränkungen oder einem UNIQUE-Index sind Konflikte möglich. Diese Option erlaubt die Auswahl einer Konflikt-Strategie: Standardmäßig wird der Import abgebrochen und zurückgerollt, aber es besteht auch die Option Konflikt auslösende Zeilen zu Ignorieren und damit nicht zu importieren oder existierende Zeilen der Tabelle zu ersetzen.</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="360"/>
@@ -3598,7 +3598,7 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_ignore_check_constraints&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Ignore Check Constraints&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_ignore_check_constraints&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Prüfbeschränkungen ignorieren&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_ignore_check_constraints&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;CHECK-Beschränkungen ignorieren&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_mode&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Journal Mode&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -4635,7 +4635,7 @@ Alle mit %1 verbundenen Daten gehen verloren.</translation>
     <message>
         <source>Error: could not delete the %1. Message from database engine:
 %2</source>
-        <translation type="vanished">Fehler: %1 konnte nicht gelöscht werden. Meldung der Datenbank:
+        <translation type="vanished">Fehler: %1 konnte nicht gelöscht werden. DB meldet:
 %2</translation>
     </message>
     <message>
@@ -4698,7 +4698,7 @@ Alle mit %1 verbundenen Daten gehen verloren.</translation>
     <message>
         <location filename="../MainWindow.cpp" line="888"/>
         <source>This table did not pass a foreign-key check.&lt;br/&gt;You should run &apos;Tools | Foreign-Key Check&apos; and fix the reported issues.</source>
-        <translation>Diese Tabelle hat die Fremdschlüsselprüfung nicht bestanden.&lt;br/&gt;Sie sollten &apos;Werkzeuge | Fremdschlüssel-Prüfng&apos; ausführen und die gemeldeten Probleme beheben.</translation>
+        <translation>Diese Tabelle hat die Fremdschlüssel-Prüfung nicht bestanden.&lt;br/&gt;Sie sollten &apos;Werkzeuge | Fremdschlüssel-Prüfung&apos; ausführen und die gemeldeten Probleme beheben.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1194"/>
@@ -4906,7 +4906,7 @@ Alle mit dieser Tabelle verbundenen Daten gehen verloren.</translation>
         <location filename="../MainWindow.cpp" line="837"/>
         <source>Message from database engine:
 %1</source>
-        <translation>Nachricht von Datenbank-Engine:
+        <translation>DB meldet:
 %1</translation>
     </message>
     <message>
@@ -5171,7 +5171,7 @@ Grund: %1</translation>
     </message>
     <message>
         <source>Duplicate records</source>
-        <translation type="vanished">Doppeltee Datensätze</translation>
+        <translation type="vanished">Doppelte Datensätze</translation>
     </message>
     <message>
         <source>Ctrl+&quot;</source>
@@ -5179,26 +5179,26 @@ Grund: %1</translation>
     </message>
     <message>
         <source>Please enter a pseudo-primary key in order to enable editing on this view. This should be the name of a unique column in the view.</source>
-        <translation type="vanished">Bitte einen Pseudo-Primärschlüssel eingeben, um die Bearbeitung dieser Ansicht zu ermöglichen. Dies sollte der Name einer eindeutigen Spalte dieser Ansicht sein.</translation>
+        <translation type="vanished">Bitte einen Pseudo-Primärschlüssel eingeben, um die Bearbeitung dieser Ansicht zu ermöglichen. Dies sollte der Name einer eindeutigen (UNIQUE) Spalte dieser Ansicht sein.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3009"/>
         <source>Collation needed! Proceed?</source>
-        <translation>Kollation notwendig! Fortführen?</translation>
+        <translation>Sortierung notwendig! Fortführen?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3010"/>
         <source>A table in this database requires a special collation function &apos;%1&apos; that this application can&apos;t provide without further knowledge.
 If you choose to proceed, be aware bad things can happen to your database.
 Create a backup!</source>
-        <translation>Eine Tabelle in dieser Datenbank benötigt eine spezielle Kollationsfunktion &apos;%1&apos;, welche diese Anwendung ohne weiterem Wissen nicht zur Verfügung stellen kann.
+        <translation>Eine Tabelle in dieser Datenbank benötigt eine spezielle Sortierfunktion &apos;%1&apos;, welche diese Anwendung ohne weiterem Wissen nicht zur Verfügung stellen kann.
 Wenn Sie fortfahren, sollten Sie im Hinterkopf behalten, dass mit Ihrer Datenbank unerwartete Dinge geschehen können.
 Erstellen Sie ein Backup!</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3015"/>
         <source>creating collation</source>
-        <translation>erstelle Kollation</translation>
+        <translation>erstelle Sortierung</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3024"/>
@@ -6399,7 +6399,7 @@ Alle Ihre Einstellungen gehen dadurch verloren und die Standardwerte werden verw
     <name>QObject</name>
     <message>
         <source>Error importing data. Message from database engine: %1</source>
-        <translation type="obsolete">Fehler beim Datenimport. Meldung der Datenbank: %1</translation>
+        <translation type="obsolete">Fehler beim Datenimport. DB meldet: %1</translation>
     </message>
     <message>
         <source>File is not a SQLite 3 database</source>
@@ -6503,7 +6503,7 @@ Ausführung wird abgebrochen.</translation>
     <message>
         <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.Message from database engine:
 %3</source>
-        <translation type="obsolete">Fehler beim Umbenennen der Tabelle &apos;%1&apos; zu &apos;%2&apos;. Meldung von Datenbank:
+        <translation type="obsolete">Fehler beim Umbenennen der Tabelle &apos;%1&apos; zu &apos;%2&apos;. DB meldet:
 %3</translation>
     </message>
     <message>
@@ -6544,13 +6544,13 @@ Ausführung wird abgebrochen.</translation>
     </message>
     <message>
         <source>Collation needed! Proceed?</source>
-        <translation type="vanished">Kollation notwendig! Fortführen?</translation>
+        <translation type="vanished">Sortierung notwendig! Fortführen?</translation>
     </message>
     <message>
         <source>A table in this database requires a special collation function &apos;%1&apos; that this application can&apos;t provide without further knowledge.
 If you choose to proceed, be aware bad things can happen to your database.
 Create a backup!</source>
-        <translation type="vanished">Eine Tabelle in dieser Datenbank benötigt eine spezielle Kollationsfunktion &apos;%1&apos;, welche diese Anwendung ohne weiterem Wissen nicht zur Verfügung stellen kann.
+        <translation type="vanished">Eine Tabelle in dieser Datenbank benötigt eine spezielle Sortierfunktion &apos;%1&apos;, welche diese Anwendung ohne weiterem Wissen nicht zur Verfügung stellen kann.
 Wenn Sie fortfahren, sollten Sie im Hinterkopf behalten, dass mit Ihrer Datenbank unerwartete Dinge geschehen können.
 Erstellen Sie ein Backup!</translation>
     </message>
@@ -7132,7 +7132,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlUiLexer.cpp" line="67"/>
         <source>() The changes() function returns the number of database rows that were changed or inserted or deleted by the most recently completed INSERT, DELETE, or UPDATE statement.</source>
-        <translation>() Die changes()-Funktion gibt die Anzahl der Datenbankzeilen zurück, die mit dem zuletzt abgeschlossenen INSERT-, DELETE- oder UPDATE-Statements geändert, einfügt oder gelöscht worden sind.</translation>
+        <translation>() Die changes()-Funktion gibt die Anzahl der Datenbankzeilen zurück, die mit dem zuletzt abgeschlossenen INSERT-, DELETE- oder UPDATE-Statement geändert, einfügt oder gelöscht wurden.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="68"/>
@@ -8188,7 +8188,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.cpp" line="888"/>
         <source>Please enter a pseudo-primary key in order to enable editing on this view. This should be the name of a unique column in the view.</source>
-        <translation>Bitte einen Pseudo-Primärschlüssel eingeben, um die Bearbeitung dieser Ansicht zu ermöglichen. Dies sollte der Name einer eindeutigen Spalte dieser Ansicht sein.</translation>
+        <translation>Bitte einen Pseudo-Primärschlüssel eingeben, um die Bearbeitung dieser Ansicht zu ermöglichen. Dies sollte der Name einer eindeutigen (UNIQUE) Spalte dieser Ansicht sein.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1010"/>
