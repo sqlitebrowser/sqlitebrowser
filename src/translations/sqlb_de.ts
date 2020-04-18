@@ -2514,7 +2514,7 @@ x~y	Bereich: Werte zwischen x und y
     <message>
         <location filename="../FindReplaceDialog.ui" line="106"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When checked, the pattern to find is searched only in the current selection.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Wenn ausgewählt, wird das gesuchte Muster nur in der aktuellen Auswahl gesucht.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Wenn ausgewählt, wird das Muster nur in der aktuellen Auswahl gesucht.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="109"/>
@@ -6986,7 +6986,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="105"/>
         <source>The found pattern must be a whole word</source>
-        <translation>Das Pattern muss ein ganzes Wort sein</translation>
+        <translation>Das Suchmuster muss ein ganzes Wort sein</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="108"/>
@@ -6996,7 +6996,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="118"/>
         <source>Text pattern to find considering the checks in this frame</source>
-        <translation>Zu findendes Textpattern unter Einbeziehung der Prüfungen in diesem Fenster</translation>
+        <translation>Suchmuster unter Einbeziehung der aktivierten Optionen in diesem Fenster</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="121"/>
@@ -7006,7 +7006,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="131"/>
         <source>The found pattern must match in letter case</source>
-        <translation>Das Fundpattern muss in Groß-/Kleinschreibung übereinstimmen</translation>
+        <translation>Das Suchmuster muss in Groß-/Kleinschreibung übereinstimmen</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="134"/>
@@ -7031,7 +7031,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="158"/>
         <source>Interpret search pattern as a regular expression</source>
-        <translation>Suchpattern als regulären Ausdruck interpretieren</translation>
+        <translation>Suchmuster als regulären Ausdruck interpretieren</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="161"/>
@@ -7542,7 +7542,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="253"/>
         <source>Text pattern to find considering the checks in this frame</source>
-        <translation>Zu findendes Textpattern unter Einbeziehung der Prüfungen in diesem Fenster</translation>
+        <translation>Suchmuster unter Einbeziehung der aktivierten Optionen in diesem Fenster</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="256"/>
@@ -7582,7 +7582,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="300"/>
         <source>The found pattern must match in letter case</source>
-        <translation>Das Suchpattern muss in Groß-/Kleinschreibung übereinstimmen</translation>
+        <translation>Das Suchmuster muss in Groß-/Kleinschreibung übereinstimmen</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="303"/>
@@ -7592,7 +7592,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="310"/>
         <source>The found pattern must be a whole word</source>
-        <translation>Das Pattern muss ein ganzes Wort sein</translation>
+        <translation>Das Suchmuster muss ein ganzes Wort sein</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="313"/>
@@ -7602,7 +7602,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="320"/>
         <source>Interpret search pattern as a regular expression</source>
-        <translation>Suchpattern als regulären Ausdruck interpretieren</translation>
+        <translation>Suchmuster als regulären Ausdruck interpretieren</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="323"/>
