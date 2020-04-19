@@ -326,7 +326,7 @@
     <message>
         <location filename="../CipherDialog.ui" line="224"/>
         <source>Plaintext Header Size</source>
-        <translation>Plaintext-Headergröße</translation>
+        <translation>Nur-Text-Headergröße</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="66"/>
@@ -651,7 +651,7 @@ Falls weitere Einstellungen für diese Datenbank-Datei vorgenommen worden sind, 
     <message>
         <source>Error in statement #%1: %2.
 Aborting execution.</source>
-        <translation type="vanished">Fehler im Statement #%1: %2.
+        <translation type="vanished">Fehler in der Anweisung #%1: %2.
 Ausführung wird abgebrochen.</translation>
     </message>
     <message>
@@ -694,7 +694,7 @@ Ausführung wird abgebrochen.</translation>
         <location filename="../sqlitedb.cpp" line="1154"/>
         <source>Error in statement #%1: %2.
 Aborting execution%3.</source>
-        <translation>Fehler im Statement #%1: %2.
+        <translation>Fehler in der Anweisung #%1: %2.
 Ausführung wird abgebrochen %3.</translation>
     </message>
     <message>
@@ -816,7 +816,7 @@ DB meldet:
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 
 </source>
-        <translation>Wiederherstellung einiger mit dieser Tabelle verbundener Objekte fehlgeschagen. Dies passiert häufig durch geänderte Spaltennamen. SQL-Statement zum manuellen Reparieren und Ausführen:
+        <translation>Wiederherstellung einiger mit dieser Tabelle verbundener Objekte fehlgeschagen. Dies passiert häufig durch geänderte Spaltennamen. SQL-Anweisung zum manuellen Reparieren und Ausführen:
 
 </translation>
     </message>
@@ -1006,7 +1006,7 @@ DB meldet:
         <source>The text editor modes let you edit plain text, as well as JSON or XML data with syntax highlighting, automatic formatting and validation before saving.
 
 Errors are indicated with a red squiggle underline.</source>
-        <translation>Der Text-Editor-Modus erlaubt das Bearbeiten von Reintext sowie JSON- oder XML-Daten mit Syntaxhervorhebung, automatischer Formatierung und Validierung vor dem Speichern.
+        <translation>Der Text-Editor-Modus erlaubt das Bearbeiten als Nur-Text sowie JSON- oder XML-Daten mit Syntaxhervorhebung, automatischer Formatierung und Validierung vor dem Speichern.
 
 Fehler werden mittels eine roten Wellenlinie angezeigt.</translation>
     </message>
@@ -2035,7 +2035,7 @@ Alle aktuell in diesem Feld gespeicherten Daten gehen verloren.</translation>
     <message>
         <location filename="../ExportSqlDialog.ui" line="95"/>
         <source>Multiple rows (VALUES) per INSERT statement</source>
-        <translation>Mehrere Reihen (VALUES) je INSERT-Statement</translation>
+        <translation>Mehrere Zeilen (VALUES) je INSERT-Anweisung</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="116"/>
@@ -3003,7 +3003,7 @@ x~y	Bereich: Werte zwischen x und y
 You can drag SQL statements from an object row and drop them into other applications or into another instance of &apos;DB Browser for SQLite&apos;.
 </source>
         <translation>Dies ist die Struktur der geöffneten Datenbank.
-Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendungen oder einer anderen &apos;DB-Browser für SQLite&apos;-Instanz ablegen.
+Sie können SQL-Anweisungen aus einer Objektzeile fassen und in anderen Anwendungen oder einer anderen &apos;DB-Browser für SQLite&apos;-Instanz ablegen.
 </translation>
     </message>
     <message>
@@ -3068,7 +3068,7 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This popup menu provides the following options applying to the currently browsed and filtered table:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Export to CSV: this option exports the data of the browsed table as currently displayed (after filters, display formats and order column) to a CSV file.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Save as view: this option saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dieses Popup-Menü bietet die folgenden Optionen zur Anwendung auf die aktuell ausgewählte und gefilterte Tabelle:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;CSV exportieren: diese Option exportiert die Daten der ausgewählten Tabelle wie aktuell angezeigt (gefiltert, Anzeigeformat und Spaltenreihenfolge) in eine CSV-Datei.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Als Ansicht speichern: diese Option speichert die aktuelle Einstellung der ausgewählten Tabelle (Filter, Anzeigeformat und Spaltenreihenfolge) als eine SQL-View, die Sie später durchsuchen oder in SQL-Statements verwenden können.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dieses Popup-Menü bietet die folgenden Optionen zur Anwendung auf die aktuell ausgewählte und gefilterte Tabelle:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;CSV exportieren: diese Option exportiert die Daten der ausgewählten Tabelle wie aktuell angezeigt (gefiltert, Anzeigeformat und Spaltenreihenfolge) in eine CSV-Datei.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Als Ansicht speichern: diese Option speichert die aktuelle Einstellung der ausgewählten Tabelle (Filter, Anzeigeformat und Spaltenreihenfolge) als eine SQL-View, die Sie später durchsuchen oder in SQL-Anweisungen verwenden können.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>...</source>
@@ -3141,12 +3141,12 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     <message>
         <location filename="../MainWindow.ui" line="1494"/>
         <source>This button executes the currently selected SQL statements. If no text is selected, all SQL statements are executed.</source>
-        <translation>Dieser Button führt das aktuell ausgewählte SQL-Statement aus. Falls kein Text ausgewählt ist, werden alle SQL-Statements ausgeführt.</translation>
+        <translation>Dieser Button führt die aktuell ausgewählte SQL-Anweisung aus. Falls kein Text ausgewählt ist, werden alle SQL-Anweisungen ausgeführt.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1509"/>
         <source>This button opens a file containing SQL statements and loads it in a new editor tab</source>
-        <translation>Dieser Button öffnet eine Datei mit SQL-Statements und lädt diese in einen neuen Editortab</translation>
+        <translation>Dieser Button öffnet eine Datei mit SQL-Anweisungen und lädt diese in einen neuen Editortab</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1530"/>
@@ -3365,7 +3365,7 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     </message>
     <message>
         <source>This button saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.</source>
-        <translation type="vanished">Dieser Button speichert die aktuellen Einstellungen der ausgewählten Tabelle (Filter, Anzeigeformate und Spaltenreihenfolge) als SQL-View, welche Sie später durchsuchen oder in SQL-Statements verwenden können.</translation>
+        <translation type="vanished">Dieser Button speichert die aktuellen Einstellungen der ausgewählten Tabelle (Filter, Anzeigeformate und Spaltenreihenfolge) als SQL-View, welche Sie später durchsuchen oder in SQL-Anweisungen verwenden können.</translation>
     </message>
     <message>
         <source>Insert Values...</source>
@@ -3765,8 +3765,8 @@ You can drag multiple object names from the Name column and drop them into the S
 You can drag SQL statements from the Schema column and drop them into the SQL editor or into other applications.
 </source>
         <translation>Dies ist die Struktur der geöffneten Datenbank.
-Sie können mehrere Objektnamen aus der Namensspalte nehmen und in den SQL-Editor ziehen und Sie können die Eigenschaften der abgelegten Namen über das Kontextmenü anpassen. Dies kann Sie bei der Erstellung von SQL-Statements unterstützen.
-Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor oder in anderen Anwendungen ablegen.
+Sie können mehrere Objektnamen aus der Namensspalte nehmen und in den SQL-Editor ziehen und Sie können die Eigenschaften der abgelegten Namen über das Kontextmenü anpassen. Dies kann Sie bei der Erstellung von SQL-Anweisungen unterstützen.
+Sie können SQL-Anweisungen aus der Schemaspalte nehmen und in den SQL-Editor oder in anderen Anwendungen ablegen.
 </translation>
     </message>
     <message>
@@ -3790,7 +3790,7 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     <message>
         <location filename="../MainWindow.ui" line="1551"/>
         <source>This button executes the SQL statement present in the current editor line</source>
-        <translation>Dieser Button führt das SQL-Statement in der aktuellen Editorzeile aus</translation>
+        <translation>Dieser Button führt die SQL-Anweisung in der aktuellen Editorzeile aus</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1554"/>
@@ -3833,12 +3833,12 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     <message>
         <location filename="../MainWindow.ui" line="1751"/>
         <source>Copy Create statement</source>
-        <translation>Create-Statement kopieren</translation>
+        <translation>Create-Anweisung kopieren</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1754"/>
         <source>Copy the CREATE statement of the item to the clipboard</source>
-        <translation>CREATE-Statement des Elements in die Zwischenablage kopieren</translation>
+        <translation>CREATE-Anweisung des Elements in die Zwischenablage kopieren</translation>
     </message>
     <message>
         <source>Edit display format</source>
@@ -4788,7 +4788,7 @@ Bei der Antwort NEIN werden die Daten in die SQL-Datei der aktuellen Datenbank i
     <message>
         <location filename="../MainWindow.cpp" line="653"/>
         <source>You are still executing SQL statements. Closing the database now will stop their execution, possibly leaving the database in an inconsistent state. Are you sure you want to close the database?</source>
-        <translation>Es werden aktuell SQL-Statements ausgeführt. Das Schließen der Datenbank wird deren Ausführung abbrechen, was die Datenbank möglicherweise in einem inkonsistenten Zustand belässt. Soll die Datenbank wirklich geschlossen werden?</translation>
+        <translation>Es werden aktuell SQL-Anweisungen ausgeführt. Das Schließen der Datenbank wird deren Ausführung abbrechen, was die Datenbank möglicherweise in einem inkonsistenten Zustand belässt. Soll die Datenbank wirklich geschlossen werden?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="727"/>
@@ -4918,7 +4918,7 @@ Möchten Sie die Datenbank wirklich speichern?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="1000"/>
         <source>You are already executing SQL statements. Do you want to stop them in order to execute the current statements instead? Note that this might leave the database in an inconsistent state.</source>
-        <translation>Es werden bereits SQL-Statements ausgeführt. Sollen diese abgebrochen werden, um stattdessen die aktuellen Statements auszuführen? Dies führt möglicherweise zu einem inkonsistenten Zustand der Datenbank.</translation>
+        <translation>Es werden bereits SQL-Anweisungen ausgeführt. Sollen diese abgebrochen werden, um stattdessen die aktuellen Anweisungen auszuführen? Dies führt möglicherweise zu einem inkonsistenten Zustand der Datenbank.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1047"/>
@@ -5096,7 +5096,7 @@ Sind Sie sich sicher?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="1876"/>
         <source>The statements in this tab are still executing. Closing the tab will stop the execution. This might leave the database in an inconsistent state. Are you sure you want to close the tab?</source>
-        <translation>Es werden aktuell SQL-Statements ausgeführt. Das Schließen des Tabs wird deren Ausführung abbrechen, was die Datenbank möglicherweise in einem inkonsistenten Zustand belässt. Soll der Tab wirklich geschlossen werden?</translation>
+        <translation>Es werden aktuell SQL-Anweisungen ausgeführt. Das Schließen des Tabs wird deren Ausführung abbrechen, was die Datenbank möglicherweise in einem inkonsistenten Zustand belässt. Soll der Tab wirklich geschlossen werden?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1958"/>
@@ -5295,7 +5295,7 @@ Erstellen Sie ein Backup!</translation>
     <message>
         <location filename="../PlotDock.ui" line="30"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This pane shows the list of columns of the currently browsed table or the just executed query. You can select the columns that you want to be used as X or Y axis for the plot pane below. The table shows detected axis type that will affect the resulting plot. For the Y axis you can only select numeric columns, but for the X axis you will be able to select:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Date/Time&lt;/span&gt;: strings with format &amp;quot;yyyy-MM-dd hh:mm:ss&amp;quot; or &amp;quot;yyyy-MM-ddThh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Date&lt;/span&gt;: strings with format &amp;quot;yyyy-MM-dd&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Time&lt;/span&gt;: strings with format &amp;quot;hh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Label&lt;/span&gt;: other string formats. Selecting this column as X axis will produce a Bars plot with the column values as labels for the bars&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Numeric&lt;/span&gt;: integer or real values&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Double-clicking the Y cells you can change the used color for that graph.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dieses Pane zeigt die Liste der Spalten der aktuell ausgewählten Tabelle oder des soeben ausgeführten Abfrage. Sie können die für die X- und Y-Achse gewünschten Spalten für das Plot-Pane unten auswählen. Die Tabelle zeigt den erkannten Axentyp, der den entstehenden Plot beeinflusst. Für die Y-Achse sind nur numerische Spalten zulässig, während Sie für die X-Achse aus folgenden Optionen auswählen können:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Datum/Zeit&lt;/span&gt;: Strings im Format &amp;quot;yyyy-MM-dd hh:mm:ss&amp;quot; or &amp;quot;yyyy-MM-ddThh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Datum&lt;/span&gt;: Strings im Format &amp;quot;yyyy-MM-dd&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Zeit&lt;/span&gt;: Strings im Format &amp;quot;hh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Beschriftung&lt;/span&gt;: andere Stringformate. Die Auswahl dieser Spalte als X-Achse erzeugt ein Säulendiagramm mit den Spaltenwerten als Beschriftungen der Säulen.&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Numerisch&lt;/span&gt;: Integer- oder Real-Werte&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Ein Doppelklick auf die Y-Zellen ermöglicht Ihnen das Ändern der für den Graph verwendeten Farbe.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dieser Fensterbereich zeigt die Liste der Spalten der aktuell ausgewählten Tabelle oder des soeben ausgeführten Abfrage. Sie können die für die X- und Y-Achse gewünschten Spalten für den Diagrammbereich unten auswählen. Die Tabelle zeigt den erkannten Axentyp, der das entstehende Diagramm beeinflusst. Für die Y-Achse sind nur numerische Spalten zulässig, während Sie für die X-Achse aus folgenden Optionen auswählen können:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Datum/Zeit&lt;/span&gt;: Strings im Format &amp;quot;yyyy-MM-dd hh:mm:ss&amp;quot; or &amp;quot;yyyy-MM-ddThh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Datum&lt;/span&gt;: Strings im Format &amp;quot;yyyy-MM-dd&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Zeit&lt;/span&gt;: Strings im Format &amp;quot;hh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Beschriftung&lt;/span&gt;: andere Stringformate. Die Auswahl dieser Spalte als X-Achse erzeugt ein Säulendiagramm mit den Spaltenwerten als Beschriftungen der Säulen.&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Numerisch&lt;/span&gt;: Integer- oder Real-Werte&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Ein Doppelklick auf die Y-Zellen ermöglicht Ihnen das Ändern der für den Graph verwendeten Farbe.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="46"/>
@@ -5330,9 +5330,9 @@ Click on points to select them in the plot and in the table. Ctrl+Click for sele
 Use mouse-wheel for zooming and mouse drag for changing the axis range.
 
 Select the axes or axes labels to drag and zoom only in that orientation.</source>
-        <translation>Hier wird ein Plot angezeigt, wenn Sie oben die x- und y-Werte auswählen.
+        <translation>Hier wird ein Diagramm angezeigt, wenn Sie oben die x- und y-Werte auswählen.
 
-Klicken Sie auf Punkte, um diese im Plot und in der Tabelle auszuwählen. Strg+Klick zur Auswahl eines Punktebereichs.
+Klicken Sie auf Punkte, um diese im Diagramm und in der Tabelle auszuwählen. Strg+Klick zur Auswahl eines Punktebereichs.
 
 Verwenden Sie das Mausrad zum Zoomen und Ziehen Sie mit der Maus, um den Achsenbereich zu ändern.
 
@@ -5463,7 +5463,7 @@ Wählen Sie die Achsen oder Achsenbeschriftungen aus, um nur in diese Richtung z
         <location filename="../PlotDock.ui" line="309"/>
         <location filename="../PlotDock.cpp" line="474"/>
         <source>Load all data and redraw plot</source>
-        <translation>Alle Daten laden und Plot neu zeichnen</translation>
+        <translation>Alle Daten laden und Diagramm neu zeichnen</translation>
     </message>
     <message>
         <source>Load all data. This has only an effect if not all data has been fetched from the table yet due to the partial fetch mechanism.</source>
@@ -5535,8 +5535,8 @@ Wählen Sie die Achsen oder Achsenbeschriftungen aus, um nur in diese Richtung z
         <location filename="../PlotDock.cpp" line="469"/>
         <source>Load all data and redraw plot.
 Warning: not all data has been fetched from the table yet due to the partial fetch mechanism.</source>
-        <translation>Alle Daten laden und Plot neu zeichnen.
-Warnung: es wurden aufgrund der partiellen Abrufmechanismus noch nicht alle Daten aus der Tabelle abgerufen.</translation>
+        <translation>Alle Daten laden und Diagramm neu zeichnen.
+Warnung: Aufgrund des partiellen Abrufmechanismus wurden noch nicht alle Daten aus der Tabelle abgerufen.</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="555"/>
@@ -5556,7 +5556,7 @@ Warnung: es wurden aufgrund der partiellen Abrufmechanismus noch nicht alle Date
     <message>
         <location filename="../PlotDock.cpp" line="626"/>
         <source>There are curves in this plot and the selected line style can only be applied to graphs sorted by X. Either sort the table or query by X to remove curves or select one of the styles supported by curves: None or Line.</source>
-        <translation>Dieser Plot enthält Kurven und der ausgewählte Linienstil kann nur auf nach X sortierte Graphen angewendet werden. Sortieren Sie entweder die Tabelle oder Abfrage nach X oder entfernen Sie die Kurven oder wählen Sie eine der Stile, die von Kurven unterstützt werden: Keiner oder Linie.</translation>
+        <translation>Dieses Diagramm enthält Kurven und der ausgewählte Linienstil kann nur auf nach X sortierte Graphen angewendet werden. Sortieren Sie entweder die Tabelle oder Abfrage nach X oder entfernen Sie die Kurven oder wählen Sie einen der Stile, die Kurven unterstützen: Keiner oder Linie.</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="738"/>
@@ -5824,7 +5824,7 @@ Warnung: es wurden aufgrund der partiellen Abrufmechanismus noch nicht alle Date
     <message>
         <location filename="../PreferencesDialog.ui" line="1180"/>
         <source>Underline</source>
-        <translation>Unterstreichung</translation>
+        <translation>Unterstrichen</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1188"/>
@@ -6458,7 +6458,7 @@ Alle Ihre Einstellungen gehen dadurch verloren und die Standardwerte werden verw
     <message>
         <source>Error in statement #%1: %2.
 Aborting execution.</source>
-        <translation type="obsolete">Fehler im Statement #%1: %2.
+        <translation type="obsolete">Fehler in der Anweisung #%1: %2.
 Ausführung wird abgebrochen.</translation>
     </message>
     <message>
@@ -6491,7 +6491,7 @@ Ausführung wird abgebrochen.</translation>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 
 </source>
-        <translation type="obsolete">Wiederherstellung einiger mit dieser Tabelle verbundener Objekte fehlgeschagen. Dies passiert häufig durch geänderte Spaltennamen. Hier das SQL-Statement zum manuellen Reparieren und Ausführen:
+        <translation type="obsolete">Wiederherstellung einiger mit dieser Tabelle verbundener Objekte fehlgeschagen. Dies passiert häufig durch geänderte Spaltennamen. Hier das SQL-Anweisung zum manuellen Reparieren und Ausführen:
 
 </translation>
     </message>
@@ -6805,7 +6805,7 @@ Erstellen Sie ein Backup!</translation>
     <message>
         <location filename="../RemoteDock.ui" line="86"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB4S. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to create a DB4S certificate (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB4S Preferences. Click the button to add a new certificate to DB4S and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In diesem Pane könnten entfernte Datenbanken von der dbhub.io-Webseite zu DB4S hinzugefügt werden. Zunächst benötigen Sie eine Identität:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Melden Sie sich auf der dbhub.io-Webseite an (unter Verwendung Ihrer GitHub-Daten oder wie gewünscht)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klicken Sie auf den Button, um ein DB4S-Zertifikat zu erstellen (das ist Ihre Identität). Dies erzeugt Ihnen eine Zertifikatsdatei (speichern Sie dies auf ihrer lokalen Festplatte).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Öffnen Sie den Remote-Tab in den DB4S-Einstellungen. Klicken Sie auf den Button, um ein neues Zertifikat zu DB4S hinzuzufügen und wählen Sie die soeben heruntergeladene Zertifikatsdatei aus.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Jetzt zeigt das Remote-Panel Ihre Identität und Sie können entfernte Datenbanken hinzufügen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In diesem Fensterbereich können entfernte Datenbanken von der dbhub.io-Webseite zu DB4S hinzugefügt werden. Zunächst benötigen Sie eine Identität:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Melden Sie sich auf der dbhub.io-Webseite an (unter Verwendung Ihrer GitHub-Daten oder wie gewünscht)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klicken Sie auf den Button, um ein DB4S-Zertifikat zu erstellen (das ist Ihre Identität). Dies erzeugt Ihnen eine Zertifikatsdatei (speichern Sie dies auf ihrer lokalen Festplatte).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Öffnen Sie den Remote-Tab in den DB4S-Einstellungen. Klicken Sie auf den Button, um ein neues Zertifikat zu DB4S hinzuzufügen und wählen Sie die soeben heruntergeladene Zertifikatsdatei aus.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Jetzt zeigt das Remote-Panel Ihre Identität und Sie können entfernte Datenbanken hinzufügen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="127"/>
@@ -7051,17 +7051,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="232"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Results of the last executed statements.&lt;/p&gt;&lt;p&gt;You may want to collapse this panel and use the &lt;span style=&quot; font-style:italic;&quot;&gt;SQL Log&lt;/span&gt; dock with &lt;span style=&quot; font-style:italic;&quot;&gt;User&lt;/span&gt; selection instead.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ergebnisse der zuletzt ausgeführten Statements.&lt;/p&gt;&lt;p&gt;Dieses Panel kann zusammengeklappt und stattdessen der &lt;span style=&quot; font-style:italic;&quot;&gt;SQL-Protokoll&lt;/span&gt;-Dock mit der Auswahl &lt;span style=&quot; font-style:italic;&quot;&gt;Benutzer&lt;/span&gt; verwendet werden.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ergebnisse der zuletzt ausgeführten Anweisungen.&lt;/p&gt;&lt;p&gt;Dieses Panel kann zusammengeklappt und stattdessen der &lt;span style=&quot; font-style:italic;&quot;&gt;SQL-Protokoll&lt;/span&gt;-Dock mit der Auswahl &lt;span style=&quot; font-style:italic;&quot;&gt;Benutzer&lt;/span&gt; verwendet werden.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="253"/>
         <source>Results of the last executed statements</source>
-        <translation>Ergebnisse des zuletzt ausgeführten Statements</translation>
+        <translation>Ergebnisse des zuletzt ausgeführten Anweisungen</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="235"/>
         <source>This field shows the results and status codes of the last executed statements.</source>
-        <translation>Dieses Feld zeigt die Ergebnisse und Statuscodes der zuletzt ausgeführten Statements.</translation>
+        <translation>Dieses Feld zeigt die Ergebnisse und Statuscodes der zuletzt ausgeführten Anweisungen.</translation>
     </message>
     <message>
         <source>Export to &amp;CSV</source>
@@ -7131,7 +7131,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlUiLexer.cpp" line="67"/>
         <source>() The changes() function returns the number of database rows that were changed or inserted or deleted by the most recently completed INSERT, DELETE, or UPDATE statement.</source>
-        <translation>() Die changes()-Funktion gibt die Anzahl der Datenbankzeilen zurück, die mit dem zuletzt abgeschlossenen INSERT-, DELETE- oder UPDATE-Statement geändert, einfügt oder gelöscht wurden.</translation>
+        <translation>() Die changes()-Funktion gibt die Anzahl der Datenbankzeilen zurück, die mit der zuletzt abgeschlossenen INSERT-, DELETE- oder UPDATE-Anweisung geändert, einfügt oder gelöscht wurden.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="68"/>
@@ -7243,7 +7243,7 @@ Die Verwendung dieser Funktion muss in den Einstellungen authorisiert werden.</t
     <message>
         <location filename="../SqlUiLexer.cpp" line="87"/>
         <source>(X) The quote(X) function returns the text of an SQL literal which is the value of its argument suitable for inclusion into an SQL statement.</source>
-        <translation>(X) Die quote(X)-Funktion gibt den Text eines SQL-Literals zurück, wobei der Wert des Arguments zum Einfügen in ein SQL-Statement geeignet ist.</translation>
+        <translation>(X) Die quote(X)-Funktion gibt den Text eines SQL-Literals zurück, wobei der Wert des Arguments zum Einfügen in eine SQL-Anweisung geeignet ist.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="88"/>
@@ -7298,7 +7298,7 @@ Die Verwendung dieser Funktion muss in den Einstellungen authorisiert werden.</t
     <message>
         <location filename="../SqlUiLexer.cpp" line="98"/>
         <source>() The total_changes() function returns the number of row changes caused by INSERT, UPDATE or DELETE statements since the current database connection was opened.</source>
-        <translation>() Die changes()-Funktion gibt die Anzahl der geänderten Datenbankzeilen zurück, die seit dem Öffnen der aktuellen Datenbankverbindung mit INSERT-, DELETE- oder UPDATE-Statements geändert, einfügt oder gelöscht wurden.</translation>
+        <translation>() Die changes()-Funktion gibt die Anzahl der geänderten Datenbankzeilen zurück, die seit dem Öffnen der aktuellen Datenbankverbindung mit INSERT-, DELETE- oder UPDATE-Anweisungen geändert, einfügt oder gelöscht wurden.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="99"/>
@@ -7860,7 +7860,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="696"/>
         <source>This button saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.</source>
-        <translation>Dieser Button speichert die aktuellen Einstellungen der ausgewählten Tabelle (Filter, Anzeigeformate und Spaltenreihenfolge) als SQL-View, welche Sie später durchsuchen oder in SQL-Statements verwenden können.</translation>
+        <translation>Dieser Button speichert die aktuellen Einstellungen der ausgewählten Tabelle (Filter, Anzeigeformate und Spaltenreihenfolge) als SQL-View, welche Sie später durchsuchen oder in SQL-Anweisungen verwenden können.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="705"/>
@@ -7876,7 +7876,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="714"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This popup menu provides the following options applying to the currently browsed and filtered table:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Export to CSV: this option exports the data of the browsed table as currently displayed (after filters, display formats and order column) to a CSV file.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Save as view: this option saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dieses Popup-Menü bietet die folgenden Optionen zur Anwendung auf die aktuell ausgewählte und gefilterte Tabelle:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;CSV exportieren: diese Option exportiert die Daten der ausgewählten Tabelle wie aktuell angezeigt (gefiltert, Anzeigeformat und Spaltenreihenfolge) in eine CSV-Datei.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Als Ansicht speichern: diese Option speichert die aktuelle Einstellung der ausgewählten Tabelle (Filter, Anzeigeformat und Spaltenreihenfolge) als eine SQL-View, die Sie später durchsuchen oder in SQL-Statements verwenden können.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dieses Popup-Menü bietet die folgenden Optionen zur Anwendung auf die aktuell ausgewählte und gefilterte Tabelle:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;CSV exportieren: diese Option exportiert die Daten der ausgewählten Tabelle wie aktuell angezeigt (gefiltert, Anzeigeformat und Spaltenreihenfolge) in eine CSV-Datei.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Als Ansicht speichern: diese Option speichert die aktuelle Einstellung der ausgewählten Tabelle (Filter, Anzeigeformat und Spaltenreihenfolge) als eine SQL-View, die Sie später durchsuchen oder in SQL-Anweisungen verwenden können.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="719"/>
@@ -8027,7 +8027,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
         <location filename="../TableBrowser.ui" line="890"/>
         <location filename="../TableBrowser.ui" line="893"/>
         <source>Underline</source>
-        <translation>Unterstreichung</translation>
+        <translation>Unterstrichen</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="896"/>
