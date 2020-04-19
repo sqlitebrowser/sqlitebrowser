@@ -497,7 +497,7 @@ if(UNIX)
 		DESTINATION share/applications/)
 
 	install(FILES distri/${PROJECT_NAME}.desktop.appdata.xml
-		DESTINATION share/appdata/)
+		DESTINATION share/metainfo/)
 endif(UNIX)
 
 if(WIN32 AND MSVC)
