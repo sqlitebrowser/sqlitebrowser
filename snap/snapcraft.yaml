@@ -20,7 +20,7 @@
           confinement:            strict  # use "strict" to enforce system access only via declared interfaces
 
           grade:                  devel
-          icon:                   images/sqlitebrowser.svg
+          icon:                   images/logo.svg
           type:                   app
 
           apps:
