@@ -31,21 +31,21 @@
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-find_library(QCUSTOMPLOT_LIBRARY qcustomplot)
-set(QCUSTOMPLOT_LIBRARIES "${QCUSTOMPLOT_LIBRARY}")
+find_library(QCustomPlot_LIBRARY qcustomplot)
+set(QCustomPlot_LIBRARIES "${QCustomPlot_LIBRARY}")
 
-find_path(QCUSTOMPLOT_INCLUDE_DIR qcustomplot.h)
-set(QCUSTOMPLOT_INCLUDE_DIRS "${QCUSTOMPLOT_INCLUDE_DIR}")
+find_path(QCustomPlot_INCLUDE_DIR qcustomplot.h)
+set(QCustomPlot_INCLUDE_DIRS "${QCustomPlot_INCLUDE_DIR}")
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(
-    QCUSTOMPLOT
+    QCustomPlot
     DEFAULT_MSG
-    QCUSTOMPLOT_LIBRARIES
-    QCUSTOMPLOT_INCLUDE_DIRS
+    QCustomPlot_LIBRARIES
+    QCustomPlot_INCLUDE_DIRS
 )
 
 mark_as_advanced(
-  QCUSTOMPLOT_INCLUDE_DIRS
-  QCUSTOMPLOT_LIBRARIES
+  QCustomPlot_INCLUDE_DIRS
+  QCustomPlot_LIBRARIES
 )
