@@ -3136,7 +3136,7 @@ Sie können SQL-Anweisungen aus einer Objektzeile fassen und in anderen Anwendun
     <message>
         <location filename="../MainWindow.ui" line="1491"/>
         <source>Execute all/selected SQL</source>
-        <translation>Komplettes/ausgewähltes SQL ausführen</translation>
+        <translation>Komplette/ausgewählte SQL ausführen</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1494"/>
@@ -3751,7 +3751,7 @@ Sie können SQL-Anweisungen aus einer Objektzeile fassen und in anderen Anwendun
     <message>
         <location filename="../MainWindow.ui" line="965"/>
         <source>This panel lets you examine a log of all SQL commands issued by the application or by yourself</source>
-        <translation>Dieses Panel erlaubt Ihnen das Betrachten eines Protokolls aller SQL-Kommandos, die von der Anwendung oder von Ihnen selbst ausgegangen sind</translation>
+        <translation>Dieses Fenster ermöglicht die Untersuchung eines Protokolls aller SQL-Kommandos, die von der Anwendung oder von Ihnen selbst ausgegangen sind</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1024"/>
@@ -5086,7 +5086,7 @@ Sind Sie sich sicher?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="1833"/>
         <source>Do you want to save the changes made to SQL tabs in a new project file?</source>
-        <translation>Sollen die an den SQL-Tabs getätigten Änderungen in einer neuen Projektdatei gespeichert werden?</translation>
+        <translation>Sollen die Änderungen in den SQL-Editortabs in einer neuen Projektdatei gespeichert werden?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1854"/>
@@ -6127,7 +6127,7 @@ Kann auf 0 gesetzt werden, um die Vervollständigung zu deaktivieren.</translati
     <message>
         <location filename="../PreferencesDialog.ui" line="1443"/>
         <source>Choose the quoting mechanism used by the application for identifiers in SQL code.</source>
-        <translation>Wählen Sie den Zitiermechanismus aus, der von der Anwendung für Identifier im SQL-Code verwendet wird.</translation>
+        <translation>Wählen Sie den Kennzeichnungs-Modus aus, der für Datenbankbezeichner im SQL-Code verwendet wird.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1450"/>
@@ -6157,7 +6157,7 @@ Kann auf 0 gesetzt werden, um die Vervollständigung zu deaktivieren.</translati
     <message>
         <location filename="../PreferencesDialog.ui" line="1515"/>
         <source>When set, the SQL code lines that caused errors during the last execution are highlighted and the results frame indicates the error in the background</source>
-        <translation>Falls gesetzt, werden die SQL-Codezeilen, die während der letzten Ausführung Fehler verursacht haben, hervorgehoben und das Ergebnisfenster zeigt den Fehler im Hintergrund na</translation>
+        <translation>Falls gesetzt, werden die SQL-Codezeilen, die während der letzten Ausführung Fehler verursacht haben, hervorgehoben und das Ergebnisfenster zeigt den Fehler im Hintergrund an</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1548"/>
