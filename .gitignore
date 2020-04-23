@@ -38,3 +38,5 @@ libs/*/*/*.a
 
 # Ignore .DS_Store files on OSX
 .DS_Store
+.project
+.settings/org.eclipse.core.resources.prefs
