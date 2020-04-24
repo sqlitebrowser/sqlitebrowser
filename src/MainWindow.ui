@@ -174,8 +174,8 @@ You can drag SQL statements from an object row and drop them into other applicat
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>596</width>
-             <height>526</height>
+             <width>692</width>
+             <height>489</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -721,14 +721,14 @@ You can drag SQL statements from an object row and drop them into other applicat
         </item>
         <item>
          <widget class="QTabWidget" name="tabSqlAreas">
+          <property name="contextMenuPolicy">
+           <enum>Qt::CustomContextMenu</enum>
+          </property>
           <property name="currentIndex">
            <number>-1</number>
           </property>
           <property name="movable">
            <bool>true</bool>
-          </property>
-          <property name="contextMenuPolicy">
-           <enum>Qt::CustomContextMenu</enum>
           </property>
          </widget>
         </item>
@@ -744,7 +744,7 @@ You can drag SQL statements from an object row and drop them into other applicat
      <x>0</x>
      <y>0</y>
      <width>1037</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -1503,10 +1503,10 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
      <normaloff>:/icons/document_open</normaloff>:/icons/document_open</iconset>
    </property>
    <property name="text">
-    <string>Open SQL file</string>
+    <string>Open SQL file(s)</string>
    </property>
    <property name="whatsThis">
-    <string>This button opens a file containing SQL statements and loads it in a new editor tab</string>
+    <string>This button opens files containing SQL statements and loads them in new editor tabs</string>
    </property>
   </action>
   <action name="actionSqlSaveFile">

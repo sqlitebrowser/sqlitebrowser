@@ -1952,27 +1952,30 @@ void MainWindow::changeSqlTab(int index)
 
 void MainWindow::openSqlFile()
 {
-    QString file = FileDialog::getOpenFileName(
+    QStringList wfiles = FileDialog::getOpenFileNames(
                 OpenSQLFile,
                 this,
                 tr("Select SQL file to open"),
                 tr("Text files(*.sql *.txt);;All files(*)"));
 
-    if(QFile::exists(file))
+    for(QString file: wfiles)
     {
-        // Decide whether to open a new tab or take the current one
-        int index;
-        SqlExecutionArea* current_tab = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
-        if(current_tab && current_tab->getSql().isEmpty() && current_tab->getModel()->rowCount() == 0)
-            index = ui->tabSqlAreas->currentIndex();
-        else
-            index = openSqlTab();
+        if(QFile::exists(file))
+        {
+            // Decide whether to open a new tab or take the current one
+            int index;
+            SqlExecutionArea* current_tab = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
+            if(current_tab && current_tab->getSql().isEmpty() && current_tab->getModel()->rowCount() == 0)
+                index = ui->tabSqlAreas->currentIndex();
+            else
+                index = openSqlTab();
 
-        SqlExecutionArea* sqlarea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index));
-        sqlarea->openFile(file);
+            SqlExecutionArea* sqlarea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index));
+            sqlarea->openFile(file);
 
-        QFileInfo fileinfo(file);
-        ui->tabSqlAreas->setTabText(index, fileinfo.fileName());
+            QFileInfo fileinfo(file);
+            ui->tabSqlAreas->setTabText(index, fileinfo.fileName());
+        }
     }
 }
 
