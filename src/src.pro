@@ -182,7 +182,8 @@ TRANSLATIONS += \
     translations/sqlb_ko_KR.ts \
     translations/sqlb_tr.ts \
     translations/sqlb_uk_UA.ts \
-    translations/sqlb_it.ts
+    translations/sqlb_it.ts \
+    translations/sqlb_ja.ts
 
 # SQLite / SQLCipher switch pieces
 CONFIG(sqlcipher) {
@@ -286,7 +287,7 @@ unix {
     desktop.path = $$DATADIR/applications/
     desktop.files = ../distri/sqlitebrowser.desktop
     INSTALLS += desktop
-    appdata.path = $$DATADIR/appdata/
+    appdata.path = $$DATADIR/metainfo/
     appdata.files = ../distri/sqlitebrowser.desktop.appdata.xml
     INSTALLS += appdata
 }

@@ -14,12 +14,11 @@
                 - qt_<language_code>.qm
                 - qtbase_<language_code>.qm
                 - qtmultimedia_<language_code>.qm
-                - qtquick1_<language_code>.qm
                 - qtscript_<language_code>.qm
                 - qtxmlpatterns_<language_code>.qm
 
             Notes:
-                - Arabic is missing "qtquick1_ar.qm" and "qtxmlpatterns_ar.qm" but seems to work without a problem.
+                - Arabic is missing "qtxmlpatterns_ar.qm" but seems to work without a problem.
 
                 - Chinese (China), Chinese (Taiwan), and Portuguese have only one file (qt_<language_code>.qm), so
                   the default buttons are not translated for these languages.
@@ -29,27 +28,11 @@
 
             <Directory Id="translations" Name="translations">
 
-                <!-- These files are not present in Qt 5.12, used by our 64-bit nightly builds. -->
-                <?if $(sys.BUILDARCH)!="x64"?>
-                    <Component><File Source="$(var.QtPath)\translations\qtquick1_cs.qm" /></Component>
-                    <Component><File Source="$(var.QtPath)\translations\qtquick1_en.qm" /></Component>
-                    <Component><File Source="$(var.QtPath)\translations\qtquick1_fr.qm" /></Component>
-                    <Component><File Source="$(var.QtPath)\translations\qtquick1_de.qm" /></Component>
-                    <Component><File Source="$(var.QtPath)\translations\qtquick1_it.qm" /></Component>
-                    <Component><File Source="$(var.QtPath)\translations\qtquick1_ko.qm" /></Component>
-                    <Component><File Source="$(var.QtPath)\translations\qtquick1_pl.qm" /></Component>
-                    <Component><File Source="$(var.QtPath)\translations\qtquick1_ru.qm" /></Component>
-                    <Component><File Source="$(var.QtPath)\translations\qtquick1_uk.qm" /></Component>
-                <?endif?>
-
                 <!-- Arabic -->
                 <Component><File Source="$(var.QtPath)\translations\qt_ar.qm" /></Component>
-                <!-- These files are not present in Qt 5.7, used by our 32-bit nightly builds. -->
-                <?if $(sys.BUILDARCH)="x64"?>
-                    <Component><File Source="$(var.QtPath)\translations\qtbase_ar.qm" /></Component>
-                    <Component><File Source="$(var.QtPath)\translations\qtmultimedia_ar.qm" /></Component>
-                    <Component><File Source="$(var.QtPath)\translations\qtscript_ar.qm" /></Component>
-                <?endif?>
+                <Component><File Source="$(var.QtPath)\translations\qtbase_ar.qm" /></Component>
+                <Component><File Source="$(var.QtPath)\translations\qtmultimedia_ar.qm" /></Component>
+                <Component><File Source="$(var.QtPath)\translations\qtscript_ar.qm" /></Component>
 
                 <!-- Chinese (China) -->
                 <Component><File Source="$(var.QtPath)\translations\qt_zh_CN.qm" /></Component>
@@ -91,6 +74,13 @@
                 <Component><File Source="$(var.QtPath)\translations\qtmultimedia_it.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtscript_it.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtxmlpatterns_it.qm" /></Component>
+                
+                <!-- Japanese -->
+                <Component><File Source="$(var.QtPath)\translations\qt_ja.qm" /></Component>
+                <Component><File Source="$(var.QtPath)\translations\qtbase_ja.qm" /></Component>
+                <Component><File Source="$(var.QtPath)\translations\qtmultimedia_ja.qm" /></Component>
+                <Component><File Source="$(var.QtPath)\translations\qtscript_ja.qm" /></Component>
+                <Component><File Source="$(var.QtPath)\translations\qtxmlpatterns_ja.qm" /></Component>
 
                 <!-- Korean -->
                 <Component><File Source="$(var.QtPath)\translations\qt_ko.qm" /></Component>
@@ -118,13 +108,10 @@
 
                 <!-- Spanish -->
                 <Component><File Source="$(var.QtPath)\translations\qt_es.qm" /></Component>
-                <!-- These files are not present in Qt 5.7, used by our 32-bit nightly builds. -->
-                <?if $(sys.BUILDARCH)="x64"?>
-                    <Component><File Source="$(var.QtPath)\translations\qtbase_es.qm" /></Component>
-                    <Component><File Source="$(var.QtPath)\translations\qtmultimedia_es.qm" /></Component>
-                    <Component><File Source="$(var.QtPath)\translations\qtscript_es.qm" /></Component>
-                    <Component><File Source="$(var.QtPath)\translations\qtxmlpatterns_es.qm" /></Component>
-                <?endif?>
+                <Component><File Source="$(var.QtPath)\translations\qtbase_es.qm" /></Component>
+                <Component><File Source="$(var.QtPath)\translations\qtmultimedia_es.qm" /></Component>
+                <Component><File Source="$(var.QtPath)\translations\qtscript_es.qm" /></Component>
+                <Component><File Source="$(var.QtPath)\translations\qtxmlpatterns_es.qm" /></Component>
 
                 <!-- Turkish -->
 
@@ -141,27 +128,11 @@
 
         <ComponentGroup Id="TranslationsGroup">
 
-            <!-- These files are not present in Qt 5.12, used by our 64-bit nightly builds. -->
-            <?if $(sys.BUILDARCH)!="x64"?>
-                <ComponentRef Id="qtquick1_cs.qm" />
-                <ComponentRef Id="qtquick1_en.qm" />
-                <ComponentRef Id="qtquick1_fr.qm" />
-                <ComponentRef Id="qtquick1_de.qm" />
-                <ComponentRef Id="qtquick1_it.qm" />
-                <ComponentRef Id="qtquick1_ko.qm" />
-                <ComponentRef Id="qtquick1_pl.qm" />
-                <ComponentRef Id="qtquick1_ru.qm" />
-                <ComponentRef Id="qtquick1_uk.qm" />
-            <?endif?>
-
             <!-- Arabic -->
             <ComponentRef Id="qt_ar.qm" />
-            <!-- These files are not present in Qt 5.7, used by our 32-bit nightly builds. -->
-            <?if $(sys.BUILDARCH)="x64"?>
-                <ComponentRef Id="qtbase_ar.qm" />
-                <ComponentRef Id="qtmultimedia_ar.qm" />
-                <ComponentRef Id="qtscript_ar.qm" />
-            <?endif?>
+            <ComponentRef Id="qtbase_ar.qm" />
+            <ComponentRef Id="qtmultimedia_ar.qm" />
+            <ComponentRef Id="qtscript_ar.qm" />
 
             <!-- Chinese (China) -->
             <ComponentRef Id="qt_zh_CN.qm" />
@@ -204,6 +175,13 @@
             <ComponentRef Id="qtscript_it.qm" />
             <ComponentRef Id="qtxmlpatterns_it.qm" />
 
+            <!-- Japanese -->
+            <ComponentRef Id="qt_ja.qm" />
+            <ComponentRef Id="qtbase_ja.qm" />
+            <ComponentRef Id="qtmultimedia_ja.qm" />
+            <ComponentRef Id="qtscript_ja.qm" />
+            <ComponentRef Id="qtxmlpatterns_ja.qm" />
+
             <!-- Korean -->
             <ComponentRef Id="qt_ko.qm" />
             <ComponentRef Id="qtbase_ko.qm" />
@@ -230,13 +208,10 @@
 
             <!-- Spanish -->
             <ComponentRef Id="qt_es.qm" />
-            <!-- These files are not present in Qt 5.7, used by our 32-bit nightly builds. -->
-            <?if $(sys.BUILDARCH)="x64"?>
-                <ComponentRef Id="qtbase_es.qm" />
-                <ComponentRef Id="qtmultimedia_es.qm" />
-                <ComponentRef Id="qtscript_es.qm" />
-                <ComponentRef Id="qtxmlpatterns_es.qm" />
-            <?endif?>
+            <ComponentRef Id="qtbase_es.qm" />
+            <ComponentRef Id="qtmultimedia_es.qm" />
+            <ComponentRef Id="qtscript_es.qm" />
+            <ComponentRef Id="qtxmlpatterns_es.qm" />
 
             <!-- Turkish -->
 

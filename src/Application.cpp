@@ -199,11 +199,11 @@ bool Application::event(QEvent* event)
 
 QString Application::versionString()
 {
-    // Distinguish between high and low patch version numbers. High numbers as in x.y.99 indicate nightly builds or
-    // beta releases. For these we want to include the build date. For the release versions we don't add the release
-    // date in order to avoid confusion about what is more important, version number or build date, and about different
-    // build dates for the same version. This also should help making release builds reproducible out of the box.
-#if PATCH_VERSION >= 99
+    // Nightly builds use a patch number of 99, and for these we include the build date in the version string.  For
+    // our release versions (which use any other patch number) we don't include the build date. This should avoid
+    // confusion about what is more important, version number or build date, and about different build dates for
+    // the same version. This also should help making release builds reproducible out of the box.
+#if PATCH_VERSION == 99
     return QString("%1 (%2)").arg(APP_VERSION, __DATE__);
 #else
     return QString("%1").arg(APP_VERSION);

@@ -97,6 +97,9 @@ private slots:
     void parseDirectoryListing(const QString& text, const QVariant& userdata);
 
 private:
+    // The header list is a list of column titles
+    const std::vector<QString> headerList;
+
     // Pointer to the root item. This contains all the actual item data.
     RemoteModelItem* rootItem;
 

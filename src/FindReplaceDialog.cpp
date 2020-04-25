@@ -7,6 +7,7 @@
 FindReplaceDialog::FindReplaceDialog(QWidget* parent)
     : QDialog(parent),
       ui(new Ui::FindReplaceDialog),
+      m_scintilla(nullptr),
       foundIndicatorNumber(0),
       findInProgress(false)
 {

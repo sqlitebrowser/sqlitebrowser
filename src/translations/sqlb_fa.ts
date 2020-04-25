@@ -5006,7 +5006,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="69"/>
-        <source>Find previous match with mapping</source>
+        <source>Find previous match with wrapping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -455,7 +455,7 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
 
                     int pageSize = dotenv.value(databaseFileName + "_pageSize", enc_default_page_size).toInt();
                     int kdfIterations = dotenv.value(databaseFileName + "_kdfIter", enc_default_kdf_iter).toInt();
-                    int plaintextHeaderSize = dotenv.value(databaseFileName + "_plaintextHeaderSize", enc_default_kdf_iter).toInt();
+                    int plaintextHeaderSize = dotenv.value(databaseFileName + "_plaintextHeaderSize", enc_default_plaintext_header_size).toInt();
                     std::string hmacAlgorithm = dotenv.value(databaseFileName + "_hmacAlgorithm", QString::fromStdString(enc_default_hmac_algorithm)).toString().toStdString();
                     std::string kdfAlgorithm = dotenv.value(databaseFileName + "_kdfAlgorithm", QString::fromStdString(enc_default_kdf_algorithm)).toString().toStdString();
 
@@ -466,15 +466,15 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
                     cipherSettings->setPassword(password);
                     cipherSettings->setPageSize(pageSize);
                     cipherSettings->setKdfIterations(kdfIterations);
-                    cipherSettings->setHmacAlgorithm(hmacAlgorithm);
-                    cipherSettings->setKdfAlgorithm(kdfAlgorithm);
+                    cipherSettings->setHmacAlgorithm("HMAC_" + hmacAlgorithm);
+                    cipherSettings->setKdfAlgorithm("PBKDF2_HMAC_" + kdfAlgorithm);
                     cipherSettings->setPlaintextHeaderSize(plaintextHeaderSize);
                 }
             }
 
             if(foundDotenvPassword)
             {
-                // Skip the CipherDialog prompt for now to test if the dotenv password was correct
+                // Skip the CipherDialog prompt for now to test if the dotenv settings are correct
             } else {
 	            CipherDialog *cipherDialog = new CipherDialog(nullptr, false);
 	            if(cipherDialog->exec())
@@ -502,7 +502,7 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
             // Set the key
             sqlite3_exec(dbHandle, ("PRAGMA key = " + cipherSettings->getPassword()).c_str(), nullptr, nullptr, nullptr);
 
-            // Set the page size if it differs from the default value
+            // Set the settings if they differ from the default values
             if(cipherSettings->getPageSize() != enc_default_page_size)
                 sqlite3_exec(dbHandle, ("PRAGMA cipher_page_size = " + std::to_string(cipherSettings->getPageSize())).c_str(), nullptr, nullptr, nullptr);
             if(cipherSettings->getKdfIterations() != enc_default_kdf_iter)
@@ -558,6 +558,10 @@ bool DBBrowserDB::setSavepoint(const std::string& pointname)
 {
     if(!isOpen())
         return false;
+    if(isReadOnly) {
+        qWarning() << "setSavepoint: not done. DB is read-only";
+        return false;
+    }
     if(contains(savepointList, pointname))
         return true;
 
@@ -1046,12 +1050,11 @@ bool DBBrowserDB::executeMultiSQL(QByteArray query, bool dirty, bool log)
     const char * const tail_start = tail;
     const char * const tail_end = tail + query.size() + 1;
     size_t total_tail_length = static_cast<size_t>(tail_end - tail_start);
-    int res = SQLITE_OK;
     unsigned int line = 0;
     bool structure_updated = false;
     int last_progress_value = -1;
     std::string savepoint_name;
-    while(tail && *tail != 0 && (res == SQLITE_OK || res == SQLITE_DONE))
+    while(tail && *tail != 0)
     {
         line++;
 
@@ -1118,8 +1121,7 @@ bool DBBrowserDB::executeMultiSQL(QByteArray query, bool dirty, bool log)
         }
 
         // Execute next statement
-        res = sqlite3_prepare_v2(_db, tail, static_cast<int>(tail_end - tail + 1), &vm, &tail);
-        if(res == SQLITE_OK)
+        if(sqlite3_prepare_v2(_db, tail, static_cast<int>(tail_end - tail + 1), &vm, &tail) == SQLITE_OK)
         {
             switch(sqlite3_step(vm))
             {
@@ -1266,6 +1268,10 @@ std::string DBBrowserDB::emptyInsertStmt(const std::string& schemaName, const sq
     sqlb::StringVector fields;
     for(const sqlb::Field& f : t.fields)
     {
+        // Never insert into a generated column
+        if(!f.generated().empty())
+            continue;
+
         sqlb::ConstraintPtr pk = t.constraint({f.name()}, sqlb::Constraint::PrimaryKeyConstraintType);
         if(pk)
         {

@@ -24,7 +24,7 @@ void SqlUiLexer::setupAutoCompletion()
     keywordPatterns
             // Keywords
             << "ABORT" << "ACTION" << "ADD" << "AFTER" << "ALL"
-            << "ALTER" << "ANALYZE" << "AND" << "AS" << "ASC"
+            << "ALTER" << "ALWAYS" << "ANALYZE" << "AND" << "AS" << "ASC"
             << "ATTACH" << "AUTOINCREMENT" << "BEFORE" << "BEGIN" << "BETWEEN"
             << "BY" << "CASCADE" << "CASE" << "CAST" << "CHECK"
             << "COLLATE" << "COLUMN" << "COMMIT" << "CONFLICT" << "CONSTRAINT"
@@ -33,7 +33,7 @@ void SqlUiLexer::setupAutoCompletion()
             << "DESC" << "DETACH" << "DISTINCT" << "DO" << "DROP" << "EACH"
             << "ELSE" << "END" << "ESCAPE" << "EXCEPT" << "EXCLUSIVE"
             << "EXISTS" << "EXPLAIN" << "FAIL" << "FILTER" << "FOLLOWING" << "FOR" << "FOREIGN"
-            << "FROM" << "FULL" << "GLOB" << "GROUP" << "HAVING"
+            << "FROM" << "FULL" << "GENERATED" << "GLOB" << "GROUP" << "HAVING"
             << "IF" << "IGNORE" << "IMMEDIATE" << "IN" << "INDEX"
             << "INDEXED" << "INITIALLY" << "INNER" << "INSERT" << "INSTEAD"
             << "INTERSECT" << "INTO" << "IS" << "ISNULL" << "JOIN"
@@ -43,7 +43,7 @@ void SqlUiLexer::setupAutoCompletion()
             << "OUTER" << "OVER" << "PARTITION" << "PLAN" << "PRAGMA" << "PRECEDING" << "PRIMARY" << "QUERY"
             << "RAISE" << "RANGE" << "RECURSIVE" << "REFERENCES" << "REGEXP" << "REINDEX" << "RELEASE"
             << "RENAME" << "REPLACE" << "RESTRICT" << "RIGHT" << "ROLLBACK"
-            << "ROWID" << "ROW" << "ROWS" << "SAVEPOINT" << "SELECT" << "SET" << "TABLE"
+            << "ROWID" << "ROW" << "ROWS" << "SAVEPOINT" << "SELECT" << "SET" << "STORED" << "TABLE"
             << "TEMP" << "TEMPORARY" << "THEN" << "TO" << "TRANSACTION"
             << "TRIGGER" << "UNBOUNDED" << "UNION" << "UNIQUE" << "UPDATE" << "USING"
             << "VACUUM" << "VALUES" << "VIEW" << "VIRTUAL" << "WHEN"

@@ -6,9 +6,6 @@
 
 using json = nlohmann::json;
 
-// The header list is a list of column titles
-const static std::vector<QString> headerList = {QObject::tr("Name"), QObject::tr("Commit"), QObject::tr("Last modified"), QObject::tr("Size")};
-
 RemoteModelItem::RemoteModelItem(RemoteModelItem* parent) :
     m_parent(parent),
     m_fetchedDirectoryList(false)
@@ -103,6 +100,7 @@ std::vector<RemoteModelItem*> RemoteModelItem::loadArray(const json& array, Remo
 
 RemoteModel::RemoteModel(QObject* parent, RemoteDatabase& remote) :
     QAbstractItemModel(parent),
+    headerList({tr("Name"), tr("Commit"), tr("Last modified"), tr("Size")}),
     rootItem(new RemoteModelItem()),
     remoteDatabase(remote)
 {

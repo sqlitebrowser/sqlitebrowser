@@ -6,7 +6,11 @@
 #include <QMenu>
 #include <QWhatsThis>
 
-FilterLineEdit::FilterLineEdit(QWidget* parent, std::vector<FilterLineEdit*>* filters, size_t columnnum) : QLineEdit(parent), filterList(filters), columnNumber(columnnum)
+FilterLineEdit::FilterLineEdit(QWidget* parent, std::vector<FilterLineEdit*>* filters, size_t columnnum) :
+    QLineEdit(parent),
+    filterList(filters),
+    columnNumber(columnnum),
+    no_conditional_format(true)
 {
     setPlaceholderText(tr("Filter"));
     setClearButtonEnabled(true);
