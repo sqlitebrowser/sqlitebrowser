@@ -22,7 +22,6 @@
           grade:                  devel
           icon:                   images/logo.svg
           type:                   app
-
           apps:
             sqlitebrowser:
               command:            desktop-launch $SNAP/bin/sqlitebrowser
@@ -30,6 +29,17 @@
               environment:
                 DISABLE_WAYLAND:  1
                 TMPDIR:           $XDG_RUNTIME_DIR
+                XLOCALEDIR: '$SNAP/usr/share/X11/locale'
+                LOCPATH: '$SNAP/usr/lib/locale'
+                GTK_PATH: $SNAP/lib/gtk-2.0
+                GTK_DATA_PREFIX: $SNAP
+                XDG_DATA_DIRS: $SNAP/share:$XDG_DATA_DIRS
+                XDG_CONFIG_HOME: '$HOME/.config'
+                XKB_CONFIG_ROOT: '$SNAP/usr/share/X11/xkb'
+                XDG_CONFIG_DIRS: '$SNAP/etc/xdg:$XDG_CONFIG_DIRS'
+                XDG_DATA_HOME: '$SNAP/usr/share'
+                DISABLE_WAYLAND: '1'
+                QT_QPA_PLATFORMTHEME: qt5ct
               plugs:
                 - desktop
                 - gsettings
@@ -38,6 +48,7 @@
                 - wayland
                 - x11
                 - removable-media
+                - cups-control
 
           build-packages:
               - build-essential
@@ -49,7 +60,6 @@
               - cmake
               - libsqlcipher-dev
               - libqcustomplot-dev
-
               - libqt5scintilla2-dev
               - git
           parts:
@@ -119,5 +129,7 @@
                       - etc/X11/Xsession.d/90atk-adaptor
                       - usr/lib/gnome-settings-daemon-3.0/gtk-modules/at-spi2-atk.desktop
                       - usr/lib/unity-settings-daemon-1.0/gtk-modules/at-spi2-atk.desktop
+                      - usr/lib/*-linux-gnu*/libQt5PrintSupport.so*
+                      - usr/lib/*-linux-gnu*/libQt5Xml.so*
                   prime:
                   - $wanted
