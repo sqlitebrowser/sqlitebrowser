@@ -1643,7 +1643,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>Save the current session to a file</string>
    </property>
    <property name="whatsThis">
-    <string>This button lets you save all the settings associated to the open DB to a DB4S project file</string>
+    <string>This button lets you save all the settings associated to the open DB to a DB Browser for SQLite project file</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -1664,7 +1664,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>Load a working session from a file</string>
    </property>
    <property name="whatsThis">
-    <string>This button lets you open a DB4S project file</string>
+    <string>This button lets you open a DB Browser for SQLite project file</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
