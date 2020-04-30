@@ -646,98 +646,98 @@ Jeśli zostały zmienione jakiekolwiek dodatkowe ustawienia dla pliku tej bazy d
         <translation>Wykonywanie SQL…</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1070"/>
+        <location filename="../sqlitedb.cpp" line="1069"/>
         <source>Action cancelled.</source>
         <translation>Zaniechano działania.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1141"/>
-        <location filename="../sqlitedb.cpp" line="1154"/>
+        <location filename="../sqlitedb.cpp" line="1139"/>
+        <location filename="../sqlitedb.cpp" line="1152"/>
         <source>Error in statement #%1: %2.
 Aborting execution%3.</source>
         <translation>Błąd w poleceniu #%1: %2.
 Przerywam wykonywanie%3.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1144"/>
-        <location filename="../sqlitedb.cpp" line="1157"/>
+        <location filename="../sqlitedb.cpp" line="1142"/>
+        <location filename="../sqlitedb.cpp" line="1155"/>
         <source> and rolling back</source>
         <translation> i przywracam</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1203"/>
+        <location filename="../sqlitedb.cpp" line="1201"/>
         <source>didn&apos;t receive any output from %1</source>
         <translation>nie otrzymano żadnego wyniku z %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1209"/>
+        <location filename="../sqlitedb.cpp" line="1207"/>
         <source>could not execute command: %1</source>
         <translation>nie można wykonać polecenia: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1371"/>
+        <location filename="../sqlitedb.cpp" line="1369"/>
         <source>Cannot delete this object</source>
         <translation>Nie można usunąć tego obiektu</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1415"/>
+        <location filename="../sqlitedb.cpp" line="1413"/>
         <source>Cannot set data on this object</source>
         <translation>Nie można ustawić danych na tym objekcie</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1522"/>
-        <location filename="../sqlitedb.cpp" line="1529"/>
+        <location filename="../sqlitedb.cpp" line="1520"/>
+        <location filename="../sqlitedb.cpp" line="1527"/>
         <source>A table with the name &apos;%1&apos; already exists in schema &apos;%2&apos;.</source>
         <translation>Tabela o nazwie &apos;%1&apos; już istnieje w schemacie &apos;%2&apos;.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1538"/>
+        <location filename="../sqlitedb.cpp" line="1536"/>
         <source>No table with name &apos;%1&apos; exists in schema &apos;%2&apos;.</source>
         <translation>Tabela o nazwie &apos;%1&apos; nie istnieje w schemacie &apos;%2&apos;.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1548"/>
-        <location filename="../sqlitedb.cpp" line="1569"/>
+        <location filename="../sqlitedb.cpp" line="1546"/>
+        <location filename="../sqlitedb.cpp" line="1567"/>
         <source>Cannot find column %1.</source>
         <translation>Nie można znaleźć kolumny %1.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1582"/>
+        <location filename="../sqlitedb.cpp" line="1580"/>
         <source>Creating savepoint failed. DB says: %1</source>
         <translation>Nie można utworzyć punktu zapisu. BD zwraca: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1645"/>
+        <location filename="../sqlitedb.cpp" line="1643"/>
         <source>Renaming the column failed. DB says:
 %1</source>
         <translation>Nie można przemianować tej kolumny. BD zwraca:
 %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1673"/>
-        <location filename="../sqlitedb.cpp" line="1825"/>
+        <location filename="../sqlitedb.cpp" line="1671"/>
+        <location filename="../sqlitedb.cpp" line="1823"/>
         <source>Releasing savepoint failed. DB says: %1</source>
         <translation>Nie można zwolnić punktu zapisu. BD zwraca: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1692"/>
+        <location filename="../sqlitedb.cpp" line="1690"/>
         <source>Creating new table failed. DB says: %1</source>
         <translation>Nie można utworzyć nowej tabeli. BD zwraca: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1724"/>
+        <location filename="../sqlitedb.cpp" line="1722"/>
         <source>Copying data to new table failed. DB says:
 %1</source>
         <translation>Nie można skopiować nowej tabeli. BD zwraca: 
 %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1791"/>
+        <location filename="../sqlitedb.cpp" line="1789"/>
         <source>Deleting old table failed. DB says: %1</source>
         <translation>Nie można usunąć starej tabeli. BD zwraca: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1861"/>
+        <location filename="../sqlitedb.cpp" line="1859"/>
         <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.
 Message from database engine:
 %3</source>
@@ -746,7 +746,7 @@ Wiadomość z silnika bazy danych:
 %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1956"/>
+        <location filename="../sqlitedb.cpp" line="1954"/>
         <source>could not get list of db objects: %1</source>
         <translation>nie można pobrać listy obiektów bd: %1</translation>
     </message>
@@ -773,7 +773,7 @@ Wiadomość z silnika bazy danych:
         <translation type="vanished">renameColumn(zmiana nazwy kolumny): usuwanie starej tabeli nie powiodło się. Baza danych zwróciła: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1816"/>
+        <location filename="../sqlitedb.cpp" line="1814"/>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 
 </source>
@@ -800,7 +800,7 @@ Wiadomość z silnika bazy danych:
         <translation type="vanished">nie mogę pobrać listy obiektów bazy danych: %1, %2</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1962"/>
+        <location filename="../sqlitedb.cpp" line="1960"/>
         <source>could not get list of databases: %1</source>
         <translation>nie mogę odczytać listy baz danych: %1</translation>
     </message>
@@ -813,22 +813,22 @@ Wiadomość z silnika bazy danych:
         <translation type="vanished">nie mogłem wykonać polecenia pragmy: %1, %2</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1990"/>
+        <location filename="../sqlitedb.cpp" line="1988"/>
         <source>Error setting pragma %1 to %2: %3</source>
         <translation>Błąd przy ustawianiu pragmy %1 do %2: %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="2036"/>
+        <location filename="../sqlitedb.cpp" line="2034"/>
         <source>File not found.</source>
         <translation>Nie znaleziono pliku.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="2074"/>
+        <location filename="../sqlitedb.cpp" line="2072"/>
         <source>Error loading extension: %1</source>
         <translation>Nie można wczytać rozszerzenia: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="2099"/>
+        <location filename="../sqlitedb.cpp" line="2097"/>
         <source>could not get column information</source>
         <translation>nie można uzyskać informacji o kolumnie</translation>
     </message>
@@ -2148,12 +2148,12 @@ Czy chcesz go wstawić mimo tego?</translation>
 <context>
     <name>FilterLineEdit</name>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="11"/>
+        <location filename="../FilterLineEdit.cpp" line="15"/>
         <source>Filter</source>
         <translation>Filtr</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="25"/>
+        <location filename="../FilterLineEdit.cpp" line="29"/>
         <source>These input fields allow you to perform quick filters in the currently selected table.
 By default, the rows containing the input text are filtered out.
 The following operators are also supported:
@@ -2180,92 +2180,92 @@ x~y	Zakres: wartości pomiędzy x oraz y
 /regexp/	Wartości pasujące do wyrażenia regularnego</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="182"/>
+        <location filename="../FilterLineEdit.cpp" line="186"/>
         <source>Clear All Conditional Formats</source>
         <translation>Wyczyść wszystkie formatowania warunkowe</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="187"/>
+        <location filename="../FilterLineEdit.cpp" line="191"/>
         <source>Use for Conditional Format</source>
         <translation>Użyj do formatowania warunkowego</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="192"/>
+        <location filename="../FilterLineEdit.cpp" line="196"/>
         <source>Edit Conditional Formats...</source>
         <translation>Edytuj formatowanie warunkowe...</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="112"/>
+        <location filename="../FilterLineEdit.cpp" line="116"/>
         <source>Set Filter Expression</source>
         <translation>Ustaw wyrażenia filtra</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="114"/>
+        <location filename="../FilterLineEdit.cpp" line="118"/>
         <source>What&apos;s This?</source>
         <translation>Co to jest?</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="119"/>
+        <location filename="../FilterLineEdit.cpp" line="123"/>
         <source>Is NULL</source>
         <translation>Jest NULL</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="124"/>
+        <location filename="../FilterLineEdit.cpp" line="128"/>
         <source>Is not NULL</source>
         <translation>Nie jest NULL</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="129"/>
+        <location filename="../FilterLineEdit.cpp" line="133"/>
         <source>Is empty</source>
         <translation>Jest puste</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="134"/>
+        <location filename="../FilterLineEdit.cpp" line="138"/>
         <source>Is not empty</source>
         <translation>Nie jest puste</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="139"/>
+        <location filename="../FilterLineEdit.cpp" line="143"/>
         <source>Not containing...</source>
         <translation>Nie zawiera...</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="143"/>
+        <location filename="../FilterLineEdit.cpp" line="147"/>
         <source>Equal to...</source>
         <translation>Równe...</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="147"/>
+        <location filename="../FilterLineEdit.cpp" line="151"/>
         <source>Not equal to...</source>
         <translation>Nierówne...</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="151"/>
+        <location filename="../FilterLineEdit.cpp" line="155"/>
         <source>Greater than...</source>
         <translation>Większe niż...</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="155"/>
+        <location filename="../FilterLineEdit.cpp" line="159"/>
         <source>Less than...</source>
         <translation>Mniejsze niż...</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="159"/>
+        <location filename="../FilterLineEdit.cpp" line="163"/>
         <source>Greater or equal...</source>
         <translation>Większe lub równe...</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="163"/>
+        <location filename="../FilterLineEdit.cpp" line="167"/>
         <source>Less or equal...</source>
         <translation>Mniejsze lub równe...</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="167"/>
+        <location filename="../FilterLineEdit.cpp" line="171"/>
         <source>In range...</source>
         <translation>W zakresie...</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="172"/>
+        <location filename="../FilterLineEdit.cpp" line="176"/>
         <source>Regular expression...</source>
         <translation>Wyrażenie regularne...</translation>
     </message>
@@ -2379,32 +2379,32 @@ x~y	Zakres: wartości pomiędzy x oraz y
         <translation>Z&amp;amień wszystkie</translation>
     </message>
     <message>
-        <location filename="../FindReplaceDialog.cpp" line="85"/>
+        <location filename="../FindReplaceDialog.cpp" line="86"/>
         <source>The searched text was not found</source>
         <translation>Nie znaleziono szukanego tekstu</translation>
     </message>
     <message>
-        <location filename="../FindReplaceDialog.cpp" line="157"/>
+        <location filename="../FindReplaceDialog.cpp" line="158"/>
         <source>The searched text was not found.</source>
         <translation>Nie znaleziono szukanego tekstu.</translation>
     </message>
     <message>
-        <location filename="../FindReplaceDialog.cpp" line="163"/>
+        <location filename="../FindReplaceDialog.cpp" line="164"/>
         <source>The searched text was found one time.</source>
         <translation>Szukany tekst został znaleziony raz.</translation>
     </message>
     <message>
-        <location filename="../FindReplaceDialog.cpp" line="169"/>
+        <location filename="../FindReplaceDialog.cpp" line="170"/>
         <source>The searched text was found %1 times.</source>
         <translation>Szukany tekst został znaleziony %1 razy.</translation>
     </message>
     <message>
-        <location filename="../FindReplaceDialog.cpp" line="161"/>
+        <location filename="../FindReplaceDialog.cpp" line="162"/>
         <source>The searched text was replaced one time.</source>
         <translation>Szukany tekst został zamieniony raz.</translation>
     </message>
     <message>
-        <location filename="../FindReplaceDialog.cpp" line="167"/>
+        <location filename="../FindReplaceDialog.cpp" line="168"/>
         <source>The searched text was replaced %1 times.</source>
         <translation>Szukany tekst został zamieniony %1 razy.</translation>
     </message>
@@ -3114,13 +3114,23 @@ Można przeciągać polecenia SQL z wiersza obiektu i upuszczać je na innych ap
         <translation>Ten przycisk kończy połączenie z obecnie otwartym plikiem bazy danych</translation>
     </message>
     <message>
+        <location filename="../MainWindow.ui" line="1646"/>
+        <source>This button lets you save all the settings associated to the open DB to a DB Browser for SQLite project file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="1667"/>
+        <source>This button lets you open a DB Browser for SQLite project file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../MainWindow.ui" line="2146"/>
         <source>Browse Table</source>
         <translation>Przeglądaj tabelę</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="218"/>
-        <location filename="../MainWindow.cpp" line="3326"/>
+        <location filename="../MainWindow.cpp" line="3347"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
@@ -3673,9 +3683,8 @@ Można także dodawać i usuwać pola z tabli, a także zmieniać nazwy oraz rod
         <translation>Zapisz obecną sesję do pliku</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1646"/>
         <source>This button lets you save all the settings associated to the open DB to a DB4S project file</source>
-        <translation>Ten przycisk umożliwia zapisanie wszystkich ustawień potrzebnych do otwarcia BD do pliku projektu DB4S</translation>
+        <translation type="vanished">Ten przycisk umożliwia zapisanie wszystkich ustawień potrzebnych do otwarcia BD do pliku projektu DB4S</translation>
     </message>
     <message>
         <source>Open &amp;Project</source>
@@ -3688,9 +3697,8 @@ Można także dodawać i usuwać pola z tabli, a także zmieniać nazwy oraz rod
         <translation>Wczytaj otoczenie pracy z pliku</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1667"/>
         <source>This button lets you open a DB4S project file</source>
-        <translation>Ten przycisk umożliwia otwarcie pliku projektu DB4S</translation>
+        <translation type="vanished">Ten przycisk umożliwia otwarcie pliku projektu DB4S</translation>
     </message>
     <message>
         <source>&amp;Attach Database</source>
@@ -4006,7 +4014,7 @@ Można także dodawać i usuwać pola z tabli, a także zmieniać nazwy oraz rod
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="492"/>
-        <location filename="../MainWindow.cpp" line="2876"/>
+        <location filename="../MainWindow.cpp" line="2897"/>
         <source>Choose a database file</source>
         <translation>Wybierz plik bazy danych</translation>
     </message>
@@ -4020,7 +4028,7 @@ Powód: %1</translation>
     <message>
         <location filename="../MainWindow.cpp" line="553"/>
         <location filename="../MainWindow.cpp" line="1382"/>
-        <location filename="../MainWindow.cpp" line="2731"/>
+        <location filename="../MainWindow.cpp" line="2752"/>
         <source>Choose a filename to save under</source>
         <translation>Wybierz nazwę pliku do zapisu</translation>
     </message>
@@ -4214,37 +4222,37 @@ Czy na pewno zapisać bazę danych?</translation>
         <translation>Wybierz pliki tekstowe</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2852"/>
+        <location filename="../MainWindow.cpp" line="2873"/>
         <source>Project saved to file &apos;%1&apos;</source>
         <translation>Projekt zapisano do pliku &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3289"/>
+        <location filename="../MainWindow.cpp" line="3310"/>
         <source>Rename Tab</source>
         <translation>Przemianuj kartę</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3295"/>
+        <location filename="../MainWindow.cpp" line="3316"/>
         <source>Duplicate Tab</source>
         <translation>Powiel kartę</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3325"/>
+        <location filename="../MainWindow.cpp" line="3346"/>
         <source>Close Tab</source>
         <translation>Zamknij kartę</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3344"/>
+        <location filename="../MainWindow.cpp" line="3365"/>
         <source>Opening &apos;%1&apos;...</source>
         <translation>Otwieranie &apos;%1&apos;...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3346"/>
+        <location filename="../MainWindow.cpp" line="3367"/>
         <source>There was an error opening &apos;%1&apos;...</source>
         <translation>Błąd otwierania &apos;%1&apos;...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3349"/>
+        <location filename="../MainWindow.cpp" line="3370"/>
         <source>Value is not a valid URL or filename: %1</source>
         <translation>Wartość nie jest prawidłowym adresem URL lub nazwą pliku: %1</translation>
     </message>
@@ -4471,7 +4479,7 @@ Czy na pewno?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2158"/>
-        <location filename="../MainWindow.cpp" line="2511"/>
+        <location filename="../MainWindow.cpp" line="2522"/>
         <source>Don&apos;t show again</source>
         <translation>Nie pokazuj ponownie</translation>
     </message>
@@ -4486,22 +4494,22 @@ Czy na pewno?</translation>
         <translation>Dostępna jest nowa wersja Przeglądarki SQLite (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Pobierz z &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2383"/>
+        <location filename="../MainWindow.cpp" line="2394"/>
         <source>Choose a project file to open</source>
         <translation>Wybierz plik projektu do otworzenia</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2384"/>
+        <location filename="../MainWindow.cpp" line="2395"/>
         <source>DB Browser for SQLite project file (*.sqbpro)</source>
         <translation>Plik projektu Przeglądarki SQLite (*.sqbpro)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2515"/>
+        <location filename="../MainWindow.cpp" line="2526"/>
         <source>This project file is using an old file format because it was created using DB Browser for SQLite version 3.10 or lower. Loading this file format is still fully supported but we advice you to convert all your project files to the new file format because support for older formats might be dropped at some point in the future. You can convert your files by simply opening and re-saving them.</source>
         <translation>Ten plik projektu używa starego formatu pliku, bo został stworzony przy użyciu Przeglądarki SQLite w wersji 3.10 lub niższej. Wczytywanie tego formatu pliku jest nadal w pełni obsługiwane, lecz zalecamy przekształcenie wszystkich plików projektu na nowy format pliku, bo obsługa starych formatów może zniknąć w przyszłości. Aby przekształcić plik, wystarczy go otworzyć i zapisać.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2747"/>
+        <location filename="../MainWindow.cpp" line="2768"/>
         <source>Could not open project file for writing.
 Reason: %1</source>
         <translation>Nie można otworzyć pliku projektu do zapisu.
@@ -4542,12 +4550,12 @@ Pozostaw pole pustym, aby użyć kodowania bazy danych.</translation>
         <translation type="vanished">Podaj pseudo-główny klucz, aby rozpocząć edytowanie w tym widoku. Powinna to być nazwa niepowtarzalnej kolumny w widoku.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3009"/>
+        <location filename="../MainWindow.cpp" line="3030"/>
         <source>Collation needed! Proceed?</source>
         <translation>Potrzebne zestawianie! Postąpić naprzód?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3010"/>
+        <location filename="../MainWindow.cpp" line="3031"/>
         <source>A table in this database requires a special collation function &apos;%1&apos; that this application can&apos;t provide without further knowledge.
 If you choose to proceed, be aware bad things can happen to your database.
 Create a backup!</source>
@@ -4556,32 +4564,32 @@ Pójścia z tym dalej, może spowodować uszkodzenia w bazie danych.
 Stwórz kopię zapasową!</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3015"/>
+        <location filename="../MainWindow.cpp" line="3036"/>
         <source>creating collation</source>
         <translation>tworzenie zestawienia</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3024"/>
+        <location filename="../MainWindow.cpp" line="3045"/>
         <source>Set a new name for the SQL tab. Use the &apos;&amp;&amp;&apos; character to allow using the following character as a keyboard shortcut.</source>
         <translation>Przemianowuje kartę SQL. Wstaw znaku &apos;&amp;&amp;&apos; aby móc wykorzystać następujący po nim znak jako skrót klawiszowy.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3076"/>
+        <location filename="../MainWindow.cpp" line="3097"/>
         <source>Please specify the view name</source>
         <translation>Określ nazwę widoku</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3080"/>
+        <location filename="../MainWindow.cpp" line="3101"/>
         <source>There is already an object with that name. Please choose a different name.</source>
         <translation>Istnieje już obiekt o tej nazwie. Nadaj inną nazwę.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3087"/>
+        <location filename="../MainWindow.cpp" line="3108"/>
         <source>View successfully created.</source>
         <translation>Pomyślnie utworzono widok.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3089"/>
+        <location filename="../MainWindow.cpp" line="3110"/>
         <source>Error creating view: %1</source>
         <translation>Błąd tworzenia widoku: %1</translation>
     </message>
@@ -4594,17 +4602,17 @@ Stwórz kopię zapasową!</translation>
         <translation type="vanished">Usuń rekordy</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3094"/>
+        <location filename="../MainWindow.cpp" line="3115"/>
         <source>This action will open a new SQL tab for running:</source>
         <translation>To działanie otworzy nową kartę SQL aby wykonać:</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3096"/>
+        <location filename="../MainWindow.cpp" line="3117"/>
         <source>Press Help for opening the corresponding SQLite reference page.</source>
         <translation>Naciśnij Pomoc, aby otworzyć powiązaną stronę w podręczniku SQLite.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3208"/>
+        <location filename="../MainWindow.cpp" line="3229"/>
         <source>Busy (%1)</source>
         <translation>Zajęty (%1)</translation>
     </message>
@@ -4645,17 +4653,26 @@ Stwórz kopię zapasową!</translation>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="56"/>
         <source>Y</source>
-        <translation>Y</translation>
+        <translation type="vanished">Y</translation>
+    </message>
+    <message>
+        <location filename="../PlotDock.ui" line="56"/>
+        <source>Y1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="61"/>
+        <source>Y2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../PlotDock.ui" line="66"/>
         <source>Axis Type</source>
         <translation>Rodzaj osi</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="73"/>
+        <location filename="../PlotDock.ui" line="78"/>
         <source>Here is a plot drawn when you select the x and y values above.
 
 Click on points to select them in the plot and in the table. Ctrl+Click for selecting a range of points.
@@ -4672,129 +4689,129 @@ Aby zmienić zakres osi, należy kliknąć i przeciągnąć myszą. Aby powięks
 Aby przeciągnąć i powiększyć tylko w jedną stronę, należy wybrać osie lub etykiety osi.</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="89"/>
+        <location filename="../PlotDock.ui" line="94"/>
         <source>Line type:</source>
         <translation>Rodzaj linii:</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="130"/>
-        <location filename="../PlotDock.ui" line="189"/>
+        <location filename="../PlotDock.ui" line="135"/>
+        <location filename="../PlotDock.ui" line="194"/>
         <source>None</source>
         <translation>Brak</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="135"/>
+        <location filename="../PlotDock.ui" line="140"/>
         <source>Line</source>
         <translation>Linia</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="140"/>
+        <location filename="../PlotDock.ui" line="145"/>
         <source>StepLeft</source>
         <translation>Krok w lewo</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="145"/>
+        <location filename="../PlotDock.ui" line="150"/>
         <source>StepRight</source>
         <translation>Krok w prawo</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="150"/>
+        <location filename="../PlotDock.ui" line="155"/>
         <source>StepCenter</source>
         <translation>Krok do środka</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="155"/>
+        <location filename="../PlotDock.ui" line="160"/>
         <source>Impulse</source>
         <translation>Impuls</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="163"/>
+        <location filename="../PlotDock.ui" line="168"/>
         <source>Point shape:</source>
         <translation>Kształt punktu:</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="194"/>
+        <location filename="../PlotDock.ui" line="199"/>
         <source>Cross</source>
         <translation>Krzyż</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="199"/>
+        <location filename="../PlotDock.ui" line="204"/>
         <source>Plus</source>
         <translation>Plus</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="204"/>
+        <location filename="../PlotDock.ui" line="209"/>
         <source>Circle</source>
         <translation>Kółko</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="209"/>
+        <location filename="../PlotDock.ui" line="214"/>
         <source>Disc</source>
         <translation>Dysk</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="214"/>
+        <location filename="../PlotDock.ui" line="219"/>
         <source>Square</source>
         <translation>Kwadrat</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="219"/>
+        <location filename="../PlotDock.ui" line="224"/>
         <source>Diamond</source>
         <translation>Diament</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="224"/>
+        <location filename="../PlotDock.ui" line="229"/>
         <source>Star</source>
         <translation>Gwiazda</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="229"/>
+        <location filename="../PlotDock.ui" line="234"/>
         <source>Triangle</source>
         <translation>Trójkąt</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="234"/>
+        <location filename="../PlotDock.ui" line="239"/>
         <source>TriangleInverted</source>
         <translation>Trójkąt odwrócony</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="239"/>
+        <location filename="../PlotDock.ui" line="244"/>
         <source>CrossSquare</source>
         <translation>Krzyż w kwadracie</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="244"/>
+        <location filename="../PlotDock.ui" line="249"/>
         <source>PlusSquare</source>
         <translation>Plus w kwadracie</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="249"/>
+        <location filename="../PlotDock.ui" line="254"/>
         <source>CrossCircle</source>
         <translation>Krzyż w okręgu</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="254"/>
+        <location filename="../PlotDock.ui" line="259"/>
         <source>PlusCircle</source>
         <translation>Plus w okręgu</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="259"/>
+        <location filename="../PlotDock.ui" line="264"/>
         <source>Peace</source>
         <translation>Znak pokoju</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="280"/>
+        <location filename="../PlotDock.ui" line="285"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save current plot...&lt;/p&gt;&lt;p&gt;File format chosen by extension (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zapisz bieżący wykres...&lt;/p&gt;&lt;p&gt;Format pliku wybierany na podstawie rozszerzenia (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="283"/>
+        <location filename="../PlotDock.ui" line="288"/>
         <source>Save current plot...</source>
         <translation>Zapisz bieżący wykres…</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="309"/>
-        <location filename="../PlotDock.cpp" line="474"/>
+        <location filename="../PlotDock.ui" line="314"/>
+        <location filename="../PlotDock.cpp" line="545"/>
         <source>Load all data and redraw plot</source>
         <translation>Wczytaj wszystkie dane i przerysuj wykres</translation>
     </message>
@@ -4819,72 +4836,72 @@ Aby przeciągnąć i powiększyć tylko w jedną stronę, należy wybrać osie l
         <translation>Słupki na stosie</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="173"/>
+        <location filename="../PlotDock.cpp" line="178"/>
         <source>Date/Time</source>
         <translation>Data/Czas</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="176"/>
+        <location filename="../PlotDock.cpp" line="181"/>
         <source>Date</source>
         <translation>Data</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="179"/>
+        <location filename="../PlotDock.cpp" line="184"/>
         <source>Time</source>
         <translation>Czas</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="182"/>
-        <location filename="../PlotDock.cpp" line="226"/>
+        <location filename="../PlotDock.cpp" line="187"/>
+        <location filename="../PlotDock.cpp" line="234"/>
         <source>Numeric</source>
         <translation>Liczbowa</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="185"/>
+        <location filename="../PlotDock.cpp" line="190"/>
         <source>Label</source>
         <translation>Podpis</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="189"/>
+        <location filename="../PlotDock.cpp" line="194"/>
         <source>Invalid</source>
         <translation>Nieprawidłowy</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="224"/>
-        <location filename="../PlotDock.cpp" line="443"/>
-        <location filename="../PlotDock.cpp" line="456"/>
+        <location filename="../PlotDock.cpp" line="232"/>
+        <location filename="../PlotDock.cpp" line="503"/>
+        <location filename="../PlotDock.cpp" line="518"/>
         <source>Row #</source>
         <translation>Nr wiersza</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="469"/>
+        <location filename="../PlotDock.cpp" line="540"/>
         <source>Load all data and redraw plot.
 Warning: not all data has been fetched from the table yet due to the partial fetch mechanism.</source>
         <translation>Wczytaj wszystkie dane i przerysuj wykres.
 Uwaga: jeszcze nie wczytano wszystkich danych z tabeli ze względu na mechanizm częściowego wczytywania.</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="555"/>
+        <location filename="../PlotDock.cpp" line="635"/>
         <source>Choose an axis color</source>
         <translation>Wybierz barwę osi</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="589"/>
+        <location filename="../PlotDock.cpp" line="670"/>
         <source>Choose a filename to save under</source>
         <translation>Wybierz nazwę pliku do zapisu</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="590"/>
+        <location filename="../PlotDock.cpp" line="671"/>
         <source>PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;All Files(*)</source>
         <translation>PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;Wszystkie pliki(*)</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="626"/>
+        <location filename="../PlotDock.cpp" line="707"/>
         <source>There are curves in this plot and the selected line style can only be applied to graphs sorted by X. Either sort the table or query by X to remove curves or select one of the styles supported by curves: None or Line.</source>
         <translation>W tym wykresie występują krzywe, a wybrany wygląd linii można zastosować tylko dla wykresów uszeregowanych po X. Uszereguj tabelę lub zapytaj po X, aby usunąć krzywe lub wybierz jeden z wyglądów obsługiwanych przez krzywe: Brak lub Linia.</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="738"/>
+        <location filename="../PlotDock.cpp" line="825"/>
         <source>Loading all remaining data for this table took %1ms.</source>
         <translation>Wczytywanie wszystkich pozostałych danych dla tej tabeli zajęło %1ms.</translation>
     </message>
@@ -5567,18 +5584,18 @@ Można ustawić na 0, aby wyłączyć uzupełnianie.</translation>
         <translation>Pobieraj bazy danych do</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="68"/>
-        <location filename="../PreferencesDialog.cpp" line="630"/>
+        <location filename="../PreferencesDialog.cpp" line="69"/>
+        <location filename="../PreferencesDialog.cpp" line="637"/>
         <source>Choose a directory</source>
         <translation>Wybierz katalog</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="320"/>
+        <location filename="../PreferencesDialog.cpp" line="321"/>
         <source>The language will change after you restart the application.</source>
         <translation>Język zmieni się po ponownym uruchomieniu aplikacji.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="397"/>
+        <location filename="../PreferencesDialog.cpp" line="398"/>
         <source>Select extension file</source>
         <translation>Wybierz plik rozszerzenia</translation>
     </message>
@@ -5587,27 +5604,27 @@ Można ustawić na 0, aby wyłączyć uzupełnianie.</translation>
         <translation type="vanished">Rozszerzenia(*.so *.dll);;Wszystkie pliki(*)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="398"/>
+        <location filename="../PreferencesDialog.cpp" line="399"/>
         <source>Extensions(*.so *.dylib *.dll);;All files(*)</source>
         <translation>Rozszerzenia(*.so *.dylib *.dll);;Wszystkie pliki(*)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="556"/>
+        <location filename="../PreferencesDialog.cpp" line="563"/>
         <source>Import certificate file</source>
         <translation>Importuj plik certyfikatu</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="564"/>
+        <location filename="../PreferencesDialog.cpp" line="571"/>
         <source>No certificates found in this file.</source>
         <translation>Nie znaleziono certyfikatów w tym pliku.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="581"/>
+        <location filename="../PreferencesDialog.cpp" line="588"/>
         <source>Are you sure you want do remove this certificate? All certificate data will be deleted from the application settings!</source>
         <translation>Czy na pewno usunąć ten certyfikat? Wszystkie dane certyfikatu zostaną usunięte z ustawień aplikacji!</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="666"/>
+        <location filename="../PreferencesDialog.cpp" line="673"/>
         <source>Are you sure you want to clear all the saved settings?
 All your preferences will be lost and default values will be used.</source>
         <translation>Czy na pewno wyczyścić wszystkie zapisane ustawienia?
@@ -5929,8 +5946,12 @@ jest brany także z tożsamości.</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="86"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB Browser for SQLite. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to &amp;quot;Generate client certificate&amp;quot; (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB Browser for SQLite Preferences. Click the button to add a new certificate to DB Browser for SQLite and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB4S. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to create a DB4S certificate (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB4S Preferences. Click the button to add a new certificate to DB4S and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;W tym oknie, można dodać zdalne bazy danych ze strony sieciowej dbhub.io do DB4S. Aby to zrobić, należy posiadać tożsamość:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Zaloguj się na stronie dbhub.io (po podaniu danych dostępowych GitHub lub dowolnych innych)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Kliknij na przycisku, aby utworzyć certyfikat DB4S (to twoja tożsamość). Otrzymasz plik certyfikatu (zapisz go na swoim dysku).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Przejdź do karty Zdalnych w Ustawieniach DB4S. Kliknij na przycisk, aby dodać nowy certyfikat do DB4S i wskaż dopiero co pobrany plik certyfikatu.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Od teraz okno Zdalne pokazuje twoją tożsamość i możesz dodawać zdalne bazy danych.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;W tym oknie, można dodać zdalne bazy danych ze strony sieciowej dbhub.io do DB4S. Aby to zrobić, należy posiadać tożsamość:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Zaloguj się na stronie dbhub.io (po podaniu danych dostępowych GitHub lub dowolnych innych)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Kliknij na przycisku, aby utworzyć certyfikat DB4S (to twoja tożsamość). Otrzymasz plik certyfikatu (zapisz go na swoim dysku).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Przejdź do karty Zdalnych w Ustawieniach DB4S. Kliknij na przycisk, aby dodać nowy certyfikat do DB4S i wskaż dopiero co pobrany plik certyfikatu.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Od teraz okno Zdalne pokazuje twoją tożsamość i możesz dodawać zdalne bazy danych.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="127"/>
@@ -6575,12 +6596,12 @@ Przyciśnij %3Shift i kliknij, aby tu przejść</translation>
         <translation>uzyskiwanie listy kolumn</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="1023"/>
+        <location filename="../sqlitetablemodel.cpp" line="1024"/>
         <source>Fetching data...</source>
         <translation>Uzyskiwanie danych…</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="1024"/>
+        <location filename="../sqlitetablemodel.cpp" line="1025"/>
         <source>Cancel</source>
         <translation>Zaniechaj</translation>
     </message>
@@ -6722,7 +6743,7 @@ Przyciśnij %3Shift i kliknij, aby tu przejść</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="403"/>
-        <location filename="../TableBrowser.ui" line="1054"/>
+        <location filename="../TableBrowser.ui" line="1051"/>
         <source>Replace</source>
         <translation>Zastąp</translation>
     </message>
@@ -6884,7 +6905,7 @@ Przyciśnij %3Shift i kliknij, aby tu przejść</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="633"/>
-        <location filename="../TableBrowser.cpp" line="1012"/>
+        <location filename="../TableBrowser.cpp" line="1023"/>
         <source>Delete Record</source>
         <translation>Usuń rekord</translation>
     </message>
@@ -6986,7 +7007,7 @@ Przyciśnij %3Shift i kliknij, aby tu przejść</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="735"/>
-        <location filename="../TableBrowser.cpp" line="1371"/>
+        <location filename="../TableBrowser.cpp" line="1382"/>
         <source>Set encoding</source>
         <translation>Ustaw kodowanie</translation>
     </message>
@@ -7088,136 +7109,134 @@ Przyciśnij %3Shift i kliknij, aby tu przejść</translation>
         <translation>Otwórz pasek wyszukiwania, który umożliwi wyszukiwanie wartości w poniższym widoku tabeli.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.ui" line="845"/>
         <source>Ctrl+F</source>
-        <translation>Ctrl+F</translation>
+        <translation type="vanished">Ctrl+F</translation>
     </message>
     <message>
+        <location filename="../TableBrowser.ui" line="854"/>
         <location filename="../TableBrowser.ui" line="857"/>
-        <location filename="../TableBrowser.ui" line="860"/>
         <source>Bold</source>
         <translation>Pogrubienie</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.ui" line="863"/>
+        <location filename="../TableBrowser.ui" line="860"/>
         <source>Ctrl+B</source>
         <translation>Ctrl+B</translation>
     </message>
     <message>
+        <location filename="../TableBrowser.ui" line="872"/>
         <location filename="../TableBrowser.ui" line="875"/>
-        <location filename="../TableBrowser.ui" line="878"/>
         <source>Italic</source>
         <translation>Kursywa</translation>
     </message>
     <message>
+        <location filename="../TableBrowser.ui" line="887"/>
         <location filename="../TableBrowser.ui" line="890"/>
-        <location filename="../TableBrowser.ui" line="893"/>
         <source>Underline</source>
         <translation>Podkreślenie</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.ui" line="896"/>
+        <location filename="../TableBrowser.ui" line="893"/>
         <source>Ctrl+U</source>
         <translation>Ctrl+U</translation>
     </message>
     <message>
+        <location filename="../TableBrowser.ui" line="905"/>
         <location filename="../TableBrowser.ui" line="908"/>
-        <location filename="../TableBrowser.ui" line="911"/>
         <source>Align Right</source>
         <translation>Wyrównaj do prawej</translation>
     </message>
     <message>
+        <location filename="../TableBrowser.ui" line="920"/>
         <location filename="../TableBrowser.ui" line="923"/>
-        <location filename="../TableBrowser.ui" line="926"/>
         <source>Align Left</source>
         <translation>Wyrównaj do lewej</translation>
     </message>
     <message>
+        <location filename="../TableBrowser.ui" line="935"/>
         <location filename="../TableBrowser.ui" line="938"/>
-        <location filename="../TableBrowser.ui" line="941"/>
         <source>Center Horizontally</source>
         <translation>Wyśrodkuj w poziomie</translation>
     </message>
     <message>
+        <location filename="../TableBrowser.ui" line="950"/>
         <location filename="../TableBrowser.ui" line="953"/>
-        <location filename="../TableBrowser.ui" line="956"/>
         <source>Justify</source>
         <translation>Justowanie</translation>
     </message>
     <message>
+        <location filename="../TableBrowser.ui" line="962"/>
         <location filename="../TableBrowser.ui" line="965"/>
-        <location filename="../TableBrowser.ui" line="968"/>
         <source>Edit Conditional Formats...</source>
         <translation>Edytuj formatowanie warunkowe...</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.ui" line="971"/>
+        <location filename="../TableBrowser.ui" line="968"/>
         <source>Edit conditional formats for the current column</source>
         <translation>Zmień formatowania warunkowe dla bieżącej kolumny</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.ui" line="980"/>
+        <location filename="../TableBrowser.ui" line="977"/>
         <source>Clear Format</source>
         <translation>Wyczyść format</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.ui" line="983"/>
+        <location filename="../TableBrowser.ui" line="980"/>
         <source>Clear All Formats</source>
         <translation>Wyczyść wszystkie formatowania</translation>
     </message>
     <message>
+        <location filename="../TableBrowser.ui" line="983"/>
         <location filename="../TableBrowser.ui" line="986"/>
-        <location filename="../TableBrowser.ui" line="989"/>
         <source>Clear all cell formatting from selected cells and all conditional formats from selected columns</source>
         <translation>Wyczyść wszystkie formatowania warunkowe dla zaznaczonej komórki i wszystkie formatowania warunkowe dla zaznaczonych kolumn</translation>
     </message>
     <message>
+        <location filename="../TableBrowser.ui" line="995"/>
         <location filename="../TableBrowser.ui" line="998"/>
-        <location filename="../TableBrowser.ui" line="1001"/>
         <source>Font Color</source>
         <translation>Barwa czcionki</translation>
     </message>
     <message>
+        <location filename="../TableBrowser.ui" line="1007"/>
         <location filename="../TableBrowser.ui" line="1010"/>
-        <location filename="../TableBrowser.ui" line="1013"/>
         <source>Background Color</source>
         <translation>Barwa tła</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.ui" line="1025"/>
+        <location filename="../TableBrowser.ui" line="1022"/>
         <source>Toggle Format Toolbar</source>
         <translation>Pokaż pasek formatowania</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.ui" line="1028"/>
+        <location filename="../TableBrowser.ui" line="1025"/>
         <source>Show/hide format toolbar</source>
         <translation>Pokaż/ukryj pasek formatu</translation>
     </message>
     <message>
+        <location filename="../TableBrowser.ui" line="1028"/>
         <location filename="../TableBrowser.ui" line="1031"/>
-        <location filename="../TableBrowser.ui" line="1034"/>
         <source>This button shows or hides the formatting toolbar of the Data Browser</source>
         <translation>Ten przycisk pokazuje lub ukrywa pasek formatowania dla przeglądarki danych</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.ui" line="1039"/>
+        <location filename="../TableBrowser.ui" line="1036"/>
         <source>Select column</source>
         <translation>Zaznacz kolumnę</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.ui" line="1042"/>
+        <location filename="../TableBrowser.ui" line="1039"/>
         <source>Ctrl+Space</source>
         <translation>Ctrl+Spacja</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.ui" line="1057"/>
+        <location filename="../TableBrowser.ui" line="1054"/>
         <source>Replace text in cells</source>
         <translation>Zastąp tekst w komórkach</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.ui" line="1060"/>
         <source>Ctrl+H</source>
-        <translation>Ctrl+H</translation>
+        <translation type="vanished">Ctrl+H</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="42"/>
@@ -7225,12 +7244,12 @@ Przyciśnij %3Shift i kliknij, aby tu przejść</translation>
         <translation>Odfiltruj we wszystkich kolumnach</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="97"/>
+        <location filename="../TableBrowser.cpp" line="102"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message numerus="yes">
-        <location filename="../TableBrowser.cpp" line="434"/>
+        <location filename="../TableBrowser.cpp" line="443"/>
         <source>%n row(s)</source>
         <translation>
             <numerusform>%n wiersz</numerusform>
@@ -7239,7 +7258,7 @@ Przyciśnij %3Shift i kliknij, aby tu przejść</translation>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../TableBrowser.cpp" line="436"/>
+        <location filename="../TableBrowser.cpp" line="445"/>
         <source>, %n column(s)</source>
         <translation>
             <numerusform>, %n kolumna</numerusform>
@@ -7248,101 +7267,101 @@ Przyciśnij %3Shift i kliknij, aby tu przejść</translation>
         </translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="449"/>
+        <location filename="../TableBrowser.cpp" line="458"/>
         <source>. Sum: %1; Average: %2; Min: %3; Max: %4</source>
         <translation>. Suma: %1; Średnia: %2; Min: %3; Maks: %4</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="667"/>
+        <location filename="../TableBrowser.cpp" line="676"/>
         <source>Conditional formats for &quot;%1&quot;</source>
         <translation>Formatowania warunkowe dla &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="736"/>
+        <location filename="../TableBrowser.cpp" line="747"/>
         <source>determining row count...</source>
         <translation>określanie liczby wierszy…</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="739"/>
+        <location filename="../TableBrowser.cpp" line="750"/>
         <source>%1 - %2 of &gt;= %3</source>
         <translation>%1 - %2 z &gt;= %3</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="742"/>
+        <location filename="../TableBrowser.cpp" line="753"/>
         <source>%1 - %2 of %3</source>
         <translation>%1 - %2 z %3</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="888"/>
+        <location filename="../TableBrowser.cpp" line="899"/>
         <source>Please enter a pseudo-primary key in order to enable editing on this view. This should be the name of a unique column in the view.</source>
         <translation>Podaj pseudo-główny klucz, aby rozpocząć edytowanie w tym widoku. Powinna to być nazwa niepowtarzalnej kolumny w widoku.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1010"/>
+        <location filename="../TableBrowser.cpp" line="1021"/>
         <source>Delete Records</source>
         <translation>Usuń rekordy</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1157"/>
+        <location filename="../TableBrowser.cpp" line="1168"/>
         <source>Duplicate records</source>
         <translation>Powielone rekordy</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1157"/>
+        <location filename="../TableBrowser.cpp" line="1168"/>
         <source>Duplicate record</source>
         <translation>Powiel rekord</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1161"/>
+        <location filename="../TableBrowser.cpp" line="1172"/>
         <source>Ctrl+&quot;</source>
         <translation>Ctrl+&quot;</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1180"/>
+        <location filename="../TableBrowser.cpp" line="1191"/>
         <source>Adjust rows to contents</source>
         <translation>Dostosuj wiersze do treści</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1235"/>
+        <location filename="../TableBrowser.cpp" line="1246"/>
         <source>Error deleting record:
 %1</source>
         <translation>Błąd usuwania rekordu:
 %1</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1244"/>
+        <location filename="../TableBrowser.cpp" line="1255"/>
         <source>Please select a record first</source>
         <translation>Najpierw wybierz rekord</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1351"/>
+        <location filename="../TableBrowser.cpp" line="1362"/>
         <source>There is no filter set for this table. View will not be created.</source>
         <translation>Nie ustawiono filtru dla tej tabeli. Widok nie zostanie utworzony.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1367"/>
+        <location filename="../TableBrowser.cpp" line="1378"/>
         <source>Please choose a new encoding for all tables.</source>
         <translation>Wybierz nowe kodowanie dla wszystkich tabel.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1369"/>
+        <location filename="../TableBrowser.cpp" line="1380"/>
         <source>Please choose a new encoding for this table.</source>
         <translation>Wybierz kodowanie dla tej tabeli.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1372"/>
+        <location filename="../TableBrowser.cpp" line="1383"/>
         <source>%1
 Leave the field empty for using the database encoding.</source>
         <translation>%1
 Pozostaw pole pustym, aby użyć kodowania bazy danych.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1384"/>
+        <location filename="../TableBrowser.cpp" line="1395"/>
         <source>This encoding is either not valid or not supported.</source>
         <translation>To kodowanie jest nieprawidłowe lub nieobsługiwane</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1555"/>
+        <location filename="../TableBrowser.cpp" line="1566"/>
         <source>%1 replacement(s) made.</source>
         <translation>Wykonano %1 zastąpień</translation>
     </message>
