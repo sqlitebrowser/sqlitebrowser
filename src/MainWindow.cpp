@@ -221,6 +221,28 @@ void MainWindow::init()
           closeSqlTab(ui->tabSqlAreas->currentIndex());
     });
 
+    // Shortcuts for advancing and going back in the SQL Execution area tabs, independently of the widget which has focus.
+    // This emulates the shortcuts provided by QTabWidget.
+    QShortcut* shortcutNextTab = new QShortcut(QKeySequence(tr("Ctrl+Tab")), ui->tabSqlAreas, nullptr, nullptr, Qt::WidgetWithChildrenShortcut);
+    connect(shortcutNextTab, &QShortcut::activated, this, [this]() {
+        if(ui->tabSqlAreas->currentIndex() == ui->tabSqlAreas->count() - 1)
+            ui->tabSqlAreas->setCurrentIndex(0);
+        else
+            ui->tabSqlAreas->setCurrentIndex(ui->tabSqlAreas->currentIndex() + 1);
+        SqlExecutionArea* sqlWidget = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
+        sqlWidget->getEditor()->setFocus();
+    });
+
+    QShortcut* shortcutPreviousTab = new QShortcut(QKeySequence(tr("Ctrl+Shift+Tab")), ui->tabSqlAreas, nullptr, nullptr, Qt::WidgetWithChildrenShortcut);
+    connect(shortcutPreviousTab, &QShortcut::activated, this, [this]() {
+        if(ui->tabSqlAreas->currentIndex() == 0)
+            ui->tabSqlAreas->setCurrentIndex(ui->tabSqlAreas->count() - 1);
+        else
+            ui->tabSqlAreas->setCurrentIndex(ui->tabSqlAreas->currentIndex() - 1);
+        SqlExecutionArea* sqlWidget = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
+        sqlWidget->getEditor()->setFocus();
+    });
+
     // Create the actions for the recently opened dbs list
     for(int i = 0; i < MaxRecentFiles; ++i) {
         recentFileActs[i] = new QAction(this);
