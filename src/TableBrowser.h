@@ -35,7 +35,7 @@ struct BrowseDataTableSettings
     bool showRowid;
     QString encoding;
     QString plotXAxis;
-    QMap<QString, PlotDock::PlotSettings> plotYAxes;
+    QList<QMap<QString, PlotDock::PlotSettings>> plotYAxes;
     QString unlockViewPk;
     QMap<int, bool> hiddenColumns;
     std::vector<QString> globalFilters;
@@ -44,6 +44,7 @@ struct BrowseDataTableSettings
         showRowid(false),
         unlockViewPk("_rowid_")
     {
+      plotYAxes = {QMap<QString, PlotDock::PlotSettings>(), QMap<QString, PlotDock::PlotSettings>()};
     }
 
     friend QDataStream& operator>>(QDataStream& stream, BrowseDataTableSettings& object)
@@ -64,7 +65,7 @@ struct BrowseDataTableSettings
         if(stream.atEnd())
             return stream;
         stream >> object.plotXAxis;
-        stream >> object.plotYAxes;
+        stream >> object.plotYAxes[0];
         stream >> object.unlockViewPk;
 
         // Project files from versions before 3.11.0 didn't have these fields

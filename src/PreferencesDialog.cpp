@@ -13,6 +13,7 @@
 #include <QMessageBox>
 #include <QKeyEvent>
 #include <QStandardPaths>
+#include <QStyledItemDelegate>
 
 PreferencesDialog::PreferencesDialog(QWidget* parent, Tabs tab)
     : QDialog(parent),
@@ -470,6 +471,12 @@ void PreferencesDialog::fillLanguageBox()
     ui->languageComboBox->removeItem(index);
     ui->languageComboBox->insertItem(0, chosenIcon, chosenLanguage, chosenLocale);
     ui->languageComboBox->setCurrentIndex(0);
+
+    // This is a workaround needed for QDarkStyleSheet.
+    // See https://github.com/ColinDuquesnoy/QDarkStyleSheet/issues/169
+    QStyledItemDelegate* styledItemDelegate = new QStyledItemDelegate(ui->languageComboBox);
+    ui->languageComboBox->setItemDelegate(styledItemDelegate);
+
 }
 
 void PreferencesDialog::loadColorSetting(QFrame *frame, const std::string& settingName)

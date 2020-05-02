@@ -33,7 +33,7 @@
        <bool>true</bool>
       </property>
       <property name="columnCount">
-       <number>4</number>
+       <number>5</number>
       </property>
       <attribute name="headerDefaultSectionSize">
        <number>100</number>
@@ -53,7 +53,12 @@
       </column>
       <column>
        <property name="text">
-        <string>Y</string>
+        <string>Y1</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Y2</string>
        </property>
       </column>
       <column>

@@ -49,24 +49,12 @@
             <Merge Id="VCRedist" SourceFile="$(var.VCRedistPath)\$(var.VCRedistFile)" DiskId="1" Language="0" />
             <Directory Id="$(var.ProgramFilesFolder)">
                 <Directory Id="INSTALLDIR" Name="$(var.Name)">
-                    <!--
-                    This DLL is required when using Qt 5.10 and higher to show Windows Vista style GUI. The check for
-                    64-bit is required here since we are using Qt 5.7 for the 32-bit build. This file does not exist
-                    on earlier version of Qt. If Qt 5.10 is used for both 32-bit and 64-bit then this check can be removed.
-
-                    See https://bugreports.qt.io/browse/QTBUG-65177
-                    -->
-                    <?if $(sys.BUILDARCH)="x64"?>
                     <Directory Id="styles" Name="styles">
                         <Component><File Source="$(var.QtPath)\plugins\styles\qwindowsvistastyle.dll" /></Component>
                     </Directory>
-                    <?endif?>
-                    <!-- This plugin is not needed for the 32-bit version which is built with Qt 5.7. -->
-                    <?if $(sys.BUILDARCH)="x64"?>
                     <Directory Id="bearer" Name="bearer">
                         <Component><File Source="$(var.QtPath)\plugins\bearer\qgenericbearer.dll" /></Component>
                     </Directory>
-                    <?endif?>
                     <Directory Id="extensions" Name="extensions">
                         <Component><File Source="$(var.SQLitePath)\math.dll" /></Component>
                         <Component><File Source="$(var.SQLitePath)\formats.dll" /></Component>
@@ -100,8 +88,14 @@
                     <Component><File Source="$(var.QtPath)\bin\Qt5PrintSupport.dll" /></Component>
                     <Component><File Source="$(var.QtPath)\bin\Qt5Widgets.dll" /></Component>
                     <Component><File Source="$(var.QtPath)\bin\Qt5Xml.dll" /></Component>
-                    <Component><File Source="$(var.OpenSSLPath)\libeay32.dll" /></Component>
-                    <Component><File Source="$(var.OpenSSLPath)\ssleay32.dll" /></Component>
+		    <!-- OpenSSL 1.1.1 -->
+                    <?if $(sys.BUILDARCH)="x64"?>
+                        <Component><File Id="libcrypto.dll" Source="$(var.OpenSSLPath)\libcrypto-1_1-x64.dll" /></Component>
+                        <Component><File Id="libssl.dll" Source="$(var.OpenSSLPath)\libssl-1_1-x64.dll" /></Component>
+                    <?elseif $(sys.BUILDARCH)="x86"?>
+                        <Component><File Id="libcrypto.dll" Source="$(var.OpenSSLPath)\libcrypto-1_1.dll" /></Component>
+                        <Component><File Id="libssl.dll" Source="$(var.OpenSSLPath)\libssl-1_1.dll" /></Component>
+                    <?endif?>
                     <Component><File Source="$(var.SQLCipherPath)\sqlcipher.dll" /></Component>
                     <Component><File Source="$(var.SQLitePath)\sqlite3.dll" /></Component>
                     <Component><File Source="$(var.SQLiteExePath)\DB Browser for SQLite.exe" Checksum="yes" /></Component>
@@ -164,9 +158,7 @@
             <ComponentGroupRef Id="TranslationsGroup" />
 
             <!-- Bearer -->
-            <?if $(sys.BUILDARCH)="x64"?>
             <ComponentRef Id="qgenericbearer.dll" />
-            <?endif?>
             <!-- Plugins -->
             <ComponentRef Id="qgif.dll" />
             <ComponentRef Id="qicns.dll" />
@@ -180,9 +172,7 @@
             <!-- Platforms -->
             <ComponentRef Id="qwindows.dll" />
             <!-- Windows Vista Style -->
-            <?if $(sys.BUILDARCH)="x64"?>
                 <ComponentRef Id="qwindowsvistastyle.dll" />
-            <?endif?>
             <!-- Printer -->
             <ComponentRef Id="windowsprintersupport.dll" />
             <!-- Licenses -->
@@ -197,8 +187,8 @@
             <ComponentRef Id="Qt5Widgets.dll" />
             <ComponentRef Id="Qt5Xml.dll" />
             <!-- OpenSSL -->
-            <ComponentRef Id="libeay32.dll" />
-            <ComponentRef Id="ssleay32.dll" />
+            <ComponentRef Id="libcrypto.dll" />
+            <ComponentRef Id="libssl.dll" />
             <!-- SQLite & SQLCipher -->
             <ComponentRef Id="sqlcipher.dll" />
             <ComponentRef Id="sqlite3.dll" />

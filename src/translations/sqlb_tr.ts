@@ -24,6 +24,10 @@
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="19"/>
+        <source>SQLCipher Version %1 (based on SQLite %2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../AboutDialog.cpp" line="21"/>
         <source>Version </source>
         <translation>Versiyon </translation>
@@ -613,7 +617,7 @@ Bu veritabanı için herhangi bir başka ayar daha yapılmışsa, bu bilgileri d
         <translation>SQL yürütülüyor...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1070"/>
+        <location filename="../sqlitedb.cpp" line="1069"/>
         <source>Action cancelled.</source>
         <translation>İşlem iptal edildi.</translation>
     </message>
@@ -658,93 +662,93 @@ Aborting execution.</source>
         <translation>Hiçbir veritabanı dosyası açılmamış</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1141"/>
-        <location filename="../sqlitedb.cpp" line="1154"/>
+        <location filename="../sqlitedb.cpp" line="1139"/>
+        <location filename="../sqlitedb.cpp" line="1152"/>
         <source>Error in statement #%1: %2.
 Aborting execution%3.</source>
         <translation>Belirtilen ifadede hata oluştu: #%1: %2
 Yürütme durduruluyor %3.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1144"/>
-        <location filename="../sqlitedb.cpp" line="1157"/>
+        <location filename="../sqlitedb.cpp" line="1142"/>
+        <location filename="../sqlitedb.cpp" line="1155"/>
         <source> and rolling back</source>
         <translation> ve işlem geri alınıyor</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1203"/>
+        <location filename="../sqlitedb.cpp" line="1201"/>
         <source>didn&apos;t receive any output from %1</source>
         <translation>%1 sorgusundan herhangi bir çıktı alınamadı</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1209"/>
+        <location filename="../sqlitedb.cpp" line="1207"/>
         <source>could not execute command: %1</source>
         <translation>komut işletilemedi: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1367"/>
+        <location filename="../sqlitedb.cpp" line="1369"/>
         <source>Cannot delete this object</source>
         <translation>Bu obje silinemiyor</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1411"/>
+        <location filename="../sqlitedb.cpp" line="1413"/>
         <source>Cannot set data on this object</source>
         <translation>Bu objeye veri atanamıyor</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1518"/>
-        <location filename="../sqlitedb.cpp" line="1525"/>
+        <location filename="../sqlitedb.cpp" line="1520"/>
+        <location filename="../sqlitedb.cpp" line="1527"/>
         <source>A table with the name &apos;%1&apos; already exists in schema &apos;%2&apos;.</source>
         <translation>&apos;%2&apos; şemasında &apos;%1&apos; isimli tablo zaten mevcut.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1534"/>
+        <location filename="../sqlitedb.cpp" line="1536"/>
         <source>No table with name &apos;%1&apos; exists in schema &apos;%2&apos;.</source>
         <translation>&apos;%2&apos; şeması içerisinde &apos;%1&apos; isminde bir tablo yok.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1544"/>
-        <location filename="../sqlitedb.cpp" line="1565"/>
+        <location filename="../sqlitedb.cpp" line="1546"/>
+        <location filename="../sqlitedb.cpp" line="1567"/>
         <source>Cannot find column %1.</source>
         <translation>%1 sütunu bulunamadı.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1578"/>
+        <location filename="../sqlitedb.cpp" line="1580"/>
         <source>Creating savepoint failed. DB says: %1</source>
         <translation>Kayıt noktası oluşturulamadı. Veritabanı mesajı: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1641"/>
+        <location filename="../sqlitedb.cpp" line="1643"/>
         <source>Renaming the column failed. DB says:
 %1</source>
         <translation>Sütun yeniden adlandırılamadı. Veritabanı motoru mesajı:
 %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1669"/>
-        <location filename="../sqlitedb.cpp" line="1821"/>
+        <location filename="../sqlitedb.cpp" line="1671"/>
+        <location filename="../sqlitedb.cpp" line="1823"/>
         <source>Releasing savepoint failed. DB says: %1</source>
         <translation>Kayıt noktası serbest bırakılamadı. Veritabanı motoru mesajı: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1688"/>
+        <location filename="../sqlitedb.cpp" line="1690"/>
         <source>Creating new table failed. DB says: %1</source>
         <translation>Veri tabanı oluşturulamadı. Veritabanı mesajı: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1720"/>
+        <location filename="../sqlitedb.cpp" line="1722"/>
         <source>Copying data to new table failed. DB says:
 %1</source>
         <translation>Yeni tabloya veri kopyalanamadı. Veritabanı mesajı: 
 %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1787"/>
+        <location filename="../sqlitedb.cpp" line="1789"/>
         <source>Deleting old table failed. DB says: %1</source>
         <translation>Eski tablolar silinemedi: Veritabanı mesajı: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1857"/>
+        <location filename="../sqlitedb.cpp" line="1859"/>
         <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.
 Message from database engine:
 %3</source>
@@ -753,7 +757,7 @@ Veritabanı motoru mesajı:
 %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1952"/>
+        <location filename="../sqlitedb.cpp" line="1954"/>
         <source>could not get list of db objects: %1</source>
         <translation>veritabanı objelerinin listesi alınamadı: %1</translation>
     </message>
@@ -779,7 +783,7 @@ Veritabanı motoru mesajı:
         <translation type="vanished">Sütunu Yeniden Adlandırma: Eski veritabanı silme işlemi başarısız. veritabanı mesajı: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1812"/>
+        <location filename="../sqlitedb.cpp" line="1814"/>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 
 </source>
@@ -801,17 +805,17 @@ Veritabanı motoru mesajı:
         <translation type="vanished">... &lt;dize ikili veri içeriyor, günlüğe yazılamadı&gt; ...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1958"/>
+        <location filename="../sqlitedb.cpp" line="1960"/>
         <source>could not get list of databases: %1</source>
         <translation>veri tabanı listesi alınamadı: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="2070"/>
+        <location filename="../sqlitedb.cpp" line="2072"/>
         <source>Error loading extension: %1</source>
         <translation>Eklenti yüklenirken hata oluştu: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="2095"/>
+        <location filename="../sqlitedb.cpp" line="2097"/>
         <source>could not get column information</source>
         <translation>sütun bilgisi alınamadı</translation>
     </message>
@@ -836,12 +840,12 @@ Veritabanı motoru mesajı:
         <translation type="vanished">pragma komutu yürütülemedi: %1, %2</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1986"/>
+        <location filename="../sqlitedb.cpp" line="1988"/>
         <source>Error setting pragma %1 to %2: %3</source>
         <translation>Belirtilen pragma ayarlanırken hata oluştu: %1 &gt; %2: %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="2032"/>
+        <location filename="../sqlitedb.cpp" line="2034"/>
         <source>File not found.</source>
         <translation>Dosya bulunamadı.</translation>
     </message>
@@ -2177,12 +2181,12 @@ Do you want to insert it anyway?</source>
 <context>
     <name>FilterLineEdit</name>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="11"/>
+        <location filename="../FilterLineEdit.cpp" line="15"/>
         <source>Filter</source>
         <translation>Filtre</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="25"/>
+        <location filename="../FilterLineEdit.cpp" line="29"/>
         <source>These input fields allow you to perform quick filters in the currently selected table.
 By default, the rows containing the input text are filtered out.
 The following operators are also supported:
@@ -2209,92 +2213,92 @@ x~y	Aralık: değerler x ve y arasında
 /regexp/	Kurallı ifadelerle(RegExp) eşleşen değerler</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="182"/>
+        <location filename="../FilterLineEdit.cpp" line="186"/>
         <source>Clear All Conditional Formats</source>
         <translation>Tüm Koşullu Biçimleri Temizle</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="187"/>
+        <location filename="../FilterLineEdit.cpp" line="191"/>
         <source>Use for Conditional Format</source>
         <translation>Koşullu Biçim için Kullan</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="192"/>
+        <location filename="../FilterLineEdit.cpp" line="196"/>
         <source>Edit Conditional Formats...</source>
         <translation>Koşullu Biçimleri Düzenle...</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="112"/>
+        <location filename="../FilterLineEdit.cpp" line="116"/>
         <source>Set Filter Expression</source>
         <translation>Filtre İfadesi Ayarla</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="114"/>
+        <location filename="../FilterLineEdit.cpp" line="118"/>
         <source>What&apos;s This?</source>
         <translation>Bu nedir?</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="119"/>
+        <location filename="../FilterLineEdit.cpp" line="123"/>
         <source>Is NULL</source>
         <translation>NULL mu</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="124"/>
+        <location filename="../FilterLineEdit.cpp" line="128"/>
         <source>Is not NULL</source>
         <translation>NULL değil mi</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="129"/>
+        <location filename="../FilterLineEdit.cpp" line="133"/>
         <source>Is empty</source>
         <translation>Boş mu</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="134"/>
+        <location filename="../FilterLineEdit.cpp" line="138"/>
         <source>Is not empty</source>
         <translation>Boş değil mi</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="139"/>
+        <location filename="../FilterLineEdit.cpp" line="143"/>
         <source>Not containing...</source>
         <translation>İçermiyor...</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="143"/>
+        <location filename="../FilterLineEdit.cpp" line="147"/>
         <source>Equal to...</source>
         <translation>Şuna eşit...</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="147"/>
+        <location filename="../FilterLineEdit.cpp" line="151"/>
         <source>Not equal to...</source>
         <translation>Şuna eşit değil...</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="151"/>
+        <location filename="../FilterLineEdit.cpp" line="155"/>
         <source>Greater than...</source>
         <translation>Büyüktür...</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="155"/>
+        <location filename="../FilterLineEdit.cpp" line="159"/>
         <source>Less than...</source>
         <translation>Küçüktür...</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="159"/>
+        <location filename="../FilterLineEdit.cpp" line="163"/>
         <source>Greater or equal...</source>
         <translation>Büyük eşit...</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="163"/>
+        <location filename="../FilterLineEdit.cpp" line="167"/>
         <source>Less or equal...</source>
         <translation>Küçük eşit...</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="167"/>
+        <location filename="../FilterLineEdit.cpp" line="171"/>
         <source>In range...</source>
         <translation>Aralıkta mı...</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="172"/>
+        <location filename="../FilterLineEdit.cpp" line="176"/>
         <source>Regular expression...</source>
         <translation>Düzenli ifade (RegEx)...</translation>
     </message>
@@ -2407,32 +2411,32 @@ x~y	Aralık: değerler x ve y arasında
         <translation>&amp;Tümünü Değiştir</translation>
     </message>
     <message>
-        <location filename="../FindReplaceDialog.cpp" line="85"/>
+        <location filename="../FindReplaceDialog.cpp" line="86"/>
         <source>The searched text was not found</source>
         <translation>Aranan metin bulunamadı</translation>
     </message>
     <message>
-        <location filename="../FindReplaceDialog.cpp" line="157"/>
+        <location filename="../FindReplaceDialog.cpp" line="158"/>
         <source>The searched text was not found.</source>
         <translation>The searched text was not found.</translation>
     </message>
     <message>
-        <location filename="../FindReplaceDialog.cpp" line="163"/>
+        <location filename="../FindReplaceDialog.cpp" line="164"/>
         <source>The searched text was found one time.</source>
         <translation>Aranan metin bir kez bulundu.</translation>
     </message>
     <message>
-        <location filename="../FindReplaceDialog.cpp" line="169"/>
+        <location filename="../FindReplaceDialog.cpp" line="170"/>
         <source>The searched text was found %1 times.</source>
         <translation>Aranan metin %1 kez bulundu.</translation>
     </message>
     <message>
-        <location filename="../FindReplaceDialog.cpp" line="161"/>
+        <location filename="../FindReplaceDialog.cpp" line="162"/>
         <source>The searched text was replaced one time.</source>
         <translation>Aranan metin bir kez değiştirildi.</translation>
     </message>
     <message>
-        <location filename="../FindReplaceDialog.cpp" line="167"/>
+        <location filename="../FindReplaceDialog.cpp" line="168"/>
         <source>The searched text was replaced %1 times.</source>
         <translation>Aranan metin %1 kez değiştirildi.</translation>
     </message>
@@ -3255,7 +3259,7 @@ x~y	Aralık: değerler x ve y arasında
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="218"/>
-        <location filename="../MainWindow.cpp" line="3326"/>
+        <location filename="../MainWindow.cpp" line="3347"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
@@ -3692,9 +3696,8 @@ SQL deyimlerini Şema sütunundan sürükleyip SQL editörüne veya diğer uygul
         <translation>&amp;Patreon üzerinden Bağış Yapın...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1646"/>
         <source>This button lets you save all the settings associated to the open DB to a DB4S project file</source>
-        <translation>Bu buton, açık veritabanı ile ilişkili tüm ayarları bir DB4S proje dosyasına kaydetmenizi sağlar</translation>
+        <translation type="vanished">Bu buton, açık veritabanı ile ilişkili tüm ayarları bir DB4S proje dosyasına kaydetmenizi sağlar</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1658"/>
@@ -3702,9 +3705,8 @@ SQL deyimlerini Şema sütunundan sürükleyip SQL editörüne veya diğer uygul
         <translation>&amp;Proje Aç...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1667"/>
         <source>This button lets you open a DB4S project file</source>
-        <translation>Bu buton DB4S proje dosyası açmanızı sağlar</translation>
+        <translation type="vanished">Bu buton DB4S proje dosyası açmanızı sağlar</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1682"/>
@@ -3828,6 +3830,16 @@ SQL deyimlerini Şema sütunundan sürükleyip SQL editörüne veya diğer uygul
         <location filename="../MainWindow.ui" line="1901"/>
         <source>Shows or hides the Project toolbar.</source>
         <translation>Proje araç çubuğunu gösterir veya gizler.</translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="1646"/>
+        <source>This button lets you save all the settings associated to the open DB to a DB Browser for SQLite project file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="1667"/>
+        <source>This button lets you open a DB Browser for SQLite project file</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1916"/>
@@ -4181,7 +4193,7 @@ SQL deyimlerini Şema sütunundan sürükleyip SQL editörüne veya diğer uygul
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="492"/>
-        <location filename="../MainWindow.cpp" line="2876"/>
+        <location filename="../MainWindow.cpp" line="2897"/>
         <source>Choose a database file</source>
         <translation>Veritabanı dosyasını seçiniz</translation>
     </message>
@@ -4196,7 +4208,7 @@ SQL deyimlerini Şema sütunundan sürükleyip SQL editörüne veya diğer uygul
     <message>
         <location filename="../MainWindow.cpp" line="553"/>
         <location filename="../MainWindow.cpp" line="1382"/>
-        <location filename="../MainWindow.cpp" line="2731"/>
+        <location filename="../MainWindow.cpp" line="2752"/>
         <source>Choose a filename to save under</source>
         <translation>Kaydetmek için dosya ismi seçiniz</translation>
     </message>
@@ -4419,24 +4431,24 @@ Eğer cevabınız hayır ise biz SQL dosyasındaki verileri geçerli veritabanı
         <translation>Kaynak dosya bulunamadı: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2383"/>
+        <location filename="../MainWindow.cpp" line="2394"/>
         <source>Choose a project file to open</source>
         <translation>Açmak için bir proje dosyası seçin</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2515"/>
+        <location filename="../MainWindow.cpp" line="2526"/>
         <source>This project file is using an old file format because it was created using DB Browser for SQLite version 3.10 or lower. Loading this file format is still fully supported but we advice you to convert all your project files to the new file format because support for older formats might be dropped at some point in the future. You can convert your files by simply opening and re-saving them.</source>
         <translation>Bu proje dosyası eski bir formatta, çünkü DB Browser for SQLite 3.10 veya daha düşük bir sürüm ile oluşturulmuş. Bu dosya biçiminin yüklenmesi hala tam olarak desteklenmektedir, ancak gelecekte daha eski biçimlere yönelik destek azalabileceğinden, tüm proje dosyalarınızı yeni dosya biçimine dönüştürmenizi öneririz. Dosyalarınızı açıp yeniden kaydederek dönüştürebilirsiniz.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2747"/>
+        <location filename="../MainWindow.cpp" line="2768"/>
         <source>Could not open project file for writing.
 Reason: %1</source>
         <translation>Proje dosyası yazmaya açılamadı.
 Nedeni: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3208"/>
+        <location filename="../MainWindow.cpp" line="3229"/>
         <source>Busy (%1)</source>
         <translation>Meşgul (%1)</translation>
     </message>
@@ -4585,32 +4597,32 @@ Are you sure?</source>
 Emin misiniz?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3289"/>
+        <location filename="../MainWindow.cpp" line="3310"/>
         <source>Rename Tab</source>
         <translation>Sekmeyi Yeniden Adlandır</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3295"/>
+        <location filename="../MainWindow.cpp" line="3316"/>
         <source>Duplicate Tab</source>
         <translation>Sekmeyi Klonla</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3325"/>
+        <location filename="../MainWindow.cpp" line="3346"/>
         <source>Close Tab</source>
         <translation>Sekmeyi Kapat</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3344"/>
+        <location filename="../MainWindow.cpp" line="3365"/>
         <source>Opening &apos;%1&apos;...</source>
         <translation>&apos;%1&apos; açılıyor...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3346"/>
+        <location filename="../MainWindow.cpp" line="3367"/>
         <source>There was an error opening &apos;%1&apos;...</source>
         <translation>&apos;%1&apos; açılırken hata oluştu...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3349"/>
+        <location filename="../MainWindow.cpp" line="3370"/>
         <source>Value is not a valid URL or filename: %1</source>
         <translation>Geçersiz bir URL veya dosya adı: %1</translation>
     </message>
@@ -4660,7 +4672,7 @@ Emin misiniz?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2158"/>
-        <location filename="../MainWindow.cpp" line="2511"/>
+        <location filename="../MainWindow.cpp" line="2522"/>
         <source>Don&apos;t show again</source>
         <translation>Bir daha gös&apos;terme</translation>
     </message>
@@ -4675,17 +4687,17 @@ Emin misiniz?</translation>
         <translation>Yeni bir SQLite DB Browser sürümü mevcut (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Lütfen buradan indiriniz: &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2852"/>
+        <location filename="../MainWindow.cpp" line="2873"/>
         <source>Project saved to file &apos;%1&apos;</source>
         <translation>Proje &apos;%1&apos; dosyasına kaydedildi</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3009"/>
+        <location filename="../MainWindow.cpp" line="3030"/>
         <source>Collation needed! Proceed?</source>
         <translation>Harmanlama gerekli! Devam edilsin mi?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3010"/>
+        <location filename="../MainWindow.cpp" line="3031"/>
         <source>A table in this database requires a special collation function &apos;%1&apos; that this application can&apos;t provide without further knowledge.
 If you choose to proceed, be aware bad things can happen to your database.
 Create a backup!</source>
@@ -4694,42 +4706,42 @@ Daha fazla bilgi olmadan program bunu sağlayamaz. Eğer bu şekilde devam edece
 Bir yedek oluşturun!</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3015"/>
+        <location filename="../MainWindow.cpp" line="3036"/>
         <source>creating collation</source>
         <translation>harmanlama oluşturuluyor</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3024"/>
+        <location filename="../MainWindow.cpp" line="3045"/>
         <source>Set a new name for the SQL tab. Use the &apos;&amp;&amp;&apos; character to allow using the following character as a keyboard shortcut.</source>
         <translation>SQL sekmesi için yeni bir ad belirleyin. Aşağıdaki karakteri klavye kısayolu olarak kullanmak için &apos;&amp;&amp;&apos; karakterini kullanın.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3076"/>
+        <location filename="../MainWindow.cpp" line="3097"/>
         <source>Please specify the view name</source>
         <translation>Lütfen görünüm ismini belirtin</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3080"/>
+        <location filename="../MainWindow.cpp" line="3101"/>
         <source>There is already an object with that name. Please choose a different name.</source>
         <translation>Bu isme sahip obje zaten mevcut. Lütfen farklı bir isim seçiniz.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3087"/>
+        <location filename="../MainWindow.cpp" line="3108"/>
         <source>View successfully created.</source>
         <translation>Görünüm başarıyla oluşturuldu.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3089"/>
+        <location filename="../MainWindow.cpp" line="3110"/>
         <source>Error creating view: %1</source>
         <translation>Görünüm oluşturma hatası: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3094"/>
+        <location filename="../MainWindow.cpp" line="3115"/>
         <source>This action will open a new SQL tab for running:</source>
         <translation>Bu işlem çalıştırmak için yeni bir SQL sekmesi açar:</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3096"/>
+        <location filename="../MainWindow.cpp" line="3117"/>
         <source>Press Help for opening the corresponding SQLite reference page.</source>
         <translation>İlgili SQLite referans sayfasını açmak için Yardım&apos;a basın.</translation>
     </message>
@@ -4746,7 +4758,7 @@ Bir yedek oluşturun!</translation>
         <translation type="vanished">Açmak için dosya seçiniz</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2384"/>
+        <location filename="../MainWindow.cpp" line="2395"/>
         <source>DB Browser for SQLite project file (*.sqbpro)</source>
         <translation>SQLite DB Browser proje dosyası (*.sqbpro)</translation>
     </message>
@@ -4811,21 +4823,30 @@ Bir yedek oluşturun!</translation>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="56"/>
         <source>Y</source>
-        <translation>Y</translation>
+        <translation type="vanished">Y</translation>
     </message>
     <message>
         <source>_</source>
         <translation type="obsolete">_</translation>
     </message>
     <message>
+        <location filename="../PlotDock.ui" line="56"/>
+        <source>Y1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../PlotDock.ui" line="61"/>
+        <source>Y2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../PlotDock.ui" line="66"/>
         <source>Axis Type</source>
         <translation>Eksen Tipi</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="73"/>
+        <location filename="../PlotDock.ui" line="78"/>
         <source>Here is a plot drawn when you select the x and y values above.
 
 Click on points to select them in the plot and in the table. Ctrl+Click for selecting a range of points.
@@ -4842,136 +4863,136 @@ Yakınlaştırma için fare tekerleğini ve eksen aralığını değiştirmek i�
 Yalnızca geçerli yönde sürüklemek ve yakınlaştırmak için eksen veya eksen etiketlerini seçin.</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="89"/>
+        <location filename="../PlotDock.ui" line="94"/>
         <source>Line type:</source>
         <translation>Çizgi Tipi:</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="130"/>
-        <location filename="../PlotDock.ui" line="189"/>
+        <location filename="../PlotDock.ui" line="135"/>
+        <location filename="../PlotDock.ui" line="194"/>
         <source>None</source>
         <translation>Hiçbiri</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="135"/>
+        <location filename="../PlotDock.ui" line="140"/>
         <source>Line</source>
         <translation>Çizgi</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="140"/>
+        <location filename="../PlotDock.ui" line="145"/>
         <source>StepLeft</source>
         <translation>Sola Basamakla</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="145"/>
+        <location filename="../PlotDock.ui" line="150"/>
         <source>StepRight</source>
         <translation>Sağa Basamakla</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="150"/>
+        <location filename="../PlotDock.ui" line="155"/>
         <source>StepCenter</source>
         <translation>Merkeze Basamakla</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="155"/>
+        <location filename="../PlotDock.ui" line="160"/>
         <source>Impulse</source>
         <translation>Kaydırmalı</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="163"/>
+        <location filename="../PlotDock.ui" line="168"/>
         <source>Point shape:</source>
         <translation>Nokta şekli:</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="194"/>
+        <location filename="../PlotDock.ui" line="199"/>
         <source>Cross</source>
         <translation>Çarpı</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="199"/>
+        <location filename="../PlotDock.ui" line="204"/>
         <source>Plus</source>
         <translation>Artı</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="204"/>
+        <location filename="../PlotDock.ui" line="209"/>
         <source>Circle</source>
         <translation>Daire</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="209"/>
+        <location filename="../PlotDock.ui" line="214"/>
         <source>Disc</source>
         <translation>Disk</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="214"/>
+        <location filename="../PlotDock.ui" line="219"/>
         <source>Square</source>
         <translation>Kare</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="219"/>
+        <location filename="../PlotDock.ui" line="224"/>
         <source>Diamond</source>
         <translation>Elmas</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="224"/>
+        <location filename="../PlotDock.ui" line="229"/>
         <source>Star</source>
         <translation>Yıldız</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="229"/>
+        <location filename="../PlotDock.ui" line="234"/>
         <source>Triangle</source>
         <translation>Üçgen</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="234"/>
+        <location filename="../PlotDock.ui" line="239"/>
         <source>TriangleInverted</source>
         <translation>Ters Üçgen</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="239"/>
+        <location filename="../PlotDock.ui" line="244"/>
         <source>CrossSquare</source>
         <translation>Çapraz Kare</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="244"/>
+        <location filename="../PlotDock.ui" line="249"/>
         <source>PlusSquare</source>
         <translation>Kare İçinde Artı</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="249"/>
+        <location filename="../PlotDock.ui" line="254"/>
         <source>CrossCircle</source>
         <translation>Daire İçinde Çarpı</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="254"/>
+        <location filename="../PlotDock.ui" line="259"/>
         <source>PlusCircle</source>
         <translation>Daire İçinde Artı</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="259"/>
+        <location filename="../PlotDock.ui" line="264"/>
         <source>Peace</source>
         <translation>Barış Simgesi</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="280"/>
+        <location filename="../PlotDock.ui" line="285"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save current plot...&lt;/p&gt;&lt;p&gt;File format chosen by extension (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Geçerli çizimi kaydet...&lt;/p&gt;&lt;p&gt;Uzantıya göre seçilen dosya formatları (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="283"/>
+        <location filename="../PlotDock.ui" line="288"/>
         <source>Save current plot...</source>
         <translation>Geçerli çizimi kaydet...</translation>
     </message>
     <message>
-        <location filename="../PlotDock.ui" line="309"/>
-        <location filename="../PlotDock.cpp" line="474"/>
+        <location filename="../PlotDock.ui" line="314"/>
+        <location filename="../PlotDock.cpp" line="545"/>
         <source>Load all data and redraw plot</source>
         <translation>Tüm verileri yükle ve grafiği yeniden çiz</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="224"/>
-        <location filename="../PlotDock.cpp" line="443"/>
-        <location filename="../PlotDock.cpp" line="456"/>
+        <location filename="../PlotDock.cpp" line="232"/>
+        <location filename="../PlotDock.cpp" line="503"/>
+        <location filename="../PlotDock.cpp" line="518"/>
         <source>Row #</source>
         <translation>Satır #</translation>
     </message>
@@ -5000,65 +5021,65 @@ Yalnızca geçerli yönde sürüklemek ve yakınlaştırmak için eksen veya eks
         <translation>Yığılmış çubuklar</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="173"/>
+        <location filename="../PlotDock.cpp" line="178"/>
         <source>Date/Time</source>
         <translation>Tarih/Saat</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="176"/>
+        <location filename="../PlotDock.cpp" line="181"/>
         <source>Date</source>
         <translation>Tarih</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="179"/>
+        <location filename="../PlotDock.cpp" line="184"/>
         <source>Time</source>
         <translation>Saat</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="182"/>
-        <location filename="../PlotDock.cpp" line="226"/>
+        <location filename="../PlotDock.cpp" line="187"/>
+        <location filename="../PlotDock.cpp" line="234"/>
         <source>Numeric</source>
         <translation>Nümerik</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="185"/>
+        <location filename="../PlotDock.cpp" line="190"/>
         <source>Label</source>
         <translation>Etiket</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="189"/>
+        <location filename="../PlotDock.cpp" line="194"/>
         <source>Invalid</source>
         <translation>Geçersiz</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="469"/>
+        <location filename="../PlotDock.cpp" line="540"/>
         <source>Load all data and redraw plot.
 Warning: not all data has been fetched from the table yet due to the partial fetch mechanism.</source>
         <translation>Tüm verileri yükle ve grafiği yeniden çiz.
 Uyarı: Kısmi yükleme mekanizması nedeniyle tüm veriler tablodan henüz alınmadı.</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="555"/>
+        <location filename="../PlotDock.cpp" line="635"/>
         <source>Choose an axis color</source>
         <translation>Bir eksen rengi seçin</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="589"/>
+        <location filename="../PlotDock.cpp" line="670"/>
         <source>Choose a filename to save under</source>
         <translation>Altına kaydetmek için dosya ismi seçiniz</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="590"/>
+        <location filename="../PlotDock.cpp" line="671"/>
         <source>PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;All Files(*)</source>
         <translation>PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;Tüm dosyalar(*)</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="626"/>
+        <location filename="../PlotDock.cpp" line="707"/>
         <source>There are curves in this plot and the selected line style can only be applied to graphs sorted by X. Either sort the table or query by X to remove curves or select one of the styles supported by curves: None or Line.</source>
         <translation>Bu grafikte eğriler var ve seçilen çizgi stili yalnızca X&apos;e göre sıralanmış grafiklere uygulanabilir. Eğrileri kaldırmak için tabloyu veya sorguyu X&apos;e göre sıralayın veya eğriler tarafından desteklenen stillerden birini seçin: &apos;Hiçbiri&apos; veya &apos;Çizgi&apos;.</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="738"/>
+        <location filename="../PlotDock.cpp" line="825"/>
         <source>Loading all remaining data for this table took %1ms.</source>
         <translation>Bu tablo için kalan tüm verilerin yüklenmesi %1ms sürdü.</translation>
     </message>
@@ -5780,18 +5801,18 @@ Tamamlamayı devre dışı bırakmak için 0 olarak ayarlanabilir.</translation>
         <translation>Kurallı İfade eklentisini devre dışı bırak</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="68"/>
-        <location filename="../PreferencesDialog.cpp" line="630"/>
+        <location filename="../PreferencesDialog.cpp" line="69"/>
+        <location filename="../PreferencesDialog.cpp" line="637"/>
         <source>Choose a directory</source>
         <translation>Dizin seçiniz</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="320"/>
+        <location filename="../PreferencesDialog.cpp" line="321"/>
         <source>The language will change after you restart the application.</source>
         <translation>Seçilen dil uygulama yeniden başlatıldıktan sonra uygulanacaktır.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="397"/>
+        <location filename="../PreferencesDialog.cpp" line="398"/>
         <source>Select extension file</source>
         <translation>Eklenti dosyası seçiniz</translation>
     </message>
@@ -5800,27 +5821,27 @@ Tamamlamayı devre dışı bırakmak için 0 olarak ayarlanabilir.</translation>
         <translation type="vanished">Eklentiler(*.so *.dll);;Tüm dosyalar(*)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="398"/>
+        <location filename="../PreferencesDialog.cpp" line="399"/>
         <source>Extensions(*.so *.dylib *.dll);;All files(*)</source>
         <translation>Eklentiler(*.so *.dylib *.dll);;Tüm dosyalar(*)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="556"/>
+        <location filename="../PreferencesDialog.cpp" line="563"/>
         <source>Import certificate file</source>
         <translation>Sertifika dosyası içe aktar</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="564"/>
+        <location filename="../PreferencesDialog.cpp" line="571"/>
         <source>No certificates found in this file.</source>
         <translation>Bu dosyada sertifika bulunamadı.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="581"/>
+        <location filename="../PreferencesDialog.cpp" line="588"/>
         <source>Are you sure you want do remove this certificate? All certificate data will be deleted from the application settings!</source>
         <translation>Bu sertifikayı kaldırmak istediğinizden emin misiniz? Tüm sertifika verileri uygulama ayarlarından silinecektir!</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="666"/>
+        <location filename="../PreferencesDialog.cpp" line="673"/>
         <source>Are you sure you want to clear all the saved settings?
 All your preferences will be lost and default values will be used.</source>
         <translation>Kaydedilen tüm ayarları silmek istediğinizden emin misiniz?
@@ -6038,24 +6059,20 @@ Daha fazla bilgi olmadan program bunu sağlayamaz. Eğer bu şekilde devam edece
         <translation>Eklentiler (* .so * .dylib * .dll)</translation>
     </message>
     <message>
-        <location filename="../RemoteModel.cpp" line="10"/>
         <source>Name</source>
-        <translation>İsim</translation>
+        <translation type="vanished">İsim</translation>
     </message>
     <message>
-        <location filename="../RemoteModel.cpp" line="10"/>
         <source>Commit</source>
-        <translation>Commit</translation>
+        <translation type="vanished">Commit</translation>
     </message>
     <message>
-        <location filename="../RemoteModel.cpp" line="10"/>
         <source>Last modified</source>
-        <translation>Son değiştirilme</translation>
+        <translation type="vanished">Son değiştirilme</translation>
     </message>
     <message>
-        <location filename="../RemoteModel.cpp" line="10"/>
         <source>Size</source>
-        <translation>Boyut</translation>
+        <translation type="vanished">Boyut</translation>
     </message>
 </context>
 <context>
@@ -6161,8 +6178,12 @@ Daha fazla bilgi olmadan program bunu sağlayamaz. Eğer bu şekilde devam edece
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="86"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB Browser for SQLite. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to &amp;quot;Generate client certificate&amp;quot; (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB Browser for SQLite Preferences. Click the button to add a new certificate to DB Browser for SQLite and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB4S. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to create a DB4S certificate (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB4S Preferences. Click the button to add a new certificate to DB4S and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; Bu bölmeden, dbhub.io web sitesinden uzak veritabanları DB4S&apos;ye eklenebilir. İlk olarak bir kimliğe ihtiyacınız var: &lt;/p&gt; &lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot; &gt; &lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot; &gt; Dbhub.io web sitesine giriş yapın (GitHub veya istediğiniz bir kimlik bilgisini kullanın) &lt;/li&gt; &lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot; &gt; Bir DB4S sertifikası oluşturmak için butona tıklayın (bu sizin kimliğinizdir). Bu size bir sertifika dosyası verecektir (yerel diskinize kaydedin). &lt;/li&gt; &lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot; &gt; DB4S Tercihleri&apos;ndeki Uzak Bilgisayar sekmesine gidin. DB4S&apos;ye yeni bir sertifika eklemek için butona tıklayın ve indirilen sertifika dosyasını seçin. &lt;/li&gt; &lt;/ol&gt; &lt;p&gt; Artık Uzak Bilgisayar paneli kimliğinizi gösterir ve uzak veritabanları ekleyebilirsiniz. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; Bu bölmeden, dbhub.io web sitesinden uzak veritabanları DB4S&apos;ye eklenebilir. İlk olarak bir kimliğe ihtiyacınız var: &lt;/p&gt; &lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot; &gt; &lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot; &gt; Dbhub.io web sitesine giriş yapın (GitHub veya istediğiniz bir kimlik bilgisini kullanın) &lt;/li&gt; &lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot; &gt; Bir DB4S sertifikası oluşturmak için butona tıklayın (bu sizin kimliğinizdir). Bu size bir sertifika dosyası verecektir (yerel diskinize kaydedin). &lt;/li&gt; &lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot; &gt; DB4S Tercihleri&apos;ndeki Uzak Bilgisayar sekmesine gidin. DB4S&apos;ye yeni bir sertifika eklemek için butona tıklayın ve indirilen sertifika dosyasını seçin. &lt;/li&gt; &lt;/ol&gt; &lt;p&gt; Artık Uzak Bilgisayar paneli kimliğinizi gösterir ve uzak veritabanları ekleyebilirsiniz. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="127"/>
@@ -6183,8 +6204,24 @@ Daha fazla bilgi olmadan program bunu sağlayamaz. Eğer bu şekilde devam edece
 <context>
     <name>RemoteModel</name>
     <message>
+        <location filename="../RemoteModel.cpp" line="103"/>
         <source>Name</source>
-        <translation type="obsolete">İsim</translation>
+        <translation type="unfinished">İsim</translation>
+    </message>
+    <message>
+        <location filename="../RemoteModel.cpp" line="103"/>
+        <source>Commit</source>
+        <translation type="unfinished">Commit</translation>
+    </message>
+    <message>
+        <location filename="../RemoteModel.cpp" line="103"/>
+        <source>Last modified</source>
+        <translation type="unfinished">Son değiştirilme</translation>
+    </message>
+    <message>
+        <location filename="../RemoteModel.cpp" line="103"/>
+        <source>Size</source>
+        <translation type="unfinished">Boyut</translation>
     </message>
     <message>
         <source>Version</source>
@@ -6791,35 +6828,35 @@ Bu işlevin kullanımına Tercihler&apos;den izin verilmelidir.</translation>
         <translation>satırlar okunuyor</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="336"/>
+        <location filename="../sqlitetablemodel.cpp" line="337"/>
         <source>loading...</source>
         <translation>yükleniyor...</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="401"/>
+        <location filename="../sqlitetablemodel.cpp" line="402"/>
         <source>References %1(%2)
 Hold %3Shift and click to jump there</source>
         <translation>Referanslar %1(%2)
 Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="560"/>
+        <location filename="../sqlitetablemodel.cpp" line="555"/>
         <source>Error changing data:
 %1</source>
         <translation>Veri değiştirme hatası: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="803"/>
+        <location filename="../sqlitetablemodel.cpp" line="796"/>
         <source>retrieving list of columns</source>
         <translation>sütunların listesi alınıyor</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="1017"/>
+        <location filename="../sqlitetablemodel.cpp" line="1024"/>
         <source>Fetching data...</source>
         <translation>Veri alınıyor...</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="1018"/>
+        <location filename="../sqlitetablemodel.cpp" line="1025"/>
         <source>Cancel</source>
         <translation>İptal</translation>
     </message>
@@ -6961,7 +6998,7 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="403"/>
-        <location filename="../TableBrowser.ui" line="1054"/>
+        <location filename="../TableBrowser.ui" line="1051"/>
         <source>Replace</source>
         <translation>Değiştir</translation>
     </message>
@@ -7031,9 +7068,13 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
         <translation>Sona sürükle</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.ui" line="526"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Clicking this button navigates up to the end in the table view above.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Bu butona basıldığında üstteki tablo görünümünün en sonuna kaydırılır.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Bu butona basıldığında üstteki tablo görünümünün en sonuna kaydırılır.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../TableBrowser.ui" line="526"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates up to the end in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="529"/>
@@ -7119,7 +7160,7 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="633"/>
-        <location filename="../TableBrowser.cpp" line="1012"/>
+        <location filename="../TableBrowser.cpp" line="1023"/>
         <source>Delete Record</source>
         <translation>Kaydı Sil</translation>
     </message>
@@ -7221,7 +7262,7 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="735"/>
-        <location filename="../TableBrowser.cpp" line="1371"/>
+        <location filename="../TableBrowser.cpp" line="1382"/>
         <source>Set encoding</source>
         <translation>Kodlama seç</translation>
     </message>
@@ -7323,136 +7364,134 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
         <translation>Aşağıdaki tablo görünümünde değerleri aramanıza izin veren bul araç çubuğunu açın.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.ui" line="845"/>
         <source>Ctrl+F</source>
-        <translation>Ctrl+F</translation>
+        <translation type="vanished">Ctrl+F</translation>
     </message>
     <message>
+        <location filename="../TableBrowser.ui" line="854"/>
         <location filename="../TableBrowser.ui" line="857"/>
-        <location filename="../TableBrowser.ui" line="860"/>
         <source>Bold</source>
         <translation>Kalın</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.ui" line="863"/>
+        <location filename="../TableBrowser.ui" line="860"/>
         <source>Ctrl+B</source>
         <translation>Ctrl+B</translation>
     </message>
     <message>
+        <location filename="../TableBrowser.ui" line="872"/>
         <location filename="../TableBrowser.ui" line="875"/>
-        <location filename="../TableBrowser.ui" line="878"/>
         <source>Italic</source>
         <translation>İtalik</translation>
     </message>
     <message>
+        <location filename="../TableBrowser.ui" line="887"/>
         <location filename="../TableBrowser.ui" line="890"/>
-        <location filename="../TableBrowser.ui" line="893"/>
         <source>Underline</source>
         <translation>Altı çizili</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.ui" line="896"/>
+        <location filename="../TableBrowser.ui" line="893"/>
         <source>Ctrl+U</source>
         <translation>Ctrl+U</translation>
     </message>
     <message>
+        <location filename="../TableBrowser.ui" line="905"/>
         <location filename="../TableBrowser.ui" line="908"/>
-        <location filename="../TableBrowser.ui" line="911"/>
         <source>Align Right</source>
         <translation>Sağa Hizala</translation>
     </message>
     <message>
+        <location filename="../TableBrowser.ui" line="920"/>
         <location filename="../TableBrowser.ui" line="923"/>
-        <location filename="../TableBrowser.ui" line="926"/>
         <source>Align Left</source>
         <translation>Sola Hizala</translation>
     </message>
     <message>
+        <location filename="../TableBrowser.ui" line="935"/>
         <location filename="../TableBrowser.ui" line="938"/>
-        <location filename="../TableBrowser.ui" line="941"/>
         <source>Center Horizontally</source>
         <translation>Yatayda Ortala</translation>
     </message>
     <message>
+        <location filename="../TableBrowser.ui" line="950"/>
         <location filename="../TableBrowser.ui" line="953"/>
-        <location filename="../TableBrowser.ui" line="956"/>
         <source>Justify</source>
         <translation>İki yana yasla</translation>
     </message>
     <message>
+        <location filename="../TableBrowser.ui" line="962"/>
         <location filename="../TableBrowser.ui" line="965"/>
-        <location filename="../TableBrowser.ui" line="968"/>
         <source>Edit Conditional Formats...</source>
         <translation>Koşullu Biçimlendirmeyi Düzenle...</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.ui" line="971"/>
+        <location filename="../TableBrowser.ui" line="968"/>
         <source>Edit conditional formats for the current column</source>
         <translation>Geçerli sütun için koşullu biçimlendirmeyi düzenle</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.ui" line="980"/>
+        <location filename="../TableBrowser.ui" line="977"/>
         <source>Clear Format</source>
         <translation>Biçimlendirmeleri Temizle</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.ui" line="983"/>
+        <location filename="../TableBrowser.ui" line="980"/>
         <source>Clear All Formats</source>
         <translation>Tüm Biçimlendirmeleri Temizle</translation>
     </message>
     <message>
+        <location filename="../TableBrowser.ui" line="983"/>
         <location filename="../TableBrowser.ui" line="986"/>
-        <location filename="../TableBrowser.ui" line="989"/>
         <source>Clear all cell formatting from selected cells and all conditional formats from selected columns</source>
         <translation>Seçilen hücrelerdeki tüm hücre biçimlendirmelerini ve seçilen sütunlardaki tüm koşullu biçimleri temizle</translation>
     </message>
     <message>
+        <location filename="../TableBrowser.ui" line="995"/>
         <location filename="../TableBrowser.ui" line="998"/>
-        <location filename="../TableBrowser.ui" line="1001"/>
         <source>Font Color</source>
         <translation>Yazı Rengi</translation>
     </message>
     <message>
+        <location filename="../TableBrowser.ui" line="1007"/>
         <location filename="../TableBrowser.ui" line="1010"/>
-        <location filename="../TableBrowser.ui" line="1013"/>
         <source>Background Color</source>
         <translation>Arka Plan Rengi</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.ui" line="1025"/>
+        <location filename="../TableBrowser.ui" line="1022"/>
         <source>Toggle Format Toolbar</source>
         <translation>Biçim Araç Çubuğunu Aç/Kapat</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.ui" line="1028"/>
+        <location filename="../TableBrowser.ui" line="1025"/>
         <source>Show/hide format toolbar</source>
         <translation>Biçim araç çubuğunu göster/gizle</translation>
     </message>
     <message>
+        <location filename="../TableBrowser.ui" line="1028"/>
         <location filename="../TableBrowser.ui" line="1031"/>
-        <location filename="../TableBrowser.ui" line="1034"/>
         <source>This button shows or hides the formatting toolbar of the Data Browser</source>
         <translation>Bu düğme Veri Görüntüleyici&apos;nin biçimlendirme araç çubuğunu gösterir veya gizler</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.ui" line="1039"/>
+        <location filename="../TableBrowser.ui" line="1036"/>
         <source>Select column</source>
         <translation>Sütun seç</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.ui" line="1042"/>
+        <location filename="../TableBrowser.ui" line="1039"/>
         <source>Ctrl+Space</source>
         <translation>Ctrl+Space</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.ui" line="1057"/>
+        <location filename="../TableBrowser.ui" line="1054"/>
         <source>Replace text in cells</source>
         <translation>Hücrelerdeki metinleri değiştir</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.ui" line="1060"/>
         <source>Ctrl+H</source>
-        <translation>Ctrl+H</translation>
+        <translation type="vanished">Ctrl+H</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="42"/>
@@ -7460,120 +7499,120 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
         <translation>Tüm sütunları filtrele</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="97"/>
+        <location filename="../TableBrowser.cpp" line="102"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message numerus="yes">
-        <location filename="../TableBrowser.cpp" line="434"/>
+        <location filename="../TableBrowser.cpp" line="443"/>
         <source>%n row(s)</source>
         <translation>
             <numerusform>%n satır</numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../TableBrowser.cpp" line="436"/>
+        <location filename="../TableBrowser.cpp" line="445"/>
         <source>, %n column(s)</source>
         <translation>
             <numerusform>, %n sütun</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="449"/>
+        <location filename="../TableBrowser.cpp" line="458"/>
         <source>. Sum: %1; Average: %2; Min: %3; Max: %4</source>
         <translation>. Toplam: %1; Ortalama: %2; Min: %3; Maks: %4</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="667"/>
+        <location filename="../TableBrowser.cpp" line="676"/>
         <source>Conditional formats for &quot;%1&quot;</source>
         <translation>&quot;%1&quot; için koşullu biçimlendirme</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="736"/>
+        <location filename="../TableBrowser.cpp" line="747"/>
         <source>determining row count...</source>
         <translation>satır sayısı belirleniyor...</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="739"/>
+        <location filename="../TableBrowser.cpp" line="750"/>
         <source>%1 - %2 of &gt;= %3</source>
         <translation>%1 - %2 &gt;= %3</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="742"/>
+        <location filename="../TableBrowser.cpp" line="753"/>
         <source>%1 - %2 of %3</source>
         <translation>%1 - %2 / %3</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="888"/>
+        <location filename="../TableBrowser.cpp" line="899"/>
         <source>Please enter a pseudo-primary key in order to enable editing on this view. This should be the name of a unique column in the view.</source>
         <translation>Bu görünümde düzenlemeyi etkinleştirmek için lütfen sözde birincil anahtar girin. Bu, görünümdeki benzersiz bir sütunun adı olmalıdır.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1010"/>
+        <location filename="../TableBrowser.cpp" line="1021"/>
         <source>Delete Records</source>
         <translation>Kayıtları Sil</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1157"/>
+        <location filename="../TableBrowser.cpp" line="1168"/>
         <source>Duplicate records</source>
         <translation>Yinelenen kayıtlar</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1157"/>
+        <location filename="../TableBrowser.cpp" line="1168"/>
         <source>Duplicate record</source>
         <translation>Yinelenen kayıt</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1161"/>
+        <location filename="../TableBrowser.cpp" line="1172"/>
         <source>Ctrl+&quot;</source>
         <translation>Ctrl+&quot;</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1180"/>
+        <location filename="../TableBrowser.cpp" line="1191"/>
         <source>Adjust rows to contents</source>
         <translation>Satırları içeriklere göre ayarlama</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1235"/>
+        <location filename="../TableBrowser.cpp" line="1246"/>
         <source>Error deleting record:
 %1</source>
         <translation>Kayıt silme hatası:
 %1</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1244"/>
+        <location filename="../TableBrowser.cpp" line="1255"/>
         <source>Please select a record first</source>
         <translation>Lütfen öncelikle kaydı seçiniz</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1351"/>
+        <location filename="../TableBrowser.cpp" line="1362"/>
         <source>There is no filter set for this table. View will not be created.</source>
         <translation>Bu tablo için ayarlanmış filtre yok. Görünüm oluşturulmaz.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1367"/>
+        <location filename="../TableBrowser.cpp" line="1378"/>
         <source>Please choose a new encoding for all tables.</source>
         <translation>Lütfen tüm tablolar için yeni bir kodlama seçin.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1369"/>
+        <location filename="../TableBrowser.cpp" line="1380"/>
         <source>Please choose a new encoding for this table.</source>
         <translation>Lütfen bu tablo için yeni bir kodlama seçin.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1372"/>
+        <location filename="../TableBrowser.cpp" line="1383"/>
         <source>%1
 Leave the field empty for using the database encoding.</source>
         <translation>%1
 Veritabanı kodlamasını kullanmak için alanı boş bırakın.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1384"/>
+        <location filename="../TableBrowser.cpp" line="1395"/>
         <source>This encoding is either not valid or not supported.</source>
         <translation>Bu kodlama geçerli değil veya desteklenmiyor.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1555"/>
+        <location filename="../TableBrowser.cpp" line="1566"/>
         <source>%1 replacement(s) made.</source>
         <translation>%1 değişimi yapıldı.</translation>
     </message>

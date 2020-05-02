@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
-# This script depends on imagemagick being installed
+# This script depends on ImageMagick being installed
 
 for imgsize in 16 32 64 128
 do

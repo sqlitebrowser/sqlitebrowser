@@ -437,7 +437,10 @@ private:
 class IndexedColumn
 {
 public:
-    IndexedColumn() {}
+    IndexedColumn()
+        : m_isExpression(false)
+    {
+    }
 
     IndexedColumn(const std::string& name, bool expr, const std::string& order = std::string())
         : m_name(name),

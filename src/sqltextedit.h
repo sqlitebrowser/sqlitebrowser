@@ -18,6 +18,9 @@ public:
 
     static SqlUiLexer* sqlLexer;
 
+private:
+    void transferFocus();
+
 public slots:
     void reloadSettings();
     void toggleBlockComment();

@@ -41,6 +41,9 @@ SqlTextEdit::SqlTextEdit(QWidget* parent) :
     QShortcut* shortcutToggleComment = new QShortcut(QKeySequence(tr("Ctrl+/")), this, nullptr, nullptr, Qt::WidgetShortcut);
     connect(shortcutToggleComment, &QShortcut::activated, this, &SqlTextEdit::toggleBlockComment);
 
+    QShortcut* shortcutFocusOut = new QShortcut(QKeySequence(tr("Ctrl+PgDown")), this, nullptr, nullptr, Qt::WidgetShortcut);
+    connect(shortcutFocusOut, &QShortcut::activated, this, &SqlTextEdit::transferFocus);
+
     // Do rest of initialisation
     reloadSettings();
 }
@@ -132,4 +135,10 @@ void SqlTextEdit::toggleBlockComment()
         replaceSelectedText(lineText);
     }
     endUndoAction();
+}
+
+void SqlTextEdit::transferFocus()
+{
+    // We need two jumps to get to the Table Results widget
+    nextInFocusChain()->nextInFocusChain()->setFocus();
 }

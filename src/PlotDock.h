@@ -9,6 +9,7 @@
 class QMenu;
 class QPrinter;
 class QTreeWidgetItem;
+class QCPAxis;
 
 class SqliteTableModel;
 struct BrowseDataTableSettings;
@@ -81,8 +82,9 @@ private:
     {
         PlotColumnField = 0,
         PlotColumnX = 1,
-        PlotColumnY = 2,
-        PlotColumnType = 3,
+        PlotColumnY1 = 2,
+        PlotColumnY2 = 3,
+        PlotColumnType = 4,
     };
 
     Ui::PlotDock* ui;
@@ -93,6 +95,8 @@ private:
     bool m_showLegend;
     bool m_stackedBars;
     Palette m_graphPalette;
+    QList<QCPAxis *> yAxes;
+    QList<int> PlotColumnY;
 
     /*!
      * \brief guessdatatype try to parse the first 10 rows and decide the datatype

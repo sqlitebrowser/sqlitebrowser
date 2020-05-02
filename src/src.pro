@@ -287,7 +287,7 @@ unix {
     desktop.path = $$DATADIR/applications/
     desktop.files = ../distri/sqlitebrowser.desktop
     INSTALLS += desktop
-    appdata.path = $$DATADIR/appdata/
+    appdata.path = $$DATADIR/metainfo/
     appdata.files = ../distri/sqlitebrowser.desktop.appdata.xml
     INSTALLS += appdata
 }

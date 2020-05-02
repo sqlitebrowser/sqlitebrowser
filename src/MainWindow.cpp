@@ -221,6 +221,28 @@ void MainWindow::init()
           closeSqlTab(ui->tabSqlAreas->currentIndex());
     });
 
+    // Shortcuts for advancing and going back in the SQL Execution area tabs, independently of the widget which has focus.
+    // This emulates the shortcuts provided by QTabWidget.
+    QShortcut* shortcutNextTab = new QShortcut(QKeySequence(tr("Ctrl+Tab")), ui->tabSqlAreas, nullptr, nullptr, Qt::WidgetWithChildrenShortcut);
+    connect(shortcutNextTab, &QShortcut::activated, this, [this]() {
+        if(ui->tabSqlAreas->currentIndex() == ui->tabSqlAreas->count() - 1)
+            ui->tabSqlAreas->setCurrentIndex(0);
+        else
+            ui->tabSqlAreas->setCurrentIndex(ui->tabSqlAreas->currentIndex() + 1);
+        SqlExecutionArea* sqlWidget = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
+        sqlWidget->getEditor()->setFocus();
+    });
+
+    QShortcut* shortcutPreviousTab = new QShortcut(QKeySequence(tr("Ctrl+Shift+Tab")), ui->tabSqlAreas, nullptr, nullptr, Qt::WidgetWithChildrenShortcut);
+    connect(shortcutPreviousTab, &QShortcut::activated, this, [this]() {
+        if(ui->tabSqlAreas->currentIndex() == 0)
+            ui->tabSqlAreas->setCurrentIndex(ui->tabSqlAreas->count() - 1);
+        else
+            ui->tabSqlAreas->setCurrentIndex(ui->tabSqlAreas->currentIndex() - 1);
+        SqlExecutionArea* sqlWidget = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
+        sqlWidget->getEditor()->setFocus();
+    });
+
     // Create the actions for the recently opened dbs list
     for(int i = 0; i < MaxRecentFiles; ++i) {
         recentFileActs[i] = new QAction(this);
@@ -424,16 +446,16 @@ void MainWindow::init()
 
     // Connect tool pragmas
     connect(ui->actionIntegrityCheck, &QAction::triggered, [this]() {
-            runSqlNewTab("PRAGMA integrity_check;", ui->actionIntegrityCheck->text());
+            runSqlNewTab("PRAGMA integrity_check;", ui->actionIntegrityCheck->text(), "https://www.sqlite.org/pragma.html#pragma_integrity_check");
     });
     connect(ui->actionQuickCheck, &QAction::triggered, [this]() {
-            runSqlNewTab("PRAGMA quick_check;", ui->actionQuickCheck->text());
+            runSqlNewTab("PRAGMA quick_check;", ui->actionQuickCheck->text(), "https://www.sqlite.org/pragma.html#pragma_quick_check");
     });
     connect(ui->actionForeignKeyCheck, &QAction::triggered, [this]() {
-            runSqlNewTab("PRAGMA foreign_key_check;", ui->actionForeignKeyCheck->text());
+            runSqlNewTab("PRAGMA foreign_key_check;", ui->actionForeignKeyCheck->text(), "https://www.sqlite.org/pragma.html#pragma_foreign_key_check");
     });
     connect(ui->actionOptimize, &QAction::triggered, [this]() {
-            runSqlNewTab("PRAGMA optimize;", ui->actionOptimize->text());
+            runSqlNewTab("PRAGMA optimize;", ui->actionOptimize->text(), "https://www.sqlite.org/pragma.html#pragma_optimize");
     });
 
     // Action for switching the table via the Database Structure tab
@@ -902,6 +924,18 @@ void MainWindow::editObject()
         EditIndexDialog dialog(db, name, false, this);
         if(dialog.exec())
             populateTable();
+    } else if(type == "view") {
+        sqlb::ViewPtr view = db.getObjectByName<sqlb::View>(name);
+        runSqlNewTab(QString("DROP VIEW %1;\n%2").arg(QString::fromStdString(name.toString())).arg(QString::fromStdString(view->sql())),
+                     tr("Edit View %1").arg(QString::fromStdString(name.toDisplayString())),
+                     "https://www.sqlite.org/lang_createview.html",
+                     /* autoRun */ false);
+    } else if(type == "trigger") {
+        sqlb::TriggerPtr trigger = db.getObjectByName<sqlb::Trigger>(name);
+        runSqlNewTab(QString("DROP TRIGGER %1;\n%2").arg(QString::fromStdString(name.toString())).arg(QString::fromStdString(trigger->sql())),
+                     tr("Edit Trigger %1").arg(QString::fromStdString(name.toDisplayString())),
+                     "https://www.sqlite.org/lang_createtrigger.html",
+                     /* autoRun */ false);
     }
 }
 
@@ -944,7 +978,7 @@ void MainWindow::doubleClickTable(const QModelIndex& index)
 
     // * Don't allow editing of other objects than tables and editable views
     bool isEditingAllowed = !db.readOnly() && m_currentTabTableModel == ui->tableBrowser->model() &&
-            ui->tableBrowser->model()->isEditable();
+            ui->tableBrowser->model()->isEditable(index);
 
     // Enable or disable the Apply, Null, & Import buttons in the Edit Cell
     // dock depending on the value of the "isEditingAllowed" bool above
@@ -968,7 +1002,7 @@ void MainWindow::dataTableSelectionChanged(const QModelIndex& index)
     }
 
     bool editingAllowed = !db.readOnly() && (m_currentTabTableModel == ui->tableBrowser->model()) &&
-            ui->tableBrowser->model()->isEditable();
+            ui->tableBrowser->model()->isEditable(index);
 
     // Don't allow editing of other objects than tables and editable views
     editDock->setReadOnly(!editingAllowed);
@@ -1509,13 +1543,9 @@ void MainWindow::changeTreeSelection()
     ui->editModifyObjectAction->setVisible(true);
 
     // Activate actions
-    if(type == "table" || type == "index")
-    {
-        ui->editDeleteObjectAction->setEnabled(!db.readOnly());
-        ui->editModifyObjectAction->setEnabled(!db.readOnly());
-    } else if(type == "view" || type == "trigger") {
-        ui->editDeleteObjectAction->setEnabled(!db.readOnly());
-    }
+    ui->editDeleteObjectAction->setEnabled(!db.readOnly());
+    ui->editModifyObjectAction->setEnabled(!db.readOnly());
+
     if(type == "table" || type == "view")
     {
         ui->actionEditBrowseTable->setEnabled(true);
@@ -1962,29 +1992,31 @@ void MainWindow::changeSqlTab(int index)
 
 void MainWindow::openSqlFile()
 {
-    QString file = FileDialog::getOpenFileName(
+    QStringList wfiles = FileDialog::getOpenFileNames(
                 OpenSQLFile,
                 this,
                 tr("Select SQL file to open"),
                 tr("Text files(*.sql *.txt);;All files(*)"));
 
-    if(QFile::exists(file))
+    for(QString file: wfiles)
     {
-        // Decide whether to open a new tab or take the current one
-        int index;
-        SqlExecutionArea* current_tab = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
-        if(current_tab && current_tab->getSql().isEmpty() && current_tab->getModel()->rowCount() == 0)
-            index = ui->tabSqlAreas->currentIndex();
-        else
-            index = openSqlTab();
+        if(QFile::exists(file))
+        {
+            // Decide whether to open a new tab or take the current one
+            int index;
+            SqlExecutionArea* current_tab = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
+            if(current_tab && current_tab->getSql().isEmpty() && current_tab->getModel()->rowCount() == 0)
+                index = ui->tabSqlAreas->currentIndex();
+            else
+                index = openSqlTab();
 
-        SqlExecutionArea* sqlarea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index));
-        sqlarea->openFile(file);
+            SqlExecutionArea* sqlarea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index));
+            sqlarea->openFile(file);
 
-        QFileInfo fileinfo(file);
-        ui->tabSqlAreas->setTabText(index, fileinfo.fileName());
-        ui->tabSqlAreas->setTabIcon(index, QIcon(":/icons/document_open"));
-
+            QFileInfo fileinfo(file);
+            ui->tabSqlAreas->setTabText(index, fileinfo.fileName());
+            ui->tabSqlAreas->setTabIcon(index, QIcon(":/icons/document_open"));          
+        }
     }
 }
 
@@ -2360,17 +2392,28 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, QXmlS
             }
         } else if(xml.name() == "plot_y_axes") {
             while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "plot_y_axes") {
-                QString yAxisName;
-                PlotDock::PlotSettings yAxisSettings;
+                QString y1AxisName;
+                QString y2AxisName;
+                PlotDock::PlotSettings y1AxisSettings;
+                PlotDock::PlotSettings y2AxisSettings;
                 if (xml.name() == "y_axis") {
-                    yAxisName = xml.attributes().value("name").toString();
-                    yAxisSettings.lineStyle = xml.attributes().value("line_style").toInt();
-                    yAxisSettings.pointShape = xml.attributes().value("point_shape").toInt();
-                    yAxisSettings.colour = QColor (xml.attributes().value("colour").toString());
-                    yAxisSettings.active = xml.attributes().value("active").toInt();
+                    y1AxisName = xml.attributes().value("name").toString();
+                    y1AxisSettings.lineStyle = xml.attributes().value("line_style").toInt();
+                    y1AxisSettings.pointShape = xml.attributes().value("point_shape").toInt();
+                    y1AxisSettings.colour = QColor (xml.attributes().value("colour").toString());
+                    y1AxisSettings.active = xml.attributes().value("active").toInt();
                     xml.skipCurrentElement();
                 }
-                settings.plotYAxes[yAxisName] = yAxisSettings;
+                settings.plotYAxes[0][y1AxisName] = y1AxisSettings;
+                if (xml.name() == "y2_axis") {
+                  y2AxisName = xml.attributes().value("name").toString();
+                  y2AxisSettings.lineStyle = xml.attributes().value("line_style").toInt();
+                  y2AxisSettings.pointShape = xml.attributes().value("point_shape").toInt();
+                  y2AxisSettings.colour = QColor (xml.attributes().value("colour").toString());
+                  y2AxisSettings.active = xml.attributes().value("active").toInt();
+                  xml.skipCurrentElement();
+                }
+                settings.plotYAxes[1][y2AxisName] = y2AxisSettings;
             }
         } else if(xml.name() == "global_filter") {
             while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "global_filter")
@@ -2710,7 +2753,7 @@ static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, Q
     }
     xml.writeEndElement();
     xml.writeStartElement("plot_y_axes");
-    for(auto iter=object.plotYAxes.constBegin(); iter!=object.plotYAxes.constEnd(); ++iter) {
+    for(auto iter=object.plotYAxes[0].constBegin(); iter!=object.plotYAxes[0].constEnd(); ++iter) {
         PlotDock::PlotSettings plotSettings = iter.value();
         xml.writeStartElement("y_axis");
         xml.writeAttribute("name", iter.key());
@@ -2719,6 +2762,16 @@ static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, Q
         xml.writeAttribute("colour", plotSettings.colour.name());
         xml.writeAttribute("active", QString::number(plotSettings.active));
         xml.writeEndElement();
+    }
+    for(auto iter=object.plotYAxes[1].constBegin(); iter!=object.plotYAxes[1].constEnd(); ++iter) {
+      PlotDock::PlotSettings plotSettings = iter.value();
+      xml.writeStartElement("y2_axis");
+      xml.writeAttribute("name", iter.key());
+      xml.writeAttribute("line_style", QString::number(plotSettings.lineStyle));
+      xml.writeAttribute("point_shape", QString::number(plotSettings.pointShape));
+      xml.writeAttribute("colour", plotSettings.colour.name());
+      xml.writeAttribute("active", QString::number(plotSettings.active));
+      xml.writeEndElement();
     }
     xml.writeEndElement();
     xml.writeStartElement("global_filter");
@@ -3102,11 +3155,18 @@ void MainWindow::saveAsView(const std::string& query)
         QMessageBox::warning(this, qApp->applicationName(), tr("Error creating view: %1").arg(db.lastError()));
 }
 
-void MainWindow::runSqlNewTab(const QString& query, const QString& title)
+void MainWindow::runSqlNewTab(const QString& query, const QString& title, const QString& helpUrl, const bool autoRun)
 {
-    QString message = tr("This action will open a new SQL tab for running:") +
-                         QString("<br/><tt>%1</tt><p/>").arg(query) +
-                         tr("Press Help for opening the corresponding SQLite reference page.");
+    QString message;
+
+    if(autoRun)
+        message = tr("This action will open a new SQL tab for running:");
+    else
+        message = tr("This action will open a new SQL tab with the following statements for you to edit and run:");
+
+    message += QString("<blockquote><tt>%1</tt></blockquote>").arg(query) +
+               tr("Press Help for opening the corresponding SQLite reference page.");
+
     QString windowTitle = title;
     windowTitle.remove('&');
 
@@ -3119,13 +3179,12 @@ void MainWindow::runSqlNewTab(const QString& query, const QString& title)
         int index = openSqlTab();
         ui->tabSqlAreas->setTabText(index, title);
         qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index))->getEditor()->setText(query);
-        executeQuery();
+        if(autoRun)
+            executeQuery();
         break;
     }
     case QMessageBox::Help: {
-        QString anchor = query.toLower();
-        anchor.replace(" ", "_").chop(1);
-        QDesktopServices::openUrl(QUrl(QString("https://www.sqlite.org/pragma.html#") + anchor));
+        QDesktopServices::openUrl(QUrl(helpUrl));
         break;
     }
     default:

@@ -31,21 +31,21 @@
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-find_library(QHEXEDIT_LIBRARY qhexedit)
-set(QHEXEDIT_LIBRARIES "${QHEXEDIT_LIBRARY}")
+find_library(QHexEdit_LIBRARY qhexedit)
+set(QHexEdit_LIBRARIES "${QHexEdit_LIBRARY}")
 
-find_path(QHEXEDIT_INCLUDE_DIR qhexedit.h)
-set(QHEXEDIT_INCLUDE_DIRS "${QHEXEDIT_INCLUDE_DIR}")
+find_path(QHexEdit_INCLUDE_DIR qhexedit.h)
+set(QHexEdit_INCLUDE_DIRS "${QHexEdit_INCLUDE_DIR}")
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(
-    QHEXEDIT
+    QHexEdit
     DEFAULT_MSG
-    QHEXEDIT_LIBRARIES
-    QHEXEDIT_INCLUDE_DIRS
+    QHexEdit_LIBRARIES
+    QHexEdit_INCLUDE_DIRS
 )
 
 mark_as_advanced(
-  QHEXEDIT_INCLUDE_DIRS
-  QHEXEDIT_LIBRARIES
+  QHexEdit_INCLUDE_DIRS
+  QHexEdit_LIBRARIES
 )

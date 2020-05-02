@@ -93,6 +93,11 @@ TableBrowser::TableBrowser(QWidget* parent) :
         updateTable();
     });
 
+    // This is a workaround needed for QDarkStyleSheet.
+    // See https://github.com/ColinDuquesnoy/QDarkStyleSheet/issues/169
+    QStyledItemDelegate* styledItemDelegate = new QStyledItemDelegate(ui->comboBrowseTable);
+    ui->comboBrowseTable->setItemDelegate(styledItemDelegate);
+
     // Add the documentation of shortcuts, which aren't otherwise visible in the user interface, to some buttons.
     addShortcutsTooltip(ui->actionRefresh, {QKeySequence(tr("Ctrl+R"))});
     addShortcutsTooltip(ui->actionPrintTable);
@@ -257,6 +262,8 @@ TableBrowser::TableBrowser(QWidget* parent) :
     QShortcut* shortcutHideFindFrame = new QShortcut(QKeySequence("ESC"), ui->editFindExpression);
     connect(shortcutHideFindFrame, &QShortcut::activated, ui->buttonFindClose, &QToolButton::click);
 
+    QShortcut* shortcutActionFind = new QShortcut(QKeySequence("Ctrl+F"), this, nullptr, nullptr, Qt::WidgetWithChildrenShortcut);
+    connect(shortcutActionFind, &QShortcut::activated, ui->actionFind, &QAction::trigger);
     connect(ui->actionFind, &QAction::triggered, [this](bool checked) {
        if(checked)
        {
@@ -268,6 +275,9 @@ TableBrowser::TableBrowser(QWidget* parent) :
            ui->buttonFindClose->click();
        }
     });
+
+    QShortcut* shortcutActionReplace = new QShortcut(QKeySequence("Ctrl+H"), this, nullptr, nullptr, Qt::WidgetWithChildrenShortcut);
+    connect(shortcutActionReplace, &QShortcut::activated, ui->actionReplace, &QAction::trigger);
     connect(ui->actionReplace, &QAction::triggered, [this](bool checked) {
        if(checked)
        {
@@ -328,8 +338,7 @@ void TableBrowser::init(DBBrowserDB* _db)
 void TableBrowser::reset()
 {
     // Reset the model
-    if(m_model)
-        m_model->reset();
+    m_model->reset();
 
     // Remove all stored table information browse data tab
     m_settings.clear();
@@ -717,6 +726,8 @@ void TableBrowser::updateRecordsetLabel()
     int from = ui->dataTable->verticalHeader()->visualIndexAt(0) + 1;
     int total = m_model->rowCount();
     int to = from + ui->dataTable->numVisibleRows() - 1;
+    if(to < 0)
+            to = 0;
 
     // Update the validator of the goto row field
     gotoValidator->setRange(0, total);
