@@ -19,7 +19,7 @@
             SQLite Database Browser is not a visual shell for the sqlite command line tool. It does not require familiarity with SQL commands.
           confinement:            strict  # use "strict" to enforce system access only via declared interfaces
 
-          grade:                  devel
+          grade:                  stable
           icon:                   images/logo.svg
           type:                   app
           apps:
