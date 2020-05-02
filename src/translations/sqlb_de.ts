@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="de">
 <context>
@@ -73,17 +72,17 @@
     <message>
         <location filename="../AddRecordDialog.ui" line="14"/>
         <source>Add New Record</source>
-        <translation>Neue Zeile hinzufügen</translation>
+        <translation>Neuen Datensatz hinzufügen</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="27"/>
         <source>Enter values for the new record considering constraints. Fields in bold are mandatory.</source>
-        <translation>Geben Sie Werte für die neue Zeile unter Beachtung der Constraints ein. Fette Felder sind Pflichtfelder.</translation>
+        <translation>Eingabe der Werte für den neuen Datensatz unter Berücksichtigung aller Beschränkungen. Fett angezeigte Felder sind Pflichtfelder.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="67"/>
         <source>In the Value column you can specify the value for the field identified in the Name column. The Type column indicates the type of the field. Default values are displayed in the same style as NULL values.</source>
-        <translation>In der Wertspalte können Sie den Wert für das durch die Namensspalte identifizierte Feld angeben. Die Typspalte zeigt den Feldtyp an. Standardwerte werden im Stil von NULL-Werten angezeigt.</translation>
+        <translation>In der Wertspalte können Sie den Wert für das Feld angeben, das durch die Namensspalte benannt ist. Die Typspalte zeigt den Feldtyp an. Standardwerte werden im gleichen Stil wie NULL-Werten angezeigt.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="74"/>
@@ -108,12 +107,12 @@
     <message>
         <location filename="../AddRecordDialog.ui" line="93"/>
         <source>When you edit the values in the upper frame, the SQL query for inserting this new record is shown here. You can edit manually the query before saving.</source>
-        <translation>Wenn Sie die Werte im oberen Teil ändern, wird hier das SQL-Query für das Einfügen der neuen Zeile angezeigt. Sie können das Query vor dem Speichern manuell bearbeiten.</translation>
+        <translation>Wenn Sie die Werte im oberen Teil ändern, wird hier die SQL-Abfrage für das Einfügen des neuen Datensatzes angezeigt. Sie können die Abfrage vor dem Speichern manuell bearbeiten.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="110"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Save&lt;/span&gt; will submit the shown SQL statement to the database for inserting the new record.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Restore Defaults&lt;/span&gt; will restore the initial values in the &lt;span style=&quot; font-weight:600;&quot;&gt;Value&lt;/span&gt; column.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Cancel&lt;/span&gt; will close this dialog without executing the query.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Speichern&lt;/span&gt; wird das dargestellte SQL-Statement zum Einfügen des neuen Eintrags an die Datenbank übermitteln.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Voreinstellungen&lt;/span&gt; wird die ursprünglichen Werte der &lt;span style=&quot; font-weight:600;&quot;&gt;Wert&lt;/span&gt;-Spalte wiederherstellen.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Abbrechen&lt;/span&gt; schließt diesen Dialog, ohne die Query auszuführen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Speichern&lt;/span&gt; führt die angezeigte SQL-Anweisung aus und fügt damit den neuen Datensatz in die Datenbank ein.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Voreinstellungen&lt;/span&gt; wird die ursprünglichen Werte der &lt;span style=&quot; font-weight:600;&quot;&gt;Wert&lt;/span&gt;-Spalte wiederherstellen.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Abbrechen&lt;/span&gt; schließt diesen Dialog, ohne die SQL-Abfrage auszuführen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="234"/>
@@ -126,14 +125,14 @@
         <location filename="../AddRecordDialog.cpp" line="237"/>
         <source>Unique constraint
 </source>
-        <translation>Unique-Constraint
+        <translation>UNIQUE-Beschränkung
 </translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="240"/>
         <source>Check constraint:	 %1
 </source>
-        <translation>Prüfungsconstraint:	 %1
+        <translation>CHECK-Beschränkung:	 %1
 </translation>
     </message>
     <message>
@@ -155,7 +154,7 @@
         <source>Error adding record. Message from database engine:
 
 %1</source>
-        <translation>Fehler beim Hinzufügen der Zeile. Mitteilung der Datenbank-Engine:
+        <translation>Fehler beim Hinzufügen des Datensatzes. DB meldet:
 
 %1</translation>
     </message>
@@ -327,7 +326,7 @@
     <message>
         <location filename="../CipherDialog.ui" line="224"/>
         <source>Plaintext Header Size</source>
-        <translation>Plaintext-Headergröße</translation>
+        <translation>Nur-Text-Headergröße</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="66"/>
@@ -444,14 +443,14 @@ Falls weitere Einstellungen für diese Datenbank-Datei vorgenommen worden sind, 
         <source>Error in custom display format. Message from database engine:
 
 %1</source>
-        <translation>Fehler im benutzerdefinierten Anzeigeformat. Meldung von Datenbank:
+        <translation>Fehler im benutzerdefinierten Anzeigeformat. DB meldet:
 
 %1</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="123"/>
         <source>Custom display format must return only one column but it returned %1.</source>
-        <translation>Das benutzerdefinierte Anzeigeformat darf nur eine Spalte zurückgeben, es wurde aber %1 zurückgegeben.</translation>
+        <translation>Das benutzerdefinierte Anzeigeformat darf nur eine Spalte zurückgeben, es wurden aber %1 zurückgegeben.</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="23"/>
@@ -502,7 +501,7 @@ Falls weitere Einstellungen für diese Datenbank-Datei vorgenommen worden sind, 
     <message>
         <location filename="../CondFormatManager.ui" line="20"/>
         <source>This dialog allows creating and editing conditional formats. Each cell style will be selected by the first accomplished condition for that cell data. Conditional formats can be moved up and down, where those at higher rows take precedence over those at lower. Syntax for conditions is the same as for filters and an empty condition applies to all values.</source>
-        <translation>Dieser Dialog erlaubt das Erstellen und Bearbeiten bedingter Formatierungen. Jeder Zellenstil wird anhand der ersten erfüllten Bedingung für diese Zelldaten ausgewählt. Bedingte Formatierungen können nach oben und unten bewegt werden, wobei jene weiter oben Vorrang vor jenen weiter unten haben. Der Syntax für Bedingungen ist der gleiche wie bei Filtern und eine leere Bedingung trifft auf alle Werte zu.</translation>
+        <translation>Dieser Dialog erlaubt das Erstellen und Bearbeiten bedingter Formatierungen. Jeder Zellenstil wird anhand der ersten erfüllten Bedingung für diese Zelldaten ausgewählt. Bedingte Formatierungen können nach oben und unten bewegt werden, wobei jene weiter oben Vorrang vor jenen weiter unten haben. Die Syntax für Bedingungen ist die gleiche wie bei Filtern und eine leere Bedingung trifft auf alle Werte zu.</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="32"/>
@@ -652,7 +651,7 @@ Falls weitere Einstellungen für diese Datenbank-Datei vorgenommen worden sind, 
     <message>
         <source>Error in statement #%1: %2.
 Aborting execution.</source>
-        <translation type="vanished">Fehler im Statement #%1: %2.
+        <translation type="vanished">Fehler in der Anweisung #%1: %2.
 Ausführung wird abgebrochen.</translation>
     </message>
     <message>
@@ -695,7 +694,7 @@ Ausführung wird abgebrochen.</translation>
         <location filename="../sqlitedb.cpp" line="1152"/>
         <source>Error in statement #%1: %2.
 Aborting execution%3.</source>
-        <translation>Fehler im Statement #%1: %2.
+        <translation>Fehler in der Anweisung #%1: %2.
 Ausführung wird abgebrochen %3.</translation>
     </message>
     <message>
@@ -782,7 +781,7 @@ Ausführung wird abgebrochen %3.</translation>
 Message from database engine:
 %3</source>
         <translation>Fehler beim Umbenennen der Tabelle &apos;%1&apos; zu &apos;%2&apos;.
-Meldung von Datenbank:
+DB meldet:
 %3</translation>
     </message>
     <message>
@@ -817,7 +816,7 @@ Meldung von Datenbank:
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 
 </source>
-        <translation>Wiederherstellung einiger mit dieser Tabelle verbundener Objekte fehlgeschagen. Dies passiert häufig durch geänderte Spaltennamen. SQL-Statement zum manuellen Reparieren und Ausführen:
+        <translation>Wiederherstellung einiger mit dieser Tabelle verbundener Objekte fehlgeschagen. Dies passiert häufig durch geänderte Spaltennamen. SQL-Anweisung zum manuellen Reparieren und Ausführen:
 
 </translation>
     </message>
@@ -828,12 +827,12 @@ Meldung von Datenbank:
     <message>
         <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.Message from database engine:
 %3</source>
-        <translation type="vanished">Fehler beim Umbenennen der Tabelle &apos;%1&apos; zu &apos;%2&apos;. Meldung von Datenbank:
+        <translation type="vanished">Fehler beim Umbenennen der Tabelle &apos;%1&apos; zu &apos;%2&apos;. DB meldet:
 %3</translation>
     </message>
     <message>
         <source>... &lt;string can not be logged, contains binary data&gt; ...</source>
-        <translation type="vanished">... &lt;String kann nicht geloggt werden, enthält binäre Daten&gt; ...</translation>
+        <translation type="vanished">... &lt;Zeichenkette kann nicht protokolliert werden, er enthält binäre Daten&gt; ...</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1960"/>
@@ -1007,7 +1006,7 @@ Meldung von Datenbank:
         <source>The text editor modes let you edit plain text, as well as JSON or XML data with syntax highlighting, automatic formatting and validation before saving.
 
 Errors are indicated with a red squiggle underline.</source>
-        <translation>Der Text-Editor-Modus erlaubt das Bearbeiten von Reintext sowie JSON- oder XML-Daten mit Syntaxhervorhebung, automatischer Formatierung und Validierung vor dem Speichern.
+        <translation>Der Text-Editor-Modus erlaubt das Bearbeiten als Nur-Text sowie JSON- oder XML-Daten mit Syntaxhervorhebung, automatischer Formatierung und Validierung vor dem Speichern.
 
 Fehler werden mittels eine roten Wellenlinie angezeigt.</translation>
     </message>
@@ -1029,7 +1028,7 @@ Fehler werden mittels eine roten Wellenlinie angezeigt.</translation>
     <message>
         <location filename="../EditDialog.ui" line="344"/>
         <source>When enabled, the auto-format feature formats the data on loading, breaking the text in lines and indenting it for maximum readability. On data saving, the auto-format feature compacts the data removing end of lines, and unnecessary whitespace.</source>
-        <translation>Falls aktiviert, formatiert die Auto-Format-Funktion die Daten beim Laden, bricht den Text in Zeilen und rückt ihn ein für maximale Lesbarkeit. Beim Speichern der Daten verdichtet die Auto-Format-Funktion die Daten durch das Entfernen der Zeilenumbrüche und unnötigen Leerzeichen.</translation>
+        <translation>Falls aktiviert, formatiert die Auto-Format-Funktion die Daten beim Laden, bricht den Text in Zeilen um und rückt ihn ein für maximale Lesbarkeit. Beim Speichern der Daten verdichtet die Auto-Format-Funktion die Daten durch Entfernen der Zeilenumbrüche und unnötigen Leerzeichen.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="401"/>
@@ -1461,12 +1460,12 @@ Fehler werden durch eine rote Wellenlinie gekennzeichnet.</translation>
     <message>
         <location filename="../EditIndexDialog.ui" line="69"/>
         <source>For restricting the index to only a part of the table you can specify a WHERE clause here that selects the part of the table that should be indexed</source>
-        <translation>Zum Einschränken des Index auf einen Teil der Tabelle kann hier eine WHERE-Klausel angegeben werden, die den Teil der Tabelle auswählt, der indexiert werden soll</translation>
+        <translation>Zur Einschränkung des Index auf einen Teil der Tabelle kann hier eine WHERE-Anweisung angegeben werden, die den Teil der Tabelle auswählt, der indexiert werden soll</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="72"/>
         <source>Partial inde&amp;x clause</source>
-        <translation>Teilinde&amp;x-Klausel</translation>
+        <translation>Teilinde&amp;x-Anweisung</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="85"/>
@@ -1531,7 +1530,7 @@ Fehler werden durch eine rote Wellenlinie gekennzeichnet.</translation>
     <message>
         <location filename="../EditTableDialog.ui" line="85"/>
         <source>Make this a &apos;WITHOUT rowid&apos; table. Setting this flag requires a field of type INTEGER with the primary key flag set and the auto increment flag unset.</source>
-        <translation>Als &apos;WITHOUT rowid&apos;-Tabelle markieren. Das Setzen dieses Flags erfordert ein Feld vom Typ INTEGER mit gesetzten Primärkey-Flag und nicht gesetztem Autoinkrement-Flag.</translation>
+        <translation>Als &apos;Ohne Rowid&apos;-Tabelle markieren. Das Setzen dieses Flags erfordert ein Feld vom Typ INTEGER mit gesetzten Primärkey-Flag und nicht gesetztem Autoinkrement-Flag.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="75"/>
@@ -1676,12 +1675,12 @@ Fehler werden durch eine rote Wellenlinie gekennzeichnet.</translation>
     <message>
         <location filename="../EditTableDialog.ui" line="318"/>
         <source>Check constraint</source>
-        <translation>Beschränkung prüfen</translation>
+        <translation>CHECK-Beschränkung</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="323"/>
         <source>Collation</source>
-        <translation>Kollation</translation>
+        <translation>Sortierung</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="328"/>
@@ -1693,17 +1692,17 @@ Fehler werden durch eine rote Wellenlinie gekennzeichnet.</translation>
     <message>
         <location filename="../EditTableDialog.ui" line="337"/>
         <source>Constraints</source>
-        <translation>Constraints</translation>
+        <translation>Beschränkungen</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="345"/>
         <source>Add constraint</source>
-        <translation>Constraint hinzufügen</translation>
+        <translation>Beschränkung hinzufügen</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="368"/>
         <source>Remove constraint</source>
-        <translation>Constraint entfernen</translation>
+        <translation>Beschränkung entfernen</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="404"/>
@@ -1729,22 +1728,22 @@ Fehler werden durch eine rote Wellenlinie gekennzeichnet.</translation>
     <message>
         <location filename="../EditTableDialog.ui" line="464"/>
         <source>Add a primary key constraint</source>
-        <translation>Ein Constraint für den Primärschlüssel hinzufügen</translation>
+        <translation>Einen Primärschlüssel hinzufügen</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="476"/>
         <source>Add a foreign key constraint</source>
-        <translation>Ein Constraint für den Fremdschlüssel hinzufügen</translation>
+        <translation>Einen Fremdschlüssel hinzufügen</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="484"/>
         <source>Add a unique constraint</source>
-        <translation>Ein Unique-Constraint hinzufügen</translation>
+        <translation>Eine UNIQUE-Beschränkung hinzufügen</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="492"/>
         <source>Add a check constraint</source>
-        <translation>Ein Prüfungs-Constraint hinzufügen</translation>
+        <translation>Eine CHECK-Beschränkung hinzufügen</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Warning: &lt;/span&gt;There is something with this table definition that our parser doesn&apos;t fully understand. Modifying and saving this table might result it in problems.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -1754,7 +1753,7 @@ Fehler werden durch eine rote Wellenlinie gekennzeichnet.</translation>
         <location filename="../EditTableDialog.cpp" line="338"/>
         <source>Error creating table. Message from database engine:
 %1</source>
-        <translation>Fehler beim Erstellen der Tabelle. Meldung der Datenbank:
+        <translation>Fehler beim Erstellen der Tabelle. DB meldet:
 %1</translation>
     </message>
     <message>
@@ -1780,12 +1779,12 @@ Fehler werden durch eine rote Wellenlinie gekennzeichnet.</translation>
     <message>
         <location filename="../EditTableDialog.cpp" line="589"/>
         <source>There is at least one row with this field set to NULL. This makes it impossible to set this flag. Please change the table data first.</source>
-        <translation>Mindestens eine Reihe enthält ein Feld mit dem Wert NULL. Dies verhindert das Setzen dieser Markierung. Bitte zunächst die Tabellendaten ändern.</translation>
+        <translation>Mindestens eine Zeile enthält ein Feld mit dem Wert NULL. Dies verhindert das Setzen dieser Markierung. Bitte zunächst die Tabellendaten ändern.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="620"/>
         <source>There is at least one row with a non-integer value in this field. This makes it impossible to set the AI flag. Please change the table data first.</source>
-        <translation>Mindestens eine Reihe enthält ein Feld mit einem nicht ganzzahligen Wert. Dies verhindert das Setzen der AI-Markierung. Bitte zunächst die Tabellendaten ändern.</translation>
+        <translation>Mindestens eine Zeile enthält einen Textwert in diesem Feld (nicht Ganzzahl). Dies verhindert das Setzen der AI-Markierung. Bitte zunächst die Tabellendaten ändern.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="678"/>
@@ -1825,14 +1824,14 @@ Alle aktuell in diesem Feld gespeicherten Daten gehen verloren.</translation>
         <source>Please add a field which meets the following criteria before setting the without rowid flag:
  - Primary key flag set
  - Auto increment disabled</source>
-        <translation>Bitte fügen Sie vor dem Setzen des &quot;Without rowid&quot;-Flags ein Feld hinzu, welches folgenden Kriterien entspricht:
+        <translation>Bitte fügen Sie vor dem Setzen des &quot;Ohne Rowid&quot;-Flags ein Feld hinzu, das den folgenden Kriterien entspricht:
  - Primärschlüssel-Flag gesetzt
  - Autoinkrement deaktiviert</translation>
     </message>
     <message>
         <source>Setting the rowid column for the table failed. Error message:
 %1</source>
-        <translation type="vanished">Setzen der Zeilenid-Spalte dieser Tabelle fehlgeschlagen. Fehlermeldung: %1</translation>
+        <translation type="vanished">Setzen der Rowid-Spalte dieser Tabelle fehlgeschlagen. Fehlermeldung: %1</translation>
     </message>
     <message>
         <source>Changing the table schema failed. Error message:
@@ -1914,7 +1913,7 @@ Alle aktuell in diesem Feld gespeicherten Daten gehen verloren.</translation>
     <message>
         <location filename="../ExportDataDialog.ui" line="152"/>
         <source>&amp;Quote character</source>
-        <translation>&amp;String-Zeichen</translation>
+        <translation>&amp;Zeichenkette-Begrenzungszeichen</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="177"/>
@@ -1929,7 +1928,7 @@ Alle aktuell in diesem Feld gespeicherten Daten gehen verloren.</translation>
     <message>
         <location filename="../ExportDataDialog.ui" line="222"/>
         <source>New line characters</source>
-        <translation>Zeilenumbruchs-Zeichen</translation>
+        <translation>Zeilenumbruch-Zeichen</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="244"/>
@@ -2036,7 +2035,7 @@ Alle aktuell in diesem Feld gespeicherten Daten gehen verloren.</translation>
     <message>
         <location filename="../ExportSqlDialog.ui" line="95"/>
         <source>Multiple rows (VALUES) per INSERT statement</source>
-        <translation>Mehrere Reihen (VALUES) je INSERT-Statement</translation>
+        <translation>Mehrere Zeilen (VALUES) je INSERT-Anweisung</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="116"/>
@@ -2249,12 +2248,12 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="996"/>
         <source>&lt;p&gt;Not all data has been loaded. &lt;b&gt;Do you want to load all data before selecting all the rows?&lt;/b&gt;&lt;p&gt;&lt;p&gt;Answering &lt;b&gt;No&lt;/b&gt; means that no more data will be loaded and the selection will not be performed.&lt;br/&gt;Answering &lt;b&gt;Yes&lt;/b&gt; might take some time while the data is loaded but the selection will be complete.&lt;/p&gt;Warning: Loading all the data might require a great amount of memory for big tables.</source>
-        <translation>&lt;p&gt;Es wurden nicht alle Daten geladen. &lt;b&gt;Sollen vor dem Auswählen aller Zeilen alle Daten geladen werden?&lt;/b&gt;&lt;p&gt;&lt;p&gt;Das Antworten von &lt;b&gt;Nein&lt;/b&gt; wird keine weiteren Daten laden und die Auswahl nicht durchführen.&lt;/br&gt;Das Antworten von &lt;b&gt;Ja&lt;/b&gt; benötigt möglicherweise einige Zeit, während die Daten geladen werden, aber die Auswahl wird vollständig sein.&lt;/p&gt;Warnung: Das Laden aller Daten benötigt bei großen Tabellen möglicherweise eine große Menge an Speicher.</translation>
+        <translation>&lt;p&gt;Es wurden nicht alle Daten geladen. &lt;b&gt;Sollen vor dem Auswählen aller Zeilen alle Daten geladen werden?&lt;/b&gt;&lt;p&gt;&lt;p&gt;Bei &lt;b&gt;Nein&lt;/b&gt; werden keine weiteren Daten geladen und die Auswahl nicht durchgeführt.&lt;/br&gt;Bei &lt;b&gt;Ja&lt;/b&gt; dauert es möglicherweise einige Zeit, während die Daten geladen werden, aber die Auswahl wird vollständig sein.&lt;/p&gt;Warnung: Das Laden aller Daten benötigt bei großen Tabellen möglicherweise sehr viel Speicher.</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="1073"/>
         <source>Cannot set selection to NULL. Column %1 has a NOT NULL constraint.</source>
-        <translation>Auswahl kann nicht auf NULL gesetzt. Die Spalte %1 hat ein NOT NULL Constraint.</translation>
+        <translation>Auswahl kann nicht auf NULL gesetzt werden. Die Spalte %1 hat eine NOT NULL-Beschränkung.</translation>
     </message>
 </context>
 <context>
@@ -2328,7 +2327,7 @@ The following operators are also supported:
 &lt;&gt;	Unequal: exact inverse match
 x~y	Range: values between x and y</source>
         <translation type="vanished">Diese Eingabefelder erlauben Ihnen das Anwenden von schnellen Filtern in der aktuell ausgewählten Tabelle.
-Standardmäßig werden Zeilen, die den Eingabetext beinhalten, herausgefiltert.
+Standardmäßig werden die Zeilen ausgewählt, die den Eingabetext beinhalten, 
 Zudem werden die folgenden Operatoren unterstützt:
 %	Wildcard
 &gt;	Größer als
@@ -2354,7 +2353,7 @@ The following operators are also supported:
 x~y	Range: values between x and y
 /regexp/	Values matching the regular expression</source>
         <translation>Diese Eingabefelder erlauben Ihnen das Anwenden von schnellen Filtern in der aktuell ausgewählten Tabelle.
-Standardmäßig werden Zeilen, die den Eingabetext beinhalten, herausgefiltert.
+Standardmäßig werden die Zeilen ausgewählt, die den Eingabetext beinhalten, 
 Zudem werden die folgenden Operatoren unterstützt:
 %	Wildcard
 &gt;	Größer als
@@ -2514,7 +2513,7 @@ x~y	Bereich: Werte zwischen x und y
     <message>
         <location filename="../FindReplaceDialog.ui" line="106"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When checked, the pattern to find is searched only in the current selection.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Wenn ausgewählt, wird das gesuchte Muster nur in der aktuellen Auswahl gesucht.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Wenn ausgewählt, wird das Muster nur in der aktuellen Auswahl gesucht.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="109"/>
@@ -2534,7 +2533,7 @@ x~y	Bereich: Werte zwischen x und y
     <message>
         <location filename="../FindReplaceDialog.ui" line="139"/>
         <source>Find the next occurrence from the cursor position and in the direction set by &quot;Search backwards&quot;</source>
-        <translation>Das nächste Auftreten ausgehend von der Cursorpositoin und in der durch &quot;Rückwärts suchen&quot; gesetzten Richtung finden</translation>
+        <translation>Das nächste Auftreten ausgehend von der Cursorposition und in der durch &quot;Rückwärts suchen&quot; gesetzten Richtung finden</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="142"/>
@@ -2612,11 +2611,11 @@ x~y	Bereich: Werte zwischen x und y
     <message>
         <location filename="../ForeignKeyEditorDelegate.cpp" line="22"/>
         <source>Foreign key clauses (ON UPDATE, ON DELETE etc.)</source>
-        <translation>Fremdschlüssel-Klauseln (ON UPDATE, ON DELETE etc.)</translation>
+        <translation>Fremdschlüssel-Anweisung (ON UPDATE, ON DELETE etc.)</translation>
     </message>
     <message>
         <source>(foreign key clauses(ON UPDATE, ON DELETE etc.)</source>
-        <translation type="vanished">(Fremdschlüssel-Klauseln(ON UPDATE, ON DELETE etc.))</translation>
+        <translation type="vanished">(Fremdschlüssel-Anweisungen(ON UPDATE, ON DELETE etc.))</translation>
     </message>
 </context>
 <context>
@@ -2669,24 +2668,24 @@ x~y	Bereich: Werte zwischen x und y
     <message>
         <location filename="../ImportCsvDialog.ui" line="228"/>
         <source>Other</source>
-        <translation>Anderer</translation>
+        <translation>Andere</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="130"/>
         <source>&amp;Quote character</source>
-        <translation>&amp;String-Zeichen</translation>
+        <translation>&amp;Zeichenkette-Begrenzungszeichen</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="88"/>
         <location filename="../ImportCsvDialog.ui" line="158"/>
         <source>Other (printable)</source>
-        <translation>Anderer (darstellbar)</translation>
+        <translation>Anderes (darstellbar)</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="93"/>
         <location filename="../ImportCsvDialog.ui" line="163"/>
         <source>Other (code)</source>
-        <translation>Anderer (Code)</translation>
+        <translation>Anderes (Code)</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="143"/>
@@ -2746,7 +2745,7 @@ x~y	Bereich: Werte zwischen x und y
     <message>
         <location filename="../ImportCsvDialog.ui" line="322"/>
         <source>Activate this option to stop the import when trying to import an empty value into a NOT NULL column without a default value.</source>
-        <translation>Aktivieren Sie diese Option, um den Import zu stoppen, falls ein leerer Wert in eine NOT-NULL-Spalte ohne Standardwert importiert werden soll.</translation>
+        <translation>Aktivieren Sie diese Option, um den Import zu abzubrechen, falls ein leerer Wert in eine NOT-NULL-Spalte ohne Standardwert importiert werden soll.</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="329"/>
@@ -2766,7 +2765,7 @@ x~y	Bereich: Werte zwischen x und y
     <message>
         <location filename="../ImportCsvDialog.ui" line="356"/>
         <source>When importing into an existing table with a primary key, unique constraints or a unique index there is a chance for a conflict. This option allows you to select a strategy for that case: By default the import is aborted and rolled back but you can also choose to ignore and not import conflicting rows or to replace the existing row in the table.</source>
-        <translation>Beim Import von Daten in eine existierende Tabelle mit einem Primärschlüssel, Unique-Constraints oder einem eindeutigen Index besteht die Möglichkeit von Konflikten. Diese Option erlaubt die Auswahl einer Strategie für diesen Fall: Standardmäßig wird der Import abgebrochen und zurückgerollt, aber es besteht auch die Option des Ignorierens und somit Nicht-Importierens in Konflikt stehender Zeilen oder des Ersetzens existierender Zeilen der Tabelle.</translation>
+        <translation>Beim Import von Daten in eine existierende Tabelle mit einem Primärschlüssel, UNIQUE-Beschränkungen oder einem UNIQUE-Index sind Konflikte möglich. Diese Option erlaubt die Auswahl einer Konflikt-Strategie: Standardmäßig wird der Import abgebrochen und zurückgerollt, aber es besteht auch die Option Konflikt auslösende Zeilen zu Ignorieren und damit nicht zu importieren oder existierende Zeilen der Tabelle zu ersetzen.</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="360"/>
@@ -2856,7 +2855,7 @@ x~y	Bereich: Werte zwischen x und y
     </message>
     <message>
         <source>Missing field for record %1</source>
-        <translation type="vanished">Fehlendes Feld für Record %1</translation>
+        <translation type="vanished">Fehlendes Feld für Datensatz %1</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.cpp" line="685"/>
@@ -2909,7 +2908,7 @@ x~y	Bereich: Werte zwischen x und y
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates one page of records upwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ein Klick auf diesen Button navigiert in den Einträgen der Tabellenansicht oben eine Seite nach oben.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ein Klick auf diesen Button navigiert in der Tabellenansicht oben eine Seite an Datensätzen nach oben.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Scroll one page downwards</source>
@@ -2917,7 +2916,7 @@ x~y	Bereich: Werte zwischen x und y
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates one page of records downwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ein Klick auf diesen Button navigiert in den Einträgen der Tabellenansicht oben eine Seite nach unten.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ein Klick auf diesen Button navigiert in der Tabellenansicht oben eine Seite an Datensätzen nach unten.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>SQLCipher &amp;FAQ...</source>
@@ -2951,31 +2950,31 @@ x~y	Bereich: Werte zwischen x und y
     </message>
     <message>
         <source>Insert a new record in the current table</source>
-        <translation type="vanished">Fügt eine neue Zeile zur aktuellen Tabelle hinzu</translation>
+        <translation type="vanished">Fügt einen neuen Datensatz zur aktuellen Tabelle hinzu</translation>
     </message>
     <message>
         <source>This button creates a new, empty record in the database</source>
-        <translation type="vanished">Dieser Button erzeugt eine neue, leere Zeile in der Tabelle</translation>
+        <translation type="vanished">Dieser Button erzeugt einen neuen, leeren Datensatz in der Tabelle</translation>
     </message>
     <message>
         <source>New Record</source>
-        <translation type="vanished">Neue Zeile</translation>
+        <translation type="vanished">Neuer Datensatz</translation>
     </message>
     <message>
         <source>Delete the current record</source>
-        <translation type="vanished">Aktuelle Zeile löschen</translation>
+        <translation type="vanished">Aktuellen Datensatz löschen</translation>
     </message>
     <message>
         <source>This button deletes the record currently selected in the database</source>
-        <translation type="vanished">Dieser Button löscht die aktuell in der Tabellenansicht ausgewählte Zeile</translation>
+        <translation type="vanished">Dieser Button löscht den aktuell in der Tabellenansicht ausgewählten Datensatz</translation>
     </message>
     <message>
         <source>Delete Record</source>
-        <translation type="vanished">Zeile löschen</translation>
+        <translation type="vanished">Datensatz löschen</translation>
     </message>
     <message>
         <source>This is the database view. You can double-click any record to edit its contents in the cell editor window.</source>
-        <translation type="vanished">Dies ist die Tabellenansicht. Mit einem Doppelklick auf eine Zeile können Sie ihren Inhalt in einem Editorfenster bearbeiten.</translation>
+        <translation type="vanished">Dies ist die Tabellenansicht. Mit einem Doppelklick auf einen Datensatz können Sie dessen Inhalt im Zelleneditor-Fenster bearbeiten.</translation>
     </message>
     <message>
         <source>&lt;</source>
@@ -2991,7 +2990,7 @@ x~y	Bereich: Werte zwischen x und y
     </message>
     <message>
         <source>Scroll 100 records upwards</source>
-        <translation type="vanished">100 Zeilen nach oben scrollen</translation>
+        <translation type="vanished">100 Datensätze nach oben scrollen</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="14"/>
@@ -3004,7 +3003,7 @@ x~y	Bereich: Werte zwischen x und y
 You can drag SQL statements from an object row and drop them into other applications or into another instance of &apos;DB Browser for SQLite&apos;.
 </source>
         <translation>Dies ist die Struktur der geöffneten Datenbank.
-Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendungen oder einer anderen &apos;DB-Browser für SQLite&apos;-Instanz ablegen.
+Sie können SQL-Anweisungen aus einer Objektzeile fassen und in anderen Anwendungen oder einer anderen &apos;DB-Browser für SQLite&apos;-Instanz ablegen.
 </translation>
     </message>
     <message>
@@ -3033,7 +3032,7 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     <message>
         <location filename="../MainWindow.ui" line="2077"/>
         <source>Comment or uncomment the selected lines or the current line, when there is no selection. All the block is toggled according to the first line.</source>
-        <translation>Aktuelle Zeilen oder aktuelle Zeile kommentieren oder unkommentieren, wenn es keine Auswahl gibt. Der gesamte Block wird entsprechend der ersten Zeile invertiert.</translation>
+        <translation>Ausgewählte Zeilen kommentieren oder unkommentieren, oder aktuelle Zeile, wenn es keine Auswahl gibt. Der gesamte Block wird entsprechend der ersten Zeile invertiert.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2080"/>
@@ -3053,7 +3052,7 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     <message>
         <location filename="../MainWindow.ui" line="2098"/>
         <source>Stop the currently running SQL script</source>
-        <translation>Das aktuelle laufende SQL-Skript stoppen</translation>
+        <translation>Das aktuelle laufende SQL-Skript abbrechen</translation>
     </message>
     <message>
         <source>Clear all filters</source>
@@ -3069,7 +3068,7 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This popup menu provides the following options applying to the currently browsed and filtered table:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Export to CSV: this option exports the data of the browsed table as currently displayed (after filters, display formats and order column) to a CSV file.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Save as view: this option saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dieses Popup-Menü bietet die folgenden Optionen zur Anwendung auf die aktuell ausgewählte und gefilterte Tabelle:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;CSV exportieren: diese Option exportiert die Daten der ausgewählten Tabelle wie aktuell angezeigt (gefiltert, Anzeigeformat und Spaltenreihenfolge) in eine CSV-Datei.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Als Ansicht speichern: diese Option speichert die aktuelle Einstellung der ausgewählten Tabelle (Filter, Anzeigeformat und Spaltenreihenfolge) als eine SQL-View, die Sie später durchsuchen oder in SQL-Statements verwenden können.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dieses Popup-Menü bietet die folgenden Optionen zur Anwendung auf die aktuell ausgewählte und gefilterte Tabelle:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;CSV exportieren: diese Option exportiert die Daten der ausgewählten Tabelle wie aktuell angezeigt (gefiltert, Anzeigeformat und Spaltenreihenfolge) in eine CSV-Datei.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Als Ansicht speichern: diese Option speichert die aktuelle Einstellung der ausgewählten Tabelle (Filter, Anzeigeformat und Spaltenreihenfolge) als eine SQL-View, die Sie später durchsuchen oder in SQL-Anweisungen verwenden können.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>...</source>
@@ -3085,11 +3084,11 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button creates a new record in the database. Hold the mouse button to open a pop-up menu of different options:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt;: insert a new record with default values in the database.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Insert Values...&lt;/span&gt;: open a dialog for entering values before they are inserted in the database. This allows to enter values acomplishing the different constraints. This dialog is also open if the &lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt; option fails due to these constraints.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dieser Button erstellt eine neue Zeile in der Datenbank. Halten sie die Maustaste gedrückt, um ein Popup-Menü mit verschiedenen Optionen zu öffnen:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Neuer Eintrag&lt;/span&gt;: eine neue Zeile mit Standardwerten in die Datenbank einfügen.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Werte einfügen...&lt;/span&gt;: einen Dialog zur Eingabe von Werten öffnen, bevor diese in die Datenbank eingefügt werden. Dies erlaubt die Eingabe von Werten, die den Constraints Genüge tun. Dieser Dialog wird auch geöffnet, falls die &lt;span style=&quot; font-weight:600;&quot;&gt;Neuer Eintrag&lt;/span&gt;-Option aufgrund dieser Constraints fehlschlägt.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dieser Button erstellt einen neuen Datensatz in der Datenbank. Halten sie die Maustaste gedrückt, um ein Popup-Menü mit verschiedenen Optionen zu öffnen:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Neuer Datensatz&lt;/span&gt;: einen neuen Datensatz mit Standardwerten in die Datenbank einfügen.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Werte einfügen...&lt;/span&gt;: einen Dialog zur Eingabe von Werten öffnen, bevor diese in die Datenbank eingefügt werden. Dies erlaubt die Eingabe von Werten, die den Beschränkungen entsprechen. Dieser Dialog wird auch geöffnet, falls die &lt;span style=&quot; font-weight:600;&quot;&gt;Neuer Eintrag&lt;/span&gt;-Option aufgrund von Beschränkungen fehlschlägt.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>This button deletes the record or records currently selected in the table</source>
-        <translation type="vanished">Dieser Button löscht die Zeile oder Zeilen, die aktuell in der Tabelle ausgewählt sind</translation>
+        <translation type="vanished">Dieser Button löscht den Datensatz oder die  Datensätze, die aktuell in der Tabelle ausgewählt sind</translation>
     </message>
     <message>
         <source>This is the database table view. You can do the following actions:
@@ -3100,10 +3099,10 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
  - Ctrl+&apos; for copying the value from the cell above.
  - Standard selection and copy/paste operations.</source>
         <translation type="vanished">Dies ist die Datenbanktabellen-Ansicht. Sie können die folgenden Aktionen durchführen:
- - Mit Schreiben beginnen, um die Werte inline zu bearbeiten.
- - Doppelt auf einen Eintrag klicken, um dessen Inhalte im Zelleneditor-Fenster zu bearbeiten.
+ - Mit Schreiben beginnen, um die Werte unmittelbar zu bearbeiten.
+ - Doppelt auf einen Datensatz klicken, um dessen Inhalte im Zelleneditor-Fenster zu bearbeiten.
  - Alt+Entf zum Löschen des Zellinhaltes zu NULL.
- - Strg+&quot; zur Duplizierung des aktuellen Eintrags.
+ - Strg+&quot; zur Duplizierung des aktuellen Datensatzes.
  - Strg+&apos; zum Kopieren des Wertes der darüberliegenden Zelle.
  - Standardmäßige Auswahl- und Kopieren/Einfügen-Operationen.</translation>
     </message>
@@ -3122,7 +3121,7 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     <message>
         <location filename="../MainWindow.ui" line="926"/>
         <source>Error Log</source>
-        <translation>Fehlerlog</translation>
+        <translation>Fehlerprotokoll</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1184"/>
@@ -3137,17 +3136,17 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     <message>
         <location filename="../MainWindow.ui" line="1491"/>
         <source>Execute all/selected SQL</source>
-        <translation>Komplettes/ausgewähltes SQL ausführen</translation>
+        <translation>Komplette/ausgewählte SQL ausführen</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1494"/>
         <source>This button executes the currently selected SQL statements. If no text is selected, all SQL statements are executed.</source>
-        <translation>Dieser Button führt das aktuell ausgewählte SQL-Statement aus. Falls kein Text ausgewählt ist, werden alle SQL-Statements ausgeführt.</translation>
+        <translation>Dieser Button führt die aktuell ausgewählte SQL-Anweisung aus. Falls kein Text ausgewählt ist, werden alle SQL-Anweisungen ausgeführt.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1509"/>
         <source>This button opens a file containing SQL statements and loads it in a new editor tab</source>
-        <translation>Dieser Button öffnet eine Datei mit SQL-Statements und lädt diese in einen neuen Editortab</translation>
+        <translation>Dieser Button öffnet eine Datei mit SQL-Anweisungen und lädt diese in einen neuen Editortab</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1530"/>
@@ -3260,7 +3259,7 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     <message>
         <location filename="../MainWindow.ui" line="1816"/>
         <source>This button lets you save the results of the last executed query</source>
-        <translation>Dieser Button erlaubt Ihnen das Speichern der Ergebnisse der zuletzt ausgeführten Query</translation>
+        <translation>Dieser Button erlaubt Ihnen das Speichern der Ergebnisse der zuletzt ausgeführten Abfrage</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1828"/>
@@ -3276,7 +3275,7 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     <message>
         <location filename="../MainWindow.ui" line="1837"/>
         <source>This button opens the search bar of the editor</source>
-        <translation>Dieser Button öffnet die Suchleiste des Editors</translation>
+        <translation>Dieser Button öffnet die Such-Werkzeugleiste des Editors</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1840"/>
@@ -3364,7 +3363,7 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     </message>
     <message>
         <source>This button saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.</source>
-        <translation type="vanished">Dieser Button speichert die aktuellen Einstellungen der ausgewählten Tabelle (Filter, Anzeigeformate und Spaltenreihenfolge) als SQL-View, welche Sie später durchsuchen oder in SQL-Statements verwenden können.</translation>
+        <translation type="vanished">Dieser Button speichert die aktuellen Einstellungen der ausgewählten Tabelle (Filter, Anzeigeformate und Spaltenreihenfolge) als SQL-View, welche Sie später durchsuchen oder in SQL-Anweisungen verwenden können.</translation>
     </message>
     <message>
         <source>Insert Values...</source>
@@ -3372,11 +3371,11 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     </message>
     <message>
         <source>Open a dialog for inserting values in a new record</source>
-        <translation type="vanished">Einen Dialog zum Einfügen von Werten in eine neue Zeile öffnen</translation>
+        <translation type="vanished">Einen Dialog öffnen zum Einfügen von Werten in einen neuen Datensatz</translation>
     </message>
     <message>
         <source>Insert new record using default values in browsed table</source>
-        <translation type="vanished">Eine neue Zeile mit den Standardwerten in den ausgewählte Tabelle einfügen</translation>
+        <translation type="vanished">Einen neuen Datensatz mit den Standardwerten in die ausgewählte Tabelle einfügen</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1646"/>
@@ -3522,15 +3521,15 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates 100 records upwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ein Klick auf diesen Button navigiert 100 Einträge höher in der oben angezeigten Tabelle.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ein Klick auf diesen Button navigiert 100 Datensätze höher in der oben angezeigten Tabelle.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll 100 records downwards&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;100 Zeilen nach unten scrollen&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;100 Datensätze nach unten scrollen&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates 100 records downwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ein Klick auf diesen Button navigiert 100 Einträge nach unten in der oben angezeigten Tabelle.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ein Klick auf diesen Button navigiert 100 Datensätze nach unten in der oben angezeigten Tabelle.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Scroll to the end</source>
@@ -3546,11 +3545,11 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click here to jump to the specified record&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;body&gt;&lt;p&gt;Klicken Sie hier, um zu einer bestimmten Zeile zu springen&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;body&gt;&lt;p&gt;Klicken Sie hier, um zu einem bestimmten Datensatz zu springen&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button is used to navigate to the record number specified in the Go to area.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;body&gt;&lt;p&gt;Dieser Button kann zum Navigieren zu einer im &quot;Springe zu&quot;-Bereich festgelegten Zeile verwendet werden.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;body&gt;&lt;p&gt;Dieser Button kann zum Navigieren zu einem im &quot;Springe zu&quot;-Bereich festgelegten Datensatz verwendet werden.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Go to:</source>
@@ -3558,11 +3557,11 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     </message>
     <message>
         <source>Enter record number to browse</source>
-        <translation type="vanished">Zeilennummer zum Suchen auswählen</translation>
+        <translation type="vanished">Datensatznummer zum Suchen eingeben</translation>
     </message>
     <message>
         <source>Type a record number in this area and click the Go to: button to display the record in the database view</source>
-        <translation type="vanished">Geben Sie eine Zeilennummer in diesem Bereich ein und klicken Sie auf den &quot;Springe zu:&quot;-Button, um die Zeile in der Datenbankansicht anzuzeigen</translation>
+        <translation type="vanished">Geben Sie eine Datensatznummer in diesem Bereich ein und klicken Sie auf den &quot;Springe zu:&quot;-Button, um den Datensatz in der Datenbankansicht anzuzeigen</translation>
     </message>
     <message>
         <source>1</source>
@@ -3574,7 +3573,7 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_auto_vacuum&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Auto Vacuum&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_auto_vacuum&quot;&gt;&lt;span style=&quot; text-decoration: underline, color:#0000ff;&quot;&gt;Automatisches Vakuum&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_auto_vacuum&quot;&gt;&lt;span style=&quot; text-decoration: underline, color:#0000ff;&quot;&gt;Automatische Komprimierung&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>None</source>
@@ -3606,7 +3605,7 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_ignore_check_constraints&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Ignore Check Constraints&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_ignore_check_constraints&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Beschränkungsprüfung ignorieren&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_ignore_check_constraints&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;CHECK-Beschränkungen ignorieren&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_mode&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Journal Mode&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -3755,12 +3754,12 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     <message>
         <location filename="../MainWindow.ui" line="953"/>
         <source>This button clears the contents of the SQL logs</source>
-        <translation>Dieser Button löscht den Inhalt der SQL-Logs</translation>
+        <translation>Dieser Button löscht die Inhalte der SQL-Protokolle</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="965"/>
         <source>This panel lets you examine a log of all SQL commands issued by the application or by yourself</source>
-        <translation>Dieses Panel erlaubt Ihnen das Betrachten eines Logs aller SQL-Kommandos, die von der Anwendung oder von Ihnen selbst ausgegangen sind</translation>
+        <translation>Dieses Fenster ermöglicht die Untersuchung eines Protokolls aller SQL-Kommandos, die von der Anwendung oder von Ihnen selbst ausgegangen sind</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1024"/>
@@ -3774,8 +3773,8 @@ You can drag multiple object names from the Name column and drop them into the S
 You can drag SQL statements from the Schema column and drop them into the SQL editor or into other applications.
 </source>
         <translation>Dies ist die Struktur der geöffneten Datenbank.
-Sie können mehrere Objektnamen aus der Namensspalte nehmen und in den SQL-Editor ziehen und Sie können die Eigenschaften der abgelegten Namen über das Kontextmenü anpassen. Dies kann Sie bei der Erstellung von SQL-Statements unterstützen.
-Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor oder in anderen Anwendungen ablegen.
+Sie können mehrere Objektnamen aus der Namensspalte nehmen und in den SQL-Editor ziehen und Sie können die Eigenschaften der abgelegten Namen über das Kontextmenü anpassen. Dies kann Sie bei der Erstellung von SQL-Anweisungen unterstützen.
+Sie können SQL-Anweisungen aus der Schemaspalte nehmen und in den SQL-Editor oder in anderen Anwendungen ablegen.
 </translation>
     </message>
     <message>
@@ -3799,7 +3798,7 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     <message>
         <location filename="../MainWindow.ui" line="1551"/>
         <source>This button executes the SQL statement present in the current editor line</source>
-        <translation>Dieser Button führt das SQL-Statement in der aktuellen Editorzeile aus</translation>
+        <translation>Dieser Button führt die SQL-Anweisung in der aktuellen Editorzeile aus</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1554"/>
@@ -3842,12 +3841,12 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     <message>
         <location filename="../MainWindow.ui" line="1751"/>
         <source>Copy Create statement</source>
-        <translation>Create-Statement kopieren</translation>
+        <translation>Create-Anweisung kopieren</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1754"/>
         <source>Copy the CREATE statement of the item to the clipboard</source>
-        <translation>CREATE-Statement des Elements in die Zwischenablage kopieren</translation>
+        <translation>CREATE-Anweisung des Elements in die Zwischenablage kopieren</translation>
     </message>
     <message>
         <source>Edit display format</source>
@@ -3883,7 +3882,7 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     </message>
     <message>
         <source>Duplicate record</source>
-        <translation type="vanished">Zeile duplizieren</translation>
+        <translation type="vanished">Datensatz duplizieren</translation>
     </message>
     <message>
         <source>toolBar</source>
@@ -3891,7 +3890,7 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     </message>
     <message>
         <source>SQL Log</source>
-        <translation type="obsolete">SQL-Log</translation>
+        <translation type="obsolete">SQL-Protokoll</translation>
     </message>
     <message>
         <source>&amp;Show SQL submitted by</source>
@@ -4134,13 +4133,13 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     <message>
         <location filename="../MainWindow.ui" line="1249"/>
         <source>Compact the database file, removing space wasted by deleted records</source>
-        <translation>Datenbank-Datei komprimieren, löscht Speicherplatz von gelöschten Zeilen</translation>
+        <translation>Datenbank-Datei komprimieren, gibt Speicherplatz von gelöschten Datensätzen frei</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1252"/>
         <location filename="../MainWindow.ui" line="1255"/>
         <source>Compact the database file, removing space wasted by deleted records.</source>
-        <translation>Datenbank-Datei komprimieren, löscht Speicherplatz von gelöschten Zeilen.</translation>
+        <translation>Datenbank-Datei komprimieren, gibt Speicherplatz von gelöschten Datensätzen frei.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1263"/>
@@ -4258,12 +4257,12 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     <message>
         <location filename="../MainWindow.ui" line="1430"/>
         <source>&amp;DB Toolbar</source>
-        <translation>&amp;DB Toolbar</translation>
+        <translation>&amp;DB-Werkzeugleiste</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1433"/>
         <source>Shows or hides the Database toolbar.</source>
-        <translation>Zeigt oder versteckt die Datenbank-Toolbar.</translation>
+        <translation>Zeigt oder versteckt die Datenbank-Werkzeugleiste.</translation>
     </message>
     <message>
         <source>What&apos;s This?</source>
@@ -4331,7 +4330,7 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     <message>
         <location filename="../MainWindow.ui" line="850"/>
         <source>DB Toolbar</source>
-        <translation>DB Toolbar</translation>
+        <translation>DB-Werkzeugleiste</translation>
     </message>
     <message>
         <source>Edit Database Cell</source>
@@ -4340,7 +4339,7 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     <message>
         <location filename="../MainWindow.ui" line="881"/>
         <source>SQL &amp;Log</source>
-        <translation>SQL-&amp;Log</translation>
+        <translation>SQL-&amp;Protokoll</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="899"/>
@@ -4613,18 +4612,18 @@ Reason: %1</source>
     <message>
         <source>Error adding record:
 </source>
-        <translation type="vanished">Fehler beim Hinzufügen der Zeile:
+        <translation type="vanished">Fehler beim Hinzufügen des Datensatzes:
 </translation>
     </message>
     <message>
         <source>Error deleting record:
 %1</source>
-        <translation type="vanished">Fehler beim Löschen der Zeile:
+        <translation type="vanished">Fehler beim Löschen des Datensatzes:
 %1</translation>
     </message>
     <message>
         <source>Please select a record first</source>
-        <translation type="vanished">Bitte zuerst eine Zeile auswählen</translation>
+        <translation type="vanished">Bitte zuerst einen Datensatz auswählen</translation>
     </message>
     <message>
         <source>%1 - %2 of %3</source>
@@ -4643,7 +4642,7 @@ Alle mit %1 verbundenen Daten gehen verloren.</translation>
     <message>
         <source>Error: could not delete the %1. Message from database engine:
 %2</source>
-        <translation type="vanished">Fehler: %1 konnte nicht gelöscht werden. Meldung der Datenbank:
+        <translation type="vanished">Fehler: %1 konnte nicht gelöscht werden. DB meldet:
 %2</translation>
     </message>
     <message>
@@ -4660,7 +4659,7 @@ Alle mit %1 verbundenen Daten gehen verloren.</translation>
     </message>
     <message>
         <source>Query executed successfully: %1 (took %2ms%3)</source>
-        <translation type="vanished">Query erfolgreich ausgeführt: %1 (innerhalb von %2ms%3)</translation>
+        <translation type="vanished">Abfrage erfolgreich ausgeführt: %1 (innerhalb von %2ms%3)</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1324"/>
@@ -4706,7 +4705,7 @@ Alle mit %1 verbundenen Daten gehen verloren.</translation>
     <message>
         <location filename="../MainWindow.cpp" line="888"/>
         <source>This table did not pass a foreign-key check.&lt;br/&gt;You should run &apos;Tools | Foreign-Key Check&apos; and fix the reported issues.</source>
-        <translation>Diese Tabelle hat die Fremdschlüsselprüfung nicht bestanden.&lt;br/&gt;Sie sollten &apos;Werkzeuge | Fremdschlüssel-Prüfng&apos; ausführen und die gemeldeten Probleme beheben.</translation>
+        <translation>Diese Tabelle hat die Fremdschlüssel-Prüfung nicht bestanden.&lt;br/&gt;Sie sollten &apos;Werkzeuge | Fremdschlüssel-Prüfung&apos; ausführen und die gemeldeten Probleme beheben.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1194"/>
@@ -4738,11 +4737,11 @@ Lassen Sie das Feld leer, um die Datenbankodierung zu verwenden.</translation>
     </message>
     <message>
         <source>Error executing query: %1</source>
-        <translation type="vanished">Fehler beim Ausführen der Anfrage: %1</translation>
+        <translation type="vanished">Fehler beim Ausführen der Abfrage: %1</translation>
     </message>
     <message>
         <source>Query executed successfully: %1 (took %2ms)</source>
-        <translation type="obsolete">Anfrage erfolgreich ausgeführt: %1 (in %2ms)</translation>
+        <translation type="obsolete">Abfrage erfolgreich ausgeführt: %1 (in %2ms)</translation>
     </message>
     <message>
         <source>Choose a text file</source>
@@ -4797,7 +4796,7 @@ Bei der Antwort NEIN werden die Daten in die SQL-Datei der aktuellen Datenbank i
     <message>
         <location filename="../MainWindow.cpp" line="653"/>
         <source>You are still executing SQL statements. Closing the database now will stop their execution, possibly leaving the database in an inconsistent state. Are you sure you want to close the database?</source>
-        <translation>Es werden aktuell SQL-Statements ausgeführt. Das Schließen der Datenbank wird deren Ausführung stoppen, was die Datenbank möglicherweise in einem inkonsistenten Zustand belässt. Soll die Datenbank wirklich geschlossen werden?</translation>
+        <translation>Es werden aktuell SQL-Anweisungen ausgeführt. Das Schließen der Datenbank wird deren Ausführung abbrechen, was die Datenbank möglicherweise in einem inkonsistenten Zustand belässt. Soll die Datenbank wirklich geschlossen werden?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="727"/>
@@ -4848,7 +4847,7 @@ Bei der Antwort NEIN werden die Daten in die SQL-Datei der aktuellen Datenbank i
         <location filename="../MainWindow.cpp" line="1778"/>
         <source>Setting PRAGMA values will commit your current transaction.
 Are you sure?</source>
-        <translation>Das Setzen von PRAGMA-Werten übermittelt den aktuellen Vorgang.
+        <translation>Das Setzen von PRAGMA-Werten wird Ihre aktuelle Transaktion abschließen.
 Sind Sie sicher?</translation>
     </message>
     <message>
@@ -4862,7 +4861,7 @@ Sind Sie sicher?</translation>
     </message>
     <message>
         <source>determining row count...</source>
-        <translation type="vanished">bestimmte Zeilenanzahl...</translation>
+        <translation type="vanished">bestimme Zeilenanzahl...</translation>
     </message>
     <message>
         <source>%1 - %2 of &gt;= %3</source>
@@ -4914,7 +4913,7 @@ Alle mit dieser Tabelle verbundenen Daten gehen verloren.</translation>
         <location filename="../MainWindow.cpp" line="837"/>
         <source>Message from database engine:
 %1</source>
-        <translation>Nachricht von Datenbank-Engine:
+        <translation>DB meldet:
 %1</translation>
     </message>
     <message>
@@ -4927,7 +4926,7 @@ Möchten Sie die Datenbank wirklich speichern?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="1000"/>
         <source>You are already executing SQL statements. Do you want to stop them in order to execute the current statements instead? Note that this might leave the database in an inconsistent state.</source>
-        <translation>Es werden bereits SQL-Statements ausgeführt. Sollen diese gestoppt werden, um stattdessen die aktuellen Statements auszuführen? Dies führt möglicherweise zu einem inkonsistenten Zustand der Datenbank.</translation>
+        <translation>Es werden bereits SQL-Anweisungen ausgeführt. Sollen diese abgebrochen werden, um stattdessen die aktuellen Anweisungen auszuführen? Dies führt möglicherweise zu einem inkonsistenten Zustand der Datenbank.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1047"/>
@@ -4970,7 +4969,7 @@ Möchten Sie die Datenbank wirklich speichern?</translation>
         <location filename="../MainWindow.cpp" line="1176"/>
         <source>Setting PRAGMA values or vacuuming will commit your current transaction.
 Are you sure?</source>
-        <translation>Das Setzen von PRAGMA-Werten oder des Vakuumings wird Ihre aktuelle Transaktion committen.
+        <translation>Das Setzen von PRAGMA-Werten oder das Komprimieren der Datenbank wird Ihre aktuelle Transaktion abschließen.
 Sind Sie sich sicher?</translation>
     </message>
     <message>
@@ -5010,7 +5009,7 @@ Sind Sie sich sicher?</translation>
     </message>
     <message>
         <source>executing query</source>
-        <translation type="vanished">führe Query aus</translation>
+        <translation type="vanished">führe Abfrage aus</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1170"/>
@@ -5019,7 +5018,7 @@ Sind Sie sich sicher?</translation>
     </message>
     <message>
         <source>query executed successfully. Took %1ms%2</source>
-        <translation type="vanished">Query erfolgreich ausgeführt. Benötigte %1ms%2</translation>
+        <translation type="vanished">Abfrage erfolgreich ausgeführt. Benötigte %1ms%2</translation>
     </message>
     <message>
         <source>-- At line %1:
@@ -5095,7 +5094,7 @@ Sind Sie sich sicher?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="1833"/>
         <source>Do you want to save the changes made to SQL tabs in a new project file?</source>
-        <translation>Sollen die an den SQL-Tabs getätigten Änderungen in einer neuen Projektdatei gespeichert werden?</translation>
+        <translation>Sollen die Änderungen in den SQL-Editortabs in einer neuen Projektdatei gespeichert werden?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1854"/>
@@ -5105,7 +5104,7 @@ Sind Sie sich sicher?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="1876"/>
         <source>The statements in this tab are still executing. Closing the tab will stop the execution. This might leave the database in an inconsistent state. Are you sure you want to close the tab?</source>
-        <translation>Es werden aktuell SQL-Statements ausgeführt. Das Schließen des Tabs wird deren Ausführung stoppen, was die Datenbank möglicherweise in einem inkonsistenten Zustand belässt. Soll der Tab wirklich geschlossen werden?</translation>
+        <translation>Es werden aktuell SQL-Anweisungen ausgeführt. Das Schließen des Tabs wird deren Ausführung abbrechen, was die Datenbank möglicherweise in einem inkonsistenten Zustand belässt. Soll der Tab wirklich geschlossen werden?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1958"/>
@@ -5179,7 +5178,7 @@ Grund: %1</translation>
     </message>
     <message>
         <source>Duplicate records</source>
-        <translation type="vanished">Doppelte Einträge</translation>
+        <translation type="vanished">Doppelte Datensätze</translation>
     </message>
     <message>
         <source>Ctrl+&quot;</source>
@@ -5187,26 +5186,26 @@ Grund: %1</translation>
     </message>
     <message>
         <source>Please enter a pseudo-primary key in order to enable editing on this view. This should be the name of a unique column in the view.</source>
-        <translation type="vanished">Bitte einen Pseudo-Primärschlüssel eingeben, um die Bearbeitung dieser Ansicht zu ermöglichen. Dies sollte der Name der eindeutigen Spalte dieser Ansicht sein.</translation>
+        <translation type="vanished">Bitte einen Pseudo-Primärschlüssel eingeben, um die Bearbeitung dieser Ansicht zu ermöglichen. Dies sollte der Name einer eindeutigen (UNIQUE) Spalte dieser Ansicht sein.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3030"/>
         <source>Collation needed! Proceed?</source>
-        <translation>Kollation notwendig! Fortführen?</translation>
+        <translation>Sortierung notwendig! Fortführen?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3031"/>
         <source>A table in this database requires a special collation function &apos;%1&apos; that this application can&apos;t provide without further knowledge.
 If you choose to proceed, be aware bad things can happen to your database.
 Create a backup!</source>
-        <translation>Eine Tabelle in dieser Datenbank benötigt eine spezielle Kollationsfunktion &apos;%1&apos;, welche diese Anwendung ohne weiterem Wissen nicht zur Verfügung stellen kann.
+        <translation>Eine Tabelle in dieser Datenbank benötigt eine spezielle Sortierfunktion &apos;%1&apos;, welche diese Anwendung ohne weiterem Wissen nicht zur Verfügung stellen kann.
 Wenn Sie fortfahren, sollten Sie im Hinterkopf behalten, dass mit Ihrer Datenbank unerwartete Dinge geschehen können.
 Erstellen Sie ein Backup!</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3036"/>
         <source>creating collation</source>
-        <translation>erstelle Kollation</translation>
+        <translation>erstelle Sortierung</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3045"/>
@@ -5239,7 +5238,7 @@ Erstellen Sie ein Backup!</translation>
     </message>
     <message>
         <source>Delete Records</source>
-        <translation type="vanished">Einträge löschen</translation>
+        <translation type="vanished">Datensätze löschen</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3115"/>
@@ -5304,7 +5303,7 @@ Erstellen Sie ein Backup!</translation>
     <message>
         <location filename="../PlotDock.ui" line="30"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This pane shows the list of columns of the currently browsed table or the just executed query. You can select the columns that you want to be used as X or Y axis for the plot pane below. The table shows detected axis type that will affect the resulting plot. For the Y axis you can only select numeric columns, but for the X axis you will be able to select:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Date/Time&lt;/span&gt;: strings with format &amp;quot;yyyy-MM-dd hh:mm:ss&amp;quot; or &amp;quot;yyyy-MM-ddThh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Date&lt;/span&gt;: strings with format &amp;quot;yyyy-MM-dd&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Time&lt;/span&gt;: strings with format &amp;quot;hh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Label&lt;/span&gt;: other string formats. Selecting this column as X axis will produce a Bars plot with the column values as labels for the bars&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Numeric&lt;/span&gt;: integer or real values&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Double-clicking the Y cells you can change the used color for that graph.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dieses Pane zeigt die Liste der Spalten der aktuell ausgewählten Tabelle oder des soeben ausgeführtne Queries. Sie können die für die X- und Y-Achse gewünschten Spalten für das Plot-Pane unten auswählen. Die Tabelle zeigt den erkannten Axentyp, der den entstehenden Plot beeinflusst. Für die Y-Achse sind nur numerische Spalten zulässig, während Sie für die X-Achse aus folgenden Optionen auswählen können:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Datum/Zeit&lt;/span&gt;: Strings im Format &amp;quot;yyyy-MM-dd hh:mm:ss&amp;quot; or &amp;quot;yyyy-MM-ddThh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Datum&lt;/span&gt;: Strings im Format &amp;quot;yyyy-MM-dd&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Zeit&lt;/span&gt;: Strings im Format &amp;quot;hh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Beschriftung&lt;/span&gt;: andere Stringformate. Die Auswahl dieser Spalte als X-Achse erzeugt einen Barplot mit den Spaltenwerten als Beschriftungen der Bars.&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Numerisch&lt;/span&gt;: Integer- oder Real-Werte&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Ein Doppelklick auf die Y-Zellen ermöglicht Ihnen das Ändern der für den Graph verwendeten Farbe.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dieser Fensterbereich zeigt die Liste der Spalten der aktuell ausgewählten Tabelle oder des soeben ausgeführten Abfrage. Sie können die für die X- und Y-Achse gewünschten Spalten für den Diagrammbereich unten auswählen. Die Tabelle zeigt den erkannten Axentyp, der das entstehende Diagramm beeinflusst. Für die Y-Achse sind nur numerische Spalten zulässig, während Sie für die X-Achse aus folgenden Optionen auswählen können:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Datum/Zeit&lt;/span&gt;: Zeichenketten im Format &amp;quot;yyyy-MM-dd hh:mm:ss&amp;quot; or &amp;quot;yyyy-MM-ddThh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Datum&lt;/span&gt;: Zeichenketten im Format &amp;quot;yyyy-MM-dd&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Zeit&lt;/span&gt;: Zeichenketten im Format &amp;quot;hh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Beschriftung&lt;/span&gt;: andere Zeichenkettenformate. Die Auswahl dieser Spalte als X-Achse erzeugt ein Säulendiagramm mit den Spaltenwerten als Beschriftungen der Säulen.&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Numerisch&lt;/span&gt;: Integer- oder Real-Werte&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Ein Doppelklick auf die Y-Zellen ermöglicht Ihnen das Ändern der für den Graph verwendeten Farbe.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="46"/>
@@ -5348,9 +5347,9 @@ Click on points to select them in the plot and in the table. Ctrl+Click for sele
 Use mouse-wheel for zooming and mouse drag for changing the axis range.
 
 Select the axes or axes labels to drag and zoom only in that orientation.</source>
-        <translation>Hier wird ein Plot angezeigt, wenn Sie oben die x- und y-Werte auswählen.
+        <translation>Hier wird ein Diagramm angezeigt, wenn Sie oben die x- und y-Werte auswählen.
 
-Klicken Sie auf Punkte, um diese im Plot und in der Tabelle auszuwählen. Strg+Klick zur Auswahl eines Punktebereichs.
+Klicken Sie auf Punkte, um diese im Diagramm und in der Tabelle auszuwählen. Strg+Klick zur Auswahl eines Punktebereichs.
 
 Verwenden Sie das Mausrad zum Zoomen und Ziehen Sie mit der Maus, um den Achsenbereich zu ändern.
 
@@ -5481,7 +5480,7 @@ Wählen Sie die Achsen oder Achsenbeschriftungen aus, um nur in diese Richtung z
         <location filename="../PlotDock.ui" line="314"/>
         <location filename="../PlotDock.cpp" line="545"/>
         <source>Load all data and redraw plot</source>
-        <translation>Alle Daten laden und Plot neu zeichnen</translation>
+        <translation>Alle Daten laden und Diagramm neu zeichnen</translation>
     </message>
     <message>
         <source>Load all data. This has only an effect if not all data has been fetched from the table yet due to the partial fetch mechanism.</source>
@@ -5516,7 +5515,7 @@ Wählen Sie die Achsen oder Achsenbeschriftungen aus, um nur in diese Richtung z
     <message>
         <location filename="../PlotDock.cpp" line="94"/>
         <source>Stacked bars</source>
-        <translation>Gestapelte Bars</translation>
+        <translation>Gestapelte Säulen</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="178"/>
@@ -5553,8 +5552,8 @@ Wählen Sie die Achsen oder Achsenbeschriftungen aus, um nur in diese Richtung z
         <location filename="../PlotDock.cpp" line="540"/>
         <source>Load all data and redraw plot.
 Warning: not all data has been fetched from the table yet due to the partial fetch mechanism.</source>
-        <translation>Alle Daten laden und Plot neu zeichnen.
-Warnung: es wurden aufgrund der partiellen Abrufmechanismus noch nicht alle Daten aus der Tabelle abgerufen.</translation>
+        <translation>Alle Daten laden und Diagramm neu zeichnen.
+Warnung: Aufgrund des partiellen Abrufmechanismus wurden noch nicht alle Daten aus der Tabelle abgerufen.</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="635"/>
@@ -5574,7 +5573,7 @@ Warnung: es wurden aufgrund der partiellen Abrufmechanismus noch nicht alle Date
     <message>
         <location filename="../PlotDock.cpp" line="707"/>
         <source>There are curves in this plot and the selected line style can only be applied to graphs sorted by X. Either sort the table or query by X to remove curves or select one of the styles supported by curves: None or Line.</source>
-        <translation>Dieser Plot enthält Kurven und der ausgewählte Linienstil kann nur auf nach X sortierte Graphen angewendet werden. Sortieren Sie entweder die Tabelle oder Query nach X oder entfernen Sie die Kurven oder wählen Sie eine der Stile, die von Kurven unterstützt werden: Keiner oder Linie.</translation>
+        <translation>Dieses Diagramm enthält Kurven und der ausgewählte Linienstil kann nur auf nach X sortierte Graphen angewendet werden. Sortieren Sie entweder die Tabelle oder Abfrage nach X oder entfernen Sie die Kurven oder wählen Sie einen der Stile, die Kurven unterstützen: Keiner oder Linie.</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="825"/>
@@ -5842,7 +5841,7 @@ Warnung: es wurden aufgrund der partiellen Abrufmechanismus noch nicht alle Date
     <message>
         <location filename="../PreferencesDialog.ui" line="1180"/>
         <source>Underline</source>
-        <translation>Unterstreichung</translation>
+        <translation>Unterstrichen</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1188"/>
@@ -5876,7 +5875,7 @@ Warnung: es wurden aufgrund der partiellen Abrufmechanismus noch nicht alle Date
     <message>
         <location filename="../PreferencesDialog.ui" line="1276"/>
         <source>String</source>
-        <translation>String</translation>
+        <translation>Zeichenkette</translation>
     </message>
     <message>
         <source>currentline</source>
@@ -5894,7 +5893,7 @@ Warnung: es wurden aufgrund der partiellen Abrufmechanismus noch nicht alle Date
     </message>
     <message>
         <source>SQL &amp;log font size</source>
-        <translation type="vanished">SQL-&amp;Log Schriftgröße</translation>
+        <translation type="vanished">SQL-&amp;Protokoll Schriftgröße</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1376"/>
@@ -6145,7 +6144,7 @@ Kann auf 0 gesetzt werden, um die Vervollständigung zu deaktivieren.</translati
     <message>
         <location filename="../PreferencesDialog.ui" line="1443"/>
         <source>Choose the quoting mechanism used by the application for identifiers in SQL code.</source>
-        <translation>Wählen Sie den Zitiermechanismus aus, der von der Anwendung für Identifier im SQL-Code verwendet wird.</translation>
+        <translation>Wählen Sie den Kennzeichnungs-Modus aus, der für Datenbankbezeichner im SQL-Code verwendet wird.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1450"/>
@@ -6175,7 +6174,7 @@ Kann auf 0 gesetzt werden, um die Vervollständigung zu deaktivieren.</translati
     <message>
         <location filename="../PreferencesDialog.ui" line="1515"/>
         <source>When set, the SQL code lines that caused errors during the last execution are highlighted and the results frame indicates the error in the background</source>
-        <translation>Falls gesetzt, werden die SQL-Codezeilen, die während der letzten Ausführung Fehler verursacht haben, hervorgehoben und das Ergebnisfenster zeigt den Fehler im Hintergrund na</translation>
+        <translation>Falls gesetzt, werden die SQL-Codezeilen, die während der letzten Ausführung Fehler verursacht haben, hervorgehoben und das Ergebnisfenster zeigt den Fehler im Hintergrund an</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1548"/>
@@ -6416,7 +6415,7 @@ Alle Ihre Einstellungen gehen dadurch verloren und die Standardwerte werden verw
     <name>QObject</name>
     <message>
         <source>Error importing data. Message from database engine: %1</source>
-        <translation type="obsolete">Fehler beim Datenimport. Meldung der Datenbank: %1</translation>
+        <translation type="obsolete">Fehler beim Datenimport. DB meldet: %1</translation>
     </message>
     <message>
         <source>File is not a SQLite 3 database</source>
@@ -6446,7 +6445,7 @@ Alle Ihre Einstellungen gehen dadurch verloren und die Standardwerte werden verw
     <message>
         <location filename="../ImportCsvDialog.cpp" line="115"/>
         <source> from record number %1</source>
-        <translation> von Zeilennummer %1</translation>
+        <translation> von Datensatznummer %1</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.cpp" line="116"/>
@@ -6476,7 +6475,7 @@ Alle Ihre Einstellungen gehen dadurch verloren und die Standardwerte werden verw
     <message>
         <source>Error in statement #%1: %2.
 Aborting execution.</source>
-        <translation type="obsolete">Fehler im Statement #%1: %2.
+        <translation type="obsolete">Fehler in der Anweisung #%1: %2.
 Ausführung wird abgebrochen.</translation>
     </message>
     <message>
@@ -6509,7 +6508,7 @@ Ausführung wird abgebrochen.</translation>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 
 </source>
-        <translation type="obsolete">Wiederherstellung einiger mit dieser Tabelle verbundener Objekte fehlgeschagen. Dies passiert häufig durch geänderte Spaltennamen. Hier das SQL-Statement zum manuellen Reparieren und Ausführen:
+        <translation type="obsolete">Wiederherstellung einiger mit dieser Tabelle verbundener Objekte fehlgeschagen. Dies passiert häufig durch geänderte Spaltennamen. Hier das SQL-Anweisung zum manuellen Reparieren und Ausführen:
 
 </translation>
     </message>
@@ -6520,12 +6519,12 @@ Ausführung wird abgebrochen.</translation>
     <message>
         <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.Message from database engine:
 %3</source>
-        <translation type="obsolete">Fehler beim Umbenennen der Tabelle &apos;%1&apos; zu &apos;%2&apos;. Meldung von Datenbank:
+        <translation type="obsolete">Fehler beim Umbenennen der Tabelle &apos;%1&apos; zu &apos;%2&apos;. DB meldet:
 %3</translation>
     </message>
     <message>
         <source>... &lt;string can not be logged, contains binary data&gt; ...</source>
-        <translation type="obsolete">... &lt;String kann nicht geloggt werden, enthält binäre Daten&gt; ...</translation>
+        <translation type="obsolete">... &lt;Zeichenkette kann nicht protokolliert werden, sie enthält binäre Daten&gt; ...</translation>
     </message>
     <message>
         <source>unknown object type %1</source>
@@ -6561,13 +6560,13 @@ Ausführung wird abgebrochen.</translation>
     </message>
     <message>
         <source>Collation needed! Proceed?</source>
-        <translation type="vanished">Kollation notwendig! Fortführen?</translation>
+        <translation type="vanished">Sortierung notwendig! Fortführen?</translation>
     </message>
     <message>
         <source>A table in this database requires a special collation function &apos;%1&apos; that this application can&apos;t provide without further knowledge.
 If you choose to proceed, be aware bad things can happen to your database.
 Create a backup!</source>
-        <translation type="vanished">Eine Tabelle in dieser Datenbank benötigt eine spezielle Kollationsfunktion &apos;%1&apos;, welche diese Anwendung ohne weiterem Wissen nicht zur Verfügung stellen kann.
+        <translation type="vanished">Eine Tabelle in dieser Datenbank benötigt eine spezielle Sortierfunktion &apos;%1&apos;, welche diese Anwendung ohne weiterem Wissen nicht zur Verfügung stellen kann.
 Wenn Sie fortfahren, sollten Sie im Hinterkopf behalten, dass mit Ihrer Datenbank unerwartete Dinge geschehen können.
 Erstellen Sie ein Backup!</translation>
     </message>
@@ -6648,7 +6647,7 @@ Erstellen Sie ein Backup!</translation>
     <message>
         <location filename="../FileDialog.h" line="35"/>
         <source>Concordance DAT files (*.dat)</source>
-        <translation>Konkordanz DAT-Dateien (*.dat)</translation>
+        <translation>Concordance DAT-Dateien (*.dat)</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="38"/>
@@ -6961,12 +6960,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../RunSql.cpp" line="219"/>
         <source>query executed successfully. Took %1ms%2</source>
-        <translation>Query erfolgreich ausgeführt. Benötigte %1ms%2</translation>
+        <translation>Abfrage erfolgreich ausgeführt. Benötigte %1ms%2</translation>
     </message>
     <message>
         <location filename="../RunSql.cpp" line="297"/>
         <source>executing query</source>
-        <translation>führe Query aus</translation>
+        <translation>führe Abfrage aus</translation>
     </message>
 </context>
 <context>
@@ -7007,7 +7006,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="105"/>
         <source>The found pattern must be a whole word</source>
-        <translation>Das Pattern muss ein ganzes Wort sein</translation>
+        <translation>Das Suchmuster muss ein ganzes Wort sein</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="108"/>
@@ -7017,7 +7016,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="118"/>
         <source>Text pattern to find considering the checks in this frame</source>
-        <translation>Zu findendes Textpattern unter Einbeziehung der Prüfungen in diesem Fenster</translation>
+        <translation>Suchmuster unter Einbeziehung der aktivierten Optionen in diesem Fenster</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="121"/>
@@ -7027,7 +7026,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="131"/>
         <source>The found pattern must match in letter case</source>
-        <translation>Das Fundpattern muss in Groß-/Kleinschreibung übereinstimmen</translation>
+        <translation>Das Suchmuster muss in Groß-/Kleinschreibung übereinstimmen</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="134"/>
@@ -7052,7 +7051,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="158"/>
         <source>Interpret search pattern as a regular expression</source>
-        <translation>Suchpattern als regulären Ausdruck interpretieren</translation>
+        <translation>Suchmuster als regulären Ausdruck interpretieren</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="161"/>
@@ -7068,22 +7067,22 @@ p, li { white-space: pre-wrap; }
         <location filename="../SqlExecutionArea.ui" line="184"/>
         <location filename="../SqlExecutionArea.ui" line="187"/>
         <source>Close Find Bar</source>
-        <translation>Suchbar schließen</translation>
+        <translation>Such-Werkzeugleiste schließen</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="232"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Results of the last executed statements.&lt;/p&gt;&lt;p&gt;You may want to collapse this panel and use the &lt;span style=&quot; font-style:italic;&quot;&gt;SQL Log&lt;/span&gt; dock with &lt;span style=&quot; font-style:italic;&quot;&gt;User&lt;/span&gt; selection instead.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ergebnisse der zuletzt ausgeführten Statements.&lt;/p&gt;&lt;p&gt;Dieses Panel kann zusammengeklappt und stattdessen der &lt;span style=&quot; font-style:italic;&quot;&gt;SQL-Log&lt;/span&gt;-Dock mit der Auswahl &lt;span style=&quot; font-style:italic;&quot;&gt;Benutzer&lt;/span&gt; verwendet werden.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ergebnisse der zuletzt ausgeführten Anweisungen.&lt;/p&gt;&lt;p&gt;Dieses Panel kann zusammengeklappt und stattdessen der &lt;span style=&quot; font-style:italic;&quot;&gt;SQL-Protokoll&lt;/span&gt;-Dock mit der Auswahl &lt;span style=&quot; font-style:italic;&quot;&gt;Benutzer&lt;/span&gt; verwendet werden.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="253"/>
         <source>Results of the last executed statements</source>
-        <translation>Ergebnisse des zuletzt ausgeführten Statements</translation>
+        <translation>Ergebnisse des zuletzt ausgeführten Anweisungen</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="235"/>
         <source>This field shows the results and status codes of the last executed statements.</source>
-        <translation>Dieses Feld zeigt die Ergebnisse und Statuscodes der zuletzt ausgeführten Statements.</translation>
+        <translation>Dieses Feld zeigt die Ergebnisse und Statuscodes der zuletzt ausgeführten Anweisungen.</translation>
     </message>
     <message>
         <source>Export to &amp;CSV</source>
@@ -7153,7 +7152,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlUiLexer.cpp" line="67"/>
         <source>() The changes() function returns the number of database rows that were changed or inserted or deleted by the most recently completed INSERT, DELETE, or UPDATE statement.</source>
-        <translation>() Die changes()-Funktion gibt die Anzahl der Datenbankzeilen zurück, die mit dem zuletzt abgeschlossenen INSERT-, DELETE- oder UPDATE-Statement geändert, einfügt oder gelöscht worden sind.</translation>
+        <translation>() Die changes()-Funktion gibt die Anzahl der Datenbankzeilen zurück, die mit der zuletzt abgeschlossenen INSERT-, DELETE- oder UPDATE-Anweisung geändert, einfügt oder gelöscht wurden.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="68"/>
@@ -7188,7 +7187,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlUiLexer.cpp" line="74"/>
         <source>() The last_insert_rowid() function returns the ROWID of the last row insert from the database connection which invoked the function.</source>
-        <translation>() Die last_insert_rowid()-Funktion gibt die ROWID der letzte Zeile zurück, die von der diese Funktion aufrufenden Datenbankverbindung eingefügt wurde.</translation>
+        <translation>() Die last_insert_rowid()-Funktion gibt die Rowid der letzte Zeile zurück, die von der diese Funktion aufrufenden Datenbankverbindung eingefügt wurde.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="75"/>
@@ -7265,7 +7264,7 @@ Die Verwendung dieser Funktion muss in den Einstellungen authorisiert werden.</t
     <message>
         <location filename="../SqlUiLexer.cpp" line="87"/>
         <source>(X) The quote(X) function returns the text of an SQL literal which is the value of its argument suitable for inclusion into an SQL statement.</source>
-        <translation>(X) Die quote(X)-Funktion gibt den Text eines SQL-Literals zurück, wobei der Wert des Arguments zum Einfügen in ein SQL-Statement geeignet ist.</translation>
+        <translation>(X) Die quote(X)-Funktion gibt den Text eines SQL-Literals zurück, wobei der Wert des Arguments zum Einfügen in eine SQL-Anweisung geeignet ist.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="88"/>
@@ -7280,7 +7279,7 @@ Die Verwendung dieser Funktion muss in den Einstellungen authorisiert werden.</t
     <message>
         <location filename="../SqlUiLexer.cpp" line="90"/>
         <source>(X,Y,Z) The replace(X,Y,Z) function returns a string formed by substituting string Z for every occurrence of string Y in string X.</source>
-        <translation>(X,Y,Z) Die replace(X,Y,Z)-Funktion gibt einen String zurück, der durch Ersetzen der Zeichenkette Z bei jedem Auftreten von Zeichenkette Y in Zeichenkette X gebildet wird.</translation>
+        <translation>(X,Y,Z) Die replace(X,Y,Z)-Funktion gibt eine Zeichenkette zurück, die durch Ersetzen der Zeichenkette Z bei jedem Auftreten von Zeichenkette Y in Zeichenkette X gebildet wird.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="91"/>
@@ -7320,7 +7319,7 @@ Die Verwendung dieser Funktion muss in den Einstellungen authorisiert werden.</t
     <message>
         <location filename="../SqlUiLexer.cpp" line="98"/>
         <source>() The total_changes() function returns the number of row changes caused by INSERT, UPDATE or DELETE statements since the current database connection was opened.</source>
-        <translation>() Die changes()-Funktion gibt die Anzahl dergeänderten Datenbankzeilen zurück, die seit dem Öffnen der aktuellen Datenbankverbindung mit INSERT-, DELETE- oder UPDATE-Statement geändert, einfügt oder gelöscht worden sind.</translation>
+        <translation>() Die changes()-Funktion gibt die Anzahl der geänderten Datenbankzeilen zurück, die seit dem Öffnen der aktuellen Datenbankverbindung mit INSERT-, DELETE- oder UPDATE-Anweisungen geändert, einfügt oder gelöscht wurden.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="99"/>
@@ -7335,7 +7334,7 @@ Die Verwendung dieser Funktion muss in den Einstellungen authorisiert werden.</t
     <message>
         <location filename="../SqlUiLexer.cpp" line="101"/>
         <source>(X) The typeof(X) function returns a string that indicates the datatype of the expression X.</source>
-        <translation>(X) Die typeof(X)-Funktion gibt einen String zurück, der den Datentyp des Ausdruckes X angibt.</translation>
+        <translation>(X) Die typeof(X)-Funktion gibt eine Zeichenkette zurück, die den Datentyp des Ausdruckes X angibt.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="102"/>
@@ -7358,12 +7357,12 @@ Die Verwendung dieser Funktion muss in den Einstellungen authorisiert werden.</t
         <location filename="../SqlUiLexer.cpp" line="108"/>
         <location filename="../SqlUiLexer.cpp" line="109"/>
         <source>(timestring,modifier,modifier,...)</source>
-        <translation>(Zeitstring,Modifikation,Modifikation,...)</translation>
+        <translation>(Zeit-Zeichenkette,Modifizierer,Modifizierer,...)</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="110"/>
         <source>(format,timestring,modifier,modifier,...)</source>
-        <translation>(Format,Zeitstring,Modifikation,Modifikation,...)</translation>
+        <translation>(Format,Zeit-Zeichenkette,Modifizierer,Modifizierer,...)</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="112"/>
@@ -7404,22 +7403,22 @@ Die Verwendung dieser Funktion muss in den Einstellungen authorisiert werden.</t
     <message>
         <location filename="../SqlUiLexer.cpp" line="121"/>
         <source>() The number of the row within the current partition. Rows are numbered starting from 1 in the order defined by the ORDER BY clause in the window definition, or in arbitrary order otherwise.</source>
-        <translation>() Die Anzahl der Zeilen in der aktuellen Partition. Zeilen werden beginnend bei 1 in der durch den ORDER-BY-Befehl in der Fensterdefinition nummeriert, ansonsten in willkürlicher Reihenfolge.</translation>
+        <translation>() Die Nummer der Zeile in der aktuellen Partition. Zeilen werden beginnend mit 1 nummeriert, geordnet nach der ORDER-BY-Anweisung der Fenster-Definition, ansonsten in beliebiger Reihenfolge.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="122"/>
         <source>() The row_number() of the first peer in each group - the rank of the current row with gaps. If there is no ORDER BY clause, then all rows are considered peers and this function always returns 1.</source>
-        <translation>() Die row_number() des ersten Peer in jeder Gruppe - der Rang der aktuellen Zeile mit Lücken. Falls es keinen ORDER-BY-Befehl gibt, dann werden alle Zeilen als Peers angesehen und diese Funktion gibt immer 1 zurück.</translation>
+        <translation>() Die row_number() des ersten Peer in jeder Gruppe - der Rang der aktuellen Zeile mit Lücken. Ohne ORDER-BY-Anweisung werden alle Zeilen als Peers angesehen und die Funktion gibt immer 1 zurück.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="123"/>
         <source>() The number of the current row&apos;s peer group within its partition - the rank of the current row without gaps. Partitions are numbered starting from 1 in the order defined by the ORDER BY clause in the window definition. If there is no ORDER BY clause, then all rows are considered peers and this function always returns 1. </source>
-        <translation>() Die Nummer der Peer-Gruppe der aktuellen Zeile in der Partition - der Rang der aktuellen Reihe ohne Lücken. Partitionen werden mit 1 startend nummeriert in der Reihenfolge, wie sie durch den ORDER-BY-Befehl in der Fensterdefinition festgelegt ist. Falls es keinen ORDER-BY-Befehl gibt, werden alle Zeilen als Peers angesehen und diese Funktion gibt immer 1 zurück. </translation>
+        <translation>() Die Nummer der Peer-Gruppe der aktuellen Zeile in der Partition - der Rang der aktuellen Zeile ohne Lücken. Partitionen werden beginnend mit 1 nummeriert, geordnet nach der ORDER-BY-Anweisung der Fenster-Definition. Ohne ORDER-BY-Anweisung werden alle Zeilen als Peers angesehen und die Funktion gibt immer 1 zurück. </translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="124"/>
         <source>() Despite the name, this function always returns a value between 0.0 and 1.0 equal to (rank - 1)/(partition-rows - 1), where rank is the value returned by built-in window function rank() and partition-rows is the total number of rows in the partition. If the partition contains only one row, this function returns 0.0. </source>
-        <translation>() Ungeachtet des Namens gibt diese Funktion immer einen Wert zwischen 0.0 und 1.0 identisch zu (Rang - 1)/(Partitionszeilen - 1) zurück, wobei Rang der Wert der eingebauten Fensterfunktion rank() und Partitionszeilen die Gesamtanzahl der Zeilen in der Partition ist. Falls die Partition nur eine Zeile enthält, gibt diese Funktion 0.0 zurück. </translation>
+        <translation>() Ungeachtet ihres Namens gibt diese Funktion immer einen Wert zwischen 0.0 und 1.0 identisch zu (Rang - 1)/(Partitionszeilen - 1) zurück, wobei Rang der Wert der eingebauten Fensterfunktion rank() und Partitionszeilen die Gesamtanzahl der Zeilen in der Partition ist. Falls die Partition nur eine Zeile enthält, gibt diese Funktion 0.0 zurück. </translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="125"/>
@@ -7429,48 +7428,48 @@ Die Verwendung dieser Funktion muss in den Einstellungen authorisiert werden.</t
     <message>
         <location filename="../SqlUiLexer.cpp" line="126"/>
         <source>(N) Argument N is handled as an integer. This function divides the partition into N groups as evenly as possible and assigns an integer between 1 and N to each group, in the order defined by the ORDER BY clause, or in arbitrary order otherwise. If necessary, larger groups occur first. This function returns the integer value assigned to the group that the current row is a part of.</source>
-        <translation>(N) Das Argument N wird als Integer behandelt. Diese Funktion teilt die Partition in N Gruppen so gleichmäßig wie möglich auf und weist jeder Gruppe einen Integer zwischen 1 und N zu, in der Reihenfolge, die durch den ORDER-BY-Befehl definiert ist, ansonsten in beliebiger Reihenfolge. Falls notwendig tauchen größere Gruppen als erstes auf. Diese Funktion gibt einen Integerwert zurück, der der Gruppe zugewiesen ist, zu der die aktuelle Zeile gehört.</translation>
+        <translation>(N) Das Argument N wird als Integer behandelt. Diese Funktion teilt die Partition in N Gruppen so gleichmäßig wie möglich auf und weist jeder Gruppe einen Integer zwischen 1 und N zu, geordnet nach der ORDER-BY-Anweisung, ansonsten in beliebiger Reihenfolge. Falls notwendig tauchen größere Gruppen als erstes auf. Diese Funktion gibt den Integerwert der Gruppe zurück, zu der die aktuelle Zeile gehört.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="127"/>
         <source>(expr) Returns the result of evaluating expression expr against the previous row in the partition. Or, if there is no previous row (because the current row is the first), NULL.</source>
-        <translation>(expr) Gibt das Ergebnis der Evaluation des Ausdrucks expr gegen die vorherige Zeile in der Partition zurück. Falls es keine vorhergehende Zeile gibt (weil die aktuelle Zeile die erste ist), wird NULL zurückgegeben.</translation>
+        <translation>(expr) Gibt das Ergebnis der Auswertung des Ausdrucks expr gegen die vorherige Zeile in der Partition zurück. Ohne vorhergehende Zeile (weil die aktuelle Zeile die erste ist), wird NULL zurückgegeben.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="128"/>
         <source>(expr,offset) If the offset argument is provided, then it must be a non-negative integer. In this case the value returned is the result of evaluating expr against the row offset rows before the current row within the partition. If offset is 0, then expr is evaluated against the current row. If there is no row offset rows before the current row, NULL is returned.</source>
-        <translation>(expr,offset) Falls das Offset-Argument angegeben ist, dann muss dieses ein nicht-negativer Integerwert sein. In diesem Fall ist der Rückgabewert das Ergebnis der Evaluation von expr gegen die Zeile, die innerhalb der Partition offset Zeilen weiter oben liegt. Falls offset 0 ist, wird expr gegen die aktuelle Zeile evaluiert. Falls vor der aktuellen Zeile nicht genügend Zeilen vorhanden sind, wird NULL zurückgegeben.</translation>
+        <translation>(expr,offset) Falls das Offset-Argument angegeben ist, muss es ein nicht-negativer Integerwert sein. In diesem Fall ist der Rückgabewert das Ergebnis der Auswertung von expr gegen die Zeile, die innerhalb der Partition Offset Zeilen weiter oben liegt. Falls Offset 0 ist, wird expr gegen die aktuelle Zeile ausgewertet. Falls vor der aktuellen Zeile nicht genügend Zeilen vorhanden sind, wird NULL zurückgegeben.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="129"/>
         <location filename="../SqlUiLexer.cpp" line="132"/>
         <source>(expr,offset,default) If default is also provided, then it is returned instead of NULL if the row identified by offset does not exist.</source>
-        <translation>(expr,offset,default) Falls auch default angegeben ist, dann wird dieser Wert anstatt NULL zurückgegeben, falls die durch offset angegebene Zeile nicht existiert.</translation>
+        <translation>(expr,offset,default) Falls auch default angegeben ist, wird dieser Wert anstatt NULL zurückgegeben, falls die durch Offset angegebene Zeile nicht existiert.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="130"/>
         <source>(expr) Returns the result of evaluating expression expr against the next row in the partition. Or, if there is no next row (because the current row is the last), NULL.</source>
-        <translation>(expr) Gibt das Ergebnis der Evaluation des Ausdrucks expr gegen die nächste Zeile in der Partition zurück. Falls es keine nächste Zeile gibt (weil die aktuelle Zeile die letzte ist), wird NULL zurückgegeben.</translation>
+        <translation>(expr) Gibt das Ergebnis der Auswertung des Ausdrucks expr gegen die nächste Zeile in der Partition zurück. Ohne nächste Zeile (weil die aktuelle Zeile die letzte ist), wird NULL zurückgegeben.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="131"/>
         <source>(expr,offset) If the offset argument is provided, then it must be a non-negative integer. In this case the value returned is the result of evaluating expr against the row offset rows after the current row within the partition. If offset is 0, then expr is evaluated against the current row. If there is no row offset rows after the current row, NULL is returned.</source>
-        <translation>(expr,offset) Falls das Offset-Argument angegeben ist, dann muss dieses ein nicht-negativer Integerwert sein. In diesem Fall ist der Rückgabewert das Ergebnis der Evaluation von expr gegen die Zeile, die innerhalb der Partition offset Zeilen weiter unten liegt. Falls offset 0 ist, wird expr gegen die aktuelle Zeile evaluiert. Falls nach der aktuellen Zeile nicht genügend Zeilen vorhanden sind, wird NULL zurückgegeben.</translation>
+        <translation>(expr,offset) Falls das Offset-Argument angegeben ist, muss es ein nicht-negativer Integerwert sein. In diesem Fall ist der Rückgabewert das Ergebnis der Auswertung von expr gegen die Zeile, die innerhalb der Partition Offset Zeilen weiter unten liegt. Falls Offset 0 ist, wird expr gegen die aktuelle Zeile ausgewertet. Falls nach der aktuellen Zeile nicht genügend Zeilen vorhanden sind, wird NULL zurückgegeben.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="133"/>
         <source>(expr) This built-in window function calculates the window frame for each row in the same way as an aggregate window function. It returns the value of expr evaluated against the first row in the window frame for each row.</source>
-        <translation>(expr) Diese eingebaute Fensterfunktion berechnet das Windowframe für jede Zeile auf die gleiche Art wie ein aggregierte Fensterfunktion. Sie gibt den Wert von expr evaluiert gegen die erste Zeile des Windowframes für jede Zeile zurück.</translation>
+        <translation>(expr) Diese eingebaute Fensterfunktion berechnet das Windowframe für jede Zeile auf die gleiche Art wie eine aggregierte Fensterfunktion. Sie gibt das Ergebnis der Auswertung von expr gegen die erste Zeile des Windowframes für jede Zeile zurück.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="134"/>
         <source>(expr) This built-in window function calculates the window frame for each row in the same way as an aggregate window function. It returns the value of expr evaluated against the last row in the window frame for each row.</source>
-        <translation>(expr) Diese eingebaute Fensterfunktion berechnet das Windowframe für jede Zeile auf die gleiche Art wie ein aggregierte Fensterfunktion. Sie gibt den Wert von expr evaluiert gegen die letzte Zeile des Windowframes für jede Zeile zurück.</translation>
+        <translation>(expr) Diese eingebaute Fensterfunktion berechnet das Windowframe für jede Zeile auf die gleiche Art wie eine aggregierte Fensterfunktion. Sie gibt das Ergebnis der Auswertung von expr gegen die letzte Zeile des Windowframes für jede Zeile zurück.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="135"/>
         <source>(expr,N) This built-in window function calculates the window frame for each row in the same way as an aggregate window function. It returns the value of expr evaluated against the row N of the window frame. Rows are numbered within the window frame starting from 1 in the order defined by the ORDER BY clause if one is present, or in arbitrary order otherwise. If there is no Nth row in the partition, then NULL is returned.</source>
-        <translation>(expr,N) Diese eingebaute Fensterfunktion berechnet das Windowframe für jede Zeile auf die gleiche Art wie ein aggregierte Fensterfunktion. Sie gibt den Wert von expr evaluiert gegen die N-te Zeile des Windowframes für zurück. Die Zeilen werden beginnend bei 1 in der durch den ORDER-BY-Befehl definierten Reihenfolge nummeriert, falls dieser vorhanden ist, ansonsten in beliebiger Reihenfolge. Falls es keine N-te Zeile in der Partition gibt, dann wird NULL zurückgegeben.</translation>
+        <translation>(expr,N) Diese eingebaute Fensterfunktion berechnet das Windowframe für jede Zeile auf die gleiche Art wie eine aggregierte Fensterfunktion. Sie gibt das Ergebnis der Auswertung von expr gegen die N-te Zeile des Windowframes für zurück. Die Zeilen werden beginnend mit 1 nummeriert, geordnet nach der ORDER-BY-Anweisung, ansonsten in beliebiger Reihenfolge. Falls es keine N-te Zeile in der Partition gibt, dann wird NULL zurückgegeben.</translation>
     </message>
 </context>
 <context>
@@ -7553,17 +7552,17 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
  - Ctrl+&apos; for copying the value from the cell above.
  - Standard selection and copy/paste operations.</source>
         <translation>Dies ist die Datenbanktabellen-Ansicht. Sie können die folgenden Aktionen durchführen:
- - Mit dem Schreiben beginnen, um die Werte Inline zu bearbeiten.
- - Doppelt auf einen Eintrag klicken, um dessen Inhalte im Zelleneditor-Fenster zu bearbeiten.
+ - Mit dem Schreiben beginnen, um die Werte unmittelbar zu bearbeiten.
+ - Doppelt auf einen Datensatz klicken, um dessen Inhalte im Zelleneditor-Fenster zu bearbeiten.
  - Alt+Entf zum Löschen des Zellinhaltes zu NULL.
- - Strg+&quot; zur Duplizierung des aktuellen Eintrags.
+ - Strg+&quot; zur Duplizierung des aktuellen Datensatzes.
  - Strg+&apos; zum Kopieren des Wertes der darüberliegenden Zelle.
  - Standardmäßige Auswahl- und Kopieren/Einfügen-Operationen.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="253"/>
         <source>Text pattern to find considering the checks in this frame</source>
-        <translation>Zu findendes Textpattern unter Einbeziehung der Prüfungen in diesem Fenster</translation>
+        <translation>Suchmuster unter Einbeziehung der aktivierten Optionen in diesem Fenster</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="256"/>
@@ -7603,7 +7602,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="300"/>
         <source>The found pattern must match in letter case</source>
-        <translation>Das Suchpattern muss in Groß-/Kleinschreibung übereinstimmen</translation>
+        <translation>Das Suchmuster muss in Groß-/Kleinschreibung übereinstimmen</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="303"/>
@@ -7613,7 +7612,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="310"/>
         <source>The found pattern must be a whole word</source>
-        <translation>Das Pattern muss ein ganzes Wort sein</translation>
+        <translation>Das Suchmuster muss ein ganzes Wort sein</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="313"/>
@@ -7623,7 +7622,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="320"/>
         <source>Interpret search pattern as a regular expression</source>
-        <translation>Suchpattern als regulären Ausdruck interpretieren</translation>
+        <translation>Suchmuster als regulären Ausdruck interpretieren</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="323"/>
@@ -7639,7 +7638,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
         <location filename="../TableBrowser.ui" line="346"/>
         <location filename="../TableBrowser.ui" line="349"/>
         <source>Close Find Bar</source>
-        <translation>Suchbar schließen</translation>
+        <translation>Such-Werkzeugleiste schließen</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="387"/>
@@ -7695,7 +7694,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="479"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates one page of records upwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ein Klick auf diesen Button navigiert in den Einträgen der Tabellenansicht oben eine Seite nach oben.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ein Klick auf diesen Button navigiert in der Tabellenansicht oben eine Seite an Datensätzen nach oben.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="482"/>
@@ -7715,7 +7714,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="506"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates one page of records downwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ein Klick auf diesen Button navigiert in den Einträgen der Tabellenansicht oben eine Seite nach unten.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ein Klick auf diesen Button navigiert in der Tabellenansicht oben eine Seite an Datensätzen nach unten.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="509"/>
@@ -7744,12 +7743,12 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="553"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click here to jump to the specified record&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;/head&gt;&lt;body&gt;&lt;p&gt;Klicken Sie hier, um zu einer bestimmten Zeile zu springen&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;/head&gt;&lt;body&gt;&lt;p&gt;Klicken Sie hier, um zu einem bestimmten Datensatz zu springen&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="556"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button is used to navigate to the record number specified in the Go to area.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;/head&gt;&lt;body&gt;&lt;p&gt;Dieser Button kann zum Navigieren zu einer im &quot;Springe zu&quot;-Bereich festgelegten Zeile verwendet werden.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;/head&gt;&lt;body&gt;&lt;p&gt;Dieser Button kann zum Navigieren zu einem im &quot;Springe zu&quot;-Bereich festgelegten Datensatz verwendet werden.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="559"/>
@@ -7759,12 +7758,12 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="566"/>
         <source>Enter record number to browse</source>
-        <translation>Zeilennummer zum Suchen auswählen</translation>
+        <translation>Datensatznummer zum Suchen eingeben</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="569"/>
         <source>Type a record number in this area and click the Go to: button to display the record in the database view</source>
-        <translation>Geben Sie eine Zeilennummer in diesem Bereich ein und klicken Sie auf den &quot;Springe zu:&quot;-Button, um die Zeile in der Datenbankansicht anzuzeigen</translation>
+        <translation>Geben Sie eine Datensatznummer in diesem Bereich ein und klicken Sie auf den &quot;Springe zu:&quot;-Button, um den Datensatz in der Datenbankansicht anzuzeigen</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="572"/>
@@ -7805,41 +7804,41 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
         <location filename="../TableBrowser.ui" line="615"/>
         <location filename="../TableBrowser.ui" line="651"/>
         <source>New Record</source>
-        <translation>Neue Zeile</translation>
+        <translation>Neuer Datensatz</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="618"/>
         <location filename="../TableBrowser.ui" line="621"/>
         <source>Insert a new record in the current table</source>
-        <translation>Fügt eine neue Zeile zur aktuellen Tabelle hinzu</translation>
+        <translation>Fügt einen neuen Datensatz zur aktuellen Tabelle hinzu</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="624"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button creates a new record in the database. Hold the mouse button to open a pop-up menu of different options:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt;: insert a new record with default values in the database.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Insert Values...&lt;/span&gt;: open a dialog for entering values before they are inserted in the database. This allows to enter values acomplishing the different constraints. This dialog is also open if the &lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt; option fails due to these constraints.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dieser Button erstellt eine neue Zeile in der Datenbank. Halten sie die Maustaste gedrückt, um ein Popup-Menü mit verschiedenen Optionen zu öffnen:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Neuer Eintrag&lt;/span&gt;: eine neue Zeile mit Standardwerten in die Datenbank einfügen.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Werte einfügen...&lt;/span&gt;: einen Dialog zur Eingabe von Werten öffnen, bevor diese in die Datenbank eingefügt werden. Dies erlaubt die Eingabe von Werten, die den Constraints Genüge tun. Dieser Dialog wird auch geöffnet, falls die &lt;span style=&quot; font-weight:600;&quot;&gt;Neuer Eintrag&lt;/span&gt;-Option aufgrund dieser Constraints fehlschlägt.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dieser Button erstellt einen neuen Datensatz in der Datenbank. Halten sie die Maustaste gedrückt, um ein Popup-Menü mit verschiedenen Optionen zu öffnen:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Neuer Datensatz&lt;/span&gt;: einen neuen Datensatz mit Standardwerten in die Datenbank einfügen.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Werte einfügen...&lt;/span&gt;: einen Dialog zur Eingabe von Werten öffnen, bevor diese in die Datenbank eingefügt werden. Dies erlaubt die Eingabe von Werten, die den Beschränkungen entsprechen. Dieser Dialog wird auch geöffnet, falls die &lt;span style=&quot; font-weight:600;&quot;&gt;Neuer Datensatz&lt;/span&gt;-Option aufgrund von Beschränkungen fehlschlägt.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="633"/>
         <location filename="../TableBrowser.cpp" line="1023"/>
         <source>Delete Record</source>
-        <translation>Zeile löschen</translation>
+        <translation>Datensatz löschen</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="636"/>
         <source>Delete the current record</source>
-        <translation>Aktuelle Zeile löschen</translation>
+        <translation>Aktuellen Datensatz löschen</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="639"/>
         <location filename="../TableBrowser.ui" line="642"/>
         <source>This button deletes the record or records currently selected in the table</source>
-        <translation>Dieser Button löscht die Zeile oder Zeilen, die aktuell in der Tabelle ausgewählt sind</translation>
+        <translation>Dieser Button löscht den Datensatz oder die Datensätze, die aktuell in der Tabelle ausgewählt sind</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="654"/>
         <location filename="../TableBrowser.ui" line="657"/>
         <source>Insert new record using default values in browsed table</source>
-        <translation>Eine neue Zeile mit den Standardwerten in den ausgewählte Tabelle einfügen</translation>
+        <translation>Einen neuen Datensatz mit Standardwerten in die ausgewählte Tabelle einfügen</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="662"/>
@@ -7850,7 +7849,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
         <location filename="../TableBrowser.ui" line="665"/>
         <location filename="../TableBrowser.ui" line="668"/>
         <source>Open a dialog for inserting values in a new record</source>
-        <translation>Einen Dialog zum Einfügen von Werten in eine neue Zeile öffnen</translation>
+        <translation>Einen Dialog öffnen zum Einfügen von Werten in einen neuen Datensatz</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="673"/>
@@ -7882,7 +7881,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="696"/>
         <source>This button saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.</source>
-        <translation>Dieser Button speichert die aktuellen Einstellungen der ausgewählten Tabelle (Filter, Anzeigeformate und Spaltenreihenfolge) als SQL-View, welche Sie später durchsuchen oder in SQL-Statements verwenden können.</translation>
+        <translation>Dieser Button speichert die aktuellen Einstellungen der ausgewählten Tabelle (Filter, Anzeigeformate und Spaltenreihenfolge) als SQL-View, welche Sie später durchsuchen oder in SQL-Anweisungen verwenden können.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="705"/>
@@ -7898,7 +7897,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="714"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This popup menu provides the following options applying to the currently browsed and filtered table:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Export to CSV: this option exports the data of the browsed table as currently displayed (after filters, display formats and order column) to a CSV file.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Save as view: this option saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dieses Popup-Menü bietet die folgenden Optionen zur Anwendung auf die aktuell ausgewählte und gefilterte Tabelle:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;CSV exportieren: diese Option exportiert die Daten der ausgewählten Tabelle wie aktuell angezeigt (gefiltert, Anzeigeformat und Spaltenreihenfolge) in eine CSV-Datei.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Als Ansicht speichern: diese Option speichert die aktuelle Einstellung der ausgewählten Tabelle (Filter, Anzeigeformat und Spaltenreihenfolge) als eine SQL-View, die Sie später durchsuchen oder in SQL-Statements verwenden können.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dieses Popup-Menü bietet die folgenden Optionen zur Anwendung auf die aktuell ausgewählte und gefilterte Tabelle:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;CSV exportieren: diese Option exportiert die Daten der ausgewählten Tabelle wie aktuell angezeigt (gefiltert, Anzeigeformat und Spaltenreihenfolge) in eine CSV-Datei.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Als Ansicht speichern: diese Option speichert die aktuelle Einstellung der ausgewählten Tabelle (Filter, Anzeigeformat und Spaltenreihenfolge) als eine SQL-View, die Sie später durchsuchen oder in SQL-Anweisungen verwenden können.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="719"/>
@@ -8021,7 +8020,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="842"/>
         <source>Open the find tool bar which allows you to search for values in the table view below.</source>
-        <translation>Die Such-Toolbar öffnen, welche das Suchen nach Werten in der Tabellenansicht unten erlaubt.</translation>
+        <translation>Die Such-Werkzeugleiste öffnen, welche das Suchen nach Werten in der Tabellenansicht unten erlaubt.</translation>
     </message>
     <message>
         <source>Ctrl+F</source>
@@ -8048,7 +8047,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
         <location filename="../TableBrowser.ui" line="887"/>
         <location filename="../TableBrowser.ui" line="890"/>
         <source>Underline</source>
-        <translation>Unterstreichung</translation>
+        <translation>Unterstrichen</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="893"/>
@@ -8121,18 +8120,18 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="1022"/>
         <source>Toggle Format Toolbar</source>
-        <translation>Formatierungs-Toolbar umschalten</translation>
+        <translation>Format-Werkzeugleiste umschalten</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1025"/>
         <source>Show/hide format toolbar</source>
-        <translation>Formatierungs-Toolbar anzeigen/verstecken</translation>
+        <translation>Format-Werkzeugleiste anzeigen/verstecken</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1028"/>
         <location filename="../TableBrowser.ui" line="1031"/>
         <source>This button shows or hides the formatting toolbar of the Data Browser</source>
-        <translation>Dieser Button zeigt oder versteckt die Formatierungs-Toolbar im Datenbrowser</translation>
+        <translation>Dieser Button zeigt oder versteckt die Format-Werkzeugleiste im Datenbrowser</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1036"/>
@@ -8167,8 +8166,8 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
         <location filename="../TableBrowser.cpp" line="443"/>
         <source>%n row(s)</source>
         <translation>
-            <numerusform>%n row</numerusform>
-            <numerusform>%n rows</numerusform>
+            <numerusform>%n Zeile</numerusform>
+            <numerusform>%n Zeilen</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -8207,22 +8206,22 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.cpp" line="899"/>
         <source>Please enter a pseudo-primary key in order to enable editing on this view. This should be the name of a unique column in the view.</source>
-        <translation>Bitte einen Pseudo-Primärschlüssel eingeben, um die Bearbeitung dieser Ansicht zu ermöglichen. Dies sollte der Name der eindeutigen Spalte dieser Ansicht sein.</translation>
+        <translation>Bitte einen Pseudo-Primärschlüssel eingeben, um die Bearbeitung dieser Ansicht zu ermöglichen. Dies sollte der Name einer eindeutigen (UNIQUE) Spalte dieser Ansicht sein.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1021"/>
         <source>Delete Records</source>
-        <translation>Einträge löschen</translation>
+        <translation>Datensätze löschen</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1168"/>
         <source>Duplicate records</source>
-        <translation>Einträge duplizieren</translation>
+        <translation>Datensätze duplizieren</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1168"/>
         <source>Duplicate record</source>
-        <translation>Eintrag duplizieren</translation>
+        <translation>Datensatz duplizieren</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1172"/>
@@ -8238,18 +8237,18 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
         <location filename="../TableBrowser.cpp" line="1246"/>
         <source>Error deleting record:
 %1</source>
-        <translation>Fehler beim Löschen des Eintrags:
+        <translation>Fehler beim Löschen des Datensatzes:
 %1</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1255"/>
         <source>Please select a record first</source>
-        <translation>Bitte zuerst einen Eintrag auswählen</translation>
+        <translation>Bitte zuerst einen Datensatz auswählen</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1362"/>
         <source>There is no filter set for this table. View will not be created.</source>
-        <translation>Es gibt keinen Filtersatz für diese Tabelle. Die Ansicht wird nicht erstellt.</translation>
+        <translation>Für die Tabelle ist kein Filter eingestellt. Die Ansicht wird nicht erstellt.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1378"/>
@@ -8289,16 +8288,16 @@ Lassen Sie das Feld leer, um die Datenbank-Kodierung zu verwenden.</translation>
     <message>
         <location filename="../VacuumDialog.ui" line="26"/>
         <source>Warning: Compacting the database will commit all of your changes.</source>
-        <translation>Warnung: Das Verdichten der Datenbank wird alle Ihre Änderungen übermitteln.</translation>
+        <translation>Warnung: Mit dem Komprimieren der Datenbank werden alle offenen Änderungen übernommen.</translation>
     </message>
     <message>
         <location filename="../VacuumDialog.ui" line="39"/>
         <source>Please select the databases to co&amp;mpact:</source>
-        <translation>Bitte wählen Sie die zu ver&amp;dichtenden Datenbanken aus:</translation>
+        <translation>Bitte wählen Sie die zu ko&amp;mprimierenden Datenbanken aus:</translation>
     </message>
     <message>
         <source>Warning: Compacting the database will commit all changes you made.</source>
-        <translation type="vanished">Warnung: Das Komprimieren der Datenbank wird alle getätigten Änderungen übernehmen.</translation>
+        <translation type="vanished">Warnung: Mit dem Komprimieren der Datenbank werden alle offenen Änderungen übernommen.</translation>
     </message>
     <message>
         <source>Please select the objects to compact:</source>
