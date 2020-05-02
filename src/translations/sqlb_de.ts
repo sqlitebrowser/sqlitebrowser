@@ -3381,12 +3381,12 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     <message>
         <location filename="../MainWindow.ui" line="1646"/>
         <source>This button lets you save all the settings associated to the open DB to a DB Browser for SQLite project file</source>
-        <translation type="unfinished"></translation>
+        <translation>Dieser Button erlaubt Ihnen das Speichern aller mit der geöffneten DB verbundenen Einstellungen in einer DB-Browser für SQLite-Projektdatei</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1667"/>
         <source>This button lets you open a DB Browser for SQLite project file</source>
-        <translation type="unfinished"></translation>
+        <translation>Dieser Button erlaubt Ihnen das Öffnen einer DB-Browser für SQLite-Projektdatei</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1942"/>
@@ -5327,12 +5327,12 @@ Erstellen Sie ein Backup!</translation>
     <message>
         <location filename="../PlotDock.ui" line="56"/>
         <source>Y1</source>
-        <translation type="unfinished"></translation>
+        <translation>Y1</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="61"/>
         <source>Y2</source>
-        <translation type="unfinished"></translation>
+        <translation>Y2</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="66"/>
@@ -6818,12 +6818,12 @@ Erstellen Sie ein Backup!</translation>
     <message>
         <location filename="../RemoteDock.ui" line="73"/>
         <source>Push currently opened database to server</source>
-        <translation>Aktuell geöffnete Datenbank an den Server schicken</translation>
+        <translation>Aktuell geöffnete Datenbank an den Server übertragen</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="86"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB Browser for SQLite. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to &amp;quot;Generate client certificate&amp;quot; (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB Browser for SQLite Preferences. Click the button to add a new certificate to DB Browser for SQLite and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In diesem Fensterbereich können entfernte Datenbanken von der dbhub.io-Webseite zu DB-Browser für SQLite hinzugefügt werden. Zunächst benötigen Sie eine Identität:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Melden Sie sich auf der dbhub.io-Webseite an (unter Verwendung Ihrer GitHub-Daten oder wie gewünscht)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klicken Sie auf den Button &amp;quot;Generate client certificate&amp;quot;, um ein Zertifikat zu erstellen (das ist Ihre Identität). Speichern Sie die erzeugte Zertifikatdatei auf ihrer lokalen Festplatte.&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Öffnen Sie den Entfernt-Tab in den DB-Browser für SQLite-Einstellungen. Klicken Sie auf den Button, um ein neues Zertifikat hinzuzufügen und wählen Sie die soeben heruntergeladene Zertifikatdatei aus.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Jetzt zeigt der Entfernt-Fensterbereich Ihre Identität und Sie können entfernte Datenbanken hinzufügen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB4S. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to create a DB4S certificate (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB4S Preferences. Click the button to add a new certificate to DB4S and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -6881,12 +6881,12 @@ Erstellen Sie ein Backup!</translation>
     <message>
         <location filename="../RemotePushDialog.ui" line="14"/>
         <source>Push database</source>
-        <translation>Datenbank pushen</translation>
+        <translation>Datenbank übertragen</translation>
     </message>
     <message>
         <location filename="../RemotePushDialog.ui" line="22"/>
         <source>Database na&amp;me to push to</source>
-        <translation>Zu pushender Datenbankna&amp;me</translation>
+        <translation>Datenbankna&amp;me am Zielort</translation>
     </message>
     <message>
         <location filename="../RemotePushDialog.ui" line="39"/>
@@ -7734,7 +7734,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="526"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates up to the end in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ein Klick auf diesen Button navigiert zum Ende der oben angezeigten Tabelle.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="529"/>
