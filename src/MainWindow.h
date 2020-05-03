@@ -118,6 +118,7 @@ private:
     bool closeFiles();
     bool closeProject();
     bool askSaveSqlTab(int index, bool& ignoreUnattachedBuffers);
+    void focusSqlEditor();
 
 protected:
     void closeEvent(QCloseEvent *) override;

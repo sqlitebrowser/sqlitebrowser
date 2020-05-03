@@ -229,8 +229,7 @@ void MainWindow::init()
             ui->tabSqlAreas->setCurrentIndex(0);
         else
             ui->tabSqlAreas->setCurrentIndex(ui->tabSqlAreas->currentIndex() + 1);
-        SqlExecutionArea* sqlWidget = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
-        sqlWidget->getEditor()->setFocus();
+        focusSqlEditor();
     });
 
     QShortcut* shortcutPreviousTab = new QShortcut(QKeySequence(tr("Ctrl+Shift+Tab")), ui->tabSqlAreas, nullptr, nullptr, Qt::WidgetWithChildrenShortcut);
@@ -239,9 +238,13 @@ void MainWindow::init()
             ui->tabSqlAreas->setCurrentIndex(ui->tabSqlAreas->count() - 1);
         else
             ui->tabSqlAreas->setCurrentIndex(ui->tabSqlAreas->currentIndex() - 1);
-        SqlExecutionArea* sqlWidget = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
-        sqlWidget->getEditor()->setFocus();
+        focusSqlEditor();
     });
+
+    // This is the counterpart of Ctrl+PgDown in SQL editor, which focus out of the editor.
+    // This one sets the focus again in the editor.
+    QShortcut* shortcutFocusEditor = new QShortcut(QKeySequence(tr("Ctrl+PgUp")), ui->tabSqlAreas, nullptr, nullptr, Qt::WidgetWithChildrenShortcut);
+    connect(shortcutFocusEditor, &QShortcut::activated, this, &MainWindow::focusSqlEditor);
 
     // Create the actions for the recently opened dbs list
     for(int i = 0; i < MaxRecentFiles; ++i) {
@@ -1934,9 +1937,7 @@ void MainWindow::closeSqlTab(int index, bool force)
         openSqlTab(true);
 
     // Set focus to the currently selected editor tab.
-    SqlExecutionArea* sqlarea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
-    if(sqlarea)
-        sqlarea->getEditor()->setFocus();
+    focusSqlEditor();
 }
 
 int MainWindow::openSqlTab(bool resetCounter)
@@ -3419,4 +3420,11 @@ void MainWindow::openUrlOrFile(const QString& urlString)
 
     } else
         showStatusMessage5s(tr("Value is not a valid URL or filename: %1").arg(url.errorString()));
+}
+
+void MainWindow::focusSqlEditor()
+{
+    SqlExecutionArea* sqlArea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
+    if(sqlArea)
+        sqlArea->getEditor()->setFocus();
 }
