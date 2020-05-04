@@ -16,7 +16,7 @@
     <message>
         <location filename="../AboutDialog.ui" line="102"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Silk icon set by Mark James licensed under a Creative Commons Attribution 2.5 and 3.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite 是一个开源的免费可视化工具，用于创建、设计和编辑 SQLite 数据库文件。&lt;/p&gt;&lt;p&gt;它以第 2 版 Mozilla 公共许可，以及第 3 版及之后版本的 GNU 通用许可方式授权。你可以在遵循这些许可的条件下修改或重新发布它。&lt;/p&gt;&lt;p&gt;参阅 &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/span&gt;&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://sqlitebrowser.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Silk icon set by Mark James licensed under a Creative Commons Attribution 2.5 and 3.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite 是一个开源免费的可视化工具，用于创建、设计和编辑 SQLite 数据库文件。&lt;/p&gt;&lt;p&gt;它以第 2 版 Mozilla 公共许可，以及第 3 版及之后版本的 GNU 通用许可方式授权。你可以在遵循这些许可的条件下修改或重新发布它。&lt;/p&gt;&lt;p&gt;参阅 &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; 了解细节。&lt;/p&gt;&lt;p&gt;要获得本程序的更多信息，请访问我们的网站: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;这个软件使用了来自于 &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt; &lt;span style=&quot; font-size:small;&quot;&gt;的 GPL/LGPL Qt Toolkit。&lt;br/&gt;参阅 &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; 了解许可条款和其他信息。&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;它还使用了 Mark James 的 Silk 图标集，以第 2.5 和 3.0 版知识共享署名(CCA)许可方式授权。&lt;br/&gt;参阅 &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; 了解细节。&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/span&gt;&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://sqlitebrowser.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Silk icon set by Mark James licensed under a Creative Commons Attribution 2.5 and 3.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -770,21 +770,21 @@ Message from database engine:
     </message>
     <message>
         <source>renameColumn: creating savepoint failed. DB says: %1</source>
-        <translation type="vanished">重命名列: 创建保存点时失败。DB 说: %1</translation>
+        <translation type="vanished">重命名列: 创建保存点时失败。数据库显示: %1</translation>
     </message>
     <message>
         <source>renameColumn: creating new table failed. DB says: %1</source>
-        <translation type="vanished">重命名列: 创建新表时失败。DB 说: %1</translation>
+        <translation type="vanished">重命名列: 创建新表时失败。数据库显示: %1</translation>
     </message>
     <message>
         <source>renameColumn: copying data to new table failed. DB says:
 %1</source>
-        <translation type="vanished">重命名列: 复制数据到新表时失败。DB 说:
+        <translation type="vanished">重命名列: 复制数据到新表时失败。数据库显示:
 %1</translation>
     </message>
     <message>
         <source>renameColumn: deleting old table failed. DB says: %1</source>
-        <translation type="vanished">重命名列: 删除旧表失败。DB 说: %1</translation>
+        <translation type="vanished">重命名列: 删除旧表失败。数据库显示: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1814"/>
@@ -797,7 +797,7 @@ Message from database engine:
     </message>
     <message>
         <source>renameColumn: releasing savepoint failed. DB says: %1</source>
-        <translation type="vanished">重命名列: 释放保存点时失败。DB 说: %1</translation>
+        <translation type="vanished">重命名列: 释放保存点时失败。数据库显示: %1</translation>
     </message>
     <message>
         <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.Message from database engine:
@@ -1349,12 +1349,12 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditDialog.cpp" line="1058"/>
         <source>Type of data currently in cell: Valid JSON</source>
-        <translation>单元格中当前的数据: 合法的 JSON</translation>
+        <translation>当前在单元格中的数据的类型: 合法的JSON</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="1067"/>
         <source>Type of data currently in cell: Binary</source>
-        <translation>当前在单元格中的数据的类型: Binary 二进制</translation>
+        <translation>当前在单元格中的数据的类型: 二进制</translation>
     </message>
     <message numerus="yes">
         <location filename="../EditDialog.cpp" line="1038"/>
@@ -1568,17 +1568,17 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditTableDialog.ui" line="275"/>
         <source>NN</source>
-        <translation>NN</translation>
+        <translation>非空</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="278"/>
         <source>Not null</source>
-        <translation>非空</translation>
+        <translation>非NULL</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="283"/>
         <source>PK</source>
-        <translation>PK</translation>
+        <translation>主键</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="286"/>
@@ -1588,7 +1588,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditTableDialog.ui" line="291"/>
         <source>AI</source>
-        <translation>AI</translation>
+        <translation>自增</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="294"/>
@@ -1598,7 +1598,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditTableDialog.ui" line="299"/>
         <source>U</source>
-        <translation>U</translation>
+        <translation>唯一</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="302"/>
@@ -2424,7 +2424,7 @@ x~y	范围: 值在 x 和 y 之间
     <message>
         <location filename="../FindReplaceDialog.ui" line="79"/>
         <source>Match &amp;only whole words</source>
-        <translation>全词匹配(&amp;O)</translation>
+        <translation>全字匹配(&amp;O)</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="86"/>
@@ -2509,32 +2509,32 @@ x~y	范围: 值在 x 和 y 之间
     <message>
         <location filename="../FindReplaceDialog.cpp" line="86"/>
         <source>The searched text was not found</source>
-        <translation>无法找到要搜索的文本</translation>
+        <translation>无法找到要查找的文本</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.cpp" line="158"/>
         <source>The searched text was not found.</source>
-        <translation>无法找到要搜索的文本。</translation>
+        <translation>无法找到要查找的文本。</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.cpp" line="164"/>
         <source>The searched text was found one time.</source>
-        <translation>搜索的文本找到了一次。</translation>
+        <translation>查找的文本被找到了 1 次。</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.cpp" line="170"/>
         <source>The searched text was found %1 times.</source>
-        <translation>搜索的文本找到了 %1 次。</translation>
+        <translation>查找的文本被找到了 %1 次。</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.cpp" line="162"/>
         <source>The searched text was replaced one time.</source>
-        <translation>搜索的文本被替换了一次。</translation>
+        <translation>查找的文本被替换了 1 次。</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.cpp" line="168"/>
         <source>The searched text was replaced %1 times.</source>
-        <translation>搜索的文本被替换了 %1 次。</translation>
+        <translation>查找的文本被替换了 %1 次。</translation>
     </message>
 </context>
 <context>
@@ -3940,12 +3940,12 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1646"/>
         <source>This button lets you save all the settings associated to the open DB to a DB Browser for SQLite project file</source>
-        <translation type="unfinished"></translation>
+        <translation>此按钮让你将所有关于打开的数据库的设置保存到一个 DB Browser for SQLite 工程文件。</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1667"/>
         <source>This button lets you open a DB Browser for SQLite project file</source>
-        <translation type="unfinished"></translation>
+        <translation>此按钮让你打开一个 DB Browser for SQLite 工程文件。</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1786"/>
@@ -3986,7 +3986,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1837"/>
         <source>This button opens the search bar of the editor</source>
-        <translation>此按钮打开编辑器的搜索栏</translation>
+        <translation>此按钮打开编辑器的查找栏</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1840"/>
@@ -4807,8 +4807,8 @@ If you answer no we will attempt to import the data in the SQL file to the curre
         <location filename="../MainWindow.cpp" line="1778"/>
         <source>Setting PRAGMA values will commit your current transaction.
 Are you sure?</source>
-        <translation>设置 PRAGMA 值将会提交您的当前事务。.
-您确认吗?</translation>
+        <translation>设置 PRAGMA 值将会提交您的当前事务。
+您确定吗？</translation>
     </message>
     <message>
         <source>Execution aborted by user</source>
@@ -5129,12 +5129,12 @@ Create a backup!</source>
     <message>
         <location filename="../PlotDock.ui" line="56"/>
         <source>Y1</source>
-        <translation type="unfinished"></translation>
+        <translation>Y1</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="61"/>
         <source>Y2</source>
-        <translation type="unfinished"></translation>
+        <translation>Y2</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="66"/>
@@ -5584,7 +5584,7 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     <message>
         <location filename="../PreferencesDialog.ui" line="817"/>
         <source>Threshold for completion and calculation on selection</source>
-        <translation>自动完成和汇总限制</translation>
+        <translation>自动完成与汇总限制</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="827"/>
@@ -5711,7 +5711,7 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     <message>
         <location filename="../PreferencesDialog.ui" line="1505"/>
         <source>Error indicators</source>
-        <translation>错误指示器</translation>
+        <translation>显示代码错误</translation>
     </message>
     <message>
         <source>Enabling error indicators highlights the SQL code lines that caused errors during the last execution</source>
@@ -5730,7 +5730,7 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     <message>
         <location filename="../PreferencesDialog.ui" line="1468"/>
         <source>Code co&amp;mpletion</source>
-        <translation>代码完成(&amp;M)</translation>
+        <translation>自动补全(&amp;M)</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="128"/>
@@ -6012,7 +6012,7 @@ Can be set to 0 for disabling completion.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="1624"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite provides an SQL function for loading extensions from a shared library file. Activate this if you want to use the &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt; function from SQL code.&lt;/p&gt;&lt;p&gt;For security reasons, extension loading is turned off by default and must be enabled through this setting. You can always load extensions through the GUI, even though this option is disabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite 提供了 SQL 函数用于从共享库中加载扩展。启用这个选项以在SQL代码中使用 &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt; 函数。&lt;/p&gt;&lt;p&gt;因安全原因，加载扩展功能默认被关闭，须在此处手动启用。但即使此选项未启用，仍能通过上方图像界面加载扩展。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite 提供了 SQL 函数用于从共享库中加载扩展。启用这个选项以在SQL代码中使用 &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt; 函数。&lt;/p&gt;&lt;p&gt;因安全原因，加载扩展功能默认被关闭，须在此处手动启用。但即使此选项未启用，仍能通过上方的界面加载扩展。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1627"/>
@@ -6511,7 +6511,7 @@ Create a backup!</source>
     <message>
         <location filename="../RemoteDock.ui" line="86"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB Browser for SQLite. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to &amp;quot;Generate client certificate&amp;quot; (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB Browser for SQLite Preferences. Click the button to add a new certificate to DB Browser for SQLite and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;在此面板，来自 dbhub.io 网站的远程数据库可以被添加到 DB4S。首先你需要一个身份:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;登录 dbhub.io 网站 (使用你的 GitHub 认证或其他什么)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;点击按钮创建 DB4S 证书 (那是你的身份)。 这会给你一个证书文件 (保存到你的本地硬盘里)。&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;前往 DB4S 的设置中的远程选项卡。点击添加证书，选择刚才下载的文件。&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;这样，远程面板就会显示你的身份，之后可以添加远程数据库。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB4S. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to create a DB4S certificate (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB4S Preferences. Click the button to add a new certificate to DB4S and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -6700,17 +6700,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="108"/>
         <source>Whole Words</source>
-        <translation>全词</translation>
+        <translation>全字匹配</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="118"/>
         <source>Text pattern to find considering the checks in this frame</source>
-        <translation>搜索的文本符合这里的选择</translation>
+        <translation>符合这里的选择要查找的文本</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="121"/>
         <source>Find in editor</source>
-        <translation>在编辑器中搜索</translation>
+        <translation>在编辑器中查找</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="131"/>
@@ -7241,12 +7241,12 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.ui" line="253"/>
         <source>Text pattern to find considering the checks in this frame</source>
-        <translation>搜索符合这里的选择的文本</translation>
+        <translation>符合这里的选择要查找的文本</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="256"/>
         <source>Find in table</source>
-        <translation>在表中搜索</translation>
+        <translation>在表中查找</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="266"/>
