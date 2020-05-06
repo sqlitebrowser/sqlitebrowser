@@ -1920,12 +1920,17 @@ void DBBrowserDB::updateSchema()
                else
                    return false;
 
-               // If parsing wasn't successful set the object name manually, so that at least the name is going to be correct
+               // If parsing wasn't successful set the object name and SQL manually, so that at least the name is going to be correct
                if(!object->fullyParsed())
+               {
                    object->setName(val_name);
+                   object->setOriginalSql(val_sql);
+               }
 
-               // For virtual tables and views query the column list using the SQLite pragma because for both we can't yet rely on our grammar parser
-               if((object->type() == sqlb::Object::Types::Table && std::dynamic_pointer_cast<sqlb::Table>(object)->isVirtual()) || object->type() == sqlb::Object::Types::View)
+               // For virtual tables, views, and not fully parsed tables query the column list using the SQLite pragma because for both we can't yet rely on our grammar parser
+               if(!object->fullyParsed() ||
+                  (object->type() == sqlb::Object::Types::Table && std::dynamic_pointer_cast<sqlb::Table>(object)->isVirtual()) ||
+                  object->type() == sqlb::Object::Types::View)
                {
                    const auto columns = queryColumnInformation(schema_name, val_name);
 
