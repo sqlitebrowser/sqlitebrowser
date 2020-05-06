@@ -582,7 +582,9 @@ void TableBrowser::reloadSettings()
 
 void TableBrowser::setCurrentTable(const sqlb::ObjectIdentifier& name)
 {
-    ui->comboBrowseTable->setCurrentIndex(ui->comboBrowseTable->findText(QString::fromStdString(name.toDisplayString())));
+    int index = ui->comboBrowseTable->findText(QString::fromStdString(name.toDisplayString()));
+    if(index != -1)
+        ui->comboBrowseTable->setCurrentIndex(index);
 }
 
 void TableBrowser::clear()
