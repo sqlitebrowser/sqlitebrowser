@@ -1906,49 +1906,49 @@ void DBBrowserDB::updateSchema()
 
             if(!val_sql.empty())
             {
-               val_sql.erase(std::remove(val_sql.begin(), val_sql.end(), '\r'), val_sql.end());
+                val_sql.erase(std::remove(val_sql.begin(), val_sql.end(), '\r'), val_sql.end());
 
-               sqlb::ObjectPtr object;
-               if(val_type == "table")
-                   object = sqlb::Table::parseSQL(val_sql);
-               else if(val_type == "index")
-                   object = sqlb::Index::parseSQL(val_sql);
-               else if(val_type == "trigger")
-                   object = sqlb::Trigger::parseSQL(val_sql);
-               else if(val_type == "view")
-                   object = sqlb::View::parseSQL(val_sql);
-               else
-                   return false;
+                sqlb::ObjectPtr object;
+                if(val_type == "table")
+                    object = sqlb::Table::parseSQL(val_sql);
+                else if(val_type == "index")
+                    object = sqlb::Index::parseSQL(val_sql);
+                else if(val_type == "trigger")
+                    object = sqlb::Trigger::parseSQL(val_sql);
+                else if(val_type == "view")
+                    object = sqlb::View::parseSQL(val_sql);
+                else
+                    return false;
 
-               // If parsing wasn't successful set the object name and SQL manually, so that at least the name is going to be correct
-               if(!object->fullyParsed())
-               {
-                   object->setName(val_name);
-                   object->setOriginalSql(val_sql);
-               }
+                // If parsing wasn't successful set the object name and SQL manually, so that at least the name is going to be correct
+                if(!object->fullyParsed())
+                {
+                    object->setName(val_name);
+                    object->setOriginalSql(val_sql);
+                }
 
-               // For virtual tables, views, and not fully parsed tables query the column list using the SQLite pragma because for both we can't yet rely on our grammar parser
-               if(!object->fullyParsed() ||
-                  (object->type() == sqlb::Object::Types::Table && std::dynamic_pointer_cast<sqlb::Table>(object)->isVirtual()) ||
-                  object->type() == sqlb::Object::Types::View)
-               {
-                   const auto columns = queryColumnInformation(schema_name, val_name);
+                // For virtual tables, views, and not fully parsed tables query the column list using the SQLite pragma because for both we can't yet rely on our grammar parser
+                if(!object->fullyParsed() ||
+                   (object->type() == sqlb::Object::Types::Table && std::dynamic_pointer_cast<sqlb::Table>(object)->isVirtual()) ||
+                   object->type() == sqlb::Object::Types::View)
+                {
+                    const auto columns = queryColumnInformation(schema_name, val_name);
 
-                   if(object->type() == sqlb::Object::Types::Table)
-                   {
-                       sqlb::TablePtr tab = std::dynamic_pointer_cast<sqlb::Table>(object);
-                       for(const auto& column : columns)
-                           tab->fields.emplace_back(column.first, column.second);
-                   } else {
-                       sqlb::ViewPtr view = std::dynamic_pointer_cast<sqlb::View>(object);
-                       for(const auto& column : columns)
-                           view->fields.emplace_back(column.first, column.second);
-                   }
-               } else if(object->type() == sqlb::Object::Types::Trigger) {
-                   // For triggers set the name of the table the trigger operates on here because we don't have a parser for trigger statements yet.
-                   sqlb::TriggerPtr trg = std::dynamic_pointer_cast<sqlb::Trigger>(object);
-                   trg->setTable(val_tblname);
-               }
+                    if(object->type() == sqlb::Object::Types::Table)
+                    {
+                        sqlb::TablePtr tab = std::dynamic_pointer_cast<sqlb::Table>(object);
+                        for(const auto& column : columns)
+                            tab->fields.emplace_back(column.first, column.second);
+                    } else {
+                        sqlb::ViewPtr view = std::dynamic_pointer_cast<sqlb::View>(object);
+                        for(const auto& column : columns)
+                            view->fields.emplace_back(column.first, column.second);
+                    }
+                } else if(object->type() == sqlb::Object::Types::Trigger) {
+                    // For triggers set the name of the table the trigger operates on here because we don't have a parser for trigger statements yet.
+                    sqlb::TriggerPtr trg = std::dynamic_pointer_cast<sqlb::Trigger>(object);
+                    trg->setTable(val_tblname);
+                }
 
                 schemata[schema_name].insert({val_type, object});
             }
