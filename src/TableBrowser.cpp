@@ -785,7 +785,10 @@ void TableBrowser::applySettings(const BrowseDataTableSettings& storedData, bool
 
     // Column widths
     for(auto widthIt=storedData.columnWidths.constBegin();widthIt!=storedData.columnWidths.constEnd();++widthIt)
-        ui->dataTable->setColumnWidth(widthIt.key(), widthIt.value());
+    {
+        if(widthIt.key() < ui->dataTable->model()->columnCount())
+            ui->dataTable->setColumnWidth(widthIt.key(), widthIt.value());
+    }
     m_columnsResized = true;
 
     // Filters
@@ -963,6 +966,9 @@ void TableBrowser::hideColumns(int column, bool hide)
     // (Un)hide requested column(s)
     for(int col : columns)
     {
+        if(col >= ui->dataTable->model()->columnCount())
+            continue;
+
         ui->dataTable->setColumnHidden(col, hide);
         if(!hide)
             ui->dataTable->setColumnWidth(col, ui->dataTable->horizontalHeader()->defaultSectionSize());
