@@ -1162,7 +1162,7 @@ Gli errori sono indicati con una sottolineatura rossa ondulata.</translation>
         <location filename="../EditDialog.ui" line="290"/>
         <location filename="../EditDialog.ui" line="308"/>
         <source>Ctrl+P</source>
-        <translation>Ctrl+P</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="302"/>
@@ -1182,7 +1182,7 @@ Gli errori sono indicati con una sottolineatura rossa ondulata.</translation>
     <message>
         <location filename="../EditDialog.ui" line="326"/>
         <source>Ctrl+Shift+C</source>
-        <translation>Ctrl+Shift+C</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="248"/>
@@ -1954,18 +1954,18 @@ Tutti i dati che sono attualmente memorizzati in questo campo andranno persi.</t
         <location filename="../ExtendedScintilla.cpp" line="62"/>
         <location filename="../ExtendedScintilla.cpp" line="283"/>
         <source>Ctrl+H</source>
-        <translation>Ctrl+H</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="64"/>
         <source>Ctrl+F</source>
-        <translation>Ctrl+F</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="77"/>
         <location filename="../ExtendedScintilla.cpp" line="287"/>
         <source>Ctrl+P</source>
-        <translation>Ctrl+P</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="277"/>
@@ -2078,17 +2078,17 @@ Tutti i dati che sono attualmente memorizzati in questo campo andranno persi.</t
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="298"/>
         <source>Alt+Del</source>
-        <translation>Alt+Canc</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="300"/>
         <source>Ctrl+Shift+C</source>
-        <translation>Ctrl+Shift+C</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="301"/>
         <source>Ctrl+Alt+C</source>
-        <translation>Ctrl+Alt+C</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="692"/>
@@ -3027,7 +3027,7 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
     <message>
         <location filename="../MainWindow.ui" line="1133"/>
         <source>Ctrl+N</source>
-        <translation>Ctrl+N</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1145"/>
@@ -3265,7 +3265,7 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
     <message>
         <location filename="../MainWindow.ui" line="1479"/>
         <source>Ctrl+T</source>
-        <translation>Ctrl+T</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1545"/>
@@ -3295,7 +3295,7 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
     <message>
         <location filename="../MainWindow.ui" line="1798"/>
         <source>Ctrl+Shift+O</source>
-        <translation>Ctrl+Shift+O</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1831"/>
@@ -3340,7 +3340,7 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
     <message>
         <location filename="../MainWindow.ui" line="2080"/>
         <source>Ctrl+/</source>
-        <translation>Ctrl+/</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2092"/>
@@ -3384,7 +3384,7 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
     <message>
         <location filename="../MainWindow.ui" line="2137"/>
         <source>Ctrl+Shift+S</source>
-        <translation>Ctrl+Shift+S</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2146"/>
@@ -3407,7 +3407,7 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
     <message>
         <location filename="../MainWindow.ui" line="1448"/>
         <source>Shift+F1</source>
-        <translation>Shift+F1</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1456"/>
@@ -3483,7 +3483,7 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
     <message>
         <location filename="../MainWindow.ui" line="1554"/>
         <source>Shift+F5</source>
-        <translation>Shift+F5</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1562"/>
@@ -3703,7 +3703,7 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
     <message>
         <location filename="../MainWindow.ui" line="1840"/>
         <source>Ctrl+F</source>
-        <translation>Ctrl+F</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1855"/>
@@ -3723,7 +3723,7 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
     <message>
         <location filename="../MainWindow.ui" line="1867"/>
         <source>Ctrl+H</source>
-        <translation>Ctrl+H</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1875"/>
@@ -3899,12 +3899,12 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
         <location filename="../MainWindow.ui" line="2029"/>
         <location filename="../MainWindow.ui" line="2056"/>
         <source>Ctrl+P</source>
-        <translation>Ctrl+P</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1184"/>
         <source>Ctrl+F4</source>
-        <translation>Ctrl+F4</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1491"/>
@@ -3914,12 +3914,12 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
     <message>
         <location filename="../MainWindow.ui" line="1497"/>
         <source>Ctrl+Return</source>
-        <translation>Ctrl+Invio</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="267"/>
         <source>Ctrl+L</source>
-        <translation>Ctrl+L</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="272"/>
@@ -3944,7 +3944,7 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
     <message>
         <location filename="../MainWindow.cpp" line="318"/>
         <source>Alt+0</source>
-        <translation>Alt+0</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="339"/>
@@ -4625,7 +4625,7 @@ Crea un backup!</translation>
     <message>
         <location filename="../AddRecordDialog.cpp" line="44"/>
         <source>Alt+Del</source>
-        <translation>Alt+Canc</translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -6653,7 +6653,7 @@ Tieni premuto %3Shift e clicca per saltare lì</translation>
     <message>
         <location filename="../TableBrowser.ui" line="276"/>
         <source>Shift+F3</source>
-        <translation>Shift+F3</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="283"/>
@@ -7061,7 +7061,7 @@ Tieni premuto %3Shift e clicca per saltare lì</translation>
     <message>
         <location filename="../TableBrowser.ui" line="803"/>
         <source>Ctrl+P</source>
-        <translation>Ctrl+P</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="815"/>
@@ -7095,7 +7095,7 @@ Tieni premuto %3Shift e clicca per saltare lì</translation>
     </message>
     <message>
         <source>Ctrl+F</source>
-        <translation type="vanished">Ctrl+F</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="854"/>
@@ -7106,7 +7106,7 @@ Tieni premuto %3Shift e clicca per saltare lì</translation>
     <message>
         <location filename="../TableBrowser.ui" line="860"/>
         <source>Ctrl+B</source>
-        <translation>Ctrl+B</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="872"/>
@@ -7123,7 +7123,7 @@ Tieni premuto %3Shift e clicca per saltare lì</translation>
     <message>
         <location filename="../TableBrowser.ui" line="893"/>
         <source>Ctrl+U</source>
-        <translation>Ctrl+U</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="905"/>
@@ -7212,7 +7212,7 @@ Tieni premuto %3Shift e clicca per saltare lì</translation>
     <message>
         <location filename="../TableBrowser.ui" line="1039"/>
         <source>Ctrl+Space</source>
-        <translation>Ctrl+Space</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1054"/>
@@ -7221,7 +7221,7 @@ Tieni premuto %3Shift e clicca per saltare lì</translation>
     </message>
     <message>
         <source>Ctrl+H</source>
-        <translation type="vanished">Ctrl+H</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="42"/>
@@ -7231,7 +7231,7 @@ Tieni premuto %3Shift e clicca per saltare lì</translation>
     <message>
         <location filename="../TableBrowser.cpp" line="102"/>
         <source>Ctrl+R</source>
-        <translation>Ctrl+R</translation>
+        <translation></translation>
     </message>
     <message numerus="yes">
         <location filename="../TableBrowser.cpp" line="443"/>
@@ -7297,7 +7297,7 @@ Tieni premuto %3Shift e clicca per saltare lì</translation>
     <message>
         <location filename="../TableBrowser.cpp" line="1172"/>
         <source>Ctrl+&quot;</source>
-        <translation>Ctrl+&quot;</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1191"/>

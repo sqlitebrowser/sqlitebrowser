@@ -1126,7 +1126,7 @@ Fehler werden mittels eine roten Wellenlinie angezeigt.</translation>
         <location filename="../EditDialog.ui" line="290"/>
         <location filename="../EditDialog.ui" line="308"/>
         <source>Ctrl+P</source>
-        <translation>Strg+P</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="302"/>
@@ -1146,7 +1146,7 @@ Fehler werden mittels eine roten Wellenlinie angezeigt.</translation>
     <message>
         <location filename="../EditDialog.ui" line="326"/>
         <source>Ctrl+Shift+C</source>
-        <translation>Strg+Umschalt+C</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Import text</source>
@@ -2098,18 +2098,18 @@ Alle aktuell in diesem Feld gespeicherten Daten gehen verloren.</translation>
         <location filename="../ExtendedScintilla.cpp" line="62"/>
         <location filename="../ExtendedScintilla.cpp" line="283"/>
         <source>Ctrl+H</source>
-        <translation>Strg+H</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="64"/>
         <source>Ctrl+F</source>
-        <translation>Strg+F</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="77"/>
         <location filename="../ExtendedScintilla.cpp" line="287"/>
         <source>Ctrl+P</source>
-        <translation>Strg+P</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="277"/>
@@ -2228,17 +2228,17 @@ Möchten Sie ihn dennoch einfügen?</translation>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="298"/>
         <source>Alt+Del</source>
-        <translation>Alt+Entf</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="300"/>
         <source>Ctrl+Shift+C</source>
-        <translation>Strg+Umschalt+C</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="301"/>
         <source>Ctrl+Alt+C</source>
-        <translation>Strg+Alt+C</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="692"/>
@@ -3038,7 +3038,7 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     <message>
         <location filename="../MainWindow.ui" line="2080"/>
         <source>Ctrl+/</source>
-        <translation>Strg+/</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2092"/>
@@ -3127,7 +3127,7 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     <message>
         <location filename="../MainWindow.ui" line="1184"/>
         <source>Ctrl+F4</source>
-        <translation>Strg+F4</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1246"/>
@@ -3245,7 +3245,7 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     <message>
         <location filename="../MainWindow.ui" line="1798"/>
         <source>Ctrl+Shift+O</source>
-        <translation>Strg+Umschalt+O</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1810"/>
@@ -3281,7 +3281,7 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     <message>
         <location filename="../MainWindow.ui" line="1840"/>
         <source>Ctrl+F</source>
-        <translation>Strg+F</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1855"/>
@@ -3302,7 +3302,7 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     <message>
         <location filename="../MainWindow.ui" line="1867"/>
         <source>Ctrl+H</source>
-        <translation>Strg+H</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1875"/>
@@ -3518,7 +3518,7 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     <message>
         <location filename="../MainWindow.ui" line="2137"/>
         <source>Ctrl+Shift+S</source>
-        <translation>Strg+Umschalt+S</translation>
+        <translation></translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates 100 records upwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -3804,7 +3804,7 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     <message>
         <location filename="../MainWindow.ui" line="1554"/>
         <source>Shift+F5</source>
-        <translation>Shift+F5</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1637"/>
@@ -4047,7 +4047,7 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     <message>
         <location filename="../MainWindow.ui" line="1133"/>
         <source>Ctrl+N</source>
-        <translation>Strg+N</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1145"/>
@@ -4074,7 +4074,7 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     <message>
         <location filename="../MainWindow.ui" line="1157"/>
         <source>Ctrl+O</source>
-        <translation>Strg+O</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1172"/>
@@ -4090,7 +4090,7 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
         <location filename="../MainWindow.cpp" line="218"/>
         <location filename="../MainWindow.cpp" line="3347"/>
         <source>Ctrl+W</source>
-        <translation>Strg+W</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Revert Changes</source>
@@ -4125,7 +4125,7 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     <message>
         <location filename="../MainWindow.ui" line="1235"/>
         <source>Ctrl+S</source>
-        <translation>Strg+S</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Compact Database</source>
@@ -4150,7 +4150,7 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     <message>
         <location filename="../MainWindow.ui" line="1266"/>
         <source>Ctrl+Q</source>
-        <translation>Strg+Q</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Database from SQL file...</source>
@@ -4272,7 +4272,7 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     <message>
         <location filename="../MainWindow.ui" line="1448"/>
         <source>Shift+F1</source>
-        <translation>Shift+F1</translation>
+        <translation></translation>
     </message>
     <message>
         <source>&amp;About...</source>
@@ -4291,7 +4291,7 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     <message>
         <location filename="../MainWindow.ui" line="1479"/>
         <source>Ctrl+T</source>
-        <translation>Strg+T</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="50"/>
@@ -4503,7 +4503,7 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     <message>
         <location filename="../MainWindow.cpp" line="282"/>
         <source>Ctrl+E</source>
-        <translation>Strg+E</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1562"/>
@@ -4518,13 +4518,13 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     <message>
         <location filename="../MainWindow.cpp" line="267"/>
         <source>Ctrl+L</source>
-        <translation>Strg+L</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2029"/>
         <location filename="../MainWindow.ui" line="2056"/>
         <source>Ctrl+P</source>
-        <translation>Strg+P</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="383"/>
@@ -4540,17 +4540,17 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     <message>
         <location filename="../MainWindow.ui" line="1497"/>
         <source>Ctrl+Return</source>
-        <translation>Strg+Return</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="272"/>
         <source>Ctrl+D</source>
-        <translation>Strg+D</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="277"/>
         <source>Ctrl+I</source>
-        <translation>Strg+I</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="317"/>
@@ -4560,7 +4560,7 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     <message>
         <location filename="../MainWindow.cpp" line="318"/>
         <source>Alt+0</source>
-        <translation>Alt+0</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="339"/>
@@ -5183,7 +5183,7 @@ Grund: %1</translation>
     </message>
     <message>
         <source>Ctrl+&quot;</source>
-        <translation type="vanished">Strg+&quot;</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Please enter a pseudo-primary key in order to enable editing on this view. This should be the name of a unique column in the view.</source>
@@ -5291,7 +5291,7 @@ Erstellen Sie ein Backup!</translation>
     <message>
         <location filename="../AddRecordDialog.cpp" line="44"/>
         <source>Alt+Del</source>
-        <translation>Alt+Entf</translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -7002,7 +7002,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="91"/>
         <source>Shift+F3</source>
-        <translation>Umschalt+F3</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="105"/>
@@ -7140,7 +7140,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../sqltextedit.cpp" line="41"/>
         <source>Ctrl+/</source>
-        <translation>Strg+/</translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -7583,7 +7583,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="276"/>
         <source>Shift+F3</source>
-        <translation>Umschalt+F3</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="283"/>
@@ -7991,7 +7991,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="803"/>
         <source>Ctrl+P</source>
-        <translation>Strg+P</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="815"/>
@@ -8025,7 +8025,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     </message>
     <message>
         <source>Ctrl+F</source>
-        <translation type="vanished">Strg+F</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="854"/>
@@ -8036,7 +8036,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="860"/>
         <source>Ctrl+B</source>
-        <translation>Strg+B</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="872"/>
@@ -8053,7 +8053,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="893"/>
         <source>Ctrl+U</source>
-        <translation>Strg+U</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="905"/>
@@ -8142,7 +8142,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="1039"/>
         <source>Ctrl+Space</source>
-        <translation>Strg+Space</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1054"/>
@@ -8151,7 +8151,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     </message>
     <message>
         <source>Ctrl+H</source>
-        <translation type="vanished">Strg+H</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="42"/>
@@ -8161,7 +8161,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.cpp" line="102"/>
         <source>Ctrl+R</source>
-        <translation>Strg+R</translation>
+        <translation></translation>
     </message>
     <message numerus="yes">
         <location filename="../TableBrowser.cpp" line="443"/>
@@ -8227,7 +8227,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.cpp" line="1172"/>
         <source>Ctrl+&quot;</source>
-        <translation>Strg+&quot;</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1191"/>
