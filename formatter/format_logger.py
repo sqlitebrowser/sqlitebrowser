@@ -44,22 +44,22 @@ _ROOT_LOGGER = logging.getLogger('ROOT')
 
 
 ####################
-def test_log_level_warning() -> bool:
+def test_enable_output() -> bool:
     """\
-    Test current effective log level and return a boolean TRUE
-    if log level is at or greater than logging.WARNING.
-    Need functionality to control subprocess output to console
-    (i.e. 'quiet' or 'silent' operation).
+    Test current effective log level and return TRUE if log level is less than logging.ERROR.
+    Need functionality to control subprocess output to console (i.e. 'quiet' or 'silent' operation).
     """
-    return logging.NOTSET < _ROOT_LOGGER.getEffectiveLevel() < logging.ERROR
+    return _ROOT_LOGGER.getEffectiveLevel() < logging.ERROR
 
 
 ####################
 def set_verbosity(level_value: int):
     """\
-    Assume value is a count of \'v\' given to ArgumentParser.
-    Derive log level from that count and set accordingly.
+    Value is a count of \'v\' switches from ArgumentParser(command line).
+    Calculate log level from that count and set accordingly.
     """
+    # 50 = logging.ERROR -> quiet
+    # 10 = logging.DEBUG -> max debug info
     calc_verbose: int = logging.ERROR - (level_value * 10)
     if calc_verbose < logging.DEBUG:
         calc_verbose = logging.DEBUG
@@ -72,7 +72,7 @@ def set_verbosity(level_value: int):
 ####################
 def set_log_env(level_str: str):
     """\
-    Store log level as a string.
+    Set log level based on string argument.
     NOTE: should be same as str(logging.LEVEL).lower()
     """
     if level_str in _LOG_LEVELS.keys():

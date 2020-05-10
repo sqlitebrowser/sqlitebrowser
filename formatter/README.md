@@ -8,7 +8,7 @@ All necessary configuration settings for automated code formatting as it applies
 
 ## DEPENDENT APPLICATIONS
 
-Application leverages Python 3 to execute other applications to perform automated code formatting. These dependent applications are available across may platforms Ensure these applications are installed prior to attempting to follow the **OPERATION** instructions below.
+Application leverages Python 3 to execute other applications to perform automated code formatting. These dependent applications are available across many platforms Ensure these applications are installed prior to attempting to follow the **OPERATION** instructions below.
 
 ### Python 3
 

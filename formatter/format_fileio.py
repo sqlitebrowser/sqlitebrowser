@@ -54,9 +54,9 @@ def pretty_dictionary(dict_obj: dict,
     Display string type presentation of selected dictionary.
     """
     if not dict_obj or not isinstance(dict_obj, dict):
-        raise ResourceError('Bad Dictionary to StrDict')
+        raise ResourceError('Invalid Dictionary Object given to method.')
     if not hasattr(dict_obj, 'items'):
-        raise ResourceError('Empty Dictionary to StrDict')
+        raise ResourceError('Empty Dictionary Object given to method.')
     top_indt = str(' ' * indt_init)
     lines = ['{indt}{{'.format(indt=top_indt)]
     for key, value in dict_obj.items():

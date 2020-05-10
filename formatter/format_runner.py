@@ -70,7 +70,7 @@ def argument_processing():
         action='count',
         default=0,
         help="""\
-        Enable verbose output during execution. \'-vv\' can be used for debug output."""
+        Enable verbose output during execution. Multiple switches increase output."""
     )
     arguments, unknown = parser.parse_known_args(sys_args)
     if unknown:

@@ -39,6 +39,6 @@ libs/*/*/*.a
 # Ignore .DS_Store files on OSX
 .DS_Store
 
-# Ignore any python generated python caching files
+# Ignore any python generated caching files
 */__pycache__/
 */.mypy_cache/

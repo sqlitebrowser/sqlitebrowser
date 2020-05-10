@@ -42,7 +42,7 @@ import format_arg as FrmtArg
 _mod_log = FrmtLog.get_logger(__name__)
 # flag to control print statement console outputs
 # circumvent "noise" for global variable usage
-_OUTPUT_STMTS = {'enable': FrmtLog.test_log_level_warning()}
+_OUTPUT_STMTS = {'enable': FrmtLog.test_enable_output()}
 
 
 ####################
@@ -488,7 +488,7 @@ class FormatTool(FrmtArg.ClassUtility):
         defines a format tool. Method returns a list of format tools.
         """
         # update logging output
-        _OUTPUT_STMTS['enable'] = FrmtLog.test_log_level_warning()
+        _OUTPUT_STMTS['enable'] = FrmtLog.test_enable_output()
         # process list of tools
         tool_list: List[FormatTool] = list()
         for tool in args:
