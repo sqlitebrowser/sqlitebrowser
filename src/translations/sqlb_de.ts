@@ -7557,7 +7557,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
  - Doppelt auf einen Eintrag klicken, um dessen Inhalte im Zelleneditor-Fenster zu bearbeiten.
  - Alt+Entf zum Löschen des Zellinhaltes zu NULL.
  - Strg+&quot; zur Duplizierung des aktuellen Eintrags.
- - Ctrl+&apos; zum Kopieren des Wertes der darüberliegenden Zelle.
+ - Strg+&apos; zum Kopieren des Wertes der darüberliegenden Zelle.
  - Standardmäßige Auswahl- und Kopieren/Einfügen-Operationen.</translation>
     </message>
     <message>
