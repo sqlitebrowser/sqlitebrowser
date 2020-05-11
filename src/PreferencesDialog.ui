@@ -20,7 +20,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_4">
       <attribute name="title">
@@ -555,159 +555,152 @@
       <attribute name="title">
        <string>&amp;Database</string>
       </attribute>
-      <layout class="QFormLayout" name="formLayout">
-       <property name="fieldGrowthPolicy">
-        <enum>QFormLayout::FieldsStayAtSizeHint</enum>
-       </property>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Database &amp;encoding</string>
+      <layout class="QVBoxLayout" name="verticalLayout_10">
+       <item>
+        <layout class="QFormLayout" name="formLayout">
+         <property name="fieldGrowthPolicy">
+          <enum>QFormLayout::FieldsStayAtSizeHint</enum>
          </property>
-         <property name="buddy">
-          <cstring>encodingComboBox</cstring>
+         <property name="leftMargin">
+          <number>9</number>
          </property>
-        </widget>
+         <property name="topMargin">
+          <number>9</number>
+         </property>
+         <property name="rightMargin">
+          <number>9</number>
+         </property>
+         <property name="bottomMargin">
+          <number>9</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>Database &amp;encoding</string>
+           </property>
+           <property name="buddy">
+            <cstring>encodingComboBox</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_5">
+           <property name="toolTip">
+            <string>Open databases with foreign keys enabled.</string>
+           </property>
+           <property name="text">
+            <string>&amp;Foreign keys</string>
+           </property>
+           <property name="buddy">
+            <cstring>foreignKeysCheckBox</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_8">
+           <property name="text">
+            <string>Remove line breaks in schema &amp;view</string>
+           </property>
+           <property name="buddy">
+            <cstring>checkHideSchemaLinebreaks</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>Prefetch block si&amp;ze</string>
+           </property>
+           <property name="buddy">
+            <cstring>spinPrefetchSize</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="defaultFieldTypeLabel">
+           <property name="text">
+            <string>Default field type</string>
+           </property>
+           <property name="buddy">
+            <cstring>defaultFieldTypeComboBox</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QComboBox" name="defaultFieldTypeComboBox"/>
+         </item>
+         <item row="3" column="1">
+          <widget class="QSpinBox" name="spinPrefetchSize">
+           <property name="minimum">
+            <number>255</number>
+           </property>
+           <property name="maximum">
+            <number>1000000</number>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QCheckBox" name="checkHideSchemaLinebreaks">
+           <property name="toolTip">
+            <string>When enabled, the line breaks in the Schema column of the DB Structure tab, dock and printed output are removed.</string>
+           </property>
+           <property name="text">
+            <string>enabled</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QCheckBox" name="foreignKeysCheckBox">
+           <property name="text">
+            <string>enabled</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="encodingComboBox">
+           <item>
+            <property name="text">
+             <string notr="true">UTF-8</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string notr="true">UTF-16</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+        </layout>
        </item>
-       <item row="0" column="1">
-        <widget class="QComboBox" name="encodingComboBox">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_9">
          <item>
-          <property name="text">
-           <string notr="true">UTF-8</string>
-          </property>
+          <widget class="QLabel" name="labelDatabaseDefaultSqlText">
+           <property name="text">
+            <string>SQ&amp;L to execute after opening database</string>
+           </property>
+           <property name="buddy">
+            <cstring>editDatabaseDefaultSqlText</cstring>
+           </property>
+          </widget>
          </item>
          <item>
-          <property name="text">
-           <string notr="true">UTF-16</string>
-          </property>
+          <widget class="SqlTextEdit" name="editDatabaseDefaultSqlText">
+           <property name="minimumSize">
+            <size>
+             <width>20</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
          </item>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_5">
-         <property name="toolTip">
-          <string>Open databases with foreign keys enabled.</string>
-         </property>
-         <property name="text">
-          <string>&amp;Foreign keys</string>
-         </property>
-         <property name="buddy">
-          <cstring>foreignKeysCheckBox</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QCheckBox" name="foreignKeysCheckBox">
-         <property name="text">
-          <string>enabled</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_8">
-         <property name="text">
-          <string>Remove line breaks in schema &amp;view</string>
-         </property>
-         <property name="buddy">
-          <cstring>checkHideSchemaLinebreaks</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QCheckBox" name="checkHideSchemaLinebreaks">
-         <property name="toolTip">
-          <string>When enabled, the line breaks in the Schema column of the DB Structure tab, dock and printed output are removed.</string>
-         </property>
-         <property name="text">
-          <string>enabled</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Prefetch block si&amp;ze</string>
-         </property>
-         <property name="buddy">
-          <cstring>spinPrefetchSize</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QSpinBox" name="spinPrefetchSize">
-         <property name="minimum">
-          <number>255</number>
-         </property>
-         <property name="maximum">
-          <number>1000000</number>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QPushButton" name="buttonDatabaseAdvanced">
-         <property name="text">
-          <string>Advanced</string>
-         </property>
-         <property name="icon">
-          <iconset resource="icons/icons.qrc">
-           <normaloff>:/icons/down</normaloff>:/icons/down</iconset>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="1">
-        <widget class="SqlTextEdit" name="editDatabaseDefaultSqlText">
-         <property name="minimumSize">
-          <size>
-           <width>20</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>200</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="labelDatabaseDefaultSqlText">
-         <property name="text">
-          <string>SQ&amp;L to execute after opening database</string>
-         </property>
-         <property name="buddy">
-          <cstring>editDatabaseDefaultSqlText</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="1">
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>180</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="4" column="1">
-        <widget class="QComboBox" name="defaultFieldTypeComboBox"/>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="defaultFieldTypeLabel">
-         <property name="text">
-          <string>Default field type</string>
-         </property>
-         <property name="buddy">
-          <cstring>defaultFieldTypeComboBox</cstring>
-         </property>
-        </widget>
+        </layout>
        </item>
       </layout>
      </widget>
@@ -1922,8 +1915,6 @@ Can be set to 0 for disabling completion.</string>
   <tabstop>checkHideSchemaLinebreaks</tabstop>
   <tabstop>spinPrefetchSize</tabstop>
   <tabstop>defaultFieldTypeComboBox</tabstop>
-  <tabstop>buttonDatabaseAdvanced</tabstop>
-  <tabstop>editDatabaseDefaultSqlText</tabstop>
   <tabstop>comboDataBrowserFont</tabstop>
   <tabstop>spinDataBrowserFontSize</tabstop>
   <tabstop>spinSymbolLimit</tabstop>
@@ -2031,38 +2022,6 @@ Can be set to 0 for disabling completion.</string>
     <hint type="destinationlabel">
      <x>294</x>
      <y>202</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonDatabaseAdvanced</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>labelDatabaseDefaultSqlText</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>344</x>
-     <y>230</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>119</x>
-     <y>273</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonDatabaseAdvanced</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>editDatabaseDefaultSqlText</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>344</x>
-     <y>230</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>365</x>
-     <y>252</y>
     </hint>
    </hints>
   </connection>

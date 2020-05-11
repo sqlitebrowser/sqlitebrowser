@@ -23,8 +23,6 @@ PreferencesDialog::PreferencesDialog(QWidget* parent, Tabs tab)
 {
     ui->setupUi(this);
     ui->treeSyntaxHighlighting->setColumnHidden(0, true);
-    ui->labelDatabaseDefaultSqlText->setVisible(false);
-    ui->editDatabaseDefaultSqlText->setVisible(false);
     ui->tableClientCerts->setColumnHidden(0, true);
 
     ui->fr_bin_bg->installEventFilter(this);
