@@ -71,6 +71,13 @@ public:
 
     bool open(const QString& db, bool readOnly = false);
     bool attach(const QString& filename, QString attach_as = QString());
+
+    /**
+      detaches a previously attached database identified with its alias-name
+
+      \param attached_as the alias-name as witch a additional database file has been attached to the connection
+    **/
+    bool detach(const QString& attached_as);
     bool create ( const QString & db);
     bool close();
 

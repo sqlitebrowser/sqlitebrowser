@@ -2195,6 +2195,30 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>Ctrl+Shift+F4</string>
    </property>
   </action>
+  <action name="fileDetachAction">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/db_detach</normaloff>:/icons/db_detach</iconset>
+   </property>
+   <property name="text">
+    <string>Detach Database</string>
+   </property>
+   <property name="toolTip">
+    <string>Detach database file attached to the current database connection</string>
+   </property>
+  </action>
+  <action name="actionPopupSchemaDockDetachDatabase">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/db_detach</normaloff>:/icons/db_detach</iconset>
+   </property>
+   <property name="text">
+    <string>Detach Database</string>
+   </property>
+   <property name="toolTip">
+    <string>Detach database file attached to the current database connection</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -2902,6 +2926,22 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>fileAttach()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fileDetachAction</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>fileDetachDbTree()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -3658,6 +3698,8 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
   <slot>loadProject()</slot>
   <slot>saveProject()</slot>
   <slot>fileAttach()</slot>
+  <slot>fileDetachDbTree()</slot>
+  <slot>fileDetachTreeSchemaDock()</slot>
   <slot>editEncryption()</slot>
   <slot>saveSqlFileAs()</slot>
   <slot>switchToBrowseDataTab()</slot>

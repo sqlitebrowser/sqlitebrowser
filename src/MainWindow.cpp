@@ -240,12 +240,14 @@ void MainWindow::init()
     popupTableMenu->addAction(ui->actionEditBrowseTable);
     popupTableMenu->addAction(ui->editModifyObjectAction);
     popupTableMenu->addAction(ui->editDeleteObjectAction);
+    popupTableMenu->addAction(ui->fileDetachAction);
     popupTableMenu->addSeparator();
     popupTableMenu->addAction(ui->actionEditCopyCreateStatement);
     popupTableMenu->addAction(ui->actionExportCsvPopup);
 
     popupSchemaDockMenu = new QMenu(this);
     popupSchemaDockMenu->addAction(ui->actionPopupSchemaDockBrowseTable);
+    popupSchemaDockMenu->addAction(ui->actionPopupSchemaDockDetachDatabase);
     popupSchemaDockMenu->addSeparator();
     popupSchemaDockMenu->addAction(ui->actionDropQualifiedCheck);
     popupSchemaDockMenu->addAction(ui->actionEnquoteNamesCheck);
@@ -1503,7 +1505,7 @@ void MainWindow::createTreeContextMenu(const QPoint &qPoint)
         return;
 
     QString type = dbSelected->objectType();
-    if(type == "table" || type == "view" || type == "trigger" || type == "index")
+    if(type == "table" || type == "view" || type == "trigger" || type == "index" || type == "database")
     {
         // needed for first click on treeView as for first time change QItemSelectionModel::currentChanged doesn't fire
         changeTreeSelection();
@@ -1515,14 +1517,18 @@ void MainWindow::createTreeContextMenu(const QPoint &qPoint)
 void MainWindow::createSchemaDockContextMenu(const QPoint &qPoint)
 {
     bool enable_browse_table = false;
+    bool enable_detach_file = false;
 
     if(dockDbSelected->hasSelection())
     {
         QString type = dockDbSelected->objectType();
         if(type == "table" || type == "view")
             enable_browse_table = true;
+        else if(type == "database" && dockDbSelected->schema() != "main" && dockDbSelected->schema() != "temp")
+            enable_detach_file = true;
     }
     ui->actionPopupSchemaDockBrowseTable->setEnabled(enable_browse_table);
+    ui->actionPopupSchemaDockDetachDatabase->setEnabled(enable_detach_file);
 
     popupSchemaDockMenu->exec(ui->treeSchemaDock->mapToGlobal(qPoint));
 }
@@ -1533,12 +1539,18 @@ void MainWindow::changeTreeSelection()
     ui->editDeleteObjectAction->setEnabled(false);
     ui->editModifyObjectAction->setEnabled(false);
     ui->actionEditBrowseTable->setEnabled(false);
+    ui->actionExportCsvPopup->setEnabled(false);
+    ui->fileDetachAction->setEnabled(false);
+    ui->actionEditCopyCreateStatement->setEnabled(false);
+
+    ui->fileDetachAction->setVisible(false);
 
     if(!dbSelected->hasSelection())
         return;
 
     // Change the text and tooltips of the actions
     QString type = dbSelected->objectType();
+    QString schema = dbSelected->schema();
 
     if (type.isEmpty())
     {
@@ -1561,15 +1573,24 @@ void MainWindow::changeTreeSelection()
     } else if(type == "table") {
         ui->editDeleteObjectAction->setText(tr("Delete Table"));
         ui->editModifyObjectAction->setText(tr("Modify Table"));
+    } else if(type == "database") {
+        ui->editDeleteObjectAction->setVisible(false);
+        ui->editModifyObjectAction->setVisible(false);
+        ui->fileDetachAction->setVisible(true);
+        ui->fileDetachAction->setEnabled(!(schema == "main" || schema == "temp"));
+        return;
     } else {
         // Nothing to do for other types. Set the buttons not visible and return.
         ui->editDeleteObjectAction->setVisible(false);
         ui->editModifyObjectAction->setVisible(false);
+        ui->fileDetachAction->setVisible(false);
+        ui->actionEditCopyCreateStatement->setEnabled(true);
         return;
     }
 
     ui->editDeleteObjectAction->setVisible(true);
     ui->editModifyObjectAction->setVisible(true);
+    ui->actionEditCopyCreateStatement->setEnabled(true);
 
     // Activate actions
     ui->editDeleteObjectAction->setEnabled(!db.readOnly());
@@ -3163,6 +3184,36 @@ void MainWindow::switchToBrowseDataTab(sqlb::ObjectIdentifier tableToBrowse)
     // Bring new tab to foreground
     Application::processEvents();   // For some reason this is required for raise() to work here.
     d->raise();
+}
+
+void MainWindow::fileDetachDbTree()
+{
+    fileDetachTreeViewSelected(ui->dbTreeWidget);
+}
+
+void MainWindow::fileDetachTreeSchemaDock()
+{
+    fileDetachTreeViewSelected(ui->treeSchemaDock);
+}
+
+void MainWindow::fileDetachTreeViewSelected(QTreeView* treeView)
+{
+    if (!treeView || !treeView->selectionModel()->hasSelection())
+    {
+        return;
+    }
+
+    sqlb::ObjectIdentifier attachedDatabase = sqlb::ObjectIdentifier();
+    // get the currently selected attached database from treeView parameter
+    // Cancel here if there is no selection
+    attachedDatabase.setSchema(treeView->model()->data(treeView->currentIndex().sibling(treeView->currentIndex().row(), DbStructureModel::ColumnSchema), Qt::EditRole).toString().toStdString());
+    attachedDatabase.setName(treeView->model()->data(treeView->currentIndex().sibling(treeView->currentIndex().row(), DbStructureModel::ColumnName), Qt::EditRole).toString().toStdString());
+
+    QString attached_as = QString::fromStdString(attachedDatabase.name());
+    if (db.detach(attached_as))
+    {
+        isProjectModified = true;
+    }
 }
 
 void MainWindow::copyCurrentCreateStatement()
