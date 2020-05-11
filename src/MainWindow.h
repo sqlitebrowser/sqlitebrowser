@@ -154,6 +154,9 @@ public slots:
     void refresh();
     void switchToBrowseDataTab(sqlb::ObjectIdentifier tableToBrowse = sqlb::ObjectIdentifier());
     void populateStructure(const std::vector<sqlb::ObjectIdentifier>& old_tables = {});
+    void fileDetachDbTree();
+    void fileDetachTreeSchemaDock();
+    void fileDetachTreeViewSelected(QTreeView* treeView);
     void reloadSettings();
     bool closeFiles();
 

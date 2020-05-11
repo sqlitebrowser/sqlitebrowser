@@ -104,5 +104,6 @@
         <file>monitor_link.png</file>
         <file alias="clone_database">server_add.png</file>
         <file alias="cut">cut.png</file>
+        <file alias="db_detach">database_link_broken.png</file>
     </qresource>
 </RCC>

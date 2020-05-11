@@ -271,6 +271,33 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
     }
 }
 
+/**
+  detaches a previously attached database identified with its alias-name
+**/
+bool DBBrowserDB::detach(const QString& attached_as)
+{
+    if(!_db)
+    {
+        return false;
+    }
+
+    waitForDbRelease();
+
+    // dettach database
+    if(!executeSQL("DETACH " + sqlb::escapeIdentifier(attached_as.toStdString()), false))
+    {
+        QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
+        return false;
+    }
+
+
+    // Update schema to load database schema of the newly attached database
+    updateSchema();
+
+    return true;
+}
+
+
 bool DBBrowserDB::attach(const QString& filePath, QString attach_as)
 {
     if(!_db)
