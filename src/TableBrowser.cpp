@@ -39,7 +39,7 @@ TableBrowser::TableBrowser(QWidget* parent) :
     ui->editGoto->setValidator(gotoValidator);
 
     // Set custom placeholder text for global filter field and disable conditional formats
-    ui->editGlobalFilter->setPlaceholderText(tr("Filter in all columns"));
+    ui->editGlobalFilter->setPlaceholderText(tr("Filter in any column"));
     ui->editGlobalFilter->setConditionFormatContextMenuEnabled(false);
 
     // Set up popup menus
