@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "dbstructureqitemviewfacade.h"
 #include "sqlitedb.h"
 
 #include <memory>
@@ -89,6 +90,16 @@ private:
     QVector<QAction*> recentFileActs;
     QAction* clearRecentFilesAction;
     QAction* recentSeparatorAct;
+
+    /**
+     * @brief dbSelected provides a simple read only interface to the actual selected node of ui->dbTreeWidget
+     */
+    DbStructureQItemViewFacade *dbSelected;
+
+    /**
+     * @brief dockDbSelected provides a simple read only interface to the actual selected node of ui->treeSchemaDock
+     */
+    DbStructureQItemViewFacade *dockDbSelected;
 
     EditDialog* editDock;
     PlotDock* plotDock;

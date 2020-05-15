@@ -26,6 +26,7 @@ HEADERS += \
     RemoteLocalFilesModel.h \
     RemoteNetwork.h \
     TableBrowserDock.h \
+    dbstructureqitemviewfacade.h \
     sqlitedb.h \
     MainWindow.h \
     EditIndexDialog.h \
@@ -91,6 +92,7 @@ SOURCES += \
     RemoteLocalFilesModel.cpp \
     RemoteNetwork.cpp \
     TableBrowserDock.cpp \
+    dbstructureqitemviewfacade.cpp \
     sqlitedb.cpp \
     MainWindow.cpp \
     EditIndexDialog.cpp \

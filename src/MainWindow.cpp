@@ -80,6 +80,8 @@ MainWindow::MainWindow(QWidget* parent)
 
 MainWindow::~MainWindow()
 {
+    delete dbSelected;
+    delete dockDbSelected;
     delete ui;
 }
 
@@ -116,6 +118,10 @@ void MainWindow::init()
         }
     });
 #endif
+
+    // create facade objects to dbTreeWidgets
+    dbSelected = new DbStructureQItemViewFacade(*ui->dbTreeWidget);
+    dockDbSelected = new DbStructureQItemViewFacade(*ui->treeSchemaDock);
 
     // Connect SQL logging and database state setting to main window
     connect(&db, &DBBrowserDB::dbChanged, this, &MainWindow::dbState, Qt::QueuedConnection);
@@ -446,9 +452,7 @@ void MainWindow::init()
 
     // Action for switching the table via the Database Structure tab
     connect(ui->actionPopupSchemaDockBrowseTable, &QAction::triggered, [this]() {
-            sqlb::ObjectIdentifier obj(ui->treeSchemaDock->model()->data(ui->treeSchemaDock->currentIndex().sibling(ui->treeSchemaDock->currentIndex().row(), DbStructureModel::ColumnSchema), Qt::EditRole).toString().toStdString(),
-                                       ui->treeSchemaDock->model()->data(ui->treeSchemaDock->currentIndex().sibling(ui->treeSchemaDock->currentIndex().row(), DbStructureModel::ColumnName), Qt::EditRole).toString().toStdString());
-            switchToBrowseDataTab(obj);
+            switchToBrowseDataTab(dockDbSelected->object());
             refresh();  // Required in case the Browse Data tab already was the active main tab
     });
 
@@ -842,9 +846,8 @@ void MainWindow::compact()
 void MainWindow::deleteObject()
 {
     // Get name and type of object to delete
-    sqlb::ObjectIdentifier name(ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnSchema), Qt::EditRole).toString().toStdString(),
-                                ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnName), Qt::EditRole).toString().toStdString());
-    QString type = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnObjectType), Qt::EditRole).toString();
+    sqlb::ObjectIdentifier obj = dbSelected->object();
+    QString type = dbSelected->objectType();
 
     // Due to different grammar in languages (e.g. gender or declension), each message must be given separately to translation.
     QString message;
@@ -858,11 +861,11 @@ void MainWindow::deleteObject()
         message = tr("Are you sure you want to delete the index '%1'?");
 
     // Ask user if he really wants to delete that table
-    if(QMessageBox::warning(this, QApplication::applicationName(), message.arg(QString::fromStdString(name.name())),
+    if(QMessageBox::warning(this, QApplication::applicationName(), message.arg(QString::fromStdString(obj.name())),
                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
     {
         // Delete the table
-        QString statement = QString("DROP %1 %2;").arg(type.toUpper(), QString::fromStdString(name.toString()));
+        QString statement = QString("DROP %1 %2;").arg(type.toUpper(), QString::fromStdString(obj.toString()));
         if(!db.executeSQL(statement.toStdString()))
         {
             if (type == "table")
@@ -885,13 +888,12 @@ void MainWindow::deleteObject()
 
 void MainWindow::editObject()
 {
-    if(!ui->dbTreeWidget->selectionModel()->hasSelection())
+    if(!dbSelected->hasSelection())
         return;
 
     // Get name and type of the object to edit
-    sqlb::ObjectIdentifier name(ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnSchema), Qt::EditRole).toString().toStdString(),
-                                ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnName), Qt::EditRole).toString().toStdString());
-    QString type = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnObjectType), Qt::EditRole).toString();
+    sqlb::ObjectIdentifier obj = dbSelected->object();
+    QString type = dbSelected->objectType();
 
     if(type == "table")
     {
@@ -912,12 +914,12 @@ void MainWindow::editObject()
             db.setPragma("foreign_keys", "0");
         }
 
-        EditTableDialog dialog(db, name, false, this);
+        EditTableDialog dialog(db, obj, false, this);
         bool ok = dialog.exec();
 
         // If foreign_keys were enabled, we must commit or rollback the transaction so the foreign_keys pragma can be restored.
         if (foreign_keys == "1") {
-            if (!db.querySingleValueFromDb("PRAGMA " + sqlb::escapeIdentifier(name.schema()) + ".foreign_key_check").isNull()) {
+            if (!db.querySingleValueFromDb("PRAGMA " + sqlb::escapeIdentifier(obj.schema()) + ".foreign_key_check").isNull()) {
                 // Raise warning for accepted modification. When rejected, warn user also since we know now that the table has problems,
                 // but it wasn't our fault.
                 if (ok)
@@ -937,25 +939,25 @@ void MainWindow::editObject()
         if(ok) {
             for(const auto& t : allTableBrowserWidgets())
             {
-                if(t->currentlyBrowsedTableName() == name)
+                if(t->currentlyBrowsedTableName() == obj)
                     t->clearFilters();
             }
             refreshTableBrowsers();
         }
     } else if(type == "index") {
-        EditIndexDialog dialog(db, name, false, this);
+        EditIndexDialog dialog(db, obj, false, this);
         if(dialog.exec())
             refreshTableBrowsers();
     } else if(type == "view") {
-        sqlb::ViewPtr view = db.getObjectByName<sqlb::View>(name);
-        runSqlNewTab(QString("DROP VIEW %1;\n%2").arg(QString::fromStdString(name.toString())).arg(QString::fromStdString(view->sql())),
-                     tr("Edit View %1").arg(QString::fromStdString(name.toDisplayString())),
+        sqlb::ViewPtr view = db.getObjectByName<sqlb::View>(obj);
+        runSqlNewTab(QString("DROP VIEW %1;\n%2").arg(QString::fromStdString(obj.toString())).arg(QString::fromStdString(view->sql())),
+                     tr("Edit View %1").arg(QString::fromStdString(obj.toDisplayString())),
                      "https://www.sqlite.org/lang_createview.html",
                      /* autoRun */ false);
     } else if(type == "trigger") {
-        sqlb::TriggerPtr trigger = db.getObjectByName<sqlb::Trigger>(name);
-        runSqlNewTab(QString("DROP TRIGGER %1;\n%2").arg(QString::fromStdString(name.toString())).arg(QString::fromStdString(trigger->sql())),
-                     tr("Edit Trigger %1").arg(QString::fromStdString(name.toDisplayString())),
+        sqlb::TriggerPtr trigger = db.getObjectByName<sqlb::Trigger>(obj);
+        runSqlNewTab(QString("DROP TRIGGER %1;\n%2").arg(QString::fromStdString(obj.toString())).arg(QString::fromStdString(trigger->sql())),
+                     tr("Edit Trigger %1").arg(QString::fromStdString(obj.toDisplayString())),
                      "https://www.sqlite.org/lang_createtrigger.html",
                      /* autoRun */ false);
     }
@@ -1337,12 +1339,10 @@ void MainWindow::exportTableToCSV()
     sqlb::ObjectIdentifier current_table;
     if(ui->mainTab->currentWidget() == ui->structure)
     {
-        QString type = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnObjectType)).toString();
+        QString type = dbSelected->objectType();
         if(type == "table" || type == "view")
         {
-            QString schema = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnSchema)).toString();
-            QString name = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnName)).toString();
-            current_table = sqlb::ObjectIdentifier(schema.toStdString(), name.toStdString());
+            current_table = dbSelected->object();
         }
     } else if(ui->mainTab->currentWidget() == ui->browser) {
         current_table = currentlyBrowsedTableName();
@@ -1359,12 +1359,10 @@ void MainWindow::exportTableToJson()
     sqlb::ObjectIdentifier current_table;
     if(ui->mainTab->currentWidget() == ui->structure)
     {
-        QString type = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnObjectType)).toString();
+        QString type = dbSelected->objectType();
         if(type == "table" || type == "view")
         {
-            QString schema = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnSchema)).toString();
-            QString name = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnName)).toString();
-            current_table = sqlb::ObjectIdentifier(schema.toStdString(), name.toStdString());
+            current_table = dbSelected->object();
         }
     } else if(ui->mainTab->currentWidget() == ui->browser) {
         current_table = currentlyBrowsedTableName();
@@ -1502,11 +1500,10 @@ void MainWindow::openPreferences()
 //** Db Tree Context Menu
 void MainWindow::createTreeContextMenu(const QPoint &qPoint)
 {
-    if(!ui->dbTreeWidget->selectionModel()->hasSelection())
+    if(!dbSelected->hasSelection())
         return;
 
-    QString type = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 1)).toString();
-
+    QString type = dbSelected->objectType();
     if(type == "table" || type == "view" || type == "trigger" || type == "index")
         popupTableMenu->exec(ui->dbTreeWidget->mapToGlobal(qPoint));
 }
@@ -1515,9 +1512,10 @@ void MainWindow::createTreeContextMenu(const QPoint &qPoint)
 void MainWindow::createSchemaDockContextMenu(const QPoint &qPoint)
 {
     bool enable_browse_table = false;
-    if(ui->treeSchemaDock->selectionModel()->hasSelection())
+
+    if(dockDbSelected->hasSelection())
     {
-        QString type = ui->treeSchemaDock->model()->data(ui->treeSchemaDock->currentIndex().sibling(ui->treeSchemaDock->currentIndex().row(), DbStructureModel::ColumnObjectType), Qt::EditRole).toString();
+        QString type = dockDbSelected->objectType();
         if(type == "table" || type == "view")
             enable_browse_table = true;
     }
@@ -1533,11 +1531,11 @@ void MainWindow::changeTreeSelection()
     ui->editModifyObjectAction->setEnabled(false);
     ui->actionEditBrowseTable->setEnabled(false);
 
-    if(!ui->dbTreeWidget->currentIndex().isValid())
+    if(!dbSelected->hasSelection())
         return;
 
     // Change the text and tooltips of the actions
-    QString type = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 1)).toString();
+    QString type = dbSelected->objectType();
 
     if (type.isEmpty())
     {
@@ -3142,11 +3140,11 @@ void MainWindow::switchToBrowseDataTab(sqlb::ObjectIdentifier tableToBrowse)
     if(tableToBrowse.isEmpty())
     {
         // Cancel here if there is no selection
-        if(!ui->dbTreeWidget->selectionModel()->hasSelection())
+        if(!dbSelected->hasSelection())
             return;
 
-        tableToBrowse.setSchema(ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnSchema), Qt::EditRole).toString().toStdString());
-        tableToBrowse.setName(ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnName), Qt::EditRole).toString().toStdString());
+        tableToBrowse.setSchema(dbSelected->schema().toStdString());
+        tableToBrowse.setName(dbSelected->name().toStdString());
     }
 
     TableBrowserDock* d = newTableBrowserTab(tableToBrowse);
@@ -3167,11 +3165,11 @@ void MainWindow::switchToBrowseDataTab(sqlb::ObjectIdentifier tableToBrowse)
 void MainWindow::copyCurrentCreateStatement()
 {
     // Cancel if no field is currently selected
-    if(!ui->dbTreeWidget->selectionModel()->hasSelection())
+    if(!dbSelected->hasSelection())
         return;
 
-    // Get the CREATE statement from the Schema column
-    QString stmt = ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), 3), Qt::EditRole).toString();
+    // Get the CREATE statement from the SQL column
+    QString stmt = dbSelected->sql();
 
     // Copy the statement to the global application clipboard
     QApplication::clipboard()->setText(stmt);

@@ -145,6 +145,7 @@ set(SQLB_MOC_HDR
 	src/sqltextedit.h
 	src/docktextedit.h
 	src/DbStructureModel.h
+	src/dbstructureqitemviewfacade.h
 	src/Application.h
 	src/CipherDialog.h
 	src/ExportSqlDialog.h
@@ -202,6 +203,7 @@ set(SQLB_SRC
 	src/docktextedit.cpp
 	src/csvparser.cpp
 	src/DbStructureModel.cpp
+	src/dbstructureqitemviewfacade.cpp
 	src/main.cpp
 	src/Application.cpp
 	src/CipherDialog.cpp
