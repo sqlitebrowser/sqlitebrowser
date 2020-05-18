@@ -1377,7 +1377,6 @@ void MainWindow::dbState(bool dirty)
 {
     ui->fileSaveAction->setEnabled(dirty);
     ui->fileRevertAction->setEnabled(dirty);
-    ui->fileAttachAction->setEnabled(db.isOpen() && !dirty);
 }
 
 void MainWindow::fileSave()
@@ -1505,7 +1504,11 @@ void MainWindow::createTreeContextMenu(const QPoint &qPoint)
 
     QString type = dbSelected->objectType();
     if(type == "table" || type == "view" || type == "trigger" || type == "index")
+    {
+        // needed for first click on treeView as for first time change QItemSelectionModel::currentChanged doesn't fire
+        changeTreeSelection();
         popupTableMenu->exec(ui->dbTreeWidget->mapToGlobal(qPoint));
+    }
 }
 
 //** DB Schema Dock Context Menu
