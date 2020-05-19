@@ -2351,7 +2351,7 @@ x~y	Zakres: wartości pomiędzy x oraz y
     <message>
         <location filename="../FindReplaceDialog.ui" line="145"/>
         <source>F3</source>
-        <translation>F3</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="152"/>
@@ -3416,7 +3416,7 @@ Można także dodawać i usuwać pola z tabli, a także zmieniać nazwy oraz rod
     <message>
         <location filename="../MainWindow.ui" line="1577"/>
         <source>F1</source>
-        <translation>F1</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1589"/>
@@ -3797,7 +3797,7 @@ Można także dodawać i usuwać pola z tabli, a także zmieniać nazwy oraz rod
     </message>
     <message>
         <source>F5</source>
-        <translation type="vanished">F5</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1786"/>
@@ -6171,7 +6171,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="151"/>
         <source>F3</source>
-        <translation>F3</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="158"/>
@@ -6683,7 +6683,7 @@ Przyciśnij %3Shift i kliknij, aby tu przejść</translation>
     <message>
         <location filename="../TableBrowser.ui" line="293"/>
         <source>F3</source>
-        <translation>F3</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="300"/>
@@ -7096,7 +7096,7 @@ Przyciśnij %3Shift i kliknij, aby tu przejść</translation>
     <message>
         <location filename="../TableBrowser.ui" line="824"/>
         <source>F5</source>
-        <translation>F5</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="839"/>
