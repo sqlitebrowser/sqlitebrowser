@@ -2573,7 +2573,7 @@ x~y	Fourchette : valeurs entre x et y
     <message>
         <location filename="../FindReplaceDialog.ui" line="145"/>
         <source>F3</source>
-        <translation>F3</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="152"/>
@@ -2980,7 +2980,7 @@ x~y	Fourchette : valeurs entre x et y
     </message>
     <message>
         <source>F5</source>
-        <translation type="vanished">F5</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Clear all filters</source>
@@ -3444,7 +3444,7 @@ x~y	Fourchette : valeurs entre x et y
     <message>
         <location filename="../MainWindow.ui" line="1577"/>
         <source>F1</source>
-        <translation>F1</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1589"/>
@@ -7147,7 +7147,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="151"/>
         <source>F3</source>
-        <translatorcomment>F3</translatorcomment>
+        <translation></translation>
         <translation>F3</translation>
     </message>
     <message>
@@ -7699,7 +7699,7 @@ Appuyez simultanément sur %3+Maj et cliquez pour arriver ici</translation>
     <message>
         <location filename="../TableBrowser.ui" line="293"/>
         <source>F3</source>
-        <translation>F3</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="300"/>
@@ -8112,7 +8112,7 @@ Appuyez simultanément sur %3+Maj et cliquez pour arriver ici</translation>
     <message>
         <location filename="../TableBrowser.ui" line="824"/>
         <source>F5</source>
-        <translation>F5</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="839"/>
