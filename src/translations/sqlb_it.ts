@@ -2357,7 +2357,7 @@ x~y	Intervallo: valori tra x e y
     <message>
         <location filename="../FindReplaceDialog.ui" line="145"/>
         <source>F3</source>
-        <translation>F3</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="152"/>
@@ -3054,7 +3054,7 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
     <message>
         <location filename="../MainWindow.ui" line="1157"/>
         <source>Ctrl+O</source>
-        <translation>Ctrl+A</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1172"/>
@@ -3070,7 +3070,7 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
         <location filename="../MainWindow.cpp" line="218"/>
         <location filename="../MainWindow.cpp" line="3347"/>
         <source>Ctrl+W</source>
-        <translation>Ctrl+S</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1199"/>
@@ -3107,7 +3107,7 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
     <message>
         <location filename="../MainWindow.ui" line="1235"/>
         <source>Ctrl+S</source>
-        <translation>Ctrl+C</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1246"/>
@@ -3133,7 +3133,7 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
     <message>
         <location filename="../MainWindow.ui" line="1266"/>
         <source>Ctrl+Q</source>
-        <translation>Ctrl+E</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1274"/>
@@ -3275,7 +3275,7 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
     <message>
         <location filename="../MainWindow.ui" line="1577"/>
         <source>F1</source>
-        <translation>F1</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1637"/>
@@ -6668,7 +6668,7 @@ Tieni premuto %3Shift e clicca per saltare lì</translation>
     <message>
         <location filename="../TableBrowser.ui" line="293"/>
         <source>F3</source>
-        <translation>F3</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="300"/>
@@ -7081,7 +7081,7 @@ Tieni premuto %3Shift e clicca per saltare lì</translation>
     <message>
         <location filename="../TableBrowser.ui" line="824"/>
         <source>F5</source>
-        <translation>F5</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="839"/>

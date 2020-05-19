@@ -2479,7 +2479,7 @@ x~y	范围: 值在 x 和 y 之间
     <message>
         <location filename="../FindReplaceDialog.ui" line="145"/>
         <source>F3</source>
-        <translation>F3</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="152"/>
@@ -2916,7 +2916,7 @@ x~y	范围: 值在 x 和 y 之间
     </message>
     <message>
         <source>F5</source>
-        <translation type="vanished">F5</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2068"/>
@@ -3935,7 +3935,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1577"/>
         <source>F1</source>
-        <translation>F1</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1646"/>
@@ -6735,7 +6735,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="151"/>
         <source>F3</source>
-        <translation>F3</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="158"/>
@@ -7276,7 +7276,7 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.ui" line="293"/>
         <source>F3</source>
-        <translation>F3</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="300"/>
@@ -7689,7 +7689,7 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.ui" line="824"/>
         <source>F5</source>
-        <translation>F5</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="839"/>
