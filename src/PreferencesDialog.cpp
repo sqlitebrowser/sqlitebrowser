@@ -188,6 +188,7 @@ void PreferencesDialog::loadSettings()
     ui->checkCompleteUpper->setChecked(Settings::getValue("editor", "upper_keywords").toBool());
     ui->checkErrorIndicators->setChecked(Settings::getValue("editor", "error_indicators").toBool());
     ui->checkHorizontalTiling->setChecked(Settings::getValue("editor", "horizontal_tiling").toBool());
+    ui->checkCloseButtonOnTabs->setChecked(Settings::getValue("editor", "close_button_on_tabs").toBool());
 
     ui->listExtensions->addItems(Settings::getValue("extensions", "list").toStringList());
     ui->checkRegexDisabled->setChecked(Settings::getValue("extensions", "disableregex").toBool());
@@ -251,6 +252,7 @@ void PreferencesDialog::saveSettings()
     Settings::setValue("editor", "upper_keywords", ui->checkCompleteUpper->isChecked());
     Settings::setValue("editor", "error_indicators", ui->checkErrorIndicators->isChecked());
     Settings::setValue("editor", "horizontal_tiling", ui->checkHorizontalTiling->isChecked());
+    Settings::setValue("editor", "close_button_on_tabs", ui->checkCloseButtonOnTabs->isChecked());
 
     QStringList extList;
     for(const QListWidgetItem* item : ui->listExtensions->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard))

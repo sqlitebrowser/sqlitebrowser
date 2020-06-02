@@ -1539,6 +1539,26 @@ Can be set to 0 for disabling completion.</string>
            </property>
           </widget>
          </item>
+         <item row="9" column="0">
+          <widget class="QLabel" name="labelCloseButtonOnTabs">
+           <property name="text">
+            <string>Close button on tabs</string>
+           </property>
+           <property name="buddy">
+            <cstring>checkCloseButtonOnTabs</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="9" column="1">
+          <widget class="QCheckBox" name="checkCloseButtonOnTabs">
+           <property name="toolTip">
+            <string>If enabled, SQL editor tabs will have a close button. In any case, you can use the contextual menu or the keyboard shortcut to close them.</string>
+           </property>
+           <property name="text">
+            <string>enabled</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </item>
       </layout>
@@ -1931,6 +1951,7 @@ Can be set to 0 for disabling completion.</string>
   <tabstop>checkCompleteUpper</tabstop>
   <tabstop>checkErrorIndicators</tabstop>
   <tabstop>checkHorizontalTiling</tabstop>
+  <tabstop>checkCloseButtonOnTabs</tabstop>
   <tabstop>listExtensions</tabstop>
   <tabstop>buttonAddExtension</tabstop>
   <tabstop>buttonRemoveExtension</tabstop>
