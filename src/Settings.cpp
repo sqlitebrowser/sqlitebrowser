@@ -305,6 +305,10 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
     if(group == "editor" && name == "splitter2_sizes")
         return QVariant();
 
+    // editor/close_button_on_tabs?
+    if(group == "editor" && name == "close_button_on_tabs")
+        return true;
+
     // extensions/list?
     if(group == "extensions" && name == "list")
         return QStringList();
