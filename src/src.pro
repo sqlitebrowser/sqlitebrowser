@@ -21,6 +21,7 @@ CONFIG(unittest) {
 }
 
 HEADERS += \
+    ImageViewer.h \
     sqlitedb.h \
     MainWindow.h \
     EditIndexDialog.h \
@@ -81,6 +82,7 @@ HEADERS += \
     sql/parser/sqlite3_parser.hpp
 
 SOURCES += \
+    ImageViewer.cpp \
     sqlitedb.cpp \
     MainWindow.cpp \
     EditIndexDialog.cpp \
@@ -143,6 +145,7 @@ RESOURCES += icons/icons.qrc \
              qdarkstyle/style.qrc
 
 FORMS += \
+    ImageViewer.ui \
     MainWindow.ui \
     EditIndexDialog.ui \
     AboutDialog.ui \

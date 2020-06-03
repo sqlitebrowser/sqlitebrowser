@@ -170,6 +170,7 @@ set(SQLB_MOC_HDR
 	src/ProxyDialog.h
 	src/SelectItemsPopup.h
 	src/TableBrowser.h
+	src/ImageViewer.h
 )
 
 set(SQLB_SRC
@@ -228,6 +229,7 @@ set(SQLB_SRC
 	src/sql/parser/ParserDriver.cpp
 	src/sql/parser/sqlite3_lexer.cpp
 	src/sql/parser/sqlite3_parser.cpp
+	src/ImageViewer.cpp
 )
 
 set(SQLB_FORMS
@@ -254,6 +256,7 @@ set(SQLB_FORMS
 	src/ProxyDialog.ui
 	src/SelectItemsPopup.ui
 	src/TableBrowser.ui
+	src/ImageViewer.ui
 )
 
 set(SQLB_RESOURCES
