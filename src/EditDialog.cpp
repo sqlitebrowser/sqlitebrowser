@@ -210,6 +210,8 @@ void EditDialog::loadData(const QByteArray& bArrdata)
     case XML:
         // Can be stored in any widget, except the ImageViewer
 
+        sciEdit->clearTextInMargin();
+
         switch (editMode) {
         case TextEditor:
         case JsonEditor:
@@ -859,10 +861,8 @@ void EditDialog::editTextChanged()
         if (dataType == Null && isModified && dataLength != 0)
             dataType = Text;
 
-        if (dataType != Null) {
-            sciEdit->clearTextInMargin();
+        if (dataType != Null)
             ui->labelType->setText(tr("Type of data currently in cell: Text / Numeric"));
-        }
         ui->labelSize->setText(tr("%n character(s)", "", dataLength));
     }
 }
