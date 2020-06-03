@@ -21,8 +21,14 @@ public:
 public slots:
     void openPrintImageDialog();
 
+private slots:
+    void scaleToFitWindow(bool enabled);
+    void scaleImage(int scale);
+
 private:
     Ui::ImageViewer* ui;
+
+    qreal m_scale_factor;
 };
 
 #endif

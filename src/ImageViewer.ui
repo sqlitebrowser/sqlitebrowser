@@ -31,23 +31,87 @@
    </property>
    <item>
     <widget class="QScrollArea" name="scrollArea">
-     <property name="widgetResizable">
-      <bool>true</bool>
-     </property>
      <widget class="QLabel" name="labelView">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
         <width>431</width>
-        <height>305</height>
+        <height>280</height>
        </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
       </property>
       <property name="contextMenuPolicy">
        <enum>Qt::ActionsContextMenu</enum>
       </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
      </widget>
     </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QSlider" name="sliderScale">
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>800</number>
+       </property>
+       <property name="value">
+        <number>100</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="buttonOriginalSize">
+       <property name="toolTip">
+        <string>Reset the scaling to match the original size of the image.</string>
+       </property>
+       <property name="icon">
+        <iconset resource="icons/icons.qrc">
+         <normaloff>:/icons/view</normaloff>:/icons/view</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="buttonFitToWindow">
+       <property name="toolTip">
+        <string>Set the scaling to match the size of the viewport.</string>
+       </property>
+       <property name="icon">
+        <iconset resource="icons/icons.qrc">
+         <normaloff>:/icons/monitor_link.png</normaloff>:/icons/monitor_link.png</iconset>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
   <action name="actionPrintImage">
@@ -86,5 +150,41 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>sliderScale</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>ImageViewer</receiver>
+   <slot>scaleImage(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>280</x>
+     <y>294</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>216</x>
+     <y>153</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonFitToWindow</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>ImageViewer</receiver>
+   <slot>scaleToFitWindow(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>419</x>
+     <y>294</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>216</x>
+     <y>153</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>scaleImage(int)</slot>
+  <slot>scaleToFitWindow(bool)</slot>
+ </slots>
 </ui>
