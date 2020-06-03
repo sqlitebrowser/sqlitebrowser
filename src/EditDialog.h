@@ -20,7 +20,7 @@ public:
     ~EditDialog() override;
 
     void setCurrentIndex(const QModelIndex& idx);
-    QPersistentModelIndex currentIndex() { return m_currentIndex; };
+    QPersistentModelIndex currentIndex() const { return m_currentIndex; }
 
 public slots:
     void setFocus();

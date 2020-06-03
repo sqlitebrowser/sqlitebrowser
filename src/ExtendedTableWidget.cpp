@@ -1061,7 +1061,7 @@ void ExtendedTableWidget::currentChanged(const QModelIndex &current, const QMode
 
 void ExtendedTableWidget::setToNull(const QModelIndexList& indices)
 {
-    SqliteTableModel* m = qobject_cast<SqliteTableModel*>(const_cast<QAbstractItemModel*>(model()));
+    SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
     sqlb::TablePtr currentTable = m->db().getObjectByName<sqlb::Table>(m->currentTableName());
 
     // Check if some column in the selection has a NOT NULL constraint, before trying to update the cells.
