@@ -1927,8 +1927,10 @@ void DBBrowserDB::updateSchema()
                     object->setOriginalSql(val_sql);
                 }
 
-                // For virtual tables, views, and not fully parsed tables query the column list using the SQLite pragma because for both we can't yet rely on our grammar parser
-                if(!object->fullyParsed() ||
+                // For virtual tables, views, and tables we could not parse at all,
+                // query the column list using the SQLite pragma to at least get
+                // some information on them when our parser does not.
+                if((!object->fullyParsed() && object->fieldInformation().empty()) ||
                    (object->type() == sqlb::Object::Types::Table && std::dynamic_pointer_cast<sqlb::Table>(object)->isVirtual()) ||
                    object->type() == sqlb::Object::Types::View)
                 {
