@@ -784,7 +784,8 @@ void TableBrowser::applySettings(const BrowseDataTableSettings& storedData, bool
         hideColumns(hiddenIt.key(), hiddenIt.value());
 
     // Column widths
-    for(auto widthIt=storedData.columnWidths.constBegin();widthIt!=storedData.columnWidths.constEnd();++widthIt)
+    QMap<int, int> w = storedData.columnWidths;                         // We need to make a copy here because with some versions of Qt
+    for(auto widthIt=w.constBegin();widthIt!=w.constEnd();++widthIt)    // the container gets modified in a way which causes a crash
     {
         if(widthIt.key() < ui->dataTable->model()->columnCount())
             ui->dataTable->setColumnWidth(widthIt.key(), widthIt.value());
