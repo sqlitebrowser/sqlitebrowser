@@ -3,7 +3,7 @@
 
     <?define Name="DB Browser for SQLite" ?>
     <?define Team="$(var.Name) Team" ?>
-    <?define Version="3.11.100" ?>
+    <?define Version="3.11.300" ?>
 
     <!--
     =============================================== Add/Remove Programs ================================================
