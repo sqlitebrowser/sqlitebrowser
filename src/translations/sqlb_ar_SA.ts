@@ -2757,7 +2757,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="218"/>
-        <location filename="../MainWindow.cpp" line="3347"/>
+        <location filename="../MainWindow.cpp" line="3368"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
@@ -2901,7 +2901,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1358"/>
-        <location filename="../MainWindow.cpp" line="1492"/>
+        <location filename="../MainWindow.cpp" line="1501"/>
         <source>Delete Table</source>
         <translation>احذف الجدول</translation>
     </message>
@@ -2955,6 +2955,16 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <location filename="../MainWindow.ui" line="1479"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+T</translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="1506"/>
+        <source>Open SQL file(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="1509"/>
+        <source>This button opens files containing SQL statements and loads them in new editor tabs</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1646"/>
@@ -3348,14 +3358,12 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation>ن&amp;فّذ SQL</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1506"/>
         <source>Open SQL file</source>
-        <translation>افتح ملف SQL</translation>
+        <translation type="vanished">افتح ملف SQL</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1509"/>
         <source>This button opens a file containing SQL statements and loads it in a new editor tab</source>
-        <translation>يفتح هذا الزر ملفًا يحتوي إفادات SQL ويحمّله في لسان محرّر جديد</translation>
+        <translation type="vanished">يفتح هذا الزر ملفًا يحتوي إفادات SQL ويحمّله في لسان محرّر جديد</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1518"/>
@@ -3449,45 +3457,45 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation>Ctrl+I</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="369"/>
+        <location filename="../MainWindow.cpp" line="359"/>
         <source>Encrypted</source>
         <translation>معمّاة</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="370"/>
+        <location filename="../MainWindow.cpp" line="360"/>
         <source>Database is encrypted using SQLCipher</source>
         <translation>قاعدة البيانات معمّاة بامتداد SQLCipher</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="376"/>
+        <location filename="../MainWindow.cpp" line="366"/>
         <source>Read only</source>
         <translation>للقراءة فقط</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="377"/>
+        <location filename="../MainWindow.cpp" line="367"/>
         <source>Database file is read only. Editing the database is disabled.</source>
         <translation>ملف قاعدة البيانات للقراءة فقط. تحرير قاعدة البيانات معطّل.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="383"/>
+        <location filename="../MainWindow.cpp" line="373"/>
         <source>Database encoding</source>
         <translation>ترميز قاعدة البيانات</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="492"/>
-        <location filename="../MainWindow.cpp" line="2897"/>
+        <location filename="../MainWindow.cpp" line="482"/>
+        <location filename="../MainWindow.cpp" line="2912"/>
         <source>Choose a database file</source>
         <translation>اختر ملف قاعدة بيانات</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="553"/>
-        <location filename="../MainWindow.cpp" line="1382"/>
-        <location filename="../MainWindow.cpp" line="2752"/>
+        <location filename="../MainWindow.cpp" line="543"/>
+        <location filename="../MainWindow.cpp" line="1391"/>
+        <location filename="../MainWindow.cpp" line="2767"/>
         <source>Choose a filename to save under</source>
         <translation>اختر اسمًا للملف لحفظه به</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1324"/>
+        <location filename="../MainWindow.cpp" line="1333"/>
         <source>Error while saving the database file. This means that not all changes to the database were saved. You need to resolve the following error first.
 
 %1</source>
@@ -3496,131 +3504,130 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
 %L1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1333"/>
+        <location filename="../MainWindow.cpp" line="1342"/>
         <source>Are you sure you want to undo all changes made to the database file &apos;%1&apos; since the last save?</source>
         <translation>أمتأكّد من التراجع عن كلّ التعديلات التي أجريتها على ملف قاعدة البيانات ”%L1“ منذ آخر حفظ؟</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1363"/>
+        <location filename="../MainWindow.cpp" line="1372"/>
         <source>Choose a file to import</source>
         <translation>اختر ملفًا لاستيراده</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1959"/>
+        <location filename="../MainWindow.cpp" line="1967"/>
         <source>Text files(*.sql *.txt);;All files(*)</source>
         <translation>الملفات النصية(*.sql *.txt);;كلّ الملفات(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1375"/>
+        <location filename="../MainWindow.cpp" line="1384"/>
         <source>Do you want to create a new database file to hold the imported data?
 If you answer no we will attempt to import the data in the SQL file to the current database.</source>
         <translation>أتريد إنشاء ملف قاعدة بيانات جديد ليحتفظ بالبيانات المستوردة؟
 إن كانت إجابتك ”لا“ فسنحاول استيراد البيانات من ملف SQL إلى قاعدة البيانات الحالية.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="339"/>
         <source>Close current SQL tab</source>
-        <translation>أغلِق لسان SQL الحالي</translation>
+        <translation type="vanished">أغلِق لسان SQL الحالي</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="653"/>
+        <location filename="../MainWindow.cpp" line="643"/>
         <source>You are still executing SQL statements. Closing the database now will stop their execution, possibly leaving the database in an inconsistent state. Are you sure you want to close the database?</source>
         <translation>ما زلت تنفّذ إفادات SQL. بإغلاق قاعدة البيانات الآن تكون أوقفت التنفيذ وقد يترك ذلك قاعدة البيانات في حال غير مستقرّة. أمتأكّد من إغلاق قاعدة البيانات؟</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="727"/>
+        <location filename="../MainWindow.cpp" line="717"/>
         <source>Do you want to save the changes made to the project file &apos;%1&apos;?</source>
         <translation>أتريد حفظ التعديلات التي أجريتها في ملف المشروع ”%L1“؟</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1386"/>
+        <location filename="../MainWindow.cpp" line="1395"/>
         <source>File %1 already exists. Please choose a different name.</source>
         <translation>الملف %L1 موجود بالفعل. من فضلك اختر اسمًا آخر.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1411"/>
+        <location filename="../MainWindow.cpp" line="1420"/>
         <source>Error importing data: %1</source>
         <translation>خطأ أثناء استيراد البيانات: %L1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1415"/>
+        <location filename="../MainWindow.cpp" line="1424"/>
         <source>Import completed.</source>
         <translation>اكتمل الاستيراد.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1483"/>
+        <location filename="../MainWindow.cpp" line="1492"/>
         <source>Delete View</source>
         <translation>احذف المنظور</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1484"/>
+        <location filename="../MainWindow.cpp" line="1493"/>
         <source>Modify View</source>
         <translation>عدّل المنظور</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1486"/>
+        <location filename="../MainWindow.cpp" line="1495"/>
         <source>Delete Trigger</source>
         <translation>احذف المحفّز</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1487"/>
+        <location filename="../MainWindow.cpp" line="1496"/>
         <source>Modify Trigger</source>
         <translation>عدّل المحفّز</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1489"/>
+        <location filename="../MainWindow.cpp" line="1498"/>
         <source>Delete Index</source>
         <translation>احذف الفهرس</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1490"/>
+        <location filename="../MainWindow.cpp" line="1499"/>
         <source>Modify Index</source>
         <translation>عدّل الفهرس</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1493"/>
+        <location filename="../MainWindow.cpp" line="1502"/>
         <source>Modify Table</source>
         <translation>عدّل الجدول</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1833"/>
+        <location filename="../MainWindow.cpp" line="1838"/>
         <source>Do you want to save the changes made to SQL tabs in a new project file?</source>
         <translation>أتريد حفظ التعديلات التي أجريتها على ألسنة SQL في ملف مشروع جديد؟</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1854"/>
+        <location filename="../MainWindow.cpp" line="1859"/>
         <source>Do you want to save the changes made to the SQL file %1?</source>
         <translation>أتريد حفظ التعديلات التي أجريتها على ملف SQL بالاسم ”%L1“؟</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1876"/>
+        <location filename="../MainWindow.cpp" line="1881"/>
         <source>The statements in this tab are still executing. Closing the tab will stop the execution. This might leave the database in an inconsistent state. Are you sure you want to close the tab?</source>
         <translation>ما زلت تنفّذ إفادات SQL في هذا اللسان. بإغلاق قاعدة البيانات الآن تكون أوقفت التنفيذ وقد يترك ذلك قاعدة البيانات في حال غير مستقرّة. أمتأكّد من إغلاق هذا اللسان؟</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2069"/>
+        <location filename="../MainWindow.cpp" line="2082"/>
         <source>Could not find resource file: %1</source>
         <translation>تعذّر العثور على ملف الموارد: %L1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2394"/>
+        <location filename="../MainWindow.cpp" line="2409"/>
         <source>Choose a project file to open</source>
         <translation>اختر ملف مشروع لفتحه</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2526"/>
+        <location filename="../MainWindow.cpp" line="2541"/>
         <source>This project file is using an old file format because it was created using DB Browser for SQLite version 3.10 or lower. Loading this file format is still fully supported but we advice you to convert all your project files to the new file format because support for older formats might be dropped at some point in the future. You can convert your files by simply opening and re-saving them.</source>
         <translation>يستعمل ملف المشروع هذا نسق ملفات قديم إذ أُنشأ باستعمال «متصفّح قواعد بيانات SQLite» بإصدارة ٣٫١٠ أو أقل. تحميل نسق الملفات هذا مدعوم بشكل كلي حتّى الآن، ولكنّنا ننصح بتحويل كلّ ملفات المشاريع لديك لتستعمل النسق الجديد لأن دعم النسق القديمة قد ينتهي في المستقبل. يمكنك تحويل ملفاتك بفتحها وإعادة حفظها فحسب.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2768"/>
+        <location filename="../MainWindow.cpp" line="2783"/>
         <source>Could not open project file for writing.
 Reason: %1</source>
         <translation>تعذّر فتح ملف المشروع للكتابة.
 السبب: %L1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1778"/>
+        <location filename="../MainWindow.cpp" line="1783"/>
         <source>Setting PRAGMA values will commit your current transaction.
 Are you sure?</source>
         <translation>سيؤّدي ضبط قيم PRAGMA إلى إيداع المعاملة الحالية.
@@ -3637,169 +3644,179 @@ Are you sure?</source>
         <translation>Alt+0</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="355"/>
+        <location filename="../MainWindow.cpp" line="345"/>
         <source>The database is currenctly busy.</source>
         <translation>قاعدة البيانات مشغولة حاليًا.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="361"/>
+        <location filename="../MainWindow.cpp" line="351"/>
         <source>Click here to interrupt the currently running query.</source>
         <translation>انقر هنا لمقاطعة الاستعلام الذي يعمل حاليًا.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="539"/>
+        <location filename="../MainWindow.cpp" line="529"/>
         <source>Could not open database file.
 Reason: %1</source>
         <translation>تعذّر فتح ملف قاعدة البيانات.
 السبب: %L1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="575"/>
+        <location filename="../MainWindow.cpp" line="565"/>
         <source>In-Memory database</source>
         <translation>قاعدة بيانات في الذاكرة</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="812"/>
+        <location filename="../MainWindow.cpp" line="802"/>
         <source>Are you sure you want to delete the table &apos;%1&apos;?
 All data associated with the table will be lost.</source>
         <translation>أمتأكّد من حذف الجدول ”%L1“؟
 ستفقد كلّ البيانات المرتبطة بالجدول.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="814"/>
+        <location filename="../MainWindow.cpp" line="804"/>
         <source>Are you sure you want to delete the view &apos;%1&apos;?</source>
         <translation>أمتأكّد من حذف المنظور ”%L1“؟</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="816"/>
+        <location filename="../MainWindow.cpp" line="806"/>
         <source>Are you sure you want to delete the trigger &apos;%1&apos;?</source>
         <translation>أمتأكّد من حذف المحفّز ”%L1“؟</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="818"/>
+        <location filename="../MainWindow.cpp" line="808"/>
         <source>Are you sure you want to delete the index &apos;%1&apos;?</source>
         <translation>أمتأكّد من حذف الفهرس ”%L1“؟</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="829"/>
+        <location filename="../MainWindow.cpp" line="819"/>
         <source>Error: could not delete the table.</source>
         <translation>خطأ: تعذّر حذف الجدول.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="831"/>
+        <location filename="../MainWindow.cpp" line="821"/>
         <source>Error: could not delete the view.</source>
         <translation>خطأ: تعذّر حذف المنظور.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="833"/>
+        <location filename="../MainWindow.cpp" line="823"/>
         <source>Error: could not delete the trigger.</source>
         <translation>خطأ: تعذّر حذف المحفّز.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="835"/>
+        <location filename="../MainWindow.cpp" line="825"/>
         <source>Error: could not delete the index.</source>
         <translation>خطأ: تعذّر حذف الفهرس.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="837"/>
+        <location filename="../MainWindow.cpp" line="827"/>
         <source>Message from database engine:
 %1</source>
         <translation>الرسالة من محرّك قواعد البيانات:
 %L1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="866"/>
+        <location filename="../MainWindow.cpp" line="856"/>
         <source>Editing the table requires to save all pending changes now.
 Are you sure you want to save the database?</source>
         <translation>تحرير الجدول يطلب حفظ كلّ التغييرات المرجأة الآن.
 أمتأكّد من حفظ قاعدة البيانات؟</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="885"/>
+        <location filename="../MainWindow.cpp" line="875"/>
         <source>Error checking foreign keys after table modification. The changes will be reverted.</source>
         <translation>خطأ أثناء فحص المفاتيح الأجنبية بعد تعديل الجدول. ستُرجَع التغييرات.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="888"/>
+        <location filename="../MainWindow.cpp" line="878"/>
         <source>This table did not pass a foreign-key check.&lt;br/&gt;You should run &apos;Tools | Foreign-Key Check&apos; and fix the reported issues.</source>
         <translation>لم يمرّ الجدول فحص المفتاح الأجنبي.&lt;br/&gt;عليك تشغيل ”أدوات -&gt; فحص المفتاح الأجنبي“ وإصلاح المشاكل المذكورة.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1000"/>
+        <location filename="../MainWindow.cpp" line="898"/>
+        <source>Edit View %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="904"/>
+        <source>Edit Trigger %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="1002"/>
         <source>You are already executing SQL statements. Do you want to stop them in order to execute the current statements instead? Note that this might leave the database in an inconsistent state.</source>
         <translation>أنت تنفّذ حقًا إفادات SQL. أتريد إيقافها لتنفيذ الإفادات الحالية بدلها؟ وقد يترك ذلك قاعدة البيانات في حال غير مستقرّة.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1047"/>
+        <location filename="../MainWindow.cpp" line="1049"/>
         <source>-- EXECUTING SELECTION IN &apos;%1&apos;
 --</source>
         <translation>-- ينفّذ التحديد في ”%L1“
 --</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1068"/>
+        <location filename="../MainWindow.cpp" line="1070"/>
         <source>-- EXECUTING LINE IN &apos;%1&apos;
 --</source>
         <translation>-- ينفّذ السطر في ”%L1“
 --</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1076"/>
+        <location filename="../MainWindow.cpp" line="1078"/>
         <source>-- EXECUTING ALL IN &apos;%1&apos;
 --</source>
         <translation>-- ينفّذ الكلّ في ”%L1“
 --</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1110"/>
-        <location filename="../MainWindow.cpp" line="1113"/>
+        <location filename="../MainWindow.cpp" line="1112"/>
+        <location filename="../MainWindow.cpp" line="1115"/>
         <source>At line %1:</source>
         <translation>عند السطر %L1:</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1110"/>
+        <location filename="../MainWindow.cpp" line="1112"/>
         <source>Result: %1</source>
         <translation>النتيجة: %L1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1113"/>
+        <location filename="../MainWindow.cpp" line="1115"/>
         <source>Result: %2</source>
         <translation>النتيجة: %L2</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1176"/>
+        <location filename="../MainWindow.cpp" line="1178"/>
         <source>Setting PRAGMA values or vacuuming will commit your current transaction.
 Are you sure?</source>
         <translation>سيؤّدي ضبط قيم PRAGMA أو التنظيف إلى إيداع المعاملة الحالية.
 أمتأكّد؟</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1570"/>
+        <location filename="../MainWindow.cpp" line="1575"/>
         <source>&amp;%1 %2%3</source>
         <translation>‏&amp;%L1 ‏‎%L2‎‏%L3</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1570"/>
+        <location filename="../MainWindow.cpp" line="1575"/>
         <source> (read only)</source>
         <translation> (للقراءة فقط)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1654"/>
+        <location filename="../MainWindow.cpp" line="1659"/>
         <source>Open Database or Project</source>
         <translation>افتح قاعدة بيانات أو مشروع</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1655"/>
+        <location filename="../MainWindow.cpp" line="1660"/>
         <source>Attach Database...</source>
         <translation>أرفِق قاعدة بيانات...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1656"/>
+        <location filename="../MainWindow.cpp" line="1661"/>
         <source>Import CSV file(s)...</source>
         <translation>استورِد ملفات CSV...</translation>
     </message>
     <message numerus="yes">
-        <location filename="../MainWindow.cpp" line="1659"/>
+        <location filename="../MainWindow.cpp" line="1664"/>
         <source>Select the action to apply to the dropped file(s). &lt;br/&gt;Note: only &apos;Import&apos; will process more than one file.</source>
         <translation>
             <numerusform>اختر الإجراء الذي تريد تطبيقه على الملفات التي أفلتّها. &lt;br/&gt;لاحظ أنّ خيار ”استورِد“ هو الوحيد الذي سيُعالج الملفات المتعدّدة.</numerusform>
@@ -3811,113 +3828,118 @@ Are you sure?</source>
         </translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1834"/>
+        <location filename="../MainWindow.cpp" line="1839"/>
         <source>Do you want to save the changes made to SQL tabs in the project file &apos;%1&apos;?</source>
         <translation>أتريد حفظ التعديلات التي أجريتها على ألسنة SQL في ملف المشروع ”%L1“؟</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2873"/>
+        <location filename="../MainWindow.cpp" line="2888"/>
         <source>Project saved to file &apos;%1&apos;</source>
         <translation>حُفظ المشروع في الملف ”%L1“</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3229"/>
+        <location filename="../MainWindow.cpp" line="3135"/>
+        <source>This action will open a new SQL tab with the following statements for you to edit and run:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="3250"/>
         <source>Busy (%1)</source>
         <translation>مشغولة (%L1)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3310"/>
+        <location filename="../MainWindow.cpp" line="3331"/>
         <source>Rename Tab</source>
         <translation>غيّر اسم اللسان</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3316"/>
+        <location filename="../MainWindow.cpp" line="3337"/>
         <source>Duplicate Tab</source>
         <translation>كرّر اللسان</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3346"/>
+        <location filename="../MainWindow.cpp" line="3367"/>
         <source>Close Tab</source>
         <translation>أغلِق اللسان</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3365"/>
+        <location filename="../MainWindow.cpp" line="3386"/>
         <source>Opening &apos;%1&apos;...</source>
         <translation>يفتح ”%L1“...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3367"/>
+        <location filename="../MainWindow.cpp" line="3388"/>
         <source>There was an error opening &apos;%1&apos;...</source>
         <translation>خطأ أثناء فتح ”%L1“...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3370"/>
+        <location filename="../MainWindow.cpp" line="3391"/>
         <source>Value is not a valid URL or filename: %1</source>
         <translation>القيمة ليست عنوانًا ولا اسم ملف صالح: %L1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1170"/>
+        <location filename="../MainWindow.cpp" line="1172"/>
         <source>%1 rows returned in %2ms</source>
         <translation>أُعيد من الصفوف %L1 خلال %L2 م‌ث</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1250"/>
+        <location filename="../MainWindow.cpp" line="1259"/>
         <source>Choose text files</source>
         <translation>اختر ملفات نصية</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1413"/>
+        <location filename="../MainWindow.cpp" line="1422"/>
         <source>Import completed. Some foreign key constraints are violated. Please fix them before saving.</source>
         <translation>اكتمل الاستيراد. انتُهكت بعض قيود المفتاح الأجنبي. من فضلك أصلِحها قبل الحفظ.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1958"/>
+        <location filename="../MainWindow.cpp" line="1966"/>
         <source>Select SQL file to open</source>
         <translation>اختر ملف SQL لفتحه</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2012"/>
+        <location filename="../MainWindow.cpp" line="2024"/>
         <source>Select file name</source>
         <translation>اختر اسم الملف</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2043"/>
+        <location filename="../MainWindow.cpp" line="2056"/>
         <source>Select extension file</source>
         <translation>اختر ملف الامتداد</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2050"/>
+        <location filename="../MainWindow.cpp" line="2063"/>
         <source>Extension successfully loaded.</source>
         <translation>نجح تحميل الامتداد.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2052"/>
+        <location filename="../MainWindow.cpp" line="2065"/>
         <source>Error loading extension: %1</source>
         <translation>خطأ أثناء تحميل الامتداد: %L1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2158"/>
-        <location filename="../MainWindow.cpp" line="2522"/>
+        <location filename="../MainWindow.cpp" line="2173"/>
+        <location filename="../MainWindow.cpp" line="2537"/>
         <source>Don&apos;t show again</source>
         <translation>لا تعرض ثانيةً</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2161"/>
+        <location filename="../MainWindow.cpp" line="2176"/>
         <source>New version available.</source>
         <translation>تتوفّر إصدارة جديدة.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2162"/>
+        <location filename="../MainWindow.cpp" line="2177"/>
         <source>A new DB Browser for SQLite version is available (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Please download at &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</source>
         <translation>تتوفّر إصدارة جديدة من «متصفّح قواعد بيانات SQLite» ‏(%L1٫‏%L2٫‏%L3).&lt;br/&gt;&lt;br/&gt;من فضلك نزّلها من &lt;a href=&apos;%4&apos;&gt;%L4&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3030"/>
+        <location filename="../MainWindow.cpp" line="3045"/>
         <source>Collation needed! Proceed?</source>
         <translation>قواعد مقارنة المحارف مطلوبة! أنتابع؟</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3031"/>
+        <location filename="../MainWindow.cpp" line="3046"/>
         <source>A table in this database requires a special collation function &apos;%1&apos; that this application can&apos;t provide without further knowledge.
 If you choose to proceed, be aware bad things can happen to your database.
 Create a backup!</source>
@@ -3926,57 +3948,57 @@ Create a backup!</source>
 خُذ نسخة احتياطيّة!</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3036"/>
+        <location filename="../MainWindow.cpp" line="3051"/>
         <source>creating collation</source>
         <translation>يُنشئ قواعد مقارنة المحارف</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3045"/>
+        <location filename="../MainWindow.cpp" line="3060"/>
         <source>Set a new name for the SQL tab. Use the &apos;&amp;&amp;&apos; character to allow using the following character as a keyboard shortcut.</source>
         <translation>ضع اسمًا جديدًا للسان SQL. استخدم محرف ”&amp;&amp;“ ليُتاح استخدام المحرف الذي يليه كاختصار لوحة مفاتيح.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3097"/>
+        <location filename="../MainWindow.cpp" line="3112"/>
         <source>Please specify the view name</source>
         <translation>من فضلك اختر اسم المنظور</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3101"/>
+        <location filename="../MainWindow.cpp" line="3116"/>
         <source>There is already an object with that name. Please choose a different name.</source>
         <translation>هناك كائن بنفس الاسم. من فضلك اختر اسمًا آخر.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3108"/>
+        <location filename="../MainWindow.cpp" line="3123"/>
         <source>View successfully created.</source>
         <translation>نجح إنشاء المنظور.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3110"/>
+        <location filename="../MainWindow.cpp" line="3125"/>
         <source>Error creating view: %1</source>
         <translation>خطأ أثناء إنشاء المنظور: %L1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3115"/>
+        <location filename="../MainWindow.cpp" line="3133"/>
         <source>This action will open a new SQL tab for running:</source>
         <translation>سيفتح هذا الإجراء لسان SQL جديد لتشغيل:</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3117"/>
+        <location filename="../MainWindow.cpp" line="3138"/>
         <source>Press Help for opening the corresponding SQLite reference page.</source>
         <translation>انقر ”مساعدة“ لفتح صفحة SQLite المرجعية المناسبة.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2395"/>
+        <location filename="../MainWindow.cpp" line="2410"/>
         <source>DB Browser for SQLite project file (*.sqbpro)</source>
         <translation>ملف مشروع «متصفّح قواعد بيانات SQLite» ‏(*.sqbpro)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1194"/>
+        <location filename="../MainWindow.cpp" line="1203"/>
         <source>Execution finished with errors.</source>
         <translation>اكتمل التنفيذ وحدثت أخطاء.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1196"/>
+        <location filename="../MainWindow.cpp" line="1205"/>
         <source>Execution finished without errors.</source>
         <translation>اكتمل التنفيذ دون أخطاء.</translation>
     </message>
@@ -4299,8 +4321,8 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="85"/>
-        <location filename="../PreferencesDialog.ui" line="1719"/>
-        <location filename="../PreferencesDialog.ui" line="1839"/>
+        <location filename="../PreferencesDialog.ui" line="1720"/>
+        <location filename="../PreferencesDialog.ui" line="1840"/>
         <source>...</source>
         <translation>...</translation>
     </message>
@@ -4322,12 +4344,13 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     <message>
         <location filename="../PreferencesDialog.ui" line="348"/>
         <location filename="../PreferencesDialog.ui" line="368"/>
-        <location filename="../PreferencesDialog.ui" line="602"/>
-        <location filename="../PreferencesDialog.ui" line="622"/>
-        <location filename="../PreferencesDialog.ui" line="1478"/>
-        <location filename="../PreferencesDialog.ui" line="1498"/>
-        <location filename="../PreferencesDialog.ui" line="1518"/>
-        <location filename="../PreferencesDialog.ui" line="1538"/>
+        <location filename="../PreferencesDialog.ui" line="636"/>
+        <location filename="../PreferencesDialog.ui" line="643"/>
+        <location filename="../PreferencesDialog.ui" line="1459"/>
+        <location filename="../PreferencesDialog.ui" line="1479"/>
+        <location filename="../PreferencesDialog.ui" line="1499"/>
+        <location filename="../PreferencesDialog.ui" line="1519"/>
+        <location filename="../PreferencesDialog.ui" line="1539"/>
         <source>enabled</source>
         <translation>مفعّلة</translation>
     </message>
@@ -4342,227 +4365,226 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation>&amp;قاعدة البيانات</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="565"/>
+        <location filename="../PreferencesDialog.ui" line="567"/>
         <source>Database &amp;encoding</source>
         <translation>&amp;ترميز قاعدة البيانات</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="589"/>
+        <location filename="../PreferencesDialog.ui" line="577"/>
         <source>Open databases with foreign keys enabled.</source>
         <translation>افتح قواعد البيانات والمفاتيح الأجنبية مفعّلة.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="592"/>
+        <location filename="../PreferencesDialog.ui" line="580"/>
         <source>&amp;Foreign keys</source>
         <translation>الم&amp;فاتيح الأجنبية</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="609"/>
+        <location filename="../PreferencesDialog.ui" line="590"/>
         <source>Remove line breaks in schema &amp;view</source>
         <translation>أزِل كاسرات الأسطر في من&amp;ظور المخطّط</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="629"/>
+        <location filename="../PreferencesDialog.ui" line="600"/>
         <source>Prefetch block si&amp;ze</source>
         <translation>&amp;حجم الكتلة لجلبها مسبقًا</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="649"/>
         <source>Advanced</source>
-        <translation>متقدّم</translation>
+        <translation type="vanished">متقدّم</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="679"/>
+        <location filename="../PreferencesDialog.ui" line="668"/>
         <source>SQ&amp;L to execute after opening database</source>
         <translation>إ&amp;فادة SQL لتُنفّذ بعد فتح قاعدة البيانات</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="705"/>
+        <location filename="../PreferencesDialog.ui" line="610"/>
         <source>Default field type</source>
         <translation>نوع الحقول المبدئي</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="716"/>
+        <location filename="../PreferencesDialog.ui" line="697"/>
         <source>Data &amp;Browser</source>
         <translation>مت&amp;صفّح البيانات</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="724"/>
+        <location filename="../PreferencesDialog.ui" line="705"/>
         <source>Font</source>
         <translation>الخط</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="730"/>
+        <location filename="../PreferencesDialog.ui" line="711"/>
         <source>&amp;Font</source>
         <translation>ال&amp;خط</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="759"/>
+        <location filename="../PreferencesDialog.ui" line="740"/>
         <source>Content</source>
         <translation>المحتوى</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="765"/>
+        <location filename="../PreferencesDialog.ui" line="746"/>
         <source>Symbol limit in cell</source>
         <translation>أقصى عدد من الرموز في كلّ خليّة</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="876"/>
+        <location filename="../PreferencesDialog.ui" line="857"/>
         <source>NULL</source>
         <translation>NULL</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="886"/>
+        <location filename="../PreferencesDialog.ui" line="867"/>
         <source>Regular</source>
         <translation>العادية</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="866"/>
+        <location filename="../PreferencesDialog.ui" line="847"/>
         <source>Binary</source>
         <translation>البيانات الثنائيّة</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1304"/>
+        <location filename="../PreferencesDialog.ui" line="1285"/>
         <source>Background</source>
         <translation>الخلفية</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1093"/>
+        <location filename="../PreferencesDialog.ui" line="1074"/>
         <source>Filters</source>
         <translation>المرشّحات</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="817"/>
+        <location filename="../PreferencesDialog.ui" line="798"/>
         <source>Threshold for completion and calculation on selection</source>
         <translation>عتبة إكمال النصوص والحساب</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="827"/>
+        <location filename="../PreferencesDialog.ui" line="808"/>
         <source>Show images in cell</source>
         <translation>اعرض الصور في الخلايا</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="837"/>
+        <location filename="../PreferencesDialog.ui" line="818"/>
         <source>Enable this option to show a preview of BLOBs containing image data in the cells. This can affect the performance of the data browser, however.</source>
         <translation>فعّل هذا الخيار لعرض معاينة كائنات BLOB التي فيها بيانات صور داخل الخلايا. ولكن يمكن أن يؤثّر هذا على أداء متصفّح البيانات.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1106"/>
+        <location filename="../PreferencesDialog.ui" line="1087"/>
         <source>Escape character</source>
         <translation>محرف الهروب</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1116"/>
+        <location filename="../PreferencesDialog.ui" line="1097"/>
         <source>Delay time (&amp;ms)</source>
         <translation>وقت التأخير (&amp;م‌ث)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1126"/>
+        <location filename="../PreferencesDialog.ui" line="1107"/>
         <source>Set the waiting time before a new filter value is applied. Can be set to 0 for disabling waiting.</source>
         <translation>اضبط وقت انتظار قبل تطبيق قيمة المرشّح الجديدة. يمكن ضبطه إلى القيمة صِفر لتعطيل الانتظار.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1142"/>
+        <location filename="../PreferencesDialog.ui" line="1123"/>
         <source>&amp;SQL</source>
         <translation>م&amp;حرّر SQL</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1155"/>
+        <location filename="../PreferencesDialog.ui" line="1136"/>
         <source>Settings name</source>
         <translation>الاسم في الإعدادات</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1160"/>
+        <location filename="../PreferencesDialog.ui" line="1141"/>
         <source>Context</source>
         <translation>السياق</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1165"/>
+        <location filename="../PreferencesDialog.ui" line="1146"/>
         <source>Colour</source>
         <translation>اللون</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1170"/>
+        <location filename="../PreferencesDialog.ui" line="1151"/>
         <source>Bold</source>
         <translation>ثخين</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1175"/>
+        <location filename="../PreferencesDialog.ui" line="1156"/>
         <source>Italic</source>
         <translation>مائل</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1180"/>
+        <location filename="../PreferencesDialog.ui" line="1161"/>
         <source>Underline</source>
         <translation>مسطّر</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1188"/>
+        <location filename="../PreferencesDialog.ui" line="1169"/>
         <source>Keyword</source>
         <translation>الكلمات المفتاحية</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1208"/>
+        <location filename="../PreferencesDialog.ui" line="1189"/>
         <source>Function</source>
         <translation>الدوال</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1216"/>
+        <location filename="../PreferencesDialog.ui" line="1197"/>
         <source>Table</source>
         <translation>الجداول</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1236"/>
+        <location filename="../PreferencesDialog.ui" line="1217"/>
         <source>Comment</source>
         <translation>التعليقات</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1256"/>
+        <location filename="../PreferencesDialog.ui" line="1237"/>
         <source>Identifier</source>
         <translation>المعرّفات</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1276"/>
+        <location filename="../PreferencesDialog.ui" line="1257"/>
         <source>String</source>
         <translation>السلاسل النصية</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1296"/>
+        <location filename="../PreferencesDialog.ui" line="1277"/>
         <source>Current line</source>
         <translation>السطر الحالي</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1337"/>
+        <location filename="../PreferencesDialog.ui" line="1318"/>
         <source>SQL &amp;editor font size</source>
         <translation>حجم الخط في م&amp;حرّر SQL</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1376"/>
+        <location filename="../PreferencesDialog.ui" line="1357"/>
         <source>Tab size</source>
         <translation>حجم التبويبات</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1322"/>
+        <location filename="../PreferencesDialog.ui" line="1303"/>
         <source>SQL editor &amp;font</source>
         <translation>&amp;خط محرّر SQL</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1505"/>
+        <location filename="../PreferencesDialog.ui" line="1486"/>
         <source>Error indicators</source>
         <translation>مؤشّرات الأخطاء</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1525"/>
+        <location filename="../PreferencesDialog.ui" line="1506"/>
         <source>Hori&amp;zontal tiling</source>
         <translation>التراتب أف&amp;قيًا</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1535"/>
+        <location filename="../PreferencesDialog.ui" line="1516"/>
         <source>If enabled the SQL code editor and the result table view are shown side by side instead of one over the other.</source>
         <translation>إن فعّلته فسترى محرّر أكواد SQL ومنظور جدول النتائج جنبًا إلى جنب بدلًا من أن يكونان فوق بعض.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1468"/>
+        <location filename="../PreferencesDialog.ui" line="1449"/>
         <source>Code co&amp;mpletion</source>
         <translation>إ&amp;كمال الكود</translation>
     </message>
@@ -4672,17 +4694,17 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation>نمط البرمجيّة</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="619"/>
+        <location filename="../PreferencesDialog.ui" line="633"/>
         <source>When enabled, the line breaks in the Schema column of the DB Structure tab, dock and printed output are removed.</source>
         <translation>إن فعّلته فستُزال كاسِرات الأسطر في عمود ”المخطّط“ في لسان ”بنية قاعدة البيانات“ كما والرصيف والخرج المطبوع.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="743"/>
+        <location filename="../PreferencesDialog.ui" line="724"/>
         <source>Font si&amp;ze</source>
         <translation>&amp;حجم الخط</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="797"/>
+        <location filename="../PreferencesDialog.ui" line="778"/>
         <source>This is the maximum number of items allowed for some computationally expensive functionalities to be enabled:
 Maximum number of rows in a table for enabling the value completion based on current values in the column.
 Maximum number of indexes in a selection for calculating sum and average.
@@ -4693,253 +4715,263 @@ Can be set to 0 for disabling the functionalities.</source>
 يمكنك ضبطه على صِفر لتعطيل الميزة.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="803"/>
+        <location filename="../PreferencesDialog.ui" line="784"/>
         <source>This is the maximum number of rows in a table for enabling the value completion based on current values in the column.
 Can be set to 0 for disabling completion.</source>
         <translation>هذا أقصى عدد من الصفوف في كلّ جدول لتفعيل إكمال القيمة حسب البيانات الحالية في العمود.
 يمكن ضبطه على صفر لتعطيل الإكمال.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="847"/>
+        <location filename="../PreferencesDialog.ui" line="828"/>
         <source>Field display</source>
         <translation>عرض الحقول</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="853"/>
+        <location filename="../PreferencesDialog.ui" line="834"/>
         <source>Displayed &amp;text</source>
         <translation>ال&amp;نص المعروض</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="899"/>
-        <location filename="../PreferencesDialog.ui" line="928"/>
+        <location filename="../PreferencesDialog.ui" line="880"/>
+        <location filename="../PreferencesDialog.ui" line="909"/>
+        <location filename="../PreferencesDialog.ui" line="938"/>
         <location filename="../PreferencesDialog.ui" line="957"/>
         <location filename="../PreferencesDialog.ui" line="976"/>
         <location filename="../PreferencesDialog.ui" line="995"/>
-        <location filename="../PreferencesDialog.ui" line="1014"/>
         <source>Click to set this color</source>
         <translation>انقر لضبط هذا اللون</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="915"/>
+        <location filename="../PreferencesDialog.ui" line="896"/>
         <source>Text color</source>
         <translation>لون النص</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="944"/>
+        <location filename="../PreferencesDialog.ui" line="925"/>
         <source>Background color</source>
         <translation>لون الخلفية</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1059"/>
+        <location filename="../PreferencesDialog.ui" line="1040"/>
         <source>Preview only (N/A)</source>
         <translation>معاينة فقط (غير متوفّر)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1312"/>
+        <location filename="../PreferencesDialog.ui" line="1293"/>
         <source>Foreground</source>
         <translation>الأمامية</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1359"/>
+        <location filename="../PreferencesDialog.ui" line="1340"/>
         <source>SQL &amp;results font size</source>
         <translation>حجم خط ن&amp;تائج SQL</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1399"/>
+        <location filename="../PreferencesDialog.ui" line="1380"/>
         <source>&amp;Wrap lines</source>
         <translation>لُ&amp;فّ الأسطر</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1410"/>
+        <location filename="../PreferencesDialog.ui" line="1391"/>
         <source>Never</source>
         <translation>أبدًا</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1415"/>
+        <location filename="../PreferencesDialog.ui" line="1396"/>
         <source>At word boundaries</source>
         <translation>عند حدود الكلمات</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1420"/>
+        <location filename="../PreferencesDialog.ui" line="1401"/>
         <source>At character boundaries</source>
         <translation>عند حدود المحارف</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1425"/>
+        <location filename="../PreferencesDialog.ui" line="1406"/>
         <source>At whitespace boundaries</source>
         <translation>عند حدود المسافات</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1433"/>
+        <location filename="../PreferencesDialog.ui" line="1414"/>
         <source>&amp;Quotes for identifiers</source>
         <translation>&amp;علامات التنصيص للمُعرّفات</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1443"/>
+        <location filename="../PreferencesDialog.ui" line="1424"/>
         <source>Choose the quoting mechanism used by the application for identifiers in SQL code.</source>
         <translation>اختر آليّة التنصيص التي سيستخدمها التطبيق للمُعرّفات في كود SQL.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1450"/>
+        <location filename="../PreferencesDialog.ui" line="1431"/>
         <source>&quot;Double quotes&quot; - Standard SQL (recommended)</source>
         <translation>&quot;علامات تنصيص مزدوجة&quot; - SQL القياسية (مستحسن)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1455"/>
+        <location filename="../PreferencesDialog.ui" line="1436"/>
         <source>`Grave accents` - Traditional MySQL quotes</source>
         <translation>`نبر الإطالة` - علامات اقتباس MySQL التقليدية</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1460"/>
+        <location filename="../PreferencesDialog.ui" line="1441"/>
         <source>[Square brackets] - Traditional MS SQL Server quotes</source>
         <translation>[أقواس مربّعة] - علامات تنصيص خادوم SQL لِمايكروسوفت التقليدي</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1485"/>
+        <location filename="../PreferencesDialog.ui" line="1466"/>
         <source>Keywords in &amp;UPPER CASE</source>
         <translation>الكلمات المفتاحية &amp;كبيرة الحالة</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1495"/>
+        <location filename="../PreferencesDialog.ui" line="1476"/>
         <source>When set, the SQL keywords are completed in UPPER CASE letters.</source>
         <translation>إن فعّلته فسيجري إكمال كلمات SQL المفتاحيّة بالأحرف وحالتها كبيرة.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1515"/>
+        <location filename="../PreferencesDialog.ui" line="1496"/>
         <source>When set, the SQL code lines that caused errors during the last execution are highlighted and the results frame indicates the error in the background</source>
         <translation>إن فعّلته فستُبرز الأسطر في كود SQL التي تسبّبت بأخطاء أثناء آخر تنفيذ وسيُشير إطار النتائج إلى الخطأ في الخلفية</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1548"/>
+        <location filename="../PreferencesDialog.ui" line="1526"/>
+        <source>Close button on tabs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.ui" line="1536"/>
+        <source>If enabled, SQL editor tabs will have a close button. In any case, you can use the contextual menu or the keyboard shortcut to close them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.ui" line="1549"/>
         <source>&amp;Extensions</source>
         <translation>الامت&amp;دادات</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1554"/>
+        <location filename="../PreferencesDialog.ui" line="1555"/>
         <source>Select extensions to load for every database:</source>
         <translation>حدّد الامتدادات لتُحمّل لكلّ قاعدة بيانات:</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1575"/>
+        <location filename="../PreferencesDialog.ui" line="1576"/>
         <source>Add extension</source>
         <translation>أضِف امتدادًا</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1586"/>
+        <location filename="../PreferencesDialog.ui" line="1587"/>
         <source>Remove extension</source>
         <translation>أزِل الامتداد</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1614"/>
+        <location filename="../PreferencesDialog.ui" line="1615"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;While supporting the REGEXP operator SQLite doesn&apos;t implement any regular expression&lt;br/&gt;algorithm but calls back the running application. DB Browser for SQLite implements this&lt;br/&gt;algorithm for you to let you use REGEXP out of the box. However, as there are multiple possible&lt;br/&gt;implementations of this and you might want to use another one, you&apos;re free to disable the&lt;br/&gt;application&apos;s implementation and load your own by using an extension. Requires restart of the application.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>مع أنّ معامل REGEX مدعوم، إلّا أنّ SQLITE ليس فيها أية خوارزمية تعابير نمطية مُنجزة،&lt;br/&gt;بل تنادي التطبيق الجاري. ينفّذ «متصفّح قواعد بيانات SQLite» هذه الخوارزمية لك&lt;br/&gt;لتستعمل REGEXP دون عناء. مع ذلك، يختلف تنفيذ هذه الميزة ولربّما تحتاج استعمال&lt;br/&gt;واحدة أخرى، لذا فأنت حرّ في تعطيل طريقة التطبيق في التنفيذ وتحميل أيّ من تلك باستعمال&lt;br/&gt;إحدى الامتدادات. إعادة تشغيل التطبيق مطلوبة.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1617"/>
+        <location filename="../PreferencesDialog.ui" line="1618"/>
         <source>Disable Regular Expression extension</source>
         <translation>عطّل ملحقة العبارات النمطية</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1624"/>
+        <location filename="../PreferencesDialog.ui" line="1625"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite provides an SQL function for loading extensions from a shared library file. Activate this if you want to use the &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt; function from SQL code.&lt;/p&gt;&lt;p&gt;For security reasons, extension loading is turned off by default and must be enabled through this setting. You can always load extensions through the GUI, even though this option is disabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>توفّر SQLite دالة SQL لتحميل الامتدادات من ملف مكتبة مشتركة. فعّل هذا إن أردت استعمال دالة &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()‎&lt;/span&gt; من كود SQL.&lt;/p&gt;&lt;p&gt;لأسباب أمنية، تحميل الامتداد معطّل مبدئيًا ويجب تفعيله بهذا الإعداد. يمكنك دائمًا تحميل الامتدادات عبر الواجهة الرسومية، حتى لو كان هذا الخيار معطّلًا.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1627"/>
+        <location filename="../PreferencesDialog.ui" line="1628"/>
         <source>Allow loading extensions from SQL code</source>
         <translation>اسمح بتحميل الامتدادات من كود SQL</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1635"/>
+        <location filename="../PreferencesDialog.ui" line="1636"/>
         <source>Remote</source>
         <translation>البعيد</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1746"/>
+        <location filename="../PreferencesDialog.ui" line="1747"/>
         <source>CA certificates</source>
         <translation>شهادات سلطة الشهادات</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1848"/>
+        <location filename="../PreferencesDialog.ui" line="1849"/>
         <source>Proxy</source>
         <translation>الوسيط</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1855"/>
+        <location filename="../PreferencesDialog.ui" line="1856"/>
         <source>Configure</source>
         <translation>اضبط</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1675"/>
-        <location filename="../PreferencesDialog.ui" line="1771"/>
+        <location filename="../PreferencesDialog.ui" line="1676"/>
+        <location filename="../PreferencesDialog.ui" line="1772"/>
         <source>Subject CN</source>
         <translation>اش موضوع التعمية</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1774"/>
+        <location filename="../PreferencesDialog.ui" line="1775"/>
         <source>Common Name</source>
         <translation>الاسم الشائع</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1779"/>
+        <location filename="../PreferencesDialog.ui" line="1780"/>
         <source>Subject O</source>
         <translation>المنظّمة موضوع التعمية</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1782"/>
+        <location filename="../PreferencesDialog.ui" line="1783"/>
         <source>Organization</source>
         <translation>المنظّمة</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1691"/>
-        <location filename="../PreferencesDialog.ui" line="1787"/>
+        <location filename="../PreferencesDialog.ui" line="1692"/>
+        <location filename="../PreferencesDialog.ui" line="1788"/>
         <source>Valid from</source>
         <translation>صالحة من</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1696"/>
-        <location filename="../PreferencesDialog.ui" line="1792"/>
+        <location filename="../PreferencesDialog.ui" line="1697"/>
+        <location filename="../PreferencesDialog.ui" line="1793"/>
         <source>Valid to</source>
         <translation>صالحة حتى</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1701"/>
-        <location filename="../PreferencesDialog.ui" line="1797"/>
+        <location filename="../PreferencesDialog.ui" line="1702"/>
+        <location filename="../PreferencesDialog.ui" line="1798"/>
         <source>Serial number</source>
         <translation>الرقم التسلسلي</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1645"/>
+        <location filename="../PreferencesDialog.ui" line="1646"/>
         <source>Your certificates</source>
         <translation>شهاداتك</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1670"/>
+        <location filename="../PreferencesDialog.ui" line="1671"/>
         <source>File</source>
         <translation>الملف</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1678"/>
+        <location filename="../PreferencesDialog.ui" line="1679"/>
         <source>Subject Common Name</source>
         <translation>الاسم الشائع لموضوع التعمية</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1683"/>
+        <location filename="../PreferencesDialog.ui" line="1684"/>
         <source>Issuer CN</source>
         <translation>اش المُصدِر</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1686"/>
+        <location filename="../PreferencesDialog.ui" line="1687"/>
         <source>Issuer Common Name</source>
         <translation>الاسم الشائع للمُصدِر</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1811"/>
+        <location filename="../PreferencesDialog.ui" line="1812"/>
         <source>Clone databases into</source>
         <translation>استنسخ قواعد البيانات إلى</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="69"/>
+        <location filename="../PreferencesDialog.cpp" line="67"/>
         <location filename="../PreferencesDialog.cpp" line="637"/>
         <source>Choose a directory</source>
         <translation>اختر دليلًا</translation>
@@ -6236,7 +6268,7 @@ Hold %3Shift and click to jump there</source>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="633"/>
-        <location filename="../TableBrowser.cpp" line="1023"/>
+        <location filename="../TableBrowser.cpp" line="1025"/>
         <source>Delete Record</source>
         <translation>احذف السجلّ</translation>
     </message>
@@ -6338,7 +6370,7 @@ Hold %3Shift and click to jump there</source>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="735"/>
-        <location filename="../TableBrowser.cpp" line="1382"/>
+        <location filename="../TableBrowser.cpp" line="1384"/>
         <source>Set encoding</source>
         <translation>اضبط الترميز</translation>
     </message>
@@ -6570,9 +6602,13 @@ Hold %3Shift and click to jump there</source>
         <translation type="vanished">Ctrl+H</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="42"/>
         <source>Filter in all columns</source>
-        <translation>رشّح كلّ الأعمدة</translation>
+        <translation type="vanished">رشّح كلّ الأعمدة</translation>
+    </message>
+    <message>
+        <location filename="../TableBrowser.cpp" line="42"/>
+        <source>Filter in any column</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="102"/>
@@ -6609,96 +6645,96 @@ Hold %3Shift and click to jump there</source>
         <translation>. المجموع: %L1، المتوسّط: %L2، الأدنى: %L3، الأقصى: %L4</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="676"/>
+        <location filename="../TableBrowser.cpp" line="678"/>
         <source>Conditional formats for &quot;%1&quot;</source>
         <translation>تنسيقات ”%L1“ الشرطيّة</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="747"/>
+        <location filename="../TableBrowser.cpp" line="749"/>
         <source>determining row count...</source>
         <translation>يحدّد عدد الصفوف...</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="750"/>
+        <location filename="../TableBrowser.cpp" line="752"/>
         <source>%1 - %2 of &gt;= %3</source>
         <translation>‏%L1 - ‏%L2 من أصل &gt;= ‏%L3</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="753"/>
+        <location filename="../TableBrowser.cpp" line="755"/>
         <source>%1 - %2 of %3</source>
         <translation>‏%L1 - ‏%L2 من أصل %L3</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="899"/>
+        <location filename="../TableBrowser.cpp" line="901"/>
         <source>Please enter a pseudo-primary key in order to enable editing on this view. This should be the name of a unique column in the view.</source>
         <translation>من فضلك أدخِل مفتاحًا أساسيًا زائفًا (pseudo) لتفعيل التحرير في هذا المنظور. يجب أن يكون المفتاح اسمًا لأحد الأعمدة الفريدة في المنظور.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1021"/>
+        <location filename="../TableBrowser.cpp" line="1023"/>
         <source>Delete Records</source>
         <translation>احذف السجلّات</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1168"/>
+        <location filename="../TableBrowser.cpp" line="1170"/>
         <source>Duplicate records</source>
         <translation>كرّر السجلّات</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1168"/>
+        <location filename="../TableBrowser.cpp" line="1170"/>
         <source>Duplicate record</source>
         <translation>كرّر السجلّ</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1172"/>
+        <location filename="../TableBrowser.cpp" line="1174"/>
         <source>Ctrl+&quot;</source>
         <translation>Ctrl+&quot;</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1191"/>
+        <location filename="../TableBrowser.cpp" line="1193"/>
         <source>Adjust rows to contents</source>
         <translation>اضبط الصفوف إلى محتواها</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1246"/>
+        <location filename="../TableBrowser.cpp" line="1248"/>
         <source>Error deleting record:
 %1</source>
         <translation>خطأ أثناء حذف السجلّ:
 %L1</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1255"/>
+        <location filename="../TableBrowser.cpp" line="1257"/>
         <source>Please select a record first</source>
         <translation>من فضلك اختر سجلًا أوّلًا</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1362"/>
+        <location filename="../TableBrowser.cpp" line="1364"/>
         <source>There is no filter set for this table. View will not be created.</source>
         <translation>لا مرشّح مضبوط لهذا الجدول. لن يُنشأ المنظور.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1378"/>
+        <location filename="../TableBrowser.cpp" line="1380"/>
         <source>Please choose a new encoding for all tables.</source>
         <translation>من فضلك اختر ترميزًا جديدًا لكلّ الجداول.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1380"/>
+        <location filename="../TableBrowser.cpp" line="1382"/>
         <source>Please choose a new encoding for this table.</source>
         <translation>من فضلك اختر ترميزًا جديدًا لهذا الجدول.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1383"/>
+        <location filename="../TableBrowser.cpp" line="1385"/>
         <source>%1
 Leave the field empty for using the database encoding.</source>
         <translation>%L1
 اترك الحقل فارغًا لاستعمال ترميز قاعدة البيانات.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1395"/>
+        <location filename="../TableBrowser.cpp" line="1397"/>
         <source>This encoding is either not valid or not supported.</source>
         <translation>إمّا أنّ هذا الترميز غير صالح أو أنّه غير مدعوم.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1566"/>
+        <location filename="../TableBrowser.cpp" line="1568"/>
         <source>%1 replacement(s) made.</source>
         <translation>عدد الاستبدالات المُجراة: %L1</translation>
     </message>

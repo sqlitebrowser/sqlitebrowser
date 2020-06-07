@@ -2915,10 +2915,6 @@ x~y	范围: 值在 x 和 y 之间
         <translation type="vanished">刷新</translation>
     </message>
     <message>
-        <source>F5</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="2068"/>
         <source>Un/comment block of SQL code</source>
         <translation>注释/取消注释SQL代码</translation>
@@ -3240,9 +3236,8 @@ x~y	范围: 值在 x 和 y 之间
         <translation>此按钮执行当前选中的 SQL 语句。如果没有选中文本，就执行所有的 SQL 语句。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1509"/>
         <source>This button opens a file containing SQL statements and loads it in a new editor tab</source>
-        <translation>此按钮打开一个包含 SQL 语句的文件，并加载到一个新的编辑器标签中</translation>
+        <translation type="vanished">此按钮打开一个包含 SQL 语句的文件，并加载到一个新的编辑器标签中</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1530"/>
@@ -3554,7 +3549,7 @@ x~y	范围: 值在 x 和 y 之间
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="218"/>
-        <location filename="../MainWindow.cpp" line="3347"/>
+        <location filename="../MainWindow.cpp" line="3368"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
@@ -3926,6 +3921,16 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <location filename="../MainWindow.ui" line="1223"/>
         <source>&amp;Write Changes</source>
         <translation>写入更改(&amp;W)</translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="1506"/>
+        <source>Open SQL file(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="1509"/>
+        <source>This button opens files containing SQL statements and loads them in new editor tabs</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1545"/>
@@ -4321,9 +4326,8 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation>从一个文件加载工作会话</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1506"/>
         <source>Open SQL file</source>
-        <translation>打开 SQL 文件</translation>
+        <translation type="vanished">打开 SQL 文件</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save current plot...&lt;/p&gt;&lt;p&gt;File format chosen by extension (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -4369,13 +4373,13 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="383"/>
+        <location filename="../MainWindow.cpp" line="373"/>
         <source>Database encoding</source>
         <translation>数据库编码</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="492"/>
-        <location filename="../MainWindow.cpp" line="2897"/>
+        <location filename="../MainWindow.cpp" line="482"/>
+        <location filename="../MainWindow.cpp" line="2912"/>
         <source>Choose a database file</source>
         <translation>选择一个数据库文件</translation>
     </message>
@@ -4395,36 +4399,36 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation>Ctrl+I</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="369"/>
+        <location filename="../MainWindow.cpp" line="359"/>
         <source>Encrypted</source>
         <translation>加密的</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="370"/>
+        <location filename="../MainWindow.cpp" line="360"/>
         <source>Database is encrypted using SQLCipher</source>
         <translation>数据库使用 SQLCipher 进行了加密</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="376"/>
+        <location filename="../MainWindow.cpp" line="366"/>
         <source>Read only</source>
         <translation>只读</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="377"/>
+        <location filename="../MainWindow.cpp" line="367"/>
         <source>Database file is read only. Editing the database is disabled.</source>
         <translation>数据库是只读的。编辑被禁止。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="539"/>
+        <location filename="../MainWindow.cpp" line="529"/>
         <source>Could not open database file.
 Reason: %1</source>
         <translation>无法打开数据库文件。
 原因: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="553"/>
-        <location filename="../MainWindow.cpp" line="1382"/>
-        <location filename="../MainWindow.cpp" line="2752"/>
+        <location filename="../MainWindow.cpp" line="543"/>
+        <location filename="../MainWindow.cpp" line="1391"/>
+        <location filename="../MainWindow.cpp" line="2767"/>
         <source>Choose a filename to save under</source>
         <translation>选择一个文件名保存</translation>
     </message>
@@ -4465,7 +4469,7 @@ All data associated with the %1 will be lost.</source>
 %2</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1176"/>
+        <location filename="../MainWindow.cpp" line="1178"/>
         <source>Setting PRAGMA values or vacuuming will commit your current transaction.
 Are you sure?</source>
         <translation>设置或清除杂注值会提交你的当前事务。
@@ -4492,7 +4496,7 @@ Are you sure?</source>
         <translation type="vanished">查询执行成功: %1 (耗时 %2ms%3)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1324"/>
+        <location filename="../MainWindow.cpp" line="1333"/>
         <source>Error while saving the database file. This means that not all changes to the database were saved. You need to resolve the following error first.
 
 %1</source>
@@ -4501,7 +4505,7 @@ Are you sure?</source>
 %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2162"/>
+        <location filename="../MainWindow.cpp" line="2177"/>
         <source>A new DB Browser for SQLite version is available (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Please download at &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</source>
         <translation>有新版本的 DB Browser for SQLite (%1.%2.%3)可用。&lt;br/&gt;&lt;br/&gt;请从 &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt; 下载。</translation>
     </message>
@@ -4510,7 +4514,7 @@ Are you sure?</source>
         <translation type="vanished">请输入要保存的数据库文件的 URL.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2395"/>
+        <location filename="../MainWindow.cpp" line="2410"/>
         <source>DB Browser for SQLite project file (*.sqbpro)</source>
         <translation>DB Browser for SQLite 工程文件 (*.sqbpro)</translation>
     </message>
@@ -4533,160 +4537,174 @@ Are you sure?</source>
         <translation>Alt+0</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="339"/>
         <source>Close current SQL tab</source>
-        <translation>关闭当前SQL标签</translation>
+        <translation type="vanished">关闭当前SQL标签</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="355"/>
+        <location filename="../MainWindow.cpp" line="345"/>
         <source>The database is currenctly busy.</source>
         <translation>数据库正忙。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="361"/>
+        <location filename="../MainWindow.cpp" line="351"/>
         <source>Click here to interrupt the currently running query.</source>
         <translation>点击此处中断当前运行的查询。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="653"/>
+        <location filename="../MainWindow.cpp" line="643"/>
         <source>You are still executing SQL statements. Closing the database now will stop their execution, possibly leaving the database in an inconsistent state. Are you sure you want to close the database?</source>
         <translation>你正在执行SQL语句。关闭数据库会停止执行，可能使数据库处于不准确的状态。确实要关闭数据库吗？</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="727"/>
+        <location filename="../MainWindow.cpp" line="717"/>
         <source>Do you want to save the changes made to the project file &apos;%1&apos;?</source>
         <translation>是否要保存对工程文件 &apos;%1&apos; 的修改？</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="885"/>
+        <location filename="../MainWindow.cpp" line="875"/>
         <source>Error checking foreign keys after table modification. The changes will be reverted.</source>
         <translation>修改表格后的外键检查错误。修改会被回退。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="888"/>
+        <location filename="../MainWindow.cpp" line="878"/>
         <source>This table did not pass a foreign-key check.&lt;br/&gt;You should run &apos;Tools | Foreign-Key Check&apos; and fix the reported issues.</source>
         <translation>此表格没有通过外键检查。&lt;br/&gt;你需要执行 &apos;工具 | 外键检查&apos; 并修复发现的问题。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1110"/>
-        <location filename="../MainWindow.cpp" line="1113"/>
+        <location filename="../MainWindow.cpp" line="898"/>
+        <source>Edit View %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="904"/>
+        <source>Edit Trigger %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="1112"/>
+        <location filename="../MainWindow.cpp" line="1115"/>
         <source>At line %1:</source>
         <translation>在行 %1:</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1110"/>
+        <location filename="../MainWindow.cpp" line="1112"/>
         <source>Result: %1</source>
         <translation>结果: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1113"/>
+        <location filename="../MainWindow.cpp" line="1115"/>
         <source>Result: %2</source>
         <translation>结果: %2</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1194"/>
+        <location filename="../MainWindow.cpp" line="1203"/>
         <source>Execution finished with errors.</source>
         <translation>执行已完成，但有错误。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1196"/>
+        <location filename="../MainWindow.cpp" line="1205"/>
         <source>Execution finished without errors.</source>
         <translation>执行完成。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1570"/>
+        <location filename="../MainWindow.cpp" line="1575"/>
         <source>&amp;%1 %2%3</source>
         <translation>&amp;%1 %2%3</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1570"/>
+        <location filename="../MainWindow.cpp" line="1575"/>
         <source> (read only)</source>
         <translation> (只读)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1654"/>
+        <location filename="../MainWindow.cpp" line="1659"/>
         <source>Open Database or Project</source>
         <translation>打开数据库或工程</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1655"/>
+        <location filename="../MainWindow.cpp" line="1660"/>
         <source>Attach Database...</source>
         <translation>附加数据库...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1656"/>
+        <location filename="../MainWindow.cpp" line="1661"/>
         <source>Import CSV file(s)...</source>
         <translation>导入CSV文件...</translation>
     </message>
     <message numerus="yes">
-        <location filename="../MainWindow.cpp" line="1659"/>
+        <location filename="../MainWindow.cpp" line="1664"/>
         <source>Select the action to apply to the dropped file(s). &lt;br/&gt;Note: only &apos;Import&apos; will process more than one file.</source>
         <translation>
             <numerusform>选择要应用到拖放的文件的操作。&lt;br/&gt;注意：只有“导入”会处理多个文件。</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1833"/>
+        <location filename="../MainWindow.cpp" line="1838"/>
         <source>Do you want to save the changes made to SQL tabs in a new project file?</source>
         <translation>是否要把对SQL的修改保存为工程文件？</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3310"/>
+        <location filename="../MainWindow.cpp" line="3135"/>
+        <source>This action will open a new SQL tab with the following statements for you to edit and run:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="3331"/>
         <source>Rename Tab</source>
         <translation>重命名标签</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3316"/>
+        <location filename="../MainWindow.cpp" line="3337"/>
         <source>Duplicate Tab</source>
         <translation>复制标签</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3346"/>
+        <location filename="../MainWindow.cpp" line="3367"/>
         <source>Close Tab</source>
         <translation>关闭标签</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3365"/>
+        <location filename="../MainWindow.cpp" line="3386"/>
         <source>Opening &apos;%1&apos;...</source>
         <translation>正在打开 &apos;%1&apos;...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3367"/>
+        <location filename="../MainWindow.cpp" line="3388"/>
         <source>There was an error opening &apos;%1&apos;...</source>
         <translation>打开 &apos;%1&apos; 时出错...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3370"/>
+        <location filename="../MainWindow.cpp" line="3391"/>
         <source>Value is not a valid URL or filename: %1</source>
         <translation>不是正确的URL或文件名：%1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1854"/>
+        <location filename="../MainWindow.cpp" line="1859"/>
         <source>Do you want to save the changes made to the SQL file %1?</source>
         <translation>是否要保存对SQL文件 %1 的修改？</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1876"/>
+        <location filename="../MainWindow.cpp" line="1881"/>
         <source>The statements in this tab are still executing. Closing the tab will stop the execution. This might leave the database in an inconsistent state. Are you sure you want to close the tab?</source>
         <translation>此标签内的SQL语句正在被执行。关闭标签会停止执行，可能使数据库处于不准确的状态。确实要关闭标签吗？</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2069"/>
+        <location filename="../MainWindow.cpp" line="2082"/>
         <source>Could not find resource file: %1</source>
         <translation>不能找到资源文件：%1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2394"/>
+        <location filename="../MainWindow.cpp" line="2409"/>
         <source>Choose a project file to open</source>
         <translation>选择一个要打开的工程文件</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2526"/>
+        <location filename="../MainWindow.cpp" line="2541"/>
         <source>This project file is using an old file format because it was created using DB Browser for SQLite version 3.10 or lower. Loading this file format is still fully supported but we advice you to convert all your project files to the new file format because support for older formats might be dropped at some point in the future. You can convert your files by simply opening and re-saving them.</source>
         <translation>此工程文件使用了旧的文件格式，因为它是由 DB Browser for SQLite version 3.10 或更低版本创建的。加载此文件格式依然完全支持，但我们建议你把工程转换到新的格式，因为旧格式支持将来可能会失效。你可以通过打开并重新保存的方式来转换。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2768"/>
+        <location filename="../MainWindow.cpp" line="2783"/>
         <source>Could not open project file for writing.
 Reason: %1</source>
         <translation>未能写入工程文件。
@@ -4707,7 +4725,7 @@ Leave the field empty for using the database encoding.</source>
         <translation type="vanished">这种编码非法或者不支持。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3229"/>
+        <location filename="../MainWindow.cpp" line="3250"/>
         <source>Busy (%1)</source>
         <translation>正忙 (%1)</translation>
     </message>
@@ -4732,70 +4750,70 @@ Leave the field empty for using the database encoding.</source>
         <translation type="vanished">导入完成</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1333"/>
+        <location filename="../MainWindow.cpp" line="1342"/>
         <source>Are you sure you want to undo all changes made to the database file &apos;%1&apos; since the last save?</source>
         <translation>您是否确认您想撤销从上次保存以来对数据库文件‘%1’做出的所有更改。?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1363"/>
+        <location filename="../MainWindow.cpp" line="1372"/>
         <source>Choose a file to import</source>
         <translation>选择要导入的一个文件</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1959"/>
+        <location filename="../MainWindow.cpp" line="1967"/>
         <source>Text files(*.sql *.txt);;All files(*)</source>
         <translation>文本文件(*.sql *.txt);;所有文件(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1375"/>
+        <location filename="../MainWindow.cpp" line="1384"/>
         <source>Do you want to create a new database file to hold the imported data?
 If you answer no we will attempt to import the data in the SQL file to the current database.</source>
         <translation>您是否确认您想创建一个新的数据库文件用来存放导入的数据?
 如果您会到“否”的话，我们将尝试导入 SQL 文件中的数据到当前数据库。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1386"/>
+        <location filename="../MainWindow.cpp" line="1395"/>
         <source>File %1 already exists. Please choose a different name.</source>
         <translation>文件 %1 已存在。请选择一个不同的名称。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1411"/>
+        <location filename="../MainWindow.cpp" line="1420"/>
         <source>Error importing data: %1</source>
         <translation>导入数据时出错: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1415"/>
+        <location filename="../MainWindow.cpp" line="1424"/>
         <source>Import completed.</source>
         <translation>导入完成。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1483"/>
+        <location filename="../MainWindow.cpp" line="1492"/>
         <source>Delete View</source>
         <translation>删除视图</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1484"/>
+        <location filename="../MainWindow.cpp" line="1493"/>
         <source>Modify View</source>
         <translation>修改视图</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1486"/>
+        <location filename="../MainWindow.cpp" line="1495"/>
         <source>Delete Trigger</source>
         <translation>删除触发器</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1487"/>
+        <location filename="../MainWindow.cpp" line="1496"/>
         <source>Modify Trigger</source>
         <translation>修改触发器</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1489"/>
+        <location filename="../MainWindow.cpp" line="1498"/>
         <source>Delete Index</source>
         <translation>删除索引</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1358"/>
-        <location filename="../MainWindow.cpp" line="1492"/>
+        <location filename="../MainWindow.cpp" line="1501"/>
         <source>Delete Table</source>
         <translation>删除表</translation>
     </message>
@@ -4804,7 +4822,7 @@ If you answer no we will attempt to import the data in the SQL file to the curre
         <translation type="vanished">&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1778"/>
+        <location filename="../MainWindow.cpp" line="1783"/>
         <source>Setting PRAGMA values will commit your current transaction.
 Are you sure?</source>
         <translation>设置 PRAGMA 值将会提交您的当前事务。.
@@ -4815,7 +4833,7 @@ Are you sure?</source>
         <translation type="vanished">操作被用户终止</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="575"/>
+        <location filename="../MainWindow.cpp" line="565"/>
         <source>In-Memory database</source>
         <translation>内存数据库</translation>
     </message>
@@ -4824,82 +4842,82 @@ Are you sure?</source>
         <translation type="vanished">正在决定行数...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="812"/>
+        <location filename="../MainWindow.cpp" line="802"/>
         <source>Are you sure you want to delete the table &apos;%1&apos;?
 All data associated with the table will be lost.</source>
         <translation>你确定要删除表 &apos;%1&apos; 吗？
 所有关联的数据都会丢失。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="814"/>
+        <location filename="../MainWindow.cpp" line="804"/>
         <source>Are you sure you want to delete the view &apos;%1&apos;?</source>
         <translation>你确定要删除视图 &apos;%1&apos; 吗？</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="816"/>
+        <location filename="../MainWindow.cpp" line="806"/>
         <source>Are you sure you want to delete the trigger &apos;%1&apos;?</source>
         <translation>你确定要删除触发器 &apos;%1&apos; 吗？</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="818"/>
+        <location filename="../MainWindow.cpp" line="808"/>
         <source>Are you sure you want to delete the index &apos;%1&apos;?</source>
         <translation>你确定要删除索引 &apos;%1&apos; 吗？</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="829"/>
+        <location filename="../MainWindow.cpp" line="819"/>
         <source>Error: could not delete the table.</source>
         <translation>错误: 无法删除表。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="831"/>
+        <location filename="../MainWindow.cpp" line="821"/>
         <source>Error: could not delete the view.</source>
         <translation>错误: 无法删除视图。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="833"/>
+        <location filename="../MainWindow.cpp" line="823"/>
         <source>Error: could not delete the trigger.</source>
         <translation>错误: 无法删除触发器。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="835"/>
+        <location filename="../MainWindow.cpp" line="825"/>
         <source>Error: could not delete the index.</source>
         <translation>错误: 无法删除索引。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="837"/>
+        <location filename="../MainWindow.cpp" line="827"/>
         <source>Message from database engine:
 %1</source>
         <translation>来自数据库引擎的消息:
 %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="866"/>
+        <location filename="../MainWindow.cpp" line="856"/>
         <source>Editing the table requires to save all pending changes now.
 Are you sure you want to save the database?</source>
         <translation>编辑表格之前需要立刻保存所有修改。
 你确定要保存数据库吗？</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1000"/>
+        <location filename="../MainWindow.cpp" line="1002"/>
         <source>You are already executing SQL statements. Do you want to stop them in order to execute the current statements instead? Note that this might leave the database in an inconsistent state.</source>
         <translation>你已经在执行SQL语句。是否要停止执行并改为执行当前语句？注意，这可能使数据库处于不准确的状态。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1047"/>
+        <location filename="../MainWindow.cpp" line="1049"/>
         <source>-- EXECUTING SELECTION IN &apos;%1&apos;
 --</source>
         <translation>-- 执行 &apos;%1&apos; 中所选
 --</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1068"/>
+        <location filename="../MainWindow.cpp" line="1070"/>
         <source>-- EXECUTING LINE IN &apos;%1&apos;
 --</source>
         <translation>-- 执行 &apos;%1&apos; 中的行
 --</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1076"/>
+        <location filename="../MainWindow.cpp" line="1078"/>
         <source>-- EXECUTING ALL IN &apos;%1&apos;
 --</source>
         <translation>-- 执行 &apos;%1&apos; 中所有
@@ -4910,7 +4928,7 @@ Are you sure you want to save the database?</source>
         <translation type="vanished">执行查询</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1170"/>
+        <location filename="../MainWindow.cpp" line="1172"/>
         <source>%1 rows returned in %2ms</source>
         <translation>%1 行返回，耗时 %2ms</translation>
     </message>
@@ -4927,32 +4945,32 @@ Are you sure you want to save the database?</source>
 -- 结果: %3</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1250"/>
+        <location filename="../MainWindow.cpp" line="1259"/>
         <source>Choose text files</source>
         <translation>选择文本文件</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1413"/>
+        <location filename="../MainWindow.cpp" line="1422"/>
         <source>Import completed. Some foreign key constraints are violated. Please fix them before saving.</source>
         <translation>导入完成。一些外键约束被违反了。请在保存之前修复。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1490"/>
+        <location filename="../MainWindow.cpp" line="1499"/>
         <source>Modify Index</source>
         <translation>修改索引</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1493"/>
+        <location filename="../MainWindow.cpp" line="1502"/>
         <source>Modify Table</source>
         <translation>修改表</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1834"/>
+        <location filename="../MainWindow.cpp" line="1839"/>
         <source>Do you want to save the changes made to SQL tabs in the project file &apos;%1&apos;?</source>
         <translation>是否要把对SQL的修改保存到工程文件 &apos;%1&apos; ？</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1958"/>
+        <location filename="../MainWindow.cpp" line="1966"/>
         <source>Select SQL file to open</source>
         <translation>选择要打开的 SQL 文件</translation>
     </message>
@@ -4965,12 +4983,12 @@ Are you sure you want to save the database?</source>
         <translation type="vanished">无法保存文件: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2012"/>
+        <location filename="../MainWindow.cpp" line="2024"/>
         <source>Select file name</source>
         <translation>选择文件名</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2043"/>
+        <location filename="../MainWindow.cpp" line="2056"/>
         <source>Select extension file</source>
         <translation>选择扩展文件</translation>
     </message>
@@ -4979,38 +4997,38 @@ Are you sure you want to save the database?</source>
         <translation type="vanished">扩展(*.so *.dll);;所有文件(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2050"/>
+        <location filename="../MainWindow.cpp" line="2063"/>
         <source>Extension successfully loaded.</source>
         <translation>扩展成功加载。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2052"/>
+        <location filename="../MainWindow.cpp" line="2065"/>
         <source>Error loading extension: %1</source>
         <translation>加载扩展时出错: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2158"/>
-        <location filename="../MainWindow.cpp" line="2522"/>
+        <location filename="../MainWindow.cpp" line="2173"/>
+        <location filename="../MainWindow.cpp" line="2537"/>
         <source>Don&apos;t show again</source>
         <translation>不再显示</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2161"/>
+        <location filename="../MainWindow.cpp" line="2176"/>
         <source>New version available.</source>
         <translation>新版本可用。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2873"/>
+        <location filename="../MainWindow.cpp" line="2888"/>
         <source>Project saved to file &apos;%1&apos;</source>
         <translation>工程已保存到文件 &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3030"/>
+        <location filename="../MainWindow.cpp" line="3045"/>
         <source>Collation needed! Proceed?</source>
         <translation>需要整理! 继续?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3031"/>
+        <location filename="../MainWindow.cpp" line="3046"/>
         <source>A table in this database requires a special collation function &apos;%1&apos; that this application can&apos;t provide without further knowledge.
 If you choose to proceed, be aware bad things can happen to your database.
 Create a backup!</source>
@@ -5019,32 +5037,32 @@ Create a backup!</source>
 记得备份!</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3036"/>
+        <location filename="../MainWindow.cpp" line="3051"/>
         <source>creating collation</source>
         <translation>创建整理</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3045"/>
+        <location filename="../MainWindow.cpp" line="3060"/>
         <source>Set a new name for the SQL tab. Use the &apos;&amp;&amp;&apos; character to allow using the following character as a keyboard shortcut.</source>
         <translation>为 SQL 标签页设置新名称。使用 &apos;&amp;&amp;&apos; 字符来允许它作为键盘快捷键。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3097"/>
+        <location filename="../MainWindow.cpp" line="3112"/>
         <source>Please specify the view name</source>
         <translation>请指定视图名称</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3101"/>
+        <location filename="../MainWindow.cpp" line="3116"/>
         <source>There is already an object with that name. Please choose a different name.</source>
         <translation>已有同名的对象。请选择一个不同的名称。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3108"/>
+        <location filename="../MainWindow.cpp" line="3123"/>
         <source>View successfully created.</source>
         <translation>视图成功创建。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3110"/>
+        <location filename="../MainWindow.cpp" line="3125"/>
         <source>Error creating view: %1</source>
         <translation>创建视图时出错: %1</translation>
     </message>
@@ -5057,12 +5075,12 @@ Create a backup!</source>
         <translation type="vanished">删除记录</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3115"/>
+        <location filename="../MainWindow.cpp" line="3133"/>
         <source>This action will open a new SQL tab for running:</source>
         <translation>此动作会打开新的 SQL 标签页以运行:</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3117"/>
+        <location filename="../MainWindow.cpp" line="3138"/>
         <source>Press Help for opening the corresponding SQLite reference page.</source>
         <translation>按下帮助以打开对应的 SQLite 参考页。</translation>
     </message>
@@ -5435,29 +5453,30 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation>数据库(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="565"/>
+        <location filename="../PreferencesDialog.ui" line="567"/>
         <source>Database &amp;encoding</source>
         <translation>数据库编码(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="589"/>
+        <location filename="../PreferencesDialog.ui" line="577"/>
         <source>Open databases with foreign keys enabled.</source>
         <translation>打开启用了外键的数据库。</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="592"/>
+        <location filename="../PreferencesDialog.ui" line="580"/>
         <source>&amp;Foreign keys</source>
         <translation>外键(&amp;F)</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="348"/>
         <location filename="../PreferencesDialog.ui" line="368"/>
-        <location filename="../PreferencesDialog.ui" line="602"/>
-        <location filename="../PreferencesDialog.ui" line="622"/>
-        <location filename="../PreferencesDialog.ui" line="1478"/>
-        <location filename="../PreferencesDialog.ui" line="1498"/>
-        <location filename="../PreferencesDialog.ui" line="1518"/>
-        <location filename="../PreferencesDialog.ui" line="1538"/>
+        <location filename="../PreferencesDialog.ui" line="636"/>
+        <location filename="../PreferencesDialog.ui" line="643"/>
+        <location filename="../PreferencesDialog.ui" line="1459"/>
+        <location filename="../PreferencesDialog.ui" line="1479"/>
+        <location filename="../PreferencesDialog.ui" line="1499"/>
+        <location filename="../PreferencesDialog.ui" line="1519"/>
+        <location filename="../PreferencesDialog.ui" line="1539"/>
         <source>enabled</source>
         <translation>启用</translation>
     </message>
@@ -5468,13 +5487,13 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="85"/>
-        <location filename="../PreferencesDialog.ui" line="1719"/>
-        <location filename="../PreferencesDialog.ui" line="1839"/>
+        <location filename="../PreferencesDialog.ui" line="1720"/>
+        <location filename="../PreferencesDialog.ui" line="1840"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="609"/>
+        <location filename="../PreferencesDialog.ui" line="590"/>
         <source>Remove line breaks in schema &amp;view</source>
         <translation>删除架构视图中的换行(&amp;V)</translation>
     </message>
@@ -5488,41 +5507,40 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation type="vanished">远程服务器</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="629"/>
+        <location filename="../PreferencesDialog.ui" line="600"/>
         <source>Prefetch block si&amp;ze</source>
         <translation>预取块尺寸(&amp;Z)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="649"/>
         <source>Advanced</source>
-        <translation>高级</translation>
+        <translation type="vanished">高级</translation>
     </message>
     <message>
         <source>SQL to execute after opening database</source>
         <translation type="vanished">打开数据库后执行的 SQL</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="679"/>
+        <location filename="../PreferencesDialog.ui" line="668"/>
         <source>SQ&amp;L to execute after opening database</source>
         <translation>打开数据库后执行的 SQL(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="705"/>
+        <location filename="../PreferencesDialog.ui" line="610"/>
         <source>Default field type</source>
         <translation>默认字段类型</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="716"/>
+        <location filename="../PreferencesDialog.ui" line="697"/>
         <source>Data &amp;Browser</source>
         <translation>数据浏览器(&amp;B)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="724"/>
+        <location filename="../PreferencesDialog.ui" line="705"/>
         <source>Font</source>
         <translation>字体</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="730"/>
+        <location filename="../PreferencesDialog.ui" line="711"/>
         <source>&amp;Font</source>
         <translation>字体(&amp;F)</translation>
     </message>
@@ -5531,12 +5549,12 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation type="vanished">字号(&amp;Z)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="759"/>
+        <location filename="../PreferencesDialog.ui" line="740"/>
         <source>Content</source>
         <translation>内容</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="765"/>
+        <location filename="../PreferencesDialog.ui" line="746"/>
         <source>Symbol limit in cell</source>
         <translation>单元格字符数限制</translation>
     </message>
@@ -5553,12 +5571,12 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation type="vanished">字段颜色</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="876"/>
+        <location filename="../PreferencesDialog.ui" line="857"/>
         <source>NULL</source>
         <translation>空</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="886"/>
+        <location filename="../PreferencesDialog.ui" line="867"/>
         <source>Regular</source>
         <translation>常规</translation>
     </message>
@@ -5567,87 +5585,87 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation type="vanished">文本</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="866"/>
+        <location filename="../PreferencesDialog.ui" line="847"/>
         <source>Binary</source>
         <translation>二进制</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1304"/>
+        <location filename="../PreferencesDialog.ui" line="1285"/>
         <source>Background</source>
         <translation>背景</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1093"/>
+        <location filename="../PreferencesDialog.ui" line="1074"/>
         <source>Filters</source>
         <translation>过滤</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="817"/>
+        <location filename="../PreferencesDialog.ui" line="798"/>
         <source>Threshold for completion and calculation on selection</source>
         <translation>自动完成和汇总限制</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="827"/>
+        <location filename="../PreferencesDialog.ui" line="808"/>
         <source>Show images in cell</source>
         <translation>显示单元格中图片</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="837"/>
+        <location filename="../PreferencesDialog.ui" line="818"/>
         <source>Enable this option to show a preview of BLOBs containing image data in the cells. This can affect the performance of the data browser, however.</source>
         <translation>启用此选项可以预览单元格BOLB中包含的图片。但这会影响浏览数据的性能。</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1106"/>
+        <location filename="../PreferencesDialog.ui" line="1087"/>
         <source>Escape character</source>
         <translation>转义字符</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1116"/>
+        <location filename="../PreferencesDialog.ui" line="1097"/>
         <source>Delay time (&amp;ms)</source>
         <translation>延时(毫秒)(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1126"/>
+        <location filename="../PreferencesDialog.ui" line="1107"/>
         <source>Set the waiting time before a new filter value is applied. Can be set to 0 for disabling waiting.</source>
         <translation>设置应用新过滤值前的等待时间。设为0以禁用等待。</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1142"/>
+        <location filename="../PreferencesDialog.ui" line="1123"/>
         <source>&amp;SQL</source>
         <translation>&amp;SQL</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1155"/>
+        <location filename="../PreferencesDialog.ui" line="1136"/>
         <source>Settings name</source>
         <translation>设置名称</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1160"/>
+        <location filename="../PreferencesDialog.ui" line="1141"/>
         <source>Context</source>
         <translation>上下文</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1165"/>
+        <location filename="../PreferencesDialog.ui" line="1146"/>
         <source>Colour</source>
         <translation>颜色</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1170"/>
+        <location filename="../PreferencesDialog.ui" line="1151"/>
         <source>Bold</source>
         <translation>粗体</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1175"/>
+        <location filename="../PreferencesDialog.ui" line="1156"/>
         <source>Italic</source>
         <translation>斜体</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1180"/>
+        <location filename="../PreferencesDialog.ui" line="1161"/>
         <source>Underline</source>
         <translation>下划线</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1188"/>
+        <location filename="../PreferencesDialog.ui" line="1169"/>
         <source>Keyword</source>
         <translation>关键字</translation>
     </message>
@@ -5656,27 +5674,27 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation type="vanished">函数</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1208"/>
+        <location filename="../PreferencesDialog.ui" line="1189"/>
         <source>Function</source>
         <translation>函数</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1216"/>
+        <location filename="../PreferencesDialog.ui" line="1197"/>
         <source>Table</source>
         <translation>表</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1236"/>
+        <location filename="../PreferencesDialog.ui" line="1217"/>
         <source>Comment</source>
         <translation>注释</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1256"/>
+        <location filename="../PreferencesDialog.ui" line="1237"/>
         <source>Identifier</source>
         <translation>识别符</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1276"/>
+        <location filename="../PreferencesDialog.ui" line="1257"/>
         <source>String</source>
         <translation>字符串</translation>
     </message>
@@ -5685,12 +5703,12 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation type="vanished">当前行</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1296"/>
+        <location filename="../PreferencesDialog.ui" line="1277"/>
         <source>Current line</source>
         <translation>当前行</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1337"/>
+        <location filename="../PreferencesDialog.ui" line="1318"/>
         <source>SQL &amp;editor font size</source>
         <translation>SQL 编辑器字体大小(&amp;E)</translation>
     </message>
@@ -5699,17 +5717,17 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation type="vanished">SQL 日志字体大小(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1376"/>
+        <location filename="../PreferencesDialog.ui" line="1357"/>
         <source>Tab size</source>
         <translation>Tab 长度</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1322"/>
+        <location filename="../PreferencesDialog.ui" line="1303"/>
         <source>SQL editor &amp;font</source>
         <translation>SQL 编辑器字体(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1505"/>
+        <location filename="../PreferencesDialog.ui" line="1486"/>
         <source>Error indicators</source>
         <translation>错误指示器</translation>
     </message>
@@ -5718,17 +5736,17 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation type="vanished">启用错误指示器将高亮 SQL 代码中导致最近一次执行出错的行</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1525"/>
+        <location filename="../PreferencesDialog.ui" line="1506"/>
         <source>Hori&amp;zontal tiling</source>
         <translation>水平平铺(&amp;Z)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1535"/>
+        <location filename="../PreferencesDialog.ui" line="1516"/>
         <source>If enabled the SQL code editor and the result table view are shown side by side instead of one over the other.</source>
         <translation>如果启用，SQL 编辑器和结果表视图将并排显示，而不是上下显示。</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1468"/>
+        <location filename="../PreferencesDialog.ui" line="1449"/>
         <source>Code co&amp;mpletion</source>
         <translation>代码完成(&amp;M)</translation>
     </message>
@@ -5838,17 +5856,17 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation>界面风格</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="619"/>
+        <location filename="../PreferencesDialog.ui" line="633"/>
         <source>When enabled, the line breaks in the Schema column of the DB Structure tab, dock and printed output are removed.</source>
         <translation>当启用时，数据库结构标签页中的架构列里的换行，显示、打印时被移除。</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="743"/>
+        <location filename="../PreferencesDialog.ui" line="724"/>
         <source>Font si&amp;ze</source>
         <translation>字体大小(&amp;Z)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="797"/>
+        <location filename="../PreferencesDialog.ui" line="778"/>
         <source>This is the maximum number of items allowed for some computationally expensive functionalities to be enabled:
 Maximum number of rows in a table for enabling the value completion based on current values in the column.
 Maximum number of indexes in a selection for calculating sum and average.
@@ -5859,7 +5877,7 @@ Can be set to 0 for disabling the functionalities.</source>
 可以设置为0以禁用这些功能。</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="803"/>
+        <location filename="../PreferencesDialog.ui" line="784"/>
         <source>This is the maximum number of rows in a table for enabling the value completion based on current values in the column.
 Can be set to 0 for disabling completion.</source>
         <translation>这是表启用根据当前值的自动补完的最大的列数量。
@@ -5870,246 +5888,256 @@ Can be set to 0 for disabling completion.</source>
         <translation type="vanished">自动补完的列数阈值</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="847"/>
+        <location filename="../PreferencesDialog.ui" line="828"/>
         <source>Field display</source>
         <translation>字段显示</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="853"/>
+        <location filename="../PreferencesDialog.ui" line="834"/>
         <source>Displayed &amp;text</source>
         <translation>显示的文本(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="899"/>
-        <location filename="../PreferencesDialog.ui" line="928"/>
+        <location filename="../PreferencesDialog.ui" line="880"/>
+        <location filename="../PreferencesDialog.ui" line="909"/>
+        <location filename="../PreferencesDialog.ui" line="938"/>
         <location filename="../PreferencesDialog.ui" line="957"/>
         <location filename="../PreferencesDialog.ui" line="976"/>
         <location filename="../PreferencesDialog.ui" line="995"/>
-        <location filename="../PreferencesDialog.ui" line="1014"/>
         <source>Click to set this color</source>
         <translation>点击设置颜色</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="915"/>
+        <location filename="../PreferencesDialog.ui" line="896"/>
         <source>Text color</source>
         <translation>文本颜色</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="944"/>
+        <location filename="../PreferencesDialog.ui" line="925"/>
         <source>Background color</source>
         <translation>背景颜色</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1059"/>
+        <location filename="../PreferencesDialog.ui" line="1040"/>
         <source>Preview only (N/A)</source>
         <translation>仅预览 (N/A)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1312"/>
+        <location filename="../PreferencesDialog.ui" line="1293"/>
         <source>Foreground</source>
         <translation>前景</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1359"/>
+        <location filename="../PreferencesDialog.ui" line="1340"/>
         <source>SQL &amp;results font size</source>
         <translation>SQL 结果的字体大小(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1399"/>
+        <location filename="../PreferencesDialog.ui" line="1380"/>
         <source>&amp;Wrap lines</source>
         <translation>换行(&amp;W)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1410"/>
+        <location filename="../PreferencesDialog.ui" line="1391"/>
         <source>Never</source>
         <translation>永不</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1415"/>
+        <location filename="../PreferencesDialog.ui" line="1396"/>
         <source>At word boundaries</source>
         <translation>按照词边界</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1420"/>
+        <location filename="../PreferencesDialog.ui" line="1401"/>
         <source>At character boundaries</source>
         <translation>按照字母边界</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1425"/>
+        <location filename="../PreferencesDialog.ui" line="1406"/>
         <source>At whitespace boundaries</source>
         <translation>按照空白字符边界</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1433"/>
+        <location filename="../PreferencesDialog.ui" line="1414"/>
         <source>&amp;Quotes for identifiers</source>
         <translation>标识转义(&amp;Q)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1443"/>
+        <location filename="../PreferencesDialog.ui" line="1424"/>
         <source>Choose the quoting mechanism used by the application for identifiers in SQL code.</source>
         <translation>选择 SQL 代码中标识的转义方式。</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1450"/>
+        <location filename="../PreferencesDialog.ui" line="1431"/>
         <source>&quot;Double quotes&quot; - Standard SQL (recommended)</source>
         <translation>&quot;双引号&quot; - 标准 SQL (推荐)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1455"/>
+        <location filename="../PreferencesDialog.ui" line="1436"/>
         <source>`Grave accents` - Traditional MySQL quotes</source>
         <translation>`重音符` - 经典的 MySQL 转义</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1460"/>
+        <location filename="../PreferencesDialog.ui" line="1441"/>
         <source>[Square brackets] - Traditional MS SQL Server quotes</source>
         <translation>[方括号] - 经典的 MS SQL Server 转义</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1485"/>
+        <location filename="../PreferencesDialog.ui" line="1466"/>
         <source>Keywords in &amp;UPPER CASE</source>
         <translation>关键字大写(&amp;U)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1495"/>
+        <location filename="../PreferencesDialog.ui" line="1476"/>
         <source>When set, the SQL keywords are completed in UPPER CASE letters.</source>
         <translation>设置时，SQL 关键字被自动补全为大写字母。</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1515"/>
+        <location filename="../PreferencesDialog.ui" line="1496"/>
         <source>When set, the SQL code lines that caused errors during the last execution are highlighted and the results frame indicates the error in the background</source>
         <translation>设置时，导致上次执行出错的 SQL 代码行会被高亮。</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1548"/>
+        <location filename="../PreferencesDialog.ui" line="1526"/>
+        <source>Close button on tabs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.ui" line="1536"/>
+        <source>If enabled, SQL editor tabs will have a close button. In any case, you can use the contextual menu or the keyboard shortcut to close them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.ui" line="1549"/>
         <source>&amp;Extensions</source>
         <translation>扩展(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1554"/>
+        <location filename="../PreferencesDialog.ui" line="1555"/>
         <source>Select extensions to load for every database:</source>
         <translation>选择每个数据库要加载的扩展:</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1575"/>
+        <location filename="../PreferencesDialog.ui" line="1576"/>
         <source>Add extension</source>
         <translation>添加扩展</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1586"/>
+        <location filename="../PreferencesDialog.ui" line="1587"/>
         <source>Remove extension</source>
         <translation>删除扩展</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1614"/>
+        <location filename="../PreferencesDialog.ui" line="1615"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;While supporting the REGEXP operator SQLite doesn&apos;t implement any regular expression&lt;br/&gt;algorithm but calls back the running application. DB Browser for SQLite implements this&lt;br/&gt;algorithm for you to let you use REGEXP out of the box. However, as there are multiple possible&lt;br/&gt;implementations of this and you might want to use another one, you&apos;re free to disable the&lt;br/&gt;application&apos;s implementation and load your own by using an extension. Requires restart of the application.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;虽然支持 REGEXP 运算符，但是 SQLite 并没有实现任何正则表达式算法，&lt;br/&gt;而是回调应用程序。DB Browser for SQLite 为您实现了算法，以便您可以&lt;br/&gt;打破常规使用 REGEXP。由于算法有多种可能的实现，您可能想用其他的，&lt;br/&gt;所以您可以禁用算法实现并通过扩展加载您的实现。需要重启应用程序。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1617"/>
+        <location filename="../PreferencesDialog.ui" line="1618"/>
         <source>Disable Regular Expression extension</source>
         <translation>禁用正则表达式扩展</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1624"/>
+        <location filename="../PreferencesDialog.ui" line="1625"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite provides an SQL function for loading extensions from a shared library file. Activate this if you want to use the &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt; function from SQL code.&lt;/p&gt;&lt;p&gt;For security reasons, extension loading is turned off by default and must be enabled through this setting. You can always load extensions through the GUI, even though this option is disabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite 提供了 SQL 函数用于从共享库中加载扩展。启用这个选项以在SQL代码中使用 &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt; 函数。&lt;/p&gt;&lt;p&gt;因安全原因，加载扩展功能默认被关闭，须在此处手动启用。但即使此选项未启用，仍能通过上方图像界面加载扩展。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1627"/>
+        <location filename="../PreferencesDialog.ui" line="1628"/>
         <source>Allow loading extensions from SQL code</source>
         <translation>允许在SQL代码里加载扩展</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1635"/>
+        <location filename="../PreferencesDialog.ui" line="1636"/>
         <source>Remote</source>
         <translation>远程</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1746"/>
+        <location filename="../PreferencesDialog.ui" line="1747"/>
         <source>CA certificates</source>
         <translation>CA 证书</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1848"/>
+        <location filename="../PreferencesDialog.ui" line="1849"/>
         <source>Proxy</source>
         <translation>代理服务器</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1855"/>
+        <location filename="../PreferencesDialog.ui" line="1856"/>
         <source>Configure</source>
         <translation>配置</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1675"/>
-        <location filename="../PreferencesDialog.ui" line="1771"/>
+        <location filename="../PreferencesDialog.ui" line="1676"/>
+        <location filename="../PreferencesDialog.ui" line="1772"/>
         <source>Subject CN</source>
         <translation>主题 CN (Subject CN)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1774"/>
+        <location filename="../PreferencesDialog.ui" line="1775"/>
         <source>Common Name</source>
         <translation>公用名称 (Common Name)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1779"/>
+        <location filename="../PreferencesDialog.ui" line="1780"/>
         <source>Subject O</source>
         <translation>主题 O （Subject O)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1782"/>
+        <location filename="../PreferencesDialog.ui" line="1783"/>
         <source>Organization</source>
         <translation>组织 (Organization)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1691"/>
-        <location filename="../PreferencesDialog.ui" line="1787"/>
+        <location filename="../PreferencesDialog.ui" line="1692"/>
+        <location filename="../PreferencesDialog.ui" line="1788"/>
         <source>Valid from</source>
         <translation>有效期从</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1696"/>
-        <location filename="../PreferencesDialog.ui" line="1792"/>
+        <location filename="../PreferencesDialog.ui" line="1697"/>
+        <location filename="../PreferencesDialog.ui" line="1793"/>
         <source>Valid to</source>
         <translation>有效期到</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1701"/>
-        <location filename="../PreferencesDialog.ui" line="1797"/>
+        <location filename="../PreferencesDialog.ui" line="1702"/>
+        <location filename="../PreferencesDialog.ui" line="1798"/>
         <source>Serial number</source>
         <translation>序列号</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1645"/>
+        <location filename="../PreferencesDialog.ui" line="1646"/>
         <source>Your certificates</source>
         <translation>您的证书</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1670"/>
+        <location filename="../PreferencesDialog.ui" line="1671"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1678"/>
+        <location filename="../PreferencesDialog.ui" line="1679"/>
         <source>Subject Common Name</source>
         <translation>主题公用名称 (Subject Common Name)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1683"/>
+        <location filename="../PreferencesDialog.ui" line="1684"/>
         <source>Issuer CN</source>
         <translation>签发人 CN (Issuer CN)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1686"/>
+        <location filename="../PreferencesDialog.ui" line="1687"/>
         <source>Issuer Common Name</source>
         <translation>签发人公用名称 (Issuer Common Name)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1811"/>
+        <location filename="../PreferencesDialog.ui" line="1812"/>
         <source>Clone databases into</source>
         <translation>克隆数据库信息</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="69"/>
+        <location filename="../PreferencesDialog.cpp" line="67"/>
         <location filename="../PreferencesDialog.cpp" line="637"/>
         <source>Choose a directory</source>
         <translation>选择一个目录</translation>
@@ -7498,7 +7526,7 @@ Hold %3Shift and click to jump there</source>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="633"/>
-        <location filename="../TableBrowser.cpp" line="1023"/>
+        <location filename="../TableBrowser.cpp" line="1025"/>
         <source>Delete Record</source>
         <translation>删除记录</translation>
     </message>
@@ -7600,7 +7628,7 @@ Hold %3Shift and click to jump there</source>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="735"/>
-        <location filename="../TableBrowser.cpp" line="1382"/>
+        <location filename="../TableBrowser.cpp" line="1384"/>
         <source>Set encoding</source>
         <translation>设置编码</translation>
     </message>
@@ -7832,9 +7860,13 @@ Hold %3Shift and click to jump there</source>
         <translation type="vanished">Ctrl+H</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="42"/>
         <source>Filter in all columns</source>
-        <translation>在所有列中过滤</translation>
+        <translation type="vanished">在所有列中过滤</translation>
+    </message>
+    <message>
+        <location filename="../TableBrowser.cpp" line="42"/>
+        <source>Filter in any column</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="102"/>
@@ -7862,96 +7894,96 @@ Hold %3Shift and click to jump there</source>
         <translation>. Sum: %1; Average: %2; Min: %3; Max: %4</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="676"/>
+        <location filename="../TableBrowser.cpp" line="678"/>
         <source>Conditional formats for &quot;%1&quot;</source>
         <translation>&quot;%1&quot; 的条件格式</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="747"/>
+        <location filename="../TableBrowser.cpp" line="749"/>
         <source>determining row count...</source>
         <translation>正在决定行数...</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="750"/>
+        <location filename="../TableBrowser.cpp" line="752"/>
         <source>%1 - %2 of &gt;= %3</source>
         <translation>%1 - %2 / 超过 %3</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="753"/>
+        <location filename="../TableBrowser.cpp" line="755"/>
         <source>%1 - %2 of %3</source>
         <translation>%1 - %2 / %3</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="899"/>
+        <location filename="../TableBrowser.cpp" line="901"/>
         <source>Please enter a pseudo-primary key in order to enable editing on this view. This should be the name of a unique column in the view.</source>
         <translation>请输入一个伪主键以在当前视图启用编辑。这需要是视图中的一个满足唯一性的列的名字。</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1021"/>
+        <location filename="../TableBrowser.cpp" line="1023"/>
         <source>Delete Records</source>
         <translation>删除记录</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1168"/>
+        <location filename="../TableBrowser.cpp" line="1170"/>
         <source>Duplicate records</source>
         <translation>重复记录</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1168"/>
+        <location filename="../TableBrowser.cpp" line="1170"/>
         <source>Duplicate record</source>
         <translation>重复的记录</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1172"/>
+        <location filename="../TableBrowser.cpp" line="1174"/>
         <source>Ctrl+&quot;</source>
         <translation>Ctrl+&quot;</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1191"/>
+        <location filename="../TableBrowser.cpp" line="1193"/>
         <source>Adjust rows to contents</source>
         <translation>按内容调整行高</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1246"/>
+        <location filename="../TableBrowser.cpp" line="1248"/>
         <source>Error deleting record:
 %1</source>
         <translation>删除记录时出错:
 %1</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1255"/>
+        <location filename="../TableBrowser.cpp" line="1257"/>
         <source>Please select a record first</source>
         <translation>请首先选择一条记录</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1362"/>
+        <location filename="../TableBrowser.cpp" line="1364"/>
         <source>There is no filter set for this table. View will not be created.</source>
         <translation>此表没有过滤。视图不会被创建。</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1378"/>
+        <location filename="../TableBrowser.cpp" line="1380"/>
         <source>Please choose a new encoding for all tables.</source>
         <translation>请为所有表选择新的编码。</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1380"/>
+        <location filename="../TableBrowser.cpp" line="1382"/>
         <source>Please choose a new encoding for this table.</source>
         <translation>请为此表选择新的编码。</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1383"/>
+        <location filename="../TableBrowser.cpp" line="1385"/>
         <source>%1
 Leave the field empty for using the database encoding.</source>
         <translation>%1
 留空此字段以使用数据库默认编码。</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1395"/>
+        <location filename="../TableBrowser.cpp" line="1397"/>
         <source>This encoding is either not valid or not supported.</source>
         <translation>这种编码非法或者不支持。</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1566"/>
+        <location filename="../TableBrowser.cpp" line="1568"/>
         <source>%1 replacement(s) made.</source>
         <translation>进行了 %1 次替换。</translation>
     </message>
