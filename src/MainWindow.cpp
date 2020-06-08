@@ -45,7 +45,6 @@
 #include <QClipboard>
 #include <QShortcut>
 #include <QUrlQuery>
-#include <QDataStream>      // This include seems to only be necessary for the Windows build
 #include <QPrinter>
 #include <QPrintPreviewDialog>
 #include <QToolButton>
@@ -57,36 +56,6 @@
 #include <limits>
 
 const int MainWindow::MaxRecentFiles;
-
-// These are needed for reading and writing object files
-QDataStream& operator>>(QDataStream& ds, sqlb::ObjectIdentifier& objid)
-{
-    // Read in the item
-    QVariant v;
-    ds >> v;
-
-    // If it is a string list, we can treat it as an object identifier. If it isn't, we assume it's just a
-    // single string and use interpret it as the table name in the main schema. This is done for backwards
-    // compatability with old project file formats.
-    QStringList str = v.toStringList();
-    if(str.isEmpty())
-    {
-        objid = sqlb::ObjectIdentifier("main", v.toString().toStdString());
-    } else {
-        objid.setSchema(str.first().toStdString());
-        if(str.size() >= 2)
-            objid.setName(str.last().toStdString());
-    }
-    return ds;
-}
-
-// This is a temporary helper function. Delete it once we clean up the project file loading.
-static std::vector<sqlb::SortedColumn> toSortOrderVector(int index, Qt::SortOrder mode)
-{
-    std::vector<sqlb::SortedColumn> vector;
-    vector.emplace_back(index, mode == Qt::AscendingOrder ? sqlb::Ascending : sqlb::Descending);
-    return vector;
-}
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
@@ -2321,14 +2290,6 @@ static void loadCondFormatMap(BrowseDataTableSettings::CondFormatMap& condFormat
 
 static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, QXmlStreamReader& xml)
 {
-    // TODO Remove this in the near future. This file format was only created temporarily by the nightlies from the late 3.11 development period.
-    if(xml.attributes().hasAttribute("sort_order_index"))
-    {
-        int sortOrderIndex = xml.attributes().value("sort_order_index").toInt();
-        Qt::SortOrder sortOrderMode = static_cast<Qt::SortOrder>(xml.attributes().value("sort_order_mode").toInt());
-        settings.query.setOrderBy(toSortOrderVector(sortOrderIndex, sortOrderMode));
-    }
-
     settings.showRowid = xml.attributes().value("show_row_id").toInt();
     settings.encoding = xml.attributes().value("encoding").toString();
     settings.plotXAxis = xml.attributes().value("plot_x_axis").toString();
@@ -2552,8 +2513,7 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                             xml.skipCurrentElement();
                         } else if(xml.name() == "browsetable_info") {
                             // This tag is only found in old project files. In newer versions (>= 3.11) it is replaced by a new implementation.
-                            // We still support loading it though we might decide to drop that support later. But for now we show a warning to the
-                            // user when loading an old file.
+                            // 3.12 is the last version to support loading this file format, so just show a warning here.
                             if(!Settings::getValue("idontcare", "projectBrowseTable").toBool())
                             {
                                 QMessageBox msgBox;
@@ -2562,21 +2522,12 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                                 msgBox.setTextFormat(Qt::RichText);
                                 msgBox.setWindowTitle(qApp->applicationName());
                                 msgBox.setText(tr("This project file is using an old file format because it was created using DB Browser for SQLite "
-                                                  "version 3.10 or lower. Loading this file format is still fully supported but we advice you to convert "
-                                                  "all your project files to the new file format because support for older formats might be dropped "
-                                                  "at some point in the future. You can convert your files by simply opening and re-saving them."));
+                                                  "version 3.10 or lower. Loading this file format is no longer fully supported. If you want to load "
+                                                  "it completely, please use DB Browser for SQLite version 3.12 to convert it to the new file format."));
                                 msgBox.exec();
                                 if(msgBox.clickedButton() == idontcarebutton)
                                     Settings::setValue("idontcare", "projectBrowseTable", true);
                             }
-
-                            QString attrData = xml.attributes().value("data").toString();
-                            QByteArray temp = QByteArray::fromBase64(attrData.toUtf8());
-                            QDataStream stream(temp);
-                            QMap<sqlb::ObjectIdentifier, BrowseDataTableSettings> settings;
-                            stream >> settings;
-                            for(auto it=settings.begin();it!=settings.end();++it)
-                                ui->tableBrowser->setSettings(it.key(), it.value());
 
                             xml.skipCurrentElement();
                         } else if(xml.name() == "browse_table_settings") {
