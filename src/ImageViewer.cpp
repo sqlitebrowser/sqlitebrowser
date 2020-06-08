@@ -30,8 +30,12 @@ void ImageViewer::setImage(const QImage& image)
 {
     ui->labelView->setPixmap(QPixmap::fromImage(image));
 
-    // Reset the scaling to show the image in its original size
-    scaleImage(100);
+    // If the image is larger than the viewport scale it to fit the viewport.
+    // If the image is smaller than the viewport show it in its original size.
+    if(image.size().width() > ui->labelView->size().width() || image.size().height() > ui->labelView->size().height())
+        ui->buttonFitToWindow->setChecked(true);
+    else
+        scaleImage(100);
 }
 
 void ImageViewer::openPrintImageDialog()
