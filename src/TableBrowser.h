@@ -5,12 +5,13 @@
 #include "PlotDock.h"
 #include "sql/Query.h"
 
-#include <QMap>
 #include <QModelIndex>
 #include <QWidget>
 
 #include <functional>
+#include <map>
 #include <unordered_set>
+#include <vector>
 
 class DBBrowserDB;
 class ExtendedTableWidget;
@@ -25,26 +26,26 @@ class TableBrowser;
 
 struct BrowseDataTableSettings
 {
-    using CondFormatMap = QMap<size_t, std::vector<CondFormat>>;
+    using CondFormatMap = std::map<size_t, std::vector<CondFormat>>;
     sqlb::Query query;                              // NOTE: We only store the sort order in here (for now)
-    QMap<int, int> columnWidths;
-    QMap<int, QString> filterValues;
+    std::map<int, int> columnWidths;
+    std::map<int, QString> filterValues;
     CondFormatMap condFormats;
     CondFormatMap rowIdFormats;
-    QMap<int, QString> displayFormats;
+    std::map<int, QString> displayFormats;
     bool showRowid;
     QString encoding;
     QString plotXAxis;
-    QList<QMap<QString, PlotDock::PlotSettings>> plotYAxes;
+    std::vector<std::map<QString, PlotDock::PlotSettings>> plotYAxes;
     QString unlockViewPk;
-    QMap<int, bool> hiddenColumns;
+    std::map<int, bool> hiddenColumns;
     std::vector<QString> globalFilters;
 
     BrowseDataTableSettings() :
         showRowid(false),
+        plotYAxes({std::map<QString, PlotDock::PlotSettings>(), std::map<QString, PlotDock::PlotSettings>()}),
         unlockViewPk("_rowid_")
     {
-      plotYAxes = {QMap<QString, PlotDock::PlotSettings>(), QMap<QString, PlotDock::PlotSettings>()};
     }
 };
 
@@ -60,7 +61,7 @@ public:
 
     sqlb::ObjectIdentifier currentlyBrowsedTableName() const;
 
-    QMap<sqlb::ObjectIdentifier, BrowseDataTableSettings> allSettings() const { return m_settings; }
+    std::map<sqlb::ObjectIdentifier, BrowseDataTableSettings> allSettings() const { return m_settings; }
     BrowseDataTableSettings& settings(const sqlb::ObjectIdentifier& object);
     void setSettings(const sqlb::ObjectIdentifier& table, const BrowseDataTableSettings& table_settings);
 
@@ -154,7 +155,7 @@ private:
     /// re-initialized when switching to another table)
     SqliteTableModel* m_model;
 
-    static QMap<sqlb::ObjectIdentifier, BrowseDataTableSettings> m_settings;  // This is static, so settings are shared between instances
+    static std::map<sqlb::ObjectIdentifier, BrowseDataTableSettings> m_settings;  // This is static, so settings are shared between instances
     static QString m_defaultEncoding;
 
     Palette m_condFormatPalette;

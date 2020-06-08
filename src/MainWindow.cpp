@@ -2628,10 +2628,10 @@ static void saveDbTreeState(const QTreeView* tree, QXmlStreamWriter& xml, QModel
 static void saveCondFormatMap(const QString& elementName, const BrowseDataTableSettings::CondFormatMap& condFormats, QXmlStreamWriter& xml)
 {
     xml.writeStartElement(elementName);
-    for(auto iter=condFormats.constBegin(); iter!=condFormats.constEnd(); ++iter) {
+    for(auto iter=condFormats.cbegin(); iter!=condFormats.cend(); ++iter) {
         xml.writeStartElement("column");
-        xml.writeAttribute("index", QString::number(iter.key()));
-        for(auto format : iter.value()) {
+        xml.writeAttribute("index", QString::number(iter->first));
+        for(auto format : iter->second) {
             xml.writeStartElement("format");
             xml.writeAttribute("condition", format.filter());
             xml.writeAttribute("background", format.backgroundColor().name());
@@ -2663,54 +2663,54 @@ static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, Q
     xml.writeEndElement();
 
     xml.writeStartElement("column_widths");
-    for(auto iter=object.columnWidths.constBegin(); iter!=object.columnWidths.constEnd(); ++iter) {
+    for(auto iter=object.columnWidths.cbegin(); iter!=object.columnWidths.cend(); ++iter) {
         xml.writeStartElement("column");
-        xml.writeAttribute("index", QString::number(iter.key()));
-        xml.writeAttribute("value", QString::number(iter.value()));
+        xml.writeAttribute("index", QString::number(iter->first));
+        xml.writeAttribute("value", QString::number(iter->second));
         xml.writeEndElement();
     }
     xml.writeEndElement();
     xml.writeStartElement("filter_values");
-    for(auto iter=object.filterValues.constBegin(); iter!=object.filterValues.constEnd(); ++iter) {
+    for(auto iter=object.filterValues.cbegin(); iter!=object.filterValues.cend(); ++iter) {
         xml.writeStartElement("column");
-        xml.writeAttribute("index", QString::number(iter.key()));
-        xml.writeAttribute("value", iter.value());
+        xml.writeAttribute("index", QString::number(iter->first));
+        xml.writeAttribute("value", iter->second);
         xml.writeEndElement();
     }
     xml.writeEndElement();
     saveCondFormatMap("conditional_formats", object.condFormats, xml);
     saveCondFormatMap("row_id_formats", object.rowIdFormats, xml);
     xml.writeStartElement("display_formats");
-    for(auto iter=object.displayFormats.constBegin(); iter!=object.displayFormats.constEnd(); ++iter) {
+    for(auto iter=object.displayFormats.cbegin(); iter!=object.displayFormats.cend(); ++iter) {
         xml.writeStartElement("column");
-        xml.writeAttribute("index", QString::number(iter.key()));
-        xml.writeAttribute("value", iter.value());
+        xml.writeAttribute("index", QString::number(iter->first));
+        xml.writeAttribute("value", iter->second);
         xml.writeEndElement();
     }
     xml.writeEndElement();
     xml.writeStartElement("hidden_columns");
-    for(auto iter=object.hiddenColumns.constBegin(); iter!=object.hiddenColumns.constEnd(); ++iter) {
+    for(auto iter=object.hiddenColumns.cbegin(); iter!=object.hiddenColumns.cend(); ++iter) {
         xml.writeStartElement("column");
-        xml.writeAttribute("index", QString::number(iter.key()));
-        xml.writeAttribute("value", QString::number(iter.value()));
+        xml.writeAttribute("index", QString::number(iter->first));
+        xml.writeAttribute("value", QString::number(iter->second));
         xml.writeEndElement();
     }
     xml.writeEndElement();
     xml.writeStartElement("plot_y_axes");
-    for(auto iter=object.plotYAxes[0].constBegin(); iter!=object.plotYAxes[0].constEnd(); ++iter) {
-        PlotDock::PlotSettings plotSettings = iter.value();
+    for(auto iter=object.plotYAxes[0].cbegin(); iter!=object.plotYAxes[0].cend(); ++iter) {
+        PlotDock::PlotSettings plotSettings = iter->second;
         xml.writeStartElement("y_axis");
-        xml.writeAttribute("name", iter.key());
+        xml.writeAttribute("name", iter->first);
         xml.writeAttribute("line_style", QString::number(plotSettings.lineStyle));
         xml.writeAttribute("point_shape", QString::number(plotSettings.pointShape));
         xml.writeAttribute("colour", plotSettings.colour.name());
         xml.writeAttribute("active", QString::number(plotSettings.active));
         xml.writeEndElement();
     }
-    for(auto iter=object.plotYAxes[1].constBegin(); iter!=object.plotYAxes[1].constEnd(); ++iter) {
-      PlotDock::PlotSettings plotSettings = iter.value();
+    for(auto iter=object.plotYAxes[1].cbegin(); iter!=object.plotYAxes[1].cend(); ++iter) {
+      PlotDock::PlotSettings plotSettings = iter->second;
       xml.writeStartElement("y2_axis");
-      xml.writeAttribute("name", iter.key());
+      xml.writeAttribute("name", iter->first);
       xml.writeAttribute("line_style", QString::number(plotSettings.lineStyle));
       xml.writeAttribute("point_shape", QString::number(plotSettings.pointShape));
       xml.writeAttribute("colour", plotSettings.colour.name());
@@ -2823,12 +2823,12 @@ void MainWindow::saveProject(const QString& currentFilename)
 
         xml.writeStartElement("browse_table_settings");
         const auto settings = ui->tableBrowser->allSettings();
-        for(auto tableIt=settings.constBegin(); tableIt!=settings.constEnd(); ++tableIt) {
+        for(auto tableIt=settings.cbegin(); tableIt!=settings.cend(); ++tableIt) {
 
             xml.writeStartElement("table");
-            xml.writeAttribute("schema", QString::fromStdString(tableIt.key().schema()));
-            xml.writeAttribute("name", QString::fromStdString(tableIt.key().name()));
-            saveBrowseDataTableSettings(tableIt.value(), xml);
+            xml.writeAttribute("schema", QString::fromStdString(tableIt->first.schema()));
+            xml.writeAttribute("name", QString::fromStdString(tableIt->first.name()));
+            saveBrowseDataTableSettings(tableIt->second, xml);
             xml.writeEndElement();
         }
         // </browse_table_settings>

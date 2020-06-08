@@ -20,7 +20,7 @@
 #include <QTextCodec>
 #include <QColorDialog>
 
-QMap<sqlb::ObjectIdentifier, BrowseDataTableSettings> TableBrowser::m_settings;
+std::map<sqlb::ObjectIdentifier, BrowseDataTableSettings> TableBrowser::m_settings;
 QString TableBrowser::m_defaultEncoding;
 
 TableBrowser::TableBrowser(QWidget* parent) :
@@ -462,7 +462,7 @@ void TableBrowser::updateTable()
         });
     }
     // Search stored table settings for this table
-    bool storedDataFound = m_settings.contains(tablename);
+    bool storedDataFound = contains(m_settings, tablename);
 
     // Set new table
     if(!storedDataFound)
@@ -507,8 +507,8 @@ void TableBrowser::updateTable()
         query.setOrderBy(storedData.query.orderBy());
 
         // Filters
-        for(auto it=storedData.filterValues.constBegin();it!=storedData.filterValues.constEnd();++it)
-            query.where().insert({it.key(), CondFormat::filterToSqlCondition(it.value(), m_model->encoding())});
+        for(auto it=storedData.filterValues.cbegin();it!=storedData.filterValues.cend();++it)
+            query.where().insert({it->first, CondFormat::filterToSqlCondition(it->second, m_model->encoding())});
 
         // Global filter
         for(const auto& f : storedData.globalFilters)
@@ -608,7 +608,7 @@ void TableBrowser::updateFilter(size_t column, const QString& value)
 
     m_model->updateFilter(column, value);
     BrowseDataTableSettings& settings = m_settings[currentlyBrowsedTableName()];
-    if(value.isEmpty() && settings.filterValues.remove(static_cast<int>(column)) > 0)
+    if(value.isEmpty() && settings.filterValues.erase(static_cast<int>(column)) > 0)
     {
         emit projectModified();
     } else {
@@ -710,7 +710,7 @@ void TableBrowser::modifyFormat(std::function<void(CondFormat&)> changeFunction)
     const std::unordered_set<size_t>& columns = ui->dataTable->selectedCols();
     if (columns.size() > 0) {
         for (size_t column : columns) {
-            const QString& filter = m_settings[currentlyBrowsedTableName()].filterValues.value(static_cast<int>(column));
+            const QString& filter = m_settings[currentlyBrowsedTableName()].filterValues.at(static_cast<int>(column));
             modifySingleFormat(false, filter, currentIndex().sibling(currentIndex().row(), static_cast<int>(column)), changeFunction);
         }
     } else {
@@ -780,15 +780,15 @@ void TableBrowser::applySettings(const BrowseDataTableSettings& storedData, bool
 
     // Column hidden status
     on_actionShowAllColumns_triggered();
-    for(auto hiddenIt=storedData.hiddenColumns.constBegin();hiddenIt!=storedData.hiddenColumns.constEnd();++hiddenIt)
-        hideColumns(hiddenIt.key(), hiddenIt.value());
+    for(auto hiddenIt=storedData.hiddenColumns.cbegin();hiddenIt!=storedData.hiddenColumns.cend();++hiddenIt)
+        hideColumns(hiddenIt->first, hiddenIt->second);
 
     // Column widths
-    QMap<int, int> w = storedData.columnWidths;                         // We need to make a copy here because with some versions of Qt
-    for(auto widthIt=w.constBegin();widthIt!=w.constEnd();++widthIt)    // the container gets modified in a way which causes a crash
+    std::map<int, int> w = storedData.columnWidths;                         // We need to make a copy here because with some versions of Qt
+    for(auto widthIt=w.cbegin();widthIt!=w.cend();++widthIt)                // the container gets modified in a way which causes a crash
     {
-        if(widthIt.key() < ui->dataTable->model()->columnCount())
-            ui->dataTable->setColumnWidth(widthIt.key(), widthIt.value());
+        if(widthIt->first < ui->dataTable->model()->columnCount())
+            ui->dataTable->setColumnWidth(widthIt->first, widthIt->second);
     }
     m_columnsResized = true;
 
@@ -798,16 +798,16 @@ void TableBrowser::applySettings(const BrowseDataTableSettings& storedData, bool
         // Set filters blocking signals, since the filter is already applied to the browse table model
         FilterTableHeader* filterHeader = qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader());
         bool oldState = filterHeader->blockSignals(true);
-        for(auto filterIt=storedData.filterValues.constBegin();filterIt!=storedData.filterValues.constEnd();++filterIt)
-            filterHeader->setFilter(static_cast<size_t>(filterIt.key()), filterIt.value());
+        for(auto filterIt=storedData.filterValues.cbegin();filterIt!=storedData.filterValues.cend();++filterIt)
+            filterHeader->setFilter(static_cast<size_t>(filterIt->first), filterIt->second);
 
         // Regular conditional formats
-        for(auto formatIt=storedData.condFormats.constBegin(); formatIt!=storedData.condFormats.constEnd(); ++formatIt)
-            m_model->setCondFormats(false, formatIt.key(), formatIt.value());
+        for(auto formatIt=storedData.condFormats.cbegin(); formatIt!=storedData.condFormats.cend(); ++formatIt)
+            m_model->setCondFormats(false, formatIt->first, formatIt->second);
 
         // Row Id formats
-        for(auto formatIt=storedData.rowIdFormats.constBegin(); formatIt!=storedData.rowIdFormats.constEnd(); ++formatIt)
-            m_model->setCondFormats(true, formatIt.key(), formatIt.value());
+        for(auto formatIt=storedData.rowIdFormats.cbegin(); formatIt!=storedData.rowIdFormats.cend(); ++formatIt)
+            m_model->setCondFormats(true, formatIt->first, formatIt->second);
 
         filterHeader->blockSignals(oldState);
 
@@ -1348,7 +1348,7 @@ void TableBrowser::editDisplayFormat()
         if(new_format.size())
             m_settings[current_table].displayFormats[field_number] = new_format;
         else
-            m_settings[current_table].displayFormats.remove(field_number);
+            m_settings[current_table].displayFormats.erase(field_number);
         emit projectModified();
 
         // Refresh view
@@ -1417,7 +1417,7 @@ void TableBrowser::setTableEncoding(bool forAllTables)
             m_defaultEncoding = encoding;
 
             for(auto it=m_settings.begin();it!=m_settings.end();++it)
-                it.value().encoding = encoding;
+                it->second.encoding = encoding;
         }
 
         emit projectModified();
@@ -1511,7 +1511,7 @@ void TableBrowser::find(const QString& expr, bool forward, bool include_first, R
         column_list.push_back(0);
     for(int i=1;i<m_model->columnCount();i++)
     {
-        if(m_settings[tableName].hiddenColumns.contains(i) == false)
+        if(contains(m_settings[tableName].hiddenColumns, i) == false)
             column_list.push_back(i);
         else if(m_settings[tableName].hiddenColumns[i] == false)
             column_list.push_back(i);

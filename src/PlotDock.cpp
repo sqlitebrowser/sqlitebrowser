@@ -138,7 +138,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
 
         // save current selected columns, so we can restore them after the update
         QString sItemX; // selected X column
-        QList<QMap<QString, PlotSettings>> mapItemsY = {QMap<QString, PlotSettings>(), QMap<QString, PlotSettings>()};
+        std::vector<std::map<QString, PlotSettings>> mapItemsY = {std::map<QString, PlotSettings>(), std::map<QString, PlotSettings>()};
 
         if(keepOrResetSelection)
         {
@@ -151,7 +151,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
 
                 for(int y_ind = 0; y_ind < 2; y_ind++)
                   if(item->checkState(PlotColumnY[y_ind]) == Qt::Checked)
-                    mapItemsY[y_ind][item->text(PlotColumnField)] = PlotSettings(0, 0, item->backgroundColor(PlotColumnY[y_ind]), item->checkState(PlotColumnY[y_ind]) == Qt::Checked);
+                    mapItemsY[static_cast<size_t>(y_ind)][item->text(PlotColumnField)] = PlotSettings(0, 0, item->backgroundColor(PlotColumnY[y_ind]), item->checkState(PlotColumnY[y_ind]) == Qt::Checked);
 
             }
         } else {
@@ -203,7 +203,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                     // restore previous check state
                     for(int y_ind = 0; y_ind < 2; y_ind++)
                       {
-                        if(mapItemsY[y_ind].contains(columnitem->text(PlotColumnField)))
+                        if(contains(mapItemsY[y_ind], columnitem->text(PlotColumnField)))
                         {
                           columnitem->setCheckState(PlotColumnY[y_ind], mapItemsY[y_ind][columnitem->text(PlotColumnField)].active ? Qt::Checked : Qt::Unchecked);
                           columnitem->setBackgroundColor(PlotColumnY[y_ind], mapItemsY[y_ind][columnitem->text(PlotColumnField)].colour);
@@ -236,7 +236,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                 // restore previous check state
                 for(int y_ind = 0; y_ind < 2; y_ind++)
                 {
-                    if(mapItemsY[y_ind].contains(columnitem->text(PlotColumnField)))
+                    if(contains(mapItemsY[y_ind], columnitem->text(PlotColumnField)))
                     {
                       columnitem->setCheckState(PlotColumnY[y_ind], mapItemsY[y_ind][columnitem->text(PlotColumnField)].active ? Qt::Checked : Qt::Unchecked);
                       columnitem->setBackgroundColor(PlotColumnY[y_ind], mapItemsY[y_ind][columnitem->text(PlotColumnField)].colour);
@@ -652,7 +652,7 @@ void PlotDock::on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem* item, int c
 
                 // Save settings for this table
                 if(m_currentTableSettings)
-                    m_currentTableSettings->plotYAxes[y_ind].remove(item->text(PlotColumnField));
+                    m_currentTableSettings->plotYAxes[y_ind].erase(item->text(PlotColumnField));
             }
         }
     }
@@ -727,11 +727,11 @@ void PlotDock::on_comboLineType_currentIndexChanged(int index)
     {
         for(int y_ind = 0; y_ind < 2; y_ind++)
         {
-            QMap<QString, PlotSettings>& graphs = m_currentTableSettings->plotYAxes[y_ind];
+            std::map<QString, PlotSettings>& graphs = m_currentTableSettings->plotYAxes[y_ind];
             auto it = graphs.begin();
             while(it != graphs.end())
             {
-                it.value().lineStyle = lineStyle;
+                it->second.lineStyle = lineStyle;
                 ++it;
             }
         }
@@ -765,11 +765,11 @@ void PlotDock::on_comboPointShape_currentIndexChanged(int index)
     {
         for(int y_ind = 0; y_ind < 2; y_ind++)
         {
-            QMap<QString, PlotSettings>& graphs = m_currentTableSettings->plotYAxes[y_ind];
+            std::map<QString, PlotSettings>& graphs = m_currentTableSettings->plotYAxes[y_ind];
             auto it = graphs.begin();
             while(it != graphs.end())
             {
-                it.value().pointShape = shape;
+                it->second.pointShape = shape;
                 ++it;
             }
         }

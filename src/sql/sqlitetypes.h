@@ -3,16 +3,23 @@
 #define SQLITETYPES_H
 
 #include <algorithm>
+#include <cctype>
+#include <map>
 #include <memory>
+#include <set>
 #include <string>
 #include <vector>
-#include <cctype>
-#include <set>
 
 template<typename C, typename E>
 bool contains(const C& container, E element)
 {
     return std::find(container.begin(), container.end(), element) != container.end();
+}
+
+template<typename T1, typename T2, typename E>
+bool contains(const std::map<T1, T2>& container, E element)
+{
+    return container.find(element) != container.end();
 }
 
 template<typename T>
