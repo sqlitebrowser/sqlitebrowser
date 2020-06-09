@@ -504,7 +504,7 @@ void TableBrowser::updateTable()
         sqlb::Query query(tablename);
 
         // Sorting
-        query.setOrderBy(storedData.query.orderBy());
+        query.setOrderBy(storedData.sortColumns);
 
         // Filters
         for(auto it=storedData.filterValues.cbegin();it!=storedData.filterValues.cend();++it)
@@ -1059,7 +1059,7 @@ void TableBrowser::headerClicked(int logicalindex)
     ui->dataTable->verticalHeader()->setMinimumWidth(ui->dataTable->verticalHeader()->width());
 
     // Get the current list of sort columns
-    auto& columns = settings.query.orderBy();
+    auto& columns = settings.sortColumns;
 
     // Before sorting, first check if the Control key is pressed. If it is, we want to append this column to the list of sort columns. If it is not,
     // we want to sort only by the new column.
@@ -1318,7 +1318,7 @@ void TableBrowser::on_actionClearFilters_triggered()
 void TableBrowser::on_actionClearSorting_triggered()
 {
     // Get the current list of sort columns
-    auto& columns = m_settings[currentlyBrowsedTableName()].query.orderBy();
+    auto& columns = m_settings[currentlyBrowsedTableName()].sortColumns;
     columns.clear();
     // Set cleared vector of sort-by columns
     m_model->sort(columns);

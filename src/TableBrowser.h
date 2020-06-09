@@ -27,7 +27,7 @@ class TableBrowser;
 struct BrowseDataTableSettings
 {
     using CondFormatMap = std::map<size_t, std::vector<CondFormat>>;
-    sqlb::Query query;                              // NOTE: We only store the sort order in here (for now)
+    std::vector<sqlb::SortedColumn> sortColumns;
     std::map<int, int> columnWidths;
     std::map<int, QString> filterValues;
     CondFormatMap condFormats;

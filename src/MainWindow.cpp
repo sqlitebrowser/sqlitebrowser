@@ -2304,7 +2304,7 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, QXmlS
                 {
                     int index = xml.attributes().value("index").toInt();
                     int mode = xml.attributes().value("mode").toInt();
-                    settings.query.orderBy().emplace_back(index, mode == Qt::AscendingOrder ? sqlb::Ascending : sqlb::Descending);
+                    settings.sortColumns.emplace_back(index, mode == Qt::AscendingOrder ? sqlb::Ascending : sqlb::Descending);
                     xml.skipCurrentElement();
                 }
             }
@@ -2653,7 +2653,7 @@ static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, Q
     xml.writeAttribute("unlock_view_pk", object.unlockViewPk);
 
     xml.writeStartElement("sort");
-    for(const auto& column : object.query.orderBy())
+    for(const auto& column : object.sortColumns)
     {
         xml.writeStartElement("column");
         xml.writeAttribute("index", QString::number(column.column));
