@@ -1467,10 +1467,10 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
   <action name="actionSqlOpenTab">
    <property name="icon">
     <iconset resource="icons/icons.qrc">
-     <normaloff>:/icons/open_tab</normaloff>:/icons/open_tab</iconset>
+     <normaloff>:/icons/new_tab</normaloff>:/icons/new_tab</iconset>
    </property>
    <property name="text">
-    <string>Open &amp;tab</string>
+    <string>New &amp;tab</string>
    </property>
    <property name="whatsThis">
     <string>This button opens a new tab for the SQL editor</string>

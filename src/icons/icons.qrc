@@ -24,7 +24,7 @@
         <file alias="trigger_delete">script_delete.png</file>
         <file alias="settings">wrench.png</file>
         <file alias="whatis">help.png</file>
-        <file alias="open_tab">tab_add.png</file>
+        <file alias="new_tab">tab_add.png</file>
         <file alias="run">resultset_next.png</file>
         <file alias="save_sql">page_save.png</file>
         <file alias="open_sql">page_white_database.png</file>
