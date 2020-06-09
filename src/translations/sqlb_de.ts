@@ -3376,12 +3376,12 @@ Sie können SQL-Anweisungen aus einer Objektzeile fassen und in anderen Anwendun
     <message>
         <location filename="../MainWindow.ui" line="1646"/>
         <source>This button lets you save all the settings associated to the open DB to a DB Browser for SQLite project file</source>
-        <translation type="unfinished"></translation>
+        <translation>Dieser Button erlaubt Ihnen das Speichern aller mit der geöffneten DB verbundenen Einstellungen in einer DB4S-Projektdatei</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1667"/>
         <source>This button lets you open a DB Browser for SQLite project file</source>
-        <translation type="unfinished"></translation>
+        <translation>Dieser Button erlaubt Ihnen das Öffnen einer DB4S-Projektdatei</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1942"/>
@@ -3788,12 +3788,12 @@ Sie können SQL-Anweisungen aus der Schemaspalte nehmen und in den SQL-Editor od
     <message>
         <location filename="../MainWindow.ui" line="1506"/>
         <source>Open SQL file(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>SQL-Datei(en) öffnen</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1509"/>
         <source>This button opens files containing SQL statements and loads them in new editor tabs</source>
-        <translation type="unfinished"></translation>
+        <translation>Dieser Button öffnet Dateien mit SQL-Anweisungen und lädt diese in neue Editortabs</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1542"/>
@@ -4930,12 +4930,12 @@ Möchten Sie die Datenbank wirklich speichern?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="898"/>
         <source>Edit View %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ansicht %1 bearbeiten</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="904"/>
         <source>Edit Trigger %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Trigger %1 bearbeiten</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1002"/>
@@ -4994,7 +4994,7 @@ Sind Sie sich sicher?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="3135"/>
         <source>This action will open a new SQL tab with the following statements for you to edit and run:</source>
-        <translation type="unfinished"></translation>
+        <translation>Diese Aktion öffnet einen neuen SQL-Tab mit den folgenden Anweisungen zum Bearbeiten und Ausführen:</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3331"/>
@@ -5345,12 +5345,12 @@ Erstellen Sie ein Backup!</translation>
     <message>
         <location filename="../PlotDock.ui" line="56"/>
         <source>Y1</source>
-        <translation type="unfinished"></translation>
+        <translation>Y1</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="61"/>
         <source>Y2</source>
-        <translation type="unfinished"></translation>
+        <translation>Y2</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="66"/>
@@ -6198,12 +6198,12 @@ Kann auf 0 gesetzt werden, um die Vervollständigung zu deaktivieren.</translati
     <message>
         <location filename="../PreferencesDialog.ui" line="1526"/>
         <source>Close button on tabs</source>
-        <translation type="unfinished"></translation>
+        <translation>Schließen-Button für Tabs</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1536"/>
         <source>If enabled, SQL editor tabs will have a close button. In any case, you can use the contextual menu or the keyboard shortcut to close them.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wenn aktiviert, werden die SQL-Editor-Tabs einen Schließen-Button haben. In allen Fällen können Sie zum Schließen auch das Kontextmenü oder die Tastenkombination verwenden.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1549"/>
@@ -6851,7 +6851,7 @@ Erstellen Sie ein Backup!</translation>
     <message>
         <location filename="../RemoteDock.ui" line="86"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB Browser for SQLite. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to &amp;quot;Generate client certificate&amp;quot; (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB Browser for SQLite Preferences. Click the button to add a new certificate to DB Browser for SQLite and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In diesem Pane könnten entfernte Datenbanken von der dbhub.io-Webseite zu DB4S hinzugefügt werden. Zunächst benötigen Sie eine Identität:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Melden Sie sich auf der dbhub.io-Webseite an (unter Verwendung Ihrer GitHub-Daten oder wie gewünscht)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klicken Sie auf den Button, um ein DB4S-Zertifikat zu erstellen (das ist Ihre Identität). Dies erzeugt Ihnen eine Zertifikatsdatei (speichern Sie dies auf ihrer lokalen Festplatte).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Öffnen Sie den Remote-Tab in den DB4S-Einstellungen. Klicken Sie auf den Button, um ein neues Zertifikat zu DB4S hinzuzufügen und wählen Sie die soeben heruntergeladene Zertifikatsdatei aus.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Jetzt zeigt das Remote-Panel Ihre Identität und Sie können entfernte Datenbanken hinzufügen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB4S. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to create a DB4S certificate (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB4S Preferences. Click the button to add a new certificate to DB4S and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -7762,7 +7762,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="526"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates up to the end in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ein Klick auf diesen Button navigiert zum Anfang der oben angezeigten Tabelle.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="529"/>
@@ -8188,7 +8188,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.cpp" line="42"/>
         <source>Filter in any column</source>
-        <translation type="unfinished"></translation>
+        <translation>In allen Spalten filtern</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="102"/>
