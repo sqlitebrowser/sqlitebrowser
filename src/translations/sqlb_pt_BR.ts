@@ -20,7 +20,7 @@
     <message>
         <location filename="../AboutDialog.cpp" line="19"/>
         <source>SQLCipher Version %1 (based on SQLite %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>SQLCipher versão %1 (baseado em SQLite %2)</translation>
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="21"/>
@@ -30,7 +30,7 @@
     <message>
         <location filename="../AboutDialog.cpp" line="22"/>
         <source>Built for %1, running on %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Compilado para %1, rodando em %2</translation>
     </message>
     <message>
         <source>Built for </source>
@@ -4752,12 +4752,12 @@ Você pode arrastar comandos SQL da coluna Esquema e largá-los no editor SQL ou
     <message>
         <location filename="../MainWindow.ui" line="1646"/>
         <source>This button lets you save all the settings associated to the open DB to a DB Browser for SQLite project file</source>
-        <translation type="unfinished"></translation>
+        <translation>Este botão lhe permite salvar todas as configurações associadas ao banco de dados aberto a um arquivo de projeto do DB Browser para SQLite</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1667"/>
         <source>This button lets you open a DB Browser for SQLite project file</source>
-        <translation type="unfinished"></translation>
+        <translation>Este botão lhe permite abrir um arquivo de projeto do DB Browser para SQLite</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1942"/>
@@ -5471,12 +5471,12 @@ Faça um backup!</translation>
     <message>
         <location filename="../PlotDock.ui" line="56"/>
         <source>Y1</source>
-        <translation type="unfinished"></translation>
+        <translation>Y1</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="61"/>
         <source>Y2</source>
-        <translation type="unfinished"></translation>
+        <translation>Y2</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="66"/>
@@ -6710,7 +6710,7 @@ Faça um backup!</translation>
     <message>
         <location filename="../RemoteDock.ui" line="86"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB Browser for SQLite. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to &amp;quot;Generate client certificate&amp;quot; (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB Browser for SQLite Preferences. Click the button to add a new certificate to DB Browser for SQLite and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Neste painel, bancos de dados remotos do dbhub.io podem ser adicionados ao DB Browser para SQLite. Primeiro você precisa adicionar uma identidade:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Entrar no dbhub.io (use suas credenciais do GitHub ou algum outro método)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Clique o botão para &amp;quot;Gerar certificado do cliente&amp;quot; (essa é sua identidade). Isto te dará um certificado (salve-o no disco local).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Vá para a aba Remoto nas configurações do DB Browser para SQLite. Clique no botão para adicionar um novo certificado ao DB Browser para SQLite e escolha o arquivo recém baixado.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Agora o painel remoto mostra sua identidade e você pode adicionar bancos de dados remotos.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="127"/>
@@ -7618,7 +7618,7 @@ Segure %3Shift e clique para ir para lá</translation>
     <message>
         <location filename="../TableBrowser.ui" line="526"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates up to the end in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicar nesse botão navega para o fim da tabela acima.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="529"/>
