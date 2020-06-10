@@ -6,6 +6,8 @@
 #include <QDialog>
 #include <QVariant>
 
+#include <vector>
+
 class QMenu;
 class QPrinter;
 class QTreeWidgetItem;
@@ -95,8 +97,8 @@ private:
     bool m_showLegend;
     bool m_stackedBars;
     Palette m_graphPalette;
-    QList<QCPAxis *> yAxes;
-    QList<int> PlotColumnY;
+    std::vector<QCPAxis *> yAxes;
+    std::vector<int> PlotColumnY;
 
     /*!
      * \brief guessdatatype try to parse the first 10 rows and decide the datatype
