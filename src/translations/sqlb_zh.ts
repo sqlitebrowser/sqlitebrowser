@@ -3925,12 +3925,12 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1506"/>
         <source>Open SQL file(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>打开 SQL 文件</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1509"/>
         <source>This button opens files containing SQL statements and loads them in new editor tabs</source>
-        <translation type="unfinished"></translation>
+        <translation>此按钮打开包含 SQL 语句的文件，将其载入到新标签页</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1545"/>
@@ -4573,12 +4573,12 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="898"/>
         <source>Edit View %1</source>
-        <translation type="unfinished"></translation>
+        <translation>编辑视图 %1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="904"/>
         <source>Edit Trigger %1</source>
-        <translation type="unfinished"></translation>
+        <translation>编辑触发器 %1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1112"/>
@@ -4646,7 +4646,7 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="3135"/>
         <source>This action will open a new SQL tab with the following statements for you to edit and run:</source>
-        <translation type="unfinished"></translation>
+        <translation>此动作会打开包含下列语句的新的 SQL 标签页以编辑并运行:</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3331"/>
@@ -6000,12 +6000,12 @@ Can be set to 0 for disabling completion.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="1526"/>
         <source>Close button on tabs</source>
-        <translation type="unfinished"></translation>
+        <translation>标签显示关闭按钮</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1536"/>
         <source>If enabled, SQL editor tabs will have a close button. In any case, you can use the contextual menu or the keyboard shortcut to close them.</source>
-        <translation type="unfinished"></translation>
+        <translation>如果启用，SQL 编辑器标签页上将显示关闭按钮。无论是否启用，你都可以通过右键菜单或者键盘快捷键来关闭标签。</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1549"/>
@@ -7866,7 +7866,7 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.cpp" line="42"/>
         <source>Filter in any column</source>
-        <translation type="unfinished"></translation>
+        <translation>在所有列中过滤</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="102"/>
