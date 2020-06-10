@@ -29,10 +29,10 @@ struct BrowseDataTableSettings
     using CondFormatMap = std::map<size_t, std::vector<CondFormat>>;
     std::vector<sqlb::SortedColumn> sortColumns;
     std::map<int, int> columnWidths;
-    std::map<int, QString> filterValues;
+    std::map<size_t, QString> filterValues;
     CondFormatMap condFormats;
     CondFormatMap rowIdFormats;
-    std::map<int, QString> displayFormats;
+    std::map<size_t, QString> displayFormats;
     bool showRowid;
     QString encoding;
     QString plotXAxis;
@@ -100,9 +100,8 @@ private slots:
     void clearAllCondFormats(size_t column);
     void clearRowIdFormats(const QModelIndex index);
     void editCondFormats(size_t column);
-    void applySettings(const BrowseDataTableSettings& storedData, bool skipFilters = false);
     void enableEditing(bool enable_edit);
-    void showRowidColumn(bool show, bool skipFilters = false);
+    void showRowidColumn(bool show);
     void unlockViewEditing(bool unlock, QString pk = QString());
     void hideColumns(int column = -1, bool hide = true);
     void on_actionShowAllColumns_triggered();
@@ -164,6 +163,11 @@ private:
     void modifySingleFormat(const bool isRowIdFormat, const QString& filter, const QModelIndex refIndex,
                             std::function<void(CondFormat&)> changeFunction);
     void modifyFormat(std::function<void(CondFormat&)> changeFunction);
+
+    sqlb::Query buildQuery(const BrowseDataTableSettings& storedData, const sqlb::ObjectIdentifier& tablename) const;
+    void applyModelSettings(const BrowseDataTableSettings& storedData, const sqlb::Query& query);
+    void applyViewportSettings(const BrowseDataTableSettings& storedData, const sqlb::ObjectIdentifier& tablename);
+    void generateFilters();
 };
 
 #endif

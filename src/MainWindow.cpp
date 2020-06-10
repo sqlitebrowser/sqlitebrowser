@@ -2319,7 +2319,7 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, QXmlS
         } else if(xml.name() == "filter_values") {
             while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "filter_values") {
                 if (xml.name() == "column") {
-                    int index = xml.attributes().value("index").toInt();
+                    size_t index = xml.attributes().value("index").toUInt();
                     settings.filterValues[index] = xml.attributes().value("value").toString();
                     xml.skipCurrentElement();
                 }
@@ -2331,7 +2331,7 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, QXmlS
         } else if(xml.name() == "display_formats") {
             while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "display_formats") {
                 if (xml.name() == "column") {
-                    int index = xml.attributes().value("index").toInt();
+                    size_t index = xml.attributes().value("index").toUInt();
                     settings.displayFormats[index] = xml.attributes().value("value").toString();
                     xml.skipCurrentElement();
                 }
