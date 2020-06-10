@@ -4220,12 +4220,12 @@ Deixe o campo em branco para usar a codificação do banco de dados.</translatio
     <message>
         <location filename="../MainWindow.ui" line="1506"/>
         <source>Open SQL file(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir arquivo(s) SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1509"/>
         <source>This button opens files containing SQL statements and loads them in new editor tabs</source>
-        <translation type="unfinished"></translation>
+        <translation>Este botão abre arquivos SQL e carrega eles em novas abas no editor</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1554"/>
@@ -5015,12 +5015,12 @@ Você tem certeza que quer salvar o banco de dados?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="898"/>
         <source>Edit View %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar vista %1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="904"/>
         <source>Edit Trigger %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar gatilho %1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1002"/>
@@ -5056,7 +5056,7 @@ Você tem certeza que quer salvar o banco de dados?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="3135"/>
         <source>This action will open a new SQL tab with the following statements for you to edit and run:</source>
-        <translation type="unfinished"></translation>
+        <translation>Esta ação abrirá uma nova aba SQL com os seguintes comandos para você editar e executar:</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3331"/>
@@ -6348,12 +6348,12 @@ Pode ser 0 para desabilitar preenchimento.</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="1526"/>
         <source>Close button on tabs</source>
-        <translation type="unfinished"></translation>
+        <translation>Botão para fechar abas</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1536"/>
         <source>If enabled, SQL editor tabs will have a close button. In any case, you can use the contextual menu or the keyboard shortcut to close them.</source>
-        <translation type="unfinished"></translation>
+        <translation>Se ativado, as abas do editor de SQL terão um botão para fechá-las. De qualquer forma, você pode usar o menu de contexto ou o atalho de teclado para fechá-las.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1849"/>
@@ -6738,7 +6738,7 @@ Faça um backup!</translation>
     <message>
         <location filename="../RemoteDock.ui" line="86"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB Browser for SQLite. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to &amp;quot;Generate client certificate&amp;quot; (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB Browser for SQLite Preferences. Click the button to add a new certificate to DB Browser for SQLite and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Neste painel, bancos de dados remotos do dbhub.io podem ser adicionados ao DB Browser para SQLite. Primeiro você precisa adicionar uma identidade:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Entrar no dbhub.io (use suas credenciais do GitHub ou algum outro método)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Clique o botão para &amp;quot;Gerar certificado do cliente&amp;quot; (essa é sua identidade). Isto te dará um certificado (salve-o no disco local).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Vá para a aba Remoto nas configurações do DB Browser para SQLite. Clique no botão para adicionar um novo certificado ao DB Browser para SQLite e escolha o arquivo recém baixado.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Agora o painel remoto mostra sua identidade e você pode adicionar bancos de dados remotos.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Neste painel, bancos de dados remotos do dbhub.io podem ser adicionados ao DB Browser para SQLite. Primeiro você precisa adicionar uma identidade:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Entre no dbhub.io (use suas credenciais do GitHub ou algum outro método)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Clique o botão &amp;quot;Gerar certificado do cliente&amp;quot; (essa é sua identidade). Isto te dará um certificado (salve-o no disco local).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Vá para a aba Remoto nas configurações do DB Browser para SQLite. Clique no botão para adicionar um novo certificado ao DB Browser para SQLite e escolha o arquivo recém baixado.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Agora o painel remoto mostra sua identidade e você pode adicionar bancos de dados remotos.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="127"/>
@@ -8072,7 +8072,7 @@ Segure %3Shift e clique para ir para lá</translation>
     <message>
         <location filename="../TableBrowser.cpp" line="42"/>
         <source>Filter in any column</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtrar em qualquer coluna</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="102"/>
