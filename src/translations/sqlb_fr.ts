@@ -24,7 +24,7 @@
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/span&gt;&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://sqlitebrowser.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Silk icon set by Mark James licensed under a Creative Commons Attribution 2.5 and 3.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translatorcomment>DB Browser for SQLite est un logiciel libre, open-source utilisé pour créer, concevoir et modifier des bases de données SQLite.</translatorcomment>
+        <translatorcomment>DB Browser pour SQLite est un logiciel libre, open-source utilisé pour créer, concevoir et modifier des bases de données SQLite.</translatorcomment>
         <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser pour SQLite est un logiciel libre, open-source utilisé pour créer, concevoir et modifier des Bases de Données SQLite.&lt;/p&gt;&lt;p&gt;Ce programme est proposé sous une double licence : Mozilla Public License Version 2 et GNU General Public License Version 3 ou suivante. Vous pouvez le modifier ou le redistribuer en respectant les conditions de ces licences.&lt;/p&gt;&lt;p&gt;Voir &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/a&gt; et &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/span&gt;&lt;/a&gt; pour plus de détails.&lt;/p&gt;&lt;p&gt;Pour plus d&apos;information concernant ce programme, visitez notre site Internet sur : &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://sqlitebrowser.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Ce logiciel utilise le GPL/LGPL Qt Toolkit fourni par &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;Voir &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; pour les conditions de licence et toute autre information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Il utilise le jeu d&apos;icones Silk créé par Mark James disponible selon la licence Creative Commons Attribution 2.5 and 3.0.&lt;br/&gt;Voir &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; pour plus de détails.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -46,7 +46,7 @@
     <message>
         <location filename="../AboutDialog.cpp" line="19"/>
         <source>SQLCipher Version %1 (based on SQLite %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>SQLCipher Version %1 (basé sur SQLite %2)</translation>
     </message>
     <message>
         <location filename="../AboutDialog.cpp" line="21"/>
@@ -56,7 +56,7 @@
     <message>
         <location filename="../AboutDialog.cpp" line="22"/>
         <source>Built for %1, running on %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Compilé pour %1, fonctionnant sur %2</translation>
     </message>
     <message>
         <source>Built for </source>
@@ -3653,12 +3653,12 @@ x~y	Fourchette : valeurs entre x et y
     <message>
         <location filename="../MainWindow.ui" line="1646"/>
         <source>This button lets you save all the settings associated to the open DB to a DB Browser for SQLite project file</source>
-        <translation type="unfinished"></translation>
+        <translation>Ce bouton vous permet d&apos;enregistrer tous les paramètres associés à la base de données ouverte dans un fichier projet DB Browser pour SQLite</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1667"/>
         <source>This button lets you open a DB Browser for SQLite project file</source>
-        <translation type="unfinished"></translation>
+        <translation>Ce bouton vous permet d&apos;ouvrir un fichier projet DB Browser pour SQLite</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1942"/>
@@ -4076,7 +4076,7 @@ Vous pouvez faire glisser les instructions SQL de la colonne Schéma et les dép
 You can drag SQL statements from an object row and drop them into other applications or into another instance of &apos;DB Browser for SQLite&apos;.
 </source>
         <translation>Ceci est la structure de la Base de Données ouverte.
-Vous pouvez faire glisser les instructions SQL d&apos;une ligne d&apos;objet et les déposer dans d&apos;autres applications ou dans une autre instance de&apos;DB Browser for SQLite&apos;.
+Vous pouvez faire glisser les instructions SQL d&apos;une ligne d&apos;objet et les déposer dans d&apos;autres applications ou dans une autre instance de&apos;DB Browser pour SQLite&apos;.
 </translation>
     </message>
     <message>
@@ -4454,12 +4454,12 @@ Vous pouvez faire glisser les instructions SQL d&apos;une ligne d&apos;objet et 
     <message>
         <location filename="../MainWindow.ui" line="1506"/>
         <source>Open SQL file(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir un fichier SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1509"/>
         <source>This button opens files containing SQL statements and loads them in new editor tabs</source>
-        <translation type="unfinished"></translation>
+        <translation>Ce bouton ouvre un fichier contenant des instructions SQL et le charge dans un nouvel onglet de l&apos;éditeur</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1518"/>
@@ -4767,7 +4767,7 @@ Toutes les données associées à %1 seront perdues.</translation>
     <message>
         <location filename="../MainWindow.cpp" line="2177"/>
         <source>A new DB Browser for SQLite version is available (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Please download at &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</source>
-        <translation>Une nouvelle version de SQLiteBrowser est disponible (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Vous pouvez la télécharger sur &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</translation>
+        <translation>Une nouvelle version de DB Browser pour SQLite est disponible (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Vous pouvez la télécharger sur &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</translation>
     </message>
     <message>
         <source>Please enter the URL of the database file to save.</source>
@@ -4776,7 +4776,7 @@ Toutes les données associées à %1 seront perdues.</translation>
     <message>
         <location filename="../MainWindow.cpp" line="2410"/>
         <source>DB Browser for SQLite project file (*.sqbpro)</source>
-        <translation>Projet DB Browser pour SQLite (*.sqbpro)</translation>
+        <translation>Fichier de projet DB Browser pour SQLite (*.sqbpro)</translation>
     </message>
     <message>
         <source>Please choose a new encoding for this table.</source>
@@ -5019,12 +5019,12 @@ Are you sure you want to save the database?</source>
     <message>
         <location filename="../MainWindow.cpp" line="898"/>
         <source>Edit View %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Editer la vue %1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="904"/>
         <source>Edit Trigger %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Editer le déclencheur %1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1002"/>
@@ -5083,7 +5083,8 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="3135"/>
         <source>This action will open a new SQL tab with the following statements for you to edit and run:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Need to verify if following statements ore shown bellow ou above or on the open action </translatorcomment>
+        <translation>Cette action ouvrira un nouvel onglet SQL avec les instructions suivantes que vous pourrez modifier et exécuter :</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3331"/>
@@ -5270,12 +5271,12 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="2409"/>
         <source>Choose a project file to open</source>
-        <translation>Coisir un fichier de projet à ouvrir</translation>
+        <translation>Choisir un fichier projet à ouvrir</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2541"/>
         <source>This project file is using an old file format because it was created using DB Browser for SQLite version 3.10 or lower. Loading this file format is still fully supported but we advice you to convert all your project files to the new file format because support for older formats might be dropped at some point in the future. You can convert your files by simply opening and re-saving them.</source>
-        <translation>Ce fichier de projet utilise un ancien format de fichier parce qu&apos;il a été créé avec DB Browser pour SQLite version 3.10 ou inférieure. Le chargement de ce format de fichier est toujours entièrement pris en charge, mais nous vous conseillons de convertir tous vos fichiers de projet vers le nouveau format de fichier car la prise en charge des anciens formats pourrait être supprimée à un moment donné dans le futur. Vous pouvez convertir vos fichiers en les ouvrant et en les sauvegardant à nouveau.</translation>
+        <translation>Ce fichier projet utilise un ancien format de fichier parce qu&apos;il a été créé avec DB Browser pour SQLite version 3.10 ou inférieure. Le chargement de ce format de fichier est toujours totalement pris en charge, mais nous vous conseillons de convertir tous vos fichiers projet vers le nouveau format de fichier, car la prise en charge des anciens formats pourrait être supprimée à un moment ou un autre. Vous pouvez convertir vos fichiers en les ouvrant et en les sauvegardant de nouveau.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2783"/>
@@ -5434,12 +5435,12 @@ Faites une sauvegarde !</translation>
     <message>
         <location filename="../PlotDock.ui" line="56"/>
         <source>Y1</source>
-        <translation type="unfinished"></translation>
+        <translation>Y1</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="61"/>
         <source>Y2</source>
-        <translation type="unfinished"></translation>
+        <translation>Y2</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="66"/>
@@ -6289,12 +6290,12 @@ Peut être mis à 0 pour désactiver la complétion.</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="1526"/>
         <source>Close button on tabs</source>
-        <translation type="unfinished"></translation>
+        <translation>Bouton de fermeture des onglets</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1536"/>
         <source>If enabled, SQL editor tabs will have a close button. In any case, you can use the contextual menu or the keyboard shortcut to close them.</source>
-        <translation type="unfinished"></translation>
+        <translation>Si cette option est activée, les onglets de l&apos;éditeur SQL comporteront un bouton de fermeture. Dans tous les cas, vous pouvez utiliser le menu contextuel ou le raccourci clavier pour les fermer.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1549"/>
@@ -6319,7 +6320,7 @@ Peut être mis à 0 pour désactiver la complétion.</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="1615"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;While supporting the REGEXP operator SQLite doesn&apos;t implement any regular expression&lt;br/&gt;algorithm but calls back the running application. DB Browser for SQLite implements this&lt;br/&gt;algorithm for you to let you use REGEXP out of the box. However, as there are multiple possible&lt;br/&gt;implementations of this and you might want to use another one, you&apos;re free to disable the&lt;br/&gt;application&apos;s implementation and load your own by using an extension. Requires restart of the application.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bien que SQLite supporte l&apos;opérateur REGEXP, aucun algorithme&lt;br&gt;d&apos;expression régulière est implémenté, mais il rappelle l&apos;application en cours d&apos;exécution. DB Browser pour SQLite implémente&lt;br/&gt;cet algorithme pour vous permettre d&apos;utiliser REGEXP. Cependant, comme il existe plusieurs implémentations possibles&lt;br/&gt;et que vous souhaitez peut-être utiliser autre chose, vous êtes libre de désactiver cette implémentation dans l&apos;application&lt;br/&gt;pour utiliser la votre en utilisant une extention. Cela nécessite le redémarrage de l&apos;application.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bien que SQLite supporte l&apos;opérateur REGEXP, aucun algorithme&lt;br&gt;d&apos;expression régulière est implémenté, mais il rappelle l&apos;application en cours d&apos;exécution. DB Browser pour SQLite implémente&lt;br/&gt;cet algorithme pour vous permettre d&apos;utiliser REGEXP. Cependant, comme il existe plusieurs implémentations possibles&lt;br/&gt;et que vous souhaitez peut-être utiliser autre chose, vous êtes libre de désactiver cette implémentation dans l&apos;application&lt;br/&gt;pour utiliser la votre en utilisant une extension. Cela nécessite le redémarrage de l&apos;application.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1618"/>
@@ -6736,7 +6737,7 @@ Faites une sauvegarde !</translation>
     <message>
         <location filename="../FileDialog.h" line="16"/>
         <source>DB Browser for SQLite Project Files (*.sqbpro)</source>
-        <translation>DB Browser pour les fichiers projet SQLite (*.sqbpro)</translation>
+        <translation>Fichiers projet DB Browser pour SQLite (*.sqbpro)</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="20"/>
@@ -6946,7 +6947,7 @@ Faites une sauvegarde !</translation>
     <message>
         <location filename="../RemoteDock.ui" line="86"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB Browser for SQLite. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to &amp;quot;Generate client certificate&amp;quot; (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB Browser for SQLite Preferences. Click the button to add a new certificate to DB Browser for SQLite and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dans ce volet, les bases de données distantes du site Web dbhub.io peuvent être ajoutées à DB Browser pour SQLite. Il faut d&apos;abord vous identifier :&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Connectez-vous sur le site dbhub.io (utilisez vos identifiants GitHub ou ce que vous voulez)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Cliquez sur le bouton &amp;quot;Generate client certificate&amp;quot; (c&apos;est votre identité). Cela vous fournira un fichier de certificat (enregistrez-le sur votre disque local).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Allez dans l&apos;onglet Serveur Distant des Préférences DB Browser pour SQLite . Cliquez sur le bouton pour ajouter un nouveau certificat à DB Browser pour SQLite et choisissez le fichier de certificat que vous venez de télécharger.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Maintenant, le panneau Serveur distant affiche votre identité et vous pouvez ajouter des bases de données distantes..&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB4S. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to create a DB4S certificate (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB4S Preferences. Click the button to add a new certificate to DB4S and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -7862,7 +7863,7 @@ Appuyez simultanément sur %3+Maj et cliquez pour arriver ici</translation>
     <message>
         <location filename="../TableBrowser.ui" line="526"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates up to the end in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Cliquer sur ce bouton permet d&apos;aller à la fin de la table ci-dessus.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="529"/>
@@ -8288,7 +8289,7 @@ Appuyez simultanément sur %3+Maj et cliquez pour arriver ici</translation>
     <message>
         <location filename="../TableBrowser.cpp" line="42"/>
         <source>Filter in any column</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtrer dans n&apos;importe quelle colonne</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="102"/>
@@ -8299,16 +8300,16 @@ Appuyez simultanément sur %3+Maj et cliquez pour arriver ici</translation>
         <location filename="../TableBrowser.cpp" line="443"/>
         <source>%n row(s)</source>
         <translation>
-            <numerusform>%n lignes(s)</numerusform>
-            <numerusform></numerusform>
+            <numerusform>%n ligne</numerusform>
+            <numerusform>%n lignes</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../TableBrowser.cpp" line="445"/>
         <source>, %n column(s)</source>
         <translation>
-            <numerusform>, %n colonne(s)</numerusform>
-            <numerusform></numerusform>
+            <numerusform>, %n colonne</numerusform>
+            <numerusform>, %n colonnes</numerusform>
         </translation>
     </message>
     <message>
