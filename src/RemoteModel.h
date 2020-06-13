@@ -65,6 +65,7 @@ public:
     ~RemoteModel() override;
 
     void setNewRootDir(const QString& url, const QString& cert);
+    void refresh();
 
     QModelIndex index(int row, int column,const QModelIndex& parent = QModelIndex()) const override;
     QModelIndex parent(const QModelIndex& index) const override;

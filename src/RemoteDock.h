@@ -26,7 +26,7 @@ public slots:
     void reject() override;
 
 private slots:
-    void setNewIdentity();
+    void setNewIdentity(const QString& identity);
     void fetchDatabase(const QModelIndex& idx);
     void pushDatabase();
     void newDirectoryNode(const QModelIndex& parent);
