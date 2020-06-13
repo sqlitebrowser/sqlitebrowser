@@ -58,9 +58,15 @@
            <property name="toolTip">
             <string>Push currently opened database to server</string>
            </property>
+           <property name="text">
+            <string>Upload</string>
+           </property>
            <property name="icon">
             <iconset resource="icons/icons.qrc">
              <normaloff>:/icons/push_database</normaloff>:/icons/push_database</iconset>
+           </property>
+           <property name="toolButtonStyle">
+            <enum>Qt::ToolButtonTextBesideIcon</enum>
            </property>
           </widget>
          </item>
