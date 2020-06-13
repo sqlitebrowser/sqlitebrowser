@@ -41,20 +41,6 @@
           </widget>
          </item>
          <item>
-          <widget class="QToolButton" name="buttonLogin">
-           <property name="toolTip">
-            <string>Connect to the remote server using the currently selected identity. The correct server is taken from the identity as well.</string>
-           </property>
-           <property name="text">
-            <string>Go</string>
-           </property>
-           <property name="icon">
-            <iconset resource="icons/icons.qrc">
-             <normaloff>:/icons/cog_go.png</normaloff>:/icons/cog_go.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
           <spacer name="horizontalSpacer">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -203,10 +189,10 @@
  </resources>
  <connections>
   <connection>
-   <sender>buttonLogin</sender>
-   <signal>clicked()</signal>
+   <sender>comboUser</sender>
+   <signal>currentTextChanged(QString)</signal>
    <receiver>RemoteDock</receiver>
-   <slot>setNewIdentity()</slot>
+   <slot>setNewIdentity(QString)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>134</x>
@@ -284,7 +270,7 @@
   </connection>
  </connections>
  <slots>
-  <slot>setNewIdentity()</slot>
+  <slot>setNewIdentity(QString)</slot>
   <slot>fetchDatabase(QModelIndex)</slot>
   <slot>pushDatabase()</slot>
   <slot>switchToMainView()</slot>

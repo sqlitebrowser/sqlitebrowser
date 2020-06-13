@@ -61,8 +61,12 @@ RemoteDock::~RemoteDock()
 
 void RemoteDock::reloadSettings()
 {
-    // Load list of client certs
+    // Clear list of client certificates and add a dummy entry which does nothing except serve as
+    // an explanation to the user.
     ui->comboUser->clear();
+    ui->comboUser->addItem(tr("Select an identity to connect"), "dummy");
+
+    // Load list of client certs
     QStringList client_certs = Settings::getValue("remote", "client_certificates").toStringList();
     for(const QString& file : client_certs)
     {
@@ -75,12 +79,15 @@ void RemoteDock::reloadSettings()
     ui->comboUser->addItem(tr("Public"), ":/user_certs/public.cert.pem");
 }
 
-void RemoteDock::setNewIdentity()
+void RemoteDock::setNewIdentity(const QString& identity)
 {
-    // Get identity
-    QString identity = ui->comboUser->currentText();
-    if(identity.isEmpty())
+    // Do nothing if the dummy entry was selected
+    if(ui->comboUser->currentData() == "dummy")
         return;
+
+    // Check if the dummy item is still there and remove it if it is
+    if(ui->comboUser->itemData(0) == "dummy")
+        ui->comboUser->removeItem(0);
 
     // Get certificate file name
     QString cert = ui->comboUser->itemData(ui->comboUser->findText(identity), Qt::UserRole).toString();

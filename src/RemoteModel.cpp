@@ -122,6 +122,12 @@ void RemoteModel::setNewRootDir(const QString& url, const QString& cert)
     currentRootDirectory = url;
     currentClientCert = cert;
 
+    // Fetch root directory
+    refresh();
+}
+
+void RemoteModel::refresh()
+{
     // Fetch root directory and put the reply data under the root item
     remoteDatabase.fetch(currentRootDirectory, RemoteDatabase::RequestTypeDirectory, currentClientCert, QModelIndex());
 }
