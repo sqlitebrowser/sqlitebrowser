@@ -151,8 +151,10 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
 
                 for(size_t y_ind = 0; y_ind < 2; y_ind++)
                   if(item->checkState(PlotColumnY[y_ind]) == Qt::Checked)
-                    mapItemsY[y_ind][item->text(PlotColumnField)] = PlotSettings(0, 0, item->backgroundColor(PlotColumnY[y_ind]), item->checkState(PlotColumnY[y_ind]) == Qt::Checked);
-
+                    mapItemsY[y_ind][item->text(PlotColumnField)] = PlotSettings(
+                        0, 0,
+                        item->background(PlotColumnY[y_ind]).color(),
+                        item->checkState(PlotColumnY[y_ind]) == Qt::Checked);
             }
         } else {
             // Get the plot columns to select from the stored browse table information
@@ -206,7 +208,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                         if(contains(mapItemsY[y_ind], columnitem->text(PlotColumnField)))
                         {
                           columnitem->setCheckState(PlotColumnY[y_ind], mapItemsY[y_ind][columnitem->text(PlotColumnField)].active ? Qt::Checked : Qt::Unchecked);
-                          columnitem->setBackgroundColor(PlotColumnY[y_ind], mapItemsY[y_ind][columnitem->text(PlotColumnField)].colour);
+                          columnitem->setBackground(PlotColumnY[y_ind], mapItemsY[y_ind][columnitem->text(PlotColumnField)].colour);
                         } else {
                         if (columntype == QVariant::Double)
                           columnitem->setCheckState(PlotColumnY[y_ind], Qt::Unchecked);
@@ -239,7 +241,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                     if(contains(mapItemsY[y_ind], columnitem->text(PlotColumnField)))
                     {
                       columnitem->setCheckState(PlotColumnY[y_ind], mapItemsY[y_ind][columnitem->text(PlotColumnField)].active ? Qt::Checked : Qt::Unchecked);
-                      columnitem->setBackgroundColor(PlotColumnY[y_ind], mapItemsY[y_ind][columnitem->text(PlotColumnField)].colour);
+                      columnitem->setBackground(PlotColumnY[y_ind], mapItemsY[y_ind][columnitem->text(PlotColumnField)].colour);
                     } else {
                     columnitem->setCheckState(PlotColumnY[y_ind], Qt::Unchecked);
                     }
@@ -450,7 +452,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                                 ticker->addTicks(xdata, labels);
                                 ui->plotWidget->xAxis->setTicker(ticker);
                             }
-                            QColor color = item->backgroundColor(PlotColumnY[y_ind]);
+                            QColor color = item->background(PlotColumnY[y_ind]).color();
                             bars->setBrush(color);
                             plottable->setPen(QPen(color.darker(150)));
                         }
@@ -467,7 +469,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                                 // set some graph styles not supported by the abstract plottable
                                 graph->setLineStyle(static_cast<QCPGraph::LineStyle>(ui->comboLineType->currentIndex()));
                                 graph->setScatterStyle(scatterStyle);
-                                plottable->setPen(QPen(item->backgroundColor(PlotColumnY[y_ind])));
+                                plottable->setPen(QPen(item->background(PlotColumnY[y_ind]).color()));
                             }
                         }
                     } else {
@@ -484,7 +486,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                                 else
                                     curve->setLineStyle(QCPCurve::lsLine);
                                 curve->setScatterStyle(scatterStyle);
-                                plottable->setPen(QPen(item->backgroundColor(PlotColumnY[y_ind])));
+                                plottable->setPen(QPen(item->background(PlotColumnY[y_ind]).color()));
                             }
                         }
                     }
@@ -593,12 +595,12 @@ void PlotDock::on_treePlotColumns_itemChanged(QTreeWidgetItem* changeitem, int c
                 if(changeitem->checkState(column) == Qt::Checked)
                 {
                     // Generate a default colour if none isn't set yet
-                    QColor colour = changeitem->backgroundColor(column);
+                    QColor colour = changeitem->background(column).color();
                     if(!colour.isValid())
                         colour = m_graphPalette.nextSerialColor(true);
 
                     // Set colour
-                    changeitem->setBackgroundColor(column, colour);
+                    changeitem->setBackground(column, colour);
 
                     // Save settings for this table
                     if(m_currentTableSettings)
@@ -632,13 +634,13 @@ void PlotDock::on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem* item, int c
         {
             // On double click open the colordialog
             QColorDialog colordialog(this);
-            QColor curbkcolor = item->backgroundColor(column);
+            QColor curbkcolor = item->background(column).color();
             QColor precolor = !curbkcolor.isValid() ? static_cast<Qt::GlobalColor>(random_number(5, 13)) : curbkcolor;
             QColor color = colordialog.getColor(precolor, this, tr("Choose an axis color"));
             if(color.isValid())
             {
                 item->setCheckState(column, Qt::Checked);
-                item->setBackgroundColor(column, color);
+                item->setBackground(column, color);
 
                 // Save settings for this table
                 if(m_currentTableSettings)
