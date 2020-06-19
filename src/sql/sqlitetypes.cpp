@@ -243,6 +243,26 @@ std::string CheckConstraint::toSql() const
     return result;
 }
 
+std::string DefaultConstraint::toSql() const
+{
+    std::string result;
+    if(!m_name.empty())
+        result = "CONSTRAINT " + escapeIdentifier(m_name) + " ";
+    result += "DEFAULT " + m_value;
+
+    return result;
+}
+
+std::string CollateConstraint::toSql() const
+{
+    std::string result;
+    if(!m_name.empty())
+        result = "CONSTRAINT " + escapeIdentifier(m_name) + " ";
+    result += "COLLATE " + m_collation;
+
+    return result;
+}
+
 std::string GeneratedColumnConstraint::toSql() const
 {
     std::string result;
@@ -278,14 +298,14 @@ std::string Field::toString(const std::string& indent, const std::string& sep) c
     std::string str = indent + escapeIdentifier(m_name) + sep + m_type;
     if(m_notnull)
         str += " " + m_notnull->toSql();
-    if(!m_defaultvalue.empty())
-        str += " DEFAULT " + m_defaultvalue;
-    if(!m_check.empty())
-        str += " CHECK(" + m_check + ")";
+    if(m_defaultvalue)
+        str += " " + m_defaultvalue->toSql();
+    if(m_check)
+        str += " " + m_check->toSql();
     if(m_unique)
         str += " " + m_unique->toSql();
-    if(!m_collation.empty())
-        str += " COLLATE " + m_collation;
+    if(m_collation)
+        str += " " + m_collation->toSql();
     if(!m_generated.empty())
         str += " " + m_generated.toSql();
     return str;

@@ -729,51 +729,67 @@ columnconstraint:
 	| optional_constraintname CHECK "(" expr ")"					{
 												$$.type = ColumnConstraintInfo::Check;
 												$$.is_table_constraint = false;
-												$$.text = $4;
-												$$.fully_parsed = ($1 == "");
+												auto c = std::make_shared<sqlb::CheckConstraint>($4);
+												c->setName($1);
+												$$.constraint = c;
+												$$.fully_parsed = true;
 											}
 	| optional_constraintname DEFAULT signednumber					{
 												$$.type = ColumnConstraintInfo::Default;
 												$$.is_table_constraint = false;
-												$$.text = $3;
-												$$.fully_parsed = ($1 == "");
+												auto d = std::make_shared<sqlb::DefaultConstraint>($3);
+												d->setName($1);
+												$$.constraint = d;
+												$$.fully_parsed = true;
 											}
 	| optional_constraintname DEFAULT literalvalue					{
 												$$.type = ColumnConstraintInfo::Default;
 												$$.is_table_constraint = false;
-												$$.text = $3;
-												$$.fully_parsed = ($1 == "");
+												auto d = std::make_shared<sqlb::DefaultConstraint>($3);
+												d->setName($1);
+												$$.constraint = d;
+												$$.fully_parsed = true;
 											}
 	| optional_constraintname DEFAULT id						{
 												$$.type = ColumnConstraintInfo::Default;
 												$$.is_table_constraint = false;
-												$$.text = $3;
-												$$.fully_parsed = ($1 == "");
+												auto d = std::make_shared<sqlb::DefaultConstraint>($3);
+												d->setName($1);
+												$$.constraint = d;
+												$$.fully_parsed = true;
 											}
 	| optional_constraintname DEFAULT allowed_keywords_as_identifier		{	// We must allow the same keywords as unquoted default values as in the columnid context.
 												// But we do not use columnid here in order to avoid reduce/reduce conflicts.
 												$$.type = ColumnConstraintInfo::Default;
 												$$.is_table_constraint = false;
-												$$.text = $3;
-												$$.fully_parsed = ($1 == "");
+												auto d = std::make_shared<sqlb::DefaultConstraint>($3);
+												d->setName($1);
+												$$.constraint = d;
+												$$.fully_parsed = true;
 											}
 	| optional_constraintname DEFAULT IF						{	// Same as above.
 												$$.type = ColumnConstraintInfo::Default;
 												$$.is_table_constraint = false;
-												$$.text = $3;
-												$$.fully_parsed = ($1 == "");
+												auto d = std::make_shared<sqlb::DefaultConstraint>($3);
+												d->setName($1);
+												$$.constraint = d;
+												$$.fully_parsed = true;
 											}
 	| optional_constraintname DEFAULT "(" expr ")"					{
 												$$.type = ColumnConstraintInfo::Default;
 												$$.is_table_constraint = false;
-												$$.text = "(" + $4 + ")";
-												$$.fully_parsed = ($1 == "");
+												auto d = std::make_shared<sqlb::DefaultConstraint>("(" + $4 + ")");
+												d->setName($1);
+												$$.constraint = d;
+												$$.fully_parsed = true;
 											}
 	| optional_constraintname COLLATE id						{
 												$$.type = ColumnConstraintInfo::Collate;
 												$$.is_table_constraint = false;
-												$$.text = $3;
-												$$.fully_parsed = ($1 == "");
+												auto c = std::make_shared<sqlb::CollateConstraint>($3);
+												c->setName($1);
+												$$.constraint = c;
+												$$.fully_parsed = true;
 											}
 	| optional_constraintname REFERENCES tableid optional_columnid_with_paren_list optional_fk_clause	{	// TODO Solve shift/reduce conflict. It is not super important though as shifting seems to be right here.
 												$$.type = ColumnConstraintInfo::ForeignKey;
@@ -827,11 +843,11 @@ columndef:
 										} else if(c.type == ColumnConstraintInfo::Unique) {
 											f.setUnique(std::dynamic_pointer_cast<sqlb::UniqueConstraint>(c.constraint));
 										} else if(c.type == ColumnConstraintInfo::Check) {
-											f.setCheck(c.text);
+											f.setCheck(std::dynamic_pointer_cast<sqlb::CheckConstraint>(c.constraint));
 										} else if(c.type == ColumnConstraintInfo::Default) {
-											f.setDefaultValue(c.text);
+											f.setDefaultValue(std::dynamic_pointer_cast<sqlb::DefaultConstraint>(c.constraint));
 										} else if(c.type == ColumnConstraintInfo::Collate) {
-											f.setCollation(c.text);
+											f.setCollation(std::dynamic_pointer_cast<sqlb::CollateConstraint>(c.constraint));
 										} else if(c.type == ColumnConstraintInfo::Generated) {
 											f.setGenerated(c.generated_constraint);
 

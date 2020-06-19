@@ -148,6 +148,8 @@ public:
         CheckConstraintType,
         GeneratedColumnConstraintType,
         NotNullConstraintType,
+        DefaultConstraintType,
+        CollateConstraintType,
 
         NoType = 999,
     };
@@ -295,6 +297,44 @@ private:
     std::string m_expression;
 };
 
+class DefaultConstraint : public Constraint
+{
+public:
+    explicit DefaultConstraint(const std::string& value = std::string())
+        : m_value(value)
+    {
+    }
+
+    void setValue(const std::string& value) { m_value = value; }
+    const std::string& value() const { return m_value; }
+
+    std::string toSql() const override;
+
+    ConstraintTypes type() const override { return DefaultConstraintType; }
+
+private:
+    std::string m_value;
+};
+
+class CollateConstraint : public Constraint
+{
+public:
+    explicit CollateConstraint(const std::string& collation)
+        : m_collation(collation)
+    {
+    }
+
+    void setCollation(const std::string& collation) { m_collation = collation; }
+    const std::string& collation() const { return m_collation; }
+
+    std::string toSql() const override;
+
+    ConstraintTypes type() const override { return CollateConstraintType; }
+
+private:
+    std::string m_collation;
+};
+
 class GeneratedColumnConstraint : public Constraint
 {
 public:
@@ -337,10 +377,10 @@ public:
         : m_name(name)
         , m_type(type)
         , m_notnull(notnull ? std::make_shared<NotNullConstraint>() : nullptr)
-        , m_check(check)
-        , m_defaultvalue(defaultvalue)
+        , m_check(check.empty() ? nullptr : std::make_shared<CheckConstraint>(check))
+        , m_defaultvalue(defaultvalue.empty() ? nullptr : std::make_shared<DefaultConstraint>(defaultvalue))
         , m_unique(unique ? std::make_shared<UniqueConstraint>() : nullptr)
-        , m_collation(collation)
+        , m_collation(collation.empty() ? nullptr : std::make_shared<CollateConstraint>(collation))
     {}
 
     bool operator==(const Field& rhs) const;
@@ -349,13 +389,16 @@ public:
 
     void setName(const std::string& name) { m_name = name; }
     void setType(const std::string& type) { m_type = type; }
-    void setNotNull(std::shared_ptr<sqlb::NotNullConstraint> notnull) { m_notnull = notnull; }
+    void setNotNull(std::shared_ptr<NotNullConstraint> notnull) { m_notnull = notnull; }
     void setNotNull(bool notnull = true) { if(notnull) m_notnull = std::make_shared<NotNullConstraint>(); else m_notnull.reset(); }
-    void setCheck(const std::string& check) { m_check = check; }
-    void setDefaultValue(const std::string& defaultvalue) { m_defaultvalue = defaultvalue; }
-    void setUnique(std::shared_ptr<sqlb::UniqueConstraint> u) { m_unique = u; }
+    void setCheck(std::shared_ptr<CheckConstraint> check) { m_check = check; }
+    void setCheck(const std::string& check) { if(!check.empty()) m_check = std::make_shared<CheckConstraint>(check); else m_check.reset(); }
+    void setDefaultValue(std::shared_ptr<DefaultConstraint> defaultvalue) { m_defaultvalue = defaultvalue; }
+    void setDefaultValue(const std::string& value) { if(!value.empty()) m_defaultvalue = std::make_shared<DefaultConstraint>(value); else m_defaultvalue.reset(); }
+    void setUnique(std::shared_ptr<UniqueConstraint> u) { m_unique = u; }
     void setUnique(bool u) { if(u) m_unique = std::make_shared<UniqueConstraint>(); else m_unique.reset(); }
-    void setCollation(const std::string& collation) { m_collation = collation; }
+    void setCollation(std::shared_ptr<CollateConstraint> c) { m_collation = c; }
+    void setCollation(const std::string& collation) { if(!collation.empty()) m_collation = std::make_shared<CollateConstraint>(collation); else m_collation.reset(); }
 
     bool isText() const;
     bool isInteger() const;
@@ -377,10 +420,10 @@ public:
     const std::string& name() const { return m_name; }
     const std::string& type() const { return m_type; }
     bool notnull() const { return m_notnull ? true : false; }
-    const std::string& check() const { return m_check; }
-    const std::string& defaultValue() const { return m_defaultvalue; }
+    std::string check() const { return m_check ? m_check->expression() : std::string{}; }
+    std::string defaultValue() const { return m_defaultvalue ? m_defaultvalue->value() : std::string{}; }
     bool unique() const { return m_unique ? true : false; }
-    const std::string& collation() const { return m_collation; }
+    std::string collation() const { return m_collation ? m_collation->collation() : std::string{}; }
 
     const GeneratedColumnConstraint& generated() const { return m_generated; }
     GeneratedColumnConstraint& generated() { return m_generated; }
@@ -390,10 +433,10 @@ private:
     std::string m_name;
     std::string m_type;
     std::shared_ptr<NotNullConstraint> m_notnull;
-    std::string m_check;
-    std::string m_defaultvalue;
+    std::shared_ptr<CheckConstraint> m_check;
+    std::shared_ptr<DefaultConstraint> m_defaultvalue;
     std::shared_ptr<UniqueConstraint> m_unique;
-    std::string m_collation;
+    std::shared_ptr<CollateConstraint> m_collation;
     GeneratedColumnConstraint m_generated;
 };
 
