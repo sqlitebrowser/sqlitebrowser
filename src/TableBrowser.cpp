@@ -525,9 +525,10 @@ void TableBrowser::updateFilter(size_t column, const QString& value)
 
     // Save the new filter settings
     BrowseDataTableSettings& settings = m_settings[currentlyBrowsedTableName()];
-    if(value.isEmpty() && settings.filterValues.erase(column) > 0)
+    if(value.isEmpty())
     {
-        emit projectModified();
+        if(settings.filterValues.erase(column) > 0)
+            emit projectModified();
     } else {
         if (settings.filterValues[column] != value) {
             settings.filterValues[column] = value;

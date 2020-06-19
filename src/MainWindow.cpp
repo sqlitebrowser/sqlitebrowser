@@ -2320,7 +2320,9 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, QXmlS
             while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "filter_values") {
                 if (xml.name() == "column") {
                     size_t index = xml.attributes().value("index").toUInt();
-                    settings.filterValues[index] = xml.attributes().value("value").toString();
+                    QString value = xml.attributes().value("value").toString();
+                    if(!value.isEmpty())
+                        settings.filterValues[index] = value;
                     xml.skipCurrentElement();
                 }
             }
