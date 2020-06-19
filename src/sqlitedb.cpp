@@ -1269,7 +1269,7 @@ std::string DBBrowserDB::emptyInsertStmt(const std::string& schemaName, const sq
     for(const sqlb::Field& f : t.fields)
     {
         // Never insert into a generated column
-        if(!f.generated().empty())
+        if(f.generated())
             continue;
 
         sqlb::ConstraintPtr pk = t.constraint({f.name()}, sqlb::Constraint::PrimaryKeyConstraintType);

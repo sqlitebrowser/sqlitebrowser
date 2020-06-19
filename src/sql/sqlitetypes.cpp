@@ -306,8 +306,8 @@ std::string Field::toString(const std::string& indent, const std::string& sep) c
         str += " " + m_unique->toSql();
     if(m_collation)
         str += " " + m_collation->toSql();
-    if(!m_generated.empty())
-        str += " " + m_generated.toSql();
+    if(m_generated)
+        str += " " + m_generated->toSql();
     return str;
 }
 

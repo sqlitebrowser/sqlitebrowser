@@ -54,64 +54,10 @@
 	namespace sqlb { namespace parser { class ParserDriver; } }
 	typedef void* yyscan_t;
 
-	// Unfortunately we do not store column constraints in a systematic manner yet.
-	// Instead there is a variable for most column constraints directly inside the
-	// sqlb::Field class. This means that when parsing a column constraint we cannot
-	// just build a column constraint object with all the information and insert that
-	// into the Field object. Instead, the information needs to be passed upwards in
-	// some other way. This is what these declarations are for. We need to be able
-	// to pass information to the Field object as well as to the Table object too
-	// because some column constraints need to be transformed into Table constraints
-	// with our current layout.
-	class ColumnConstraintInfo
-	{
-	public:
-		ColumnConstraintInfo() : is_table_constraint(false), fully_parsed(false) {}
-		~ColumnConstraintInfo() {}
-		ColumnConstraintInfo& operator=(const ColumnConstraintInfo& other)
-		{
-			type = other.type;
-			is_table_constraint = other.is_table_constraint;
-			fully_parsed = other.fully_parsed;
-			constraint = other.constraint;
-			text = other.text;
-			generated_constraint = other.generated_constraint;
+	// Colum definitions are a tuple of two elements: the Field object and a set of table constraints
+	using ColumndefData = std::tuple<sqlb::Field, sqlb::ConstraintSet>;
 
-			return *this;
-		}
-		ColumnConstraintInfo(const ColumnConstraintInfo& other)
-		{
-			*this = other;
-		}
-
-		enum ConstraintType
-		{
-			None,
-			AutoIncrement,
-			PrimaryKey,
-			NotNull,
-			Unique,
-			Check,
-			Default,
-			Collate,
-			ForeignKey,
-			Generated,
-		};
-
-		ConstraintType type;
-		bool is_table_constraint;
-		bool fully_parsed;
-
-		sqlb::ConstraintPtr constraint;
-		std::string text;
-		sqlb::GeneratedColumnConstraint generated_constraint;
-	};
-	using ColumnConstraintInfoVector = std::vector<ColumnConstraintInfo>;
-
-	// Colum definitions are a tuple of three elements: the Field object, a set of table constraints, and a bool to indicate whether parsing was complete
-	using ColumndefData = std::tuple<sqlb::Field, sqlb::ConstraintSet, bool>;
-
-#line 115 "sqlite3_parser.hpp"
+#line 61 "sqlite3_parser.hpp"
 
 # include <cassert>
 # include <cstdlib> // std::abort
@@ -246,7 +192,7 @@
 
 #line 10 "sqlite3_parser.yy"
 namespace  sqlb { namespace parser  {
-#line 250 "sqlite3_parser.hpp"
+#line 196 "sqlite3_parser.hpp"
 
 
 
@@ -460,45 +406,41 @@ namespace  sqlb { namespace parser  {
     /// An auxiliary type to compute the largest semantic type.
     union union_type
     {
-      // columnconstraint
-      char dummy1[sizeof (ColumnConstraintInfo)];
-
-      // columnconstraint_list
-      char dummy2[sizeof (ColumnConstraintInfoVector)];
-
       // columndef
-      char dummy3[sizeof (ColumndefData)];
+      char dummy1[sizeof (ColumndefData)];
 
       // optional_if_not_exists
       // optional_unique
       // optional_temporary
       // optional_withoutrowid
       // optional_always_generated
-      char dummy4[sizeof (bool)];
+      char dummy2[sizeof (bool)];
 
+      // columnconstraint
       // tableconstraint
-      char dummy5[sizeof (sqlb::ConstraintPtr)];
+      char dummy3[sizeof (sqlb::ConstraintPtr)];
 
+      // columnconstraint_list
       // tableconstraint_list
       // optional_tableconstraint_list
-      char dummy6[sizeof (sqlb::ConstraintSet)];
+      char dummy4[sizeof (sqlb::ConstraintSet)];
 
       // createindex_stmt
-      char dummy7[sizeof (sqlb::IndexPtr)];
+      char dummy5[sizeof (sqlb::IndexPtr)];
 
       // indexed_column
-      char dummy8[sizeof (sqlb::IndexedColumn)];
+      char dummy6[sizeof (sqlb::IndexedColumn)];
 
       // indexed_column_list
-      char dummy9[sizeof (sqlb::IndexedColumnVector)];
+      char dummy7[sizeof (sqlb::IndexedColumnVector)];
 
       // columnid_list
       // optional_columnid_with_paren_list
-      char dummy10[sizeof (sqlb::StringVector)];
+      char dummy8[sizeof (sqlb::StringVector)];
 
       // createvirtualtable_stmt
       // createtable_stmt
-      char dummy11[sizeof (sqlb::TablePtr)];
+      char dummy9[sizeof (sqlb::TablePtr)];
 
       // "ABORT"
       // "ACTION"
@@ -623,10 +565,10 @@ namespace  sqlb { namespace parser  {
       // fk_clause_part
       // fk_clause_part_list
       // optional_fk_clause
-      char dummy12[sizeof (std::string)];
+      char dummy10[sizeof (std::string)];
 
       // columndef_list
-      char dummy13[sizeof (std::vector<ColumndefData>)];
+      char dummy11[sizeof (std::vector<ColumndefData>)];
     };
 
     /// The size of the largest semantic type.
@@ -1018,14 +960,6 @@ namespace  sqlb { namespace parser  {
       {
         switch (this->kind ())
     {
-      case 158: // columnconstraint
-        value.move< ColumnConstraintInfo > (std::move (that.value));
-        break;
-
-      case 159: // columnconstraint_list
-        value.move< ColumnConstraintInfoVector > (std::move (that.value));
-        break;
-
       case 160: // columndef
         value.move< ColumndefData > (std::move (that.value));
         break;
@@ -1038,10 +972,12 @@ namespace  sqlb { namespace parser  {
         value.move< bool > (std::move (that.value));
         break;
 
+      case 158: // columnconstraint
       case 168: // tableconstraint
         value.move< sqlb::ConstraintPtr > (std::move (that.value));
         break;
 
+      case 159: // columnconstraint_list
       case 169: // tableconstraint_list
       case 170: // optional_tableconstraint_list
         value.move< sqlb::ConstraintSet > (std::move (that.value));
@@ -1222,32 +1158,6 @@ namespace  sqlb { namespace parser  {
       {}
 #endif
 #if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, ColumnConstraintInfo&& v, location_type&& l)
-        : Base (t)
-        , value (std::move (v))
-        , location (std::move (l))
-      {}
-#else
-      basic_symbol (typename Base::kind_type t, const ColumnConstraintInfo& v, const location_type& l)
-        : Base (t)
-        , value (v)
-        , location (l)
-      {}
-#endif
-#if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, ColumnConstraintInfoVector&& v, location_type&& l)
-        : Base (t)
-        , value (std::move (v))
-        , location (std::move (l))
-      {}
-#else
-      basic_symbol (typename Base::kind_type t, const ColumnConstraintInfoVector& v, const location_type& l)
-        : Base (t)
-        , value (v)
-        , location (l)
-      {}
-#endif
-#if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, ColumndefData&& v, location_type&& l)
         : Base (t)
         , value (std::move (v))
@@ -1413,14 +1323,6 @@ namespace  sqlb { namespace parser  {
         // Value type destructor.
 switch (yykind)
     {
-      case 158: // columnconstraint
-        value.template destroy< ColumnConstraintInfo > ();
-        break;
-
-      case 159: // columnconstraint_list
-        value.template destroy< ColumnConstraintInfoVector > ();
-        break;
-
       case 160: // columndef
         value.template destroy< ColumndefData > ();
         break;
@@ -1433,10 +1335,12 @@ switch (yykind)
         value.template destroy< bool > ();
         break;
 
+      case 158: // columnconstraint
       case 168: // tableconstraint
         value.template destroy< sqlb::ConstraintPtr > ();
         break;
 
+      case 159: // columnconstraint_list
       case 169: // tableconstraint_list
       case 170: // optional_tableconstraint_list
         value.template destroy< sqlb::ConstraintSet > ();
@@ -3919,14 +3823,6 @@ switch (yykind)
   {
     switch (this->kind ())
     {
-      case 158: // columnconstraint
-        value.copy< ColumnConstraintInfo > (YY_MOVE (that.value));
-        break;
-
-      case 159: // columnconstraint_list
-        value.copy< ColumnConstraintInfoVector > (YY_MOVE (that.value));
-        break;
-
       case 160: // columndef
         value.copy< ColumndefData > (YY_MOVE (that.value));
         break;
@@ -3939,10 +3835,12 @@ switch (yykind)
         value.copy< bool > (YY_MOVE (that.value));
         break;
 
+      case 158: // columnconstraint
       case 168: // tableconstraint
         value.copy< sqlb::ConstraintPtr > (YY_MOVE (that.value));
         break;
 
+      case 159: // columnconstraint_list
       case 169: // tableconstraint_list
       case 170: // optional_tableconstraint_list
         value.copy< sqlb::ConstraintSet > (YY_MOVE (that.value));
@@ -4129,14 +4027,6 @@ switch (yykind)
     super_type::move (s);
     switch (this->kind ())
     {
-      case 158: // columnconstraint
-        value.move< ColumnConstraintInfo > (YY_MOVE (s.value));
-        break;
-
-      case 159: // columnconstraint_list
-        value.move< ColumnConstraintInfoVector > (YY_MOVE (s.value));
-        break;
-
       case 160: // columndef
         value.move< ColumndefData > (YY_MOVE (s.value));
         break;
@@ -4149,10 +4039,12 @@ switch (yykind)
         value.move< bool > (YY_MOVE (s.value));
         break;
 
+      case 158: // columnconstraint
       case 168: // tableconstraint
         value.move< sqlb::ConstraintPtr > (YY_MOVE (s.value));
         break;
 
+      case 159: // columnconstraint_list
       case 169: // tableconstraint_list
       case 170: // optional_tableconstraint_list
         value.move< sqlb::ConstraintSet > (YY_MOVE (s.value));
@@ -4373,7 +4265,7 @@ switch (yykind)
 
 #line 10 "sqlite3_parser.yy"
 } } //  sqlb::parser 
-#line 4377 "sqlite3_parser.hpp"
+#line 4269 "sqlite3_parser.hpp"
 
 
 

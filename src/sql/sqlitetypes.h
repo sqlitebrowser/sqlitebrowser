@@ -344,8 +344,6 @@ public:
     {
     }
 
-    bool empty() const { return m_expression.empty(); }
-
     void setExpression(const std::string& expr) { m_expression = expr; }
     const std::string& expression() const { return m_expression; }
 
@@ -425,9 +423,9 @@ public:
     bool unique() const { return m_unique ? true : false; }
     std::string collation() const { return m_collation ? m_collation->collation() : std::string{}; }
 
-    const GeneratedColumnConstraint& generated() const { return m_generated; }
-    GeneratedColumnConstraint& generated() { return m_generated; }
-    void setGenerated(const GeneratedColumnConstraint& gen) { m_generated = gen; }
+    const std::shared_ptr<GeneratedColumnConstraint> generated() const { return m_generated; }
+    std::shared_ptr<GeneratedColumnConstraint> generated() { return m_generated; }
+    void setGenerated(std::shared_ptr<GeneratedColumnConstraint> gen) { m_generated = gen; }
 
 private:
     std::string m_name;
@@ -437,7 +435,7 @@ private:
     std::shared_ptr<DefaultConstraint> m_defaultvalue;
     std::shared_ptr<UniqueConstraint> m_unique;
     std::shared_ptr<CollateConstraint> m_collation;
-    GeneratedColumnConstraint m_generated;
+    std::shared_ptr<GeneratedColumnConstraint> m_generated;
 };
 
 class Table : public Object

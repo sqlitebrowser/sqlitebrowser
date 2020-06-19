@@ -981,7 +981,7 @@ bool SqliteTableModel::isEditable(const QModelIndex& index) const
     if(index.isValid() && m_table_of_query)
     {
         const auto field = sqlb::findField(m_table_of_query, m_headers.at(static_cast<size_t>(index.column())));
-        if(field != m_table_of_query->fields.cend() && !field->generated().empty())
+        if(field != m_table_of_query->fields.cend() && field->generated())
             return false;
     }
 
