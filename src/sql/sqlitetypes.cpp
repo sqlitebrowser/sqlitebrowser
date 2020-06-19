@@ -174,10 +174,29 @@ std::string UniqueConstraint::toSql() const
     if(!m_name.empty())
         result = "CONSTRAINT " + escapeIdentifier(m_name) + " ";
 
-    std::vector<std::string> u_columns;
-    for(const auto& c : m_columns)
-        u_columns.push_back(c.toString("", " "));
-    result += "UNIQUE(" + joinStringVector(u_columns, ",") + ")";
+    result += "UNIQUE";
+
+    if(m_columns.size())
+    {
+        std::vector<std::string> u_columns;
+        for(const auto& c : m_columns)
+            u_columns.push_back(c.toString("", " "));
+        result += "(" + joinStringVector(u_columns, ",") + ")";
+    }
+
+    if(!m_conflictAction.empty())
+        result += " ON CONFLICT " + m_conflictAction;
+
+    return result;
+}
+
+std::string NotNullConstraint::toSql() const
+{
+    std::string result;
+    if(!m_name.empty())
+        result = "CONSTRAINT " + escapeIdentifier(m_name) + " ";
+
+    result += "NOT NULL";
 
     if(!m_conflictAction.empty())
         result += " ON CONFLICT " + m_conflictAction;
@@ -258,13 +277,13 @@ std::string Field::toString(const std::string& indent, const std::string& sep) c
 {
     std::string str = indent + escapeIdentifier(m_name) + sep + m_type;
     if(m_notnull)
-        str += " NOT NULL";
+        str += " " + m_notnull->toSql();
     if(!m_defaultvalue.empty())
         str += " DEFAULT " + m_defaultvalue;
     if(!m_check.empty())
         str += " CHECK(" + m_check + ")";
     if(m_unique)
-        str += " UNIQUE";
+        str += " " + m_unique->toSql();
     if(!m_collation.empty())
         str += " COLLATE " + m_collation;
     if(!m_generated.empty())

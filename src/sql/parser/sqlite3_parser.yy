@@ -36,8 +36,7 @@
 			type = other.type;
 			is_table_constraint = other.is_table_constraint;
 			fully_parsed = other.fully_parsed;
-			if(is_table_constraint)
-				table_constraint = other.table_constraint;
+			constraint = other.constraint;
 			text = other.text;
 			generated_constraint = other.generated_constraint;
 
@@ -66,7 +65,7 @@
 		bool is_table_constraint;
 		bool fully_parsed;
 
-		sqlb::ConstraintPtr table_constraint;
+		sqlb::ConstraintPtr constraint;
 		std::string text;
 		sqlb::GeneratedColumnConstraint generated_constraint;
 	};
@@ -691,7 +690,7 @@ columnconstraint:
 												sqlb::PrimaryKeyConstraint* pk = new sqlb::PrimaryKeyConstraint({sqlb::IndexedColumn("", false, $4)});
 												pk->setName($1);
 												pk->setConflictAction($5);
-												$$.table_constraint = sqlb::ConstraintPtr(pk);
+												$$.constraint = sqlb::ConstraintPtr(pk);
 												$$.fully_parsed = true;
 											}
 	| optional_constraintname PRIMARY KEY optional_sort_order optional_conflictclause AUTOINCREMENT	{
@@ -701,13 +700,17 @@ columnconstraint:
 												pk->setName($1);
 												pk->setConflictAction($5);
 												pk->setAutoIncrement(true);
-												$$.table_constraint = sqlb::ConstraintPtr(pk);
+												$$.constraint = sqlb::ConstraintPtr(pk);
 												$$.fully_parsed = true;
 											}
 	| optional_constraintname NOT NULL optional_conflictclause			{
 												$$.type = ColumnConstraintInfo::NotNull;
 												$$.is_table_constraint = false;
-												$$.fully_parsed = ($1 == "" && $4 == "");
+												sqlb::NotNullConstraint* nn = new sqlb::NotNullConstraint();
+												nn->setName($1);
+												nn->setConflictAction($4);
+												$$.constraint = sqlb::ConstraintPtr(nn);
+												$$.fully_parsed = true;
 											}
 	| optional_constraintname NULL 							{
 												$$.type = ColumnConstraintInfo::None;
@@ -717,7 +720,11 @@ columnconstraint:
 	| optional_constraintname UNIQUE optional_conflictclause			{
 												$$.type = ColumnConstraintInfo::Unique;
 												$$.is_table_constraint = false;
-												$$.fully_parsed = ($1 == "" && $3 == "");
+												sqlb::UniqueConstraint* u = new sqlb::UniqueConstraint();
+												u->setName($1);
+												u->setConflictAction($3);
+												$$.constraint = sqlb::ConstraintPtr(u);
+												$$.fully_parsed = true;
 											}
 	| optional_constraintname CHECK "(" expr ")"					{
 												$$.type = ColumnConstraintInfo::Check;
@@ -776,7 +783,7 @@ columnconstraint:
 												fk->setTable($3);
 												fk->setColumns($4);
 												fk->setConstraint($5);
-												$$.table_constraint = sqlb::ConstraintPtr(fk);
+												$$.constraint = sqlb::ConstraintPtr(fk);
 												$$.fully_parsed = true;
 											}
 	| optional_constraintname optional_always_generated AS "(" expr ")" optional_storage_identifier	{		// TODO Solve shift/reduce conflict.
@@ -809,16 +816,16 @@ columndef:
 
 									if(c.is_table_constraint)
 									{
-										if(c.table_constraint->columnList().empty())
-											c.table_constraint->setColumnList({$1});
+										if(c.constraint->columnList().empty())
+											c.constraint->setColumnList({$1});
 										else
-											c.table_constraint->replaceInColumnList("", $1);
-										table_constraints.insert(c.table_constraint);
+											c.constraint->replaceInColumnList("", $1);
+										table_constraints.insert(c.constraint);
 									} else {
 										if(c.type == ColumnConstraintInfo::NotNull) {
-											f.setNotNull(true);
+											f.setNotNull(std::dynamic_pointer_cast<sqlb::NotNullConstraint>(c.constraint));
 										} else if(c.type == ColumnConstraintInfo::Unique) {
-											f.setUnique(true);
+											f.setUnique(std::dynamic_pointer_cast<sqlb::UniqueConstraint>(c.constraint));
 										} else if(c.type == ColumnConstraintInfo::Check) {
 											f.setCheck(c.text);
 										} else if(c.type == ColumnConstraintInfo::Default) {

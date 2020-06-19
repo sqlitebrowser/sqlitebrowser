@@ -147,6 +147,7 @@ public:
         ForeignKeyConstraintType,
         CheckConstraintType,
         GeneratedColumnConstraintType,
+        NotNullConstraintType,
 
         NoType = 999,
     };
@@ -239,6 +240,22 @@ protected:
     std::string m_conflictAction;
 };
 
+
+class NotNullConstraint : public Constraint
+{
+public:
+    void setConflictAction(const std::string& conflict) { m_conflictAction = conflict; }
+    const std::string& conflictAction() const { return m_conflictAction; }
+
+    std::string toSql() const override;
+
+    ConstraintTypes type() const override { return NotNullConstraintType; }
+
+protected:
+    std::string m_conflictAction;
+};
+
+
 class PrimaryKeyConstraint : public UniqueConstraint
 {
     // Primary keys are a sort of unique constraint for us. This matches quite nicely as both can have a conflict action
@@ -308,8 +325,6 @@ class Field
 {
 public:
     Field()
-        : m_notnull(false),
-          m_unique(false)
     {}
 
     Field(const std::string& name,
@@ -321,10 +336,10 @@ public:
           const std::string& collation = std::string())
         : m_name(name)
         , m_type(type)
-        , m_notnull(notnull)
+        , m_notnull(notnull ? std::make_shared<NotNullConstraint>() : nullptr)
         , m_check(check)
         , m_defaultvalue(defaultvalue)
-        , m_unique(unique)
+        , m_unique(unique ? std::make_shared<UniqueConstraint>() : nullptr)
         , m_collation(collation)
     {}
 
@@ -334,10 +349,12 @@ public:
 
     void setName(const std::string& name) { m_name = name; }
     void setType(const std::string& type) { m_type = type; }
-    void setNotNull(bool notnull = true) { m_notnull = notnull; }
+    void setNotNull(std::shared_ptr<sqlb::NotNullConstraint> notnull) { m_notnull = notnull; }
+    void setNotNull(bool notnull = true) { if(notnull) m_notnull = std::make_shared<NotNullConstraint>(); else m_notnull.reset(); }
     void setCheck(const std::string& check) { m_check = check; }
     void setDefaultValue(const std::string& defaultvalue) { m_defaultvalue = defaultvalue; }
-    void setUnique(bool u) { m_unique = u; }
+    void setUnique(std::shared_ptr<sqlb::UniqueConstraint> u) { m_unique = u; }
+    void setUnique(bool u) { if(u) m_unique = std::make_shared<UniqueConstraint>(); else m_unique.reset(); }
     void setCollation(const std::string& collation) { m_collation = collation; }
 
     bool isText() const;
@@ -359,10 +376,10 @@ public:
 
     const std::string& name() const { return m_name; }
     const std::string& type() const { return m_type; }
-    bool notnull() const { return m_notnull; }
+    bool notnull() const { return m_notnull ? true : false; }
     const std::string& check() const { return m_check; }
     const std::string& defaultValue() const { return m_defaultvalue; }
-    bool unique() const { return m_unique; }
+    bool unique() const { return m_unique ? true : false; }
     const std::string& collation() const { return m_collation; }
 
     const GeneratedColumnConstraint& generated() const { return m_generated; }
@@ -372,10 +389,10 @@ public:
 private:
     std::string m_name;
     std::string m_type;
-    bool m_notnull;
+    std::shared_ptr<NotNullConstraint> m_notnull;
     std::string m_check;
     std::string m_defaultvalue;
-    bool m_unique;
+    std::shared_ptr<UniqueConstraint> m_unique;
     std::string m_collation;
     GeneratedColumnConstraint m_generated;
 };
