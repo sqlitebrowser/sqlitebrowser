@@ -780,6 +780,7 @@ columndef_list:
 optional_constraintname:
 	%empty						{ $$ = ""; }
 	| CONSTRAINT id					{ $$ = $2; }
+	| CONSTRAINT STRINGLITERAL			{ $$ = $2; }
 	;
 
 columnid_list:
