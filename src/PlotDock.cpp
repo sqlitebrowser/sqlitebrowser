@@ -360,11 +360,16 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                 {
                     tdata[j] = j;
 
-                    // NULL values produce gaps in the graph. We use NaN values in
-                    // that case as required by QCustomPlot.
-                    if(x != RowNumId && model->data(model->index(j, x), Qt::EditRole).isNull())
-                        xdata[j] = qQNaN();
-                    else {
+                    if(x != RowNumId && model->data(model->index(j, x), Qt::EditRole).isNull()) {
+                        // NULL values produce gaps in the linear graphs. We use NaN values in
+                        // that case as required by QCustomPlot.
+                        // Bar plots will display the configured string for NULL values.
+                        if(xtype == QVariant::String) {
+                            xdata[j] = j+1;
+                            labels << model->data(model->index(j, x), Qt::DisplayRole).toString();
+                        } else
+                            xdata[j] = qQNaN();
+                    } else {
 
                         // convert x type axis if it's datetime
                         switch (xtype) {
