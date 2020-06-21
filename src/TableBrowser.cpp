@@ -56,6 +56,7 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
 
     popupHeaderMenu = new QMenu(this);
     popupHeaderMenu->addAction(ui->actionShowRowidColumn);
+    popupHeaderMenu->addAction(ui->actionFreezeColumns);
     popupHeaderMenu->addAction(ui->actionHideColumns);
     popupHeaderMenu->addAction(ui->actionShowAllColumns);
     popupHeaderMenu->addAction(ui->actionSelectColumn);
@@ -68,7 +69,13 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
 
     connect(ui->actionSelectColumn, &QAction::triggered, [this]() {
         ui->dataTable->selectColumn(ui->actionBrowseTableEditDisplayFormat->property("clicked_column").toInt());
-      });
+    });
+    connect(ui->actionFreezeColumns, &QAction::triggered, [this](bool checked) {
+        if(checked)
+            freezeColumns(ui->actionBrowseTableEditDisplayFormat->property("clicked_column").toUInt() + 1);
+        else
+            freezeColumns(0);
+    });
 
     // Set up shortcuts
     QShortcut* dittoRecordShortcut = new QShortcut(QKeySequence("Ctrl+\""), this);
@@ -728,7 +735,7 @@ void TableBrowser::updateRecordsetLabel()
             generateFilters();
             ui->dataTable->adjustSize();
         } else if(!needs_filters && header->hasFilters()) {
-            header->generateFilters(0);
+            ui->dataTable->generateFilters(0, false);
         }
     }
 }
@@ -836,6 +843,9 @@ void TableBrowser::applyViewportSettings(const BrowseDataTableSettings& storedDa
         ui->actionUnlockViewEditing->setVisible(true);
         ui->actionShowRowidColumn->setVisible(false);
     }
+
+    // Frozen columns
+    freezeColumns(storedData.frozenColumns);
 }
 
 void TableBrowser::enableEditing(bool enable_edit)
@@ -850,8 +860,8 @@ void TableBrowser::enableEditing(bool enable_edit)
 
 void TableBrowser::showRowidColumn(bool show)
 {
-    // Block all signals from the horizontal header. Otherwise the QHeaderView::sectionResized signal causes us trouble
-    ui->dataTable->horizontalHeader()->blockSignals(true);
+    // Disconnect the resized signal from the horizontal header. Otherwise it's resetting the automatic column widths
+    disconnect(ui->dataTable->horizontalHeader(), &QHeaderView::sectionResized, this, &TableBrowser::updateColumnWidth);
 
     // WORKAROUND
     // Set the opposite hidden/visible status of what we actually want for the rowid column. This is to work around a Qt bug which
@@ -864,6 +874,8 @@ void TableBrowser::showRowidColumn(bool show)
 
     // Show/hide rowid column
     ui->dataTable->setColumnHidden(0, !show);
+    if(show)
+        ui->dataTable->setColumnWidth(0, ui->dataTable->horizontalHeader()->defaultSectionSize());
 
     // Update checked status of the popup menu action
     ui->actionShowRowidColumn->setChecked(show);
@@ -878,25 +890,43 @@ void TableBrowser::showRowidColumn(bool show)
     // Update the filter row
     generateFilters();
 
-    // Re-enable signals
-    ui->dataTable->horizontalHeader()->blockSignals(false);
+    // Re-enable signal
+    connect(ui->dataTable->horizontalHeader(), &QHeaderView::sectionResized, this, &TableBrowser::updateColumnWidth);
 
     ui->dataTable->update();
+}
+
+void TableBrowser::freezeColumns(size_t columns)
+{
+    // Update checked status of the popup menu action
+    ui->actionFreezeColumns->setChecked(columns != 0);
+
+    // Save settings for this table
+    sqlb::ObjectIdentifier current_table = currentlyBrowsedTableName();
+    if (m_settings[current_table].frozenColumns != columns) {
+        emit projectModified();
+        m_settings[current_table].frozenColumns = columns;
+    }
+
+    // Apply settings
+    ui->dataTable->horizontalHeader()->blockSignals(true);
+    ui->dataTable->setFrozenColumns(columns);
+    generateFilters();
+    ui->dataTable->horizontalHeader()->blockSignals(false);
 }
 
 void TableBrowser::generateFilters()
 {
     // Generate a new row of filter line edits
     const auto& settings = m_settings[currentlyBrowsedTableName()];
-    qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader())->generateFilters(static_cast<size_t>(m_model->columnCount()),
-                                                                                         settings.showRowid);
+    ui->dataTable->generateFilters(static_cast<size_t>(m_model->columnCount()), settings.showRowid);
 
     // Apply the stored filter strings to the new row of line edits
     // Set filters blocking signals for this since the filter is already applied to the browse table model
     FilterTableHeader* filterHeader = qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader());
     bool oldState = filterHeader->blockSignals(true);
     for(auto filterIt=settings.filterValues.cbegin();filterIt!=settings.filterValues.cend();++filterIt)
-        filterHeader->setFilter(static_cast<size_t>(filterIt->first), filterIt->second);
+        ui->dataTable->setFilter(static_cast<size_t>(filterIt->first), filterIt->second);
     filterHeader->blockSignals(oldState);
 }
 

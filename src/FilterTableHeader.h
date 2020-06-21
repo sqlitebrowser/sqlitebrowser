@@ -15,9 +15,10 @@ public:
     explicit FilterTableHeader(QTableView* parent = nullptr);
     QSize sizeHint() const override;
     bool hasFilters() const {return (filterWidgets.size() > 0);}
+    QString filterValue(size_t column) const;
     
 public slots:
-    void generateFilters(size_t number, bool showFirst = false);
+    void generateFilters(size_t number, size_t number_of_hidden_filters = 1);
     void adjustPositions();
     void clearFilters();
     void setFilter(size_t column, const QString& value);

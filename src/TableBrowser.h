@@ -40,11 +40,13 @@ struct BrowseDataTableSettings
     QString unlockViewPk;
     std::map<int, bool> hiddenColumns;
     std::vector<QString> globalFilters;
+    size_t frozenColumns;
 
     BrowseDataTableSettings() :
         showRowid(false),
         plotYAxes({std::map<QString, PlotDock::PlotSettings>(), std::map<QString, PlotDock::PlotSettings>()}),
-        unlockViewPk("_rowid_")
+        unlockViewPk("_rowid_"),
+        frozenColumns(0)
     {
     }
 };
@@ -105,6 +107,7 @@ private slots:
     void editCondFormats(size_t column);
     void enableEditing(bool enable_edit);
     void showRowidColumn(bool show);
+    void freezeColumns(size_t columns);
     void unlockViewEditing(bool unlock, QString pk = QString());
     void hideColumns(int column = -1, bool hide = true);
     void on_actionShowAllColumns_triggered();

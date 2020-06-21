@@ -2432,6 +2432,8 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, QXmlS
     settings.encoding = xml.attributes().value("encoding").toString();
     settings.plotXAxis = xml.attributes().value("plot_x_axis").toString();
     settings.unlockViewPk = xml.attributes().value("unlock_view_pk").toString();
+    if(xml.attributes().hasAttribute("freeze_columns"))
+        settings.frozenColumns = xml.attributes().value("freeze_columns").toUInt();
 
     while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != "table") {
         if(xml.name() == "sort")
@@ -2820,6 +2822,7 @@ static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, Q
     xml.writeAttribute("encoding", object.encoding);
     xml.writeAttribute("plot_x_axis", object.plotXAxis);
     xml.writeAttribute("unlock_view_pk", object.unlockViewPk);
+    xml.writeAttribute("freeze_columns", QString::number(object.frozenColumns));
 
     xml.writeStartElement("sort");
     for(const auto& column : object.sortColumns)

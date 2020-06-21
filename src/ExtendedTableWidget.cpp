@@ -224,7 +224,9 @@ void ExtendedTableWidgetEditorDelegate::updateEditorGeometry(QWidget* editor, co
 
 
 ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
-    QTableView(parent)
+    QTableView(parent),
+    m_frozen_table_view(qobject_cast<ExtendedTableWidget*>(parent) ? nullptr : new ExtendedTableWidget(this)),
+    m_frozen_column_count(0)
 {
     setHorizontalScrollMode(ExtendedTableWidget::ScrollPerPixel);
     // Force ScrollPerItem, so scrolling shows all table rows
@@ -405,21 +407,81 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
         selectionModel()->select(QItemSelection(selectionModel()->selectedIndexes().first(), selectionModel()->selectedIndexes().last()), QItemSelectionModel::Select | QItemSelectionModel::Rows);
     });
 
+    // Set up frozen columns child widget
+    if(m_frozen_table_view)
+    {
+        // Set up widget
+        m_frozen_table_view->setFocusPolicy(Qt::NoFocus);
+        m_frozen_table_view->verticalHeader()->hide();
+        m_frozen_table_view->setStyleSheet("QTableView { border: none; }"
+                                           "QTableView::item:selected{ background-color: " + palette().color(QPalette::Active, QPalette::Highlight).name() + "}");
+        m_frozen_table_view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        m_frozen_table_view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        m_frozen_table_view->setVerticalScrollMode(verticalScrollMode());
+        viewport()->stackUnder(m_frozen_table_view);
+        m_tableHeader->stackUnder(m_frozen_table_view);
+
+        // Keep both widgets in sync
+        connect(horizontalHeader(), &QHeaderView::sectionResized, this, &ExtendedTableWidget::updateSectionWidth);
+        connect(m_frozen_table_view->horizontalHeader(), &QHeaderView::sectionResized, this, &ExtendedTableWidget::updateSectionWidth);
+        connect(verticalHeader(), &QHeaderView::sectionResized, this, &ExtendedTableWidget::updateSectionHeight);
+        connect(m_frozen_table_view->verticalHeader(), &QHeaderView::sectionResized, this, &ExtendedTableWidget::updateSectionHeight);
+        connect(m_frozen_table_view->verticalScrollBar(), &QAbstractSlider::valueChanged, verticalScrollBar(), &QAbstractSlider::setValue);
+        connect(verticalScrollBar(), &QAbstractSlider::valueChanged, m_frozen_table_view->verticalScrollBar(), &QAbstractSlider::setValue);
+
+        // Forward signals from frozen table view widget to the main table view widget
+        connect(m_frozen_table_view, &ExtendedTableWidget::doubleClicked, this, &ExtendedTableWidget::doubleClicked);
+        connect(m_frozen_table_view->filterHeader(), &FilterTableHeader::sectionClicked, filterHeader(), &FilterTableHeader::sectionClicked);
+        connect(m_frozen_table_view->filterHeader(), &QHeaderView::sectionDoubleClicked, filterHeader(), &QHeaderView::sectionDoubleClicked);
+        connect(m_frozen_table_view->verticalHeader(), &QHeaderView::sectionResized, verticalHeader(), &QHeaderView::sectionResized);
+        connect(m_frozen_table_view->horizontalHeader(), &QHeaderView::customContextMenuRequested, horizontalHeader(), &QHeaderView::customContextMenuRequested);
+        connect(m_frozen_table_view->verticalHeader(), &QHeaderView::customContextMenuRequested, verticalHeader(), &QHeaderView::customContextMenuRequested);
+        connect(m_frozen_table_view, &ExtendedTableWidget::openFileFromDropEvent, this, &ExtendedTableWidget::openFileFromDropEvent);
+        connect(m_frozen_table_view, &ExtendedTableWidget::selectedRowsToBeDeleted, this, &ExtendedTableWidget::selectedRowsToBeDeleted);
+        connect(m_frozen_table_view->filterHeader(), &FilterTableHeader::filterChanged, filterHeader(), &FilterTableHeader::filterChanged);
+        connect(m_frozen_table_view->filterHeader(), &FilterTableHeader::addCondFormat, filterHeader(), &FilterTableHeader::addCondFormat);
+        connect(m_frozen_table_view->filterHeader(), &FilterTableHeader::allCondFormatsCleared, filterHeader(), &FilterTableHeader::allCondFormatsCleared);
+        connect(m_frozen_table_view->filterHeader(), &FilterTableHeader::condFormatsEdited, filterHeader(), &FilterTableHeader::condFormatsEdited);
+        connect(m_frozen_table_view, &ExtendedTableWidget::editCondFormats, this, &ExtendedTableWidget::editCondFormats);
+        connect(m_frozen_table_view, &ExtendedTableWidget::dataAboutToBeEdited, this, &ExtendedTableWidget::dataAboutToBeEdited);
+        connect(m_frozen_table_view, &ExtendedTableWidget::foreignKeyClicked, this, &ExtendedTableWidget::foreignKeyClicked);
+        connect(m_frozen_table_view, &ExtendedTableWidget::currentIndexChanged, this, &ExtendedTableWidget::currentIndexChanged);
+    }
+
 #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0) && QT_VERSION < QT_VERSION_CHECK(5, 12, 3)
     // This work arounds QTBUG-73721 and it is applied only for the affected version range.
     setWordWrap(false);
 #endif
 }
 
+ExtendedTableWidget::~ExtendedTableWidget()
+{
+    delete m_frozen_table_view;
+}
+
+void ExtendedTableWidget::setModel(QAbstractItemModel* item_model)
+{
+    // Set model
+    QTableView::setModel(item_model);
+
+    // Set up frozen table view widget
+    if(item_model)
+        setFrozenColumns(m_frozen_column_count);
+    else
+        m_frozen_table_view->hide();
+}
+
 void ExtendedTableWidget::reloadSettings()
 {
-    // Set the new font and font size
+    // We only get the font here to get its metrics. The actual font for the view is set in the model
     QFont dataBrowserFont(Settings::getValue("databrowser", "font").toString());
     dataBrowserFont.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
-    setFont(dataBrowserFont);
 
     // Set new default row height depending on the font size
-    verticalHeader()->setDefaultSectionSize(verticalHeader()->fontMetrics().height()+10);
+    QFontMetrics fontMetrics(dataBrowserFont);
+    verticalHeader()->setDefaultSectionSize(fontMetrics.height()+10);
+    if(m_frozen_table_view)
+        m_frozen_table_view->reloadSettings();
 }
 
 void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMimeData* mimeData, const bool withHeaders, const bool inSQL)
@@ -872,13 +934,21 @@ void ExtendedTableWidget::updateGeometries()
     // Call the parent implementation first - it does most of the actual logic
     QTableView::updateGeometries();
 
+    // Update frozen columns view too
+    if(m_frozen_table_view)
+        m_frozen_table_view->updateGeometries();
+
     // Check if a model has already been set yet
     if(model())
     {
         // If so and if it is a SqliteTableModel and if the parent implementation of this method decided that a scrollbar is needed, update its maximum value
         SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
         if(m && verticalScrollBar()->maximum())
+        {
             verticalScrollBar()->setMaximum(m->rowCount() - numVisibleRows() + 1);
+            if(m_frozen_table_view)
+                m_frozen_table_view->verticalScrollBar()->setMaximum(verticalScrollBar()->maximum());
+        }
     }
 }
 
@@ -1119,4 +1189,126 @@ void ExtendedTableWidget::setToNull(const QModelIndexList& indices)
         if(!model()->setData(index, QVariant()))
             return;
     }
+}
+
+void ExtendedTableWidget::setFrozenColumns(size_t count)
+{
+    if(!m_frozen_table_view)
+        return;
+
+    m_frozen_column_count = count;
+
+    // Set up frozen table view widget
+    m_frozen_table_view->setModel(model());
+    m_frozen_table_view->setSelectionModel(selectionModel());
+
+    // Only show frozen columns in extra table view and copy column widths
+    m_frozen_table_view->horizontalHeader()->blockSignals(true);    // Signals need to be blocked because hiding a column would emit resizedSection
+    for(size_t col=0;col<static_cast<size_t>(model()->columnCount());++col)
+        m_frozen_table_view->setColumnHidden(static_cast<int>(col), col >= count);
+    m_frozen_table_view->horizontalHeader()->blockSignals(false);
+    for(int col=0;col<static_cast<int>(count);++col)
+        m_frozen_table_view->setColumnWidth(col, columnWidth(col));
+
+    updateFrozenTableGeometry();
+
+    // Only show extra table view when there are frozen columns to see
+    if(count)
+        m_frozen_table_view->show();
+    else
+        m_frozen_table_view->hide();
+}
+
+void ExtendedTableWidget::generateFilters(size_t number, bool show_rowid)
+{
+    m_tableHeader->generateFilters(number, m_frozen_column_count);
+
+    if(m_frozen_table_view)
+    {
+        size_t frozen_columns = std::min(m_frozen_column_count, number);
+        m_frozen_table_view->m_tableHeader->generateFilters(frozen_columns, show_rowid ? 0 : 1);
+    }
+}
+
+void ExtendedTableWidget::updateSectionWidth(int logicalIndex, int /* oldSize */, int newSize)
+{
+    if(!m_frozen_table_view)
+        return;
+
+    if(logicalIndex < static_cast<int>(m_frozen_column_count))
+    {
+        m_frozen_table_view->setColumnWidth(logicalIndex, newSize);
+        setColumnWidth(logicalIndex, newSize);
+        updateFrozenTableGeometry();
+    }
+}
+
+void ExtendedTableWidget::updateSectionHeight(int logicalIndex, int /* oldSize */, int newSize)
+{
+    if(!m_frozen_table_view)
+        return;
+
+    m_frozen_table_view->setRowHeight(logicalIndex, newSize);
+}
+
+void ExtendedTableWidget::resizeEvent(QResizeEvent* event)
+{
+      QTableView::resizeEvent(event);
+      updateFrozenTableGeometry();
+}
+
+QModelIndex ExtendedTableWidget::moveCursor(CursorAction cursorAction, Qt::KeyboardModifiers modifiers)
+{
+    QModelIndex current = QTableView::moveCursor(cursorAction, modifiers);
+    if(!m_frozen_table_view)
+        return current;
+
+    int width = 0;
+    for(int i=0;i<static_cast<int>(m_frozen_column_count);i++)
+        width += m_frozen_table_view->columnWidth(i);
+
+    if(cursorAction == MoveLeft && current.column() > 0 && visualRect(current).topLeft().x() < width)
+    {
+        const int newValue = horizontalScrollBar()->value() + visualRect(current).topLeft().x() - width;
+        horizontalScrollBar()->setValue(newValue);
+    }
+    return current;
+}
+
+void ExtendedTableWidget::scrollTo(const QModelIndex& index, ScrollHint hint)
+{
+    if(index.column() >= static_cast<int>(m_frozen_column_count))
+        QTableView::scrollTo(index, hint);
+}
+
+void ExtendedTableWidget::updateFrozenTableGeometry()
+{
+    if(!m_frozen_table_view)
+        return;
+
+    int width = 0;
+    for(int i=0;i<static_cast<int>(m_frozen_column_count);i++)
+    {
+        if(!isColumnHidden(i))
+            width += columnWidth(i);
+    }
+
+    m_frozen_table_view->setGeometry(verticalHeader()->width() + frameWidth(),
+                                     frameWidth(),
+                                     width,
+                                     viewport()->height() + horizontalHeader()->height());
+}
+
+void ExtendedTableWidget::setEditTriggers(QAbstractItemView::EditTriggers editTriggers)
+{
+    QTableView::setEditTriggers(editTriggers);
+    if(m_frozen_table_view)
+        m_frozen_table_view->setEditTriggers(editTriggers);
+}
+
+void ExtendedTableWidget::setFilter(size_t column, const QString& value)
+{
+    filterHeader()->setFilter(column, value);
+    if(m_frozen_table_view)
+        m_frozen_table_view->filterHeader()->setFilter(column, value);
 }

@@ -1042,6 +1042,17 @@
     <string>Replace text in cells</string>
    </property>
   </action>
+  <action name="actionFreezeColumns">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Freeze columns</string>
+   </property>
+   <property name="toolTip">
+    <string>Make all columns from the first column up to this column not move when scrolling horizontally</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
