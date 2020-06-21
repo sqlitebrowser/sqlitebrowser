@@ -1002,8 +1002,8 @@ bool DBBrowserDB::executeSQL(const std::string& statement, bool dirtyDB, bool lo
         return false;
     }
 
-    if (logsql) logSQL(QString::fromStdString(statement), kLogMsg_App);
     if (dirtyDB) setSavepoint();
+    if (logsql) logSQL(QString::fromStdString(statement), kLogMsg_App);
 
     char* errmsg;
     if (SQLITE_OK == sqlite3_exec(_db, statement.c_str(), callback ? callbackWrapper : nullptr, &callback, &errmsg))
@@ -1422,8 +1422,8 @@ bool DBBrowserDB::updateRecord(const sqlb::ObjectIdentifier& table, const std::s
     else
         sql += "sqlb_make_single_value(" + sqlb::joinStringVector(sqlb::escapeIdentifier(pks), ",") + ")=" + sqlb::escapeString(rowid.toStdString());
 
-    logSQL(QString::fromStdString(sql), kLogMsg_App);
     setSavepoint();
+    logSQL(QString::fromStdString(sql), kLogMsg_App);
 
     // If we get a NULL QByteArray we insert a NULL value, and for that
     // we can pass NULL to sqlite3_bind_text() so that it behaves like sqlite3_bind_null()
