@@ -1082,6 +1082,11 @@ void EditDialog::reloadSettings()
     hexFont.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
     hexEdit->setFont(hexFont);
 
+    // Set the databrowser font for the RTL text editor.
+    QFont textFont(Settings::getValue("databrowser", "font").toString());
+    textFont.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
+    ui->qtEdit->setFont(textFont);
+
     ui->editCellToolbar->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>
                                             (Settings::getValue("General", "toolbarStyleEditCell").toInt()));
 
