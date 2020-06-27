@@ -353,7 +353,7 @@ void ImportCsvDialog::matchSimilar()
                                              });
             if (matchingHeader) {
                 item->setCheckState(Qt::Checked);
-                item->setBackgroundColor(Qt::green);
+                item->setBackground(Qt::green);
             }
         }
         else

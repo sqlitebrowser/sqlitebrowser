@@ -119,8 +119,8 @@ void PreferencesDialog::loadSettings()
         std::string name = ui->treeSyntaxHighlighting->topLevelItem(i)->text(0).toStdString();
         QString colorname = Settings::getValue("syntaxhighlighter", name + "_colour").toString();
         QColor color = QColor(colorname);
-        ui->treeSyntaxHighlighting->topLevelItem(i)->setTextColor(2, color);
-        ui->treeSyntaxHighlighting->topLevelItem(i)->setBackgroundColor(2, color);
+        ui->treeSyntaxHighlighting->topLevelItem(i)->setForeground(2, color);
+        ui->treeSyntaxHighlighting->topLevelItem(i)->setBackground(2, color);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setText(2, colorname);
         if (name != "null" && name != "currentline"  && name != "background" && name != "foreground") {
             ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(3, Settings::getValue("syntaxhighlighter", name + "_bold").toBool() ? Qt::Checked : Qt::Unchecked);
@@ -346,8 +346,8 @@ void PreferencesDialog::showColourDialog(QTreeWidgetItem* item, int column)
     QColor colour = QColorDialog::getColor(QColor(item->text(column)), this);
     if(colour.isValid())
     {
-        item->setTextColor(column, colour);
-        item->setBackgroundColor(column, colour);
+        item->setForeground(column, colour);
+        item->setBackground(column, colour);
         item->setText(column, colour.name());
     }
 }
@@ -545,8 +545,8 @@ void PreferencesDialog::adjustColorsToStyle(int style)
     {
         std::string name = ui->treeSyntaxHighlighting->topLevelItem(i)->text(0).toStdString();
         QColor color = Settings::getDefaultColorValue("syntaxhighlighter", name + "_colour", appStyle);
-        ui->treeSyntaxHighlighting->topLevelItem(i)->setTextColor(2, color);
-        ui->treeSyntaxHighlighting->topLevelItem(i)->setBackgroundColor(2, color);
+        ui->treeSyntaxHighlighting->topLevelItem(i)->setForeground(2, color);
+        ui->treeSyntaxHighlighting->topLevelItem(i)->setBackground(2, color);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setText(2, color.name());
     }
 }
