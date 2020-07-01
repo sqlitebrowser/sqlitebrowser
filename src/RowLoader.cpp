@@ -208,8 +208,14 @@ void RowLoader::process (Task & t)
         // Remove trailing trailing semicolon
         QString queryTemp = rtrimChar(query, ';');
 
-        // If the query ends with a LIMIT statement take it as it is, if not append our own LIMIT part for lazy population
-        if(queryTemp.contains(QRegExp("LIMIT\\s+.+\\s*((,|\\b(OFFSET)\\b)\\s*.+\\s*)?$", Qt::CaseInsensitive)))
+        // If the query ends with a LIMIT statement or contains a compound operator take it as it is,
+        // if not append our own LIMIT part for lazy population. The compound operator test is a very
+        // weak check and does not detect whether the keyword is in a string or similar. This means
+        // that lazy population is disabled for more queries than necessary. We should fix this once
+        // we have a parser for SELECT statements but until then it is better to disable lazy population
+        // for more statements than required instead of failing to run some statements entirely.
+        if(queryTemp.contains(QRegExp("LIMIT\\s+.+\\s*((,|\\b(OFFSET)\\b)\\s*.+\\s*)?$", Qt::CaseInsensitive)) ||
+                queryTemp.contains(QRegExp("\\s(UNION)|(INTERSECT)|(EXCEPT)\\s", Qt::CaseInsensitive)))
             sLimitQuery = queryTemp;
         else
             sLimitQuery = queryTemp + QString(" LIMIT %1, %2;").arg(t.row_begin).arg(t.row_end-t.row_begin);
