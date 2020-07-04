@@ -448,6 +448,8 @@ QColor Settings::getDefaultColorValue(const std::string& group, const std::strin
                     return QColor(Qt::lightGray);
                 else if(name == "currentline_colour")
                     return backgroundColour.lighter(150);
+                else if(name == "highlight_colour")
+                    return QColor(79, 148, 205);
             } else {
                 if(name == "keyword_colour")
                     return QColor(Qt::darkBlue);
@@ -463,6 +465,8 @@ QColor Settings::getDefaultColorValue(const std::string& group, const std::strin
                     return QColor(Qt::red);
                 else if(name == "currentline_colour")
                     return QColor(236, 236, 245);
+                else if(name == "highlight_colour")
+                    return QColor(Qt::cyan);
             }
         }
     }

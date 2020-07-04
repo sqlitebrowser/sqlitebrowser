@@ -122,7 +122,7 @@ void PreferencesDialog::loadSettings()
         ui->treeSyntaxHighlighting->topLevelItem(i)->setForeground(2, color);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setBackground(2, color);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setText(2, colorname);
-        if (name != "null" && name != "currentline"  && name != "background" && name != "foreground") {
+        if (name != "null" && name != "currentline"  && name != "background" && name != "foreground" && name != "highlight") {
             ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(3, Settings::getValue("syntaxhighlighter", name + "_bold").toBool() ? Qt::Checked : Qt::Unchecked);
             ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(4, Settings::getValue("syntaxhighlighter", name + "_italic").toBool() ? Qt::Checked : Qt::Unchecked);
             ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(5, Settings::getValue("syntaxhighlighter", name + "_underline").toBool() ? Qt::Checked : Qt::Unchecked);

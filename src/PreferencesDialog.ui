@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>755</width>
-    <height>594</height>
+    <height>601</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1291,6 +1291,14 @@ Can be set to 0 for disabling completion.</string>
           </property>
           <property name="text">
            <string>Foreground</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>highlight</string>
+          </property>
+          <property name="text">
+           <string>Highlight</string>
           </property>
          </item>
         </widget>
