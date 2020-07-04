@@ -1295,6 +1295,22 @@ Can be set to 0 for disabling completion.</string>
          </item>
          <item>
           <property name="text">
+           <string>selected_bg</string>
+          </property>
+          <property name="text">
+           <string>Selection background</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>selected_fg</string>
+          </property>
+          <property name="text">
+           <string>Selection foreground</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
            <string>highlight</string>
           </property>
           <property name="text">

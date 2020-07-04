@@ -417,6 +417,7 @@ QColor Settings::getDefaultColorValue(const std::string& group, const std::strin
         {
             QColor backgroundColour;
             QColor foregroundColour;
+
             switch (style) {
             case FollowDesktopStyle :
                 backgroundColour = QPalette().color(QPalette::Active, QPalette::Base);
@@ -431,6 +432,10 @@ QColor Settings::getDefaultColorValue(const std::string& group, const std::strin
                 return foregroundColour;
             else if(name == "background_colour")
                 return backgroundColour;
+            else if(name == "selected_fg_colour")
+                return QPalette().color(QPalette::Active, QPalette::HighlightedText);
+            else if(name == "selected_bg_colour")
+                return QPalette().color(QPalette::Active, QPalette::Highlight);
 
             // Detect and provide sensible defaults for dark themes
             if (backgroundColour.value() < foregroundColour.value()) {

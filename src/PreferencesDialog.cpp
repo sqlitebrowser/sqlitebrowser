@@ -114,6 +114,8 @@ void PreferencesDialog::loadSettings()
     ui->editFilterEscape->setText(Settings::getValue("databrowser", "filter_escape").toString());
     ui->spinFilterDelay->setValue(Settings::getValue("databrowser", "filter_delay").toInt());
 
+    ui->treeSyntaxHighlighting->resizeColumnToContents(1);
+
     for(int i=0; i < ui->treeSyntaxHighlighting->topLevelItemCount(); ++i)
     {
         std::string name = ui->treeSyntaxHighlighting->topLevelItem(i)->text(0).toStdString();
@@ -122,7 +124,11 @@ void PreferencesDialog::loadSettings()
         ui->treeSyntaxHighlighting->topLevelItem(i)->setForeground(2, color);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setBackground(2, color);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setText(2, colorname);
-        if (name != "null" && name != "currentline"  && name != "background" && name != "foreground" && name != "highlight") {
+
+        // Add font properties except for colour-only entries
+        if (name != "null" && name != "currentline" &&
+            name != "background" && name != "foreground" && name != "highlight" &&
+            name != "selected_fg" && name != "selected_bg") {
             ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(3, Settings::getValue("syntaxhighlighter", name + "_bold").toBool() ? Qt::Checked : Qt::Unchecked);
             ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(4, Settings::getValue("syntaxhighlighter", name + "_italic").toBool() ? Qt::Checked : Qt::Unchecked);
             ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(5, Settings::getValue("syntaxhighlighter", name + "_underline").toBool() ? Qt::Checked : Qt::Unchecked);
