@@ -1121,7 +1121,7 @@ void MainWindow::executeQuery()
     // no chance to execute any further.
     QString sql = sqlWidget->getSql();
     if(mode == Selection)
-        sql = sql.left(execute_to_position);
+        sql = sql.toUtf8().left(execute_to_position);   // We have to convert to a QByteArray here because QScintilla gives us the position in bytes, not in characters.
 
     // Prepare the SQL worker to run the query. We set the context of each signal-slot connection to the current SQL execution area.
     // This means that if the tab is closed all these signals are automatically disconnected so the lambdas won't be called for a not
