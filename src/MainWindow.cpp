@@ -26,6 +26,7 @@
 #include "FindReplaceDialog.h"
 #include "RunSql.h"
 #include "ExtendedTableWidget.h"
+#include "Data.h"
 
 #include <chrono>
 #include <QFile>
@@ -1407,7 +1408,9 @@ void MainWindow::importDatabaseFromSQL()
     QApplication::setOverrideCursor(Qt::WaitCursor);
     QFile f(fileName);
     f.open(QIODevice::ReadOnly);
-    bool ok = db.executeMultiSQL(f.readAll(), newDbFile.size() == 0);
+    QByteArray data = f.readAll();
+    removeBom(data);
+    bool ok = db.executeMultiSQL(data, newDbFile.size() == 0);
     // Restore cursor before asking the user to accept the message
     QApplication::restoreOverrideCursor();
     if(!ok)
