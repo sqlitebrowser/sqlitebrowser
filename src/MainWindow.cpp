@@ -556,7 +556,10 @@ void MainWindow::fileNew()
 
 void MainWindow::fileNewInMemoryDatabase()
 {
-    db.create(":memory:");
+    // Open an in-memory database. We use open() instead of create() here because the extra work create() does is not needed
+    // when no files are stored on disk.
+    db.open(":memory:");
+
     setCurrentFile(tr("In-Memory database"));
     statusEncodingLabel->setText(db.getPragma("encoding"));
     statusEncryptionLabel->setVisible(false);
