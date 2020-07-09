@@ -2064,7 +2064,8 @@ void MainWindow::loadExtension()
 
 void MainWindow::reloadSettings()
 {
-    Application::reloadSettings();
+    // Set default application font size
+    qobject_cast<Application*>(qApp)->reloadSettings();
 
     // Set data browser font
     ui->tableBrowser->reloadSettings();
@@ -2108,6 +2109,12 @@ void MainWindow::reloadSettings()
     ui->editLogUser->setFont(logfont);
     ui->editLogErrorLog->setFont(logfont);
     editDock->reloadSettings();
+
+    // Set font for database structure views
+    QFont structure_font = ui->dbTreeWidget->font();
+    structure_font.setPointSize(Settings::getValue("db", "fontsize").toInt());
+    ui->dbTreeWidget->setFont(structure_font);
+    ui->treeSchemaDock->setFont(structure_font);
 
     // Load extensions
     db.loadExtensionsFromSettings();

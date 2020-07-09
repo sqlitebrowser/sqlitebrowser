@@ -72,6 +72,9 @@ Application::Application(int& argc, char** argv) :
     // See https://bugreports.qt.io/browse/QTBUG-40332
     qputenv("QT_BEARER_POLL_TIMEOUT", QByteArray::number(INT_MAX));
 
+    // Remember default font size
+    m_defaultFontSize = font().pointSize();
+
     // Parse command line
     QString fileToOpen;
     QString tableToBrowse;
@@ -208,6 +211,13 @@ QString Application::versionString()
 #else
     return QString("%1").arg(APP_VERSION);
 #endif
+}
+
+void Application::reloadSettings()
+{
+    QFont f = font();
+    f.setPointSize(Settings::getValue("General", "fontsize").toInt());
+    setFont(f);
 }
 
 // Functions for documenting the shortcuts in the user interface using native names

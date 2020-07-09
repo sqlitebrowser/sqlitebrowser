@@ -86,11 +86,12 @@ void PreferencesDialog::loadSettings()
     ui->defaultFieldTypeComboBox->addItems(DBBrowserDB::Datatypes);
 
     int defaultFieldTypeIndex = Settings::getValue("db", "defaultfieldtype").toInt();
-
     if (defaultFieldTypeIndex < DBBrowserDB::Datatypes.count())
     {
         ui->defaultFieldTypeComboBox->setCurrentIndex(defaultFieldTypeIndex);
     }
+
+    ui->spinStructureFontSize->setValue(Settings::getValue("db", "fontsize").toInt());
 
     // Gracefully handle the preferred Data Browser font not being available
     int matchingFont = ui->comboDataBrowserFont->findText(Settings::getValue("databrowser", "font").toString(), Qt::MatchExactly);
@@ -204,6 +205,7 @@ void PreferencesDialog::loadSettings()
     ui->toolbarStyleComboBrowse->setCurrentIndex(Settings::getValue("General", "toolbarStyleBrowse").toInt());
     ui->toolbarStyleComboSql->setCurrentIndex(Settings::getValue("General", "toolbarStyleSql").toInt());
     ui->toolbarStyleComboEditCell->setCurrentIndex(Settings::getValue("General", "toolbarStyleEditCell").toInt());
+    ui->spinGeneralFontSize->setValue(Settings::getValue("General", "fontsize").toInt());
 }
 
 void PreferencesDialog::saveSettings()
@@ -217,8 +219,8 @@ void PreferencesDialog::saveSettings()
     Settings::setValue("db", "foreignkeys", ui->foreignKeysCheckBox->isChecked());
     Settings::setValue("db", "prefetchsize", ui->spinPrefetchSize->value());
     Settings::setValue("db", "defaultsqltext", ui->editDatabaseDefaultSqlText->text());
-
     Settings::setValue("db", "defaultfieldtype", ui->defaultFieldTypeComboBox->currentIndex());
+    Settings::setValue("db", "fontsize", ui->spinStructureFontSize->value());
 
     Settings::setValue("checkversion", "enabled", ui->checkUpdates->isChecked());
 
@@ -328,14 +330,13 @@ void PreferencesDialog::saveSettings()
 
     Settings::setValue("General", "language", newLanguage);
     Settings::setValue("General", "appStyle", ui->appStyleCombo->currentIndex());
-
     Settings::setValue("General", "toolbarStyle", ui->toolbarStyleComboMain->currentIndex());
     Settings::setValue("General", "toolbarStyleStructure", ui->toolbarStyleComboStructure->currentIndex());
     Settings::setValue("General", "toolbarStyleBrowse", ui->toolbarStyleComboBrowse->currentIndex());
     Settings::setValue("General", "toolbarStyleSql", ui->toolbarStyleComboSql->currentIndex());
     Settings::setValue("General", "toolbarStyleEditCell", ui->toolbarStyleComboEditCell->currentIndex());
-
     Settings::setValue("General", "DBFileExtensions", m_dbFileExtensions.join(";;") );
+    Settings::setValue("General", "fontsize", ui->spinGeneralFontSize->value());
 
     m_proxyDialog->saveSettings();
 
