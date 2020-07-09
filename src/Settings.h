@@ -18,6 +18,8 @@ public:
     static void setValue(const std::string& group, const std::string& name, const QVariant& value, bool dont_save_to_disk = false);
     static void restoreDefaults();
 
+    static void rememberDefaultFontSize(int size) { m_defaultFontSize = size; }
+
 private:
     Settings() = delete;    // class is fully static
 
@@ -30,6 +32,9 @@ private:
 
     // Cache for storing the settings to avoid repeatedly reading the settings file all the time
     static std::unordered_map<std::string, QVariant> m_hCache;
+
+    // Default UI font size
+    static int m_defaultFontSize;
 };
 
 #endif

@@ -24,7 +24,6 @@ public:
     static QString versionString();
 
     static void reloadSettings();
-    int defaultFontSize() const { return m_defaultFontSize; }
 
 protected:
     bool event(QEvent* event) override;
@@ -34,7 +33,6 @@ private:
     MainWindow* m_mainWindow;
     QTranslator* m_translatorQt;
     QTranslator* m_translatorApp;
-    int m_defaultFontSize;
 };
 
 void addShortcutsTooltip(QAction* action, const QList<QKeySequence>& extraKeys = QList<QKeySequence>());

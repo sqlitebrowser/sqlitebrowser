@@ -1,5 +1,4 @@
 #include "Settings.h"
-#include "Application.h"
 
 #include <QApplication>
 #include <QDir>
@@ -11,6 +10,7 @@
 #include <QPalette>
 
 std::unordered_map<std::string, QVariant> Settings::m_hCache;
+int Settings::m_defaultFontSize;
 
 static bool ends_with(const std::string& str, const std::string& with)
 {
@@ -193,7 +193,7 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
 
     // General/fontsize
     if(group == "General" && name == "fontsize")
-        return qobject_cast<Application*>(qApp)->defaultFontSize();
+        return m_defaultFontSize;
 
     // checkversion group?
     if(group == "checkversion")
