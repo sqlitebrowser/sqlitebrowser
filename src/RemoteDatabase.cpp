@@ -381,11 +381,17 @@ QString RemoteDatabase::getInfoFromClientCert(const QString& cert, CertInfo info
 
     // Return requested part of the CN
     if(info == CertInfoUser)
+    {
         return cn_parts.first();
-    else if(info == CertInfoServer)
-        return cn_parts.last();
-    else
-        return QString();
+    } else if(info == CertInfoServer) {
+        // Assemble the full URL from the host name. We use port 443 by default but for
+        // local development purposes we use 5550 instead.
+        QString host = cn_parts.last();
+        host = QString("https://%1:%2/").arg(host).arg(host.contains("docker-dev") ? "5550" : "443");
+        return host;
+    }
+
+    return QString();
 }
 
 bool RemoteDatabase::prepareSsl(QNetworkRequest* request, const QString& clientCert)
