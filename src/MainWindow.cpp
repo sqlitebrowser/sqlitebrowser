@@ -754,7 +754,6 @@ void MainWindow::refresh()
         db.updateSchema();
     } else if (currentTab == ui->browser) {
         // Refresh the schema and reload the current table
-        db.updateSchema();
         populateTable();
     } else if (currentTab == ui->pragmas) {
         // Reload pragma values
@@ -2065,6 +2064,8 @@ void MainWindow::loadExtension()
 
 void MainWindow::reloadSettings()
 {
+    Application::reloadSettings();
+
     // Set data browser font
     ui->tableBrowser->reloadSettings();
 

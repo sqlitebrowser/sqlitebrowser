@@ -423,6 +423,9 @@ void TableBrowser::updateTable()
         return;
     }
 
+    // Update the schema first
+    db->updateSchema();
+
     // Reset the minimum width of the vertical header which could have been modified in updateFilter
     // or in headerClicked.
     ui->dataTable->verticalHeader()->setMinimumWidth(0);
