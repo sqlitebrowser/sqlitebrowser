@@ -73,7 +73,7 @@ Application::Application(int& argc, char** argv) :
     qputenv("QT_BEARER_POLL_TIMEOUT", QByteArray::number(INT_MAX));
 
     // Remember default font size
-    m_defaultFontSize = font().pointSize();
+    Settings::rememberDefaultFontSize(font().pointSize());
 
     // Parse command line
     QString fileToOpen;
