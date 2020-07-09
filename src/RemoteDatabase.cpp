@@ -439,10 +439,11 @@ void RemoteDatabase::prepareProgressDialog(QNetworkReply* reply, bool upload, co
     m_progress->setCancelButtonText(tr("Cancel"));
 
     // Set dialog text
+    QString url_for_display = QUrl(url).toString(QUrl::PrettyDecoded | QUrl::RemoveQuery);
     if(upload)
-        m_progress->setLabelText(tr("Uploading remote database to\n%1").arg(url));
+        m_progress->setLabelText(tr("Uploading remote database to\n%1").arg(url_for_display));
     else
-        m_progress->setLabelText(tr("Downloading remote database from\n%1").arg(url));
+        m_progress->setLabelText(tr("Downloading remote database from\n%1").arg(url_for_display));
 
     // Show dialog
     m_progress->show();
