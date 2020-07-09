@@ -80,8 +80,7 @@ void RemoteDock::setNewIdentity()
         return;
 
     // Open root directory. Get host name from client cert
-    QString host = remoteDatabase.getInfoFromClientCert(cert, RemoteDatabase::CertInfoServer);
-    remoteModel->setNewRootDir(QString("https://%1:443/").arg(host), cert);
+    remoteModel->setNewRootDir(remoteDatabase.getInfoFromClientCert(cert, RemoteDatabase::CertInfoServer), cert);
 
     // Enable buttons if necessary
     enableButtons();
@@ -124,7 +123,7 @@ void RemoteDock::pushDatabase()
     name = name.remove(QRegExp("_[0-9]+.remotedb$"));
 
     // Show the user a dialog for setting all the commit details
-    QString host = QString("https://%1:443/").arg(remoteDatabase.getInfoFromClientCert(remoteModel->currentClientCertificate(), RemoteDatabase::CertInfoServer));
+    QString host = remoteDatabase.getInfoFromClientCert(remoteModel->currentClientCertificate(), RemoteDatabase::CertInfoServer);
     RemotePushDialog pushDialog(this, remoteDatabase, host, remoteModel->currentClientCertificate(), name);
     if(pushDialog.exec() != QDialog::Accepted)
         return;
