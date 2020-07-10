@@ -205,8 +205,11 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
             // It's a database file.
 
             // Add cloned database to list of local databases
-            QString saveFileAs = localAdd(reply->url().fileName(), reply->property("certfile").toString(),
-                                          reply->url(), QUrlQuery(reply->url()).queryItemValue("commit").toStdString());
+            QString saveFileAs = localAdd(reply->url().fileName(),
+                                          reply->property("certfile").toString(),
+                                          reply->url(),
+                                          QUrlQuery(reply->url()).queryItemValue("commit").toStdString(),
+                                          QUrlQuery(reply->url()).queryItemValue("branch").toStdString());
 
             // Save the downloaded data under the generated file name
             QFile file(saveFileAs);
@@ -292,7 +295,11 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
                 break;
 
             // Create or update the record in our local checkout database
-            QString saveFileAs = localAdd(reply->url().fileName(), reply->property("certfile").toString(), QString::fromStdString(obj["url"]), obj["commit_id"]);
+            QString saveFileAs = localAdd(reply->url().fileName(),
+                                          reply->property("certfile").toString(),
+                                          QString::fromStdString(obj["url"]),
+                                          obj["commit_id"],
+                                          QUrlQuery(QUrl(QString::fromStdString(obj["url"]))).queryItemValue("branch").toStdString());
 
             // If the name of the source file and the name we're saving as differ, we're doing an initial push. In this case, copy the source file to
             // the destination path to avoid redownloading it when it's first used.
@@ -542,7 +549,7 @@ void RemoteDatabase::push(const QString& filename, const QString& url, const QSt
     addPart(multipart, "licence", licence);
     addPart(multipart, "public", isPublic ? "true" : "false");
     addPart(multipart, "branch", branch);
-    addPart(multipart, "commit", QString::fromStdString(localLastCommitId(clientCert, url)));
+    addPart(multipart, "commit", QString::fromStdString(localLastCommitId(clientCert, url, branch.toStdString())));
     addPart(multipart, "force", forcePush ? "true" : "false");
     addPart(multipart, "lastmodified", last_modified.toString("yyyy-MM-dd'T'HH:mm:ss'Z'"));
 
@@ -640,7 +647,7 @@ void RemoteDatabase::localAssureOpened()
     }
 }
 
-QString RemoteDatabase::localAdd(QString filename, QString identity, const QUrl& url, const std::string& new_commit_id)
+QString RemoteDatabase::localAdd(QString filename, QString identity, const QUrl& url, const std::string& new_commit_id, const std::string& branch)
 {
     // This function adds a new local database clone to our internal list. It does so by adding a single
     // new record to the remote dbs database. All the fields are extracted from the filename, the identity
@@ -657,7 +664,7 @@ QString RemoteDatabase::localAdd(QString filename, QString identity, const QUrl&
     identity = f.fileName();
 
     // Check if this file has already been checked in
-    std::string last_commit_id = localLastCommitId(identity, url.toString());
+    std::string last_commit_id = localLastCommitId(identity, url.toString(), branch);
     if(last_commit_id.empty())
     {
         // The file hasn't been checked in yet. So add a new record for it.
@@ -666,7 +673,7 @@ QString RemoteDatabase::localAdd(QString filename, QString identity, const QUrl&
         filename = QString("%2_%1.remotedb").arg(QDateTime::currentMSecsSinceEpoch()).arg(filename);
 
         // Insert database into local database list
-        QString sql = QString("INSERT INTO local(identity, name, url, commit_id, file) VALUES(?, ?, ?, ?, ?)");
+        QString sql = QString("INSERT INTO local(identity, name, url, commit_id, file, branch) VALUES(?, ?, ?, ?, ?, ?)");
         sqlite3_stmt* stmt;
         if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, nullptr) != SQLITE_OK)
             return QString();
@@ -697,6 +704,12 @@ QString RemoteDatabase::localAdd(QString filename, QString identity, const QUrl&
         }
 
         if(sqlite3_bind_text(stmt, 5, filename.toUtf8(), filename.size(), SQLITE_TRANSIENT))
+        {
+            sqlite3_finalize(stmt);
+            return QString();
+        }
+
+        if(sqlite3_bind_text(stmt, 6, branch.c_str(), static_cast<int>(branch.size()), SQLITE_TRANSIENT))
         {
             sqlite3_finalize(stmt);
             return QString();
@@ -887,14 +900,14 @@ QString RemoteDatabase::localCheckFile(const QString& local_file)
     }
 }
 
-std::string RemoteDatabase::localLastCommitId(QString identity, const QUrl& url)
+std::string RemoteDatabase::localLastCommitId(QString identity, const QUrl& url, const std::string& branch)
 {
     // This function takes a file name and checks with which commit id we had checked out this file or last pushed it.
 
     localAssureOpened();
 
     // Query commit id for that file name
-    QString sql = QString("SELECT commit_id FROM local WHERE identity=? AND url=?");
+    QString sql = QString("SELECT commit_id FROM local WHERE identity=? AND url=? AND branch=?");
     sqlite3_stmt* stmt;
     if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, nullptr) != SQLITE_OK)
         return std::string();
@@ -909,6 +922,12 @@ std::string RemoteDatabase::localLastCommitId(QString identity, const QUrl& url)
 
     if(sqlite3_bind_text(stmt, 2, url.toString(QUrl::PrettyDecoded | QUrl::RemoveQuery).toUtf8(),
                          url.toString(QUrl::PrettyDecoded | QUrl::RemoveQuery).toUtf8().size(), SQLITE_TRANSIENT))
+    {
+        sqlite3_finalize(stmt);
+        return std::string();
+    }
+
+    if(sqlite3_bind_text(stmt, 3, branch.c_str(), static_cast<int>(branch.size()), SQLITE_TRANSIENT))
     {
         sqlite3_finalize(stmt);
         return std::string();
