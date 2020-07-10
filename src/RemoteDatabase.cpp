@@ -958,3 +958,35 @@ void RemoteDatabase::clearAccessCache(const QString& clientCert)
         m_manager->clearAccessCache();
     }
 }
+
+std::vector<RemoteDatabase::LocalFileInfo> RemoteDatabase::localGetLocalFiles(QString identity)
+{
+    localAssureOpened();
+
+    // Query commit id for that file name
+    QString sql = QString("SELECT name, url, commit_id, file, branch FROM local WHERE identity=? ORDER BY url");
+    sqlite3_stmt* stmt;
+    if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, nullptr) != SQLITE_OK)
+        return {};
+
+    QFileInfo f(identity);
+    identity = f.fileName();
+    if(sqlite3_bind_text(stmt, 1, identity.toUtf8(), identity.toUtf8().length(), SQLITE_TRANSIENT))
+    {
+        sqlite3_finalize(stmt);
+        return {};
+    }
+
+    std::vector<RemoteDatabase::LocalFileInfo> result;
+    while(sqlite3_step(stmt) == SQLITE_ROW)
+    {
+        result.emplace_back(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0)),
+                            reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1)),
+                            reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2)),
+                            reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3)),
+                            reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4)));
+    }
+
+    sqlite3_finalize(stmt);
+    return result;
+}

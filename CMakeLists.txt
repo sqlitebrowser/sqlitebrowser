@@ -171,6 +171,7 @@ set(SQLB_MOC_HDR
 	src/SelectItemsPopup.h
 	src/TableBrowser.h
 	src/ImageViewer.h
+	src/RemoteLocalFilesModel.h
 )
 
 set(SQLB_SRC
@@ -230,6 +231,7 @@ set(SQLB_SRC
 	src/sql/parser/sqlite3_lexer.cpp
 	src/sql/parser/sqlite3_parser.cpp
 	src/ImageViewer.cpp
+	src/RemoteLocalFilesModel.cpp
 )
 
 set(SQLB_FORMS

@@ -22,6 +22,7 @@ CONFIG(unittest) {
 
 HEADERS += \
     ImageViewer.h \
+    RemoteLocalFilesModel.h \
     sqlitedb.h \
     MainWindow.h \
     EditIndexDialog.h \
@@ -83,6 +84,7 @@ HEADERS += \
 
 SOURCES += \
     ImageViewer.cpp \
+    RemoteLocalFilesModel.cpp \
     sqlitedb.cpp \
     MainWindow.cpp \
     EditIndexDialog.cpp \
