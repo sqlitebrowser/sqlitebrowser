@@ -6,6 +6,7 @@
 #include "ui_RemoteDock.h"
 #include "Settings.h"
 #include "RemoteDatabase.h"
+#include "RemoteLocalFilesModel.h"
 #include "RemoteModel.h"
 #include "MainWindow.h"
 #include "RemotePushDialog.h"
@@ -16,15 +17,22 @@ RemoteDock::RemoteDock(MainWindow* parent)
       ui(new Ui::RemoteDock),
       mainWindow(parent),
       remoteDatabase(parent->getRemote()),
-      remoteModel(new RemoteModel(this, parent->getRemote()))
+      remoteModel(new RemoteModel(this, parent->getRemote())),
+      remoteLocalFilesModel(new RemoteLocalFilesModel(this, parent->getRemote()))
 {
     ui->setupUi(this);
 
-    // Set up model
-    ui->treeStructure->setModel(remoteModel);
+    // Set models
+    ui->treeRemote->setModel(remoteModel);
+    ui->treeLocal->setModel(remoteLocalFilesModel);
 
-    // Reload the directory tree when a database upload has finished
-    connect(&remoteDatabase, &RemoteDatabase::uploadFinished, this, &RemoteDock::setNewIdentity);
+    // When a database has been downloaded and must be opened, notify users of this class
+    connect(&remoteDatabase, &RemoteDatabase::openFile, this, &RemoteDock::openFile);
+
+    // Reload the directory tree and the list of local checkouts when a database upload has finished
+    connect(&remoteDatabase, &RemoteDatabase::uploadFinished, remoteModel, &RemoteModel::refresh);
+    connect(&remoteDatabase, &RemoteDatabase::uploadFinished, this, &RemoteDock::refreshLocalFileList);
+    connect(&remoteDatabase, &RemoteDatabase::openFile, this, &RemoteDock::refreshLocalFileList);
 
     // Whenever a new directory listing has been parsed, check if it was a new root dir and, if so, open the user's directory
     connect(remoteModel, &RemoteModel::directoryListingParsed, this, &RemoteDock::newDirectoryNode);
@@ -81,6 +89,10 @@ void RemoteDock::setNewIdentity()
 
     // Open root directory. Get host name from client cert
     remoteModel->setNewRootDir(remoteDatabase.getInfoFromClientCert(cert, RemoteDatabase::CertInfoServer), cert);
+
+    // Reset list of local checkouts
+    remoteLocalFilesModel->setIdentity(cert);
+    refreshLocalFileList();
 
     // Enable buttons if necessary
     enableButtons();
@@ -149,11 +161,14 @@ void RemoteDock::newDirectoryNode(const QModelIndex& parent)
         // Get current user name
         QString user = remoteDatabase.getInfoFromClientCert(remoteModel->currentClientCertificate(), RemoteDatabase::CertInfoUser);
 
-        for(int i=0;i<remoteModel->rowCount(parent);i++)
+        for(int i=0;i<remoteModel->rowCount();i++)
         {
-            QModelIndex child = remoteModel->index(i, RemoteModelColumnName, parent);
+            QModelIndex child = remoteModel->index(i, RemoteModelColumnName);
             if(child.data().toString() == user)
-                ui->treeStructure->expand(child);
+            {
+                ui->treeRemote->expand(child);
+                break;
+            }
         }
     }
 }
@@ -168,4 +183,31 @@ void RemoteDock::reject()
 void RemoteDock::switchToMainView()
 {
     ui->stack->setCurrentIndex(0);
+}
+
+void RemoteDock::refreshLocalFileList()
+{
+    remoteLocalFilesModel->refresh();
+
+    // Expand node for current user
+    QString user = remoteDatabase.getInfoFromClientCert(remoteModel->currentClientCertificate(), RemoteDatabase::CertInfoUser);
+    for(int i=0;i<remoteLocalFilesModel->rowCount();i++)
+    {
+        QModelIndex child = remoteLocalFilesModel->index(i, RemoteLocalFilesModel::ColumnName);
+        if(child.data().toString() == user)
+        {
+            ui->treeLocal->expand(child);
+            break;
+        }
+    }
+}
+
+void RemoteDock::openLocalFile(const QModelIndex& idx)
+{
+    if(!idx.isValid())
+        return;
+
+    QString file = idx.siblingAtColumn(RemoteLocalFilesModel::ColumnFile).data().toString();
+    if(!file.isEmpty())
+        emit openFile(Settings::getValue("remote", "clonedirectory").toString() + "/" + file);
 }

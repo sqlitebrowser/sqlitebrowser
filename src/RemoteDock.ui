@@ -81,10 +81,34 @@
         </layout>
        </item>
        <item>
-        <widget class="QTreeView" name="treeStructure">
-         <property name="whatsThis">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB Browser for SQLite. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to &amp;quot;Generate client certificate&amp;quot; (that's your identity). That'll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB Browser for SQLite Preferences. Click the button to add a new certificate to DB Browser for SQLite and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <widget class="QTabWidget" name="tabs">
+         <property name="currentIndex">
+          <number>0</number>
          </property>
+         <widget class="QWidget" name="tabRemote">
+          <attribute name="title">
+           <string>DBHub.io</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <widget class="QTreeView" name="treeRemote">
+             <property name="whatsThis">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB Browser for SQLite. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to &amp;quot;Generate client certificate&amp;quot; (that's your identity). That'll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB Browser for SQLite Preferences. Click the button to add a new certificate to DB Browser for SQLite and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tabLocal">
+          <attribute name="title">
+           <string>Local</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <item>
+            <widget class="QTreeView" name="treeLocal"/>
+           </item>
+          </layout>
+         </widget>
         </widget>
        </item>
       </layout>
@@ -185,8 +209,8 @@
    <slot>setNewIdentity()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>551</x>
-     <y>22</y>
+     <x>134</x>
+     <y>25</y>
     </hint>
     <hint type="destinationlabel">
      <x>419</x>
@@ -195,7 +219,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>treeStructure</sender>
+   <sender>treeRemote</sender>
    <signal>doubleClicked(QModelIndex)</signal>
    <receiver>RemoteDock</receiver>
    <slot>fetchDatabase(QModelIndex)</slot>
@@ -217,8 +241,8 @@
    <slot>pushDatabase()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>551</x>
-     <y>22</y>
+     <x>530</x>
+     <y>25</y>
     </hint>
     <hint type="destinationlabel">
      <x>287</x>
@@ -233,8 +257,24 @@
    <slot>switchToMainView()</slot>
    <hints>
     <hint type="sourcelabel">
+     <x>93</x>
+     <y>23</y>
+    </hint>
+    <hint type="destinationlabel">
      <x>266</x>
-     <y>217</y>
+     <y>148</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treeLocal</sender>
+   <signal>doubleClicked(QModelIndex)</signal>
+   <receiver>RemoteDock</receiver>
+   <slot>openLocalFile(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>266</x>
+     <y>179</y>
     </hint>
     <hint type="destinationlabel">
      <x>266</x>
@@ -248,5 +288,6 @@
   <slot>fetchDatabase(QModelIndex)</slot>
   <slot>pushDatabase()</slot>
   <slot>switchToMainView()</slot>
+  <slot>openLocalFile(QModelIndex)</slot>
  </slots>
 </ui>

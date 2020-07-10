@@ -4,6 +4,7 @@
 #include <QDialog>
 
 class RemoteDatabase;
+class RemoteLocalFilesModel;
 class RemoteModel;
 class MainWindow;
 
@@ -31,6 +32,10 @@ private slots:
     void pushDatabase();
     void newDirectoryNode(const QModelIndex& parent);
     void switchToMainView();
+    void openLocalFile(const QModelIndex& idx);
+
+signals:
+    void openFile(QString file);
 
 private:
     Ui::RemoteDock* ui;
@@ -39,6 +44,9 @@ private:
 
     RemoteDatabase& remoteDatabase;
     RemoteModel* remoteModel;
+    RemoteLocalFilesModel* remoteLocalFilesModel;
+
+    void refreshLocalFileList();
 };
 
 #endif
