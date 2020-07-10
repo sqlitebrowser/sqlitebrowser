@@ -218,3 +218,20 @@ void RemoteDock::openLocalFile(const QModelIndex& idx)
     if(!file.isEmpty())
         emit openFile(Settings::getValue("remote", "clonedirectory").toString() + "/" + file);
 }
+
+void RemoteDock::fileOpened(const QString& filename)
+{
+    // Check if it is a tracked remote database file and retrieve the information we have on it
+    RemoteDatabase::LocalFileInfo info;
+    if(filename.startsWith(Settings::getValue("remote", "clonedirectory").toString()))
+        info = remoteDatabase.localGetLocalFileInfo(filename);
+
+    // Copy information to view
+    ui->labelDatabaseUser->setText(info.user_name());
+    ui->labelDatabaseFile->setText(QString::fromStdString(info.name));
+    ui->labelDatabaseBranch->setText(QString::fromStdString(info.branch));
+
+    // Switch to "Current Database" tab when we have information on this database
+    if(!info.file.empty())
+        ui->tabs->setCurrentIndex(2);
+}

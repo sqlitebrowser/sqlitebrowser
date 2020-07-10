@@ -23,6 +23,12 @@ public:
     void reloadSettings();
     void enableButtons();
 
+    // This function should be called whenever a database file is opened.
+    // It checks whether the file is a checkout of a tracked remote database
+    // and updates some of the fields in the remote dock if it is.
+    // Call it with an empty file name if the database is closed.
+    void fileOpened(const QString& filename);
+
 public slots:
     void reject() override;
 
