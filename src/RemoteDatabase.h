@@ -50,25 +50,38 @@ public:
               const QString& commitMessage = QString(), const QString& licence = QString(), bool isPublic = false,
               const QString& branch = QString("master"), bool forcePush = false);
 
-    // This can be used to get a list of all locally checked out databases for a given identity.
+    // These function can be used to get information on locally checked out databases
     class LocalFileInfo
     {
     public:
-        LocalFileInfo(const std::string& _name, const std::string& _url, const std::string& _commit_id, const std::string& _file, const std::string& _branch) :
+        LocalFileInfo()
+        {}
+
+        LocalFileInfo(const std::string& _name,
+                      const std::string& _url,
+                      const std::string& _commit_id,
+                      const std::string& _file,
+                      const std::string& _branch,
+                      const std::string& _identity) :
             name(_name),
             url(_url),
             commit_id(_commit_id),
             file(_file),
-            branch(_branch)
+            branch(_branch),
+            identity(_identity)
         {}
+
+        QString user_name() const;
 
         std::string name;
         std::string url;
         std::string commit_id;
         std::string file;
         std::string branch;
+        std::string identity;
     };
-    std::vector<LocalFileInfo> localGetLocalFiles(QString identity);
+    std::vector<LocalFileInfo> localGetLocalFiles(QString identity);    // Return a list of all checked out databases for a given identity
+    LocalFileInfo localGetLocalFileInfo(QString filename);              // Return information on a single file
 
 signals:
     // As soon as you can safely open a network connection, this signal is emitted. This can be used to delay early network requests

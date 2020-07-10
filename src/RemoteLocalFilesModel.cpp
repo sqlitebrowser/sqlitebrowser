@@ -46,11 +46,7 @@ void RemoteLocalFilesModel::refresh()
     // Loop through that list
     for(const auto& file : files)
     {
-        // Figure out the user name from the URL
-        QString user_name = QUrl(QString::fromStdString(file.url)).path();
-        if(user_name.count('/') < 2 || !user_name.startsWith('/'))
-            continue;
-        user_name = user_name.mid(1, user_name.indexOf('/', 1) - 1);
+        QString user_name = file.user_name();
 
         // Check if there is already a node for this user
         QTreeWidgetItem* user_node = nullptr;

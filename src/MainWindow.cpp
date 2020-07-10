@@ -519,6 +519,10 @@ bool MainWindow::fileOpen(const QString& fileName, bool openFromProject, bool re
                     populateTable();
                 else if(ui->mainTab->currentWidget() == ui->pragmas)
                     loadPragmas();
+
+                // Update remote dock
+                remoteDock->fileOpened(wFile);
+
                 retval = true;
             } else {
                 QMessageBox::warning(this, qApp->applicationName(), tr("Could not open database file.\nReason: %1").arg(db.lastError()));
@@ -671,6 +675,9 @@ bool MainWindow::fileClose()
     SqlTextEdit::sqlLexer->setTableNames(SqlUiLexer::QualifiedTablesMap());
     for(int i=0; i < ui->tabSqlAreas->count(); i++)
         qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i))->getEditor()->reloadKeywords();
+
+    // Clear remote dock
+    remoteDock->fileOpened(QString());
 
     return true;
 }

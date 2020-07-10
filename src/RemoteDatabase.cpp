@@ -963,7 +963,7 @@ std::vector<RemoteDatabase::LocalFileInfo> RemoteDatabase::localGetLocalFiles(QS
 {
     localAssureOpened();
 
-    // Query commit id for that file name
+    // Get all rows for this identity
     QString sql = QString("SELECT name, url, commit_id, file, branch FROM local WHERE identity=? ORDER BY url");
     sqlite3_stmt* stmt;
     if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, nullptr) != SQLITE_OK)
@@ -984,9 +984,58 @@ std::vector<RemoteDatabase::LocalFileInfo> RemoteDatabase::localGetLocalFiles(QS
                             reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1)),
                             reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2)),
                             reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3)),
-                            reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4)));
+                            reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4)),
+                            identity.toStdString());
     }
 
     sqlite3_finalize(stmt);
     return result;
+}
+
+RemoteDatabase::LocalFileInfo RemoteDatabase::localGetLocalFileInfo(QString filename)
+{
+    localAssureOpened();
+
+    // Find this file in our database
+    QString sql = QString("SELECT name, url, commit_id, branch, identity FROM local WHERE file=?");
+    sqlite3_stmt* stmt;
+    if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, nullptr) != SQLITE_OK)
+        return {};
+
+    // Remove the path for querying the file name
+    filename = QFileInfo(filename).fileName();
+    if(sqlite3_bind_text(stmt, 1, filename.toUtf8(), filename.toUtf8().length(), SQLITE_TRANSIENT))
+    {
+        sqlite3_finalize(stmt);
+        return {};
+    }
+
+    if(sqlite3_step(stmt) != SQLITE_ROW)
+    {
+        // If there was either an error or no record was found for this file name, stop here.
+        sqlite3_finalize(stmt);
+        return {};
+    }
+
+    // Retrieve and return all the information we have
+    RemoteDatabase::LocalFileInfo result(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0)),
+                                         reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1)),
+                                         reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2)),
+                                         filename.toStdString(),
+                                         reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3)),
+                                         reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4)));
+    sqlite3_finalize(stmt);
+    return result;
+}
+
+QString RemoteDatabase::LocalFileInfo::user_name() const
+{
+    // Figure out the user name from the URL
+
+    QString path = QUrl(QString::fromStdString(url)).path();
+
+    if(path.count('/') < 2 || !path.startsWith('/'))
+        return QString();
+    else
+        return path.mid(1, path.indexOf('/', 1) - 1);
 }
