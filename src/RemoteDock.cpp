@@ -231,7 +231,15 @@ void RemoteDock::fileOpened(const QString& filename)
     ui->labelDatabaseFile->setText(QString::fromStdString(info.name));
     ui->labelDatabaseBranch->setText(QString::fromStdString(info.branch));
 
-    // Switch to "Current Database" tab when we have information on this database
+    // Is this actually a clone of a remote database?
     if(!info.file.empty())
+    {
+        // Make sure the current identity matches the identity used to clone this file in the first place.
+        // A mismatch is possible when the local database file has been opened using a recent files menu item or some similar technique.
+        if(QString::fromStdString(info.identity) != QFileInfo(remoteModel->currentClientCertificate()).fileName())
+            ui->comboUser->setCurrentIndex(ui->comboUser->findData("/" + QString::fromStdString(info.identity), Qt::UserRole, Qt::MatchEndsWith));
+
+        // Switch to "Current Database" tab
         ui->tabs->setCurrentIndex(2);
+    }
 }
