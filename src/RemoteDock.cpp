@@ -214,7 +214,7 @@ void RemoteDock::openLocalFile(const QModelIndex& idx)
     if(!idx.isValid())
         return;
 
-    QString file = idx.siblingAtColumn(RemoteLocalFilesModel::ColumnFile).data().toString();
+    QString file = idx.sibling(idx.row(), RemoteLocalFilesModel::ColumnFile).data().toString();
     if(!file.isEmpty())
         emit openFile(Settings::getValue("remote", "clonedirectory").toString() + "/" + file);
 }
