@@ -10,7 +10,7 @@ FilterLineEdit::FilterLineEdit(QWidget* parent, std::vector<FilterLineEdit*>* fi
     QLineEdit(parent),
     filterList(filters),
     columnNumber(columnnum),
-    no_conditional_format(true)
+    conditional_format(true)
 {
     setPlaceholderText(tr("Filter"));
     setClearButtonEnabled(true);
@@ -179,7 +179,7 @@ void FilterLineEdit::showContextMenu(const QPoint &pos)
         });
 
 
-    if(!no_conditional_format)
+    if(conditional_format)
     {
         QAction* conditionalFormatAction;
         if (text().isEmpty()) {
