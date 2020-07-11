@@ -599,12 +599,12 @@ void PlotDock::on_treePlotColumns_itemChanged(QTreeWidgetItem* changeitem, int c
 
                 if(changeitem->checkState(column) == Qt::Checked)
                 {
-                    // Generate a default colour if none isn't set yet
+                    // Generate a default colour if none is set yet
                     QColor colour = changeitem->background(column).color();
-                    if(!colour.isValid())
+                    if(!colour.isValid() || colour == changeitem->background(PlotColumnField).color())
                         colour = m_graphPalette.nextSerialColor(true);
 
-                    // Set colour
+                    // Set colour to cell background
                     changeitem->setBackground(column, colour);
 
                     // Save settings for this table
