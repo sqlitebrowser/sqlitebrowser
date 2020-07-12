@@ -309,6 +309,41 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
             emit uploadFinished(obj["url"]);
             break;
         }
+    case RequestTypeMetadata:
+        {
+            // Read and check results
+            json obj = json::parse(reply->readAll(), nullptr, false);
+            if(obj.is_discarded() || !obj.is_object())
+                break;
+
+            // Extract and convert data
+            json obj_branches = obj["branches"];
+            json obj_commits = obj["commits"];
+            json obj_releases = obj["releases"];
+            json obj_tags = obj["tags"];
+            std::string default_branch = (obj.contains("default_branch") && !obj["default_branch"].empty()) ? obj["default_branch"] : "master";
+            std::vector<RemoteMetadataBranchInfo> branches;
+            for(auto it=obj_branches.cbegin();it!=obj_branches.cend();++it)
+                branches.emplace_back(it.key(), it.value()["commit"], it.value()["description"], it.value()["commit_count"]);
+            std::vector<RemoteMetadataReleaseInfo> releases;
+            for(auto it=obj_releases.cbegin();it!=obj_releases.cend();++it)
+            {
+                releases.emplace_back(it.key(), it.value()["commit"], it.value()["date"],
+                        it.value()["description"], it.value()["email"],
+                        it.value()["name"], it.value()["size"]);
+            }
+            std::vector<RemoteMetadataReleaseInfo> tags;
+            for(auto it=obj_tags.cbegin();it!=obj_tags.cend();++it)
+            {
+                tags.emplace_back(it.key(), it.value()["commit"], it.value()["date"],
+                        it.value()["description"], it.value()["email"],
+                        it.value()["name"], 0);
+            }
+
+            // Send data list to anyone who is interested
+            emit gotMetadata(branches, obj_commits.dump(), releases, tags, default_branch);
+            break;
+        }
     }
 
     // Delete reply later, i.e. after returning from this slot function

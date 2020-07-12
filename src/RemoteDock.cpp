@@ -1,10 +1,12 @@
 #include <QDesktopServices>
 #include <QFileInfo>
 #include <QUrl>
+#include <QUrlQuery>
 
 #include "RemoteDock.h"
 #include "ui_RemoteDock.h"
 #include "Settings.h"
+#include "RemoteCommitsModel.h"
 #include "RemoteDatabase.h"
 #include "RemoteLocalFilesModel.h"
 #include "RemoteModel.h"
@@ -18,13 +20,15 @@ RemoteDock::RemoteDock(MainWindow* parent)
       mainWindow(parent),
       remoteDatabase(parent->getRemote()),
       remoteModel(new RemoteModel(this, parent->getRemote())),
-      remoteLocalFilesModel(new RemoteLocalFilesModel(this, parent->getRemote()))
+      remoteLocalFilesModel(new RemoteLocalFilesModel(this, parent->getRemote())),
+      remoteCommitsModel(new RemoteCommitsModel(this))
 {
     ui->setupUi(this);
 
     // Set models
     ui->treeRemote->setModel(remoteModel);
     ui->treeLocal->setModel(remoteLocalFilesModel);
+    ui->treeDatabaseCommits->setModel(remoteCommitsModel);
 
     // When a database has been downloaded and must be opened, notify users of this class
     connect(&remoteDatabase, &RemoteDatabase::openFile, this, &RemoteDock::openFile);
@@ -37,6 +41,9 @@ RemoteDock::RemoteDock(MainWindow* parent)
     // Whenever a new directory listing has been parsed, check if it was a new root dir and, if so, open the user's directory
     connect(remoteModel, &RemoteModel::directoryListingParsed, this, &RemoteDock::newDirectoryNode);
 
+    // Show metadata for a database when we get it
+    connect(&remoteDatabase, &RemoteDatabase::gotMetadata, this, &RemoteDock::showMetadata);
+
     // When the Preferences link is clicked in the no-certificates-label, open the preferences dialog. For other links than the ones we know,
     // just open them in a web browser
     connect(ui->labelNoCert, &QLabel::linkActivated, [this](const QString& link) {
@@ -48,6 +55,12 @@ RemoteDock::RemoteDock(MainWindow* parent)
         } else {
             QDesktopServices::openUrl(QUrl(link));
         }
+    });
+
+    // When changing the current branch in the branches combo box, update the tree view accordingly
+    connect(ui->comboDatabaseBranch, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), [this](int /*index*/) {
+        remoteCommitsModel->refresh(current_commit_json, ui->comboDatabaseBranch->currentData().toString().toStdString());
+        ui->treeDatabaseCommits->expandAll();
     });
 
     // Initial setup
@@ -227,6 +240,7 @@ void RemoteDock::fileOpened(const QString& filename)
         info = remoteDatabase.localGetLocalFileInfo(filename);
 
     // Copy information to view
+    remoteCommitsModel->clear();
     ui->labelDatabaseUser->setText(info.user_name());
     ui->labelDatabaseFile->setText(QString::fromStdString(info.name));
     ui->labelDatabaseBranch->setText(QString::fromStdString(info.branch));
@@ -239,7 +253,33 @@ void RemoteDock::fileOpened(const QString& filename)
         if(QString::fromStdString(info.identity) != QFileInfo(remoteModel->currentClientCertificate()).fileName())
             ui->comboUser->setCurrentIndex(ui->comboUser->findData("/" + QString::fromStdString(info.identity), Qt::UserRole, Qt::MatchEndsWith));
 
+        // Query more information on database from server
+        QUrl url(remoteDatabase.getInfoFromClientCert(remoteModel->currentClientCertificate(), RemoteDatabase::CertInfoServer) + "/metadata/get");
+        QUrlQuery query;
+        query.addQueryItem("username", info.user_name());
+        query.addQueryItem("folder", "/");
+        query.addQueryItem("dbname", QString::fromStdString(info.name));
+        url.setQuery(query);
+        remoteDatabase.fetch(url.toString(), RemoteDatabase::RequestTypeMetadata, remoteModel->currentClientCertificate());
+
         // Switch to "Current Database" tab
         ui->tabs->setCurrentIndex(2);
     }
+}
+
+void RemoteDock::showMetadata(const std::vector<RemoteMetadataBranchInfo>& branches, const std::string& commits,
+                              const std::vector<RemoteMetadataReleaseInfo>& releases, const std::vector<RemoteMetadataReleaseInfo>& tags,
+                              const std::string& /*default_branch*/)
+{
+    current_commit_json = commits;
+
+    // Fill branches combo box
+    ui->comboDatabaseBranch->clear();
+    for(const auto& branch : branches)
+        ui->comboDatabaseBranch->addItem(QString::fromStdString(branch.name), QString::fromStdString(branch.commit_id));
+    for(const auto& release : releases)
+        ui->comboDatabaseBranch->addItem(QString::fromStdString(release.name) + " (" + tr("release") + ")", QString::fromStdString(release.commit_id));
+    for(const auto& tag : tags)
+        ui->comboDatabaseBranch->addItem(QString::fromStdString(tag.name) + " (" + tr("tag") + ")", QString::fromStdString(tag.commit_id));
+    ui->comboDatabaseBranch->setCurrentIndex(ui->comboDatabaseBranch->findText(ui->labelDatabaseBranch->text()));
 }

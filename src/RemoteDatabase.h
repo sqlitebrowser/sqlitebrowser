@@ -15,6 +15,52 @@ class QHttpMultiPart;
 class QFile;
 struct sqlite3;
 
+class RemoteMetadataBranchInfo
+{
+public:
+    RemoteMetadataBranchInfo(const std::string& _name, const std::string& _commit_id, const std::string& _description, unsigned int _commit_count) :
+        name(_name),
+        commit_id(_commit_id),
+        description(_description),
+        commit_count(_commit_count)
+    {}
+    RemoteMetadataBranchInfo() :
+        commit_count(0)
+    {}
+
+    std::string name;
+    std::string commit_id;
+    std::string description;
+    unsigned int commit_count;
+};
+
+class RemoteMetadataReleaseInfo
+{
+public:
+    RemoteMetadataReleaseInfo(const std::string& _name, const std::string& _commit_id, const std::string& _date,
+                              const std::string& _description, const std::string& _email,
+                              const std::string& _user_name, unsigned int _size) :
+        name(_name),
+        commit_id(_commit_id),
+        date(_date),
+        description(_description),
+        email(_email),
+        user_name(_user_name),
+        size(_size)
+    {}
+    RemoteMetadataReleaseInfo() :
+        size(0)
+    {}
+
+    std::string name;
+    std::string commit_id;
+    std::string date;
+    std::string description;
+    std::string email;
+    std::string user_name;
+    unsigned long size;
+};
+
 class RemoteDatabase : public QObject
 {
     Q_OBJECT
@@ -43,6 +89,7 @@ public:
         RequestTypePush,
         RequestTypeLicenceList,
         RequestTypeBranchList,
+        RequestTypeMetadata,
     };
 
     void fetch(const QString& url, RequestType type, const QString& clientCert = QString(), QVariant userdata = QVariant());
@@ -98,6 +145,9 @@ signals:
     void gotCurrentVersion(QString version, QString url);
     void gotLicenceList(std::vector<std::pair<std::string, std::string>> licences);
     void gotBranchList(std::vector<std::string> branches, std::string default_branch);
+    void gotMetadata(std::vector<RemoteMetadataBranchInfo> branches, std::string commits,
+                     std::vector<RemoteMetadataReleaseInfo> releases, std::vector<RemoteMetadataReleaseInfo> tags,
+                     std::string default_branch);
 
     // The uploadFinished() signal is emitted when a push() call is finished, i.e. a database upload has completed.
     void uploadFinished(std::string url);

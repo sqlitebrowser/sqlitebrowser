@@ -21,6 +21,7 @@ CONFIG(unittest) {
 }
 
 HEADERS += \
+    RemoteCommitsModel.h \
     RemoteLocalFilesModel.h \
     sqlitedb.h \
     MainWindow.h \
@@ -82,6 +83,7 @@ HEADERS += \
     sql/parser/sqlite3_parser.hpp
 
 SOURCES += \
+    RemoteCommitsModel.cpp \
     RemoteLocalFilesModel.cpp \
     sqlitedb.cpp \
     MainWindow.cpp \
