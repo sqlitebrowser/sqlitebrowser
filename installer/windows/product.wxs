@@ -49,6 +49,11 @@
             <Merge Id="VCRedist" SourceFile="$(var.VCRedistPath)\$(var.VCRedistFile)" DiskId="1" Language="0" />
             <Directory Id="$(var.ProgramFilesFolder)">
                 <Directory Id="INSTALLDIR" Name="$(var.Name)">
+                    <!-- Save the install location to the Registry -->
+                    <Component Id="RegistryInstallLocation">
+                        <RegistryValue Root="HKLM" Key="Software\$(var.Name)" Name="InstallLocation" Value="[INSTALLDIR]" Type="string" />
+                    </Component>
+
                     <Directory Id="styles" Name="styles">
                         <Component><File Source="$(var.QtPath)\plugins\styles\qwindowsvistastyle.dll" /></Component>
                     </Directory>
@@ -147,6 +152,9 @@
                     <ComponentRef Id="fileio.dll" />
                 </Feature>
             </Feature>
+
+            <!-- Registry -->
+            <ComponentRef Id="RegistryInstallLocation" />
 
             <!-- Shortcuts -->
             <ComponentRef Id="SQLiteDesktopShortcut" />
