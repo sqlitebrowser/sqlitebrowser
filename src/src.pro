@@ -22,6 +22,7 @@ CONFIG(unittest) {
 
 HEADERS += \
     ImageViewer.h \
+    RemoteCommitsModel.h \
     RemoteLocalFilesModel.h \
     sqlitedb.h \
     MainWindow.h \
@@ -84,6 +85,7 @@ HEADERS += \
 
 SOURCES += \
     ImageViewer.cpp \
+    RemoteCommitsModel.cpp \
     RemoteLocalFilesModel.cpp \
     sqlitedb.cpp \
     MainWindow.cpp \

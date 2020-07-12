@@ -3,7 +3,10 @@
 
 #include <QDialog>
 
+class RemoteCommitsModel;
 class RemoteDatabase;
+class RemoteMetadataBranchInfo;
+class RemoteMetadataReleaseInfo;
 class RemoteLocalFilesModel;
 class RemoteModel;
 class MainWindow;
@@ -39,6 +42,9 @@ private slots:
     void newDirectoryNode(const QModelIndex& parent);
     void switchToMainView();
     void openLocalFile(const QModelIndex& idx);
+    void showMetadata(const std::vector<RemoteMetadataBranchInfo>& branches, const std::string& commits,
+                      const std::vector<RemoteMetadataReleaseInfo>& releases, const std::vector<RemoteMetadataReleaseInfo>& tags,
+                      const std::string& default_branch);
 
 signals:
     void openFile(QString file);
@@ -51,6 +57,9 @@ private:
     RemoteDatabase& remoteDatabase;
     RemoteModel* remoteModel;
     RemoteLocalFilesModel* remoteLocalFilesModel;
+    RemoteCommitsModel* remoteCommitsModel;
+
+    std::string current_commit_json;
 
     void refreshLocalFileList();
 };
