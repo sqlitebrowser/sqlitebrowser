@@ -646,14 +646,18 @@ void RemoteDatabase::localAssureOpened()
     if(m_dbLocal)
         return;
 
-    // Open file
-    QString database_file = QStandardPaths::writableLocation(
+    // Make sure the directory exists
+    QString database_directory = QStandardPaths::writableLocation(
 #if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
                 QStandardPaths::AppDataLocation
 #else
                 QStandardPaths::GenericDataLocation
 #endif
-                ) + "/remotedbs.db";
+                );
+    QDir().mkpath(database_directory);
+
+    // Open file
+    QString database_file = database_directory + "/remotedbs.db";
     if(sqlite3_open_v2(database_file.toUtf8(), &m_dbLocal, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, nullptr) != SQLITE_OK)
     {
         QMessageBox::warning(nullptr, qApp->applicationName(), tr("Error opening local databases list.\n%1").arg(QString::fromUtf8(sqlite3_errmsg(m_dbLocal))));
