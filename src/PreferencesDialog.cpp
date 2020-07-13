@@ -644,7 +644,7 @@ void PreferencesDialog::chooseRemoteCloneDirectory()
                 tr("Choose a directory"),
                 QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 
-    if(!s.isEmpty())
+    if(!s.isEmpty() && QDir().mkpath(s))
         ui->editRemoteCloneDirectory->setText(s);
 }
 
