@@ -3,10 +3,9 @@
 
 #include <QDialog>
 
+#include "RemoteDatabase.h"
+
 class RemoteCommitsModel;
-class RemoteDatabase;
-class RemoteMetadataBranchInfo;
-class RemoteMetadataReleaseInfo;
 class RemoteLocalFilesModel;
 class RemoteModel;
 class MainWindow;
@@ -60,6 +59,7 @@ private:
     RemoteCommitsModel* remoteCommitsModel;
 
     std::string current_commit_json;
+    RemoteDatabase::LocalFileInfo currently_opened_file_info;
 
     void refreshLocalFileList();
     void refreshMetadata(const QString& username, const QString& dbname);
