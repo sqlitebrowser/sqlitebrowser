@@ -1,5 +1,6 @@
 #include <QTreeWidgetItem>
 
+#include "Data.h"
 #include "RemoteCommitsModel.h"
 #include "Settings.h"
 
@@ -53,7 +54,7 @@ void RemoteCommitsModel::refresh(const std::string& json_data, const std::string
         QTreeWidgetItem* item = new QTreeWidgetItem(rootItem);
         item->setText(ColumnCommitId, QString::fromStdString(commit["id"]));
         item->setText(ColumnMessage, QString::fromStdString(commit["message"]));
-        item->setText(ColumnDate, QString::fromStdString(commit["timestamp"]));
+        item->setText(ColumnDate, isoDateTimeStringToLocalDateTimeString(QString::fromStdString(commit["timestamp"])));
         item->setText(ColumnAuthor, QString::fromStdString(commit["author_name"]) + " <" + QString::fromStdString(commit["author_email"]) + ">");
 
         parent_id = commit["parent"];

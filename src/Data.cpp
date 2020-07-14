@@ -1,7 +1,9 @@
 #include "Data.h"
 
 #include <QBuffer>
+#include <QDateTime>
 #include <QImageReader>
+#include <QLocale>
 #include <QTextCodec>
 
 #include <algorithm>
@@ -147,4 +149,9 @@ QString humanReadableSize(unsigned long byteCount)
     }
 
     return QString::number(size, 'f', 2) + " YiB";
+}
+
+QString isoDateTimeStringToLocalDateTimeString(const QString& date_string)
+{
+    return QLocale::system().toString(QDateTime::fromString(date_string, Qt::ISODate).toLocalTime(), QLocale::ShortFormat);
 }
