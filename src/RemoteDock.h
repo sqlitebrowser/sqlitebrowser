@@ -62,6 +62,7 @@ private:
     std::string current_commit_json;
 
     void refreshLocalFileList();
+    void refreshMetadata(const QString& username, const QString& dbname);
 };
 
 #endif

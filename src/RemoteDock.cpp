@@ -36,6 +36,9 @@ RemoteDock::RemoteDock(MainWindow* parent)
     // Reload the directory tree and the list of local checkouts when a database upload has finished
     connect(&remoteDatabase, &RemoteDatabase::uploadFinished, remoteModel, &RemoteModel::refresh);
     connect(&remoteDatabase, &RemoteDatabase::uploadFinished, this, &RemoteDock::refreshLocalFileList);
+    connect(&remoteDatabase, &RemoteDatabase::uploadFinished, [this]() {
+        refreshMetadata(ui->labelDatabaseUser->text(), ui->labelDatabaseFile->text());
+    });
     connect(&remoteDatabase, &RemoteDatabase::openFile, this, &RemoteDock::refreshLocalFileList);
 
     // Whenever a new directory listing has been parsed, check if it was a new root dir and, if so, open the user's directory
@@ -254,17 +257,22 @@ void RemoteDock::fileOpened(const QString& filename)
             ui->comboUser->setCurrentIndex(ui->comboUser->findData("/" + QString::fromStdString(info.identity), Qt::UserRole, Qt::MatchEndsWith));
 
         // Query more information on database from server
-        QUrl url(remoteDatabase.getInfoFromClientCert(remoteModel->currentClientCertificate(), RemoteDatabase::CertInfoServer) + "/metadata/get");
-        QUrlQuery query;
-        query.addQueryItem("username", info.user_name());
-        query.addQueryItem("folder", "/");
-        query.addQueryItem("dbname", QString::fromStdString(info.name));
-        url.setQuery(query);
-        remoteDatabase.fetch(url.toString(), RemoteDatabase::RequestTypeMetadata, remoteModel->currentClientCertificate());
+        refreshMetadata(info.user_name(), QString::fromStdString(info.name));
 
         // Switch to "Current Database" tab
         ui->tabs->setCurrentIndex(2);
     }
+}
+
+void RemoteDock::refreshMetadata(const QString& username, const QString& dbname)
+{
+    QUrl url(remoteDatabase.getInfoFromClientCert(remoteModel->currentClientCertificate(), RemoteDatabase::CertInfoServer) + "/metadata/get");
+    QUrlQuery query;
+    query.addQueryItem("username", username);
+    query.addQueryItem("folder", "/");
+    query.addQueryItem("dbname", dbname);
+    url.setQuery(query);
+    remoteDatabase.fetch(url.toString(), RemoteDatabase::RequestTypeMetadata, remoteModel->currentClientCertificate());
 }
 
 void RemoteDock::showMetadata(const std::vector<RemoteMetadataBranchInfo>& branches, const std::string& commits,
