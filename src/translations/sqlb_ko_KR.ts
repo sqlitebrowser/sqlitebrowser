@@ -6163,57 +6163,57 @@ All your preferences will be lost and default values will be used.</source>
     <message>
         <location filename="../ProxyDialog.ui" line="14"/>
         <source>Proxy Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>프록시 설정</translation>
     </message>
     <message>
         <location filename="../ProxyDialog.ui" line="22"/>
         <source>Pro&amp;xy Type</source>
-        <translation type="unfinished"></translation>
+        <translation>프록시 종류(&amp;X)</translation>
     </message>
     <message>
         <location filename="../ProxyDialog.ui" line="35"/>
         <source>Host Na&amp;me</source>
-        <translation type="unfinished"></translation>
+        <translation>서버 주소(&amp;M)</translation>
     </message>
     <message>
         <location filename="../ProxyDialog.ui" line="48"/>
         <source>Port</source>
-        <translation type="unfinished"></translation>
+        <translation>포트</translation>
     </message>
     <message>
         <location filename="../ProxyDialog.ui" line="68"/>
         <source>Authentication Re&amp;quired</source>
-        <translation type="unfinished"></translation>
+        <translation>인증 정보 필요(&amp;Q)</translation>
     </message>
     <message>
         <location filename="../ProxyDialog.ui" line="81"/>
         <source>&amp;User Name</source>
-        <translation type="unfinished"></translation>
+        <translation>사용자명(&amp;U)</translation>
     </message>
     <message>
         <location filename="../ProxyDialog.ui" line="94"/>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>암호</translation>
     </message>
     <message>
         <location filename="../ProxyDialog.cpp" line="12"/>
         <source>None</source>
-        <translation type="unfinished">사용하지 않음</translation>
+        <translation>사용하지 않음</translation>
     </message>
     <message>
         <location filename="../ProxyDialog.cpp" line="13"/>
         <source>System settings</source>
-        <translation type="unfinished"></translation>
+        <translation>시스템 설정</translation>
     </message>
     <message>
         <location filename="../ProxyDialog.cpp" line="14"/>
         <source>HTTP</source>
-        <translation type="unfinished"></translation>
+        <translation>HTTP</translation>
     </message>
     <message>
         <location filename="../ProxyDialog.cpp" line="15"/>
         <source>Socks v5</source>
-        <translation type="unfinished"></translation>
+        <translation>Socks v5</translation>
     </message>
 </context>
 <context>
