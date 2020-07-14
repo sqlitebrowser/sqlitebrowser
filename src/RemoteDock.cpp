@@ -1,5 +1,6 @@
 #include <QDesktopServices>
 #include <QFileInfo>
+#include <QMessageBox>
 #include <QUrl>
 #include <QUrlQuery>
 
@@ -150,6 +151,17 @@ void RemoteDock::pushDatabase()
     {
         ui->stack->setCurrentIndex(1);
         return;
+    }
+
+    // Show a warning when trying to push a database with unsaved changes
+    if(mainWindow->getDb().getDirty())
+    {
+        if(QMessageBox::warning(this,
+                                QApplication::applicationName(),
+                                tr("The database has unsaved changes. Are you sure you want to push it before saving?"),
+                                QMessageBox::Yes | QMessageBox::Cancel,
+                                QMessageBox::Cancel) == QMessageBox::Cancel)
+            return;
     }
 
     // The default suggestion for a database name is the local file name. If it is a remote file (like when it initially was fetched using DB4S),
