@@ -118,6 +118,7 @@ public:
             identity(_identity)
         {}
 
+        void clear() { name = url = commit_id = file = branch = identity = {}; }
         QString user_name() const;
 
         std::string name;

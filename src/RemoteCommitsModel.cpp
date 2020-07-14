@@ -30,7 +30,7 @@ void RemoteCommitsModel::clear()
     endResetModel();
 }
 
-void RemoteCommitsModel::refresh(const std::string& json_data, const std::string& last_commit_id)
+void RemoteCommitsModel::refresh(const std::string& json_data, const std::string& last_commit_id, const std::string& current_commit_id)
 {
     // Clear previous items
     clear();
@@ -56,6 +56,14 @@ void RemoteCommitsModel::refresh(const std::string& json_data, const std::string
         item->setText(ColumnMessage, QString::fromStdString(commit["message"]));
         item->setText(ColumnDate, isoDateTimeStringToLocalDateTimeString(QString::fromStdString(commit["timestamp"])));
         item->setText(ColumnAuthor, QString::fromStdString(commit["author_name"]) + " <" + QString::fromStdString(commit["author_email"]) + ">");
+
+        // Make the currently checked out commit id bold
+        if(current_commit_id == commit["id"])
+        {
+            QFont bold_font = item->font(ColumnCommitId);
+            bold_font.setBold(true);
+            item->setFont(0, bold_font);
+        }
 
         parent_id = commit["parent"];
     }
@@ -110,6 +118,8 @@ QVariant RemoteCommitsModel::data(const QModelIndex& index, int role) const
     case Qt::DisplayRole:
     case Qt::EditRole:
         return item->text(index.column());
+    case Qt::FontRole:
+        return item->font(0);   // Choose font for the entire row depending on the first column
     default:
         return QVariant();
     }

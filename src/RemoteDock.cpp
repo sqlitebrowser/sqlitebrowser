@@ -38,7 +38,7 @@ RemoteDock::RemoteDock(MainWindow* parent)
     connect(&remoteDatabase, &RemoteDatabase::uploadFinished, remoteModel, &RemoteModel::refresh);
     connect(&remoteDatabase, &RemoteDatabase::uploadFinished, this, &RemoteDock::refreshLocalFileList);
     connect(&remoteDatabase, &RemoteDatabase::uploadFinished, [this]() {
-        refreshMetadata(ui->labelDatabaseUser->text(), ui->labelDatabaseFile->text());
+        refreshMetadata(currently_opened_file_info.user_name(), QString::fromStdString(currently_opened_file_info.name));
     });
     connect(&remoteDatabase, &RemoteDatabase::openFile, this, &RemoteDock::refreshLocalFileList);
 
@@ -63,7 +63,7 @@ RemoteDock::RemoteDock(MainWindow* parent)
 
     // When changing the current branch in the branches combo box, update the tree view accordingly
     connect(ui->comboDatabaseBranch, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), [this](int /*index*/) {
-        remoteCommitsModel->refresh(current_commit_json, ui->comboDatabaseBranch->currentData().toString().toStdString());
+        remoteCommitsModel->refresh(current_commit_json, ui->comboDatabaseBranch->currentData().toString().toStdString(), currently_opened_file_info.commit_id);
         ui->treeDatabaseCommits->expandAll();
     });
 
@@ -250,26 +250,26 @@ void RemoteDock::openLocalFile(const QModelIndex& idx)
 void RemoteDock::fileOpened(const QString& filename)
 {
     // Check if it is a tracked remote database file and retrieve the information we have on it
-    RemoteDatabase::LocalFileInfo info;
+    currently_opened_file_info.clear();
     if(filename.startsWith(Settings::getValue("remote", "clonedirectory").toString()))
-        info = remoteDatabase.localGetLocalFileInfo(filename);
+        currently_opened_file_info = remoteDatabase.localGetLocalFileInfo(filename);
 
     // Copy information to view
     remoteCommitsModel->clear();
-    ui->labelDatabaseUser->setText(info.user_name());
-    ui->labelDatabaseFile->setText(QString::fromStdString(info.name));
-    ui->labelDatabaseBranch->setText(QString::fromStdString(info.branch));
+    ui->labelDatabaseUser->setText(currently_opened_file_info.user_name());
+    ui->labelDatabaseFile->setText(QString::fromStdString(currently_opened_file_info.name));
+    ui->labelDatabaseBranch->setText(QString::fromStdString(currently_opened_file_info.branch));
 
     // Is this actually a clone of a remote database?
-    if(!info.file.empty())
+    if(!currently_opened_file_info.file.empty())
     {
         // Make sure the current identity matches the identity used to clone this file in the first place.
         // A mismatch is possible when the local database file has been opened using a recent files menu item or some similar technique.
-        if(QString::fromStdString(info.identity) != QFileInfo(remoteModel->currentClientCertificate()).fileName())
-            ui->comboUser->setCurrentIndex(ui->comboUser->findData("/" + QString::fromStdString(info.identity), Qt::UserRole, Qt::MatchEndsWith));
+        if(QString::fromStdString(currently_opened_file_info.identity) != QFileInfo(remoteModel->currentClientCertificate()).fileName())
+            ui->comboUser->setCurrentIndex(ui->comboUser->findData("/" + QString::fromStdString(currently_opened_file_info.identity), Qt::UserRole, Qt::MatchEndsWith));
 
         // Query more information on database from server
-        refreshMetadata(info.user_name(), QString::fromStdString(info.name));
+        refreshMetadata(currently_opened_file_info.user_name(), QString::fromStdString(currently_opened_file_info.name));
 
         // Switch to "Current Database" tab
         ui->tabs->setCurrentIndex(2);

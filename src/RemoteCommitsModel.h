@@ -16,7 +16,7 @@ public:
     ~RemoteCommitsModel() override;
 
     void clear();
-    void refresh(const std::string& json_data, const std::string& last_commit_id);
+    void refresh(const std::string& json_data, const std::string& last_commit_id, const std::string& current_commit_id);
 
     QModelIndex index(int row, int column,const QModelIndex& parent = QModelIndex()) const override;
     QModelIndex parent(const QModelIndex& index) const override;
