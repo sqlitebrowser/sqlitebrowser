@@ -86,7 +86,7 @@ std::vector<RemoteModelItem*> RemoteModelItem::loadArray(const json& array, Remo
         item->setValue(RemoteModelColumnName, QString::fromStdString(elem["name"]));
         item->setValue(RemoteModelColumnType, QString::fromStdString(elem["type"]));
         item->setValue(RemoteModelColumnUrl, QString::fromStdString(elem["url"]));
-        item->setValue(RemoteModelColumnLastModified, QString::fromStdString(elem["last_modified"]));
+        item->setValue(RemoteModelColumnLastModified, isoDateTimeStringToLocalDateTimeString(QString::fromStdString(elem["last_modified"])));
         if(elem.contains("commit_id"))
             item->setValue(RemoteModelColumnCommitId, QString::fromStdString(elem["commit_id"]));
         if(elem.contains("size"))

@@ -75,7 +75,7 @@ void RemoteLocalFilesModel::refresh()
         file_node->setText(ColumnName, QString::fromStdString(file.name));
         file_node->setIcon(ColumnName, QIcon(":/icons/database"));
         file_node->setText(ColumnBranch, QString::fromStdString(file.branch));
-        file_node->setText(ColumnLastModified, QFileInfo(file_info).lastModified().toOffsetFromUtc(0).toString("yyyy-MM-dd'T'HH:mm:ss'Z'"));
+        file_node->setText(ColumnLastModified, QLocale::system().toString(QFileInfo(file_info).lastModified().toLocalTime(), QLocale::ShortFormat));
         file_node->setText(ColumnSize, humanReadableSize(static_cast<unsigned long>(file_info.size())));
         file_node->setText(ColumnCommit, QString::fromStdString(file.commit_id));
         file_node->setText(ColumnFile, QString::fromStdString(file.file));
