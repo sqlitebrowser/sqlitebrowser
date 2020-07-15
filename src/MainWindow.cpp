@@ -568,6 +568,7 @@ void MainWindow::fileNewInMemoryDatabase()
     statusEncodingLabel->setText(db.getPragma("encoding"));
     statusEncryptionLabel->setVisible(false);
     statusReadOnlyLabel->setVisible(false);
+    remoteDock->fileOpened(":memory:");
     populateTable();
     if(ui->tabSqlAreas->count() == 0)
         openSqlTab(true);

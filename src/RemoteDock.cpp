@@ -138,7 +138,7 @@ void RemoteDock::fetchDatabase(const QModelIndex& idx)
 
 void RemoteDock::enableButtons()
 {
-    bool db_opened = mainWindow->getDb().isOpen();
+    bool db_opened = mainWindow->getDb().isOpen() && mainWindow->getDb().currentFile() != ":memory:";
     bool logged_in = !remoteModel->currentClientCertificate().isEmpty();
 
     ui->buttonPushDatabase->setEnabled(db_opened && logged_in);
@@ -250,20 +250,29 @@ void RemoteDock::openLocalFile(const QModelIndex& idx)
 
 void RemoteDock::fileOpened(const QString& filename)
 {
-    // Check if it is a tracked remote database file and retrieve the information we have on it
+    // Clear data first
     currently_opened_file_info.clear();
+    remoteCommitsModel->clear();
+    ui->labelDatabaseUser->setText(QString());
+    ui->labelDatabaseFile->setText(QString());
+    ui->labelDatabaseBranch->setText(QString());
+
+    // Do nothing if the file name is empty (indicating a closed database) or this is an in-memory database
+    if(filename.isEmpty() || filename == ":memory:")
+        return;
+
+    // Check if it is a tracked remote database file and retrieve the information we have on it
     if(filename.startsWith(Settings::getValue("remote", "clonedirectory").toString()))
         currently_opened_file_info = remoteDatabase.localGetLocalFileInfo(filename);
-
-    // Copy information to view
-    remoteCommitsModel->clear();
-    ui->labelDatabaseUser->setText(currently_opened_file_info.user_name());
-    ui->labelDatabaseFile->setText(QString::fromStdString(currently_opened_file_info.name));
-    ui->labelDatabaseBranch->setText(QString::fromStdString(currently_opened_file_info.branch));
 
     // Is this actually a clone of a remote database?
     if(!currently_opened_file_info.file.empty())
     {
+        // Copy information to view
+        ui->labelDatabaseUser->setText(currently_opened_file_info.user_name());
+        ui->labelDatabaseFile->setText(QString::fromStdString(currently_opened_file_info.name));
+        ui->labelDatabaseBranch->setText(QString::fromStdString(currently_opened_file_info.branch));
+
         // Make sure the current identity matches the identity used to clone this file in the first place.
         // A mismatch is possible when the local database file has been opened using a recent files menu item or some similar technique.
         if(QString::fromStdString(currently_opened_file_info.identity) != QFileInfo(remoteModel->currentClientCertificate()).fileName())
