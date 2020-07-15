@@ -169,8 +169,13 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
     // Check if request was successful
     if(reply->error() != QNetworkReply::NoError)
     {
-        QMessageBox::warning(nullptr, qApp->applicationName(),
-                             reply->errorString() + "\n" + reply->readAll());
+        // Do not show error message when operation was cancelled on purpose
+        if(reply->error() != QNetworkReply::OperationCanceledError)
+        {
+            QMessageBox::warning(nullptr, qApp->applicationName(),
+                                 reply->errorString() + "\n" + reply->readAll());
+        }
+
         reply->deleteLater();
         return;
     }
