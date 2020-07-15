@@ -940,17 +940,7 @@ QString RemoteDatabase::localCheckFile(const QString& local_file)
     } else {
         // Remove the apparently invalid entry from the local clones database to avoid future lookups and confusions. The file column should
         // be unique for the entire table because the files are all in the same directory and their names need to be unique because of this.
-        QString sql = QString("DELETE FROM local WHERE file=?");
-        sqlite3_stmt* stmt;
-        if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, nullptr) != SQLITE_OK)
-            return QString();
-        if(sqlite3_bind_text(stmt, 1, local_file.toUtf8(), local_file.toUtf8().length(), SQLITE_TRANSIENT))
-        {
-            sqlite3_finalize(stmt);
-            return QString();
-        }
-        sqlite3_step(stmt);
-        sqlite3_finalize(stmt);
+        localDeleteFile(local_file);
 
         // Return empty string to indicate a redownload request
         return QString();
@@ -1083,6 +1073,27 @@ RemoteDatabase::LocalFileInfo RemoteDatabase::localGetLocalFileInfo(QString file
                                          reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4)));
     sqlite3_finalize(stmt);
     return result;
+}
+
+void RemoteDatabase::localDeleteFile(QString filename)
+{
+    localAssureOpened();
+
+    // Remove the file's entry in our database
+    QString sql = QString("DELETE FROM local WHERE file=?");
+    sqlite3_stmt* stmt;
+    if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, nullptr) != SQLITE_OK)
+        return;
+    if(sqlite3_bind_text(stmt, 1, filename.toUtf8(), filename.toUtf8().length(), SQLITE_TRANSIENT))
+    {
+        sqlite3_finalize(stmt);
+        return;
+    }
+    sqlite3_step(stmt);
+    sqlite3_finalize(stmt);
+
+    // Delete the actual file on disk
+    QFile::remove(Settings::getValue("remote", "clonedirectory").toString() + "/" + filename);
 }
 
 QString RemoteDatabase::LocalFileInfo::user_name() const

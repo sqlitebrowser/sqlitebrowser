@@ -162,3 +162,20 @@ int RemoteLocalFilesModel::columnCount(const QModelIndex& /*parent*/) const
 {
     return rootItem->columnCount();
 }
+
+bool RemoteLocalFilesModel::removeRows(int row, int count, const QModelIndex& parent)
+{
+    for(int i=0;i<count;i++)
+        remoteDatabase.localDeleteFile(index(row + i, ColumnFile, parent).data().toString());
+
+    // Remove rows from view
+    beginRemoveRows(parent, row, row + count - 1);
+    for(int i=count-1;i>=0;i--)
+    {
+        auto item = static_cast<QTreeWidgetItem*>(index(row + i, 0, parent).internalPointer());
+        item->parent()->removeChild(item);
+    }
+    endRemoveRows();
+
+    return true;
+}

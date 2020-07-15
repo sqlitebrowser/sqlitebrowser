@@ -68,6 +68,18 @@ RemoteDock::RemoteDock(MainWindow* parent)
         ui->treeDatabaseCommits->expandAll();
     });
 
+    // Prepare context menu for list of local clones
+    connect(ui->treeLocal->selectionModel(), &QItemSelectionModel::currentChanged, [this](const QModelIndex& index, const QModelIndex&) {
+        // Only enable database actions when a database was selected
+        bool enable = index.isValid() &&
+                !index.sibling(index.row(), RemoteLocalFilesModel::ColumnFile).data().isNull();
+        ui->actionDeleteDatabase->setEnabled(enable);
+    });
+    connect(ui->actionDeleteDatabase, &QAction::triggered, [this]() {
+       deleteLocalDatabase(ui->treeLocal->currentIndex());
+    });
+    ui->treeLocal->addAction(ui->actionDeleteDatabase);
+
     // Initial setup
     reloadSettings();
 }
@@ -312,4 +324,33 @@ void RemoteDock::showMetadata(const std::vector<RemoteMetadataBranchInfo>& branc
     for(const auto& tag : tags)
         ui->comboDatabaseBranch->addItem(QString::fromStdString(tag.name) + " (" + tr("tag") + ")", QString::fromStdString(tag.commit_id));
     ui->comboDatabaseBranch->setCurrentIndex(ui->comboDatabaseBranch->findText(ui->labelDatabaseBranch->text()));
+}
+
+void RemoteDock::deleteLocalDatabase(const QModelIndex& index)
+{
+    if(!index.isValid())
+        return;
+
+    QString filename = index.sibling(index.row(), RemoteLocalFilesModel::ColumnFile).data().toString();
+    QString path = Settings::getValue("remote", "clonedirectory").toString() + "/" + filename;
+
+    // Warn when trying to delete a currently opened database file
+    if(mainWindow->getDb().currentFile() == path)
+    {
+        QMessageBox::warning(this, QApplication::applicationName(), tr("The database you are trying to delete is currently opened. "
+                                                                       "Please close it before deleting."));
+        return;
+    }
+
+    // Let user confirm deleting the database
+    if(QMessageBox::warning(this, QApplication::applicationName(), tr("This deletes the local version of this database with all the "
+                                                                      "changes you have not committed yet. Are you sure you want to "
+                                                                      "delete this database?"),
+                            QMessageBox::Yes | QMessageBox::Cancel, QMessageBox::Cancel) == QMessageBox::Cancel)
+    {
+        return;
+    }
+
+    // Delete the file
+    remoteLocalFilesModel->removeRow(index.row(), index.parent());
 }

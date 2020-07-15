@@ -121,7 +121,11 @@
           </attribute>
           <layout class="QVBoxLayout" name="verticalLayout_5">
            <item>
-            <widget class="QTreeView" name="treeLocal"/>
+            <widget class="QTreeView" name="treeLocal">
+             <property name="contextMenuPolicy">
+              <enum>Qt::ActionsContextMenu</enum>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -318,6 +322,21 @@
     </widget>
    </item>
   </layout>
+  <action name="actionDeleteDatabase">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/close</normaloff>:/icons/close</iconset>
+   </property>
+   <property name="text">
+    <string>Delete Database</string>
+   </property>
+   <property name="toolTip">
+    <string>Delete the local clone of this database</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="icons/icons.qrc"/>
