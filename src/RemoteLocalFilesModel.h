@@ -20,7 +20,7 @@ public:
     void setIdentity(const QString& cert_filename);
     void refresh();
 
-    QModelIndex index(int row, int column,const QModelIndex& parent = QModelIndex()) const override;
+    QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override;
     QModelIndex parent(const QModelIndex& index) const override;
 
     QVariant data(const QModelIndex& index, int role) const override;
@@ -28,6 +28,8 @@ public:
 
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;
     int columnCount(const QModelIndex& parent = QModelIndex()) const override;
+
+    bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex()) override;
 
     enum Columns
     {
