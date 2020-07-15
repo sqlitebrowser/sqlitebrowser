@@ -164,7 +164,7 @@ private:
     // Helper functions for managing the list of locally available databases
     void localAssureOpened();
     QString localAdd(QString filename, QString identity, const QUrl& url, const std::string& new_commit_id, const std::string& branch);
-    QString localExists(const QUrl& url, QString identity);
+    QString localExists(const QUrl& url, QString identity, const std::string& branch);
     QString localCheckFile(const QString& local_file);
     std::string localLastCommitId(QString clientCert, const QUrl& url, const std::string& branch);
 
