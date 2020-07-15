@@ -38,7 +38,8 @@ RemoteDock::RemoteDock(MainWindow* parent)
     connect(&remoteDatabase, &RemoteDatabase::uploadFinished, remoteModel, &RemoteModel::refresh);
     connect(&remoteDatabase, &RemoteDatabase::uploadFinished, this, &RemoteDock::refreshLocalFileList);
     connect(&remoteDatabase, &RemoteDatabase::uploadFinished, [this]() {
-        refreshMetadata(currently_opened_file_info.user_name(), QString::fromStdString(currently_opened_file_info.name));
+        if(!currently_opened_file_info.file.empty())
+            refreshMetadata(currently_opened_file_info.user_name(), QString::fromStdString(currently_opened_file_info.name));
     });
     connect(&remoteDatabase, &RemoteDatabase::openFile, this, &RemoteDock::refreshLocalFileList);
 
