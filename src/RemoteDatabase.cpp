@@ -583,9 +583,12 @@ void RemoteDatabase::push(const QString& filename, const QString& url, const QSt
     addPart(multipart, "licence", licence);
     addPart(multipart, "public", isPublic ? "true" : "false");
     addPart(multipart, "branch", branch);
-    addPart(multipart, "commit", QString::fromStdString(localLastCommitId(clientCert, url, branch.toStdString())));
     addPart(multipart, "force", forcePush ? "true" : "false");
     addPart(multipart, "lastmodified", last_modified.toString("yyyy-MM-dd'T'HH:mm:ss'Z'"));
+
+    // Only add commit id if the pushed file is actually a cloned file
+    if(filename.startsWith(Settings::getValue("remote", "clonedirectory").toString()))
+        addPart(multipart, "commit", QString::fromStdString(localLastCommitId(clientCert, url, branch.toStdString())));
 
     // Set SSL configuration when trying to access a file via the HTTPS protocol
     bool https = QUrl(url).scheme().compare("https", Qt::CaseInsensitive) == 0;
