@@ -509,7 +509,7 @@ void RemoteDatabase::fetch(const QString& url, RequestType type, const QString& 
     // If this is a request for a database there is a chance that we've already cloned that database. So check for that first
     if(type == RequestTypeDatabase)
     {
-        QString exists = localExists(url, clientCert);
+        QString exists = localExists(url, clientCert, QUrlQuery(url).queryItemValue("branch").toStdString());
         if(!exists.isEmpty())
         {
             // Database has already been cloned! So open the local file instead of fetching the one from the
@@ -574,8 +574,7 @@ void RemoteDatabase::push(const QString& filename, const QString& url, const QSt
     request.setRawHeader("User-Agent", QString("%1 %2").arg(qApp->organizationName(), APP_VERSION).toUtf8());
 
     // Get the last modified date of the file and prepare it for conversion into the ISO date format
-    QDateTime last_modified = QFileInfo(filename).lastModified();
-    last_modified.toOffsetFromUtc(0);
+    QDateTime last_modified = QFileInfo(filename).lastModified().toOffsetFromUtc(0);
 
     // Prepare HTTP multi part data containing all the information about the commit we're about to push
     QHttpMultiPart* multipart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
@@ -771,7 +770,7 @@ QString RemoteDatabase::localAdd(QString filename, QString identity, const QUrl&
     {
         // The file has already been checked in and the commit ids are different. If they weren't we wouldn't need to update anything
 
-        QString sql = QString("UPDATE local SET commit_id=? WHERE identity=? AND url=?");
+        QString sql = QString("UPDATE local SET commit_id=? WHERE identity=? AND url=? AND branch=?");
         sqlite3_stmt* stmt;
         if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, nullptr) != SQLITE_OK)
             return QString();
@@ -795,6 +794,12 @@ QString RemoteDatabase::localAdd(QString filename, QString identity, const QUrl&
             return QString();
         }
 
+        if(sqlite3_bind_text(stmt, 4, branch.c_str(), static_cast<int>(branch.size()), SQLITE_TRANSIENT))
+        {
+            sqlite3_finalize(stmt);
+            return QString();
+        }
+
         if(sqlite3_step(stmt) != SQLITE_DONE)
         {
             sqlite3_finalize(stmt);
@@ -806,10 +811,10 @@ QString RemoteDatabase::localAdd(QString filename, QString identity, const QUrl&
 
     // If we got here, the file was already checked in (and was either updated or not (obviously)). This mean we can just return the file name as
     // we know it.
-    return localExists(url, identity);
+    return localExists(url, identity, branch);
 }
 
-QString RemoteDatabase::localExists(const QUrl& url, QString identity)
+QString RemoteDatabase::localExists(const QUrl& url, QString identity, const std::string& branch)
 {
     // This function checks if there already is a clone for the given combination of url and identity. It returns the filename
     // of this clone if there is or a null string if there isn't a clone yet. The identity needs to be part of this check because
@@ -821,7 +826,7 @@ QString RemoteDatabase::localExists(const QUrl& url, QString identity)
     QString url_commit_id = QUrlQuery(url).queryItemValue("commit");
 
     // Query commit id and filename for the given combination of url and identity
-    QString sql = QString("SELECT id, commit_id, file FROM local WHERE url=? AND identity=?");
+    QString sql = QString("SELECT id, commit_id, file FROM local WHERE url=? AND identity=? AND branch=?");
     sqlite3_stmt* stmt;
     if(sqlite3_prepare_v2(m_dbLocal, sql.toUtf8(), -1, &stmt, nullptr) != SQLITE_OK)
         return QString();
@@ -840,6 +845,12 @@ QString RemoteDatabase::localExists(const QUrl& url, QString identity)
         return QString();
     }
 
+    if(sqlite3_bind_text(stmt, 3, branch.c_str(), static_cast<int>(branch.size()), SQLITE_TRANSIENT))
+    {
+        sqlite3_finalize(stmt);
+        return QString();
+    }
+
     if(sqlite3_step(stmt) != SQLITE_ROW)
     {
         // If there was either an error or no record was found for this combination of url and
@@ -849,8 +860,7 @@ QString RemoteDatabase::localExists(const QUrl& url, QString identity)
     }
 
     // Having come here we can assume that at least some local clone for the given combination of
-    // url and identity exists. So extract all the information we have on it.
-    //int local_id = sqlite3_column_int(stmt, 0);
+    // url, identity and branch exists. So extract all the information we have on it.
     QString local_commit_id = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1)));
     QString local_file = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2)));
     sqlite3_finalize(stmt);
@@ -882,7 +892,7 @@ QString RemoteDatabase::localExists(const QUrl& url, QString identity)
             // Build full path to database file and delete it
             QFile::remove(Settings::getValue("remote", "clonedirectory").toString() + "/" + local_file);
 
-            // Remove the old entry from the local clones database to enforce a redownload. The file column should be unique for the entire table because the
+            // Remove the old entry from the local clones database to enforce a redownload. The file column is unique for the entire table because the
             // files are all in the same directory and their names need to be unique because of this.
             QString delete_sql = QString("DELETE FROM local WHERE file=?");
             sqlite3_stmt* delete_stmt;
