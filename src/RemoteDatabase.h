@@ -92,8 +92,8 @@ public:
         RequestTypeMetadata,
     };
 
-    void fetch(const QString& url, RequestType type, const QString& clientCert = QString(), QVariant userdata = QVariant());
-    void push(const QString& filename, const QString& url, const QString& clientCert, const QString& remotename,
+    void fetch(const QUrl& url, RequestType type, const QString& clientCert = QString(), QVariant userdata = QVariant());
+    void push(const QString& filename, const QUrl& url, const QString& clientCert, const QString& remotename,
               const QString& commitMessage = QString(), const QString& licence = QString(), bool isPublic = false,
               const QString& branch = QString("master"), bool forcePush = false);
 
@@ -166,7 +166,7 @@ private:
     void gotError(QNetworkReply* reply, const QList<QSslError>& errors);
     void updateProgress(qint64 bytesTransmitted, qint64 bytesTotal);
     bool prepareSsl(QNetworkRequest* request, const QString& clientCert);
-    void prepareProgressDialog(QNetworkReply* reply, bool upload, const QString& url);
+    void prepareProgressDialog(QNetworkReply* reply, bool upload, const QUrl& url);
 
     // Helper functions for managing the list of locally available databases
     void localAssureOpened();

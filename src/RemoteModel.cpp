@@ -307,7 +307,7 @@ void RemoteModel::fetchMore(const QModelIndex& parent)
 
     // Fetch item URL
     item->setFetchedDirectoryList(true);
-    remoteDatabase.fetch(item->value(RemoteModelColumnUrl).toString(), RemoteDatabase::RequestTypeDirectory, currentClientCert, parent);
+    remoteDatabase.fetch(item->value(RemoteModelColumnUrl).toUrl(), RemoteDatabase::RequestTypeDirectory, currentClientCert, parent);
 }
 
 const QString& RemoteModel::currentClientCertificate() const
