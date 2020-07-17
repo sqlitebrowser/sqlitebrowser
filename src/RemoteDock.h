@@ -37,6 +37,7 @@ public slots:
 private slots:
     void setNewIdentity(const QString& identity);
     void fetchDatabase(const QModelIndex& idx);
+    void fetchDatabase(QString url = QString());
     void pushDatabase();
     void newDirectoryNode(const QModelIndex& parent);
     void switchToMainView();

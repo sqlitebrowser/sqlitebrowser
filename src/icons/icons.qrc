@@ -102,5 +102,6 @@
         <file alias="document_link">document-link.png</file>
         <file alias="open_data_in_app">application_go.png</file>
         <file>monitor_link.png</file>
+        <file alias="clone_database">server_add.png</file>
     </qresource>
 </RCC>

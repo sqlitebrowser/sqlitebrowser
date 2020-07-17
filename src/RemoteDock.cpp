@@ -1,5 +1,7 @@
+#include <QClipboard>
 #include <QDesktopServices>
 #include <QFileInfo>
+#include <QInputDialog>
 #include <QMessageBox>
 #include <QUrl>
 #include <QUrlQuery>
@@ -145,7 +147,44 @@ void RemoteDock::fetchDatabase(const QModelIndex& idx)
 
     // Only open database file
     if(item->value(RemoteModelColumnType).toString() == "database")
-        remoteDatabase.fetch(item->value(RemoteModelColumnUrl).toString(), RemoteDatabase::RequestTypeDatabase, remoteModel->currentClientCertificate());
+        fetchDatabase(item->value(RemoteModelColumnUrl).toString());
+}
+
+void RemoteDock::fetchDatabase(QString url_string)
+{
+    // If no URL was provided ask the user. Default to the current clipboard contents
+    if(url_string.isEmpty())
+    {
+        url_string = QInputDialog::getText(this,
+                                           qApp->applicationName(),
+                                           tr("Please enter the URL to clone from."),
+                                           QLineEdit::Normal,
+                                           QApplication::clipboard()->text());
+    }
+
+    if(url_string.isEmpty())
+        return;
+
+    // Check the URL
+    QUrl url(url_string);
+    if(url.authority() != QUrl(remoteDatabase.getInfoFromClientCert(remoteModel->currentClientCertificate(), RemoteDatabase::CertInfoServer)).authority())
+    {
+        QMessageBox::warning(this, qApp->applicationName(), tr("Invalid URL: The host name does not match the host name of the current identity."));
+        return;
+    }
+    if(!QUrlQuery(url).hasQueryItem("branch"))
+    {
+        QMessageBox::warning(this, qApp->applicationName(), tr("Invalid URL: No branch name specified."));
+        return;
+    }
+    if(!QUrlQuery(url).hasQueryItem("commit"))
+    {
+        QMessageBox::warning(this, qApp->applicationName(), tr("Invalid URL: No commit ID specified."));
+        return;
+    }
+
+    // Clone the database
+    remoteDatabase.fetch(url.toString(), RemoteDatabase::RequestTypeDatabase, remoteModel->currentClientCertificate());
 }
 
 void RemoteDock::enableButtons()
@@ -153,6 +192,7 @@ void RemoteDock::enableButtons()
     bool db_opened = mainWindow->getDb().isOpen() && mainWindow->getDb().currentFile() != ":memory:";
     bool logged_in = !remoteModel->currentClientCertificate().isEmpty();
 
+    ui->buttonCloneDatabase->setEnabled(logged_in);
     ui->buttonPushDatabase->setEnabled(db_opened && logged_in);
 }
 
