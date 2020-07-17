@@ -674,17 +674,19 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
         // Some error occurred or the user cancelled the action
 
         // Rollback the entire import. If the action was cancelled, don't show an error message. If it errored, show an error message.
-        if(result == CSVParser::ParserResult::ParserResultCancelled)
+        QString message;
+        if(result == CSVParser::ParserResult::ParserResultError)
         {
-            sqlite3_finalize(stmt);
-            rollback(this, pdb, &pDb, restorepointName, 0, QString());
-            return false;
-        } else {
             QString error(sqlite3_errmsg(pDb.get()));
-            sqlite3_finalize(stmt);
-            rollback(this, pdb, &pDb, restorepointName, lastRowNum, tr("Inserting row failed: %1").arg(error));
-            return false;
+            message = tr("Inserting row failed: %1").arg(error);
+        } else if(result == CSVParser::ParserResult::ParserResultUnexpectedEOF) {
+            message = tr("Unexpected end of file. Please make sure that you have configured the correct quote characters and "
+                         "the file is not malformed.");
         }
+
+        sqlite3_finalize(stmt);
+        rollback(this, pdb, &pDb, restorepointName, lastRowNum, message);
+        return false;
     }
 
     // Clean up prepared statement
