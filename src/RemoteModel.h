@@ -2,6 +2,7 @@
 #define REMOTEMODEL_H
 
 #include <QAbstractItemModel>
+#include <QUrl>
 
 #include <json.hpp>
 
@@ -109,7 +110,7 @@ private:
 
     // This stores the currently used network identity so it can be used for further requests, e.g. for
     // lazy population.
-    QString currentRootDirectory;
+    QUrl currentRootDirectory;
     QString currentClientCert;
     QString currentUserName;
 };

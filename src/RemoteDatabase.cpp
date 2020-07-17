@@ -476,7 +476,7 @@ bool RemoteDatabase::prepareSsl(QNetworkRequest* request, const QString& clientC
     return true;
 }
 
-void RemoteDatabase::prepareProgressDialog(QNetworkReply* reply, bool upload, const QString& url)
+void RemoteDatabase::prepareProgressDialog(QNetworkReply* reply, bool upload, const QUrl& url)
 {
     // Instantiate progress dialog and apply some basic settings
     if(!m_progress)
@@ -486,7 +486,7 @@ void RemoteDatabase::prepareProgressDialog(QNetworkReply* reply, bool upload, co
     m_progress->setCancelButtonText(tr("Cancel"));
 
     // Set dialog text
-    QString url_for_display = QUrl(url).toString(QUrl::PrettyDecoded | QUrl::RemoveQuery);
+    QString url_for_display = url.toString(QUrl::PrettyDecoded | QUrl::RemoveQuery);
     if(upload)
         m_progress->setLabelText(tr("Uploading remote database to\n%1").arg(url_for_display));
     else
@@ -502,7 +502,7 @@ void RemoteDatabase::prepareProgressDialog(QNetworkReply* reply, bool upload, co
         connect(reply, &QNetworkReply::downloadProgress, this, &RemoteDatabase::updateProgress);
 }
 
-void RemoteDatabase::fetch(const QString& url, RequestType type, const QString& clientCert, QVariant userdata)
+void RemoteDatabase::fetch(const QUrl& url, RequestType type, const QString& clientCert, QVariant userdata)
 {
     // Check if network is accessible. If not, abort right here
     if(m_manager->networkAccessible() == QNetworkAccessManager::NotAccessible)
@@ -531,7 +531,7 @@ void RemoteDatabase::fetch(const QString& url, RequestType type, const QString& 
 
     // Set SSL configuration when trying to access a file via the HTTPS protocol.
     // Skip this step when no client certificate was specified. In this case the default HTTPS configuration is used.
-    bool https = QUrl(url).scheme().compare("https", Qt::CaseInsensitive) == 0;
+    bool https = url.scheme().compare("https", Qt::CaseInsensitive) == 0;
     if(https && !clientCert.isNull())
     {
         // If configuring the SSL connection fails, abort the request here
@@ -554,7 +554,7 @@ void RemoteDatabase::fetch(const QString& url, RequestType type, const QString& 
         prepareProgressDialog(reply, false, url);
 }
 
-void RemoteDatabase::push(const QString& filename, const QString& url, const QString& clientCert, const QString& remotename,
+void RemoteDatabase::push(const QString& filename, const QUrl& url, const QString& clientCert, const QString& remotename,
                           const QString& commitMessage, const QString& licence, bool isPublic, const QString& branch, bool forcePush)
 {
     // Check if network is accessible. If not, abort right here
@@ -596,7 +596,7 @@ void RemoteDatabase::push(const QString& filename, const QString& url, const QSt
         addPart(multipart, "commit", QString::fromStdString(localLastCommitId(clientCert, url, branch.toStdString())));
 
     // Set SSL configuration when trying to access a file via the HTTPS protocol
-    bool https = QUrl(url).scheme().compare("https", Qt::CaseInsensitive) == 0;
+    bool https = url.scheme().compare("https", Qt::CaseInsensitive) == 0;
     if(https)
     {
         // If configuring the SSL connection fails, abort the request here
