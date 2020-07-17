@@ -54,6 +54,20 @@
           </spacer>
          </item>
          <item>
+          <widget class="QToolButton" name="buttonCloneDatabase">
+           <property name="text">
+            <string>Clone</string>
+           </property>
+           <property name="icon">
+            <iconset resource="icons/icons.qrc">
+             <normaloff>:/icons/clone_database</normaloff>:/icons/clone_database</iconset>
+           </property>
+           <property name="toolButtonStyle">
+            <enum>Qt::ToolButtonTextBesideIcon</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QToolButton" name="buttonPushDatabase">
            <property name="toolTip">
             <string>Push currently opened database to server</string>
@@ -296,6 +310,17 @@
    </property>
   </action>
  </widget>
+ <tabstops>
+  <tabstop>comboUser</tabstop>
+  <tabstop>buttonCloneDatabase</tabstop>
+  <tabstop>buttonPushDatabase</tabstop>
+  <tabstop>tabs</tabstop>
+  <tabstop>treeRemote</tabstop>
+  <tabstop>treeLocal</tabstop>
+  <tabstop>comboDatabaseBranch</tabstop>
+  <tabstop>treeDatabaseCommits</tabstop>
+  <tabstop>buttonNoCertBack</tabstop>
+ </tabstops>
  <resources>
   <include location="icons/icons.qrc"/>
  </resources>
@@ -380,6 +405,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>buttonCloneDatabase</sender>
+   <signal>clicked()</signal>
+   <receiver>RemoteDock</receiver>
+   <slot>fetchDatabase()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>412</x>
+     <y>15</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>266</x>
+     <y>178</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>setNewIdentity(QString)</slot>
@@ -387,5 +428,6 @@
   <slot>pushDatabase()</slot>
   <slot>switchToMainView()</slot>
   <slot>openLocalFile(QModelIndex)</slot>
+  <slot>fetchDatabase()</slot>
  </slots>
 </ui>
