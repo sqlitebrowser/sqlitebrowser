@@ -102,7 +102,7 @@ void MainWindow::init()
     connect(m_remoteDb, &RemoteDatabase::networkReady, [this]() {
         // Check for a new version if automatic update check aren't disabled in the settings dialog
         if(Settings::getValue("checkversion", "enabled").toBool())
-            m_remoteDb->fetch("https://download.sqlitebrowser.org/currentrelease", RemoteDatabase::RequestTypeNewVersionCheck);
+            m_remoteDb->fetch(QUrl("https://download.sqlitebrowser.org/currentrelease"), RemoteDatabase::RequestTypeNewVersionCheck);
     });
 #endif
 
