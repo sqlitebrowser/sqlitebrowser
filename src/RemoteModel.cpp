@@ -158,8 +158,8 @@ void RemoteModel::parseDirectoryListing(const QString& text, const QVariant& use
     }
 
     // Insert data
-    beginInsertRows(parent, 0, static_cast<int>(array.size()));
     std::vector<RemoteModelItem*> items = RemoteModelItem::loadArray(array, parentItem);
+    beginInsertRows(parent, 0, static_cast<int>(items.size() - 1));
     for(RemoteModelItem* item : items)
         parentItem->appendChild(item);
     endInsertRows();
