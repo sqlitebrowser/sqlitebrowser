@@ -307,6 +307,7 @@ void RemoteDock::fileOpened(const QString& filename)
     // Clear data first
     currently_opened_file_info.clear();
     remoteCommitsModel->clear();
+    ui->comboDatabaseBranch->clear();
     ui->labelDatabaseUser->setText(QString());
     ui->labelDatabaseFile->setText(QString());
     ui->labelDatabaseBranch->setText(QString());
