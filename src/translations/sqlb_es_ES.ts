@@ -1595,7 +1595,7 @@ Los errores se indican con un subrayado ondulado rojo.</translation>
     <message>
         <location filename="../EditTableDialog.ui" line="62"/>
         <source>Database sche&amp;ma</source>
-        <translation>Esquema de la base de datos</translation>
+        <translation>Esque&amp;ma de la base de datos</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="114"/>
@@ -2778,7 +2778,7 @@ x~y	Rango: valores entre x e y</translation>
     <message>
         <location filename="../ImportCsvDialog.ui" line="329"/>
         <source>Fail on missing values </source>
-        <translation>Fallar cuando falten valores</translation>
+        <translation>Fallar cuando falten valores </translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="339"/>
@@ -3221,14 +3221,24 @@ También puede arrastrar varias sentencias SQL desde la columna «Esquema» y so
         <translation type="vanished">Inserta un nuevo registro usando valores por defecto en la tabla visualizada</translation>
     </message>
     <message>
+        <location filename="../MainWindow.ui" line="1506"/>
+        <source>Open SQL file(s)</source>
+        <translation>Abrir archivo(s) SQL</translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="1509"/>
+        <source>This button opens files containing SQL statements and loads them in new editor tabs</source>
+        <translation>Este botón abre archivos que contengan sentencias SQL y los carga en pestañas nuevas del editor</translation>
+    </message>
+    <message>
         <location filename="../MainWindow.ui" line="1646"/>
         <source>This button lets you save all the settings associated to the open DB to a DB Browser for SQLite project file</source>
-        <translation type="unfinished"></translation>
+        <translation>Este botón le permite guardar todos los ajustes asociados a la base de datos abierta a un archivo de proyecto de «DB Browser for SQLite»</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1667"/>
         <source>This button lets you open a DB Browser for SQLite project file</source>
-        <translation type="unfinished"></translation>
+        <translation>Este botón le permite abrir un archivo de proyecto «DB Browser for SQLite»</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1942"/>
@@ -3341,7 +3351,7 @@ También puede arrastrar varias sentencias SQL desde la columna «Esquema» y so
     <message>
         <location filename="../MainWindow.ui" line="2071"/>
         <source>Un/comment block</source>
-        <translation>Des/comentar bloque de código </translation>
+        <translation>Des/comentar bloque de código</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2074"/>
@@ -3472,7 +3482,8 @@ También puede arrastrar varias sentencias SQL desde la columna «Esquema» y so
 You can drag SQL statements from an object row and drop them into other applications or into another instance of &apos;DB Browser for SQLite&apos;.
 </source>
         <translation>Esta es la estructura de la base de datos abierta.
-Puede arrastrar sentencias SQL desde una fila de objeto y soltarlas en otras aplicaciones o en otra instancia de «DB Browser for SQLite».</translation>
+Puede arrastrar sentencias SQL desde una fila de objeto y soltarlas en otras aplicaciones o en otra instancia de «DB Browser for SQLite».
+</translation>
     </message>
     <message>
         <source>&amp;Table:</source>
@@ -4825,7 +4836,17 @@ Si responde no se intentarán importar los datos del archivo SQL en la base de d
         <translation>¿Quiere guardar los cambios hechos al archivo de proyecto &apos;%1&apos;?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1110"/>
+        <location filename="../MainWindow.cpp" line="898"/>
+        <source>Edit View %1</source>
+        <translation>Editar vista %1</translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="904"/>
+        <source>Edit Trigger %1</source>
+        <translation>Editar disparador %1</translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="1112"/>
         <source>Result: %1</source>
         <translation>Resultado: %1</translation>
     </message>
@@ -4880,7 +4901,12 @@ Si responde no se intentarán importar los datos del archivo SQL en la base de d
         <translation>Modificar tabla</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3310"/>
+        <location filename="../MainWindow.cpp" line="3135"/>
+        <source>This action will open a new SQL tab with the following statements for you to edit and run:</source>
+        <translation>Esta acción abrirá una nueva pestaña SQL con las siguientes sentencias para que usted las pueda modificar y ejecutar:</translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="3331"/>
         <source>Rename Tab</source>
         <translation>Renombrar Pestaña</translation>
     </message>
@@ -4978,8 +5004,7 @@ If you choose to proceed, be aware bad things can happen to your database.
 Create a backup!</source>
         <translation>Una tabla en esta base de datos necesita una función de comparación especial «%1» que esta aplicación no puede proporcionar sin más información.
 Si decide continuar, está avisado de que la base de datos se puede dañar.
-¡Cree una copia de respaldo!
-</translation>
+¡Cree una copia de respaldo!</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1778"/>
@@ -5428,12 +5453,12 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
     <message>
         <location filename="../PlotDock.ui" line="56"/>
         <source>Y1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="61"/>
         <source>Y2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="66"/>
@@ -6027,7 +6052,17 @@ Can be set to 0 for disabling completion.</source>
 Se puede poner a 0 para desactivar el autocompletado.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1848"/>
+        <location filename="../PreferencesDialog.ui" line="1526"/>
+        <source>Close button on tabs</source>
+        <translation>Botón de cerrar en pestañas</translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.ui" line="1536"/>
+        <source>If enabled, SQL editor tabs will have a close button. In any case, you can use the contextual menu or the keyboard shortcut to close them.</source>
+        <translation>Si se habilita, las pestañas del editor SQL tendrán un botón para cerrarlas. En cualquier caso, usted siempre podrá usar el menú contextual o el atajo de teclado para cerrarlas.</translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.ui" line="1849"/>
         <source>Proxy</source>
         <translation>Proxy</translation>
     </message>
@@ -6392,7 +6427,7 @@ Se puede poner a 0 para desactivar el autocompletado.</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="1359"/>
         <source>SQL &amp;results font size</source>
-        <translation>Tamaño de letra de resultados</translation>
+        <translation>Tamaño de letra de &amp;resultados</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1548"/>
@@ -6417,8 +6452,7 @@ Se puede poner a 0 para desactivar el autocompletado.</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="1614"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;While supporting the REGEXP operator SQLite doesn&apos;t implement any regular expression&lt;br/&gt;algorithm but calls back the running application. DB Browser for SQLite implements this&lt;br/&gt;algorithm for you to let you use REGEXP out of the box. However, as there are multiple possible&lt;br/&gt;implementations of this and you might want to use another one, you&apos;re free to disable the&lt;br/&gt;application&apos;s implementation and load your own by using an extension. Requires restart of the application.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>
-&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;
 Aunque SQLite admite el operador REGEXP, no implementa en sí ningún algoritmo de expresiones&lt;br/&gt;
 regulares sino que llama a los de la aplicación en ejecución. «DB Browser for SQLite» implementa este&lt;br/&gt;
 método para permitirle usar REGEXP de fábrica. Sin embargo, como hay múltiples posibles&lt;br/&gt;
@@ -6837,7 +6871,7 @@ Si decide continuar, está avisado de que la base de datos se puede dañar.
     <message>
         <location filename="../RemoteDock.ui" line="86"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB Browser for SQLite. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to &amp;quot;Generate client certificate&amp;quot; (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB Browser for SQLite Preferences. Click the button to add a new certificate to DB Browser for SQLite and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;En este panel, las BB.DD. remotas del sitio web dbhub.io se pueden añadir a «DB Browser for SQLite». En primer lugar necesita una identidad:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Ingrese en el sitio web dbhub.io (use sus credenciales de GitHub o las que desee)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Haga clic en el botón de crear un certificado de cliente (esa es su identidad). Eso le proporcionará un archivo de certificado (guárdelo en su disco local).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Vaya a la pestaña «Remoto» de las preferencias de «DB Browser for SQLite». Haga clic en el botón para añadir el nuevo certificado a la aplicación y elija el archivo de certificado recién descargado.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Ahora el panel «Remoto» le mostrará su identidad y podrá añadir BB.DD. remotas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB4S. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to create a DB4S certificate (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB4S Preferences. Click the button to add a new certificate to DB4S and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -7168,7 +7202,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlUiLexer.cpp" line="68"/>
         <source>(X1,X2,...) The char(X1,X2,...,XN) function returns a string composed of characters having the unicode code point values of integers X1 through XN, respectively. </source>
-        <translation>(X1,X2,...) La función char(X1,X2,...,XN) devuelve una cadena compuesta por caracteres que tienen el valor numérico del código de punto unicode los enteros X1 hasta XN, respectivamente.</translation>
+        <translation>(X1,X2,...) La función char(X1,X2,...,XN) devuelve una cadena compuesta por caracteres que tienen el valor numérico del código de punto unicode los enteros X1 hasta XN, respectivamente. </translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="69"/>
@@ -7424,7 +7458,7 @@ El uso de esta función tiene que ser autorizado desde las Preferencias.</transl
     <message>
         <location filename="../SqlUiLexer.cpp" line="123"/>
         <source>() The number of the current row&apos;s peer group within its partition - the rank of the current row without gaps. Partitions are numbered starting from 1 in the order defined by the ORDER BY clause in the window definition. If there is no ORDER BY clause, then all rows are considered peers and this function always returns 1. </source>
-        <translation>() El número del grupo de pares de la fila actual dentro de su partición - el rango de la fila actual sin huecos. Las particiones se numeran empezando por 1 en el orden definido por la cláusula ORDER BY en la ventana de definición. Si no hay una cláusula ORDER BY, entonces todas las filas son consideradas pares y esta función siempre devuelve 1.</translation>
+        <translation>() El número del grupo de pares de la fila actual dentro de su partición - el rango de la fila actual sin huecos. Las particiones se numeran empezando por 1 en el orden definido por la cláusula ORDER BY en la ventana de definición. Si no hay una cláusula ORDER BY, entonces todas las filas son consideradas pares y esta función siempre devuelve 1. </translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="124"/>
@@ -7744,7 +7778,7 @@ Mantenga pulsado %3Mayús. y haga clic para ir ahí</translation>
     <message>
         <location filename="../TableBrowser.ui" line="526"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates up to the end in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pulsando este botón se mueve al final de la vista de tabla de arriba.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="529"/>
@@ -7970,7 +8004,7 @@ Mantenga pulsado %3Mayús. y haga clic para ir ahí</translation>
     <message>
         <location filename="../TableBrowser.ui" line="773"/>
         <source>Clear Sorting</source>
-        <translation>Borrar Ordenamiento</translation>
+        <translation>Eliminar ordenación</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="776"/>
@@ -7981,7 +8015,7 @@ Mantenga pulsado %3Mayús. y haga clic para ir ahí</translation>
         <location filename="../TableBrowser.ui" line="779"/>
         <location filename="../TableBrowser.ui" line="782"/>
         <source>This button clears the sorting columns specified for the currently browsed table and returns to the default order.</source>
-        <translation>Este botón elimina el ordenamiento de las columnas especificadas para la tabla mostrada actualmente y vuelve al orden por defecto.</translation>
+        <translation>Este botón elimina la ordenación de las columnas especificadas para la tabla mostrada actualmente y vuelve al orden por defecto.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="791"/>
@@ -8069,19 +8103,19 @@ Mantenga pulsado %3Mayús. y haga clic para ir ahí</translation>
         <location filename="../TableBrowser.ui" line="905"/>
         <location filename="../TableBrowser.ui" line="908"/>
         <source>Align Right</source>
-        <translation>Alineado Derecha</translation>
+        <translation>Alineado derecha</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="920"/>
         <location filename="../TableBrowser.ui" line="923"/>
         <source>Align Left</source>
-        <translation>Alineado Izquierda</translation>
+        <translation>Alineado izquierda</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="935"/>
         <location filename="../TableBrowser.ui" line="938"/>
         <source>Center Horizontally</source>
-        <translation>Centrado Horizontal</translation>
+        <translation>Centrado horizontal</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="950"/>
@@ -8093,7 +8127,7 @@ Mantenga pulsado %3Mayús. y haga clic para ir ahí</translation>
         <location filename="../TableBrowser.ui" line="962"/>
         <location filename="../TableBrowser.ui" line="965"/>
         <source>Edit Conditional Formats...</source>
-        <translation>Editar Formatos Condicionales...</translation>
+        <translation>Editar formatos condicionales...</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="968"/>
@@ -8103,12 +8137,12 @@ Mantenga pulsado %3Mayús. y haga clic para ir ahí</translation>
     <message>
         <location filename="../TableBrowser.ui" line="977"/>
         <source>Clear Format</source>
-        <translation>Eliminar Formato</translation>
+        <translation>Eliminar formato</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="980"/>
         <source>Clear All Formats</source>
-        <translation>Eliminar Todos los Formatos</translation>
+        <translation>Eliminar todos los formatos</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="983"/>
@@ -8120,23 +8154,23 @@ Mantenga pulsado %3Mayús. y haga clic para ir ahí</translation>
         <location filename="../TableBrowser.ui" line="995"/>
         <location filename="../TableBrowser.ui" line="998"/>
         <source>Font Color</source>
-        <translation>Color del Texto</translation>
+        <translation>Color del texto</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1007"/>
         <location filename="../TableBrowser.ui" line="1010"/>
         <source>Background Color</source>
-        <translation>Color del Fondo</translation>
+        <translation>Color del fondo</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1022"/>
         <source>Toggle Format Toolbar</source>
-        <translation>Intercambia la barra de formato</translation>
+        <translation>Conmutar barra de formato</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1025"/>
         <source>Show/hide format toolbar</source>
-        <translation>Mostrar/Ocultar la barra de formato</translation>
+        <translation>Mostrar/ocultar la barra de formato</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1028"/>
@@ -8165,8 +8199,8 @@ Mantenga pulsado %3Mayús. y haga clic para ir ahí</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="42"/>
-        <source>Filter in all columns</source>
-        <translation>Filtro en todas las columnas </translation>
+        <source>Filter in any column</source>
+        <translation>Filtrar en cualquier columna</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="102"/>
