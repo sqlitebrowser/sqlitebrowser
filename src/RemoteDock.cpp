@@ -33,6 +33,13 @@ RemoteDock::RemoteDock(MainWindow* parent)
     ui->treeLocal->setModel(remoteLocalFilesModel);
     ui->treeDatabaseCommits->setModel(remoteCommitsModel);
 
+    // Set initial column widths for tree views
+    ui->treeRemote->setColumnWidth(0, 300);                                     // Make name column wider
+    ui->treeRemote->setColumnWidth(2, 80);                                      // Make size column narrower
+    ui->treeLocal->setColumnWidth(RemoteLocalFilesModel::ColumnName, 300);      // Make name column wider
+    ui->treeLocal->setColumnWidth(RemoteLocalFilesModel::ColumnSize, 80);       // Make size column narrower
+    ui->treeLocal->setColumnHidden(RemoteLocalFilesModel::ColumnFile, true);    // Hide local file name
+
     // When a database has been downloaded and must be opened, notify users of this class
     connect(&remoteDatabase, &RemoteDatabase::openFile, this, &RemoteDock::openFile);
 
