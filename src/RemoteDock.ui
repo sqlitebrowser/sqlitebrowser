@@ -55,6 +55,9 @@
          </item>
          <item>
           <widget class="QToolButton" name="buttonCloneDatabase">
+           <property name="toolTip">
+            <string>Use this to download a remote database for local editing using a URL as provided on the web page of the database.</string>
+           </property>
            <property name="text">
             <string>Clone</string>
            </property>
