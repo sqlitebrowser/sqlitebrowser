@@ -721,6 +721,7 @@ bool DBBrowserDB::close()
         if(sqlite3_close(_db) != SQLITE_OK)
             qWarning() << tr("Database didn't close correctly, probably still busy");
         _db = nullptr;
+        curDBFilename.clear();
     }
 
     schemata.clear();
