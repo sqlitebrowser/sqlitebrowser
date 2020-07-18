@@ -119,7 +119,11 @@ void RemoteDock::setNewIdentity(const QString& identity)
 
     // Check if the dummy item is still there and remove it if it is
     if(ui->comboUser->itemData(0) == "dummy")
+    {
+        ui->comboUser->blockSignals(true);
         ui->comboUser->removeItem(0);
+        ui->comboUser->blockSignals(false);
+    }
 
     // Get certificate file name
     QString cert = ui->comboUser->itemData(ui->comboUser->findText(identity), Qt::UserRole).toString();
