@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>534</width>
-    <height>357</height>
+    <height>379</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -93,6 +93,18 @@
            <string>DBHub.io</string>
           </attribute>
           <layout class="QVBoxLayout" name="verticalLayout_4">
+           <property name="leftMargin">
+            <number>2</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>2</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
            <item>
             <widget class="QTreeView" name="treeRemote">
              <property name="whatsThis">
@@ -107,6 +119,18 @@
            <string>Local</string>
           </attribute>
           <layout class="QVBoxLayout" name="verticalLayout_5">
+           <property name="leftMargin">
+            <number>2</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>2</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
            <item>
             <widget class="QTreeView" name="treeLocal">
              <property name="contextMenuPolicy">
@@ -121,6 +145,29 @@
            <string>Current Database</string>
           </attribute>
           <layout class="QVBoxLayout" name="verticalLayout_7">
+           <property name="leftMargin">
+            <number>2</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>2</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QToolBar" name="toolBar">
+             <property name="movable">
+              <bool>false</bool>
+             </property>
+             <property name="floatable">
+              <bool>false</bool>
+             </property>
+             <addaction name="actionDatabaseOpenBrowser"/>
+            </widget>
+           </item>
            <item>
             <widget class="QGroupBox" name="groupBox">
              <property name="title">
@@ -187,6 +234,18 @@
               <string>Commits</string>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_6">
+              <property name="leftMargin">
+               <number>2</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>2</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_4">
                 <item>
@@ -312,6 +371,18 @@
     <string>Delete the local clone of this database</string>
    </property>
   </action>
+  <action name="actionDatabaseOpenBrowser">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/browser_open</normaloff>:/icons/browser_open</iconset>
+   </property>
+   <property name="text">
+    <string>Open in web browser</string>
+   </property>
+   <property name="toolTip">
+    <string>Open the web page for the current database in your browser</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
   <tabstop>comboUser</tabstop>
@@ -424,6 +495,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionDatabaseOpenBrowser</sender>
+   <signal>triggered()</signal>
+   <receiver>RemoteDock</receiver>
+   <slot>openCurrentDatabaseInBrowser()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>266</x>
+     <y>189</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>setNewIdentity(QString)</slot>
@@ -432,5 +519,6 @@
   <slot>switchToMainView()</slot>
   <slot>openLocalFile(QModelIndex)</slot>
   <slot>fetchDatabase()</slot>
+  <slot>openCurrentDatabaseInBrowser()</slot>
  </slots>
 </ui>

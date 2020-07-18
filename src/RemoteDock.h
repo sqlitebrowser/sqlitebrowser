@@ -44,8 +44,9 @@ private slots:
     void openLocalFile(const QModelIndex& idx);
     void showMetadata(const std::vector<RemoteMetadataBranchInfo>& branches, const std::string& commits,
                       const std::vector<RemoteMetadataReleaseInfo>& releases, const std::vector<RemoteMetadataReleaseInfo>& tags,
-                      const std::string& default_branch);
+                      const std::string& default_branch, const std::string& web_page);
     void deleteLocalDatabase(const QModelIndex& index);
+    void openCurrentDatabaseInBrowser() const;
 
 signals:
     void openFile(QString file);

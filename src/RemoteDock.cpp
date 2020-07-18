@@ -208,6 +208,7 @@ void RemoteDock::enableButtons()
 
     ui->buttonCloneDatabase->setEnabled(logged_in);
     ui->buttonPushDatabase->setEnabled(db_opened && logged_in);
+    ui->actionDatabaseOpenBrowser->setEnabled(db_opened && logged_in);
 }
 
 void RemoteDock::pushDatabase()
@@ -366,9 +367,13 @@ void RemoteDock::refreshMetadata(const QString& username, const QString& dbname)
 
 void RemoteDock::showMetadata(const std::vector<RemoteMetadataBranchInfo>& branches, const std::string& commits,
                               const std::vector<RemoteMetadataReleaseInfo>& releases, const std::vector<RemoteMetadataReleaseInfo>& tags,
-                              const std::string& /*default_branch*/)
+                              const std::string& /*default_branch*/, const std::string& web_page)
 {
+    // Store all the commit information as-is
     current_commit_json = commits;
+
+    // Store the link to the web page in the action for opening that link in a browser
+    ui->actionDatabaseOpenBrowser->setData(QString::fromStdString(web_page));
 
     // Fill branches combo box
     ui->comboDatabaseBranch->clear();
@@ -408,4 +413,9 @@ void RemoteDock::deleteLocalDatabase(const QModelIndex& index)
 
     // Delete the file
     remoteLocalFilesModel->removeRow(index.row(), index.parent());
+}
+
+void RemoteDock::openCurrentDatabaseInBrowser() const
+{
+    QDesktopServices::openUrl(ui->actionDatabaseOpenBrowser->data().toUrl());
 }
