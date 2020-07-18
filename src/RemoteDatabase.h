@@ -155,7 +155,7 @@ signals:
     void gotBranchList(std::vector<std::string> branches, std::string default_branch);
     void gotMetadata(std::vector<RemoteMetadataBranchInfo> branches, std::string commits,
                      std::vector<RemoteMetadataReleaseInfo> releases, std::vector<RemoteMetadataReleaseInfo> tags,
-                     std::string default_branch);
+                     std::string default_branch, std::string web_page);
 
     // The uploadFinished() signal is emitted when a push() call is finished, i.e. a database upload has completed.
     void uploadFinished(std::string url);

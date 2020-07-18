@@ -346,7 +346,7 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
             }
 
             // Send data list to anyone who is interested
-            emit gotMetadata(branches, obj_commits.dump(), releases, tags, default_branch);
+            emit gotMetadata(branches, obj_commits.dump(), releases, tags, default_branch, obj["web_page"]);
             break;
         }
     }
