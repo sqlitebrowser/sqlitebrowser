@@ -100,7 +100,7 @@ std::vector<RemoteModelItem*> RemoteModelItem::loadArray(const json& array, Remo
 
 RemoteModel::RemoteModel(QObject* parent, RemoteDatabase& remote) :
     QAbstractItemModel(parent),
-    headerList({tr("Name"), tr("Commit"), tr("Last modified"), tr("Size")}),
+    headerList({tr("Name"), tr("Last modified"), tr("Size"), tr("Commit")}),
     rootItem(new RemoteModelItem()),
     remoteDatabase(remote)
 {
@@ -228,15 +228,9 @@ QVariant RemoteModel::data(const QModelIndex& index, int role) const
             }
         case 1:
             {
-                if(type == "folder")
-                    return QVariant();
-                return item->value(RemoteModelColumnCommitId);
-            }
-        case 2:
-            {
                 return item->value(RemoteModelColumnLastModified);
             }
-        case 3:
+        case 2:
             {
                 // Folders don't have a size
                 if(type == "folder")
@@ -245,6 +239,12 @@ QVariant RemoteModel::data(const QModelIndex& index, int role) const
                 // Convert size to human readable format
                 unsigned int size = item->value(RemoteModelColumnSize).toUInt();
                 return humanReadableSize(size);
+            }
+        case 3:
+            {
+                if(type == "folder")
+                    return QVariant();
+                return item->value(RemoteModelColumnCommitId);
             }
         }
     }
