@@ -157,7 +157,9 @@ void RemoteDock::fetchDatabase(QString url_string)
     {
         url_string = QInputDialog::getText(this,
                                            qApp->applicationName(),
-                                           tr("Please enter the URL to clone from."),
+                                           tr("This downloads a database from a remote server for local editing. "
+                                              "Please enter the URL to clone from. You can generate this URL by clicking "
+                                              "the 'Clone Database in DB4S' button on the web page of the database."),
                                            QLineEdit::Normal,
                                            QApplication::clipboard()->text());
     }
