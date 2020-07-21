@@ -1,5 +1,5 @@
-project(sqlitebrowser)
 cmake_minimum_required(VERSION 2.8.12.2)
+project(sqlitebrowser)
 
 # BUILD_VERSION is the current date in YYYYMMDD format. It is only
 # used by the nightly version to add the date of the build.
