@@ -206,8 +206,8 @@ void RemoteDock::enableButtons()
     bool db_opened = mainWindow->getDb().isOpen() && mainWindow->getDb().currentFile() != ":memory:";
     bool logged_in = !remoteModel->currentClientCertificate().isEmpty();
 
-    ui->buttonCloneDatabase->setEnabled(logged_in);
     ui->buttonPushDatabase->setEnabled(db_opened && logged_in);
+    ui->actionCloneDatabase->setEnabled(logged_in);
     ui->actionDatabaseOpenBrowser->setEnabled(db_opened && logged_in);
 }
 
@@ -321,9 +321,9 @@ void RemoteDock::fileOpened(const QString& filename)
     currently_opened_file_info.clear();
     remoteCommitsModel->clear();
     ui->comboDatabaseBranch->clear();
-    ui->labelDatabaseUser->setText(QString());
-    ui->labelDatabaseFile->setText(QString());
-    ui->labelDatabaseBranch->setText(QString());
+    ui->editDatabaseUser->clear();
+    ui->editDatabaseFile->clear();
+    ui->editDatabaseBranch->clear();
 
     // Do nothing if the file name is empty (indicating a closed database) or this is an in-memory database
     if(filename.isEmpty() || filename == ":memory:")
@@ -337,9 +337,9 @@ void RemoteDock::fileOpened(const QString& filename)
     if(!currently_opened_file_info.file.empty())
     {
         // Copy information to view
-        ui->labelDatabaseUser->setText(currently_opened_file_info.user_name());
-        ui->labelDatabaseFile->setText(QString::fromStdString(currently_opened_file_info.name));
-        ui->labelDatabaseBranch->setText(QString::fromStdString(currently_opened_file_info.branch));
+        ui->editDatabaseUser->setText(currently_opened_file_info.user_name());
+        ui->editDatabaseFile->setText(QString::fromStdString(currently_opened_file_info.name));
+        ui->editDatabaseBranch->setText(QString::fromStdString(currently_opened_file_info.branch));
 
         // Make sure the current identity matches the identity used to clone this file in the first place.
         // A mismatch is possible when the local database file has been opened using a recent files menu item or some similar technique.
@@ -383,7 +383,7 @@ void RemoteDock::showMetadata(const std::vector<RemoteMetadataBranchInfo>& branc
         ui->comboDatabaseBranch->addItem(QString::fromStdString(release.name) + " (" + tr("release") + ")", QString::fromStdString(release.commit_id));
     for(const auto& tag : tags)
         ui->comboDatabaseBranch->addItem(QString::fromStdString(tag.name) + " (" + tr("tag") + ")", QString::fromStdString(tag.commit_id));
-    ui->comboDatabaseBranch->setCurrentIndex(ui->comboDatabaseBranch->findText(ui->labelDatabaseBranch->text()));
+    ui->comboDatabaseBranch->setCurrentIndex(ui->comboDatabaseBranch->findText(ui->editDatabaseBranch->text()));
 }
 
 void RemoteDock::deleteLocalDatabase(const QModelIndex& index)
