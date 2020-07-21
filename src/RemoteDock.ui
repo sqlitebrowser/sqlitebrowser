@@ -97,6 +97,7 @@
               <bool>false</bool>
              </property>
              <addaction name="actionCloneDatabase"/>
+             <addaction name="actionRefresh"/>
             </widget>
            </item>
            <item>
@@ -160,6 +161,7 @@
               <bool>false</bool>
              </property>
              <addaction name="actionDatabaseOpenBrowser"/>
+             <addaction name="actionRefresh"/>
             </widget>
            </item>
            <item>
@@ -392,6 +394,21 @@
     <string>Use this to download a remote database for local editing using a URL as provided on the web page of the database.</string>
    </property>
   </action>
+  <action name="actionRefresh">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/refresh</normaloff>:/icons/refresh</iconset>
+   </property>
+   <property name="text">
+    <string>Refresh</string>
+   </property>
+   <property name="toolTip">
+    <string>Reload all data and update the views</string>
+   </property>
+   <property name="shortcut">
+    <string>F5</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
   <tabstop>comboUser</tabstop>
@@ -519,6 +536,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionRefresh</sender>
+   <signal>triggered()</signal>
+   <receiver>RemoteDock</receiver>
+   <slot>refresh()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>51</x>
+     <y>21</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>266</x>
+     <y>193</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>setNewIdentity(QString)</slot>
@@ -528,5 +561,6 @@
   <slot>openLocalFile(QModelIndex)</slot>
   <slot>fetchDatabase()</slot>
   <slot>openCurrentDatabaseInBrowser()</slot>
+  <slot>refresh()</slot>
  </slots>
 </ui>
