@@ -47,6 +47,7 @@ private slots:
                       const std::string& default_branch, const std::string& web_page);
     void deleteLocalDatabase(const QModelIndex& index);
     void openCurrentDatabaseInBrowser() const;
+    void refresh();
 
 signals:
     void openFile(QString file);

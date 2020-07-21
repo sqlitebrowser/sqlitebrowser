@@ -44,12 +44,7 @@ RemoteDock::RemoteDock(MainWindow* parent)
     connect(&remoteDatabase, &RemoteDatabase::openFile, this, &RemoteDock::openFile);
 
     // Reload the directory tree and the list of local checkouts when a database upload has finished
-    connect(&remoteDatabase, &RemoteDatabase::uploadFinished, remoteModel, &RemoteModel::refresh);
-    connect(&remoteDatabase, &RemoteDatabase::uploadFinished, this, &RemoteDock::refreshLocalFileList);
-    connect(&remoteDatabase, &RemoteDatabase::uploadFinished, [this]() {
-        if(!currently_opened_file_info.file.empty())
-            refreshMetadata(currently_opened_file_info.user_name(), QString::fromStdString(currently_opened_file_info.name));
-    });
+    connect(&remoteDatabase, &RemoteDatabase::uploadFinished, this, &RemoteDock::refresh);
     connect(&remoteDatabase, &RemoteDatabase::openFile, this, &RemoteDock::refreshLocalFileList);
 
     // Whenever a new directory listing has been parsed, check if it was a new root dir and, if so, open the user's directory
@@ -209,6 +204,7 @@ void RemoteDock::enableButtons()
     ui->buttonPushDatabase->setEnabled(db_opened && logged_in);
     ui->actionCloneDatabase->setEnabled(logged_in);
     ui->actionDatabaseOpenBrowser->setEnabled(db_opened && logged_in);
+    ui->actionRefresh->setEnabled(logged_in);
 }
 
 void RemoteDock::pushDatabase()
@@ -418,4 +414,17 @@ void RemoteDock::deleteLocalDatabase(const QModelIndex& index)
 void RemoteDock::openCurrentDatabaseInBrowser() const
 {
     QDesktopServices::openUrl(ui->actionDatabaseOpenBrowser->data().toUrl());
+}
+
+void RemoteDock::refresh()
+{
+    // Refresh Remote tab
+    remoteModel->refresh();
+
+    // Refresh Local tab
+    refreshLocalFileList();
+
+    // Refresh Current Database tab
+    if(!currently_opened_file_info.file.empty())
+        refreshMetadata(currently_opened_file_info.user_name(), QString::fromStdString(currently_opened_file_info.name));
 }
