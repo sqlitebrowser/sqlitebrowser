@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>534</width>
-    <height>379</height>
+    <height>387</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -78,23 +78,6 @@
           </spacer>
          </item>
          <item>
-          <widget class="QToolButton" name="buttonCloneDatabase">
-           <property name="toolTip">
-            <string>Use this to download a remote database for local editing using a URL as provided on the web page of the database.</string>
-           </property>
-           <property name="text">
-            <string>Clone</string>
-           </property>
-           <property name="icon">
-            <iconset resource="icons/icons.qrc">
-             <normaloff>:/icons/clone_database</normaloff>:/icons/clone_database</iconset>
-           </property>
-           <property name="toolButtonStyle">
-            <enum>Qt::ToolButtonTextBesideIcon</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QToolButton" name="buttonPushDatabase">
            <property name="toolTip">
             <string>Push currently opened database to server</string>
@@ -135,6 +118,17 @@
            <property name="bottomMargin">
             <number>0</number>
            </property>
+           <item>
+            <widget class="QToolBar" name="toolBar_2">
+             <property name="movable">
+              <bool>false</bool>
+             </property>
+             <property name="floatable">
+              <bool>false</bool>
+             </property>
+             <addaction name="actionCloneDatabase"/>
+            </widget>
+           </item>
            <item>
             <widget class="QTreeView" name="treeRemote">
              <property name="whatsThis">
@@ -204,20 +198,23 @@
               <string>Clone</string>
              </property>
              <layout class="QFormLayout" name="formLayout">
+              <property name="verticalSpacing">
+               <number>0</number>
+              </property>
               <item row="0" column="0">
                <widget class="QLabel" name="label">
                 <property name="text">
                  <string>User</string>
                 </property>
+                <property name="buddy">
+                 <cstring>editDatabaseUser</cstring>
+                </property>
                </widget>
               </item>
               <item row="0" column="1">
-               <widget class="QLabel" name="labelDatabaseUser">
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="textInteractionFlags">
-                 <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+               <widget class="QLineEdit" name="editDatabaseUser">
+                <property name="readOnly">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
@@ -226,15 +223,15 @@
                 <property name="text">
                  <string>Database</string>
                 </property>
+                <property name="buddy">
+                 <cstring>editDatabaseFile</cstring>
+                </property>
                </widget>
               </item>
               <item row="1" column="1">
-               <widget class="QLabel" name="labelDatabaseFile">
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="textInteractionFlags">
-                 <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+               <widget class="QLineEdit" name="editDatabaseFile">
+                <property name="readOnly">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
@@ -243,15 +240,15 @@
                 <property name="text">
                  <string>Branch</string>
                 </property>
+                <property name="buddy">
+                 <cstring>editDatabaseBranch</cstring>
+                </property>
                </widget>
               </item>
               <item row="2" column="1">
-               <widget class="QLabel" name="labelDatabaseBranch">
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="textInteractionFlags">
-                 <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+               <widget class="QLineEdit" name="editDatabaseBranch">
+                <property name="readOnly">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
@@ -425,10 +422,21 @@
     <string>Open the web page for the current database in your browser</string>
    </property>
   </action>
+  <action name="actionCloneDatabase">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/clone_database</normaloff>:/icons/clone_database</iconset>
+   </property>
+   <property name="text">
+    <string>Clone from link</string>
+   </property>
+   <property name="toolTip">
+    <string>Use this to download a remote database for local editing using a URL as provided on the web page of the database.</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
   <tabstop>comboUser</tabstop>
-  <tabstop>buttonCloneDatabase</tabstop>
   <tabstop>buttonPushDatabase</tabstop>
   <tabstop>tabs</tabstop>
   <tabstop>treeRemote</tabstop>
@@ -464,8 +472,8 @@
    <slot>fetchDatabase(QModelIndex)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>211</x>
-     <y>75</y>
+     <x>215</x>
+     <y>148</y>
     </hint>
     <hint type="destinationlabel">
      <x>204</x>
@@ -522,14 +530,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>buttonCloneDatabase</sender>
-   <signal>clicked()</signal>
+   <sender>actionCloneDatabase</sender>
+   <signal>triggered()</signal>
    <receiver>RemoteDock</receiver>
    <slot>fetchDatabase()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>412</x>
-     <y>15</y>
+     <x>-1</x>
+     <y>-1</y>
     </hint>
     <hint type="destinationlabel">
      <x>266</x>
