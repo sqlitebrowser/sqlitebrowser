@@ -15,7 +15,8 @@ class RemotePushDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit RemotePushDialog(QWidget* parent, RemoteDatabase& remote, const QString& host, const QString& clientCert, const QString& name = QString());
+    explicit RemotePushDialog(QWidget* parent, RemoteDatabase& remote, const QString& host, const QString& clientCert,
+                              const QString& name = QString(), const QString& branch = QString());
     ~RemotePushDialog() override;
 
     QString name() const;
@@ -31,6 +32,9 @@ private:
     // Connection details
     QString m_host;
     QString m_clientCert;
+
+    // Suggested branch to preselect
+    QString m_suggestedBranch;
 
     // Reference to the remote database object which is stored somewhere in the main window
     RemoteDatabase& remoteDatabase;
