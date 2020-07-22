@@ -223,10 +223,9 @@ void RemoteDock::fetchCommit(const QModelIndex& idx)
 {
     // Fetch selected commit
     QUrl url(QString::fromStdString(currently_opened_file_info.url));
-    QUrlQuery query({
-                        {"branch", ui->comboDatabaseBranch->currentText()},
-                        {"commit", idx.sibling(idx.row(), RemoteCommitsModel::ColumnCommitId).data().toString()}
-                    });
+    QUrlQuery query;
+    query.addQueryItem("branch", ui->comboDatabaseBranch->currentText());
+    query.addQueryItem("commit", idx.sibling(idx.row(), RemoteCommitsModel::ColumnCommitId).data().toString());
     url.setQuery(query);
     fetchDatabase(url.toString());
 }
