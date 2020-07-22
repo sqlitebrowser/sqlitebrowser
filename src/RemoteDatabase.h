@@ -138,6 +138,12 @@ public:
     // Delete a local database clone
     void localDeleteFile(QString filename);
 
+    // This function checks if there already is a clone for the given combination of url and identity. It returns the filename
+    // of this clone if there is or a null string if there isn't a clone yet. The identity needs to be part of this check because
+    // with the url alone there could be corner cases where different versions or whatever may not be accessible for all users.
+    // If the URL contains a commit id (optional), this commit id is part of the check.
+    QString localExists(const QUrl& url, QString identity, const std::string& branch);
+
 signals:
     // As soon as you can safely open a network connection, this signal is emitted. This can be used to delay early network requests
     // which might otherwise fail.
@@ -171,7 +177,6 @@ private:
     // Helper functions for managing the list of locally available databases
     void localAssureOpened();
     QString localAdd(QString filename, QString identity, const QUrl& url, const std::string& new_commit_id, const std::string& branch);
-    QString localExists(const QUrl& url, QString identity, const std::string& branch);
     QString localCheckFile(const QString& local_file);
     std::string localLastCommitId(QString clientCert, const QUrl& url, const std::string& branch);
 

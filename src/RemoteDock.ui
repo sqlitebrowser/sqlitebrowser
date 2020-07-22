@@ -543,8 +543,24 @@
    <slot>refresh()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>51</x>
-     <y>21</y>
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>266</x>
+     <y>193</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treeDatabaseCommits</sender>
+   <signal>doubleClicked(QModelIndex)</signal>
+   <receiver>RemoteDock</receiver>
+   <slot>fetchCommit(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>266</x>
+     <y>337</y>
     </hint>
     <hint type="destinationlabel">
      <x>266</x>
@@ -562,5 +578,6 @@
   <slot>fetchDatabase()</slot>
   <slot>openCurrentDatabaseInBrowser()</slot>
   <slot>refresh()</slot>
+  <slot>fetchCommit(QModelIndex)</slot>
  </slots>
 </ui>
