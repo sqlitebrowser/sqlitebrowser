@@ -75,7 +75,7 @@ void PreferencesDialog::loadSettings()
 {
     ui->encodingComboBox->setCurrentIndex(ui->encodingComboBox->findText(Settings::getValue("db", "defaultencoding").toString(), Qt::MatchFixedString));
     ui->comboDefaultLocation->setCurrentIndex(Settings::getValue("db", "savedefaultlocation").toInt());
-    ui->locationEdit->setText(Settings::getValue("db", "defaultlocation").toString());
+    ui->locationEdit->setText(QDir::toNativeSeparators(Settings::getValue("db", "defaultlocation").toString()));
     ui->checkUpdates->setChecked(Settings::getValue("checkversion", "enabled").toBool());
 
     ui->checkHideSchemaLinebreaks->setChecked(Settings::getValue("db", "hideschemalinebreaks").toBool());
@@ -175,7 +175,7 @@ void PreferencesDialog::loadSettings()
                 addClientCertToTable(file, cert);
         }
     }
-    ui->editRemoteCloneDirectory->setText(Settings::getValue("remote", "clonedirectory").toString());
+    ui->editRemoteCloneDirectory->setText(QDir::toNativeSeparators(Settings::getValue("remote", "clonedirectory").toString()));
 
     // Gracefully handle the preferred Editor font not being available
     matchingFont = ui->comboEditorFont->findText(Settings::getValue("editor", "font").toString(), Qt::MatchExactly);
