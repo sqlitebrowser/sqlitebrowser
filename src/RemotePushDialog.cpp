@@ -6,11 +6,13 @@
 #include "ui_RemotePushDialog.h"
 #include "RemoteDatabase.h"
 
-RemotePushDialog::RemotePushDialog(QWidget* parent, RemoteDatabase& remote, const QString& host, const QString& clientCert, const QString& name) :
+RemotePushDialog::RemotePushDialog(QWidget* parent, RemoteDatabase& remote, const QString& host, const QString& clientCert,
+                                   const QString& name, const QString& branch) :
     QDialog(parent),
     ui(new Ui::RemotePushDialog),
     m_host(host),
     m_clientCert(clientCert),
+    m_suggestedBranch(branch),
     remoteDatabase(remote),
     m_nameValidator(new QRegExpValidator(QRegExp("^[a-z,A-Z,0-9,\\.,\\-,\\_,\\(,\\),\\+,\\ ]+$"), this)),
     m_branchValidator(new QRegExpValidator(QRegExp("^[a-z,A-Z,0-9,\\^,\\.,\\-,\\_,\\/,\\(,\\),\\:,\\&,\\ )]+$"), this))
@@ -126,6 +128,10 @@ void RemotePushDialog::fillInBranches(const std::vector<std::string>& branches, 
         if(branch != default_branch)
             ui->comboBranch->addItem(QString::fromStdString(branch));
     }
+
+    // If a branch was suggested, select it now
+    if(!m_suggestedBranch.isEmpty())
+        ui->comboBranch->setCurrentIndex(ui->comboBranch->findText(m_suggestedBranch));
 }
 
 void RemotePushDialog::reloadBranchList()

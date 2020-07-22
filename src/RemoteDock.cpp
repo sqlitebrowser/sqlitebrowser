@@ -270,7 +270,7 @@ void RemoteDock::pushDatabase()
 
     // Show the user a dialog for setting all the commit details
     QString host = remoteDatabase.getInfoFromClientCert(remoteModel->currentClientCertificate(), RemoteDatabase::CertInfoServer);
-    RemotePushDialog pushDialog(this, remoteDatabase, host, remoteModel->currentClientCertificate(), name);
+    RemotePushDialog pushDialog(this, remoteDatabase, host, remoteModel->currentClientCertificate(), name, QString::fromStdString(currently_opened_file_info.branch));
     if(pushDialog.exec() != QDialog::Accepted)
         return;
 
