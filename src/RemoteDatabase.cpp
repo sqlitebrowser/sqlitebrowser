@@ -824,10 +824,6 @@ QString RemoteDatabase::localAdd(QString filename, QString identity, const QUrl&
 
 QString RemoteDatabase::localExists(const QUrl& url, QString identity, const std::string& branch)
 {
-    // This function checks if there already is a clone for the given combination of url and identity. It returns the filename
-    // of this clone if there is or a null string if there isn't a clone yet. The identity needs to be part of this check because
-    // with the url alone there could be corner cases where different versions or whatever may not be accessible for all users.
-
     localAssureOpened();
 
     // Extract commit id from url and remove query part afterwards
@@ -875,51 +871,14 @@ QString RemoteDatabase::localExists(const QUrl& url, QString identity, const std
 
     // There are three possibilities now: either we didn't get any commit id in the URL in which case we just return the file we got, no matter what.
     // Or the requested commit id is the same as the local commit id in which case we return the file we got as well.
-    // Or the requested commit id differ in which case we ask the user what to do.
+    // Or the requested commit id differ in which case we return no match.
     if(url_commit_id.isNull() || local_commit_id == url_commit_id)
     {
-        // Both commit ids are the same. That's the perfect match, so we can download the local file if it still exists
+        // Both commit ids are the same. That's the perfect match, so we can open the local file if it still exists
         return localCheckFile(local_file);
     } else {
-        // The commit ids differ. That means we have another version locally checked out than we're trying to download. Because the commit ids are
-        // only calculated on the server side and we're currently always checking out the latest version this can only mean that the remote version has
-        // been updated, i.e. is newer than the local version.
-
-        // TODO Support multiple checkouts of the same database at different versions at the same time. For this we need to be more intelligent with
-        // comparing the commit ids.
-
-        // Ask the user what to do: open the local version or updating to the new remote version
-        if(QMessageBox::question(nullptr, qApp->applicationName(),
-                                 tr("The remote database has been updated since the last checkout. Do you want to update the local database to the newest version? Note "
-                                    "that this discards any changes you have made locally! If you don't want to lose local changes, click No to open the local version."),
-                                 QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
-        {
-            // User wants to download the newest version. So delete the entry from the clones database and delete the local database copy and return an empty
-            // string to indicate a redownload request.
-
-            // Build full path to database file and delete it
-            QFile::remove(Settings::getValue("remote", "clonedirectory").toString() + "/" + local_file);
-
-            // Remove the old entry from the local clones database to enforce a redownload. The file column is unique for the entire table because the
-            // files are all in the same directory and their names need to be unique because of this.
-            QString delete_sql = QString("DELETE FROM local WHERE file=?");
-            sqlite3_stmt* delete_stmt;
-            if(sqlite3_prepare_v2(m_dbLocal, delete_sql.toUtf8(), -1, &delete_stmt, nullptr) != SQLITE_OK)
-                return QString();
-            if(sqlite3_bind_text(delete_stmt, 1, local_file.toUtf8(), local_file.toUtf8().length(), SQLITE_TRANSIENT))
-            {
-                sqlite3_finalize(delete_stmt);
-                return QString();
-            }
-            sqlite3_step(delete_stmt);
-            sqlite3_finalize(delete_stmt);
-
-            // Return an empty string to indicate a redownload request
-            return QString();
-        } else {
-            // User wants to open the local version. So build the full path and return it if the file still exists.
-            return localCheckFile(local_file);
-        }
+        // The commit ids differ. This means we have no match
+        return QString();
     }
 }
 

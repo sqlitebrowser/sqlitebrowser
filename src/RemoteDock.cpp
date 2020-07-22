@@ -192,8 +192,43 @@ void RemoteDock::fetchDatabase(QString url_string)
         return;
     }
 
+    // Check if we already have a clone of this database branch. In so, show a warning because there might
+    // be unpushed changes. For this we don't care about the currently checked out commit id because for
+    // any commit local changes could be lost.
+    // TODO Detect local changes and don't warn when no changes were made
+    QUrl url_without_commit_id(url);
+    QUrlQuery url_without_commit_id_query(url_without_commit_id);
+    url_without_commit_id_query.removeQueryItem("commit");
+    url_without_commit_id.setQuery(url_without_commit_id_query);
+    if(!remoteDatabase.localExists(url_without_commit_id, remoteModel->currentClientCertificate(), QUrlQuery(url).queryItemValue("branch").toStdString()).isEmpty())
+    {
+
+
+        if(QMessageBox::warning(this,
+                                QApplication::applicationName(),
+                                tr("Fetching this commit might override local changes when you have not pushed them yet.\n"
+                                   "Are you sure you want to fetch it?"),
+                                QMessageBox::Yes | QMessageBox::Cancel,
+                                QMessageBox::Cancel) == QMessageBox::Cancel)
+        {
+            return;
+        }
+    }
+
     // Clone the database
     remoteDatabase.fetch(url.toString(), RemoteDatabase::RequestTypeDatabase, remoteModel->currentClientCertificate());
+}
+
+void RemoteDock::fetchCommit(const QModelIndex& idx)
+{
+    // Fetch selected commit
+    QUrl url(QString::fromStdString(currently_opened_file_info.url));
+    QUrlQuery query({
+                        {"branch", ui->comboDatabaseBranch->currentText()},
+                        {"commit", idx.sibling(idx.row(), RemoteCommitsModel::ColumnCommitId).data().toString()}
+                    });
+    url.setQuery(query);
+    fetchDatabase(url.toString());
 }
 
 void RemoteDock::enableButtons()
@@ -362,7 +397,7 @@ void RemoteDock::refreshMetadata(const QString& username, const QString& dbname)
 }
 
 void RemoteDock::showMetadata(const std::vector<RemoteMetadataBranchInfo>& branches, const std::string& commits,
-                              const std::vector<RemoteMetadataReleaseInfo>& releases, const std::vector<RemoteMetadataReleaseInfo>& tags,
+                              const std::vector<RemoteMetadataReleaseInfo>& /*releases*/, const std::vector<RemoteMetadataReleaseInfo>& /*tags*/,
                               const std::string& /*default_branch*/, const std::string& web_page)
 {
     // Store all the commit information as-is
@@ -375,10 +410,6 @@ void RemoteDock::showMetadata(const std::vector<RemoteMetadataBranchInfo>& branc
     ui->comboDatabaseBranch->clear();
     for(const auto& branch : branches)
         ui->comboDatabaseBranch->addItem(QString::fromStdString(branch.name), QString::fromStdString(branch.commit_id));
-    for(const auto& release : releases)
-        ui->comboDatabaseBranch->addItem(QString::fromStdString(release.name) + " (" + tr("release") + ")", QString::fromStdString(release.commit_id));
-    for(const auto& tag : tags)
-        ui->comboDatabaseBranch->addItem(QString::fromStdString(tag.name) + " (" + tr("tag") + ")", QString::fromStdString(tag.commit_id));
     ui->comboDatabaseBranch->setCurrentIndex(ui->comboDatabaseBranch->findText(ui->editDatabaseBranch->text()));
 }
 
