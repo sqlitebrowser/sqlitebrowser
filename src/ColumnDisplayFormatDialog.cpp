@@ -34,6 +34,8 @@ ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(DBBrowserDB& db, const sqlb
     ui->comboDisplayFormat->addItem(tr("Lower case"), "lower");
     ui->comboDisplayFormat->addItem(tr("Upper case"), "upper");
     ui->comboDisplayFormat->insertSeparator(ui->comboDisplayFormat->count());
+    ui->comboDisplayFormat->addItem(tr("Binary GUID to text"), "guid");
+    ui->comboDisplayFormat->insertSeparator(ui->comboDisplayFormat->count());
     ui->comboDisplayFormat->addItem(tr("Custom"), "custom");
 
     ui->labelDisplayFormat->setText(ui->labelDisplayFormat->text().arg(column_name));
@@ -54,6 +56,16 @@ ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(DBBrowserDB& db, const sqlb
     formatFunctions["ddmmyyyyDate"] = "strftime('%d/%m/%Y', " + sqlb::escapeIdentifier(column_name) + ")";
     formatFunctions["lower"] = "lower(" + sqlb::escapeIdentifier(column_name) + ")";
     formatFunctions["upper"] = "upper(" + sqlb::escapeIdentifier(column_name) + ")";
+    formatFunctions["guid"] = "substr(hex(" + sqlb::escapeIdentifier(column_name) + "), 7, 2) || " +
+                              "substr(hex(" + sqlb::escapeIdentifier(column_name) + "), 5, 2) || " +
+                              "substr(hex(" + sqlb::escapeIdentifier(column_name) + "), 3, 2) || " +
+                              "substr(hex(" + sqlb::escapeIdentifier(column_name) + "), 1, 2) || '-' || " +
+                              "substr(hex(" + sqlb::escapeIdentifier(column_name) + "), 11, 2) || " +
+                              "substr(hex(" + sqlb::escapeIdentifier(column_name) + "), 9, 2) || '-' || " +
+                              "substr(hex(" + sqlb::escapeIdentifier(column_name) + "), 15, 2) || " +
+                              "substr(hex(" + sqlb::escapeIdentifier(column_name) + "), 13, 2) || '-' || " +
+                              "substr(hex(" + sqlb::escapeIdentifier(column_name) + "), 17, 4) || '-' || " +
+                              "substr(hex(" + sqlb::escapeIdentifier(column_name) + "), 21, 12)";
 
     // Set the current format, if it's empty set the default format
     if(current_format.isEmpty())
