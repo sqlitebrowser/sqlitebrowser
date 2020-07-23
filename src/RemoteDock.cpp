@@ -72,6 +72,20 @@ RemoteDock::RemoteDock(MainWindow* parent)
         ui->treeDatabaseCommits->expandAll();
     });
 
+    // Fetch latest commit action
+    connect(ui->actionFetchLatestCommit, &QAction::triggered, [this]() {
+        // Fetch last commit of current branch
+        // The URL and the branch name is that of the currently opened database file.
+        // The latest commit id is stored in the data bits of the branch combo box.
+        QUrl url(QString::fromStdString(currently_opened_file_info.url));
+        QUrlQuery query;
+        query.addQueryItem("branch", QString::fromStdString(currently_opened_file_info.branch));
+        query.addQueryItem("commit", ui->comboDatabaseBranch->itemData(
+                               ui->comboDatabaseBranch->findText(QString::fromStdString(currently_opened_file_info.branch))).toString());
+        url.setQuery(query);
+        fetchDatabase(url.toString());
+    });
+
     // Prepare context menu for list of remote databases
     connect(ui->treeRemote->selectionModel(), &QItemSelectionModel::currentChanged, [this](const QModelIndex& index, const QModelIndex&) {
         // Only enable database actions when a database was selected
@@ -244,9 +258,10 @@ void RemoteDock::enableButtons()
     bool logged_in = !remoteModel->currentClientCertificate().isEmpty();
 
     ui->buttonPushDatabase->setEnabled(db_opened && logged_in);
+    ui->actionRefresh->setEnabled(logged_in);
     ui->actionCloneDatabaseLink->setEnabled(logged_in);
     ui->actionDatabaseOpenBrowser->setEnabled(db_opened && logged_in);
-    ui->actionRefresh->setEnabled(logged_in);
+    ui->actionFetchLatestCommit->setEnabled(db_opened && logged_in);
 }
 
 void RemoteDock::pushDatabase()

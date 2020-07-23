@@ -126,8 +126,8 @@
              <property name="floatable">
               <bool>false</bool>
              </property>
-             <addaction name="actionCloneDatabaseLink"/>
              <addaction name="actionRefresh"/>
+             <addaction name="actionCloneDatabaseLink"/>
             </widget>
            </item>
            <item>
@@ -193,8 +193,9 @@
              <property name="floatable">
               <bool>false</bool>
              </property>
-             <addaction name="actionDatabaseOpenBrowser"/>
              <addaction name="actionRefresh"/>
+             <addaction name="actionDatabaseOpenBrowser"/>
+             <addaction name="actionFetchLatestCommit"/>
             </widget>
            </item>
            <item>
@@ -500,6 +501,18 @@
      <weight>75</weight>
      <bold>true</bold>
     </font>
+   </property>
+  </action>
+  <action name="actionFetchLatestCommit">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/db_revert</normaloff>:/icons/db_revert</iconset>
+   </property>
+   <property name="text">
+    <string>Check out Latest Commit</string>
+   </property>
+   <property name="toolTip">
+    <string>Check out the latest commit of the current branch</string>
    </property>
   </action>
  </widget>
