@@ -72,17 +72,48 @@ RemoteDock::RemoteDock(MainWindow* parent)
         ui->treeDatabaseCommits->expandAll();
     });
 
+    // Prepare context menu for list of remote databases
+    connect(ui->treeRemote->selectionModel(), &QItemSelectionModel::currentChanged, [this](const QModelIndex& index, const QModelIndex&) {
+        // Only enable database actions when a database was selected
+        bool enable = index.isValid() &&
+                remoteModel->modelIndexToItem(index)->value(RemoteModelColumnType).toString() == "database";
+        ui->actionCloneDatabaseDoubleClick->setEnabled(enable);
+    });
+    ui->treeRemote->selectionModel()->currentChanged(QModelIndex(), QModelIndex()); // Enable/disable all action initially
+    connect(ui->actionCloneDatabaseDoubleClick, &QAction::triggered, [this]() {
+       fetchDatabase(ui->treeRemote->currentIndex());
+    });
+    ui->treeRemote->addAction(ui->actionCloneDatabaseDoubleClick);
+
     // Prepare context menu for list of local clones
     connect(ui->treeLocal->selectionModel(), &QItemSelectionModel::currentChanged, [this](const QModelIndex& index, const QModelIndex&) {
         // Only enable database actions when a database was selected
         bool enable = index.isValid() &&
                 !index.sibling(index.row(), RemoteLocalFilesModel::ColumnFile).data().isNull();
+        ui->actionOpenLocalDatabase->setEnabled(enable);
         ui->actionDeleteDatabase->setEnabled(enable);
+    });
+    ui->treeLocal->selectionModel()->currentChanged(QModelIndex(), QModelIndex()); // Enable/disable all action initially
+    connect(ui->actionOpenLocalDatabase, &QAction::triggered, [this]() {
+       openLocalFile(ui->treeLocal->currentIndex());
     });
     connect(ui->actionDeleteDatabase, &QAction::triggered, [this]() {
        deleteLocalDatabase(ui->treeLocal->currentIndex());
     });
+    ui->treeLocal->addAction(ui->actionOpenLocalDatabase);
     ui->treeLocal->addAction(ui->actionDeleteDatabase);
+
+    // Prepare context menu for list of commits
+    connect(ui->treeDatabaseCommits->selectionModel(), &QItemSelectionModel::currentChanged, [this](const QModelIndex& index, const QModelIndex&) {
+        // Only enable database actions when a commit was selected
+        bool enable = index.isValid();
+        ui->actionFetchCommit->setEnabled(enable);
+    });
+    ui->treeDatabaseCommits->selectionModel()->currentChanged(QModelIndex(), QModelIndex()); // Enable/disable all action initially
+    connect(ui->actionFetchCommit, &QAction::triggered, [this]() {
+       fetchCommit(ui->treeDatabaseCommits->currentIndex());
+    });
+    ui->treeDatabaseCommits->addAction(ui->actionFetchCommit);
 
     // Initial setup
     reloadSettings();
@@ -213,7 +244,7 @@ void RemoteDock::enableButtons()
     bool logged_in = !remoteModel->currentClientCertificate().isEmpty();
 
     ui->buttonPushDatabase->setEnabled(db_opened && logged_in);
-    ui->actionCloneDatabase->setEnabled(logged_in);
+    ui->actionCloneDatabaseLink->setEnabled(logged_in);
     ui->actionDatabaseOpenBrowser->setEnabled(db_opened && logged_in);
     ui->actionRefresh->setEnabled(logged_in);
 }
