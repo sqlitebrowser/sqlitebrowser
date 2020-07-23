@@ -522,26 +522,26 @@ void RemoteDatabase::fetch(const QUrl& url, RequestType type, const QString& cli
             emit openFile(exists);
             return;
         }
-    }
 
-    // Check if we already have a clone of this database branch. If so, show a warning because there might
-    // be unpushed changes. For this we don't care about the currently checked out commit id because for
-    // any commit local changes could be lost.
-    // TODO Detect local changes and don't warn when no changes were made
-    QUrl url_without_commit_id(url);
-    QUrlQuery url_without_commit_id_query(url_without_commit_id);
-    url_without_commit_id_query.removeQueryItem("commit");
-    url_without_commit_id.setQuery(url_without_commit_id_query);
-    if(!localExists(url_without_commit_id, clientCert, QUrlQuery(url).queryItemValue("branch").toStdString()).isEmpty())
-    {
-        if(QMessageBox::warning(nullptr,
-                                QApplication::applicationName(),
-                                tr("Fetching this commit might override local changes when you have not pushed them yet.\n"
-                                   "Are you sure you want to fetch it?"),
-                                QMessageBox::Yes | QMessageBox::Cancel,
-                                QMessageBox::Cancel) == QMessageBox::Cancel)
+        // Check if we already have a clone of this database branch. If so, show a warning because there might
+        // be unpushed changes. For this we don't care about the currently checked out commit id because for
+        // any commit local changes could be lost.
+        // TODO Detect local changes and don't warn when no changes were made
+        QUrl url_without_commit_id(url);
+        QUrlQuery url_without_commit_id_query(url_without_commit_id);
+        url_without_commit_id_query.removeQueryItem("commit");
+        url_without_commit_id.setQuery(url_without_commit_id_query);
+        if(!localExists(url_without_commit_id, clientCert, QUrlQuery(url).queryItemValue("branch").toStdString()).isEmpty())
         {
-            return;
+            if(QMessageBox::warning(nullptr,
+                                    QApplication::applicationName(),
+                                    tr("Fetching this commit might override local changes when you have not pushed them yet.\n"
+                                       "Are you sure you want to fetch it?"),
+                                    QMessageBox::Yes | QMessageBox::Cancel,
+                                    QMessageBox::Cancel) == QMessageBox::Cancel)
+            {
+                return;
+            }
         }
     }
 
