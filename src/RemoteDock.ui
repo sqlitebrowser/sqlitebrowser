@@ -473,6 +473,14 @@
     <string>Check out the latest commit of the current branch</string>
    </property>
   </action>
+  <action name="actionDownloadCommit">
+   <property name="text">
+    <string>Save Revision to File</string>
+   </property>
+   <property name="toolTip">
+    <string>Saves the selected revision of the database to another file</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
   <tabstop>comboUser</tabstop>

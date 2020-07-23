@@ -90,6 +90,7 @@ public:
         RequestTypeLicenceList,
         RequestTypeBranchList,
         RequestTypeMetadata,
+        RequestTypeDownload,
     };
 
     void fetch(const QUrl& url, RequestType type, const QString& clientCert = QString(), QVariant userdata = QVariant());
