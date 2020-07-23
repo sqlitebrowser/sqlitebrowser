@@ -22,7 +22,6 @@
 #include "FileDialog.h"
 #include "FilterTableHeader.h"
 #include "RemoteDock.h"
-#include "RemoteDatabase.h"
 #include "FindReplaceDialog.h"
 #include "RunSql.h"
 #include "ExtendedTableWidget.h"
@@ -62,7 +61,6 @@ MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
       ui(new Ui::MainWindow),
       db(),
-      m_remoteDb(new RemoteDatabase),
       editDock(new EditDialog(this)),
       plotDock(new PlotDock(this)),
       remoteDock(new RemoteDock(this)),
@@ -79,7 +77,6 @@ MainWindow::MainWindow(QWidget* parent)
 
 MainWindow::~MainWindow()
 {
-    delete m_remoteDb;
     delete ui;
 }
 
@@ -99,10 +96,10 @@ void MainWindow::init()
 
     // Automatic update check
 #ifdef CHECKNEWVERSION
-    connect(m_remoteDb, &RemoteDatabase::networkReady, [this]() {
+    connect(&RemoteNetwork::get(), &RemoteNetwork::networkReady, []() {
         // Check for a new version if automatic update check aren't disabled in the settings dialog
         if(Settings::getValue("checkversion", "enabled").toBool())
-            m_remoteDb->fetch(QUrl("https://download.sqlitebrowser.org/currentrelease"), RemoteDatabase::RequestTypeNewVersionCheck);
+            RemoteNetwork::get().fetch(QUrl("https://download.sqlitebrowser.org/currentrelease"), RemoteNetwork::RequestTypeNewVersionCheck);
     });
 #endif
 
@@ -389,7 +386,7 @@ void MainWindow::init()
     connect(ui->dbTreeWidget->selectionModel(), &QItemSelectionModel::currentChanged, this, &MainWindow::changeTreeSelection);
     connect(ui->dockEdit, &QDockWidget::visibilityChanged, this, &MainWindow::toggleEditDock);
     connect(remoteDock, SIGNAL(openFile(QString)), this, SLOT(fileOpen(QString)));
-    connect(m_remoteDb, &RemoteDatabase::gotCurrentVersion, this, &MainWindow::checkNewVersion);
+    connect(&RemoteNetwork::get(), &RemoteNetwork::gotCurrentVersion, this, &MainWindow::checkNewVersion);
     connect(ui->actionDropQualifiedCheck, &QAction::toggled, dbStructureModel, &DbStructureModel::setDropQualifiedNames);
     connect(ui->actionEnquoteNamesCheck, &QAction::toggled, dbStructureModel, &DbStructureModel::setDropEnquotedNames);
     connect(&db, &DBBrowserDB::databaseInUseChanged, this, &MainWindow::updateDatabaseBusyStatus);
@@ -2137,9 +2134,6 @@ void MainWindow::reloadSettings()
     ui->viewMenu->actions().at(4)->setVisible(showRemoteActions);
     if(!showRemoteActions)
         ui->dockRemote->setHidden(true);
-
-    // Update the remote database connection settings
-    m_remoteDb->reloadSettings();
 
     // Reload remote dock settings
     remoteDock->reloadSettings();

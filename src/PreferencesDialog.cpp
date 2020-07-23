@@ -4,7 +4,7 @@
 #include "Settings.h"
 #include "Application.h"
 #include "MainWindow.h"
-#include "RemoteDatabase.h"
+#include "RemoteNetwork.h"
 #include "FileExtensionManager.h"
 #include "ProxyDialog.h"
 
@@ -139,7 +139,7 @@ void PreferencesDialog::loadSettings()
     // Remote settings
     ui->checkUseRemotes->setChecked(Settings::getValue("remote", "active").toBool());
     {
-        auto ca_certs = static_cast<Application*>(qApp)->mainWindow()->getRemote().caCertificates();
+        auto ca_certs = RemoteNetwork::get().caCertificates();
         ui->tableCaCerts->setRowCount(ca_certs.size());
         for(int i=0;i<ca_certs.size();i++)
         {

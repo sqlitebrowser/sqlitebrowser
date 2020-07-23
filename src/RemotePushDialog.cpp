@@ -4,16 +4,15 @@
 
 #include "RemotePushDialog.h"
 #include "ui_RemotePushDialog.h"
-#include "RemoteDatabase.h"
+#include "RemoteNetwork.h"
 
-RemotePushDialog::RemotePushDialog(QWidget* parent, RemoteDatabase& remote, const QString& host, const QString& clientCert,
+RemotePushDialog::RemotePushDialog(QWidget* parent, const QString& host, const QString& clientCert,
                                    const QString& name, const QString& branch) :
     QDialog(parent),
     ui(new Ui::RemotePushDialog),
     m_host(host),
     m_clientCert(clientCert),
     m_suggestedBranch(branch),
-    remoteDatabase(remote),
     m_nameValidator(new QRegExpValidator(QRegExp("^[a-z,A-Z,0-9,\\.,\\-,\\_,\\(,\\),\\+,\\ ]+$"), this)),
     m_branchValidator(new QRegExpValidator(QRegExp("^[a-z,A-Z,0-9,\\^,\\.,\\-,\\_,\\/,\\(,\\),\\:,\\&,\\ )]+$"), this))
 {
@@ -29,11 +28,11 @@ RemotePushDialog::RemotePushDialog(QWidget* parent, RemoteDatabase& remote, cons
     checkInput();
 
     // Fetch list of available licences
-    connect(&remoteDatabase, &RemoteDatabase::gotLicenceList, this, &RemotePushDialog::fillInLicences);
-    remoteDatabase.fetch(host + "licence/list", RemoteDatabase::RequestTypeLicenceList, clientCert);
+    connect(&RemoteNetwork::get(), &RemoteNetwork::gotLicenceList, this, &RemotePushDialog::fillInLicences);
+    RemoteNetwork::get().fetch(host + "licence/list", RemoteNetwork::RequestTypeLicenceList, clientCert);
 
     // Prepare fetching list of available branches
-    connect(&remoteDatabase, &RemoteDatabase::gotBranchList, this, &RemotePushDialog::fillInBranches);
+    connect(&RemoteNetwork::get(), &RemoteNetwork::gotBranchList, this, &RemotePushDialog::fillInBranches);
     reloadBranchList();
 }
 
@@ -139,11 +138,11 @@ void RemotePushDialog::reloadBranchList()
     // Assemble query URL
     QUrl url(m_host + "branch/list");
     QUrlQuery query;
-    query.addQueryItem("username", remoteDatabase.getInfoFromClientCert(m_clientCert, RemoteDatabase::CertInfoUser));
+    query.addQueryItem("username", RemoteNetwork::get().getInfoFromClientCert(m_clientCert, RemoteNetwork::CertInfoUser));
     query.addQueryItem("folder", "/");
     query.addQueryItem("dbname", ui->editName->text());
     url.setQuery(query);
 
     // Send request
-    remoteDatabase.fetch(url.toString(), RemoteDatabase::RequestTypeBranchList, m_clientCert);
+    RemoteNetwork::get().fetch(url.toString(), RemoteNetwork::RequestTypeBranchList, m_clientCert);
 }

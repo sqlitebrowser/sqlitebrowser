@@ -2,7 +2,7 @@
 
 #include "Data.h"
 #include "RemoteModel.h"
-#include "RemoteDatabase.h"
+#include "RemoteNetwork.h"
 
 using json = nlohmann::json;
 
@@ -98,14 +98,13 @@ std::vector<RemoteModelItem*> RemoteModelItem::loadArray(const json& array, Remo
     return items;
 }
 
-RemoteModel::RemoteModel(QObject* parent, RemoteDatabase& remote) :
+RemoteModel::RemoteModel(QObject* parent) :
     QAbstractItemModel(parent),
     headerList({tr("Name"), tr("Last modified"), tr("Size"), tr("Commit")}),
-    rootItem(new RemoteModelItem()),
-    remoteDatabase(remote)
+    rootItem(new RemoteModelItem())
 {
     // Set up signals
-    connect(&remoteDatabase, &RemoteDatabase::gotDirList, this, &RemoteModel::parseDirectoryListing);
+    connect(&RemoteNetwork::get(), &RemoteNetwork::gotDirList, this, &RemoteModel::parseDirectoryListing);
 }
 
 RemoteModel::~RemoteModel()
@@ -116,7 +115,7 @@ RemoteModel::~RemoteModel()
 void RemoteModel::setNewRootDir(const QString& url, const QString& cert)
 {
     // Get user name from client cert
-    currentUserName = remoteDatabase.getInfoFromClientCert(cert, RemoteDatabase::CertInfoUser);
+    currentUserName = RemoteNetwork::get().getInfoFromClientCert(cert, RemoteNetwork::CertInfoUser);
 
     // Save settings
     currentRootDirectory = url;
@@ -129,7 +128,7 @@ void RemoteModel::setNewRootDir(const QString& url, const QString& cert)
 void RemoteModel::refresh()
 {
     // Fetch root directory and put the reply data under the root item
-    remoteDatabase.fetch(currentRootDirectory, RemoteDatabase::RequestTypeDirectory, currentClientCert, QModelIndex());
+    RemoteNetwork::get().fetch(currentRootDirectory, RemoteNetwork::RequestTypeDirectory, currentClientCert, QModelIndex());
 }
 
 void RemoteModel::parseDirectoryListing(const QString& text, const QVariant& userdata)
@@ -307,7 +306,7 @@ void RemoteModel::fetchMore(const QModelIndex& parent)
 
     // Fetch item URL
     item->setFetchedDirectoryList(true);
-    remoteDatabase.fetch(item->value(RemoteModelColumnUrl).toUrl(), RemoteDatabase::RequestTypeDirectory, currentClientCert, parent);
+    RemoteNetwork::get().fetch(item->value(RemoteModelColumnUrl).toUrl(), RemoteNetwork::RequestTypeDirectory, currentClientCert, parent);
 }
 
 const QString& RemoteModel::currentClientCertificate() const

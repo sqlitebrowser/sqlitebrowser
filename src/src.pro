@@ -24,6 +24,7 @@ HEADERS += \
     ImageViewer.h \
     RemoteCommitsModel.h \
     RemoteLocalFilesModel.h \
+    RemoteNetwork.h \
     sqlitedb.h \
     MainWindow.h \
     EditIndexDialog.h \
@@ -87,6 +88,7 @@ SOURCES += \
     ImageViewer.cpp \
     RemoteCommitsModel.cpp \
     RemoteLocalFilesModel.cpp \
+    RemoteNetwork.cpp \
     sqlitedb.cpp \
     MainWindow.cpp \
     EditIndexDialog.cpp \

@@ -5,8 +5,9 @@
 #include <QUrl>
 
 #include "Data.h"
-#include "RemoteLocalFilesModel.h"
 #include "RemoteDatabase.h"
+#include "RemoteLocalFilesModel.h"
+#include "RemoteNetwork.h"
 #include "Settings.h"
 
 using json = nlohmann::json;
@@ -28,7 +29,7 @@ RemoteLocalFilesModel::~RemoteLocalFilesModel()
 void RemoteLocalFilesModel::setIdentity(const QString& cert_filename)
 {
     current_cert_filename = cert_filename;
-    current_user_name = remoteDatabase.getInfoFromClientCert(cert_filename, RemoteDatabase::CertInfoUser);
+    current_user_name = RemoteNetwork::get().getInfoFromClientCert(cert_filename, RemoteNetwork::CertInfoUser);
     refresh();
 }
 

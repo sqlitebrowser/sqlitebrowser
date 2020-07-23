@@ -173,6 +173,7 @@ set(SQLB_MOC_HDR
 	src/ImageViewer.h
 	src/RemoteLocalFilesModel.h
 	src/RemoteCommitsModel.h
+	src/RemoteNetwork.h
 )
 
 set(SQLB_SRC
@@ -234,6 +235,7 @@ set(SQLB_SRC
 	src/ImageViewer.cpp
 	src/RemoteLocalFilesModel.cpp
 	src/RemoteCommitsModel.cpp
+	src/RemoteNetwork.cpp
 )
 
 set(SQLB_FORMS
