@@ -37,8 +37,8 @@ public slots:
 private slots:
     void setNewIdentity(const QString& identity);
     void fetchDatabase(const QModelIndex& idx);
-    void fetchDatabase(QString url = QString());
-    void fetchCommit(const QModelIndex& idx);
+    void fetchDatabase(QString url = QString(), RemoteDatabase::RequestType request_type = RemoteDatabase::RequestTypeDatabase);
+    void fetchCommit(const QModelIndex& idx, RemoteDatabase::RequestType request_type = RemoteDatabase::RequestTypeDatabase);
     void pushDatabase();
     void newDirectoryNode(const QModelIndex& parent);
     void switchToMainView();

@@ -18,10 +18,11 @@
 
 #include <iterator>
 
+#include "FileDialog.h"
 #include "RemoteDatabase.h"
-#include "version.h"
 #include "Settings.h"
 #include "sqlite.h"
+#include "version.h"
 
 using json = nlohmann::json;
 
@@ -349,6 +350,26 @@ void RemoteDatabase::gotReply(QNetworkReply* reply)
             emit gotMetadata(branches, obj_commits.dump(), releases, tags, default_branch, obj["web_page"]);
             break;
         }
+    case RequestTypeDownload:
+        {
+            // It's a download
+
+            // Where should we save it?
+            QString path = FileDialog::getSaveFileName(FileDialogTypes::CreateDatabaseFile,
+                                                       nullptr,
+                                                       tr("Choose a location to save the file"),
+                                                       QString(),
+                                                       reply->url().fileName() + "_" + QUrlQuery(reply->url()).queryItemValue("commit") + ".db");
+            if(path.isEmpty())
+                break;
+
+            // Save the downloaded data in that file
+            QFile file(path);
+            file.open(QIODevice::WriteOnly);
+            file.write(reply->readAll());
+            file.close();
+        }
+        break;
     }
 
     // Delete reply later, i.e. after returning from this slot function
@@ -569,9 +590,9 @@ void RemoteDatabase::fetch(const QUrl& url, RequestType type, const QString& cli
     reply->setProperty("certfile", clientCert);
     reply->setProperty("userdata", userdata);
 
-    // Initialise the progress dialog for this request, but only if this is a database file. Directory listing are small enough to be loaded
-    // without progress dialog.
-    if(type == RequestTypeDatabase)
+    // Initialise the progress dialog for this request, but only if this is a database file or a download.
+    // Directory listing and similar are small enough to be loaded without progress dialog.
+    if(type == RequestTypeDatabase || type == RequestTypeDownload)
         prepareProgressDialog(reply, false, url);
 }
 

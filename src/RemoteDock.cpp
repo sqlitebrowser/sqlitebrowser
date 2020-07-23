@@ -122,12 +122,17 @@ RemoteDock::RemoteDock(MainWindow* parent)
         // Only enable database actions when a commit was selected
         bool enable = index.isValid();
         ui->actionFetchCommit->setEnabled(enable);
+        ui->actionDownloadCommit->setEnabled(enable);
     });
     ui->treeDatabaseCommits->selectionModel()->currentChanged(QModelIndex(), QModelIndex()); // Enable/disable all action initially
     connect(ui->actionFetchCommit, &QAction::triggered, [this]() {
        fetchCommit(ui->treeDatabaseCommits->currentIndex());
     });
+    connect(ui->actionDownloadCommit, &QAction::triggered, [this]() {
+       fetchCommit(ui->treeDatabaseCommits->currentIndex(), RemoteDatabase::RequestTypeDownload);
+    });
     ui->treeDatabaseCommits->addAction(ui->actionFetchCommit);
+    ui->treeDatabaseCommits->addAction(ui->actionDownloadCommit);
 
     // Initial setup
     reloadSettings();
@@ -201,7 +206,7 @@ void RemoteDock::fetchDatabase(const QModelIndex& idx)
         fetchDatabase(item->value(RemoteModelColumnUrl).toString());
 }
 
-void RemoteDock::fetchDatabase(QString url_string)
+void RemoteDock::fetchDatabase(QString url_string, RemoteDatabase::RequestType request_type)
 {
     // If no URL was provided ask the user. Default to the current clipboard contents
     if(url_string.isEmpty())
@@ -238,10 +243,10 @@ void RemoteDock::fetchDatabase(QString url_string)
     }
 
     // Clone the database
-    remoteDatabase.fetch(url.toString(), RemoteDatabase::RequestTypeDatabase, remoteModel->currentClientCertificate());
+    remoteDatabase.fetch(url.toString(), request_type, remoteModel->currentClientCertificate());
 }
 
-void RemoteDock::fetchCommit(const QModelIndex& idx)
+void RemoteDock::fetchCommit(const QModelIndex& idx, RemoteDatabase::RequestType request_type)
 {
     // Fetch selected commit
     QUrl url(QString::fromStdString(currently_opened_file_info.url));
@@ -249,7 +254,7 @@ void RemoteDock::fetchCommit(const QModelIndex& idx)
     query.addQueryItem("branch", ui->comboDatabaseBranch->currentText());
     query.addQueryItem("commit", idx.sibling(idx.row(), RemoteCommitsModel::ColumnCommitId).data().toString());
     url.setQuery(query);
-    fetchDatabase(url.toString());
+    fetchDatabase(url.toString(), request_type);
 }
 
 void RemoteDock::enableButtons()
