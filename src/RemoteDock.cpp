@@ -21,9 +21,8 @@ RemoteDock::RemoteDock(MainWindow* parent)
     : QDialog(parent),
       ui(new Ui::RemoteDock),
       mainWindow(parent),
-      remoteDatabase(parent->getRemote()),
-      remoteModel(new RemoteModel(this, parent->getRemote())),
-      remoteLocalFilesModel(new RemoteLocalFilesModel(this, parent->getRemote())),
+      remoteModel(new RemoteModel(this)),
+      remoteLocalFilesModel(new RemoteLocalFilesModel(this, remoteDatabase)),
       remoteCommitsModel(new RemoteCommitsModel(this))
 {
     ui->setupUi(this);
@@ -40,18 +39,15 @@ RemoteDock::RemoteDock(MainWindow* parent)
     ui->treeLocal->setColumnWidth(RemoteLocalFilesModel::ColumnSize, 80);       // Make size column narrower
     ui->treeLocal->setColumnHidden(RemoteLocalFilesModel::ColumnFile, true);    // Hide local file name
 
-    // When a database has been downloaded and must be opened, notify users of this class
-    connect(&remoteDatabase, &RemoteDatabase::openFile, this, &RemoteDock::openFile);
-
-    // Reload the directory tree and the list of local checkouts when a database upload has finished
-    connect(&remoteDatabase, &RemoteDatabase::uploadFinished, this, &RemoteDock::refresh);
-    connect(&remoteDatabase, &RemoteDatabase::openFile, this, &RemoteDock::refreshLocalFileList);
+    // Handle finished uploads and downloads of databases
+    connect(&RemoteNetwork::get(), &RemoteNetwork::fetchFinished, this, &RemoteDock::fetchFinished);
+    connect(&RemoteNetwork::get(), &RemoteNetwork::pushFinished, this, &RemoteDock::pushFinished);
 
     // Whenever a new directory listing has been parsed, check if it was a new root dir and, if so, open the user's directory
     connect(remoteModel, &RemoteModel::directoryListingParsed, this, &RemoteDock::newDirectoryNode);
 
     // Show metadata for a database when we get it
-    connect(&remoteDatabase, &RemoteDatabase::gotMetadata, this, &RemoteDock::showMetadata);
+    connect(&RemoteNetwork::get(), &RemoteNetwork::gotMetadata, this, &RemoteDock::showMetadata);
 
     // When the Preferences link is clicked in the no-certificates-label, open the preferences dialog. For other links than the ones we know,
     // just open them in a web browser
@@ -129,7 +125,7 @@ RemoteDock::RemoteDock(MainWindow* parent)
        fetchCommit(ui->treeDatabaseCommits->currentIndex());
     });
     connect(ui->actionDownloadCommit, &QAction::triggered, [this]() {
-       fetchCommit(ui->treeDatabaseCommits->currentIndex(), RemoteDatabase::RequestTypeDownload);
+       fetchCommit(ui->treeDatabaseCommits->currentIndex(), RemoteNetwork::RequestTypeDownload);
     });
     ui->treeDatabaseCommits->addAction(ui->actionFetchCommit);
     ui->treeDatabaseCommits->addAction(ui->actionDownloadCommit);
@@ -183,7 +179,7 @@ void RemoteDock::setNewIdentity(const QString& identity)
         return;
 
     // Open root directory. Get host name from client cert
-    remoteModel->setNewRootDir(remoteDatabase.getInfoFromClientCert(cert, RemoteDatabase::CertInfoServer), cert);
+    remoteModel->setNewRootDir(RemoteNetwork::get().getInfoFromClientCert(cert, RemoteNetwork::CertInfoServer), cert);
 
     // Reset list of local checkouts
     remoteLocalFilesModel->setIdentity(cert);
@@ -206,7 +202,7 @@ void RemoteDock::fetchDatabase(const QModelIndex& idx)
         fetchDatabase(item->value(RemoteModelColumnUrl).toString());
 }
 
-void RemoteDock::fetchDatabase(QString url_string, RemoteDatabase::RequestType request_type)
+void RemoteDock::fetchDatabase(QString url_string, RemoteNetwork::RequestType request_type)
 {
     // If no URL was provided ask the user. Default to the current clipboard contents
     if(url_string.isEmpty())
@@ -226,7 +222,7 @@ void RemoteDock::fetchDatabase(QString url_string, RemoteDatabase::RequestType r
 
     // Check the URL
     QUrl url(url_string);
-    if(url.authority() != QUrl(remoteDatabase.getInfoFromClientCert(remoteModel->currentClientCertificate(), RemoteDatabase::CertInfoServer)).authority())
+    if(url.authority() != QUrl(RemoteNetwork::get().getInfoFromClientCert(remoteModel->currentClientCertificate(), RemoteNetwork::CertInfoServer)).authority())
     {
         QMessageBox::warning(this, qApp->applicationName(), tr("Invalid URL: The host name does not match the host name of the current identity."));
         return;
@@ -242,11 +238,43 @@ void RemoteDock::fetchDatabase(QString url_string, RemoteDatabase::RequestType r
         return;
     }
 
+
+    // There is a chance that we've already cloned that database. So check for that first
+    QString exists = remoteDatabase.localExists(url, remoteModel->currentClientCertificate(), QUrlQuery(url).queryItemValue("branch").toStdString());
+    if(!exists.isEmpty())
+    {
+        // Database has already been cloned! So open the local file instead of fetching the one from the
+        // server again.
+        emit openFile(exists);
+        return;
+    }
+
+    // Check if we already have a clone of this database branch. If so, show a warning because there might
+    // be unpushed changes. For this we don't care about the currently checked out commit id because for
+    // any commit local changes could be lost.
+    // TODO Detect local changes and don't warn when no changes were made
+    QUrl url_without_commit_id(url);
+    QUrlQuery url_without_commit_id_query(url_without_commit_id);
+    url_without_commit_id_query.removeQueryItem("commit");
+    url_without_commit_id.setQuery(url_without_commit_id_query);
+    if(!remoteDatabase.localExists(url_without_commit_id, remoteModel->currentClientCertificate(), QUrlQuery(url).queryItemValue("branch").toStdString()).isEmpty())
+    {
+        if(QMessageBox::warning(nullptr,
+                                QApplication::applicationName(),
+                                tr("Fetching this commit might override local changes when you have not pushed them yet.\n"
+                                   "Are you sure you want to fetch it?"),
+                                QMessageBox::Yes | QMessageBox::Cancel,
+                                QMessageBox::Cancel) == QMessageBox::Cancel)
+        {
+            return;
+        }
+    }
+
     // Clone the database
-    remoteDatabase.fetch(url.toString(), request_type, remoteModel->currentClientCertificate());
+    RemoteNetwork::get().fetch(url.toString(), request_type, remoteModel->currentClientCertificate());
 }
 
-void RemoteDock::fetchCommit(const QModelIndex& idx, RemoteDatabase::RequestType request_type)
+void RemoteDock::fetchCommit(const QModelIndex& idx, RemoteNetwork::RequestType request_type)
 {
     // Fetch selected commit
     QUrl url(QString::fromStdString(currently_opened_file_info.url));
@@ -296,20 +324,26 @@ void RemoteDock::pushDatabase()
     name = name.remove(QRegExp("_[0-9]+.remotedb$"));
 
     // Show the user a dialog for setting all the commit details
-    QString host = remoteDatabase.getInfoFromClientCert(remoteModel->currentClientCertificate(), RemoteDatabase::CertInfoServer);
-    RemotePushDialog pushDialog(this, remoteDatabase, host, remoteModel->currentClientCertificate(), name, QString::fromStdString(currently_opened_file_info.branch));
+    QString host = RemoteNetwork::get().getInfoFromClientCert(remoteModel->currentClientCertificate(), RemoteNetwork::CertInfoServer);
+    RemotePushDialog pushDialog(this, host, remoteModel->currentClientCertificate(), name, QString::fromStdString(currently_opened_file_info.branch));
     if(pushDialog.exec() != QDialog::Accepted)
         return;
 
     // Build push URL
     QString url = host;
-    url.append(remoteDatabase.getInfoFromClientCert(remoteModel->currentClientCertificate(), RemoteDatabase::CertInfoUser));
+    url.append(RemoteNetwork::get().getInfoFromClientCert(remoteModel->currentClientCertificate(), RemoteNetwork::CertInfoUser));
     url.append("/");
     url.append(pushDialog.name());
 
+    // Check if we are pushing a cloned database. Only in this case we provide the last known commit id
+    QString commit_id;
+    if(mainWindow->getDb().currentFile().startsWith(Settings::getValue("remote", "clonedirectory").toString()))
+        commit_id = QString::fromStdString(remoteDatabase.localLastCommitId(remoteModel->currentClientCertificate(), url, pushDialog.branch().toStdString()));
+
     // Push database
-    remoteDatabase.push(mainWindow->getDb().currentFile(), url, remoteModel->currentClientCertificate(), pushDialog.name(),
-                        pushDialog.commitMessage(), pushDialog.licence(), pushDialog.isPublic(), pushDialog.branch(), pushDialog.forcePush());
+    RemoteNetwork::get().push(mainWindow->getDb().currentFile(), url, remoteModel->currentClientCertificate(), pushDialog.name(),
+                              pushDialog.commitMessage(), pushDialog.licence(), pushDialog.isPublic(), pushDialog.branch(),
+                              pushDialog.forcePush(), commit_id);
 }
 
 void RemoteDock::newDirectoryNode(const QModelIndex& parent)
@@ -320,7 +354,7 @@ void RemoteDock::newDirectoryNode(const QModelIndex& parent)
         // Then check if there is a directory with the current user name
 
         // Get current user name
-        QString user = remoteDatabase.getInfoFromClientCert(remoteModel->currentClientCertificate(), RemoteDatabase::CertInfoUser);
+        QString user = RemoteNetwork::get().getInfoFromClientCert(remoteModel->currentClientCertificate(), RemoteNetwork::CertInfoUser);
 
         for(int i=0;i<remoteModel->rowCount();i++)
         {
@@ -351,7 +385,7 @@ void RemoteDock::refreshLocalFileList()
     remoteLocalFilesModel->refresh();
 
     // Expand node for current user
-    QString user = remoteDatabase.getInfoFromClientCert(remoteModel->currentClientCertificate(), RemoteDatabase::CertInfoUser);
+    QString user = RemoteNetwork::get().getInfoFromClientCert(remoteModel->currentClientCertificate(), RemoteNetwork::CertInfoUser);
     for(int i=0;i<remoteLocalFilesModel->rowCount();i++)
     {
         QModelIndex child = remoteLocalFilesModel->index(i, RemoteLocalFilesModel::ColumnName);
@@ -414,13 +448,13 @@ void RemoteDock::fileOpened(const QString& filename)
 
 void RemoteDock::refreshMetadata(const QString& username, const QString& dbname)
 {
-    QUrl url(remoteDatabase.getInfoFromClientCert(remoteModel->currentClientCertificate(), RemoteDatabase::CertInfoServer) + "/metadata/get");
+    QUrl url(RemoteNetwork::get().getInfoFromClientCert(remoteModel->currentClientCertificate(), RemoteNetwork::CertInfoServer) + "/metadata/get");
     QUrlQuery query;
     query.addQueryItem("username", username);
     query.addQueryItem("folder", "/");
     query.addQueryItem("dbname", dbname);
     url.setQuery(query);
-    remoteDatabase.fetch(url.toString(), RemoteDatabase::RequestTypeMetadata, remoteModel->currentClientCertificate());
+    RemoteNetwork::get().fetch(url.toString(), RemoteNetwork::RequestTypeMetadata, remoteModel->currentClientCertificate());
 }
 
 void RemoteDock::showMetadata(const std::vector<RemoteMetadataBranchInfo>& branches, const std::string& commits,
@@ -485,4 +519,52 @@ void RemoteDock::refresh()
     // Refresh Current Database tab
     if(!currently_opened_file_info.file.empty())
         refreshMetadata(currently_opened_file_info.user_name(), QString::fromStdString(currently_opened_file_info.name));
+}
+
+void RemoteDock::pushFinished(const QString& filename, const QString& identity, const QUrl& url, const std::string& new_commit_id,
+                              const std::string& branch, const QString& source_file)
+{
+    // Create or update the record in our local checkout database
+    QString saveFileAs = remoteDatabase.localAdd(filename, identity, url, new_commit_id, branch);
+
+    // If the name of the source file and the name we're saving as differ, we're doing an initial push. In this case, copy the source file to
+    // the destination path to avoid redownloading it when it's first used.
+    if(saveFileAs != source_file)
+        QFile::copy(source_file, saveFileAs);
+
+    // Update info on currently opened file
+    currently_opened_file_info = remoteDatabase.localGetLocalFileInfo(saveFileAs);
+
+    // Refresh view
+    refresh();
+}
+
+void RemoteDock::fetchFinished(const QString& filename, const QString& identity, const QUrl& url, const std::string& new_commit_id,
+                               const std::string& branch, const QDateTime& last_modified, QIODevice* device)
+{
+    // Add cloned database to list of local databases
+    QString saveFileAs = remoteDatabase.localAdd(filename, identity, url, new_commit_id, branch);
+
+    // Save the downloaded data under the generated file name
+    QFile file(saveFileAs);
+    file.open(QIODevice::WriteOnly);
+    file.write(device->readAll());
+
+    // Set last modified data of the new file to the one provided by the server
+    // Before version 5.10, Qt didn't offer any option to set this attribute, so we're not setting it at the moment
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+    file.setFileTime(last_modified, QFileDevice::FileModificationTime);
+#endif
+
+    // Close file
+    file.close();
+
+    // Update info on currently opened file
+    currently_opened_file_info = remoteDatabase.localGetLocalFileInfo(saveFileAs);
+
+    // Refresh data
+    refreshLocalFileList();
+
+    // Tell the application to open this file
+    emit openFile(saveFileAs);
 }

@@ -12,7 +12,6 @@ class EditDialog;
 class ExtendedTableWidget;
 class FindReplaceDialog;
 class PlotDock;
-class RemoteDatabase;
 class RemoteDock;
 class RunSql;
 class SqliteTableModel;
@@ -36,7 +35,6 @@ public:
     ~MainWindow() override;
 
     DBBrowserDB& getDb() { return db; }
-    RemoteDatabase& getRemote() { return *m_remoteDb; }
 
 private:
     struct PragmaValues
@@ -85,8 +83,6 @@ private:
     static const int MaxRecentFiles = 5;
     QAction *recentFileActs[MaxRecentFiles];
     QAction *recentSeparatorAct;
-
-    RemoteDatabase* m_remoteDb;
 
     EditDialog* editDock;
     PlotDock* plotDock;

@@ -4,6 +4,7 @@
 #include <QDialog>
 
 #include "RemoteDatabase.h"
+#include "RemoteNetwork.h"
 
 class RemoteCommitsModel;
 class RemoteLocalFilesModel;
@@ -37,8 +38,8 @@ public slots:
 private slots:
     void setNewIdentity(const QString& identity);
     void fetchDatabase(const QModelIndex& idx);
-    void fetchDatabase(QString url = QString(), RemoteDatabase::RequestType request_type = RemoteDatabase::RequestTypeDatabase);
-    void fetchCommit(const QModelIndex& idx, RemoteDatabase::RequestType request_type = RemoteDatabase::RequestTypeDatabase);
+    void fetchDatabase(QString url = QString(), RemoteNetwork::RequestType request_type = RemoteNetwork::RequestTypeDatabase);
+    void fetchCommit(const QModelIndex& idx, RemoteNetwork::RequestType request_type = RemoteNetwork::RequestTypeDatabase);
     void pushDatabase();
     void newDirectoryNode(const QModelIndex& parent);
     void switchToMainView();
@@ -49,6 +50,10 @@ private slots:
     void deleteLocalDatabase(const QModelIndex& index);
     void openCurrentDatabaseInBrowser() const;
     void refresh();
+    void pushFinished(const QString& filename, const QString& identity, const QUrl& url, const std::string& new_commit_id,
+                      const std::string& branch, const QString& source_file);
+    void fetchFinished(const QString& filename, const QString& identity, const QUrl& url, const std::string& new_commit_id,
+                       const std::string& branch, const QDateTime& last_modified, QIODevice* device);
 
 signals:
     void openFile(QString file);
@@ -58,7 +63,7 @@ private:
 
     MainWindow* mainWindow;
 
-    RemoteDatabase& remoteDatabase;
+    RemoteDatabase remoteDatabase;
     RemoteModel* remoteModel;
     RemoteLocalFilesModel* remoteLocalFilesModel;
     RemoteCommitsModel* remoteCommitsModel;

@@ -9,6 +9,7 @@
 
 #include "Application.h"
 #include "MainWindow.h"
+#include "RemoteNetwork.h"
 #include "Settings.h"
 #include "version.h"
 
@@ -217,6 +218,10 @@ QString Application::versionString()
 
 void Application::reloadSettings()
 {
+    // Network settings
+    RemoteNetwork::get().reloadSettings();
+
+    // Font settings
     QFont f = font();
     f.setPointSize(Settings::getValue("General", "fontsize").toInt());
     setFont(f);

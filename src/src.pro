@@ -23,6 +23,7 @@ CONFIG(unittest) {
 HEADERS += \
     RemoteCommitsModel.h \
     RemoteLocalFilesModel.h \
+    RemoteNetwork.h \
     sqlitedb.h \
     MainWindow.h \
     EditIndexDialog.h \
@@ -85,6 +86,7 @@ HEADERS += \
 SOURCES += \
     RemoteCommitsModel.cpp \
     RemoteLocalFilesModel.cpp \
+    RemoteNetwork.cpp \
     sqlitedb.cpp \
     MainWindow.cpp \
     EditIndexDialog.cpp \

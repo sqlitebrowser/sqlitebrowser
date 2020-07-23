@@ -6,8 +6,6 @@
 
 #include <json.hpp>
 
-class RemoteDatabase;
-
 // List of fields stored in the JSON data
 enum RemoteModelColumns
 {
@@ -62,7 +60,7 @@ class RemoteModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    explicit RemoteModel(QObject* parent, RemoteDatabase& remote);
+    explicit RemoteModel(QObject* parent);
     ~RemoteModel() override;
 
     void setNewRootDir(const QString& url, const QString& cert);
@@ -104,9 +102,6 @@ private:
 
     // Pointer to the root item. This contains all the actual item data.
     RemoteModelItem* rootItem;
-
-    // Reference to the remote database object which is stored somewhere in the main window.
-    RemoteDatabase& remoteDatabase;
 
     // This stores the currently used network identity so it can be used for further requests, e.g. for
     // lazy population.
