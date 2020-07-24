@@ -32,9 +32,6 @@ private:
     QString m_host;
     QString m_clientCert;
 
-    // Suggested branch to preselect
-    QString m_suggestedBranch;
-
     // Validators
     QRegExpValidator* m_nameValidator;
     QRegExpValidator* m_branchValidator;
@@ -42,11 +39,6 @@ private:
 protected slots:
     void checkInput();
     void accept() override;
-
-    void reloadBranchList();
-
-    void fillInLicences(const std::vector<std::pair<std::string, std::string>>& licences);
-    void fillInBranches(const std::vector<std::string>& branches, const std::string& default_branch);
 };
 
 #endif

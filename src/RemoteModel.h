@@ -92,9 +92,8 @@ signals:
     void directoryListingParsed(QModelIndex parent);
 
 private slots:
-    // This is called whenever a network reply containing a directory listing arrives. json contains the reply data, userdata
-    // contains some custom data passed to the request. In this case we expect this to be the model index of the parent tree item.
-    void parseDirectoryListing(const QString& text, const QVariant& userdata);
+    // This is called whenever a network reply containing a directory listing arrives
+    void parseDirectoryListing(const QString& text, QModelIndex parent);
 
 private:
     // The header list is a list of column titles

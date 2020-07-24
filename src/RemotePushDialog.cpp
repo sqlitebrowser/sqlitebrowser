@@ -2,9 +2,13 @@
 #include <QUrlQuery>
 #include <QRegExpValidator>
 
+#include <json.hpp>
+
 #include "RemotePushDialog.h"
 #include "ui_RemotePushDialog.h"
 #include "RemoteNetwork.h"
+
+using json = nlohmann::json;
 
 RemotePushDialog::RemotePushDialog(QWidget* parent, const QString& host, const QString& clientCert,
                                    const QString& name, const QString& branch) :
@@ -12,7 +16,6 @@ RemotePushDialog::RemotePushDialog(QWidget* parent, const QString& host, const Q
     ui(new Ui::RemotePushDialog),
     m_host(host),
     m_clientCert(clientCert),
-    m_suggestedBranch(branch),
     m_nameValidator(new QRegExpValidator(QRegExp("^[a-z,A-Z,0-9,\\.,\\-,\\_,\\(,\\),\\+,\\ ]+$"), this)),
     m_branchValidator(new QRegExpValidator(QRegExp("^[a-z,A-Z,0-9,\\^,\\.,\\-,\\_,\\/,\\(,\\),\\:,\\&,\\ )]+$"), this))
 {
@@ -28,12 +31,58 @@ RemotePushDialog::RemotePushDialog(QWidget* parent, const QString& host, const Q
     checkInput();
 
     // Fetch list of available licences
-    connect(&RemoteNetwork::get(), &RemoteNetwork::gotLicenceList, this, &RemotePushDialog::fillInLicences);
-    RemoteNetwork::get().fetch(host + "licence/list", RemoteNetwork::RequestTypeLicenceList, clientCert);
+    RemoteNetwork::get().fetch(host + "licence/list", RemoteNetwork::RequestTypeCustom, clientCert, [this](const QByteArray& reply) {
+        // Clear licence list
+        ui->comboLicence->clear();
 
-    // Prepare fetching list of available branches
-    connect(&RemoteNetwork::get(), &RemoteNetwork::gotBranchList, this, &RemotePushDialog::fillInBranches);
-    reloadBranchList();
+        // Read and check results
+        json obj = json::parse(reply, nullptr, false);
+        if(obj.is_discarded() || !obj.is_object())
+            return;
+
+        // Parse data and build ordered licence map: order -> (short name, long name)
+        std::map<int, std::pair<std::string, std::string>> licences;
+        for(auto it=obj.cbegin();it!=obj.cend();++it)
+            licences.insert({it.value()["order"], {it.key(), it.value()["full_name"]}});
+
+        // Parse licence list and fill combo box. Show the full name to the user and use the short name as user data.
+        for(auto it=licences.begin();it!=licences.end();++it)
+            ui->comboLicence->addItem(QString::fromStdString(it->second.second), QString::fromStdString(it->second.first));
+    });
+
+    // Fetch list of exsisting branches
+    QUrl url(m_host + "branch/list");
+    QUrlQuery query;
+    query.addQueryItem("username", RemoteNetwork::get().getInfoFromClientCert(m_clientCert, RemoteNetwork::CertInfoUser));
+    query.addQueryItem("folder", "/");
+    query.addQueryItem("dbname", ui->editName->text());
+    url.setQuery(query);
+    RemoteNetwork::get().fetch(url.toString(), RemoteNetwork::RequestTypeCustom, m_clientCert, [this, branch](const QByteArray& reply) {
+        // Read and check results
+        json obj = json::parse(reply, nullptr, false);
+        if(obj.is_discarded() || !obj.is_object())
+            return;
+        json obj_branches = obj["branches"];
+
+        // Get default branch
+        std::string default_branch = (obj.contains("default_branch") && !obj["default_branch"].empty()) ? obj["default_branch"] : "master";
+
+        // Clear branch list and add the default branch
+        ui->comboBranch->clear();
+        ui->comboBranch->addItem(QString::fromStdString(default_branch));
+
+        // Parse data and assemble branch list
+        std::vector<std::string> branches;
+        for(auto it=obj_branches.cbegin();it!=obj_branches.cend();++it)
+        {
+            if(it.key() != default_branch)
+                ui->comboBranch->addItem(QString::fromStdString(it.key()));
+        }
+
+        // If a branch was suggested, select it now
+        if(!branch.isEmpty())
+            ui->comboBranch->setCurrentIndex(ui->comboBranch->findText(branch));
+    });
 }
 
 RemotePushDialog::~RemotePushDialog()
@@ -103,46 +152,4 @@ QString RemotePushDialog::branch() const
 bool RemotePushDialog::forcePush() const
 {
     return ui->checkForce->isChecked();
-}
-
-void RemotePushDialog::fillInLicences(const std::vector<std::pair<std::string, std::string>>& licences)
-{
-    // Clear licence list
-    ui->comboLicence->clear();
-
-    // Parse licence list and fill combo box. Show the full name to the user and use the short name as user data.
-    for(const auto& it : licences)
-        ui->comboLicence->addItem(QString::fromStdString(it.second), QString::fromStdString(it.first));
-}
-
-void RemotePushDialog::fillInBranches(const std::vector<std::string>& branches, const std::string& default_branch)
-{
-    // Clear branch list and add the default branch
-    ui->comboBranch->clear();
-    ui->comboBranch->addItem(QString::fromStdString(default_branch));
-
-    // Add rest of the branch list to the combo box
-    for(const std::string& branch : branches)
-    {
-        if(branch != default_branch)
-            ui->comboBranch->addItem(QString::fromStdString(branch));
-    }
-
-    // If a branch was suggested, select it now
-    if(!m_suggestedBranch.isEmpty())
-        ui->comboBranch->setCurrentIndex(ui->comboBranch->findText(m_suggestedBranch));
-}
-
-void RemotePushDialog::reloadBranchList()
-{
-    // Assemble query URL
-    QUrl url(m_host + "branch/list");
-    QUrlQuery query;
-    query.addQueryItem("username", RemoteNetwork::get().getInfoFromClientCert(m_clientCert, RemoteNetwork::CertInfoUser));
-    query.addQueryItem("folder", "/");
-    query.addQueryItem("dbname", ui->editName->text());
-    url.setQuery(query);
-
-    // Send request
-    RemoteNetwork::get().fetch(url.toString(), RemoteNetwork::RequestTypeBranchList, m_clientCert);
 }

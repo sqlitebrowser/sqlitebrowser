@@ -6,6 +6,8 @@
 #include <QUrl>
 #include <QUrlQuery>
 
+#include <json.hpp>
+
 #include "RemoteDock.h"
 #include "ui_RemoteDock.h"
 #include "Settings.h"
@@ -16,6 +18,8 @@
 #include "MainWindow.h"
 #include "RemotePushDialog.h"
 #include "PreferencesDialog.h"
+
+using json = nlohmann::json;
 
 RemoteDock::RemoteDock(MainWindow* parent)
     : QDialog(parent),
@@ -45,9 +49,6 @@ RemoteDock::RemoteDock(MainWindow* parent)
 
     // Whenever a new directory listing has been parsed, check if it was a new root dir and, if so, open the user's directory
     connect(remoteModel, &RemoteModel::directoryListingParsed, this, &RemoteDock::newDirectoryNode);
-
-    // Show metadata for a database when we get it
-    connect(&RemoteNetwork::get(), &RemoteNetwork::gotMetadata, this, &RemoteDock::showMetadata);
 
     // When the Preferences link is clicked in the no-certificates-label, open the preferences dialog. For other links than the ones we know,
     // just open them in a web browser
@@ -448,30 +449,33 @@ void RemoteDock::fileOpened(const QString& filename)
 
 void RemoteDock::refreshMetadata(const QString& username, const QString& dbname)
 {
+    // Make request for meta data
     QUrl url(RemoteNetwork::get().getInfoFromClientCert(remoteModel->currentClientCertificate(), RemoteNetwork::CertInfoServer) + "/metadata/get");
     QUrlQuery query;
     query.addQueryItem("username", username);
     query.addQueryItem("folder", "/");
     query.addQueryItem("dbname", dbname);
     url.setQuery(query);
-    RemoteNetwork::get().fetch(url.toString(), RemoteNetwork::RequestTypeMetadata, remoteModel->currentClientCertificate());
-}
+    RemoteNetwork::get().fetch(url.toString(), RemoteNetwork::RequestTypeCustom, remoteModel->currentClientCertificate(), [this](const QByteArray& reply) {
+        // Read and check results
+        json obj = json::parse(reply, nullptr, false);
+        if(obj.is_discarded() || !obj.is_object())
+            return;
 
-void RemoteDock::showMetadata(const std::vector<RemoteMetadataBranchInfo>& branches, const std::string& commits,
-                              const std::vector<RemoteMetadataReleaseInfo>& /*releases*/, const std::vector<RemoteMetadataReleaseInfo>& /*tags*/,
-                              const std::string& /*default_branch*/, const std::string& web_page)
-{
-    // Store all the commit information as-is
-    current_commit_json = commits;
+        // Store all the commit information as-is
+        json obj_commits = obj["commits"];
+        current_commit_json = obj_commits.dump();
 
-    // Store the link to the web page in the action for opening that link in a browser
-    ui->actionDatabaseOpenBrowser->setData(QString::fromStdString(web_page));
+        // Store the link to the web page in the action for opening that link in a browser
+        ui->actionDatabaseOpenBrowser->setData(QString::fromStdString(obj["web_page"]));
 
-    // Fill branches combo box
-    ui->comboDatabaseBranch->clear();
-    for(const auto& branch : branches)
-        ui->comboDatabaseBranch->addItem(QString::fromStdString(branch.name), QString::fromStdString(branch.commit_id));
-    ui->comboDatabaseBranch->setCurrentIndex(ui->comboDatabaseBranch->findText(ui->editDatabaseBranch->text()));
+        // Fill branches combo box
+        json obj_branches = obj["branches"];
+        ui->comboDatabaseBranch->clear();
+        for(auto it=obj_branches.cbegin();it!=obj_branches.cend();++it)
+            ui->comboDatabaseBranch->addItem(QString::fromStdString(it.key()), QString::fromStdString(it.value()["commit"]));
+        ui->comboDatabaseBranch->setCurrentIndex(ui->comboDatabaseBranch->findText(ui->editDatabaseBranch->text()));
+    });
 }
 
 void RemoteDock::deleteLocalDatabase(const QModelIndex& index)

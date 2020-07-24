@@ -96,10 +96,21 @@ void MainWindow::init()
 
     // Automatic update check
 #ifdef CHECKNEWVERSION
-    connect(&RemoteNetwork::get(), &RemoteNetwork::networkReady, []() {
+    connect(&RemoteNetwork::get(), &RemoteNetwork::networkReady, [this]() {
         // Check for a new version if automatic update check aren't disabled in the settings dialog
         if(Settings::getValue("checkversion", "enabled").toBool())
-            RemoteNetwork::get().fetch(QUrl("https://download.sqlitebrowser.org/currentrelease"), RemoteNetwork::RequestTypeNewVersionCheck);
+        {
+            RemoteNetwork::get().fetch(QUrl("https://download.sqlitebrowser.org/currentrelease"), RemoteNetwork::RequestTypeCustom,
+                                       QString(), QVariant(), [this](const QByteArray& reply) {
+                QList<QByteArray> info = reply.split('\n');
+                if(info.size() >= 2)
+                {
+                    QString version = info.at(0).trimmed();
+                    QString url = info.at(1).trimmed();
+                    checkNewVersion(version, url);
+                }
+            });
+        }
     });
 #endif
 
@@ -386,7 +397,6 @@ void MainWindow::init()
     connect(ui->dbTreeWidget->selectionModel(), &QItemSelectionModel::currentChanged, this, &MainWindow::changeTreeSelection);
     connect(ui->dockEdit, &QDockWidget::visibilityChanged, this, &MainWindow::toggleEditDock);
     connect(remoteDock, SIGNAL(openFile(QString)), this, SLOT(fileOpen(QString)));
-    connect(&RemoteNetwork::get(), &RemoteNetwork::gotCurrentVersion, this, &MainWindow::checkNewVersion);
     connect(ui->actionDropQualifiedCheck, &QAction::toggled, dbStructureModel, &DbStructureModel::setDropQualifiedNames);
     connect(ui->actionEnquoteNamesCheck, &QAction::toggled, dbStructureModel, &DbStructureModel::setDropEnquotedNames);
     connect(&db, &DBBrowserDB::databaseInUseChanged, this, &MainWindow::updateDatabaseBusyStatus);
