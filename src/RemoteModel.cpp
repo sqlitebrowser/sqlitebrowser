@@ -103,8 +103,6 @@ RemoteModel::RemoteModel(QObject* parent) :
     headerList({tr("Name"), tr("Last modified"), tr("Size"), tr("Commit")}),
     rootItem(new RemoteModelItem())
 {
-    // Set up signals
-    connect(&RemoteNetwork::get(), &RemoteNetwork::gotDirList, this, &RemoteModel::parseDirectoryListing);
 }
 
 RemoteModel::~RemoteModel()
@@ -128,10 +126,12 @@ void RemoteModel::setNewRootDir(const QString& url, const QString& cert)
 void RemoteModel::refresh()
 {
     // Fetch root directory and put the reply data under the root item
-    RemoteNetwork::get().fetch(currentRootDirectory, RemoteNetwork::RequestTypeDirectory, currentClientCert, QModelIndex());
+    RemoteNetwork::get().fetch(currentRootDirectory, RemoteNetwork::RequestTypeCustom, currentClientCert, [this](const QByteArray& reply) {
+        parseDirectoryListing(reply, QModelIndex());
+    });
 }
 
-void RemoteModel::parseDirectoryListing(const QString& text, const QVariant& userdata)
+void RemoteModel::parseDirectoryListing(const QString& text, QModelIndex parent)
 {
     // Load new JSON root document assuming it's an array
     json array = json::parse(text.toStdString(), nullptr, false);
@@ -139,7 +139,6 @@ void RemoteModel::parseDirectoryListing(const QString& text, const QVariant& use
         return;
 
     // Get model index to store the new data under
-    QModelIndex parent = userdata.toModelIndex();
     RemoteModelItem* parentItem = const_cast<RemoteModelItem*>(modelIndexToItem(parent));
 
     // An invalid model index indicates that this is a new root item. This means the old one needs to be entirely deleted first.
@@ -306,7 +305,9 @@ void RemoteModel::fetchMore(const QModelIndex& parent)
 
     // Fetch item URL
     item->setFetchedDirectoryList(true);
-    RemoteNetwork::get().fetch(item->value(RemoteModelColumnUrl).toUrl(), RemoteNetwork::RequestTypeDirectory, currentClientCert, parent);
+    RemoteNetwork::get().fetch(item->value(RemoteModelColumnUrl).toUrl(), RemoteNetwork::RequestTypeCustom, currentClientCert, [this, parent](const QByteArray& reply) {
+        parseDirectoryListing(reply, parent);
+    });
 }
 
 const QString& RemoteModel::currentClientCertificate() const

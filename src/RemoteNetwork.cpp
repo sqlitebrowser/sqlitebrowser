@@ -53,7 +53,6 @@ RemoteNetwork::RemoteNetwork() :
     reloadSettings();
 
     // Set up signals
-    connect(m_manager, &QNetworkAccessManager::finished, this, &RemoteNetwork::gotReply);
     connect(m_manager, &QNetworkAccessManager::encrypted, this, &RemoteNetwork::gotEncrypted);
     connect(m_manager, &QNetworkAccessManager::sslErrors, this, &RemoteNetwork::gotError);
 }
@@ -161,35 +160,6 @@ void RemoteNetwork::gotEncrypted(QNetworkReply* reply)
 
 void RemoteNetwork::gotReply(QNetworkReply* reply)
 {
-    // Check if request was successful
-    if(reply->error() != QNetworkReply::NoError)
-    {
-        // Do not show error message when operation was cancelled on purpose
-        if(reply->error() != QNetworkReply::OperationCanceledError)
-        {
-            QMessageBox::warning(nullptr, qApp->applicationName(),
-                                 reply->errorString() + "\n" + reply->readAll());
-        }
-
-        reply->deleteLater();
-        return;
-    }
-
-    // Check for redirect
-    QString redirectUrl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toString();
-    if(!redirectUrl.isEmpty())
-    {
-        // Avoid redirect loop
-        if(reply->url() == redirectUrl)
-        {
-            reply->deleteLater();
-            return;
-        }
-        fetch(redirectUrl, static_cast<RequestType>(reply->property("type").toInt()), reply->property("certfile").toString(), reply->property("userdata"));
-        reply->deleteLater();
-        return;
-    }
-
     // What type of data is this?
     RequestType type = static_cast<RequestType>(reply->property("type").toInt());
 
@@ -222,56 +192,6 @@ void RemoteNetwork::gotReply(QNetworkReply* reply)
                                reply);
         }
         break;
-    case RequestTypeDirectory:
-        emit gotDirList(reply->readAll(), reply->property("userdata"));
-        break;
-    case RequestTypeNewVersionCheck:
-        {
-            QString version = reply->readLine().trimmed();
-            QString url = reply->readLine().trimmed();
-            emit gotCurrentVersion(version, url);
-            break;
-        }
-    case RequestTypeLicenceList:
-        {
-            // Read and check results
-            json obj = json::parse(reply->readAll(), nullptr, false);
-            if(obj.is_discarded() || !obj.is_object())
-                break;
-
-            // Parse data and build ordered licence map: order -> (short name, long name)
-            std::map<int, std::pair<std::string, std::string>> licences;
-            for(auto it=obj.cbegin();it!=obj.cend();++it)
-                licences.insert({it.value()["order"], {it.key(), it.value()["full_name"]}});
-
-            // Convert the map into an ordered vector and send it to anyone who's interested
-            std::vector<std::pair<std::string, std::string>> licence_list;
-            std::transform(licences.begin(), licences.end(), std::back_inserter(licence_list), [](const std::pair<int, std::pair<std::string, std::string>>& it) {
-                return it.second;
-            });
-            emit gotLicenceList(licence_list);
-            break;
-        }
-    case RequestTypeBranchList:
-        {
-            // Read and check results
-            json obj = json::parse(reply->readAll(), nullptr, false);
-            if(obj.is_discarded() || !obj.is_object())
-                break;
-            json obj_branches = obj["branches"];
-
-            // Parse data and assemble branch list
-            std::vector<std::string> branches;
-            for(auto it=obj_branches.cbegin();it!=obj_branches.cend();++it)
-                branches.push_back(it.key());
-
-            // Get default branch
-            std::string default_branch = (obj.contains("default_branch") && !obj["default_branch"].empty()) ? obj["default_branch"] : "master";
-
-            // Send branch list to anyone who is interested
-            emit gotBranchList(branches, default_branch);
-            break;
-        }
     case RequestTypePush:
         {
             // Read and check results
@@ -286,41 +206,6 @@ void RemoteNetwork::gotReply(QNetworkReply* reply)
                               obj["commit_id"],
                               QUrlQuery(QUrl(QString::fromStdString(obj["url"]))).queryItemValue("branch").toStdString(),
                               reply->property("source_file").toString());
-            break;
-        }
-    case RequestTypeMetadata:
-        {
-            // Read and check results
-            json obj = json::parse(reply->readAll(), nullptr, false);
-            if(obj.is_discarded() || !obj.is_object())
-                break;
-
-            // Extract and convert data
-            json obj_branches = obj["branches"];
-            json obj_commits = obj["commits"];
-            json obj_releases = obj["releases"];
-            json obj_tags = obj["tags"];
-            std::string default_branch = (obj.contains("default_branch") && !obj["default_branch"].empty()) ? obj["default_branch"] : "master";
-            std::vector<RemoteMetadataBranchInfo> branches;
-            for(auto it=obj_branches.cbegin();it!=obj_branches.cend();++it)
-                branches.emplace_back(it.key(), it.value()["commit"], it.value()["description"], it.value()["commit_count"]);
-            std::vector<RemoteMetadataReleaseInfo> releases;
-            for(auto it=obj_releases.cbegin();it!=obj_releases.cend();++it)
-            {
-                releases.emplace_back(it.key(), it.value()["commit"], it.value()["date"],
-                        it.value()["description"], it.value()["email"],
-                        it.value()["name"], it.value()["size"]);
-            }
-            std::vector<RemoteMetadataReleaseInfo> tags;
-            for(auto it=obj_tags.cbegin();it!=obj_tags.cend();++it)
-            {
-                tags.emplace_back(it.key(), it.value()["commit"], it.value()["date"],
-                        it.value()["description"], it.value()["email"],
-                        it.value()["name"], 0);
-            }
-
-            // Send data list to anyone who is interested
-            emit gotMetadata(branches, obj_commits.dump(), releases, tags, default_branch, obj["web_page"]);
             break;
         }
     case RequestTypeDownload:
@@ -496,7 +381,8 @@ void RemoteNetwork::prepareProgressDialog(QNetworkReply* reply, bool upload, con
         connect(reply, &QNetworkReply::downloadProgress, this, &RemoteNetwork::updateProgress);
 }
 
-void RemoteNetwork::fetch(const QUrl& url, RequestType type, const QString& clientCert, QVariant userdata)
+void RemoteNetwork::fetch(const QUrl& url, RequestType type, const QString& clientCert,
+                          std::function<void(QByteArray)> when_finished)
 {
     // Check if network is accessible. If not, abort right here
     if(m_manager->networkAccessible() == QNetworkAccessManager::NotAccessible)
@@ -509,6 +395,9 @@ void RemoteNetwork::fetch(const QUrl& url, RequestType type, const QString& clie
     QNetworkRequest request;
     request.setUrl(url);
     request.setRawHeader("User-Agent", QString("%1 %2").arg(qApp->organizationName(), APP_VERSION).toUtf8());
+#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
+    request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
+#endif
 
     // Set SSL configuration when trying to access a file via the HTTPS protocol.
     // Skip this step when no client certificate was specified. In this case the default HTTPS configuration is used.
@@ -527,7 +416,20 @@ void RemoteNetwork::fetch(const QUrl& url, RequestType type, const QString& clie
     QNetworkReply* reply = m_manager->get(request);
     reply->setProperty("type", type);
     reply->setProperty("certfile", clientCert);
-    reply->setProperty("userdata", userdata);
+
+    // Hook up custom handler when there is one and global handler otherwise
+    if(when_finished)
+    {
+        connect(reply, &QNetworkReply::finished, reply, [this, when_finished, reply]() {
+            if(handleReply(reply))
+                when_finished(reply->readAll());
+        });
+    } else {
+        connect(reply, &QNetworkReply::finished, this, [this, reply]() {
+            if(handleReply(reply))
+                gotReply(reply);
+        });
+    }
 
     // Initialise the progress dialog for this request, but only if this is a database file or a download.
     // Directory listing and similar are small enough to be loaded without progress dialog.
@@ -632,4 +534,23 @@ void RemoteNetwork::clearAccessCache(const QString& clientCert)
         lastClientCert = clientCert;
         m_manager->clearAccessCache();
     }
+}
+
+bool RemoteNetwork::handleReply(QNetworkReply* reply)
+{
+    // Check if request was successful
+    if(reply->error() != QNetworkReply::NoError)
+    {
+        // Do not show error message when operation was cancelled on purpose
+        if(reply->error() != QNetworkReply::OperationCanceledError)
+        {
+            QMessageBox::warning(nullptr, qApp->applicationName(),
+                                 reply->errorString() + "\n" + reply->readAll());
+        }
+
+        reply->deleteLater();
+        return false;
+    }
+
+    return true;
 }
