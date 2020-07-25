@@ -5,6 +5,7 @@
 #include "sqlitedb.h"
 #include "Settings.h"
 #include "ExportDataDialog.h"
+#include "FilterTableHeader.h"
 
 #include <QInputDialog>
 #include <QMessageBox>
@@ -25,6 +26,7 @@ SqlExecutionArea::SqlExecutionArea(DBBrowserDB& _db, QWidget* parent) :
     model = new SqliteTableModel(db, this);
     ui->tableResult->setModel(model);
     connect(model, &SqliteTableModel::finishedFetch, this, &SqlExecutionArea::fetchedData);
+    connect(ui->tableResult->filterHeader(), &FilterTableHeader::sectionPressed, ui->tableResult, &QTableView::selectColumn);
 
     ui->findFrame->hide();
 
