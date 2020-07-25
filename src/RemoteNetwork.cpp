@@ -382,7 +382,7 @@ void RemoteNetwork::prepareProgressDialog(QNetworkReply* reply, bool upload, con
 }
 
 void RemoteNetwork::fetch(const QUrl& url, RequestType type, const QString& clientCert,
-                          std::function<void(QByteArray)> when_finished)
+                          std::function<void(QByteArray)> when_finished, bool synchronous)
 {
     // Check if network is accessible. If not, abort right here
     if(m_manager->networkAccessible() == QNetworkAccessManager::NotAccessible)
@@ -429,6 +429,14 @@ void RemoteNetwork::fetch(const QUrl& url, RequestType type, const QString& clie
             if(handleReply(reply))
                 gotReply(reply);
         });
+    }
+
+    // When the synchrounous flag is set we wait for the request to finish before continuing
+    if(synchronous)
+    {
+        QEventLoop loop;
+        connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+        loop.exec();
     }
 
     // Initialise the progress dialog for this request, but only if this is a database file or a download.

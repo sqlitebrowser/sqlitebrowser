@@ -46,7 +46,7 @@ public:
         RequestTypeDownload,
     };
 
-    void fetch(const QUrl& url, RequestType type, const QString& clientCert = QString(), std::function<void(QByteArray)> when_finished = {});
+    void fetch(const QUrl& url, RequestType type, const QString& clientCert = QString(), std::function<void(QByteArray)> when_finished = {}, bool synchronous = false);
     void push(const QString& filename, const QUrl& url, const QString& clientCert, const QString& remotename,
               const QString& commitMessage = QString(), const QString& licence = QString(), bool isPublic = false,
               const QString& branch = QString("master"), bool forcePush = false, const QString& last_commit = QString());

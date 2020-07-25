@@ -1,4 +1,5 @@
 #include <QClipboard>
+#include <QCryptographicHash>
 #include <QDesktopServices>
 #include <QFileInfo>
 #include <QInputDialog>
@@ -250,24 +251,39 @@ void RemoteDock::fetchDatabase(QString url_string, RemoteNetwork::RequestType re
         return;
     }
 
-    // Check if we already have a clone of this database branch. If so, show a warning because there might
-    // be unpushed changes. For this we don't care about the currently checked out commit id because for
-    // any commit local changes could be lost.
-    // TODO Detect local changes and don't warn when no changes were made
+    // Check if we already have a clone of this database branch and, if so, figure out its local file name.
+    // For this we do not care about the currently checked out commit id because we only have one file per
+    // database and branch on the disk.
     QUrl url_without_commit_id(url);
     QUrlQuery url_without_commit_id_query(url_without_commit_id);
     url_without_commit_id_query.removeQueryItem("commit");
     url_without_commit_id.setQuery(url_without_commit_id_query);
-    if(!remoteDatabase.localExists(url_without_commit_id, remoteModel->currentClientCertificate(), QUrlQuery(url).queryItemValue("branch").toStdString()).isEmpty())
+    QString local_file = remoteDatabase.localExists(url_without_commit_id, remoteModel->currentClientCertificate(), QUrlQuery(url).queryItemValue("branch").toStdString());
+    if(request_type == RemoteNetwork::RequestTypeDatabase && !local_file.isEmpty())
     {
-        if(QMessageBox::warning(nullptr,
-                                QApplication::applicationName(),
-                                tr("Fetching this commit might override local changes when you have not pushed them yet.\n"
-                                   "Are you sure you want to fetch it?"),
-                                QMessageBox::Yes | QMessageBox::Cancel,
-                                QMessageBox::Cancel) == QMessageBox::Cancel)
+        // If there is a local clone of this dtabase and branch, figure out if the local file has been modified
+
+        // For the user name, take the path, remove the database name and the initial slash
+        QString username = url.path().remove("/" + url.fileName()).mid(1);
+
+        // Get the last local commit id
+        std::string last_commit_id = remoteDatabase.localLastCommitId(remoteModel->currentClientCertificate(), url, QUrlQuery(url).queryItemValue("branch").toStdString());
+
+        // Check for modifications
+        bool modified = isLocalDatabaseModified(local_file, username, url.fileName(), remoteModel->currentClientCertificate(), last_commit_id);
+
+        // Only if the local file has been modified show a warning that checking out this commit overrides local changes
+        if(modified)
         {
-            return;
+            if(QMessageBox::warning(nullptr,
+                                    QApplication::applicationName(),
+                                    tr("You have modified the local clone of the database. Fetching this commit overrides these local changes.\n"
+                                       "Are you sure you want to proceed?"),
+                                    QMessageBox::Yes | QMessageBox::Cancel,
+                                    QMessageBox::Cancel) == QMessageBox::Cancel)
+            {
+                return;
+            }
         }
     }
 
@@ -571,4 +587,55 @@ void RemoteDock::fetchFinished(const QString& filename, const QString& identity,
 
     // Tell the application to open this file
     emit openFile(saveFileAs);
+}
+
+bool RemoteDock::isLocalDatabaseModified(const QString& local_file, const QString& username, const QString& dbname, const QString& identity, const std::string& commit_id)
+{
+    // Fetch metadata on database
+    QUrl url(RemoteNetwork::get().getInfoFromClientCert(identity, RemoteNetwork::CertInfoServer) + "/metadata/get");
+    QUrlQuery query;
+    query.addQueryItem("username", username);
+    query.addQueryItem("folder", "/");
+    query.addQueryItem("dbname", dbname);
+    url.setQuery(query);
+
+    bool modified = true;   // By default we assume the database has been modified
+    RemoteNetwork::get().fetch(url, RemoteNetwork::RequestTypeCustom, identity, [commit_id, dbname, local_file, &modified](const QByteArray& reply) {
+        // Read and check results
+        json obj = json::parse(reply, nullptr, false);
+        if(obj.is_discarded() || !obj.is_object())
+            return;
+
+        // Search tree entry for currently checked out commit
+        json tree = obj["commits"][commit_id]["tree"]["entries"];
+        for(auto it=tree.cbegin();it!=tree.cend();++it)
+        {
+            if(it.value()["entry_type"] == "db" && it.value()["name"] == dbname.toStdString())
+            {
+                // When we have found it, check if the current file matches the remote file by first checking if the
+                // file size is equal and then comparing their SHA256 hashes
+                if(QFileInfo(local_file).size() == it.value()["size"])
+                {
+                    QFile file(local_file);
+                    if(!file.open(QFile::ReadOnly))
+                        return;
+
+                    QCryptographicHash hash(QCryptographicHash::Sha256);
+                    hash.addData(&file);
+                    if(hash.result().toHex().toStdString() == it.value()["sha256"])
+                    {
+                        modified = false;
+                        return;
+                    } else {
+                        qWarning() << hash.result().toHex() << " - " << QString::fromStdString(it.value()["sha256"]);
+                        qWarning() << QString::fromStdString(tree.dump());
+                    }
+                }
+
+                break;
+            }
+        }
+    }, true);
+
+    return modified;
 }
