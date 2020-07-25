@@ -70,6 +70,8 @@ private:
 
     void refreshLocalFileList();
     void refreshMetadata(const QString& username, const QString& dbname);
+
+    bool isLocalDatabaseModified(const QString& local_file, const QString& username, const QString& dbname, const QString& identity, const std::string& commit_id);
 };
 
 #endif
