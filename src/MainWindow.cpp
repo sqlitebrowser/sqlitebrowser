@@ -132,7 +132,7 @@ void MainWindow::init()
         if(Settings::getValue("checkversion", "enabled").toBool())
         {
             RemoteNetwork::get().fetch(QUrl("https://download.sqlitebrowser.org/currentrelease"), RemoteNetwork::RequestTypeCustom,
-                                       QString(), QVariant(), [this](const QByteArray& reply) {
+                                       QString(), [this](const QByteArray& reply) {
                 QList<QByteArray> info = reply.split('\n');
                 if(info.size() >= 2)
                 {
