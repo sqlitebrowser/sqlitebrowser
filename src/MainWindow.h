@@ -115,6 +115,7 @@ private:
     bool closeProject();
     bool askSaveSqlTab(int index, bool& ignoreUnattachedBuffers);
     void focusSqlEditor();
+    void moveDocksTo(Qt::DockWidgetArea area);
 
 protected:
     void closeEvent(QCloseEvent *) override;
