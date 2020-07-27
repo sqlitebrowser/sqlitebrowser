@@ -608,13 +608,13 @@ bool RemoteDock::isLocalDatabaseModified(const QString& local_file, const QStrin
 
         // Search tree entry for currently checked out commit
         json tree = obj["commits"][commit_id]["tree"]["entries"];
-        for(auto it=tree.cbegin();it!=tree.cend();++it)
+        for(const auto& it : tree)
         {
-            if(it.value()["entry_type"] == "db" && it.value()["name"] == dbname.toStdString())
+            if(it["entry_type"] == "db" && it["name"] == dbname.toStdString())
             {
                 // When we have found it, check if the current file matches the remote file by first checking if the
                 // file size is equal and then comparing their SHA256 hashes
-                if(QFileInfo(local_file).size() == it.value()["size"])
+                if(QFileInfo(local_file).size() == it["size"])
                 {
                     QFile file(local_file);
                     if(!file.open(QFile::ReadOnly))
@@ -622,13 +622,10 @@ bool RemoteDock::isLocalDatabaseModified(const QString& local_file, const QStrin
 
                     QCryptographicHash hash(QCryptographicHash::Sha256);
                     hash.addData(&file);
-                    if(hash.result().toHex().toStdString() == it.value()["sha256"])
+                    if(hash.result().toHex().toStdString() == it["sha256"])
                     {
                         modified = false;
                         return;
-                    } else {
-                        qWarning() << hash.result().toHex() << " - " << QString::fromStdString(it.value()["sha256"]);
-                        qWarning() << QString::fromStdString(tree.dump());
                     }
                 }
 
