@@ -10,7 +10,7 @@ RemoteCommitsModel::RemoteCommitsModel(QObject* parent) :
     QAbstractItemModel(parent)
 {
     QStringList header;
-    header << tr("Commit ID") << tr("Message") << tr("Date") << tr("Author");
+    header << tr("Commit ID") << tr("Message") << tr("Date") << tr("Author") << tr("Size");
     rootItem = new QTreeWidgetItem(header);
 }
 
@@ -54,8 +54,26 @@ void RemoteCommitsModel::refresh(const std::string& json_data, const std::string
         QTreeWidgetItem* item = new QTreeWidgetItem(rootItem);
         item->setText(ColumnCommitId, QString::fromStdString(commit["id"]));
         item->setText(ColumnMessage, QString::fromStdString(commit["message"]));
+        item->setToolTip(ColumnMessage, QString::fromStdString(commit["message"]));
+
         item->setText(ColumnDate, isoDateTimeStringToLocalDateTimeString(QString::fromStdString(commit["timestamp"])));
-        item->setText(ColumnAuthor, QString::fromStdString(commit["author_name"]) + " <" + QString::fromStdString(commit["author_email"]) + ">");
+
+        QString authored_by = QString::fromStdString(commit["author_name"]) + " <" + QString::fromStdString(commit["author_email"]) + ">";
+        QString committed_by = QString::fromStdString(commit["committer_name"]) + " <" + QString::fromStdString(commit["committer_email"]) + ">";
+        item->setText(ColumnAuthor, authored_by);
+        if(committed_by == " <>" || authored_by == committed_by)    // The first check effectively checks for no committer details
+            item->setToolTip(ColumnAuthor, tr("Authored and committed by %1").arg(authored_by));
+        else
+            item->setToolTip(ColumnAuthor, tr("Authored by %1, committed by %2").arg(authored_by, committed_by));
+
+        for(const auto& e : commit["tree"]["entries"])
+        {
+            if(e["entry_type"] == "db")
+            {
+                item->setText(ColumnSize, humanReadableSize(e["size"]));
+                break;
+            }
+        }
 
         // Make the currently checked out commit id bold
         if(current_commit_id == commit["id"])
@@ -118,6 +136,8 @@ QVariant RemoteCommitsModel::data(const QModelIndex& index, int role) const
     case Qt::DisplayRole:
     case Qt::EditRole:
         return item->text(index.column());
+    case Qt::ToolTipRole:
+        return item->toolTip(index.column());
     case Qt::FontRole:
         return item->font(0);   // Choose font for the entire row depending on the first column
     default:

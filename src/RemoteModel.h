@@ -15,6 +15,12 @@ enum RemoteModelColumns
     RemoteModelColumnCommitId,
     RemoteModelColumnSize,
     RemoteModelColumnLastModified,
+    RemoteModelColumnDefaultBranch,
+    RemoteModelColumnLicence,
+    RemoteModelColumnOneLineDescription,
+    RemoteModelColumnPublic,
+    RemoteModelColumnRepoModified,
+    RemoteModelColumnSha256,
 
     RemoteModelColumnCount
 };

@@ -81,16 +81,22 @@ std::vector<RemoteModelItem*> RemoteModelItem::loadArray(const json& array, Remo
         // Create a new model item with the specified parent
         RemoteModelItem* item = new RemoteModelItem(parent);
 
-        // Save all relevant values. If one of the values isn't set in the JSON document, an empty string
-        // will be stored
+        // Save all relevant values. Some of the values are only available for databases.
         item->setValue(RemoteModelColumnName, QString::fromStdString(elem["name"]));
         item->setValue(RemoteModelColumnType, QString::fromStdString(elem["type"]));
         item->setValue(RemoteModelColumnUrl, QString::fromStdString(elem["url"]));
         item->setValue(RemoteModelColumnLastModified, isoDateTimeStringToLocalDateTimeString(QString::fromStdString(elem["last_modified"])));
-        if(elem.contains("commit_id"))
+        if(item->value(RemoteModelColumnType).toString() == "database")
+        {
             item->setValue(RemoteModelColumnCommitId, QString::fromStdString(elem["commit_id"]));
-        if(elem.contains("size"))
             item->setValue(RemoteModelColumnSize, QString::number(static_cast<unsigned long>(elem["size"])));
+            item->setValue(RemoteModelColumnDefaultBranch, QString::fromStdString(elem["default_branch"]));
+            item->setValue(RemoteModelColumnLicence, QString::fromStdString(elem["licence"]));
+            item->setValue(RemoteModelColumnOneLineDescription, QString::fromStdString(elem["one_line_description"]));
+            item->setValue(RemoteModelColumnPublic, static_cast<bool>(elem["public"]));
+            item->setValue(RemoteModelColumnSha256, QString::fromStdString(elem["sha256"]));
+            item->setValue(RemoteModelColumnRepoModified, isoDateTimeStringToLocalDateTimeString(QString::fromStdString(elem["repo_modified"])));
+        }
 
         items.push_back(item);
     }
@@ -214,6 +220,20 @@ QVariant RemoteModel::data(const QModelIndex& index, int role) const
             return QImage(":/icons/folder");
         else if(type == "database")
             return QImage(":/icons/database");
+    } else if(role == Qt::ToolTipRole) {
+        if(type == "database")
+        {
+            // Use URL to generate user name and database name. This avoids using the name of the parent item which
+            // might not contain the user name when the server sends a different directory structure.
+            QString result = "<b>" + item->value(RemoteModelColumnUrl).toUrl().path().mid(1) + "</b>";
+            if(!item->value(RemoteModelColumnOneLineDescription).toString().isEmpty())
+                result += "<br />" + item->value(RemoteModelColumnOneLineDescription).toString();
+            result += "<br />" + tr("Size: ") + humanReadableSize(item->value(RemoteModelColumnSize).toULongLong());
+            result += "<br />" + tr("Last Modified: ") + item->value(RemoteModelColumnLastModified).toString();
+            result += "<br />" + tr("Licence: ") + item->value(RemoteModelColumnLicence).toString();
+            result += "<br />" + tr("Default Branch: ") + item->value(RemoteModelColumnDefaultBranch).toString();
+            return result;
+        }
     } else if(role == Qt::DisplayRole) {
         // Display role?
 

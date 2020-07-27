@@ -33,6 +33,7 @@ public:
         ColumnMessage,
         ColumnDate,
         ColumnAuthor,
+        ColumnSize,
     };
 
 private:
