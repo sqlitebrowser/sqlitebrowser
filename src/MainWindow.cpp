@@ -233,7 +233,7 @@ void MainWindow::init()
     for(int i = 0; i < MaxRecentFiles; ++i)
         ui->fileRecentFiles->insertAction(ui->fileExitAction, recentFileActs[i]);
 
-    QAction *clearRecentFilesAction = ui->fileRecentFiles->addAction(tr("Clear Menu"));
+    QAction *clearRecentFilesAction = ui->fileRecentFiles->addAction(tr("Clear List"));
     ui->fileRecentFiles->insertAction(ui->fileExitAction, clearRecentFilesAction);
     connect(clearRecentFilesAction, &QAction::triggered, this, &MainWindow::clearRecentFiles);
 
