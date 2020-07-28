@@ -489,6 +489,14 @@ QColor Settings::getDefaultColorValue(const std::string& group, const std::strin
     return QColor();
 }
 
+void Settings::clearRecentFiles ()
+{
+  QSettings settings(QApplication::organizationName(), QApplication::organizationName());
+  settings.beginGroup("General");
+  settings.remove("recentFileList");
+  settings.endGroup();
+}
+
 void Settings::restoreDefaults ()
 {
     QSettings settings(QApplication::organizationName(), QApplication::organizationName());
