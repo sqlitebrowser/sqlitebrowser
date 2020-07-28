@@ -16,6 +16,7 @@ public:
     };
     static QVariant getValue(const std::string& group, const std::string& name);
     static void setValue(const std::string& group, const std::string& name, const QVariant& value, bool dont_save_to_disk = false);
+    static void clearRecentFiles();
     static void restoreDefaults();
 
     static void rememberDefaultFontSize(int size) { m_defaultFontSize = size; }
