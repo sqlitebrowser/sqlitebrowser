@@ -82,7 +82,6 @@ private:
 
     static const int MaxRecentFiles = 5;
     QAction *recentFileActs[MaxRecentFiles];
-    QAction *recentSeparatorAct;
 
     EditDialog* editDock;
     PlotDock* plotDock;
@@ -101,6 +100,7 @@ private:
     void clearCompleterModelsFields();
 
     void updateRecentFileActions();
+    void clearRecentFiles();
     void setCurrentFile(const QString& fileName);
     void addToRecentFilesMenu(const QString& filename, bool read_only = false);
     void activateFields(bool enable = true);
