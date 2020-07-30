@@ -523,6 +523,7 @@ if(WIN32 AND MSVC)
 			${QT5_BIN_PATH}/Qt5PrintSupportd.dll
 			${QT5_BIN_PATH}/Qt5Widgetsd.dll
 			${QT5_BIN_PATH}/Qt5Concurrentd.dll
+			${QT5_BIN_PATH}/Qt5Svgd.dll
 		DESTINATION "/"
 		CONFIGURATIONS Debug)
 	# The Qt5 Release configuration files don't have a postfix
@@ -533,6 +534,7 @@ if(WIN32 AND MSVC)
 			${QT5_BIN_PATH}/Qt5PrintSupport.dll
 			${QT5_BIN_PATH}/Qt5Widgets.dll
 			${QT5_BIN_PATH}/Qt5Concurrent.dll
+			${QT5_BIN_PATH}/Qt5Svg.dll
 		DESTINATION "/"
 		CONFIGURATIONS Release)
 	# The files below are common to all configurations
