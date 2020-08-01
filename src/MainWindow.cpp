@@ -3438,8 +3438,8 @@ void MainWindow::moveDocksTo(Qt::DockWidgetArea area)
 
 void MainWindow::clearRecentFiles()
 {
-  Settings::clearValue("General", "recentFileList");
+    Settings::clearValue("General", "recentFileList");
 
-  for (int i =0; i < MaxRecentFiles; ++i) 
-    ui->fileRecentFiles->removeAction(recentFileActs[i]);
+    for(int i=0; i < MaxRecentFiles; ++i)
+        recentFileActs[i]->setVisible(false);
 }
