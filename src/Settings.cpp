@@ -495,6 +495,7 @@ void Settings::clearValue(const std::string& group, const std::string& name)
     settings.beginGroup(QString::fromStdString(group));
     settings.remove(QString::fromStdString(name));
     settings.endGroup();
+    m_hCache.clear();
 }
 
 void Settings::restoreDefaults ()
