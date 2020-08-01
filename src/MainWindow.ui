@@ -174,8 +174,8 @@ You can drag SQL statements from an object row and drop them into other applicat
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>641</width>
-             <height>544</height>
+             <width>639</width>
+             <height>574</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -744,7 +744,7 @@ You can drag SQL statements from an object row and drop them into other applicat
      <x>0</x>
      <y>0</y>
      <width>1037</width>
-     <height>23</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -766,11 +766,17 @@ You can drag SQL statements from an object row and drop them into other applicat
      <addaction name="fileExportCSVAction"/>
      <addaction name="fileExportJsonAction"/>
     </widget>
+    <widget class="QMenu" name="fileRecentFiles">
+     <property name="title">
+      <string>Recent Files</string>
+     </property>
+    </widget>
     <addaction name="fileNewAction"/>
     <addaction name="fileNewInMemoryDatabaseAction"/>
     <addaction name="fileOpenAction"/>
     <addaction name="fileOpenReadOnlyAction"/>
     <addaction name="fileAttachAction"/>
+    <addaction name="fileRecentFiles"/>
     <addaction name="fileCloseAction"/>
     <addaction name="separator"/>
     <addaction name="fileSaveAction"/>

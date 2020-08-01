@@ -231,8 +231,11 @@ void MainWindow::init()
         connect(recentFileActs[i], &QAction::triggered, this, &MainWindow::openRecentFile);
     }
     for(int i = 0; i < MaxRecentFiles; ++i)
-        ui->fileMenu->insertAction(ui->fileExitAction, recentFileActs[i]);
-    recentSeparatorAct = ui->fileMenu->insertSeparator(ui->fileExitAction);
+        ui->fileRecentFiles->insertAction(ui->fileExitAction, recentFileActs[i]);
+
+    QAction *clearRecentFilesAction = ui->fileRecentFiles->addAction(tr("Clear List"));
+    ui->fileRecentFiles->insertAction(ui->fileExitAction, clearRecentFilesAction);
+    connect(clearRecentFilesAction, &QAction::triggered, this, &MainWindow::clearRecentFiles);
 
     // Create popup menus
     popupTableMenu = new QMenu(this);
@@ -1624,8 +1627,6 @@ void MainWindow::updateRecentFileActions()
     }
     for (int j = numRecentFiles; j < MaxRecentFiles; ++j)
         recentFileActs[j]->setVisible(false);
-
-    recentSeparatorAct->setVisible(numRecentFiles > 0);
 }
 
 void MainWindow::setCurrentFile(const QString &fileName)
@@ -3433,4 +3434,12 @@ void MainWindow::moveDocksTo(Qt::DockWidgetArea area)
     tabifyDockWidget(ui->dockLog, ui->dockPlot);
     tabifyDockWidget(ui->dockLog, ui->dockSchema);
     tabifyDockWidget(ui->dockLog, ui->dockRemote);
+}
+
+void MainWindow::clearRecentFiles()
+{
+    Settings::clearValue("General", "recentFileList");
+
+    for(int i=0; i < MaxRecentFiles; ++i)
+        recentFileActs[i]->setVisible(false);
 }

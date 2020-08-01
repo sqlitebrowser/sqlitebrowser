@@ -489,6 +489,15 @@ QColor Settings::getDefaultColorValue(const std::string& group, const std::strin
     return QColor();
 }
 
+void Settings::clearValue(const std::string& group, const std::string& name)
+{
+    QSettings settings(QApplication::organizationName(), QApplication::organizationName());
+    settings.beginGroup(QString::fromStdString(group));
+    settings.remove(QString::fromStdString(name));
+    settings.endGroup();
+    m_hCache.clear();
+}
+
 void Settings::restoreDefaults ()
 {
     QSettings settings(QApplication::organizationName(), QApplication::organizationName());
