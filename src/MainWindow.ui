@@ -788,6 +788,7 @@ You can drag SQL statements from an object row and drop them into other applicat
     <addaction name="actionOpenProject"/>
     <addaction name="actionSaveProject"/>
     <addaction name="actionSaveProjectAs"/>
+    <addaction name="actionCloseProject"/>
     <addaction name="separator"/>
     <addaction name="actionSaveAll"/>
     <addaction name="separator"/>
@@ -2174,6 +2175,17 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    </property>
    <property name="text">
     <string>Browse Table</string>
+   </property>
+  </action>
+  <action name="actionCloseProject">
+   <property name="text">
+    <string>Close Pro&amp;ject</string>
+   </property>
+   <property name="toolTip">
+    <string>Close project and database files and return to the initial state</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+F4</string>
    </property>
   </action>
  </widget>
@@ -3569,6 +3581,22 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <hint type="destinationlabel">
      <x>20</x>
      <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionCloseProject</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>closeFiles()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
     </hint>
    </hints>
   </connection>

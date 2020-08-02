@@ -111,7 +111,6 @@ private:
     void restoreOpenTabs(QString tabs);
     QString saveOpenTabs();
     void saveProject(const QString& currentFilename);
-    bool closeFiles();
     bool closeProject();
     bool askSaveSqlTab(int index, bool& ignoreUnattachedBuffers);
     void focusSqlEditor();
@@ -131,6 +130,7 @@ public slots:
     void switchToBrowseDataTab(sqlb::ObjectIdentifier tableToBrowse = sqlb::ObjectIdentifier());
     void populateStructure(const QString& old_table = QString());
     void reloadSettings();
+    bool closeFiles();
 
 private slots:
     void createTreeContextMenu(const QPoint & qPoint);
@@ -165,7 +165,7 @@ private slots:
     void savePragmas();
     void mainTabSelected( int tabindex );
     int openSqlTab(bool resetCounter = false);
-    void closeSqlTab(int index, bool force = false);
+    void closeSqlTab(int index, bool force = false, bool askSaving = true);
     void changeSqlTab(int index);
     void openSqlFile();
     void saveSqlFile();

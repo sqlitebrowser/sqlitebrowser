@@ -519,16 +519,17 @@ bool MainWindow::fileOpen(const QString& fileName, bool openFromProject, bool re
     // catch situation where user has canceled file selection from dialog
     if(!wFile.isEmpty() && QFile::exists(wFile) )
     {
-        // Close the database. If the user didn't want to close it, though, stop here
-        if (db.isOpen())
-            if(!fileClose())
-                return false;
-
-        // Try opening it as a project file first
+        // Try opening it as a project file first. If confirmed, this will include closing current
+        // database and project files.
         if(loadProject(wFile, readOnly))
         {
             retval = true;
         } else {
+            // Close the database. If the user didn't want to close it, though, stop here
+            if (db.isOpen())
+                if(!fileClose())
+                    return false;
+
             // No project file; so it should be a database file
             if(db.open(wFile, readOnly))
             {
@@ -743,10 +744,17 @@ bool MainWindow::closeFiles()
 {
     bool ignoreUnattachedBuffers = false;
     // Ask for saving all modified open SQL files in their files and all the unattached tabs in a project file.
-    for(int i=0; i<ui->tabSqlAreas->count(); i++)
+    for(int i=0; i<ui->tabSqlAreas->count(); i++) {
         // Ask for saving and comply with cancel answer.
         if(!askSaveSqlTab(i, ignoreUnattachedBuffers))
             return false;
+    }
+
+    // Now all tabs can be closed at once without asking user.
+    // Close tabs in reverse order (so indexes are not changed in the process).
+    for(int i=ui->tabSqlAreas->count()-1; i>=0; i--)
+        closeSqlTab(i, /* force */ true, /* askSaving */ false);
+
     return closeProject();
 }
 
@@ -770,7 +778,7 @@ bool MainWindow::closeProject()
         }
     }
     currentProjectFilename.clear();
-    return db.close();
+    return fileClose();
 }
 
 void MainWindow::attachPlot(ExtendedTableWidget* tableWidget, SqliteTableModel* model, BrowseDataTableSettings* settings, bool keepOrResetSelection)
@@ -1914,14 +1922,15 @@ bool MainWindow::askSaveSqlTab(int index, bool& ignoreUnattachedBuffers)
     return true;
 }
 
-void MainWindow::closeSqlTab(int index, bool force)
+void MainWindow::closeSqlTab(int index, bool force, bool askSaving)
 {
     // Check if we're still executing statements from this tab and stop them before proceeding
     if(ui->tabSqlAreas->tabBar()->tabData(index).toBool())
     {
-        if(QMessageBox::warning(this, qApp->applicationName(), tr("The statements in this tab are still executing. Closing the tab will stop the "
-                                                                  "execution. This might leave the database in an inconsistent state. Are you sure "
-                                                                  "you want to close the tab?"),
+        if(QMessageBox::warning(this, qApp->applicationName(),
+                                tr("The statements in the tab '%1' are still executing. Closing the tab will stop the "
+                                   "execution. This might leave the database in an inconsistent state. Are you sure "
+                                   "you want to close the tab?").arg(ui->tabSqlAreas->tabBar()->tabText(index)),
                                 QMessageBox::Yes,
                                 QMessageBox::Cancel | QMessageBox::Default | QMessageBox::Escape) == QMessageBox::Cancel)
             return;
@@ -1931,7 +1940,7 @@ void MainWindow::closeSqlTab(int index, bool force)
     }
     // Ask for saving and comply with cancel answer.
     bool ignoreUnattachedBuffers = false;
-    if (!askSaveSqlTab(index, ignoreUnattachedBuffers))
+    if (askSaving && !askSaveSqlTab(index, ignoreUnattachedBuffers))
         return;
     // Remove the tab and delete the widget
     QWidget* w = ui->tabSqlAreas->widget(index);
@@ -2462,7 +2471,7 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
 
         // We are going to open a new project, so close the possible current one before opening another.
         // Stop the opening process here if the user pressed the cancel button in there.
-        if(!closeProject())
+        if(!closeFiles())
             return false;
 
         addToRecentFilesMenu(filename, readOnly);
