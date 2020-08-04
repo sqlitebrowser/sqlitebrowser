@@ -128,7 +128,7 @@ public slots:
     void dbState(bool dirty);
     void refresh();
     void switchToBrowseDataTab(sqlb::ObjectIdentifier tableToBrowse = sqlb::ObjectIdentifier());
-    void populateStructure(const QString& old_table = QString());
+    void populateStructure(const sqlb::ObjectIdentifier& old_table = sqlb::ObjectIdentifier{});
     void reloadSettings();
     bool closeFiles();
 

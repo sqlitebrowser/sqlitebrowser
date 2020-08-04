@@ -65,7 +65,7 @@ public:
     BrowseDataTableSettings& settings(const sqlb::ObjectIdentifier& object);
     void setSettings(const sqlb::ObjectIdentifier& table, const BrowseDataTableSettings& table_settings);
 
-    void setStructure(QAbstractItemModel* model, const QString& old_table = QString());
+    void setStructure(QAbstractItemModel* model, const sqlb::ObjectIdentifier& old_table = sqlb::ObjectIdentifier{});
 
     SqliteTableModel* model() { return m_model; }
 

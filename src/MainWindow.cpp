@@ -144,7 +144,7 @@ void MainWindow::init()
     // Set up DB structure tab
     dbStructureModel = new DbStructureModel(db, this);
     connect(&db, &DBBrowserDB::structureUpdated, this, [this]() {
-        QString old_table = QString::fromStdString(ui->tableBrowser->currentlyBrowsedTableName().name());
+        sqlb::ObjectIdentifier old_table = ui->tableBrowser->currentlyBrowsedTableName();
         dbStructureModel->reloadData();
         populateStructure(old_table);
     });
@@ -612,7 +612,7 @@ void MainWindow::fileNewInMemoryDatabase()
     createTable();
 }
 
-void MainWindow::populateStructure(const QString& old_table)
+void MainWindow::populateStructure(const sqlb::ObjectIdentifier& old_table)
 {
     // Refresh the structure tab
     ui->dbTreeWidget->setRootIndex(dbStructureModel->index(1, 0));      // Show the 'All' part of the db structure
