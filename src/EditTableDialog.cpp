@@ -17,6 +17,15 @@
 
 Q_DECLARE_METATYPE(sqlb::ConstraintPtr)
 
+// Styled Item Delegate for non-editable columns
+class NoEditDelegate: public QStyledItemDelegate {
+public:
+    explicit NoEditDelegate(QObject* parent=nullptr): QStyledItemDelegate(parent) {}
+    QWidget* createEditor(QWidget* /* parent */, const QStyleOptionViewItem& /* option */, const QModelIndex& /* index */) const override {
+        return nullptr;
+    }
+};
+
 EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& tableName, bool createTable, QWidget* parent)
     : QDialog(parent),
       ui(new Ui::EditTableDialog),
@@ -35,6 +44,13 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
     // Set item delegate for foreign key column
     m_fkEditorDelegate = new ForeignKeyEditorDelegate(db, m_table, this);
     ui->treeWidget->setItemDelegateForColumn(kForeignKey, m_fkEditorDelegate);
+    // Disallow edition of checkable columns or columns with combo-boxes
+    ui->treeWidget->setItemDelegateForColumn(kType, new NoEditDelegate(this));
+    ui->treeWidget->setItemDelegateForColumn(kNotNull, new NoEditDelegate(this));
+    ui->treeWidget->setItemDelegateForColumn(kPrimaryKey, new NoEditDelegate(this));
+    ui->treeWidget->setItemDelegateForColumn(kAutoIncrement, new NoEditDelegate(this));
+    ui->treeWidget->setItemDelegateForColumn(kUnique, new NoEditDelegate(this));
+    ui->treeWidget->setItemDelegateForColumn(kCollation, new NoEditDelegate(this));
 
     // Set up popup menu for adding constraints
     QMenu* constraint_menu = new QMenu(this);
@@ -207,6 +223,7 @@ void EditTableDialog::populateFields()
         typeBox->setCurrentIndex(index);
         typeBox->installEventFilter(this);
         connect(typeBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateTypeAndCollation()));
+
         ui->treeWidget->setItemWidget(tbitem, kType, typeBox);
 
         tbitem->setCheckState(kNotNull, f.notnull() ? Qt::Checked : Qt::Unchecked);
@@ -353,7 +370,7 @@ void EditTableDialog::accept()
 }
 
 void EditTableDialog::reject()
-{    
+{
     // Then rollback to our savepoint
     pdb.revertToSavepoint(m_sRestorePointName);
 
@@ -880,6 +897,7 @@ void EditTableDialog::moveBottom()
 void EditTableDialog::moveCurrentField(MoveFieldDirection dir)
 {
     int currentRow = ui->treeWidget->currentIndex().row();
+    int currentCol = ui->treeWidget->currentIndex().column();
     int newRow;
     if(dir == MoveUp)
         newRow = currentRow - 1;
@@ -916,7 +934,7 @@ void EditTableDialog::moveCurrentField(MoveFieldDirection dir)
     ui->treeWidget->setItemWidget(item, kCollation, newCombo[1]);
 
     // Select the old item at its new position
-    ui->treeWidget->setCurrentIndex(ui->treeWidget->currentIndex().sibling(newRow, 0));
+    ui->treeWidget->setCurrentIndex(ui->treeWidget->currentIndex().sibling(newRow, currentCol));
 
     // Finally update the table SQL
     sqlb::Field temp = m_table.fields[static_cast<size_t>(currentRow)];
