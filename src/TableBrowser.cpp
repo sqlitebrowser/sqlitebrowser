@@ -629,7 +629,9 @@ void TableBrowser::modifyFormat(std::function<void(CondFormat&)> changeFunction)
     const std::unordered_set<size_t>& columns = ui->dataTable->selectedCols();
     if (columns.size() > 0) {
         for (size_t column : columns) {
-            const QString& filter = m_settings[currentlyBrowsedTableName()].filterValues.at(column);
+            QString filter;
+            if (m_settings[currentlyBrowsedTableName()].filterValues.count(column) > 0)
+                filter = m_settings[currentlyBrowsedTableName()].filterValues.at(column);
             modifySingleFormat(false, filter, currentIndex().sibling(currentIndex().row(), static_cast<int>(column)), changeFunction);
         }
     } else {
