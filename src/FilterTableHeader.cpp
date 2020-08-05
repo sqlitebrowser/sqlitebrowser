@@ -128,3 +128,13 @@ void FilterTableHeader::setFilter(size_t column, const QString& value)
     if(column < filterWidgets.size())
         filterWidgets.at(column)->setText(value);
 }
+
+void FilterTableHeader::setFiltersVisible(bool visible)
+{
+    // Loop through all widgets
+    for(size_t i=0; i < filterWidgets.size(); ++i)
+    {
+        // Get the current widget, and set it visible or not
+        filterWidgets.at(i)->setVisible(visible);
+    }
+}

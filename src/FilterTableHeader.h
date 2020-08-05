@@ -15,6 +15,7 @@ public:
     explicit FilterTableHeader(QTableView* parent = nullptr);
     QSize sizeHint() const override;
     bool hasFilters() const {return (filterWidgets.size() > 0);}
+    void setFiltersVisible(bool visible);
     
 public slots:
     void generateFilters(size_t number, bool showFirst = false);

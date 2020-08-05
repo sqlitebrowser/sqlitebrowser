@@ -689,6 +689,10 @@ void TableBrowser::updateRecordsetLabel()
                     (obj->type() == sqlb::Object::Table));
     }
     enableEditing(m_model->rowCountAvailable() != SqliteTableModel::RowCount::Unknown && is_table_or_unlocked_view);
+
+    // Show filters unless the table is empty
+    const bool filtersVisible = m_model->rowCount() > 0 || m_model->filterCount() != 0;
+    qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader())->setFiltersVisible(filtersVisible);
 }
 
 sqlb::Query TableBrowser::buildQuery(const BrowseDataTableSettings& storedData, const sqlb::ObjectIdentifier& tablename) const
@@ -1198,6 +1202,7 @@ void TableBrowser::addRecord()
         // User has to provide values acomplishing the constraints. Open Add Record Dialog.
         insertValues();
     }
+    updateRecordsetLabel();
 }
 
 void TableBrowser::insertValues()
@@ -1235,6 +1240,7 @@ void TableBrowser::deleteRecord()
     } else {
         QMessageBox::information( this, QApplication::applicationName(), tr("Please select a record first"));
     }
+    updateRecordsetLabel();
 }
 
 void TableBrowser::navigatePrevious()
