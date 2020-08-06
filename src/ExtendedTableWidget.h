@@ -81,6 +81,7 @@ private:
     void copyMimeData(const QModelIndexList& fromIndices, QMimeData* mimeData, const bool withHeaders, const bool inSQL);
     void copy(const bool withHeaders, const bool inSQL);
     void paste();
+    void cut();
 
     void useAsFilter(const QString& filterOperator, bool binary = false, const QString& operatorSuffix = QString());
     void duplicateUpperCell();
