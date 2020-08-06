@@ -260,6 +260,9 @@
           <property name="editTriggers">
            <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed|QAbstractItemView::SelectedClicked</set>
           </property>
+          <property name="alternatingRowColors">
+           <bool>true</bool>
+          </property>
           <property name="selectionBehavior">
            <enum>QAbstractItemView::SelectItems</enum>
           </property>
@@ -405,6 +408,9 @@
         </item>
         <item>
          <widget class="QTableWidget" name="tableConstraints">
+          <property name="alternatingRowColors">
+           <bool>true</bool>
+          </property>
           <property name="horizontalScrollMode">
            <enum>QAbstractItemView::ScrollPerPixel</enum>
           </property>
