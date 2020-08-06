@@ -737,10 +737,10 @@ void ExtendedTableWidget::cut()
         for(const QModelIndex& index : indices) {
             // Do not process rowid column
             if(index.column() != 0) {
-                size_t indexField = static_cast<size_t>(index.column()-1);
+                const size_t indexField = static_cast<size_t>(index.column()-1);
                 const sqlb::Field& field = currentTable->fields.at(indexField);
                 const QVariant newValue = field.notnull() ? QVariant("") : QVariant();
-                // Update aborting in case of any error (to avoid repetitive errors like "Database is locked"
+                // Update aborting in case of any error (to avoid repetitive errors like "Database is locked")
                 if(!model()->setData(index, newValue))
                     return;
             }
@@ -1097,17 +1097,24 @@ void ExtendedTableWidget::setToNull(const QModelIndexList& indices)
     sqlb::TablePtr currentTable = m->db().getObjectByName<sqlb::Table>(m->currentTableName());
 
     // Check if some column in the selection has a NOT NULL constraint, before trying to update the cells.
-    if(currentTable)
+    if(currentTable) {
         for(const QModelIndex& index : indices) {
-            const sqlb::Field& field = currentTable->fields.at(static_cast<size_t>(index.column())-1);
-            if(field.notnull()) {
-                QMessageBox::warning(nullptr, qApp->applicationName(),
-                                     tr("Cannot set selection to NULL. Column %1 has a NOT NULL constraint.").
-                                     arg(QString::fromStdString(field.name())));
-                return;
+            // Do not process rowid column
+            if(index.column() != 0) {
+                const size_t indexField = static_cast<size_t>(index.column()-1);
+                const sqlb::Field& field = currentTable->fields.at(indexField);
+                if(field.notnull()) {
+                    QMessageBox::warning(nullptr, qApp->applicationName(),
+                                         tr("Cannot set selection to NULL. Column %1 has a NOT NULL constraint.").
+                                         arg(QString::fromStdString(field.name())));
+                    return;
+                }
             }
         }
-
-    for(const QModelIndex& index : indices)
-        model()->setData(index, QVariant());
+    }
+    for(const QModelIndex& index : indices) {
+        // Update aborting in case of any error (to avoid repetitive errors like "Database is locked")
+        if(!model()->setData(index, QVariant()))
+            return;
+    }
 }
