@@ -289,11 +289,7 @@
             <string>PK</string>
            </property>
            <property name="toolTip">
-            <string>Primary key</string>
-           </property>
-           <property name="icon">
-            <iconset resource="icons/icons.qrc">
-             <normaloff>:/icons/field_key</normaloff>:/icons/field_key</iconset>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/icons/field_key&quot;/&gt; Primary key&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </column>
           <column>
@@ -337,9 +333,8 @@
            <property name="text">
             <string>Foreign Key</string>
            </property>
-           <property name="icon">
-            <iconset resource="icons/icons.qrc">
-             <normaloff>:/icons/field_fk</normaloff>:/icons/field_fk</iconset>
+           <property name="toolTip">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/icons/field_fk&quot;/&gt; Foreign Key&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </column>
          </widget>
