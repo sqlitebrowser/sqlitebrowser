@@ -691,8 +691,16 @@ void TableBrowser::updateRecordsetLabel()
     enableEditing(m_model->rowCountAvailable() != SqliteTableModel::RowCount::Unknown && is_table_or_unlocked_view);
 
     // Show filters unless the table is empty
-    const bool filtersVisible = m_model->rowCount() > 0 || m_model->filterCount() != 0;
-    qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader())->setFiltersVisible(filtersVisible);
+    const bool needs_filters = total > 0 || m_model->filterCount() > 0;
+    FilterTableHeader* header = qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader());
+    if(header) {
+        if(needs_filters && !header->hasFilters()) {
+            generateFilters();
+            ui->dataTable->adjustSize();
+        } else if(!needs_filters && header->hasFilters()) {
+            header->generateFilters(0);
+        }
+    }
 }
 
 sqlb::Query TableBrowser::buildQuery(const BrowseDataTableSettings& storedData, const sqlb::ObjectIdentifier& tablename) const
