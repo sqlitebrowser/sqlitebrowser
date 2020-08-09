@@ -53,6 +53,7 @@ RemoteNetwork::RemoteNetwork() :
     reloadSettings();
 
     // Set up signals
+    connect(m_manager, &QNetworkAccessManager::finished, this, &RemoteNetwork::gotReply);
     connect(m_manager, &QNetworkAccessManager::encrypted, this, &RemoteNetwork::gotEncrypted);
     connect(m_manager, &QNetworkAccessManager::sslErrors, this, &RemoteNetwork::gotError);
 }
