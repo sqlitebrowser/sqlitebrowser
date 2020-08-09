@@ -425,11 +425,11 @@ void RemoteNetwork::fetch(const QUrl& url, RequestType type, const QString& clie
             if(handleReply(reply))
                 when_finished(reply->readAll());
         });
-    } else {
-        connect(reply, &QNetworkReply::finished, this, [this, reply]() {
-            if(handleReply(reply))
-                gotReply(reply);
-        });
+//    } else {
+//        connect(reply, &QNetworkReply::finished, this, [this, reply]() {
+//            if(handleReply(reply))
+//                gotReply(reply);
+//        });
     }
 
     // When the synchrounous flag is set we wait for the request to finish before continuing
