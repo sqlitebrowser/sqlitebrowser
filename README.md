@@ -65,7 +65,7 @@ reported after the last release. :D
 
 DB Browser for SQLite works well on MacOS X / macOS.
 
-* OSX 10.8 (Mountain Lion) - 10.13 (High Sierra) are tested and known to work
+* OSX 10.12 (Sierra) - 10.15 (Catalina) are tested and known to work
 
 Download OSX releases here:
 
