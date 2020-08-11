@@ -2249,7 +2249,7 @@ Voulez-vous poursuivre l&apos;insertion malgré tout ?</translation>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="269"/>
         <source>Use in Filter Expression</source>
-        <translation>Uriliser dans l&apos;expression du Filtre</translation>
+        <translation>Utiliser dans l&apos;expression du Filtre</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="298"/>
