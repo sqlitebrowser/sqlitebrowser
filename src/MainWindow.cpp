@@ -1534,7 +1534,11 @@ void MainWindow::openRecentFile()
             read_only = true;
         }
 
-        fileOpen(file, false, read_only);
+        if(fileOpen(file, false, read_only))
+            if(read_only)
+                ui->statusbar->showMessage(tr("Opened '%1' in read-only mode from recent file list").arg(file));
+            else
+                ui->statusbar->showMessage(tr("Opened '%1' from recent file list").arg(file));
     }
 }
 
