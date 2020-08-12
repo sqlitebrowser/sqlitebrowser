@@ -53,7 +53,6 @@ RemoteNetwork::RemoteNetwork() :
     reloadSettings();
 
     // Set up signals
-    connect(m_manager, &QNetworkAccessManager::finished, this, &RemoteNetwork::gotReply);
     connect(m_manager, &QNetworkAccessManager::encrypted, this, &RemoteNetwork::gotEncrypted);
     connect(m_manager, &QNetworkAccessManager::sslErrors, this, &RemoteNetwork::gotError);
 }
@@ -425,11 +424,11 @@ void RemoteNetwork::fetch(const QUrl& url, RequestType type, const QString& clie
             if(handleReply(reply))
                 when_finished(reply->readAll());
         });
-//    } else {
-//        connect(reply, &QNetworkReply::finished, this, [this, reply]() {
-//            if(handleReply(reply))
-//                gotReply(reply);
-//        });
+    } else {
+        connect(reply, &QNetworkReply::finished, this, [this, reply]() {
+            if(handleReply(reply))
+                gotReply(reply);
+        });
     }
 
     // When the synchrounous flag is set we wait for the request to finish before continuing
@@ -509,6 +508,12 @@ void RemoteNetwork::push(const QString& filename, const QUrl& url, const QString
     reply->setProperty("certfile", clientCert);
     reply->setProperty("source_file", filename);
     multipart->setParent(reply);        // Delete the multi-part object along with the reply
+
+    // Connect reply handler
+    connect(reply, &QNetworkReply::finished, this, [this, reply]() {
+        if(handleReply(reply))
+            gotReply(reply);
+    });
 
     // Initialise the progress dialog for this request
     prepareProgressDialog(reply, true, url);
