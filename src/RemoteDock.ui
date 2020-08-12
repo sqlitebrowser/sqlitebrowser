@@ -481,6 +481,18 @@
     <string>Saves the selected revision of the database to another file</string>
    </property>
   </action>
+  <action name="actionPushLocalDatabase">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/push_database</normaloff>:/icons/push_database</iconset>
+   </property>
+   <property name="text">
+    <string>Upload Database</string>
+   </property>
+   <property name="toolTip">
+    <string>Upload this database as a new commit</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
   <tabstop>comboUser</tabstop>
@@ -532,7 +544,7 @@
    <sender>buttonPushDatabase</sender>
    <signal>clicked()</signal>
    <receiver>RemoteDock</receiver>
-   <slot>pushDatabase()</slot>
+   <slot>pushCurrentlyOpenedDatabase()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>530</x>
@@ -640,11 +652,28 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionPushLocalDatabase</sender>
+   <signal>triggered()</signal>
+   <receiver>RemoteDock</receiver>
+   <slot>pushSelectedLocalDatabase()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>266</x>
+     <y>193</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>setNewIdentity(QString)</slot>
   <slot>fetchDatabase(QModelIndex)</slot>
-  <slot>pushDatabase()</slot>
+  <slot>pushCurrentlyOpenedDatabase()</slot>
+  <slot>pushSelectedLocalDatabase()</slot>
   <slot>switchToMainView()</slot>
   <slot>openLocalFile(QModelIndex)</slot>
   <slot>fetchDatabase()</slot>

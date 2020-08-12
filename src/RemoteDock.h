@@ -40,7 +40,8 @@ private slots:
     void fetchDatabase(const QModelIndex& idx);
     void fetchDatabase(QString url = QString(), RemoteNetwork::RequestType request_type = RemoteNetwork::RequestTypeDatabase);
     void fetchCommit(const QModelIndex& idx, RemoteNetwork::RequestType request_type = RemoteNetwork::RequestTypeDatabase);
-    void pushDatabase();
+    void pushCurrentlyOpenedDatabase();
+    void pushSelectedLocalDatabase();
     void newDirectoryNode(const QModelIndex& parent);
     void switchToMainView();
     void openLocalFile(const QModelIndex& idx);
@@ -72,6 +73,8 @@ private:
     void refreshMetadata(const QString& username, const QString& dbname);
 
     bool isLocalDatabaseModified(const QString& local_file, const QString& username, const QString& dbname, const QString& identity, const std::string& commit_id);
+
+    void pushDatabase(const QString& path, const QString& branch);
 };
 
 #endif
