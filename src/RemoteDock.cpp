@@ -103,6 +103,7 @@ RemoteDock::RemoteDock(MainWindow* parent)
         bool enable = index.isValid() &&
                 !index.sibling(index.row(), RemoteLocalFilesModel::ColumnFile).data().isNull();
         ui->actionOpenLocalDatabase->setEnabled(enable);
+        ui->actionPushLocalDatabase->setEnabled(enable);
         ui->actionDeleteDatabase->setEnabled(enable);
     });
     ui->treeLocal->selectionModel()->currentChanged(QModelIndex(), QModelIndex()); // Enable/disable all action initially
@@ -113,6 +114,7 @@ RemoteDock::RemoteDock(MainWindow* parent)
        deleteLocalDatabase(ui->treeLocal->currentIndex());
     });
     ui->treeLocal->addAction(ui->actionOpenLocalDatabase);
+    ui->treeLocal->addAction(ui->actionPushLocalDatabase);
     ui->treeLocal->addAction(ui->actionDeleteDatabase);
 
     // Prepare context menu for list of commits
@@ -314,16 +316,8 @@ void RemoteDock::enableButtons()
     ui->actionFetchLatestCommit->setEnabled(db_opened && logged_in);
 }
 
-void RemoteDock::pushDatabase()
+void RemoteDock::pushCurrentlyOpenedDatabase()
 {
-    // If the currently active identity is the read-only public access to dbhub.io, don't show the Push Database dialog because it won't work anyway.
-    // Instead switch to an explanation offering some advice to create and import a proper certificate.
-    if(remoteModel->currentClientCertificate() == ":/user_certs/public.cert.pem")
-    {
-        ui->stack->setCurrentIndex(1);
-        return;
-    }
-
     // Show a warning when trying to push a database with unsaved changes
     if(mainWindow->getDb().getDirty())
     {
@@ -335,14 +329,44 @@ void RemoteDock::pushDatabase()
             return;
     }
 
+    // Push currently opened file
+    pushDatabase(mainWindow->getDb().currentFile(), QString::fromStdString(currently_opened_file_info.branch));
+}
+
+void RemoteDock::pushSelectedLocalDatabase()
+{
+    // Return if no file is selected
+    if(!ui->treeLocal->currentIndex().isValid())
+        return;
+
+    const int row = ui->treeLocal->currentIndex().row();
+    const QString filename = ui->treeLocal->currentIndex().sibling(row, RemoteLocalFilesModel::ColumnFile).data().toString();
+    if(filename.isEmpty())
+        return;
+
+    // Push selected file
+    const QString branch = ui->treeLocal->currentIndex().sibling(row, RemoteLocalFilesModel::ColumnBranch).data().toString();
+    pushDatabase(Settings::getValue("remote", "clonedirectory").toString() + "/" + filename, branch);
+}
+
+void RemoteDock::pushDatabase(const QString& path, const QString& branch)
+{
+    // If the currently active identity is the read-only public access to dbhub.io, don't show the Push Database dialog because it won't work anyway.
+    // Instead switch to an explanation offering some advice to create and import a proper certificate.
+    if(remoteModel->currentClientCertificate() == ":/user_certs/public.cert.pem")
+    {
+        ui->stack->setCurrentIndex(1);
+        return;
+    }
+
     // The default suggestion for a database name is the local file name. If it is a remote file (like when it initially was fetched using DB4S),
     // the extra bit of information at the end of the name gets removed first.
-    QString name = QFileInfo(mainWindow->getDb().currentFile()).fileName();
+    QString name = QFileInfo(path).fileName();
     name = name.remove(QRegExp("_[0-9]+.remotedb$"));
 
     // Show the user a dialog for setting all the commit details
     QString host = RemoteNetwork::get().getInfoFromClientCert(remoteModel->currentClientCertificate(), RemoteNetwork::CertInfoServer);
-    RemotePushDialog pushDialog(this, host, remoteModel->currentClientCertificate(), name, QString::fromStdString(currently_opened_file_info.branch));
+    RemotePushDialog pushDialog(this, host, remoteModel->currentClientCertificate(), name, branch);
     if(pushDialog.exec() != QDialog::Accepted)
         return;
 
@@ -354,11 +378,11 @@ void RemoteDock::pushDatabase()
 
     // Check if we are pushing a cloned database. Only in this case we provide the last known commit id
     QString commit_id;
-    if(mainWindow->getDb().currentFile().startsWith(Settings::getValue("remote", "clonedirectory").toString()))
+    if(path.startsWith(Settings::getValue("remote", "clonedirectory").toString()))
         commit_id = QString::fromStdString(remoteDatabase.localLastCommitId(remoteModel->currentClientCertificate(), url, pushDialog.branch().toStdString()));
 
     // Push database
-    RemoteNetwork::get().push(mainWindow->getDb().currentFile(), url, remoteModel->currentClientCertificate(), pushDialog.name(),
+    RemoteNetwork::get().push(path, url, remoteModel->currentClientCertificate(), pushDialog.name(),
                               pushDialog.commitMessage(), pushDialog.licence(), pushDialog.isPublic(), pushDialog.branch(),
                               pushDialog.forcePush(), commit_id);
 }
@@ -553,7 +577,8 @@ void RemoteDock::pushFinished(const QString& filename, const QString& identity, 
         QFile::copy(source_file, saveFileAs);
 
     // Update info on currently opened file
-    currently_opened_file_info = remoteDatabase.localGetLocalFileInfo(saveFileAs);
+    if(currently_opened_file_info.file == QFileInfo(saveFileAs).fileName().toStdString())
+        currently_opened_file_info = remoteDatabase.localGetLocalFileInfo(saveFileAs);
 
     // Refresh view
     refresh();
