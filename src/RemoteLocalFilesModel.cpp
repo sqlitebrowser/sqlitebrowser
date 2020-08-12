@@ -178,5 +178,14 @@ bool RemoteLocalFilesModel::removeRows(int row, int count, const QModelIndex& pa
     }
     endRemoveRows();
 
+    // If parent node is empty, remove that one too. Make sure to not remove the root node
+    if(parent.isValid() && !index(0, 0, parent).isValid())
+    {
+        beginRemoveRows(parent.parent(), 0, 0);
+        auto item = static_cast<QTreeWidgetItem*>(parent.internalPointer());
+        item->parent()->removeChild(item);
+        endRemoveRows();
+    }
+
     return true;
 }
