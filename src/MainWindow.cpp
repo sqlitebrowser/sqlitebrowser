@@ -1159,18 +1159,23 @@ void MainWindow::executeQuery()
 
         // Wait until the initial loading of data (= first chunk and row count) has been performed
         auto conn = std::make_shared<QMetaObject::Connection>();
-        *conn = connect(model, &SqliteTableModel::finishedFetch, [=]() {
-            // Disconnect this connection right now. This avoids calling this slot multiple times
-            disconnect(*conn);
+        *conn = connect(model, &SqliteTableModel::finishedFetch, [=](int fetched_row_begin, int fetched_row_end) {
+            // Avoid attaching the plot when the signal is notifying the row count, since the
+            // data wouldn't be available yet.
+            if(fetched_row_begin != fetched_row_end && fetched_row_begin != model->rowCount()) {
+                // Disconnect this connection right now. This avoids calling this slot multiple times
+                disconnect(*conn);
 
-            attachPlot(sqlWidget->getTableResult(), sqlWidget->getModel());
-            connect(sqlWidget->getTableResult()->selectionModel(), &QItemSelectionModel::currentChanged, this, &MainWindow::dataTableSelectionChanged);
-            connect(sqlWidget->getTableResult(), &QTableView::doubleClicked, this, &MainWindow::doubleClickTable);
+                attachPlot(sqlWidget->getTableResult(), sqlWidget->getModel());
+            } else {
+                connect(sqlWidget->getTableResult()->selectionModel(), &QItemSelectionModel::currentChanged, this, &MainWindow::dataTableSelectionChanged);
+                connect(sqlWidget->getTableResult(), &QTableView::doubleClicked, this, &MainWindow::doubleClickTable);
 
-            auto time_end = std::chrono::high_resolution_clock::now();
-            auto time_in_ms = std::chrono::duration_cast<std::chrono::milliseconds>(time_end-time_start);
-            query_logger(true, tr("%1 rows returned in %2ms").arg(model->rowCount()).arg(time_in_ms.count()+time_in_ms_so_far), from_position, to_position);
-            execute_sql_worker->startNextStatement();
+                auto time_end = std::chrono::high_resolution_clock::now();
+                auto time_in_ms = std::chrono::duration_cast<std::chrono::milliseconds>(time_end-time_start);
+                query_logger(true, tr("%1 rows returned in %2ms").arg(model->rowCount()).arg(time_in_ms.count()+time_in_ms_so_far), from_position, to_position);
+                execute_sql_worker->startNextStatement();
+            }
         });
     }, Qt::QueuedConnection);
     connect(execute_sql_worker.get(), &RunSql::confirmSaveBeforePragmaOrVacuum, sqlWidget, [this]() {
