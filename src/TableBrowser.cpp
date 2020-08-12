@@ -652,6 +652,14 @@ void TableBrowser::updateRecordsetLabel()
     if(to < 0)
             to = 0;
 
+    // Adjust visible rows to contents if necessary, and then take the new visible rows, which might have changed.
+    if(m_adjustRows) {
+        for(int i=from; i<=to; i++)
+            ui->dataTable->resizeRowToContents(i);
+        from = ui->dataTable->verticalHeader()->visualIndexAt(0) + 1;
+        to = from + ui->dataTable->numVisibleRows() - 1;
+    }
+
     // Update the validator of the goto row field
     gotoValidator->setRange(0, total);
 
@@ -1188,10 +1196,7 @@ void TableBrowser::showRecordPopupMenu(const QPoint& pos)
 
     connect(adjustRowHeightAction, &QAction::toggled, [&](bool checked) {
         m_adjustRows = checked;
-        if(m_adjustRows)
-            ui->dataTable->resizeRowsToContents();
-        else
-            updateTable();
+        updateTable();
     });
 
     popupRecordMenu.exec(ui->dataTable->verticalHeader()->mapToGlobal(pos));
@@ -1568,10 +1573,6 @@ void TableBrowser::find(const QString& expr, bool forward, bool include_first, R
 void TableBrowser::fetchedData()
 {
     updateRecordsetLabel();
-
-    // Adjust row height to contents. This has to be done each time new data is fetched.
-    if(m_adjustRows)
-        ui->dataTable->resizeRowsToContents();
 
     // Don't resize the columns more than once to fit their contents. This is necessary because the finishedFetch signal of the model
     // is emitted for each loaded prefetch block and we want to avoid column resizes while scrolling down.
