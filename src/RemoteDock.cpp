@@ -245,7 +245,7 @@ void RemoteDock::fetchDatabase(QString url_string, RemoteNetwork::RequestType re
 
     // There is a chance that we've already cloned that database. So check for that first
     QString exists = remoteDatabase.localExists(url, remoteModel->currentClientCertificate(), QUrlQuery(url).queryItemValue("branch").toStdString());
-    if(!exists.isEmpty())
+    if(!exists.isEmpty() && request_type == RemoteNetwork::RequestTypeDatabase)
     {
         // Database has already been cloned! So open the local file instead of fetching the one from the
         // server again.
