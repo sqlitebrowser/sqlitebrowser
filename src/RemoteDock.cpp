@@ -242,15 +242,25 @@ void RemoteDock::fetchDatabase(QString url_string, RemoteNetwork::RequestType re
         return;
     }
 
+    // For the user name, take the path, remove the database name and the initial slash
+    QString username = url.path().remove("/" + url.fileName()).mid(1);
 
     // There is a chance that we've already cloned that database. So check for that first
     QString exists = remoteDatabase.localExists(url, remoteModel->currentClientCertificate(), QUrlQuery(url).queryItemValue("branch").toStdString());
     if(!exists.isEmpty() && request_type == RemoteNetwork::RequestTypeDatabase)
     {
+        // Check for modifications
+        bool modified = isLocalDatabaseModified(exists, username, url.fileName(), remoteModel->currentClientCertificate(),
+                                                QUrlQuery(url).queryItemValue("commit").toStdString());
+
         // Database has already been cloned! So open the local file instead of fetching the one from the
-        // server again.
-        emit openFile(exists);
-        return;
+        // server again. If the local file has been modified don't open it but try to download the last known
+        // commit again.
+        if(!modified)
+        {
+            emit openFile(exists);
+            return;
+        }
     }
 
     // Check if we already have a clone of this database branch and, if so, figure out its local file name.
@@ -264,9 +274,6 @@ void RemoteDock::fetchDatabase(QString url_string, RemoteNetwork::RequestType re
     if(request_type == RemoteNetwork::RequestTypeDatabase && !local_file.isEmpty())
     {
         // If there is a local clone of this dtabase and branch, figure out if the local file has been modified
-
-        // For the user name, take the path, remove the database name and the initial slash
-        QString username = url.path().remove("/" + url.fileName()).mid(1);
 
         // Get the last local commit id
         std::string last_commit_id = remoteDatabase.localLastCommitId(remoteModel->currentClientCertificate(), url, QUrlQuery(url).queryItemValue("branch").toStdString());
