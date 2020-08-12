@@ -38,6 +38,7 @@ private:
 
 protected slots:
     void checkInput();
+    void reloadBranchList(const QString& select_branch = QString());
     void accept() override;
 };
 
