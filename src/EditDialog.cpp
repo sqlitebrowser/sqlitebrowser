@@ -386,7 +386,7 @@ void EditDialog::importData(bool asLink)
                 OpenDataFile,
                 this,
                 tr("Choose a file to import")
-#ifndef Q_OS_MAC // Filters on OS X are buggy
+#ifndef Q_OS_MAC // Filters on macOS are buggy
                 , filters.join(";;")
                 , &selectedFilter
 #endif

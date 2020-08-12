@@ -20,7 +20,7 @@ Compilation instructions:
  Compile this C source file into a dynamic library as follows:
  * Linux:
    gcc -fPIC -lm -shared extension-functions.c -o libsqlitefunctions.so
- * Mac OS X:
+ * macOS:
    gcc -fno-common -dynamiclib extension-functions.c -o libsqlitefunctions.dylib
  (You may need to add flags
   -I /opt/local/include/ -L/opt/local/lib -lsqlite3

@@ -358,7 +358,7 @@ else()
 	set(LPTHREAD pthread)
 endif(WIN32)
 
-#enable version check for MacOS
+#enable version check for macOS
 if(APPLE)
 	add_definitions(-DCHECKNEWVERSION)
 endif(APPLE)

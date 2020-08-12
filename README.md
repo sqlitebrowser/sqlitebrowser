@@ -61,17 +61,17 @@ Download Windows releases here:
 (e.g. gives an error), try a nightly build.  Nightly builds often fix bugs
 reported after the last release. :D
 
-## MacOS X / macOS
+## macOS
 
-DB Browser for SQLite works well on MacOS X / macOS.
+DB Browser for SQLite works well on macOS.
 
-* OSX 10.12 (Sierra) - 10.15 (Catalina) are tested and known to work
+* macOS 10.12 (Sierra) - 10.15 (Catalina) are tested and known to work
 
-Download OSX releases here:
+Download macOS releases here:
 
 * https://sqlitebrowser.org/dl/#macos
 
-The latest OSX binary can be installed via [Homebrew Cask](https://caskroom.github.io/ "Homebrew Cask"):
+The latest macOS binary can be installed via [Homebrew Cask](https://caskroom.github.io/ "Homebrew Cask"):
 
 ```
 brew cask install db-browser-for-sqlite

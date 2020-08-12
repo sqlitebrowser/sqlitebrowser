@@ -236,7 +236,7 @@ databases.
 Before compiling make sure you have the necessary SQLCipher development files
 installed. On Linux this can usually be accomplished by just installing the
 correct package (e.g. 'libsqlcipher-dev' on Debian-based distributions). On
-MacOS X the easiest way is to install it via Homebrew ('brew install
+macOS the easiest way is to install it via Homebrew ('brew install
 sqlcipher'). On Windows unfortunately it's a bit more difficult: You'll have
 to download and compile the code as described on the
 [SQLCipher website](https://www.zetetic.net/sqlcipher/) before you can proceed.
