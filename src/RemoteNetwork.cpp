@@ -509,6 +509,12 @@ void RemoteNetwork::push(const QString& filename, const QUrl& url, const QString
     reply->setProperty("source_file", filename);
     multipart->setParent(reply);        // Delete the multi-part object along with the reply
 
+    // Connect reply handler
+    connect(reply, &QNetworkReply::finished, this, [this, reply]() {
+        if(handleReply(reply))
+            gotReply(reply);
+    });
+
     // Initialise the progress dialog for this request
     prepareProgressDialog(reply, true, url);
 }
