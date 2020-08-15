@@ -1467,9 +1467,9 @@ void MainWindow::importDatabaseFromSQL()
     QApplication::setOverrideCursor(Qt::WaitCursor);
     QFile f(fileName);
     f.open(QIODevice::ReadOnly);
-    QByteArray data = f.readAll();
-    removeBom(data);
-    bool ok = db.executeMultiSQL(data, newDbFile.size() == 0);
+    QByteArray filedata = f.readAll();
+    removeBom(filedata);
+    bool ok = db.executeMultiSQL(filedata, newDbFile.size() == 0);
     // Restore cursor before asking the user to accept the message
     QApplication::restoreOverrideCursor();
     if(!ok)
@@ -1591,10 +1591,12 @@ void MainWindow::openRecentFile()
         }
 
         if(fileOpen(file, false, read_only))
+        {
             if(read_only)
                 ui->statusbar->showMessage(tr("Opened '%1' in read-only mode from recent file list").arg(file));
             else
                 ui->statusbar->showMessage(tr("Opened '%1' from recent file list").arg(file));
+        }
     }
 }
 
