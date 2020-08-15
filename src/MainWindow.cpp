@@ -56,7 +56,7 @@
 
 #include <limits>
 
-const int MainWindow::MaxRecentFiles;
+int MainWindow::MaxRecentFiles;
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
@@ -213,6 +213,10 @@ void MainWindow::init()
     QShortcut* shortcutFocusEditor = new QShortcut(QKeySequence(tr("Ctrl+PgUp")), ui->tabSqlAreas, nullptr, nullptr, Qt::WidgetWithChildrenShortcut);
     connect(shortcutFocusEditor, &QShortcut::activated, this, &MainWindow::focusSqlEditor);
 
+    // Get MaxRecentFiles value from QSettings.
+    MaxRecentFiles = Settings::getValue("General", "maxRecentFiles").toInt();
+    recentFileActs.resize(MaxRecentFiles);
+
     // Create the actions for the recently opened dbs list
     for(int i = 0; i < MaxRecentFiles; ++i) {
         recentFileActs[i] = new QAction(this);
@@ -222,7 +226,7 @@ void MainWindow::init()
     for(int i = 0; i < MaxRecentFiles; ++i)
         ui->fileRecentFiles->insertAction(ui->fileExitAction, recentFileActs[i]);
 
-    QAction *clearRecentFilesAction = ui->fileRecentFiles->addAction(tr("Clear List"));
+    clearRecentFilesAction = ui->fileRecentFiles->addAction(tr("Clear List"));
     ui->fileRecentFiles->insertAction(ui->fileExitAction, clearRecentFilesAction);
     connect(clearRecentFilesAction, &QAction::triggered, this, &MainWindow::clearRecentFiles);
 
@@ -2152,6 +2156,39 @@ void MainWindow::reloadSettings()
         TableBrowser* w = qobject_cast<TableBrowser*>(ui->tabBrowsers->widget(i));
         if(w)
             w->reloadSettings();
+    }
+
+    // Set max recent files
+    const int newMaxRecentFiles = Settings::getValue("General", "maxRecentFiles").toInt();
+
+    if(MaxRecentFiles < newMaxRecentFiles) {
+        // If user increase max recent files value.
+        ui->fileRecentFiles->removeAction(clearRecentFilesAction);
+
+        recentFileActs.resize(newMaxRecentFiles);
+        for(int i = MaxRecentFiles; i < newMaxRecentFiles; ++i) {
+            recentFileActs[i] = new QAction(this);
+            recentFileActs[i]->setVisible(false);
+            connect(recentFileActs[i], &QAction::triggered, this, &MainWindow::openRecentFile);
+        }
+
+        for(int i = 0; i < newMaxRecentFiles; ++i)
+            ui->fileRecentFiles->insertAction(ui->fileExitAction, recentFileActs[i]);
+
+        ui->fileRecentFiles->insertAction(ui->fileExitAction, clearRecentFilesAction);
+
+        MaxRecentFiles = newMaxRecentFiles;
+        updateRecentFileActions();
+    } else if (MaxRecentFiles > newMaxRecentFiles) {
+        // If user decrease max recent files value.
+        for(int i = (MaxRecentFiles - 1); i >= newMaxRecentFiles; --i) {
+            ui->fileRecentFiles->removeAction(recentFileActs[i]);
+            delete recentFileActs[i];
+        }
+
+        recentFileActs.resize(newMaxRecentFiles);
+        MaxRecentFiles = newMaxRecentFiles;
+        updateRecentFileActions();
     }
 
     switch (static_cast<Settings::AppStyle>(Settings::getValue("General", "appStyle").toInt())) {
