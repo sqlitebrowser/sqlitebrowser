@@ -3089,17 +3089,34 @@ void MainWindow::fileOpenReadOnly()
 
 void MainWindow::requestCollation(const QString& name, int eTextRep)
 {
-    QMessageBox::StandardButton reply = QMessageBox::question(
-                this,
-                tr("Collation needed! Proceed?"),
-                tr("A table in this database requires a special collation function '%1' "
-                   "that this application can't provide without further knowledge.\n"
-                   "If you choose to proceed, be aware bad things can happen to your database.\n"
-                   "Create a backup!").arg(name), QMessageBox::Yes | QMessageBox::No);
-    if(reply == QMessageBox::Yes) {
-        auto pDb = db.get(tr("creating collation"));
-        sqlite3_create_collation(pDb.get(), name.toUtf8(), eTextRep, nullptr, collCompare);
+    // Show message box
+    if(!Settings::getValue("db", "dont_ask_collation").toBool())
+    {
+        QMessageBox msgbox;
+        QPushButton* button_dont_ask_again = msgbox.addButton(tr("Yes. Don't ask again"), QMessageBox::ActionRole);
+        msgbox.addButton(QMessageBox::Yes);
+        msgbox.addButton(QMessageBox::No);
+        msgbox.setTextFormat(Qt::RichText);
+        msgbox.setWindowTitle(tr("Collation needed! Proceed?"));
+        msgbox.setText(tr("A table in this database requires a special collation function '%1' "
+                          "that this application can't provide without further knowledge.\n"
+                          "If you choose to proceed, be aware bad things can happen to your database.\n"
+                          "Create a backup!").arg(name));
+        int reply = msgbox.exec();
+
+        // Remember Don't ask again setting and proceed if either that button or the Yes button was clicked.
+        // Cancel here if the No button was clicked
+        if(msgbox.clickedButton() == button_dont_ask_again)
+        {
+            Settings::setValue("db", "dont_ask_collation", true);
+        } else if(reply == QMessageBox::No) {
+            return;
+        }
     }
+
+    // Add collation
+    auto pDb = db.get(tr("creating collation"));
+    sqlite3_create_collation(pDb.get(), name.toUtf8(), eTextRep, nullptr, collCompare);
 }
 
 void MainWindow::renameSqlTab(int index)
