@@ -116,6 +116,9 @@ private:
     void focusSqlEditor();
     void moveDocksTo(Qt::DockWidgetArea area);
 
+    // Identifier of the currently browsed table in the current data browser tab
+    sqlb::ObjectIdentifier currentlyBrowsedTableName() const;
+
 protected:
     void closeEvent(QCloseEvent *) override;
     void dragEnterEvent(QDragEnterEvent *event) override;
@@ -128,7 +131,7 @@ public slots:
     void dbState(bool dirty);
     void refresh();
     void switchToBrowseDataTab(sqlb::ObjectIdentifier tableToBrowse = sqlb::ObjectIdentifier());
-    void populateStructure(const sqlb::ObjectIdentifier& old_table = sqlb::ObjectIdentifier{});
+    void populateStructure(const std::vector<sqlb::ObjectIdentifier>& old_tables = {});
     void reloadSettings();
     bool closeFiles();
 
@@ -164,9 +167,6 @@ private slots:
     void updatePragmaUi();
     void savePragmas();
     void mainTabSelected( int tabindex );
-    int openSqlTab(bool resetCounter = false);
-    void closeSqlTab(int index, bool force = false, bool askSaving = true);
-    void changeSqlTab(int index);
     void openSqlFile();
     void saveSqlFile();
     void saveSqlFileAs();
@@ -188,7 +188,6 @@ private slots:
     void copyCurrentCreateStatement();
     void fileOpenReadOnly();
     void requestCollation(const QString& name, int eTextRep);
-    void renameSqlTab(int index);
     void setFindFrameVisibility(bool show);
     void openFindReplaceDialog();
     void toggleSqlBlockComment();
@@ -201,8 +200,19 @@ private slots:
     void showStatusMessage5s(QString message);
     void saveSqlFile(int tabIndex);
     void saveAll();
-    void showContextMenuSqlTabBar(const QPoint& pos);
     void openUrlOrFile(const QString& urlString);
+
+    int openSqlTab(bool resetCounter = false);
+    void closeSqlTab(int index, bool force = false, bool askSaving = true);
+    void changeSqlTab(int index);
+    void renameSqlTab(int index);
+    void showContextMenuSqlTabBar(const QPoint& pos);
+
+    int newTableBrowserTab(bool resetCounter = false);
+    void closeTableBrowserTab(int index, bool force = false);
+    void changeTableBrowserTab(int index);
+    void renameTableBrowserTab(int index);
+    void showContextMenuTableBrowserTabBar(const QPoint& pos);
 };
 
 #endif

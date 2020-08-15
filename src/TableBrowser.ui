@@ -449,9 +449,6 @@
      </property>
      <item>
       <widget class="QToolButton" name="buttonBegin">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
        <property name="toolTip">
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll to the beginning&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
@@ -469,9 +466,6 @@
      </item>
      <item>
       <widget class="QToolButton" name="buttonPrevious">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
        <property name="toolTip">
         <string>Scroll one page upwards</string>
        </property>
@@ -496,9 +490,6 @@
      </item>
      <item>
       <widget class="QToolButton" name="buttonNext">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
        <property name="toolTip">
         <string>Scroll one page downwards</string>
        </property>
@@ -516,9 +507,6 @@
      </item>
      <item>
       <widget class="QToolButton" name="buttonEnd">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
        <property name="toolTip">
         <string>Scroll to the end</string>
        </property>

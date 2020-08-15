@@ -54,16 +54,16 @@ class TableBrowser : public QWidget
     Q_OBJECT
 
 public:
-    explicit TableBrowser(QWidget* parent = nullptr);
+    explicit TableBrowser(DBBrowserDB* _db, QWidget* parent = nullptr);
     ~TableBrowser();
-    void init(DBBrowserDB* _db);
     void reset();
+    static void resetSharedSettings();
 
     sqlb::ObjectIdentifier currentlyBrowsedTableName() const;
 
-    std::map<sqlb::ObjectIdentifier, BrowseDataTableSettings> allSettings() const { return m_settings; }
-    BrowseDataTableSettings& settings(const sqlb::ObjectIdentifier& object);
-    void setSettings(const sqlb::ObjectIdentifier& table, const BrowseDataTableSettings& table_settings);
+    static std::map<sqlb::ObjectIdentifier, BrowseDataTableSettings> allSettings() { return m_settings; }
+    static BrowseDataTableSettings& settings(const sqlb::ObjectIdentifier& object);
+    static void setSettings(const sqlb::ObjectIdentifier& table, const BrowseDataTableSettings& table_settings);
 
     void setStructure(QAbstractItemModel* model, const sqlb::ObjectIdentifier& old_table = sqlb::ObjectIdentifier{});
 
@@ -71,8 +71,8 @@ public:
 
     QModelIndex currentIndex() const;
 
-    void setDefaultEncoding(const QString& encoding) { m_defaultEncoding = encoding; }
-    QString defaultEncoding() const { return m_defaultEncoding; }
+    static void setDefaultEncoding(const QString& encoding) { m_defaultEncoding = encoding; }
+    static QString defaultEncoding() { return m_defaultEncoding; }
 
 public slots:
     void setEnabled(bool enable);

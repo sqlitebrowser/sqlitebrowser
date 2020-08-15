@@ -23,11 +23,11 @@
 std::map<sqlb::ObjectIdentifier, BrowseDataTableSettings> TableBrowser::m_settings;
 QString TableBrowser::m_defaultEncoding;
 
-TableBrowser::TableBrowser(QWidget* parent) :
+TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
     QWidget(parent),
     ui(new Ui::TableBrowser),
     gotoValidator(new QIntValidator(0, 0, this)),
-    db(nullptr),
+    db(_db),
     dbStructureModel(nullptr),
     m_model(nullptr),
     m_adjustRows(false),
@@ -317,17 +317,6 @@ TableBrowser::TableBrowser(QWidget* parent) :
     connect(ui->buttonReplaceAll, &QToolButton::clicked, this, [this](){
         find(ui->editFindExpression->text(), true, true, ReplaceMode::ReplaceAll);
     });
-}
-
-TableBrowser::~TableBrowser()
-{
-    delete gotoValidator;
-    delete ui;
-}
-
-void TableBrowser::init(DBBrowserDB* _db)
-{
-    db = _db;
 
     // Recreate the model
     if(m_model)
@@ -338,14 +327,16 @@ void TableBrowser::init(DBBrowserDB* _db)
     connect(m_model, &SqliteTableModel::finishedFetch, this, &TableBrowser::fetchedData);
 }
 
+TableBrowser::~TableBrowser()
+{
+    delete gotoValidator;
+    delete ui;
+}
+
 void TableBrowser::reset()
 {
     // Reset the model
     m_model->reset();
-
-    // Remove all stored table information browse data tab
-    m_settings.clear();
-    m_defaultEncoding = QString();
 
     // Reset the recordset label inside the Browse tab now
     updateRecordsetLabel();
@@ -355,6 +346,13 @@ void TableBrowser::reset()
 
     // Reset the plot dock model and connection
     emit updatePlot(nullptr, nullptr, nullptr, true);
+}
+
+void TableBrowser::resetSharedSettings()
+{
+    // Remove all stored table information browse data tab
+    m_settings.clear();
+    m_defaultEncoding = QString();
 }
 
 sqlb::ObjectIdentifier TableBrowser::currentlyBrowsedTableName() const
