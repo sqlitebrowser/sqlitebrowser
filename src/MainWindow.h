@@ -83,6 +83,7 @@ private:
     static int MaxRecentFiles;
     QVector<QAction*> recentFileActs;
     QAction* clearRecentFilesAction;
+    QAction* recentSeparatorAct;
 
     EditDialog* editDock;
     PlotDock* plotDock;

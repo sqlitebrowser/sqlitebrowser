@@ -226,6 +226,7 @@ void MainWindow::init()
     for(int i = 0; i < MaxRecentFiles; ++i)
         ui->fileRecentFiles->insertAction(ui->fileExitAction, recentFileActs[i]);
 
+    recentSeparatorAct = ui->fileRecentFiles->insertSeparator(ui->fileExitAction);
     clearRecentFilesAction = ui->fileRecentFiles->addAction(tr("Clear List"));
     ui->fileRecentFiles->insertAction(ui->fileExitAction, clearRecentFilesAction);
     connect(clearRecentFilesAction, &QAction::triggered, this, &MainWindow::clearRecentFiles);
@@ -2175,6 +2176,7 @@ void MainWindow::reloadSettings()
         for(int i = 0; i < newMaxRecentFiles; ++i)
             ui->fileRecentFiles->insertAction(ui->fileExitAction, recentFileActs[i]);
 
+        ui->fileRecentFiles->insertSeparator(ui->fileExitAction);
         ui->fileRecentFiles->insertAction(ui->fileExitAction, clearRecentFilesAction);
 
         MaxRecentFiles = newMaxRecentFiles;
