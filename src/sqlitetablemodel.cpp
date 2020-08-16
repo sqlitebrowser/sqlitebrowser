@@ -353,7 +353,7 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
             return QVariant();
         return decode(data);
     } else if(role == Qt::FontRole) {
-        QFont font;
+        QFont font = m_font;
         if(!row_available || data.isNull() || isBinary(data))
             font.setItalic(true);
         else {
@@ -1175,6 +1175,8 @@ void SqliteTableModel::reloadSettings()
     m_nullBgColour = QColor(Settings::getValue("databrowser", "null_bg_colour").toString());
     m_binFgColour = QColor(Settings::getValue("databrowser", "bin_fg_colour").toString());
     m_binBgColour = QColor(Settings::getValue("databrowser", "bin_bg_colour").toString());
+    m_font = QFont(Settings::getValue("databrowser", "font").toString());
+    m_font.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
     m_symbolLimit = Settings::getValue("databrowser", "symbol_limit").toInt();
     m_imagePreviewEnabled = Settings::getValue("databrowser", "image_preview").toBool();
     m_chunkSize = static_cast<std::size_t>(Settings::getValue("db", "prefetchsize").toUInt());

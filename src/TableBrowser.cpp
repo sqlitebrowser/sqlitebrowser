@@ -215,7 +215,8 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
             QString font_string = m_model->data(current, Qt::FontRole).toString();
             QFont font;
             if(!font_string.isEmpty())
-                font.fromString(m_model->data(current, Qt::FontRole).toString());
+                font.fromString(font_string);
+
             ui->fontComboBox->blockSignals(true);
             ui->fontComboBox->setCurrentFont(font);
             ui->fontComboBox->blockSignals(false);
