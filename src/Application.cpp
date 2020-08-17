@@ -174,8 +174,10 @@ Application::Application(int& argc, char** argv) :
                 m_mainWindow->refresh();
 
             // Jump to table if the -t/--table parameter was set
-            if(!tableToBrowse.isEmpty())
+            if(!tableToBrowse.isEmpty()) {
                 m_mainWindow->switchToBrowseDataTab(sqlb::ObjectIdentifier("main", tableToBrowse.toStdString()));
+                m_mainWindow->refresh();
+            }
         }
     }
 }
