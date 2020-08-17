@@ -331,6 +331,9 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
 
     // Connect slots
     connect(m_model, &SqliteTableModel::finishedFetch, this, &TableBrowser::fetchedData);
+
+    // Load initial settings
+    reloadSettings();
 }
 
 TableBrowser::~TableBrowser()
