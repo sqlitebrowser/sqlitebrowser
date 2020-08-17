@@ -2635,12 +2635,14 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                             xml.skipCurrentElement();
                         } else if(xml.name() == "table") {
                             // New browser tab
-                            QString title = xml.attributes().value("title").toString();
                             sqlb::ObjectIdentifier table;
                             table.fromSerialised(xml.attributes().value("table").toString().toStdString());
-
                             int tab_index = newTableBrowserTab(table);
+
+                            QString title = xml.attributes().value("title").toString();
                             ui->tabBrowsers->setTabText(tab_index, title);
+                            if(xml.attributes().value("custom_title").toString() == "1")
+                                ui->tabBrowsers->tabBar()->setTabData(tab_index, true);
 
                             xml.skipCurrentElement();
                         } else if(xml.name() == "current_tab") {
@@ -2940,6 +2942,7 @@ void MainWindow::saveProject(const QString& currentFilename)
             TableBrowser* w = qobject_cast<TableBrowser*>(ui->tabBrowsers->widget(i));
             xml.writeStartElement("table");
             xml.writeAttribute("title", ui->tabBrowsers->tabText(i));
+            xml.writeAttribute("custom_title", ui->tabBrowsers->tabBar()->tabData(i).toBool() ? "1" : "0");
             xml.writeAttribute("table", QString::fromStdString(w->currentlyBrowsedTableName().toSerialised()));
             xml.writeEndElement();
         }
