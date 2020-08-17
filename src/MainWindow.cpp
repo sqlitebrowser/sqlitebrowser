@@ -2630,12 +2630,7 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                             }
 
                             if (!currentTable.isEmpty())
-                            {
-                                int tab_index = newTableBrowserTab(true);
-                                TableBrowser* w = qobject_cast<TableBrowser*>(ui->tabBrowsers->widget(tab_index));
-                                if(w)
-                                    w->setCurrentTable(currentTable);
-                            }
+                                newTableBrowserTab(true, currentTable);
 
                             xml.skipCurrentElement();
                         } else if(xml.name() == "table") {
@@ -2644,11 +2639,8 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                             sqlb::ObjectIdentifier table;
                             table.fromSerialised(xml.attributes().value("table").toString().toStdString());
 
-                            int tab_index = newTableBrowserTab(true);
+                            int tab_index = newTableBrowserTab(true, table);
                             ui->tabBrowsers->setTabText(tab_index, title);
-                            TableBrowser* w = qobject_cast<TableBrowser*>(ui->tabBrowsers->widget(tab_index));
-                            if(w)
-                                w->setCurrentTable(table);
 
                             xml.skipCurrentElement();
                         } else if(xml.name() == "current_tab") {
@@ -3126,14 +3118,15 @@ void MainWindow::switchToBrowseDataTab(sqlb::ObjectIdentifier tableToBrowse)
         tableToBrowse.setName(ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnName), Qt::EditRole).toString().toStdString());
     }
 
-    int tab_index = newTableBrowserTab();
-    TableBrowser* w = qobject_cast<TableBrowser*>(ui->tabBrowsers->widget(tab_index));
-    if(w)
-        w->setCurrentTable(tableToBrowse);
+    newTableBrowserTab(false, tableToBrowse);
 
     if (ui->mainTab->indexOf(ui->browser) == -1)
         ui->mainTab->addTab(ui->browser, ui->browser->accessibleName());
+
+    // Don't emit a main tab changed signal here because all it would do is refreshing the just loaded table view
+    ui->mainTab->blockSignals(true);
     ui->mainTab->setCurrentWidget(ui->browser);
+    ui->mainTab->blockSignals(false);
 }
 
 void MainWindow::copyCurrentCreateStatement()
@@ -3571,7 +3564,7 @@ void MainWindow::closeTableBrowserTab(int index, bool force)
         newTableBrowserTab(true);
 }
 
-int MainWindow::newTableBrowserTab(bool resetCounter)
+int MainWindow::newTableBrowserTab(bool resetCounter, const sqlb::ObjectIdentifier& tableToBrowse)
 {
     static int tabNumber = 0;
 
@@ -3580,7 +3573,7 @@ int MainWindow::newTableBrowserTab(bool resetCounter)
 
     // Create and initialise widget
     TableBrowser* w = new TableBrowser(&db, this);
-    w->setStructure(dbStructureModel);
+    w->setStructure(dbStructureModel, tableToBrowse);
     w->setEnabled(ui->fileCloseAction->isEnabled());
 
     // Connect signals and slots

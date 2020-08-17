@@ -208,7 +208,7 @@ private slots:
     void renameSqlTab(int index);
     void showContextMenuSqlTabBar(const QPoint& pos);
 
-    int newTableBrowserTab(bool resetCounter = false);
+    int newTableBrowserTab(bool resetCounter = false, const sqlb::ObjectIdentifier& tableToBrowse = {});
     void closeTableBrowserTab(int index, bool force = false);
     void changeTableBrowserTab(int index);
     void renameTableBrowserTab(int index);

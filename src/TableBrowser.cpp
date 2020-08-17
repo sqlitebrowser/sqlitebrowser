@@ -143,6 +143,11 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
     connect(ui->dataTable, &ExtendedTableWidget::openFileFromDropEvent, this, &TableBrowser::requestFileOpen);
     connect(ui->dataTable, &ExtendedTableWidget::selectedRowsToBeDeleted, this, &TableBrowser::deleteRecord);
 
+    connect(ui->actionRefresh, &QAction::triggered, this, [this]() {
+        db->updateSchema();
+        updateTable();
+    });
+
     connect(ui->fontComboBox, &QFontComboBox::currentFontChanged, this, [this](const QFont &font) {
         modifyFormat([font](CondFormat& format) { format.setFontFamily(font.family()); });
     });
@@ -378,9 +383,12 @@ void TableBrowser::setSettings(const sqlb::ObjectIdentifier& table, const Browse
 void TableBrowser::setStructure(QAbstractItemModel* model, const sqlb::ObjectIdentifier& old_table)
 {
     dbStructureModel = model;
-    ui->comboBrowseTable->setModel(model);
 
+    ui->comboBrowseTable->blockSignals(true);
+    ui->comboBrowseTable->setModel(model);
     ui->comboBrowseTable->setRootModelIndex(dbStructureModel->index(0, 0)); // Show the 'browsable' section of the db structure tree
+    ui->comboBrowseTable->blockSignals(false);
+
     int old_table_index = ui->comboBrowseTable->findText(QString::fromStdString(old_table.toDisplayString()));
     if(old_table_index == -1 && ui->comboBrowseTable->count())      // If the old table couldn't be found anymore but there is another table, select that
         ui->comboBrowseTable->setCurrentIndex(0);
@@ -421,9 +429,6 @@ void TableBrowser::updateTable()
         clear();
         return;
     }
-
-    // Update the schema first
-    db->updateSchema();
 
     // Reset the minimum width of the vertical header which could have been modified in updateFilter
     // or in headerClicked.
