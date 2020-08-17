@@ -1,5 +1,4 @@
 #include "TestRegex.h"
-#include "../sqlitedb.h"
 #include "../sqlitetablemodel.h"
 
 #include <QtTest/QTest>
@@ -74,12 +73,9 @@ void TestRegex::sqlQueryComments_data()
 
 void TestRegex::sqlQueryComments()
 {
-    DBBrowserDB db;
-    SqliteTableModel model(db);
-
     QFETCH(QString, dirtyQuery);
     QFETCH(QString, clearQuery);
 
-    model.removeCommentsFromQuery(dirtyQuery);
+    SqliteTableModel::removeCommentsFromQuery(dirtyQuery);
     QCOMPARE(dirtyQuery, clearQuery);
 }
