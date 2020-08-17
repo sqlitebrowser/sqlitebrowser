@@ -91,6 +91,7 @@ signals:
     void updatePlot(ExtendedTableWidget* tableWidget, SqliteTableModel* model, BrowseDataTableSettings* settings, bool keepOrResetSelection);
     void createView(std::string sql);
     void requestFileOpen(QString file);
+    void currentTableChanged(sqlb::ObjectIdentifier table);
 
 private slots:
     void clear();

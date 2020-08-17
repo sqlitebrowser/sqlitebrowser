@@ -396,6 +396,8 @@ void TableBrowser::setStructure(QAbstractItemModel* model, const sqlb::ObjectIde
         clear();
     else                                                            // Under normal circumstances just select the old table again
         ui->comboBrowseTable->setCurrentIndex(old_table_index);
+
+    emit currentTableChanged(currentlyBrowsedTableName());
 }
 
 QModelIndex TableBrowser::currentIndex() const
@@ -479,6 +481,9 @@ void TableBrowser::updateTable()
     // so this information can be needed any time.
     if(storedData.columnWidths.empty())
         m_columnsResized = false;
+
+    // Current table changed
+    emit currentTableChanged(tablename);
 
     // Build query and apply settings
     applyModelSettings(storedData, buildQuery(storedData, tablename));
