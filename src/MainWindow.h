@@ -80,8 +80,10 @@ private:
 
     DbStructureModel* dbStructureModel;
 
-    static const int MaxRecentFiles = 5;
-    QAction *recentFileActs[MaxRecentFiles];
+    static int MaxRecentFiles;
+    QVector<QAction*> recentFileActs;
+    QAction* clearRecentFilesAction;
+    QAction* recentSeparatorAct;
 
     EditDialog* editDock;
     PlotDock* plotDock;

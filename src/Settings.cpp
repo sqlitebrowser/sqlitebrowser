@@ -160,6 +160,10 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
     if(group == "General" && name == "recentFileList")
         return QStringList();
 
+    // General/maxRecentFiles?
+    if(group == "General" && name == "maxRecentFiles")
+        return 5;
+
     // General/language?
     if(group == "General" && name == "language")
         return QLocale::system().name();

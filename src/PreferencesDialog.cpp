@@ -206,6 +206,7 @@ void PreferencesDialog::loadSettings()
     ui->toolbarStyleComboSql->setCurrentIndex(Settings::getValue("General", "toolbarStyleSql").toInt());
     ui->toolbarStyleComboEditCell->setCurrentIndex(Settings::getValue("General", "toolbarStyleEditCell").toInt());
     ui->spinGeneralFontSize->setValue(Settings::getValue("General", "fontsize").toInt());
+    ui->spinMaxRecentFiles->setValue(Settings::getValue("General", "maxRecentFiles").toInt());
 }
 
 void PreferencesDialog::saveSettings()
@@ -337,6 +338,7 @@ void PreferencesDialog::saveSettings()
     Settings::setValue("General", "toolbarStyleEditCell", ui->toolbarStyleComboEditCell->currentIndex());
     Settings::setValue("General", "DBFileExtensions", m_dbFileExtensions.join(";;") );
     Settings::setValue("General", "fontsize", ui->spinGeneralFontSize->value());
+    Settings::setValue("General", "maxRecentFiles", ui->spinMaxRecentFiles->value());
 
     m_proxyDialog->saveSettings();
 

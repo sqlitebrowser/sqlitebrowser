@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>755</width>
-    <height>618</height>
+    <height>625</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -122,7 +122,7 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="0">
+       <item row="5" column="0">
         <widget class="QLabel" name="labelToolbarStyle">
          <property name="text">
           <string>Toolbar style</string>
@@ -132,7 +132,7 @@
          </property>
         </widget>
        </item>
-       <item row="6" column="1">
+       <item row="7" column="1">
         <widget class="QComboBox" name="toolbarStyleComboMain">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -182,7 +182,7 @@
          </item>
         </widget>
        </item>
-       <item row="7" column="1">
+       <item row="8" column="1">
         <widget class="QComboBox" name="toolbarStyleComboStructure">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -232,7 +232,7 @@
          </item>
         </widget>
        </item>
-       <item row="8" column="1">
+       <item row="9" column="1">
         <widget class="QComboBox" name="toolbarStyleComboBrowse">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -282,7 +282,7 @@
          </item>
         </widget>
        </item>
-       <item row="9" column="1">
+       <item row="10" column="1">
         <widget class="QComboBox" name="toolbarStyleComboSql">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -332,7 +332,7 @@
          </item>
         </widget>
        </item>
-       <item row="11" column="0">
+       <item row="12" column="0">
         <widget class="QLabel" name="labelUseRemotes">
          <property name="text">
           <string>Show remote options</string>
@@ -342,7 +342,7 @@
          </property>
         </widget>
        </item>
-       <item row="11" column="1">
+       <item row="12" column="1">
         <widget class="QCheckBox" name="checkUseRemotes">
          <property name="text">
           <string>enabled</string>
@@ -352,7 +352,7 @@
          </property>
         </widget>
        </item>
-       <item row="12" column="0">
+       <item row="13" column="0">
         <widget class="QLabel" name="labelUpdates">
          <property name="text">
           <string>Automatic &amp;updates</string>
@@ -362,14 +362,14 @@
          </property>
         </widget>
        </item>
-       <item row="12" column="1">
+       <item row="13" column="1">
         <widget class="QCheckBox" name="checkUpdates">
          <property name="text">
           <string>enabled</string>
          </property>
         </widget>
        </item>
-       <item row="13" column="0">
+       <item row="14" column="0">
         <widget class="QLabel" name="label_16">
          <property name="text">
           <string>DB file extensions</string>
@@ -379,14 +379,14 @@
          </property>
         </widget>
        </item>
-       <item row="13" column="1">
+       <item row="14" column="1">
         <widget class="QPushButton" name="buttonManageFileExtension">
          <property name="text">
           <string>Manage</string>
          </property>
         </widget>
        </item>
-       <item row="6" column="0">
+       <item row="7" column="0">
         <widget class="QLabel" name="labelMainToolBar">
          <property name="text">
           <string>Main Window</string>
@@ -399,7 +399,7 @@
          </property>
         </widget>
        </item>
-       <item row="7" column="0">
+       <item row="8" column="0">
         <widget class="QLabel" name="labelStructureToolBar">
          <property name="text">
           <string>Database Structure</string>
@@ -412,7 +412,7 @@
          </property>
         </widget>
        </item>
-       <item row="8" column="0">
+       <item row="9" column="0">
         <widget class="QLabel" name="labelBrowseToolBar">
          <property name="text">
           <string>Browse Data</string>
@@ -425,7 +425,7 @@
          </property>
         </widget>
        </item>
-       <item row="9" column="0">
+       <item row="10" column="0">
         <widget class="QLabel" name="labelSqlToolBar">
          <property name="text">
           <string>Execute SQL</string>
@@ -438,7 +438,7 @@
          </property>
         </widget>
        </item>
-       <item row="10" column="1">
+       <item row="11" column="1">
         <widget class="QComboBox" name="toolbarStyleComboEditCell">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -488,7 +488,7 @@
          </item>
         </widget>
        </item>
-       <item row="10" column="0">
+       <item row="11" column="0">
         <widget class="QLabel" name="labelEditCellToolBar">
          <property name="text">
           <string>Edit Database Cell</string>
@@ -564,6 +564,23 @@
        </item>
        <item row="3" column="1">
         <widget class="QSpinBox" name="spinGeneralFontSize"/>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="labelMaxRecentFiles">
+         <property name="text">
+          <string>Max Recent Files</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QSpinBox" name="spinMaxRecentFiles">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>40</number>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
