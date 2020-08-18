@@ -4,6 +4,7 @@
 #include "sqlitedb.h"
 
 #include <memory>
+#include <vector>
 #include <QMainWindow>
 
 struct BrowseDataTableSettings;
@@ -15,6 +16,8 @@ class PlotDock;
 class RemoteDock;
 class RunSql;
 class SqliteTableModel;
+class TableBrowser;
+class TableBrowserDock;
 
 class QDragEnterEvent;
 class QModelIndex;
@@ -29,6 +32,8 @@ class MainWindow;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
+friend TableBrowserDock;
 
 public:
     explicit MainWindow(QWidget* parent = nullptr);
@@ -88,6 +93,7 @@ private:
     EditDialog* editDock;
     PlotDock* plotDock;
     RemoteDock* remoteDock;
+    TableBrowser* currentTableBrowser;
     FindReplaceDialog* findReplaceDialog;
 
     std::unique_ptr<RunSql> execute_sql_worker;
@@ -121,6 +127,9 @@ private:
     // Identifier of the currently browsed table in the current data browser tab
     sqlb::ObjectIdentifier currentlyBrowsedTableName() const;
 
+    QList<TableBrowserDock*> allTableBrowserDocks() const;
+    std::vector<TableBrowser*> allTableBrowserWidgets() const;
+
 protected:
     void closeEvent(QCloseEvent *) override;
     void dragEnterEvent(QDragEnterEvent *event) override;
@@ -143,7 +152,7 @@ private slots:
     void changeTreeSelection();
     void fileNew();
     void fileNewInMemoryDatabase();
-    void populateTable();
+    void refreshTableBrowsers(bool force_refresh = false);
     bool fileClose();
     void createTable();
     void createIndex();
@@ -210,10 +219,10 @@ private slots:
     void renameSqlTab(int index);
     void showContextMenuSqlTabBar(const QPoint& pos);
 
-    int newTableBrowserTab(const sqlb::ObjectIdentifier& tableToBrowse = {});
-    void closeTableBrowserTab(int index, bool force = false);
-    void changeTableBrowserTab(int index);
-    void renameTableBrowserTab(int index);
+    TableBrowserDock* newTableBrowserTab(const sqlb::ObjectIdentifier& tableToBrowse = {});
+    void tableBrowserTabClosed();
+    void changeTableBrowserTab(TableBrowser* browser);
+    void renameTableBrowserTab(TableBrowserDock* dock);
     void showContextMenuTableBrowserTabBar(const QPoint& pos);
 };
 

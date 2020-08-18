@@ -127,6 +127,7 @@ ExtendedTableWidgetEditorDelegate::ExtendedTableWidgetEditorDelegate(QObject* pa
 
 QWidget* ExtendedTableWidgetEditorDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& /*option*/, const QModelIndex& index) const
 {
+    emit dataAboutToBeEdited(index);
 
     SqliteTableModel* m = qobject_cast<SqliteTableModel*>(const_cast<QAbstractItemModel*>(index.model()));
     sqlb::ForeignKeyClause fk = m->getForeignKeyClause(static_cast<size_t>(index.column()-1));
@@ -294,6 +295,7 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     // Create and set up delegate
     m_editorDelegate = new ExtendedTableWidgetEditorDelegate(this);
     setItemDelegate(m_editorDelegate);
+    connect(m_editorDelegate, &ExtendedTableWidgetEditorDelegate::dataAboutToBeEdited, this, &ExtendedTableWidget::dataAboutToBeEdited);
 
     // This is only for displaying the shortcut in the context menu.
     // An entry in keyPressEvent is still needed.

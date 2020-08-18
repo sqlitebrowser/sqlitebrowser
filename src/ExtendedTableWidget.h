@@ -40,6 +40,9 @@ public:
     void setEditorData(QWidget* editor, const QModelIndex& index) const override;
     void setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const override;
     void updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
+
+signals:
+    void dataAboutToBeEdited(QModelIndex index) const;
 };
 
 class ExtendedTableWidget : public QTableView
@@ -75,6 +78,7 @@ signals:
     void selectedRowsToBeDeleted();
     void editCondFormats(int column);
     void currentIndexChanged(const QModelIndex &current, const QModelIndex &previous);
+    void dataAboutToBeEdited(const QModelIndex& index);
     void requestUrlOrFileOpen(const QString& urlString);
 
 private:

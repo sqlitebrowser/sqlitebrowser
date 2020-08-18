@@ -174,6 +174,7 @@ set(SQLB_MOC_HDR
 	src/RemoteLocalFilesModel.h
 	src/RemoteCommitsModel.h
 	src/RemoteNetwork.h
+	src/TableBrowserDock.h
 )
 
 set(SQLB_SRC
@@ -236,6 +237,7 @@ set(SQLB_SRC
 	src/RemoteLocalFilesModel.cpp
 	src/RemoteCommitsModel.cpp
 	src/RemoteNetwork.cpp
+	src/TableBrowserDock.cpp
 )
 
 set(SQLB_FORMS

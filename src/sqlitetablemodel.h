@@ -27,7 +27,7 @@ class SqliteTableModel : public QAbstractTableModel
 #endif
 
 public:
-    explicit SqliteTableModel(DBBrowserDB& db, QObject *parent = nullptr, const QString& encoding = QString());
+    explicit SqliteTableModel(DBBrowserDB& db, QObject *parent = nullptr, const QString& encoding = QString(), bool force_wait = false);
     ~SqliteTableModel() override;
 
     /// reset to state after construction

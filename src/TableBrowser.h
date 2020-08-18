@@ -76,7 +76,7 @@ public:
 
 public slots:
     void setEnabled(bool enable);
-    void updateTable();
+    void refresh();
     void clearFilters();
     void reloadSettings();
     void setCurrentTable(const sqlb::ObjectIdentifier& name);
@@ -92,6 +92,8 @@ signals:
     void createView(std::string sql);
     void requestFileOpen(QString file);
     void currentTableChanged(sqlb::ObjectIdentifier table);
+    void foreignKeyClicked(sqlb::ObjectIdentifier table, std::string column, QByteArray value);
+    void dataAboutToBeEdited(const QModelIndex& index);
 
 private slots:
     void clear();

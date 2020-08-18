@@ -122,30 +122,27 @@ You can drag SQL statements from an object row and drop them into other applicat
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <property name="spacing">
-         <number>3</number>
+         <number>0</number>
         </property>
         <property name="leftMargin">
-         <number>3</number>
+         <number>0</number>
         </property>
         <property name="topMargin">
-         <number>3</number>
+         <number>0</number>
         </property>
         <property name="rightMargin">
-         <number>3</number>
+         <number>0</number>
         </property>
         <property name="bottomMargin">
-         <number>3</number>
+         <number>0</number>
         </property>
         <item>
-         <widget class="QTabWidget" name="tabBrowsers">
+         <widget class="QMainWindow" name="tabBrowsers">
           <property name="contextMenuPolicy">
            <enum>Qt::CustomContextMenu</enum>
           </property>
-          <property name="currentIndex">
-           <number>-1</number>
-          </property>
-          <property name="movable">
-           <bool>true</bool>
+          <property name="dockOptions">
+           <set>QMainWindow::AllowNestedDocks|QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks</set>
           </property>
          </widget>
         </item>
@@ -3597,54 +3594,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <hint type="sourcelabel">
      <x>-1</x>
      <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>518</x>
-     <y>314</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tabBrowsers</sender>
-   <signal>currentChanged(int)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>changeTableBrowserTab(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>336</x>
-     <y>347</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>518</x>
-     <y>314</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tabBrowsers</sender>
-   <signal>tabCloseRequested(int)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>closeTableBrowserTab(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>336</x>
-     <y>347</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>518</x>
-     <y>314</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tabBrowsers</sender>
-   <signal>tabBarDoubleClicked(int)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>renameTableBrowserTab(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>336</x>
-     <y>347</y>
     </hint>
     <hint type="destinationlabel">
      <x>518</x>

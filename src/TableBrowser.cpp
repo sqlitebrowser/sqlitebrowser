@@ -90,7 +90,7 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
                 index = num_items - 1;
         }
         ui->comboBrowseTable->setCurrentIndex(index);
-        updateTable();
+        refresh();
     });
 
     // This is a workaround needed for QDarkStyleSheet.
@@ -108,6 +108,7 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
     connect(ui->dataTable->filterHeader(), &FilterTableHeader::allCondFormatsCleared, this, &TableBrowser::clearAllCondFormats);
     connect(ui->dataTable->filterHeader(), &FilterTableHeader::condFormatsEdited, this, &TableBrowser::editCondFormats);
     connect(ui->dataTable, &ExtendedTableWidget::editCondFormats, this, &TableBrowser::editCondFormats);
+    connect(ui->dataTable, &ExtendedTableWidget::dataAboutToBeEdited, this, &TableBrowser::dataAboutToBeEdited);
 
     // Set up global filter
     connect(ui->editGlobalFilter, &FilterLineEdit::delayedTextChanged, this, [this](const QString& value) {
@@ -143,9 +144,18 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
     connect(ui->dataTable, &ExtendedTableWidget::openFileFromDropEvent, this, &TableBrowser::requestFileOpen);
     connect(ui->dataTable, &ExtendedTableWidget::selectedRowsToBeDeleted, this, &TableBrowser::deleteRecord);
 
+    connect(ui->dataTable, &ExtendedTableWidget::foreignKeyClicked, [this](const sqlb::ObjectIdentifier& table, const std::string& column, const QByteArray& value) {
+        // Just select the column that was just clicked instead of selecting an entire range which
+        // happens because of the Ctrl and Shift keys.
+        ui->dataTable->selectionModel()->select(ui->dataTable->currentIndex(), QItemSelectionModel::ClearAndSelect);
+
+        // Emit the foreign key clicked signal
+        emit foreignKeyClicked(table, column, value);
+    });
+
     connect(ui->actionRefresh, &QAction::triggered, this, [this]() {
         db->updateSchema();
-        updateTable();
+        refresh();
     });
 
     connect(ui->fontComboBox, &QFontComboBox::currentFontChanged, this, [this](const QFont &font) {
@@ -327,7 +337,7 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
     // Recreate the model
     if(m_model)
         delete m_model;
-    m_model = new SqliteTableModel(*db, this);
+    m_model = new SqliteTableModel(*db, this, QString(), true);
 
     // Connect slots
     connect(m_model, &SqliteTableModel::finishedFetch, this, &TableBrowser::fetchedData);
@@ -425,7 +435,7 @@ void TableBrowser::setEnabled(bool enable)
     updateInsertDeleteRecordButton();
 }
 
-void TableBrowser::updateTable()
+void TableBrowser::refresh()
 {
     // If the list of table names is empty, i.e. there are no tables to browse, clear the view
     // to make sure any left over data is removed and do not add any new information.
@@ -1208,7 +1218,7 @@ void TableBrowser::showRecordPopupMenu(const QPoint& pos)
 
     connect(adjustRowHeightAction, &QAction::toggled, [&](bool checked) {
         m_adjustRows = checked;
-        updateTable();
+        refresh();
     });
 
     popupRecordMenu.exec(ui->dataTable->verticalHeader()->mapToGlobal(pos));
@@ -1235,7 +1245,7 @@ void TableBrowser::insertValues()
     std::vector<std::string> pseudo_pk = m_model->hasPseudoPk() ? m_model->pseudoPk() : std::vector<std::string>();
     AddRecordDialog dialog(*db, currentlyBrowsedTableName(), this, pseudo_pk);
     if (dialog.exec())
-        updateTable();
+        refresh();
 }
 
 void TableBrowser::deleteRecord()
@@ -1355,7 +1365,7 @@ void TableBrowser::editDisplayFormat()
         emit projectModified();
 
         // Refresh view
-        updateTable();
+        refresh();
     }
 }
 
@@ -1452,8 +1462,8 @@ void TableBrowser::jumpToRow(const sqlb::ObjectIdentifier& table, std::string co
     setCurrentTable(table);
 
     // Set filter
-    ui->dataTable->filterHeader()->setFilter(static_cast<size_t>(column_index-obj->fields.begin()+1), QString("=") + value);
-    updateTable();
+    m_settings[table].filterValues[static_cast<size_t>(column_index-obj->fields.begin()+1)] = value;
+    refresh();
 }
 
 static QString replaceInValue(QString value, const QString& find, const QString& replace, Qt::MatchFlags flags)

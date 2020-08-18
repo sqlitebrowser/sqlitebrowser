@@ -25,6 +25,7 @@ HEADERS += \
     RemoteCommitsModel.h \
     RemoteLocalFilesModel.h \
     RemoteNetwork.h \
+    TableBrowserDock.h \
     sqlitedb.h \
     MainWindow.h \
     EditIndexDialog.h \
@@ -89,6 +90,7 @@ SOURCES += \
     RemoteCommitsModel.cpp \
     RemoteLocalFilesModel.cpp \
     RemoteNetwork.cpp \
+    TableBrowserDock.cpp \
     sqlitedb.cpp \
     MainWindow.cpp \
     EditIndexDialog.cpp \

@@ -152,7 +152,6 @@ void DbStructureModel::reloadData()
     if(!m_db.isOpen())
     {
         endResetModel();
-        emit structureUpdated();
         return;
     }
 
@@ -197,7 +196,6 @@ void DbStructureModel::reloadData()
 
     // Refresh the view
     endResetModel();
-    emit structureUpdated();
 }
 
 QStringList DbStructureModel::mimeTypes() const

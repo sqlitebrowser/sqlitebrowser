@@ -20,7 +20,7 @@
 
 using json = nlohmann::json;
 
-SqliteTableModel::SqliteTableModel(DBBrowserDB& db, QObject* parent, const QString& encoding)
+SqliteTableModel::SqliteTableModel(DBBrowserDB& db, QObject* parent, const QString& encoding, bool force_wait)
     : QAbstractTableModel(parent)
     , m_db(db)
     , m_lifeCounter(0)
@@ -31,7 +31,7 @@ SqliteTableModel::SqliteTableModel(DBBrowserDB& db, QObject* parent, const QStri
     reloadSettings();
 
     worker = new RowLoader(
-        [this](){ return m_db.get(tr("reading rows")); },
+        [this, force_wait](){ return m_db.get(tr("reading rows"), force_wait); },
         [this](QString stmt){ return m_db.logSQL(stmt, kLogMsg_App); },
         m_headers, m_mutexDataCache, m_cache
         );
