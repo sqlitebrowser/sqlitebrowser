@@ -3149,7 +3149,7 @@ void MainWindow::switchToBrowseDataTab(sqlb::ObjectIdentifier tableToBrowse)
         tableToBrowse.setName(ui->dbTreeWidget->model()->data(ui->dbTreeWidget->currentIndex().sibling(ui->dbTreeWidget->currentIndex().row(), DbStructureModel::ColumnName), Qt::EditRole).toString().toStdString());
     }
 
-    newTableBrowserTab(tableToBrowse);
+    TableBrowserDock* d = newTableBrowserTab(tableToBrowse);
 
     if (ui->mainTab->indexOf(ui->browser) == -1)
         ui->mainTab->addTab(ui->browser, ui->browser->accessibleName());
@@ -3158,6 +3158,10 @@ void MainWindow::switchToBrowseDataTab(sqlb::ObjectIdentifier tableToBrowse)
     ui->mainTab->blockSignals(true);
     ui->mainTab->setCurrentWidget(ui->browser);
     ui->mainTab->blockSignals(false);
+
+    // Bring new tab to foreground
+    Application::processEvents();   // For some reason this is required for raise() to work here.
+    d->raise();
 }
 
 void MainWindow::copyCurrentCreateStatement()
