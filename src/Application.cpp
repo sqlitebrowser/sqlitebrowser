@@ -78,7 +78,7 @@ Application::Application(int& argc, char** argv) :
 
     // Parse command line
     QString fileToOpen;
-    QString tableToBrowse;
+    std::vector<QString> tableToBrowse;
     QStringList sqlToExecute;
     bool readOnly = false;
     m_dontShowMainWindow = false;
@@ -115,7 +115,7 @@ Application::Application(int& argc, char** argv) :
             if(++i >= arguments().size())
                 qWarning() << qPrintable(tr("The -t/--table option requires an argument"));
             else
-                tableToBrowse = arguments().at(i);
+                tableToBrowse.push_back(arguments().at(i));
         } else if(arguments().at(i) == "-q" || arguments().at(i) == "--quit") {
             m_dontShowMainWindow = true;
         } else if(arguments().at(i) == "-R" || arguments().at(i) == "--read-only") {
@@ -178,8 +178,8 @@ Application::Application(int& argc, char** argv) :
                 m_mainWindow->refresh();
 
             // Jump to table if the -t/--table parameter was set
-            if(!tableToBrowse.isEmpty())
-                m_mainWindow->switchToBrowseDataTab(sqlb::ObjectIdentifier("main", tableToBrowse.toStdString()));
+            for(const QString& t : tableToBrowse)
+                m_mainWindow->switchToBrowseDataTab(sqlb::ObjectIdentifier("main", t.toStdString()));
         }
     }
 }
