@@ -3,7 +3,6 @@
 [![Wiki][wiki-img]][wiki]
 [![Build Status][travis-img]][travis]
 [![Join the chat at https://gitter.im/sqlitebrowser/sqlitebrowser][gitter-img]][gitter]
-[![Join the chat at https://join.slack.com/t/db4s/shared_invite/enQtMzc3MzY5OTU4NDgzLWRlYjk0ZmE5ZDEzYWVmNDQxYTYxNmJjNWVkMjI3ZmVjZTY2NDBjODY3YzNhNTNmZDVlNWI2ZGFjNTk5MjJkYmU][slack-img]][slack]
 [![Download][download-img]][download]
 [![Qt][qt-img]][qt]
 [![Coverity][coverity-img]][coverity]
@@ -47,7 +46,7 @@ https://github.com/sqlitebrowser/sqlitebrowser/wiki.
 
 ## Nightly builds
 
-Download nightly builds for Windows and OSX here:
+Download nightly builds for Windows and macOS here:
 
 * https://nightlies.sqlitebrowser.org/latest
 
@@ -188,7 +187,7 @@ or this command:
 
 ## Compiling
 
-Instructions for compiling on Windows, OSX, Linux, and FreeBSD are
+Instructions for compiling on Windows, macOS, Linux, and FreeBSD are
 in [BUILDING](BUILDING.md).
 
 ## Twitter
