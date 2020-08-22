@@ -651,11 +651,10 @@ void MainWindow::populateStructure(const std::vector<sqlb::ObjectIdentifier>& ol
     // Resize SQL column to fit contents
     ui->dbTreeWidget->resizeColumnToContents(DbStructureModel::ColumnSQL);
     ui->treeSchemaDock->resizeColumnToContents(DbStructureModel::ColumnSQL);
+
     // Resize also the Name column in the Dock since it has usually
     // short content and there is little space there.
     ui->treeSchemaDock->resizeColumnToContents(DbStructureModel::ColumnName);
-
-
 }
 
 void MainWindow::refreshTableBrowsers(bool force_refresh)
@@ -2247,11 +2246,6 @@ void MainWindow::reloadSettings()
 
     // Refresh view
     db.structureUpdated();
-    std::vector<sqlb::ObjectIdentifier> old_tables;
-    for(const auto& t : allTableBrowserWidgets())
-        old_tables.push_back(t->currentlyBrowsedTableName());
-    dbStructureModel->reloadData();
-    populateStructure(old_tables);
     refreshTableBrowsers();
 
     // Hide or show the remote dock as needed

@@ -700,47 +700,50 @@ bool DBBrowserDB::create ( const QString & db)
 
 bool DBBrowserDB::close()
 {
+    // Do nothing if no file is opened
+    if(!_db)
+        return true;
+
     waitForDbRelease();
 
-    if(_db)
+    if (getDirty())
     {
-        if (getDirty())
+        // In-memory databases can't be saved to disk. So the need another text than regular databases.
+        // Note that the QMessageBox::Yes option in the :memory: case and the QMessageBox::No option in the regular case are
+        // doing the same job: proceeding but not saving anything.
+        QMessageBox::StandardButton reply;
+        if(curDBFilename == ":memory:")
         {
-            // In-memory databases can't be saved to disk. So the need another text than regular databases.
-            // Note that the QMessageBox::Yes option in the :memory: case and the QMessageBox::No option in the regular case are
-            // doing the same job: proceeding but not saving anything.
-            QMessageBox::StandardButton reply;
-            if(curDBFilename == ":memory:")
-            {
-                reply = QMessageBox::question(nullptr,
-                                              QApplication::applicationName(),
-                                              tr("Do you really want to close this temporary database? All data will be lost."),
-                                              QMessageBox::Yes | QMessageBox::Cancel);
-            } else {
-                reply = QMessageBox::question(nullptr,
-                                              QApplication::applicationName(),
-                                              tr("Do you want to save the changes made to the database file %1?").arg(curDBFilename),
-                                              QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
-            }
-
-            // If the user clicked the cancel button stop here and return false
-            if(reply == QMessageBox::Cancel)
-                return false;
-
-            // If he didn't it was either yes or no
-            if(reply == QMessageBox::Save)
-                releaseAllSavepoints();
-            else
-                revertAll(); //not really necessary, I think... but will not hurt.
+            reply = QMessageBox::question(nullptr,
+                                          QApplication::applicationName(),
+                                          tr("Do you really want to close this temporary database? All data will be lost."),
+                                          QMessageBox::Yes | QMessageBox::Cancel);
+        } else {
+            reply = QMessageBox::question(nullptr,
+                                          QApplication::applicationName(),
+                                          tr("Do you want to save the changes made to the database file %1?").arg(curDBFilename),
+                                          QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
         }
-        if(sqlite3_close(_db) != SQLITE_OK)
-            qWarning() << tr("Database didn't close correctly, probably still busy");
-        _db = nullptr;
-        curDBFilename.clear();
+
+        // If the user clicked the cancel button stop here and return false
+        if(reply == QMessageBox::Cancel)
+            return false;
+
+        // If he didn't it was either yes or no
+        if(reply == QMessageBox::Save)
+            releaseAllSavepoints();
+        else
+            revertAll(); //not really necessary, I think... but will not hurt.
     }
 
+    if(sqlite3_close(_db) != SQLITE_OK)
+        qWarning() << tr("Database didn't close correctly, probably still busy");
+
+    _db = nullptr;
+    curDBFilename.clear();
     schemata.clear();
     savepointList.clear();
+
     emit dbChanged(getDirty());
     emit structureUpdated();
 
