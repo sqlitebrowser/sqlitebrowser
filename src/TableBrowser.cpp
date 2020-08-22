@@ -212,8 +212,11 @@ TableBrowser::TableBrowser(QWidget* parent) :
 
     connect(ui->dataTable, &ExtendedTableWidget::currentIndexChanged, this, [this](const QModelIndex &current, const QModelIndex &) {
             // Get cell current format for updating the format toolbar values. Block signals, so the format change is not reapplied.
+            QString font_string = m_model->data(current, Qt::FontRole).toString();
             QFont font;
-            font.fromString(m_model->data(current, Qt::FontRole).toString());
+            if(!font_string.isEmpty())
+                font.fromString(font_string);
+
             ui->fontComboBox->blockSignals(true);
             ui->fontComboBox->setCurrentFont(font);
             ui->fontComboBox->blockSignals(false);

@@ -3,6 +3,7 @@
 
 #include <QAbstractTableModel>
 #include <QColor>
+#include <QFont>
 
 #include <map>
 #include <memory>
@@ -235,6 +236,7 @@ private:
     QColor m_nullBgColour;
     QColor m_binFgColour;
     QColor m_binBgColour;
+    QFont m_font;
     int m_symbolLimit;
     bool m_imagePreviewEnabled;
 
