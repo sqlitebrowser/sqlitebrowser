@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>755</width>
-    <height>594</height>
+    <height>618</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -122,7 +122,7 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
+       <item row="4" column="0">
         <widget class="QLabel" name="labelToolbarStyle">
          <property name="text">
           <string>Toolbar style</string>
@@ -132,7 +132,7 @@
          </property>
         </widget>
        </item>
-       <item row="5" column="1">
+       <item row="6" column="1">
         <widget class="QComboBox" name="toolbarStyleComboMain">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -182,7 +182,7 @@
          </item>
         </widget>
        </item>
-       <item row="6" column="1">
+       <item row="7" column="1">
         <widget class="QComboBox" name="toolbarStyleComboStructure">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -232,7 +232,7 @@
          </item>
         </widget>
        </item>
-       <item row="7" column="1">
+       <item row="8" column="1">
         <widget class="QComboBox" name="toolbarStyleComboBrowse">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -282,7 +282,7 @@
          </item>
         </widget>
        </item>
-       <item row="8" column="1">
+       <item row="9" column="1">
         <widget class="QComboBox" name="toolbarStyleComboSql">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -332,7 +332,7 @@
          </item>
         </widget>
        </item>
-       <item row="10" column="0">
+       <item row="11" column="0">
         <widget class="QLabel" name="labelUseRemotes">
          <property name="text">
           <string>Show remote options</string>
@@ -342,7 +342,7 @@
          </property>
         </widget>
        </item>
-       <item row="10" column="1">
+       <item row="11" column="1">
         <widget class="QCheckBox" name="checkUseRemotes">
          <property name="text">
           <string>enabled</string>
@@ -352,7 +352,7 @@
          </property>
         </widget>
        </item>
-       <item row="11" column="0">
+       <item row="12" column="0">
         <widget class="QLabel" name="labelUpdates">
          <property name="text">
           <string>Automatic &amp;updates</string>
@@ -362,14 +362,14 @@
          </property>
         </widget>
        </item>
-       <item row="11" column="1">
+       <item row="12" column="1">
         <widget class="QCheckBox" name="checkUpdates">
          <property name="text">
           <string>enabled</string>
          </property>
         </widget>
        </item>
-       <item row="12" column="0">
+       <item row="13" column="0">
         <widget class="QLabel" name="label_16">
          <property name="text">
           <string>DB file extensions</string>
@@ -379,14 +379,14 @@
          </property>
         </widget>
        </item>
-       <item row="12" column="1">
+       <item row="13" column="1">
         <widget class="QPushButton" name="buttonManageFileExtension">
          <property name="text">
           <string>Manage</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="0">
+       <item row="6" column="0">
         <widget class="QLabel" name="labelMainToolBar">
          <property name="text">
           <string>Main Window</string>
@@ -399,7 +399,7 @@
          </property>
         </widget>
        </item>
-       <item row="6" column="0">
+       <item row="7" column="0">
         <widget class="QLabel" name="labelStructureToolBar">
          <property name="text">
           <string>Database Structure</string>
@@ -412,7 +412,7 @@
          </property>
         </widget>
        </item>
-       <item row="7" column="0">
+       <item row="8" column="0">
         <widget class="QLabel" name="labelBrowseToolBar">
          <property name="text">
           <string>Browse Data</string>
@@ -425,7 +425,7 @@
          </property>
         </widget>
        </item>
-       <item row="8" column="0">
+       <item row="9" column="0">
         <widget class="QLabel" name="labelSqlToolBar">
          <property name="text">
           <string>Execute SQL</string>
@@ -438,7 +438,7 @@
          </property>
         </widget>
        </item>
-       <item row="9" column="1">
+       <item row="10" column="1">
         <widget class="QComboBox" name="toolbarStyleComboEditCell">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -488,7 +488,7 @@
          </item>
         </widget>
        </item>
-       <item row="9" column="0">
+       <item row="10" column="0">
         <widget class="QLabel" name="labelEditCellToolBar">
          <property name="text">
           <string>Edit Database Cell</string>
@@ -548,6 +548,22 @@
           <cstring>toolbarStyleComboStructure</cstring>
          </property>
         </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_27">
+         <property name="toolTip">
+          <string>This sets the font size for all UI elements which do not have their own font size option.</string>
+         </property>
+         <property name="text">
+          <string>Font size</string>
+         </property>
+         <property name="buddy">
+          <cstring>spinGeneralFontSize</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QSpinBox" name="spinGeneralFontSize"/>
        </item>
       </layout>
      </widget>
@@ -657,6 +673,19 @@
             </property>
            </item>
           </widget>
+         </item>
+         <item row="5" column="0">
+          <widget class="QLabel" name="label_26">
+           <property name="text">
+            <string>Database structure font size</string>
+           </property>
+           <property name="buddy">
+            <cstring>spinStructureFontSize</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="1">
+          <widget class="QSpinBox" name="spinStructureFontSize"/>
          </item>
         </layout>
        </item>
@@ -1890,6 +1919,7 @@ Can be set to 0 for disabling completion.</string>
   <tabstop>setLocationButton</tabstop>
   <tabstop>languageComboBox</tabstop>
   <tabstop>appStyleCombo</tabstop>
+  <tabstop>spinGeneralFontSize</tabstop>
   <tabstop>toolbarStyleComboMain</tabstop>
   <tabstop>toolbarStyleComboStructure</tabstop>
   <tabstop>toolbarStyleComboBrowse</tabstop>
@@ -1903,6 +1933,7 @@ Can be set to 0 for disabling completion.</string>
   <tabstop>checkHideSchemaLinebreaks</tabstop>
   <tabstop>spinPrefetchSize</tabstop>
   <tabstop>defaultFieldTypeComboBox</tabstop>
+  <tabstop>spinStructureFontSize</tabstop>
   <tabstop>comboDataBrowserFont</tabstop>
   <tabstop>spinDataBrowserFontSize</tabstop>
   <tabstop>spinSymbolLimit</tabstop>
@@ -1956,8 +1987,8 @@ Can be set to 0 for disabling completion.</string>
    <slot>addExtension()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>571</x>
-     <y>97</y>
+     <x>732</x>
+     <y>96</y>
     </hint>
     <hint type="destinationlabel">
      <x>245</x>
@@ -1972,8 +2003,8 @@ Can be set to 0 for disabling completion.</string>
    <slot>removeExtension()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>571</x>
-     <y>135</y>
+     <x>732</x>
+     <y>125</y>
     </hint>
     <hint type="destinationlabel">
      <x>245</x>
@@ -2004,8 +2035,8 @@ Can be set to 0 for disabling completion.</string>
    <slot>chooseLocation()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>571</x>
-     <y>114</y>
+     <x>732</x>
+     <y>106</y>
     </hint>
     <hint type="destinationlabel">
      <x>294</x>
@@ -2020,8 +2051,8 @@ Can be set to 0 for disabling completion.</string>
    <slot>activateRemoteTab(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>231</x>
-     <y>393</y>
+     <x>301</x>
+     <y>503</y>
     </hint>
     <hint type="destinationlabel">
      <x>382</x>
@@ -2084,12 +2115,12 @@ Can be set to 0 for disabling completion.</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>642</x>
-     <y>450</y>
+     <x>733</x>
+     <y>444</y>
     </hint>
     <hint type="destinationlabel">
-     <x>642</x>
-     <y>480</y>
+     <x>733</x>
+     <y>474</y>
     </hint>
    </hints>
   </connection>

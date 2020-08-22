@@ -1,4 +1,5 @@
 #include "Settings.h"
+#include "Application.h"
 
 #include <QApplication>
 #include <QDir>
@@ -84,6 +85,10 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
     // db/defaultsqltext?
     if(group == "db" && name == "defaultsqltext")
         return QString();
+
+    // db/fontsize?
+    if(group == "db" && name == "fontsize")
+        return 10;
 
     // exportcsv/firstrowheader?
     if(group == "exportcsv" && name == "firstrowheader")
@@ -185,6 +190,10 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
 
     if(group == "General" && name == "DBFileExtensions")
         return QObject::tr("SQLite database files (*.db *.sqlite *.sqlite3 *.db3)");
+
+    // General/fontsize
+    if(group == "General" && name == "fontsize")
+        return qobject_cast<Application*>(qApp)->defaultFontSize();
 
     // checkversion group?
     if(group == "checkversion")
