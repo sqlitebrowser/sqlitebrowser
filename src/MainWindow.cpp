@@ -315,11 +315,37 @@ void MainWindow::init()
     }
 
     ui->viewMenu->addSeparator();
-    QAction* resetLayoutAction = ui->viewMenu->addAction(tr("Reset Window Layout"));
+
+    QMenu* layoutMenu = new QMenu(tr("Window Layout"), this);
+    ui->viewMenu->addMenu(layoutMenu);
+
+    QAction* resetLayoutAction = layoutMenu->addAction(tr("Reset Window Layout"));
     resetLayoutAction->setShortcut(QKeySequence(tr("Alt+0")));
     connect(resetLayoutAction, &QAction::triggered, [=]() {
             restoreState(defaultWindowState);
             restoreOpenTabs(defaultOpenTabs);
+        });
+    QAction* simplifyLayoutAction = layoutMenu->addAction(tr("Simplify Window Layout"));
+    simplifyLayoutAction->setShortcut(QKeySequence(tr("Shift+Alt+0")));
+    connect(simplifyLayoutAction, &QAction::triggered, [=]() {
+            toggleTabVisible(ui->pragmas, false);
+            ui->dockLog->hide();
+            ui->dockPlot->hide();
+            ui->dockSchema->hide();
+            ui->dockEdit->hide();
+            ui->dockRemote->hide();
+        });
+    QAction* atBottomLayoutAction = layoutMenu->addAction(tr("Dock Windows at Bottom"));
+    connect(atBottomLayoutAction, &QAction::triggered, [=]() {
+            moveDocksTo(Qt::BottomDockWidgetArea);
+        });
+    QAction* atLeftLayoutAction = layoutMenu->addAction(tr("Dock Windows at Left Side"));
+    connect(atLeftLayoutAction, &QAction::triggered, [=]() {
+            moveDocksTo(Qt::LeftDockWidgetArea);
+        });
+    QAction* atTopLayoutAction = layoutMenu->addAction(tr("Dock Windows at Top"));
+    connect(atTopLayoutAction, &QAction::triggered, [=]() {
+            moveDocksTo(Qt::TopDockWidgetArea);
         });
 
     // Set Alt+[1-4] shortcuts for opening the corresponding tab in that position.
@@ -3412,4 +3438,20 @@ void MainWindow::openUrlOrFile(const QString& urlString)
 
     } else
         showStatusMessage5s(tr("Value is not a valid URL or filename: %1").arg(url.errorString()));
+}
+
+void MainWindow::focusSqlEditor()
+{
+    SqlExecutionArea* sqlArea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
+    if(sqlArea)
+        sqlArea->getEditor()->setFocus();
+}
+
+void MainWindow::moveDocksTo(Qt::DockWidgetArea area)
+{
+    addDockWidget(area, ui->dockEdit);
+    addDockWidget(area, ui->dockLog);
+    tabifyDockWidget(ui->dockLog, ui->dockPlot);
+    tabifyDockWidget(ui->dockLog, ui->dockSchema);
+    tabifyDockWidget(ui->dockLog, ui->dockRemote);
 }
