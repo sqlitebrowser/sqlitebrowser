@@ -359,9 +359,9 @@ void TableBrowser::reset()
 
 sqlb::ObjectIdentifier TableBrowser::currentlyBrowsedTableName() const
 {
-    return sqlb::ObjectIdentifier(ui->comboBrowseTable->model()->data(dbStructureModel->index(ui->comboBrowseTable->currentIndex(),
-                                                                                              DbStructureModel::ColumnSchema,
-                                                                                              ui->comboBrowseTable->rootModelIndex())).toString().toStdString(),
+    return sqlb::ObjectIdentifier(dbStructureModel->index(ui->comboBrowseTable->currentIndex(),
+                                                          DbStructureModel::ColumnSchema,
+                                                          ui->comboBrowseTable->rootModelIndex()).data().toString().toStdString(),
                                   ui->comboBrowseTable->currentData(Qt::EditRole).toString().toStdString());  // Use the edit role here to make sure we actually get the
                                                                                                               // table name without the schema bit in front of it.
 }
@@ -376,13 +376,13 @@ void TableBrowser::setSettings(const sqlb::ObjectIdentifier& table, const Browse
     m_settings[table] = table_settings;
 }
 
-void TableBrowser::setStructure(QAbstractItemModel* model, const QString& old_table)
+void TableBrowser::setStructure(QAbstractItemModel* model, const sqlb::ObjectIdentifier& old_table)
 {
     dbStructureModel = model;
     ui->comboBrowseTable->setModel(model);
 
     ui->comboBrowseTable->setRootModelIndex(dbStructureModel->index(0, 0)); // Show the 'browsable' section of the db structure tree
-    int old_table_index = ui->comboBrowseTable->findText(old_table);
+    int old_table_index = ui->comboBrowseTable->findText(QString::fromStdString(old_table.toDisplayString()));
     if(old_table_index == -1 && ui->comboBrowseTable->count())      // If the old table couldn't be found anymore but there is another table, select that
         ui->comboBrowseTable->setCurrentIndex(0);
     else if(old_table_index == -1)                                  // If there aren't any tables to be selected anymore, clear the table view
