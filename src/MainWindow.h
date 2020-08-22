@@ -139,7 +139,6 @@ private:
     sqlb::ObjectIdentifier currentlyBrowsedTableName() const;
 
     QList<TableBrowserDock*> allTableBrowserDocks() const;
-    std::vector<TableBrowser*> allTableBrowserWidgets() const;
 
 protected:
     void closeEvent(QCloseEvent *) override;
@@ -235,9 +234,7 @@ private slots:
 
     TableBrowserDock* newTableBrowserTab(const sqlb::ObjectIdentifier& tableToBrowse = {});
     void tableBrowserTabClosed();
-    void changeTableBrowserTab(TableBrowser* browser);
-    void renameTableBrowserTab(TableBrowserDock* dock);
-    void showContextMenuTableBrowserTabBar(const QPoint& pos);
+    void changeTableBrowserTab(TableBrowserDock* dock);
 };
 
 #endif
