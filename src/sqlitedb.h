@@ -77,7 +77,7 @@ public:
 
       \param attached_as the alias-name as witch a additional database file has been attached to the connection
     **/
-    bool detach(const QString& attached_as);
+    bool detach(const std::string& attached_as);
     bool create ( const QString & db);
     bool close();
 

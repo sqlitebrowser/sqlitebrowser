@@ -274,7 +274,7 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
 /**
   detaches a previously attached database identified with its alias-name
 **/
-bool DBBrowserDB::detach(const QString& attached_as)
+bool DBBrowserDB::detach(const std::string& attached_as)
 {
     if(!_db)
     {
@@ -284,7 +284,7 @@ bool DBBrowserDB::detach(const QString& attached_as)
     waitForDbRelease();
 
     // dettach database
-    if(!executeSQL("DETACH " + sqlb::escapeIdentifier(attached_as.toStdString()), false))
+    if(!executeSQL("DETACH " + sqlb::escapeIdentifier(attached_as) + ";", false))
     {
         QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
         return false;

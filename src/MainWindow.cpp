@@ -3192,18 +3192,14 @@ void MainWindow::fileDetachTreeSchemaDock()
 
 void MainWindow::fileDetachTreeViewSelected(QTreeView* treeView)
 {
+    // Cancel here if there is no selection
     if (!treeView || !treeView->selectionModel()->hasSelection())
     {
         return;
     }
 
-    sqlb::ObjectIdentifier attachedDatabase = sqlb::ObjectIdentifier();
     // get the currently selected attached database from treeView parameter
-    // Cancel here if there is no selection
-    attachedDatabase.setSchema(treeView->model()->data(treeView->currentIndex().sibling(treeView->currentIndex().row(), DbStructureModel::ColumnSchema), Qt::EditRole).toString().toStdString());
-    attachedDatabase.setName(treeView->model()->data(treeView->currentIndex().sibling(treeView->currentIndex().row(), DbStructureModel::ColumnName), Qt::EditRole).toString().toStdString());
-
-    QString attached_as = QString::fromStdString(attachedDatabase.name());
+    std::string attached_as = treeView->model()->data(treeView->currentIndex().sibling(treeView->currentIndex().row(), DbStructureModel::ColumnSchema), Qt::EditRole).toString().toStdString();
     if (db.detach(attached_as))
     {
         isProjectModified = true;
