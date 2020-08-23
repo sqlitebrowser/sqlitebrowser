@@ -5252,7 +5252,7 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="2394"/>
         <source>Choose a project file to open</source>
-        <translation>Coisir un fichier de projet à ouvrir</translation>
+        <translation>Choisir un fichier de projet à ouvrir</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2526"/>
