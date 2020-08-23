@@ -154,6 +154,11 @@ Application::Application(int& argc, char** argv) :
         }
     }
 
+    if(m_dontShowMainWindow) {
+        m_mainWindow = nullptr;
+        return;
+    }
+
     // Show main window
     m_mainWindow = new MainWindow();
     m_mainWindow->show();
@@ -186,7 +191,8 @@ Application::Application(int& argc, char** argv) :
 
 Application::~Application()
 {
-    delete m_mainWindow;
+    if(m_mainWindow)
+        delete m_mainWindow;
 }
 
 bool Application::event(QEvent* event)
