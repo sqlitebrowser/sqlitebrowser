@@ -185,6 +185,8 @@ Application::Application(int& argc, char** argv) :
             // Jump to table if the -t/--table parameter was set
             for(const QString& t : tableToBrowse)
                 m_mainWindow->switchToBrowseDataTab(sqlb::ObjectIdentifier("main", t.toStdString()));
+            if(!tableToBrowse.empty())
+                m_mainWindow->refresh();
         }
     }
 }
