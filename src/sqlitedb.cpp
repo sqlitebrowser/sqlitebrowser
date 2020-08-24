@@ -271,6 +271,33 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
     }
 }
 
+/**
+  detaches a previously attached database identified with its alias-name
+**/
+bool DBBrowserDB::detach(const QString& attached_as)
+{
+    if(!_db)
+    {
+        return false;
+    }
+
+    waitForDbRelease();
+
+    // dettach database
+    if(!executeSQL("DETACH " + sqlb::escapeIdentifier(attached_as.toStdString()), false))
+    {
+        QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
+        return false;
+    }
+
+
+    // Update schema to load database schema of the newly attached database
+    updateSchema();
+
+    return true;
+}
+
+
 bool DBBrowserDB::attach(const QString& filePath, QString attach_as)
 {
     if(!_db)
@@ -278,31 +305,19 @@ bool DBBrowserDB::attach(const QString& filePath, QString attach_as)
 
     waitForDbRelease();
 
-    // Check if this file has already been attached and abort if this is the case
-    QFileInfo fi(filePath);
-    bool ok = executeSQL("PRAGMA database_list", false, true, [fi](int, std::vector<QByteArray> values, std::vector<QByteArray>) -> bool {
-        QFileInfo path(values.at(2));
-        if(fi == path)
-        {
-            QString schema = values.at(1);
-            QMessageBox::information(nullptr, qApp->applicationName(), tr("This database has already been attached. Its schema name is '%1'.").arg(schema));
-            return true;
-        }
-
-        return false;
-    });
-
-    if(ok == false)
-        return false;
+    // In shared cache mode, attempting to attach the same database file more than once results in an error.
+    // So no need for a check if this file has already been attached and abort if this is the case
 
     // Ask for name to be given to the attached database if none was provided
     if(attach_as.isEmpty())
+    {
         attach_as = QInputDialog::getText(nullptr,
                                           qApp->applicationName(),
                                           tr("Please specify the database name under which you want to access the attached database"),
                                           QLineEdit::Normal,
                                           QFileInfo(filePath).baseName()
                                           ).trimmed();
+    }
     if(attach_as.isNull())
         return false;
 
@@ -685,46 +700,50 @@ bool DBBrowserDB::create ( const QString & db)
 
 bool DBBrowserDB::close()
 {
+    // Do nothing if no file is opened
+    if(!_db)
+        return true;
+
     waitForDbRelease();
 
-    if(_db)
+    if (getDirty())
     {
-        if (getDirty())
+        // In-memory databases can't be saved to disk. So the need another text than regular databases.
+        // Note that the QMessageBox::Yes option in the :memory: case and the QMessageBox::No option in the regular case are
+        // doing the same job: proceeding but not saving anything.
+        QMessageBox::StandardButton reply;
+        if(curDBFilename == ":memory:")
         {
-            // In-memory databases can't be saved to disk. So the need another text than regular databases.
-            // Note that the QMessageBox::Yes option in the :memory: case and the QMessageBox::No option in the regular case are
-            // doing the same job: proceeding but not saving anything.
-            QMessageBox::StandardButton reply;
-            if(curDBFilename == ":memory:")
-            {
-                reply = QMessageBox::question(nullptr,
-                                              QApplication::applicationName(),
-                                              tr("Do you really want to close this temporary database? All data will be lost."),
-                                              QMessageBox::Yes | QMessageBox::Cancel);
-            } else {
-                reply = QMessageBox::question(nullptr,
-                                              QApplication::applicationName(),
-                                              tr("Do you want to save the changes made to the database file %1?").arg(curDBFilename),
-                                              QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
-            }
-
-            // If the user clicked the cancel button stop here and return false
-            if(reply == QMessageBox::Cancel)
-                return false;
-
-            // If he didn't it was either yes or no
-            if(reply == QMessageBox::Save)
-                releaseAllSavepoints();
-            else
-                revertAll(); //not really necessary, I think... but will not hurt.
+            reply = QMessageBox::question(nullptr,
+                                          QApplication::applicationName(),
+                                          tr("Do you really want to close this temporary database? All data will be lost."),
+                                          QMessageBox::Yes | QMessageBox::Cancel);
+        } else {
+            reply = QMessageBox::question(nullptr,
+                                          QApplication::applicationName(),
+                                          tr("Do you want to save the changes made to the database file %1?").arg(curDBFilename),
+                                          QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
         }
-        if(sqlite3_close(_db) != SQLITE_OK)
-            qWarning() << tr("Database didn't close correctly, probably still busy");
-        _db = nullptr;
+
+        // If the user clicked the cancel button stop here and return false
+        if(reply == QMessageBox::Cancel)
+            return false;
+
+        // If he didn't it was either yes or no
+        if(reply == QMessageBox::Save)
+            releaseAllSavepoints();
+        else
+            revertAll(); //not really necessary, I think... but will not hurt.
     }
 
+    if(sqlite3_close(_db) != SQLITE_OK)
+        qWarning() << tr("Database didn't close correctly, probably still busy");
+
+    _db = nullptr;
+    curDBFilename.clear();
     schemata.clear();
     savepointList.clear();
+
     emit dbChanged(getDirty());
     emit structureUpdated();
 
@@ -1002,8 +1021,8 @@ bool DBBrowserDB::executeSQL(const std::string& statement, bool dirtyDB, bool lo
         return false;
     }
 
-    if (logsql) logSQL(QString::fromStdString(statement), kLogMsg_App);
     if (dirtyDB) setSavepoint();
+    if (logsql) logSQL(QString::fromStdString(statement), kLogMsg_App);
 
     char* errmsg;
     if (SQLITE_OK == sqlite3_exec(_db, statement.c_str(), callback ? callbackWrapper : nullptr, &callback, &errmsg))
@@ -1269,7 +1288,7 @@ std::string DBBrowserDB::emptyInsertStmt(const std::string& schemaName, const sq
     for(const sqlb::Field& f : t.fields)
     {
         // Never insert into a generated column
-        if(!f.generated().empty())
+        if(f.generated())
             continue;
 
         sqlb::ConstraintPtr pk = t.constraint({f.name()}, sqlb::Constraint::PrimaryKeyConstraintType);
@@ -1422,8 +1441,8 @@ bool DBBrowserDB::updateRecord(const sqlb::ObjectIdentifier& table, const std::s
     else
         sql += "sqlb_make_single_value(" + sqlb::joinStringVector(sqlb::escapeIdentifier(pks), ",") + ")=" + sqlb::escapeString(rowid.toStdString());
 
-    logSQL(QString::fromStdString(sql), kLogMsg_App);
     setSavepoint();
+    logSQL(QString::fromStdString(sql), kLogMsg_App);
 
     // If we get a NULL QByteArray we insert a NULL value, and for that
     // we can pass NULL to sqlite3_bind_text() so that it behaves like sqlite3_bind_null()
@@ -1906,44 +1925,51 @@ void DBBrowserDB::updateSchema()
 
             if(!val_sql.empty())
             {
-               val_sql.erase(std::remove(val_sql.begin(), val_sql.end(), '\r'), val_sql.end());
+                val_sql.erase(std::remove(val_sql.begin(), val_sql.end(), '\r'), val_sql.end());
 
-               sqlb::ObjectPtr object;
-               if(val_type == "table")
-                   object = sqlb::Table::parseSQL(val_sql);
-               else if(val_type == "index")
-                   object = sqlb::Index::parseSQL(val_sql);
-               else if(val_type == "trigger")
-                   object = sqlb::Trigger::parseSQL(val_sql);
-               else if(val_type == "view")
-                   object = sqlb::View::parseSQL(val_sql);
-               else
-                   return false;
+                sqlb::ObjectPtr object;
+                if(val_type == "table")
+                    object = sqlb::Table::parseSQL(val_sql);
+                else if(val_type == "index")
+                    object = sqlb::Index::parseSQL(val_sql);
+                else if(val_type == "trigger")
+                    object = sqlb::Trigger::parseSQL(val_sql);
+                else if(val_type == "view")
+                    object = sqlb::View::parseSQL(val_sql);
+                else
+                    return false;
 
-               // If parsing wasn't successful set the object name manually, so that at least the name is going to be correct
-               if(!object->fullyParsed())
-                   object->setName(val_name);
+                // If parsing wasn't successful set the object name and SQL manually, so that at least the name is going to be correct
+                if(!object->fullyParsed())
+                {
+                    object->setName(val_name);
+                    object->setOriginalSql(val_sql);
+                }
 
-               // For virtual tables and views query the column list using the SQLite pragma because for both we can't yet rely on our grammar parser
-               if((object->type() == sqlb::Object::Types::Table && std::dynamic_pointer_cast<sqlb::Table>(object)->isVirtual()) || object->type() == sqlb::Object::Types::View)
-               {
-                   const auto columns = queryColumnInformation(schema_name, val_name);
+                // For virtual tables, views, and tables we could not parse at all,
+                // query the column list using the SQLite pragma to at least get
+                // some information on them when our parser does not.
+                if((!object->fullyParsed() && object->fieldInformation().empty()) ||
+                   (object->type() == sqlb::Object::Types::Table && std::dynamic_pointer_cast<sqlb::Table>(object)->isVirtual()) ||
+                   object->type() == sqlb::Object::Types::View)
+                {
+                    const auto columns = queryColumnInformation(schema_name, val_name);
 
-                   if(object->type() == sqlb::Object::Types::Table)
-                   {
-                       sqlb::TablePtr tab = std::dynamic_pointer_cast<sqlb::Table>(object);
-                       for(const auto& column : columns)
-                           tab->fields.emplace_back(column.first, column.second);
-                   } else {
-                       sqlb::ViewPtr view = std::dynamic_pointer_cast<sqlb::View>(object);
-                       for(const auto& column : columns)
-                           view->fields.emplace_back(column.first, column.second);
-                   }
-               } else if(object->type() == sqlb::Object::Types::Trigger) {
-                   // For triggers set the name of the table the trigger operates on here because we don't have a parser for trigger statements yet.
-                   sqlb::TriggerPtr trg = std::dynamic_pointer_cast<sqlb::Trigger>(object);
-                   trg->setTable(val_tblname);
-               }
+                    if(object->type() == sqlb::Object::Types::Table)
+                    {
+                        sqlb::TablePtr tab = std::dynamic_pointer_cast<sqlb::Table>(object);
+                        for(const auto& column : columns)
+                            tab->fields.emplace_back(column.first, column.second);
+                    } else {
+                        sqlb::ViewPtr view = std::dynamic_pointer_cast<sqlb::View>(object);
+                        for(const auto& column : columns)
+                            view->fields.emplace_back(column.first, column.second);
+                    }
+                } else if(object->type() == sqlb::Object::Types::Trigger) {
+                    // For triggers set the name of the table the trigger operates on here because we don't have a parser for trigger statements yet.
+                    sqlb::TriggerPtr trg = std::dynamic_pointer_cast<sqlb::Trigger>(object);
+                    trg->setTable(val_tblname);
+                }
 
                 schemata[schema_name].insert({val_type, object});
             }

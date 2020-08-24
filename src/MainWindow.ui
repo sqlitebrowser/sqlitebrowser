@@ -122,22 +122,29 @@ You can drag SQL statements from an object row and drop them into other applicat
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <property name="spacing">
-         <number>3</number>
+         <number>0</number>
         </property>
         <property name="leftMargin">
-         <number>3</number>
+         <number>0</number>
         </property>
         <property name="topMargin">
-         <number>3</number>
+         <number>0</number>
         </property>
         <property name="rightMargin">
-         <number>3</number>
+         <number>0</number>
         </property>
         <property name="bottomMargin">
-         <number>3</number>
+         <number>0</number>
         </property>
         <item>
-         <widget class="TableBrowser" name="tableBrowser" native="true"/>
+         <widget class="QMainWindow" name="tabBrowsers">
+          <property name="contextMenuPolicy">
+           <enum>Qt::CustomContextMenu</enum>
+          </property>
+          <property name="dockOptions">
+           <set>QMainWindow::AllowNestedDocks|QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks</set>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -174,8 +181,8 @@ You can drag SQL statements from an object row and drop them into other applicat
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>596</width>
-             <height>526</height>
+             <width>641</width>
+             <height>544</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -721,14 +728,14 @@ You can drag SQL statements from an object row and drop them into other applicat
         </item>
         <item>
          <widget class="QTabWidget" name="tabSqlAreas">
+          <property name="contextMenuPolicy">
+           <enum>Qt::CustomContextMenu</enum>
+          </property>
           <property name="currentIndex">
            <number>-1</number>
           </property>
           <property name="movable">
            <bool>true</bool>
-          </property>
-          <property name="contextMenuPolicy">
-           <enum>Qt::CustomContextMenu</enum>
           </property>
          </widget>
         </item>
@@ -744,7 +751,7 @@ You can drag SQL statements from an object row and drop them into other applicat
      <x>0</x>
      <y>0</y>
      <width>1037</width>
-     <height>22</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -766,11 +773,17 @@ You can drag SQL statements from an object row and drop them into other applicat
      <addaction name="fileExportCSVAction"/>
      <addaction name="fileExportJsonAction"/>
     </widget>
+    <widget class="QMenu" name="fileRecentFiles">
+     <property name="title">
+      <string>Recent Files</string>
+     </property>
+    </widget>
     <addaction name="fileNewAction"/>
     <addaction name="fileNewInMemoryDatabaseAction"/>
     <addaction name="fileOpenAction"/>
     <addaction name="fileOpenReadOnlyAction"/>
     <addaction name="fileAttachAction"/>
+    <addaction name="fileRecentFiles"/>
     <addaction name="fileCloseAction"/>
     <addaction name="separator"/>
     <addaction name="fileSaveAction"/>
@@ -782,6 +795,7 @@ You can drag SQL statements from an object row and drop them into other applicat
     <addaction name="actionOpenProject"/>
     <addaction name="actionSaveProject"/>
     <addaction name="actionSaveProjectAs"/>
+    <addaction name="actionCloseProject"/>
     <addaction name="separator"/>
     <addaction name="actionSaveAll"/>
     <addaction name="separator"/>
@@ -885,6 +899,18 @@ You can drag SQL statements from an object row and drop them into other applicat
    </attribute>
    <widget class="QWidget" name="dockWidgetContents">
     <layout class="QVBoxLayout" name="verticalLayout_5">
+     <property name="leftMargin">
+      <number>2</number>
+     </property>
+     <property name="topMargin">
+      <number>2</number>
+     </property>
+     <property name="rightMargin">
+      <number>2</number>
+     </property>
+     <property name="bottomMargin">
+      <number>2</number>
+     </property>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
@@ -1028,6 +1054,18 @@ You can drag SQL statements from an object row and drop them into other applicat
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_3">
     <layout class="QVBoxLayout" name="verticalLayout_9">
+     <property name="leftMargin">
+      <number>2</number>
+     </property>
+     <property name="topMargin">
+      <number>2</number>
+     </property>
+     <property name="rightMargin">
+      <number>2</number>
+     </property>
+     <property name="bottomMargin">
+      <number>2</number>
+     </property>
      <item>
       <widget class="QTreeView" name="treeSchemaDock">
        <property name="contextMenuPolicy">
@@ -1467,10 +1505,10 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
   <action name="actionSqlOpenTab">
    <property name="icon">
     <iconset resource="icons/icons.qrc">
-     <normaloff>:/icons/open_tab</normaloff>:/icons/open_tab</iconset>
+     <normaloff>:/icons/new_tab</normaloff>:/icons/new_tab</iconset>
    </property>
    <property name="text">
-    <string>Open &amp;tab</string>
+    <string>New &amp;tab</string>
    </property>
    <property name="whatsThis">
     <string>This button opens a new tab for the SQL editor</string>
@@ -1503,10 +1541,10 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
      <normaloff>:/icons/document_open</normaloff>:/icons/document_open</iconset>
    </property>
    <property name="text">
-    <string>Open SQL file</string>
+    <string>Open SQL file(s)</string>
    </property>
    <property name="whatsThis">
-    <string>This button opens a file containing SQL statements and loads it in a new editor tab</string>
+    <string>This button opens files containing SQL statements and loads them in new editor tabs</string>
    </property>
   </action>
   <action name="actionSqlSaveFile">
@@ -1643,7 +1681,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>Save the current session to a file</string>
    </property>
    <property name="whatsThis">
-    <string>This button lets you save all the settings associated to the open DB to a DB4S project file</string>
+    <string>This button lets you save all the settings associated to the open DB to a DB Browser for SQLite project file</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -1664,7 +1702,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>Load a working session from a file</string>
    </property>
    <property name="whatsThis">
-    <string>This button lets you open a DB4S project file</string>
+    <string>This button lets you open a DB Browser for SQLite project file</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2146,6 +2184,41 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>Browse Table</string>
    </property>
   </action>
+  <action name="actionCloseProject">
+   <property name="text">
+    <string>Close Pro&amp;ject</string>
+   </property>
+   <property name="toolTip">
+    <string>Close project and database files and return to the initial state</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+F4</string>
+   </property>
+  </action>
+  <action name="fileDetachAction">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/db_detach</normaloff>:/icons/db_detach</iconset>
+   </property>
+   <property name="text">
+    <string>Detach Database</string>
+   </property>
+   <property name="toolTip">
+    <string>Detach database file attached to the current database connection</string>
+   </property>
+  </action>
+  <action name="actionPopupSchemaDockDetachDatabase">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/db_detach</normaloff>:/icons/db_detach</iconset>
+   </property>
+   <property name="text">
+    <string>Detach Database</string>
+   </property>
+   <property name="toolTip">
+    <string>Detach database file attached to the current database connection</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -2158,12 +2231,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    <class>ExtendedScintilla</class>
    <extends>QTextEdit</extends>
    <header>ExtendedScintilla.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>TableBrowser</class>
-   <extends>QWidget</extends>
-   <header>TableBrowser.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
@@ -2871,6 +2938,22 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    </hints>
   </connection>
   <connection>
+   <sender>fileDetachAction</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>fileDetachDbTree()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
    <sender>actionEncryption</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
@@ -3542,6 +3625,38 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionCloseProject</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>closeFiles()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tabBrowsers</sender>
+   <signal>customContextMenuRequested(QPoint)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>showContextMenuTableBrowserTabBar(QPoint)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>336</x>
+     <y>347</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileOpen()</slot>
@@ -3583,6 +3698,8 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
   <slot>loadProject()</slot>
   <slot>saveProject()</slot>
   <slot>fileAttach()</slot>
+  <slot>fileDetachDbTree()</slot>
+  <slot>fileDetachTreeSchemaDock()</slot>
   <slot>editEncryption()</slot>
   <slot>saveSqlFileAs()</slot>
   <slot>switchToBrowseDataTab()</slot>
@@ -3596,5 +3713,10 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
   <slot>renameSqlTab(int)</slot>
   <slot>fileNewInMemoryDatabase()</slot>
   <slot>showContextMenuSqlTabBar(QPoint)</slot>
+  <slot>closeTableBrowserTab(int)</slot>
+  <slot>openTableBrowserTab()</slot>
+  <slot>changeTableBrowserTab(int)</slot>
+  <slot>renameTableBrowserTab(int)</slot>
+  <slot>showContextMenuTableBrowserTabBar(QPoint)</slot>
  </slots>
 </ui>

@@ -96,7 +96,9 @@ bool RunSql::executeNextStatement()
     if(!structure_updated && (query_type == AlterStatement ||
                               query_type == CreateStatement ||
                               query_type == DropStatement ||
-                              query_type == RollbackStatement))
+                              query_type == RollbackStatement ||
+                              query_type == AttachStatement ||
+                              query_type == DetachStatement))
         structure_updated = true;
 
     // Check whether this is trying to set a pragma or to vacuum the database

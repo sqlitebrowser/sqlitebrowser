@@ -4,7 +4,7 @@
 #include "Settings.h"
 #include "Application.h"
 #include "MainWindow.h"
-#include "RemoteDatabase.h"
+#include "RemoteNetwork.h"
 #include "FileExtensionManager.h"
 #include "ProxyDialog.h"
 
@@ -23,8 +23,6 @@ PreferencesDialog::PreferencesDialog(QWidget* parent, Tabs tab)
 {
     ui->setupUi(this);
     ui->treeSyntaxHighlighting->setColumnHidden(0, true);
-    ui->labelDatabaseDefaultSqlText->setVisible(false);
-    ui->editDatabaseDefaultSqlText->setVisible(false);
     ui->tableClientCerts->setColumnHidden(0, true);
 
     ui->fr_bin_bg->installEventFilter(this);
@@ -77,7 +75,7 @@ void PreferencesDialog::loadSettings()
 {
     ui->encodingComboBox->setCurrentIndex(ui->encodingComboBox->findText(Settings::getValue("db", "defaultencoding").toString(), Qt::MatchFixedString));
     ui->comboDefaultLocation->setCurrentIndex(Settings::getValue("db", "savedefaultlocation").toInt());
-    ui->locationEdit->setText(Settings::getValue("db", "defaultlocation").toString());
+    ui->locationEdit->setText(QDir::toNativeSeparators(Settings::getValue("db", "defaultlocation").toString()));
     ui->checkUpdates->setChecked(Settings::getValue("checkversion", "enabled").toBool());
 
     ui->checkHideSchemaLinebreaks->setChecked(Settings::getValue("db", "hideschemalinebreaks").toBool());
@@ -88,11 +86,12 @@ void PreferencesDialog::loadSettings()
     ui->defaultFieldTypeComboBox->addItems(DBBrowserDB::Datatypes);
 
     int defaultFieldTypeIndex = Settings::getValue("db", "defaultfieldtype").toInt();
-
     if (defaultFieldTypeIndex < DBBrowserDB::Datatypes.count())
     {
         ui->defaultFieldTypeComboBox->setCurrentIndex(defaultFieldTypeIndex);
     }
+
+    ui->spinStructureFontSize->setValue(Settings::getValue("db", "fontsize").toInt());
 
     // Gracefully handle the preferred Data Browser font not being available
     int matchingFont = ui->comboDataBrowserFont->findText(Settings::getValue("databrowser", "font").toString(), Qt::MatchExactly);
@@ -116,15 +115,21 @@ void PreferencesDialog::loadSettings()
     ui->editFilterEscape->setText(Settings::getValue("databrowser", "filter_escape").toString());
     ui->spinFilterDelay->setValue(Settings::getValue("databrowser", "filter_delay").toInt());
 
+    ui->treeSyntaxHighlighting->resizeColumnToContents(1);
+
     for(int i=0; i < ui->treeSyntaxHighlighting->topLevelItemCount(); ++i)
     {
         std::string name = ui->treeSyntaxHighlighting->topLevelItem(i)->text(0).toStdString();
         QString colorname = Settings::getValue("syntaxhighlighter", name + "_colour").toString();
         QColor color = QColor(colorname);
-        ui->treeSyntaxHighlighting->topLevelItem(i)->setTextColor(2, color);
-        ui->treeSyntaxHighlighting->topLevelItem(i)->setBackgroundColor(2, color);
+        ui->treeSyntaxHighlighting->topLevelItem(i)->setForeground(2, color);
+        ui->treeSyntaxHighlighting->topLevelItem(i)->setBackground(2, color);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setText(2, colorname);
-        if (name != "null" && name != "currentline"  && name != "background" && name != "foreground") {
+
+        // Add font properties except for colour-only entries
+        if (name != "null" && name != "currentline" &&
+            name != "background" && name != "foreground" && name != "highlight" &&
+            name != "selected_fg" && name != "selected_bg") {
             ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(3, Settings::getValue("syntaxhighlighter", name + "_bold").toBool() ? Qt::Checked : Qt::Unchecked);
             ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(4, Settings::getValue("syntaxhighlighter", name + "_italic").toBool() ? Qt::Checked : Qt::Unchecked);
             ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(5, Settings::getValue("syntaxhighlighter", name + "_underline").toBool() ? Qt::Checked : Qt::Unchecked);
@@ -134,7 +139,7 @@ void PreferencesDialog::loadSettings()
     // Remote settings
     ui->checkUseRemotes->setChecked(Settings::getValue("remote", "active").toBool());
     {
-        auto ca_certs = static_cast<Application*>(qApp)->mainWindow()->getRemote().caCertificates();
+        auto ca_certs = RemoteNetwork::get().caCertificates();
         ui->tableCaCerts->setRowCount(ca_certs.size());
         for(int i=0;i<ca_certs.size();i++)
         {
@@ -170,7 +175,7 @@ void PreferencesDialog::loadSettings()
                 addClientCertToTable(file, cert);
         }
     }
-    ui->editRemoteCloneDirectory->setText(Settings::getValue("remote", "clonedirectory").toString());
+    ui->editRemoteCloneDirectory->setText(QDir::toNativeSeparators(Settings::getValue("remote", "clonedirectory").toString()));
 
     // Gracefully handle the preferred Editor font not being available
     matchingFont = ui->comboEditorFont->findText(Settings::getValue("editor", "font").toString(), Qt::MatchExactly);
@@ -188,6 +193,7 @@ void PreferencesDialog::loadSettings()
     ui->checkCompleteUpper->setChecked(Settings::getValue("editor", "upper_keywords").toBool());
     ui->checkErrorIndicators->setChecked(Settings::getValue("editor", "error_indicators").toBool());
     ui->checkHorizontalTiling->setChecked(Settings::getValue("editor", "horizontal_tiling").toBool());
+    ui->checkCloseButtonOnTabs->setChecked(Settings::getValue("editor", "close_button_on_tabs").toBool());
 
     ui->listExtensions->addItems(Settings::getValue("extensions", "list").toStringList());
     ui->checkRegexDisabled->setChecked(Settings::getValue("extensions", "disableregex").toBool());
@@ -199,6 +205,8 @@ void PreferencesDialog::loadSettings()
     ui->toolbarStyleComboBrowse->setCurrentIndex(Settings::getValue("General", "toolbarStyleBrowse").toInt());
     ui->toolbarStyleComboSql->setCurrentIndex(Settings::getValue("General", "toolbarStyleSql").toInt());
     ui->toolbarStyleComboEditCell->setCurrentIndex(Settings::getValue("General", "toolbarStyleEditCell").toInt());
+    ui->spinGeneralFontSize->setValue(Settings::getValue("General", "fontsize").toInt());
+    ui->spinMaxRecentFiles->setValue(Settings::getValue("General", "maxRecentFiles").toInt());
 }
 
 void PreferencesDialog::saveSettings()
@@ -212,8 +220,8 @@ void PreferencesDialog::saveSettings()
     Settings::setValue("db", "foreignkeys", ui->foreignKeysCheckBox->isChecked());
     Settings::setValue("db", "prefetchsize", ui->spinPrefetchSize->value());
     Settings::setValue("db", "defaultsqltext", ui->editDatabaseDefaultSqlText->text());
-
     Settings::setValue("db", "defaultfieldtype", ui->defaultFieldTypeComboBox->currentIndex());
+    Settings::setValue("db", "fontsize", ui->spinStructureFontSize->value());
 
     Settings::setValue("checkversion", "enabled", ui->checkUpdates->isChecked());
 
@@ -251,6 +259,7 @@ void PreferencesDialog::saveSettings()
     Settings::setValue("editor", "upper_keywords", ui->checkCompleteUpper->isChecked());
     Settings::setValue("editor", "error_indicators", ui->checkErrorIndicators->isChecked());
     Settings::setValue("editor", "horizontal_tiling", ui->checkHorizontalTiling->isChecked());
+    Settings::setValue("editor", "close_button_on_tabs", ui->checkCloseButtonOnTabs->isChecked());
 
     QStringList extList;
     for(const QListWidgetItem* item : ui->listExtensions->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard))
@@ -322,14 +331,14 @@ void PreferencesDialog::saveSettings()
 
     Settings::setValue("General", "language", newLanguage);
     Settings::setValue("General", "appStyle", ui->appStyleCombo->currentIndex());
-
     Settings::setValue("General", "toolbarStyle", ui->toolbarStyleComboMain->currentIndex());
     Settings::setValue("General", "toolbarStyleStructure", ui->toolbarStyleComboStructure->currentIndex());
     Settings::setValue("General", "toolbarStyleBrowse", ui->toolbarStyleComboBrowse->currentIndex());
     Settings::setValue("General", "toolbarStyleSql", ui->toolbarStyleComboSql->currentIndex());
     Settings::setValue("General", "toolbarStyleEditCell", ui->toolbarStyleComboEditCell->currentIndex());
-
     Settings::setValue("General", "DBFileExtensions", m_dbFileExtensions.join(";;") );
+    Settings::setValue("General", "fontsize", ui->spinGeneralFontSize->value());
+    Settings::setValue("General", "maxRecentFiles", ui->spinMaxRecentFiles->value());
 
     m_proxyDialog->saveSettings();
 
@@ -346,8 +355,8 @@ void PreferencesDialog::showColourDialog(QTreeWidgetItem* item, int column)
     QColor colour = QColorDialog::getColor(QColor(item->text(column)), this);
     if(colour.isValid())
     {
-        item->setTextColor(column, colour);
-        item->setBackgroundColor(column, colour);
+        item->setForeground(column, colour);
+        item->setBackground(column, colour);
         item->setText(column, colour.name());
     }
 }
@@ -545,8 +554,8 @@ void PreferencesDialog::adjustColorsToStyle(int style)
     {
         std::string name = ui->treeSyntaxHighlighting->topLevelItem(i)->text(0).toStdString();
         QColor color = Settings::getDefaultColorValue("syntaxhighlighter", name + "_colour", appStyle);
-        ui->treeSyntaxHighlighting->topLevelItem(i)->setTextColor(2, color);
-        ui->treeSyntaxHighlighting->topLevelItem(i)->setBackgroundColor(2, color);
+        ui->treeSyntaxHighlighting->topLevelItem(i)->setForeground(2, color);
+        ui->treeSyntaxHighlighting->topLevelItem(i)->setBackground(2, color);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setText(2, color.name());
     }
 }
@@ -637,7 +646,7 @@ void PreferencesDialog::chooseRemoteCloneDirectory()
                 tr("Choose a directory"),
                 QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 
-    if(!s.isEmpty())
+    if(!s.isEmpty() && QDir().mkpath(s))
         ui->editRemoteCloneDirectory->setText(s);
 }
 

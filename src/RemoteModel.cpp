@@ -2,7 +2,7 @@
 
 #include "Data.h"
 #include "RemoteModel.h"
-#include "RemoteDatabase.h"
+#include "RemoteNetwork.h"
 
 using json = nlohmann::json;
 
@@ -81,16 +81,22 @@ std::vector<RemoteModelItem*> RemoteModelItem::loadArray(const json& array, Remo
         // Create a new model item with the specified parent
         RemoteModelItem* item = new RemoteModelItem(parent);
 
-        // Save all relevant values. If one of the values isn't set in the JSON document, an empty string
-        // will be stored
+        // Save all relevant values. Some of the values are only available for databases.
         item->setValue(RemoteModelColumnName, QString::fromStdString(elem["name"]));
         item->setValue(RemoteModelColumnType, QString::fromStdString(elem["type"]));
         item->setValue(RemoteModelColumnUrl, QString::fromStdString(elem["url"]));
-        item->setValue(RemoteModelColumnLastModified, QString::fromStdString(elem["last_modified"]));
-        if(elem.contains("commit_id"))
+        item->setValue(RemoteModelColumnLastModified, isoDateTimeStringToLocalDateTimeString(QString::fromStdString(elem["last_modified"])));
+        if(item->value(RemoteModelColumnType).toString() == "database")
+        {
             item->setValue(RemoteModelColumnCommitId, QString::fromStdString(elem["commit_id"]));
-        if(elem.contains("size"))
             item->setValue(RemoteModelColumnSize, QString::number(static_cast<unsigned long>(elem["size"])));
+            item->setValue(RemoteModelColumnDefaultBranch, QString::fromStdString(elem["default_branch"]));
+            item->setValue(RemoteModelColumnLicence, QString::fromStdString(elem["licence"]));
+            item->setValue(RemoteModelColumnOneLineDescription, QString::fromStdString(elem["one_line_description"]));
+            item->setValue(RemoteModelColumnPublic, static_cast<bool>(elem["public"]));
+            item->setValue(RemoteModelColumnSha256, QString::fromStdString(elem["sha256"]));
+            item->setValue(RemoteModelColumnRepoModified, isoDateTimeStringToLocalDateTimeString(QString::fromStdString(elem["repo_modified"])));
+        }
 
         items.push_back(item);
     }
@@ -98,14 +104,11 @@ std::vector<RemoteModelItem*> RemoteModelItem::loadArray(const json& array, Remo
     return items;
 }
 
-RemoteModel::RemoteModel(QObject* parent, RemoteDatabase& remote) :
+RemoteModel::RemoteModel(QObject* parent) :
     QAbstractItemModel(parent),
-    headerList({tr("Name"), tr("Commit"), tr("Last modified"), tr("Size")}),
-    rootItem(new RemoteModelItem()),
-    remoteDatabase(remote)
+    headerList({tr("Name"), tr("Last modified"), tr("Size"), tr("Commit")}),
+    rootItem(new RemoteModelItem())
 {
-    // Set up signals
-    connect(&remoteDatabase, &RemoteDatabase::gotDirList, this, &RemoteModel::parseDirectoryListing);
 }
 
 RemoteModel::~RemoteModel()
@@ -116,17 +119,25 @@ RemoteModel::~RemoteModel()
 void RemoteModel::setNewRootDir(const QString& url, const QString& cert)
 {
     // Get user name from client cert
-    currentUserName = remoteDatabase.getInfoFromClientCert(cert, RemoteDatabase::CertInfoUser);
+    currentUserName = RemoteNetwork::get().getInfoFromClientCert(cert, RemoteNetwork::CertInfoUser);
 
     // Save settings
     currentRootDirectory = url;
     currentClientCert = cert;
 
-    // Fetch root directory and put the reply data under the root item
-    remoteDatabase.fetch(currentRootDirectory, RemoteDatabase::RequestTypeDirectory, currentClientCert, QModelIndex());
+    // Fetch root directory
+    refresh();
 }
 
-void RemoteModel::parseDirectoryListing(const QString& text, const QVariant& userdata)
+void RemoteModel::refresh()
+{
+    // Fetch root directory and put the reply data under the root item
+    RemoteNetwork::get().fetch(currentRootDirectory, RemoteNetwork::RequestTypeCustom, currentClientCert, [this](const QByteArray& reply) {
+        parseDirectoryListing(reply, QModelIndex());
+    });
+}
+
+void RemoteModel::parseDirectoryListing(const QString& text, QModelIndex parent)
 {
     // Load new JSON root document assuming it's an array
     json array = json::parse(text.toStdString(), nullptr, false);
@@ -134,7 +145,6 @@ void RemoteModel::parseDirectoryListing(const QString& text, const QVariant& use
         return;
 
     // Get model index to store the new data under
-    QModelIndex parent = userdata.toModelIndex();
     RemoteModelItem* parentItem = const_cast<RemoteModelItem*>(modelIndexToItem(parent));
 
     // An invalid model index indicates that this is a new root item. This means the old one needs to be entirely deleted first.
@@ -152,8 +162,8 @@ void RemoteModel::parseDirectoryListing(const QString& text, const QVariant& use
     }
 
     // Insert data
-    beginInsertRows(parent, 0, static_cast<int>(array.size()));
     std::vector<RemoteModelItem*> items = RemoteModelItem::loadArray(array, parentItem);
+    beginInsertRows(parent, 0, static_cast<int>(items.size() - 1));
     for(RemoteModelItem* item : items)
         parentItem->appendChild(item);
     endInsertRows();
@@ -210,6 +220,20 @@ QVariant RemoteModel::data(const QModelIndex& index, int role) const
             return QImage(":/icons/folder");
         else if(type == "database")
             return QImage(":/icons/database");
+    } else if(role == Qt::ToolTipRole) {
+        if(type == "database")
+        {
+            // Use URL to generate user name and database name. This avoids using the name of the parent item which
+            // might not contain the user name when the server sends a different directory structure.
+            QString result = "<b>" + item->value(RemoteModelColumnUrl).toUrl().path().mid(1) + "</b>";
+            if(!item->value(RemoteModelColumnOneLineDescription).toString().isEmpty())
+                result += "<br />" + item->value(RemoteModelColumnOneLineDescription).toString();
+            result += "<br />" + tr("Size: ") + humanReadableSize(item->value(RemoteModelColumnSize).toULongLong());
+            result += "<br />" + tr("Last Modified: ") + item->value(RemoteModelColumnLastModified).toString();
+            result += "<br />" + tr("Licence: ") + item->value(RemoteModelColumnLicence).toString();
+            result += "<br />" + tr("Default Branch: ") + item->value(RemoteModelColumnDefaultBranch).toString();
+            return result;
+        }
     } else if(role == Qt::DisplayRole) {
         // Display role?
 
@@ -222,15 +246,9 @@ QVariant RemoteModel::data(const QModelIndex& index, int role) const
             }
         case 1:
             {
-                if(type == "folder")
-                    return QVariant();
-                return item->value(RemoteModelColumnCommitId);
-            }
-        case 2:
-            {
                 return item->value(RemoteModelColumnLastModified);
             }
-        case 3:
+        case 2:
             {
                 // Folders don't have a size
                 if(type == "folder")
@@ -239,6 +257,12 @@ QVariant RemoteModel::data(const QModelIndex& index, int role) const
                 // Convert size to human readable format
                 unsigned int size = item->value(RemoteModelColumnSize).toUInt();
                 return humanReadableSize(size);
+            }
+        case 3:
+            {
+                if(type == "folder")
+                    return QVariant();
+                return item->value(RemoteModelColumnCommitId);
             }
         }
     }
@@ -301,7 +325,9 @@ void RemoteModel::fetchMore(const QModelIndex& parent)
 
     // Fetch item URL
     item->setFetchedDirectoryList(true);
-    remoteDatabase.fetch(item->value(RemoteModelColumnUrl).toString(), RemoteDatabase::RequestTypeDirectory, currentClientCert, parent);
+    RemoteNetwork::get().fetch(item->value(RemoteModelColumnUrl).toUrl(), RemoteNetwork::RequestTypeCustom, currentClientCert, [this, parent](const QByteArray& reply) {
+        parseDirectoryListing(reply, parent);
+    });
 }
 
 const QString& RemoteModel::currentClientCertificate() const

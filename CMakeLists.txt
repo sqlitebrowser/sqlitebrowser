@@ -1,5 +1,5 @@
-project(sqlitebrowser)
 cmake_minimum_required(VERSION 2.8.12.2)
+project(sqlitebrowser)
 
 # BUILD_VERSION is the current date in YYYYMMDD format. It is only
 # used by the nightly version to add the date of the build.
@@ -145,6 +145,7 @@ set(SQLB_MOC_HDR
 	src/sqltextedit.h
 	src/docktextedit.h
 	src/DbStructureModel.h
+	src/dbstructureqitemviewfacade.h
 	src/Application.h
 	src/CipherDialog.h
 	src/ExportSqlDialog.h
@@ -170,6 +171,11 @@ set(SQLB_MOC_HDR
 	src/ProxyDialog.h
 	src/SelectItemsPopup.h
 	src/TableBrowser.h
+	src/ImageViewer.h
+	src/RemoteLocalFilesModel.h
+	src/RemoteCommitsModel.h
+	src/RemoteNetwork.h
+	src/TableBrowserDock.h
 )
 
 set(SQLB_SRC
@@ -197,6 +203,7 @@ set(SQLB_SRC
 	src/docktextedit.cpp
 	src/csvparser.cpp
 	src/DbStructureModel.cpp
+	src/dbstructureqitemviewfacade.cpp
 	src/main.cpp
 	src/Application.cpp
 	src/CipherDialog.cpp
@@ -228,6 +235,11 @@ set(SQLB_SRC
 	src/sql/parser/ParserDriver.cpp
 	src/sql/parser/sqlite3_lexer.cpp
 	src/sql/parser/sqlite3_parser.cpp
+	src/ImageViewer.cpp
+	src/RemoteLocalFilesModel.cpp
+	src/RemoteCommitsModel.cpp
+	src/RemoteNetwork.cpp
+	src/TableBrowserDock.cpp
 )
 
 set(SQLB_FORMS
@@ -254,6 +266,7 @@ set(SQLB_FORMS
 	src/ProxyDialog.ui
 	src/SelectItemsPopup.ui
 	src/TableBrowser.ui
+	src/ImageViewer.ui
 )
 
 set(SQLB_RESOURCES
@@ -349,7 +362,7 @@ else()
 	set(LPTHREAD pthread)
 endif(WIN32)
 
-#enable version check for MacOS
+#enable version check for macOS
 if(APPLE)
 	add_definitions(-DCHECKNEWVERSION)
 endif(APPLE)
@@ -514,6 +527,7 @@ if(WIN32 AND MSVC)
 			${QT5_BIN_PATH}/Qt5PrintSupportd.dll
 			${QT5_BIN_PATH}/Qt5Widgetsd.dll
 			${QT5_BIN_PATH}/Qt5Concurrentd.dll
+			${QT5_BIN_PATH}/Qt5Svgd.dll
 		DESTINATION "/"
 		CONFIGURATIONS Debug)
 	# The Qt5 Release configuration files don't have a postfix
@@ -524,6 +538,7 @@ if(WIN32 AND MSVC)
 			${QT5_BIN_PATH}/Qt5PrintSupport.dll
 			${QT5_BIN_PATH}/Qt5Widgets.dll
 			${QT5_BIN_PATH}/Qt5Concurrent.dll
+			${QT5_BIN_PATH}/Qt5Svg.dll
 		DESTINATION "/"
 		CONFIGURATIONS Release)
 	# The files below are common to all configurations

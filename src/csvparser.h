@@ -60,7 +60,8 @@ public:
     {
         ParserResultSuccess,
         ParserResultCancelled,
-        ParserResultError
+        ParserResultError,
+        ParserResultUnexpectedEOF
     };
 
     /*!

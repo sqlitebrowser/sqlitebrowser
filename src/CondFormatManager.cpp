@@ -216,8 +216,8 @@ void CondFormatManager::itemClicked(QTreeWidgetItem* item, int column)
     case ColumnBackground: {
         QColor color = QColorDialog::getColor(item->background(column).color(), this);
         if(color.isValid()) {
-            item->setTextColor(column, color);
-            item->setBackgroundColor(column, color);
+            item->setForeground(column, color);
+            item->setBackground(column, color);
         }
         break;
     }

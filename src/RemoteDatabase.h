@@ -2,17 +2,10 @@
 #define REMOTEDATABASE_H
 
 #include <QObject>
-#include <QtNetwork/QSslConfiguration>
+#include <QVariant>
 
-#include <map>
+#include <string>
 
-class QNetworkAccessManager;
-class QNetworkConfigurationManager;
-class QNetworkReply;
-class QProgressDialog;
-class QNetworkRequest;
-class QHttpMultiPart;
-class QFile;
 struct sqlite3;
 
 class RemoteDatabase : public QObject
@@ -23,80 +16,70 @@ public:
     RemoteDatabase();
     ~RemoteDatabase() override;
 
-    void reloadSettings();
-
-    enum CertInfo
+    // This class compiles all the information on a lcao database file
+    class LocalFileInfo
     {
-        CertInfoUser,
-        CertInfoServer,
+    public:
+        LocalFileInfo()
+        {}
+
+        LocalFileInfo(const std::string& _name,
+                      const std::string& _url,
+                      const std::string& _commit_id,
+                      const std::string& _file,
+                      const std::string& _branch,
+                      const std::string& _identity) :
+            name(_name),
+            url(_url),
+            commit_id(_commit_id),
+            file(_file),
+            branch(_branch),
+            identity(_identity)
+        {}
+
+        void clear() { name = url = commit_id = file = branch = identity = {}; }
+        QString user_name() const;
+
+        std::string name;           // Database name
+        std::string url;            // URL for cloning
+        std::string commit_id;      // Commit ID at the time of the cloning
+        std::string file;           // Name of the local file on disk
+        std::string branch;         // Cloned branch
+        std::string identity;       // Identity used for cloning
     };
 
-    const QList<QSslCertificate>& caCertificates() const;
-    const std::map<QString, QSslCertificate>& clientCertificates() const { return m_clientCertFiles; }
-    QString getInfoFromClientCert(const QString& cert, CertInfo info) const;
+    // Return a list of all checked out databases for a given identity
+    std::vector<LocalFileInfo> localGetLocalFiles(QString identity);
 
-    enum RequestType
-    {
-        RequestTypeDatabase,
-        RequestTypeDirectory,
-        RequestTypeNewVersionCheck,
-        RequestTypePush,
-        RequestTypeLicenceList,
-        RequestTypeBranchList,
-    };
+    // Return information on a single file
+    LocalFileInfo localGetLocalFileInfo(QString filename);
 
-    void fetch(const QString& url, RequestType type, const QString& clientCert = QString(), QVariant userdata = QVariant());
-    void push(const QString& filename, const QString& url, const QString& clientCert, const QString& remotename,
-              const QString& commitMessage = QString(), const QString& licence = QString(), bool isPublic = false,
-              const QString& branch = QString("master"), bool forcePush = false);
+    // Delete a local database clone
+    void localDeleteFile(QString filename);
 
-signals:
-    // As soon as you can safely open a network connection, this signal is emitted. This can be used to delay early network requests
-    // which might otherwise fail.
-    void networkReady();
+    // This function checks if there already is a clone for the given combination of url and identity. It returns the filename
+    // of this clone if there is or a null string if there isn't a clone yet. The identity needs to be part of this check because
+    // with the url alone there could be corner cases where different versions or whatever may not be accessible for all users.
+    // If the URL contains a commit id (optional), this commit id is part of the check.
+    QString localExists(const QUrl& url, QString identity, const std::string& branch);
 
-    // The openFile signal is emitted whenever a remote database file shall be opened in the main window. This happens when the
-    // fetch() call for a database is finished, either by actually downloading the database or opening the local clone.
-    void openFile(QString path);
+    // This function takes a file name and checks with which commit id we had checked out this file or last pushed it.
+    std::string localLastCommitId(QString clientCert, const QUrl& url, const std::string& branch);
 
-    // These signals are emitted when the fetch() calls are finished that are not requesting a remote database but other data, like
-    // a directory listing or the licence list.
-    void gotDirList(QString json, QVariant userdata);
-    void gotCurrentVersion(QString version, QString url);
-    void gotLicenceList(std::vector<std::pair<std::string, std::string>> licences);
-    void gotBranchList(std::vector<std::string> branches, std::string default_branch);
-
-    // The uploadFinished() signal is emitted when a push() call is finished, i.e. a database upload has completed.
-    void uploadFinished(std::string url);
+    // This function adds a new local database clone to our internal list. It does so by adding a single
+    // new record to the remote dbs database. All the fields are extracted from the filename, the identity
+    // and (most importantly) the url parameters. Note that for the commit id field to be correctly filled we
+    // require the commit id to be part of the url parameter. Also note that this function doesn't care if the
+    // database has already been added to the list or not. If you need this information you need to check it before
+    // calling this function, ideally even before sending out a request to the network. The function returns the full
+    // path of the newly created/updated file.
+    QString localAdd(QString filename, QString identity, const QUrl& url, const std::string& new_commit_id, const std::string& branch);
 
 private:
-    void gotEncrypted(QNetworkReply* reply);
-    void gotReply(QNetworkReply* reply);
-    void gotError(QNetworkReply* reply, const QList<QSslError>& errors);
-    void updateProgress(qint64 bytesTransmitted, qint64 bytesTotal);
-    bool prepareSsl(QNetworkRequest* request, const QString& clientCert);
-    void prepareProgressDialog(QNetworkReply* reply, bool upload, const QString& url);
-
     // Helper functions for managing the list of locally available databases
     void localAssureOpened();
-    QString localAdd(QString filename, QString identity, const QUrl& url, const std::string& new_commit_id);
-    QString localExists(const QUrl& url, QString identity);
     QString localCheckFile(const QString& local_file);
-    std::string localLastCommitId(QString clientCert, const QUrl& url);
 
-    // Helper functions for building multi-part HTTP requests
-    void addPart(QHttpMultiPart* multipart, const QString& name, const QString& value) const;
-    void addPart(QHttpMultiPart* multipart, const QString& name, QFile* file, const QString& filename) const;
-
-    // Before using a new client certificate we need to clear the access and authentication cache of the network manager
-    // object. Otherwise Qt might reuse the old certificate if the requested URL has been used before.
-    void clearAccessCache(const QString& clientCert);
-
-    QNetworkAccessManager* m_manager;
-    QNetworkConfigurationManager* m_configurationManager;
-    QProgressDialog* m_progress;
-    QSslConfiguration m_sslConfiguration;
-    std::map<QString, QSslCertificate> m_clientCertFiles;
     sqlite3* m_dbLocal;
 };
 

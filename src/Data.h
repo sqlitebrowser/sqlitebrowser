@@ -32,4 +32,6 @@ QByteArray decodeString(const QByteArray& str, const QString& encoding);
 
 QString humanReadableSize(unsigned long byteCount);
 
+QString isoDateTimeStringToLocalDateTimeString(const QString& date_string);
+
 #endif

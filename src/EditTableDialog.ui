@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>652</width>
+    <width>800</width>
     <height>600</height>
    </rect>
   </property>
@@ -257,6 +257,15 @@
             <height>140</height>
            </size>
           </property>
+          <property name="editTriggers">
+           <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed|QAbstractItemView::SelectedClicked</set>
+          </property>
+          <property name="alternatingRowColors">
+           <bool>true</bool>
+          </property>
+          <property name="selectionBehavior">
+           <enum>QAbstractItemView::SelectItems</enum>
+          </property>
           <property name="rootIsDecorated">
            <bool>false</bool>
           </property>
@@ -283,7 +292,7 @@
             <string>PK</string>
            </property>
            <property name="toolTip">
-            <string>Primary key</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/icons/field_key&quot;/&gt; Primary key&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </column>
           <column>
@@ -326,6 +335,9 @@
           <column>
            <property name="text">
             <string>Foreign Key</string>
+           </property>
+           <property name="toolTip">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/icons/field_fk&quot;/&gt; Foreign Key&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </column>
          </widget>
@@ -396,6 +408,9 @@
         </item>
         <item>
          <widget class="QTableWidget" name="tableConstraints">
+          <property name="alternatingRowColors">
+           <bool>true</bool>
+          </property>
           <property name="horizontalScrollMode">
            <enum>QAbstractItemView::ScrollPerPixel</enum>
           </property>
@@ -578,8 +593,8 @@
    <slot>addField()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>78</x>
-     <y>255</y>
+     <x>82</x>
+     <y>248</y>
     </hint>
     <hint type="destinationlabel">
      <x>79</x>
@@ -594,8 +609,8 @@
    <slot>removeField()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>167</x>
-     <y>255</y>
+     <x>178</x>
+     <y>248</y>
     </hint>
     <hint type="destinationlabel">
      <x>249</x>
@@ -626,8 +641,8 @@
    <slot>moveUp()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>343</x>
-     <y>253</y>
+     <x>400</x>
+     <y>248</y>
     </hint>
     <hint type="destinationlabel">
      <x>308</x>
@@ -642,8 +657,8 @@
    <slot>moveDown()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>481</x>
-     <y>253</y>
+     <x>519</x>
+     <y>248</y>
     </hint>
     <hint type="destinationlabel">
      <x>308</x>
@@ -662,8 +677,8 @@
      <y>78</y>
     </hint>
     <hint type="destinationlabel">
-     <x>138</x>
-     <y>172</y>
+     <x>159</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>
@@ -674,8 +689,8 @@
    <slot>setWithoutRowid(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>485</x>
-     <y>160</y>
+     <x>640</x>
+     <y>156</y>
     </hint>
     <hint type="destinationlabel">
      <x>324</x>
@@ -706,8 +721,8 @@
    <slot>changeSchema(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>327</x>
-     <y>139</y>
+     <x>482</x>
+     <y>135</y>
     </hint>
     <hint type="destinationlabel">
      <x>647</x>
@@ -722,8 +737,8 @@
    <slot>removeConstraint()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>295</x>
-     <y>255</y>
+     <x>119</x>
+     <y>253</y>
     </hint>
     <hint type="destinationlabel">
      <x>647</x>

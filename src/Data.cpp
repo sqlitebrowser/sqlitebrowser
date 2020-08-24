@@ -1,7 +1,9 @@
 #include "Data.h"
 
 #include <QBuffer>
+#include <QDateTime>
 #include <QImageReader>
+#include <QLocale>
 #include <QTextCodec>
 
 #include <algorithm>
@@ -16,9 +18,12 @@ static const QByteArray bom4b("\xFF\xFE\x00\x00", 4);
 
 bool isTextOnly(QByteArray data, const QString& encoding, bool quickTest)
 {
-    // If the data starts with a Unicode BOM, we always assume it is text
-    if(startsWithBom(data))
-        return true;
+    // If the data starts with a Unicode BOM, we can use detection provided by QTextCodec.
+    if(startsWithBom(data)) {
+        QTextCodec *codec = encoding.isEmpty()? QTextCodec::codecForName("UTF-8") : QTextCodec::codecForName(encoding.toUtf8());
+        QTextCodec *detectedCodec = QTextCodec::codecForUtfText(data, nullptr);
+        return detectedCodec == codec;
+    }
 
     // Truncate to the first few bytes for quick testing
     int testSize = quickTest? std::min(512, data.size()) : data.size();
@@ -144,4 +149,9 @@ QString humanReadableSize(unsigned long byteCount)
     }
 
     return QString::number(size, 'f', 2) + " YiB";
+}
+
+QString isoDateTimeStringToLocalDateTimeString(const QString& date_string)
+{
+    return QLocale::system().toString(QDateTime::fromString(date_string, Qt::ISODate).toLocalTime(), QLocale::ShortFormat);
 }

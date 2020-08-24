@@ -25,6 +25,7 @@ ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(DBBrowserDB& db, const sqlb
     ui->comboDisplayFormat->insertSeparator(ui->comboDisplayFormat->count());
     ui->comboDisplayFormat->addItem(tr("Apple NSDate to date"), "appleDate");
     ui->comboDisplayFormat->addItem(tr("Java epoch (milliseconds) to date"), "javaEpoch");
+    ui->comboDisplayFormat->addItem(tr(".NET DateTime.Ticks to date"), "dotNetTicks");
     ui->comboDisplayFormat->addItem(tr("Julian day to date"), "julian");
     ui->comboDisplayFormat->addItem(tr("Unix epoch to date"), "epoch");
     ui->comboDisplayFormat->addItem(tr("Unix epoch to local time"), "epochLocalTime");
@@ -33,6 +34,8 @@ ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(DBBrowserDB& db, const sqlb
     ui->comboDisplayFormat->insertSeparator(ui->comboDisplayFormat->count());
     ui->comboDisplayFormat->addItem(tr("Lower case"), "lower");
     ui->comboDisplayFormat->addItem(tr("Upper case"), "upper");
+    ui->comboDisplayFormat->insertSeparator(ui->comboDisplayFormat->count());
+    ui->comboDisplayFormat->addItem(tr("Binary GUID to text"), "guid");
     ui->comboDisplayFormat->insertSeparator(ui->comboDisplayFormat->count());
     ui->comboDisplayFormat->addItem(tr("Custom"), "custom");
 
@@ -47,6 +50,7 @@ ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(DBBrowserDB& db, const sqlb
     formatFunctions["appleDate"] = "datetime('2001-01-01', " + sqlb::escapeIdentifier(column_name) + " || ' seconds')";
     formatFunctions["javaEpoch"] = "strftime('%Y-%m-%d %H:%M:%S.', " + sqlb::escapeIdentifier(column_name) +
             "/1000, 'unixepoch') || (" + sqlb::escapeIdentifier(column_name) + "%1000)";
+    formatFunctions["dotNetTicks"] = "datetime(" + sqlb::escapeIdentifier(column_name) + " / 10000000 - 62135596800, 'unixepoch')";
     formatFunctions["julian"] = "datetime(" + sqlb::escapeIdentifier(column_name) + ")";
     formatFunctions["epoch"] = "datetime(" + sqlb::escapeIdentifier(column_name) + ", 'unixepoch')";
     formatFunctions["epochLocalTime"] = "datetime(" + sqlb::escapeIdentifier(column_name) + ", 'unixepoch', 'localtime')";
@@ -54,6 +58,16 @@ ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(DBBrowserDB& db, const sqlb
     formatFunctions["ddmmyyyyDate"] = "strftime('%d/%m/%Y', " + sqlb::escapeIdentifier(column_name) + ")";
     formatFunctions["lower"] = "lower(" + sqlb::escapeIdentifier(column_name) + ")";
     formatFunctions["upper"] = "upper(" + sqlb::escapeIdentifier(column_name) + ")";
+    formatFunctions["guid"] = "substr(hex(" + sqlb::escapeIdentifier(column_name) + "), 7, 2) || " +
+                              "substr(hex(" + sqlb::escapeIdentifier(column_name) + "), 5, 2) || " +
+                              "substr(hex(" + sqlb::escapeIdentifier(column_name) + "), 3, 2) || " +
+                              "substr(hex(" + sqlb::escapeIdentifier(column_name) + "), 1, 2) || '-' || " +
+                              "substr(hex(" + sqlb::escapeIdentifier(column_name) + "), 11, 2) || " +
+                              "substr(hex(" + sqlb::escapeIdentifier(column_name) + "), 9, 2) || '-' || " +
+                              "substr(hex(" + sqlb::escapeIdentifier(column_name) + "), 15, 2) || " +
+                              "substr(hex(" + sqlb::escapeIdentifier(column_name) + "), 13, 2) || '-' || " +
+                              "substr(hex(" + sqlb::escapeIdentifier(column_name) + "), 17, 4) || '-' || " +
+                              "substr(hex(" + sqlb::escapeIdentifier(column_name) + "), 21, 12)";
 
     // Set the current format, if it's empty set the default format
     if(current_format.isEmpty())

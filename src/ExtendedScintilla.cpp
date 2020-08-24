@@ -144,6 +144,11 @@ void ExtendedScintilla::reloadCommonSettings()
     }
     setPaper(Settings::getValue("syntaxhighlighter", "background_colour").toString());
     setColor(Settings::getValue("syntaxhighlighter", "foreground_colour").toString());
+    setMatchedBraceBackgroundColor(Settings::getValue("syntaxhighlighter", "highlight_colour").toString());
+
+    setSelectionBackgroundColor(Settings::getValue("syntaxhighlighter", "selected_bg_colour").toString());
+
+    setSelectionForegroundColor(Settings::getValue("syntaxhighlighter", "selected_fg_colour").toString());
 }
 
 void ExtendedScintilla::reloadKeywords()

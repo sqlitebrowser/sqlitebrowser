@@ -42,9 +42,6 @@ public slots:
     void setDropQualifiedNames(bool value) { m_dropQualifiedNames = value; }
     void setDropEnquotedNames(bool value) { m_dropEnquotedNames = value; }
 
-signals:
-    void structureUpdated();
-
 private:
     DBBrowserDB& m_db;
     QTreeWidgetItem* rootItem;

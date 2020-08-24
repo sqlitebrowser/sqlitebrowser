@@ -294,7 +294,7 @@ CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStr
 
     // Check if we are in StateNormal or StateEndQuote state. The first is what we should be in for unquoted data and all files which
     // end with a line break. The latter is what we are in for quoted data with no final line break.
-    return (state == StateNormal || state == StateEndQuote) ? ParserResult::ParserResultSuccess : ParserResult::ParserResultError;
+    return (state == StateNormal || state == StateEndQuote) ? ParserResult::ParserResultSuccess : ParserResult::ParserResultUnexpectedEOF;
 }
 
 bool CSVParser::look_ahead(QTextStream& stream, QByteArray& sBuffer, const char** it, const char** sBufferEnd, char expected)

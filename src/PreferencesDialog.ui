@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>755</width>
-    <height>594</height>
+    <height>625</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -122,7 +122,7 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
+       <item row="5" column="0">
         <widget class="QLabel" name="labelToolbarStyle">
          <property name="text">
           <string>Toolbar style</string>
@@ -132,7 +132,7 @@
          </property>
         </widget>
        </item>
-       <item row="5" column="1">
+       <item row="7" column="1">
         <widget class="QComboBox" name="toolbarStyleComboMain">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -182,7 +182,7 @@
          </item>
         </widget>
        </item>
-       <item row="6" column="1">
+       <item row="8" column="1">
         <widget class="QComboBox" name="toolbarStyleComboStructure">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -232,7 +232,7 @@
          </item>
         </widget>
        </item>
-       <item row="7" column="1">
+       <item row="9" column="1">
         <widget class="QComboBox" name="toolbarStyleComboBrowse">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -282,7 +282,7 @@
          </item>
         </widget>
        </item>
-       <item row="8" column="1">
+       <item row="10" column="1">
         <widget class="QComboBox" name="toolbarStyleComboSql">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -332,7 +332,7 @@
          </item>
         </widget>
        </item>
-       <item row="10" column="0">
+       <item row="12" column="0">
         <widget class="QLabel" name="labelUseRemotes">
          <property name="text">
           <string>Show remote options</string>
@@ -342,7 +342,7 @@
          </property>
         </widget>
        </item>
-       <item row="10" column="1">
+       <item row="12" column="1">
         <widget class="QCheckBox" name="checkUseRemotes">
          <property name="text">
           <string>enabled</string>
@@ -352,7 +352,7 @@
          </property>
         </widget>
        </item>
-       <item row="11" column="0">
+       <item row="13" column="0">
         <widget class="QLabel" name="labelUpdates">
          <property name="text">
           <string>Automatic &amp;updates</string>
@@ -362,14 +362,14 @@
          </property>
         </widget>
        </item>
-       <item row="11" column="1">
+       <item row="13" column="1">
         <widget class="QCheckBox" name="checkUpdates">
          <property name="text">
           <string>enabled</string>
          </property>
         </widget>
        </item>
-       <item row="12" column="0">
+       <item row="14" column="0">
         <widget class="QLabel" name="label_16">
          <property name="text">
           <string>DB file extensions</string>
@@ -379,14 +379,14 @@
          </property>
         </widget>
        </item>
-       <item row="12" column="1">
+       <item row="14" column="1">
         <widget class="QPushButton" name="buttonManageFileExtension">
          <property name="text">
           <string>Manage</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="0">
+       <item row="7" column="0">
         <widget class="QLabel" name="labelMainToolBar">
          <property name="text">
           <string>Main Window</string>
@@ -399,7 +399,7 @@
          </property>
         </widget>
        </item>
-       <item row="6" column="0">
+       <item row="8" column="0">
         <widget class="QLabel" name="labelStructureToolBar">
          <property name="text">
           <string>Database Structure</string>
@@ -412,7 +412,7 @@
          </property>
         </widget>
        </item>
-       <item row="7" column="0">
+       <item row="9" column="0">
         <widget class="QLabel" name="labelBrowseToolBar">
          <property name="text">
           <string>Browse Data</string>
@@ -425,7 +425,7 @@
          </property>
         </widget>
        </item>
-       <item row="8" column="0">
+       <item row="10" column="0">
         <widget class="QLabel" name="labelSqlToolBar">
          <property name="text">
           <string>Execute SQL</string>
@@ -438,7 +438,7 @@
          </property>
         </widget>
        </item>
-       <item row="9" column="1">
+       <item row="11" column="1">
         <widget class="QComboBox" name="toolbarStyleComboEditCell">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -488,7 +488,7 @@
          </item>
         </widget>
        </item>
-       <item row="9" column="0">
+       <item row="11" column="0">
         <widget class="QLabel" name="labelEditCellToolBar">
          <property name="text">
           <string>Edit Database Cell</string>
@@ -549,165 +549,192 @@
          </property>
         </widget>
        </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_27">
+         <property name="toolTip">
+          <string>This sets the font size for all UI elements which do not have their own font size option.</string>
+         </property>
+         <property name="text">
+          <string>Font size</string>
+         </property>
+         <property name="buddy">
+          <cstring>spinGeneralFontSize</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QSpinBox" name="spinGeneralFontSize"/>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="labelMaxRecentFiles">
+         <property name="text">
+          <string>Max Recent Files</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QSpinBox" name="spinMaxRecentFiles">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>40</number>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="tab">
       <attribute name="title">
        <string>&amp;Database</string>
       </attribute>
-      <layout class="QFormLayout" name="formLayout">
-       <property name="fieldGrowthPolicy">
-        <enum>QFormLayout::FieldsStayAtSizeHint</enum>
-       </property>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Database &amp;encoding</string>
+      <layout class="QVBoxLayout" name="verticalLayout_10">
+       <item>
+        <layout class="QFormLayout" name="formLayout">
+         <property name="fieldGrowthPolicy">
+          <enum>QFormLayout::FieldsStayAtSizeHint</enum>
          </property>
-         <property name="buddy">
-          <cstring>encodingComboBox</cstring>
-         </property>
-        </widget>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>Database &amp;encoding</string>
+           </property>
+           <property name="buddy">
+            <cstring>encodingComboBox</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_5">
+           <property name="toolTip">
+            <string>Open databases with foreign keys enabled.</string>
+           </property>
+           <property name="text">
+            <string>&amp;Foreign keys</string>
+           </property>
+           <property name="buddy">
+            <cstring>foreignKeysCheckBox</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_8">
+           <property name="text">
+            <string>Remove line breaks in schema &amp;view</string>
+           </property>
+           <property name="buddy">
+            <cstring>checkHideSchemaLinebreaks</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>Prefetch block si&amp;ze</string>
+           </property>
+           <property name="buddy">
+            <cstring>spinPrefetchSize</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="defaultFieldTypeLabel">
+           <property name="text">
+            <string>Default field type</string>
+           </property>
+           <property name="buddy">
+            <cstring>defaultFieldTypeComboBox</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QComboBox" name="defaultFieldTypeComboBox"/>
+         </item>
+         <item row="3" column="1">
+          <widget class="QSpinBox" name="spinPrefetchSize">
+           <property name="minimum">
+            <number>255</number>
+           </property>
+           <property name="maximum">
+            <number>1000000</number>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QCheckBox" name="checkHideSchemaLinebreaks">
+           <property name="toolTip">
+            <string>When enabled, the line breaks in the Schema column of the DB Structure tab, dock and printed output are removed.</string>
+           </property>
+           <property name="text">
+            <string>enabled</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QCheckBox" name="foreignKeysCheckBox">
+           <property name="text">
+            <string>enabled</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="encodingComboBox">
+           <item>
+            <property name="text">
+             <string notr="true">UTF-8</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string notr="true">UTF-16</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="5" column="0">
+          <widget class="QLabel" name="label_26">
+           <property name="text">
+            <string>Database structure font size</string>
+           </property>
+           <property name="buddy">
+            <cstring>spinStructureFontSize</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="1">
+          <widget class="QSpinBox" name="spinStructureFontSize"/>
+         </item>
+        </layout>
        </item>
-       <item row="0" column="1">
-        <widget class="QComboBox" name="encodingComboBox">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_9">
          <item>
-          <property name="text">
-           <string notr="true">UTF-8</string>
-          </property>
+          <widget class="QLabel" name="labelDatabaseDefaultSqlText">
+           <property name="text">
+            <string>SQ&amp;L to execute after opening database</string>
+           </property>
+           <property name="buddy">
+            <cstring>editDatabaseDefaultSqlText</cstring>
+           </property>
+          </widget>
          </item>
          <item>
-          <property name="text">
-           <string notr="true">UTF-16</string>
-          </property>
+          <widget class="SqlTextEdit" name="editDatabaseDefaultSqlText">
+           <property name="minimumSize">
+            <size>
+             <width>20</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
          </item>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_5">
-         <property name="toolTip">
-          <string>Open databases with foreign keys enabled.</string>
-         </property>
-         <property name="text">
-          <string>&amp;Foreign keys</string>
-         </property>
-         <property name="buddy">
-          <cstring>foreignKeysCheckBox</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QCheckBox" name="foreignKeysCheckBox">
-         <property name="text">
-          <string>enabled</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_8">
-         <property name="text">
-          <string>Remove line breaks in schema &amp;view</string>
-         </property>
-         <property name="buddy">
-          <cstring>checkHideSchemaLinebreaks</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QCheckBox" name="checkHideSchemaLinebreaks">
-         <property name="toolTip">
-          <string>When enabled, the line breaks in the Schema column of the DB Structure tab, dock and printed output are removed.</string>
-         </property>
-         <property name="text">
-          <string>enabled</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Prefetch block si&amp;ze</string>
-         </property>
-         <property name="buddy">
-          <cstring>spinPrefetchSize</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QSpinBox" name="spinPrefetchSize">
-         <property name="minimum">
-          <number>255</number>
-         </property>
-         <property name="maximum">
-          <number>1000000</number>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QPushButton" name="buttonDatabaseAdvanced">
-         <property name="text">
-          <string>Advanced</string>
-         </property>
-         <property name="icon">
-          <iconset resource="icons/icons.qrc">
-           <normaloff>:/icons/down</normaloff>:/icons/down</iconset>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="1">
-        <widget class="SqlTextEdit" name="editDatabaseDefaultSqlText">
-         <property name="minimumSize">
-          <size>
-           <width>20</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>200</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="labelDatabaseDefaultSqlText">
-         <property name="text">
-          <string>SQ&amp;L to execute after opening database</string>
-         </property>
-         <property name="buddy">
-          <cstring>editDatabaseDefaultSqlText</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="1">
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>180</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="4" column="1">
-        <widget class="QComboBox" name="defaultFieldTypeComboBox"/>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="defaultFieldTypeLabel">
-         <property name="text">
-          <string>Default field type</string>
-         </property>
-         <property name="buddy">
-          <cstring>defaultFieldTypeComboBox</cstring>
-         </property>
-        </widget>
+        </layout>
        </item>
       </layout>
      </widget>
@@ -1312,6 +1339,30 @@ Can be set to 0 for disabling completion.</string>
            <string>Foreground</string>
           </property>
          </item>
+         <item>
+          <property name="text">
+           <string>selected_bg</string>
+          </property>
+          <property name="text">
+           <string>Selection background</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>selected_fg</string>
+          </property>
+          <property name="text">
+           <string>Selection foreground</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>highlight</string>
+          </property>
+          <property name="text">
+           <string>Highlight</string>
+          </property>
+         </item>
         </widget>
        </item>
        <item>
@@ -1533,6 +1584,26 @@ Can be set to 0 for disabling completion.</string>
           <widget class="QCheckBox" name="checkHorizontalTiling">
            <property name="toolTip">
             <string>If enabled the SQL code editor and the result table view are shown side by side instead of one over the other.</string>
+           </property>
+           <property name="text">
+            <string>enabled</string>
+           </property>
+          </widget>
+         </item>
+         <item row="9" column="0">
+          <widget class="QLabel" name="labelCloseButtonOnTabs">
+           <property name="text">
+            <string>Close button on tabs</string>
+           </property>
+           <property name="buddy">
+            <cstring>checkCloseButtonOnTabs</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="9" column="1">
+          <widget class="QCheckBox" name="checkCloseButtonOnTabs">
+           <property name="toolTip">
+            <string>If enabled, SQL editor tabs will have a close button. In any case, you can use the contextual menu or the keyboard shortcut to close them.</string>
            </property>
            <property name="text">
             <string>enabled</string>
@@ -1889,6 +1960,7 @@ Can be set to 0 for disabling completion.</string>
   <tabstop>setLocationButton</tabstop>
   <tabstop>languageComboBox</tabstop>
   <tabstop>appStyleCombo</tabstop>
+  <tabstop>spinGeneralFontSize</tabstop>
   <tabstop>toolbarStyleComboMain</tabstop>
   <tabstop>toolbarStyleComboStructure</tabstop>
   <tabstop>toolbarStyleComboBrowse</tabstop>
@@ -1902,8 +1974,7 @@ Can be set to 0 for disabling completion.</string>
   <tabstop>checkHideSchemaLinebreaks</tabstop>
   <tabstop>spinPrefetchSize</tabstop>
   <tabstop>defaultFieldTypeComboBox</tabstop>
-  <tabstop>buttonDatabaseAdvanced</tabstop>
-  <tabstop>editDatabaseDefaultSqlText</tabstop>
+  <tabstop>spinStructureFontSize</tabstop>
   <tabstop>comboDataBrowserFont</tabstop>
   <tabstop>spinDataBrowserFontSize</tabstop>
   <tabstop>spinSymbolLimit</tabstop>
@@ -1931,6 +2002,7 @@ Can be set to 0 for disabling completion.</string>
   <tabstop>checkCompleteUpper</tabstop>
   <tabstop>checkErrorIndicators</tabstop>
   <tabstop>checkHorizontalTiling</tabstop>
+  <tabstop>checkCloseButtonOnTabs</tabstop>
   <tabstop>listExtensions</tabstop>
   <tabstop>buttonAddExtension</tabstop>
   <tabstop>buttonRemoveExtension</tabstop>
@@ -1956,8 +2028,8 @@ Can be set to 0 for disabling completion.</string>
    <slot>addExtension()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>571</x>
-     <y>97</y>
+     <x>732</x>
+     <y>96</y>
     </hint>
     <hint type="destinationlabel">
      <x>245</x>
@@ -1972,8 +2044,8 @@ Can be set to 0 for disabling completion.</string>
    <slot>removeExtension()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>571</x>
-     <y>135</y>
+     <x>732</x>
+     <y>125</y>
     </hint>
     <hint type="destinationlabel">
      <x>245</x>
@@ -2004,44 +2076,12 @@ Can be set to 0 for disabling completion.</string>
    <slot>chooseLocation()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>571</x>
-     <y>114</y>
+     <x>732</x>
+     <y>106</y>
     </hint>
     <hint type="destinationlabel">
      <x>294</x>
      <y>202</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonDatabaseAdvanced</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>labelDatabaseDefaultSqlText</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>344</x>
-     <y>230</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>119</x>
-     <y>273</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonDatabaseAdvanced</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>editDatabaseDefaultSqlText</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>344</x>
-     <y>230</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>365</x>
-     <y>252</y>
     </hint>
    </hints>
   </connection>
@@ -2052,8 +2092,8 @@ Can be set to 0 for disabling completion.</string>
    <slot>activateRemoteTab(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>231</x>
-     <y>393</y>
+     <x>301</x>
+     <y>503</y>
     </hint>
     <hint type="destinationlabel">
      <x>382</x>
@@ -2116,12 +2156,12 @@ Can be set to 0 for disabling completion.</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>642</x>
-     <y>450</y>
+     <x>733</x>
+     <y>444</y>
     </hint>
     <hint type="destinationlabel">
-     <x>642</x>
-     <y>480</y>
+     <x>733</x>
+     <y>474</y>
     </hint>
    </hints>
   </connection>

@@ -9,6 +9,7 @@
 
 #include "Application.h"
 #include "MainWindow.h"
+#include "RemoteNetwork.h"
 #include "Settings.h"
 #include "version.h"
 
@@ -72,9 +73,12 @@ Application::Application(int& argc, char** argv) :
     // See https://bugreports.qt.io/browse/QTBUG-40332
     qputenv("QT_BEARER_POLL_TIMEOUT", QByteArray::number(INT_MAX));
 
+    // Remember default font size
+    Settings::rememberDefaultFontSize(font().pointSize());
+
     // Parse command line
     QString fileToOpen;
-    QString tableToBrowse;
+    std::vector<QString> tableToBrowse;
     QStringList sqlToExecute;
     bool readOnly = false;
     m_dontShowMainWindow = false;
@@ -111,7 +115,7 @@ Application::Application(int& argc, char** argv) :
             if(++i >= arguments().size())
                 qWarning() << qPrintable(tr("The -t/--table option requires an argument"));
             else
-                tableToBrowse = arguments().at(i);
+                tableToBrowse.push_back(arguments().at(i));
         } else if(arguments().at(i) == "-q" || arguments().at(i) == "--quit") {
             m_dontShowMainWindow = true;
         } else if(arguments().at(i) == "-R" || arguments().at(i) == "--read-only") {
@@ -150,6 +154,11 @@ Application::Application(int& argc, char** argv) :
         }
     }
 
+    if(m_dontShowMainWindow) {
+        m_mainWindow = nullptr;
+        return;
+    }
+
     // Show main window
     m_mainWindow = new MainWindow();
     m_mainWindow->show();
@@ -174,15 +183,16 @@ Application::Application(int& argc, char** argv) :
                 m_mainWindow->refresh();
 
             // Jump to table if the -t/--table parameter was set
-            if(!tableToBrowse.isEmpty())
-                m_mainWindow->switchToBrowseDataTab(sqlb::ObjectIdentifier("main", tableToBrowse.toStdString()));
+            for(const QString& t : tableToBrowse)
+                m_mainWindow->switchToBrowseDataTab(sqlb::ObjectIdentifier("main", t.toStdString()));
         }
     }
 }
 
 Application::~Application()
 {
-    delete m_mainWindow;
+    if(m_mainWindow)
+        delete m_mainWindow;
 }
 
 bool Application::event(QEvent* event)
@@ -208,6 +218,17 @@ QString Application::versionString()
 #else
     return QString("%1").arg(APP_VERSION);
 #endif
+}
+
+void Application::reloadSettings()
+{
+    // Network settings
+    RemoteNetwork::get().reloadSettings();
+
+    // Font settings
+    QFont f = font();
+    f.setPointSize(Settings::getValue("General", "fontsize").toInt());
+    setFont(f);
 }
 
 // Functions for documenting the shortcuts in the user interface using native names

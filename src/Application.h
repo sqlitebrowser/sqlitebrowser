@@ -23,6 +23,8 @@ public:
 
     static QString versionString();
 
+    static void reloadSettings();
+
 protected:
     bool event(QEvent* event) override;
 

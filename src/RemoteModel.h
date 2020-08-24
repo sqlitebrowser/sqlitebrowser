@@ -2,10 +2,9 @@
 #define REMOTEMODEL_H
 
 #include <QAbstractItemModel>
+#include <QUrl>
 
 #include <json.hpp>
-
-class RemoteDatabase;
 
 // List of fields stored in the JSON data
 enum RemoteModelColumns
@@ -16,6 +15,12 @@ enum RemoteModelColumns
     RemoteModelColumnCommitId,
     RemoteModelColumnSize,
     RemoteModelColumnLastModified,
+    RemoteModelColumnDefaultBranch,
+    RemoteModelColumnLicence,
+    RemoteModelColumnOneLineDescription,
+    RemoteModelColumnPublic,
+    RemoteModelColumnRepoModified,
+    RemoteModelColumnSha256,
 
     RemoteModelColumnCount
 };
@@ -61,10 +66,11 @@ class RemoteModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    explicit RemoteModel(QObject* parent, RemoteDatabase& remote);
+    explicit RemoteModel(QObject* parent);
     ~RemoteModel() override;
 
     void setNewRootDir(const QString& url, const QString& cert);
+    void refresh();
 
     QModelIndex index(int row, int column,const QModelIndex& parent = QModelIndex()) const override;
     QModelIndex parent(const QModelIndex& index) const override;
@@ -92,9 +98,8 @@ signals:
     void directoryListingParsed(QModelIndex parent);
 
 private slots:
-    // This is called whenever a network reply containing a directory listing arrives. json contains the reply data, userdata
-    // contains some custom data passed to the request. In this case we expect this to be the model index of the parent tree item.
-    void parseDirectoryListing(const QString& text, const QVariant& userdata);
+    // This is called whenever a network reply containing a directory listing arrives
+    void parseDirectoryListing(const QString& text, QModelIndex parent);
 
 private:
     // The header list is a list of column titles
@@ -103,12 +108,9 @@ private:
     // Pointer to the root item. This contains all the actual item data.
     RemoteModelItem* rootItem;
 
-    // Reference to the remote database object which is stored somewhere in the main window.
-    RemoteDatabase& remoteDatabase;
-
     // This stores the currently used network identity so it can be used for further requests, e.g. for
     // lazy population.
-    QString currentRootDirectory;
+    QUrl currentRootDirectory;
     QString currentClientCert;
     QString currentUserName;
 };

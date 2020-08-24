@@ -152,7 +152,6 @@ void DbStructureModel::reloadData()
     if(!m_db.isOpen())
     {
         endResetModel();
-        emit structureUpdated();
         return;
     }
 
@@ -169,6 +168,7 @@ void DbStructureModel::reloadData()
     itemAll->setIcon(ColumnName, IconCache::get("database"));
     itemAll->setText(ColumnName, tr("All"));
     itemAll->setText(ColumnObjectType, "database");
+    itemAll->setText(ColumnSchema, "main");
     buildTree(itemAll, "main");
 
     // Add the temporary database as a node if it isn't empty. Make sure it's always second if it exists.
@@ -178,6 +178,7 @@ void DbStructureModel::reloadData()
         itemTemp->setIcon(ColumnName, IconCache::get("database"));
         itemTemp->setText(ColumnName, tr("Temporary"));
         itemTemp->setText(ColumnObjectType, "database");
+        itemTemp->setText(ColumnSchema, "temp");
         buildTree(itemTemp, "temp");
     }
 
@@ -191,13 +192,13 @@ void DbStructureModel::reloadData()
             itemSchema->setIcon(ColumnName, IconCache::get("database"));
             itemSchema->setText(ColumnName, QString::fromStdString(it.first));
             itemSchema->setText(ColumnObjectType, "database");
+            itemSchema->setText(ColumnSchema, QString::fromStdString(it.first));
             buildTree(itemSchema, it.first);
         }
     }
 
     // Refresh the view
     endResetModel();
-    emit structureUpdated();
 }
 
 QStringList DbStructureModel::mimeTypes() const

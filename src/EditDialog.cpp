@@ -6,6 +6,7 @@
 #include "docktextedit.h"
 #include "FileDialog.h"
 #include "Data.h"
+#include "ImageViewer.h"
 
 #include <QMainWindow>
 #include <QKeySequence>
@@ -16,7 +17,6 @@
 #include <QMessageBox>
 #include <QPrinter>
 #include <QPrintPreviewDialog>
-#include <QPainter>
 #include <QClipboard>
 #include <QTextDocument>
 #include <QMenu>
@@ -49,6 +49,10 @@ EditDialog::EditDialog(QWidget* parent)
     sciEdit = new DockTextEdit(this);
     sciLayout->addWidget(sciEdit);
 
+    QHBoxLayout* imageLayout = new QHBoxLayout(ui->editorImage);
+    imageEdit = new ImageViewer(this);
+    imageLayout->addWidget(imageEdit);
+
     QShortcut* ins = new QShortcut(QKeySequence(Qt::Key_Insert), this);
     connect(ins, &QShortcut::activated, this, &EditDialog::toggleOverwriteMode);
 
@@ -62,7 +66,6 @@ EditDialog::EditDialog(QWidget* parent)
     connect(shortcutPrint, &QShortcut::activated, this, &EditDialog::openPrintDialog);
 
     // Add actions to editors that have a context menu based on actions. This also activates the shortcuts.
-    ui->editorImage->addAction(ui->actionPrintImage);
     ui->editorBinary->addAction(ui->actionPrint);
     ui->editorBinary->addAction(ui->actionCopyHexAscii);
 
@@ -187,12 +190,12 @@ void EditDialog::loadData(const QByteArray& bArrdata)
 
             break;
 
-        case ImageViewer:
+        case ImageEditor:
             // The hex widget buffer is now the main data source
             dataSource = HexBuffer;
 
             // Clear any image from the image viewing widget
-            ui->editorImage->setPixmap(QPixmap(0,0));
+            imageEdit->resetImage();
 
             // Load the Null into the hex editor
             hexEdit->setData(bArrdata);
@@ -207,6 +210,8 @@ void EditDialog::loadData(const QByteArray& bArrdata)
     case XML:
         // Can be stored in any widget, except the ImageViewer
 
+        sciEdit->clearTextInMargin();
+
         switch (editMode) {
         case TextEditor:
         case JsonEditor:
@@ -219,11 +224,11 @@ void EditDialog::loadData(const QByteArray& bArrdata)
         case HexEditor:
             setDataInBuffer(bArrdata, HexBuffer);
             break;
-        case ImageViewer:
+        case ImageEditor:
             // The image viewer cannot hold data nor display text.
 
             // Clear any image from the image viewing widget
-            ui->editorImage->setPixmap(QPixmap(0,0));
+            imageEdit->resetImage();
 
             // Load the text into the text editor
             setDataInBuffer(bArrdata, SciBuffer);
@@ -260,10 +265,10 @@ void EditDialog::loadData(const QByteArray& bArrdata)
             ui->qtEdit->setEnabled(false);
             break;
 
-        case ImageViewer:
+        case ImageEditor:
             // Load the image into the image viewing widget
             if (img.loadFromData(bArrdata)) {
-                ui->editorImage->setPixmap(QPixmap::fromImage(img));
+                imageEdit->setImage(img);
             }
             break;
         }
@@ -283,14 +288,14 @@ void EditDialog::loadData(const QByteArray& bArrdata)
             setDataInBuffer(bArrdata, HexBuffer);
             break;
 
-        case ImageViewer:
+        case ImageEditor:
             // Set data in the XML (Sci) Buffer and load the SVG Image
             setDataInBuffer(bArrdata, SciBuffer);
             sciEdit->setLanguage(DockTextEdit::XML);
 
             // Load the image into the image viewing widget
             if (img.loadFromData(bArrdata)) {
-                ui->editorImage->setPixmap(QPixmap::fromImage(img));
+                imageEdit->setImage(img);
             }
             break;
         case RtlTextEditor:
@@ -327,9 +332,9 @@ void EditDialog::loadData(const QByteArray& bArrdata)
             ui->qtEdit->setEnabled(false);
             break;
 
-        case ImageViewer:
+        case ImageEditor:
             // Clear any image from the image viewing widget
-            ui->editorImage->setPixmap(QPixmap(0,0));
+            imageEdit->resetImage();
             break;
         }
     }
@@ -367,7 +372,7 @@ void EditDialog::importData(bool asLink)
     case HexEditor:
         selectedFilter = FILE_FILTER_BIN;
         break;
-    case ImageViewer:
+    case ImageEditor:
         selectedFilter = tr("Image files (%1)").arg(image_formats);
         break;
     case JsonEditor:
@@ -381,7 +386,7 @@ void EditDialog::importData(bool asLink)
                 OpenDataFile,
                 this,
                 tr("Choose a file to import")
-#ifndef Q_OS_MAC // Filters on OS X are buggy
+#ifndef Q_OS_MAC // Filters on macOS are buggy
                 , filters.join(";;")
                 , &selectedFilter
 #endif
@@ -492,7 +497,7 @@ void EditDialog::exportData()
 void EditDialog::setNull()
 {
     ui->qtEdit->clear();
-    ui->editorImage->clear();
+    imageEdit->resetImage();
     hexEdit->setData(QByteArray());
     sciEdit->clear();
     dataType = Null;
@@ -772,9 +777,9 @@ void EditDialog::editModeChanged(int newMode)
             setDataInBuffer(removedBom + ui->qtEdit->toPlainText().toUtf8(), HexBuffer);
             break;
 
-        case ImageViewer:
+        case ImageEditor:
             // Clear any image from the image viewing widget
-            ui->editorImage->setPixmap(QPixmap(0,0));
+            imageEdit->resetImage();
             break;
         }
         break;
@@ -798,7 +803,7 @@ void EditDialog::editModeChanged(int newMode)
             // Convert the text widget buffer for the hex widget
             setDataInBuffer(sciEdit->text().toUtf8(), HexBuffer);
             break;
-        case ImageViewer:
+        case ImageEditor:
         {
             // When SVG format, load the image, else clear it.
             QByteArray bArrdata = sciEdit->text().toUtf8();
@@ -807,10 +812,10 @@ void EditDialog::editModeChanged(int newMode)
                 QImage img;
 
                 if (img.loadFromData(bArrdata))
-                    ui->editorImage->setPixmap(QPixmap::fromImage(img));
+                    imageEdit->setImage(img);
                 else
                     // Clear any image from the image viewing widget
-                    ui->editorImage->setPixmap(QPixmap(0,0));
+                    imageEdit->resetImage();
             }
         }
         break;
@@ -856,10 +861,8 @@ void EditDialog::editTextChanged()
         if (dataType == Null && isModified && dataLength != 0)
             dataType = Text;
 
-        if (dataType != Null) {
-            sciEdit->clearTextInMargin();
+        if (dataType != Null)
             ui->labelType->setText(tr("Type of data currently in cell: Text / Numeric"));
-        }
         ui->labelSize->setText(tr("%n character(s)", "", dataLength));
     }
 }
@@ -945,7 +948,7 @@ void EditDialog::setFocus()
     case HexEditor:
         hexEdit->setFocus();
         break;
-    case ImageViewer:
+    case ImageEditor:
         // Nothing to do
         break;
     }
@@ -978,7 +981,7 @@ void EditDialog::switchEditorMode(bool autoSwitchForType)
         // Switch automatically the editing mode according to the detected data.
         switch (dataType) {
         case Image:
-            ui->comboMode->setCurrentIndex(ImageViewer);
+            ui->comboMode->setCurrentIndex(ImageEditor);
             break;
         case Binary:
             ui->comboMode->setCurrentIndex(HexEditor);
@@ -1079,6 +1082,11 @@ void EditDialog::reloadSettings()
     hexFont.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
     hexEdit->setFont(hexFont);
 
+    // Set the databrowser font for the RTL text editor.
+    QFont textFont(Settings::getValue("databrowser", "font").toString());
+    textFont.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
+    ui->qtEdit->setFont(textFont);
+
     ui->editCellToolbar->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>
                                             (Settings::getValue("General", "toolbarStyleEditCell").toInt()));
 
@@ -1094,7 +1102,7 @@ void EditDialog::setStackCurrentIndex(int editMode)
         sciEdit->setLanguage(DockTextEdit::PlainText);
         break;
     case HexEditor:
-    case ImageViewer:
+    case ImageEditor:
     case RtlTextEditor:
         // General case: switch to the selected editor
         ui->editorStack->setCurrentIndex(editMode);
@@ -1115,8 +1123,8 @@ void EditDialog::setStackCurrentIndex(int editMode)
 void EditDialog::openPrintDialog()
 {
     int editMode = ui->editorStack->currentIndex();
-    if (editMode == ImageViewer) {
-        openPrintImageDialog();
+    if (editMode == ImageEditor) {
+        imageEdit->openPrintImageDialog();
         return;
     }
 
@@ -1145,26 +1153,6 @@ void EditDialog::openPrintDialog()
     dialog->exec();
     delete dialog;
 
-}
-
-void EditDialog::openPrintImageDialog()
-{
-    QPrinter printer;
-    QPrintPreviewDialog *dialog = new QPrintPreviewDialog(&printer);
-
-    connect(dialog, &QPrintPreviewDialog::paintRequested, [&](QPrinter *previewPrinter) {
-            QPainter painter(previewPrinter);
-            QRect rect = painter.viewport();
-            QSize size = ui->editorImage->pixmap()->size();
-            size.scale(rect.size(), Qt::KeepAspectRatio);
-            painter.setViewport(rect.x(), rect.y(), size.width(), size.height());
-            painter.setWindow(ui->editorImage->pixmap()->rect());
-            painter.drawPixmap(0, 0, *ui->editorImage->pixmap());
-        });
-
-    dialog->exec();
-
-    delete dialog;
 }
 
 void EditDialog::copyHexAscii()

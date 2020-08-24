@@ -127,6 +127,7 @@ ExtendedTableWidgetEditorDelegate::ExtendedTableWidgetEditorDelegate(QObject* pa
 
 QWidget* ExtendedTableWidgetEditorDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& /*option*/, const QModelIndex& index) const
 {
+    emit dataAboutToBeEdited(index);
 
     SqliteTableModel* m = qobject_cast<SqliteTableModel*>(const_cast<QAbstractItemModel*>(index.model()));
     sqlb::ForeignKeyClause fk = m->getForeignKeyClause(static_cast<size_t>(index.column()-1));
@@ -259,6 +260,7 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     QAction* condFormatAction = new QAction(QIcon(":/icons/edit_cond_formats"), tr("Edit Conditional Formats..."), m_contextMenu);
 
     QAction* nullAction = new QAction(QIcon(":/icons/set_to_null"), tr("Set to NULL"), m_contextMenu);
+    QAction* cutAction = new QAction(QIcon(":/icons/cut"), tr("Cut"), m_contextMenu);
     QAction* copyAction = new QAction(QIcon(":/icons/copy"), tr("Copy"), m_contextMenu);
     QAction* copyWithHeadersAction = new QAction(QIcon(":/icons/special_copy"), tr("Copy with Headers"), m_contextMenu);
     QAction* copyAsSQLAction = new QAction(QIcon(":/icons/sql_copy"), tr("Copy as SQL"), m_contextMenu);
@@ -281,6 +283,7 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     m_contextMenu->addSeparator();
     m_contextMenu->addAction(nullAction);
     m_contextMenu->addSeparator();
+    m_contextMenu->addAction(cutAction);
     m_contextMenu->addAction(copyAction);
     m_contextMenu->addAction(copyWithHeadersAction);
     m_contextMenu->addAction(copyAsSQLAction);
@@ -292,10 +295,12 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     // Create and set up delegate
     m_editorDelegate = new ExtendedTableWidgetEditorDelegate(this);
     setItemDelegate(m_editorDelegate);
+    connect(m_editorDelegate, &ExtendedTableWidgetEditorDelegate::dataAboutToBeEdited, this, &ExtendedTableWidget::dataAboutToBeEdited);
 
     // This is only for displaying the shortcut in the context menu.
     // An entry in keyPressEvent is still needed.
     nullAction->setShortcut(QKeySequence(tr("Alt+Del")));
+    cutAction->setShortcut(QKeySequence::Cut);
     copyAction->setShortcut(QKeySequence::Copy);
     copyWithHeadersAction->setShortcut(QKeySequence(tr("Ctrl+Shift+C")));
     copyAsSQLAction->setShortcut(QKeySequence(tr("Ctrl+Alt+C")));
@@ -325,6 +330,7 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
         // Try to find out whether the current view is editable and (de)activate menu options according to that
         bool editable = editTriggers() != QAbstractItemView::NoEditTriggers;
         nullAction->setEnabled(enabled && editable);
+        cutAction->setEnabled(enabled && editable);
         pasteAction->setEnabled(enabled && editable);
 
         // Show menu
@@ -371,6 +377,7 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     connect(copyAction, &QAction::triggered, [&]() {
        copy(false, false);
     });
+    connect(cutAction, &QAction::triggered, this, &ExtendedTableWidget::cut);
     connect(copyWithHeadersAction, &QAction::triggered, [&]() {
        copy(true, false);
     });
@@ -719,6 +726,30 @@ void ExtendedTableWidget::paste()
     }
 }
 
+void ExtendedTableWidget::cut()
+{
+    const QModelIndexList& indices = selectionModel()->selectedIndexes();
+    SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
+    sqlb::TablePtr currentTable = m->db().getObjectByName<sqlb::Table>(m->currentTableName());
+
+    copy(false, false);
+
+    // Check if the column in the selection has a NOT NULL constraint, then update with an empty string, else with NULL
+    if(currentTable) {
+        for(const QModelIndex& index : indices) {
+            // Do not process rowid column
+            if(index.column() != 0) {
+                const size_t indexField = static_cast<size_t>(index.column()-1);
+                const sqlb::Field& field = currentTable->fields.at(indexField);
+                const QVariant newValue = field.notnull() ? QVariant("") : QVariant();
+                // Update aborting in case of any error (to avoid repetitive errors like "Database is locked")
+                if(!model()->setData(index, newValue))
+                    return;
+            }
+        }
+    }
+}
+
 void ExtendedTableWidget::useAsFilter(const QString& filterOperator, bool binary, const QString& operatorSuffix)
 {
     QModelIndex index = selectionModel()->currentIndex();
@@ -776,6 +807,9 @@ void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
     {
         copy(false, false);
         return;
+    } else if(event->matches(QKeySequence::Cut)) {
+        // Call a custom cut method when Ctrl-X is pressed
+        cut();
     } else if(event->matches(QKeySequence::Paste)) {
         // Call a custom paste method when Ctrl-V is pressed
         paste();
@@ -1061,21 +1095,28 @@ void ExtendedTableWidget::currentChanged(const QModelIndex &current, const QMode
 
 void ExtendedTableWidget::setToNull(const QModelIndexList& indices)
 {
-    SqliteTableModel* m = qobject_cast<SqliteTableModel*>(const_cast<QAbstractItemModel*>(model()));
+    SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
     sqlb::TablePtr currentTable = m->db().getObjectByName<sqlb::Table>(m->currentTableName());
 
     // Check if some column in the selection has a NOT NULL constraint, before trying to update the cells.
-    if(currentTable)
+    if(currentTable) {
         for(const QModelIndex& index : indices) {
-            const sqlb::Field& field = currentTable->fields.at(static_cast<size_t>(index.column())-1);
-            if(field.notnull()) {
-                QMessageBox::warning(nullptr, qApp->applicationName(),
-                                     tr("Cannot set selection to NULL. Column %1 has a NOT NULL constraint.").
-                                     arg(QString::fromStdString(field.name())));
-                return;
+            // Do not process rowid column
+            if(index.column() != 0) {
+                const size_t indexField = static_cast<size_t>(index.column()-1);
+                const sqlb::Field& field = currentTable->fields.at(indexField);
+                if(field.notnull()) {
+                    QMessageBox::warning(nullptr, qApp->applicationName(),
+                                         tr("Cannot set selection to NULL. Column %1 has a NOT NULL constraint.").
+                                         arg(QString::fromStdString(field.name())));
+                    return;
+                }
             }
         }
-
-    for(const QModelIndex& index : indices)
-        model()->setData(index, QVariant());
+    }
+    for(const QModelIndex& index : indices) {
+        // Update aborting in case of any error (to avoid repetitive errors like "Database is locked")
+        if(!model()->setData(index, QVariant()))
+            return;
+    }
 }

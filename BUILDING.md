@@ -125,9 +125,10 @@ Building an .app bundle version takes a bit more effort, but isn't too hard.
 It requires SQLite and Qt 5.x to be installed first.  These are the
 [Homebrew](http://brew.sh) steps, though other package managers should work:
 
-    $ brew install sqlite --with-functions --with-json1 --without-readline
+    $ brew tap sqlitebrowser/sqlite3
+    $ brew install sqlitefts5
     $ brew install qt
-    $ brew link sqlite3 --force
+    $ brew link sqlitefts5 --force
 
 Then it's just a matter of getting the source:
 
@@ -141,7 +142,7 @@ And compiling it:
     $ cd sqlitebrowser
     $ qmake
     $ make
-    $ brew unlink sqlite3
+    $ brew unlink sqlitefts5
     $ mv src/DB\ Browser\ for\ SQLite.app /Applications/
 
 An icon for "DB Browser for SQLite" should now be in your main OSX Applications
@@ -235,7 +236,7 @@ databases.
 Before compiling make sure you have the necessary SQLCipher development files
 installed. On Linux this can usually be accomplished by just installing the
 correct package (e.g. 'libsqlcipher-dev' on Debian-based distributions). On
-MacOS X the easiest way is to install it via Homebrew ('brew install
+macOS the easiest way is to install it via Homebrew ('brew install
 sqlcipher'). On Windows unfortunately it's a bit more difficult: You'll have
 to download and compile the code as described on the
 [SQLCipher website](https://www.zetetic.net/sqlcipher/) before you can proceed.

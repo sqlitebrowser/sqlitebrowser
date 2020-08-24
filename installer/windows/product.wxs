@@ -49,6 +49,11 @@
             <Merge Id="VCRedist" SourceFile="$(var.VCRedistPath)\$(var.VCRedistFile)" DiskId="1" Language="0" />
             <Directory Id="$(var.ProgramFilesFolder)">
                 <Directory Id="INSTALLDIR" Name="$(var.Name)">
+                    <!-- Save the install location to the Registry -->
+                    <Component Id="RegistryInstallLocation">
+                        <RegistryValue Root="HKLM" Key="Software\$(var.Name)" Name="InstallLocation" Value="[INSTALLDIR]" Type="string" />
+                    </Component>
+
                     <Directory Id="styles" Name="styles">
                         <Component><File Source="$(var.QtPath)\plugins\styles\qwindowsvistastyle.dll" /></Component>
                     </Directory>
@@ -88,6 +93,7 @@
                     <Component><File Source="$(var.QtPath)\bin\Qt5PrintSupport.dll" /></Component>
                     <Component><File Source="$(var.QtPath)\bin\Qt5Widgets.dll" /></Component>
                     <Component><File Source="$(var.QtPath)\bin\Qt5Xml.dll" /></Component>
+                    <Component><File Source="$(var.QtPath)\bin\Qt5Svg.dll" /></Component>
 		    <!-- OpenSSL 1.1.1 -->
                     <?if $(sys.BUILDARCH)="x64"?>
                         <Component><File Id="libcrypto.dll" Source="$(var.OpenSSLPath)\libcrypto-1_1-x64.dll" /></Component>
@@ -148,6 +154,9 @@
                 </Feature>
             </Feature>
 
+            <!-- Registry -->
+            <ComponentRef Id="RegistryInstallLocation" />
+
             <!-- Shortcuts -->
             <ComponentRef Id="SQLiteDesktopShortcut" />
             <ComponentRef Id="SQLiteProgramMenuShortcut" />
@@ -186,6 +195,7 @@
             <ComponentRef Id="Qt5PrintSupport.dll" />
             <ComponentRef Id="Qt5Widgets.dll" />
             <ComponentRef Id="Qt5Xml.dll" />
+            <ComponentRef Id="Qt5Svg.dll" />
             <!-- OpenSSL -->
             <ComponentRef Id="libcrypto.dll" />
             <ComponentRef Id="libssl.dll" />

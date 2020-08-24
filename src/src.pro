@@ -21,6 +21,12 @@ CONFIG(unittest) {
 }
 
 HEADERS += \
+    ImageViewer.h \
+    RemoteCommitsModel.h \
+    RemoteLocalFilesModel.h \
+    RemoteNetwork.h \
+    TableBrowserDock.h \
+    dbstructureqitemviewfacade.h \
     sqlitedb.h \
     MainWindow.h \
     EditIndexDialog.h \
@@ -81,6 +87,12 @@ HEADERS += \
     sql/parser/sqlite3_parser.hpp
 
 SOURCES += \
+    ImageViewer.cpp \
+    RemoteCommitsModel.cpp \
+    RemoteLocalFilesModel.cpp \
+    RemoteNetwork.cpp \
+    TableBrowserDock.cpp \
+    dbstructureqitemviewfacade.cpp \
     sqlitedb.cpp \
     MainWindow.cpp \
     EditIndexDialog.cpp \
@@ -143,6 +155,7 @@ RESOURCES += icons/icons.qrc \
              qdarkstyle/style.qrc
 
 FORMS += \
+    ImageViewer.ui \
     MainWindow.ui \
     EditIndexDialog.ui \
     AboutDialog.ui \

@@ -138,7 +138,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
 
         // save current selected columns, so we can restore them after the update
         QString sItemX; // selected X column
-        QList<QMap<QString, PlotSettings>> mapItemsY = {QMap<QString, PlotSettings>(), QMap<QString, PlotSettings>()};
+        std::vector<std::map<QString, PlotSettings>> mapItemsY = {std::map<QString, PlotSettings>(), std::map<QString, PlotSettings>()};
 
         if(keepOrResetSelection)
         {
@@ -149,10 +149,12 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                 if(item->checkState(PlotColumnX) == Qt::Checked)
                     sItemX = item->text(PlotColumnField);
 
-                for(int y_ind = 0; y_ind < 2; y_ind++)
+                for(size_t y_ind = 0; y_ind < 2; y_ind++)
                   if(item->checkState(PlotColumnY[y_ind]) == Qt::Checked)
-                    mapItemsY[y_ind][item->text(PlotColumnField)] = PlotSettings(0, 0, item->backgroundColor(PlotColumnY[y_ind]), item->checkState(PlotColumnY[y_ind]) == Qt::Checked);
-
+                    mapItemsY[y_ind][item->text(PlotColumnField)] = PlotSettings(
+                        0, 0,
+                        item->background(PlotColumnY[y_ind]).color(),
+                        item->checkState(PlotColumnY[y_ind]) == Qt::Checked);
             }
         } else {
             // Get the plot columns to select from the stored browse table information
@@ -201,12 +203,12 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                     columnitem->setText(PlotColumnField, model->headerData(i, Qt::Horizontal, Qt::EditRole).toString());
 
                     // restore previous check state
-                    for(int y_ind = 0; y_ind < 2; y_ind++)
+                    for(size_t y_ind = 0; y_ind < 2; y_ind++)
                       {
-                        if(mapItemsY[y_ind].contains(columnitem->text(PlotColumnField)))
+                        if(contains(mapItemsY[y_ind], columnitem->text(PlotColumnField)))
                         {
                           columnitem->setCheckState(PlotColumnY[y_ind], mapItemsY[y_ind][columnitem->text(PlotColumnField)].active ? Qt::Checked : Qt::Unchecked);
-                          columnitem->setBackgroundColor(PlotColumnY[y_ind], mapItemsY[y_ind][columnitem->text(PlotColumnField)].colour);
+                          columnitem->setBackground(PlotColumnY[y_ind], mapItemsY[y_ind][columnitem->text(PlotColumnField)].colour);
                         } else {
                         if (columntype == QVariant::Double)
                           columnitem->setCheckState(PlotColumnY[y_ind], Qt::Unchecked);
@@ -234,12 +236,12 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                 columnitem->setText(PlotColumnType, tr("Numeric"));
 
                 // restore previous check state
-                for(int y_ind = 0; y_ind < 2; y_ind++)
+                for(size_t y_ind = 0; y_ind < 2; y_ind++)
                 {
-                    if(mapItemsY[y_ind].contains(columnitem->text(PlotColumnField)))
+                    if(contains(mapItemsY[y_ind], columnitem->text(PlotColumnField)))
                     {
                       columnitem->setCheckState(PlotColumnY[y_ind], mapItemsY[y_ind][columnitem->text(PlotColumnField)].active ? Qt::Checked : Qt::Unchecked);
-                      columnitem->setBackgroundColor(PlotColumnY[y_ind], mapItemsY[y_ind][columnitem->text(PlotColumnField)].colour);
+                      columnitem->setBackground(PlotColumnY[y_ind], mapItemsY[y_ind][columnitem->text(PlotColumnField)].colour);
                     } else {
                     columnitem->setCheckState(PlotColumnY[y_ind], Qt::Unchecked);
                     }
@@ -272,7 +274,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
         xitem = nullptr;
     }
 
-    QList<QStringList> yAxisLabels = {QStringList(), QStringList()};
+    std::vector<QStringList> yAxisLabels = {QStringList(), QStringList()};
 
     // Clear graphs and axis labels
     ui->plotWidget->clearPlottables();
@@ -330,11 +332,11 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
         for(int i = 0; i < ui->treePlotColumns->topLevelItemCount(); ++i)
         {
             QTreeWidgetItem* item = ui->treePlotColumns->topLevelItem(i);
-            QList<bool> yItemBool = {false, false};
+            std::vector<bool> yItemBool = {false, false};
 
             if(item->checkState((PlotColumnY[0])) == Qt::Checked || item->checkState((PlotColumnY[1])) == Qt::Checked)
             {
-                for(int y_ind = 0; y_ind < 2; y_ind++)
+                for(size_t y_ind = 0; y_ind < 2; y_ind++)
                     if(item->checkState((PlotColumnY[y_ind])) == Qt::Checked)
                         yItemBool[y_ind] = true;
 
@@ -351,8 +353,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
 
                 auto nrows = model->rowCount();
 
-                QList<QVector<double>> ydata;
-                ydata = {QVector<double>(nrows), QVector<double>(nrows)};
+                std::vector<QVector<double>> ydata{QVector<double>(nrows), QVector<double>(nrows)};
 
                 QVector<double> xdata(nrows), tdata(nrows);
                 QVector<QString> labels;
@@ -361,11 +362,16 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                 {
                     tdata[j] = j;
 
-                    // NULL values produce gaps in the graph. We use NaN values in
-                    // that case as required by QCustomPlot.
-                    if(x != RowNumId && model->data(model->index(j, x), Qt::EditRole).isNull())
-                        xdata[j] = qQNaN();
-                    else {
+                    if(x != RowNumId && model->data(model->index(j, x), Qt::EditRole).isNull()) {
+                        // NULL values produce gaps in the linear graphs. We use NaN values in
+                        // that case as required by QCustomPlot.
+                        // Bar plots will display the configured string for NULL values.
+                        if(xtype == QVariant::String) {
+                            xdata[j] = j+1;
+                            labels << model->data(model->index(j, x), Qt::DisplayRole).toString();
+                        } else
+                            xdata[j] = qQNaN();
+                    } else {
 
                         // convert x type axis if it's datetime
                         switch (xtype) {
@@ -408,7 +414,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                     else
                         pointdata = model->data(model->index(j, column), Qt::EditRole);
 
-                    for(int y_ind = 0; y_ind < 2; y_ind++)
+                    for(size_t y_ind = 0; y_ind < 2; y_ind++)
                     {
                         if(pointdata.isNull()){
                             if(yItemBool[y_ind])
@@ -430,7 +436,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                 if (shapeIdx > 0) shapeIdx += 1;
                 QCPScatterStyle scatterStyle = QCPScatterStyle(static_cast<QCPScatterStyle::ScatterShape>(shapeIdx), 5);
 
-                QCPAbstractPlottable* plottable;
+                QCPAbstractPlottable* plottable = nullptr;
                 // When the X type is String, we draw a bar chart.
                 // When it is already sorted by x, we draw a graph.
                 // When it is not sorted by x, we draw a curve, so the order selected by the user in the table or in the query is
@@ -438,7 +444,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                 // TODO: how to make the user aware of this without disturbing.
                 if (xtype == QVariant::String) {
 
-                    for(int y_ind = 0; y_ind < 2; y_ind++)
+                    for(size_t y_ind = 0; y_ind < 2; y_ind++)
                     {
                         if(yItemBool[y_ind])
                         {
@@ -451,14 +457,14 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                                 ticker->addTicks(xdata, labels);
                                 ui->plotWidget->xAxis->setTicker(ticker);
                             }
-                            QColor color = item->backgroundColor(PlotColumnY[y_ind]);
+                            QColor color = item->background(PlotColumnY[y_ind]).color();
                             bars->setBrush(color);
                             plottable->setPen(QPen(color.darker(150)));
                         }
                     }
                 } else {
                     if (isSorted) {
-                        for(int y_ind = 0; y_ind < 2; y_ind++)
+                        for(size_t y_ind = 0; y_ind < 2; y_ind++)
                         {
                             if(yItemBool[y_ind])
                             {
@@ -468,11 +474,11 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                                 // set some graph styles not supported by the abstract plottable
                                 graph->setLineStyle(static_cast<QCPGraph::LineStyle>(ui->comboLineType->currentIndex()));
                                 graph->setScatterStyle(scatterStyle);
-                                plottable->setPen(QPen(item->backgroundColor(PlotColumnY[y_ind])));
+                                plottable->setPen(QPen(item->background(PlotColumnY[y_ind]).color()));
                             }
                         }
                     } else {
-                        for(int y_ind = 0; y_ind < 2; y_ind++)
+                        for(size_t y_ind = 0; y_ind < 2; y_ind++)
                         {
                             if(yItemBool[y_ind])
                             {
@@ -485,16 +491,19 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                                 else
                                     curve->setLineStyle(QCPCurve::lsLine);
                                 curve->setScatterStyle(scatterStyle);
-                                plottable->setPen(QPen(item->backgroundColor(PlotColumnY[y_ind])));
+                                plottable->setPen(QPen(item->background(PlotColumnY[y_ind]).color()));
                             }
                         }
                     }
                 }
 
-                plottable->setSelectable(QCP::stDataRange);
-                plottable->setName(item->text(PlotColumnField));
+                if(plottable)
+                {
+                    plottable->setSelectable(QCP::stDataRange);
+                    plottable->setName(item->text(PlotColumnField));
+                }
 
-                for(int y_ind = 0; y_ind < 2; y_ind++)
+                for(size_t y_ind = 0; y_ind < 2; y_ind++)
                 {
                     if(yItemBool[y_ind])
                     {
@@ -518,7 +527,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
             ui->plotWidget->xAxis->setLabel(tr("Row #"));
         else
             ui->plotWidget->xAxis->setLabel(model->headerData(x, Qt::Horizontal, Qt::EditRole).toString());
-        for(int y_ind = 0; y_ind < 2; y_ind++)
+        for(size_t y_ind = 0; y_ind < 2; y_ind++)
             yAxes[y_ind]->setLabel(yAxisLabels[y_ind].join("|"));
 
         if(displayY2Axis){
@@ -578,7 +587,7 @@ void PlotDock::on_treePlotColumns_itemChanged(QTreeWidgetItem* changeitem, int c
         }
     } else if(column == PlotColumnY[0] || column == PlotColumnY[1]) {
         // Save check state of this column
-        for(int y_ind = 0; y_ind < 2; y_ind++)
+        for(size_t y_ind = 0; y_ind < 2; y_ind++)
         {
             if(column == PlotColumnY[y_ind])
             {
@@ -590,13 +599,13 @@ void PlotDock::on_treePlotColumns_itemChanged(QTreeWidgetItem* changeitem, int c
 
                 if(changeitem->checkState(column) == Qt::Checked)
                 {
-                    // Generate a default colour if none isn't set yet
-                    QColor colour = changeitem->backgroundColor(column);
-                    if(!colour.isValid())
+                    // Generate a default colour if none is set yet
+                    QColor colour = changeitem->background(column).color();
+                    if(!colour.isValid() || colour == changeitem->background(PlotColumnField).color())
                         colour = m_graphPalette.nextSerialColor(true);
 
-                    // Set colour
-                    changeitem->setBackgroundColor(column, colour);
+                    // Set colour to cell background
+                    changeitem->setBackground(column, colour);
 
                     // Save settings for this table
                     if(m_currentTableSettings)
@@ -624,19 +633,19 @@ void PlotDock::on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem* item, int c
 
     int type = item->data(PlotColumnType, Qt::UserRole).toInt();
 
-    for(int y_ind = 0; y_ind < 2; y_ind++)
+    for(size_t y_ind = 0; y_ind < 2; y_ind++)
     {
         if(column == PlotColumnY[y_ind] && type == QVariant::Double)
         {
             // On double click open the colordialog
             QColorDialog colordialog(this);
-            QColor curbkcolor = item->backgroundColor(column);
+            QColor curbkcolor = item->background(column).color();
             QColor precolor = !curbkcolor.isValid() ? static_cast<Qt::GlobalColor>(random_number(5, 13)) : curbkcolor;
             QColor color = colordialog.getColor(precolor, this, tr("Choose an axis color"));
             if(color.isValid())
             {
                 item->setCheckState(column, Qt::Checked);
-                item->setBackgroundColor(column, color);
+                item->setBackground(column, color);
 
                 // Save settings for this table
                 if(m_currentTableSettings)
@@ -652,7 +661,7 @@ void PlotDock::on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem* item, int c
 
                 // Save settings for this table
                 if(m_currentTableSettings)
-                    m_currentTableSettings->plotYAxes[y_ind].remove(item->text(PlotColumnField));
+                    m_currentTableSettings->plotYAxes[y_ind].erase(item->text(PlotColumnField));
             }
         }
     }
@@ -725,13 +734,13 @@ void PlotDock::on_comboLineType_currentIndexChanged(int index)
     // Save settings for this table
     if(m_currentTableSettings)
     {
-        for(int y_ind = 0; y_ind < 2; y_ind++)
+        for(size_t y_ind = 0; y_ind < 2; y_ind++)
         {
-            QMap<QString, PlotSettings>& graphs = m_currentTableSettings->plotYAxes[y_ind];
+            std::map<QString, PlotSettings>& graphs = m_currentTableSettings->plotYAxes[y_ind];
             auto it = graphs.begin();
             while(it != graphs.end())
             {
-                it.value().lineStyle = lineStyle;
+                it->second.lineStyle = lineStyle;
                 ++it;
             }
         }
@@ -763,13 +772,13 @@ void PlotDock::on_comboPointShape_currentIndexChanged(int index)
     // Save settings for this table
     if(m_currentTableSettings)
     {
-        for(int y_ind = 0; y_ind < 2; y_ind++)
+        for(size_t y_ind = 0; y_ind < 2; y_ind++)
         {
-            QMap<QString, PlotSettings>& graphs = m_currentTableSettings->plotYAxes[y_ind];
+            std::map<QString, PlotSettings>& graphs = m_currentTableSettings->plotYAxes[y_ind];
             auto it = graphs.begin();
             while(it != graphs.end())
             {
-                it.value().pointShape = shape;
+                it->second.pointShape = shape;
                 ++it;
             }
         }

@@ -20,7 +20,7 @@
 
 using json = nlohmann::json;
 
-SqliteTableModel::SqliteTableModel(DBBrowserDB& db, QObject* parent, const QString& encoding)
+SqliteTableModel::SqliteTableModel(DBBrowserDB& db, QObject* parent, const QString& encoding, bool force_wait)
     : QAbstractTableModel(parent)
     , m_db(db)
     , m_lifeCounter(0)
@@ -31,7 +31,7 @@ SqliteTableModel::SqliteTableModel(DBBrowserDB& db, QObject* parent, const QStri
     reloadSettings();
 
     worker = new RowLoader(
-        [this](){ return m_db.get(tr("reading rows")); },
+        [this, force_wait](){ return m_db.get(tr("reading rows"), force_wait); },
         [this](QString stmt){ return m_db.logSQL(stmt, kLogMsg_App); },
         m_headers, m_mutexDataCache, m_cache
         );
@@ -353,7 +353,7 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
             return QVariant();
         return decode(data);
     } else if(role == Qt::FontRole) {
-        QFont font;
+        QFont font = m_font;
         if(!row_available || data.isNull() || isBinary(data))
             font.setItalic(true);
         else {
@@ -981,7 +981,7 @@ bool SqliteTableModel::isEditable(const QModelIndex& index) const
     if(index.isValid() && m_table_of_query)
     {
         const auto field = sqlb::findField(m_table_of_query, m_headers.at(static_cast<size_t>(index.column())));
-        if(field != m_table_of_query->fields.cend() && !field->generated().empty())
+        if(field != m_table_of_query->fields.cend() && field->generated())
             return false;
     }
 
@@ -1175,6 +1175,8 @@ void SqliteTableModel::reloadSettings()
     m_nullBgColour = QColor(Settings::getValue("databrowser", "null_bg_colour").toString());
     m_binFgColour = QColor(Settings::getValue("databrowser", "bin_fg_colour").toString());
     m_binBgColour = QColor(Settings::getValue("databrowser", "bin_bg_colour").toString());
+    m_font = QFont(Settings::getValue("databrowser", "font").toString());
+    m_font.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
     m_symbolLimit = Settings::getValue("databrowser", "symbol_limit").toInt();
     m_imagePreviewEnabled = Settings::getValue("databrowser", "image_preview").toBool();
     m_chunkSize = static_cast<std::size_t>(Settings::getValue("db", "prefetchsize").toUInt());
