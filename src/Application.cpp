@@ -88,7 +88,7 @@ Application::Application(int& argc, char** argv) :
         if(arguments().at(i) == "-h" || arguments().at(i) == "--help")
         {
             // Help
-            qWarning() << qPrintable(tr("Usage: %1 [options] [db]\n").arg(argv[0]));
+            qWarning() << qPrintable(tr("Usage: %1 [options] [database]\n").arg(argv[0]));
             qWarning() << qPrintable(tr("Possible command line arguments:"));
             qWarning() << qPrintable(tr("  -h, --help\t\tShow command line options"));
             qWarning() << qPrintable(tr("  -q, --quit\t\tExit application after running scripts"));
@@ -98,10 +98,10 @@ Application::Application(int& argc, char** argv) :
             qWarning() << qPrintable(tr("  -o, --option [group/setting=value]\tRun application with this setting temporarily set to value"));
             qWarning() << qPrintable(tr("  -O, --save-option [group/setting=value]\tRun application saving this value for this setting"));
             qWarning() << qPrintable(tr("  -v, --version\t\tDisplay the current version"));
-            qWarning() << qPrintable(tr("  [file]\t\tOpen this SQLite database"));
+            qWarning() << qPrintable(tr("  [database]\t\tOpen this SQLite database"));
             m_dontShowMainWindow = true;
         } else if(arguments().at(i) == "-v" || arguments().at(i) == "--version") {
-            qWarning() << qPrintable(tr("This is DB Browser for SQLite version %1.").arg(versionString()));
+            qWarning() << qPrintable(tr("DB Browser for SQLite version %1.").arg(versionString()));
             m_dontShowMainWindow = true;
         } else if(arguments().at(i) == "-s" || arguments().at(i) == "--sql") {
             // Run SQL file: If file exists add it to list of scripts to execute
