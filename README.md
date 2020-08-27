@@ -268,6 +268,8 @@ support issues.
 In September 2014, the project was renamed to "DB Browser for SQLite", to
 avoid confusion with an existing application called "Database Browser".
 
+## Contribution
+Contribution guidelines in [CONTRIBUTION.md](CONTRIBUTION.md).
 ## Contributors
 
 View the list by going to the [__Contributors__ tab](https://github.com/sqlitebrowser/sqlitebrowser/graphs/contributors).
