@@ -20,7 +20,7 @@ If you have any questions about our project, please check the following first.
 - Search for existing similar issues
 
 If your question is still not resolved, you can create an issue and ask a question.  
-A template from the GitHub issue will help you write a good bug report.
+A template from the GitHub issue will help you write a good question.
 
 ## How to contribute?
 ### Report bug/issue
@@ -45,6 +45,7 @@ If a bug has not yet been reported or has not been resolved, please follow these
     but screencast can be hosted on streamable.com and the link pasted into the issue.
 - Crash log (If the crash log is known, although this is **NOT** required)
     - If you have a long crash log, [Pastebin](https://pastebin.com/) can help (Make sure to set expiration to 'never')
+- SQL log (If the log content is relevant)
 - Project file or database file in use (**NOT** required)
 
 A template from the GitHub issue will help you write a good bug/issue report.
@@ -66,10 +67,11 @@ Languages that are already being translated can be translated by modifying the c
 and translations for new languages can be translated by adding a new entry to the TRANSLATION section of the src/src.pro file and then rebuilding the project.
 
 #### DO NOT translate key names in shortcuts
-Keyboard shortcuts get automatically localized by Qt, and translating key names may indeed break them. They show up on the translation file only for the rare occasions that one has to redirect a shortcut to another one in a specific language. But even then, you should use the English key names to get this working. Theoretically, one could follow Qt conventions for translated key names, and they should work, but the risk to stumble upon Qt bugs or moving conventions is high, so it is better to not translate keys and only remap the shortcut. If you want to preserve the original key sequence (recommended), just leave the translation empty and finished.
+Keyboard shortcuts get automatically localized by Qt, and translating key names may indeed break them.  
+For further information, check out the [translations section](https://github.com/sqlitebrowser/sqlitebrowser/wiki/Translations) of the wiki.
 
 ## Styleguide
-Styleguides help keep the project's source code looking good and consistent.
+Styleguides help keep the project's source code looking good and consistent.  
 This can be of great help to existing and new contributors.
 
 ### CPP source code
@@ -88,7 +90,7 @@ This can be of great help to existing and new contributors.
 - Leave a space after each comma
 
 #### Braces
-- Place braces on the line after the keyword
+- Place braces on the same line as the keyword
 - A brace can be omitted if the execution statement in the conditional/repeated statement consists of only one line
 
 ### Git commit message
@@ -101,3 +103,4 @@ Keeping Git commit messages consistent can help keep track of code history.
 - Use the body to explain why
 - Reference related issue number
     - Ex) `Add clearValue() method (#9999)`
+    - Do **NOT** close the issue from the commit(eg. Close #9999) before request the user's confirmation.
