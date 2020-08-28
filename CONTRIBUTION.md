@@ -23,8 +23,8 @@ If your question is still not resolved, you can create an issue and ask a questi
 A template from the GitHub issue will help you write a good bug report.
 
 ## How to contribute?
-### Report bug
-Please check the following before reporting a bug.
+### Report bug/issue
+Please check the following before reporting a bug or issue.
 
 - Look up ['Known Issues'](https://github.com/sqlitebrowser/sqlitebrowser/issues/1688)
 - Search for existing similar issues
@@ -32,22 +32,22 @@ Please check the following before reporting a bug.
 
 If a bug has not yet been reported or has not been resolved, please follow these steps to help members identify the bug.
 
-- Use a good title to identify the bug
+- Use a concise but descriptive title to identify the bug/issue
     - Ex) `Crash DB4S when try to reset the settings`
 - Detailed steps to reproduce the bug
     - Ex) `File -> Preferences -> General -> Restore Defaults`
 - What you actually expected to do and why
     - Ex) `DB4S settings are initalized normally.`
-- System environment, DB4S version, Loaded extensions
+- System environment, DB4S version, loaded extensions
     - Ex) `macOS Catalina Version 10.15.6(19G2021), DB4S Version 3.12.0, No Extensions`
-- Attach screenshots or screencasts related to the bug
+- Attach screenshots or screencasts related to the bug/issue
     - You can add images can be pasted directly into the GitHub issue,  
     but screencast can be hosted on streamable.com and the link pasted into the issue.
-- Crash log (If the crash log is known, **NOT** required)
+- Crash log (If the crash log is known, although this is **NOT** required)
     - If you have a long crash log, [Pastebin](https://pastebin.com/) can help (Make sure to set expiration to 'never')
 - Project file or database file in use (**NOT** required)
 
-And also a template from GitHub issue will help you write good bug report.
+A template from the GitHub issue will help you write a good bug/issue report.
 
 ### Suggest enhancement
 Please check the following before suggesting an enhancement.
@@ -56,7 +56,7 @@ Please check the following before suggesting an enhancement.
 
 And please follow the below to help members identify the suggestion.
 
-- Use a good title to identify the suggestion
+- Use a concise but descriptive title to identify the suggestion
 - Describe the detailed steps for the enhancement you want to propose
 - Attach a simple example of the proposal, already applied projects or screenshots
 
@@ -89,7 +89,7 @@ This can be of great help to existing and new contributors.
 
 #### Braces
 - Place braces on the line after the keyword
-- A Brace can be omitted if the execution statement in the conditional/repeated statement consists of only one line
+- A brace can be omitted if the execution statement in the conditional/repeated statement consists of only one line
 
 ### Git commit message
 Keeping Git commit messages consistent can help keep track of code history.
