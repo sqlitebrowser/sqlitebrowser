@@ -14,6 +14,8 @@
 #include <QtConcurrent/QtConcurrentRun>
 #include <QProgressDialog>
 #include <QRegularExpression>
+#include <QPushButton>
+
 #include <json.hpp>
 
 #include "RowLoader.h"
@@ -1023,6 +1025,14 @@ bool SqliteTableModel::completeCache () const
     // cancel button if we allow cancellation here. This isn't
     QProgressDialog progress(tr("Fetching data..."),
                              tr("Cancel"), 0, rowCount());
+
+    QPushButton* cancelButton = new QPushButton(tr("Cancel"));
+    // This is to prevent distracted cancelation of the fetching and avoid the
+    // Snap-To Windows optional feature.
+    cancelButton->setDefault(false);
+    cancelButton->setAutoDefault(false);
+    progress.setCancelButton(cancelButton);
+
     progress.setWindowModality(Qt::ApplicationModal);
     progress.show();
 
