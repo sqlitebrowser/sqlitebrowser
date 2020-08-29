@@ -1,9 +1,10 @@
+
 #include "Application.h"
 #include "sqlite.h"
 
 #include <QMessageBox>
 
-static QMessageBox* messageBox = nullptr;
+static QString message = QString();
 
 void db4sMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
@@ -24,13 +25,7 @@ void db4sMessageOutput(QtMsgType type, const QMessageLogContext &context, const 
 
 void boxMessageOutput(QtMsgType, const QMessageLogContext &, const QString &msg)
 {
-    if (!messageBox)
-        messageBox = new QMessageBox();
-
-    messageBox->setText(messageBox->text() + msg + "\n");
-
-    if (!messageBox->isVisible())
-        messageBox->show();
+    message += msg + "\n";
 }
 
 int main( int argc, char ** argv )
@@ -46,8 +41,12 @@ int main( int argc, char ** argv )
     Application a(argc, argv);
 
     // If there has been output in the message box, let user see it.
-    if(messageBox && messageBox->isVisible())
-        messageBox->exec();
+    if(!message.isEmpty()) {
+        QMessageBox messageBox;
+        messageBox.setTextFormat(Qt::RichText);
+        messageBox.setText("<pre>" + message + "</pre>");
+        messageBox.exec();
+    }
 
     // Quit application now if user doesn't want to see the UI
     if(a.dontShowMainWindow())
