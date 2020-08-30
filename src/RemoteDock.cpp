@@ -383,10 +383,14 @@ void RemoteDock::pushDatabase(const QString& path, const QString& branch)
     url.append("/");
     url.append(pushDialog.name());
 
-    // Check if we are pushing a cloned database. Only in this case we provide the last known commit id
+    // Check if we are pushing a cloned database. Only in this case we provide the last known commit id.
+    // For this check we use the branch name which was used for cloning this database rather than the
+    // branch name which was selected in the push dialog. This is because we want to figure out the
+    // current commit id of we are currently looking at rather than some other commit id or none at all
+    // when creating a new branch.
     QString commit_id;
     if(path.startsWith(Settings::getValue("remote", "clonedirectory").toString()))
-        commit_id = QString::fromStdString(remoteDatabase.localLastCommitId(remoteModel->currentClientCertificate(), url, pushDialog.branch().toStdString()));
+        commit_id = QString::fromStdString(remoteDatabase.localLastCommitId(remoteModel->currentClientCertificate(), url, branch.toStdString()));
 
     // Push database
     RemoteNetwork::get().push(path, url, remoteModel->currentClientCertificate(), pushDialog.name(),
