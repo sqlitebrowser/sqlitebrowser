@@ -382,7 +382,7 @@ void RemoteNetwork::prepareProgressDialog(QNetworkReply* reply, bool upload, con
 }
 
 void RemoteNetwork::fetch(const QUrl& url, RequestType type, const QString& clientCert,
-                          std::function<void(QByteArray)> when_finished, bool synchronous)
+                          std::function<void(QByteArray)> when_finished, bool synchronous, bool ignore_errors)
 {
     // Check if network is accessible. If not, abort right here
     if(m_manager->networkAccessible() == QNetworkAccessManager::NotAccessible)
@@ -416,6 +416,7 @@ void RemoteNetwork::fetch(const QUrl& url, RequestType type, const QString& clie
     QNetworkReply* reply = m_manager->get(request);
     reply->setProperty("type", type);
     reply->setProperty("certfile", clientCert);
+    reply->setProperty("ignore_errors", ignore_errors);
 
     // Hook up custom handler when there is one and global handler otherwise
     if(when_finished)
@@ -556,7 +557,7 @@ bool RemoteNetwork::handleReply(QNetworkReply* reply)
     if(reply->error() != QNetworkReply::NoError)
     {
         // Do not show error message when operation was cancelled on purpose
-        if(reply->error() != QNetworkReply::OperationCanceledError)
+        if(reply->error() != QNetworkReply::OperationCanceledError && !reply->property("ignore_errors").toBool())
         {
             QMessageBox::warning(nullptr, qApp->applicationName(),
                                  reply->errorString() + "\n" + reply->readAll());

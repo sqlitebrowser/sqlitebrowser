@@ -15,7 +15,7 @@ class RemotePushDialog : public QDialog
 
 public:
     explicit RemotePushDialog(QWidget* parent, const QString& host, const QString& clientCert,
-                              const QString& name = QString(), const QString& branch = QString());
+                              const QString& name = QString(), const QString& branch = QString(), const QString& user = QString());
     ~RemotePushDialog() override;
 
     QString name() const;
@@ -23,6 +23,7 @@ public:
     QString licence() const;
     bool isPublic() const;
     QString branch() const;
+    QString user() const;
     bool forcePush() const;
 
 private:

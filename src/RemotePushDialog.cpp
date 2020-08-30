@@ -11,7 +11,7 @@
 using json = nlohmann::json;
 
 RemotePushDialog::RemotePushDialog(QWidget* parent, const QString& host, const QString& clientCert,
-                                   const QString& name, const QString& branch) :
+                                   const QString& name, const QString& branch, const QString& user) :
     QDialog(parent),
     ui(new Ui::RemotePushDialog),
     m_host(host),
@@ -23,9 +23,15 @@ RemotePushDialog::RemotePushDialog(QWidget* parent, const QString& host, const Q
     ui->setupUi(this);
     ui->editName->setValidator(m_nameValidator);
     ui->comboBranch->setValidator(m_branchValidator);
+    ui->comboUser->setValidator(m_nameValidator);
 
     // Set start values
     ui->editName->setText(name);
+
+    // Fill in usernames
+    ui->comboUser->addItem(RemoteNetwork::get().getInfoFromClientCert(m_clientCert, RemoteNetwork::CertInfoUser));
+    if(!user.isEmpty())
+        ui->comboUser->addItem(user);
 
     // Enable/disable accept button
     checkInput();
@@ -85,6 +91,9 @@ void RemotePushDialog::checkInput()
     if(ui->comboBranch->currentText().size() < 1 || ui->comboBranch->currentText().size() > 32)
         valid = false;
 
+    if(ui->comboUser->currentText().trimmed().isEmpty())
+        valid = false;
+
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(valid);
 }
 
@@ -118,6 +127,11 @@ QString RemotePushDialog::branch() const
     return ui->comboBranch->currentText();
 }
 
+QString RemotePushDialog::user() const
+{
+    return ui->comboUser->currentText();
+}
+
 bool RemotePushDialog::forcePush() const
 {
     return ui->checkForce->isChecked();
@@ -127,7 +141,7 @@ void RemotePushDialog::reloadBranchList(const QString& select_branch)
 {
     QUrl url(m_host + "branch/list");
     QUrlQuery query;
-    query.addQueryItem("username", RemoteNetwork::get().getInfoFromClientCert(m_clientCert, RemoteNetwork::CertInfoUser));
+    query.addQueryItem("username", ui->comboUser->currentText());
     query.addQueryItem("folder", "/");
     query.addQueryItem("dbname", ui->editName->text());
     url.setQuery(query);
@@ -156,5 +170,5 @@ void RemotePushDialog::reloadBranchList(const QString& select_branch)
         // If a branch was suggested, select it now
         if(!select_branch.isEmpty())
             ui->comboBranch->setCurrentIndex(ui->comboBranch->findText(select_branch));
-    });
+    }, false, true);
 }
