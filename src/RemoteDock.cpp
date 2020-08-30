@@ -379,7 +379,7 @@ void RemoteDock::pushDatabase(const QString& path, const QString& branch)
 
     // Build push URL
     QString url = host;
-    url.append(RemoteNetwork::get().getInfoFromClientCert(remoteModel->currentClientCertificate(), RemoteNetwork::CertInfoUser));
+    url.append(pushDialog.user());
     url.append("/");
     url.append(pushDialog.name());
 
