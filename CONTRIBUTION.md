@@ -79,7 +79,8 @@ This can be of great help to existing and new contributors.
 - 4 spaces(**NOT** tabs) for indentation
 
 #### Declare variables
-- Use lowerCamelCase
+- Use lowerCamelCase when working with Qt classes (for example in dialogs)
+- Use snake_case when working with the standard library (for example in the sqlb namespace)
 - Declare only one variable per line
 - \* in pointer variable is attached to data type
     - Ex) `int* ptr`
