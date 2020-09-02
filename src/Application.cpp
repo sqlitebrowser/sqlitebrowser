@@ -13,6 +13,7 @@
 #include "RemoteNetwork.h"
 #include "Settings.h"
 #include "version.h"
+#include "sqlitedb.h"
 
 Application::Application(int& argc, char** argv) :
     QApplication(argc, argv)
@@ -90,7 +91,7 @@ Application::Application(int& argc, char** argv) :
         {
             // Help
             qWarning() << qPrintable(tr("Usage: %1 [options] [<database>|<project>]\n").
-                                     arg(QFileInfo(argv[0]).baseName()));
+                                     arg(QFileInfo(argv[0]).fileName()));
             qWarning() << qPrintable(tr("Possible command line arguments:"));
             qWarning() << qPrintable(tr("  -h, --help          Show command line options"));
             qWarning() << qPrintable(tr("  -q, --quit          Exit application after running scripts"));
@@ -106,7 +107,7 @@ Application::Application(int& argc, char** argv) :
             qWarning() << qPrintable(tr("  <project>           Open this project file (*.sqbpro)"));
             m_dontShowMainWindow = true;
         } else if(arguments().at(i) == "-v" || arguments().at(i) == "--version") {
-            qWarning() << qPrintable(tr("DB Browser for SQLite version %1.").arg(versionString()));
+            qWarning() << qPrintable(versionInformation());
             m_dontShowMainWindow = true;
         } else if(arguments().at(i) == "-s" || arguments().at(i) == "--sql") {
             // Run SQL file: If file exists add it to list of scripts to execute
@@ -225,6 +226,23 @@ QString Application::versionString()
 #else
     return QString("%1").arg(APP_VERSION);
 #endif
+}
+
+QString Application::versionInformation()
+{
+    QString sqlite_version, sqlcipher_version;
+    DBBrowserDB::getSqliteVersion(sqlite_version, sqlcipher_version);
+    if(sqlcipher_version.isNull())
+        sqlite_version = tr("SQLite Version ") + sqlite_version;
+    else
+        sqlite_version = tr("SQLCipher Version %1 (based on SQLite %2)").arg(sqlcipher_version, sqlite_version);
+
+    return
+        tr("DB Browser for SQLite Version %1.").arg(versionString() + "\n\n" +
+        tr("Built for %1, running on %2").arg(QSysInfo::buildAbi(), QSysInfo::currentCpuArchitecture()) + "\n" +
+        tr("Qt Version %1").arg(QT_VERSION_STR) + "\n" +
+        sqlite_version
+        );
 }
 
 void Application::reloadSettings()
