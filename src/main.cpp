@@ -40,11 +40,11 @@ int main( int argc, char ** argv )
     // Create application object. All the initialisation stuff happens in there
     Application a(argc, argv);
 
-    // If there has been output in the message box, let user see it.
+    // If there has been invocations to the message handler, show it to user in a message box.
     if(!message.isEmpty()) {
         QMessageBox messageBox;
         messageBox.setTextFormat(Qt::RichText);
-        messageBox.setText("<pre>" + message + "</pre>");
+        messageBox.setText("<pre>" + message.toHtmlEscaped() + "</pre>");
         messageBox.exec();
     }
 
