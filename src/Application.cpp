@@ -18,6 +18,32 @@
 Application::Application(int& argc, char** argv) :
     QApplication(argc, argv)
 {
+    // Check 'DB4S_CONFIG_FILE environment variable exists
+    const char* env = getenv("DB4S_CONFIG_FILE");
+
+    // If 'DB4S_CONFIG_FILE' environment variable exists
+    if(env)
+    {
+        Settings::userConfiguration = true;
+        Settings::userConfigurationDir = QString::fromStdString(env);
+    }
+
+    for(int i=1;i<arguments().size();i++)
+    {
+        if(arguments().at(i) == "-c" || arguments().at(i) == "--config")
+        {
+            if(++i >= arguments().size())
+            {
+                qWarning() << qPrintable(tr("The -c/--config option requires an argument"));
+            } else {
+                if (env)
+                    qWarning() << qPrintable(tr("The user configuration file location is replaced with the argument value instead of the environment variable value."));
+                Settings::userConfiguration = true;
+                Settings::userConfigurationDir = arguments().at(i);
+            }
+        }
+    }
+
     // Set organisation and application names
     setOrganizationName("sqlitebrowser");
     setApplicationName("DB Browser for SQLite");
@@ -98,6 +124,8 @@ Application::Application(int& argc, char** argv) :
             qWarning() << qPrintable(tr("  -s, --sql <file>    Execute this SQL file after opening the DB"));
             qWarning() << qPrintable(tr("  -t, --table <table> Browse this table after opening the DB"));
             qWarning() << qPrintable(tr("  -R, --read-only     Open database in read-only mode"));
+            qWarning() << qPrintable(tr("  -c, --config <config_file>"));
+            qWarning() << qPrintable(tr("                      Run application based on this configuration file"));
             qWarning() << qPrintable(tr("  -o, --option <group>/<setting>=<value>"));
             qWarning() << qPrintable(tr("                      Run application with this setting temporarily set to value"));
             qWarning() << qPrintable(tr("  -O, --save-option <group>/<setting>=<value>"));
@@ -126,6 +154,10 @@ Application::Application(int& argc, char** argv) :
             m_dontShowMainWindow = true;
         } else if(arguments().at(i) == "-R" || arguments().at(i) == "--read-only") {
             readOnly = true;
+        } else if(arguments().at(i) == "-c" || arguments().at(i) == "--config") {
+            // This option has already been handled above
+            // Also since this option was required one more argument(configuration file), it skips one argument
+            i++;
         } else if(arguments().at(i) == "-o" || arguments().at(i) == "--option" ||
                   arguments().at(i) == "-O" || arguments().at(i) == "--save-option") {
             const QString optionWarning = tr("The -o/--option and -O/--save-option options require an argument in the form group/setting=value");

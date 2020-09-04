@@ -10,6 +10,9 @@ class Settings
 
 public:
 
+    static bool userConfiguration;
+    static QString userConfigurationDir;
+
     enum AppStyle {
         FollowDesktopStyle,
         DarkStyle

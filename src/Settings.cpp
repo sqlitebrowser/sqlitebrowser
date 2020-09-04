@@ -9,6 +9,8 @@
 #include <QStandardPaths>
 #include <QPalette>
 
+bool Settings::userConfiguration;
+QString Settings::userConfigurationDir;
 std::unordered_map<std::string, QVariant> Settings::m_hCache;
 int Settings::m_defaultFontSize;
 
@@ -26,8 +28,15 @@ QVariant Settings::getValue(const std::string& group, const std::string& name)
         return cacheIndex->second;
     } else {
         // Nothing found in the cache, so get the value from the settings file or get the default value if there is no value set yet
-        QSettings settings(QApplication::organizationName(), QApplication::organizationName());
-        QVariant value = settings.value(QString::fromStdString(group + "/" + name), getDefaultValue(group, name));
+        QSettings* settings = NULL;
+
+        if(userConfiguration)
+            settings = new QSettings(userConfigurationDir, QSettings::IniFormat);
+        else
+            settings = new QSettings(QCoreApplication::organizationName(), QCoreApplication::organizationName());
+
+        QVariant value = (*settings).value(QString::fromStdString(group + "/" + name), getDefaultValue(group, name));
+        delete settings;
 
         // Store this value in the cache for further usage and return it afterwards
         m_hCache.insert({group + name, value});
@@ -42,10 +51,18 @@ void Settings::setValue(const std::string& group, const std::string& name, const
     if(dont_save_to_disk == false)
     {
         // Set the group and save the given value
-        QSettings settings(QApplication::organizationName(), QApplication::organizationName());
-        settings.beginGroup(QString::fromStdString(group));
-        settings.setValue(QString::fromStdString(name), value);
-        settings.endGroup();
+        QSettings* settings = NULL;
+
+        if(userConfiguration)
+            settings = new QSettings(userConfigurationDir, QSettings::IniFormat);
+        else
+            settings = new QSettings(QCoreApplication::organizationName(), QCoreApplication::organizationName());
+
+        (*settings).beginGroup(QString::fromStdString(group));
+        (*settings).setValue(QString::fromStdString(name), value);
+        (*settings).endGroup();
+
+        delete settings;
     }
 
     // Also change it in the cache
