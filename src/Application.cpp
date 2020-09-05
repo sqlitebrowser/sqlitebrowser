@@ -18,28 +18,25 @@
 Application::Application(int& argc, char** argv) :
     QApplication(argc, argv)
 {
-    // Check 'DB4S_CONFIG_FILE environment variable exists
+    // Get 'DB4S_CONFIG_FILE' environment variable
     const char* env = getenv("DB4S_CONFIG_FILE");
 
     // If 'DB4S_CONFIG_FILE' environment variable exists
     if(env)
-    {
-        Settings::userConfiguration = true;
-        Settings::userConfigurationDir = QString::fromStdString(env);
-    }
+        Settings::setUserConfigurationFile(QString::fromStdString(env));
 
     for(int i=1;i<arguments().size();i++)
     {
         if(arguments().at(i) == "-c" || arguments().at(i) == "--config")
         {
-            if(++i >= arguments().size())
+            if(++i < arguments().size())
             {
-                qWarning() << qPrintable(tr("The -c/--config option requires an argument"));
-            } else {
-                if (env)
+                if(env)
+                {
                     qWarning() << qPrintable(tr("The user configuration file location is replaced with the argument value instead of the environment variable value."));
-                Settings::userConfiguration = true;
-                Settings::userConfigurationDir = arguments().at(i);
+                    qWarning() << qPrintable(tr("Ignored environment variable(DB4S_CONFIG_FILE) value : ") + QString::fromStdString(env));
+                }
+                Settings::setUserConfigurationFile(arguments().at(i));
             }
         }
     }
@@ -47,6 +44,9 @@ Application::Application(int& argc, char** argv) :
     // Set organisation and application names
     setOrganizationName("sqlitebrowser");
     setApplicationName("DB Browser for SQLite");
+
+    // Create a QSettings class object
+    Settings::setSettingsObject();
 
     // Set character encoding to UTF8
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
@@ -156,8 +156,12 @@ Application::Application(int& argc, char** argv) :
             readOnly = true;
         } else if(arguments().at(i) == "-c" || arguments().at(i) == "--config") {
             // This option has already been handled above
-            // Also since this option was required one more argument(configuration file), it skips one argument
-            i++;
+            // For here, only print the error when no parameter value is given
+            if(++i >= arguments().size())
+            {
+                qWarning() << qPrintable(tr("The -c/--config option requires an argument"));
+                qWarning() << qPrintable(tr("So the -c/--config option is ignored and run application"));
+            }
         } else if(arguments().at(i) == "-o" || arguments().at(i) == "--option" ||
                   arguments().at(i) == "-O" || arguments().at(i) == "--save-option") {
             const QString optionWarning = tr("The -o/--option and -O/--save-option options require an argument in the form group/setting=value");

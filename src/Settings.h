@@ -9,14 +9,13 @@ class Settings
     friend class PreferencesDialog;
 
 public:
-
-    static bool userConfiguration;
-    static QString userConfigurationDir;
-
     enum AppStyle {
         FollowDesktopStyle,
         DarkStyle
     };
+
+    static void setUserConfigurationFile(const QString userConfigurationFileArg);
+    static void setSettingsObject();
     static QVariant getValue(const std::string& group, const std::string& name);
     static void setValue(const std::string& group, const std::string& name, const QVariant& value, bool dont_save_to_disk = false);
     static void clearValue(const std::string& group, const std::string& name);
@@ -33,6 +32,9 @@ private:
     // This works similar to getDefaultValue but returns the default color value based on the passed application style
     // instead of the current palette.
     static QColor getDefaultColorValue(const std::string& group, const std::string& name, AppStyle style);
+
+    // User configuration file path
+    static QString userConfigurationFile;
 
     // Cache for storing the settings to avoid repeatedly reading the settings file all the time
     static std::unordered_map<std::string, QVariant> m_hCache;
