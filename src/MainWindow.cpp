@@ -1025,7 +1025,9 @@ void MainWindow::dataTableSelectionChanged(const QModelIndex& index)
         return;
     }
 
-    changeTableBrowserTab(qobject_cast<TableBrowserDock*>(index.model()->parent()->parent()));
+    TableBrowserDock* dock = qobject_cast<TableBrowserDock*>(index.model()->parent()->parent());
+    if(dock)
+        changeTableBrowserTab(dock);
 
     bool editingAllowed = !db.readOnly() && currentTableBrowser && m_currentTabTableModel == currentTableBrowser->model() && currentTableBrowser->model()->isEditable(index);
 
