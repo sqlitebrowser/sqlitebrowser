@@ -104,11 +104,11 @@ void Settings::setValue(const std::string& group, const std::string& name, const
         settings->beginGroup(QString::fromStdString(group));
         settings->setValue(QString::fromStdString(name), value);
         settings->endGroup();
+        delete settings;
     }
 
     // Also change it in the cache
     m_hCache[group + name] = value;
-    delete settings;
 }
 
 QVariant Settings::getDefaultValue(const std::string& group, const std::string& name)
