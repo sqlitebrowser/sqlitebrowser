@@ -158,6 +158,9 @@ Errors are indicated with a red squiggle underline.</string>
      </widget>
      <widget class="QWidget" name="rtlVerticalLayout">
       <layout class="QVBoxLayout" name="verticalLayout_3">
+       <property name="spacing">
+        <number>0</number>
+       </property>
        <property name="leftMargin">
         <number>0</number>
        </property>

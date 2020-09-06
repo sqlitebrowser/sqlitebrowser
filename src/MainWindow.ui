@@ -181,7 +181,7 @@ You can drag SQL statements from an object row and drop them into other applicat
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>641</width>
+             <width>676</width>
              <height>544</height>
             </rect>
            </property>
@@ -968,7 +968,7 @@ You can drag SQL statements from an object row and drop them into other applicat
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="buttonLogClear">
+        <widget class="QToolButton" name="buttonLogClear">
          <property name="minimumSize">
           <size>
            <width>0</width>

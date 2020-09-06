@@ -49,6 +49,7 @@
 #include <QUrlQuery>
 #include <QPrinter>
 #include <QPrintPreviewDialog>
+#include <QPushButton>
 #include <QToolButton>
 
 #ifdef Q_OS_MACX //Needed only on macOS
