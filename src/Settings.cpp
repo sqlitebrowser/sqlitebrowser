@@ -27,6 +27,10 @@ void Settings::setUserConfigurationFile(const QString userConfigurationFileArg)
 
 void Settings::setSettingsObject()
 {
+    // If an object has already been created, it is terminated to reduce overhead
+    if(settings)
+        return;
+
     /*
     Variable that stores whether or not the configuration file requested by the user is a normal configuration file
     If the file does not exist and is newly created, the if statement below is not executed, so the default value is set to true
@@ -88,7 +92,6 @@ QVariant Settings::getValue(const std::string& group, const std::string& name)
 
         // Store this value in the cache for further usage and return it afterwards
         m_hCache.insert({group + name, value});
-        delete settings;
         return value;
     }
 }
@@ -104,7 +107,6 @@ void Settings::setValue(const std::string& group, const std::string& name, const
         settings->beginGroup(QString::fromStdString(group));
         settings->setValue(QString::fromStdString(name), value);
         settings->endGroup();
-        delete settings;
     }
 
     // Also change it in the cache
@@ -559,7 +561,6 @@ void Settings::clearValue(const std::string& group, const std::string& name)
     settings->remove(QString::fromStdString(name));
     settings->endGroup();
     m_hCache.clear();
-    delete settings;
 }
 
 void Settings::restoreDefaults ()
@@ -567,5 +568,4 @@ void Settings::restoreDefaults ()
     setSettingsObject();
     settings->clear();
     m_hCache.clear();
-    delete settings;
 }
