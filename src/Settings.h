@@ -2,6 +2,7 @@
 #define SETTINGS_H
 
 #include <unordered_map>
+#include <QSettings>
 #include <QVariant>
 
 class Settings
@@ -15,7 +16,6 @@ public:
     };
 
     static void setUserConfigurationFile(const QString userConfigurationFileArg);
-    static void setSettingsObject();
     static QVariant getValue(const std::string& group, const std::string& name);
     static void setValue(const std::string& group, const std::string& name, const QVariant& value, bool dont_save_to_disk = false);
     static void clearValue(const std::string& group, const std::string& name);
@@ -35,6 +35,12 @@ private:
 
     // User configuration file path
     static QString userConfigurationFile;
+
+    // QSettings object
+    static QSettings* settings;
+
+    // This works initialize QSettings object
+    static void setSettingsObject();
 
     // Cache for storing the settings to avoid repeatedly reading the settings file all the time
     static std::unordered_map<std::string, QVariant> m_hCache;

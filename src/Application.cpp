@@ -45,9 +45,6 @@ Application::Application(int& argc, char** argv) :
     setOrganizationName("sqlitebrowser");
     setApplicationName("DB Browser for SQLite");
 
-    // Create a QSettings class object
-    Settings::setSettingsObject();
-
     // Set character encoding to UTF8
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
@@ -158,10 +155,7 @@ Application::Application(int& argc, char** argv) :
             // This option has already been handled above
             // For here, only print the error when no parameter value is given
             if(++i >= arguments().size())
-            {
-                qWarning() << qPrintable(tr("The -c/--config option requires an argument"));
-                qWarning() << qPrintable(tr("So the -c/--config option is ignored and run application"));
-            }
+                qWarning() << qPrintable(tr("The -c/--config option requires an argument. The option is ignored."));
         } else if(arguments().at(i) == "-o" || arguments().at(i) == "--option" ||
                   arguments().at(i) == "-O" || arguments().at(i) == "--save-option") {
             const QString optionWarning = tr("The -o/--option and -O/--save-option options require an argument in the form group/setting=value");

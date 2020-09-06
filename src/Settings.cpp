@@ -11,7 +11,7 @@
 #include <QPalette>
 
 QString Settings::userConfigurationFile;
-QSettings* settings = nullptr;
+QSettings* Settings::settings;
 std::unordered_map<std::string, QVariant> Settings::m_hCache;
 int Settings::m_defaultFontSize;
 
@@ -41,11 +41,9 @@ void Settings::setSettingsObject()
 
         if(file->open(QIODevice::ReadOnly))
         {
-            if(file->exists())
-            {
-                if(QString::compare(QString::fromStdString("[%General]\n"), file->readLine(), Qt::CaseInsensitive) != 0)
-                    isNormalUserConfigurationFile = false;
-            }
+            if(file->exists() &&
+              QString::compare(QString::fromStdString("[%General]\n"), file->readLine(), Qt::CaseInsensitive) != 0)
+                isNormalUserConfigurationFile = false;
         }
 
         file->close();
@@ -85,10 +83,12 @@ QVariant Settings::getValue(const std::string& group, const std::string& name)
         return cacheIndex->second;
     } else {
         // Nothing found in the cache, so get the value from the settings file or get the default value if there is no value set yet
+        setSettingsObject();
         QVariant value = settings->value(QString::fromStdString(group + "/" + name), getDefaultValue(group, name));
 
         // Store this value in the cache for further usage and return it afterwards
         m_hCache.insert({group + name, value});
+        delete settings;
         return value;
     }
 }
@@ -99,6 +99,7 @@ void Settings::setValue(const std::string& group, const std::string& name, const
     // In order to achieve this this flag can be set which disables the save to disk mechanism and only leaves the save to cache part active.
     if(dont_save_to_disk == false)
     {
+        setSettingsObject();
         // Set the group and save the given value
         settings->beginGroup(QString::fromStdString(group));
         settings->setValue(QString::fromStdString(name), value);
@@ -107,6 +108,7 @@ void Settings::setValue(const std::string& group, const std::string& name, const
 
     // Also change it in the cache
     m_hCache[group + name] = value;
+    delete settings;
 }
 
 QVariant Settings::getDefaultValue(const std::string& group, const std::string& name)
@@ -552,14 +554,18 @@ QColor Settings::getDefaultColorValue(const std::string& group, const std::strin
 
 void Settings::clearValue(const std::string& group, const std::string& name)
 {
+    setSettingsObject();
     settings->beginGroup(QString::fromStdString(group));
     settings->remove(QString::fromStdString(name));
     settings->endGroup();
     m_hCache.clear();
+    delete settings;
 }
 
 void Settings::restoreDefaults ()
 {
+    setSettingsObject();
     settings->clear();
     m_hCache.clear();
+    delete settings;
 }
