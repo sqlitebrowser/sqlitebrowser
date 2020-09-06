@@ -1,6 +1,7 @@
 #include "Settings.h"
 
 #include <QApplication>
+#include <QDebug>
 #include <QDir>
 #include <QSettings>
 #include <QColor>
@@ -9,12 +10,72 @@
 #include <QStandardPaths>
 #include <QPalette>
 
+QString Settings::userConfigurationFile;
+QSettings* Settings::settings;
 std::unordered_map<std::string, QVariant> Settings::m_hCache;
 int Settings::m_defaultFontSize;
 
 static bool ends_with(const std::string& str, const std::string& with)
 {
     return str.rfind(with) == str.size() - with.size();
+}
+
+void Settings::setUserConfigurationFile(const QString userConfigurationFileArg)
+{
+    userConfigurationFile = userConfigurationFileArg;
+}
+
+void Settings::setSettingsObject()
+{
+    // If an object has already been created, it is terminated to reduce overhead
+    if(settings)
+        return;
+
+    /*
+    Variable that stores whether or not the configuration file requested by the user is a normal configuration file
+    If the file does not exist and is newly created, the if statement below is not executed, so the default value is set to true
+    */
+    bool isNormalUserConfigurationFile = true;
+
+    // Code that verifies that the configuration file requested by the user is a normal configuration file
+    if(userConfigurationFile != nullptr)
+    {
+        QFile *file = new QFile;
+        file->setFileName(userConfigurationFile);
+
+        if(file->open(QIODevice::ReadOnly))
+        {
+            if(file->exists() &&
+              QString::compare(QString::fromStdString("[%General]\n"), file->readLine(), Qt::CaseInsensitive) != 0)
+                isNormalUserConfigurationFile = false;
+        }
+
+        file->close();
+    }
+
+    if(userConfigurationFile == nullptr)
+    {
+        settings = new QSettings(QCoreApplication::organizationName(), QCoreApplication::organizationName());
+    } else {
+        if(isNormalUserConfigurationFile)
+        {
+            settings = new QSettings(userConfigurationFile, QSettings::IniFormat);
+
+            // Code to verify that the user does not have access to the requested configuration file
+            if(settings->status() == QSettings::AccessError) {
+                qWarning() << qPrintable("The given configuration file can NOT access. Please check the permission for the file.");
+                qWarning() << qPrintable("So, the -c/--config option is ignored.");
+
+                // Since you do not have permission to the file, delete the existing assignment and assign the standard
+                delete settings;
+                settings = new QSettings(QCoreApplication::organizationName(), QCoreApplication::organizationName());
+            }
+        } else {
+            qWarning() << qPrintable("The given configuration file is not a normal configuration file. Please check again.");
+            qWarning() << qPrintable("So, the -c/--config option is ignored.");
+            settings = new QSettings(QCoreApplication::organizationName(), QCoreApplication::organizationName());
+        }
+    }
 }
 
 QVariant Settings::getValue(const std::string& group, const std::string& name)
@@ -26,8 +87,8 @@ QVariant Settings::getValue(const std::string& group, const std::string& name)
         return cacheIndex->second;
     } else {
         // Nothing found in the cache, so get the value from the settings file or get the default value if there is no value set yet
-        QSettings settings(QApplication::organizationName(), QApplication::organizationName());
-        QVariant value = settings.value(QString::fromStdString(group + "/" + name), getDefaultValue(group, name));
+        setSettingsObject();
+        QVariant value = settings->value(QString::fromStdString(group + "/" + name), getDefaultValue(group, name));
 
         // Store this value in the cache for further usage and return it afterwards
         m_hCache.insert({group + name, value});
@@ -41,11 +102,11 @@ void Settings::setValue(const std::string& group, const std::string& name, const
     // In order to achieve this this flag can be set which disables the save to disk mechanism and only leaves the save to cache part active.
     if(dont_save_to_disk == false)
     {
+        setSettingsObject();
         // Set the group and save the given value
-        QSettings settings(QApplication::organizationName(), QApplication::organizationName());
-        settings.beginGroup(QString::fromStdString(group));
-        settings.setValue(QString::fromStdString(name), value);
-        settings.endGroup();
+        settings->beginGroup(QString::fromStdString(group));
+        settings->setValue(QString::fromStdString(name), value);
+        settings->endGroup();
     }
 
     // Also change it in the cache
@@ -495,16 +556,16 @@ QColor Settings::getDefaultColorValue(const std::string& group, const std::strin
 
 void Settings::clearValue(const std::string& group, const std::string& name)
 {
-    QSettings settings(QApplication::organizationName(), QApplication::organizationName());
-    settings.beginGroup(QString::fromStdString(group));
-    settings.remove(QString::fromStdString(name));
-    settings.endGroup();
+    setSettingsObject();
+    settings->beginGroup(QString::fromStdString(group));
+    settings->remove(QString::fromStdString(name));
+    settings->endGroup();
     m_hCache.clear();
 }
 
 void Settings::restoreDefaults ()
 {
-    QSettings settings(QApplication::organizationName(), QApplication::organizationName());
-    settings.clear();
+    setSettingsObject();
+    settings->clear();
     m_hCache.clear();
 }
