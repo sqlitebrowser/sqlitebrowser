@@ -10,7 +10,7 @@
 #include <QStandardPaths>
 #include <QPalette>
 
-QString Settings::userConfigurationFile;
+QString Settings::userPreferencesFile;
 QSettings* Settings::settings;
 std::unordered_map<std::string, QVariant> Settings::m_hCache;
 int Settings::m_defaultFontSize;
@@ -20,9 +20,9 @@ static bool ends_with(const std::string& str, const std::string& with)
     return str.rfind(with) == str.size() - with.size();
 }
 
-void Settings::setUserConfigurationFile(const QString userConfigurationFileArg)
+void Settings::setUserPreferencesFile(const QString userPreferencesFileArg)
 {
-    userConfigurationFile = userConfigurationFileArg;
+    userPreferencesFile = userPreferencesFileArg;
 }
 
 void Settings::setSettingsObject()
@@ -32,47 +32,47 @@ void Settings::setSettingsObject()
         return;
 
     /*
-    Variable that stores whether or not the configuration file requested by the user is a normal configuration file
+    Variable that stores whether or not the preferences file requested by the user is a normal preferences file
     If the file does not exist and is newly created, the if statement below is not executed, so the default value is set to true
     */
-    bool isNormalUserConfigurationFile = true;
+    bool isNormalUserPreferencesFile = true;
 
-    // Code that verifies that the configuration file requested by the user is a normal configuration file
-    if(userConfigurationFile != nullptr)
+    // Code that verifies that the preferences file requested by the user is a normal preferences file
+    if(userPreferencesFile != nullptr)
     {
         QFile *file = new QFile;
-        file->setFileName(userConfigurationFile);
+        file->setFileName(userPreferencesFile);
 
         if(file->open(QIODevice::ReadOnly))
         {
             if(file->exists() &&
               QString::compare(QString::fromStdString("[%General]\n"), file->readLine(), Qt::CaseInsensitive) != 0)
-                isNormalUserConfigurationFile = false;
+                isNormalUserPreferencesFile = false;
         }
 
         file->close();
     }
 
-    if(userConfigurationFile == nullptr)
+    if(userPreferencesFile == nullptr)
     {
         settings = new QSettings(QCoreApplication::organizationName(), QCoreApplication::organizationName());
     } else {
-        if(isNormalUserConfigurationFile)
+        if(isNormalUserPreferencesFile)
         {
-            settings = new QSettings(userConfigurationFile, QSettings::IniFormat);
+            settings = new QSettings(userPreferencesFile, QSettings::IniFormat);
 
-            // Code to verify that the user does not have access to the requested configuration file
+            // Code to verify that the user does not have access to the requested preferences file
             if(settings->status() == QSettings::AccessError) {
-                qWarning() << qPrintable("The given configuration file can NOT access. Please check the permission for the file.");
-                qWarning() << qPrintable("So, the -c/--config option is ignored.");
+                qWarning() << qPrintable("The given preferences file can NOT access. Please check the permission for the file.");
+                qWarning() << qPrintable("So, the -p/--preferences option is ignored.");
 
                 // Since you do not have permission to the file, delete the existing assignment and assign the standard
                 delete settings;
                 settings = new QSettings(QCoreApplication::organizationName(), QCoreApplication::organizationName());
             }
         } else {
-            qWarning() << qPrintable("The given configuration file is not a normal configuration file. Please check again.");
-            qWarning() << qPrintable("So, the -c/--config option is ignored.");
+            qWarning() << qPrintable("The given preferences file is not a normal preferences file. Please check again.");
+            qWarning() << qPrintable("So, the -p/--preferences option is ignored.");
             settings = new QSettings(QCoreApplication::organizationName(), QCoreApplication::organizationName());
         }
     }
