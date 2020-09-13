@@ -5271,7 +5271,7 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="2409"/>
         <source>Choose a project file to open</source>
-        <translation>Choisir un fichier projet à ouvrir</translation>
+        <translation>Choisir un fichier de projet à ouvrir</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2541"/>
