@@ -22,6 +22,8 @@ public:
     static void restoreDefaults();
 
     static void rememberDefaultFontSize(int size) { m_defaultFontSize = size; }
+    static void exportSettings(const QString fileName);
+    static void importSettings(const QString fileName);
 
 private:
     Settings() = delete;    // class is fully static

@@ -569,3 +569,42 @@ void Settings::restoreDefaults ()
     settings->clear();
     m_hCache.clear();
 }
+
+void Settings::exportSettings(const QString fileName)
+{
+    QSettings* exportSettings = new QSettings(fileName, QSettings::IniFormat);
+
+    const QStringList groups = settings->childGroups();
+    foreach(QString currentGroup, groups)
+    {
+        settings->beginGroup(currentGroup);
+        const QStringList keys = settings->childKeys();
+        foreach(QString currentKey, keys)
+        {
+            exportSettings->beginGroup(currentGroup);
+            exportSettings->setValue(currentKey, getValue((currentGroup.toStdString()), (currentKey.toStdString())));
+            exportSettings->endGroup();
+        }
+        settings->endGroup();
+    }
+}
+
+void Settings::importSettings(const QString fileName)
+{
+    // TODO: Validate whether the target file is a normal file
+    QSettings* importSettings = new QSettings(fileName, QSettings::IniFormat);
+
+    const QStringList groups = importSettings->childGroups();
+    foreach(QString currentGroup, groups)
+    {
+        importSettings->beginGroup(currentGroup);
+        const QStringList keys = importSettings->childKeys();
+        foreach(QString currentKey, keys)
+        {
+            settings->beginGroup(currentGroup);
+            setting->setValue(currentKey, importSettings->value(currentKey));
+            settings->endGroup();
+        }
+        importSettings->endGroup();
+    }
+}

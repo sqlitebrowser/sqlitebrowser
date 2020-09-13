@@ -704,7 +704,7 @@ void PreferencesDialog::exportSettings()
     const QString fileName = FileDialog::getSaveFileName(CreateSettingsFile, this, tr("Save Settings File"), tr("Initialization File (*.ini)"));
     if(!fileName.isEmpty())
     {
-        // TODO: Implement export settings function
+        Settings::exportSettings(fileName);
         QMessageBox::information(this, QApplication::applicationName(), (tr("The settings file has been saved in location : ") + fileName));
     }
 }
@@ -714,7 +714,7 @@ void PreferencesDialog::importSettings()
     const QString fileName = FileDialog::getOpenFileName(OpenSettingsFile, this, tr("Open Settings File"), tr("Initialization File (*.ini)"));
     if(!fileName.isEmpty())
     {
-        // TODO: Implement import settings function
+        Settings::importSettings(fileName);
         QMessageBox::information(this, QApplication::applicationName(), tr("Rerun the program to apply the settings."));
         PreferencesDialog::close();
     }
