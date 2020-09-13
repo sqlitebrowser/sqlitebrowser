@@ -25,16 +25,13 @@ void Settings::setUserSettingsFile(const QString userSettingsFileArg)
     userSettingsFile = userSettingsFileArg;
 }
 
-void Settings::setSettingsObject()
+bool Settings::verifyUserSettingsFile(const QString userSettingsFile)
 {
-    // If an object has already been created, it is terminated to reduce overhead
-    if(settings)
-        return;
-
     /*
     Variable that stores whether or not the settings file requested by the user is a normal settings file
     If the file does not exist and is newly created, the if statement below is not executed, so the default value is set to true
     */
+
     bool isNormalUserSettingsFile = true;
 
     // Code that verifies that the settings file requested by the user is a normal settings file
@@ -52,6 +49,17 @@ void Settings::setSettingsObject()
 
         file->close();
     }
+
+    return isNormalUserSettingsFile;
+}
+
+void Settings::setSettingsObject()
+{
+    // If an object has already been created, it is terminated to reduce overhead
+    if(settings)
+        return;
+
+    bool isNormalUserSettingsFile = verifyUserSettingsFile(userSettingsFile);
 
     if(userSettingsFile == nullptr)
     {
@@ -589,9 +597,11 @@ void Settings::exportSettings(const QString fileName)
     }
 }
 
-void Settings::importSettings(const QString fileName)
+bool Settings::importSettings(const QString fileName)
 {
-    // TODO: Validate whether the target file is a normal file
+    if(!verifyUserSettingsFile(fileName))
+        return false;
+
     QSettings* importSettings = new QSettings(fileName, QSettings::IniFormat);
 
     const QStringList groups = importSettings->childGroups();
@@ -607,4 +617,6 @@ void Settings::importSettings(const QString fileName)
         }
         importSettings->endGroup();
     }
+
+    return true;
 }

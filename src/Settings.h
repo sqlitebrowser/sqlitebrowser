@@ -23,7 +23,7 @@ public:
 
     static void rememberDefaultFontSize(int size) { m_defaultFontSize = size; }
     static void exportSettings(const QString fileName);
-    static void importSettings(const QString fileName);
+    static bool importSettings(const QString fileName);
 
 private:
     Settings() = delete;    // class is fully static
@@ -40,6 +40,9 @@ private:
 
     // QSettings object
     static QSettings* settings;
+
+    // This works verify that the settings file provided by the user is a normal settings file
+    static bool verifyUserSettingsFile(const QString userSettingsFile);
 
     // This works initialize QSettings object
     static void setSettingsObject();
