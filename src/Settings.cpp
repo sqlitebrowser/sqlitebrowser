@@ -59,7 +59,7 @@ void Settings::setSettingsObject()
     if(settings)
         return;
 
-    bool isNormalUserSettingsFile = verifyUserSettingsFile(userSettingsFile);
+    const bool isNormalUserSettingsFile = verifyUserSettingsFile(userSettingsFile);
 
     if(userSettingsFile == nullptr)
     {
