@@ -16,22 +16,19 @@
     <message>
         <location filename="../AboutDialog.ui" line="102"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Silk icon set by Mark James licensed under a Creative Commons Attribution 2.5 and 3.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite は SQLite データベースを作成、デザイン、編集できる、オープンソースで無料のヴィジュアルツールです。&lt;/p&gt;&lt;p&gt;このソフトウェアは Mozilla Public License Version 2&#x3000;と the GNU General Public License Version 3 (もしくはそれ以降のもの) の2つでライセンスされています。あなたはこれらのライセンスの条件の下でこのソフトウェアを変更、もしくは、再配布できます。&lt;/p&gt;&lt;p&gt;詳細は &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; と &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; をご覧ください。&lt;/p&gt;&lt;p&gt;このプログラムのさらなる情報は、私たちのウェブサイトをご覧ください。: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;このソフトウェアは GPL/LGPL Qt Toolkit を使用しています。 &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;ライセンス条項や情報は &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; をご覧ください。&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;また、 Mark James の Silk icon set を Creative Commons Attribution 2.5 and 3.0 license の元で使用しています。&lt;br/&gt;詳細は &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; をご覧ください。&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite は SQLite データベースを作成、デザイン、編集できる、オープンソースで無料のヴィジュアルツールです。&lt;/p&gt;&lt;p&gt;このソフトウェアは Mozilla Public License Version 2　と the GNU General Public License Version 3 (もしくはそれ以降のもの) の2つでライセンスされています。あなたはこれらのライセンスの条件の下でこのソフトウェアを変更、もしくは、再配布できます。&lt;/p&gt;&lt;p&gt;詳細は &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; と &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; をご覧ください。&lt;/p&gt;&lt;p&gt;このプログラムのさらなる情報は、私たちのウェブサイトをご覧ください。: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;このソフトウェアは GPL/LGPL Qt Toolkit を使用しています。 &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;ライセンス条項や情報は &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; をご覧ください。&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;また、 Mark James の Silk icon set を Creative Commons Attribution 2.5 and 3.0 license の元で使用しています。&lt;br/&gt;詳細は &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; をご覧ください。&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../AboutDialog.cpp" line="17"/>
         <source>SQLite Version </source>
-        <translation>SQLite バージョン </translation>
+        <translation type="vanished">SQLite バージョン </translation>
     </message>
     <message>
-        <location filename="../AboutDialog.cpp" line="19"/>
         <source>SQLCipher Version %1 (based on SQLite %2)</source>
-        <translation>SQLCipher バージョン %1 (SQLite %2 がベース)</translation>
+        <translation type="vanished">SQLCipher バージョン %1 (SQLite %2 がベース)</translation>
     </message>
     <message>
-        <location filename="../AboutDialog.cpp" line="22"/>
         <source>Built for %1, running on %2</source>
-        <translation>%1 向けビルド, %2 で動作中</translation>
+        <translation type="vanished">%1 向けビルド, %2 で動作中</translation>
     </message>
     <message>
         <source>SQLCipher Version </source>
@@ -42,18 +39,16 @@
         <translation type="vanished"> (SQLite %1 がベース)</translation>
     </message>
     <message>
-        <location filename="../AboutDialog.cpp" line="21"/>
         <source>Version </source>
-        <translation>バージョン </translation>
+        <translation type="vanished">バージョン </translation>
     </message>
     <message>
         <source>Built for </source>
         <translation type="vanished">ビルド </translation>
     </message>
     <message>
-        <location filename="../AboutDialog.cpp" line="23"/>
         <source>Qt Version </source>
-        <translation>Qt バージョン </translation>
+        <translation type="vanished">Qt バージョン </translation>
     </message>
 </context>
 <context>
@@ -156,93 +151,173 @@
 <context>
     <name>Application</name>
     <message>
-        <location filename="../Application.cpp" line="87"/>
         <source>Usage: %1 [options] [db]
 </source>
-        <translation>使い方: %1 [オプション] [DB]
+        <translation type="vanished">使い方: %1 [オプション] [DB]
 </translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="88"/>
+        <location filename="../Application.cpp" line="95"/>
         <source>Possible command line arguments:</source>
         <translation>使用可能なコマンドライン引数:</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="89"/>
         <source>  -h, --help		Show command line options</source>
-        <translation>  -h, --help		コマンドラインのオプションを表示</translation>
+        <translation type="vanished">  -h, --help		コマンドラインのオプションを表示</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="90"/>
         <source>  -q, --quit		Exit application after running scripts</source>
-        <translation>  -q, --quit		スクリプト実行後にアプリケーションを終了</translation>
+        <translation type="vanished">  -q, --quit		スクリプト実行後にアプリケーションを終了</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="91"/>
         <source>  -s, --sql [file]	Execute this SQL file after opening the DB</source>
-        <translation>  -s, --sql [ファイル]	DBを開いた後、このSQLファイルを実行</translation>
+        <translation type="vanished">  -s, --sql [ファイル]	DBを開いた後、このSQLファイルを実行</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="92"/>
         <source>  -t, --table [table]	Browse this table after opening the DB</source>
-        <translation>  -t, --table [table]	DB開いた後このテーブルを閲覧</translation>
+        <translation type="vanished">  -t, --table [table]	DB開いた後このテーブルを閲覧</translation>
+    </message>
+    <message>
+        <source>  -R, --read-only	Open database in read-only mode</source>
+        <translation type="vanished">  -R, --read-only	読み取り専用モードでデータベースを開く</translation>
+    </message>
+    <message>
+        <source>  -o, --option [group/setting=value]	Run application with this setting temporarily set to value</source>
+        <translation type="vanished">  -o, --option [グループ/設定=値]	一時的にこの値を設定してアプリケーションを実行</translation>
+    </message>
+    <message>
+        <source>  -O, --save-option [group/setting=value]	Run application saving this value for this setting</source>
+        <translation type="vanished">  -O, --save-option [グループ/設定=値]	この値の設定を保存してアプリケーションを実行</translation>
+    </message>
+    <message>
+        <source>  -v, --version		Display the current version</source>
+        <translation type="vanished">  -v, --version		現在のバージョンを表示</translation>
+    </message>
+    <message>
+        <source>  [file]		Open this SQLite database</source>
+        <translation type="vanished">  [ファイル]		この SQLite データベースを開く</translation>
+    </message>
+    <message>
+        <source>This is DB Browser for SQLite version %1.</source>
+        <translation type="vanished">これは DB Browser for SQLite バージョン %1 です.</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="93"/>
-        <source>  -R, --read-only	Open database in read-only mode</source>
-        <translation>  -R, --read-only	読み取り専用モードでデータベースを開く</translation>
-    </message>
-    <message>
-        <location filename="../Application.cpp" line="94"/>
-        <source>  -o, --option [group/setting=value]	Run application with this setting temporarily set to value</source>
-        <translation>  -o, --option [グループ/設定=値]	一時的にこの値を設定してアプリケーションを実行</translation>
-    </message>
-    <message>
-        <location filename="../Application.cpp" line="95"/>
-        <source>  -O, --save-option [group/setting=value]	Run application saving this value for this setting</source>
-        <translation>  -O, --save-option [グループ/設定=値]	この値の設定を保存してアプリケーションを実行</translation>
+        <source>Usage: %1 [options] [&lt;database&gt;|&lt;project&gt;]
+</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="96"/>
-        <source>  -v, --version		Display the current version</source>
-        <translation>  -v, --version		現在のバージョンを表示</translation>
+        <source>  -h, --help          Show command line options</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="97"/>
-        <source>  [file]		Open this SQLite database</source>
-        <translation>  [ファイル]		この SQLite データベースを開く</translation>
+        <source>  -q, --quit          Exit application after running scripts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="98"/>
+        <source>  -s, --sql &lt;file&gt;    Execute this SQL file after opening the DB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="99"/>
+        <source>  -t, --table &lt;table&gt; Browse this table after opening the DB</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="100"/>
-        <source>This is DB Browser for SQLite version %1.</source>
-        <translation>これは DB Browser for SQLite バージョン %1 です.</translation>
+        <source>  -R, --read-only     Open database in read-only mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="101"/>
+        <source>  -o, --option &lt;group&gt;/&lt;setting&gt;=&lt;value&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="102"/>
+        <source>                      Run application with this setting temporarily set to value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="103"/>
+        <source>  -O, --save-option &lt;group&gt;/&lt;setting&gt;=&lt;value&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="104"/>
+        <source>                      Run application saving this value for this setting</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="105"/>
+        <source>  -v, --version       Display the current version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="106"/>
+        <source>  &lt;database&gt;          Open this SQLite database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="107"/>
+        <source>  &lt;project&gt;           Open this project file (*.sqbpro)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="115"/>
         <source>The -s/--sql option requires an argument</source>
         <translation>-s/--sql オプションは引数が必要です</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="107"/>
+        <location filename="../Application.cpp" line="117"/>
         <source>The file %1 does not exist</source>
         <translation>ファイル %1 が存在しません</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="112"/>
+        <location filename="../Application.cpp" line="122"/>
         <source>The -t/--table option requires an argument</source>
         <translation>-t/--table オプションは引数が必要です</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="121"/>
+        <location filename="../Application.cpp" line="131"/>
         <source>The -o/--option and -O/--save-option options require an argument in the form group/setting=value</source>
         <translation>-o/--option と -O/--save-optionオプションは グループ/設定=値 の形式で引数が必要です</translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="236"/>
+        <source>SQLite Version </source>
+        <translation type="unfinished">SQLite バージョン </translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="238"/>
+        <source>SQLCipher Version %1 (based on SQLite %2)</source>
+        <translation type="unfinished">SQLCipher バージョン %1 (SQLite %2 がベース)</translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="241"/>
+        <source>DB Browser for SQLite Version %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="242"/>
+        <source>Built for %1, running on %2</source>
+        <translation type="unfinished">%1 向けビルド, %2 で動作中</translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="243"/>
+        <source>Qt Version %1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The -o/--option option requires an argument in the form group/setting=value</source>
         <translation type="vanished">-o/--option オプションは グループ/設定=値 の形式で引数が必要です</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="149"/>
+        <location filename="../Application.cpp" line="159"/>
         <source>Invalid option/non-existant file: %1</source>
         <translation>不正なオプション/存在しないファイルです: %1</translation>
     </message>
@@ -402,51 +477,56 @@ If any of the other settings were altered for this database file you need to pro
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="28"/>
+        <source>.NET DateTime.Ticks to date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="29"/>
         <source>Julian day to date</source>
         <translation>ユリウス日を日付に</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="29"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="30"/>
         <source>Unix epoch to date</source>
         <translation>Unix エポックを日付に</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="30"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="31"/>
         <source>Unix epoch to local time</source>
         <translation>Unix エポックを地方時に</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="31"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="32"/>
         <source>Windows DATE to date</source>
         <translation>Windows DATE を日付に</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="32"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="33"/>
         <source>Date as dd/mm/yyyy</source>
         <translation>日付(dd/mm/yyyy)</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="34"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="35"/>
         <source>Lower case</source>
         <translation>小文字</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="35"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="36"/>
         <source>Upper case</source>
         <translation>大文字</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="37"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="38"/>
         <source>Custom</source>
         <translation>カスタム</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="109"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="111"/>
         <source>Custom display format must contain a function call applied to %1</source>
         <translation>カスタム表示形式には、%1 に適用される関数呼び出しが含まれている必要があります</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="121"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="123"/>
         <source>Error in custom display format. Message from database engine:
 
 %1</source>
@@ -455,7 +535,7 @@ If any of the other settings were altered for this database file you need to pro
 %1</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="123"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="125"/>
         <source>Custom display format must return only one column but it returned %1.</source>
         <translation>カスタム表示形式はただ1つのカラムを返す必要がありますが、%1 が返ってきました。</translation>
     </message>
@@ -928,7 +1008,7 @@ Restoring some of the objects associated with this table failed. This is most li
     </message>
     <message>
         <location filename="../EditDialog.ui" line="66"/>
-        <location filename="../EditDialog.cpp" line="250"/>
+        <location filename="../EditDialog.cpp" line="252"/>
         <source>Image</source>
         <translation>画像</translation>
     </message>
@@ -1169,26 +1249,26 @@ Errors are indicated with a red squiggle underline.</source>
         <translation>Ctrl+Shift+C</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="248"/>
-        <location filename="../EditDialog.cpp" line="257"/>
+        <location filename="../EditDialog.cpp" line="250"/>
+        <location filename="../EditDialog.cpp" line="259"/>
         <source>Image data can&apos;t be viewed in this mode.</source>
         <translation>画像データはこのモードでは表示できません。</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="249"/>
-        <location filename="../EditDialog.cpp" line="258"/>
+        <location filename="../EditDialog.cpp" line="251"/>
+        <location filename="../EditDialog.cpp" line="260"/>
         <source>Try switching to Image or Binary mode.</source>
         <translation>画像/バイナリーモードに切り替えてみてください。</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="315"/>
-        <location filename="../EditDialog.cpp" line="324"/>
+        <location filename="../EditDialog.cpp" line="317"/>
+        <location filename="../EditDialog.cpp" line="326"/>
         <source>Binary data can&apos;t be viewed in this mode.</source>
         <translation>バイナリーデータはこのモードでは表示できません。</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="316"/>
-        <location filename="../EditDialog.cpp" line="325"/>
+        <location filename="../EditDialog.cpp" line="318"/>
+        <location filename="../EditDialog.cpp" line="327"/>
         <source>Try switching to Binary mode.</source>
         <translation>バイナリーモードに切り替えてみてください。</translation>
     </message>
@@ -1205,13 +1285,13 @@ Errors are indicated with a red squiggle underline.</source>
         <translation type="vanished">XMLファイル (*.xml)</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="352"/>
-        <location filename="../EditDialog.cpp" line="371"/>
+        <location filename="../EditDialog.cpp" line="354"/>
+        <location filename="../EditDialog.cpp" line="373"/>
         <source>Image files (%1)</source>
         <translation>画像ファイル (%1)</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="426"/>
+        <location filename="../EditDialog.cpp" line="428"/>
         <source>Binary files (*.bin)</source>
         <translation>バイナリーファイル (*.bin)</translation>
     </message>
@@ -1220,12 +1300,12 @@ Errors are indicated with a red squiggle underline.</source>
         <translation type="vanished">すべてのファイル (*)</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="383"/>
+        <location filename="../EditDialog.cpp" line="385"/>
         <source>Choose a file to import</source>
         <translation>インポートするファイルを選択</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="422"/>
+        <location filename="../EditDialog.cpp" line="424"/>
         <source>%1 Image</source>
         <translation>%1 画像</translation>
     </message>
@@ -1238,22 +1318,22 @@ Errors are indicated with a red squiggle underline.</source>
         <translation type="vanished">十六進ダンプファイル (*.txt)</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="460"/>
+        <location filename="../EditDialog.cpp" line="462"/>
         <source>Choose a filename to export data</source>
         <translation>エクスポートデータのファイル名を選択</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="526"/>
+        <location filename="../EditDialog.cpp" line="528"/>
         <source>Invalid data for this mode</source>
         <translation>このモードでは不正なデータ</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="527"/>
+        <location filename="../EditDialog.cpp" line="529"/>
         <source>The cell contains invalid %1 data. Reason: %2. Do you really want to apply it to the cell?</source>
         <translation>セルに不正なデータ %1 があります。理由: %2。本当にセルに適用しますか?</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="861"/>
+        <location filename="../EditDialog.cpp" line="862"/>
         <location filename="../EditDialog.cpp" line="1050"/>
         <source>Type of data currently in cell: Text / Numeric</source>
         <translation>現在セルにあるデータの種類: テキスト / 数値</translation>
@@ -3186,8 +3266,8 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
         <translation>テーブルを閲覧</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="218"/>
-        <location filename="../MainWindow.cpp" line="3368"/>
+        <location filename="../MainWindow.cpp" line="227"/>
+        <location filename="../MainWindow.cpp" line="3429"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
@@ -3331,7 +3411,7 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1358"/>
-        <location filename="../MainWindow.cpp" line="1501"/>
+        <location filename="../MainWindow.cpp" line="1549"/>
         <source>Delete Table</source>
         <translation>テーブルを削除</translation>
     </message>
@@ -3907,32 +3987,37 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
         <translation>Ctrl+Return</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="267"/>
+        <location filename="../MainWindow.cpp" line="276"/>
         <source>Ctrl+L</source>
         <translation>Ctrl+L</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="272"/>
+        <location filename="../MainWindow.cpp" line="281"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="277"/>
+        <location filename="../MainWindow.cpp" line="286"/>
         <source>Ctrl+I</source>
         <translation>Ctrl+I</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="282"/>
+        <location filename="../MainWindow.cpp" line="291"/>
         <source>Ctrl+E</source>
         <translation>Ctrl+E</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="317"/>
+        <location filename="../MainWindow.cpp" line="327"/>
+        <source>Window Layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="330"/>
         <source>Reset Window Layout</source>
         <translation>ウィンドウレイアウトをリセット</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="318"/>
+        <location filename="../MainWindow.cpp" line="331"/>
         <source>Alt+0</source>
         <translation>Alt+0</translation>
     </message>
@@ -3941,134 +4026,169 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
         <translation type="vanished">現在のSQLタブを閉じる</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="345"/>
+        <location filename="../MainWindow.cpp" line="336"/>
+        <source>Simplify Window Layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="337"/>
+        <source>Shift+Alt+0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="346"/>
+        <source>Dock Windows at Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="350"/>
+        <source>Dock Windows at Left Side</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="354"/>
+        <source>Dock Windows at Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="380"/>
         <source>The database is currenctly busy.</source>
         <translation>データベースは現在ビジー状態です。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="351"/>
+        <location filename="../MainWindow.cpp" line="386"/>
         <source>Click here to interrupt the currently running query.</source>
         <translation>ここをクリックして、現在実行中のクエリーを中断します。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="359"/>
+        <location filename="../MainWindow.cpp" line="394"/>
         <source>Encrypted</source>
         <translation>暗号化</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="360"/>
+        <location filename="../MainWindow.cpp" line="395"/>
         <source>Database is encrypted using SQLCipher</source>
         <translation>データベースはSQLCipherで暗号化されています</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="366"/>
+        <location filename="../MainWindow.cpp" line="401"/>
         <source>Read only</source>
         <translation>読み取り専用</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="367"/>
+        <location filename="../MainWindow.cpp" line="402"/>
         <source>Database file is read only. Editing the database is disabled.</source>
         <translation>データベースは読み取り専用です。データベースの編集はできません。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="373"/>
+        <location filename="../MainWindow.cpp" line="408"/>
         <source>Database encoding</source>
         <translation>データベースのエンコード</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="482"/>
-        <location filename="../MainWindow.cpp" line="2912"/>
+        <location filename="../MainWindow.cpp" line="516"/>
+        <location filename="../MainWindow.cpp" line="2973"/>
         <source>Choose a database file</source>
         <translation>データベースファイルを選択</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="529"/>
+        <location filename="../MainWindow.cpp" line="567"/>
         <source>Could not open database file.
 Reason: %1</source>
         <translation>データベースファイルを開けません。
 理由: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="543"/>
-        <location filename="../MainWindow.cpp" line="1391"/>
-        <location filename="../MainWindow.cpp" line="2767"/>
+        <location filename="../MainWindow.cpp" line="581"/>
+        <location filename="../MainWindow.cpp" line="1437"/>
+        <location filename="../MainWindow.cpp" line="2828"/>
         <source>Choose a filename to save under</source>
         <translation>セーブするファイル名を下から選択</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="565"/>
+        <location filename="../MainWindow.cpp" line="603"/>
         <source>In-Memory database</source>
         <translation>インメモリーデータベース</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="643"/>
+        <location filename="../MainWindow.cpp" line="682"/>
         <source>You are still executing SQL statements. Closing the database now will stop their execution, possibly leaving the database in an inconsistent state. Are you sure you want to close the database?</source>
         <translation>まだSQL文を実行中です。今、データベースを閉じると、実行が中止され、データベースに一貫性がない状態を残すかもしれません。本当にデータベースを閉じますか?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="898"/>
+        <location filename="../MainWindow.cpp" line="939"/>
         <source>Edit View %1</source>
         <translation>ビュー %1 を編集</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="904"/>
+        <location filename="../MainWindow.cpp" line="945"/>
         <source>Edit Trigger %1</source>
         <translation>トリガー %1 を編集</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2082"/>
+        <location filename="../MainWindow.cpp" line="1587"/>
+        <source>Opened &apos;%1&apos; in read-only mode from recent file list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="1589"/>
+        <source>Opened &apos;%1&apos; from recent file list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="2137"/>
         <source>Could not find resource file: %1</source>
         <translation>リソースファイルが見つかりません: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2783"/>
+        <location filename="../MainWindow.cpp" line="2844"/>
         <source>Could not open project file for writing.
 Reason: %1</source>
         <translation>書き込むプロジェクトファイルを開くことができません。
 理由: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2888"/>
+        <location filename="../MainWindow.cpp" line="2949"/>
         <source>Project saved to file &apos;%1&apos;</source>
         <translation>プロジェクトをファイル &apos;%1&apos; に保存しました</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3135"/>
+        <location filename="../MainWindow.cpp" line="3196"/>
         <source>This action will open a new SQL tab with the following statements for you to edit and run:</source>
         <translation>この操作はこの文の編集と実行ができる新しいSQLタブを開きます:</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3250"/>
+        <location filename="../MainWindow.cpp" line="3311"/>
         <source>Busy (%1)</source>
         <translation>ビジー (%1)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3331"/>
+        <location filename="../MainWindow.cpp" line="3392"/>
         <source>Rename Tab</source>
         <translation>タブ名を変更</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3337"/>
+        <location filename="../MainWindow.cpp" line="3398"/>
         <source>Duplicate Tab</source>
         <translation>タブを複製</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3367"/>
+        <location filename="../MainWindow.cpp" line="3428"/>
         <source>Close Tab</source>
         <translation>タブを閉じる</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3386"/>
+        <location filename="../MainWindow.cpp" line="3447"/>
         <source>Opening &apos;%1&apos;...</source>
         <translation>&apos;%1&apos; を開いています...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3388"/>
+        <location filename="../MainWindow.cpp" line="3449"/>
         <source>There was an error opening &apos;%1&apos;...</source>
         <translation>&apos;%1&apos; を開くときにエラーがありました...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3391"/>
+        <location filename="../MainWindow.cpp" line="3452"/>
         <source>Value is not a valid URL or filename: %1</source>
         <translation>値は正規のURLもしくはファイル名でありません: %1</translation>
     </message>
@@ -4099,104 +4219,104 @@ Reason: %1</source>
         <translation type="vanished">開いているデータベースがありません。新しいデータベースファイルを開くか作成してください。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="802"/>
+        <location filename="../MainWindow.cpp" line="843"/>
         <source>Are you sure you want to delete the table &apos;%1&apos;?
 All data associated with the table will be lost.</source>
         <translation>本当にテーブル &apos;%1&apos; を削除しますか?
 テーブルに関連するすべてのデータは失われます。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="804"/>
+        <location filename="../MainWindow.cpp" line="845"/>
         <source>Are you sure you want to delete the view &apos;%1&apos;?</source>
         <translation>本当にビュー &apos;%1&apos; を削除しますか?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="806"/>
+        <location filename="../MainWindow.cpp" line="847"/>
         <source>Are you sure you want to delete the trigger &apos;%1&apos;?</source>
         <translation>本当にトリガー &apos;%1&apos; を削除しますか?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="808"/>
+        <location filename="../MainWindow.cpp" line="849"/>
         <source>Are you sure you want to delete the index &apos;%1&apos;?</source>
         <translation>本当にインデックス &apos;%1&apos; を削除しますか?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="819"/>
+        <location filename="../MainWindow.cpp" line="860"/>
         <source>Error: could not delete the table.</source>
         <translation>エラー: テーブルを削除できませんでした。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="821"/>
+        <location filename="../MainWindow.cpp" line="862"/>
         <source>Error: could not delete the view.</source>
         <translation>エラー: ビューを削除できませんでした。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="823"/>
+        <location filename="../MainWindow.cpp" line="864"/>
         <source>Error: could not delete the trigger.</source>
         <translation>エラー: トリガーを削除できませんでした。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="825"/>
+        <location filename="../MainWindow.cpp" line="866"/>
         <source>Error: could not delete the index.</source>
         <translation>エラー: インデックスを削除できませんでした。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="827"/>
+        <location filename="../MainWindow.cpp" line="868"/>
         <source>Message from database engine:
 %1</source>
         <translation>データベースエンジンからのメッセージ。
 %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="856"/>
+        <location filename="../MainWindow.cpp" line="897"/>
         <source>Editing the table requires to save all pending changes now.
 Are you sure you want to save the database?</source>
         <translation>テーブルの編集には保留中のすべての変更を今保存する必要があります。
 本当にデータベースを保存しますか?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="875"/>
+        <location filename="../MainWindow.cpp" line="916"/>
         <source>Error checking foreign keys after table modification. The changes will be reverted.</source>
         <translation>デーブル変更後の外部キー検査でエラー。変更は元に戻ります。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="878"/>
+        <location filename="../MainWindow.cpp" line="919"/>
         <source>This table did not pass a foreign-key check.&lt;br/&gt;You should run &apos;Tools | Foreign-Key Check&apos; and fix the reported issues.</source>
         <translation>このテーブルは外部キー検査に合格しませんでした。&lt;br/&gt;&apos;ツール | 外部キー検査&apos; を実行し、報告された問題を解決します。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1002"/>
+        <location filename="../MainWindow.cpp" line="1043"/>
         <source>You are already executing SQL statements. Do you want to stop them in order to execute the current statements instead? Note that this might leave the database in an inconsistent state.</source>
         <translation>SQL文は既に実行中です。替わりに現在の文を実行するため、中止しますか? 注意: これはデータベースに一貫性がない状態を残すかもしれません。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1049"/>
+        <location filename="../MainWindow.cpp" line="1090"/>
         <source>-- EXECUTING SELECTION IN &apos;%1&apos;
 --</source>
         <translation>-- &apos;%1 内の選択部分を実行中&apos;
 --</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1070"/>
+        <location filename="../MainWindow.cpp" line="1111"/>
         <source>-- EXECUTING LINE IN &apos;%1&apos;
 --</source>
         <translation>-- &apos;%1 内の行を実行中&apos;
 --</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1078"/>
+        <location filename="../MainWindow.cpp" line="1119"/>
         <source>-- EXECUTING ALL IN &apos;%1&apos;
 --</source>
         <translation>-- &apos;%1 内をすべて実行中&apos;
 --</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1112"/>
+        <location filename="../MainWindow.cpp" line="1153"/>
         <source>Result: %1</source>
         <translation>結果: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1178"/>
+        <location filename="../MainWindow.cpp" line="1224"/>
         <source>Setting PRAGMA values or vacuuming will commit your current transaction.
 Are you sure?</source>
         <translation>PRAGMA 値の設定やバキュームは現在のトランザクションをコミットします。
@@ -4211,7 +4331,7 @@ Are you sure?</source>
         <translation type="vanished">実行クエリー</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1172"/>
+        <location filename="../MainWindow.cpp" line="1217"/>
         <source>%1 rows returned in %2ms</source>
         <translation>%1 行が %2ms で返されました</translation>
     </message>
@@ -4224,18 +4344,18 @@ Are you sure?</source>
         <translation type="vanished">クエリーの実行に成功しました。 %1ms%2 かかりました</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1112"/>
-        <location filename="../MainWindow.cpp" line="1115"/>
+        <location filename="../MainWindow.cpp" line="1153"/>
+        <location filename="../MainWindow.cpp" line="1156"/>
         <source>At line %1:</source>
         <translation>%1 行目:</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1115"/>
+        <location filename="../MainWindow.cpp" line="1156"/>
         <source>Result: %2</source>
         <translation>結果: %2</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1259"/>
+        <location filename="../MainWindow.cpp" line="1305"/>
         <source>Choose text files</source>
         <translation>テキストファイルを選択</translation>
     </message>
@@ -4244,7 +4364,7 @@ Are you sure?</source>
         <translation type="vanished">テキストファイル(*.csv *.txt);;すべてのファイル(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1333"/>
+        <location filename="../MainWindow.cpp" line="1379"/>
         <source>Error while saving the database file. This means that not all changes to the database were saved. You need to resolve the following error first.
 
 %1</source>
@@ -4253,74 +4373,74 @@ Are you sure?</source>
 %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1342"/>
+        <location filename="../MainWindow.cpp" line="1388"/>
         <source>Are you sure you want to undo all changes made to the database file &apos;%1&apos; since the last save?</source>
         <translation>本当にデータベースファイル &apos;%1&apos; への最後の保存後に行われたすべての変更を元に戻しますか?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1372"/>
+        <location filename="../MainWindow.cpp" line="1418"/>
         <source>Choose a file to import</source>
         <translation>インポートするファイルを選択</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1575"/>
+        <location filename="../MainWindow.cpp" line="1627"/>
         <source>&amp;%1 %2%3</source>
         <translation>&amp;%1 %2%3</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1575"/>
+        <location filename="../MainWindow.cpp" line="1627"/>
         <source> (read only)</source>
         <translation> (読み取り専用)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1659"/>
+        <location filename="../MainWindow.cpp" line="1711"/>
         <source>Open Database or Project</source>
         <translation>データベース化プロジェクトを開く</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1660"/>
+        <location filename="../MainWindow.cpp" line="1712"/>
         <source>Attach Database...</source>
         <translation>データベースに接続...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1661"/>
+        <location filename="../MainWindow.cpp" line="1713"/>
         <source>Import CSV file(s)...</source>
         <translation>CSVファイルをインポート...</translation>
     </message>
     <message numerus="yes">
-        <location filename="../MainWindow.cpp" line="1664"/>
+        <location filename="../MainWindow.cpp" line="1716"/>
         <source>Select the action to apply to the dropped file(s). &lt;br/&gt;Note: only &apos;Import&apos; will process more than one file.</source>
         <translation>
             <numerusform>ドロップされたファイルに対して行う操作を選択してください。 &lt;br/&gt;注意: &apos;インポート&apos; のみが複数ファイルを処理できます。</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1838"/>
+        <location filename="../MainWindow.cpp" line="1890"/>
         <source>Do you want to save the changes made to SQL tabs in a new project file?</source>
         <translation>新しいプロジェクトファイルにSQLタブで行われた変更を保存しますか?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1839"/>
+        <location filename="../MainWindow.cpp" line="1891"/>
         <source>Do you want to save the changes made to SQL tabs in the project file &apos;%1&apos;?</source>
         <translation>プロジェクトファイル &apos;%1&apos; にSQLタブで行われた変更を保存しますか?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1859"/>
+        <location filename="../MainWindow.cpp" line="1911"/>
         <source>Do you want to save the changes made to the SQL file %1?</source>
         <translation>変更をSQLファイル %1 に保存しますか?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1881"/>
+        <location filename="../MainWindow.cpp" line="1933"/>
         <source>The statements in this tab are still executing. Closing the tab will stop the execution. This might leave the database in an inconsistent state. Are you sure you want to close the tab?</source>
         <translation>このタブの文はまだ実行中です。タブを閉じると実行が中止されます。これはデータベースに一貫性がない状態を残すかもしれません。本当にタブを閉じますか?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1967"/>
+        <location filename="../MainWindow.cpp" line="2019"/>
         <source>Text files(*.sql *.txt);;All files(*)</source>
         <translation>テキストファイル(*.sql *.txt);;すべてのファイル(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1384"/>
+        <location filename="../MainWindow.cpp" line="1430"/>
         <source>Do you want to create a new database file to hold the imported data?
 If you answer no we will attempt to import the data in the SQL file to the current database.</source>
         <translation>インポートしたデータを保持する新しいデータベースを作成しますか
@@ -4331,72 +4451,72 @@ If you answer no we will attempt to import the data in the SQL file to the curre
         <translation type="vanished">まだSQL文を実行中です。今、データベースを閉じると、実行が中止され、こデータベースに一貫性がない状態を残すかもしれません。本当にデータベースを閉じますか?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="717"/>
+        <location filename="../MainWindow.cpp" line="759"/>
         <source>Do you want to save the changes made to the project file &apos;%1&apos;?</source>
         <translation>プロジェクトファイル &apos;%1&apos; に変更を保存しますか?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1203"/>
+        <location filename="../MainWindow.cpp" line="1249"/>
         <source>Execution finished with errors.</source>
         <translation>エラーがありましたが、実行が終了しました。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1205"/>
+        <location filename="../MainWindow.cpp" line="1251"/>
         <source>Execution finished without errors.</source>
         <translation>エラーなしで実行が終了しました。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1395"/>
+        <location filename="../MainWindow.cpp" line="1441"/>
         <source>File %1 already exists. Please choose a different name.</source>
         <translation>ファイル %1 は既に存在しています。違う名前を選んでください。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1420"/>
+        <location filename="../MainWindow.cpp" line="1468"/>
         <source>Error importing data: %1</source>
         <translation>データのインポートでエラー: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1422"/>
+        <location filename="../MainWindow.cpp" line="1470"/>
         <source>Import completed. Some foreign key constraints are violated. Please fix them before saving.</source>
         <translation>インポートが終了しました。いくつかの外部キー制約に違反があります。保存前に修正してください。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1424"/>
+        <location filename="../MainWindow.cpp" line="1472"/>
         <source>Import completed.</source>
         <translation>インポート完了。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1492"/>
+        <location filename="../MainWindow.cpp" line="1540"/>
         <source>Delete View</source>
         <translation>ビューを削除</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1493"/>
+        <location filename="../MainWindow.cpp" line="1541"/>
         <source>Modify View</source>
         <translation>ビューを変更</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1495"/>
+        <location filename="../MainWindow.cpp" line="1543"/>
         <source>Delete Trigger</source>
         <translation>トリガーを削除</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1496"/>
+        <location filename="../MainWindow.cpp" line="1544"/>
         <source>Modify Trigger</source>
         <translation>トリガーを変更</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1498"/>
+        <location filename="../MainWindow.cpp" line="1546"/>
         <source>Delete Index</source>
         <translation>インデックスを削除</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1499"/>
+        <location filename="../MainWindow.cpp" line="1547"/>
         <source>Modify Index</source>
         <translation>インデックスを変更</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1502"/>
+        <location filename="../MainWindow.cpp" line="1550"/>
         <source>Modify Table</source>
         <translation>テーブルを変更</translation>
     </message>
@@ -4405,14 +4525,14 @@ If you answer no we will attempt to import the data in the SQL file to the curre
         <translation type="vanished">&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1783"/>
+        <location filename="../MainWindow.cpp" line="1835"/>
         <source>Setting PRAGMA values will commit your current transaction.
 Are you sure?</source>
         <translation>PRAGMA 値の設定は現在のトランザクションをコミットします。
 本当に行いますか?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1966"/>
+        <location filename="../MainWindow.cpp" line="2018"/>
         <source>Select SQL file to open</source>
         <translation>開くSQLファイルを選択</translation>
     </message>
@@ -4425,12 +4545,12 @@ Are you sure?</source>
         <translation type="vanished">ファイルを保存できません: %1.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2024"/>
+        <location filename="../MainWindow.cpp" line="2076"/>
         <source>Select file name</source>
         <translation>ファイル名を選択</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2056"/>
+        <location filename="../MainWindow.cpp" line="2108"/>
         <source>Select extension file</source>
         <translation>拡張ファイルを選択</translation>
     </message>
@@ -4439,12 +4559,12 @@ Are you sure?</source>
         <translation type="vanished">拡張(*.so *.dylib *.dll);;すべてのファイル(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2063"/>
+        <location filename="../MainWindow.cpp" line="2115"/>
         <source>Extension successfully loaded.</source>
         <translation>拡張の読み込みに成功しました。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2065"/>
+        <location filename="../MainWindow.cpp" line="2117"/>
         <source>Error loading extension: %1</source>
         <translation>拡張の読み込みでエラー: %1</translation>
     </message>
@@ -4453,33 +4573,33 @@ Are you sure?</source>
         <translation type="vanished">検索リソースファイルが開けません: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2173"/>
-        <location filename="../MainWindow.cpp" line="2537"/>
+        <location filename="../MainWindow.cpp" line="2231"/>
+        <location filename="../MainWindow.cpp" line="2598"/>
         <source>Don&apos;t show again</source>
         <translation>二度と表示しない</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2176"/>
+        <location filename="../MainWindow.cpp" line="2234"/>
         <source>New version available.</source>
         <translation>新しいバージョンがあります。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2177"/>
+        <location filename="../MainWindow.cpp" line="2235"/>
         <source>A new DB Browser for SQLite version is available (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Please download at &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</source>
         <translation>新しいバージョンの DB Browser for SQLite (%1.%2.%3)があります。&lt;br/&gt;&lt;br/&gt;&lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;からダウンロードしてください。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2409"/>
+        <location filename="../MainWindow.cpp" line="2470"/>
         <source>Choose a project file to open</source>
         <translation>開くプロジェクトファイルを選択</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2410"/>
+        <location filename="../MainWindow.cpp" line="2471"/>
         <source>DB Browser for SQLite project file (*.sqbpro)</source>
         <translation>DB Browser for SQLite プロジェクトファイル (*.sqbpro)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2541"/>
+        <location filename="../MainWindow.cpp" line="2602"/>
         <source>This project file is using an old file format because it was created using DB Browser for SQLite version 3.10 or lower. Loading this file format is still fully supported but we advice you to convert all your project files to the new file format because support for older formats might be dropped at some point in the future. You can convert your files by simply opening and re-saving them.</source>
         <translation>このプロジェクトファイルは DB Browser for SQLite version 3.10 以下のバージョンで使われた、古いファイルフォーマットを使用しています。このファイルフォーマットの読み込みはいまだ完全にサポートされていますが、将来古いフォーマットのサポートはなくなるため、すべてのプロジェクトファイルを新しいフォーマットに変換することをおすすめします。ファイルを変換するには単純にファイルを開き再保存します。</translation>
     </message>
@@ -4518,12 +4638,12 @@ Leave the field empty for using the database encoding.</source>
         <translation type="vanished">このビューでの編集を有効にするため、疑似主キーを入力してください。ビューに一意なカラムの名前が必要です。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3045"/>
+        <location filename="../MainWindow.cpp" line="3106"/>
         <source>Collation needed! Proceed?</source>
         <translation>照合順序が必要です!続行しますか?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3046"/>
+        <location filename="../MainWindow.cpp" line="3107"/>
         <source>A table in this database requires a special collation function &apos;%1&apos; that this application can&apos;t provide without further knowledge.
 If you choose to proceed, be aware bad things can happen to your database.
 Create a backup!</source>
@@ -4532,32 +4652,32 @@ Create a backup!</source>
 バックアップを作成してください!</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3051"/>
+        <location filename="../MainWindow.cpp" line="3112"/>
         <source>creating collation</source>
         <translation>照合順序の作成中</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3060"/>
+        <location filename="../MainWindow.cpp" line="3121"/>
         <source>Set a new name for the SQL tab. Use the &apos;&amp;&amp;&apos; character to allow using the following character as a keyboard shortcut.</source>
         <translation>SQLタブに新しい名前を設定してください。&apos;&amp;&amp;&apos;の文字を使うと、その次の文字をキーボードショートカットにできます。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3112"/>
+        <location filename="../MainWindow.cpp" line="3173"/>
         <source>Please specify the view name</source>
         <translation>ビューの名前を指定してください</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3116"/>
+        <location filename="../MainWindow.cpp" line="3177"/>
         <source>There is already an object with that name. Please choose a different name.</source>
         <translation>その名前のオブジェクトは既に存在します。別の名前を選んでください。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3123"/>
+        <location filename="../MainWindow.cpp" line="3184"/>
         <source>View successfully created.</source>
         <translation>ビューの作成に成功しました。</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3125"/>
+        <location filename="../MainWindow.cpp" line="3186"/>
         <source>Error creating view: %1</source>
         <translation>ビューの作成でエラー: %1</translation>
     </message>
@@ -4570,12 +4690,12 @@ Create a backup!</source>
         <translation type="vanished">レコードを削除</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3133"/>
+        <location filename="../MainWindow.cpp" line="3194"/>
         <source>This action will open a new SQL tab for running:</source>
         <translation>この操作は実行のため新しいSQLタブを開きます:</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3138"/>
+        <location filename="../MainWindow.cpp" line="3199"/>
         <source>Press Help for opening the corresponding SQLite reference page.</source>
         <translation>ヘルプを押すと、対応する SQLite のリファレンスページを開きます。</translation>
     </message>
@@ -4903,8 +5023,8 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="85"/>
-        <location filename="../PreferencesDialog.ui" line="1720"/>
-        <location filename="../PreferencesDialog.ui" line="1840"/>
+        <location filename="../PreferencesDialog.ui" line="1749"/>
+        <location filename="../PreferencesDialog.ui" line="1869"/>
         <source>...</source>
         <translation>...</translation>
     </message>
@@ -4971,13 +5091,13 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     <message>
         <location filename="../PreferencesDialog.ui" line="348"/>
         <location filename="../PreferencesDialog.ui" line="368"/>
-        <location filename="../PreferencesDialog.ui" line="636"/>
-        <location filename="../PreferencesDialog.ui" line="643"/>
-        <location filename="../PreferencesDialog.ui" line="1459"/>
-        <location filename="../PreferencesDialog.ui" line="1479"/>
-        <location filename="../PreferencesDialog.ui" line="1499"/>
-        <location filename="../PreferencesDialog.ui" line="1519"/>
-        <location filename="../PreferencesDialog.ui" line="1539"/>
+        <location filename="../PreferencesDialog.ui" line="652"/>
+        <location filename="../PreferencesDialog.ui" line="659"/>
+        <location filename="../PreferencesDialog.ui" line="1488"/>
+        <location filename="../PreferencesDialog.ui" line="1508"/>
+        <location filename="../PreferencesDialog.ui" line="1528"/>
+        <location filename="../PreferencesDialog.ui" line="1548"/>
+        <location filename="../PreferencesDialog.ui" line="1568"/>
         <source>enabled</source>
         <translation>有効</translation>
     </message>
@@ -5042,37 +5162,47 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation>アプリケーションスタイル</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="556"/>
+        <location filename="../PreferencesDialog.ui" line="555"/>
+        <source>This sets the font size for all UI elements which do not have their own font size option.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.ui" line="558"/>
+        <source>Font size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.ui" line="572"/>
         <source>&amp;Database</source>
         <translation>データベース(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="567"/>
+        <location filename="../PreferencesDialog.ui" line="583"/>
         <source>Database &amp;encoding</source>
         <translation>データベースのエンコード(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="577"/>
+        <location filename="../PreferencesDialog.ui" line="593"/>
         <source>Open databases with foreign keys enabled.</source>
         <translation>外部キーを有効にしてデータベースを開く。</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="580"/>
+        <location filename="../PreferencesDialog.ui" line="596"/>
         <source>&amp;Foreign keys</source>
         <translation>外部キー(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="590"/>
+        <location filename="../PreferencesDialog.ui" line="606"/>
         <source>Remove line breaks in schema &amp;view</source>
         <translation>スキーマビューから改行を取り除く(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="633"/>
+        <location filename="../PreferencesDialog.ui" line="649"/>
         <source>When enabled, the line breaks in the Schema column of the DB Structure tab, dock and printed output are removed.</source>
         <translation>有効にすると、DB構造タブのカラムスキーマ、ドックや印刷された出力にある改行が取り除かれます。</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="600"/>
+        <location filename="../PreferencesDialog.ui" line="616"/>
         <source>Prefetch block si&amp;ze</source>
         <translation>先読みブロックサイズ(&amp;Z)</translation>
     </message>
@@ -5081,47 +5211,52 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation type="vanished">高度な設定</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="668"/>
+        <location filename="../PreferencesDialog.ui" line="697"/>
         <source>SQ&amp;L to execute after opening database</source>
         <translation>データベースを開いた後に実行するSQL(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="610"/>
+        <location filename="../PreferencesDialog.ui" line="626"/>
         <source>Default field type</source>
         <translation>デフォルトのフィールドデータ形式</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="697"/>
+        <location filename="../PreferencesDialog.ui" line="680"/>
+        <source>Database structure font size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.ui" line="726"/>
         <source>Data &amp;Browser</source>
         <translation>データ閲覧(&amp;B)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="705"/>
+        <location filename="../PreferencesDialog.ui" line="734"/>
         <source>Font</source>
         <translation>フォント</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="711"/>
+        <location filename="../PreferencesDialog.ui" line="740"/>
         <source>&amp;Font</source>
         <translation>フォント(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="724"/>
+        <location filename="../PreferencesDialog.ui" line="753"/>
         <source>Font si&amp;ze</source>
         <translation>フォントサイズ(&amp;Z)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="740"/>
+        <location filename="../PreferencesDialog.ui" line="769"/>
         <source>Content</source>
         <translation>内容</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="746"/>
+        <location filename="../PreferencesDialog.ui" line="775"/>
         <source>Symbol limit in cell</source>
         <translation>セル内のシンボル上限</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="778"/>
+        <location filename="../PreferencesDialog.ui" line="807"/>
         <source>This is the maximum number of items allowed for some computationally expensive functionalities to be enabled:
 Maximum number of rows in a table for enabling the value completion based on current values in the column.
 Maximum number of indexes in a selection for calculating sum and average.
@@ -5132,7 +5267,7 @@ Can be set to 0 for disabling the functionalities.</source>
 0に設定するとこの機能を無効にできます。</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="784"/>
+        <location filename="../PreferencesDialog.ui" line="813"/>
         <source>This is the maximum number of rows in a table for enabling the value completion based on current values in the column.
 Can be set to 0 for disabling completion.</source>
         <translation>これは現在の値を基にしたカラムの値補完を有効にしたときのテーブル内の行数の最大値です。</translation>
@@ -5142,452 +5277,452 @@ Can be set to 0 for disabling completion.</source>
         <translation type="vanished">補完の行数閾値</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="828"/>
+        <location filename="../PreferencesDialog.ui" line="857"/>
         <source>Field display</source>
         <translation>フィールド表示</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="834"/>
+        <location filename="../PreferencesDialog.ui" line="863"/>
         <source>Displayed &amp;text</source>
         <translation>表示されたテキスト(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="847"/>
+        <location filename="../PreferencesDialog.ui" line="876"/>
         <source>Binary</source>
         <translation>バイナリー</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="857"/>
+        <location filename="../PreferencesDialog.ui" line="886"/>
         <source>NULL</source>
         <translation>NULL</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="867"/>
+        <location filename="../PreferencesDialog.ui" line="896"/>
         <source>Regular</source>
         <translation>通常</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="880"/>
         <location filename="../PreferencesDialog.ui" line="909"/>
         <location filename="../PreferencesDialog.ui" line="938"/>
-        <location filename="../PreferencesDialog.ui" line="957"/>
-        <location filename="../PreferencesDialog.ui" line="976"/>
-        <location filename="../PreferencesDialog.ui" line="995"/>
+        <location filename="../PreferencesDialog.ui" line="967"/>
+        <location filename="../PreferencesDialog.ui" line="986"/>
+        <location filename="../PreferencesDialog.ui" line="1005"/>
+        <location filename="../PreferencesDialog.ui" line="1024"/>
         <source>Click to set this color</source>
         <translation>クリックでこの色を設定</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="896"/>
+        <location filename="../PreferencesDialog.ui" line="925"/>
         <source>Text color</source>
         <translation>文字色</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="925"/>
+        <location filename="../PreferencesDialog.ui" line="954"/>
         <source>Background color</source>
         <translation>背景色</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1040"/>
+        <location filename="../PreferencesDialog.ui" line="1069"/>
         <source>Preview only (N/A)</source>
         <translation>閲覧のみ(設定不可)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1074"/>
+        <location filename="../PreferencesDialog.ui" line="1103"/>
         <source>Filters</source>
         <translation>フィルター</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1087"/>
+        <location filename="../PreferencesDialog.ui" line="1116"/>
         <source>Escape character</source>
         <translation>エスケープ文字</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1097"/>
+        <location filename="../PreferencesDialog.ui" line="1126"/>
         <source>Delay time (&amp;ms)</source>
         <translation>遅延時間 (ms) (&amp;M)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1107"/>
+        <location filename="../PreferencesDialog.ui" line="1136"/>
         <source>Set the waiting time before a new filter value is applied. Can be set to 0 for disabling waiting.</source>
         <translation>新しいフィルターの値が適用される前の待機時間を設定します。0にすると待機しません。</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1123"/>
+        <location filename="../PreferencesDialog.ui" line="1152"/>
         <source>&amp;SQL</source>
         <translation>SQL(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1136"/>
+        <location filename="../PreferencesDialog.ui" line="1165"/>
         <source>Settings name</source>
         <translation>設定名</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1141"/>
+        <location filename="../PreferencesDialog.ui" line="1170"/>
         <source>Context</source>
         <translation>内容</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1146"/>
+        <location filename="../PreferencesDialog.ui" line="1175"/>
         <source>Colour</source>
         <translation>色</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1151"/>
+        <location filename="../PreferencesDialog.ui" line="1180"/>
         <source>Bold</source>
         <translation>太字</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1156"/>
+        <location filename="../PreferencesDialog.ui" line="1185"/>
         <source>Italic</source>
         <translation>イタリック</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1161"/>
+        <location filename="../PreferencesDialog.ui" line="1190"/>
         <source>Underline</source>
         <translation>下線</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1169"/>
+        <location filename="../PreferencesDialog.ui" line="1198"/>
         <source>Keyword</source>
         <translation>キーワード</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1189"/>
+        <location filename="../PreferencesDialog.ui" line="1218"/>
         <source>Function</source>
         <translation>関数</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1197"/>
+        <location filename="../PreferencesDialog.ui" line="1226"/>
         <source>Table</source>
         <translation>テーブル</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1217"/>
+        <location filename="../PreferencesDialog.ui" line="1246"/>
         <source>Comment</source>
         <translation>コメント</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1237"/>
+        <location filename="../PreferencesDialog.ui" line="1266"/>
         <source>Identifier</source>
         <translation>識別子</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1257"/>
+        <location filename="../PreferencesDialog.ui" line="1286"/>
         <source>String</source>
         <translation>文字列</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1277"/>
+        <location filename="../PreferencesDialog.ui" line="1306"/>
         <source>Current line</source>
         <translation>現在行</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1285"/>
+        <location filename="../PreferencesDialog.ui" line="1314"/>
         <source>Background</source>
         <translation>背景</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1293"/>
+        <location filename="../PreferencesDialog.ui" line="1322"/>
         <source>Foreground</source>
         <translation>前景</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1303"/>
+        <location filename="../PreferencesDialog.ui" line="1332"/>
         <source>SQL editor &amp;font</source>
         <translation>SQLエディターフォント(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1318"/>
+        <location filename="../PreferencesDialog.ui" line="1347"/>
         <source>SQL &amp;editor font size</source>
         <translation>SQLエディターフォントサイズ(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1340"/>
+        <location filename="../PreferencesDialog.ui" line="1369"/>
         <source>SQL &amp;results font size</source>
         <translation>SQL結果フォントサイズ(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1357"/>
+        <location filename="../PreferencesDialog.ui" line="1386"/>
         <source>Tab size</source>
         <translation>タブサイズ</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1380"/>
+        <location filename="../PreferencesDialog.ui" line="1409"/>
         <source>&amp;Wrap lines</source>
         <translation>ワードラップ(&amp;W)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1391"/>
+        <location filename="../PreferencesDialog.ui" line="1420"/>
         <source>Never</source>
         <translation>しない</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1396"/>
+        <location filename="../PreferencesDialog.ui" line="1425"/>
         <source>At word boundaries</source>
         <translation>単語で</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1401"/>
+        <location filename="../PreferencesDialog.ui" line="1430"/>
         <source>At character boundaries</source>
         <translation>文字で</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1406"/>
+        <location filename="../PreferencesDialog.ui" line="1435"/>
         <source>At whitespace boundaries</source>
         <translation>空白で</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1414"/>
+        <location filename="../PreferencesDialog.ui" line="1443"/>
         <source>&amp;Quotes for identifiers</source>
         <translation>識別子のクォート(&amp;Q)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1424"/>
+        <location filename="../PreferencesDialog.ui" line="1453"/>
         <source>Choose the quoting mechanism used by the application for identifiers in SQL code.</source>
         <translation>アプリケーションがSQLコード内で識別子をクォートする仕組みを選択します。</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1431"/>
+        <location filename="../PreferencesDialog.ui" line="1460"/>
         <source>&quot;Double quotes&quot; - Standard SQL (recommended)</source>
         <translation>&quot;ダブルクォート&quot; - 一般的な SQL (推奨)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1436"/>
+        <location filename="../PreferencesDialog.ui" line="1465"/>
         <source>`Grave accents` - Traditional MySQL quotes</source>
         <translation>`グレイヴアクセント` - 伝統的な MySQL のクォート</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1441"/>
+        <location filename="../PreferencesDialog.ui" line="1470"/>
         <source>[Square brackets] - Traditional MS SQL Server quotes</source>
         <translation>[角括弧] - 伝統的な MS SQL Server のクォート</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1449"/>
+        <location filename="../PreferencesDialog.ui" line="1478"/>
         <source>Code co&amp;mpletion</source>
         <translation>コード補完(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1466"/>
+        <location filename="../PreferencesDialog.ui" line="1495"/>
         <source>Keywords in &amp;UPPER CASE</source>
         <translation>キーワードを大文字に(&amp;U)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1476"/>
+        <location filename="../PreferencesDialog.ui" line="1505"/>
         <source>When set, the SQL keywords are completed in UPPER CASE letters.</source>
         <translation>設定すると、SQLキーワードを大文字に補完します。</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1486"/>
+        <location filename="../PreferencesDialog.ui" line="1515"/>
         <source>Error indicators</source>
         <translation>エラー指摘</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1496"/>
+        <location filename="../PreferencesDialog.ui" line="1525"/>
         <source>When set, the SQL code lines that caused errors during the last execution are highlighted and the results frame indicates the error in the background</source>
         <translation>設定すると、最後の実行でエラーが起きたSQLコードの行が強調され、結果フレームがバックグラウンドでエラーを指摘します</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1506"/>
+        <location filename="../PreferencesDialog.ui" line="1535"/>
         <source>Hori&amp;zontal tiling</source>
         <translation>横に並べる(&amp;Z)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1516"/>
+        <location filename="../PreferencesDialog.ui" line="1545"/>
         <source>If enabled the SQL code editor and the result table view are shown side by side instead of one over the other.</source>
         <translation>有効にすると、重ねる代わりに、SQLコードエディターと結果タブビューが並んで表示されます。</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1526"/>
+        <location filename="../PreferencesDialog.ui" line="1555"/>
         <source>Close button on tabs</source>
         <translation>タブ上の閉じるボタン</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1536"/>
+        <location filename="../PreferencesDialog.ui" line="1565"/>
         <source>If enabled, SQL editor tabs will have a close button. In any case, you can use the contextual menu or the keyboard shortcut to close them.</source>
         <translation>可能ならば、SQLエディタータブに閉じるボタンを表示します。どのような場合でも、コンテキストメニューやキーボートショートカットを使って閉じることはできます。</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1549"/>
+        <location filename="../PreferencesDialog.ui" line="1578"/>
         <source>&amp;Extensions</source>
         <translation>拡張(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1555"/>
+        <location filename="../PreferencesDialog.ui" line="1584"/>
         <source>Select extensions to load for every database:</source>
         <translation>すべてのデータベースで読み込む拡張を選択:</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1576"/>
+        <location filename="../PreferencesDialog.ui" line="1605"/>
         <source>Add extension</source>
         <translation>拡張を追加</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1587"/>
+        <location filename="../PreferencesDialog.ui" line="1616"/>
         <source>Remove extension</source>
         <translation>拡張を削除</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1615"/>
+        <location filename="../PreferencesDialog.ui" line="1644"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;While supporting the REGEXP operator SQLite doesn&apos;t implement any regular expression&lt;br/&gt;algorithm but calls back the running application. DB Browser for SQLite implements this&lt;br/&gt;algorithm for you to let you use REGEXP out of the box. However, as there are multiple possible&lt;br/&gt;implementations of this and you might want to use another one, you&apos;re free to disable the&lt;br/&gt;application&apos;s implementation and load your own by using an extension. Requires restart of the application.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;REGEXP演算子がサポートされている間、SQLite は正規表現を実装しませんが、実行中のアプリケーションをコールバックします。DB Browser for SQLite はこれを実装しているので、REGEXP をすぐに使えます。しかし、これには複数の実装があり、アプリケーションの実装を無効にし拡張を使って他の実装を読み込むことが自由にできます。アプリケーションの再起動が必要です。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1618"/>
+        <location filename="../PreferencesDialog.ui" line="1647"/>
         <source>Disable Regular Expression extension</source>
         <translation>正規表現拡張を無効</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1625"/>
+        <location filename="../PreferencesDialog.ui" line="1654"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite provides an SQL function for loading extensions from a shared library file. Activate this if you want to use the &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt; function from SQL code.&lt;/p&gt;&lt;p&gt;For security reasons, extension loading is turned off by default and must be enabled through this setting. You can always load extensions through the GUI, even though this option is disabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite は共有ライブラリファイルから拡張を読み込むSQL関数を提供します。SQLコードから&lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt;関数を使いたいならば、.これを有効にします。&lt;/p&gt;&lt;p&gt;セキュリティー上の理由から、拡張の読み込みはデフォルトで無効になっており、使用するにはこの設定を有効にする必要があります。このオプションが無効でも、GUIを通じて拡張を読み込むことは常にできます。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1628"/>
+        <location filename="../PreferencesDialog.ui" line="1657"/>
         <source>Allow loading extensions from SQL code</source>
         <translation>SQLコードで拡張の読み込みを許可する</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1636"/>
+        <location filename="../PreferencesDialog.ui" line="1665"/>
         <source>Remote</source>
         <translation>リモート</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1747"/>
+        <location filename="../PreferencesDialog.ui" line="1776"/>
         <source>CA certificates</source>
         <translation>認証局証明書</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1849"/>
+        <location filename="../PreferencesDialog.ui" line="1878"/>
         <source>Proxy</source>
         <translation>プロキシ</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1856"/>
+        <location filename="../PreferencesDialog.ui" line="1885"/>
         <source>Configure</source>
         <translation>設定</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1676"/>
-        <location filename="../PreferencesDialog.ui" line="1772"/>
+        <location filename="../PreferencesDialog.ui" line="1705"/>
+        <location filename="../PreferencesDialog.ui" line="1801"/>
         <source>Subject CN</source>
         <translation>対象CN</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1775"/>
+        <location filename="../PreferencesDialog.ui" line="1804"/>
         <source>Common Name</source>
         <translation>Common Name</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1780"/>
+        <location filename="../PreferencesDialog.ui" line="1809"/>
         <source>Subject O</source>
         <translation>対象O</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1783"/>
+        <location filename="../PreferencesDialog.ui" line="1812"/>
         <source>Organization</source>
         <translation>Organization</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1692"/>
-        <location filename="../PreferencesDialog.ui" line="1788"/>
+        <location filename="../PreferencesDialog.ui" line="1721"/>
+        <location filename="../PreferencesDialog.ui" line="1817"/>
         <source>Valid from</source>
         <translation>証明開始</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1697"/>
-        <location filename="../PreferencesDialog.ui" line="1793"/>
+        <location filename="../PreferencesDialog.ui" line="1726"/>
+        <location filename="../PreferencesDialog.ui" line="1822"/>
         <source>Valid to</source>
         <translation>証明終了</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1702"/>
-        <location filename="../PreferencesDialog.ui" line="1798"/>
+        <location filename="../PreferencesDialog.ui" line="1731"/>
+        <location filename="../PreferencesDialog.ui" line="1827"/>
         <source>Serial number</source>
         <translation>シリアル番号</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1646"/>
+        <location filename="../PreferencesDialog.ui" line="1675"/>
         <source>Your certificates</source>
         <translation>あなたの証明書</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="798"/>
+        <location filename="../PreferencesDialog.ui" line="827"/>
         <source>Threshold for completion and calculation on selection</source>
         <translation>補完と選択範囲内の計算の閾値</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="808"/>
+        <location filename="../PreferencesDialog.ui" line="837"/>
         <source>Show images in cell</source>
         <translation>セル内に画像を表示</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="818"/>
+        <location filename="../PreferencesDialog.ui" line="847"/>
         <source>Enable this option to show a preview of BLOBs containing image data in the cells. This can affect the performance of the data browser, however.</source>
         <translation>このオプションを有効にすると、セル内の画像データを含む BLOB のプレビューができます。しかし、これはデータ閲覧の性能に影響します。</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1671"/>
+        <location filename="../PreferencesDialog.ui" line="1700"/>
         <source>File</source>
         <translation>ファイル</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1679"/>
+        <location filename="../PreferencesDialog.ui" line="1708"/>
         <source>Subject Common Name</source>
         <translation>対象Common Name</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1684"/>
+        <location filename="../PreferencesDialog.ui" line="1713"/>
         <source>Issuer CN</source>
         <translation>発行者CN</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1687"/>
+        <location filename="../PreferencesDialog.ui" line="1716"/>
         <source>Issuer Common Name</source>
         <translation>発行者Common Name</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1812"/>
+        <location filename="../PreferencesDialog.ui" line="1841"/>
         <source>Clone databases into</source>
         <translation>ここにデータベースを複製</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.cpp" line="67"/>
-        <location filename="../PreferencesDialog.cpp" line="637"/>
+        <location filename="../PreferencesDialog.cpp" line="638"/>
         <source>Choose a directory</source>
         <translation>ディレクトリーを選択</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="321"/>
+        <location filename="../PreferencesDialog.cpp" line="323"/>
         <source>The language will change after you restart the application.</source>
         <translation>アプリケーションを再起動すると、言語が変更されます。</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="398"/>
+        <location filename="../PreferencesDialog.cpp" line="399"/>
         <source>Select extension file</source>
         <translation>拡張ファイルを選択</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="399"/>
+        <location filename="../PreferencesDialog.cpp" line="400"/>
         <source>Extensions(*.so *.dylib *.dll);;All files(*)</source>
         <translation>拡張(*.so *.dylib *.dll);;すべてのファイル(*)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="563"/>
+        <location filename="../PreferencesDialog.cpp" line="564"/>
         <source>Import certificate file</source>
         <translation>証明書ファイルをインポート</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="571"/>
+        <location filename="../PreferencesDialog.cpp" line="572"/>
         <source>No certificates found in this file.</source>
         <translation>このファイルに証明書が見つかりません。</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="588"/>
+        <location filename="../PreferencesDialog.cpp" line="589"/>
         <source>Are you sure you want do remove this certificate? All certificate data will be deleted from the application settings!</source>
         <translation>本当にこの証明書を削除しますか? すべての証明書データはこのアプリケーション設定から削除されます!</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="673"/>
+        <location filename="../PreferencesDialog.cpp" line="674"/>
         <source>Are you sure you want to clear all the saved settings?
 All your preferences will be lost and default values will be used.</source>
         <translation>本当に保存された設定を削除しますか?
@@ -5687,7 +5822,7 @@ All your preferences will be lost and default values will be used.</source>
         <translation>キャンセル</translation>
     </message>
     <message>
-        <location filename="../Settings.cpp" line="187"/>
+        <location filename="../Settings.cpp" line="192"/>
         <source>SQLite database files (*.db *.sqlite *.sqlite3 *.db3)</source>
         <translation>SQLite データベースファイル (*.db *.sqlite *.sqlite3 *.db3)</translation>
     </message>
@@ -5804,79 +5939,106 @@ All your preferences will be lost and default values will be used.</source>
     </message>
 </context>
 <context>
+    <name>RemoteCommitsModel</name>
+    <message>
+        <location filename="../RemoteCommitsModel.cpp" line="13"/>
+        <source>Commit ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteCommitsModel.cpp" line="13"/>
+        <source>Message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteCommitsModel.cpp" line="13"/>
+        <source>Date</source>
+        <translation type="unfinished">日付</translation>
+    </message>
+    <message>
+        <location filename="../RemoteCommitsModel.cpp" line="13"/>
+        <source>Author</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteCommitsModel.cpp" line="13"/>
+        <source>Size</source>
+        <translation type="unfinished">サイズ</translation>
+    </message>
+    <message>
+        <location filename="../RemoteCommitsModel.cpp" line="65"/>
+        <source>Authored and committed by %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteCommitsModel.cpp" line="67"/>
+        <source>Authored by %1, committed by %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RemoteDatabase</name>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="173"/>
         <source>Error when connecting to %1.
 %2</source>
-        <translation>%1 への接続でエラー。
+        <translation type="vanished">%1 への接続でエラー。
 %2</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="324"/>
         <source>Error opening remote file at %1.
 %2</source>
-        <translation>%1 のリモートファイルを開くときにエラー.
+        <translation type="vanished">%1 のリモートファイルを開くときにエラー.
 %2</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="397"/>
         <source>Error: Invalid client certificate specified.</source>
-        <translation>エラー: 不正なクライアント証明書が指定されました。</translation>
+        <translation type="vanished">エラー: 不正なクライアント証明書が指定されました。</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="409"/>
         <source>Please enter the passphrase for this client certificate in order to authenticate.</source>
-        <translation>このクライアント証明書を確認するためパスフレーズを入力してください。</translation>
+        <translation type="vanished">このクライアント証明書を確認するためパスフレーズを入力してください。</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="433"/>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation type="vanished">キャンセル</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="437"/>
         <source>Uploading remote database to
 %1</source>
-        <translation>リモートデータベースをここにアップロード中
+        <translation type="vanished">リモートデータベースをここにアップロード中
 %1</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="439"/>
         <source>Downloading remote database from
 %1</source>
-        <translation>リモートデータベースをここからダウンロード中
+        <translation type="vanished">リモートデータベースをここからダウンロード中
 %1</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="456"/>
-        <location filename="../RemoteDatabase.cpp" line="509"/>
         <source>Error: The network is not accessible.</source>
-        <translation>エラー: ネットワークにアクセスできません。</translation>
+        <translation type="vanished">エラー: ネットワークにアクセスできません。</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="518"/>
         <source>Error: Cannot open the file for sending.</source>
-        <translation>エラー: 送信するファイルを開けません。</translation>
+        <translation type="vanished">エラー: 送信するファイルを開けません。</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="610"/>
+        <location filename="../RemoteDatabase.cpp" line="56"/>
         <source>Error opening local databases list.
 %1</source>
         <translation>ローカルデータベースの一覧を開くときにエラー。
 %1</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="628"/>
+        <location filename="../RemoteDatabase.cpp" line="74"/>
         <source>Error creating local databases list.
 %1</source>
         <translation>ローカルデータベースの一覧の作成でエラー。
 %1</translation>
     </message>
     <message>
-        <location filename="../RemoteDatabase.cpp" line="816"/>
         <source>The remote database has been updated since the last checkout. Do you want to update the local database to the newest version? Note that this discards any changes you have made locally! If you don&apos;t want to lose local changes, click No to open the local version.</source>
-        <translation>リモートデータベースが最後のチェックアウトから更新されました。ローカルのデータベースを最新バージョンに更新しますか? 注意:これはローカルで行った変更がすべて破棄されます! もし変更を失いたくなければ、いいえをクリックしてローカルのファイルを開いてください。</translation>
+        <translation type="vanished">リモートデータベースが最後のチェックアウトから更新されました。ローカルのデータベースを最新バージョンに更新しますか? 注意:これはローカルで行った変更がすべて破棄されます! もし変更を失いたくなければ、いいえをクリックしてローカルのファイルを開いてください。</translation>
     </message>
 </context>
 <context>
@@ -5892,25 +6054,168 @@ All your preferences will be lost and default values will be used.</source>
         <translation>アイデンティティー</translation>
     </message>
     <message>
-        <location filename="../RemoteDock.ui" line="46"/>
         <source>Connect to the remote server using the currently selected identity. The correct server is taken from the identity as well.</source>
-        <translation>現在選択されたアイデンティティーを使ってリモートサーバーに接続します。正しいサーバーもアイデンティティーから取得されます。</translation>
+        <translation type="vanished">現在選択されたアイデンティティーを使ってリモートサーバーに接続します。正しいサーバーもアイデンティティーから取得されます。</translation>
     </message>
     <message>
-        <location filename="../RemoteDock.ui" line="49"/>
         <source>Go</source>
-        <translation>実行</translation>
+        <translation type="vanished">実行</translation>
     </message>
     <message>
-        <location filename="../RemoteDock.ui" line="73"/>
+        <location filename="../RemoteDock.ui" line="59"/>
         <source>Push currently opened database to server</source>
         <translation>現在開いているデータベースをサーバーにプッシュします</translation>
     </message>
     <message>
-        <location filename="../RemoteDock.ui" line="86"/>
+        <location filename="../RemoteDock.ui" line="76"/>
+        <source>DBHub.io</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.ui" line="109"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB Browser for SQLite. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to &amp;quot;Generate client certificate&amp;quot; (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB Browser for SQLite Preferences. Click the button to add a new certificate to DB Browser for SQLite and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;このペインでは、dbhub.io ウェブサイトのリモートデータベースを DB Browser for SQLite に追加します。最初にアイデンティティーが必要です。:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;dbhub.io ウェブサイトにログインします。(GitHubかあなたが望む認証情報を使います)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;ボタンをクリックし&amp;quotクライアント証明書を作成&amp;quotします(これがあなたのアイデンティティです)。 証明書ファイルが与えられます(あなたのローカルディスクに保存します)。&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;
 DB Browser for SQLite 設定のリモートタブに行き、新しい証明書を DB Browsser for SQLite に追加するボタンをクリックし、ダウンロードした証明書ファイルを選択します。&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;これで、リモートパネルにあなたのアイデンティティが表示され、リモートデータベースが追加できます。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.ui" line="117"/>
+        <source>Local</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.ui" line="143"/>
+        <source>Current Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.ui" line="174"/>
+        <source>Clone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.ui" line="183"/>
+        <source>User</source>
+        <translation type="unfinished">ユーザー</translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.ui" line="200"/>
+        <source>Database</source>
+        <translation type="unfinished">データベース</translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.ui" line="217"/>
+        <source>Branch</source>
+        <translation type="unfinished">ブランチ</translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.ui" line="237"/>
+        <source>Commits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.ui" line="257"/>
+        <source>Commits for</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.ui" line="372"/>
+        <source>Delete Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.ui" line="375"/>
+        <source>Delete the local clone of this database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.ui" line="384"/>
+        <source>Open in Web Browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.ui" line="387"/>
+        <source>Open the web page for the current database in your browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.ui" line="396"/>
+        <source>Clone from Link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.ui" line="399"/>
+        <source>Use this to download a remote database for local editing using a URL as provided on the web page of the database.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.ui" line="408"/>
+        <source>Refresh</source>
+        <translation type="unfinished">更新</translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.ui" line="411"/>
+        <source>Reload all data and update the views</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.ui" line="414"/>
+        <source>F5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.ui" line="423"/>
+        <source>Clone Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.ui" line="438"/>
+        <source>Open Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.ui" line="441"/>
+        <source>Open the local copy of this database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.ui" line="452"/>
+        <source>Check out Commit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.ui" line="455"/>
+        <source>Download and open this specific commit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.ui" line="470"/>
+        <source>Check out Latest Commit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.ui" line="473"/>
+        <source>Check out the latest commit of the current branch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.ui" line="478"/>
+        <source>Save Revision to File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.ui" line="481"/>
+        <source>Saves the selected revision of the database to another file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.ui" line="490"/>
+        <source>Upload Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.ui" line="493"/>
+        <source>Upload this database as a new commit</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB4S. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to create a DB4S certificate (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB4S Preferences. Click the button to add a new certificate to DB4S and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -5918,46 +6223,203 @@ DB Browser for SQLite 設定のリモートタブに行き、新しい証明書�
 DB4S設定のリモートタブに行き、新しい証明書をDB4Sに追加するボタンをクリックし、ダウンロードした証明書ファイルを選択します。&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;これで、リモートパネルにあなたのアイデンティティが表示され、リモートデータベースが追加できます。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../RemoteDock.ui" line="127"/>
+        <location filename="../RemoteDock.ui" line="317"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;You are currently using a built-in, read-only identity. For uploading your database, you need to configure and use your DBHub.io account.&lt;/p&gt;&lt;p&gt;No DBHub.io account yet? &lt;a href=&quot;https://dbhub.io/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Create one now&lt;/span&gt;&lt;/a&gt; and import your certificate &lt;a href=&quot;#preferences&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;here&lt;/span&gt;&lt;/a&gt; to share your databases.&lt;/p&gt;&lt;p&gt;For online help visit &lt;a href=&quot;https://dbhub.io/about&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;here&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;あなたは現在組み込みの読み込み専用のアイデンティティーを使用しています。あなたのデータベースをアップロードするには、あなたの DBHub.io アカウントを設定し使う必要があります。&lt;/p&gt;&lt;p&gt;DBHub.io のアカウントがまだない? &lt;a href=&quot;https://dbhub.io/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;今すぐアカウントを作り&lt;/span&gt;&lt;/a&gt;、あなたの証明書を&lt;a href=&quot;#preferences&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;ここから&lt;/span&gt;&lt;/a&gt;インポートしてデータベースを共有してください。&lt;/p&gt;&lt;p&gt;オンラインのヘルプは&lt;a href=&quot;https://dbhub.io/about&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;ここ&lt;/span&gt;&lt;/a&gt;を見てください。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../RemoteDock.ui" line="137"/>
+        <location filename="../RemoteDock.ui" line="327"/>
         <source>Back</source>
         <translation>戻る</translation>
     </message>
     <message>
-        <location filename="../RemoteDock.cpp" line="67"/>
+        <location filename="../RemoteDock.cpp" line="151"/>
+        <source>Select an identity to connect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.cpp" line="163"/>
         <source>Public</source>
         <translation>公開</translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.cpp" line="216"/>
+        <source>This downloads a database from a remote server for local editing.
+Please enter the URL to clone from. You can generate this URL by
+clicking the &apos;Clone Database in DB4S&apos; button on the web page
+of the database.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.cpp" line="231"/>
+        <source>Invalid URL: The host name does not match the host name of the current identity.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.cpp" line="236"/>
+        <source>Invalid URL: No branch name specified.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.cpp" line="241"/>
+        <source>Invalid URL: No commit ID specified.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.cpp" line="289"/>
+        <source>You have modified the local clone of the database. Fetching this commit overrides these local changes.
+Are you sure you want to proceed?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.cpp" line="333"/>
+        <source>The database has unsaved changes. Are you sure you want to push it before saving?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.cpp" line="543"/>
+        <source>The database you are trying to delete is currently opened. Please close it before deleting.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteDock.cpp" line="549"/>
+        <source>This deletes the local version of this database with all the changes you have not committed yet. Are you sure you want to delete this database?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RemoteLocalFilesModel</name>
+    <message>
+        <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
+        <source>Name</source>
+        <translation type="unfinished">名前</translation>
+    </message>
+    <message>
+        <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
+        <source>Branch</source>
+        <translation type="unfinished">ブランチ</translation>
+    </message>
+    <message>
+        <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
+        <source>Last modified</source>
+        <translation type="unfinished">最終変更</translation>
+    </message>
+    <message>
+        <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
+        <source>Size</source>
+        <translation type="unfinished">サイズ</translation>
+    </message>
+    <message>
+        <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
+        <source>Commit</source>
+        <translation type="unfinished">コミット</translation>
+    </message>
+    <message>
+        <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
+        <source>File</source>
+        <translation type="unfinished">ファイル</translation>
     </message>
 </context>
 <context>
     <name>RemoteModel</name>
     <message>
-        <location filename="../RemoteModel.cpp" line="103"/>
+        <location filename="../RemoteModel.cpp" line="109"/>
         <source>Name</source>
         <translation>名前</translation>
     </message>
     <message>
-        <location filename="../RemoteModel.cpp" line="103"/>
+        <location filename="../RemoteModel.cpp" line="109"/>
         <source>Commit</source>
         <translation>コミット</translation>
     </message>
     <message>
-        <location filename="../RemoteModel.cpp" line="103"/>
+        <location filename="../RemoteModel.cpp" line="109"/>
         <source>Last modified</source>
         <translation>最終変更</translation>
     </message>
     <message>
-        <location filename="../RemoteModel.cpp" line="103"/>
+        <location filename="../RemoteModel.cpp" line="109"/>
         <source>Size</source>
         <translation>サイズ</translation>
     </message>
     <message>
+        <location filename="../RemoteModel.cpp" line="231"/>
+        <source>Size: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteModel.cpp" line="232"/>
+        <source>Last Modified: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteModel.cpp" line="233"/>
+        <source>Licence: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteModel.cpp" line="234"/>
+        <source>Default Branch: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>bytes</source>
         <translation type="vanished">バイト</translation>
+    </message>
+</context>
+<context>
+    <name>RemoteNetwork</name>
+    <message>
+        <location filename="../RemoteNetwork.cpp" line="218"/>
+        <source>Choose a location to save the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemoteNetwork.cpp" line="250"/>
+        <source>Error opening remote file at %1.
+%2</source>
+        <translation type="unfinished">%1 のリモートファイルを開くときにエラー.
+%2</translation>
+    </message>
+    <message>
+        <location filename="../RemoteNetwork.cpp" line="329"/>
+        <source>Error: Invalid client certificate specified.</source>
+        <translation type="unfinished">エラー: 不正なクライアント証明書が指定されました。</translation>
+    </message>
+    <message>
+        <location filename="../RemoteNetwork.cpp" line="341"/>
+        <source>Please enter the passphrase for this client certificate in order to authenticate.</source>
+        <translation type="unfinished">このクライアント証明書を確認するためパスフレーズを入力してください。</translation>
+    </message>
+    <message>
+        <location filename="../RemoteNetwork.cpp" line="365"/>
+        <source>Cancel</source>
+        <translation type="unfinished">キャンセル</translation>
+    </message>
+    <message>
+        <location filename="../RemoteNetwork.cpp" line="370"/>
+        <source>Uploading remote database to
+%1</source>
+        <translation type="unfinished">リモートデータベースをここにアップロード中
+%1</translation>
+    </message>
+    <message>
+        <location filename="../RemoteNetwork.cpp" line="372"/>
+        <source>Downloading remote database from
+%1</source>
+        <translation type="unfinished">リモートデータベースをここからダウンロード中
+%1</translation>
+    </message>
+    <message>
+        <location filename="../RemoteNetwork.cpp" line="390"/>
+        <location filename="../RemoteNetwork.cpp" line="456"/>
+        <source>Error: The network is not accessible.</source>
+        <translation type="unfinished">エラー: ネットワークにアクセスできません。</translation>
+    </message>
+    <message>
+        <location filename="../RemoteNetwork.cpp" line="465"/>
+        <source>Error: Cannot open the file for sending.</source>
+        <translation type="unfinished">エラー: 送信するファイルを開けません。</translation>
     </message>
 </context>
 <context>
@@ -5978,17 +6440,25 @@ DB4S設定のリモートタブに行き、新しい証明書をDB4Sに追加す
         <translation>コミットメッセージ</translation>
     </message>
     <message>
-        <location filename="../RemotePushDialog.ui" line="49"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Oxygen-Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Oxygen-Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../RemotePushDialog.ui" line="49"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Noto Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Oxygen-Sans&apos;;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../RemotePushDialog.ui" line="63"/>
@@ -6011,17 +6481,22 @@ p, li { white-space: pre-wrap; }
         <translation>強制プッシュ</translation>
     </message>
     <message>
-        <location filename="../RemotePushDialog.cpp" line="47"/>
+        <location filename="../RemotePushDialog.ui" line="129"/>
+        <source>Username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RemotePushDialog.cpp" line="72"/>
         <source>Database will be public. Everyone has read access to it.</source>
         <translation>データベースを公開にします。すべての人がアクセスできます。</translation>
     </message>
     <message>
-        <location filename="../RemotePushDialog.cpp" line="49"/>
+        <location filename="../RemotePushDialog.cpp" line="74"/>
         <source>Database will be private. Only you have access to it.</source>
         <translation>データベースを非公開にします。あなただけがアクセスできます。</translation>
     </message>
     <message>
-        <location filename="../RemotePushDialog.cpp" line="53"/>
+        <location filename="../RemotePushDialog.cpp" line="78"/>
         <source>Use with care. This can cause remote commits to be deleted.</source>
         <translation>注意して使用してください。これはリモートコミットが削除される可能性があります。</translation>
     </message>
@@ -6174,23 +6649,23 @@ p, li { white-space: pre-wrap; }
         <translation>最後に実行した文の結果</translation>
     </message>
     <message>
-        <location filename="../SqlExecutionArea.cpp" line="237"/>
+        <location filename="../SqlExecutionArea.cpp" line="239"/>
         <source>Couldn&apos;t read file: %1.</source>
         <translation>ファイルを読めません: %1.</translation>
     </message>
     <message>
-        <location filename="../SqlExecutionArea.cpp" line="267"/>
-        <location filename="../SqlExecutionArea.cpp" line="285"/>
+        <location filename="../SqlExecutionArea.cpp" line="269"/>
+        <location filename="../SqlExecutionArea.cpp" line="287"/>
         <source>Couldn&apos;t save file: %1.</source>
         <translation>ファイルを保存できません: %1.</translation>
     </message>
     <message>
-        <location filename="../SqlExecutionArea.cpp" line="295"/>
+        <location filename="../SqlExecutionArea.cpp" line="297"/>
         <source>Your changes will be lost when reloading it!</source>
         <translation>再読み込みすると変更が失われます!</translation>
     </message>
     <message>
-        <location filename="../SqlExecutionArea.cpp" line="301"/>
+        <location filename="../SqlExecutionArea.cpp" line="303"/>
         <source>The file &quot;%1&quot; was modified by another program. Do you want to reload it?%2</source>
         <translation>ファイル &quot;%1&quot; は他のプログラムによって変更されました。再読み込みしますか?%2</translation>
     </message>
@@ -6870,7 +7345,7 @@ Hold %3Shift and click to jump there</source>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="633"/>
-        <location filename="../TableBrowser.cpp" line="1025"/>
+        <location filename="../TableBrowser.cpp" line="1032"/>
         <source>Delete Record</source>
         <translation>レコードを削除</translation>
     </message>
@@ -6972,7 +7447,7 @@ Hold %3Shift and click to jump there</source>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="735"/>
-        <location filename="../TableBrowser.cpp" line="1384"/>
+        <location filename="../TableBrowser.cpp" line="1391"/>
         <source>Set encoding</source>
         <translation>エンコードの設定</translation>
     </message>
@@ -7218,115 +7693,115 @@ Hold %3Shift and click to jump there</source>
         <translation>Ctrl+R</translation>
     </message>
     <message numerus="yes">
-        <location filename="../TableBrowser.cpp" line="443"/>
+        <location filename="../TableBrowser.cpp" line="450"/>
         <source>%n row(s)</source>
         <translation>
             <numerusform>%n 行</numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../TableBrowser.cpp" line="445"/>
+        <location filename="../TableBrowser.cpp" line="452"/>
         <source>, %n column(s)</source>
         <translation>
             <numerusform>, %n カラム</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="458"/>
+        <location filename="../TableBrowser.cpp" line="465"/>
         <source>. Sum: %1; Average: %2; Min: %3; Max: %4</source>
         <translation>. 合計: %1; 平均: %2; 最低: %3; 最高: %4</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="678"/>
+        <location filename="../TableBrowser.cpp" line="685"/>
         <source>Conditional formats for &quot;%1&quot;</source>
         <translation>&quot;%1&quot; の条件付き書式</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="749"/>
+        <location filename="../TableBrowser.cpp" line="756"/>
         <source>determining row count...</source>
         <translation>行数を計算中...</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="752"/>
+        <location filename="../TableBrowser.cpp" line="759"/>
         <source>%1 - %2 of &gt;= %3</source>
         <translation>%1 - %2 of &gt;= %3</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="755"/>
+        <location filename="../TableBrowser.cpp" line="762"/>
         <source>%1 - %2 of %3</source>
         <translation>%1 - %2 of %3</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="901"/>
+        <location filename="../TableBrowser.cpp" line="908"/>
         <source>Please enter a pseudo-primary key in order to enable editing on this view. This should be the name of a unique column in the view.</source>
         <translation>このビューでの編集を有効にするため、疑似主キーを入力してください。ビューに一意なカラムの名前が必要です。</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1023"/>
+        <location filename="../TableBrowser.cpp" line="1030"/>
         <source>Delete Records</source>
         <translation>レコードを削除</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1170"/>
+        <location filename="../TableBrowser.cpp" line="1177"/>
         <source>Duplicate records</source>
         <translation>レコードを複製</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1170"/>
+        <location filename="../TableBrowser.cpp" line="1177"/>
         <source>Duplicate record</source>
         <translation>レコードを複製</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1174"/>
+        <location filename="../TableBrowser.cpp" line="1181"/>
         <source>Ctrl+&quot;</source>
         <translation>Ctrl+&quot;</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1193"/>
+        <location filename="../TableBrowser.cpp" line="1200"/>
         <source>Adjust rows to contents</source>
         <translation>行を内容に合わせ調整</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1248"/>
+        <location filename="../TableBrowser.cpp" line="1255"/>
         <source>Error deleting record:
 %1</source>
         <translation>レコードの削除でエラー:
 %1</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1257"/>
+        <location filename="../TableBrowser.cpp" line="1264"/>
         <source>Please select a record first</source>
         <translation>最初にレコードを選択してください</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1364"/>
+        <location filename="../TableBrowser.cpp" line="1371"/>
         <source>There is no filter set for this table. View will not be created.</source>
         <translation>このテーブルにフィルターの設定はありません。ビューは作成されません。</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1380"/>
+        <location filename="../TableBrowser.cpp" line="1387"/>
         <source>Please choose a new encoding for all tables.</source>
         <translation>すべてのテーブルの新しいエンコードを選択してください。</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1382"/>
+        <location filename="../TableBrowser.cpp" line="1389"/>
         <source>Please choose a new encoding for this table.</source>
         <translation>すべてのテーブルの新しいエンコードを選択してください。</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1385"/>
+        <location filename="../TableBrowser.cpp" line="1392"/>
         <source>%1
 Leave the field empty for using the database encoding.</source>
         <translation>%1
 データベースのエンコードを使うため、フィールドを空にします。</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1397"/>
+        <location filename="../TableBrowser.cpp" line="1404"/>
         <source>This encoding is either not valid or not supported.</source>
         <translation>このエンコードは不正かサポートされていません。</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1568"/>
+        <location filename="../TableBrowser.cpp" line="1575"/>
         <source>%1 replacement(s) made.</source>
         <translation>%1 つ置き換えました。</translation>
     </message>
