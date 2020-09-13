@@ -602,7 +602,7 @@ void Settings::importSettings(const QString fileName)
         foreach(QString currentKey, keys)
         {
             settings->beginGroup(currentGroup);
-            setting->setValue(currentKey, importSettings->value(currentKey));
+            settings->setValue(currentKey, importSettings->value(currentKey));
             settings->endGroup();
         }
         importSettings->endGroup();
