@@ -15,7 +15,7 @@ public:
         DarkStyle
     };
 
-    static void setUserPreferencesFile(const QString userPreferencesFileArg);
+    static void setUserSettingsFile(const QString userSettingsFileArg);
     static QVariant getValue(const std::string& group, const std::string& name);
     static void setValue(const std::string& group, const std::string& name, const QVariant& value, bool dont_save_to_disk = false);
     static void clearValue(const std::string& group, const std::string& name);
@@ -33,8 +33,8 @@ private:
     // instead of the current palette.
     static QColor getDefaultColorValue(const std::string& group, const std::string& name, AppStyle style);
 
-    // User configuration file path
-    static QString userPreferencesFile;
+    // User settings file path
+    static QString userSettingsFile;
 
     // QSettings object
     static QSettings* settings;

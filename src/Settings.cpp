@@ -10,7 +10,7 @@
 #include <QStandardPaths>
 #include <QPalette>
 
-QString Settings::userPreferencesFile;
+QString Settings::userSettingsFile;
 QSettings* Settings::settings;
 std::unordered_map<std::string, QVariant> Settings::m_hCache;
 int Settings::m_defaultFontSize;
@@ -20,9 +20,9 @@ static bool ends_with(const std::string& str, const std::string& with)
     return str.rfind(with) == str.size() - with.size();
 }
 
-void Settings::setUserPreferencesFile(const QString userPreferencesFileArg)
+void Settings::setUserSettingsFile(const QString userSettingsFileArg)
 {
-    userPreferencesFile = userPreferencesFileArg;
+    userSettingsFile = userSettingsFileArg;
 }
 
 void Settings::setSettingsObject()
@@ -32,47 +32,47 @@ void Settings::setSettingsObject()
         return;
 
     /*
-    Variable that stores whether or not the preferences file requested by the user is a normal preferences file
+    Variable that stores whether or not the settings file requested by the user is a normal settings file
     If the file does not exist and is newly created, the if statement below is not executed, so the default value is set to true
     */
-    bool isNormalUserPreferencesFile = true;
+    bool isNormalUserSettingsFile = true;
 
-    // Code that verifies that the preferences file requested by the user is a normal preferences file
-    if(userPreferencesFile != nullptr)
+    // Code that verifies that the settings file requested by the user is a normal settings file
+    if(userSettingsFile != nullptr)
     {
         QFile *file = new QFile;
-        file->setFileName(userPreferencesFile);
+        file->setFileName(userSettingsFile);
 
         if(file->open(QIODevice::ReadOnly))
         {
             if(file->exists() &&
               QString::compare(QString::fromStdString("[%General]\n"), file->readLine(), Qt::CaseInsensitive) != 0)
-                isNormalUserPreferencesFile = false;
+                isNormalUserSettingsFile = false;
         }
 
         file->close();
     }
 
-    if(userPreferencesFile == nullptr)
+    if(userSettingsFile == nullptr)
     {
         settings = new QSettings(QCoreApplication::organizationName(), QCoreApplication::organizationName());
     } else {
-        if(isNormalUserPreferencesFile)
+        if(isNormalUserSettingsFile)
         {
-            settings = new QSettings(userPreferencesFile, QSettings::IniFormat);
+            settings = new QSettings(userSettingsFile, QSettings::IniFormat);
 
-            // Code to verify that the user does not have access to the requested preferences file
+            // Code to verify that the user does not have access to the requested settings file
             if(settings->status() == QSettings::AccessError) {
-                qWarning() << qPrintable("The given preferences file can NOT access. Please check the permission for the file.");
-                qWarning() << qPrintable("So, the -p/--preferences option is ignored.");
+                qWarning() << qPrintable("The given settings file can NOT access. Please check the permission for the file.");
+                qWarning() << qPrintable("So, the -S/--settings option is ignored.");
 
                 // Since you do not have permission to the file, delete the existing assignment and assign the standard
                 delete settings;
                 settings = new QSettings(QCoreApplication::organizationName(), QCoreApplication::organizationName());
             }
         } else {
-            qWarning() << qPrintable("The given preferences file is not a normal preferences file. Please check again.");
-            qWarning() << qPrintable("So, the -p/--preferences option is ignored.");
+            qWarning() << qPrintable("The given settings file is not a normal settings file. Please check again.");
+            qWarning() << qPrintable("So, the -S/--settings option is ignored.");
             settings = new QSettings(QCoreApplication::organizationName(), QCoreApplication::organizationName());
         }
     }
