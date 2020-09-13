@@ -158,12 +158,12 @@
     <message>
         <location filename="../Application.cpp" line="121"/>
         <source>  -s, --sql &lt;file&gt;    Execute this SQL file after opening the DB</source>
-        <translation>  -s, --sql  [archivo]    Ejecuta este archivo de SQL tras abrir la base de datos</translation>
+        <translation>  -s, --sql &lt;archivo&gt; Ejecuta este archivo de SQL tras abrir la base de datos</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="122"/>
         <source>  -t, --table &lt;table&gt; Browse this table after opening the DB</source>
-        <translation>  -t, --table [tabla] Mostrar esta tabla en la hoja de datos tras abrir la base de datos</translation>
+        <translation>  -t, --table &lt;tabla&gt; Mostrar esta tabla en la hoja de datos tras abrir la base de datos</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="123"/>
@@ -208,7 +208,7 @@
     <message>
         <location filename="../Application.cpp" line="131"/>
         <source>  &lt;database&gt;          Open this SQLite database</source>
-        <translation>  &lt;base de datos&gt;       Abrir esta base de datos SQLite</translation>
+        <translation>  &lt;base de datos&gt;     Abrir esta base de datos SQLite</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="132"/>
