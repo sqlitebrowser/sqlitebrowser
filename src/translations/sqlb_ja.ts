@@ -4034,7 +4034,7 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
     <message>
         <location filename="../MainWindow.cpp" line="337"/>
         <source>Shift+Alt+0</source>
-        <translation>Shift+Alt+0</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="346"/>
@@ -6161,7 +6161,7 @@ DB Browser for SQLite 設定のリモートタブに行き、新しい証明書�
     <message>
         <location filename="../RemoteDock.ui" line="414"/>
         <source>F5</source>
-        <translation>F5</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="423"/>
