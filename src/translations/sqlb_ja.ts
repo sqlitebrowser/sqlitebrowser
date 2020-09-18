@@ -16,7 +16,7 @@
     <message>
         <location filename="../AboutDialog.ui" line="102"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Silk icon set by Mark James licensed under a Creative Commons Attribution 2.5 and 3.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite は SQLite データベースを作成、デザイン、編集できる、オープンソースで無料のヴィジュアルツールです。&lt;/p&gt;&lt;p&gt;このソフトウェアは Mozilla Public License Version 2　と the GNU General Public License Version 3 (もしくはそれ以降のもの) の2つでライセンスされています。あなたはこれらのライセンスの条件の下でこのソフトウェアを変更、もしくは、再配布できます。&lt;/p&gt;&lt;p&gt;詳細は &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; と &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; をご覧ください。&lt;/p&gt;&lt;p&gt;このプログラムのさらなる情報は、私たちのウェブサイトをご覧ください。: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;このソフトウェアは GPL/LGPL Qt Toolkit を使用しています。 &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;ライセンス条項や情報は &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; をご覧ください。&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;また、 Mark James の Silk icon set を Creative Commons Attribution 2.5 and 3.0 license の元で使用しています。&lt;br/&gt;詳細は &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; をご覧ください。&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite は SQLite データベースを作成、デザイン、編集できる、オープンソースで無料のヴィジュアルツールです。&lt;/p&gt;&lt;p&gt;このソフトウェアは Mozilla Public License Version 2&#x3000;と the GNU General Public License Version 3 (もしくはそれ以降のもの) の2つでライセンスされています。あなたはこれらのライセンスの条件の下でこのソフトウェアを変更、もしくは、再配布できます。&lt;/p&gt;&lt;p&gt;詳細は &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; と &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; をご覧ください。&lt;/p&gt;&lt;p&gt;このプログラムのさらなる情報は、私たちのウェブサイトをご覧ください。: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;このソフトウェアは GPL/LGPL Qt Toolkit を使用しています。 &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;ライセンス条項や情報は &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; をご覧ください。&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;また、 Mark James の Silk icon set を Creative Commons Attribution 2.5 and 3.0 license の元で使用しています。&lt;br/&gt;詳細は &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; をご覧ください。&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>SQLite Version </source>
@@ -205,67 +205,68 @@
         <location filename="../Application.cpp" line="93"/>
         <source>Usage: %1 [options] [&lt;database&gt;|&lt;project&gt;]
 </source>
-        <translation type="unfinished"></translation>
+        <translation>使い方: %1 [オプション] [&lt;DB&gt;|&lt;プロジェクト&gt;]
+</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="96"/>
         <source>  -h, --help          Show command line options</source>
-        <translation type="unfinished"></translation>
+        <translation>  -h, --help             コマンドラインのオプションを表示</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="97"/>
         <source>  -q, --quit          Exit application after running scripts</source>
-        <translation type="unfinished"></translation>
+        <translation>  -q, --quit             スクリプト実行後にアプリケーションを終了</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="98"/>
         <source>  -s, --sql &lt;file&gt;    Execute this SQL file after opening the DB</source>
-        <translation type="unfinished"></translation>
+        <translation>  -s, --sql &lt;ファイル&gt;   DBを開いた後、このSQLファイルを実行</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="99"/>
         <source>  -t, --table &lt;table&gt; Browse this table after opening the DB</source>
-        <translation type="unfinished"></translation>
+        <translation>  -t, --table &lt;テーブル&gt; DBを開いた後このテーブルを閲覧</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="100"/>
         <source>  -R, --read-only     Open database in read-only mode</source>
-        <translation type="unfinished"></translation>
+        <translation>  -R, --read-only        読み取り専用モードでデータベースを開く</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="101"/>
         <source>  -o, --option &lt;group&gt;/&lt;setting&gt;=&lt;value&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>  -o, --option &lt;グループ&gt;/&lt;設定&gt;=&lt;値&gt;</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="102"/>
         <source>                      Run application with this setting temporarily set to value</source>
-        <translation type="unfinished"></translation>
+        <translation>                         一時的にこの値を設定してアプリケーションを実行</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="103"/>
         <source>  -O, --save-option &lt;group&gt;/&lt;setting&gt;=&lt;value&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>  -O, --save-option &lt;グループ&gt;/&lt;設定&gt;=&lt;値&gt;</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="104"/>
         <source>                      Run application saving this value for this setting</source>
-        <translation type="unfinished"></translation>
+        <translation>                         この値の設定を保存してアプリケーションを実行</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="105"/>
         <source>  -v, --version       Display the current version</source>
-        <translation type="unfinished"></translation>
+        <translation>  -v, --version          現在のバージョンを表示</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="106"/>
         <source>  &lt;database&gt;          Open this SQLite database</source>
-        <translation type="unfinished"></translation>
+        <translation>  &lt;データベース&gt;         このSQLiteデータベースを開く</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="107"/>
         <source>  &lt;project&gt;           Open this project file (*.sqbpro)</source>
-        <translation type="unfinished"></translation>
+        <translation>  &lt;プロジェクト&gt;         このプロジェクトファイル(*.sqbpro)を開く</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="115"/>
@@ -290,27 +291,27 @@
     <message>
         <location filename="../Application.cpp" line="236"/>
         <source>SQLite Version </source>
-        <translation type="unfinished">SQLite バージョン </translation>
+        <translation>SQLite バージョン </translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="238"/>
         <source>SQLCipher Version %1 (based on SQLite %2)</source>
-        <translation type="unfinished">SQLCipher バージョン %1 (SQLite %2 がベース)</translation>
+        <translation>SQLCipher バージョン %1 (SQLite %2 がベース)</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="241"/>
         <source>DB Browser for SQLite Version %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>DB Browser for SQLite バージョン %1.</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="242"/>
         <source>Built for %1, running on %2</source>
-        <translation type="unfinished">%1 向けビルド, %2 で動作中</translation>
+        <translation>%1 向けビルド, %2 で動作中</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="243"/>
         <source>Qt Version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Qt バージョン %1</translation>
     </message>
     <message>
         <source>The -o/--option option requires an argument in the form group/setting=value</source>
@@ -478,7 +479,7 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="28"/>
         <source>.NET DateTime.Ticks to date</source>
-        <translation type="unfinished"></translation>
+        <translation>.NET DateTime.Ticks を日付に</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="29"/>
@@ -4009,7 +4010,7 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
     <message>
         <location filename="../MainWindow.cpp" line="327"/>
         <source>Window Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>ウィンドウレイアウト</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="330"/>
@@ -4028,27 +4029,27 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
     <message>
         <location filename="../MainWindow.cpp" line="336"/>
         <source>Simplify Window Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>ウィンドウレイアウトをシンプルに</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="337"/>
         <source>Shift+Alt+0</source>
-        <translation type="unfinished"></translation>
+        <translation>Shift+Alt+0</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="346"/>
         <source>Dock Windows at Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>ウィンドウを下にドッキング</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="350"/>
         <source>Dock Windows at Left Side</source>
-        <translation type="unfinished"></translation>
+        <translation>ウィンドウを左にドッキング</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="354"/>
         <source>Dock Windows at Top</source>
-        <translation type="unfinished"></translation>
+        <translation>ウィンドウを上にドッキング</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="380"/>
@@ -4128,12 +4129,12 @@ Reason: %1</source>
     <message>
         <location filename="../MainWindow.cpp" line="1587"/>
         <source>Opened &apos;%1&apos; in read-only mode from recent file list</source>
-        <translation type="unfinished"></translation>
+        <translation>最近使ったファイルリストから読み取り専用モードで &apos;%1&apos; を開きました</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1589"/>
         <source>Opened &apos;%1&apos; from recent file list</source>
-        <translation type="unfinished"></translation>
+        <translation>最近使ったファイルリストから &apos;%1&apos; を開きました</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2137"/>
@@ -5164,12 +5165,12 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     <message>
         <location filename="../PreferencesDialog.ui" line="555"/>
         <source>This sets the font size for all UI elements which do not have their own font size option.</source>
-        <translation type="unfinished"></translation>
+        <translation>これは独自のフォントサイズオプションを持たない全てのUI要素のフォントサイズを設定します。</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="558"/>
         <source>Font size</source>
-        <translation type="unfinished"></translation>
+        <translation>フォントサイズ</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="572"/>
@@ -5223,7 +5224,7 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     <message>
         <location filename="../PreferencesDialog.ui" line="680"/>
         <source>Database structure font size</source>
-        <translation type="unfinished"></translation>
+        <translation>データベース構造のフォントサイズ</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="726"/>
@@ -5943,37 +5944,37 @@ All your preferences will be lost and default values will be used.</source>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="13"/>
         <source>Commit ID</source>
-        <translation type="unfinished"></translation>
+        <translation>コミットID</translation>
     </message>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="13"/>
         <source>Message</source>
-        <translation type="unfinished"></translation>
+        <translation>メッセージ</translation>
     </message>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="13"/>
         <source>Date</source>
-        <translation type="unfinished">日付</translation>
+        <translation>日付</translation>
     </message>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="13"/>
         <source>Author</source>
-        <translation type="unfinished"></translation>
+        <translation>作者</translation>
     </message>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="13"/>
         <source>Size</source>
-        <translation type="unfinished">サイズ</translation>
+        <translation>サイズ</translation>
     </message>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="65"/>
         <source>Authored and committed by %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 が作成・コミットしました</translation>
     </message>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="67"/>
         <source>Authored by %1, committed by %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 が作成, %2 がコミットしました</translation>
     </message>
 </context>
 <context>
@@ -6069,7 +6070,7 @@ All your preferences will be lost and default values will be used.</source>
     <message>
         <location filename="../RemoteDock.ui" line="76"/>
         <source>DBHub.io</source>
-        <translation type="unfinished"></translation>
+        <translation>DBHub.io</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="109"/>
@@ -6080,142 +6081,142 @@ DB Browser for SQLite 設定のリモートタブに行き、新しい証明書�
     <message>
         <location filename="../RemoteDock.ui" line="117"/>
         <source>Local</source>
-        <translation type="unfinished"></translation>
+        <translation>ローカル</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="143"/>
         <source>Current Database</source>
-        <translation type="unfinished"></translation>
+        <translation>現在のデータベース</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="174"/>
         <source>Clone</source>
-        <translation type="unfinished"></translation>
+        <translation>クローン</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="183"/>
         <source>User</source>
-        <translation type="unfinished">ユーザー</translation>
+        <translation>ユーザー</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="200"/>
         <source>Database</source>
-        <translation type="unfinished">データベース</translation>
+        <translation>データベース</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="217"/>
         <source>Branch</source>
-        <translation type="unfinished">ブランチ</translation>
+        <translation>ブランチ</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="237"/>
         <source>Commits</source>
-        <translation type="unfinished"></translation>
+        <translation>コミット</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="257"/>
         <source>Commits for</source>
-        <translation type="unfinished"></translation>
+        <translation>これにコミット</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="372"/>
         <source>Delete Database</source>
-        <translation type="unfinished"></translation>
+        <translation>データベースを削除</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="375"/>
         <source>Delete the local clone of this database</source>
-        <translation type="unfinished"></translation>
+        <translation>このデータベースのローカルクローンを削除</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="384"/>
         <source>Open in Web Browser</source>
-        <translation type="unfinished"></translation>
+        <translation>ウェブブラウザーで開く</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="387"/>
         <source>Open the web page for the current database in your browser</source>
-        <translation type="unfinished"></translation>
+        <translation>ブラウザで現在のデータベースのウェブページを開く</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="396"/>
         <source>Clone from Link</source>
-        <translation type="unfinished"></translation>
+        <translation>リンクからクローン</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="399"/>
         <source>Use this to download a remote database for local editing using a URL as provided on the web page of the database.</source>
-        <translation type="unfinished"></translation>
+        <translation>データベースのウェブページで提供されるURLを使って、ローカル編集用のリモートデータベースをダウンロードするには、これを使います。</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="408"/>
         <source>Refresh</source>
-        <translation type="unfinished">更新</translation>
+        <translation>更新</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="411"/>
         <source>Reload all data and update the views</source>
-        <translation type="unfinished"></translation>
+        <translation>全てのデータを再読み込みしビューを更新する</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="414"/>
         <source>F5</source>
-        <translation type="unfinished"></translation>
+        <translation>F5</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="423"/>
         <source>Clone Database</source>
-        <translation type="unfinished"></translation>
+        <translation>データベースをクローン</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="438"/>
         <source>Open Database</source>
-        <translation type="unfinished"></translation>
+        <translation>データベースを開く</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="441"/>
         <source>Open the local copy of this database</source>
-        <translation type="unfinished"></translation>
+        <translation>このデータベースのローカルコピーを開く</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="452"/>
         <source>Check out Commit</source>
-        <translation type="unfinished"></translation>
+        <translation>コミットをチェックアウト</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="455"/>
         <source>Download and open this specific commit</source>
-        <translation type="unfinished"></translation>
+        <translation>この特定のコミットをダウンロードし開く</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="470"/>
         <source>Check out Latest Commit</source>
-        <translation type="unfinished"></translation>
+        <translation>最新のコミットをチェックアウト</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="473"/>
         <source>Check out the latest commit of the current branch</source>
-        <translation type="unfinished"></translation>
+        <translation>現在のブランチの最新のコミットをチェックアウト</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="478"/>
         <source>Save Revision to File</source>
-        <translation type="unfinished"></translation>
+        <translation>リヴィジョンをファイルに保存</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="481"/>
         <source>Saves the selected revision of the database to another file</source>
-        <translation type="unfinished"></translation>
+        <translation>データベースの選択したリヴィジョンをほかのファイルに保存</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="490"/>
         <source>Upload Database</source>
-        <translation type="unfinished"></translation>
+        <translation>データベースをアップロード</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="493"/>
         <source>Upload this database as a new commit</source>
-        <translation type="unfinished"></translation>
+        <translation>このデータベースを新しいコミットとしてアップロード</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB4S. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to create a DB4S certificate (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB4S Preferences. Click the button to add a new certificate to DB4S and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -6235,7 +6236,7 @@ DB4S設定のリモートタブに行き、新しい証明書をDB4Sに追加す
     <message>
         <location filename="../RemoteDock.cpp" line="151"/>
         <source>Select an identity to connect</source>
-        <translation type="unfinished"></translation>
+        <translation>接続するアイデンティティーを選択</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="163"/>
@@ -6248,43 +6249,47 @@ DB4S設定のリモートタブに行き、新しい証明書をDB4Sに追加す
 Please enter the URL to clone from. You can generate this URL by
 clicking the &apos;Clone Database in DB4S&apos; button on the web page
 of the database.</source>
-        <translation type="unfinished"></translation>
+        <translation>これはローカル編集用にリモートサーバーからデータベースをダウンロードします。
+クローン元のURLを入力してください。このURLはデータベースの
+ウェブページにある &apos;Clone Database in DB4S&apos; ボタンを
+クリックして生成できます。</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="231"/>
         <source>Invalid URL: The host name does not match the host name of the current identity.</source>
-        <translation type="unfinished"></translation>
+        <translation>不正なURL: ホスト名が現在のアイデンティティーのホスト名と一致しません。</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="236"/>
         <source>Invalid URL: No branch name specified.</source>
-        <translation type="unfinished"></translation>
+        <translation>不正なURL: ブランチ名が指定されていません。</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="241"/>
         <source>Invalid URL: No commit ID specified.</source>
-        <translation type="unfinished"></translation>
+        <translation>不正なURL: コミットIDが指定されていません。</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="289"/>
         <source>You have modified the local clone of the database. Fetching this commit overrides these local changes.
 Are you sure you want to proceed?</source>
-        <translation type="unfinished"></translation>
+        <translation>データベースのローカルクローンが編集されています。このコミットをフェッチするとローカルの変更が無視されます。
+本当に実行しますか?</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="333"/>
         <source>The database has unsaved changes. Are you sure you want to push it before saving?</source>
-        <translation type="unfinished"></translation>
+        <translation>データベースに保存されていない変更があります。本当に保存前にプッシュしますか?</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="543"/>
         <source>The database you are trying to delete is currently opened. Please close it before deleting.</source>
-        <translation type="unfinished"></translation>
+        <translation>削除しようとしたデータベースは現在開かれています。削除前に閉じてください。</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="549"/>
         <source>This deletes the local version of this database with all the changes you have not committed yet. Are you sure you want to delete this database?</source>
-        <translation type="unfinished"></translation>
+        <translation>これはこのデータベースのローカルバージョンをまだコミットしていない変更と共に削除します。本当にこのデータベースを削除しますか?</translation>
     </message>
 </context>
 <context>
@@ -6292,32 +6297,32 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>Name</source>
-        <translation type="unfinished">名前</translation>
+        <translation>名前</translation>
     </message>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>Branch</source>
-        <translation type="unfinished">ブランチ</translation>
+        <translation>ブランチ</translation>
     </message>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>Last modified</source>
-        <translation type="unfinished">最終変更</translation>
+        <translation>最終変更</translation>
     </message>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>Size</source>
-        <translation type="unfinished">サイズ</translation>
+        <translation>サイズ</translation>
     </message>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>Commit</source>
-        <translation type="unfinished">コミット</translation>
+        <translation>コミット</translation>
     </message>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>File</source>
-        <translation type="unfinished">ファイル</translation>
+        <translation>ファイル</translation>
     </message>
 </context>
 <context>
@@ -6345,22 +6350,22 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../RemoteModel.cpp" line="231"/>
         <source>Size: </source>
-        <translation type="unfinished"></translation>
+        <translation>サイズ: </translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="232"/>
         <source>Last Modified: </source>
-        <translation type="unfinished"></translation>
+        <translation>最終変更: </translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="233"/>
         <source>Licence: </source>
-        <translation type="unfinished"></translation>
+        <translation>ライセンス: </translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="234"/>
         <source>Default Branch: </source>
-        <translation type="unfinished"></translation>
+        <translation>デフォルトブランチ: </translation>
     </message>
     <message>
         <source>bytes</source>
@@ -6372,54 +6377,54 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../RemoteNetwork.cpp" line="218"/>
         <source>Choose a location to save the file</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを保存する場所を選択</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="250"/>
         <source>Error opening remote file at %1.
 %2</source>
-        <translation type="unfinished">%1 のリモートファイルを開くときにエラー.
+        <translation>%1 のリモートファイルを開くときにエラー.
 %2</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="329"/>
         <source>Error: Invalid client certificate specified.</source>
-        <translation type="unfinished">エラー: 不正なクライアント証明書が指定されました。</translation>
+        <translation>エラー: 不正なクライアント証明書が指定されました。</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="341"/>
         <source>Please enter the passphrase for this client certificate in order to authenticate.</source>
-        <translation type="unfinished">このクライアント証明書を確認するためパスフレーズを入力してください。</translation>
+        <translation>このクライアント証明書を確認するためパスフレーズを入力してください。</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="365"/>
         <source>Cancel</source>
-        <translation type="unfinished">キャンセル</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="370"/>
         <source>Uploading remote database to
 %1</source>
-        <translation type="unfinished">リモートデータベースをここにアップロード中
+        <translation>リモートデータベースをここにアップロード中
 %1</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="372"/>
         <source>Downloading remote database from
 %1</source>
-        <translation type="unfinished">リモートデータベースをここからダウンロード中
+        <translation>リモートデータベースをここからダウンロード中
 %1</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="390"/>
         <location filename="../RemoteNetwork.cpp" line="456"/>
         <source>Error: The network is not accessible.</source>
-        <translation type="unfinished">エラー: ネットワークにアクセスできません。</translation>
+        <translation>エラー: ネットワークにアクセスできません。</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="465"/>
         <source>Error: Cannot open the file for sending.</source>
-        <translation type="unfinished">エラー: 送信するファイルを開けません。</translation>
+        <translation>エラー: 送信するファイルを開けません。</translation>
     </message>
 </context>
 <context>
@@ -6474,7 +6479,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../RemotePushDialog.ui" line="129"/>
         <source>Username</source>
-        <translation type="unfinished"></translation>
+        <translation>ユーザー名</translation>
     </message>
     <message>
         <location filename="../RemotePushDialog.cpp" line="72"/>
