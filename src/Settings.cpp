@@ -10,7 +10,7 @@
 #include <QStandardPaths>
 #include <QPalette>
 
-QString Settings::userPreferencesFile;
+QString Settings::userSettingsFile;
 QSettings* Settings::settings;
 std::unordered_map<std::string, QVariant> Settings::m_hCache;
 int Settings::m_defaultFontSize;
@@ -20,9 +20,37 @@ static bool ends_with(const std::string& str, const std::string& with)
     return str.rfind(with) == str.size() - with.size();
 }
 
-void Settings::setUserPreferencesFile(const QString userPreferencesFileArg)
+void Settings::setUserSettingsFile(const QString userSettingsFileArg)
 {
-    userPreferencesFile = userPreferencesFileArg;
+    userSettingsFile = userSettingsFileArg;
+}
+
+bool Settings::isVaildSettingsFile(const QString userSettingsFile)
+{
+    /*
+    Variable that stores whether or not the settings file requested by the user is a normal settings file
+    If the file does not exist and is newly created, the if statement below is not executed, so the default value is set to true
+    */
+
+    bool isNormalUserSettingsFile = true;
+
+    // Code that verifies that the settings file requested by the user is a normal settings file
+    if(userSettingsFile != nullptr)
+    {
+        QFile *file = new QFile;
+        file->setFileName(userSettingsFile);
+
+        if(file->open(QIODevice::ReadOnly))
+        {
+            if(file->exists() &&
+              QString::compare(QString::fromStdString("[%General]\n"), file->readLine(), Qt::CaseInsensitive) != 0)
+                isNormalUserSettingsFile = false;
+        }
+
+        file->close();
+    }
+
+    return isNormalUserSettingsFile;
 }
 
 void Settings::setSettingsObject()
@@ -31,48 +59,28 @@ void Settings::setSettingsObject()
     if(settings)
         return;
 
-    /*
-    Variable that stores whether or not the preferences file requested by the user is a normal preferences file
-    If the file does not exist and is newly created, the if statement below is not executed, so the default value is set to true
-    */
-    bool isNormalUserPreferencesFile = true;
+    const bool isNormalUserSettingsFile = isVaildSettingsFile(userSettingsFile);
 
-    // Code that verifies that the preferences file requested by the user is a normal preferences file
-    if(userPreferencesFile != nullptr)
-    {
-        QFile *file = new QFile;
-        file->setFileName(userPreferencesFile);
-
-        if(file->open(QIODevice::ReadOnly))
-        {
-            if(file->exists() &&
-              QString::compare(QString::fromStdString("[%General]\n"), file->readLine(), Qt::CaseInsensitive) != 0)
-                isNormalUserPreferencesFile = false;
-        }
-
-        file->close();
-    }
-
-    if(userPreferencesFile == nullptr)
+    if(userSettingsFile == nullptr)
     {
         settings = new QSettings(QCoreApplication::organizationName(), QCoreApplication::organizationName());
     } else {
-        if(isNormalUserPreferencesFile)
+        if(isNormalUserSettingsFile)
         {
-            settings = new QSettings(userPreferencesFile, QSettings::IniFormat);
+            settings = new QSettings(userSettingsFile, QSettings::IniFormat);
 
-            // Code to verify that the user does not have access to the requested preferences file
+            // Code to verify that the user does not have access to the requested settings file
             if(settings->status() == QSettings::AccessError) {
-                qWarning() << qPrintable("The given preferences file can NOT access. Please check the permission for the file.");
-                qWarning() << qPrintable("So, the -p/--preferences option is ignored.");
+                qWarning() << qPrintable("The given settings file can NOT access. Please check the permission for the file.");
+                qWarning() << qPrintable("So, the -S/--settings option is ignored.");
 
                 // Since you do not have permission to the file, delete the existing assignment and assign the standard
                 delete settings;
                 settings = new QSettings(QCoreApplication::organizationName(), QCoreApplication::organizationName());
             }
         } else {
-            qWarning() << qPrintable("The given preferences file is not a normal preferences file. Please check again.");
-            qWarning() << qPrintable("So, the -p/--preferences option is ignored.");
+            qWarning() << qPrintable("The given settings file is not a normal settings file. Please check again.");
+            qWarning() << qPrintable("So, the -S/--settings option is ignored.");
             settings = new QSettings(QCoreApplication::organizationName(), QCoreApplication::organizationName());
         }
     }
@@ -568,4 +576,47 @@ void Settings::restoreDefaults ()
     setSettingsObject();
     settings->clear();
     m_hCache.clear();
+}
+
+void Settings::exportSettings(const QString fileName)
+{
+    QSettings* exportSettings = new QSettings(fileName, QSettings::IniFormat);
+
+    const QStringList groups = settings->childGroups();
+    foreach(QString currentGroup, groups)
+    {
+        settings->beginGroup(currentGroup);
+        const QStringList keys = settings->childKeys();
+        foreach(QString currentKey, keys)
+        {
+            exportSettings->beginGroup(currentGroup);
+            exportSettings->setValue(currentKey, getValue((currentGroup.toStdString()), (currentKey.toStdString())));
+            exportSettings->endGroup();
+        }
+        settings->endGroup();
+    }
+}
+
+bool Settings::importSettings(const QString fileName)
+{
+    if(!isVaildSettingsFile(fileName))
+        return false;
+
+    QSettings* importSettings = new QSettings(fileName, QSettings::IniFormat);
+
+    const QStringList groups = importSettings->childGroups();
+    for(const QString currentGroup : groups)
+    {
+        importSettings->beginGroup(currentGroup);
+        const QStringList keys = importSettings->childKeys();
+        for(const QString currentKey : keys)
+        {
+            settings->beginGroup(currentGroup);
+            settings->setValue(currentKey, importSettings->value(currentKey));
+            settings->endGroup();
+        }
+        importSettings->endGroup();
+    }
+
+    return true;
 }

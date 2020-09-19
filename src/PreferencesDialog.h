@@ -63,6 +63,8 @@ private:
     void setColorSetting(QFrame* frame, const QColor &color);
     void saveColorSetting(QFrame* frame, const std::string& name);
     void addClientCertToTable(const QString& path, const QSslCertificate& cert);
+    void exportSettings();
+    void importSettings();
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;

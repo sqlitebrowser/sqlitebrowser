@@ -49,6 +49,12 @@ PreferencesDialog::PreferencesDialog(QWidget* parent, Tabs tab)
 
     // Set current tab
     ui->tabWidget->setCurrentIndex(tab);
+
+    // Add 'Export Settings' and 'Import Settings' buttons
+    const QPushButton* exportSettings = ui->buttonBox->addButton(tr("Export Settings"), QDialogButtonBox::ActionRole);
+    connect(exportSettings, &QPushButton::clicked, this, &PreferencesDialog::exportSettings);
+    const QPushButton* importSettings = ui->buttonBox->addButton(tr("Import Settings"), QDialogButtonBox::ActionRole);
+    connect(importSettings, &QPushButton::clicked, this, &PreferencesDialog::importSettings);
 }
 
 /*
@@ -691,4 +697,28 @@ void PreferencesDialog::on_buttonBox_clicked(QAbstractButton* button)
 void PreferencesDialog::configureProxy()
 {
     m_proxyDialog->show();
+}
+
+void PreferencesDialog::exportSettings()
+{
+    const QString fileName = FileDialog::getSaveFileName(CreateSettingsFile, this, tr("Save Settings File"), tr("Initialization File (*.ini)"));
+    if(!fileName.isEmpty())
+    {
+        Settings::exportSettings(fileName);
+        QMessageBox::information(this, QApplication::applicationName(), (tr("The settings file has been saved in location :\n") + fileName));
+    }
+}
+
+void PreferencesDialog::importSettings()
+{
+    const QString fileName = FileDialog::getOpenFileName(OpenSettingsFile, this, tr("Open Settings File"), tr("Initialization File (*.ini)"));
+    if(!fileName.isEmpty())
+    {
+        if(Settings::importSettings(fileName))
+            QMessageBox::warning(this, QApplication::applicationName(), tr("Rerun the program to apply the settings."));
+        else
+            QMessageBox::critical(this, QApplication::applicationName(), tr("The selected settings file is not a normal settings file.\nPlease check again."));
+
+        PreferencesDialog::close();
+    }
 }
