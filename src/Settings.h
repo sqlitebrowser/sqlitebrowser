@@ -42,7 +42,7 @@ private:
     static QSettings* settings;
 
     // This works verify that the settings file provided by the user is a normal settings file
-    static bool verifyUserSettingsFile(const QString userSettingsFile);
+    static bool isVaildSettingsFile(const QString userSettingsFile);
 
     // This works initialize QSettings object
     static void setSettingsObject();

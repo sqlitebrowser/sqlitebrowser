@@ -25,7 +25,7 @@ void Settings::setUserSettingsFile(const QString userSettingsFileArg)
     userSettingsFile = userSettingsFileArg;
 }
 
-bool Settings::verifyUserSettingsFile(const QString userSettingsFile)
+bool Settings::isVaildSettingsFile(const QString userSettingsFile)
 {
     /*
     Variable that stores whether or not the settings file requested by the user is a normal settings file
@@ -59,7 +59,7 @@ void Settings::setSettingsObject()
     if(settings)
         return;
 
-    const bool isNormalUserSettingsFile = verifyUserSettingsFile(userSettingsFile);
+    const bool isNormalUserSettingsFile = isVaildSettingsFile(userSettingsFile);
 
     if(userSettingsFile == nullptr)
     {
@@ -599,17 +599,17 @@ void Settings::exportSettings(const QString fileName)
 
 bool Settings::importSettings(const QString fileName)
 {
-    if(!verifyUserSettingsFile(fileName))
+    if(!isVaildSettingsFile(fileName))
         return false;
 
     QSettings* importSettings = new QSettings(fileName, QSettings::IniFormat);
 
     const QStringList groups = importSettings->childGroups();
-    foreach(QString currentGroup, groups)
+    for(const QString currentGroup : groups)
     {
         importSettings->beginGroup(currentGroup);
         const QStringList keys = importSettings->childKeys();
-        foreach(QString currentKey, keys)
+        for(const QString currentKey : keys)
         {
             settings->beginGroup(currentGroup);
             settings->setValue(currentKey, importSettings->value(currentKey));
