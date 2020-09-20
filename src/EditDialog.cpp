@@ -1202,24 +1202,31 @@ void EditDialog::openDataWithExternal()
     case Null:
         return;
     }
-    QTemporaryFile file (QDir::tempPath() + QString("/DB4S-XXXXXX") + extension);
+    QTemporaryFile* file = new QTemporaryFile (QDir::tempPath() + QString("/DB4S-XXXXXX") + extension);
 
-    if(file.open())
-    {
+    if(!file->open()) {
+        QMessageBox::warning(this, qApp->applicationName(),
+                             tr("Couldn't save file: %1.").arg(file->fileName()));
+        delete file;
+    } else {
         switch (dataSource) {
         case HexBuffer:
-            file.write(hexEdit->data());
+            file->write(hexEdit->data());
             break;
         case SciBuffer:
-            file.write(sciEdit->text().toUtf8());
+            file->write(sciEdit->text().toUtf8());
             break;
         case QtBuffer:
-            file.write(ui->qtEdit->toPlainText().toUtf8());
+            file->write(ui->qtEdit->toPlainText().toUtf8());
             break;
         }
-        file.close();
-
-        emit requestUrlOrFileOpen(file.fileName());
+        // We don't want the file to be automatically removed by Qt when destroyed.
+        file->setAutoRemove(false);
+        // But we don't want Qt to keep the file open (and locked in Windows),
+        // and the only way is to destroy the object.
+        QString fileName = file->fileName();
+        delete file;
+        emit requestUrlOrFileOpen(fileName);
 
         QMessageBox::StandardButton reply = QMessageBox::information
             (nullptr,
@@ -1228,11 +1235,12 @@ void EditDialog::openDataWithExternal()
                 "You can now edit the file and, when you are ready, apply the saved new data to the cell editor or cancel any changes."),
              QMessageBox::Apply | QMessageBox::Cancel);
 
-        QFile readFile(file.fileName());
+        QFile readFile(fileName);
         if(reply == QMessageBox::Apply && readFile.open(QIODevice::ReadOnly)){
             QByteArray d = readFile.readAll();
             loadData(d);
             readFile.close();
         }
+        readFile.remove();
     }
 }
