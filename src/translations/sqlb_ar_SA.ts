@@ -3514,7 +3514,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1497"/>
         <source>Ctrl+Return</source>
-        <translation>Ctrl+Enter</translation>
+        <translation>Ctrl+Return</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="276"/>
