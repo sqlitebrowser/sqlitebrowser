@@ -215,7 +215,7 @@ void PreferencesDialog::loadSettings()
     ui->spinMaxRecentFiles->setValue(Settings::getValue("General", "maxRecentFiles").toInt());
 }
 
-void PreferencesDialog::saveSettings()
+void PreferencesDialog::saveSettings(bool accept)
 {
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
@@ -348,7 +348,8 @@ void PreferencesDialog::saveSettings()
 
     m_proxyDialog->saveSettings();
 
-    accept();
+    if(accept)
+        PreferencesDialog::accept();
 
     QApplication::restoreOverrideCursor();
 }
@@ -701,6 +702,8 @@ void PreferencesDialog::configureProxy()
 
 void PreferencesDialog::exportSettings()
 {
+    saveSettings(false);
+
     const QString fileName = FileDialog::getSaveFileName(CreateSettingsFile, this, tr("Save Settings File"), tr("Initialization File (*.ini)"));
     if(!fileName.isEmpty())
     {
@@ -712,13 +715,20 @@ void PreferencesDialog::exportSettings()
 void PreferencesDialog::importSettings()
 {
     const QString fileName = FileDialog::getOpenFileName(OpenSettingsFile, this, tr("Open Settings File"), tr("Initialization File (*.ini)"));
+    const QVariant existingLanguage = Settings::getValue("General", "language");
+
     if(!fileName.isEmpty())
     {
         if(Settings::importSettings(fileName))
-            QMessageBox::warning(this, QApplication::applicationName(), tr("Rerun the program to apply the settings."));
-        else
-            QMessageBox::critical(this, QApplication::applicationName(), tr("The selected settings file is not a normal settings file.\nPlease check again."));
+        {
+            QMessageBox::information(this, QApplication::applicationName(), tr("The settings file was loaded properly."));
+            if (existingLanguage != Settings::getValue("General", "language"))
+                QMessageBox::information(this, QApplication::applicationName(),
+                                         tr("The language will change after you restart the application."));
 
-        PreferencesDialog::close();
+            accept();
+        } else {
+            QMessageBox::critical(this, QApplication::applicationName(), tr("The selected settings file is not a normal settings file.\nPlease check again."));
+        }
     }
 }

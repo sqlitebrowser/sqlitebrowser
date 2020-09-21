@@ -618,5 +618,6 @@ bool Settings::importSettings(const QString fileName)
         importSettings->endGroup();
     }
 
+    m_hCache.clear();
     return true;
 }

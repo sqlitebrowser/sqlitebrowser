@@ -34,7 +34,7 @@ public:
 
 private slots:
     void loadSettings();
-    void saveSettings();
+    void saveSettings(bool accept=true);
 
     void chooseLocation();
     void showColourDialog(QTreeWidgetItem* item, int column);

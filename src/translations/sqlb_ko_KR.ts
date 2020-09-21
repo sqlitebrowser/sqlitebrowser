@@ -132,16 +132,6 @@
 </translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="36"/>
-        <source>The user preferences file location is replaced with the argument value instead of the environment variable value.</source>
-        <translation>사용자 기본 설정 파일 위치는 환경 변수 값 대신 인자 값으로 대체됩니다.</translation>
-    </message>
-    <message>
-        <location filename="../Application.cpp" line="37"/>
-        <source>Ignored environment variable(DB4S_PREFERENCES_FILE) value : </source>
-        <translation>환경변수(DB4S_PREFERENCES_FILE)이 무시됩니다 : </translation>
-    </message>
-    <message>
         <location filename="../Application.cpp" line="119"/>
         <source>  -h, --help          Show command line options</source>
         <translation>  -h, --help          명령줄 옵션을 보여줍니다</translation>
@@ -167,14 +157,24 @@
         <translation>  -R, --read-only     데이터베이스를 읽기 전용 모드로 열기합니다</translation>
     </message>
     <message>
+        <location filename="../Application.cpp" line="36"/>
+        <source>The user settings file location is replaced with the argument value instead of the environment variable value.</source>
+        <translation>사용자 환경설정 파일 위치는 환경 변수 값 대신 인자 값으로 대체됩니다.</translation>
+    </message>
+    <message>
+        <location filename="../Application.cpp" line="37"/>
+        <source>Ignored environment variable(DB4S_SETTINGS_FILE) value : </source>
+        <translation>무시되는 환경변수(DB4S_SETTINGS_FILE) 값 : </translation>
+    </message>
+    <message>
         <location filename="../Application.cpp" line="124"/>
-        <source>  -p, --preferences &lt;preferences_file&gt;</source>
-        <translation>  -p, --preferences &lt;기본_설정_파일&gt;</translation>
+        <source>  -S, --settings &lt;settings_file&gt;</source>
+        <translation>  -S, --settings &lt;환경설정_파일&gt;</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="125"/>
-        <source>                      Run application based on this preferences file</source>
-        <translation>                      이 기본 설정 파일을 기반으로 애플리케이션 실행</translation>
+        <source>                      Run application based on this settings file</source>
+        <translation>                      이 환경설정 파일을 바탕으로 프로그램을 실행합니다</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="126"/>
@@ -228,8 +228,8 @@
     </message>
     <message>
         <location filename="../Application.cpp" line="158"/>
-        <source>The -p/--preferences option requires an argument. The option is ignored.</source>
-        <translation>-p/--preferences 옵션은 인자 값이 필요합니다. 따라서 이 옵션은 무시됩니다.</translation>
+        <source>The -S/--settings option requires an argument. The option is ignored.</source>
+        <translation>-S/--settings 옵션은 인자 값이 필요합니다. 따라서 이 옵션은 무시됩니다.</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="161"/>
@@ -1201,7 +1201,12 @@ Errors are indicated with a red squiggle underline.</source>
         <translation>현재 데이터 타입: 유효한 JSON</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="1227"/>
+        <location filename="../EditDialog.cpp" line="1209"/>
+        <source>Couldn&apos;t save file: %1.</source>
+        <translation>파일을 저장할 수 없습니다: %1.</translation>
+    </message>
+    <message>
+        <location filename="../EditDialog.cpp" line="1234"/>
         <source>The data has been saved to a temporary file and has been opened with the default application. You can now edit the file and, when you are ready, apply the saved new data to the cell editor or cancel any changes.</source>
         <translation>현재 데이터는 임시 파일에 저장되었으며 기본 프로그램으로 열립니다. 이제 파일을 편집하고 준비되면 저장된 새 데이터를 셀 편집기에 적용하거나 변경 사항을 취소할 수 있습니다.</translation>
     </message>
@@ -5152,47 +5157,93 @@ Can be set to 0 for disabling completion.</source>
         <translation>정규 표현식 확장기능 비활성화</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="67"/>
-        <location filename="../PreferencesDialog.cpp" line="646"/>
+        <location filename="../PreferencesDialog.cpp" line="54"/>
+        <source>Export Settings</source>
+        <translation>환경설정 내보내기</translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.cpp" line="56"/>
+        <source>Import Settings</source>
+        <translation>환경설정 불러오기</translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.cpp" line="73"/>
+        <location filename="../PreferencesDialog.cpp" line="653"/>
         <source>Choose a directory</source>
         <translation>디렉터리를 선택하세요</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="330"/>
+        <location filename="../PreferencesDialog.cpp" line="336"/>
+        <location filename="../PreferencesDialog.cpp" line="727"/>
         <source>The language will change after you restart the application.</source>
         <translation>언어 변경은 애플리케이션을 재시작해야 반영됩니다.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="407"/>
+        <location filename="../PreferencesDialog.cpp" line="414"/>
         <source>Select extension file</source>
         <translation>확장기능 파일을 선택하세요</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="408"/>
+        <location filename="../PreferencesDialog.cpp" line="415"/>
         <source>Extensions(*.so *.dylib *.dll);;All files(*)</source>
         <translation>확장기능(*.so *.dylib *dll);;모든 파일(*)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="572"/>
+        <location filename="../PreferencesDialog.cpp" line="579"/>
         <source>Import certificate file</source>
         <translation>인증서 파일 가져오기</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="580"/>
+        <location filename="../PreferencesDialog.cpp" line="587"/>
         <source>No certificates found in this file.</source>
         <translation>이 파일에는 인증서가 없습니다.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="597"/>
+        <location filename="../PreferencesDialog.cpp" line="604"/>
         <source>Are you sure you want do remove this certificate? All certificate data will be deleted from the application settings!</source>
         <translation>정말로 이 인증서를 삭제하겠습니까? 애플리케이션 설정에서 모든 증명 데이터가 삭제될 것입니다!</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="682"/>
+        <location filename="../PreferencesDialog.cpp" line="689"/>
         <source>Are you sure you want to clear all the saved settings?
 All your preferences will be lost and default values will be used.</source>
         <translation>저장된 모든 설정을 정말로 초기화하시겠습니까?
 모든 설정이 초기화되고 기본값으로 대체됩니다.</translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.cpp" line="707"/>
+        <source>Save Settings File</source>
+        <translation>환경설정을 내보낼 파일을 선택하세요</translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.cpp" line="707"/>
+        <location filename="../PreferencesDialog.cpp" line="717"/>
+        <source>Initialization File (*.ini)</source>
+        <translation>환경설정 파일 (*.ini)</translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.cpp" line="711"/>
+        <source>The settings file has been saved in location :
+</source>
+        <translation>환경설정 파일이 다음 경로에 저장되었습니다 :
+</translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.cpp" line="717"/>
+        <source>Open Settings File</source>
+        <translation>가져오려는 환경설정 파일을 선택하세요</translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.cpp" line="724"/>
+        <source>The settings file was loaded properly.</source>
+        <translation>환경설정 파일을 정상적으로 불러 왔습니다.</translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.cpp" line="731"/>
+        <source>The selected settings file is not a normal settings file.
+Please check again.</source>
+        <translation>선택하신 환경설정 파일은 정상적인 환경설정 파일이 아닙니다.
+다시 확인해주세요.</translation>
     </message>
 </context>
 <context>
@@ -5288,7 +5339,7 @@ All your preferences will be lost and default values will be used.</source>
         <translation>모든 파일(*)</translation>
     </message>
     <message>
-        <location filename="../Settings.cpp" line="257"/>
+        <location filename="../Settings.cpp" line="265"/>
         <source>SQLite database files (*.db *.sqlite *.sqlite3 *.db3)</source>
         <translation>SQLite 데이터베이스 파일(*.db *.sqlite *.sqlite3 *.db3)</translation>
     </message>
@@ -5386,6 +5437,11 @@ All your preferences will be lost and default values will be used.</source>
         <location filename="../FileDialog.h" line="57"/>
         <source>Extensions (*.so *.dylib *.dll)</source>
         <translation>확장기능 (*.so *.dylib *.dll)</translation>
+    </message>
+    <message>
+        <location filename="../FileDialog.h" line="60"/>
+        <source>Initialization File (*.ini)</source>
+        <translation>환경설정 파일 (*.ini)</translation>
     </message>
 </context>
 <context>
