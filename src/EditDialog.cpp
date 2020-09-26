@@ -1232,7 +1232,7 @@ void EditDialog::openDataWithExternal()
             (nullptr,
              QApplication::applicationName(),
              tr("The data has been saved to a temporary file and has been opened with the default application. "
-                "You can now edit the file and, when you are ready, apply the saved new data to the cell editor or cancel any changes."),
+                "You can now edit the file and, when you are ready, apply the saved new data to the cell or cancel any changes."),
              QMessageBox::Apply | QMessageBox::Cancel);
 
         QFile readFile(fileName);
@@ -1240,6 +1240,7 @@ void EditDialog::openDataWithExternal()
             QByteArray d = readFile.readAll();
             loadData(d);
             readFile.close();
+            accept();
         }
         readFile.remove();
     }
