@@ -72,7 +72,7 @@ after_success:
 notifications:
   email:
    recipients:
-   - mkleusberg@gmail.com
+   - github@mkleusberg.de
    - innermous@gmail.com
    - justin@postgresql.org
    - mgrojo@gmail.com
