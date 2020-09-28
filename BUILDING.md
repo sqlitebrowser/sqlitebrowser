@@ -51,7 +51,7 @@ The same process works for building the code in any platform supported by Qt
 (including other Unix systems with X11.)
 
 
-### Ubuntu Linux
+### Ubuntu / Debian Linux
 
 ```bash
 $ sudo apt install build-essential git-core cmake libsqlite3-dev qt5-default qttools5-dev-tools \
@@ -64,6 +64,8 @@ $ cmake -Dsqlcipher=1 -Wno-dev ..
 $ make
 $ sudo make install
 ```
+
+**Note** - Use `cmake -DFORCE_INTERNAL_QSCINTILLA=ON -Dsqlcipher=1 -Wno-dev ..` if you're using Debian and meet errors during compiling.
 
 This should complete without errors, giving you a binary file called 'sqlitebrowser'.
 
