@@ -50,11 +50,9 @@ PreferencesDialog::PreferencesDialog(QWidget* parent, Tabs tab)
     // Set current tab
     ui->tabWidget->setCurrentIndex(tab);
 
-    // Add 'Export Settings' and 'Import Settings' buttons
-    const QPushButton* exportSettings = ui->buttonBox->addButton(tr("Export Settings"), QDialogButtonBox::ActionRole);
-    connect(exportSettings, &QPushButton::clicked, this, &PreferencesDialog::exportSettings);
-    const QPushButton* importSettings = ui->buttonBox->addButton(tr("Import Settings"), QDialogButtonBox::ActionRole);
-    connect(importSettings, &QPushButton::clicked, this, &PreferencesDialog::importSettings);
+    // Connect 'Export Settings' and 'Import Settings' buttons
+    connect(ui->buttonExportSettings, &QPushButton::clicked, this, &PreferencesDialog::exportSettings);
+    connect(ui->buttonImportSettings, &QPushButton::clicked, this, &PreferencesDialog::importSettings);
 }
 
 /*
