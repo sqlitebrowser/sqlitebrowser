@@ -62,6 +62,8 @@ reported after the last release. :D
 
 ## macOS
 
+#### Stable release
+
 DB Browser for SQLite works well on macOS.
 
 * macOS 10.12 (Sierra) - 10.15 (Catalina) are tested and known to work
@@ -75,6 +77,18 @@ The latest macOS binary can be installed via [Homebrew Cask](https://caskroom.gi
 ```
 brew cask install db-browser-for-sqlite
 ```
+
+#### Nightly builds
+
+Nightly builds are available here:
+* https://nightlies.sqlitebrowser.org/latest
+
+and also you can be installed via [Homebrew Cask](https://caskroom.github.io/ "Homebrew Cask"):
+
+    $ brew tap homebrew/cask-versions
+    $ brew cask install db-browser-for-sqlite-nightly
+
+**Note** - You can **NOT** install nightly builds with Homebrew if you already have the stable version installed.
 
 ## Linux
 
