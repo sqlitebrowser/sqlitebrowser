@@ -205,67 +205,68 @@
         <location filename="../Application.cpp" line="93"/>
         <source>Usage: %1 [options] [&lt;database&gt;|&lt;project&gt;]
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Utilizzo: %1 [opzioni] [&lt;database&gt;|&lt;progetto&gt;]
+</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="96"/>
         <source>  -h, --help          Show command line options</source>
-        <translation type="unfinished"></translation>
+        <translation>  -h, --help          Mostra le opzioni da riga di comando</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="97"/>
         <source>  -q, --quit          Exit application after running scripts</source>
-        <translation type="unfinished"></translation>
+        <translation>  -q, --quit          Chiude l&apos;applicazione dopo aver eseguito gli scripts</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="98"/>
         <source>  -s, --sql &lt;file&gt;    Execute this SQL file after opening the DB</source>
-        <translation type="unfinished"></translation>
+        <translation>  -s, --sql &lt;file&gt;    Esegue questo file SQL dopo aver aperto il DB</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="99"/>
         <source>  -t, --table &lt;table&gt; Browse this table after opening the DB</source>
-        <translation type="unfinished"></translation>
+        <translation>  -t, --table &lt;table&gt; Mostra questa tabella dopo aver aperto il DB</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="100"/>
         <source>  -R, --read-only     Open database in read-only mode</source>
-        <translation type="unfinished"></translation>
+        <translation>  -R, --read-only     Apre il database in sola lettura</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="101"/>
         <source>  -o, --option &lt;group&gt;/&lt;setting&gt;=&lt;value&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>  -o, --option &lt;gruppo&gt;/&lt;impostazione&gt;=&lt;valore&gt;</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="102"/>
         <source>                      Run application with this setting temporarily set to value</source>
-        <translation type="unfinished"></translation>
+        <translation>                      Esegue l&apos;applicazione con queste impostazioni applicate temporaneamente</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="103"/>
         <source>  -O, --save-option &lt;group&gt;/&lt;setting&gt;=&lt;value&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>  -O, --save-option &lt;gruppo&gt;/&lt;impostazione&gt;=&lt;valore&gt;</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="104"/>
         <source>                      Run application saving this value for this setting</source>
-        <translation type="unfinished"></translation>
+        <translation>                      Esegue l&apos;applicazione salvando questo valore come impostazione</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="105"/>
         <source>  -v, --version       Display the current version</source>
-        <translation type="unfinished"></translation>
+        <translation>  -v, --version       Mostra la versione corrente</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="106"/>
         <source>  &lt;database&gt;          Open this SQLite database</source>
-        <translation type="unfinished"></translation>
+        <translation>  &lt;database&gt;          Apre questo database SQLite</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="107"/>
         <source>  &lt;project&gt;           Open this project file (*.sqbpro)</source>
-        <translation type="unfinished"></translation>
+        <translation>  &lt;project&gt;           Apre questo file di progetto (*.sqbpro)</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="115"/>
@@ -290,27 +291,27 @@
     <message>
         <location filename="../Application.cpp" line="236"/>
         <source>SQLite Version </source>
-        <translation type="unfinished">Versione SQLite </translation>
+        <translation>Versione SQLite </translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="238"/>
         <source>SQLCipher Version %1 (based on SQLite %2)</source>
-        <translation type="unfinished">Versione SQLCipher %1 (basata su SQLite %2)</translation>
+        <translation>Versione SQLCipher %1 (basata su SQLite %2)</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="241"/>
         <source>DB Browser for SQLite Version %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>DB Browser for SQLite Versione %1.</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="242"/>
         <source>Built for %1, running on %2</source>
-        <translation type="unfinished">Compilato per %1, in esecuzione su %2</translation>
+        <translation>Compilato per %1, in esecuzione su %2</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="243"/>
         <source>Qt Version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Versione Qt %1</translation>
     </message>
     <message>
         <source>The -o/--option option requires an argument in the form group/setting=value</source>
@@ -478,7 +479,7 @@ Se una qualunque altra impostazione è stata modificata per l&apos;inserimento d
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="28"/>
         <source>.NET DateTime.Ticks to date</source>
-        <translation type="unfinished"></translation>
+        <translation>.NET DateTime.Ticks ad oggi</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="29"/>
@@ -3350,12 +3351,12 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
     <message>
         <location filename="../MainWindow.ui" line="1506"/>
         <source>Open SQL file(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Apri file(s) SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1509"/>
         <source>This button opens files containing SQL statements and loads them in new editor tabs</source>
-        <translation type="unfinished"></translation>
+        <translation>Questo pulsante apre files contenenti stringhe SQL e li carica in una nuova scheda dell&apos;editor</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1545"/>
@@ -3375,12 +3376,12 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
     <message>
         <location filename="../MainWindow.ui" line="1646"/>
         <source>This button lets you save all the settings associated to the open DB to a DB Browser for SQLite project file</source>
-        <translation type="unfinished"></translation>
+        <translation>Questo pulsante ti permette di salvare tutte le impostazioni associate al DB aperto nel file di progetto di DB BRowser for SQLite</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1667"/>
         <source>This button lets you open a DB Browser for SQLite project file</source>
-        <translation type="unfinished"></translation>
+        <translation>Questo pulsante ti permette di aprire un file di progetto di DB Browser for SQLite</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1798"/>
@@ -4219,12 +4220,12 @@ Sei sicuro di voler salvare il database?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="939"/>
         <source>Edit View %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifica vista %1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="945"/>
         <source>Edit Trigger %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifica Trigger %1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1043"/>
@@ -4271,12 +4272,12 @@ Sei sicuro di voler salvare il database?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="1587"/>
         <source>Opened &apos;%1&apos; in read-only mode from recent file list</source>
-        <translation type="unfinished"></translation>
+        <translation>Aperto &apos;%1&apos; in modalità solo lettura dalla lista dei file recenti</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1589"/>
         <source>Opened &apos;%1&apos; from recent file list</source>
-        <translation type="unfinished"></translation>
+        <translation>Aperto &apos;%1&apos; dalla lista di file recenti</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2949"/>
@@ -4286,7 +4287,7 @@ Sei sicuro di voler salvare il database?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="3196"/>
         <source>This action will open a new SQL tab with the following statements for you to edit and run:</source>
-        <translation type="unfinished"></translation>
+        <translation>Questa azione aprirà una nuova scheda SQL con la seguente stringa SQL per permetterti di modificarla ed eseguirla</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3392"/>
@@ -4457,32 +4458,32 @@ Se rispondi di no proveremo ad importare i dati del file SQL all&apos;interno de
     <message>
         <location filename="../MainWindow.cpp" line="327"/>
         <source>Window Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Disposizione finestra</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="336"/>
         <source>Simplify Window Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Semplifica disposizione finestra</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="337"/>
         <source>Shift+Alt+0</source>
-        <translation type="unfinished"></translation>
+        <translation>Shift+Alt+0</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="346"/>
         <source>Dock Windows at Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Blocca finestre in basso</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="350"/>
         <source>Dock Windows at Left Side</source>
-        <translation type="unfinished"></translation>
+        <translation>Blocca finestre al lato sinistro</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="354"/>
         <source>Dock Windows at Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Blocca finestre in cima</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="682"/>
@@ -4795,12 +4796,12 @@ Crea un backup!</translation>
     <message>
         <location filename="../PlotDock.ui" line="56"/>
         <source>Y1</source>
-        <translation type="unfinished"></translation>
+        <translation>Y1</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="61"/>
         <source>Y2</source>
-        <translation type="unfinished"></translation>
+        <translation>Y2</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="66"/>
@@ -5217,12 +5218,12 @@ Attenzione: non sono ancora stati recuperati tutti i dati dalla tabella a causa 
     <message>
         <location filename="../PreferencesDialog.ui" line="555"/>
         <source>This sets the font size for all UI elements which do not have their own font size option.</source>
-        <translation type="unfinished"></translation>
+        <translation>Questo imposta la dimensione del testo per tutti gli elementi dell&apos;interfaccia che non hanno una loro opzione specifica.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="558"/>
         <source>Font size</source>
-        <translation type="unfinished"></translation>
+        <translation>Dimensione testo</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="572"/>
@@ -5276,7 +5277,7 @@ Attenzione: non sono ancora stati recuperati tutti i dati dalla tabella a causa 
     <message>
         <location filename="../PreferencesDialog.ui" line="680"/>
         <source>Database structure font size</source>
-        <translation type="unfinished"></translation>
+        <translation>Dimensione testo per la struttura del database</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="726"/>
@@ -5588,12 +5589,12 @@ Può essere impostato a 0 per disabilitare il completamento.</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="1555"/>
         <source>Close button on tabs</source>
-        <translation type="unfinished"></translation>
+        <translation>Pulsante di chiusura sulle schede</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1565"/>
         <source>If enabled, SQL editor tabs will have a close button. In any case, you can use the contextual menu or the keyboard shortcut to close them.</source>
-        <translation type="unfinished"></translation>
+        <translation>Se abilitato, le schede dell&apos;editor SQL avranno un pulsante di chiusura. In ogni caso, puoi utilizzare il menù contestuale o le scorciatoie da tastiera per chiuderle.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1578"/>
@@ -6001,37 +6002,37 @@ Tutte le tue preferenze andranno perse e verranno utilizzati i valori predefinit
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="13"/>
         <source>Commit ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID Invio</translation>
     </message>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="13"/>
         <source>Message</source>
-        <translation type="unfinished"></translation>
+        <translation>Messaggio</translation>
     </message>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="13"/>
         <source>Date</source>
-        <translation type="unfinished">Data</translation>
+        <translation>Data</translation>
     </message>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="13"/>
         <source>Author</source>
-        <translation type="unfinished"></translation>
+        <translation>Autore</translation>
     </message>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="13"/>
         <source>Size</source>
-        <translation type="unfinished">Dimensione</translation>
+        <translation>Dimensione</translation>
     </message>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="65"/>
         <source>Authored and committed by %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Creato e inviato da %1</translation>
     </message>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="67"/>
         <source>Authored by %1, committed by %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Creato da %1, inviato da %2</translation>
     </message>
 </context>
 <context>
@@ -6127,152 +6128,152 @@ Tutte le tue preferenze andranno perse e verranno utilizzati i valori predefinit
     <message>
         <location filename="../RemoteDock.ui" line="76"/>
         <source>DBHub.io</source>
-        <translation type="unfinished"></translation>
+        <translation>DBHub.io</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="109"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB Browser for SQLite. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to &amp;quot;Generate client certificate&amp;quot; (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB Browser for SQLite Preferences. Click the button to add a new certificate to DB Browser for SQLite and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In questo pannello, possono essere aggiunti a DB Browser for SQLite i database dal sito web dbhub.io. Prima hai bisogno di un&apos;identità:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Accedi al sito web dbhub.io (usa le tue credenziali GitHub o qualsiasi cosa tu voglia)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Clicca il pulsante per &amp;quot;Generare un certificato cliente&amp;quot; (la tua identità). Questo di darà un file certificato (da salvare sul to disco locale).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Vai alla scheda Remoto nelle preferenze di  DB Browser for SQLite. Clicca il pulsante per aggiungere un nuovo certificato a DB Browser for SQLite e scegli il file di certificato appena scaricato.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Ora il pannello Remoto ti mostrerà la tua identità e potrai aggiungere database remoti.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="117"/>
         <source>Local</source>
-        <translation type="unfinished"></translation>
+        <translation>Locale</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="143"/>
         <source>Current Database</source>
-        <translation type="unfinished"></translation>
+        <translation>Database Corrente</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="174"/>
         <source>Clone</source>
-        <translation type="unfinished"></translation>
+        <translation>Clona</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="183"/>
         <source>User</source>
-        <translation type="unfinished">Utente</translation>
+        <translation>Utente</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="200"/>
         <source>Database</source>
-        <translation type="unfinished">Database</translation>
+        <translation>Database</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="217"/>
         <source>Branch</source>
-        <translation type="unfinished">Branch</translation>
+        <translation>Ramo</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="237"/>
         <source>Commits</source>
-        <translation type="unfinished"></translation>
+        <translation>Invii</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="257"/>
         <source>Commits for</source>
-        <translation type="unfinished"></translation>
+        <translation>Invii per</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="372"/>
         <source>Delete Database</source>
-        <translation type="unfinished"></translation>
+        <translation>Elimina Database</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="375"/>
         <source>Delete the local clone of this database</source>
-        <translation type="unfinished"></translation>
+        <translation>Elimina il clone locale di questo database</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="384"/>
         <source>Open in Web Browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Apri in nel Web Browser</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="387"/>
         <source>Open the web page for the current database in your browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Apre la pagina web per il database corrente nel tuo browser</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="396"/>
         <source>Clone from Link</source>
-        <translation type="unfinished"></translation>
+        <translation>Clona dal collegamento</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="399"/>
         <source>Use this to download a remote database for local editing using a URL as provided on the web page of the database.</source>
-        <translation type="unfinished"></translation>
+        <translation>Usa questo per scaricare un database remoto per modificarlo in locale usando un URL come fornito sulla pagina web del database.</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="408"/>
         <source>Refresh</source>
-        <translation type="unfinished">Aggiorna</translation>
+        <translation>Aggiorna</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="411"/>
         <source>Reload all data and update the views</source>
-        <translation type="unfinished"></translation>
+        <translation>Ricarica tutti i dati e aggiorna le viste</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="414"/>
         <source>F5</source>
-        <translation type="unfinished"></translation>
+        <translation>F5</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="423"/>
         <source>Clone Database</source>
-        <translation type="unfinished"></translation>
+        <translation>Clona Database</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="438"/>
         <source>Open Database</source>
-        <translation type="unfinished"></translation>
+        <translation>Apri Database</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="441"/>
         <source>Open the local copy of this database</source>
-        <translation type="unfinished"></translation>
+        <translation>Apre una copia locale di questo database</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="452"/>
         <source>Check out Commit</source>
-        <translation type="unfinished"></translation>
+        <translation>Scarica invio</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="455"/>
         <source>Download and open this specific commit</source>
-        <translation type="unfinished"></translation>
+        <translation>Scarica e apre questo specifico invio</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="470"/>
         <source>Check out Latest Commit</source>
-        <translation type="unfinished"></translation>
+        <translation>Scarica l&apos;ultimo invio</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="473"/>
         <source>Check out the latest commit of the current branch</source>
-        <translation type="unfinished"></translation>
+        <translation>Scarica l&apos;invio più recente per il ramo corrente</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="478"/>
         <source>Save Revision to File</source>
-        <translation type="unfinished"></translation>
+        <translation>Salva la revisione su file</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="481"/>
         <source>Saves the selected revision of the database to another file</source>
-        <translation type="unfinished"></translation>
+        <translation>Salva la revisione selezionata del database s&apos;un altro file</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="490"/>
         <source>Upload Database</source>
-        <translation type="unfinished"></translation>
+        <translation>Carica Database</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="493"/>
         <source>Upload this database as a new commit</source>
-        <translation type="unfinished"></translation>
+        <translation>Carica questo database come nuovo invio</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB4S. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to create a DB4S certificate (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB4S Preferences. Click the button to add a new certificate to DB4S and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -6295,7 +6296,7 @@ Tutte le tue preferenze andranno perse e verranno utilizzati i valori predefinit
     <message>
         <location filename="../RemoteDock.cpp" line="151"/>
         <source>Select an identity to connect</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona un&apos;identità per connetterti</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="163"/>
@@ -6308,43 +6309,46 @@ Tutte le tue preferenze andranno perse e verranno utilizzati i valori predefinit
 Please enter the URL to clone from. You can generate this URL by
 clicking the &apos;Clone Database in DB4S&apos; button on the web page
 of the database.</source>
-        <translation type="unfinished"></translation>
+        <translation>Questo scarica un database ad un server remoto per modificarlo localmente.
+Si prega d&apos;inserire l&apos;URL da clonare. Puoi generare questa URL cliccando
+il pulsante &apos;Clona Database in DB4S&apos; sulla pagina web del database.</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="231"/>
         <source>Invalid URL: The host name does not match the host name of the current identity.</source>
-        <translation type="unfinished"></translation>
+        <translation>URL non valida: Il nome dell&apos;host non corrisponde al nome dell&apos;host dell&apos;identità corrente.</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="236"/>
         <source>Invalid URL: No branch name specified.</source>
-        <translation type="unfinished"></translation>
+        <translation>URL non valida: Nessun ramo specificato.</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="241"/>
         <source>Invalid URL: No commit ID specified.</source>
-        <translation type="unfinished"></translation>
+        <translation>URL non valida: Nessun ID Invio specificato.</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="289"/>
         <source>You have modified the local clone of the database. Fetching this commit overrides these local changes.
 Are you sure you want to proceed?</source>
-        <translation type="unfinished"></translation>
+        <translation>Hai modificato il clone locale del database. Recuperare questo commit sovrascriverà le modifiche locali.
+Sei sicuro di voler proseguire?</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="333"/>
         <source>The database has unsaved changes. Are you sure you want to push it before saving?</source>
-        <translation type="unfinished"></translation>
+        <translation>Il database ha delle modifiche non salvate. Sei sicuro di volerlo inviare prima di salvare?</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="543"/>
         <source>The database you are trying to delete is currently opened. Please close it before deleting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il database che stai provando a cancellare è attualmente aperto. Si prega di chiuderlo prima d&apos;eliminarlo.</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="549"/>
         <source>This deletes the local version of this database with all the changes you have not committed yet. Are you sure you want to delete this database?</source>
-        <translation type="unfinished"></translation>
+        <translation>Questo elimina la versione locale di questo database con tutte le modifiche che non hai ancora inviato. Sei sicuro di voler eliminare questo database?</translation>
     </message>
 </context>
 <context>
@@ -6352,32 +6356,32 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>Name</source>
-        <translation type="unfinished">Nome</translation>
+        <translation>Nome</translation>
     </message>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>Branch</source>
-        <translation type="unfinished">Branch</translation>
+        <translation>Ramo</translation>
     </message>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>Last modified</source>
-        <translation type="unfinished">Ultima modifca</translation>
+        <translation>Ultima modifca</translation>
     </message>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>Size</source>
-        <translation type="unfinished">Dimensione</translation>
+        <translation>Dimensione</translation>
     </message>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>Commit</source>
-        <translation type="unfinished">Commit</translation>
+        <translation>Invio</translation>
     </message>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>File</source>
-        <translation type="unfinished">File</translation>
+        <translation>File</translation>
     </message>
 </context>
 <context>
@@ -6405,22 +6409,22 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../RemoteModel.cpp" line="231"/>
         <source>Size: </source>
-        <translation type="unfinished"></translation>
+        <translation>Dimensione: </translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="232"/>
         <source>Last Modified: </source>
-        <translation type="unfinished"></translation>
+        <translation>Ultima modifica: </translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="233"/>
         <source>Licence: </source>
-        <translation type="unfinished"></translation>
+        <translation>Licenza: </translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="234"/>
         <source>Default Branch: </source>
-        <translation type="unfinished"></translation>
+        <translation>Ramo di default: </translation>
     </message>
     <message>
         <source>bytes</source>
@@ -6432,54 +6436,54 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../RemoteNetwork.cpp" line="218"/>
         <source>Choose a location to save the file</source>
-        <translation type="unfinished"></translation>
+        <translation>Scegli una posizione per salvare il file</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="250"/>
         <source>Error opening remote file at %1.
 %2</source>
-        <translation type="unfinished">Errore aprendo il file remoto a %1.
+        <translation>Errore aprendo il file remoto a %1.
 %2</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="329"/>
         <source>Error: Invalid client certificate specified.</source>
-        <translation type="unfinished">Errore: specificato certificato invalido per il client.</translation>
+        <translation>Errore: specificato certificato invalido per il client.</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="341"/>
         <source>Please enter the passphrase for this client certificate in order to authenticate.</source>
-        <translation type="unfinished">Si prega d&apos;inserire la passphrase per questo certificato di client in modo da permetterne l&apos;autenticazione.</translation>
+        <translation>Si prega d&apos;inserire la passphrase per questo certificato di client in modo da permetterne l&apos;autenticazione.</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="365"/>
         <source>Cancel</source>
-        <translation type="unfinished">Annulla</translation>
+        <translation>Annulla</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="370"/>
         <source>Uploading remote database to
 %1</source>
-        <translation type="unfinished">Carico il database remoto in
+        <translation>Carico il database remoto in
 %1</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="372"/>
         <source>Downloading remote database from
 %1</source>
-        <translation type="unfinished">Scarico il database remoto da
+        <translation>Scarico il database remoto da
 %1</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="390"/>
         <location filename="../RemoteNetwork.cpp" line="456"/>
         <source>Error: The network is not accessible.</source>
-        <translation type="unfinished">Errore: Rete non disponibile.</translation>
+        <translation>Errore: Rete non disponibile.</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="465"/>
         <source>Error: Cannot open the file for sending.</source>
-        <translation type="unfinished">Errore:Impossibile aprire il file per l&apos;invio.</translation>
+        <translation>Errore:Impossibile aprire il file per l&apos;invio.</translation>
     </message>
 </context>
 <context>
@@ -6534,7 +6538,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../RemotePushDialog.ui" line="129"/>
         <source>Username</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome utente</translation>
     </message>
     <message>
         <location filename="../RemotePushDialog.cpp" line="72"/>
@@ -7728,7 +7732,7 @@ Tieni premuto %3Shift e clicca per saltare lì</translation>
     <message>
         <location filename="../TableBrowser.cpp" line="42"/>
         <source>Filter in any column</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtra in qualsiasi colonna</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="102"/>
