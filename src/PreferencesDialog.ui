@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>755</width>
-    <height>626</height>
+    <height>642</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -531,8 +531,11 @@
        <item row="11" column="0">
         <widget class="QLabel" name="labelDoNotAskSaveProject">
          <property name="text">
-          <string>Do NOT ask 'Save Project'
+          <string>Do NOT ask to 'Save Project'
 in SQL Editor tabs</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
