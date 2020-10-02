@@ -1923,7 +1923,7 @@ bool MainWindow::askSaveSqlTab(int index, bool& ignoreUnattachedBuffers)
     SqlExecutionArea* sqlExecArea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index));
 
     if(sqlExecArea->getEditor()->isModified()) {
-        if(sqlExecArea->fileName().isEmpty() && !ignoreUnattachedBuffers) {
+        if(sqlExecArea->fileName().isEmpty() && !ignoreUnattachedBuffers && !Settings::getValue("General", "donotasksaveproject")) {
             // Once the project is saved, remaining SQL tabs will not be modified, so this is only expected to be asked once.
             QString message = currentProjectFilename.isEmpty() ?
                 tr("Do you want to save the changes made to SQL tabs in a new project file?") :
