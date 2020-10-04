@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>755</width>
-    <height>626</height>
+    <height>625</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -122,87 +122,6 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="labelAppStyle">
-         <property name="text">
-          <string>Application style</string>
-         </property>
-         <property name="buddy">
-          <cstring>toolbarStyleComboStructure</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QComboBox" name="appStyleCombo">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="toolTip">
-          <string>When this value is changed, all the other color preferences are also set to matching colors.</string>
-         </property>
-         <property name="currentIndex">
-          <number>0</number>
-         </property>
-         <property name="sizeAdjustPolicy">
-          <enum>QComboBox::AdjustToContents</enum>
-         </property>
-         <property name="minimumContentsLength">
-          <number>35</number>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>20</width>
-           <height>15</height>
-          </size>
-         </property>
-         <item>
-          <property name="text">
-           <string>Follow the desktop style</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Dark style</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_27">
-         <property name="toolTip">
-          <string>This sets the font size for all UI elements which do not have their own font size option.</string>
-         </property>
-         <property name="text">
-          <string>Font size</string>
-         </property>
-         <property name="buddy">
-          <cstring>spinGeneralFontSize</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QSpinBox" name="spinGeneralFontSize"/>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="labelMaxRecentFiles">
-         <property name="text">
-          <string>Max Recent Files</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QSpinBox" name="spinMaxRecentFiles">
-         <property name="minimum">
-          <number>1</number>
-         </property>
-         <property name="maximum">
-          <number>40</number>
-         </property>
-        </widget>
-       </item>
        <item row="5" column="0">
         <widget class="QLabel" name="labelToolbarStyle">
          <property name="text">
@@ -213,20 +132,7 @@
          </property>
         </widget>
        </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="labelMainToolBar">
-         <property name="text">
-          <string>Main Window</string>
-         </property>
-         <property name="indent">
-          <number>20</number>
-         </property>
-         <property name="buddy">
-          <cstring>toolbarStyleComboMain</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
+       <item row="7" column="1">
         <widget class="QComboBox" name="toolbarStyleComboMain">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -276,20 +182,7 @@
          </item>
         </widget>
        </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="labelStructureToolBar">
-         <property name="text">
-          <string>Database Structure</string>
-         </property>
-         <property name="indent">
-          <number>20</number>
-         </property>
-         <property name="buddy">
-          <cstring>toolbarStyleComboStructure</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="1">
+       <item row="8" column="1">
         <widget class="QComboBox" name="toolbarStyleComboStructure">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -339,20 +232,7 @@
          </item>
         </widget>
        </item>
-       <item row="8" column="0">
-        <widget class="QLabel" name="labelBrowseToolBar">
-         <property name="text">
-          <string>Browse Data</string>
-         </property>
-         <property name="indent">
-          <number>20</number>
-         </property>
-         <property name="buddy">
-          <cstring>toolbarStyleComboBrowse</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="1">
+       <item row="9" column="1">
         <widget class="QComboBox" name="toolbarStyleComboBrowse">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -402,20 +282,7 @@
          </item>
         </widget>
        </item>
-       <item row="9" column="0">
-        <widget class="QLabel" name="labelSqlToolBar">
-         <property name="text">
-          <string>Execute SQL</string>
-         </property>
-         <property name="indent">
-          <number>20</number>
-         </property>
-         <property name="buddy">
-          <cstring>toolbarStyleComboSql</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="1">
+       <item row="10" column="1">
         <widget class="QComboBox" name="toolbarStyleComboSql">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -465,20 +332,113 @@
          </item>
         </widget>
        </item>
-       <item row="10" column="0">
-        <widget class="QLabel" name="labelEditCellToolBar">
+       <item row="13" column="0">
+        <widget class="QLabel" name="labelUseRemotes">
          <property name="text">
-          <string>Edit Database Cell</string>
+          <string>Show remote options</string>
+         </property>
+         <property name="buddy">
+          <cstring>checkUseRemotes</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="13" column="1">
+        <widget class="QCheckBox" name="checkUseRemotes">
+         <property name="text">
+          <string>enabled</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="14" column="0">
+        <widget class="QLabel" name="labelUpdates">
+         <property name="text">
+          <string>Automatic &amp;updates</string>
+         </property>
+         <property name="buddy">
+          <cstring>checkUpdates</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="14" column="1">
+        <widget class="QCheckBox" name="checkUpdates">
+         <property name="text">
+          <string>enabled</string>
+         </property>
+        </widget>
+       </item>
+       <item row="15" column="0">
+        <widget class="QLabel" name="label_16">
+         <property name="text">
+          <string>DB file extensions</string>
+         </property>
+         <property name="buddy">
+          <cstring>buttonManageFileExtension</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="15" column="1">
+        <widget class="QPushButton" name="buttonManageFileExtension">
+         <property name="text">
+          <string>Manage</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="labelMainToolBar">
+         <property name="text">
+          <string>Main Window</string>
          </property>
          <property name="indent">
           <number>20</number>
          </property>
          <property name="buddy">
-          <cstring>toolbarStyleComboEditCell</cstring>
+          <cstring>toolbarStyleComboMain</cstring>
          </property>
         </widget>
        </item>
-       <item row="10" column="1">
+       <item row="8" column="0">
+        <widget class="QLabel" name="labelStructureToolBar">
+         <property name="text">
+          <string>Database Structure</string>
+         </property>
+         <property name="indent">
+          <number>20</number>
+         </property>
+         <property name="buddy">
+          <cstring>toolbarStyleComboStructure</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0">
+        <widget class="QLabel" name="labelBrowseToolBar">
+         <property name="text">
+          <string>Browse Data</string>
+         </property>
+         <property name="indent">
+          <number>20</number>
+         </property>
+         <property name="buddy">
+          <cstring>toolbarStyleComboBrowse</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="0">
+        <widget class="QLabel" name="labelSqlToolBar">
+         <property name="text">
+          <string>Execute SQL</string>
+         </property>
+         <property name="indent">
+          <number>20</number>
+         </property>
+         <property name="buddy">
+          <cstring>toolbarStyleComboSql</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="1">
         <widget class="QComboBox" name="toolbarStyleComboEditCell">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -529,6 +489,100 @@
         </widget>
        </item>
        <item row="11" column="0">
+        <widget class="QLabel" name="labelEditCellToolBar">
+         <property name="text">
+          <string>Edit Database Cell</string>
+         </property>
+         <property name="indent">
+          <number>20</number>
+         </property>
+         <property name="buddy">
+          <cstring>toolbarStyleComboEditCell</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QComboBox" name="appStyleCombo">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="toolTip">
+          <string>When this value is changed, all the other color preferences are also set to matching colors.</string>
+         </property>
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <property name="sizeAdjustPolicy">
+          <enum>QComboBox::AdjustToContents</enum>
+         </property>
+         <property name="minimumContentsLength">
+          <number>35</number>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>15</height>
+          </size>
+         </property>
+         <item>
+          <property name="text">
+           <string>Follow the desktop style</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Dark style</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="labelAppStyle">
+         <property name="text">
+          <string>Application style</string>
+         </property>
+         <property name="buddy">
+          <cstring>toolbarStyleComboStructure</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_27">
+         <property name="toolTip">
+          <string>This sets the font size for all UI elements which do not have their own font size option.</string>
+         </property>
+         <property name="text">
+          <string>Font size</string>
+         </property>
+         <property name="buddy">
+          <cstring>spinGeneralFontSize</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QSpinBox" name="spinGeneralFontSize"/>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="labelMaxRecentFiles">
+         <property name="text">
+          <string>Max Recent Files</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QSpinBox" name="spinMaxRecentFiles">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>40</number>
+         </property>
+        </widget>
+       </item>
+       <item row="12" column="0">
         <widget class="QLabel" name="labelPromptSQLTabsInNewProject">
          <property name="text">
           <string>Prompt to save SQL tabs
@@ -536,7 +590,7 @@ in new project file</string>
          </property>
         </widget>
        </item>
-       <item row="11" column="1">
+       <item row="12" column="1">
         <widget class="QCheckBox" name="checkPromptSQLTabsInNewProject">
          <property name="toolTip">
           <string>If this is turned on, then changes to the SQL editor generate a save a project confirmation dialog when closing the SQL editor tab.</string>
@@ -546,60 +600,6 @@ in new project file</string>
          </property>
          <property name="checked">
           <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="12" column="0">
-        <widget class="QLabel" name="labelUseRemotes">
-         <property name="text">
-          <string>Show remote options</string>
-         </property>
-         <property name="buddy">
-          <cstring>checkUseRemotes</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="12" column="1">
-        <widget class="QCheckBox" name="checkUseRemotes">
-         <property name="text">
-          <string>enabled</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="13" column="0">
-        <widget class="QLabel" name="labelUpdates">
-         <property name="text">
-          <string>Automatic &amp;updates</string>
-         </property>
-         <property name="buddy">
-          <cstring>checkUpdates</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="13" column="1">
-        <widget class="QCheckBox" name="checkUpdates">
-         <property name="text">
-          <string>enabled</string>
-         </property>
-        </widget>
-       </item>
-       <item row="14" column="0">
-        <widget class="QLabel" name="label_16">
-         <property name="text">
-          <string>DB file extensions</string>
-         </property>
-         <property name="buddy">
-          <cstring>buttonManageFileExtension</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="14" column="1">
-        <widget class="QPushButton" name="buttonManageFileExtension">
-         <property name="text">
-          <string>Manage</string>
          </property>
         </widget>
        </item>
@@ -1955,14 +1955,32 @@ Can be set to 0 for disabling completion.</string>
     </widget>
    </item>
    <item>
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::RestoreDefaults|QDialogButtonBox::Save</set>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="horizontalLayout_bottomButtons">
+     <item>
+      <widget class="QPushButton" name="buttonExportSettings">
+       <property name="text">
+        <string>Export Settings</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonImportSettings">
+       <property name="text">
+        <string>Import Settings</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QDialogButtonBox" name="buttonBox">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="standardButtons">
+        <set>QDialogButtonBox::Cancel|QDialogButtonBox::RestoreDefaults|QDialogButtonBox::Save</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
