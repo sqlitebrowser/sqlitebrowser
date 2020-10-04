@@ -1921,10 +1921,10 @@ void MainWindow::logSql(const QString& sql, int msgtype)
 bool MainWindow::askSaveSqlTab(int index, bool& ignoreUnattachedBuffers)
 {
     SqlExecutionArea* sqlExecArea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index));
-    const bool isDoNotAskSaveProject = Settings::getValue("General", "donotasksaveproject").toBool();
+    const bool isPromptSQLTabsInNewProject = Settings::getValue("General", "promptsqltabsinnewproject").toBool();
 
     if(sqlExecArea->getEditor()->isModified()) {
-        if(sqlExecArea->fileName().isEmpty() && !ignoreUnattachedBuffers && !isDoNotAskSaveProject) {
+        if(sqlExecArea->fileName().isEmpty() && !ignoreUnattachedBuffers && isPromptSQLTabsInNewProject) {
             // Once the project is saved, remaining SQL tabs will not be modified, so this is only expected to be asked once.
             QString message = currentProjectFilename.isEmpty() ?
                 tr("Do you want to save the changes made to SQL tabs in a new project file?") :

@@ -529,20 +529,23 @@
         </widget>
        </item>
        <item row="11" column="0">
-        <widget class="QLabel" name="labelDoNotAskSaveProject">
+        <widget class="QLabel" name="labelPromptSQLTabsInNewProject">
          <property name="text">
-          <string>Do NOT ask 'Save Project'
-in SQL Editor tabs</string>
+          <string>Prompt to save SQL tabs
+in new project file</string>
          </property>
         </widget>
        </item>
        <item row="11" column="1">
-        <widget class="QCheckBox" name="checkDoNotAskSaveProject">
+        <widget class="QCheckBox" name="checkPromptSQLTabsInNewProject">
          <property name="toolTip">
-          <string>If this is turned on, then changes to the SQL editor won't generate a save a project confirmation dialog when closing the SQL editor tab. Instead, the changes will be lost.</string>
+          <string>If this is turned on, then changes to the SQL editor generate a save a project confirmation dialog when closing the SQL editor tab.</string>
          </property>
          <property name="text">
           <string>enabled</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
