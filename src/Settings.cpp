@@ -268,6 +268,10 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
     if(group == "General" && name == "fontsize")
         return m_defaultFontSize;
 
+    // General/promptsqltabsinnewproject
+    if(group == "General" && name == "promptsqltabsinnewproject")
+        return true;
+
     // checkversion group?
     if(group == "checkversion")
     {

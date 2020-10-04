@@ -80,6 +80,7 @@ void PreferencesDialog::loadSettings()
     ui->encodingComboBox->setCurrentIndex(ui->encodingComboBox->findText(Settings::getValue("db", "defaultencoding").toString(), Qt::MatchFixedString));
     ui->comboDefaultLocation->setCurrentIndex(Settings::getValue("db", "savedefaultlocation").toInt());
     ui->locationEdit->setText(QDir::toNativeSeparators(Settings::getValue("db", "defaultlocation").toString()));
+    ui->checkPromptSQLTabsInNewProject->setChecked(Settings::getValue("General", "promptsqltabsinnewproject").toBool());
     ui->checkUpdates->setChecked(Settings::getValue("checkversion", "enabled").toBool());
 
     ui->checkHideSchemaLinebreaks->setChecked(Settings::getValue("db", "hideschemalinebreaks").toBool());
@@ -343,6 +344,7 @@ void PreferencesDialog::saveSettings(bool accept)
     Settings::setValue("General", "DBFileExtensions", m_dbFileExtensions.join(";;") );
     Settings::setValue("General", "fontsize", ui->spinGeneralFontSize->value());
     Settings::setValue("General", "maxRecentFiles", ui->spinMaxRecentFiles->value());
+    Settings::setValue("General", "promptsqltabsinnewproject", ui->checkPromptSQLTabsInNewProject->isChecked());
 
     m_proxyDialog->saveSettings();
 
