@@ -214,67 +214,68 @@
         <location filename="../Application.cpp" line="93"/>
         <source>Usage: %1 [options] [&lt;database&gt;|&lt;project&gt;]
 </source>
-        <translation type="unfinished"></translation>
+        <translation>用法: %1 [选项] [&lt;数据库&gt;|&lt;项目&gt;]
+</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="96"/>
         <source>  -h, --help          Show command line options</source>
-        <translation type="unfinished"></translation>
+        <translation>  -h, --help          显示命令行选项</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="97"/>
         <source>  -q, --quit          Exit application after running scripts</source>
-        <translation type="unfinished"></translation>
+        <translation>  -q, --quit          在运行脚本后退出应用程序</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="98"/>
         <source>  -s, --sql &lt;file&gt;    Execute this SQL file after opening the DB</source>
-        <translation type="unfinished"></translation>
+        <translation>  -s, --sql [文件]    在打开数据库后执行此 SQL 文件</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="99"/>
         <source>  -t, --table &lt;table&gt; Browse this table after opening the DB</source>
-        <translation type="unfinished"></translation>
+        <translation>  -t, --table [表] 在打开数据库后浏览此表</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="100"/>
         <source>  -R, --read-only     Open database in read-only mode</source>
-        <translation type="unfinished"></translation>
+        <translation>  -R, --read-only     用只读模式打开数据库</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="101"/>
         <source>  -o, --option &lt;group&gt;/&lt;setting&gt;=&lt;value&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>  -o, --option [分组/设置=值]</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="102"/>
         <source>                      Run application with this setting temporarily set to value</source>
-        <translation type="unfinished"></translation>
+        <translation>                      临时以此设置运行程序</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="103"/>
         <source>  -O, --save-option &lt;group&gt;/&lt;setting&gt;=&lt;value&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>  -O, --save-option [分组/设置=值]</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="104"/>
         <source>                      Run application saving this value for this setting</source>
-        <translation type="unfinished"></translation>
+        <translation>                      以此设置运行程序并保存设置</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="105"/>
         <source>  -v, --version       Display the current version</source>
-        <translation type="unfinished"></translation>
+        <translation>  -v, --version       显示当前版本</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="106"/>
         <source>  &lt;database&gt;          Open this SQLite database</source>
-        <translation type="unfinished"></translation>
+        <translation>  [文件]         打开这个 SQLite 数据库</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="107"/>
         <source>  &lt;project&gt;           Open this project file (*.sqbpro)</source>
-        <translation type="unfinished"></translation>
+        <translation>  &lt;项目&gt;           打开这个项目文件 (*.sqbpro)</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="115"/>
@@ -299,27 +300,27 @@
     <message>
         <location filename="../Application.cpp" line="236"/>
         <source>SQLite Version </source>
-        <translation type="unfinished">SQLite 版本 </translation>
+        <translation>SQLite 版本 </translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="238"/>
         <source>SQLCipher Version %1 (based on SQLite %2)</source>
-        <translation type="unfinished">SQLCipher 版本 %1 (基于 SQLite %2)</translation>
+        <translation>SQLCipher 版本 %1 (基于 SQLite %2)</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="241"/>
         <source>DB Browser for SQLite Version %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>DB Browser for SQLite 版本 %1.</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="242"/>
         <source>Built for %1, running on %2</source>
-        <translation type="unfinished">为 %1 构建，运行于 %2</translation>
+        <translation>为 %1 构建，运行于 %2</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="243"/>
         <source>Qt Version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Qt 版本 %1</translation>
     </message>
 </context>
 <context>
@@ -472,7 +473,7 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="28"/>
         <source>.NET DateTime.Ticks to date</source>
-        <translation type="unfinished"></translation>
+        <translation>.NET 日期时间（Ticks到日期）</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="29"/>
@@ -4689,12 +4690,12 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="1587"/>
         <source>Opened &apos;%1&apos; in read-only mode from recent file list</source>
-        <translation type="unfinished"></translation>
+        <translation>从最近的文件列表中用只读方式打开 %1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1589"/>
         <source>Opened &apos;%1&apos; from recent file list</source>
-        <translation type="unfinished"></translation>
+        <translation>从最近的文件列表中打开 %1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1627"/>
@@ -4864,32 +4865,32 @@ If you answer no we will attempt to import the data in the SQL file to the curre
     <message>
         <location filename="../MainWindow.cpp" line="327"/>
         <source>Window Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>窗口布局</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="336"/>
         <source>Simplify Window Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>精简窗口布局</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="337"/>
         <source>Shift+Alt+0</source>
-        <translation type="unfinished"></translation>
+        <translation>Shift+Alt+0</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="346"/>
         <source>Dock Windows at Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>停靠窗口到底部</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="350"/>
         <source>Dock Windows at Left Side</source>
-        <translation type="unfinished"></translation>
+        <translation>停靠窗口到左侧</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="354"/>
         <source>Dock Windows at Top</source>
-        <translation type="unfinished"></translation>
+        <translation>停靠窗口到顶部</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1441"/>
@@ -5978,12 +5979,12 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     <message>
         <location filename="../PreferencesDialog.ui" line="555"/>
         <source>This sets the font size for all UI elements which do not have their own font size option.</source>
-        <translation type="unfinished"></translation>
+        <translation>此选项为所有组件设置字体大小，有单独的字体大小选项的组件除外。</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="558"/>
         <source>Font size</source>
-        <translation type="unfinished"></translation>
+        <translation>字体大小</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="649"/>
@@ -5993,7 +5994,7 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     <message>
         <location filename="../PreferencesDialog.ui" line="680"/>
         <source>Database structure font size</source>
-        <translation type="unfinished"></translation>
+        <translation>数据库结构字体大小</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="753"/>
@@ -6553,37 +6554,37 @@ Create a backup!</source>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="13"/>
         <source>Commit ID</source>
-        <translation type="unfinished"></translation>
+        <translation>提交ID</translation>
     </message>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="13"/>
         <source>Message</source>
-        <translation type="unfinished"></translation>
+        <translation>说明</translation>
     </message>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="13"/>
         <source>Date</source>
-        <translation type="unfinished">日期</translation>
+        <translation>日期</translation>
     </message>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="13"/>
         <source>Author</source>
-        <translation type="unfinished"></translation>
+        <translation>作者</translation>
     </message>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="13"/>
         <source>Size</source>
-        <translation type="unfinished">大小</translation>
+        <translation>大小</translation>
     </message>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="65"/>
         <source>Authored and committed by %1</source>
-        <translation type="unfinished"></translation>
+        <translation>由 %1 为作者并提交</translation>
     </message>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="67"/>
         <source>Authored by %1, committed by %2</source>
-        <translation type="unfinished"></translation>
+        <translation>由 %1 为作者，由 %2 提交</translation>
     </message>
 </context>
 <context>
@@ -6700,7 +6701,7 @@ Create a backup!</source>
     <message>
         <location filename="../RemoteDock.ui" line="76"/>
         <source>DBHub.io</source>
-        <translation type="unfinished"></translation>
+        <translation>DBHub.io</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="109"/>
@@ -6710,137 +6711,137 @@ Create a backup!</source>
     <message>
         <location filename="../RemoteDock.ui" line="143"/>
         <source>Current Database</source>
-        <translation type="unfinished"></translation>
+        <translation>当前数据库</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="174"/>
         <source>Clone</source>
-        <translation type="unfinished"></translation>
+        <translation>克隆</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="183"/>
         <source>User</source>
-        <translation type="unfinished">用户</translation>
+        <translation>用户</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="200"/>
         <source>Database</source>
-        <translation type="unfinished">数据库</translation>
+        <translation>数据库</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="217"/>
         <source>Branch</source>
-        <translation type="unfinished">分支</translation>
+        <translation>分支</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="237"/>
         <source>Commits</source>
-        <translation type="unfinished"></translation>
+        <translation>提交记录</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="257"/>
         <source>Commits for</source>
-        <translation type="unfinished"></translation>
+        <translation>提交于</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="372"/>
         <source>Delete Database</source>
-        <translation type="unfinished"></translation>
+        <translation>删除数据库</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="375"/>
         <source>Delete the local clone of this database</source>
-        <translation type="unfinished"></translation>
+        <translation>删除此数据库的本地克隆</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="384"/>
         <source>Open in Web Browser</source>
-        <translation type="unfinished"></translation>
+        <translation>在浏览器中打开</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="387"/>
         <source>Open the web page for the current database in your browser</source>
-        <translation type="unfinished"></translation>
+        <translation>在你的浏览器中打开当前数据库的网页版</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="396"/>
         <source>Clone from Link</source>
-        <translation type="unfinished"></translation>
+        <translation>从链接克隆</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="399"/>
         <source>Use this to download a remote database for local editing using a URL as provided on the web page of the database.</source>
-        <translation type="unfinished"></translation>
+        <translation>使用数据库页面提供的链接，将数据库下载到本地以供编辑。</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="408"/>
         <source>Refresh</source>
-        <translation type="unfinished">刷新</translation>
+        <translation>刷新</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="411"/>
         <source>Reload all data and update the views</source>
-        <translation type="unfinished"></translation>
+        <translation>重新载入所有数据并更新视图</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="414"/>
         <source>F5</source>
-        <translation type="unfinished"></translation>
+        <translation>F5</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="423"/>
         <source>Clone Database</source>
-        <translation type="unfinished"></translation>
+        <translation>克隆数据库</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="438"/>
         <source>Open Database</source>
-        <translation type="unfinished"></translation>
+        <translation>打开数据库</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="441"/>
         <source>Open the local copy of this database</source>
-        <translation type="unfinished"></translation>
+        <translation>打开此数据库的本地拷贝</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="452"/>
         <source>Check out Commit</source>
-        <translation type="unfinished"></translation>
+        <translation>签出某个提交</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="455"/>
         <source>Download and open this specific commit</source>
-        <translation type="unfinished"></translation>
+        <translation>下载并打开特定的提交版本</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="470"/>
         <source>Check out Latest Commit</source>
-        <translation type="unfinished"></translation>
+        <translation>签出最新提交</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="473"/>
         <source>Check out the latest commit of the current branch</source>
-        <translation type="unfinished"></translation>
+        <translation>从当前分支签出最近一次的提交版本</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="478"/>
         <source>Save Revision to File</source>
-        <translation type="unfinished"></translation>
+        <translation>将版本另存为文件</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="481"/>
         <source>Saves the selected revision of the database to another file</source>
-        <translation type="unfinished"></translation>
+        <translation>将选择的版本的数据库保存到另一个文件</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="490"/>
         <source>Upload Database</source>
-        <translation type="unfinished"></translation>
+        <translation>上传数据库</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="493"/>
         <source>Upload this database as a new commit</source>
-        <translation type="unfinished"></translation>
+        <translation>将当前数据库作为新的提交上传</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB4S. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to create a DB4S certificate (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB4S Preferences. Click the button to add a new certificate to DB4S and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -6859,7 +6860,7 @@ Create a backup!</source>
     <message>
         <location filename="../RemoteDock.cpp" line="151"/>
         <source>Select an identity to connect</source>
-        <translation type="unfinished"></translation>
+        <translation>选择要用于连接的凭据</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="163"/>
@@ -6872,43 +6873,47 @@ Create a backup!</source>
 Please enter the URL to clone from. You can generate this URL by
 clicking the &apos;Clone Database in DB4S&apos; button on the web page
 of the database.</source>
-        <translation type="unfinished"></translation>
+        <translation>将远程服务器上的数据库下载到本地以编辑。
+请输入用于克隆的URL。可通过在网页上点击
+“Clone Database in DB4S”获得数据库的URL。</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="231"/>
         <source>Invalid URL: The host name does not match the host name of the current identity.</source>
-        <translation type="unfinished"></translation>
+        <translation>无效的URL：主机名与凭据的主机名不符。</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="236"/>
         <source>Invalid URL: No branch name specified.</source>
-        <translation type="unfinished"></translation>
+        <translation>无效的URL：未指定分支名。</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="241"/>
         <source>Invalid URL: No commit ID specified.</source>
-        <translation type="unfinished"></translation>
+        <translation>无效的URL：未指定提交ID。</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="289"/>
         <source>You have modified the local clone of the database. Fetching this commit overrides these local changes.
 Are you sure you want to proceed?</source>
-        <translation type="unfinished"></translation>
+        <translation>你已经修改了本地的数据库。此时获取远程提交将覆盖本地的更改。
+确实要继续吗？</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="333"/>
         <source>The database has unsaved changes. Are you sure you want to push it before saving?</source>
-        <translation type="unfinished"></translation>
+        <translation>数据库有未保存的更改，确实要在保存前推送吗？</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="543"/>
         <source>The database you are trying to delete is currently opened. Please close it before deleting.</source>
-        <translation type="unfinished"></translation>
+        <translation>尝试删除的数据库当前已被打开，请先将之关闭。</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="549"/>
         <source>This deletes the local version of this database with all the changes you have not committed yet. Are you sure you want to delete this database?</source>
-        <translation type="unfinished"></translation>
+        <translation>将删除本地的数据库，包括你未提交的修改。
+确实要删除此数据库吗？</translation>
     </message>
 </context>
 <context>
@@ -6916,32 +6921,32 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>Name</source>
-        <translation type="unfinished">名称</translation>
+        <translation>名称</translation>
     </message>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>Branch</source>
-        <translation type="unfinished">分支</translation>
+        <translation>分支</translation>
     </message>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>Last modified</source>
-        <translation type="unfinished">上次修改</translation>
+        <translation>上次修改</translation>
     </message>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>Size</source>
-        <translation type="unfinished">大小</translation>
+        <translation>大小</translation>
     </message>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>Commit</source>
-        <translation type="unfinished">提交</translation>
+        <translation>提交</translation>
     </message>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>File</source>
-        <translation type="unfinished">文件</translation>
+        <translation>文件</translation>
     </message>
 </context>
 <context>
@@ -6973,22 +6978,22 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../RemoteModel.cpp" line="231"/>
         <source>Size: </source>
-        <translation type="unfinished"></translation>
+        <translation>大小：</translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="232"/>
         <source>Last Modified: </source>
-        <translation type="unfinished"></translation>
+        <translation>上次修改：</translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="233"/>
         <source>Licence: </source>
-        <translation type="unfinished"></translation>
+        <translation>授权：</translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="234"/>
         <source>Default Branch: </source>
-        <translation type="unfinished"></translation>
+        <translation>默认分支：</translation>
     </message>
     <message>
         <source>bytes</source>
@@ -7000,54 +7005,54 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../RemoteNetwork.cpp" line="218"/>
         <source>Choose a location to save the file</source>
-        <translation type="unfinished"></translation>
+        <translation>选择保存位置</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="250"/>
         <source>Error opening remote file at %1.
 %2</source>
-        <translation type="unfinished">在 %1 打开远程文件时出错.
+        <translation>打开远程文件 %1 时出错.
 %2</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="329"/>
         <source>Error: Invalid client certificate specified.</source>
-        <translation type="unfinished">错误: 指定了错误的客户端证书。</translation>
+        <translation>错误: 指定了错误的客户端证书。</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="341"/>
         <source>Please enter the passphrase for this client certificate in order to authenticate.</source>
-        <translation type="unfinished">请输入客户端证书的口令以进行身份认证。</translation>
+        <translation>请输入客户端证书的口令以进行身份认证。</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="365"/>
         <source>Cancel</source>
-        <translation type="unfinished">取消</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="370"/>
         <source>Uploading remote database to
 %1</source>
-        <translation type="unfinished">正在上传远程数据库到
+        <translation>正在上传远程数据库到
 %1. {1?}</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="372"/>
         <source>Downloading remote database from
 %1</source>
-        <translation type="unfinished">正在下载远程数据库于
+        <translation>正在下载远程数据库于
 %1. {1?}</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="390"/>
         <location filename="../RemoteNetwork.cpp" line="456"/>
         <source>Error: The network is not accessible.</source>
-        <translation type="unfinished">错误: 网络无法访问。</translation>
+        <translation>错误: 网络无法访问。</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="465"/>
         <source>Error: Cannot open the file for sending.</source>
-        <translation type="unfinished">错误: 无法打开文件用于发送。</translation>
+        <translation>错误: 无法打开文件用于发送。</translation>
     </message>
 </context>
 <context>
@@ -7102,7 +7107,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../RemotePushDialog.ui" line="129"/>
         <source>Username</source>
-        <translation type="unfinished"></translation>
+        <translation>用户名</translation>
     </message>
     <message>
         <location filename="../RemotePushDialog.cpp" line="72"/>
