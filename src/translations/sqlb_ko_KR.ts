@@ -1020,7 +1020,7 @@ Errors are indicated with a red squiggle underline.</source>
         <location filename="../EditDialog.ui" line="284"/>
         <location filename="../EditDialog.ui" line="299"/>
         <source>Print...</source>
-        <translation></translation>
+        <translation>인쇄하기...</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="290"/>
@@ -6208,8 +6208,7 @@ Use of this function must be authorized from Preferences.</source>
     <message>
         <location filename="../sqlitetablemodel.cpp" line="339"/>
         <source>loading...</source>
-        <translatorcomment>로딩 중...</translatorcomment>
-        <translation></translation>
+        <translation>로딩 중...</translation>
     </message>
     <message>
         <location filename="../sqlitetablemodel.cpp" line="404"/>
