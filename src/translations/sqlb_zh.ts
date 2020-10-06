@@ -230,12 +230,12 @@
     <message>
         <location filename="../Application.cpp" line="98"/>
         <source>  -s, --sql &lt;file&gt;    Execute this SQL file after opening the DB</source>
-        <translation>  -s, --sql [文件]    在打开数据库后执行此 SQL 文件</translation>
+        <translation>  -s, --sql &lt;文件&gt;    在打开数据库后执行此 SQL 文件</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="99"/>
         <source>  -t, --table &lt;table&gt; Browse this table after opening the DB</source>
-        <translation>  -t, --table [表] 在打开数据库后浏览此表</translation>
+        <translation>  -t, --table &lt;表&gt; 在打开数据库后浏览此表</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="100"/>
@@ -245,7 +245,7 @@
     <message>
         <location filename="../Application.cpp" line="101"/>
         <source>  -o, --option &lt;group&gt;/&lt;setting&gt;=&lt;value&gt;</source>
-        <translation>  -o, --option [分组/设置=值]</translation>
+        <translation>  -o, --option &lt;分组/设置=值&gt;</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="102"/>
@@ -255,7 +255,7 @@
     <message>
         <location filename="../Application.cpp" line="103"/>
         <source>  -O, --save-option &lt;group&gt;/&lt;setting&gt;=&lt;value&gt;</source>
-        <translation>  -O, --save-option [分组/设置=值]</translation>
+        <translation>  -O, --save-option &lt;分组/设置=值&gt;</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="104"/>
@@ -270,7 +270,7 @@
     <message>
         <location filename="../Application.cpp" line="106"/>
         <source>  &lt;database&gt;          Open this SQLite database</source>
-        <translation>  [文件]         打开这个 SQLite 数据库</translation>
+        <translation>  &lt;文件&gt;         打开这个 SQLite 数据库</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="107"/>
