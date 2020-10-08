@@ -4474,7 +4474,7 @@ Waarschuwing: door het partiële laadmechanisme zijn nog niet alle gegevens zijn
         <location filename="../PreferencesDialog.ui" line="1811"/>
         <location filename="../PreferencesDialog.ui" line="1931"/>
         <source>...</source>
-        <translation></translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="96"/>
