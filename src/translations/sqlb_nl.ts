@@ -509,7 +509,7 @@ Indien enige andere opties voor dit databasebestand gewijzigd waren dan dien je 
     <message>
         <location filename="../CondFormatManager.ui" line="35"/>
         <source>&amp;Add</source>
-        <translation></translation>
+        <translation>&amp;Toevoegen</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="52"/>
@@ -914,12 +914,12 @@ Melding van de database:
     <message>
         <location filename="../EditDialog.ui" line="83"/>
         <source>JSON</source>
-        <translation></translation>
+        <translation>JSON</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="88"/>
         <source>XML</source>
-        <translation></translation>
+        <translation>XML</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="96"/>
@@ -1612,22 +1612,22 @@ Alle waarden die momenteel opgeslagen zijn in dit veld zullen verloren gaan.</tr
     <message>
         <location filename="../ExportDataDialog.ui" line="102"/>
         <source>,</source>
-        <translation></translation>
+        <translation>,</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="107"/>
         <source>;</source>
-        <translation></translation>
+        <translation>;</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="112"/>
         <source>Tab</source>
-        <translation></translation>
+        <translation>Tab</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="117"/>
         <source>|</source>
-        <translation></translation>
+        <translation>|</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="122"/>
@@ -1644,12 +1644,12 @@ Alle waarden die momenteel opgeslagen zijn in dit veld zullen verloren gaan.</tr
     <message>
         <location filename="../ExportDataDialog.ui" line="177"/>
         <source>&quot;</source>
-        <translation></translation>
+        <translation>&quot;</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="182"/>
         <source>&apos;</source>
-        <translation></translation>
+        <translation>&apos;</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="222"/>
@@ -1659,12 +1659,12 @@ Alle waarden die momenteel opgeslagen zijn in dit veld zullen verloren gaan.</tr
     <message>
         <location filename="../ExportDataDialog.ui" line="244"/>
         <source>Windows: CR+LF (\r\n)</source>
-        <translation></translation>
+        <translation>Windows: CR+LF (\r\n)</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="249"/>
         <source>Unix: LF (\n)</source>
-        <translation></translation>
+        <translation>Unix: LF (\n)</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="288"/>
@@ -2340,23 +2340,23 @@ x~y	Bereik: waarden tussen x en y
     <message>
         <location filename="../ImportCsvDialog.ui" line="68"/>
         <source>,</source>
-        <translation></translation>
+        <translation>,</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="73"/>
         <source>;</source>
-        <translation></translation>
+        <translation>;</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="78"/>
         <location filename="../ImportCsvDialog.cpp" line="779"/>
         <source>Tab</source>
-        <translation></translation>
+        <translation>Tab</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="83"/>
         <source>|</source>
-        <translation></translation>
+        <translation>|</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="88"/>
@@ -2378,12 +2378,12 @@ x~y	Bereik: waarden tussen x en y
     <message>
         <location filename="../ImportCsvDialog.ui" line="143"/>
         <source>&quot;</source>
-        <translation></translation>
+        <translation>&quot;</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="148"/>
         <source>&apos;</source>
-        <translation></translation>
+        <translation>&apos;</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="200"/>
@@ -2393,17 +2393,17 @@ x~y	Bereik: waarden tussen x en y
     <message>
         <location filename="../ImportCsvDialog.ui" line="213"/>
         <source>UTF-8</source>
-        <translation></translation>
+        <translation>UTF-8</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="218"/>
         <source>UTF-16</source>
-        <translation></translation>
+        <translation>UTF-16</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="223"/>
         <source>ISO-8859-1</source>
-        <translation></translation>
+        <translation>ISO-8859-1</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="228"/>
@@ -2904,7 +2904,7 @@ Je kunt SQL-instructies vanuit de Schema-kolom naar de SQL-bewerker of naar ande
     <message>
         <location filename="../MainWindow.ui" line="1357"/>
         <source>Export a database table as a comma separated text file.</source>
-        <translation></translation>
+        <translation>Exporteer een databasetabel naar een kommagescheiden tekstbestand.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1360"/>
@@ -3917,7 +3917,7 @@ Als je nee antwoordt, wordt geprobeerd om de gegevens uit het SQL-bestand te imp
     <message>
         <location filename="../MainWindow.cpp" line="1665"/>
         <source>&amp;%1 %2%3</source>
-        <translation></translation>
+        <translation>&amp;%1 %2%3</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1665"/>
@@ -4185,17 +4185,17 @@ Maak een backup!</translation>
     <message>
         <location filename="../PlotDock.ui" line="63"/>
         <source>X</source>
-        <translation></translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="68"/>
         <source>Y1</source>
-        <translation></translation>
+        <translation>Y1</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="73"/>
         <source>Y2</source>
-        <translation></translation>
+        <translation>Y2</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="78"/>
@@ -4903,7 +4903,7 @@ Voer 0 in om waarde-aanvulling uit te schakelen.</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="1365"/>
         <source>selected_bg</source>
-        <translation></translation>
+        <translation>selected_bg</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1368"/>
@@ -4913,7 +4913,7 @@ Voer 0 in om waarde-aanvulling uit te schakelen.</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="1373"/>
         <source>selected_fg</source>
-        <translation></translation>
+        <translation>selected_fg</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1376"/>
@@ -4923,7 +4923,7 @@ Voer 0 in om waarde-aanvulling uit te schakelen.</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="1381"/>
         <source>highlight</source>
-        <translation></translation>
+        <translation>highlight</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1384"/>
@@ -5313,12 +5313,12 @@ Please check again.</source>
     <message>
         <location filename="../ProxyDialog.cpp" line="14"/>
         <source>HTTP</source>
-        <translation></translation>
+        <translation>HTTP</translation>
     </message>
     <message>
         <location filename="../ProxyDialog.cpp" line="15"/>
         <source>Socks v5</source>
-        <translation></translation>
+        <translation>Socks v5</translation>
     </message>
 </context>
 <context>
@@ -5442,7 +5442,8 @@ Please check again.</source>
         <location filename="../ImportCsvDialog.cpp" line="116"/>
         <source>.
 %1</source>
-        <translation></translation>
+        <translation>.
+%1</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.cpp" line="128"/>
@@ -5465,7 +5466,7 @@ Please check again.</source>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="13"/>
         <source>Commit ID</source>
-        <translation></translation>
+        <translation>Commit ID</translation>
     </message>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="13"/>
@@ -5540,7 +5541,7 @@ Please check again.</source>
     <message>
         <location filename="../RemoteDock.ui" line="106"/>
         <source>DBHub.io</source>
-        <translation></translation>
+        <translation>DBHub.io</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="139"/>
@@ -5580,7 +5581,7 @@ Please check again.</source>
     <message>
         <location filename="../RemoteDock.ui" line="267"/>
         <source>Commits</source>
-        <translation></translation>
+        <translation>Commits</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="287"/>
@@ -5781,7 +5782,7 @@ Weet je zeker dat je door wilt gaan?</translation>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>Commit</source>
-        <translation></translation>
+        <translation>Commit</translation>
     </message>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
@@ -5809,7 +5810,7 @@ Weet je zeker dat je door wilt gaan?</translation>
     <message>
         <location filename="../RemoteModel.cpp" line="109"/>
         <source>Commit</source>
-        <translation></translation>
+        <translation>Commit</translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="231"/>
@@ -6708,7 +6709,7 @@ Houdt %3Shift ingedrukt terwijl je klikt om er naartoe te springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="459"/>
         <source>|&lt;</source>
-        <translation></translation>
+        <translation>|&lt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="470"/>
@@ -6723,7 +6724,7 @@ Houdt %3Shift ingedrukt terwijl je klikt om er naartoe te springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="476"/>
         <source>&lt;</source>
-        <translation></translation>
+        <translation>&lt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="487"/>
@@ -6743,7 +6744,7 @@ Houdt %3Shift ingedrukt terwijl je klikt om er naartoe te springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="500"/>
         <source>&gt;</source>
-        <translation></translation>
+        <translation>&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="511"/>
@@ -6758,7 +6759,7 @@ Houdt %3Shift ingedrukt terwijl je klikt om er naartoe te springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="517"/>
         <source>&gt;|</source>
-        <translation></translation>
+        <translation>&gt;|</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="541"/>
@@ -6788,7 +6789,7 @@ Houdt %3Shift ingedrukt terwijl je klikt om er naartoe te springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="560"/>
         <source>1</source>
-        <translation></translation>
+        <translation>1</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="572"/>
