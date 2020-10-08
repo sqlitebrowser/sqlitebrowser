@@ -59,7 +59,7 @@
     <message>
         <location filename="../AddRecordDialog.ui" line="93"/>
         <source>When you edit the values in the upper frame, the SQL query for inserting this new record is shown here. You can edit manually the query before saving.</source>
-        <translation></translation>
+        <translation>Wanneer je waarden in het kader hierboven bewerkt, dan wordt de SQL-opdracht voor het invoegen van een nieuw record hier getoond. Je kunt de opdracht dan nog bewerken, voordat je deze opslaat.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="110"/>
@@ -648,7 +648,7 @@ Indien enige andere opties voor dit databasebestand gewijzigd waren dan dien je 
     <message>
         <location filename="../sqlitedb.cpp" line="835"/>
         <source>Exporting database to SQL file...</source>
-        <translation>Database wordt geëporteerd naar SQL-bestand...</translation>
+        <translation>Database wordt geëxporteerd naar SQL-bestand...</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="836"/>
