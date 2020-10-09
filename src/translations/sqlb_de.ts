@@ -162,7 +162,7 @@
     <message>
         <location filename="../AddRecordDialog.cpp" line="360"/>
         <source>Are you sure you want to restore all the entered values to their defaults?</source>
-        <translation>Sind Sie sicher, dass Sie alle eingegebenen Werte auf deren Standardwerte zurücksetzen möchten?</translation>
+        <translation>Sind Sie sicher, dass Sie alle eingegebenen Werte auf ihre Standardwerte zurücksetzen möchten?</translation>
     </message>
 </context>
 <context>
@@ -186,27 +186,27 @@
     </message>
     <message>
         <source>  -s, --sql  [file]	Execute this SQL file after opening the DB</source>
-        <translation type="obsolete">  -s, --sql  [Datei] Führe diese SQL-Datei nach dem Öffnen der DB aus</translation>
+        <translation type="obsolete">  -s, --sql  [Datei] Diese SQL-Datei nach dem Öffnen der DB ausführen</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="91"/>
         <source>  -s, --sql [file]	Execute this SQL file after opening the DB</source>
-        <translation>  -s, --sql [Datei]	Führe nach dem Öffnen der Datenbank diese SQL-Datei aus</translation>
+        <translation>  -s, --sql [Datei]	Nach dem Öffnen der Datenbank diese SQL-Datei ausführen</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="92"/>
         <source>  -t, --table [table]	Browse this table after opening the DB</source>
-        <translation>  -t, --table [Tabelle]	Navigiere nach dem Öffnen der Datenbank durch diese Tabelle</translation>
+        <translation>  -t, --table [Tabelle]	Nach dem Öffnen der Datenbank den Inhalt dieser Tabelle anzeigen</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="90"/>
         <source>  -q, --quit		Exit application after running scripts</source>
-        <translation>  -q, --quit		Beende die Anwendung nach Ausführung der Skripte</translation>
+        <translation>  -q, --quit		Nach Ausführung der Skripte die Anwendung beenden</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="93"/>
         <source>  -R, --read-only	Open database in read-only mode</source>
-        <translation>  -R, --read-only:	Datenbank im rein lesenden Modus öffnen</translation>
+        <translation>  -R, --read-only:	Datenbank im Lesemodus öffnen</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="94"/>
@@ -2960,7 +2960,7 @@ x~y	Bereich: Werte zwischen x und y
     </message>
     <message>
         <source>Table(s) to JSON...</source>
-        <translation type="vanished">Tabelle(n) zu JSON...</translation>
+        <translation type="vanished">Tabelle(n) als JSON...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1774"/>
@@ -3790,7 +3790,7 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     <message>
         <location filename="../MainWindow.ui" line="1024"/>
         <source>DB Sche&amp;ma</source>
-        <translation>DB Sche&amp;ma</translation>
+        <translation>DB-Sche&amp;ma</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1037"/>
@@ -4061,7 +4061,7 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     </message>
     <message>
         <source>DB Schema</source>
-        <translation type="vanished">DB Schema</translation>
+        <translation type="vanished">DB-Schema</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1121"/>
@@ -4217,7 +4217,7 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     </message>
     <message>
         <source>Database to SQL file...</source>
-        <translation type="obsolete">Datenbank zu SQL-Datei...</translation>
+        <translation type="obsolete">Datenbank als SQL-Datei...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1305"/>
@@ -4431,7 +4431,7 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     <message>
         <location filename="../MainWindow.ui" line="1302"/>
         <source>&amp;Database to SQL file...</source>
-        <translation>&amp;Datenbank zu SQL-Datei...</translation>
+        <translation>&amp;Datenbank als SQL-Datei...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1316"/>
@@ -4578,17 +4578,17 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     <message>
         <location filename="../MainWindow.ui" line="1497"/>
         <source>Ctrl+Return</source>
-        <translation></translation>
+        <translation>Strg+Return</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="266"/>
         <source>Ctrl+D</source>
-        <translation></translation>
+        <translation>Strg+D</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="271"/>
         <source>Ctrl+I</source>
-        <translation></translation>
+        <translation>Strg+I</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="311"/>
