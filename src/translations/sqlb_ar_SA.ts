@@ -20,26 +20,6 @@
 &lt;p&gt;«متصفّح قواعد بيانات SQLite» أداة رسوميّة مفتوحة المصدر ومجانية، تُستخدم لإنشاء ملفّات قواعد بيانات SQLite وتصميمها وتحريرها.&lt;/p&gt;&lt;p&gt;الأداة مرخّصة برخصتين، الإصدارة الثانية من رخصة موزيلا العمومية، والإصدارة الثالثة وما بعدها من رخصة غنو العمومية. يمكنك تعديل الأداة أو إعادة توزيعها بشروط تلك الرخص.&lt;/p&gt;&lt;p&gt;طالع &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; و&lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; للتفاصيل.&lt;/p&gt;&lt;p&gt;من فضلك زُر موقع الوِب هذا لمعلومات أكثر عن البرمجية: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;تستخدم هذه البرمجية عُدّة أدوات كيوت المرخّصة تحت GPL/LGPL وذلك من &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;طالع &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; لشروط الترخيص والمعلومات.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;تستخدم البرمجية أيضًا طقم أيقونات الحرير/Silk للمؤلّف Mark James المرخّصة برخصة المشاع الإبداعي - النسبة ٢٫٥ و٣٫٠.&lt;br/&gt;طالع &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; للتفاصيل.&lt;/span&gt;&lt;/p&gt;
 &lt;/html&gt;</translation>
     </message>
-    <message>
-        <source>SQLCipher Version %1 (based on SQLite %2)</source>
-        <translation type="vanished">إصدارة SQLCipher:‏ %L1 (مبنيّة على SQLite %L2)</translation>
-    </message>
-    <message>
-        <source>Version </source>
-        <translation type="vanished">الإصدارة </translation>
-    </message>
-    <message>
-        <source>Built for %1, running on %2</source>
-        <translation type="vanished">مبنيّة للمعماريّة %L1، وتعمل على المعماريّة %L2</translation>
-    </message>
-    <message>
-        <source>Qt Version </source>
-        <translation type="vanished">إصدارة كيوت: </translation>
-    </message>
-    <message>
-        <source>SQLite Version </source>
-        <translation type="vanished">إصدارة SQLite: ‏</translation>
-    </message>
 </context>
 <context>
     <name>AddRecordDialog</name>
@@ -141,60 +121,14 @@
 <context>
     <name>Application</name>
     <message>
-        <source>Usage: %1 [options] [db]
-</source>
-        <translation type="vanished">‎الاستعمال:‎ %L1 [options] [db]
-</translation>
-    </message>
-    <message>
         <location filename="../Application.cpp" line="95"/>
         <source>Possible command line arguments:</source>
         <translation>معطيات سطر الأوامر الممكنة:</translation>
     </message>
     <message>
-        <source>  -h, --help		Show command line options</source>
-        <translation type="vanished">  -h, --help		اعرض خيارات سطر الأوامر</translation>
-    </message>
-    <message>
-        <source>  -s, --sql [file]	Execute this SQL file after opening the DB</source>
-        <translation type="vanished">  -s, --sql [ملف]‎	‫نفّذ ملف SQL المذكور بعد فتح قاعدة البيانات</translation>
-    </message>
-    <message>
-        <source>  -t, --table [table]	Browse this table after opening the DB</source>
-        <translation type="vanished">  -t, --table [جدول]‎	تصفّح الجدول المذكور بعد فتح قاعدة البيانات</translation>
-    </message>
-    <message>
-        <source>  -o, --option [group/setting=value]	Run application with this setting temporarily set to value</source>
-        <translation type="vanished">  -o, --option [المجموعة/الإعداد=القيمة]	شغّل التطبيق بضبط هذا الإعداد على هذه القيمة مؤقّتًا</translation>
-    </message>
-    <message>
-        <source>  -O, --save-option [group/setting=value]	Run application saving this value for this setting</source>
-        <translation type="vanished">  -O, --save-option [المجموعة/الإعداد=القيمة]	شغّل التطبيق واحفظ هذه القيمة إعدادًا</translation>
-    </message>
-    <message>
-        <source>This is DB Browser for SQLite version %1.</source>
-        <translation type="vanished">هذا «متصفّح قواعد بيانات SQLite»، الإصدارة %L1.</translation>
-    </message>
-    <message>
         <location filename="../Application.cpp" line="131"/>
         <source>The -o/--option and -O/--save-option options require an argument in the form group/setting=value</source>
         <translation>يطلب الخياران ‎-o/--option و ‎-O/--save-option معطًى بهذا النحو: group/setting=value</translation>
-    </message>
-    <message>
-        <source>  -q, --quit		Exit application after running scripts</source>
-        <translation type="vanished">  -q, --quit		أنهِ التطبيق بعد تشغيل السكربتات</translation>
-    </message>
-    <message>
-        <source>  -R, --read-only	Open database in read-only mode</source>
-        <translation type="vanished">  -R, --read-only	افتح قاعدة البيانات بوضع القراءة فقط</translation>
-    </message>
-    <message>
-        <source>  -v, --version		Display the current version</source>
-        <translation type="vanished">  -v, --version		اعرض الإصدارة الحالية</translation>
-    </message>
-    <message>
-        <source>  [file]		Open this SQLite database</source>
-        <translation type="vanished">‎  [ملف]‎		‫افتح قاعدة بيانات SQLite المذكورة</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="93"/>
@@ -1226,7 +1160,12 @@ Errors are indicated with a red squiggle underline.</source>
         <translation>جربّ الانتقال إلى وضع ”بيانات ثنائيّة“.</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="1239"/>
+        <location filename="../EditDialog.cpp" line="1221"/>
+        <source>Couldn&apos;t save file: %1.</source>
+        <translation type="unfinished">تعذّر حفظ الملف: %L1.</translation>
+    </message>
+    <message>
+        <location filename="../EditDialog.cpp" line="1246"/>
         <source>The data has been saved to a temporary file and has been opened with the default application. You can now edit the file and, when you are ready, apply the saved new data to the cell editor or cancel any changes.</source>
         <translation>حُفظت البيانات في ملف مؤقّت وفُتح في التطبيق المبدئي. يمكنك الآن تحرير الملف وتطبيق البيانات الجديدة المحفوظة فيه متى أردت في محرّر الخليّة، أو حتّى إلغاء تلك التغييرات.</translation>
     </message>
@@ -3128,17 +3067,9 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation>تبرّع &amp;عبر باتريون...</translation>
     </message>
     <message>
-        <source>This button lets you save all the settings associated to the open DB to a DB4S project file</source>
-        <translation type="vanished">يتيح لك هذا الزر حفظ كلّ الإعدادات المرتبطة بقاعدة البيانات المفتوحة في ملف مشروع DB4S</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1658"/>
         <source>Open &amp;Project...</source>
         <translation>افتح م&amp;شروعًا...</translation>
-    </message>
-    <message>
-        <source>This button lets you open a DB4S project file</source>
-        <translation type="vanished">يتيح لك هذا الزر فتح ملف مشروع DB4S</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1682"/>
@@ -3439,14 +3370,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation>ن&amp;فّذ SQL</translation>
     </message>
     <message>
-        <source>Open SQL file</source>
-        <translation type="vanished">افتح ملف SQL</translation>
-    </message>
-    <message>
-        <source>This button opens a file containing SQL statements and loads it in a new editor tab</source>
-        <translation type="vanished">يفتح هذا الزر ملفًا يحتوي إفادات SQL ويحمّله في لسان محرّر جديد</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1518"/>
         <location filename="../MainWindow.ui" line="1727"/>
         <location filename="../MainWindow.ui" line="1730"/>
@@ -3605,10 +3528,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
 If you answer no we will attempt to import the data in the SQL file to the current database.</source>
         <translation>أتريد إنشاء ملف قاعدة بيانات جديد ليحتفظ بالبيانات المستوردة؟
 إن كانت إجابتك ”لا“ فسنحاول استيراد البيانات من ملف SQL إلى قاعدة البيانات الحالية.</translation>
-    </message>
-    <message>
-        <source>Close current SQL tab</source>
-        <translation type="vanished">أغلِق لسان SQL الحالي</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="682"/>
@@ -4160,10 +4079,6 @@ Create a backup!</source>
         <translation>س</translation>
     </message>
     <message>
-        <source>Y</source>
-        <translation type="vanished">ص</translation>
-    </message>
-    <message>
         <location filename="../PlotDock.ui" line="56"/>
         <source>Y1</source>
         <translation>ص1</translation>
@@ -4509,10 +4424,6 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <location filename="../PreferencesDialog.ui" line="616"/>
         <source>Prefetch block si&amp;ze</source>
         <translation>&amp;حجم الكتلة لجلبها مسبقًا</translation>
-    </message>
-    <message>
-        <source>Advanced</source>
-        <translation type="vanished">متقدّم</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="697"/>
@@ -5342,22 +5253,6 @@ All your preferences will be lost and default values will be used.</source>
         <source>Extensions (*.so *.dylib *.dll)</source>
         <translation>الامتدادات (*.so *.dylib *.dll)</translation>
     </message>
-    <message>
-        <source>Name</source>
-        <translation type="vanished">الاسم</translation>
-    </message>
-    <message>
-        <source>Commit</source>
-        <translation type="vanished">الإيداع</translation>
-    </message>
-    <message>
-        <source>Last modified</source>
-        <translation type="vanished">آخر تعديل</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="vanished">الحجم</translation>
-    </message>
 </context>
 <context>
     <name>RemoteCommitsModel</name>
@@ -5400,54 +5295,6 @@ All your preferences will be lost and default values will be used.</source>
 <context>
     <name>RemoteDatabase</name>
     <message>
-        <source>Error when connecting to %1.
-%2</source>
-        <translation type="vanished">خطأ أثناء الاتصال بِ‍ %L1.
-%L2</translation>
-    </message>
-    <message>
-        <source>Error opening remote file at %1.
-%2</source>
-        <translation type="vanished">خطأ أثناء فتح الملف البعيد في %L1.
-%L2</translation>
-    </message>
-    <message>
-        <source>Error: Invalid client certificate specified.</source>
-        <translation type="vanished">خطأ: حُدّدت شهادة عميل غير صالحة.</translation>
-    </message>
-    <message>
-        <source>Please enter the passphrase for this client certificate in order to authenticate.</source>
-        <translation type="vanished">من فضلك أدخِل عبارة السر لشهادة العميل لإجراء الاستيثاق.</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">ألغِ</translation>
-    </message>
-    <message>
-        <source>Uploading remote database to
-%1</source>
-        <translation type="vanished">يرفع قاعدة البيانات البعيدة إلى
-%L1</translation>
-    </message>
-    <message>
-        <source>Downloading remote database from
-%1</source>
-        <translation type="vanished">ينزّل قاعدة البيانات البعيدة من
-%L1</translation>
-    </message>
-    <message>
-        <source>The remote database has been updated since the last checkout. Do you want to update the local database to the newest version? Note that this discards any changes you have made locally! If you don&apos;t want to lose local changes, click No to open the local version.</source>
-        <translation type="vanished">لم تُحدّث أيّة قاعدة بيانات منذ آخر عمليّة جلب/checkout. أتريد تحديث قاعدة البيانات المحليّة إلى أحدث إصدارة؟ لاحظ بأنّ هذا سيُهمل أيّ تغيير أجريته محليًا! إن لم ترد فقد هذه التغييرات التي أجريتها محليًا، فانقر ”لا“ لفتح النسخة المحليّة.</translation>
-    </message>
-    <message>
-        <source>Error: The network is not accessible.</source>
-        <translation type="vanished">خطأ: تعذّر الوصول إلى الشبكة.</translation>
-    </message>
-    <message>
-        <source>Error: Cannot open the file for sending.</source>
-        <translation type="vanished">خطأ: تعذّر فتح الملف لإرساله.</translation>
-    </message>
-    <message>
         <location filename="../RemoteDatabase.cpp" line="56"/>
         <source>Error opening local databases list.
 %1</source>
@@ -5473,14 +5320,6 @@ All your preferences will be lost and default values will be used.</source>
         <location filename="../RemoteDock.ui" line="29"/>
         <source>Identity</source>
         <translation>الهويّة</translation>
-    </message>
-    <message>
-        <source>Connect to the remote server using the currently selected identity. The correct server is taken from the identity as well.</source>
-        <translation type="vanished">اتّصل بالخادوم البعيد مستخدمًا الهويّة المحدّدة حاليًا. يُأخذ الخادوم الصحيح من الهوّية هو الآخر.</translation>
-    </message>
-    <message>
-        <source>Go</source>
-        <translation type="vanished">انتقل</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="59"/>
@@ -5644,10 +5483,6 @@ All your preferences will be lost and default values will be used.</source>
         <location filename="../RemoteDock.ui" line="493"/>
         <source>Upload this database as a new commit</source>
         <translation>يرفع قاعدة البيانات هذه كإيداع جديد</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB4S. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to create a DB4S certificate (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB4S Preferences. Click the button to add a new certificate to DB4S and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">يمكنك في هذه اللوحة إضافة قواعد البيانات البعيدة من موقع الوِب dbhub.io إلى DB4S. تحتاج أولًا هويّة:&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;لِج إلى الموقع dbhub.io (استعمل بياناتك على غِت‌هَب أو أيّ بيانات تريد)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;انقر على الزر لإنشاء شهادة DB4S (وهذه ستكون الهويّة). بهذا ستسلتم ملف شهادة (احفظه في قرص محليّ).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;انتقل إلى لسان ”البعيد“ في تفضيلات DB4S. انقر الزر لإضافة شهادة جديدة إلى DB4S واختر ملف الشهادة الذي نزّلته لتوّك.&lt;/li&gt;&lt;/ol&gt;ستعرض لوحة ”البعيد“ الآن الهويّة وستقدر على إضافة قواعد البيانات البعيدة.</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="317"/>
@@ -6648,10 +6483,6 @@ Hold %3Shift and click to jump there</source>
         <translation>مرّر إلى النهاية</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Clicking this button navigates up to the end in the table view above.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">ينقلك هذا الزر إلى نهاية منظور الجدول أعلاه.</translation>
-    </message>
-    <message>
         <location filename="../TableBrowser.ui" line="526"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates up to the end in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>ينقلك هذا الزر إلى نهاية منظور الجدول أعلاه.</translation>
@@ -6944,10 +6775,6 @@ Hold %3Shift and click to jump there</source>
         <translation>افتح شريط أدوات البحث لتبحث عن القيم التي تريد في منظور الجدول أسفله.</translation>
     </message>
     <message>
-        <source>Ctrl+F</source>
-        <translation type="vanished">Ctrl+F</translation>
-    </message>
-    <message>
         <location filename="../TableBrowser.ui" line="854"/>
         <location filename="../TableBrowser.ui" line="857"/>
         <source>Bold</source>
@@ -7068,14 +6895,6 @@ Hold %3Shift and click to jump there</source>
         <location filename="../TableBrowser.ui" line="1054"/>
         <source>Replace text in cells</source>
         <translation>استبدل النصوص في الخلايا</translation>
-    </message>
-    <message>
-        <source>Ctrl+H</source>
-        <translation type="vanished">Ctrl+H</translation>
-    </message>
-    <message>
-        <source>Filter in all columns</source>
-        <translation type="vanished">رشّح كلّ الأعمدة</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="42"/>

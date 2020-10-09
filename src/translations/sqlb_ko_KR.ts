@@ -1183,7 +1183,12 @@ Errors are indicated with a red squiggle underline.</source>
         <translation>현재 데이터 타입: 유효한 JSON</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="1239"/>
+        <location filename="../EditDialog.cpp" line="1221"/>
+        <source>Couldn&apos;t save file: %1.</source>
+        <translation>파일을 저장할 수 없습니다: %1.</translation>
+    </message>
+    <message>
+        <location filename="../EditDialog.cpp" line="1246"/>
         <source>The data has been saved to a temporary file and has been opened with the default application. You can now edit the file and, when you are ready, apply the saved new data to the cell editor or cancel any changes.</source>
         <translation>현재 데이터는 임시 파일에 저장되었으며 기본 프로그램으로 열립니다. 이제 파일을 편집하고 준비되면 저장된 새 데이터를 셀 편집기에 적용하거나 변경 사항을 취소할 수 있습니다.</translation>
     </message>

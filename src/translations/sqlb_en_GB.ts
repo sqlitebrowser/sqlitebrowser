@@ -1050,7 +1050,7 @@ Errors are indicated with a red squiggle underline.</source>
         <location filename="../EditDialog.ui" line="290"/>
         <location filename="../EditDialog.ui" line="308"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="302"/>
@@ -1070,7 +1070,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditDialog.ui" line="326"/>
         <source>Ctrl+Shift+C</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="462"/>
@@ -1174,7 +1174,12 @@ Errors are indicated with a red squiggle underline.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="1239"/>
+        <location filename="../EditDialog.cpp" line="1221"/>
+        <source>Couldn&apos;t save file: %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EditDialog.cpp" line="1246"/>
         <source>The data has been saved to a temporary file and has been opened with the default application. You can now edit the file and, when you are ready, apply the saved new data to the cell editor or cancel any changes.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1747,18 +1752,18 @@ All data currently stored in this field will be lost.</source>
         <location filename="../ExtendedScintilla.cpp" line="62"/>
         <location filename="../ExtendedScintilla.cpp" line="283"/>
         <source>Ctrl+H</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="64"/>
         <source>Ctrl+F</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="77"/>
         <location filename="../ExtendedScintilla.cpp" line="287"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="277"/>
@@ -1871,17 +1876,17 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="298"/>
         <source>Alt+Del</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="300"/>
         <source>Ctrl+Shift+C</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="301"/>
         <source>Ctrl+Alt+C</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="692"/>
@@ -2512,7 +2517,7 @@ x~y	Range: values between x and y
     <message>
         <location filename="../MainWindow.ui" line="1554"/>
         <source>Shift+F5</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1637"/>
@@ -2573,7 +2578,7 @@ You can drag SQL statements from an object row and drop them into other applicat
     <message>
         <location filename="../MainWindow.ui" line="2080"/>
         <source>Ctrl+/</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2092"/>
@@ -2932,7 +2937,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1798"/>
         <source>Ctrl+Shift+O</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2107"/>
@@ -2961,7 +2966,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="2137"/>
         <source>Ctrl+Shift+S</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2146"/>
@@ -3038,7 +3043,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1840"/>
         <source>Ctrl+F</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1855"/>
@@ -3059,7 +3064,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1867"/>
         <source>Ctrl+H</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1875"/>
@@ -3222,7 +3227,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1184"/>
         <source>Ctrl+F4</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1199"/>
@@ -3506,7 +3511,7 @@ If you answer no we will attempt to import the data in the SQL file to the curre
     <message>
         <location filename="../MainWindow.cpp" line="337"/>
         <source>Shift+Alt+0</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="346"/>
@@ -3638,7 +3643,7 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="331"/>
         <source>Alt+0</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="380"/>
@@ -3660,20 +3665,6 @@ Reason: %1</source>
         <location filename="../MainWindow.cpp" line="603"/>
         <source>In-Memory database</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n row(s)</source>
-        <translation type="vanished">
-            <numerusform>%n row</numerusform>
-            <numerusform>%n rows</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>, %n column(s)</source>
-        <translation type="vanished">
-            <numerusform>, %n column</numerusform>
-            <numerusform>, %n columns</numerusform>
-        </translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="843"/>
@@ -3963,10 +3954,6 @@ Create a backup!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Choose a axis color</source>
-        <translation type="vanished">Choose an axis colour</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.cpp" line="2471"/>
         <source>DB Browser for SQLite project file (*.sqbpro)</source>
         <translation></translation>
@@ -3992,7 +3979,7 @@ Create a backup!</source>
     <message>
         <location filename="../AddRecordDialog.cpp" line="44"/>
         <source>Alt+Del</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -4176,10 +4163,6 @@ Select the axes or axes labels to drag and zoom only in that orientation.</sourc
         <location filename="../PlotDock.cpp" line="518"/>
         <source>Row #</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Choose a axis color</source>
-        <translation type="obsolete">Choose an axis colour</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="74"/>
@@ -5357,7 +5340,7 @@ All your preferences will be lost and default values will be used.</source>
     <message>
         <location filename="../RemoteDock.ui" line="414"/>
         <source>F5</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="423"/>
@@ -5711,7 +5694,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../SqlExecutionArea.ui" line="91"/>
         <source>Shift+F3</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="105"/>
@@ -5821,7 +5804,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../sqltextedit.cpp" line="41"/>
         <source>Ctrl+/</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -6147,39 +6130,40 @@ Use of this function must be authorized from Preferences.</source>
 <context>
     <name>SqliteTableModel</name>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="34"/>
+        <location filename="../sqlitetablemodel.cpp" line="36"/>
         <source>reading rows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="337"/>
+        <location filename="../sqlitetablemodel.cpp" line="339"/>
         <source>loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="402"/>
+        <location filename="../sqlitetablemodel.cpp" line="404"/>
         <source>References %1(%2)
 Hold %3Shift and click to jump there</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="555"/>
+        <location filename="../sqlitetablemodel.cpp" line="557"/>
         <source>Error changing data:
 %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="796"/>
+        <location filename="../sqlitetablemodel.cpp" line="798"/>
         <source>retrieving list of columns</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="1024"/>
+        <location filename="../sqlitetablemodel.cpp" line="1026"/>
         <source>Fetching data...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="1025"/>
+        <location filename="../sqlitetablemodel.cpp" line="1027"/>
+        <location filename="../sqlitetablemodel.cpp" line="1029"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6240,7 +6224,7 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.ui" line="276"/>
         <source>Shift+F3</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="283"/>
@@ -6644,7 +6628,7 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.ui" line="803"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="815"/>
@@ -6685,7 +6669,7 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.ui" line="860"/>
         <source>Ctrl+B</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="872"/>
@@ -6702,7 +6686,7 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.ui" line="893"/>
         <source>Ctrl+U</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="905"/>
@@ -6791,7 +6775,7 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.ui" line="1039"/>
         <source>Ctrl+Space</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1054"/>
@@ -6806,7 +6790,7 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.cpp" line="102"/>
         <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message numerus="yes">
         <location filename="../TableBrowser.cpp" line="450"/>
@@ -6872,7 +6856,7 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.cpp" line="1181"/>
         <source>Ctrl+&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1200"/>

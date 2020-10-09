@@ -18,39 +18,6 @@
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Silk icon set by Mark James licensed under a Creative Commons Attribution 2.5 and 3.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/span&gt;&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://sqlitebrowser.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Silk icon set by Mark James licensed under a Creative Commons Attribution 2.5 and 3.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Оглядач БД для SQLite - це безкоштовна програма з відкритим вихідним кодом, призначена для створення і редагування баз даних SQLite.&lt;/p&gt;&lt;p&gt;Програма має дозволи за двома ліцензіями: Mozilla Public License Version 2 та GNU General Public License Version 3 або пізніші. Можна змінювати або розповсюджувати її за умовами цих ліцензій.&lt;/p&gt;&lt;p&gt;Посилання &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;&lt;span style=&quot;text-decoration: underline; color:#0000ff;&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/a&gt; та &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/span&gt;&lt;/a&gt; для детальної інформації.&lt;/p&gt;&lt;p&gt;Більше інформації про програму можна отримати на веб-сайті: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://sqlitebrowser.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Це програмне забезпечення використовує GPL/LGPL Qt Toolkit &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;Посилання &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; для перегляду інформації про умови ліцензії.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Ця програма також використовує набір значків Silk від Марка Джеймса (Mark James) з ліцензіями Creative Commons Attribution 2.5 та 3.0.&lt;br /&gt;Посилання &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; для детальної інформації.&lt;/span&gt;&lt;/p&gt; &lt;p&gt;&lt;span style=&quot;font-size: small;&quot;&gt;Переклад українською здійснив Андрій Кондратьєв &lt;a href=&quot;mailto:inbox@kondratyev.dp.ua&quot;&gt;inbox@kondratyev.dp.ua&lt;/a&gt;&lt;br /&gt; Зв&apos;язок з автором: &lt;/span&gt;&lt;a href=&quot;https://www.facebook.com/a.s.kondratyev&quot;&gt;&lt;span style=&quot;font-size: small; text-decoration: underline; color: #0000ff;&quot;&gt;https://www.facebook.com/a.s.kondratyev&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-size:small;&quot;&gt;. &lt;/p&gt;&lt;p&gt; Редактор - Genyk &lt;a href=&quot;mailto:Genyk95@gmail.com&quot;&gt;Genyk95@gmail.com&lt;/a&gt;&lt;br/&gt; &lt;/span&gt;&lt;/p&gt; &lt;/body&gt;&lt;/html&gt;
-</translation>
-    </message>
-    <message>
-        <source>Qt Version</source>
-        <translation type="vanished">Версія Qt</translation>
-    </message>
-    <message>
-        <source>SQLCipher Version</source>
-        <translation type="vanished">Версія SQLCipher</translation>
-    </message>
-    <message>
-        <source>SQLite Version</source>
-        <translation type="vanished">Версія SQLite</translation>
-    </message>
-    <message>
-        <source>Version </source>
-        <translation type="vanished">Версія</translation>
-    </message>
-    <message>
-        <source>Qt Version </source>
-        <translation type="vanished">Версія Qt</translation>
-    </message>
-    <message>
-        <source>SQLCipher Version </source>
-        <translation type="vanished">Версія SQLCipher</translation>
-    </message>
-    <message>
-        <source>SQLite Version </source>
-        <translation type="vanished">Версія SQLite</translation>
-    </message>
 </context>
 <context>
     <name>AddRecordDialog</name>
@@ -145,34 +112,9 @@
 <context>
     <name>Application</name>
     <message>
-        <source>Usage: %1 [options] [db]
-</source>
-        <translation type="vanished">Використання: %1 [options] [db]</translation>
-    </message>
-    <message>
         <location filename="../Application.cpp" line="95"/>
         <source>Possible command line arguments:</source>
         <translation>Доступні ключі командного рядку:</translation>
-    </message>
-    <message>
-        <source>  -h, --help		Show command line options</source>
-        <translation type="vanished">  -h, --help		Показати довідку</translation>
-    </message>
-    <message>
-        <source>  -s, --sql [file]	Execute this SQL file after opening the DB</source>
-        <translation type="vanished">  -s, --sql [file]	Виконати цей SQL-файл після відкриття БД</translation>
-    </message>
-    <message>
-        <source>  -t, --table [table]	Browse this table after opening the DB</source>
-        <translation type="vanished">  -t, --table [table]	Переглянути цю таблицю після відкриття БД</translation>
-    </message>
-    <message>
-        <source>  -q, --quit		Exit application after running scripts</source>
-        <translation type="vanished">  -q, --quit		Вийти з програми після виконання скриптів</translation>
-    </message>
-    <message>
-        <source>  [file]		Open this SQLite database</source>
-        <translation type="vanished">  [file]		Відкрити SQLite БД</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="93"/>
@@ -286,33 +228,9 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>-h, --help Show command line options</source>
-        <translation type="vanished">-h, --help Показати довідку</translation>
-    </message>
-    <message>
-        <source>-s, --sql [file] Execute this SQL file after opening the DB</source>
-        <translation type="vanished">-s, --sql [file] Виконати цей SQL-файл після відкриття БД</translation>
-    </message>
-    <message>
-        <source>-t, --table [table] Browse this table after opening the DB</source>
-        <translation type="vanished">-t, --table [table] Переглянути цю таблицю після відкриття БД</translation>
-    </message>
-    <message>
-        <source>-q, --quit Exit application after running scripts</source>
-        <translation type="vanished">-q, --quit Вийти з програми після виконання сценарію</translation>
-    </message>
-    <message>
-        <source>[file] Open this SQLite database</source>
-        <translation type="vanished">[file] Відкрити SQLite БД</translation>
-    </message>
-    <message>
         <location filename="../Application.cpp" line="117"/>
         <source>The file %1 does not exist</source>
         <translation>Файл %1 не існує</translation>
-    </message>
-    <message>
-        <source>Invalid option /non-existant file: %1</source>
-        <translation type="vanished">Невірна опція /non-existant file: %1</translation>
     </message>
 </context>
 <context>
@@ -386,10 +304,6 @@
         <location filename="../CipherDialog.ui" line="71"/>
         <source>Raw key</source>
         <translation>Необроблений ключ</translation>
-    </message>
-    <message>
-        <source>Page &amp;size</source>
-        <translation type="vanished">Розмір &amp;сторінки</translation>
     </message>
     <message>
         <location filename="../CipherDialog.cpp" line="35"/>
@@ -820,25 +734,11 @@ Message from database engine:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>renameColumn: cannot find column %1.</source>
-        <translation type="vanished">renameColumn: не вдається знайти стовпець %1.</translation>
-    </message>
-    <message>
         <location filename="../sqlitedb.cpp" line="1814"/>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 
 </source>
         <translation>Не вдалося скасувати видалення деяких об&apos;єктів, асоційованих із цією таблицею. Найімовірніша причина цього - зміна імен деяких стовпців таблиці. Ось SQL оператор, який потрібно виправити і виконати вручну:</translation>
-    </message>
-    <message>
-        <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.Message from database engine:
-%3</source>
-        <translation type="vanished">Помилка перейменування таблиці &apos;%1&apos; в &apos;%2&apos;. Повідомлення від ядра БД:
-%3</translation>
-    </message>
-    <message>
-        <source>... &lt;string can not be logged, contains binary data&gt; ...</source>
-        <translation type="vanished">... &lt;рядок не можна записати в лог-файл, який містить двійкові дані&gt; ...</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1960"/>
@@ -854,76 +754,6 @@ Message from database engine:
         <location filename="../sqlitedb.cpp" line="2097"/>
         <source>could not get column information</source>
         <translation>неможливо отримати інформацію про стовпець</translation>
-    </message>
-    <message>
-        <source>Error in statement #%1: %2.
-Aborting execution.</source>
-        <translation type="vanished">Помилка в операторі #%1: %2. Виконання зупинено.</translation>
-    </message>
-    <message>
-        <source>renameColumn: can not find table %1.</source>
-        <translation type="vanished">renameColumn: неможливо знайти таблицю %1.</translation>
-    </message>
-    <message>
-        <source>renameColumn: can not find column %1.</source>
-        <translation type="vanished">renameColumn: неможливо знайти стовпець %1.</translation>
-    </message>
-    <message>
-        <source>renameColumn: creating savepoint failed. DB says: %1</source>
-        <translation type="vanished">renameColumn: помилка створення точки збереження. БД говорить: %1</translation>
-    </message>
-    <message>
-        <source>renameColumn: creating new table failed. DB says: %1</source>
-        <translation type="vanished">renameColumn: помилка створення нової таблиці. БД говорить: %1</translation>
-    </message>
-    <message>
-        <source>renameColumn: copying data to new table failed. DB says:
-%1</source>
-        <translation type="vanished">renameColumn: помилка копіювання даних у нову таблицю. БД говорить:
-%1</translation>
-    </message>
-    <message>
-        <source>renameColumn: deleting old table failed. DB says: %1</source>
-        <translation type="vanished">renameColumn: помилка видалення старої таблиці. БД говорить: %1</translation>
-    </message>
-    <message>
-        <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
-</source>
-        <translation type="vanished">Не вдалося скасувати видалення деяких об&apos;єктів, асоційованих із цією таблицею. Найбільш імовірна причина цього - зміна імен деяких стовпців таблиці. Ось SQL оператор, який потрібно виправити і виконати вручну:</translation>
-    </message>
-    <message>
-        <source>renameColumn: releasing savepoint failed. DB says: %1</source>
-        <translation type="vanished">renameColumn: помилка звільнення точки збереження. БД говорить: %1</translation>
-    </message>
-    <message>
-        <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.message from database engine:
-%3</source>
-        <translation type="vanished">Помилка перейменування таблиці &apos;%1&apos; в &apos;%2&apos;. Повідомлення від ядра БД:
-%3</translation>
-    </message>
-    <message>
-        <source>... &lt;string can not be logged, contains binary data &gt; ...</source>
-        <translation type="vanished">... &lt;рядок не може бути записаний у лог-файл, оскільки містить двійкові дані &gt;...</translation>
-    </message>
-    <message>
-        <source>unknown object type %1</source>
-        <translation type="vanished">невідомий тип об&apos;єкту %1</translation>
-    </message>
-    <message>
-        <source>could not get list of db objects: %1, %2</source>
-        <translation type="vanished">неможливо отримати список об&apos;єктів БД: %1, %2</translation>
-    </message>
-    <message>
-        <source>could not get types</source>
-        <translation type="vanished">неможливо отримати типи</translation>
-    </message>
-    <message>
-        <source>didn&apos;t receive any output from pragma %1</source>
-        <translation type="vanished">не отримано жодного виходу з Прагма %1</translation>
-    </message>
-    <message>
-        <source>could not execute pragma command: %1, %2</source>
-        <translation type="vanished">неможливо виконати комманду-прагму: %1, %2</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1988"/>
@@ -957,10 +787,6 @@ Aborting execution.</source>
         <location filename="../DbStructureModel.cpp" line="23"/>
         <source>Schema</source>
         <translation>Схема</translation>
-    </message>
-    <message>
-        <source>Browsables (%1)</source>
-        <translation type="vanished">Можна переглянути (%1)</translation>
     </message>
     <message>
         <location filename="../DbStructureModel.cpp" line="23"/>
@@ -1179,7 +1005,7 @@ Errors are indicated with a red squiggle underline.</source>
         <location filename="../EditDialog.ui" line="290"/>
         <location filename="../EditDialog.ui" line="308"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished">Ctrl+P</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="302"/>
@@ -1199,35 +1025,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditDialog.ui" line="326"/>
         <source>Ctrl+Shift+C</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Import text</source>
-        <translation type="vanished">Імпортувати текст</translation>
-    </message>
-    <message>
-        <source>Opens a file dialog used to import text to this database cell.</source>
-        <translation type="vanished">Відкривається файловий діалог, щоб імпортувати текст у цю комірку бази даних.</translation>
-    </message>
-    <message>
-        <source>&amp;Import</source>
-        <translation type="vanished">&amp;Імпортувати</translation>
-    </message>
-    <message>
-        <source>Export text</source>
-        <translation type="vanished">Експортувати текст</translation>
-    </message>
-    <message>
-        <source>Opens a file dialog used to export the contents of this database cell to a text file .</source>
-        <translation type="vanished">Відкриває файловий діалог, щоб експортувати вміст цієї комірки бази даних у текстовий файл.</translation>
-    </message>
-    <message>
-        <source>&amp;Export</source>
-        <translation type="vanished">&amp;Експортувати</translation>
-    </message>
-    <message>
-        <source>Set this cell to NULL</source>
-        <translation type="vanished">Присвоїти цій комірці значення NULL</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="383"/>
@@ -1260,10 +1058,6 @@ Errors are indicated with a red squiggle underline.</source>
         <translation>Двійкові дані</translation>
     </message>
     <message>
-        <source>Opens a file dialog used to export the contents of this database cell to a text file.</source>
-        <translation type="vanished">Відкриває файловий діалог, щоб експортувати вміст цієї комірки бази даних у текстовий файл</translation>
-    </message>
-    <message>
         <location filename="../EditDialog.ui" line="386"/>
         <source>Erases the contents of the cell</source>
         <translation>Очищення вмісту комірки</translation>
@@ -1284,29 +1078,9 @@ Errors are indicated with a red squiggle underline.</source>
         <translation>Розмір даних у таблиці</translation>
     </message>
     <message>
-        <source>Choose a file</source>
-        <translation type="vanished">Обрати файл</translation>
-    </message>
-    <message>
-        <source>Text files(*.txt);;Image files(%1);;All files(*)</source>
-        <translation type="vanished">Текстові файли(*.txt);;Файли зображень(%1);;Всі файли(*)</translation>
-    </message>
-    <message>
         <location filename="../EditDialog.cpp" line="462"/>
         <source>Choose a filename to export data</source>
         <translation>Вибрати ім&apos;я файлу для експорту даних</translation>
-    </message>
-    <message>
-        <source>Text files(*.txt);;All files(*)</source>
-        <translation type="vanished">Текстові файли(*.txt);;Всі файли(*)</translation>
-    </message>
-    <message>
-        <source>Image data can&apos;t be viewed with the text editor</source>
-        <translation type="vanished">Зображення не можна показати в текстовому редакторі</translation>
-    </message>
-    <message>
-        <source>Binary data can&apos;t be viewed with the text editor</source>
-        <translation type="vanished">Бінарні дані не можна показати в текстовому редакторі</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="1020"/>
@@ -1406,7 +1180,12 @@ Errors are indicated with a red squiggle underline.</source>
         <translation>Тип даних у комірці: Двійкові дані</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="1239"/>
+        <location filename="../EditDialog.cpp" line="1221"/>
+        <source>Couldn&apos;t save file: %1.</source>
+        <translation type="unfinished">Неможливо зберегти файл: %1.</translation>
+    </message>
+    <message>
+        <location filename="../EditDialog.cpp" line="1246"/>
         <source>The data has been saved to a temporary file and has been opened with the default application. You can now edit the file and, when you are ready, apply the saved new data to the cell editor or cancel any changes.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1424,25 +1203,9 @@ Errors are indicated with a red squiggle underline.</source>
 <context>
     <name>EditIndexDialog</name>
     <message>
-        <source>Create New Index</source>
-        <translation type="vanished">Створення нового індексу</translation>
-    </message>
-    <message>
         <location filename="../EditIndexDialog.ui" line="26"/>
         <source>&amp;Name</source>
         <translation>&amp;Ім&apos;я</translation>
-    </message>
-    <message>
-        <source>&amp;Columns</source>
-        <translation type="vanished">&amp;Стовпці</translation>
-    </message>
-    <message>
-        <source>Column</source>
-        <translation type="vanished">Стовпець</translation>
-    </message>
-    <message>
-        <source>Use in Index</source>
-        <translation type="vanished">Використовувати в індексі</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="237"/>
@@ -1500,12 +1263,6 @@ Errors are indicated with a red squiggle underline.</source>
         <translation>Стовпець індексу</translation>
     </message>
     <message>
-        <source>Creating the index failed: 
-%1</source>
-        <translation type="vanished">Невдале створення індексу: 
-%1</translation>
-    </message>
-    <message>
         <location filename="../EditIndexDialog.cpp" line="269"/>
         <source>Deleting the old index failed:
 %1</source>
@@ -1547,33 +1304,9 @@ Errors are indicated with a red squiggle underline.</source>
         <translation>Без ідентифікатора</translation>
     </message>
     <message>
-        <source>Set this to create a temporary table that is deleted when closing the database.</source>
-        <translation type="vanished">Встановіть це, щоб створити тимчасову таблицю, яка видалиться після закриття бази даних.</translation>
-    </message>
-    <message>
-        <source>Temporary table</source>
-        <translation type="vanished">Тимчасова таблиця</translation>
-    </message>
-    <message>
         <location filename="../EditTableDialog.ui" line="106"/>
         <source>Fields</source>
         <translation>Поля</translation>
-    </message>
-    <message>
-        <source>Add field</source>
-        <translation type="vanished">Додати поле</translation>
-    </message>
-    <message>
-        <source>Remove field</source>
-        <translation type="vanished">Видалити поле</translation>
-    </message>
-    <message>
-        <source>Move field up</source>
-        <translation type="vanished">Перемістити поле вгору</translation>
-    </message>
-    <message>
-        <source>Move field down</source>
-        <translation type="vanished">Перемістити поле вниз</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="62"/>
@@ -1755,27 +1488,9 @@ Errors are indicated with a red squiggle underline.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Warning: &lt;/span&gt;There is something with this table definition that our parser doesn&apos;t fully understand. Modifying and saving this table might result it in problems.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight: 600; color:#ff0000;&quot;&gt;Увага: &lt;/span&gt;Парсер не зміг зрозуміти визначення цієї таблиці. Її модифікація та збереження може призвести до подальших проблем.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Error creating table. message from database engine:
-%1</source>
-        <translation type="vanished">Помилка створення таблиці. Повідомлення від ядра бази даних:
-%1</translation>
-    </message>
-    <message>
         <location filename="../EditTableDialog.cpp" line="465"/>
         <source>There already is a field with that name. Please rename it first or choose a different name for this field.</source>
         <translation>Поле з таким ім&apos;ям уже існує. Будь ласка, переіменуйте його або виберіть інше ім&apos;я для цього поля.</translation>
-    </message>
-    <message>
-        <source>This column is referenced in a foreign key in table %1, column %2 and thus its name can not be changed.</source>
-        <translation type="obsolete">На цей стовпець посилається зовнішній ключ у таблиці %1, стовпці %2, тому її ім&apos;я неможливо змінити.</translation>
-    </message>
-    <message>
-        <source>This column is referenced in a foreign key in table %1 and thus its name can not be changed.</source>
-        <translation type="vanished">На цей стовпець посилається зовнішній ключ у таблиці %1, тому її ім&apos;я неможливо змінити.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="285"/>
@@ -1817,21 +1532,6 @@ Errors are indicated with a red squiggle underline.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Column &apos;%1&apos; has no unique data.
-</source>
-        <translation type="vanished">Стовпець &apos;%1&quot; не містить унікальних даних.</translation>
-    </message>
-    <message>
-        <source>This makes it impossible to set this flag. Please change the table data first.</source>
-        <translation type="vanished">Неможливо поставити цей прапорець. Спочатку змініть табличні дані.</translation>
-    </message>
-    <message>
-        <source>Modifying this column failed. Error returned from database:
-%1</source>
-        <translation type="obsolete">Неможливо змінити цей рядок. Повідомлення про помилку від БД:
-%1</translation>
-    </message>
-    <message>
         <location filename="../EditTableDialog.cpp" line="817"/>
         <source>Are you sure you want to delete the field &apos;%1&apos;?
 All data currently stored in this field will be lost.</source>
@@ -1847,24 +1547,6 @@ All data currently stored in this field will be lost.</source>
 - встановлено прапорець первинного ключа
 - відімкнений автоінкремент</translation>
     </message>
-    <message>
-        <source>Setting the temporary flag for the table failed. Error message:
-%1</source>
-        <translation type="vanished">Не вдалося встановити тимчасовий прапорець. Повідомлення помилки:</translation>
-    </message>
-    <message>
-        <source>Please add a field which meets the following criteria before setting the without rowid flag:
-- Primary key flag set
-- Auto increment disabled</source>
-        <translation type="vanished">Будь ласка, додайте поле, яке відповідає насупним критеріям перед встановлення прапорцю без rowid:
-- встановлено прапорець первинного ключа
-- відімкнений автоінкремент</translation>
-    </message>
-    <message>
-        <source>Setting the rowid column for the table failed. Error message:
-%1</source>
-        <translation type="vanished">Не вдалося встановити rowid стовпець для таблиці. Повідомлення помилки:</translation>
-    </message>
 </context>
 <context>
     <name>ExportDataDialog</name>
@@ -1872,18 +1554,6 @@ All data currently stored in this field will be lost.</source>
         <location filename="../ExportDataDialog.ui" line="14"/>
         <source>Export data as CSV</source>
         <translation>Експортувати дані у форматі CSV</translation>
-    </message>
-    <message>
-        <source>&amp;Table(s)</source>
-        <translation type="obsolete">&amp;Таблиці</translation>
-    </message>
-    <message>
-        <source>&amp;Column names in first line</source>
-        <translation type="obsolete"> &amp;Імена стовпців у першому рядку</translation>
-    </message>
-    <message>
-        <source>Field &amp;separator</source>
-        <translation type="obsolete"> &amp;Роздільник полів</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="22"/>
@@ -1975,10 +1645,6 @@ All data currently stored in this field will be lost.</source>
         <translation>Виберіть ім&apos;я файлу для експорту даних</translation>
     </message>
     <message>
-        <source>Text files(*.csv *.txt)</source>
-        <translation type="vanished">Текстові файли(*.csv *.txt)</translation>
-    </message>
-    <message>
         <location filename="../ExportDataDialog.cpp" line="30"/>
         <source>Export data as JSON</source>
         <translation>Експортувати дані у форматі JSON</translation>
@@ -1992,10 +1658,6 @@ All data currently stored in this field will be lost.</source>
         <location filename="../ExportDataDialog.cpp" line="208"/>
         <source>exporting JSON</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Text files(*.json *.js *.txt)</source>
-        <translation type="vanished">Текстові файли(*.json *.js *.txt)</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.cpp" line="340"/>
@@ -2076,10 +1738,6 @@ All data currently stored in this field will be lost.</source>
         <translation>Експортувати тільки схему даних</translation>
     </message>
     <message>
-        <source>Please select at least 1 table.</source>
-        <translation type="vanished">Будь ласка, оберіть хоча б 1 таблицю.</translation>
-    </message>
-    <message>
         <location filename="../ExportSqlDialog.cpp" line="75"/>
         <source>Please select at least one table.</source>
         <translation type="unfinished"></translation>
@@ -2088,10 +1746,6 @@ All data currently stored in this field will be lost.</source>
         <location filename="../ExportSqlDialog.cpp" line="89"/>
         <source>Choose a filename to export</source>
         <translation>Оберіть ім&apos;я файлу для експорту</translation>
-    </message>
-    <message>
-        <source>Text files(*.sql *.txt)</source>
-        <translation type="vanished">Текстові файли(*.sql *.txt)</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.cpp" line="118"/>
@@ -2110,18 +1764,18 @@ All data currently stored in this field will be lost.</source>
         <location filename="../ExtendedScintilla.cpp" line="62"/>
         <location filename="../ExtendedScintilla.cpp" line="283"/>
         <source>Ctrl+H</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="64"/>
         <source>Ctrl+F</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="77"/>
         <location filename="../ExtendedScintilla.cpp" line="287"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished">Ctrl+P</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="277"/>
@@ -2141,12 +1795,6 @@ All data currently stored in this field will be lost.</source>
 </context>
 <context>
     <name>ExtendedTableWidget</name>
-    <message>
-        <source>The content of clipboard is bigger than the range selected.
-Do you want to insert it anyway?</source>
-        <translation type="vanished">Вміст буфера обміну більше ніж обраний діапазон.
-Все одно вставити?</translation>
-    </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="249"/>
         <source>Use as Exact Filter</source>
@@ -2240,17 +1888,17 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="298"/>
         <source>Alt+Del</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="300"/>
         <source>Ctrl+Shift+C</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="301"/>
         <source>Ctrl+Alt+C</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="692"/>
@@ -2268,13 +1916,6 @@ Do you want to insert it anyway?</source>
         <location filename="../ExtendedTableWidget.cpp" line="1073"/>
         <source>Cannot set selection to NULL. Column %1 has a NOT NULL constraint.</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>FileDialog</name>
-    <message>
-        <source>SQLite database files (*.db *.sqlite *.sqlite3 *.db3);;All files (*)</source>
-        <translation type="vanished">Файли SQLite баз даних (*.db *.sqlite *.sqlite3 *.db3);;Всі файли (*)</translation>
     </message>
 </context>
 <context>
@@ -2585,10 +2226,6 @@ x~y	Range: values between x and y
         <source>Foreign key clauses (ON UPDATE, ON DELETE etc.)</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>(foreign key clauses(ON UPDATE, ON DELETE etc.)</source>
-        <translation type="vanished">(типи зовнішніх ключів(ON UPDATE, ON DELETE тощо)</translation>
-    </message>
 </context>
 <context>
     <name>ImportCsvDialog</name>
@@ -2596,10 +2233,6 @@ x~y	Range: values between x and y
         <location filename="../ImportCsvDialog.ui" line="14"/>
         <source>Import CSV file</source>
         <translation>Імпортувати файл у форматі CSV</translation>
-    </message>
-    <message>
-        <source>&amp;Table name</source>
-        <translation type="vanished">&amp;Ім&apos;я таблиці</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="25"/>
@@ -2776,26 +2409,6 @@ x~y	Range: values between x and y
         <translation type="unfinished">Обрати все</translation>
     </message>
     <message>
-        <source>Inserting data...</source>
-        <translation type="vanished">Вставлення даних...</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Скасувати</translation>
-    </message>
-    <message>
-        <source>There is already a table of that name and an import into an existing table is only possible if the number of columns match.</source>
-        <translation type="vanished">Таблиця з таким ім&apos;ям уже існує, імпорт в існуючу таблицю можливий тільки якщо число стовпців збігається.</translation>
-    </message>
-    <message>
-        <source>There is already a table of that name. Do you want to import the data into it?</source>
-        <translation type="vanished">Таблиця з таким ім&apos;ям уже існує. Імпортувати дані в неї?</translation>
-    </message>
-    <message>
-        <source>Import completed</source>
-        <translation type="obsolete">Імпорт завершено</translation>
-    </message>
-    <message>
         <location filename="../ImportCsvDialog.cpp" line="504"/>
         <source>There is already a table named &apos;%1&apos; and an import into an existing table is only possible if the number of columns match.</source>
         <translation type="unfinished"></translation>
@@ -2826,10 +2439,6 @@ x~y	Range: values between x and y
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Missing field for record %1</source>
-        <translation type="vanished">Пропущено стовпець для запису %1</translation>
-    </message>
-    <message>
         <location filename="../ImportCsvDialog.cpp" line="685"/>
         <source>Inserting row failed: %1</source>
         <translation>Помилка вставки рядка: %1</translation>
@@ -2848,338 +2457,9 @@ x~y	Range: values between x and y
         <translation>панельІнструментів1</translation>
     </message>
     <message>
-        <source>Table:</source>
-        <translation type="vanished">Таблиця:</translation>
-    </message>
-    <message>
-        <source>Select a table to browse data</source>
-        <translation type="vanished">Оберіть таблицю для перегляду даних</translation>
-    </message>
-    <message>
-        <source>Use this list to select a table to be displayed in the database view</source>
-        <translation type="vanished">Використовуйте цей список, щоб вибрати таблицю, яку буде показано в переглядачі баз даних</translation>
-    </message>
-    <message>
-        <source>Refresh the data in the selected table.</source>
-        <translation type="vanished">Оновити дані в обраній таблиці.</translation>
-    </message>
-    <message>
-        <source>This button refreshes the data in the currently selected table.</source>
-        <translation type="vanished">Ця кнопка оновлює дані обраної на цей момент таблиці.</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click here to jump to the specified record&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Натисніть тут, щоб перейти до зазначеного запису&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_auto_vacuum&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Auto Vacuum&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_auto_vacuum&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Автовакум&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_automatic_index&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Automatic Index&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_automatic_index&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Автоматичний індекс&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_checkpoint_fullfsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Checkpoint Full FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_checkpoint_fullfsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Повна контрольна точка FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_foreign_keys&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Foreign Keys&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_foreign_keys&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Зовнішні ключі&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_fullfsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Full FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_fullfsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Повний FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_ignore_check_constraints&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Ignore Check Constraints&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_ignore_check_constraints&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Ігнорувати перевірку обмежень&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_mode&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Journal Mode&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_mode&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Режим журналу&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_size_limit&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Journal Size Limit&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_size_limit&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Обмеження розміру журналу&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_locking_mode&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Locking Mode&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_locking_mode&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Режим блокування&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_max_page_count&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Max Page Count&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_max_page_count&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Максимальна кількість сторінок&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_page_size&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Page Size&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_page_size&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Розміри сторінки&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_recursive_triggers&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Recursive Triggers&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_recursive_triggers&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Рекурсивні тригери&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_secure_delete&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Secure Delete&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_secure_delete&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Безпечне видалення&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Synchronous&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Одночасно&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_temp_store&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Temp Store&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_temp_store&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Тимчасове сховище&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_user_version&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;User Version&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_user_version&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Користувацька версія&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_wal_autocheckpoint&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;WAL Auto Checkpoint&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_wal_autocheckpoint&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;WAL автоматична контрольна точка&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1070"/>
         <source>&amp;Remote</source>
         <translation>&amp;Віддалений</translation>
-    </message>
-    <message>
-        <source>Web&amp;site...</source>
-        <translation type="vanished">Веб-&amp;сайт</translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translation type="vanished">Оновити</translation>
-    </message>
-    <message>
-        <source>Insert a new record in the current table</source>
-        <translation type="vanished">Додати новий запис у поточну таблицю</translation>
-    </message>
-    <message>
-        <source>&amp;Table:</source>
-        <translation type="vanished">&amp;Таблиця:</translation>
-    </message>
-    <message>
-        <source>This button creates a new, empty record in the database</source>
-        <translation type="vanished">Ця кнопка створює новий, порожній запис у таблиці</translation>
-    </message>
-    <message>
-        <source>New Record</source>
-        <translation type="vanished">Додати запис</translation>
-    </message>
-    <message>
-        <source>Delete the current record</source>
-        <translation type="vanished">Видалити поточний запис</translation>
-    </message>
-    <message>
-        <source>This button deletes the record currently selected in the database</source>
-        <translation type="vanished">Ця кнопка видаляє обраний запис із БД</translation>
-    </message>
-    <message>
-        <source>Delete Record</source>
-        <translation type="vanished">Видалити запис</translation>
-    </message>
-    <message>
-        <source>This is the database view. You can double-click any record to edit its contents in the cell editor window.</source>
-        <translation type="vanished">Це переглядач баз даних. Зробіть подвійне клацання по будь-якому запису щоб відредагувати його вміст.</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll to the beginning&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Прокрутити на початок&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates to the beginning in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Натискання цієї кнопки переміщує до початку таблиці.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>|&lt;</source>
-        <translation type="vanished">|&lt;</translation>
-    </message>
-    <message>
-        <source>Scroll 100 records upwards</source>
-        <translation type="vanished">Прокрутити на 100 записів вгору</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates 100 records upwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Натискання цієї кнопки переміщує на 100 записів вгору у таблиці&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>0 - 0 of 0</source>
-        <translation type="vanished">0 - 0 з 0</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll 100 records downwards&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Прокрутити на 100 записів вниз&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates 100 records downwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Натискання цієї кнопки переміщує на 100 записів вниз у таблиці&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>Scroll to the end</source>
-        <translation type="vanished">Прокрутити до кінця</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Clicking this button navigates up to the end in the table view above.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Натискання цієї кнопки переміщує в кінець таблиці.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&gt;|</source>
-        <translation type="vanished">&gt;|</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Click here to jump to the specified record&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Натисніть тут, щоб перейти до зазначеного запису&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button is used to navigate to the record number specified in the Go to area.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ця кнопка використовується, щоб переміститися до запису, номер якого зазначений в зоні Перейти до &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Go to:</source>
-        <translation type="vanished">Перейти до:</translation>
-    </message>
-    <message>
-        <source>Enter record number to browse</source>
-        <translation type="vanished">Введіть номер запису для перегляду</translation>
-    </message>
-    <message>
-        <source>Type a record number in this area and click the Go to: button to display the record in the database view</source>
-        <translation type="vanished">Надрукуйте номер запису в цій зоні й натисніть кнопку Перейти до:, щоб показати запис у базі даних</translation>
-    </message>
-    <message>
-        <source>1</source>
-        <translation type="vanished">1</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_auto_vacuum&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;Auto Vacuum&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_auto_vacuum&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;Auto Vacuum&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">Ні</translation>
-    </message>
-    <message>
-        <source>Full</source>
-        <translatorcomment> Повний, цілий</translatorcomment>
-        <translation type="vanished">Full</translation>
-    </message>
-    <message>
-        <source>Incremental</source>
-        <translation type="vanished">Incremental</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_automatic_index&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;Automatic Index&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_automatic_index&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;Automatic Index&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_checkpoint_fullfsync&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;Checkpoint Full FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_checkpoint_fullfsync&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;Checkpoint Full FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_foreign_keys&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;Foreign Keys&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_foreign_keys&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;Foreign Keys&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_fullfsync&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;Full FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_fullfsync&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;Full FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_ignore_check_constraints&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;Ignore Check Constraints&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_ignore_check_constraints&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;Ignore Check Constraints&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_mode&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;Journal Mode&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_mode&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;Journal Mode&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="vanished">Видалити</translation>
-    </message>
-    <message>
-        <source>Truncate</source>
-        <translation type="vanished">Усічення</translation>
-    </message>
-    <message>
-        <source>Persist</source>
-        <translation type="vanished">Продовжити</translation>
-    </message>
-    <message>
-        <source>Memory</source>
-        <translation type="vanished">Пам&apos;ять</translation>
-    </message>
-    <message>
-        <source>WAL</source>
-        <translation type="vanished">WAL</translation>
-    </message>
-    <message>
-        <source>Off</source>
-        <translation type="vanished">Вимкнути</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_size_limit&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;Journal Size Limit&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_size_limit&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;Journal Size Limit&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_locking_mode&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;Locking Mode&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_locking_mode&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;Locking Mode&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Normal</source>
-        <translation type="vanished">Нормально</translation>
-    </message>
-    <message>
-        <source>Exclusive</source>
-        <translation type="vanished">Вибірково</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_max_page_count&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;Max Page Count&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_max_page_count&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;Max Page Count&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_page_size&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;Page Size&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_page_size&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;Page Size&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_recursive_triggers&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;Recursive Triggers&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_recursive_triggers&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;Recursive Triggers&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_secure_delete&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;Secure Delete&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_secure_delete&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;Secure Delete&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;Synchronous&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;Synchronous&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_temp_store&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;Temp Store&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_temp_store&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;Temp Store&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation type="vanished">За замовчуванням</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="vanished">Файл</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_user_version&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;User Version&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_user_version&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;User Version&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_wal_autocheckpoint&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;WAL Auto Checkpoint&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_wal_autocheckpoint&quot;&gt;&lt;span style=&quot;text-decoration: underline; color: #0000ff;&quot;&gt;WAL Auto Checkpoint&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="752"/>
@@ -3195,10 +2475,6 @@ x~y	Range: values between x and y
         <location filename="../MainWindow.ui" line="763"/>
         <source>&amp;Export</source>
         <translation>&amp;Експорт</translation>
-    </message>
-    <message>
-        <source>Remote</source>
-        <translation type="vanished">Віддалений сервер</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="792"/>
@@ -3258,10 +2534,6 @@ x~y	Range: values between x and y
         <translation>Виконати SQL</translation>
     </message>
     <message>
-        <source>&amp;Load extension</source>
-        <translation type="vanished">Завантажити &amp;розширення</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1542"/>
         <location filename="../MainWindow.ui" line="1548"/>
         <source>Execute current line</source>
@@ -3275,7 +2547,7 @@ x~y	Range: values between x and y
     <message>
         <location filename="../MainWindow.ui" line="1554"/>
         <source>Shift+F5</source>
-        <translation>Shift+F5</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1637"/>
@@ -3283,74 +2555,14 @@ x~y	Range: values between x and y
         <translation>&amp;Зберегти проект</translation>
     </message>
     <message>
-        <source>Open &amp;Project</source>
-        <translation type="vanished">Відкрити &amp;проект</translation>
-    </message>
-    <message>
-        <source>Edit display format</source>
-        <translation type="vanished">Формат показу</translation>
-    </message>
-    <message>
-        <source>Edit the display format of the data in this column</source>
-        <translation type="vanished">Редагування формату показу для даних у цьому стовпці</translation>
-    </message>
-    <message>
-        <source>Show rowid column</source>
-        <translation type="vanished">Показати стовпець rowid</translation>
-    </message>
-    <message>
-        <source>Toggle the visibility of the rowid column</source>
-        <translation type="vanished">Змінити видимість стовпця rowid</translation>
-    </message>
-    <message>
-        <source>Set encoding</source>
-        <translation type="vanished">Кодування</translation>
-    </message>
-    <message>
-        <source>Change the encoding of the text in the table cells</source>
-        <translation type="vanished">Змінити кодування тексту в цій комірці таблиці</translation>
-    </message>
-    <message>
-        <source>Set encoding for all tables</source>
-        <translation type="vanished">Встановити кодування для всіх таблиць</translation>
-    </message>
-    <message>
-        <source>Change the default encoding assumed for all tables in the database</source>
-        <translation type="vanished">Змінити кодування за замовчуванням для всіх таблиць у базі даних</translation>
-    </message>
-    <message>
-        <source>Duplicate record</source>
-        <translation type="vanished"> Дублікат запису</translation>
-    </message>
-    <message>
-        <source>SQLCipher &amp;FAQ...</source>
-        <translation type="vanished">SQLCipher &amp; ЧаПи...</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1766"/>
         <source>Opens the SQLCipher FAQ in a browser window</source>
         <translation>Відкрити SQLCiphier ЧаПи в браузері</translation>
     </message>
     <message>
-        <source>Table(s) to JSON...</source>
-        <translation type="vanished">Таблиці в файл JSON...</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1774"/>
         <source>Export one or more table(s) to a JSON file</source>
         <translation>Експортувати таблиці в JSON файл</translation>
-    </message>
-    <message>
-        <source>Open from Remote</source>
-        <translation type="vanished">Відкрити віддалений файл</translation>
-    </message>
-    <message>
-        <source>Save to Remote</source>
-        <translation type="vanished">Зберегти в хмару</translation>
-    </message>
-    <message>
-        <source>&amp;Attach Database</source>
-        <translation type="vanished">&amp;Прикріпити базу даних</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1715"/>
@@ -3369,10 +2581,6 @@ x~y	Range: values between x and y
         <translation>Пе&amp;регляд таблиці</translation>
     </message>
     <message>
-        <source>Clear all filters</source>
-        <translation type="vanished">Очистити всі фільтри</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="916"/>
         <source>User</source>
         <translation>Користувачем</translation>
@@ -3386,122 +2594,6 @@ x~y	Range: values between x and y
         <location filename="../MainWindow.ui" line="956"/>
         <source>&amp;Clear</source>
         <translation>О&amp;чистити</translation>
-    </message>
-    <message>
-        <source>Columns</source>
-        <translation type="vanished">Стовпці</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>_</source>
-        <translation type="vanished">_</translation>
-    </message>
-    <message>
-        <source>Line type:</source>
-        <translation type="vanished">Лінія:</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Звичайна</translation>
-    </message>
-    <message>
-        <source>StepLeft</source>
-        <translation type="vanished">Ступенева, зліва</translation>
-    </message>
-    <message>
-        <source>StepRight</source>
-        <translation type="vanished">Ступенева, справа</translation>
-    </message>
-    <message>
-        <source>StepCenter</source>
-        <translation type="vanished">Ступенева, по центру</translation>
-    </message>
-    <message>
-        <source>Impulse</source>
-        <translation type="vanished">Імпульс</translation>
-    </message>
-    <message>
-        <source>Point shape:</source>
-        <translation type="vanished">Форма точок:</translation>
-    </message>
-    <message>
-        <source>Cross</source>
-        <translation type="vanished">Хрест</translation>
-    </message>
-    <message>
-        <source>Plus</source>
-        <translation type="vanished">Плюс</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">Коло</translation>
-    </message>
-    <message>
-        <source>Disc</source>
-        <translation type="vanished">Диск</translation>
-    </message>
-    <message>
-        <source>Square</source>
-        <translation type="vanished">Квадрат</translation>
-    </message>
-    <message>
-        <source>Diamond</source>
-        <translation type="vanished">Ромб</translation>
-    </message>
-    <message>
-        <source>Star</source>
-        <translation type="vanished">Зірка</translation>
-    </message>
-    <message>
-        <source>Triangle</source>
-        <translation type="vanished">Трикутник</translation>
-    </message>
-    <message>
-        <source>TriangleInverted</source>
-        <translation type="vanished">Трикутник перевернутий</translation>
-    </message>
-    <message>
-        <source>CrossSquare</source>
-        <translation type="vanished">Хрест у квадраті</translation>
-    </message>
-    <message>
-        <source>PlusSquare</source>
-        <translation type="vanished">Плюс у квадраті</translation>
-    </message>
-    <message>
-        <source>CrossCircle</source>
-        <translation type="vanished">Хрест у колі</translation>
-    </message>
-    <message>
-        <source>PlusCircle</source>
-        <translation type="vanished">Плюс у колі</translation>
-    </message>
-    <message>
-        <source>Peace</source>
-        <translation type="vanished">Світ</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save current plot...&lt;/p&gt;&lt;p&gt;File format chosen by extension (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Зберегти поточний графік...&lt;/p&gt;&lt;p&gt;Формат файлу вибирається розширенням (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Save current plot...</source>
-        <translation type="vanished">Зберегти поточний графік...</translation>
-    </message>
-    <message>
-        <source>Load all data. This has only an effect if not all data has been fetched from the table yet due to the partial fetch mechanism.</source>
-        <translation type="vanished">Отримати всі дані. Діє якщо не всі дані довантажено.</translation>
-    </message>
-    <message>
-        <source>DB Schema</source>
-        <translation type="obsolete">Схема БД</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1121"/>
@@ -3522,7 +2614,7 @@ x~y	Range: values between x and y
     <message>
         <location filename="../MainWindow.ui" line="1133"/>
         <source>Ctrl+N</source>
-        <translation>Ctrl+N</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1145"/>
@@ -3549,7 +2641,7 @@ x~y	Range: values between x and y
     <message>
         <location filename="../MainWindow.ui" line="1157"/>
         <source>Ctrl+O</source>
-        <translation>Ctrl+O</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1172"/>
@@ -3565,7 +2657,7 @@ x~y	Range: values between x and y
         <location filename="../MainWindow.cpp" line="227"/>
         <location filename="../MainWindow.cpp" line="3429"/>
         <source>Ctrl+W</source>
-        <translation>Ctrl+W</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1202"/>
@@ -3592,7 +2684,7 @@ x~y	Range: values between x and y
     <message>
         <location filename="../MainWindow.ui" line="1235"/>
         <source>Ctrl+S</source>
-        <translation>Ctrl+S</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1246"/>
@@ -3618,7 +2710,7 @@ x~y	Range: values between x and y
     <message>
         <location filename="../MainWindow.ui" line="1266"/>
         <source>Ctrl+Q</source>
-        <translation>Ctrl+Q</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1277"/>
@@ -3709,7 +2801,7 @@ x~y	Range: values between x and y
     <message>
         <location filename="../MainWindow.ui" line="1448"/>
         <source>Shift+F1</source>
-        <translation>Shift+F1</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1491"/>
@@ -3805,7 +2897,7 @@ x~y	Range: values between x and y
     <message>
         <location filename="../MainWindow.ui" line="1798"/>
         <source>Ctrl+Shift+O</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1810"/>
@@ -3841,7 +2933,7 @@ x~y	Range: values between x and y
     <message>
         <location filename="../MainWindow.ui" line="1840"/>
         <source>Ctrl+F</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1855"/>
@@ -3862,7 +2954,7 @@ x~y	Range: values between x and y
     <message>
         <location filename="../MainWindow.ui" line="1867"/>
         <source>Ctrl+H</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1875"/>
@@ -4034,11 +3126,7 @@ x~y	Range: values between x and y
     <message>
         <location filename="../MainWindow.ui" line="2137"/>
         <source>Ctrl+Shift+S</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;About...</source>
-        <translation type="vanished">Про &amp;програму...</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1464"/>
@@ -4051,26 +3139,14 @@ x~y	Range: values between x and y
         <translation>Відкрити &amp;вкладку</translation>
     </message>
     <message>
-        <source>&amp;Open Database Read Only...</source>
-        <translation type="vanished">&amp;Відкрити БД тільки для читання...</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1789"/>
         <source>Open an existing database file in read only mode</source>
         <translation>Відкрити існуючий файл БД у режимі тільки для читання</translation>
     </message>
     <message>
-        <source>Unlock view editing</source>
-        <translation type="vanished">Розблокувати редагування вигляду</translation>
-    </message>
-    <message>
-        <source>This unlocks the current view for editing. However, you will need appropriate triggers for editing.</source>
-        <translation type="vanished">Це розблоковує поточний вигляд для редагування. Проте вам необхідно виділити тригери для редагування</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1479"/>
         <source>Ctrl+T</source>
-        <translation>Ctrl+T</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="50"/>
@@ -4116,7 +3192,7 @@ You can drag SQL statements from an object row and drop them into other applicat
     <message>
         <location filename="../MainWindow.ui" line="2080"/>
         <source>Ctrl+/</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2092"/>
@@ -4134,10 +3210,6 @@ You can drag SQL statements from an object row and drop them into other applicat
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>...</source>
-        <translation type="obsolete">...</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="146"/>
         <location filename="../MainWindow.ui" line="149"/>
         <source>Edit Pragmas</source>
@@ -4148,10 +3220,6 @@ You can drag SQL statements from an object row and drop them into other applicat
         <location filename="../MainWindow.ui" line="256"/>
         <source>Warning: this pragma is not readable and this value has been inferred. Writing the pragma might overwrite a redefined LIKE provided by an SQLite extension.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edit Database Cell</source>
-        <translation type="obsolete"> Редагування комірки БД</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="881"/>
@@ -4197,7 +3265,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1184"/>
         <source>Ctrl+F4</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1199"/>
@@ -4208,10 +3276,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <location filename="../MainWindow.ui" line="1223"/>
         <source>&amp;Write Changes</source>
         <translation>&amp;Записати зміни</translation>
-    </message>
-    <message>
-        <source>Compact &amp;Database</source>
-        <translation type="vanished">&amp;Ущільнити базу даних</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1274"/>
@@ -4227,10 +3291,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <location filename="../MainWindow.ui" line="1302"/>
         <source>&amp;Database to SQL file...</source>
         <translation>Базу &amp;даних в файл SQL...</translation>
-    </message>
-    <message>
-        <source>&amp;Table (s) as CSV file...</source>
-        <translation type="vanished">&amp;Таблиці в файл CSV...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1337"/>
@@ -4273,10 +3333,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation>Ви&amp;конати код SQL</translation>
     </message>
     <message>
-        <source>Open SQL file</source>
-        <translation type="vanished">Відкрити файл SQL</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1518"/>
         <location filename="../MainWindow.ui" line="1727"/>
         <location filename="../MainWindow.ui" line="1730"/>
@@ -4291,7 +3347,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.cpp" line="291"/>
         <source>Ctrl+E</source>
-        <translation>Ctrl+E</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1562"/>
@@ -4302,18 +3358,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <location filename="../MainWindow.ui" line="1565"/>
         <source>Export table as comma separated values file</source>
         <translation>Експортувати таблицю як CSV файл</translation>
-    </message>
-    <message>
-        <source>&amp;Wiki...</source>
-        <translation type="vanished">В&amp;ікі...</translation>
-    </message>
-    <message>
-        <source>Bug &amp;report...</source>
-        <translation type="vanished">&amp;Звіт про помилку...</translation>
-    </message>
-    <message>
-        <source>Web &amp;site...</source>
-        <translation type="vanished">&amp;Веб-сайт...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1640"/>
@@ -4333,10 +3377,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation>Завантажити робочий стан із файлу</translation>
     </message>
     <message>
-        <source>&amp;Set Encryption</source>
-        <translation type="vanished">Ши&amp;фрування</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1751"/>
         <source>Copy Create statement</source>
         <translation>Копіювати CREATE вираз</translation>
@@ -4349,28 +3389,28 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1497"/>
         <source>Ctrl+Return</source>
-        <translation>Ctrl+Return</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="276"/>
         <source>Ctrl+L</source>
-        <translation>Ctrl+L</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2029"/>
         <location filename="../MainWindow.ui" line="2056"/>
         <source>Ctrl+P</source>
-        <translation>Ctrl+P</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="281"/>
         <source>Ctrl+D</source>
-        <translation>Ctrl+D</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="286"/>
         <source>Ctrl+I</source>
-        <translation>Ctrl+I</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="394"/>
@@ -4418,46 +3458,6 @@ Reason: %1</source>
         <translation>Вибрати ім&apos;я, під яким зберегти дані</translation>
     </message>
     <message>
-        <source>Error adding record:
-</source>
-        <translation type="vanished">Помилка додавання запису:
-</translation>
-    </message>
-    <message>
-        <source>Error deleting record:
-%1</source>
-        <translation type="vanished">Помилка видалення запису:
-%1</translation>
-    </message>
-    <message>
-        <source>Please select a record first</source>
-        <translation type="vanished">Будь ласка, спочатку оберіть запис</translation>
-    </message>
-    <message>
-        <source>%1 - %2 of %3</source>
-        <translation type="vanished">%1 - %2 з %3</translation>
-    </message>
-    <message>
-        <source>There is no database opened. Please open or create a new database file.</source>
-        <translation type="vanished">Немає відкритої бази даних. Відкрийте або створіть файл нової бази даних.</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to delete the %1 &apos;%2&apos;?
-All data associated with the %1 will be lost.</source>
-        <translation type="vanished">Ви точно хочете видалити %1 &apos;%2&apos;?
-Всі дані, пов&apos;язані з %1, будуть втрачені.</translation>
-    </message>
-    <message>
-        <source>Error: could not delete the %1. message from database engine:
-%2</source>
-        <translation type="vanished">Помилка: неможливо видалити %1. Повідомлення з движка бази даних:
-%2</translation>
-    </message>
-    <message>
-        <source>There is no database opened.</source>
-        <translation type="vanished">Немає відкритої бази даних.</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.cpp" line="2235"/>
         <source>A new DB Browser for SQLite version is available (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Please download at &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</source>
         <translation>Вийшла нова версія оглядача для SQLite (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Вона доступна для скачування за посиланням &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</translation>
@@ -4468,39 +3468,6 @@ All data associated with the %1 will be lost.</source>
         <translation>Файл проекту оглядача для SQLite (*.sqbpro)</translation>
     </message>
     <message>
-        <source>Error executing query: %1</source>
-        <translation type="vanished">Помилка виконання запиту: %1</translation>
-    </message>
-    <message>
-        <source>%1 rows returned in %2ms from: %3</source>
-        <translation type="vanished">%1 рядків повернуто за %2мс з: %3</translation>
-    </message>
-    <message>
-        <source>,%1 rows affected</source>
-        <translation type="vanished">,%1 рядків змінено</translation>
-    </message>
-    <message>
-        <source>Query executed successfully: %1 (took %2ms %3)</source>
-        <translation type="vanished">Запит успішно виконано: %1 (тривало %2мс %3)</translation>
-    </message>
-    <message>
-        <source>Choose a text file</source>
-        <translation type="vanished">Вибрати текстовий файл</translation>
-    </message>
-    <message>
-        <source>Text files (*.csv *.txt);;All files (*)</source>
-        <translation type="vanished">Текстові файли (*.csv *.txt);;Всі файли (*)</translation>
-    </message>
-    <message>
-        <source>Import completed</source>
-        <translation type="vanished">Імпорт завершено</translation>
-    </message>
-    <message>
-        <source>Error while saving the database file. This means that not all changes to the database were saved. You need to resolve the following error first.
-%1</source>
-        <translation type="obsolete">Помилка під час збереження файлу бази даних. Це означає, що не всі зміни в базу даних було збережено. Спочатку Вам потрібно розв&apos;язати наступну помилку.</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.cpp" line="1388"/>
         <source>Are you sure you want to undo all changes made to the database file &apos;%1&apos; since the last save?</source>
         <translation>Скасувати всі зміни, зроблені у файлі бази даних &apos;%1&apos; після останнього збереження?</translation>
@@ -4509,10 +3476,6 @@ All data associated with the %1 will be lost.</source>
         <location filename="../MainWindow.cpp" line="1418"/>
         <source>Choose a file to import</source>
         <translation>Оберіть файл для імпорту</translation>
-    </message>
-    <message>
-        <source>Text files (*.sql *.txt);;All files (*)</source>
-        <translation type="vanished">Текстові файли (*.sql *.txt);;Всі файли (*)</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1430"/>
@@ -4552,22 +3515,6 @@ If you answer no we will attempt to import the data in the SQL file to the curre
         <translation>Видалити індекс</translation>
     </message>
     <message>
-        <source>Please enter the URL of the database file to open.</source>
-        <translation type="vanished">Введіть URL файлу БД для його відкриття.</translation>
-    </message>
-    <message>
-        <source>Please enter the URL of the database file to save.</source>
-        <translation type="vanished">Введіть URL файлу БД для його збереження.</translation>
-    </message>
-    <message>
-        <source>Please choose a new encoding for this table.</source>
-        <translation type="vanished">Оберіть нову систему кодування для цієї таблиці.</translation>
-    </message>
-    <message>
-        <source>Please choose a new encoding for all tables.</source>
-        <translation type="vanished">Оберіть нову систему кодування для всіх таблиць.</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.cpp" line="330"/>
         <source>Reset Window Layout</source>
         <translation type="unfinished"></translation>
@@ -4575,7 +3522,7 @@ If you answer no we will attempt to import the data in the SQL file to the curre
     <message>
         <location filename="../MainWindow.cpp" line="331"/>
         <source>Alt+0</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="336"/>
@@ -4585,7 +3532,7 @@ If you answer no we will attempt to import the data in the SQL file to the curre
     <message>
         <location filename="../MainWindow.cpp" line="337"/>
         <source>Shift+Alt+0</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="346"/>
@@ -4895,16 +3842,6 @@ Reason: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1
-Leave the field empty for using the database encoding.</source>
-        <translation type="vanished">%1
-Залиште це поле порожнім якщо хочете, щоб використовувалося кодування за замовчуванням.</translation>
-    </message>
-    <message>
-        <source>This encoding is either not valid or not supported.</source>
-        <translation type="vanished">Кодування невірне або не підтримується.</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.cpp" line="3106"/>
         <source>Collation needed! Proceed?</source>
         <translation type="unfinished">Потрібно виконати зіставлення! Продовжити?</translation>
@@ -4959,18 +3896,10 @@ Create a backup!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Скасувати</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1358"/>
         <location filename="../MainWindow.cpp" line="1549"/>
         <source>Delete Table</source>
         <translation>Видалити таблицю</translation>
-    </message>
-    <message>
-        <source>&amp;%1 %2</source>
-        <translation type="vanished">&amp;%1 %2</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1835"/>
@@ -4979,37 +3908,15 @@ Are you sure?</source>
         <translation>Встановлення значень PRAGMA завершить поточну транзакцію. Встановити значення?</translation>
     </message>
     <message>
-        <source>Error: could not delete the %1. Message from database engine:
-%2</source>
-        <translation type="vanished">Помилка: неможливо видалити %1. Повідомлення від движка БД:
-%2</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.cpp" line="1224"/>
         <source>Setting PRAGMA values or vacuuming will commit your current transaction.
 Are you sure?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Execution aborted by user</source>
-        <translation type="vanished">Виконання скасовано користувачем</translation>
-    </message>
-    <message>
-        <source>, %1 rows affected</source>
-        <translation type="vanished">, %1 рядків постраждало</translation>
-    </message>
-    <message>
-        <source>Query executed successfully: %1 (took %2ms%3)</source>
-        <translation type="vanished">Запит виконано успішно: %1 (тривало %2мс%3)</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.cpp" line="1305"/>
         <source>Choose text files</source>
         <translation>Оберіть текстові файли</translation>
-    </message>
-    <message>
-        <source>Text files(*.csv *.txt);;All files(*)</source>
-        <translation type="vanished">Текстові файли(*.csv *.txt);;Всі файли(*)</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1379"/>
@@ -5051,14 +3958,6 @@ Are you sure?</source>
         <translation>Обрати файл SQL для відкривання</translation>
     </message>
     <message>
-        <source>Couldn&apos;t read file: %1.</source>
-        <translation type="vanished">Неможливо прочитати файл: %1.</translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t save file: %1.</source>
-        <translation type="vanished">Неможливо зберегти файл: %1.</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.cpp" line="2076"/>
         <source>Select file name</source>
         <translation>Обрати ім&apos;я файлу</translation>
@@ -5067,10 +3966,6 @@ Are you sure?</source>
         <location filename="../MainWindow.cpp" line="2108"/>
         <source>Select extension file</source>
         <translation>Обрати розширення файлу</translation>
-    </message>
-    <message>
-        <source>Extensions(*.so *.dll);;All files(*)</source>
-        <translation type="vanished">Розширення(*.so *.dll);;Всі файли(*)</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2115"/>
@@ -5093,26 +3988,6 @@ Are you sure?</source>
         <source>New version available.</source>
         <translation>Доступна нова версія.</translation>
     </message>
-    <message>
-        <source>Please enter a pseudo-primary key in order to enable editing on this view. This should be the name of a unique column in the view.</source>
-        <translation type="vanished">Будь ласка, введіть псевдо-первинний ключ для можливості редагування у цьому виді. Це має бути і&apos;мя унікального стовпця у виді</translation>
-    </message>
-    <message>
-        <source>Choose a axis color</source>
-        <translation type="vanished">Вибрати колір осей</translation>
-    </message>
-    <message>
-        <source>PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;All Files(*)</source>
-        <translation type="vanished">PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;Всі файли(*)</translation>
-    </message>
-    <message>
-        <source>Choose a file to open</source>
-        <translation type="vanished">Вибрати файл для відкривання</translation>
-    </message>
-    <message>
-        <source>Invalid file format.</source>
-        <translation type="vanished">Помилковий формат файлу.</translation>
-    </message>
 </context>
 <context>
     <name>NullLineEdit</name>
@@ -5124,7 +3999,7 @@ Are you sure?</source>
     <message>
         <location filename="../AddRecordDialog.cpp" line="44"/>
         <source>Alt+Del</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -5148,14 +4023,6 @@ Are you sure?</source>
         <location filename="../PlotDock.ui" line="51"/>
         <source>X</source>
         <translation>X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>_</source>
-        <translation type="vanished">_</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="56"/>
@@ -5311,19 +4178,11 @@ Select the axes or axes labels to drag and zoom only in that orientation.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Load all data. This has only an effect if not all data has been fetched from the table yet due to the partial fetch mechanism.</source>
-        <translation type="vanished">Отримати всі дані. Діє, якщо не всі дані довантажено.</translation>
-    </message>
-    <message>
         <location filename="../PlotDock.cpp" line="232"/>
         <location filename="../PlotDock.cpp" line="503"/>
         <location filename="../PlotDock.cpp" line="518"/>
         <source>Row #</source>
         <translation>Рядок #</translation>
-    </message>
-    <message>
-        <source>Choose a axis color</source>
-        <translation type="vanished">Вибрати колір осей</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="74"/>
@@ -5406,14 +4265,6 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <location filename="../PlotDock.cpp" line="825"/>
         <source>Loading all remaining data for this table took %1ms.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fetching all data...</source>
-        <translation type="vanished">Отримання всіх даних...</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відмінити</translation>
     </message>
 </context>
 <context>
@@ -5569,14 +4420,6 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation>Оглядач &amp;даних</translation>
     </message>
     <message>
-        <source>NULL fields</source>
-        <translation type="vanished">NULL поля</translation>
-    </message>
-    <message>
-        <source>&amp;Text</source>
-        <translation type="vanished">&amp;Текст</translation>
-    </message>
-    <message>
         <location filename="../PreferencesDialog.ui" line="606"/>
         <source>Remove line breaks in schema &amp;view</source>
         <translation>Видалити розрив рядка в &amp;схемі даних</translation>
@@ -5587,21 +4430,9 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation>Показати віддалені опції</translation>
     </message>
     <message>
-        <source>Remote server</source>
-        <translation type="vanished">Сервер</translation>
-    </message>
-    <message>
         <location filename="../PreferencesDialog.ui" line="616"/>
         <source>Prefetch block si&amp;ze</source>
         <translation>Розмір блоку &amp;вибірки</translation>
-    </message>
-    <message>
-        <source>Advanced</source>
-        <translation type="vanished">Додатково</translation>
-    </message>
-    <message>
-        <source>SQL to execute after opening database</source>
-        <translation type="vanished"> SQL, який потрібно виконати після відкриття БД</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="626"/>
@@ -5619,10 +4450,6 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation>&amp;Шрифт</translation>
     </message>
     <message>
-        <source>Font si&amp;ze:</source>
-        <translation type="vanished">Ро&amp;змір шрифту:</translation>
-    </message>
-    <message>
         <location filename="../PreferencesDialog.ui" line="769"/>
         <source>Content</source>
         <translation>Вміст</translation>
@@ -5633,10 +4460,6 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation>Кількість символів у осередку</translation>
     </message>
     <message>
-        <source>Field colors</source>
-        <translation type="vanished">Кольорове оформлення полів</translation>
-    </message>
-    <message>
         <location filename="../PreferencesDialog.ui" line="886"/>
         <source>NULL</source>
         <translation>NULL</translation>
@@ -5645,10 +4468,6 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <location filename="../PreferencesDialog.ui" line="896"/>
         <source>Regular</source>
         <translation>Звичайні</translation>
-    </message>
-    <message>
-        <source>Text</source>
-        <translation type="vanished">Текст</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="876"/>
@@ -5706,10 +4525,6 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation>Ім&apos;я налаштувань</translation>
     </message>
     <message>
-        <source>context</source>
-        <translation type="vanished">Контекст</translation>
-    </message>
-    <message>
         <location filename="../PreferencesDialog.ui" line="1170"/>
         <source>Context</source>
         <translation>Контекст</translation>
@@ -5740,10 +4555,6 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation>Ключове слово</translation>
     </message>
     <message>
-        <source>function</source>
-        <translation type="vanished">функція</translation>
-    </message>
-    <message>
         <location filename="../PreferencesDialog.ui" line="1218"/>
         <source>Function</source>
         <translation>Функція</translation>
@@ -5769,10 +4580,6 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation>Рядок</translation>
     </message>
     <message>
-        <source>currentline</source>
-        <translation type="vanished">поточний рядок</translation>
-    </message>
-    <message>
         <location filename="../PreferencesDialog.ui" line="1306"/>
         <source>Current line</source>
         <translation>Поточна рядок</translation>
@@ -5781,10 +4588,6 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <location filename="../PreferencesDialog.ui" line="1347"/>
         <source>SQL &amp;editor font size</source>
         <translation>Розмір шрифту в &amp;редакторі SQL</translation>
-    </message>
-    <message>
-        <source>SQL &amp;log font size</source>
-        <translation type="vanished">Розмір шрифту в &amp;журналі SQL</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1386"/>
@@ -5800,10 +4603,6 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <location filename="../PreferencesDialog.ui" line="1515"/>
         <source>Error indicators</source>
         <translation>Індикатори помилок</translation>
-    </message>
-    <message>
-        <source>Enabling error indicators highlights the SQL code lines that caused errors during the last execution</source>
-        <translation type="vanished">Підсвічування в SQL коді рядків, виконання яких призвело до помилок</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1535"/>
@@ -6075,10 +4874,6 @@ Can be set to 0 for disabling completion.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;While supporting the REGEXP operator SQLite doesn&apos;t implement any regular expression&lt;br/&gt; algorithm but calls back the running application. DB Browser for SQLite implements this &lt;br/&gt;algorithm for you to let you use REGEXP out of the box. However, as there are multiple possible&lt;br/&gt; implementations of this and you might want to use another one, you&apos;re free to disable the&lt;br/&gt;application&apos;s implementation and load your own by using an extension. Requires restart of the application.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Оглядач для SQLite дозволяє використовувати оператор REGEXP &apos;з коробки&apos;. Але тим&lt;br/&gt;не менше, можливі кілька різних варіантів реалізацій даного оператора і Ви вільні&lt;br/&gt;у виборі яку саме використовувати. Можна відключити нашу реалізацію і використовувати іншу -&lt;br/&gt;шляхом завантаження відповідного розширення. В цьому випадку потрібно перезавантажити програму.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../PreferencesDialog.ui" line="1647"/>
         <source>Disable Regular Expression extension</source>
         <translation>Відімкнути розширення Регулярних Виразів</translation>
@@ -6174,10 +4969,6 @@ Can be set to 0 for disabling completion.</source>
         <translation>Обираємо файл розширення</translation>
     </message>
     <message>
-        <source>Extensions(*.so *.dll);;All files(*)</source>
-        <translation type="vanished">Розширення(*.so *.dll);;Всі файли(*)</translation>
-    </message>
-    <message>
         <location filename="../PreferencesDialog.cpp" line="400"/>
         <source>Extensions(*.so *.dylib *.dll);;All files(*)</source>
         <translation type="unfinished"></translation>
@@ -6265,14 +5056,6 @@ All your preferences will be lost and default values will be used.</source>
 <context>
     <name>QObject</name>
     <message>
-        <source>Error importing data </source>
-        <translation type="vanished">Помилка імпортування даних</translation>
-    </message>
-    <message>
-        <source>from record number %1</source>
-        <translation type="vanished">з запису номер %1</translation>
-    </message>
-    <message>
         <location filename="../ImportCsvDialog.cpp" line="113"/>
         <source>Error importing data</source>
         <translation>Помилка імпортування даних</translation>
@@ -6298,26 +5081,6 @@ All your preferences will be lost and default values will be used.</source>
         <location filename="../ImportCsvDialog.cpp" line="129"/>
         <source>Cancel</source>
         <translation>Скасувати</translation>
-    </message>
-    <message>
-        <source>Decoding CSV file...</source>
-        <translation type="vanished">Розшифровка CSV файлу...</translation>
-    </message>
-    <message>
-        <source>Collation needed! Proceed?</source>
-        <translation type="vanished">Потрібно виконати зіставлення! Продовжити?</translation>
-    </message>
-    <message>
-        <source>A table in this database requires a special collation function &apos;%1&apos; that this application can&apos;t provide without further knowledge.
-If you choose to proceed, be aware bad things can happen to your database.
-Create a backup!</source>
-        <translation type="vanished">Таблиця в базі даних вимагає виконання спеціальної функції зіставлення &apos;%1&apos;.
-Якщо Ви продовжите, то можливе псування Вашої бази даних.
-Створіть резервну копію!</translation>
-    </message>
-    <message>
-        <source>SQLite database files (*.db *.sqlite *.sqlite3 *.db3);;All files (*)</source>
-        <translation type="vanished">Файли SQLite баз даних (*.db *.sqlite *.sqlite3 *.db3);;Всі файли (*)</translation>
     </message>
     <message>
         <location filename="../FileDialog.cpp" line="82"/>
@@ -6424,18 +5187,6 @@ Create a backup!</source>
         <source>Extensions (*.so *.dylib *.dll)</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Name</source>
-        <translation type="obsolete">Ім&apos;я</translation>
-    </message>
-    <message>
-        <source>Last modified</source>
-        <translation type="obsolete">Востаннє змінений</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="obsolete">Розмір</translation>
-    </message>
 </context>
 <context>
     <name>RemoteCommitsModel</name>
@@ -6478,62 +5229,6 @@ Create a backup!</source>
 <context>
     <name>RemoteDatabase</name>
     <message>
-        <source>Error when connecting to %1.
-%2</source>
-        <translation type="vanished">Помилка під час під&apos;єднання до %1.
-%2</translation>
-    </message>
-    <message>
-        <source>Error opening remote file at %1.
-%2</source>
-        <translation type="vanished">Помилка під час відкривання віддаленого файлу %1.
-%2</translation>
-    </message>
-    <message>
-        <source>Error: Invalid client certificate specified.</source>
-        <translation type="vanished">Помилка: Вказано неправильний сертифікат клієнта.</translation>
-    </message>
-    <message>
-        <source>Please enter the passphrase for this client certificate in order to authenticate.</source>
-        <translation type="vanished">Будь ласка, введіть парольну фразу для цього сертифіката клієнта, для автентифікації</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished"> Скасувати</translation>
-    </message>
-    <message>
-        <source>Uploading remote database to
-%1</source>
-        <translation type="obsolete">Вивантаження віддаленої бази даних до
-%1. {1?}</translation>
-    </message>
-    <message>
-        <source>Downloading remote database from
-%1</source>
-        <translation type="obsolete">Завантаження віддаленої бази даних із
-%1. {1?}</translation>
-    </message>
-    <message>
-        <source>Uploading remote database to
-%1.</source>
-        <translation type="vanished">Вивантаження віддаленої бази даних до
-%1.</translation>
-    </message>
-    <message>
-        <source>Downloading remote database from
-%1.</source>
-        <translation type="vanished">Завантаження віддаленої бази даних із
-%1.</translation>
-    </message>
-    <message>
-        <source>Error: The network is not accessible.</source>
-        <translation type="vanished">Помилка: Мережа не доступна.</translation>
-    </message>
-    <message>
-        <source>Error: Cannot open the file for sending.</source>
-        <translation type="vanished">Помилка: Неможливо відкрити файл для відправлення.</translation>
-    </message>
-    <message>
         <location filename="../RemoteDatabase.cpp" line="56"/>
         <source>Error opening local databases list.
 %1</source>
@@ -6556,10 +5251,6 @@ Create a backup!</source>
         <translation>Віддалений</translation>
     </message>
     <message>
-        <source>B&amp;rowse</source>
-        <translation type="vanished">В&amp;ідкрити</translation>
-    </message>
-    <message>
         <location filename="../RemoteDock.ui" line="117"/>
         <source>Local</source>
         <translation>Локальний</translation>
@@ -6568,10 +5259,6 @@ Create a backup!</source>
         <location filename="../RemoteDock.ui" line="29"/>
         <source>Identity</source>
         <translation>Ідентичний</translation>
-    </message>
-    <message>
-        <source>Go</source>
-        <translation type="vanished">Перейти</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="59"/>
@@ -6676,7 +5363,7 @@ Create a backup!</source>
     <message>
         <location filename="../RemoteDock.ui" line="414"/>
         <source>F5</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="423"/>
@@ -6829,10 +5516,6 @@ Are you sure you want to proceed?</source>
         <translation>Ім&apos;я</translation>
     </message>
     <message>
-        <source>Version</source>
-        <translation type="vanished">Версія</translation>
-    </message>
-    <message>
         <location filename="../RemoteModel.cpp" line="109"/>
         <source>Last modified</source>
         <translation>Востаннє змінений</translation>
@@ -6866,10 +5549,6 @@ Are you sure you want to proceed?</source>
         <location filename="../RemoteModel.cpp" line="234"/>
         <source>Default Branch: </source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>bytes</source>
-        <translation type="vanished">байтів</translation>
     </message>
 </context>
 <context>
@@ -7041,7 +5720,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../SqlExecutionArea.ui" line="91"/>
         <source>Shift+F3</source>
-        <translation type="unfinished">Shift+F3</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="105"/>
@@ -7125,34 +5804,6 @@ Are you sure you want to proceed?</source>
         <translation>Це поле показує результати та коди статусів останніх виконаних операторів.</translation>
     </message>
     <message>
-        <source>Export to &amp;CSV</source>
-        <translation type="vanished">Експортувати в &amp;CSV</translation>
-    </message>
-    <message>
-        <source>Save as &amp;view</source>
-        <translation type="vanished">Зберегти як &amp;вигляд</translation>
-    </message>
-    <message>
-        <source>Save as view</source>
-        <translation type="vanished">Зберегти як вигляд</translation>
-    </message>
-    <message>
-        <source>Please specify the view name</source>
-        <translation type="vanished">Вкажіть ім&apos;я вигляду</translation>
-    </message>
-    <message>
-        <source>There is already an object with that name. Please choose a different name.</source>
-        <translation type="vanished">Об&apos;єкт із зазначеним ім&apos;ям уже існує. Виберіть інше ім&apos;я.</translation>
-    </message>
-    <message>
-        <source>View successfully created.</source>
-        <translation type="vanished">Вигляд успішно створений.</translation>
-    </message>
-    <message>
-        <source>Error creating view: %1</source>
-        <translation type="vanished">Помилка створення вигляду: %1</translation>
-    </message>
-    <message>
         <location filename="../SqlExecutionArea.cpp" line="239"/>
         <source>Couldn&apos;t read file: %1.</source>
         <translation type="unfinished">Неможливо прочитати файл: %1.</translation>
@@ -7179,7 +5830,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../sqltextedit.cpp" line="41"/>
         <source>Ctrl+/</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -7195,17 +5846,9 @@ Are you sure you want to proceed?</source>
         <translation>() Функція changes() повертає кількість рядків у базі даних, які було змінено, вставлено або видалено після вдалого виконання INSERT, DELETE або UPDATE.</translation>
     </message>
     <message>
-        <source>(X1,X2,...) The char(X1,X2,...,XN) function returns a string composed of characters having the unicode code point values of integers X1 through XN, respectively.</source>
-        <translation type="vanished">(X1,X2,...) Функція char(X1,X2,...,XN) повертає рядок складений із символів, переданих в якості аргументів.</translation>
-    </message>
-    <message>
         <location filename="../SqlUiLexer.cpp" line="69"/>
         <source>(X,Y,...) The coalesce() function returns a copy of its first non-NULL argument, or NULL if all arguments are NULL</source>
         <translation>(X,Y,...) Функція coalesce() повертає копію першого аргументу не-NULL, якщо такого немає, то повертає NULL</translation>
-    </message>
-    <message>
-        <source>(X,Y) The glob (X,Y) function is equivalent to the expression &quot;Y GLOB X&quot;.</source>
-        <translation type="vanished">(X,Y) Функція glob (X,Y) еквівалентна виразу &quot;Y GLOB X&quot;.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="71"/>
@@ -7243,14 +5886,6 @@ Are you sure you want to proceed?</source>
         <translation>(X,Y,Z) Функція like() еквівалент вираження &quot;Y LIKE X ESCAPE Z&quot;.</translation>
     </message>
     <message>
-        <source>(X) The load_extension(X) function loads SQLite extensions out of the shared library file named X.</source>
-        <translation type="vanished">(X) Функція load_extension(X) завантажує розширення SQLite з файлу бібліотеки динамічного компонування X.</translation>
-    </message>
-    <message>
-        <source>(X,Y) The load_extension(X,Y) function loads SQLite extensions out of the shared library file named X using the entry point Y.</source>
-        <translation type="vanished">(X,Y) Функція load_extension (X,Y) завантажує розширення SQLite з файлу бібліотеки динамічного компонування X, використовуючи точку входу Y.</translation>
-    </message>
-    <message>
         <location filename="../SqlUiLexer.cpp" line="80"/>
         <source>(X) The lower(X) function returns a copy of string X with all ASCII characters converted to lower case.</source>
         <translation>(X) Функція lower(X) повертає копію рядка X, в якій усі ACSII символи переведені в нижній регістр.</translation>
@@ -7261,10 +5896,6 @@ Are you sure you want to proceed?</source>
         <translation>(X) ltrim(X) видаляє символи пробілів зліва для рядка X.</translation>
     </message>
     <message>
-        <source>(X,Y) The ltrim (X,Y) function returns a string formed by removing any and all characters that appear in Y from the left side of X.</source>
-        <translation type="vanished">(X,Y) Функція ltrim (X,Y) повертає новий рядок шляхом видалення з рядка X зліва будь-якого символу з Y.</translation>
-    </message>
-    <message>
         <location filename="../SqlUiLexer.cpp" line="68"/>
         <source>(X1,X2,...) The char(X1,X2,...,XN) function returns a string composed of characters having the unicode code point values of integers X1 through XN, respectively. </source>
         <translation>(X1,X2,...) Функція char(X1,X2,...,XN) повертає рядок, складений із символів, переданих як аргументи.</translation>
@@ -7273,10 +5904,6 @@ Are you sure you want to proceed?</source>
         <location filename="../SqlUiLexer.cpp" line="70"/>
         <source>(X,Y) The glob(X,Y) function is equivalent to the expression &quot;Y GLOB X&quot;.</source>
         <translation>(X,Y) функція glob(X,Y) еквівалент вираження &quot;Y GLOB X&quot;.</translation>
-    </message>
-    <message>
-        <source>(X,Y) The load_extension(X) function loads SQLite extensions out of the shared library file named X using the entry point Y.</source>
-        <translation type="vanished">(X,Y) функція load_extension(X) завантажує розширення SQLite з файлу бібліотеки динамічного компонування X використовуючи точку входу Y.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="78"/>
@@ -7440,10 +6067,6 @@ Use of this function must be authorized from Preferences.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>(X,Y) The rtrim (X,Y) function returns a string formed by removing any and all characters that appear in Y from the right side of X.</source>
-        <translation type="vanished">(X,Y) Функція rtrim(X,Y) повертає новий рядок шляхом видалення з рядка X праворуч будь-якого символу з рядка Y.</translation>
-    </message>
-    <message>
         <location filename="../SqlUiLexer.cpp" line="95"/>
         <source>(X) The soundex(X) function returns a string that is the soundex encoding of the string X.</source>
         <translation>(X) Функція soundex(X) повертає копію рядка X, кодовану в форматі soundex.</translation>
@@ -7533,52 +6156,41 @@ Use of this function must be authorized from Preferences.</source>
 <context>
     <name>SqliteTableModel</name>
     <message>
-        <source>References %1 (%2)
-Hold Ctrl+Shift and click to jump there</source>
-        <translation type="vanished">Налаштування %1 (%2)
-Натисніть Ctrl+Shift і клік щоб переміститися туди</translation>
-    </message>
-    <message>
-        <source>References %1(%2)
-Hold Ctrl+Shift and click to jump there</source>
-        <translation type="vanished">Налаштування %1(%2)
-Затисніть Ctrl+Shift і клік, щоб переміститися туди</translation>
-    </message>
-    <message>
-        <location filename="../sqlitetablemodel.cpp" line="34"/>
+        <location filename="../sqlitetablemodel.cpp" line="36"/>
         <source>reading rows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="337"/>
+        <location filename="../sqlitetablemodel.cpp" line="339"/>
         <source>loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="402"/>
+        <location filename="../sqlitetablemodel.cpp" line="404"/>
         <source>References %1(%2)
 Hold %3Shift and click to jump there</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="555"/>
+        <location filename="../sqlitetablemodel.cpp" line="557"/>
         <source>Error changing data:
 %1</source>
         <translation>Помилка зміни даних:
 %1</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="796"/>
+        <location filename="../sqlitetablemodel.cpp" line="798"/>
         <source>retrieving list of columns</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="1024"/>
+        <location filename="../sqlitetablemodel.cpp" line="1026"/>
         <source>Fetching data...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="1025"/>
+        <location filename="../sqlitetablemodel.cpp" line="1027"/>
+        <location filename="../sqlitetablemodel.cpp" line="1029"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7639,7 +6251,7 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.ui" line="276"/>
         <source>Shift+F3</source>
-        <translation type="unfinished">Shift+F3</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="283"/>
@@ -7782,10 +6394,6 @@ Hold %3Shift and click to jump there</source>
         <location filename="../TableBrowser.ui" line="523"/>
         <source>Scroll to the end</source>
         <translation type="unfinished">Прокрутити до кінця</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Clicking this button navigates up to the end in the table view above.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Натискання цієї кнопки переміщує в кінець таблиці.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="526"/>
@@ -8047,7 +6655,7 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.ui" line="803"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished">Ctrl+P</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="815"/>
@@ -8088,7 +6696,7 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.ui" line="860"/>
         <source>Ctrl+B</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="872"/>
@@ -8105,7 +6713,7 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.ui" line="893"/>
         <source>Ctrl+U</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="905"/>
@@ -8194,7 +6802,7 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.ui" line="1039"/>
         <source>Ctrl+Space</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1054"/>
@@ -8209,7 +6817,7 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.cpp" line="102"/>
         <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message numerus="yes">
         <location filename="../TableBrowser.cpp" line="450"/>
@@ -8277,7 +6885,7 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.cpp" line="1181"/>
         <source>Ctrl+&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1200"/>
@@ -8346,14 +6954,6 @@ Leave the field empty for using the database encoding.</source>
         <location filename="../VacuumDialog.ui" line="39"/>
         <source>Please select the databases to co&amp;mpact:</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Warning: Compacting the database will commit all changes you made.</source>
-        <translation type="vanished">Попередження: Ущільнення бази даних зафіксує всі зміни, які було зроблено.</translation>
-    </message>
-    <message>
-        <source>Please select the objects to compact:</source>
-        <translation type="vanished">Виберіть об&apos;єкти для ущільнення:</translation>
     </message>
 </context>
 </TS>

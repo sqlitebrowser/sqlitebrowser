@@ -18,30 +18,6 @@
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Silk icon set by Mark James licensed under a Creative Commons Attribution 2.5 and 3.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; DB Browser for SQLite, SQLite veritabanı dosyaları oluşturmak, tasarlamak ve düzenlemek için kullanılan açık kaynak kodlu, ücretsiz bir araçtır. &lt;/p&gt; &lt;p&gt; &apos;Mozilla Kamu Lisansı Sürüm 2&apos; ve &apos;GNU Genel Kamu Lisansı Sürüm 3 veya üstü&apos; olmak üzere iki lisansa sahiptir. Bu lisansların koşulları çerçevesinde yazılımı düzenleyebilir veya yeniden dağıtabilirsiniz. &lt;/p&gt; &lt;p&gt; Detaylar için, lütfen &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot; &gt;http://www.gnu.org/licenses/gpl.html&lt;/a &gt; ve &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot; &gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a &gt; adreslerini ziyaret ediniz. &lt;/p&gt; &lt;p&gt; Bu yazılım hakkında detaylı bilgi için lütfen internet sitemizi ziyaret ediniz: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt; &lt;/p&gt; &lt;p&gt; &lt;span style=&quot; font-size:small;&quot; &gt;Bu yazılım GPL/LGPL lisansına sahip Qt Araç Kitini (&lt;a href=&quot;http://qt-project.org/&quot; &gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;) kullanmaktadır.&lt;/span&gt; &lt;br /&gt; &lt;span style=&quot; font-size:small;&quot;&gt;Lisans koşulları ve bilgiler için &lt;/span &gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot; &gt;&lt;span style=&quot; font-size:small;&quot; &gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span &gt;&lt;/a &gt;&lt;span style=&quot; font-size:small;&quot;&gt; adresini ziyaret ediniz.&lt;/span &gt; &lt;/p&gt; &lt;p&gt; &lt;span style=&quot; font-size:small;&quot; &gt; Bu yazılım ayrıca, Mark James tarafından hazırlanan, &apos;Creative Commons Attribution 2.5 veya 3.0&apos; lisansına sahip Silk ikon setini kullanmaktadır. &lt;br /&gt;Detaylar için &lt;/span &gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot; &gt;&lt;span style=&quot; font-size:small;&quot; &gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span &gt;&lt;/a &gt;&lt;span style=&quot; font-size:small;&quot;&gt; adresini ziyaret ediniz.&lt;/span&gt; &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/span&gt;&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://sqlitebrowser.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Silk icon set by Mark James licensed under a Creative Commons Attribution 2.5 and 3.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite DB Browser, SQLite veritabanlarını tasarlamak ve düzenlemek için kullanılan, açık kaynak kodlu, ücretsiz bir görsel araçtır.&lt;/p&gt;&lt;p&gt;Bu program &apos;Mozilla Ortak Lisans Versiyon 2&apos; altında lisanslanmasının yanı sıra &apos;GNU Genel Ortak Lisansı Versiyon 3 veya üzeri&apos; lisansa sahiptir. Bu programı, lisans koşulları çerçevesinde değiştirebilir ve yeniden dağıtabilirsiniz.&lt;/p&gt;&lt;p&gt;Detaylı bilgiler için &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/a&gt; ve &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/span&gt;&lt;/a&gt; adreslerine bakabilirsiniz.&lt;/p&gt;&lt;p&gt;Program üzerine daha fazla bilgiye ulaşmak için web sitemizi ziyaret edebilirsiniz: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://sqlitebrowser.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Bu program belirtilen adresteki GPL/LGPL Qt Toolkit kullanmaktadır: &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;Lisans koşulları için şurayı ziyaret edin: &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Ayrıca bu program, Mark James tarafından sağlanan Creative Commons Attribution 2.5 ve 3.0 lisansına sahip Silk ikon setini kullanmaktadır.&lt;br/&gt;Detaylar için: &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Version </source>
-        <translation type="vanished">Versiyon </translation>
-    </message>
-    <message>
-        <source>Built for %1, running on %2</source>
-        <translation type="vanished">%1 için derlendi, %2 üzerinde çalışıyor</translation>
-    </message>
-    <message>
-        <source>Qt Version </source>
-        <translation type="vanished">Qt Versiyonu </translation>
-    </message>
-    <message>
-        <source>SQLCipher Version </source>
-        <translation type="vanished">SQLCipher Versiyonu </translation>
-    </message>
-    <message>
-        <source>SQLite Version </source>
-        <translation type="vanished">SQLite Versiyonu </translation>
-    </message>
 </context>
 <context>
     <name>AddRecordDialog</name>
@@ -143,59 +119,9 @@
 <context>
     <name>Application</name>
     <message>
-        <source>Usage: %1 [options] [db]
-</source>
-        <translation type="vanished">Kullanım: %1 [opsiyonlar] [veri tabanı]
-</translation>
-    </message>
-    <message>
         <location filename="../Application.cpp" line="95"/>
         <source>Possible command line arguments:</source>
         <translation>Muhtemel komut satırı argümanları:</translation>
-    </message>
-    <message>
-        <source>  -h, --help		Show command line options</source>
-        <translation type="vanished">  -h, --help		Komut satırı seçeneklerini gösterir</translation>
-    </message>
-    <message>
-        <source>  -s, --sql  [file]	Execute this SQL file after opening the DB</source>
-        <translation type="obsolete">  -s, --sql  [file]	veritabanını açtıktan sonra SQL dosyasını yürüt</translation>
-    </message>
-    <message>
-        <source>  -s, --sql [file]	Execute this SQL file after opening the DB</source>
-        <translation type="vanished">  -s, --sql [dosya]	Veritabanını açtıktan sonra belirtilen SQL dosyasını çalıştırır</translation>
-    </message>
-    <message>
-        <source>  -t, --table [table]	Browse this table after opening the DB</source>
-        <translation type="vanished">  -t, --table [tablo]	Veritabanını açtıktan sonra belirtilen tabloyu görüntüler</translation>
-    </message>
-    <message>
-        <source>  -q, --quit		Exit application after running scripts</source>
-        <translation type="vanished">  -q, --quit		Scriptleri çalıştırdıktan sonra programı kapatır</translation>
-    </message>
-    <message>
-        <source>  -R, --read-only	Open database in read-only mode</source>
-        <translation type="vanished">  -R, --read-only	Veritabanını salt okunur modda açar</translation>
-    </message>
-    <message>
-        <source>  -o, --option [group/setting=value]	Run application with this setting temporarily set to value</source>
-        <translation type="vanished">  -o, --option [grup/ayar=değer]	Programı geçici olarak  ayar için belirtilen değerle çalıştırır</translation>
-    </message>
-    <message>
-        <source>  -O, --save-option [group/setting=value]	Run application saving this value for this setting</source>
-        <translation type="vanished">  -O, --save-option [grup/ayar=değer]	Uygulamayı, ayara belirtilen değeri kaydederek çalıştırır</translation>
-    </message>
-    <message>
-        <source>  -v, --version		Display the current version</source>
-        <translation type="vanished">  -v, --version		Geçerli versiyonu gösterir</translation>
-    </message>
-    <message>
-        <source>  [file]		Open this SQLite database</source>
-        <translation type="vanished">  [dosya]		Belirtilen SQLite veritabanını açar</translation>
-    </message>
-    <message>
-        <source>This is DB Browser for SQLite version %1.</source>
-        <translation type="vanished">DB Browser for SQLite versiyon %1.</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="93"/>
@@ -385,10 +311,6 @@
         <location filename="../CipherDialog.ui" line="71"/>
         <source>Raw key</source>
         <translation>Ham anahtar</translation>
-    </message>
-    <message>
-        <source>Page &amp;size</source>
-        <translation type="vanished">&amp;Sayfa boyutu</translation>
     </message>
     <message>
         <location filename="../CipherDialog.cpp" line="35"/>
@@ -658,10 +580,6 @@ Bu veritabanı için herhangi bir başka ayar daha yapılmışsa, bu bilgileri d
 <context>
     <name>DBBrowserDB</name>
     <message>
-        <source>no error</source>
-        <translation type="obsolete">hata yok</translation>
-    </message>
-    <message>
         <location filename="../sqlitedb.cpp" line="302"/>
         <source>Please specify the database name under which you want to access the attached database</source>
         <translation>Lütfen veritabanının ismini erişmek istediğiniz bağlı veritabanının altında belirtin</translation>
@@ -696,15 +614,6 @@ Bu veritabanı için herhangi bir başka ayar daha yapılmışsa, bu bilgileri d
         <location filename="../sqlitedb.cpp" line="1069"/>
         <source>Action cancelled.</source>
         <translation>İşlem iptal edildi.</translation>
-    </message>
-    <message>
-        <source>Error in statement #%1: %2.
-Aborting execution.</source>
-        <translation type="vanished">Belirtilen ifadelerde hata var: #%1: %2. Yürütme işlemi iptal edildi.</translation>
-    </message>
-    <message>
-        <source>renameColumn: cannot find table %1.</source>
-        <translation type="vanished">Sütunu Yeniden Adlandırma: %1 tablosu bulunamadı.</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="288"/>
@@ -838,27 +747,6 @@ Veritabanı motoru mesajı:
         <translation>veritabanı objelerinin listesi alınamadı: %1</translation>
     </message>
     <message>
-        <source>renameColumn: cannot find column %1.</source>
-        <translation type="vanished">Sütunu Yeniden Adlandırma: %1 sütunu bulunamadı.</translation>
-    </message>
-    <message>
-        <source>renameColumn: creating savepoint failed. DB says: %1</source>
-        <translation type="vanished">Sütunu Yeniden Adlandırma: Kayıt noktası oluşturma başarısız. veritabanı mesajı: %1</translation>
-    </message>
-    <message>
-        <source>renameColumn: creating new table failed. DB says: %1</source>
-        <translation type="vanished">Sütunu Yeniden Adlandırma: Yeni tablo oluşturma başarısız. veritabanı mesajı: %1</translation>
-    </message>
-    <message>
-        <source>renameColumn: copying data to new table failed. DB says:
-%1</source>
-        <translation type="vanished">Sütunu Yeniden Adlandırma: Verileri yeni veritabanına kopyalama başarısız. veritabanı mesajı: %1</translation>
-    </message>
-    <message>
-        <source>renameColumn: deleting old table failed. DB says: %1</source>
-        <translation type="vanished">Sütunu Yeniden Adlandırma: Eski veritabanı silme işlemi başarısız. veritabanı mesajı: %1</translation>
-    </message>
-    <message>
         <location filename="../sqlitedb.cpp" line="1814"/>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 
@@ -866,19 +754,6 @@ Veritabanı motoru mesajı:
         <translation>Bu tabloyla ilişkili bazı objelerin restore işlemi başarısız. Bu hata büyük olasılıkla sütunların isminin değişimden kaynaklanıyor. SQL sorgusunu elle düzeltmek ve yürütmek isterseniz:
 
 </translation>
-    </message>
-    <message>
-        <source>renameColumn: releasing savepoint failed. DB says: %1</source>
-        <translation type="vanished">Sütun Yeniden Adlandırma: Kayıt noktası işlemi sonlandırılırken hata oluştu. veritabanı mesajı: %1</translation>
-    </message>
-    <message>
-        <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.Message from database engine:
-%3</source>
-        <translation type="vanished">Tablo &apos;%1&apos; isminden &apos;%2&apos; ismine yeniden adlandırılırken hata oluştu. veritabanı motorunun mesajı: %3</translation>
-    </message>
-    <message>
-        <source>... &lt;string can not be logged, contains binary data&gt; ...</source>
-        <translation type="vanished">... &lt;dize ikili veri içeriyor, günlüğe yazılamadı&gt; ...</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1960"/>
@@ -894,26 +769,6 @@ Veritabanı motoru mesajı:
         <location filename="../sqlitedb.cpp" line="2097"/>
         <source>could not get column information</source>
         <translation>sütun bilgisi alınamadı</translation>
-    </message>
-    <message>
-        <source>unknown object type %1</source>
-        <translation type="vanished">bilinmeyen nesne tipi %1</translation>
-    </message>
-    <message>
-        <source>could not get list of db objects: %1, %2</source>
-        <translation type="vanished">veritabanı nesnelerinin listesi alınamadı: %1, %2</translation>
-    </message>
-    <message>
-        <source>could not get types</source>
-        <translation type="vanished">tipler alınamadı</translation>
-    </message>
-    <message>
-        <source>didn&apos;t receive any output from pragma %1</source>
-        <translation type="vanished">%1 pragmasından herhangi bir çıktı alınamadı</translation>
-    </message>
-    <message>
-        <source>could not execute pragma command: %1, %2</source>
-        <translation type="vanished">pragma komutu yürütülemedi: %1, %2</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1988"/>
@@ -1167,7 +1022,7 @@ Hatalar, kırmızı dalgalı alt çizgiyle belirtilir.</translation>
         <location filename="../EditDialog.ui" line="290"/>
         <location filename="../EditDialog.ui" line="308"/>
         <source>Ctrl+P</source>
-        <translation>Ctrl+P</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="302"/>
@@ -1187,31 +1042,7 @@ Hatalar, kırmızı dalgalı alt çizgiyle belirtilir.</translation>
     <message>
         <location filename="../EditDialog.ui" line="326"/>
         <source>Ctrl+Shift+C</source>
-        <translation>Ctrl+Shift+C</translation>
-    </message>
-    <message>
-        <source>Import text</source>
-        <translation type="vanished">Metin aktar</translation>
-    </message>
-    <message>
-        <source>Opens a file dialog used to import text to this database cell.</source>
-        <translation type="vanished">veritabanı hücresine metin aktarmak için dosya diyaloğunu açar.</translation>
-    </message>
-    <message>
-        <source>&amp;Import</source>
-        <translation type="vanished">&amp;İçe Aktar</translation>
-    </message>
-    <message>
-        <source>Export text</source>
-        <translation type="vanished">Metni dışa aktar</translation>
-    </message>
-    <message>
-        <source>Opens a file dialog used to export the contents of this database cell to a text file.</source>
-        <translation type="vanished">veritabanı hücresindeki metni metin dosyası olarak dışa aktarmak için dosya diyaloğunu açar.</translation>
-    </message>
-    <message>
-        <source>&amp;Export</source>
-        <translation type="vanished">&amp;Dışa Aktar</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="383"/>
@@ -1244,21 +1075,9 @@ Hatalar, kırmızı dalgalı alt çizgiyle belirtilir.</translation>
         <translation>İkili</translation>
     </message>
     <message>
-        <source>Clear cell data</source>
-        <translation type="obsolete">Hücredeki veriyi temizle</translation>
-    </message>
-    <message>
         <location filename="../EditDialog.ui" line="386"/>
         <source>Erases the contents of the cell</source>
         <translation>Hücre içeriğini siler</translation>
-    </message>
-    <message>
-        <source>&amp;Clear</source>
-        <translation type="obsolete">&amp;Temizle</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#c00000;&quot;&gt;Warning: Editing binary content in text mode may result in corrupted data!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#c00000;&quot;&gt;Uyarı: İkili veriyi metin modunda düzenlemek verinin bozulmasına neden olabilir!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="17"/>
@@ -1276,21 +1095,9 @@ Hatalar, kırmızı dalgalı alt çizgiyle belirtilir.</translation>
         <translation>Şuan da tablonun içinde bulunan verinin boyutu</translation>
     </message>
     <message>
-        <source>Choose a file</source>
-        <translation type="vanished">Dosya seçiniz</translation>
-    </message>
-    <message>
-        <source>Text files(*.txt);;Image files(%1);;All files(*)</source>
-        <translation type="vanished">Metin dosyaları(*.txt);;Resim dosyaları(%1);;Tüm dosyalar(*)</translation>
-    </message>
-    <message>
         <location filename="../EditDialog.cpp" line="462"/>
         <source>Choose a filename to export data</source>
         <translation>Veriyi dışa aktarmak için dosya ismi seçiniz</translation>
-    </message>
-    <message>
-        <source>Text files(*.txt);;All files(*)</source>
-        <translation type="vanished">Metin dosyaları(*.txt);;Tüm dosyalar(*)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="250"/>
@@ -1368,13 +1175,14 @@ Hatalar, kırmızı dalgalı alt çizgiyle belirtilir.</translation>
         <translation>Şu anda hücrenin içinde bulunan veri tipi: Doğrulanmış JSON</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="1239"/>
-        <source>The data has been saved to a temporary file and has been opened with the default application. You can now edit the file and, when you are ready, apply the saved new data to the cell editor or cancel any changes.</source>
-        <translation>Veriler geçici bir dosyaya kaydedildi ve varsayılan uygulama ile açıldı. Artık dosyayı düzenleyebilir ve hazır olduğunuzda, kaydedilen yeni verileri hücre editörüne uygulayabilir veya değişiklikleri iptal edebilirsiniz.</translation>
+        <location filename="../EditDialog.cpp" line="1221"/>
+        <source>Couldn&apos;t save file: %1.</source>
+        <translation type="unfinished">Dosya kaydedilemedi: %1.</translation>
     </message>
     <message>
-        <source>Type of data currently in cell: Null</source>
-        <translation type="obsolete">Şuan da hücresinin içinde bulunan verinin tipi: Boş</translation>
+        <location filename="../EditDialog.cpp" line="1246"/>
+        <source>The data has been saved to a temporary file and has been opened with the default application. You can now edit the file and, when you are ready, apply the saved new data to the cell editor or cancel any changes.</source>
+        <translation>Veriler geçici bir dosyaya kaydedildi ve varsayılan uygulama ile açıldı. Artık dosyayı düzenleyebilir ve hazır olduğunuzda, kaydedilen yeni verileri hücre editörüne uygulayabilir veya değişiklikleri iptal edebilirsiniz.</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="862"/>
@@ -1390,14 +1198,6 @@ Hatalar, kırmızı dalgalı alt çizgiyle belirtilir.</translation>
         <translation>
             <numerusform>%n karakter</numerusform>
         </translation>
-    </message>
-    <message>
-        <source>Type of data currently in cell: Image</source>
-        <translation type="obsolete">Şuan da hücresinin içinde bulunan verinin tipi: Resim</translation>
-    </message>
-    <message>
-        <source>%1x%2 pixel</source>
-        <translation type="obsolete">%1x%2 piksel</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="1067"/>
@@ -1416,25 +1216,9 @@ Hatalar, kırmızı dalgalı alt çizgiyle belirtilir.</translation>
 <context>
     <name>EditIndexDialog</name>
     <message>
-        <source>Create New Index</source>
-        <translation type="vanished">Yeni İndeks Oluştur</translation>
-    </message>
-    <message>
         <location filename="../EditIndexDialog.ui" line="26"/>
         <source>&amp;Name</source>
         <translation>&amp;İsim</translation>
-    </message>
-    <message>
-        <source>&amp;Columns</source>
-        <translation type="vanished">&amp;Sütunlar</translation>
-    </message>
-    <message>
-        <source>Column</source>
-        <translation type="vanished">Sütun</translation>
-    </message>
-    <message>
-        <source>Use in Index</source>
-        <translation type="vanished">İndeksin içinde Kullan</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="237"/>
@@ -1541,22 +1325,6 @@ Hatalar, kırmızı dalgalı alt çizgiyle belirtilir.</translation>
         <location filename="../EditTableDialog.ui" line="106"/>
         <source>Fields</source>
         <translation>Alanlar</translation>
-    </message>
-    <message>
-        <source>Add field</source>
-        <translation type="vanished">Alan Ekle</translation>
-    </message>
-    <message>
-        <source>Remove field</source>
-        <translation type="vanished">Alanı kaldır</translation>
-    </message>
-    <message>
-        <source>Move field up</source>
-        <translation type="vanished">Alanı yukarı taşı</translation>
-    </message>
-    <message>
-        <source>Move field down</source>
-        <translation type="vanished">Alanı aşağı taşı</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="114"/>
@@ -1772,18 +1540,9 @@ Hatalar, kırmızı dalgalı alt çizgiyle belirtilir.</translation>
         <translation>Şu anda &apos;Benzersiz&apos; kısıtı eklenmesi imkansız.&apos;Benzersiz&apos; kısıtını ekleyebilmek için lütfen yinelenen değerleri silin.</translation>
     </message>
     <message>
-        <source>Column `%1` has no unique data.
-</source>
-        <translation type="obsolete">`%1` sütununda benzersiz veri yok</translation>
-    </message>
-    <message>
         <location filename="../EditTableDialog.cpp" line="492"/>
         <source>This column is referenced in a foreign key in table %1 and thus its name cannot be changed.</source>
         <translation>Bu sütun%1 tablosundaki yabancı bir anahtar tarafından referans alınıyor, bu nedenle adı değiştirilemez.</translation>
-    </message>
-    <message>
-        <source>This makes it impossible to set this flag. Please change the table data first.</source>
-        <translation type="vanished">Bu sebeple bu özelliği etkinleştirmek imkansız. Lütfen ilk önce tablonuzdaki veriyi değiştirin.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="817"/>
@@ -1807,18 +1566,6 @@ All data currently stored in this field will be lost.</source>
         <location filename="../ExportDataDialog.ui" line="14"/>
         <source>Export data as CSV</source>
         <translation>Veriyi CSV olarak dışa aktar</translation>
-    </message>
-    <message>
-        <source>&amp;Table(s)</source>
-        <translation type="vanished">&amp;Tablo(lar)</translation>
-    </message>
-    <message>
-        <source>&amp;Column names in first line</source>
-        <translation type="vanished">&amp;Sütun isimleri ilk satırda</translation>
-    </message>
-    <message>
-        <source>Field &amp;separator</source>
-        <translation type="vanished">Alan &amp;ayracı</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="22"/>
@@ -1910,10 +1657,6 @@ All data currently stored in this field will be lost.</source>
         <translation>Verileri dışarı aktarmak için dosya ismi seçiniz</translation>
     </message>
     <message>
-        <source>Text files(*.csv *.txt)</source>
-        <translation type="vanished">Metin dosyaları(*.csv *.txt)</translation>
-    </message>
-    <message>
         <location filename="../ExportDataDialog.cpp" line="30"/>
         <source>Export data as JSON</source>
         <translation>Veriyi JSON olarak dışa aktar</translation>
@@ -1950,10 +1693,6 @@ All data currently stored in this field will be lost.</source>
         <location filename="../ExportSqlDialog.ui" line="14"/>
         <source>Export SQL...</source>
         <translation>SQL dosyasını dışa aktar...</translation>
-    </message>
-    <message>
-        <source>&amp;Table(s)</source>
-        <translation type="obsolete">&amp;Tablo(lar)</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="35"/>
@@ -2006,17 +1745,9 @@ All data currently stored in this field will be lost.</source>
         <translation>Eski şemanın üzerine yaz (DROP TABLE, then CREATE TABLE)</translation>
     </message>
     <message>
-        <source>New INSERT INTO syntax (multiple rows in VALUES)</source>
-        <translation type="obsolete">Çok satırlı veri girişi için yeni &apos;INSERT INTO&apos; söz dizimini ekle</translation>
-    </message>
-    <message>
         <location filename="../ExportSqlDialog.ui" line="121"/>
         <source>Export schema only</source>
         <translation>Sadece şemayı dışa aktar</translation>
-    </message>
-    <message>
-        <source>Please select at least 1 table.</source>
-        <translation type="vanished">En az 1 tane tablo seçiniz.</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.cpp" line="75"/>
@@ -2027,10 +1758,6 @@ All data currently stored in this field will be lost.</source>
         <location filename="../ExportSqlDialog.cpp" line="89"/>
         <source>Choose a filename to export</source>
         <translation>Dışa aktarmak için dosya ismi seçiniz</translation>
-    </message>
-    <message>
-        <source>Text files(*.sql *.txt)</source>
-        <translation type="vanished">Metin dosyaları(*.sql *.txt)</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.cpp" line="118"/>
@@ -2049,18 +1776,18 @@ All data currently stored in this field will be lost.</source>
         <location filename="../ExtendedScintilla.cpp" line="62"/>
         <location filename="../ExtendedScintilla.cpp" line="283"/>
         <source>Ctrl+H</source>
-        <translation>Ctrl+H</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="64"/>
         <source>Ctrl+F</source>
-        <translation>Ctrl+F</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="77"/>
         <location filename="../ExtendedScintilla.cpp" line="287"/>
         <source>Ctrl+P</source>
-        <translation>Ctrl+P</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="277"/>
@@ -2178,12 +1905,12 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="300"/>
         <source>Ctrl+Shift+C</source>
-        <translation>Ctrl+Shift+C</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="301"/>
         <source>Ctrl+Alt+C</source>
-        <translation>Ctrl+Alt+C</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="692"/>
@@ -2201,13 +1928,6 @@ Do you want to insert it anyway?</source>
         <location filename="../ExtendedTableWidget.cpp" line="1073"/>
         <source>Cannot set selection to NULL. Column %1 has a NOT NULL constraint.</source>
         <translation>Seçim NULL olarak ayarlanamıyor. %1 sütununda NOT NULL kısıtlaması var.</translation>
-    </message>
-</context>
-<context>
-    <name>FileDialog</name>
-    <message>
-        <source>SQLite database files (*.db *.sqlite *.sqlite3 *.db3);;All files (*)</source>
-        <translation type="obsolete">SQLite veritabanı dosyaları (*.db *.sqlite *.sqlite3 *.db3);;Tüm dosyalar (*)</translation>
     </message>
 </context>
 <context>
@@ -2538,10 +2258,6 @@ x~y	Aralık: değerler x ve y arasında
         <translation>CSV dosyasını içe aktar</translation>
     </message>
     <message>
-        <source>&amp;Table name</source>
-        <translation type="vanished">&amp;Tablo ismi</translation>
-    </message>
-    <message>
         <location filename="../ImportCsvDialog.ui" line="25"/>
         <source>Table na&amp;me</source>
         <translation>Tablo İs&amp;mi</translation>
@@ -2716,26 +2432,6 @@ x~y	Aralık: değerler x ve y arasında
         <translation>Tümünü Seç</translation>
     </message>
     <message>
-        <source>Inserting data...</source>
-        <translation type="vanished">Veri ekleniyor...</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
-        <source>There is already a table of that name and an import into an existing table is only possible if the number of columns match.</source>
-        <translation type="vanished">Zaten aynı isimde tablo mevcut. Varolan tablonun üstüne yazmak ancak sütunların sayısı eşitse mümkün olabilir.</translation>
-    </message>
-    <message>
-        <source>There is already a table of that name. Do you want to import the data into it?</source>
-        <translation type="vanished">Zaten aynı isimde tablo mevcut. Verileri bu tablonun içine aktarmak istiyor musunuz?</translation>
-    </message>
-    <message>
-        <source>Import completed</source>
-        <translation type="obsolete">İçe aktarma tamamlandı</translation>
-    </message>
-    <message>
         <location filename="../ImportCsvDialog.cpp" line="504"/>
         <source>There is already a table named &apos;%1&apos; and an import into an existing table is only possible if the number of columns match.</source>
         <translation>&apos;%1&apos; isminde bir tablo zaten var, var olan bir tablo için içe aktarma, yalnızca sütun sayıları eşitse mümkün olabilir.</translation>
@@ -2766,10 +2462,6 @@ x~y	Aralık: değerler x ve y arasında
         <translation>&apos;%1&apos; dosyasını içe aktarmak %2ms sürdü. %3ms satır fonksiyonunda harcandı.</translation>
     </message>
     <message>
-        <source>Missing field for record %1</source>
-        <translation type="vanished">%1 kayıtı için eksik alan</translation>
-    </message>
-    <message>
         <location filename="../ImportCsvDialog.cpp" line="685"/>
         <source>Inserting row failed: %1</source>
         <translation>Satır ekleme başarısız: %1</translation>
@@ -2783,37 +2475,9 @@ x~y	Aralık: değerler x ve y arasında
         <translation>SQLite DB Browser</translation>
     </message>
     <message>
-        <source>Database &amp;Structure</source>
-        <translation type="obsolete">Veritabanı &amp;Yapısı</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="703"/>
         <source>toolBar1</source>
         <translation>toolBar1</translation>
-    </message>
-    <message>
-        <source>&amp;Browse Data</source>
-        <translation type="obsolete">&amp;Verileri Görüntüle</translation>
-    </message>
-    <message>
-        <source>Table:</source>
-        <translation type="vanished">Tablo:</translation>
-    </message>
-    <message>
-        <source>Select a table to browse data</source>
-        <translation type="vanished">Verileri görüntülemek için tablo seçiniz</translation>
-    </message>
-    <message>
-        <source>Use this list to select a table to be displayed in the database view</source>
-        <translation type="vanished">Veritabanı görünümünde gösterilecek tabloyu seçmek için bu listeyi kullanın</translation>
-    </message>
-    <message>
-        <source>Refresh the data in the selected table.</source>
-        <translation type="vanished">Seçilen tablodaki verileri yenileyin.</translation>
-    </message>
-    <message>
-        <source>This button refreshes the data in the currently selected table.</source>
-        <translation type="vanished">Bu buton, seçilen tablodaki verileri yeniler.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1766"/>
@@ -2826,245 +2490,9 @@ x~y	Aralık: değerler x ve y arasında
         <translation>Bir veya daha fazla tabloyu JSON dosyası olarak dışa aktarın</translation>
     </message>
     <message>
-        <source>Clear all filters</source>
-        <translation type="vanished">Tüm filtreleri temizle</translation>
-    </message>
-    <message>
-        <source>Insert a new record in the current table</source>
-        <translation type="vanished">Geçerli tabloya yeni kayıt ekle</translation>
-    </message>
-    <message>
-        <source>This button creates a new, empty record in the database</source>
-        <translation type="vanished">Bu buton, veritabanında yeni bir boş kayıt oluşturur.</translation>
-    </message>
-    <message>
-        <source>New Record</source>
-        <translation type="vanished">Yeni Kayıt</translation>
-    </message>
-    <message>
-        <source>Delete the current record</source>
-        <translation type="vanished">Geçerli kaydı sil</translation>
-    </message>
-    <message>
-        <source>This button deletes the record currently selected in the database</source>
-        <translation type="vanished">Bu buton, veritabanında seçilen geçerli kayıtları siler </translation>
-    </message>
-    <message>
-        <source>Delete Record</source>
-        <translation type="vanished">Kaydı Sil</translation>
-    </message>
-    <message>
-        <source>This is the database view. You can double-click any record to edit its contents in the cell editor window.</source>
-        <translation type="vanished">Bu veritabanı görünümüdür. Herhangi kayda çift tıklayarak hücre içeriğini hücre editör penceresinde düzenleyebilirsiniz.</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll to the beginning&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Başa sürükle&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates to the beginning in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bu butona basıldığında üstteki tablo görünümünün başlangıcına kaydırılır.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>|&lt;</source>
-        <translation type="vanished">|&lt;</translation>
-    </message>
-    <message>
-        <source>Scroll 100 records upwards</source>
-        <translation type="vanished">100 kayıt kadar yukarı kaydır</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates 100 records upwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bu butona basıldığında üstteki tablo görünümünün 100 kayıt kadar yukarısına kaydırılır.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>0 - 0 of 0</source>
-        <translation type="vanished">0 - 0 / 0</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll 100 records downwards&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;100 kayıt kadar aşağı kaydır&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates 100 records downwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bu butona basıldığında üstteki tablo görünümünün 100 kayıt kadar aşağısına kaydırılır.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>Scroll to the end</source>
-        <translation type="vanished">Sona sürükle</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Clicking this button navigates up to the end in the table view above.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Bu butona basıldığında üstteki tablo görünümünün en sonuna kaydırılır.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&gt;|</source>
-        <translation type="vanished">&gt;|</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click here to jump to the specified record&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;İstediğiniz kayda atlamak için buraya tıklayın&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button is used to navigate to the record number specified in the Go to area.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bu buton belirtilen kayıt numarasına gitmek için kullanılır.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Go to:</source>
-        <translation type="vanished">Bu kayda gidin:</translation>
-    </message>
-    <message>
-        <source>Enter record number to browse</source>
-        <translation type="vanished">Görüntülemek için kayıt numarasını giriniz</translation>
-    </message>
-    <message>
-        <source>Type a record number in this area and click the Go to: button to display the record in the database view</source>
-        <translation type="vanished">Bu alana veritabanı görünümünde görüntülemek istediğiniz kayıt numarasını giriniz ve Bu kayda gidin: butonuna tıklayınız</translation>
-    </message>
-    <message>
-        <source>1</source>
-        <translation type="vanished">1</translation>
-    </message>
-    <message>
-        <source>Edit &amp;Pragmas</source>
-        <translation type="obsolete">&amp;Pragmaları Düzenleyin</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_auto_vacuum&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Auto Vacuum&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_auto_vacuum&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Auto Vacuum&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">None</translation>
-    </message>
-    <message>
-        <source>Full</source>
-        <translation type="vanished">Full</translation>
-    </message>
-    <message>
-        <source>Incremental</source>
-        <translation type="vanished">Incremental</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_automatic_index&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Automatic Index&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_automatic_index&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Automatic Index&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_checkpoint_fullfsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Checkpoint Full FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_checkpoint_fullfsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Checkpoint Full FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_foreign_keys&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Foreign Keys&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_foreign_keys&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Foreign Keys&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_fullfsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Full FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_fullfsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Full FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_ignore_check_constraints&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Ignore Check Constraints&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_ignore_check_constraints&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Ignore Check Constraints&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_mode&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Journal Mode&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_mode&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Journal Mode&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="vanished">Delete</translation>
-    </message>
-    <message>
-        <source>Truncate</source>
-        <translation type="vanished">Truncate</translation>
-    </message>
-    <message>
-        <source>Persist</source>
-        <translation type="vanished">Persist</translation>
-    </message>
-    <message>
-        <source>Memory</source>
-        <translation type="vanished">Memory</translation>
-    </message>
-    <message>
-        <source>WAL</source>
-        <translation type="vanished">WAL</translation>
-    </message>
-    <message>
-        <source>Off</source>
-        <translation type="vanished">Off</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_size_limit&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Journal Size Limit&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_size_limit&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Journal Size Limit&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_locking_mode&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Locking Mode&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_locking_mode&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Locking Mode&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Normal</source>
-        <translation type="vanished">Normal</translation>
-    </message>
-    <message>
-        <source>Exclusive</source>
-        <translation type="vanished">Exclusive</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_max_page_count&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Max Page Count&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_max_page_count&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Max Page Count&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_page_size&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Page Size&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_page_size&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Page Size&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_recursive_triggers&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Recursive Triggers&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_recursive_triggers&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Recursive Triggers&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_secure_delete&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Secure Delete&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_secure_delete&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Secure Delete&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Synchronous&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Synchronous&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_temp_store&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Temp Store&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_temp_store&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Temp Store&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation type="vanished">Default</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="vanished">File</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_user_version&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;User Version&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_user_version&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;User Version&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_wal_autocheckpoint&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;WAL Auto Checkpoint&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_wal_autocheckpoint&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;WAL Auto Checkpoint&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1789"/>
         <source>Open an existing database file in read only mode</source>
         <translation>Mevcut bir veritabanı dosyasını salt okunur modda açar</translation>
-    </message>
-    <message>
-        <source>E&amp;xecute SQL</source>
-        <translation type="obsolete">SQL Kodunu &amp;Çalıştır</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="752"/>
@@ -3130,20 +2558,12 @@ x~y	Aralık: değerler x ve y arasında
     <message>
         <location filename="../MainWindow.ui" line="1554"/>
         <source>Shift+F5</source>
-        <translation>Shift+F5</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1637"/>
         <source>Sa&amp;ve Project</source>
         <translation>Projeyi &amp;Kaydet</translation>
-    </message>
-    <message>
-        <source>SQL Log</source>
-        <translation type="obsolete">SQL Günlüğü</translation>
-    </message>
-    <message>
-        <source>&amp;Show SQL submitted by</source>
-        <translation type="obsolete">&amp;Şunun tarafından gönderilen SQL kodunu göster:</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="916"/>
@@ -3159,122 +2579,6 @@ x~y	Aralık: değerler x ve y arasında
         <location filename="../MainWindow.ui" line="956"/>
         <source>&amp;Clear</source>
         <translation>&amp;Temizle</translation>
-    </message>
-    <message>
-        <source>Plot</source>
-        <translation type="obsolete">Plan</translation>
-    </message>
-    <message>
-        <source>Columns</source>
-        <translation type="vanished">Sütun</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>_</source>
-        <translation type="vanished">_</translation>
-    </message>
-    <message>
-        <source>Line type:</source>
-        <translation type="vanished">Çizgi Tipi:</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Çizgi</translation>
-    </message>
-    <message>
-        <source>StepLeft</source>
-        <translation type="vanished">Sola Basamakla</translation>
-    </message>
-    <message>
-        <source>StepRight</source>
-        <translation type="vanished">Sağa Basamakla</translation>
-    </message>
-    <message>
-        <source>StepCenter</source>
-        <translation type="vanished">Merkeze Basamakla</translation>
-    </message>
-    <message>
-        <source>Impulse</source>
-        <translation type="vanished">Kaydırmalı</translation>
-    </message>
-    <message>
-        <source>Point shape:</source>
-        <translation type="vanished">Nokta Şekli:</translation>
-    </message>
-    <message>
-        <source>Cross</source>
-        <translation type="vanished">Çarpı</translation>
-    </message>
-    <message>
-        <source>Plus</source>
-        <translation type="vanished">Artı</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">Daire</translation>
-    </message>
-    <message>
-        <source>Disc</source>
-        <translation type="vanished">Disk</translation>
-    </message>
-    <message>
-        <source>Square</source>
-        <translation type="vanished">Kare</translation>
-    </message>
-    <message>
-        <source>Diamond</source>
-        <translation type="vanished">Elmas</translation>
-    </message>
-    <message>
-        <source>Star</source>
-        <translation type="vanished">Yıldız</translation>
-    </message>
-    <message>
-        <source>Triangle</source>
-        <translation type="vanished">Üçgen</translation>
-    </message>
-    <message>
-        <source>TriangleInverted</source>
-        <translation type="vanished">Ters Üçgen</translation>
-    </message>
-    <message>
-        <source>CrossSquare</source>
-        <translation type="vanished">Çapraz Kare</translation>
-    </message>
-    <message>
-        <source>PlusSquare</source>
-        <translation type="vanished">Kare İçinde Artı</translation>
-    </message>
-    <message>
-        <source>CrossCircle</source>
-        <translation type="vanished">Daire İçinde Çarpı</translation>
-    </message>
-    <message>
-        <source>PlusCircle</source>
-        <translation type="vanished">Daire İçinde Artı</translation>
-    </message>
-    <message>
-        <source>Peace</source>
-        <translation type="vanished">Barış Simgesi</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save current plot...&lt;/p&gt;&lt;p&gt;File format chosen by extension (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Geçerli planı kaydedin...&lt;/p&gt;&lt;p&gt;Dosya formatı eklenti tarafından seçilmiş (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Save current plot...</source>
-        <translation type="vanished">Geçerli planı kaydet...</translation>
-    </message>
-    <message>
-        <source>DB Schema</source>
-        <translation type="vanished">Veritabanı Şeması</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1121"/>
@@ -3295,7 +2599,7 @@ x~y	Aralık: değerler x ve y arasında
     <message>
         <location filename="../MainWindow.ui" line="1133"/>
         <source>Ctrl+N</source>
-        <translation>Ctrl+N</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1145"/>
@@ -3322,7 +2626,7 @@ x~y	Aralık: değerler x ve y arasında
     <message>
         <location filename="../MainWindow.ui" line="1157"/>
         <source>Ctrl+O</source>
-        <translation>Ctrl+O</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1172"/>
@@ -3333,11 +2637,7 @@ x~y	Aralık: değerler x ve y arasında
         <location filename="../MainWindow.cpp" line="227"/>
         <location filename="../MainWindow.cpp" line="3429"/>
         <source>Ctrl+W</source>
-        <translation>Ctrl+W</translation>
-    </message>
-    <message>
-        <source>Revert Changes</source>
-        <translation type="obsolete">Değişiklikleri Geri Al</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1202"/>
@@ -3349,10 +2649,6 @@ x~y	Aralık: değerler x ve y arasında
         <location filename="../MainWindow.ui" line="1208"/>
         <source>This option is used to revert the current database file to its last saved state. All changes made since the last save operation are lost.</source>
         <translation>Bu seçenek veritabanını en son kaydedilen durumuna döndürür. Geçerli kayıttan sonra yaptığınız tüm değişiklikler kaybolacaktır.</translation>
-    </message>
-    <message>
-        <source>Write Changes</source>
-        <translation type="obsolete">Değişiklikleri Kaydet</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1226"/>
@@ -3368,11 +2664,7 @@ x~y	Aralık: değerler x ve y arasında
     <message>
         <location filename="../MainWindow.ui" line="1235"/>
         <source>Ctrl+S</source>
-        <translation>Ctrl+S</translation>
-    </message>
-    <message>
-        <source>Compact Database</source>
-        <translation type="obsolete">Veritabanını Genişlet</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1249"/>
@@ -3393,11 +2685,7 @@ x~y	Aralık: değerler x ve y arasında
     <message>
         <location filename="../MainWindow.ui" line="1266"/>
         <source>Ctrl+Q</source>
-        <translation>Ctrl+Q</translation>
-    </message>
-    <message>
-        <source>Database from SQL file...</source>
-        <translation type="obsolete">SQL dosyasından veritabanı...</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1277"/>
@@ -3410,10 +2698,6 @@ x~y	Aralık: değerler x ve y arasında
         <translation>Bu seçenek verileri .sql döküm dosyasından varolan veya yeni veritabanına aktarmanıza olanak sağlar. SQL dosyaları MySQL ve PostgreSQL dahil olmak üzere birçok veritabanı motorları tarafından oluştururlar.</translation>
     </message>
     <message>
-        <source>Table from CSV file...</source>
-        <translation type="obsolete">CSV dosyasından tablo...</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1291"/>
         <source>Open a wizard that lets you import data from a comma separated text file into a database table.</source>
         <translation>Virgülle ayrılmış metin dosyalarını veritabanınızın içine aktarmanızı sağlayan sihirbazı açar.</translation>
@@ -3422,10 +2706,6 @@ x~y	Aralık: değerler x ve y arasında
         <location filename="../MainWindow.ui" line="1294"/>
         <source>Open a wizard that lets you import data from a comma separated text file into a database table. CSV files can be created on most database and spreadsheet applications.</source>
         <translation>Virgülle ayrılmış metin dosyalarını veritabanınızın içine aktarmanızı sağlayan sihirbazı açar. CSV dosyaları çoğu veritabanı motorları ve elektronik tablo uygulamaları tarafından oluştururlar.</translation>
-    </message>
-    <message>
-        <source>Database to SQL file...</source>
-        <translation type="obsolete">Veritabanından SQL dosyası...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1305"/>
@@ -3438,10 +2718,6 @@ x~y	Aralık: değerler x ve y arasında
         <translation>Bu seçenek veritabanını .sql döküm dosyası olarak dışa aktarmanızı sağlar. SQL döküm dosyaları veritabanını, MySQL ve PostgreSQL dahil birçok veritabanı motorunda yeniden oluşturmak için gereken verilerin tümünü içerir.</translation>
     </message>
     <message>
-        <source>Table(s) as CSV file...</source>
-        <translation type="obsolete">Tablo(lar)dan CSV dosyası...</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1319"/>
         <source>Export a database table as a comma separated text file.</source>
         <translation>Veritabanı tablosunu virgülle ayrılmış metin dosyası olarak dışa aktar.</translation>
@@ -3452,17 +2728,9 @@ x~y	Aralık: değerler x ve y arasında
         <translation>Veritabanını virgülle ayrılmış metin dosyası olarak diğer veritabanı veya elektronik tablo uygulamalarına aktarmaya hazır olacak şekilde dışa aktarın.</translation>
     </message>
     <message>
-        <source>Create Table...</source>
-        <translation type="obsolete">Tablo Oluşturun...</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1340"/>
         <source>Open the Create Table wizard, where it is possible to define the name and fields for a new table in the database</source>
         <translation>Tablo Oluşturma sihirbazı, veritabanı için alanlarını ve ismini ayarlayabileceğiniz, yeni bir tablo oluşturmanızı sağlar</translation>
-    </message>
-    <message>
-        <source>Delete Table...</source>
-        <translation type="obsolete">Tabloyu Sil...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1358"/>
@@ -3476,17 +2744,9 @@ x~y	Aralık: değerler x ve y arasında
         <translation>Tablo Silme sihirbazı, seçtiğiniz tabloları silmenizi sağlar.</translation>
     </message>
     <message>
-        <source>Modify Table...</source>
-        <translation type="obsolete">Tabloyu Düzenle...</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1379"/>
         <source>Open the Modify Table wizard, where it is possible to rename an existing table. It is also possible to add or delete fields form a table, as well as modify field names and types.</source>
         <translation>Tablo Düzenleme sihirbazı, varolan tablonuzu yeniden adlandırmanıza olanak sağlar. Ayrıca yeni alan ekleyebilir, silebilir hatta alanların ismini ve tipini de düzenleyebilirsiniz.</translation>
-    </message>
-    <message>
-        <source>Create Index...</source>
-        <translation type="obsolete">İndeks Oluştur...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1397"/>
@@ -3515,17 +2775,9 @@ x~y	Aralık: değerler x ve y arasında
         <translation>Veritabanı araç çubuğunu gösterir veya gizler.</translation>
     </message>
     <message>
-        <source>What&apos;s This?</source>
-        <translation type="obsolete">Bu nedir?</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1448"/>
         <source>Shift+F1</source>
-        <translation>Shift+F1</translation>
-    </message>
-    <message>
-        <source>&amp;About...</source>
-        <translation type="vanished">&amp;Hakkında...</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1464"/>
@@ -3540,7 +2792,7 @@ x~y	Aralık: değerler x ve y arasında
     <message>
         <location filename="../MainWindow.ui" line="1479"/>
         <source>Ctrl+T</source>
-        <translation>Ctrl+T</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="50"/>
@@ -3588,7 +2840,7 @@ SQL ifadelerini bir nesne satırından sürükleyip başka uygulamalara veya &ap
     <message>
         <location filename="../MainWindow.ui" line="2080"/>
         <source>Ctrl+/</source>
-        <translation>Ctrl+/</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2092"/>
@@ -3604,10 +2856,6 @@ SQL ifadelerini bir nesne satırından sürükleyip başka uygulamalara veya &ap
         <location filename="../MainWindow.ui" line="2098"/>
         <source>Stop the currently running SQL script</source>
         <translation>Şu anda çalışan SQL betiğini durdur</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="obsolete">...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="146"/>
@@ -3700,7 +2948,7 @@ SQL deyimlerini Şema sütunundan sürükleyip SQL editörüne veya diğer uygul
     <message>
         <location filename="../MainWindow.ui" line="1184"/>
         <source>Ctrl+F4</source>
-        <translation>Ctrl+F4</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1199"/>
@@ -3778,17 +3026,9 @@ SQL deyimlerini Şema sütunundan sürükleyip SQL editörüne veya diğer uygul
         <translation>&amp;Patreon üzerinden Bağış Yapın...</translation>
     </message>
     <message>
-        <source>This button lets you save all the settings associated to the open DB to a DB4S project file</source>
-        <translation type="vanished">Bu buton, açık veritabanı ile ilişkili tüm ayarları bir DB4S proje dosyasına kaydetmenizi sağlar</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1658"/>
         <source>Open &amp;Project...</source>
         <translation>&amp;Proje Aç...</translation>
-    </message>
-    <message>
-        <source>This button lets you open a DB4S project file</source>
-        <translation type="vanished">Bu buton DB4S proje dosyası açmanızı sağlar</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1682"/>
@@ -3829,7 +3069,7 @@ SQL deyimlerini Şema sütunundan sürükleyip SQL editörüne veya diğer uygul
     <message>
         <location filename="../MainWindow.ui" line="1798"/>
         <source>Ctrl+Shift+O</source>
-        <translation>Ctrl+Shift+O</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1810"/>
@@ -3865,7 +3105,7 @@ SQL deyimlerini Şema sütunundan sürükleyip SQL editörüne veya diğer uygul
     <message>
         <location filename="../MainWindow.ui" line="1840"/>
         <source>Ctrl+F</source>
-        <translation>Ctrl+F</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1855"/>
@@ -3886,7 +3126,7 @@ SQL deyimlerini Şema sütunundan sürükleyip SQL editörüne veya diğer uygul
     <message>
         <location filename="../MainWindow.ui" line="1867"/>
         <source>Ctrl+H</source>
-        <translation>Ctrl+H</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1875"/>
@@ -4058,7 +3298,7 @@ SQL deyimlerini Şema sütunundan sürükleyip SQL editörüne veya diğer uygul
     <message>
         <location filename="../MainWindow.ui" line="2137"/>
         <source>Ctrl+Shift+S</source>
-        <translation>Ctrl+Shift+S</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1274"/>
@@ -4121,14 +3361,6 @@ SQL deyimlerini Şema sütunundan sürükleyip SQL editörüne veya diğer uygul
         <translation>&amp;SQL kodunu yürüt</translation>
     </message>
     <message>
-        <source>Open SQL file</source>
-        <translation type="vanished">SQL dosyası aç</translation>
-    </message>
-    <message>
-        <source>This button opens a file containing SQL statements and loads it in a new editor tab</source>
-        <translation type="vanished">Bu buton SQL ifadeleri içeren bir dosya açar ve yeni bir editör sekmesine yükler</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1518"/>
         <location filename="../MainWindow.ui" line="1727"/>
         <location filename="../MainWindow.ui" line="1730"/>
@@ -4136,13 +3368,9 @@ SQL deyimlerini Şema sütunundan sürükleyip SQL editörüne veya diğer uygul
         <translation>SQL dosyasını kaydet</translation>
     </message>
     <message>
-        <source>Load extension</source>
-        <translation type="obsolete">Eklenti yükle</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.cpp" line="291"/>
         <source>Ctrl+E</source>
-        <translation>Ctrl+E</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1562"/>
@@ -4155,44 +3383,16 @@ SQL deyimlerini Şema sütunundan sürükleyip SQL editörüne veya diğer uygul
         <translation>Tabloyu virgülle ayrılmış girdiler dosyası olarak dışa aktar</translation>
     </message>
     <message>
-        <source>&amp;Wiki...</source>
-        <translation type="vanished">&amp;Döküman...</translation>
-    </message>
-    <message>
-        <source>Bug &amp;report...</source>
-        <translation type="vanished">Hata Bildi&amp;r...</translation>
-    </message>
-    <message>
-        <source>Web&amp;site...</source>
-        <translation type="vanished">Web &amp;Sitesi...</translation>
-    </message>
-    <message>
-        <source>Save Project</source>
-        <translation type="obsolete">Projeyi Kaydet</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1640"/>
         <location filename="../MainWindow.ui" line="1643"/>
         <source>Save the current session to a file</source>
         <translation>Geçerli oturumu dosyaya kaydet</translation>
     </message>
     <message>
-        <source>Open Project</source>
-        <translation type="obsolete">Proeje Aç</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1661"/>
         <location filename="../MainWindow.ui" line="1664"/>
         <source>Load a working session from a file</source>
         <translation>Dosyadan çalışma oturumunu yükle</translation>
-    </message>
-    <message>
-        <source>&amp;Attach Database</source>
-        <translation type="vanished">Verit&amp;abanını İliştir</translation>
-    </message>
-    <message>
-        <source>Set Encryption</source>
-        <translation type="obsolete">Şifre Ayarla</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1715"/>
@@ -4223,28 +3423,28 @@ SQL deyimlerini Şema sütunundan sürükleyip SQL editörüne veya diğer uygul
     <message>
         <location filename="../MainWindow.ui" line="1497"/>
         <source>Ctrl+Return</source>
-        <translation>Ctrl+Return</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="276"/>
         <source>Ctrl+L</source>
-        <translation>Ctrl+L</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2029"/>
         <location filename="../MainWindow.ui" line="2056"/>
         <source>Ctrl+P</source>
-        <translation>Ctrl+P</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="281"/>
         <source>Ctrl+D</source>
-        <translation>Ctrl+D</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="286"/>
         <source>Ctrl+I</source>
-        <translation>Ctrl+I</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="394"/>
@@ -4264,7 +3464,7 @@ SQL deyimlerini Şema sütunundan sürükleyip SQL editörüne veya diğer uygul
     <message>
         <location filename="../MainWindow.cpp" line="408"/>
         <source>Database encoding</source>
-        <translation>Veritabanı kodlaması</translation>
+        <translation type="unfinished">Veritabanı kodlaması</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="395"/>
@@ -4278,80 +3478,11 @@ SQL deyimlerini Şema sütunundan sürükleyip SQL editörüne veya diğer uygul
         <translation>Veritabanı dosyasını seçiniz</translation>
     </message>
     <message>
-        <source>SQLite database files (*.db *.sqlite *.sqlite3 *.db3);;All files (*)</source>
-        <translation type="obsolete">SQLite veritabanı dosyaları (*.db *.sqlite *.sqlite3 *.db3);;Tüm dosyalar (*)</translation>
-    </message>
-    <message>
-        <source>Invalid file format.</source>
-        <translation type="vanished">Geçersiz dosya formatı</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.cpp" line="581"/>
         <location filename="../MainWindow.cpp" line="1437"/>
         <location filename="../MainWindow.cpp" line="2828"/>
         <source>Choose a filename to save under</source>
         <translation>Kaydetmek için dosya ismi seçiniz</translation>
-    </message>
-    <message>
-        <source>Error adding record:
-</source>
-        <translation type="vanished">Kayıt ekleme hatası: </translation>
-    </message>
-    <message>
-        <source>Error deleting record:
-%1</source>
-        <translation type="vanished">Kayıt silme hatası: </translation>
-    </message>
-    <message>
-        <source>Please select a record first</source>
-        <translation type="vanished">Lütfen öncelikle kaydı seçiniz</translation>
-    </message>
-    <message>
-        <source>%1 - %2 of %3</source>
-        <translation type="vanished">%1 - %2 / %3</translation>
-    </message>
-    <message>
-        <source>There is no database opened. Please open or create a new database file.</source>
-        <translation type="vanished">Açılmış veritabanı bulunamadı. Lütfen veritabanı açın veya yeni bir veritabanı oluşturun.</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to delete the %1 &apos;%2&apos;?
-All data associated with the %1 will be lost.</source>
-        <translation type="vanished">Gerçekten &apos;%1&apos; türüne ait &apos;%2&apos; nesnesini silmek istediğinize emin misiniz?
-&apos;%1&apos; ile ilişkili bütün verileri kaybedeceksiniz.</translation>
-    </message>
-    <message>
-        <source>Error: could not delete the %1. Message from database engine:
-%2</source>
-        <translation type="vanished">Hata: &apos;%1&apos; silinemedi. Veritabanı motorunun mesajı: %2</translation>
-    </message>
-    <message>
-        <source>There is no database opened.</source>
-        <translation type="vanished">Açılmış veritabanı bulunamadı.</translation>
-    </message>
-    <message>
-        <source>%1 Rows returned from: %3 (took %2ms)</source>
-        <translation type="obsolete">%1 tane satır döndürüldü: %3 (yaklaşık %2ms)</translation>
-    </message>
-    <message>
-        <source>Error executing query: %1</source>
-        <translation type="vanished">Sorgu yürütme hatası: %1</translation>
-    </message>
-    <message>
-        <source>Query executed successfully: %1 (took %2ms)</source>
-        <translation type="obsolete">Sorgu başarıyla yürütüldü: %1 (yaklaşık %2ms)</translation>
-    </message>
-    <message>
-        <source>Choose a text file</source>
-        <translation type="vanished">Metin dosyası seçiniz</translation>
-    </message>
-    <message>
-        <source>Text files(*.csv *.txt);;All files(*)</source>
-        <translation type="vanished">Metin dosyaları(*.csv *.txt);;Tüm dosyalar(*)</translation>
-    </message>
-    <message>
-        <source>Import completed</source>
-        <translation type="vanished">İçe aktarma tamamlandı</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1379"/>
@@ -4422,10 +3553,6 @@ If you answer no we will attempt to import the data in the SQL file to the curre
 Eğer cevabınız hayır ise biz SQL dosyasındaki verileri geçerli veritabanına aktarmaya başlayacağız.</translation>
     </message>
     <message>
-        <source>Close current SQL tab</source>
-        <translation type="vanished">Geçerli SQL sekmesini kapat</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.cpp" line="682"/>
         <source>You are still executing SQL statements. Closing the database now will stop their execution, possibly leaving the database in an inconsistent state. Are you sure you want to close the database?</source>
         <translation>Şu anda SQL sorgularını yürütüyorsunuz. Veritabanının şimdi kapatılması, muhtemelen veritabanını tutarsız bir durumda bırakarak yürütmeyi durduracaktır. Veritabanını kapatmak istediğinizden emin misiniz?</translation>
@@ -4484,10 +3611,6 @@ Eğer cevabınız hayır ise biz SQL dosyasındaki verileri geçerli veritabanı
         <location filename="../MainWindow.cpp" line="1550"/>
         <source>Modify Table</source>
         <translation>Tabloyu Düzenle</translation>
-    </message>
-    <message>
-        <source>&amp;%1 %2</source>
-        <translation type="vanished">&amp;%1 %2</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1890"/>
@@ -4551,7 +3674,7 @@ Bunu yapmak istediğinize emin misiniz?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="331"/>
         <source>Alt+0</source>
-        <translation>Alt+0</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="336"/>
@@ -4561,7 +3684,7 @@ Bunu yapmak istediğinize emin misiniz?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="337"/>
         <source>Shift+Alt+0</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="346"/>
@@ -4791,10 +3914,6 @@ Emin misiniz?</translation>
         <translation>Eklenti dosyasını seçiniz</translation>
     </message>
     <message>
-        <source>Extensions(*.so *.dll);;All files(*)</source>
-        <translation type="vanished">Eklenti dosyaları(*.so *.dll);;Tüm dosyalar(*)</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.cpp" line="2115"/>
         <source>Extension successfully loaded.</source>
         <translation>Eklenti başarıyla yüklendi.</translation>
@@ -4880,18 +3999,6 @@ Bir yedek oluşturun!</translation>
         <translation>İlgili SQLite referans sayfasını açmak için Yardım&apos;a basın.</translation>
     </message>
     <message>
-        <source>Choose a axis color</source>
-        <translation type="vanished">Renk eksenini seçiniz</translation>
-    </message>
-    <message>
-        <source>PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;All Files(*)</source>
-        <translation type="vanished">PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;Tüm dosyalar(*)</translation>
-    </message>
-    <message>
-        <source>Choose a file to open</source>
-        <translation type="vanished">Açmak için dosya seçiniz</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.cpp" line="2471"/>
         <source>DB Browser for SQLite project file (*.sqbpro)</source>
         <translation>SQLite DB Browser proje dosyası (*.sqbpro)</translation>
@@ -4916,10 +4023,6 @@ Bir yedek oluşturun!</translation>
         <source>Execution finished without errors.</source>
         <translation>Yürütme hatasız tamamlandı.</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">İptal</translation>
-    </message>
 </context>
 <context>
     <name>NullLineEdit</name>
@@ -4931,7 +4034,7 @@ Bir yedek oluşturun!</translation>
     <message>
         <location filename="../AddRecordDialog.cpp" line="44"/>
         <source>Alt+Del</source>
-        <translation>Alt+Del</translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -4955,14 +4058,6 @@ Bir yedek oluşturun!</translation>
         <location filename="../PlotDock.ui" line="51"/>
         <source>X</source>
         <translation>X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>_</source>
-        <translation type="obsolete">_</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="56"/>
@@ -5131,10 +4226,6 @@ Yalnızca geçerli yönde sürüklemek ve yakınlaştırmak için eksen veya eks
         <translation>Satır #</translation>
     </message>
     <message>
-        <source>Choose a axis color</source>
-        <translation type="obsolete">Renk eksenini seçiniz</translation>
-    </message>
-    <message>
         <location filename="../PlotDock.cpp" line="74"/>
         <source>Copy</source>
         <translation>Kopyala</translation>
@@ -5216,10 +4307,6 @@ Uyarı: Kısmi yükleme mekanizması nedeniyle tüm veriler tablodan henüz alı
         <location filename="../PlotDock.cpp" line="825"/>
         <source>Loading all remaining data for this table took %1ms.</source>
         <translation>Bu tablo için kalan tüm verilerin yüklenmesi %1ms sürdü.</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">İptal</translation>
     </message>
 </context>
 <context>
@@ -5310,33 +4397,9 @@ Uyarı: Kısmi yükleme mekanizması nedeniyle tüm veriler tablodan henüz alı
         <translation>&amp;Yabancı Anahtarlar</translation>
     </message>
     <message>
-        <source>Remove line breaks in schema view</source>
-        <translation type="obsolete">Şema görünümünde satır sonlarını kaldır</translation>
-    </message>
-    <message>
-        <source>&amp;Prefetch block size</source>
-        <translation type="obsolete">&amp;Önceden getirilecek blok boyutu</translation>
-    </message>
-    <message>
         <location filename="../PreferencesDialog.ui" line="726"/>
         <source>Data &amp;Browser</source>
         <translation>Veri &amp;Görüntüleyici</translation>
-    </message>
-    <message>
-        <source>NULL fields</source>
-        <translation type="vanished">Geçersiz alanlar</translation>
-    </message>
-    <message>
-        <source>Text &amp;colour</source>
-        <translation type="obsolete">Yazı &amp;rengi</translation>
-    </message>
-    <message>
-        <source>&amp;Text</source>
-        <translation type="vanished">&amp;Yazı</translation>
-    </message>
-    <message>
-        <source>Bac&amp;kground colour</source>
-        <translation type="obsolete">Ar&amp;kaplan rengi</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="606"/>
@@ -5347,10 +4410,6 @@ Uyarı: Kısmi yükleme mekanizması nedeniyle tüm veriler tablodan henüz alı
         <location filename="../PreferencesDialog.ui" line="616"/>
         <source>Prefetch block si&amp;ze</source>
         <translation>Önceden getirme blo&amp;k boyutu</translation>
-    </message>
-    <message>
-        <source>Advanced</source>
-        <translation type="vanished">Gelişmiş</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="697"/>
@@ -5406,10 +4465,6 @@ Uyarı: Kısmi yükleme mekanizması nedeniyle tüm veriler tablodan henüz alı
         <location filename="../PreferencesDialog.ui" line="896"/>
         <source>Regular</source>
         <translation>Kurallı</translation>
-    </message>
-    <message>
-        <source>Text</source>
-        <translation type="obsolete">Metin</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="876"/>
@@ -5685,10 +4740,6 @@ Tamamlamayı devre dışı bırakmak için 0 olarak ayarlanabilir.</translation>
         <translation>Anahtar Kelime</translation>
     </message>
     <message>
-        <source>function</source>
-        <translation type="vanished">fonksiyon</translation>
-    </message>
-    <message>
         <location filename="../PreferencesDialog.ui" line="1218"/>
         <source>Function</source>
         <translation>Fonksiyon</translation>
@@ -5714,10 +4765,6 @@ Tamamlamayı devre dışı bırakmak için 0 olarak ayarlanabilir.</translation>
         <translation>String</translation>
     </message>
     <message>
-        <source>currentline</source>
-        <translation type="vanished">currentline</translation>
-    </message>
-    <message>
         <location filename="../PreferencesDialog.ui" line="1306"/>
         <source>Current line</source>
         <translation>Geçerli satır</translation>
@@ -5726,10 +4773,6 @@ Tamamlamayı devre dışı bırakmak için 0 olarak ayarlanabilir.</translation>
         <location filename="../PreferencesDialog.ui" line="1347"/>
         <source>SQL &amp;editor font size</source>
         <translation>SQL &amp;Editör yazı boyutu</translation>
-    </message>
-    <message>
-        <source>SQL &amp;log font size</source>
-        <translation type="vanished">SQL &amp;günlüğü yazı boyutu</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1386"/>
@@ -5891,10 +4934,6 @@ Tamamlamayı devre dışı bırakmak için 0 olarak ayarlanabilir.</translation>
         <translation>Veritabanını şuraya kopyala</translation>
     </message>
     <message>
-        <source>Tab size:</source>
-        <translation type="obsolete">Tab boşluğu:</translation>
-    </message>
-    <message>
         <location filename="../PreferencesDialog.ui" line="1332"/>
         <source>SQL editor &amp;font</source>
         <translation>SQL Editör &amp;yazı boyutu</translation>
@@ -5974,10 +5013,6 @@ Tamamlamayı devre dışı bırakmak için 0 olarak ayarlanabilir.</translation>
         <location filename="../PreferencesDialog.cpp" line="399"/>
         <source>Select extension file</source>
         <translation>Eklenti dosyası seçiniz</translation>
-    </message>
-    <message>
-        <source>Extensions(*.so *.dll);;All files(*)</source>
-        <translation type="vanished">Eklentiler(*.so *.dll);;Tüm dosyalar(*)</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.cpp" line="400"/>
@@ -6089,28 +5124,9 @@ Tüm tercihleriniz kaybolacak ve varsayılan değerler kullanılacak.</translati
         <translation>CSV dosyası içe aktarılıyor...</translation>
     </message>
     <message>
-        <source>Decoding CSV file...</source>
-        <translation type="vanished">CSV dosyasının şifresi çözülüyor...</translation>
-    </message>
-    <message>
         <location filename="../ImportCsvDialog.cpp" line="129"/>
         <source>Cancel</source>
         <translation>İptal</translation>
-    </message>
-    <message>
-        <source>Collation needed! Proceed?</source>
-        <translation type="vanished">Harmanlama gerekli! Devam edilsin mi?</translation>
-    </message>
-    <message>
-        <source>A table in this database requires a special collation function &apos;%1&apos; that this application can&apos;t provide without further knowledge.
-If you choose to proceed, be aware bad things can happen to your database.
-Create a backup!</source>
-        <translation type="vanished">Bu veritabanınındaki bir tablo özel &apos;%1&apos; koleksiyon fonksiyonu gerektirmektedir.
-Daha fazla bilgi olmadan program bunu sağlayamaz. Eğer bu şekilde devam edecekseniz, veritabanınıza kötü şeyler olabileceğinin farkında olun ve yedek oluşturun.</translation>
-    </message>
-    <message>
-        <source>SQLite database files (*.db *.sqlite *.sqlite3 *.db3);;All files (*)</source>
-        <translation type="obsolete">SQLite veritabanı dosyaları (*.db *.sqlite *.sqlite3 *.db3);;Tüm dosyalar (*)</translation>
     </message>
     <message>
         <location filename="../FileDialog.cpp" line="82"/>
@@ -6217,22 +5233,6 @@ Daha fazla bilgi olmadan program bunu sağlayamaz. Eğer bu şekilde devam edece
         <source>Extensions (*.so *.dylib *.dll)</source>
         <translation>Eklentiler (* .so * .dylib * .dll)</translation>
     </message>
-    <message>
-        <source>Name</source>
-        <translation type="vanished">İsim</translation>
-    </message>
-    <message>
-        <source>Commit</source>
-        <translation type="vanished">Commit</translation>
-    </message>
-    <message>
-        <source>Last modified</source>
-        <translation type="vanished">Son değiştirilme</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="vanished">Boyut</translation>
-    </message>
 </context>
 <context>
     <name>RemoteCommitsModel</name>
@@ -6275,52 +5275,6 @@ Daha fazla bilgi olmadan program bunu sağlayamaz. Eğer bu şekilde devam edece
 <context>
     <name>RemoteDatabase</name>
     <message>
-        <source>Error when connecting to %1.
-%2</source>
-        <translation type="vanished">%1 adresine bağlanırken hata oluştu.%2</translation>
-    </message>
-    <message>
-        <source>Error opening remote file at %1.
-%2</source>
-        <translation type="vanished">%1 adresinde bulunan dosya açılamadı. %2</translation>
-    </message>
-    <message>
-        <source>Error: Invalid client certificate specified.</source>
-        <translation type="vanished">Hata: Geçersiz istemci sertifikası belirtildi.</translation>
-    </message>
-    <message>
-        <source>Please enter the passphrase for this client certificate in order to authenticate.</source>
-        <translation type="vanished">Kimlik doğrulaması için lütfen  istemci sertifikasının parolasını girin.</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
-        <source>Uploading remote database to
-%1</source>
-        <translation type="vanished">Uzak veritabanı karşıya yükleniyor
-%1</translation>
-    </message>
-    <message>
-        <source>Downloading remote database from
-%1</source>
-        <translation type="vanished">Uzaktaki sunucu indiriliyor:
-%1</translation>
-    </message>
-    <message>
-        <source>The remote database has been updated since the last checkout. Do you want to update the local database to the newest version? Note that this discards any changes you have made locally! If you don&apos;t want to lose local changes, click No to open the local version.</source>
-        <translation type="vanished">Uzaktaki veritabanı son kontrolden sonra değiştirildi. Yerel veritabanını son sürüme güncellemek ister misiniz? Bu işlemin yerel olarak yaptığınız değişiklikleri yoksayacağını unutmayın! Yerel değişiklikleri kaybetmek istemiyorsanız, yerel sürümü açmak için Hayır butonuna tıklayın.</translation>
-    </message>
-    <message>
-        <source>Error: The network is not accessible.</source>
-        <translation type="vanished">Hata: Ağa erişilemiyor.</translation>
-    </message>
-    <message>
-        <source>Error: Cannot open the file for sending.</source>
-        <translation type="vanished">Hata: Dosya gönderim için açılamadı.</translation>
-    </message>
-    <message>
         <location filename="../RemoteDatabase.cpp" line="56"/>
         <source>Error opening local databases list.
 %1</source>
@@ -6346,14 +5300,6 @@ Daha fazla bilgi olmadan program bunu sağlayamaz. Eğer bu şekilde devam edece
         <location filename="../RemoteDock.ui" line="29"/>
         <source>Identity</source>
         <translation>Kmlik</translation>
-    </message>
-    <message>
-        <source>Connect to the remote server using the currently selected identity. The correct server is taken from the identity as well.</source>
-        <translation type="vanished">Seçili kimliği kullanarak uzak sunucuya bağlanın. Doğru sunucu da kimlikten alınır.</translation>
-    </message>
-    <message>
-        <source>Go</source>
-        <translation type="vanished">Git</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="59"/>
@@ -6453,7 +5399,7 @@ Daha fazla bilgi olmadan program bunu sağlayamaz. Eğer bu şekilde devam edece
     <message>
         <location filename="../RemoteDock.ui" line="414"/>
         <source>F5</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="423"/>
@@ -6509,10 +5455,6 @@ Daha fazla bilgi olmadan program bunu sağlayamaz. Eğer bu şekilde devam edece
         <location filename="../RemoteDock.ui" line="493"/>
         <source>Upload this database as a new commit</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB4S. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to create a DB4S certificate (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB4S Preferences. Click the button to add a new certificate to DB4S and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; Bu bölmeden, dbhub.io web sitesinden uzak veritabanları DB4S&apos;ye eklenebilir. İlk olarak bir kimliğe ihtiyacınız var: &lt;/p&gt; &lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot; &gt; &lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot; &gt; Dbhub.io web sitesine giriş yapın (GitHub veya istediğiniz bir kimlik bilgisini kullanın) &lt;/li&gt; &lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot; &gt; Bir DB4S sertifikası oluşturmak için butona tıklayın (bu sizin kimliğinizdir). Bu size bir sertifika dosyası verecektir (yerel diskinize kaydedin). &lt;/li&gt; &lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot; &gt; DB4S Tercihleri&apos;ndeki Uzak Bilgisayar sekmesine gidin. DB4S&apos;ye yeni bir sertifika eklemek için butona tıklayın ve indirilen sertifika dosyasını seçin. &lt;/li&gt; &lt;/ol&gt; &lt;p&gt; Artık Uzak Bilgisayar paneli kimliğinizi gösterir ve uzak veritabanları ekleyebilirsiniz. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="317"/>
@@ -6654,10 +5596,6 @@ Are you sure you want to proceed?</source>
         <source>Default Branch: </source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Version</source>
-        <translation type="obsolete">Versiyon</translation>
-    </message>
 </context>
 <context>
     <name>RemoteNetwork</name>
@@ -6729,18 +5667,6 @@ Are you sure you want to proceed?</source>
         <location filename="../RemotePushDialog.ui" line="39"/>
         <source>Commit message</source>
         <translation>Commit mesajı</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Oxygen-Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Oxygen-Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../RemotePushDialog.ui" line="63"/>
@@ -6839,7 +5765,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="91"/>
         <source>Shift+F3</source>
-        <translation>Shift+F3</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="105"/>
@@ -6923,34 +5849,6 @@ p, li { white-space: pre-wrap; }
         <translation>Bu alan son yürütülen ifadenin durum kodlarını ve sonuçlarını gösterir.</translation>
     </message>
     <message>
-        <source>Export to &amp;CSV</source>
-        <translation type="vanished">&amp;CSV dosyası olarak dışa aktar</translation>
-    </message>
-    <message>
-        <source>Save as &amp;view</source>
-        <translation type="vanished">&amp;Görünümü kaydet</translation>
-    </message>
-    <message>
-        <source>Save as view</source>
-        <translation type="vanished">Görünümü kaydet</translation>
-    </message>
-    <message>
-        <source>Please specify the view name</source>
-        <translation type="vanished">Lütfen görünümünün ismini belirtin</translation>
-    </message>
-    <message>
-        <source>There is already an object with that name. Please choose a different name.</source>
-        <translation type="vanished">Bu isme sahip obje zaten mevcut. Lütfen farklı bir isim seçiniz.</translation>
-    </message>
-    <message>
-        <source>View successfully created.</source>
-        <translation type="vanished">Görünüm başarıyla oluşturuldu.</translation>
-    </message>
-    <message>
-        <source>Error creating view: %1</source>
-        <translation type="vanished">Görünüm oluşturma hatası: %1</translation>
-    </message>
-    <message>
         <location filename="../SqlExecutionArea.cpp" line="239"/>
         <source>Couldn&apos;t read file: %1.</source>
         <translation>Dosya okunamadı: %1.</translation>
@@ -6977,7 +5875,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../sqltextedit.cpp" line="41"/>
         <source>Ctrl+/</source>
-        <translation>Ctrl+/</translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -7041,14 +5939,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../SqlUiLexer.cpp" line="77"/>
         <source>(X,Y,Z) The like() function is used to implement the &quot;Y LIKE X ESCAPE Z&quot; expression.</source>
         <translation>(X,Y,Z) like() fonksiyonu &quot;Y LIKE X ESCAPE Z&quot; ifadesini uygulamak için kullanılır.</translation>
-    </message>
-    <message>
-        <source>(X) The load_extension(X) function loads SQLite extensions out of the shared library file named X.</source>
-        <translation type="vanished">(X) load_extension(X) fonksiyonu SQLite eklentilerini paylaşılan kitaplık dışına X ismiyle yükler.</translation>
-    </message>
-    <message>
-        <source>(X,Y) The load_extension(X) function loads SQLite extensions out of the shared library file named X using the entry point Y.</source>
-        <translation type="vanished">(X,Y) load_extension(X) fonksiyonu Y başlangıç noktasını kullanarak SQLite eklentilerini paylaşılan kitaplık dışına X ismiyle yükler.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="78"/>
@@ -7312,40 +6202,41 @@ Bu işlevin kullanımına Tercihler&apos;den izin verilmelidir.</translation>
 <context>
     <name>SqliteTableModel</name>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="34"/>
+        <location filename="../sqlitetablemodel.cpp" line="36"/>
         <source>reading rows</source>
         <translation>satırlar okunuyor</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="337"/>
+        <location filename="../sqlitetablemodel.cpp" line="339"/>
         <source>loading...</source>
         <translation>yükleniyor...</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="402"/>
+        <location filename="../sqlitetablemodel.cpp" line="404"/>
         <source>References %1(%2)
 Hold %3Shift and click to jump there</source>
         <translation>Referanslar %1(%2)
 Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="555"/>
+        <location filename="../sqlitetablemodel.cpp" line="557"/>
         <source>Error changing data:
 %1</source>
         <translation>Veri değiştirme hatası: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="796"/>
+        <location filename="../sqlitetablemodel.cpp" line="798"/>
         <source>retrieving list of columns</source>
         <translation>sütunların listesi alınıyor</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="1024"/>
+        <location filename="../sqlitetablemodel.cpp" line="1026"/>
         <source>Fetching data...</source>
         <translation>Veri alınıyor...</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="1025"/>
+        <location filename="../sqlitetablemodel.cpp" line="1027"/>
+        <location filename="../sqlitetablemodel.cpp" line="1029"/>
         <source>Cancel</source>
         <translation>İptal</translation>
     </message>
@@ -7382,12 +6273,12 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
  - Ctrl+&apos; for copying the value from the cell above.
  - Standard selection and copy/paste operations.</source>
         <translation>Bu veritabanı tablosu görünümüdür. Aşağıdaki işlemleri yapabilirsiniz:
-  - Satır içi değeri düzenlemek için yazmaya başlayın.
-  - İçeriklerini hücre düzenleyici penceresinde düzenlemek için herhangi bir kaydı çift tıklayın.
-  - Hücre içeriğini NULL&apos;a dönüştürmek için Alt + Del tuşlarına basın.
-  - Geçerli kaydı çoğaltmak için Ctrl + &quot;tuşlarına basın.
-  - Yukarıdaki hücreden değeri kopyalamak için Ctrl + &apos;.
-  - Standart seçim ve kopyalama / yapıştırma işlemleri.</translation>
+&#xa0; - Satır içi değeri düzenlemek için yazmaya başlayın.
+&#xa0; - İçeriklerini hücre düzenleyici penceresinde düzenlemek için herhangi bir kaydı çift tıklayın.
+&#xa0; - Hücre içeriğini NULL&apos;a dönüştürmek için Alt + Del tuşlarına basın.
+&#xa0; - Geçerli kaydı çoğaltmak için Ctrl + &quot;tuşlarına basın.
+&#xa0; - Yukarıdaki hücreden değeri kopyalamak için Ctrl + &apos;.
+&#xa0; - Standart seçim ve kopyalama / yapıştırma işlemleri.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="253"/>
@@ -7412,7 +6303,7 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     <message>
         <location filename="../TableBrowser.ui" line="276"/>
         <source>Shift+F3</source>
-        <translation>Shift+F3</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="283"/>
@@ -7555,10 +6446,6 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
         <location filename="../TableBrowser.ui" line="523"/>
         <source>Scroll to the end</source>
         <translation>Sona sürükle</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Clicking this button navigates up to the end in the table view above.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Bu butona basıldığında üstteki tablo görünümünün en sonuna kaydırılır.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="526"/>
@@ -7820,7 +6707,7 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     <message>
         <location filename="../TableBrowser.ui" line="803"/>
         <source>Ctrl+P</source>
-        <translation>Ctrl+P</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="815"/>
@@ -7853,10 +6740,6 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
         <translation>Aşağıdaki tablo görünümünde değerleri aramanıza izin veren bul araç çubuğunu açın.</translation>
     </message>
     <message>
-        <source>Ctrl+F</source>
-        <translation type="vanished">Ctrl+F</translation>
-    </message>
-    <message>
         <location filename="../TableBrowser.ui" line="854"/>
         <location filename="../TableBrowser.ui" line="857"/>
         <source>Bold</source>
@@ -7865,7 +6748,7 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     <message>
         <location filename="../TableBrowser.ui" line="860"/>
         <source>Ctrl+B</source>
-        <translation>Ctrl+B</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="872"/>
@@ -7882,7 +6765,7 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     <message>
         <location filename="../TableBrowser.ui" line="893"/>
         <source>Ctrl+U</source>
-        <translation>Ctrl+U</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="905"/>
@@ -7971,20 +6854,12 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     <message>
         <location filename="../TableBrowser.ui" line="1039"/>
         <source>Ctrl+Space</source>
-        <translation>Ctrl+Space</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1054"/>
         <source>Replace text in cells</source>
         <translation>Hücrelerdeki metinleri değiştir</translation>
-    </message>
-    <message>
-        <source>Ctrl+H</source>
-        <translation type="vanished">Ctrl+H</translation>
-    </message>
-    <message>
-        <source>Filter in all columns</source>
-        <translation type="vanished">Tüm sütunları filtrele</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="42"/>
@@ -7994,7 +6869,7 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     <message>
         <location filename="../TableBrowser.cpp" line="102"/>
         <source>Ctrl+R</source>
-        <translation>Ctrl+R</translation>
+        <translation></translation>
     </message>
     <message numerus="yes">
         <location filename="../TableBrowser.cpp" line="450"/>
@@ -8058,7 +6933,7 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
     <message>
         <location filename="../TableBrowser.cpp" line="1181"/>
         <source>Ctrl+&quot;</source>
-        <translation>Ctrl+&quot;</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1200"/>
@@ -8126,14 +7001,6 @@ Veritabanı kodlamasını kullanmak için alanı boş bırakın.</translation>
         <location filename="../VacuumDialog.ui" line="39"/>
         <source>Please select the databases to co&amp;mpact:</source>
         <translation>Sıkıştır&amp;mak istediğiniz veritabanını seçiniz:</translation>
-    </message>
-    <message>
-        <source>Warning: Compacting the database will commit all changes you made.</source>
-        <translation type="vanished">Uyarı: Veritabanını genişletmek bütün yaptığınız değişiklikleri işleyecektir.</translation>
-    </message>
-    <message>
-        <source>Please select the objects to compact:</source>
-        <translation type="vanished">Lütfen genişletilecek objeyi seçiniz:</translation>
     </message>
 </context>
 </TS>

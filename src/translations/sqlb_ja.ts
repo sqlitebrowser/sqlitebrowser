@@ -18,38 +18,6 @@
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Silk icon set by Mark James licensed under a Creative Commons Attribution 2.5 and 3.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite は SQLite データベースを作成、デザイン、編集できる、オープンソースで無料のヴィジュアルツールです。&lt;/p&gt;&lt;p&gt;このソフトウェアは Mozilla Public License Version 2&#x3000;と the GNU General Public License Version 3 (もしくはそれ以降のもの) の2つでライセンスされています。あなたはこれらのライセンスの条件の下でこのソフトウェアを変更、もしくは、再配布できます。&lt;/p&gt;&lt;p&gt;詳細は &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; と &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; をご覧ください。&lt;/p&gt;&lt;p&gt;このプログラムのさらなる情報は、私たちのウェブサイトをご覧ください。: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;このソフトウェアは GPL/LGPL Qt Toolkit を使用しています。 &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;ライセンス条項や情報は &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; をご覧ください。&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;また、 Mark James の Silk icon set を Creative Commons Attribution 2.5 and 3.0 license の元で使用しています。&lt;br/&gt;詳細は &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; をご覧ください。&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
-    <message>
-        <source>SQLite Version </source>
-        <translation type="vanished">SQLite バージョン </translation>
-    </message>
-    <message>
-        <source>SQLCipher Version %1 (based on SQLite %2)</source>
-        <translation type="vanished">SQLCipher バージョン %1 (SQLite %2 がベース)</translation>
-    </message>
-    <message>
-        <source>Built for %1, running on %2</source>
-        <translation type="vanished">%1 向けビルド, %2 で動作中</translation>
-    </message>
-    <message>
-        <source>SQLCipher Version </source>
-        <translation type="vanished">SQLCipher バージョン </translation>
-    </message>
-    <message>
-        <source> (based on SQLite %1)</source>
-        <translation type="vanished"> (SQLite %1 がベース)</translation>
-    </message>
-    <message>
-        <source>Version </source>
-        <translation type="vanished">バージョン </translation>
-    </message>
-    <message>
-        <source>Built for </source>
-        <translation type="vanished">ビルド </translation>
-    </message>
-    <message>
-        <source>Qt Version </source>
-        <translation type="vanished">Qt バージョン </translation>
-    </message>
 </context>
 <context>
     <name>AddRecordDialog</name>
@@ -151,55 +119,9 @@
 <context>
     <name>Application</name>
     <message>
-        <source>Usage: %1 [options] [db]
-</source>
-        <translation type="vanished">使い方: %1 [オプション] [DB]
-</translation>
-    </message>
-    <message>
         <location filename="../Application.cpp" line="95"/>
         <source>Possible command line arguments:</source>
         <translation>使用可能なコマンドライン引数:</translation>
-    </message>
-    <message>
-        <source>  -h, --help		Show command line options</source>
-        <translation type="vanished">  -h, --help		コマンドラインのオプションを表示</translation>
-    </message>
-    <message>
-        <source>  -q, --quit		Exit application after running scripts</source>
-        <translation type="vanished">  -q, --quit		スクリプト実行後にアプリケーションを終了</translation>
-    </message>
-    <message>
-        <source>  -s, --sql [file]	Execute this SQL file after opening the DB</source>
-        <translation type="vanished">  -s, --sql [ファイル]	DBを開いた後、このSQLファイルを実行</translation>
-    </message>
-    <message>
-        <source>  -t, --table [table]	Browse this table after opening the DB</source>
-        <translation type="vanished">  -t, --table [table]	DB開いた後このテーブルを閲覧</translation>
-    </message>
-    <message>
-        <source>  -R, --read-only	Open database in read-only mode</source>
-        <translation type="vanished">  -R, --read-only	読み取り専用モードでデータベースを開く</translation>
-    </message>
-    <message>
-        <source>  -o, --option [group/setting=value]	Run application with this setting temporarily set to value</source>
-        <translation type="vanished">  -o, --option [グループ/設定=値]	一時的にこの値を設定してアプリケーションを実行</translation>
-    </message>
-    <message>
-        <source>  -O, --save-option [group/setting=value]	Run application saving this value for this setting</source>
-        <translation type="vanished">  -O, --save-option [グループ/設定=値]	この値の設定を保存してアプリケーションを実行</translation>
-    </message>
-    <message>
-        <source>  -v, --version		Display the current version</source>
-        <translation type="vanished">  -v, --version		現在のバージョンを表示</translation>
-    </message>
-    <message>
-        <source>  [file]		Open this SQLite database</source>
-        <translation type="vanished">  [ファイル]		この SQLite データベースを開く</translation>
-    </message>
-    <message>
-        <source>This is DB Browser for SQLite version %1.</source>
-        <translation type="vanished">これは DB Browser for SQLite バージョン %1 です.</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="93"/>
@@ -312,10 +234,6 @@
         <location filename="../Application.cpp" line="243"/>
         <source>Qt Version %1</source>
         <translation>Qt バージョン %1</translation>
-    </message>
-    <message>
-        <source>The -o/--option option requires an argument in the form group/setting=value</source>
-        <translation type="vanished">-o/--option オプションは グループ/設定=値 の形式で引数が必要です</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="159"/>
@@ -830,27 +748,6 @@ Message from database engine:
         <translation>DBオブジェクトの一覧を取得できません: %1</translation>
     </message>
     <message>
-        <source>renameColumn: cannot find column %1.</source>
-        <translation type="vanished">カラム名変更: 列 %1 が見つかりません。</translation>
-    </message>
-    <message>
-        <source>renameColumn: creating savepoint failed. DB says: %1</source>
-        <translation type="vanished">カラム名変更: セーブポイントの作成に失敗。DBの反応: %1</translation>
-    </message>
-    <message>
-        <source>renameColumn: creating new table failed. DB says: %1</source>
-        <translation type="vanished">カラム名変更: 新しいテーブルの作成に失敗。DBの反応: %1</translation>
-    </message>
-    <message>
-        <source>renameColumn: copying data to new table failed. DB says:
-%1</source>
-        <translation type="vanished">カラム名変更: 新しいテーブルへのデータコピーに失敗。DBの反応: %1</translation>
-    </message>
-    <message>
-        <source>renameColumn: deleting old table failed. DB says: %1</source>
-        <translation type="vanished">カラム名変更: 古いテーブルの削除に失敗。DBの反応: %1</translation>
-    </message>
-    <message>
         <location filename="../sqlitedb.cpp" line="1814"/>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 
@@ -861,35 +758,9 @@ Restoring some of the objects associated with this table failed. This is most li
 </translation>
     </message>
     <message>
-        <source>renameColumn: releasing savepoint failed. DB says: %1</source>
-        <translation type="vanished">カラム名変更: セーブポイントの開放に失敗。DBの反応: %1</translation>
-    </message>
-    <message>
-        <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.Message from database engine:
-%3</source>
-        <translation type="vanished">テーブル名を &apos;%1&apos; から &apos;%2&apos; へ変更時にエラー。データベースエンジンからのメッセージ:
-%3</translation>
-    </message>
-    <message>
-        <source>... &lt;string can not be logged, contains binary data&gt; ...</source>
-        <translation type="vanished">... &lt;文字列は記録されません。バイナリーデータを含んでいます&gt; ...</translation>
-    </message>
-    <message>
-        <source>could not get list of db objects: %1, %2</source>
-        <translation type="vanished">DBオブジェクトの一覧を取得できません: %1, %2</translation>
-    </message>
-    <message>
         <location filename="../sqlitedb.cpp" line="1960"/>
         <source>could not get list of databases: %1</source>
         <translation>データベースの一覧を取得できません: %1</translation>
-    </message>
-    <message>
-        <source>didn&apos;t receive any output from pragma %1</source>
-        <translation type="vanished">プラグマ %1 から出力を得られませんでした</translation>
-    </message>
-    <message>
-        <source>could not execute pragma command: %1, %2</source>
-        <translation type="vanished">プラグマを実行できませんでした: %1, %2</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1988"/>
@@ -1144,10 +1015,6 @@ Errors are indicated with a red squiggle underline.</source>
         <translation>このデータベースのセルに任意の種類のデータをインポートするファイルダイアログを開きます。</translation>
     </message>
     <message>
-        <source>&amp;Import</source>
-        <translation type="vanished">インポート(&amp;I)</translation>
-    </message>
-    <message>
         <location filename="../EditDialog.ui" line="356"/>
         <source>Export to file</source>
         <translation>ファイルへエクスポート</translation>
@@ -1156,14 +1023,6 @@ Errors are indicated with a red squiggle underline.</source>
         <location filename="../EditDialog.ui" line="359"/>
         <source>Opens a file dialog used to export the contents of this database cell to a file.</source>
         <translation>このデータベースのセルの内容をファイルにエクスポートするファイルダイアログを開きます。</translation>
-    </message>
-    <message>
-        <source>&amp;Export</source>
-        <translation type="vanished">エクスポート(&amp;E)</translation>
-    </message>
-    <message>
-        <source>Set this cell to NULL</source>
-        <translation type="vanished">このセルをNULLに設定</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="386"/>
@@ -1181,14 +1040,6 @@ Errors are indicated with a red squiggle underline.</source>
         <translation>このデータベースのセルに存在するデータの情報をここに表示</translation>
     </message>
     <message>
-        <source>This editor mode lets you edit JSON or XML data with syntax highlighting, automatic formatting and validation before saving.
-
-Errors are indicated with a red squiggle underline.</source>
-        <translation type="vanished">この編集モードは構文強調してJSONやXMLデータを編集しやすくします。保存前に自動的に整形と検証をします。
-
-エラーは赤い破線で示されます。</translation>
-    </message>
-    <message>
         <location filename="../EditDialog.ui" line="219"/>
         <source>Type of data currently in cell</source>
         <translation>現在セルにあるデータの種類</translation>
@@ -1197,10 +1048,6 @@ Errors are indicated with a red squiggle underline.</source>
         <location filename="../EditDialog.ui" line="241"/>
         <source>Size of data currently in table</source>
         <translation>現在テーブルにあるデータのサイズ</translation>
-    </message>
-    <message>
-        <source>Apply data to cell [Ctrl+Return]</source>
-        <translation type="vanished">セルにデータを適用 [Ctrl+Return]</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="265"/>
@@ -1227,7 +1074,7 @@ Errors are indicated with a red squiggle underline.</source>
         <location filename="../EditDialog.ui" line="290"/>
         <location filename="../EditDialog.ui" line="308"/>
         <source>Ctrl+P</source>
-        <translation>Ctrl+P</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="302"/>
@@ -1247,7 +1094,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditDialog.ui" line="326"/>
         <source>Ctrl+Shift+C</source>
-        <translation>Ctrl+Shift+C</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="250"/>
@@ -1274,18 +1121,6 @@ Errors are indicated with a red squiggle underline.</source>
         <translation>バイナリーモードに切り替えてみてください。</translation>
     </message>
     <message>
-        <source>Text files (*.txt)</source>
-        <translation type="vanished">テキストファイル (*.txt)</translation>
-    </message>
-    <message>
-        <source>JSON files (*.json)</source>
-        <translation type="vanished">JSONファイル (*.json)</translation>
-    </message>
-    <message>
-        <source>XML files (*.xml)</source>
-        <translation type="vanished">XMLファイル (*.xml)</translation>
-    </message>
-    <message>
         <location filename="../EditDialog.cpp" line="354"/>
         <location filename="../EditDialog.cpp" line="373"/>
         <source>Image files (%1)</source>
@@ -1297,10 +1132,6 @@ Errors are indicated with a red squiggle underline.</source>
         <translation>バイナリーファイル (*.bin)</translation>
     </message>
     <message>
-        <source>All files (*)</source>
-        <translation type="vanished">すべてのファイル (*)</translation>
-    </message>
-    <message>
         <location filename="../EditDialog.cpp" line="385"/>
         <source>Choose a file to import</source>
         <translation>インポートするファイルを選択</translation>
@@ -1309,14 +1140,6 @@ Errors are indicated with a red squiggle underline.</source>
         <location filename="../EditDialog.cpp" line="424"/>
         <source>%1 Image</source>
         <translation>%1 画像</translation>
-    </message>
-    <message>
-        <source>SVG files (*.svg)</source>
-        <translation type="vanished">SVGファイル (*.svg)</translation>
-    </message>
-    <message>
-        <source>Hex dump files (*.txt)</source>
-        <translation type="vanished">十六進ダンプファイル (*.txt)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="462"/>
@@ -1338,12 +1161,6 @@ Errors are indicated with a red squiggle underline.</source>
         <location filename="../EditDialog.cpp" line="1050"/>
         <source>Type of data currently in cell: Text / Numeric</source>
         <translation>現在セルにあるデータの種類: テキスト / 数値</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n char(s)</source>
-        <translation type="vanished">
-            <numerusform>%n 文字</numerusform>
-        </translation>
     </message>
     <message numerus="yes">
         <location filename="../EditDialog.cpp" line="863"/>
@@ -1388,13 +1205,14 @@ Errors are indicated with a red squiggle underline.</source>
         <translation>現在セルにあるデータの種類: バイナリー</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="1239"/>
-        <source>The data has been saved to a temporary file and has been opened with the default application. You can now edit the file and, when you are ready, apply the saved new data to the cell editor or cancel any changes.</source>
-        <translation>データは一時ファイルに保存され、デフォルトのアプリケーションで開かれました。すぐにファイルを編集でき、準備ができたら、保存した新しいデータをセルエディターに適用するか、変更をキャンセルできます。</translation>
+        <location filename="../EditDialog.cpp" line="1221"/>
+        <source>Couldn&apos;t save file: %1.</source>
+        <translation type="unfinished">ファイルを保存できません: %1.</translation>
     </message>
     <message>
-        <source>The data has been saved to a temporary file and has been opened with the default application.You can edit now the file and when your are ready, you can apply the saved new data to the cell editor or cancel any changes.</source>
-        <translation type="vanished">データは一時ファイルに保存され、デフォルトのアプリケーションで開かれました。すぐにファイルを編集でき、準備ができたら、保存した新しいデータをセルエディターに適用するか、変更をキャンセルできます。</translation>
+        <location filename="../EditDialog.cpp" line="1246"/>
+        <source>The data has been saved to a temporary file and has been opened with the default application. You can now edit the file and, when you are ready, apply the saved new data to the cell editor or cancel any changes.</source>
+        <translation>データは一時ファイルに保存され、デフォルトのアプリケーションで開かれました。すぐにファイルを編集でき、準備ができたら、保存した新しいデータをセルエディターに適用するか、変更をキャンセルできます。</translation>
     </message>
 </context>
 <context>
@@ -1492,10 +1310,6 @@ Errors are indicated with a red squiggle underline.</source>
         <translation>高度な設定</translation>
     </message>
     <message>
-        <source>Database schema</source>
-        <translation type="vanished">データベーススキーマ</translation>
-    </message>
-    <message>
         <location filename="../EditTableDialog.ui" line="75"/>
         <source>Without Rowid</source>
         <translation>Rowidなし</translation>
@@ -1509,22 +1323,6 @@ Errors are indicated with a red squiggle underline.</source>
         <location filename="../EditTableDialog.ui" line="106"/>
         <source>Fields</source>
         <translation>フィールド</translation>
-    </message>
-    <message>
-        <source>Add field</source>
-        <translation type="vanished">フィールドを追加</translation>
-    </message>
-    <message>
-        <source>Remove field</source>
-        <translation type="vanished">フィールドを削除</translation>
-    </message>
-    <message>
-        <source>Move field up</source>
-        <translation type="vanished">フィールドを上へ</translation>
-    </message>
-    <message>
-        <source>Move field down</source>
-        <translation type="vanished">フィールドを下へ</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="62"/>
@@ -1751,12 +1549,6 @@ Errors are indicated with a red squiggle underline.</source>
         <translation>一意にするのは不可能です。重複データを削除すると、一意にできるようになります。</translation>
     </message>
     <message>
-        <source>Modifying this column failed. Error returned from database:
-%1</source>
-        <translation type="vanished">このカラムの変更に失敗。データベースからのエラー:
-%1</translation>
-    </message>
-    <message>
         <location filename="../EditTableDialog.cpp" line="817"/>
         <source>Are you sure you want to delete the field &apos;%1&apos;?
 All data currently stored in this field will be lost.</source>
@@ -1771,18 +1563,6 @@ All data currently stored in this field will be lost.</source>
         <translation>rowidをなしにして、以下の条件に合うフィールドを追加してください。
  - 主キーにする
  - 自動増加なし</translation>
-    </message>
-    <message>
-        <source>Setting the rowid column for the table failed. Error message:
-%1</source>
-        <translation type="vanished">テーブルへのrowidカラム設定に失敗。エラーメッセージ:
-%1</translation>
-    </message>
-    <message>
-        <source>Changing the table schema failed. Error message:
-%1</source>
-        <translation type="vanished">テーブルスキーマ変更に失敗。エラーメッセージ:
-%1</translation>
     </message>
 </context>
 <context>
@@ -1891,14 +1671,6 @@ All data currently stored in this field will be lost.</source>
         <translation>JSONにエクスポート</translation>
     </message>
     <message>
-        <source>Text files(*.csv *.txt)</source>
-        <translation type="vanished">テキストファイル(*.csv *.txt)</translation>
-    </message>
-    <message>
-        <source>Text files(*.json *.js *.txt)</source>
-        <translation type="vanished">テキストファイル(*.json *.js *.txt)</translation>
-    </message>
-    <message>
         <location filename="../ExportDataDialog.cpp" line="324"/>
         <location filename="../ExportDataDialog.cpp" line="351"/>
         <source>Choose a filename to export data</source>
@@ -1993,10 +1765,6 @@ All data currently stored in this field will be lost.</source>
         <translation>エクスポートするファイル名を選択</translation>
     </message>
     <message>
-        <source>Text files(*.sql *.txt)</source>
-        <translation type="vanished">テキストファイル(*.sql *.txt)</translation>
-    </message>
-    <message>
         <location filename="../ExportSqlDialog.cpp" line="118"/>
         <source>Export completed.</source>
         <translation>エクスポート完了。</translation>
@@ -2013,18 +1781,18 @@ All data currently stored in this field will be lost.</source>
         <location filename="../ExtendedScintilla.cpp" line="62"/>
         <location filename="../ExtendedScintilla.cpp" line="283"/>
         <source>Ctrl+H</source>
-        <translation>Ctrl+H</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="64"/>
         <source>Ctrl+F</source>
-        <translation>Ctrl+F</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="77"/>
         <location filename="../ExtendedScintilla.cpp" line="287"/>
         <source>Ctrl+P</source>
-        <translation>Ctrl+P</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="277"/>
@@ -2137,17 +1905,17 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="298"/>
         <source>Alt+Del</source>
-        <translation>Alt+Del</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="300"/>
         <source>Ctrl+Shift+C</source>
-        <translation>Ctrl+Shift+C</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="301"/>
         <source>Ctrl+Alt+C</source>
-        <translation>Ctrl+Alt+C</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="692"/>
@@ -2217,30 +1985,6 @@ Do you want to insert it anyway?</source>
         <location filename="../FilterLineEdit.cpp" line="15"/>
         <source>Filter</source>
         <translation>フィルター</translation>
-    </message>
-    <message>
-        <source>These input fields allow you to perform quick filters in the currently selected table.
-By default, the rows containing the input text are filtered out.
-The following operators are also supported:
-%	Wildcard
-&gt;	Greater than
-&lt;	Less than
-&gt;=	Equal to or greater
-&lt;=	Equal to or less
-=	Equal to: exact match
-&lt;&gt;	Unequal: exact inverse match
-x~y	Range: values between x and y</source>
-        <translation type="vanished">この入力欄は現在選択したテーブルの即席フィルターになります。
-デフォルトでは入力テキストが含まれる行が抽出されます。
-以下の演算子にも対応しています。:
-%	ワイルドカード
-&gt;	より大きい
-&lt;	未満
-&gt;=	以上
-&lt;=	以下
-=	等しい: 完全に一致
-&lt;&gt;	等しくない: 不一致
-x~y	範囲: xとyの間</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="29"/>
@@ -2688,10 +2432,6 @@ x~y	範囲: xとyの間
         <translation>類似に一致</translation>
     </message>
     <message>
-        <source>Import completed</source>
-        <translation type="vanished">インポート完了</translation>
-    </message>
-    <message>
         <location filename="../ImportCsvDialog.cpp" line="335"/>
         <source>Select All</source>
         <translation>すべて選択</translation>
@@ -2761,170 +2501,6 @@ SQL文をオブジェクト行からドラッグしほかのアプリケーシ�
         <source>Browse Data</source>
         <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
         <translation>データ閲覧</translation>
-    </message>
-    <message>
-        <source>&amp;Table:</source>
-        <translation type="vanished">テーブル(&amp;T):</translation>
-    </message>
-    <message>
-        <source>Select a table to browse data</source>
-        <translation type="vanished">閲覧するデータのテーブルを選択</translation>
-    </message>
-    <message>
-        <source>Use this list to select a table to be displayed in the database view</source>
-        <translation type="vanished">この一覧を使ってデータベースビューに表示するテーブルを選択</translation>
-    </message>
-    <message>
-        <source>Refresh the data in the selected table [F5, Ctrl+R]</source>
-        <translation type="vanished">選択したテーブルのデータを更新 [F5, Ctrl+R]</translation>
-    </message>
-    <message>
-        <source>This button refreshes the data in the currently selected table.</source>
-        <translation type="vanished">このボタンで現在選択しているテーブルのデータを更新します。</translation>
-    </message>
-    <message>
-        <source>Clear all filters</source>
-        <translation type="vanished">全てのフィルターを消去</translation>
-    </message>
-    <message>
-        <source>This button clears all the filters set in the header input fields for the currently browsed table.</source>
-        <translation type="vanished">このボタンで現在閲覧しているテーブルのヘッダー入力欄に設定された全てのフィルターを消去します。</translation>
-    </message>
-    <message>
-        <source>Save the table as currently displayed</source>
-        <translation type="vanished">現在表示されているものをテーブルに保存</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This popup menu provides the following options applying to the currently browsed and filtered table:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Export to CSV: this option exports the data of the browsed table as currently displayed (after filters, display formats and order column) to a CSV file.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Save as view: this option saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;このポップアップメニューは現在閲覧しているテーブルに適用される以下のオプションを提供します。:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;CSVにエクスポート: このオプションは閲覧中のテーブルのデータを現在の表示通り(フィルター、表示形式、カラム順番)にCSVファイルにエクスポートします。&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;ビューとして保存: このオプションは閲覧中のテーブルの現在の表示設定(フィルター、表示形式、カラム順番)をSQLビューとして保存し、あとで閲覧やSQL文として使用できるようにします。&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Print currently browsed table data [Ctrl+P]</source>
-        <translation type="vanished">現在閲覧中のテーブルデータを印刷 [Ctrl+P]</translation>
-    </message>
-    <message>
-        <source>Print currently browsed table data. Print selection if more than one cell is selected.</source>
-        <translation type="vanished">現在閲覧中のテーブルデータを印刷します。複数のセルを選択している場合、選択範囲を印刷します。</translation>
-    </message>
-    <message>
-        <source>Insert a new record in the current table</source>
-        <translation type="vanished">新しいレコードを現在のテーブルに挿入</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button creates a new record in the database. Hold the mouse button to open a pop-up menu of different options:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt;: insert a new record with default values in the database.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Insert Values...&lt;/span&gt;: open a dialog for entering values before they are inserted in the database. This allows to enter values acomplishing the different constraints. This dialog is also open if the &lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt; option fails due to these constraints.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;このボタンは新しいレコードをデータベースに作成します。マウスボタンを押したままにすると、違うオプションのポップアップメニューが開きます:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;新しいレコード&lt;/span&gt;: データベースにデフォルト値で新しいレコードを挿入します。&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;値を挿入...&lt;/span&gt;: データベースに挿入する前にデータを入力するダイアログを開きます。これで他の制約を満たす値が入力できます。このダイアログは&lt;span style=&quot; font-weight:600;&quot;&gt;新しいレコード&lt;/span&gt;オプションがそれらの制約のせいで失敗したときにも開きます。&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>New Record</source>
-        <translation type="vanished">新しいレコード</translation>
-    </message>
-    <message>
-        <source>Delete the current record</source>
-        <translation type="vanished">現在のレコードを削除</translation>
-    </message>
-    <message>
-        <source>This button deletes the record or records currently selected in the table</source>
-        <translation type="vanished">このボタンはテーブルにある現在選択中のレコードを削除します</translation>
-    </message>
-    <message>
-        <source>Delete Record</source>
-        <translation type="vanished">レコードを削除</translation>
-    </message>
-    <message>
-        <source>This is the database table view. You can do the following actions:
- - Start writing for editing inline the value.
- - Double-click any record to edit its contents in the cell editor window.
- - Alt+Del for deleting the cell content to NULL.
- - Ctrl+&quot; for duplicating the current record.
- - Ctrl+&apos; for copying the value from the cell above.
- - Standard selection and copy/paste operations.</source>
-        <translation type="vanished">これはデータベーステーブルのビューです。以下の操作ができます:
- - 値をインライン編集できます。
- - レコードをダブルクリックすると、セル編集ウィンドウで内容を編集できます。
- - Alt+Del でセルの内容をNULLにできます。
- - Ctrl+&quot; で現在のレコードを複製できます。
- - Ctrl+&apos; で上のセルの値をコピーできます。
- - 通常の操作で、選択/コピー/貼り付けができます。</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll to the beginning&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">先頭へ</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates to the beginning in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;このボタンをクリックすると、上のテーブルビューを先頭まで移動します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>|&lt;</source>
-        <translation type="vanished">|&lt;</translation>
-    </message>
-    <message>
-        <source>Scroll one page upwards</source>
-        <translation type="vanished">1ページ前へ</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates one page of records upwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;このボタンをクリックすると、上のテーブルビューを1ページ前へ移動します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>0 - 0 of 0</source>
-        <translation type="vanished">0 - 0 of 0</translation>
-    </message>
-    <message>
-        <source>Scroll one page downwards</source>
-        <translation type="vanished">1ページ後へ</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates one page of records downwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;このボタンをクリックすると、上のテーブルビューを1ページ後へ移動します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>Scroll to the end</source>
-        <translation type="vanished">末尾へ</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Clicking this button navigates up to the end in the table view above.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;このボタンをクリックすると、上のテーブルビューを末尾まで移動します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&gt;|</source>
-        <translation type="vanished">&gt;|</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click here to jump to the specified record&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ここをクリックして指定のレコードまで移動&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button is used to navigate to the record number specified in the Go to area.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;このボタンは ここへ移動 の入力欄で指定された番号のレコードへ移動するために使用します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Go to:</source>
-        <translation type="vanished">ここへ移動:</translation>
-    </message>
-    <message>
-        <source>Enter record number to browse</source>
-        <translation type="vanished">閲覧するレコードの番号を入力</translation>
-    </message>
-    <message>
-        <source>Type a record number in this area and click the Go to: button to display the record in the database view</source>
-        <translation type="vanished">この欄にレコードの番号を入力し、ここへ移動ボタンをクリックすると、データベースビューにレコードが表示されます</translation>
-    </message>
-    <message>
-        <source>1</source>
-        <translation type="vanished">1</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="146"/>
@@ -3098,7 +2674,7 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
     <message>
         <location filename="../MainWindow.ui" line="1133"/>
         <source>Ctrl+N</source>
-        <translation>Ctrl+N</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1145"/>
@@ -3125,7 +2701,7 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
     <message>
         <location filename="../MainWindow.ui" line="1157"/>
         <source>Ctrl+O</source>
-        <translation>Ctrl+O</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1172"/>
@@ -3170,7 +2746,7 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
     <message>
         <location filename="../MainWindow.ui" line="1798"/>
         <source>Ctrl+Shift+O</source>
-        <translation>Ctrl+Shift+O</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1831"/>
@@ -3215,7 +2791,7 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
     <message>
         <location filename="../MainWindow.ui" line="2080"/>
         <source>Ctrl+/</source>
-        <translation>Ctrl+/</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2092"/>
@@ -3259,7 +2835,7 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
     <message>
         <location filename="../MainWindow.ui" line="2137"/>
         <source>Ctrl+Shift+S</source>
-        <translation>Ctrl+Shift+S</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2146"/>
@@ -3270,7 +2846,7 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
         <location filename="../MainWindow.cpp" line="227"/>
         <location filename="../MainWindow.cpp" line="3429"/>
         <source>Ctrl+W</source>
-        <translation>Ctrl+W</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1199"/>
@@ -3307,7 +2883,7 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
     <message>
         <location filename="../MainWindow.ui" line="1235"/>
         <source>Ctrl+S</source>
-        <translation>Ctrl+S</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1246"/>
@@ -3333,7 +2909,7 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
     <message>
         <location filename="../MainWindow.ui" line="1266"/>
         <source>Ctrl+Q</source>
-        <translation>Ctrl+Q</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1274"/>
@@ -3465,7 +3041,7 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
     <message>
         <location filename="../MainWindow.ui" line="1479"/>
         <source>Ctrl+T</source>
-        <translation>Ctrl+T</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1445"/>
@@ -3475,12 +3051,12 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
     <message>
         <location filename="../MainWindow.ui" line="1184"/>
         <source>Ctrl+F4</source>
-        <translation>Ctrl+F4</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1448"/>
         <source>Shift+F1</source>
-        <translation>Shift+F1</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1456"/>
@@ -3508,21 +3084,9 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
         <translation>SQLを実行(&amp;E)</translation>
     </message>
     <message>
-        <source>Execute all/selected SQL [F5, Ctrl+Return, Ctrl+R]</source>
-        <translation type="vanished">すべての/選択したSQLを実行 [F5, Ctrl+Return, Ctrl+R]</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1494"/>
         <source>This button executes the currently selected SQL statements. If no text is selected, all SQL statements are executed.</source>
         <translation>このボタンで現在選択しているSQL文を実行します。テキストが選択されていない場合、すべてのSQL文が実行されます。</translation>
-    </message>
-    <message>
-        <source>Open SQL file</source>
-        <translation type="vanished">SQLファイルを開く</translation>
-    </message>
-    <message>
-        <source>This button opens a file containing SQL statements and loads it in a new editor tab</source>
-        <translation type="vanished">このボタンでSQL文を含むファイルを新しいエディタータブに開きます</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1518"/>
@@ -3543,10 +3107,6 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
         <translation>現在行を実行</translation>
     </message>
     <message>
-        <source>Execute current line [Shift+F5]</source>
-        <translation type="vanished">現在行を実行 [Shift+F5]</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1551"/>
         <source>This button executes the SQL statement present in the current editor line</source>
         <translation>このボタンは現在エディターの行にあるSQL文を実行します</translation>
@@ -3554,7 +3114,7 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
     <message>
         <location filename="../MainWindow.ui" line="1554"/>
         <source>Shift+F5</source>
-        <translation>Shift+F5</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1562"/>
@@ -3597,18 +3157,10 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
         <translation>Patreonで寄付(&amp;D)...</translation>
     </message>
     <message>
-        <source>Sa&amp;ve Project...</source>
-        <translation type="vanished">プロジェクトを保存(&amp;V)...</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1640"/>
         <location filename="../MainWindow.ui" line="1643"/>
         <source>Save the current session to a file</source>
         <translation>現在のセッションをファイルに保存します</translation>
-    </message>
-    <message>
-        <source>This button lets you save all the settings associated to the open DB to a DB4S project file</source>
-        <translation type="vanished">このボタンで開いているDBに関連付けられる全ての設定をDB4Sプロジェクトファイルに保存します</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1658"/>
@@ -3620,10 +3172,6 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
         <location filename="../MainWindow.ui" line="1664"/>
         <source>Load a working session from a file</source>
         <translation>作業中のセッションをファイルから読み込みます</translation>
-    </message>
-    <message>
-        <source>This button lets you open a DB4S project file</source>
-        <translation type="vanished">このボタンでDB4Sプロジェクトファイルを開きます</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1682"/>
@@ -3673,38 +3221,6 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
         <translation>このアイテムのCREATE文をクリップボードにコピーします</translation>
     </message>
     <message>
-        <source>Edit display format</source>
-        <translation type="vanished">表示書式を編集</translation>
-    </message>
-    <message>
-        <source>Edit the display format of the data in this column</source>
-        <translation type="vanished">このカラムのデータの表示書式を編集します</translation>
-    </message>
-    <message>
-        <source>Show rowid column</source>
-        <translation type="vanished">rowidカラムを表示</translation>
-    </message>
-    <message>
-        <source>Toggle the visibility of the rowid column</source>
-        <translation type="vanished">rowidカラムの表示を切り替えます</translation>
-    </message>
-    <message>
-        <source>Set encoding</source>
-        <translation type="vanished">エンコードの設定</translation>
-    </message>
-    <message>
-        <source>Change the encoding of the text in the table cells</source>
-        <translation type="vanished">テーブルのセルにあるテキストのエンコードを変更します</translation>
-    </message>
-    <message>
-        <source>Set encoding for all tables</source>
-        <translation type="vanished">すべてのテーブルのエンコードの設定</translation>
-    </message>
-    <message>
-        <source>Change the default encoding assumed for all tables in the database</source>
-        <translation type="vanished">データベース内のすべてのテーブルのデフォルトエンコードを変更します</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1763"/>
         <source>SQLCipher &amp;FAQ</source>
         <translation>SQLCipher FAQ(&amp;F)</translation>
@@ -3725,10 +3241,6 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
         <translation>1つ以上のテーブルをJSONファイルにエクスポートします</translation>
     </message>
     <message>
-        <source>Refresh</source>
-        <translation type="vanished">更新</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1786"/>
         <source>Open Data&amp;base Read Only...</source>
         <translation>データベースを読み取り専用で開く(&amp;B)...</translation>
@@ -3737,14 +3249,6 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
         <location filename="../MainWindow.ui" line="1789"/>
         <source>Open an existing database file in read only mode</source>
         <translation>既存のデータベースファイルを読み取り専用モードで開きます</translation>
-    </message>
-    <message>
-        <source>Unlock view editing</source>
-        <translation type="vanished">ビューの編集を開放</translation>
-    </message>
-    <message>
-        <source>This unlocks the current view for editing. However, you will need appropriate triggers for editing.</source>
-        <translation type="vanished">これは現在のビューで編集できるようにします。しかし、編集時のトリガーに対応する必要があります。</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1810"/>
@@ -3768,10 +3272,6 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
         <translation>SQLエディターの文字列を検索</translation>
     </message>
     <message>
-        <source>Find text in SQL editor [Ctrl+F]</source>
-        <translation type="vanished">SQLエディターの文字列を検索 [Ctrl+F]</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1837"/>
         <source>This button opens the search bar of the editor</source>
         <translation>このボタンはエディターの検索バーを開きます</translation>
@@ -3779,17 +3279,13 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
     <message>
         <location filename="../MainWindow.ui" line="1840"/>
         <source>Ctrl+F</source>
-        <translation>Ctrl+F</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1855"/>
         <location filename="../MainWindow.ui" line="1861"/>
         <source>Find or replace text in SQL editor</source>
         <translation>SQLエディターの文字列を検索/置換します</translation>
-    </message>
-    <message>
-        <source>Find or replace text in SQL editor [Ctrl+H]</source>
-        <translation type="vanished">SQLエディターの文字列を検索/置換します [Ctrl+H]</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1864"/>
@@ -3799,7 +3295,7 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
     <message>
         <location filename="../MainWindow.ui" line="1867"/>
         <source>Ctrl+H</source>
-        <translation>Ctrl+H</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1875"/>
@@ -3817,22 +3313,6 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
         <translation>ビューとして保存</translation>
     </message>
     <message>
-        <source>Hide column(s)</source>
-        <translation type="vanished">カラムを隠す</translation>
-    </message>
-    <message>
-        <source>Hide selected column(s)</source>
-        <translation type="vanished">選択したカラムを隠す</translation>
-    </message>
-    <message>
-        <source>Show all columns</source>
-        <translation type="vanished">すべてのカラムを表示</translation>
-    </message>
-    <message>
-        <source>Show all columns that were hidden</source>
-        <translation type="vanished">隠されたすべてのカラムを表示</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1901"/>
         <source>Shows or hides the Project toolbar.</source>
         <translation>プロジェクトツールバーを表示/非表示します。</translation>
@@ -3841,34 +3321,6 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
         <location filename="../MainWindow.ui" line="1916"/>
         <source>Extra DB Toolbar</source>
         <translation>追加DBツールバー</translation>
-    </message>
-    <message>
-        <source>Export the filtered data to CSV</source>
-        <translation type="vanished">フィルターされたデータをCSVにエクスポート</translation>
-    </message>
-    <message>
-        <source>This button exports the data of the browsed table as currently displayed (after filters, display formats and order column) as a CSV file.</source>
-        <translation type="vanished">このボタンは閲覧中のテーブルのデータを現在の表示通り(フィルター、表示形式、カラム順番)にCSVファイルにエクスポートします。</translation>
-    </message>
-    <message>
-        <source>Save the current filter, sort column and display formats as a view</source>
-        <translation type="vanished">現在のフィルター、カラム順番、表示形式をビューに保存</translation>
-    </message>
-    <message>
-        <source>This button saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.</source>
-        <translation type="vanished">このボタンは閲覧中のテーブルの現在の表示設定(フィルター、表示形式、カラム順番)をSQLビューとして保存し、あとで閲覧やSQL文として使用できるようにします。</translation>
-    </message>
-    <message>
-        <source>Insert Values...</source>
-        <translation type="vanished">値を挿入...</translation>
-    </message>
-    <message>
-        <source>Open a dialog for inserting values in a new record</source>
-        <translation type="vanished">新しいレコードに値を挿入するダイアログを開きます</translation>
-    </message>
-    <message>
-        <source>Insert new record using default values in browsed table</source>
-        <translation type="vanished">閲覧中のテーブルのデフォルト値を使い新しいレコードを挿入します</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1942"/>
@@ -3954,17 +3406,9 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
         <translation>印刷</translation>
     </message>
     <message>
-        <source>Print text from current SQL editor tab [Ctrl+P]</source>
-        <translation type="vanished">現在のSQLエディタータブの文字列を印刷します [Ctrl+P]</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="2026"/>
         <source>Open a dialog for printing the text in the current SQL editor tab</source>
         <translation>現在のSQLエディタータブの文字列を印刷するダイアログを開きます</translation>
-    </message>
-    <message>
-        <source>Print the structure of the opened database [Ctrl+P]</source>
-        <translation type="vanished">開いているデータベースの構造を印刷します [Ctrl+P]</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2053"/>
@@ -3975,7 +3419,7 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
         <location filename="../MainWindow.ui" line="2029"/>
         <location filename="../MainWindow.ui" line="2056"/>
         <source>Ctrl+P</source>
-        <translation>Ctrl+P</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1491"/>
@@ -3990,22 +3434,22 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
     <message>
         <location filename="../MainWindow.cpp" line="276"/>
         <source>Ctrl+L</source>
-        <translation>Ctrl+L</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="281"/>
         <source>Ctrl+D</source>
-        <translation>Ctrl+D</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="286"/>
         <source>Ctrl+I</source>
-        <translation>Ctrl+I</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="291"/>
         <source>Ctrl+E</source>
-        <translation>Ctrl+E</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="327"/>
@@ -4020,11 +3464,7 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
     <message>
         <location filename="../MainWindow.cpp" line="331"/>
         <source>Alt+0</source>
-        <translation>Alt+0</translation>
-    </message>
-    <message>
-        <source>Close current SQL tab</source>
-        <translation type="vanished">現在のSQLタブを閉じる</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="336"/>
@@ -4034,7 +3474,7 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
     <message>
         <location filename="../MainWindow.cpp" line="337"/>
         <source>Shift+Alt+0</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="346"/>
@@ -4194,32 +3634,6 @@ Reason: %1</source>
         <translation>値は正規のURLもしくはファイル名でありません: %1</translation>
     </message>
     <message>
-        <source>Error deleting record:
-%1</source>
-        <translation type="vanished">レコードの削除でエラー:
-%1</translation>
-    </message>
-    <message>
-        <source>Please select a record first</source>
-        <translation type="vanished">最初にレコードを選択してください</translation>
-    </message>
-    <message>
-        <source>determining row count...</source>
-        <translation type="vanished">行数を計算中...</translation>
-    </message>
-    <message>
-        <source>%1 - %2 of &gt;= %3</source>
-        <translation type="vanished">%1 - %2 of &gt;= %3</translation>
-    </message>
-    <message>
-        <source>%1 - %2 of %3</source>
-        <translation type="vanished">%1 - %2 of %3</translation>
-    </message>
-    <message>
-        <source>There is no database opened. Please open or create a new database file.</source>
-        <translation type="vanished">開いているデータベースがありません。新しいデータベースファイルを開くか作成してください。</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.cpp" line="843"/>
         <source>Are you sure you want to delete the table &apos;%1&apos;?
 All data associated with the table will be lost.</source>
@@ -4324,25 +3738,9 @@ Are you sure?</source>
 本当に行いますか?</translation>
     </message>
     <message>
-        <source>Execution aborted by user</source>
-        <translation type="vanished">実行はユーザーにより中止されました</translation>
-    </message>
-    <message>
-        <source>executing query</source>
-        <translation type="vanished">実行クエリー</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.cpp" line="1217"/>
         <source>%1 rows returned in %2ms</source>
         <translation>%1 行が %2ms で返されました</translation>
-    </message>
-    <message>
-        <source>, %1 rows affected</source>
-        <translation type="vanished">, %1 行に影響を与えました</translation>
-    </message>
-    <message>
-        <source>query executed successfully. Took %1ms%2</source>
-        <translation type="vanished">クエリーの実行に成功しました。 %1ms%2 かかりました</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1153"/>
@@ -4359,10 +3757,6 @@ Are you sure?</source>
         <location filename="../MainWindow.cpp" line="1305"/>
         <source>Choose text files</source>
         <translation>テキストファイルを選択</translation>
-    </message>
-    <message>
-        <source>Text files(*.csv *.txt);;All files(*)</source>
-        <translation type="vanished">テキストファイル(*.csv *.txt);;すべてのファイル(*)</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1379"/>
@@ -4448,10 +3842,6 @@ If you answer no we will attempt to import the data in the SQL file to the curre
 いいえを選択すると、SQLファイルからのデータを現在のデータベースにインポートしようとします。</translation>
     </message>
     <message>
-        <source>You are still executing SQL statements. When closing the database now the execution will be stopped. maybe leaving the database in an incosistent state. Are you sure you want to close the database?</source>
-        <translation type="vanished">まだSQL文を実行中です。今、データベースを閉じると、実行が中止され、こデータベースに一貫性がない状態を残すかもしれません。本当にデータベースを閉じますか?</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.cpp" line="759"/>
         <source>Do you want to save the changes made to the project file &apos;%1&apos;?</source>
         <translation>プロジェクトファイル &apos;%1&apos; に変更を保存しますか?</translation>
@@ -4522,10 +3912,6 @@ If you answer no we will attempt to import the data in the SQL file to the curre
         <translation>テーブルを変更</translation>
     </message>
     <message>
-        <source>&amp;%1 %2</source>
-        <translation type="vanished">&amp;%1 %2</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.cpp" line="1835"/>
         <source>Setting PRAGMA values will commit your current transaction.
 Are you sure?</source>
@@ -4538,14 +3924,6 @@ Are you sure?</source>
         <translation>開くSQLファイルを選択</translation>
     </message>
     <message>
-        <source>Couldn&apos;t read file: %1.</source>
-        <translation type="vanished">ファイルを読めません: %1.</translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t save file: %1.</source>
-        <translation type="vanished">ファイルを保存できません: %1.</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.cpp" line="2076"/>
         <source>Select file name</source>
         <translation>ファイル名を選択</translation>
@@ -4556,10 +3934,6 @@ Are you sure?</source>
         <translation>拡張ファイルを選択</translation>
     </message>
     <message>
-        <source>Extensions(*.so *.dylib *.dll);;All files(*)</source>
-        <translation type="vanished">拡張(*.so *.dylib *.dll);;すべてのファイル(*)</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.cpp" line="2115"/>
         <source>Extension successfully loaded.</source>
         <translation>拡張の読み込みに成功しました。</translation>
@@ -4568,10 +3942,6 @@ Are you sure?</source>
         <location filename="../MainWindow.cpp" line="2117"/>
         <source>Error loading extension: %1</source>
         <translation>拡張の読み込みでエラー: %1</translation>
-    </message>
-    <message>
-        <source>Could not open find resource file: %1</source>
-        <translation type="vanished">検索リソースファイルが開けません: %1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2231"/>
@@ -4603,40 +3973,6 @@ Are you sure?</source>
         <location filename="../MainWindow.cpp" line="2602"/>
         <source>This project file is using an old file format because it was created using DB Browser for SQLite version 3.10 or lower. Loading this file format is still fully supported but we advice you to convert all your project files to the new file format because support for older formats might be dropped at some point in the future. You can convert your files by simply opening and re-saving them.</source>
         <translation>このプロジェクトファイルは DB Browser for SQLite version 3.10 以下のバージョンで使われた、古いファイルフォーマットを使用しています。このファイルフォーマットの読み込みはいまだ完全にサポートされていますが、将来古いフォーマットのサポートはなくなるため、すべてのプロジェクトファイルを新しいフォーマットに変換することをおすすめします。ファイルを変換するには単純にファイルを開き再保存します。</translation>
-    </message>
-    <message>
-        <source>Duplicate records</source>
-        <translation type="vanished">レコードを複製</translation>
-    </message>
-    <message>
-        <source>Duplicate record</source>
-        <translation type="vanished">レコードを複製</translation>
-    </message>
-    <message>
-        <source>Ctrl+&quot;</source>
-        <translation type="vanished">Ctrl+&quot;</translation>
-    </message>
-    <message>
-        <source>Please choose a new encoding for all tables.</source>
-        <translation type="vanished">すべてのテーブルの新しいエンコードを選択してください。</translation>
-    </message>
-    <message>
-        <source>Please choose a new encoding for this table.</source>
-        <translation type="vanished">すべてのテーブルの新しいエンコードを選択してください。</translation>
-    </message>
-    <message>
-        <source>%1
-Leave the field empty for using the database encoding.</source>
-        <translation type="vanished">%1
-データベースのエンコードを使うため、フィールドを空にします。</translation>
-    </message>
-    <message>
-        <source>This encoding is either not valid or not supported.</source>
-        <translation type="vanished">このエンコードは不正かサポートされていません。</translation>
-    </message>
-    <message>
-        <source>Please enter a pseudo-primary key in order to enable editing on this view. This should be the name of a unique column in the view.</source>
-        <translation type="vanished">このビューでの編集を有効にするため、疑似主キーを入力してください。ビューに一意なカラムの名前が必要です。</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3106"/>
@@ -4683,14 +4019,6 @@ Create a backup!</source>
         <translation>ビューの作成でエラー: %1</translation>
     </message>
     <message>
-        <source>There is no filter set for this table. View will not be created.</source>
-        <translation type="vanished">このテーブルにフィルターの設定はありません。ビューは作成されません。</translation>
-    </message>
-    <message>
-        <source>Delete Records</source>
-        <translation type="vanished">レコードを削除</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.cpp" line="3194"/>
         <source>This action will open a new SQL tab for running:</source>
         <translation>この操作は実行のため新しいSQLタブを開きます:</translation>
@@ -4735,10 +4063,6 @@ Create a backup!</source>
         <location filename="../PlotDock.ui" line="51"/>
         <source>X</source>
         <translation>X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="56"/>
@@ -5208,10 +4532,6 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation>先読みブロックサイズ(&amp;Z)</translation>
     </message>
     <message>
-        <source>Advanced</source>
-        <translation type="vanished">高度な設定</translation>
-    </message>
-    <message>
         <location filename="../PreferencesDialog.ui" line="697"/>
         <source>SQ&amp;L to execute after opening database</source>
         <translation>データベースを開いた後に実行するSQL(&amp;L)</translation>
@@ -5272,10 +4592,6 @@ Can be set to 0 for disabling the functionalities.</source>
         <source>This is the maximum number of rows in a table for enabling the value completion based on current values in the column.
 Can be set to 0 for disabling completion.</source>
         <translation>これは現在の値を基にしたカラムの値補完を有効にしたときのテーブル内の行数の最大値です。</translation>
-    </message>
-    <message>
-        <source>Row count threshold for completion</source>
-        <translation type="vanished">補完の行数閾値</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="857"/>
@@ -5922,22 +5238,6 @@ All your preferences will be lost and default values will be used.</source>
         <source>Extensions (*.so *.dylib *.dll)</source>
         <translation>拡張 (*.so *.dylib *.dll)</translation>
     </message>
-    <message>
-        <source>Name</source>
-        <translation type="vanished">名前</translation>
-    </message>
-    <message>
-        <source>Commit</source>
-        <translation type="vanished">コミット</translation>
-    </message>
-    <message>
-        <source>Last modified</source>
-        <translation type="vanished">最終変更</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="vanished">サイズ</translation>
-    </message>
 </context>
 <context>
     <name>RemoteCommitsModel</name>
@@ -5980,50 +5280,6 @@ All your preferences will be lost and default values will be used.</source>
 <context>
     <name>RemoteDatabase</name>
     <message>
-        <source>Error when connecting to %1.
-%2</source>
-        <translation type="vanished">%1 への接続でエラー。
-%2</translation>
-    </message>
-    <message>
-        <source>Error opening remote file at %1.
-%2</source>
-        <translation type="vanished">%1 のリモートファイルを開くときにエラー.
-%2</translation>
-    </message>
-    <message>
-        <source>Error: Invalid client certificate specified.</source>
-        <translation type="vanished">エラー: 不正なクライアント証明書が指定されました。</translation>
-    </message>
-    <message>
-        <source>Please enter the passphrase for this client certificate in order to authenticate.</source>
-        <translation type="vanished">このクライアント証明書を確認するためパスフレーズを入力してください。</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">キャンセル</translation>
-    </message>
-    <message>
-        <source>Uploading remote database to
-%1</source>
-        <translation type="vanished">リモートデータベースをここにアップロード中
-%1</translation>
-    </message>
-    <message>
-        <source>Downloading remote database from
-%1</source>
-        <translation type="vanished">リモートデータベースをここからダウンロード中
-%1</translation>
-    </message>
-    <message>
-        <source>Error: The network is not accessible.</source>
-        <translation type="vanished">エラー: ネットワークにアクセスできません。</translation>
-    </message>
-    <message>
-        <source>Error: Cannot open the file for sending.</source>
-        <translation type="vanished">エラー: 送信するファイルを開けません。</translation>
-    </message>
-    <message>
         <location filename="../RemoteDatabase.cpp" line="56"/>
         <source>Error opening local databases list.
 %1</source>
@@ -6037,10 +5293,6 @@ All your preferences will be lost and default values will be used.</source>
         <translation>ローカルデータベースの一覧の作成でエラー。
 %1</translation>
     </message>
-    <message>
-        <source>The remote database has been updated since the last checkout. Do you want to update the local database to the newest version? Note that this discards any changes you have made locally! If you don&apos;t want to lose local changes, click No to open the local version.</source>
-        <translation type="vanished">リモートデータベースが最後のチェックアウトから更新されました。ローカルのデータベースを最新バージョンに更新しますか? 注意:これはローカルで行った変更がすべて破棄されます! もし変更を失いたくなければ、いいえをクリックしてローカルのファイルを開いてください。</translation>
-    </message>
 </context>
 <context>
     <name>RemoteDock</name>
@@ -6053,14 +5305,6 @@ All your preferences will be lost and default values will be used.</source>
         <location filename="../RemoteDock.ui" line="29"/>
         <source>Identity</source>
         <translation>アイデンティティー</translation>
-    </message>
-    <message>
-        <source>Connect to the remote server using the currently selected identity. The correct server is taken from the identity as well.</source>
-        <translation type="vanished">現在選択されたアイデンティティーを使ってリモートサーバーに接続します。正しいサーバーもアイデンティティーから取得されます。</translation>
-    </message>
-    <message>
-        <source>Go</source>
-        <translation type="vanished">実行</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="59"/>
@@ -6161,7 +5405,7 @@ DB Browser for SQLite 設定のリモートタブに行き、新しい証明書�
     <message>
         <location filename="../RemoteDock.ui" line="414"/>
         <source>F5</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="423"/>
@@ -6217,11 +5461,6 @@ DB Browser for SQLite 設定のリモートタブに行き、新しい証明書�
         <location filename="../RemoteDock.ui" line="493"/>
         <source>Upload this database as a new commit</source>
         <translation>このデータベースを新しいコミットとしてアップロード</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB4S. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to create a DB4S certificate (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB4S Preferences. Click the button to add a new certificate to DB4S and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;このペインでは、dbhub.io ウェブサイトのリモートデータベースをDB4Sに追加します。最初にアイデンティティーが必要です。:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;dbhub.io ウェブサイトにログインします。(GitHubかあなたが望む認証情報を使います)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;ボタンをクリックしDB4S証明書を作成します(これがあなたのアイデンティティです)。 証明書ファイルが与えられます(貴方のローカルディスクに保存します)。&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;
-DB4S設定のリモートタブに行き、新しい証明書をDB4Sに追加するボタンをクリックし、ダウンロードした証明書ファイルを選択します。&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;これで、リモートパネルにあなたのアイデンティティが表示され、リモートデータベースが追加できます。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="317"/>
@@ -6367,10 +5606,6 @@ Are you sure you want to proceed?</source>
         <source>Default Branch: </source>
         <translation>デフォルトブランチ: </translation>
     </message>
-    <message>
-        <source>bytes</source>
-        <translation type="vanished">バイト</translation>
-    </message>
 </context>
 <context>
     <name>RemoteNetwork</name>
@@ -6445,18 +5680,6 @@ Are you sure you want to proceed?</source>
         <translation>コミットメッセージ</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Oxygen-Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Oxygen-Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../RemotePushDialog.ui" line="63"/>
         <source>Database licence</source>
         <translation>データベースライセンス</translation>
@@ -6495,10 +5718,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../RemotePushDialog.cpp" line="78"/>
         <source>Use with care. This can cause remote commits to be deleted.</source>
         <translation>注意して使用してください。これはリモートコミットが削除される可能性があります。</translation>
-    </message>
-    <message>
-        <source>Unspecified</source>
-        <translation type="vanished">指定なし</translation>
     </message>
 </context>
 <context>
@@ -6550,10 +5769,6 @@ p, li { white-space: pre-wrap; }
         <translation>前を検索 [Shift+F3]</translation>
     </message>
     <message>
-        <source>Find previous match with mapping</source>
-        <translation type="vanished">マッピングで前を検索</translation>
-    </message>
-    <message>
         <location filename="../SqlExecutionArea.ui" line="84"/>
         <source>Find previous match with wrapping</source>
         <translation>ワードラップ込みで前を検索</translation>
@@ -6561,7 +5776,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../SqlExecutionArea.ui" line="91"/>
         <source>Shift+F3</source>
-        <translation>Shift+F3</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="105"/>
@@ -6671,7 +5886,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../sqltextedit.cpp" line="41"/>
         <source>Ctrl+/</source>
-        <translation>Ctrl+/</translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -6999,41 +6214,42 @@ Use of this function must be authorized from Preferences.</source>
 <context>
     <name>SqliteTableModel</name>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="34"/>
+        <location filename="../sqlitetablemodel.cpp" line="36"/>
         <source>reading rows</source>
         <translation>行を読み込み中</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="337"/>
+        <location filename="../sqlitetablemodel.cpp" line="339"/>
         <source>loading...</source>
         <translation>読み込み中...</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="402"/>
+        <location filename="../sqlitetablemodel.cpp" line="404"/>
         <source>References %1(%2)
 Hold %3Shift and click to jump there</source>
         <translation>これを参照 %1(%2)
 %3Shift を保持しクリックでジャンプ</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="555"/>
+        <location filename="../sqlitetablemodel.cpp" line="557"/>
         <source>Error changing data:
 %1</source>
         <translation>データの変更でエラー:
 %1</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="796"/>
+        <location filename="../sqlitetablemodel.cpp" line="798"/>
         <source>retrieving list of columns</source>
         <translation>カラムの一覧を取得中</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="1024"/>
+        <location filename="../sqlitetablemodel.cpp" line="1026"/>
         <source>Fetching data...</source>
         <translation>データを取得中...</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="1025"/>
+        <location filename="../sqlitetablemodel.cpp" line="1027"/>
+        <location filename="../sqlitetablemodel.cpp" line="1029"/>
         <source>Cancel</source>
         <translation>キャンセル</translation>
     </message>
@@ -7093,10 +6309,6 @@ Hold %3Shift and click to jump there</source>
         <translation>前を検索 [Shift+F3]</translation>
     </message>
     <message>
-        <source>Find previous match with mapping</source>
-        <translation type="vanished">マッピングで前を検索</translation>
-    </message>
-    <message>
         <location filename="../TableBrowser.ui" line="269"/>
         <source>Find previous match with wrapping</source>
         <translation>折り返して前を検索</translation>
@@ -7104,7 +6316,7 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.ui" line="276"/>
         <source>Shift+F3</source>
-        <translation>Shift+F3</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="283"/>
@@ -7247,10 +6459,6 @@ Hold %3Shift and click to jump there</source>
         <location filename="../TableBrowser.ui" line="523"/>
         <source>Scroll to the end</source>
         <translation>末尾へ</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Clicking this button navigates up to the end in the table view above.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;このボタンをクリックすると、上のテーブルビューを末尾まで移動します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="526"/>
@@ -7512,7 +6720,7 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.ui" line="803"/>
         <source>Ctrl+P</source>
-        <translation>Ctrl+P</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="815"/>
@@ -7545,10 +6753,6 @@ Hold %3Shift and click to jump there</source>
         <translation>テーブルビューの下に値を検索するための検索ツールバーを開きます。</translation>
     </message>
     <message>
-        <source>Ctrl+F</source>
-        <translation type="vanished">Ctrl+F</translation>
-    </message>
-    <message>
         <location filename="../TableBrowser.ui" line="854"/>
         <location filename="../TableBrowser.ui" line="857"/>
         <source>Bold</source>
@@ -7557,7 +6761,7 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.ui" line="860"/>
         <source>Ctrl+B</source>
-        <translation>Ctrl+B</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="872"/>
@@ -7574,7 +6778,7 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.ui" line="893"/>
         <source>Ctrl+U</source>
-        <translation>Ctrl+U</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="905"/>
@@ -7671,14 +6875,6 @@ Hold %3Shift and click to jump there</source>
         <translation>セル内のテキストを置き換え</translation>
     </message>
     <message>
-        <source>Ctrl+H</source>
-        <translation type="vanished">Ctrl+H</translation>
-    </message>
-    <message>
-        <source>Filter in all columns</source>
-        <translation type="vanished">すべてのカラムをフィルター</translation>
-    </message>
-    <message>
         <location filename="../TableBrowser.cpp" line="42"/>
         <source>Filter in any column</source>
         <translation>カラムをフィルター</translation>
@@ -7686,7 +6882,7 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.cpp" line="102"/>
         <source>Ctrl+R</source>
-        <translation>Ctrl+R</translation>
+        <translation></translation>
     </message>
     <message numerus="yes">
         <location filename="../TableBrowser.cpp" line="450"/>
@@ -7750,7 +6946,7 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.cpp" line="1181"/>
         <source>Ctrl+&quot;</source>
-        <translation>Ctrl+&quot;</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1200"/>

@@ -18,38 +18,6 @@
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Silk icon set by Mark James licensed under a Creative Commons Attribution 2.5 and 3.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB-Browser for SQLite è uno strumento grafico opensource e freeware usato per creare, struttutturare e modificare file database di SQLite&lt;/p&gt;&lt;p&gt;È rilasciato sotto la licenza Mozilla Public License Version 2, così come sotto la licenza GNU General Public License Version 3 o successive. È possibile modificarlo e redistribuirlo sotto le condizioni specificate da queste licenze.&lt;/p&gt;&lt;p&gt;Si veda &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; e &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; per ulteriori dettagli.&lt;/p&gt;&lt;p&gt;Per ulteriori dettagli riguardo questo programma visitate il nostro sito web a: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Questo software usa GPL/LGPL QT Toolkit da &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;Si veda &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; per  termini di licenza e informazioni.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Utilizza inoltre Silk-Iconset di Mark James, rilasciato sotto licenza Creative Commons Attribution 2.5 e 3.0.&lt;br/&gt;Si veda &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; per ulteriori dettagli.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
-    <message>
-        <source>SQLite Version </source>
-        <translation type="vanished">Versione SQLite </translation>
-    </message>
-    <message>
-        <source>SQLCipher Version %1 (based on SQLite %2)</source>
-        <translation type="vanished">Versione SQLCipher %1 (basata su SQLite %2)</translation>
-    </message>
-    <message>
-        <source>Built for %1, running on %2</source>
-        <translation type="vanished">Compilato per %1, in esecuzione su %2</translation>
-    </message>
-    <message>
-        <source>SQLCipher Version </source>
-        <translation type="vanished">Versione SQLCipher </translation>
-    </message>
-    <message>
-        <source> (based on SQLite %1)</source>
-        <translation type="vanished"> (basato su SQLite %1)</translation>
-    </message>
-    <message>
-        <source>Version </source>
-        <translation type="vanished">Versione </translation>
-    </message>
-    <message>
-        <source>Built for </source>
-        <translation type="vanished">Compilato per </translation>
-    </message>
-    <message>
-        <source>Qt Version </source>
-        <translation type="vanished">Versione Qt </translation>
-    </message>
 </context>
 <context>
     <name>AddRecordDialog</name>
@@ -151,55 +119,9 @@
 <context>
     <name>Application</name>
     <message>
-        <source>Usage: %1 [options] [db]
-</source>
-        <translation type="vanished">Utilizzo: %1 [opzioni] [db]
-</translation>
-    </message>
-    <message>
         <location filename="../Application.cpp" line="95"/>
         <source>Possible command line arguments:</source>
         <translation>Possibili argomenti da linea di comando:</translation>
-    </message>
-    <message>
-        <source>  -h, --help		Show command line options</source>
-        <translation type="vanished">  -h, --help		Mostra opzioni della linea di comando</translation>
-    </message>
-    <message>
-        <source>  -q, --quit		Exit application after running scripts</source>
-        <translation type="vanished">  -q, --quit		Esci dall&apos;applicazione dopo aver eseguito gli script</translation>
-    </message>
-    <message>
-        <source>  -s, --sql [file]	Execute this SQL file after opening the DB</source>
-        <translation type="vanished">  -s, --sql [file]	Esegui questo file SQL dopo aver aperto il DB</translation>
-    </message>
-    <message>
-        <source>  -t, --table [table]	Browse this table after opening the DB</source>
-        <translation type="vanished">  -t, --table [table]	Esplora questa tabella dopo aver aperto il DB</translation>
-    </message>
-    <message>
-        <source>  -R, --read-only	Open database in read-only mode</source>
-        <translation type="vanished">  -R, --read-only	Apri il database in modalità sola lettura</translation>
-    </message>
-    <message>
-        <source>  -o, --option [group/setting=value]	Run application with this setting temporarily set to value</source>
-        <translation type="vanished">  -o, --option [group/setting=valore]	Esegue l&apos;applicazione con queste impostazioni temporaneamente modificate al valore</translation>
-    </message>
-    <message>
-        <source>  -O, --save-option [group/setting=value]	Run application saving this value for this setting</source>
-        <translation type="vanished">  -O, --save-option [group/setting=valore]	Avvia l&apos;applicazione salvando questo valore per impostazione</translation>
-    </message>
-    <message>
-        <source>  -v, --version		Display the current version</source>
-        <translation type="vanished">  -v, --version		Mostra la versione corrente</translation>
-    </message>
-    <message>
-        <source>  [file]		Open this SQLite database</source>
-        <translation type="vanished">  [file]		Apri questo database SQLite</translation>
-    </message>
-    <message>
-        <source>This is DB Browser for SQLite version %1.</source>
-        <translation type="vanished">Questo è DB Browser for SQLite versione %1.</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="93"/>
@@ -312,10 +234,6 @@
         <location filename="../Application.cpp" line="243"/>
         <source>Qt Version %1</source>
         <translation>Versione Qt %1</translation>
-    </message>
-    <message>
-        <source>The -o/--option option requires an argument in the form group/setting=value</source>
-        <translation type="vanished">L&apos;opzione -o/--option richiede un argomento nella forma group/setting=valore</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="159"/>
@@ -547,18 +465,6 @@ Se una qualunque altra impostazione è stata modificata per l&apos;inserimento d
         <location filename="../CondFormatManager.ui" line="14"/>
         <source>Conditional Format Manager</source>
         <translation>Gestore della formattazione condizionale</translation>
-    </message>
-    <message>
-        <source>&amp;Up</source>
-        <translation type="vanished">Porta &amp;su</translation>
-    </message>
-    <message>
-        <source>&amp;Down</source>
-        <translation type="vanished">Porta &amp;giù</translation>
-    </message>
-    <message>
-        <source>This dialog allows creating and editing conditional formats, where the cell text and background will be colored based on one or more conditions. Conditional formats can be moved up and down, where those at higher rows take precedence over those at lower.</source>
-        <translation type="vanished">Questa finestra permette la creazione e modifica della formattazione condizionale, dove le il testo e lo sfondo delle celle verrà colorato in base ad una o più condizioni. Le condizioni possono essere spostate su o giù, dove quelle più in alto avranno precedenza su quelle sottostanti.</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="20"/>
@@ -840,38 +746,6 @@ Messaggio dal DB:
         <translation>non posso ottenere la listra degli oggetti db: %1</translation>
     </message>
     <message>
-        <source>renameColumn: cannot find column %1.</source>
-        <translation type="vanished">renameColumn: Impossibile trovare la colonna %1.</translation>
-    </message>
-    <message>
-        <source>renameColumn: creating savepoint failed. DB says: %1</source>
-        <translation type="vanished">renameColumn: creazione salvataggio fallita. Messaggio DB : %1</translation>
-    </message>
-    <message>
-        <source>renameColumn: renaming the column failed. DB says:
-%1</source>
-        <translation type="vanished">renameColumn: rinomino colonna fallito. Messaggio DB:
-%1</translation>
-    </message>
-    <message>
-        <source>renameColumn: releasing savepoint failed. DB says: %1</source>
-        <translation type="vanished">renameColumn: rilascio punto di salvataggio fallito. Messaggio DB: %1</translation>
-    </message>
-    <message>
-        <source>renameColumn: creating new table failed. DB says: %1</source>
-        <translation type="vanished">renameColumn: creazione nuova tabella fallita. Messaggio DB: %1</translation>
-    </message>
-    <message>
-        <source>renameColumn: copying data to new table failed. DB says:
-%1</source>
-        <translation type="vanished">renameColumn: copia dei dati a nuova tabella fallito. Messaggio DB:
-%1</translation>
-    </message>
-    <message>
-        <source>renameColumn: deleting old table failed. DB says: %1</source>
-        <translation type="vanished">renameColumn: eliminazione vecchia tabella falita. Messaggio DB: %1</translation>
-    </message>
-    <message>
         <location filename="../sqlitedb.cpp" line="1814"/>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 
@@ -881,31 +755,9 @@ Messaggio dal DB:
 </translation>
     </message>
     <message>
-        <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.Message from database engine:
-%3</source>
-        <translation type="vanished">Errore nel rinominare la tabella &apos;%1&apos; in &apos;%2&apos;.Messaggio dal database engine:
-%3</translation>
-    </message>
-    <message>
-        <source>... &lt;string can not be logged, contains binary data&gt; ...</source>
-        <translation type="vanished">... &lt;la stringa non può essere loggata, contiene dati binari&gt; ...</translation>
-    </message>
-    <message>
-        <source>could not get list of db objects: %1, %2</source>
-        <translation type="vanished">non è possibile ricavare la lista degli oggetti db: %1, %2</translation>
-    </message>
-    <message>
         <location filename="../sqlitedb.cpp" line="1960"/>
         <source>could not get list of databases: %1</source>
         <translation>non è possibile ricavare la lista dei database: %1</translation>
-    </message>
-    <message>
-        <source>didn&apos;t receive any output from pragma %1</source>
-        <translation type="vanished">non ho ricevuto nessun output da pragma %1</translation>
-    </message>
-    <message>
-        <source>could not execute pragma command: %1, %2</source>
-        <translation type="vanished">non è possibile eseguire il comando pragma: %1, %2</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1988"/>
@@ -1155,10 +1007,6 @@ Gli errori sono indicati da una sottolineatura rossa ondulata.</translation>
         <translation>Apri una finestra di dialogo per importare qualsiasi tipo di dato in questa cella del database.</translation>
     </message>
     <message>
-        <source>&amp;Import</source>
-        <translation type="vanished">&amp;Importa</translation>
-    </message>
-    <message>
         <location filename="../EditDialog.ui" line="356"/>
         <source>Export to file</source>
         <translation>Esporta in un file</translation>
@@ -1169,17 +1017,9 @@ Gli errori sono indicati da una sottolineatura rossa ondulata.</translation>
         <translation>Apri una finestra di dialogo utilizzata per esportare i contenuti di questa cella del database in un file.</translation>
     </message>
     <message>
-        <source>&amp;Export</source>
-        <translation type="vanished">&amp;Esporta</translation>
-    </message>
-    <message>
         <location filename="../EditDialog.ui" line="262"/>
         <source>Apply data to cell</source>
         <translation>Applica i dati alla cella</translation>
-    </message>
-    <message>
-        <source>Set this cell to NULL</source>
-        <translation type="vanished">Imposta questa cella a NULL</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="386"/>
@@ -1197,14 +1037,6 @@ Gli errori sono indicati da una sottolineatura rossa ondulata.</translation>
         <translation>Quest&apos;area mostra informazioni riguardo i dati presenti in questa cella del database</translation>
     </message>
     <message>
-        <source>This editor mode lets you edit JSON or XML data with syntax highlighting, automatic formatting and validation before saving.
-
-Errors are indicated with a red squiggle underline.</source>
-        <translation type="vanished">Questa modalità editor permette di modificare dati JSON o XML con evidenziazione della sintassi, formattazione e validazione autmoatica prima del salvataggio.
-
-Gli errori sono indicati con una sottolineatura rossa ondulata.</translation>
-    </message>
-    <message>
         <location filename="../EditDialog.ui" line="219"/>
         <source>Type of data currently in cell</source>
         <translation>Tipo di dato attualmente nella cella</translation>
@@ -1213,10 +1045,6 @@ Gli errori sono indicati con una sottolineatura rossa ondulata.</translation>
         <location filename="../EditDialog.ui" line="241"/>
         <source>Size of data currently in table</source>
         <translation>Dimensione dei dati attualmente in tabella</translation>
-    </message>
-    <message>
-        <source>Apply data to cell [Ctrl+Return]</source>
-        <translation type="vanished">Applica i dati alla cella [Ctrl+Invio]</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="265"/>
@@ -1290,18 +1118,6 @@ Gli errori sono indicati con una sottolineatura rossa ondulata.</translation>
         <translation>Prova a passare alla modalità Binario.</translation>
     </message>
     <message>
-        <source>Text files (*.txt)</source>
-        <translation type="vanished">File di testo (*.txt)</translation>
-    </message>
-    <message>
-        <source>JSON files (*.json)</source>
-        <translation type="vanished">File JSON (*.json)</translation>
-    </message>
-    <message>
-        <source>XML files (*.xml)</source>
-        <translation type="vanished">File XML (*.xml)</translation>
-    </message>
-    <message>
         <location filename="../EditDialog.cpp" line="354"/>
         <location filename="../EditDialog.cpp" line="373"/>
         <source>Image files (%1)</source>
@@ -1313,10 +1129,6 @@ Gli errori sono indicati con una sottolineatura rossa ondulata.</translation>
         <translation>File binario (*.bin)</translation>
     </message>
     <message>
-        <source>All files (*)</source>
-        <translation type="vanished">Tutti i files (*)</translation>
-    </message>
-    <message>
         <location filename="../EditDialog.cpp" line="385"/>
         <source>Choose a file to import</source>
         <translation>Scegli un file da importare</translation>
@@ -1325,14 +1137,6 @@ Gli errori sono indicati con una sottolineatura rossa ondulata.</translation>
         <location filename="../EditDialog.cpp" line="424"/>
         <source>%1 Image</source>
         <translation>%1 Immagine</translation>
-    </message>
-    <message>
-        <source>SVG files (*.svg)</source>
-        <translation type="vanished">File SVG (*.svg)</translation>
-    </message>
-    <message>
-        <source>Hex dump files (*.txt)</source>
-        <translation type="vanished">File esadecimale di dump (*.txt)</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="462"/>
@@ -1400,7 +1204,12 @@ Gli errori sono indicati con una sottolineatura rossa ondulata.</translation>
         <translation>Tipo di dato attualmente nella cella: Binario</translation>
     </message>
     <message>
-        <location filename="../EditDialog.cpp" line="1239"/>
+        <location filename="../EditDialog.cpp" line="1221"/>
+        <source>Couldn&apos;t save file: %1.</source>
+        <translation type="unfinished">Impossibile salvare il file: %1.</translation>
+    </message>
+    <message>
+        <location filename="../EditDialog.cpp" line="1246"/>
         <source>The data has been saved to a temporary file and has been opened with the default application. You can now edit the file and, when you are ready, apply the saved new data to the cell editor or cancel any changes.</source>
         <translation>I dati sono stati salvati in un file temporane e sono stati aperti con l&apos;applicazione predefinita. Ora puoi modificare il file e, quando sei pronto, applicare i nuovi dati salvati all&apos;editor di cella o annullare ogni modifica.</translation>
     </message>
@@ -1500,10 +1309,6 @@ Gli errori sono indicati con una sottolineatura rossa ondulata.</translation>
         <translation>Avanzate</translation>
     </message>
     <message>
-        <source>Database schema</source>
-        <translation type="vanished">Schema database</translation>
-    </message>
-    <message>
         <location filename="../EditTableDialog.ui" line="62"/>
         <source>Database sche&amp;ma</source>
         <translation>Sche&amp;ma database</translation>
@@ -1522,22 +1327,6 @@ Gli errori sono indicati con una sottolineatura rossa ondulata.</translation>
         <location filename="../EditTableDialog.ui" line="106"/>
         <source>Fields</source>
         <translation>Campi</translation>
-    </message>
-    <message>
-        <source>Add field</source>
-        <translation type="vanished">Aggiungi campo</translation>
-    </message>
-    <message>
-        <source>Remove field</source>
-        <translation type="vanished">Rimuovi campo</translation>
-    </message>
-    <message>
-        <source>Move field up</source>
-        <translation type="vanished">Muovi campo in sù</translation>
-    </message>
-    <message>
-        <source>Move field down</source>
-        <translation type="vanished">Muovi campo in giù</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="114"/>
@@ -1714,10 +1503,6 @@ Gli errori sono indicati con una sottolineatura rossa ondulata.</translation>
         <translation>Aggiungi un vincolo di controllo</translation>
     </message>
     <message>
-        <source>Unknown</source>
-        <translation type="vanished">Sconosciuto</translation>
-    </message>
-    <message>
         <location filename="../EditTableDialog.cpp" line="285"/>
         <location filename="../EditTableDialog.cpp" line="994"/>
         <source>There can only be one primary key for each table. Please modify the existing primary key instead.</source>
@@ -1763,22 +1548,6 @@ Gli errori sono indicati con una sottolineatura rossa ondulata.</translation>
         <translation>Questo rende impossibile abilitare l&apos;opzionie &apos;Univoco&apos;. Perfavore rimuovi i dati duplicati, il che permetterà l&apos;abilitazione dell&apos;opzione &apos;Univoco&apos;.</translation>
     </message>
     <message>
-        <source>Column &apos;%1&apos; has no unique data.
-</source>
-        <translation type="vanished">La colonna &apos;%1&apos; non ha dati univoci.
-</translation>
-    </message>
-    <message>
-        <source>This makes it impossible to set this flag. Please change the table data first.</source>
-        <translation type="vanished">Questo rende impossibile impostare questa opzione. Si prega prima di modificare il dato.</translation>
-    </message>
-    <message>
-        <source>Modifying this column failed. Error returned from database:
-%1</source>
-        <translation type="vanished">La modifica di questa colonna è fallita. Errore restituito dal database:
-%1</translation>
-    </message>
-    <message>
         <location filename="../EditTableDialog.cpp" line="817"/>
         <source>Are you sure you want to delete the field &apos;%1&apos;?
 All data currently stored in this field will be lost.</source>
@@ -1793,18 +1562,6 @@ Tutti i dati che sono attualmente memorizzati in questo campo andranno persi.</t
         <translation>Perfavore agginugi un campo che rispetti i seguenti criteri prima di impostare l&apos;opzione senza id di riga:
  - Opzione Chiave Primaria impostata
  - Autoincremento disabilitato</translation>
-    </message>
-    <message>
-        <source>Setting the rowid column for the table failed. Error message:
-%1</source>
-        <translation type="vanished">Impostazione della colonna rowid per la tabella fallita. Messaggo di errore:
-%1</translation>
-    </message>
-    <message>
-        <source>Changing the table schema failed. Error message:
-%1</source>
-        <translation type="vanished">Cambio dello schema della tabella fallito. Messaggio di errore:
-%1</translation>
     </message>
 </context>
 <context>
@@ -1913,14 +1670,6 @@ Tutti i dati che sono attualmente memorizzati in questo campo andranno persi.</t
         <translation>esportando in JSON</translation>
     </message>
     <message>
-        <source>Text files(*.csv *.txt)</source>
-        <translation type="vanished">File di testo(*.csv *.txt)</translation>
-    </message>
-    <message>
-        <source>Text files(*.json *.js *.txt)</source>
-        <translation type="vanished">File di testo(*.json *.js *.txt)</translation>
-    </message>
-    <message>
         <location filename="../ExportDataDialog.cpp" line="324"/>
         <location filename="../ExportDataDialog.cpp" line="351"/>
         <source>Choose a filename to export data</source>
@@ -2013,10 +1762,6 @@ Tutti i dati che sono attualmente memorizzati in questo campo andranno persi.</t
         <location filename="../ExportSqlDialog.cpp" line="89"/>
         <source>Choose a filename to export</source>
         <translation>Scegli un nome del file per esportare</translation>
-    </message>
-    <message>
-        <source>Text files(*.sql *.txt)</source>
-        <translation type="vanished">File di testo(*.sql *.txt)</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.cpp" line="118"/>
@@ -2686,10 +2431,6 @@ x~y	Intervallo: valori tra x e y
         <translation>Seleziona simili</translation>
     </message>
     <message>
-        <source>Import completed</source>
-        <translation type="vanished">Importazione completata</translation>
-    </message>
-    <message>
         <location filename="../ImportCsvDialog.cpp" line="335"/>
         <source>Select All</source>
         <translation>Seleziona tutte</translation>
@@ -2761,187 +2502,11 @@ Puoi trascinare SQL da una riga oggetto e rilasciarli dentro altri applicativi o
         <translation>Naviga nei dati</translation>
     </message>
     <message>
-        <source>&amp;Table:</source>
-        <translation type="vanished">&amp;Tabella:</translation>
-    </message>
-    <message>
-        <source>Select a table to browse data</source>
-        <translation type="vanished">Seleziona una tabella per navigare tra i dati</translation>
-    </message>
-    <message>
-        <source>Use this list to select a table to be displayed in the database view</source>
-        <translation type="vanished">Usa questa lista per selezionare una tabella da visualizzare nella vista del database</translation>
-    </message>
-    <message>
-        <source>Refresh the data in the selected table [F5, Ctrl+R]</source>
-        <translation type="vanished">Aggiorna i dati della tabella selezionata [F5, Ctrl+R]</translation>
-    </message>
-    <message>
-        <source>This button refreshes the data in the currently selected table.</source>
-        <translation type="vanished">Questo pulsante aggiorna i dati della tabella selezionata.</translation>
-    </message>
-    <message>
-        <source>Clear Filters</source>
-        <translation type="vanished">Pulisci Filtri</translation>
-    </message>
-    <message>
-        <source>Clear all filters</source>
-        <translation type="vanished">Cancella tutti i filtri</translation>
-    </message>
-    <message>
-        <source>This button clears all the filters set in the header input fields for the currently browsed table.</source>
-        <translation type="vanished">Questo pulsante pulisce tutti i filtri impostati nella riga d&apos;intestazione per la tabella corrente.</translation>
-    </message>
-    <message>
-        <source>Save Table As...</source>
-        <translation type="vanished">Salva Tabella Come...</translation>
-    </message>
-    <message>
-        <source>Save the table as currently displayed</source>
-        <translation type="vanished">Salva la tabella così come visualizzata</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This popup menu provides the following options applying to the currently browsed and filtered table:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Export to CSV: this option exports the data of the browsed table as currently displayed (after filters, display formats and order column) to a CSV file.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Save as view: this option saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Questo menù fornisce le seguenti opzioni applicabili alla tabella filtrata e visualizzata correntemente:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Esporta in CSV: questa opzione esporta i dati della tabella così come visualizzati (con filtri, riordine delle colonne e formati) in un file CSV.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Salva come vista: questa opzione salva le impostazioni correnti della tabella visualizzata (filtri, riordine delle colonne e formati) come vista SQL che puoi successivamente visualizzare o utilizzare come statement.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Print currently browsed table data [Ctrl+P]</source>
-        <translation type="vanished">Stampa i dati visualizzati [Ctrl+P]</translation>
-    </message>
-    <message>
-        <source>Print currently browsed table data. Print selection if more than one cell is selected.</source>
-        <translation type="vanished">Stampa i dati visualizzati. Stampa la selezione se più di una cella è selezionata.</translation>
-    </message>
-    <message>
-        <source>Insert a new record in the current table</source>
-        <translation type="vanished">Inserisci un nuovo valore nella tabella corrente</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button creates a new record in the database. Hold the mouse button to open a pop-up menu of different options:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt;: insert a new record with default values in the database.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Insert Values...&lt;/span&gt;: open a dialog for entering values before they are inserted in the database. This allows to enter values acomplishing the different constraints. This dialog is also open if the &lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt; option fails due to these constraints.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Questo pulsante crea una nuova riga nel database. Mantieni premuto il tasto del mouse per ottenere più opzioni:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Nuova Riga&lt;/span&gt;: inserisce una nuova riga con i valori predefiniti.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Inserisci Valori...&lt;/span&gt;: apre una finestra per inserire i valori prima che vengano immessi nel database. Questo permette che l&apos;immissione dei valori rispetti diversi limiti (constraints). Questa finestra si apre anche se l&apos;opzione &lt;span style=&quot; font-weight:600;&quot;&gt;Nuova Riga&lt;/span&gt; fallisce a causa di questi limiti (constraints).&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>New Record</source>
-        <translation type="vanished">Nuova Riga</translation>
-    </message>
-    <message>
-        <source>Delete the current record</source>
-        <translation type="vanished">Elimina il valore corrente</translation>
-    </message>
-    <message>
-        <source>This button deletes the record or records currently selected in the table</source>
-        <translation type="vanished">Questo pulsante elimina la/e righe selezionate nella tabella</translation>
-    </message>
-    <message>
-        <source>Delete Record</source>
-        <translation type="vanished">Elimina Riga</translation>
-    </message>
-    <message>
-        <source>This is the database table view. You can do the following actions:
- - Start writing for editing inline the value.
- - Double-click any record to edit its contents in the cell editor window.
- - Alt+Del for deleting the cell content to NULL.
- - Ctrl+&quot; for duplicating the current record.
- - Ctrl+&apos; for copying the value from the cell above.
- - Standard selection and copy/paste operations.</source>
-        <translation type="vanished">Questa è la vista della tabella del database. Puoi eseguire le seguenti operazioni:
- - Inizia a scrivere per modificare i valori.
- - Doppio-click su qualsiasi valore per modificarne il contenuto nella finestra di editor della cella.
- - Alt+Del per eliminare il contenuto della cella e portarlo a NULL.
- - Ctrl+&quot; per duplicare il valore corrente.
- - Ctrl+&apos; per copiare il valore dalla cella soprastante.
- - Operazioni di selezione e copia/incolla.</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll to the beginning&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scorri all&apos;ìinizio&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates to the beginning in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cliccare questo pulsante scorre la vista all&apos;inizio della tabella.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>|&lt;</source>
-        <translation type="vanished">|&lt;</translation>
-    </message>
-    <message>
-        <source>Scroll one page upwards</source>
-        <translation type="vanished">Scorri di una pagina in su</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates one page of records upwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cliccando questo pulsante la vista scorre le righe di una pagina verso l&apos;inizio della tabella.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>0 - 0 of 0</source>
-        <translation type="vanished">0 - 0 di 0</translation>
-    </message>
-    <message>
-        <source>Scroll one page downwards</source>
-        <translation type="vanished">Scorri di una pagina in giù</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates one page of records downwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cliccando questo pulsante la vista scorre le righe di una pagina verso il fondo della tabella.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>Scroll to the end</source>
-        <translation type="vanished">Scorri alla fine</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Clicking this button navigates up to the end in the table view above.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Cliccando questo pulsante la vista scorre al fondo della tabella.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&gt;|</source>
-        <translation type="vanished">&gt;|</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click here to jump to the specified record&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicca qui per saltare alla riga specificata&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button is used to navigate to the record number specified in the Go to area.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Questo pulsante è utilizzato per navigare alla riga impostata nell&apos;area &quot;Vai a&quot;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Go to:</source>
-        <translation type="vanished">Vai a:</translation>
-    </message>
-    <message>
-        <source>Enter record number to browse</source>
-        <translation type="vanished">Inserisci il numero di riga a cui scorrere</translation>
-    </message>
-    <message>
-        <source>Type a record number in this area and click the Go to: button to display the record in the database view</source>
-        <translation type="vanished">Inserisci un numero in quest&apos;area e clicca sul pul pulsante &quot;Vai a&quot; per visualizzare la riga selezionata</translation>
-    </message>
-    <message>
-        <source>1</source>
-        <translation type="vanished">1</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="146"/>
         <location filename="../MainWindow.ui" line="149"/>
         <source>Edit Pragmas</source>
         <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
         <translation>Modifica Pragmas</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_case_sensitive_like&quot;&gt;Case Sensitive Like&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_case_sensitive_like&quot;&gt;Case Sensitive Like&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="256"/>
@@ -3488,14 +3053,6 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
         <translation>Cos&apos;è &amp;questo?</translation>
     </message>
     <message>
-        <source>Refresh the data in the selected table</source>
-        <translation type="vanished">Aggiorna i dati della tabella selezionata</translation>
-    </message>
-    <message>
-        <source>Print currently browsed table data</source>
-        <translation type="vanished">Stampa i dati della tabella attualmente in esplorazione</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1448"/>
         <source>Shift+F1</source>
         <translation></translation>
@@ -3526,21 +3083,9 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
         <translation>&amp;Esegui SQL</translation>
     </message>
     <message>
-        <source>Execute all/selected SQL [F5, Ctrl+Return, Ctrl+R]</source>
-        <translation type="vanished">Esegue tutti/selezionati SQL [F5, Ctrl+Invio, Ctrl+R]</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1494"/>
         <source>This button executes the currently selected SQL statements. If no text is selected, all SQL statements are executed.</source>
         <translation>Questo pulsante esegue gli statement SQL evidenziati. Se nessun testo è selezionato, tutti gli statement SQL vengono eseguiti.</translation>
-    </message>
-    <message>
-        <source>Open SQL file</source>
-        <translation type="vanished">Apri file SQL</translation>
-    </message>
-    <message>
-        <source>This button opens a file containing SQL statements and loads it in a new editor tab</source>
-        <translation type="vanished">Questo pulsante apre un file contenente statement SQL e lo carica in una nuova scheda dell&apos;editor</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1518"/>
@@ -3559,10 +3104,6 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
         <location filename="../MainWindow.ui" line="1548"/>
         <source>Execute current line</source>
         <translation>Esegue la riga corrente</translation>
-    </message>
-    <message>
-        <source>Execute current line [Shift+F5]</source>
-        <translation type="vanished">Esegue la riga corrente [Shift+F5]</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1551"/>
@@ -3610,18 +3151,10 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
         <translation>&amp;Dona su Patreon...</translation>
     </message>
     <message>
-        <source>Sa&amp;ve Project...</source>
-        <translation type="vanished">Sal&amp;va Progetto...</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1640"/>
         <location filename="../MainWindow.ui" line="1643"/>
         <source>Save the current session to a file</source>
         <translation>Salva la sessione correte in un file</translation>
-    </message>
-    <message>
-        <source>This button lets you save all the settings associated to the open DB to a DB4S project file</source>
-        <translation type="vanished">Questo pulsante ti permette di salvare tutte le impostazioni associate al DB aperto in un file di progetto di DB4S</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1658"/>
@@ -3633,10 +3166,6 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
         <location filename="../MainWindow.ui" line="1664"/>
         <source>Load a working session from a file</source>
         <translation>Carica una sessione di lavoro da file</translation>
-    </message>
-    <message>
-        <source>This button lets you open a DB4S project file</source>
-        <translation type="vanished">Questo pulsante ti permette di aprire un file di progetto DB4S</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1682"/>
@@ -3686,38 +3215,6 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
         <translation>Copia lo statement CREATE negli appunti</translation>
     </message>
     <message>
-        <source>Edit display format</source>
-        <translation type="vanished">Modifica formato di visualizzazione</translation>
-    </message>
-    <message>
-        <source>Edit the display format of the data in this column</source>
-        <translation type="vanished">Modifica il formato di visualizzazione dei dati in questa colonna</translation>
-    </message>
-    <message>
-        <source>Show rowid column</source>
-        <translation type="vanished">Mostra colonna rowid</translation>
-    </message>
-    <message>
-        <source>Toggle the visibility of the rowid column</source>
-        <translation type="vanished">Mostra/nasconde la colonna rowid</translation>
-    </message>
-    <message>
-        <source>Set encoding</source>
-        <translation type="vanished">Imposta codifica</translation>
-    </message>
-    <message>
-        <source>Change the encoding of the text in the table cells</source>
-        <translation type="vanished">Modifica la codifica dle testo nelle celle della tabella</translation>
-    </message>
-    <message>
-        <source>Set encoding for all tables</source>
-        <translation type="vanished">Imposta la codifica per tutte le tabelle</translation>
-    </message>
-    <message>
-        <source>Change the default encoding assumed for all tables in the database</source>
-        <translation type="vanished">Modifica il valore predefinito di codifica per tutte le tabelle del database</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1763"/>
         <source>SQLCipher &amp;FAQ</source>
         <translation>SLQCipher &amp;FAQ</translation>
@@ -3738,10 +3235,6 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
         <translation>Esporta una o più tabelle in un file JSON</translation>
     </message>
     <message>
-        <source>Refresh</source>
-        <translation type="vanished">Aggiorna</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1786"/>
         <source>Open Data&amp;base Read Only...</source>
         <translation>Apri un Data&amp;base in Sola Lettura...</translation>
@@ -3750,14 +3243,6 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
         <location filename="../MainWindow.ui" line="1789"/>
         <source>Open an existing database file in read only mode</source>
         <translation>Apre un file databse esistente in modalità sola lettura</translation>
-    </message>
-    <message>
-        <source>Unlock view editing</source>
-        <translation type="vanished">Sblocca la modifica della vista</translation>
-    </message>
-    <message>
-        <source>This unlocks the current view for editing. However, you will need appropriate triggers for editing.</source>
-        <translation type="vanished">Sblocca la vista corrente per modificarla. Per poterla modificare avrai comunque bisogno degli appropriati trigger.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1810"/>
@@ -3781,10 +3266,6 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
         <translation>Trova testo nell&apos;editor SQL</translation>
     </message>
     <message>
-        <source>Find text in SQL editor [Ctrl+F]</source>
-        <translation type="vanished">Trova testo nell&apos;editor SQL [Ctrl+F]</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1837"/>
         <source>This button opens the search bar of the editor</source>
         <translation>Questo pulsante apre la barra di ricerca dell&apos;editor</translation>
@@ -3799,10 +3280,6 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
         <location filename="../MainWindow.ui" line="1861"/>
         <source>Find or replace text in SQL editor</source>
         <translation>Trova e/o sostituisci testo nell&apos;editor SQL</translation>
-    </message>
-    <message>
-        <source>Find or replace text in SQL editor [Ctrl+H]</source>
-        <translation type="vanished">Trova e/o sostituisce il testo nell&apos;editor SQL [Ctrl+H]</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1864"/>
@@ -3830,22 +3307,6 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
         <translation>Salva come vista</translation>
     </message>
     <message>
-        <source>Hide column(s)</source>
-        <translation type="vanished">Nascondi colonna(e)</translation>
-    </message>
-    <message>
-        <source>Hide selected column(s)</source>
-        <translation type="vanished">Nasconde la(e) colonna(e) selezionata(e)</translation>
-    </message>
-    <message>
-        <source>Show all columns</source>
-        <translation type="vanished">Mostra tutte le colonne</translation>
-    </message>
-    <message>
-        <source>Show all columns that were hidden</source>
-        <translation type="vanished">Mostra tutte le colonne nascoste</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1901"/>
         <source>Shows or hides the Project toolbar.</source>
         <translation>Mostra o nasconde la barra degli strumenti di progetto.</translation>
@@ -3854,34 +3315,6 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
         <location filename="../MainWindow.ui" line="1916"/>
         <source>Extra DB Toolbar</source>
         <translation>Barra degli strumenti DB estesa</translation>
-    </message>
-    <message>
-        <source>Export the filtered data to CSV</source>
-        <translation type="vanished">Esporta i dati filtrati in CSV</translation>
-    </message>
-    <message>
-        <source>This button exports the data of the browsed table as currently displayed (after filters, display formats and order column) as a CSV file.</source>
-        <translation type="vanished">Questo pulsante esporta i dati della tabella così come visualizzati (applicando  filtri, formati e ordine delle colonne) in un file CSV.</translation>
-    </message>
-    <message>
-        <source>Save the current filter, sort column and display formats as a view</source>
-        <translation type="vanished">Salva il filtro corrente, ordine colonne e formati dati come vista</translation>
-    </message>
-    <message>
-        <source>This button saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.</source>
-        <translation type="vanished">Questo pulsante salva le impostazioni della tabella visualizzata (filtri, formati e ordine colonne) in una vista SQL che puoi successivamente navigare o utilizzare in statement SQL.</translation>
-    </message>
-    <message>
-        <source>Insert Values...</source>
-        <translation type="vanished">Inserisci Valori...</translation>
-    </message>
-    <message>
-        <source>Open a dialog for inserting values in a new record</source>
-        <translation type="vanished">Apre una finestra per l&apos;inermento di valori all&apos;interno di un nuovo record</translation>
-    </message>
-    <message>
-        <source>Insert new record using default values in browsed table</source>
-        <translation type="vanished">Inserisce un nuovo record utilizzando i valori di default della tabella</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1942"/>
@@ -3967,17 +3400,9 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
         <translation>Stampa</translation>
     </message>
     <message>
-        <source>Print text from current SQL editor tab [Ctrl+P]</source>
-        <translation type="vanished">Stampa il testo della scheda editor SQL [Ctrl+P]</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="2026"/>
         <source>Open a dialog for printing the text in the current SQL editor tab</source>
         <translation>Apre una finetra per la stampa del testo nella scheda dell&apos;editor SQL</translation>
-    </message>
-    <message>
-        <source>Print the structure of the opened database [Ctrl+P]</source>
-        <translation type="vanished">Stampa la struttura del database aperto [Ctrl+P]</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2053"/>
@@ -4034,10 +3459,6 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
         <location filename="../MainWindow.cpp" line="331"/>
         <source>Alt+0</source>
         <translation></translation>
-    </message>
-    <message>
-        <source>Close current SQL tab</source>
-        <translation type="vanished">Chiudi il tab SQL attuale</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="380"/>
@@ -4098,58 +3519,6 @@ Motivo: %1</translation>
         <location filename="../MainWindow.cpp" line="603"/>
         <source>In-Memory database</source>
         <translation>Database In-Memoria</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n row(s)</source>
-        <translation type="vanished">
-            <numerusform>%n righe</numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>, %n column(s)</source>
-        <translation type="vanished">
-            <numerusform>, %n colonna(e)</numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>. Sum: %1; Average: %2; Min: %3; Max: %4</source>
-        <translation type="vanished">. Somma: %1; Media: %2; Min: %3; Max: %4</translation>
-    </message>
-    <message>
-        <source>You are still executing SQL statements. When closing the database now the execution will be stopped. maybe leaving the database in an incosistent state. Are you sure you want to close the database?</source>
-        <translation type="vanished">Sto ancora eseguendo degli SQL. Se chiudi ora il database l&apos;esecuzione verrà terminata lasciando potenzialmente il database in uno stato inconsistente. Sei sicuro di voler chiudere il database?</translation>
-    </message>
-    <message>
-        <source>Do you want to save the changes made to the project file %1?</source>
-        <translation type="vanished">Vuoi salvare le modifiche fatte al file di progetto %1?</translation>
-    </message>
-    <message>
-        <source>Error deleting record:
-%1</source>
-        <translation type="vanished">Errore eliminando le righe:
-%1</translation>
-    </message>
-    <message>
-        <source>Please select a record first</source>
-        <translation type="vanished">Si prega di selezionare prima un record</translation>
-    </message>
-    <message>
-        <source>determining row count...</source>
-        <translation type="vanished">determino il numero di righe...</translation>
-    </message>
-    <message>
-        <source>%1 - %2 of &gt;= %3</source>
-        <translation type="vanished">%1 - %2 di &gt;= %3</translation>
-    </message>
-    <message>
-        <source>%1 - %2 of %3</source>
-        <translation type="vanished">%1 - %2 di %3</translation>
-    </message>
-    <message>
-        <source>There is no database opened. Please open or create a new database file.</source>
-        <translation type="vanished">Non c&apos;è un database aperto. Si prega di aprire o creare un nuovo file di database.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="843"/>
@@ -4320,14 +3689,6 @@ Sei sicuro di voler salvare il database?</translation>
         <translation>Il valore non è un URL valida o nome file: %1</translation>
     </message>
     <message>
-        <source>-- At line %1:
-%3
--- Result: %2</source>
-        <translation type="vanished">-- Alla riga %1:
-%3
--- Risultato: %2</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.cpp" line="1224"/>
         <source>Setting PRAGMA values or vacuuming will commit your current transaction.
 Are you sure?</source>
@@ -4345,46 +3706,14 @@ Sei sicuro?</translation>
         <translation>Esecuzione completata senza errori.</translation>
     </message>
     <message>
-        <source>Extensions(*.so *.dylib *.dll);;All files(*)</source>
-        <translation type="vanished">Estensioni(*.so *.dylib *.dll);;Tutti i files(*)</translation>
-    </message>
-    <message>
-        <source>Execution aborted by user</source>
-        <translation type="vanished">Esecuzione terminata dall&apos;utente</translation>
-    </message>
-    <message>
-        <source>executing query</source>
-        <translation type="vanished">query in esecuzione</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.cpp" line="1217"/>
         <source>%1 rows returned in %2ms</source>
         <translation>%1 righe ritornate in %2ms</translation>
     </message>
     <message>
-        <source>, %1 rows affected</source>
-        <translation type="vanished">, %1 righe modificate</translation>
-    </message>
-    <message>
-        <source>query executed successfully. Took %1ms%2</source>
-        <translation type="vanished">query eseguita con successo. Impiegati %1ms%2</translation>
-    </message>
-    <message>
-        <source>-- At line %1:
-%4
--- Result: %3</source>
-        <translation type="vanished">-- Alla riga %1:
-%4
--- Risultato: %3</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.cpp" line="1305"/>
         <source>Choose text files</source>
         <translation>Seleziona i file di testo</translation>
-    </message>
-    <message>
-        <source>Text files(*.csv *.txt);;All files(*)</source>
-        <translation type="vanished">File di testo(*.csv *.txt);;Tutti i files(*)</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1379"/>
@@ -4551,10 +3880,6 @@ Se rispondi di no proveremo ad importare i dati del file SQL all&apos;interno de
         <translation>Modifica Tabella</translation>
     </message>
     <message>
-        <source>&amp;%1 %2</source>
-        <translation type="vanished">&amp;%1 %2</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.cpp" line="1835"/>
         <source>Setting PRAGMA values will commit your current transaction.
 Are you sure?</source>
@@ -4565,10 +3890,6 @@ Sei sicuro?</translation>
         <location filename="../MainWindow.cpp" line="1890"/>
         <source>Do you want to save the changes made to SQL tabs in a new project file?</source>
         <translation>Vuoi salvare le modifiche effettuate alle schede SQL in un nuovo file di progetto?</translation>
-    </message>
-    <message>
-        <source>Do you want to save the changes made to SQL tabs in the project file %1?</source>
-        <translation type="vanished">Vuoi salvare le modifiche fatte alle schede SQL nel file di progetto %1?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1911"/>
@@ -4586,14 +3907,6 @@ Sei sicuro?</translation>
         <translation>Selezionare il file SQL da aprire</translation>
     </message>
     <message>
-        <source>Couldn&apos;t read file: %1.</source>
-        <translation type="vanished">Impossibile leggere il file: %1.</translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t save file: %1.</source>
-        <translation type="vanished">Impossibile salvare il file: %1.</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.cpp" line="2076"/>
         <source>Select file name</source>
         <translation>Seleziona il nome del file</translation>
@@ -4602,10 +3915,6 @@ Sei sicuro?</translation>
         <location filename="../MainWindow.cpp" line="2108"/>
         <source>Select extension file</source>
         <translation>Seleziona l&apos;estensione del file</translation>
-    </message>
-    <message>
-        <source>Extensions(*.so *.dll);;All files(*)</source>
-        <translation type="vanished">Estensioni(*.so *.dll);;Tutti i files(*)</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2115"/>
@@ -4661,36 +3970,6 @@ Reason: %1</source>
 Motivo: %1</translation>
     </message>
     <message>
-        <source>Duplicate records</source>
-        <translation type="vanished">Duplica i records</translation>
-    </message>
-    <message>
-        <source>Duplicate record</source>
-        <translation type="vanished">Duplica il record</translation>
-    </message>
-    <message>
-        <source>Please choose a new encoding for all tables.</source>
-        <translation type="vanished">Si prega di scegliere una nuova codifica per tutte le tabelle.</translation>
-    </message>
-    <message>
-        <source>Please choose a new encoding for this table.</source>
-        <translation type="vanished">Si prega di scegliere una nuova codifica per questa tabella.</translation>
-    </message>
-    <message>
-        <source>%1
-Leave the field empty for using the database encoding.</source>
-        <translation type="vanished">%1
-Lasciare il campo vuoto per utilizzare la codifica del database.</translation>
-    </message>
-    <message>
-        <source>This encoding is either not valid or not supported.</source>
-        <translation type="vanished">Questa codifica non è valida o non è supportata.</translation>
-    </message>
-    <message>
-        <source>Please enter a pseudo-primary key in order to enable editing on this view. This should be the name of a unique column in the view.</source>
-        <translation type="vanished">Si prega d&apos;inserire una pseudo-chiave primaria in modo da abilitare le modifiche su questa vista. Deve corrispondere al nome di una colonna univoca nella vista.</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.cpp" line="3106"/>
         <source>Collation needed! Proceed?</source>
         <translation>Necessario confronto! Procedo?</translation>
@@ -4733,14 +4012,6 @@ Crea un backup!</translation>
         <location filename="../MainWindow.cpp" line="3186"/>
         <source>Error creating view: %1</source>
         <translation>Errore nella creazione della vista: %1</translation>
-    </message>
-    <message>
-        <source>There is no filter set for this table. View will not be created.</source>
-        <translation type="vanished">Non c&apos;è filtro impostato per questa tabella. La vista non sarà creata.</translation>
-    </message>
-    <message>
-        <source>Delete Records</source>
-        <translation type="vanished">Elimina i Records</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3194"/>
@@ -5261,10 +4532,6 @@ Attenzione: non sono ancora stati recuperati tutti i dati dalla tabella a causa 
         <translation>&amp;Dimensione blocco di prefetch</translation>
     </message>
     <message>
-        <source>Advanced</source>
-        <translation type="vanished">Avanzate</translation>
-    </message>
-    <message>
         <location filename="../PreferencesDialog.ui" line="697"/>
         <source>SQ&amp;L to execute after opening database</source>
         <translation>SQ&amp;L da eseguire dopo aver aperto il database</translation>
@@ -5326,10 +4593,6 @@ Può essere impostato a 0 per disabilitare le funzionalità.</translation>
 Can be set to 0 for disabling completion.</source>
         <translation>Questo è il numero massimo di righe in una tabella per abilitare il completamento dei valori basandosi su quelli attualmente nella colonna.
 Può essere impostato a 0 per disabilitare il completamento.</translation>
-    </message>
-    <message>
-        <source>Row count threshold for completion</source>
-        <translation type="vanished">Numero massimo di righe per l&apos;autocompletamento</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="857"/>
@@ -5757,10 +5020,6 @@ Può essere impostato a 0 per disabilitare il completamento.</translation>
         <translation>Seleziona il file d&apos;estensione</translation>
     </message>
     <message>
-        <source>Extensions(*.so *.dll);;All files(*)</source>
-        <translation type="vanished">Estensioni(*.so *.dll);;Tutti i files(*)</translation>
-    </message>
-    <message>
         <location filename="../PreferencesDialog.cpp" line="400"/>
         <source>Extensions(*.so *.dylib *.dll);;All files(*)</source>
         <translation>Estensioni(*.so *.dylib *.dll);;Tutti i files(*)</translation>
@@ -5980,22 +5239,6 @@ Tutte le tue preferenze andranno perse e verranno utilizzati i valori predefinit
         <source>Justify</source>
         <translation>Giustificato</translation>
     </message>
-    <message>
-        <source>Name</source>
-        <translation type="vanished">Nome</translation>
-    </message>
-    <message>
-        <source>Commit</source>
-        <translation type="vanished">Commit</translation>
-    </message>
-    <message>
-        <source>Last modified</source>
-        <translation type="vanished">Ultima modifca</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="vanished">Dimensione</translation>
-    </message>
 </context>
 <context>
     <name>RemoteCommitsModel</name>
@@ -6038,50 +5281,6 @@ Tutte le tue preferenze andranno perse e verranno utilizzati i valori predefinit
 <context>
     <name>RemoteDatabase</name>
     <message>
-        <source>Error when connecting to %1.
-%2</source>
-        <translation type="vanished">Errore nella connessione a %1.
-%2</translation>
-    </message>
-    <message>
-        <source>Error opening remote file at %1.
-%2</source>
-        <translation type="vanished">Errore aprendo il file remoto a %1.
-%2</translation>
-    </message>
-    <message>
-        <source>Error: Invalid client certificate specified.</source>
-        <translation type="vanished">Errore: specificato certificato invalido per il client.</translation>
-    </message>
-    <message>
-        <source>Please enter the passphrase for this client certificate in order to authenticate.</source>
-        <translation type="vanished">Si prega d&apos;inserire la passphrase per questo certificato di client in modo da permetterne l&apos;autenticazione.</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Annulla</translation>
-    </message>
-    <message>
-        <source>Uploading remote database to
-%1</source>
-        <translation type="vanished">Carico il database remoto in
-%1</translation>
-    </message>
-    <message>
-        <source>Downloading remote database from
-%1</source>
-        <translation type="vanished">Scarico il database remoto da
-%1</translation>
-    </message>
-    <message>
-        <source>Error: The network is not accessible.</source>
-        <translation type="vanished">Errore: Rete non disponibile.</translation>
-    </message>
-    <message>
-        <source>Error: Cannot open the file for sending.</source>
-        <translation type="vanished">Errore:Impossibile aprire il file per l&apos;invio.</translation>
-    </message>
-    <message>
         <location filename="../RemoteDatabase.cpp" line="56"/>
         <source>Error opening local databases list.
 %1</source>
@@ -6095,10 +5294,6 @@ Tutte le tue preferenze andranno perse e verranno utilizzati i valori predefinit
         <translation>Errore nella creazione della lista di database locale.
 %1</translation>
     </message>
-    <message>
-        <source>The remote database has been updated since the last checkout. Do you want to update the local database to the newest version? Note that this discards any changes you have made locally! If you don&apos;t want to lose local changes, click No to open the local version.</source>
-        <translation type="vanished">Il database remoto è stato aggiornato dall&apos;ultima verifica. Vuoi aggiornare la copia locale del database alla versione più recente? Nota che questo eliminerà tutte le modifiche che puoi aver effettuato localmente! Se non vuoi perdere le modifiche locali, clicca su &quot;No&quot; per aprire la versione locale.</translation>
-    </message>
 </context>
 <context>
     <name>RemoteDock</name>
@@ -6111,14 +5306,6 @@ Tutte le tue preferenze andranno perse e verranno utilizzati i valori predefinit
         <location filename="../RemoteDock.ui" line="29"/>
         <source>Identity</source>
         <translation>Identità</translation>
-    </message>
-    <message>
-        <source>Connect to the remote server using the currently selected identity. The correct server is taken from the identity as well.</source>
-        <translation type="vanished">Collega al server remoto utilizzando l&apos;identità selezionata. Il server corretto è scelto anch&apos;esso dall&apos;identità.</translation>
-    </message>
-    <message>
-        <source>Go</source>
-        <translation type="vanished">Vai</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="59"/>
@@ -6276,10 +5463,6 @@ Tutte le tue preferenze andranno perse e verranno utilizzati i valori predefinit
         <translation>Carica questo database come nuovo invio</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB4S. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to create a DB4S certificate (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB4S Preferences. Click the button to add a new certificate to DB4S and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In questo pannello si possono aggiungere a DB4S i database remoti del sitoi dbhub.io.Prima hai bisogno di un&apos;identità:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Accedi al sito dbhub.io (usa le tue credenziali GitHub o quelle che preferisci)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Clicca il pulsante per creare un certificato DB4S (sarà la tua identità). Questo ti creerà un file di certificato (salvandolo sul tuo disco locale).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Vai al tab &quot;Remoto&quot; nelle preferenze di DB4S. Clicca il pulsante per aggiungere un nuovo certificato a DB4S e scegli il file di certificato appena scaricato.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Ora il pannello &quot;Remoto&quot; mostra la tua identità e puoi aggiungere dei database remoti.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../RemoteDock.ui" line="317"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;You are currently using a built-in, read-only identity. For uploading your database, you need to configure and use your DBHub.io account.&lt;/p&gt;&lt;p&gt;No DBHub.io account yet? &lt;a href=&quot;https://dbhub.io/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Create one now&lt;/span&gt;&lt;/a&gt; and import your certificate &lt;a href=&quot;#preferences&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;here&lt;/span&gt;&lt;/a&gt; to share your databases.&lt;/p&gt;&lt;p&gt;For online help visit &lt;a href=&quot;https://dbhub.io/about&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;here&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Stai attulamente utilizzando un profilo interno in sola lettura. Per caricare i tuoi database, devi configurare e usare un account DBHub.io.&lt;/p&gt;&lt;p&gt;Non hai ancora un account DBHub.io? &lt;a href=&quot;https://dbhub.io/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Creane uno adesso&lt;/span&gt;&lt;/a&gt; e importa il tuo certificato &lt;a href=&quot;#preferences&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;qui&lt;/span&gt;&lt;/a&gt; per condividere i tuoi databases.&lt;/p&gt;&lt;p&gt;Per aiuto online clicca &lt;a href=&quot;https://dbhub.io/about&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;qui&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -6288,10 +5471,6 @@ Tutte le tue preferenze andranno perse e verranno utilizzati i valori predefinit
         <location filename="../RemoteDock.ui" line="327"/>
         <source>Back</source>
         <translation>Indietro</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;No DBHub.io account yet? &lt;a href=&quot;https://dbhub.io/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Create one now&lt;/span&gt;&lt;/a&gt; and import your certificate &lt;a href=&quot;#preferences&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;here&lt;/span&gt;&lt;/a&gt; to share your databases.&lt;/p&gt;&lt;p&gt;For online help visit &lt;a href=&quot;https://dbhub.io/about&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;here&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Non hai ancora un account DBHub.io? &lt;a href=&quot;https://dbhub.io/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Creane uno adesso&lt;/span&gt;&lt;/a&gt; e importa il tuo certificato &lt;a href=&quot;#preferences&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;qui&lt;/span&gt;&lt;/a&gt; per condividere i tuoi database.&lt;/p&gt;&lt;p&gt;Per aiuto online vai &lt;a href=&quot;https://dbhub.io/about&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;qui&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="151"/>
@@ -6426,10 +5605,6 @@ Sei sicuro di voler proseguire?</translation>
         <source>Default Branch: </source>
         <translation>Ramo di default: </translation>
     </message>
-    <message>
-        <source>bytes</source>
-        <translation type="vanished">bytes</translation>
-    </message>
 </context>
 <context>
     <name>RemoteNetwork</name>
@@ -6504,18 +5679,6 @@ Sei sicuro di voler proseguire?</translation>
         <translation>Messaggio di commit</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Oxygen-Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Oxygen-Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../RemotePushDialog.ui" line="63"/>
         <source>Database licence</source>
         <translation>Licenza database</translation>
@@ -6554,10 +5717,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../RemotePushDialog.cpp" line="78"/>
         <source>Use with care. This can cause remote commits to be deleted.</source>
         <translation>Usa con cautela. Questo può eliminare dei commit remoti.</translation>
-    </message>
-    <message>
-        <source>Unspecified</source>
-        <translation type="vanished">Non specificato</translation>
     </message>
 </context>
 <context>
@@ -7054,41 +6213,42 @@ L&apos;utilizzo di questa funzione dev&apos;essere permesso tramite le Preferenz
 <context>
     <name>SqliteTableModel</name>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="34"/>
+        <location filename="../sqlitetablemodel.cpp" line="36"/>
         <source>reading rows</source>
         <translation>leggo le righe</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="337"/>
+        <location filename="../sqlitetablemodel.cpp" line="339"/>
         <source>loading...</source>
         <translation>caricamento...</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="402"/>
+        <location filename="../sqlitetablemodel.cpp" line="404"/>
         <source>References %1(%2)
 Hold %3Shift and click to jump there</source>
         <translation>Riferimenti %1(%2)
 Tieni premuto %3Shift e clicca per saltare lì</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="555"/>
+        <location filename="../sqlitetablemodel.cpp" line="557"/>
         <source>Error changing data:
 %1</source>
         <translation>Errore nella modifica dei dati:
 %1</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="796"/>
+        <location filename="../sqlitetablemodel.cpp" line="798"/>
         <source>retrieving list of columns</source>
         <translation>recupero la lista delle colonne</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="1024"/>
+        <location filename="../sqlitetablemodel.cpp" line="1026"/>
         <source>Fetching data...</source>
         <translation>Recupero dati...</translation>
     </message>
     <message>
-        <location filename="../sqlitetablemodel.cpp" line="1025"/>
+        <location filename="../sqlitetablemodel.cpp" line="1027"/>
+        <location filename="../sqlitetablemodel.cpp" line="1029"/>
         <source>Cancel</source>
         <translation>Annulla</translation>
     </message>
@@ -7298,10 +6458,6 @@ Tieni premuto %3Shift e clicca per saltare lì</translation>
         <location filename="../TableBrowser.ui" line="523"/>
         <source>Scroll to the end</source>
         <translation>Scorri alla fine</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Clicking this button navigates up to the end in the table view above.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Cliccando questo pulsante la vista scorre al fondo della tabella.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="526"/>
@@ -7716,10 +6872,6 @@ Tieni premuto %3Shift e clicca per saltare lì</translation>
         <location filename="../TableBrowser.ui" line="1054"/>
         <source>Replace text in cells</source>
         <translation>Sostituisci testo nelle celle</translation>
-    </message>
-    <message>
-        <source>Filter in all columns</source>
-        <translation type="vanished">Filtra in tutte le colonne</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="42"/>
