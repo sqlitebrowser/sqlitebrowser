@@ -583,7 +583,7 @@ Indien enige andere opties voor dit databasebestand gewijzigd waren dan dien je 
     <message>
         <location filename="../sqlitedb.cpp" line="288"/>
         <source>This database has already been attached. Its schema name is &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Deze database is al gekoppeld. Diens schemanaam is &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="302"/>
@@ -960,7 +960,7 @@ Fouten worden aangegeven met rode kronkelige onderstreping.</translation>
     <message>
         <location filename="../EditDialog.ui" line="287"/>
         <source>Open preview dialog for printing displayed image</source>
-        <translation type="unfinished">Open voorvertoningsdialoogvenster om getoonde afbeelding af te drukken</translation>
+        <translation>Open voorvertoningsdialoogvenster om getoonde afbeelding af te drukken</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="302"/>
@@ -1211,7 +1211,7 @@ Fouten worden aangegeven met rode kronkelige onderstreping.</translation>
     <message>
         <location filename="../EditDialog.cpp" line="1246"/>
         <source>The data has been saved to a temporary file and has been opened with the default application. You can now edit the file and, when you are ready, apply the saved new data to the cell editor or cancel any changes.</source>
-        <translation type="unfinished"></translation>
+        <translation>De gegevens zijn in een tijdelijk bestand opgeslagen en is geopend in de standaard applicatie. Je kunt het bestand nu bewerken en, wanneer je klaar bent, de opgeslagen nieuwe gegevens toepassen op de cel of de wijzingen annuleren.</translation>
     </message>
 </context>
 <context>
@@ -1388,7 +1388,7 @@ Fouten worden aangegeven met rode kronkelige onderstreping.</translation>
     <message>
         <location filename="../EditTableDialog.ui" line="286"/>
         <source>Primary key</source>
-        <translation type="unfinished"></translation>
+        <translation>Primaire sleutel</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="291"/>
@@ -2930,7 +2930,7 @@ Je kunt SQL-instructies vanuit de Schema-kolom naar de SQL-bewerker of naar ande
     <message>
         <location filename="../MainWindow.ui" line="1473"/>
         <source>Open &amp;tab</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Tabblad openen</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1476"/>
@@ -3854,12 +3854,12 @@ Weet je het zeker?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="1933"/>
         <source>The statements in this tab are still executing. Closing the tab will stop the execution. This might leave the database in an inconsistent state. Are you sure you want to close the tab?</source>
-        <translation type="unfinished"></translation>
+        <translation>De instructies in dit tabblad worden nog steeds uitgevoerd. Het sluiten van het tabblad zal het uitvoeren stoppen en de database daarmee mogelijk inconsistent maken. Weet je zeker dat je het tabblad wilt sluiten?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2602"/>
         <source>This project file is using an old file format because it was created using DB Browser for SQLite version 3.10 or lower. Loading this file format is still fully supported but we advice you to convert all your project files to the new file format because support for older formats might be dropped at some point in the future. You can convert your files by simply opening and re-saving them.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dit projectbestand gebruikt een oud bestandsformaat, omdat het gemaakt is met versie 3.10 of lager van DB-browser voor SQLite. Dit bestandsformaat wordt nog steeds volledig ondersteund, maar we adviseren je om al jouw projectbestanden om te zetten naar het nieuwe bestandsformaat, omdat oudere formaten in de toekomst mogelijk niet meer ondersteund zullen worden. Je kunt je bestanden omzetten door ze simpelweg te openen en opnieuw op te slaan.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2018"/>
@@ -6213,7 +6213,7 @@ het resultaat. Of NULL, indien er geen vorige rij bestaat (omdat de huidige rij 
         <location filename="../SqlUiLexer.cpp" line="128"/>
         <source>(expr,offset) If the offset argument is provided, then it must be a non-negative integer. In this case the value returned is the result of evaluating expr against the row offset rows before the current row within the partition. If offset is 0, then expr is evaluated against the current row. If there is no row offset rows before the current row, NULL is returned.</source>
         <translation>(expr,verschuiving) Indien het argument verschuiving wordt meegegeven dan dient
-deze een niet-negatief geheel getal te zijn. In dat geval wordt de expressie expr tegen
+dit een niet-negatief geheel getal te zijn. In dat geval wordt de expressie expr tegen
 de rij met afstand verschuiving voor de huidige rij in de partitie geëvalueerd en het
 resultaat retourneerd. Als verschuiving 0 is dan wordt tegen de huidige rij geëvalueerd.
 Indien er geen rij met afstand verschuiving voor de huidige rij bestaat, wordt NULL geretourneerd.</translation>
@@ -6235,7 +6235,7 @@ het resultaat. Of NULL, indien er geen volgende rij bestaat (omdat de huidige ri
         <location filename="../SqlUiLexer.cpp" line="131"/>
         <source>(expr,offset) If the offset argument is provided, then it must be a non-negative integer. In this case the value returned is the result of evaluating expr against the row offset rows after the current row within the partition. If offset is 0, then expr is evaluated against the current row. If there is no row offset rows after the current row, NULL is returned.</source>
         <translation>(expr,verschuiving) Indien het argument verschuiving wordt meegegeven dan
-dient deze een niet-negatief geheel getal te zijn. In dat geval wordt de expressie
+dient dit een niet-negatief geheel getal te zijn. In dat geval wordt de expressie
 expr tegen de rij met afstand verschuiving na de huidige rij in de partitie
 geëvalueerd en het resultaat retourneerd. Als verschuiving 0 is dan wordt tegen
 de huidige rij geëvalueerd. Indien er geen rij met afstand verschuiving na de
