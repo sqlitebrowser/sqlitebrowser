@@ -4461,8 +4461,8 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="85"/>
-        <location filename="../PreferencesDialog.ui" line="1804"/>
-        <location filename="../PreferencesDialog.ui" line="1924"/>
+        <location filename="../PreferencesDialog.ui" line="1811"/>
+        <location filename="../PreferencesDialog.ui" line="1931"/>
         <source>...</source>
         <translation>...</translation>
     </message>
@@ -4477,251 +4477,262 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation>언어(&amp;G)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="568"/>
+        <location filename="../PreferencesDialog.ui" line="358"/>
         <source>Automatic &amp;updates</source>
         <translation>자동 업데이트(&amp;U)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="541"/>
-        <location filename="../PreferencesDialog.ui" line="558"/>
-        <location filename="../PreferencesDialog.ui" line="578"/>
-        <location filename="../PreferencesDialog.ui" line="683"/>
+        <location filename="../PreferencesDialog.ui" line="348"/>
+        <location filename="../PreferencesDialog.ui" line="368"/>
+        <location filename="../PreferencesDialog.ui" line="599"/>
         <location filename="../PreferencesDialog.ui" line="690"/>
-        <location filename="../PreferencesDialog.ui" line="1543"/>
-        <location filename="../PreferencesDialog.ui" line="1563"/>
-        <location filename="../PreferencesDialog.ui" line="1583"/>
-        <location filename="../PreferencesDialog.ui" line="1603"/>
-        <location filename="../PreferencesDialog.ui" line="1623"/>
+        <location filename="../PreferencesDialog.ui" line="697"/>
+        <location filename="../PreferencesDialog.ui" line="1550"/>
+        <location filename="../PreferencesDialog.ui" line="1570"/>
+        <location filename="../PreferencesDialog.ui" line="1590"/>
+        <location filename="../PreferencesDialog.ui" line="1610"/>
+        <location filename="../PreferencesDialog.ui" line="1630"/>
         <source>enabled</source>
         <translation>사용하기</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="548"/>
+        <location filename="../PreferencesDialog.ui" line="338"/>
         <source>Show remote options</source>
         <translation>원격 옵션 보기</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="603"/>
+        <location filename="../PreferencesDialog.ui" line="610"/>
         <source>&amp;Database</source>
         <translation>데이터베이스(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="614"/>
+        <location filename="../PreferencesDialog.ui" line="621"/>
         <source>Database &amp;encoding</source>
         <translation>데이터베이스 인코딩(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="624"/>
+        <location filename="../PreferencesDialog.ui" line="631"/>
         <source>Open databases with foreign keys enabled.</source>
         <translation>외래키 기능을 사용하며 데이터베이스를 엽니다.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="627"/>
+        <location filename="../PreferencesDialog.ui" line="634"/>
         <source>&amp;Foreign keys</source>
         <translation>외래키(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="757"/>
+        <location filename="../PreferencesDialog.ui" line="764"/>
         <source>Data &amp;Browser</source>
         <translation>데이터 보기(&amp;B)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="637"/>
+        <location filename="../PreferencesDialog.ui" line="644"/>
         <source>Remove line breaks in schema &amp;view</source>
         <translation>스키마 뷰에서 개행을 제거합니다(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="647"/>
+        <location filename="../PreferencesDialog.ui" line="654"/>
         <source>Prefetch block si&amp;ze</source>
         <translation>프리패치 할 블럭 크기(&amp;Z)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="728"/>
+        <location filename="../PreferencesDialog.ui" line="735"/>
         <source>SQ&amp;L to execute after opening database</source>
         <translation>데이터베이스를 연 후 SQL을 실행(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="657"/>
+        <location filename="../PreferencesDialog.ui" line="664"/>
         <source>Default field type</source>
         <translation>기본 필드 타입</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="765"/>
+        <location filename="../PreferencesDialog.ui" line="772"/>
         <source>Font</source>
         <translation>글꼴</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="771"/>
+        <location filename="../PreferencesDialog.ui" line="778"/>
         <source>&amp;Font</source>
         <translation>글꼴(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="800"/>
+        <location filename="../PreferencesDialog.ui" line="807"/>
         <source>Content</source>
         <translation>내용</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="806"/>
+        <location filename="../PreferencesDialog.ui" line="813"/>
         <source>Symbol limit in cell</source>
         <translation>셀 안 심볼 한계</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="917"/>
+        <location filename="../PreferencesDialog.ui" line="924"/>
         <source>NULL</source>
         <translation>NULL</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="927"/>
+        <location filename="../PreferencesDialog.ui" line="934"/>
         <source>Regular</source>
         <translation>보통</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="907"/>
+        <location filename="../PreferencesDialog.ui" line="914"/>
         <source>Binary</source>
         <translation>바이너리</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1345"/>
+        <location filename="../PreferencesDialog.ui" line="1352"/>
         <source>Background</source>
         <translation>배경색</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1134"/>
+        <location filename="../PreferencesDialog.ui" line="1141"/>
         <source>Filters</source>
         <translation>필터</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="209"/>
+        <location filename="../PreferencesDialog.ui" line="128"/>
         <source>Toolbar style</source>
         <translation>툴바 스타일</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="254"/>
-        <location filename="../PreferencesDialog.ui" line="317"/>
-        <location filename="../PreferencesDialog.ui" line="380"/>
-        <location filename="../PreferencesDialog.ui" line="443"/>
-        <location filename="../PreferencesDialog.ui" line="506"/>
+        <location filename="../PreferencesDialog.ui" line="160"/>
+        <location filename="../PreferencesDialog.ui" line="210"/>
+        <location filename="../PreferencesDialog.ui" line="260"/>
+        <location filename="../PreferencesDialog.ui" line="310"/>
+        <location filename="../PreferencesDialog.ui" line="466"/>
         <source>Only display the icon</source>
         <translation>아이콘만 표시</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="259"/>
-        <location filename="../PreferencesDialog.ui" line="322"/>
-        <location filename="../PreferencesDialog.ui" line="385"/>
-        <location filename="../PreferencesDialog.ui" line="448"/>
-        <location filename="../PreferencesDialog.ui" line="511"/>
+        <location filename="../PreferencesDialog.ui" line="165"/>
+        <location filename="../PreferencesDialog.ui" line="215"/>
+        <location filename="../PreferencesDialog.ui" line="265"/>
+        <location filename="../PreferencesDialog.ui" line="315"/>
+        <location filename="../PreferencesDialog.ui" line="471"/>
         <source>Only display the text</source>
         <translation>텍스트만 표시</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="264"/>
-        <location filename="../PreferencesDialog.ui" line="327"/>
-        <location filename="../PreferencesDialog.ui" line="390"/>
-        <location filename="../PreferencesDialog.ui" line="453"/>
-        <location filename="../PreferencesDialog.ui" line="516"/>
+        <location filename="../PreferencesDialog.ui" line="170"/>
+        <location filename="../PreferencesDialog.ui" line="220"/>
+        <location filename="../PreferencesDialog.ui" line="270"/>
+        <location filename="../PreferencesDialog.ui" line="320"/>
+        <location filename="../PreferencesDialog.ui" line="476"/>
         <source>The text appears beside the icon</source>
         <translation>텍스트를 아이콘 옆으로</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="269"/>
-        <location filename="../PreferencesDialog.ui" line="332"/>
-        <location filename="../PreferencesDialog.ui" line="395"/>
-        <location filename="../PreferencesDialog.ui" line="458"/>
-        <location filename="../PreferencesDialog.ui" line="521"/>
+        <location filename="../PreferencesDialog.ui" line="175"/>
+        <location filename="../PreferencesDialog.ui" line="225"/>
+        <location filename="../PreferencesDialog.ui" line="275"/>
+        <location filename="../PreferencesDialog.ui" line="325"/>
+        <location filename="../PreferencesDialog.ui" line="481"/>
         <source>The text appears under the icon</source>
         <translation>텍스트가 아이콘 아래로</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="274"/>
-        <location filename="../PreferencesDialog.ui" line="337"/>
-        <location filename="../PreferencesDialog.ui" line="400"/>
-        <location filename="../PreferencesDialog.ui" line="463"/>
-        <location filename="../PreferencesDialog.ui" line="526"/>
+        <location filename="../PreferencesDialog.ui" line="180"/>
+        <location filename="../PreferencesDialog.ui" line="230"/>
+        <location filename="../PreferencesDialog.ui" line="280"/>
+        <location filename="../PreferencesDialog.ui" line="330"/>
+        <location filename="../PreferencesDialog.ui" line="486"/>
         <source>Follow the style</source>
         <translation>애플리케이션 스타일 적용</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="585"/>
+        <location filename="../PreferencesDialog.ui" line="375"/>
         <source>DB file extensions</source>
         <translation>데이터베이스 파일 확장자</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="595"/>
+        <location filename="../PreferencesDialog.ui" line="385"/>
         <source>Manage</source>
         <translation>관리</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="219"/>
+        <location filename="../PreferencesDialog.ui" line="392"/>
         <source>Main Window</source>
         <translation>메인 창</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="282"/>
+        <location filename="../PreferencesDialog.ui" line="405"/>
         <source>Database Structure</source>
         <translation>데이터베이스 구조</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="345"/>
+        <location filename="../PreferencesDialog.ui" line="418"/>
         <source>Browse Data</source>
         <translation>데이터 보기</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="408"/>
+        <location filename="../PreferencesDialog.ui" line="431"/>
         <source>Execute SQL</source>
         <translation>SQL 실행</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="471"/>
+        <location filename="../PreferencesDialog.ui" line="494"/>
         <source>Edit Database Cell</source>
         <translation>데이터베이스 셀 수정</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="144"/>
+        <location filename="../PreferencesDialog.ui" line="513"/>
         <source>When this value is changed, all the other color preferences are also set to matching colors.</source>
         <translation>이 값이 변경되면 다른 모든 색상들도 이에 일치하는 색상으로 설정됩니다.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="163"/>
+        <location filename="../PreferencesDialog.ui" line="532"/>
         <source>Follow the desktop style</source>
         <translation>데스크톱 스타일 적용</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="168"/>
+        <location filename="../PreferencesDialog.ui" line="537"/>
         <source>Dark style</source>
         <translation>어둡게</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="128"/>
+        <location filename="../PreferencesDialog.ui" line="545"/>
         <source>Application style</source>
         <translation>애플리케이션 스타일</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="176"/>
+        <location filename="../PreferencesDialog.ui" line="555"/>
         <source>This sets the font size for all UI elements which do not have their own font size option.</source>
         <translation>개별 글꼴 크기 옵션이 없는 모든 UI 요소의 글꼴 크기를 설정합니다.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="179"/>
+        <location filename="../PreferencesDialog.ui" line="558"/>
         <source>Font size</source>
         <translation>글꼴 크기</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="680"/>
+        <location filename="../PreferencesDialog.ui" line="588"/>
+        <source>Prompt to save SQL tabs
+in new project file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.ui" line="596"/>
+        <source>If this is turned on, then changes to the SQL editor generate a save a project confirmation dialog when closing the SQL editor tab.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.ui" line="687"/>
         <source>When enabled, the line breaks in the Schema column of the DB Structure tab, dock and printed output are removed.</source>
         <translation>활성화되면 DB 구조 탭의 스키마 열에서 줄 바꿈, 독 및 인쇄된 출력이 제거됩니다.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="711"/>
+        <location filename="../PreferencesDialog.ui" line="718"/>
         <source>Database structure font size</source>
         <translation>데이터베이스 구조 글꼴 크기</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="784"/>
+        <location filename="../PreferencesDialog.ui" line="791"/>
         <source>Font si&amp;ze</source>
         <translation>글꼴 크기(&amp;Z)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="838"/>
+        <location filename="../PreferencesDialog.ui" line="845"/>
         <source>This is the maximum number of items allowed for some computationally expensive functionalities to be enabled:
 Maximum number of rows in a table for enabling the value completion based on current values in the column.
 Maximum number of indexes in a selection for calculating sum and average.
@@ -4732,520 +4743,515 @@ Can be set to 0 for disabling the functionalities.</source>
 기능 비활성화하려면 0으로 설정하세요.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="844"/>
+        <location filename="../PreferencesDialog.ui" line="851"/>
         <source>This is the maximum number of rows in a table for enabling the value completion based on current values in the column.
 Can be set to 0 for disabling completion.</source>
         <translation>열의 현재 값을 기반으로 값 완성을 활성화하기 위한 테이블의 최대 행 수입니다.
 비활성화하려면 0으로 설정하세요.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1610"/>
+        <location filename="../PreferencesDialog.ui" line="1617"/>
         <source>Close button on tabs</source>
         <translation>탭에 닫기 버튼</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1620"/>
+        <location filename="../PreferencesDialog.ui" line="1627"/>
         <source>If enabled, SQL editor tabs will have a close button. In any case, you can use the contextual menu or the keyboard shortcut to close them.</source>
         <translation>활성화되면 SQL 편집기 탭에 닫기 버튼이 생깁니다. 어떤 경우든 컨텍스트 메뉴나 키보드 단축기를 사용하여 닫을 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1933"/>
+        <location filename="../PreferencesDialog.ui" line="1940"/>
         <source>Proxy</source>
         <translation>프록시</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1940"/>
+        <location filename="../PreferencesDialog.ui" line="1947"/>
         <source>Configure</source>
         <translation>설정</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="888"/>
+        <location filename="../PreferencesDialog.ui" line="895"/>
         <source>Field display</source>
         <translation>필드 출력</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="192"/>
+        <location filename="../PreferencesDialog.ui" line="571"/>
         <source>Max Recent Files</source>
         <translation>최근 연 파일 목록 최대값</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="534"/>
-        <source>Do NOT ask &apos;Save Project&apos;</source>
-        <translation>&apos;프로젝트 저장&apos;을 묻지 않음</translation>
-    </message>
-    <message>
-        <location filename="../PreferencesDialog.ui" line="894"/>
+        <location filename="../PreferencesDialog.ui" line="901"/>
         <source>Displayed &amp;text</source>
         <translation>출력 텍스트(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="940"/>
-        <location filename="../PreferencesDialog.ui" line="969"/>
-        <location filename="../PreferencesDialog.ui" line="998"/>
-        <location filename="../PreferencesDialog.ui" line="1017"/>
-        <location filename="../PreferencesDialog.ui" line="1036"/>
-        <location filename="../PreferencesDialog.ui" line="1055"/>
+        <location filename="../PreferencesDialog.ui" line="947"/>
+        <location filename="../PreferencesDialog.ui" line="976"/>
+        <location filename="../PreferencesDialog.ui" line="1005"/>
+        <location filename="../PreferencesDialog.ui" line="1024"/>
+        <location filename="../PreferencesDialog.ui" line="1043"/>
+        <location filename="../PreferencesDialog.ui" line="1062"/>
         <source>Click to set this color</source>
         <translation>선택하여 이 색상을 선택하세요</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="956"/>
+        <location filename="../PreferencesDialog.ui" line="963"/>
         <source>Text color</source>
         <translation>글자색</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="985"/>
+        <location filename="../PreferencesDialog.ui" line="992"/>
         <source>Background color</source>
         <translation>배경색</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1100"/>
+        <location filename="../PreferencesDialog.ui" line="1107"/>
         <source>Preview only (N/A)</source>
         <translation>미리보기만 출력 (N/A)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1147"/>
+        <location filename="../PreferencesDialog.ui" line="1154"/>
         <source>Escape character</source>
         <translation>이스케이프 문자</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1157"/>
+        <location filename="../PreferencesDialog.ui" line="1164"/>
         <source>Delay time (&amp;ms)</source>
         <translation>대기 시간 (&amp;ms)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1167"/>
+        <location filename="../PreferencesDialog.ui" line="1174"/>
         <source>Set the waiting time before a new filter value is applied. Can be set to 0 for disabling waiting.</source>
         <translation>새로운 필터 값을 적용하기 전에 대기할 시간을 설정하세요. 대기 시간을 0으로 하면 대기하지 않습니다.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1183"/>
+        <location filename="../PreferencesDialog.ui" line="1190"/>
         <source>&amp;SQL</source>
         <translation>SQL(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1196"/>
+        <location filename="../PreferencesDialog.ui" line="1203"/>
         <source>Settings name</source>
         <translation>설정 이름</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1201"/>
+        <location filename="../PreferencesDialog.ui" line="1208"/>
         <source>Context</source>
         <translation>내용</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1206"/>
+        <location filename="../PreferencesDialog.ui" line="1213"/>
         <source>Colour</source>
         <translation>색깔</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1211"/>
+        <location filename="../PreferencesDialog.ui" line="1218"/>
         <source>Bold</source>
         <translation>진하게</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1216"/>
+        <location filename="../PreferencesDialog.ui" line="1223"/>
         <source>Italic</source>
         <translation>기울게</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1221"/>
+        <location filename="../PreferencesDialog.ui" line="1228"/>
         <source>Underline</source>
         <translation>밑줄</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1229"/>
+        <location filename="../PreferencesDialog.ui" line="1236"/>
         <source>Keyword</source>
         <translation>키워드</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1249"/>
+        <location filename="../PreferencesDialog.ui" line="1256"/>
         <source>Function</source>
         <translation>함수</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1257"/>
+        <location filename="../PreferencesDialog.ui" line="1264"/>
         <source>Table</source>
         <translation>테이블</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1277"/>
+        <location filename="../PreferencesDialog.ui" line="1284"/>
         <source>Comment</source>
         <translation>주석</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1297"/>
+        <location filename="../PreferencesDialog.ui" line="1304"/>
         <source>Identifier</source>
         <translation>식별자</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1317"/>
+        <location filename="../PreferencesDialog.ui" line="1324"/>
         <source>String</source>
         <translation>문자열</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1337"/>
+        <location filename="../PreferencesDialog.ui" line="1344"/>
         <source>Current line</source>
         <translation>현재 행</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1358"/>
+        <location filename="../PreferencesDialog.ui" line="1365"/>
         <source>selected_bg</source>
         <translation>선택된 배경색</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1361"/>
+        <location filename="../PreferencesDialog.ui" line="1368"/>
         <source>Selection background</source>
         <translation>선택된 배경색</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1366"/>
+        <location filename="../PreferencesDialog.ui" line="1373"/>
         <source>selected_fg</source>
         <translation>선택된 전경색</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1369"/>
+        <location filename="../PreferencesDialog.ui" line="1376"/>
         <source>Selection foreground</source>
         <translation>선택된 전경색</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1374"/>
+        <location filename="../PreferencesDialog.ui" line="1381"/>
         <source>highlight</source>
         <translation>강조</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1377"/>
+        <location filename="../PreferencesDialog.ui" line="1384"/>
         <source>Highlight</source>
         <translation>강조</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1402"/>
+        <location filename="../PreferencesDialog.ui" line="1409"/>
         <source>SQL &amp;editor font size</source>
         <translation>SQL 에디터 글꼴 크기(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1441"/>
+        <location filename="../PreferencesDialog.ui" line="1448"/>
         <source>Tab size</source>
         <translation>탭 크기</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1464"/>
+        <location filename="../PreferencesDialog.ui" line="1471"/>
         <source>&amp;Wrap lines</source>
         <translation>줄 바꿈(&amp;W)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1475"/>
+        <location filename="../PreferencesDialog.ui" line="1482"/>
         <source>Never</source>
         <translation>사용 안 함</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1480"/>
+        <location filename="../PreferencesDialog.ui" line="1487"/>
         <source>At word boundaries</source>
         <translation>단어 경계에서</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1485"/>
+        <location filename="../PreferencesDialog.ui" line="1492"/>
         <source>At character boundaries</source>
         <translation>문자 경계에서</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1490"/>
+        <location filename="../PreferencesDialog.ui" line="1497"/>
         <source>At whitespace boundaries</source>
         <translation>공백에서</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1498"/>
+        <location filename="../PreferencesDialog.ui" line="1505"/>
         <source>&amp;Quotes for identifiers</source>
         <translation>식별자 구분 기호(&amp;Q)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1508"/>
+        <location filename="../PreferencesDialog.ui" line="1515"/>
         <source>Choose the quoting mechanism used by the application for identifiers in SQL code.</source>
         <translation>SQL 코드의 식별자에 대해 응용 프로그램에서 사용하는 기호를 선택합니다.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1515"/>
+        <location filename="../PreferencesDialog.ui" line="1522"/>
         <source>&quot;Double quotes&quot; - Standard SQL (recommended)</source>
         <translation>&quot;큰 따옴표&quot; - SQL 표준 (권장됨)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1520"/>
+        <location filename="../PreferencesDialog.ui" line="1527"/>
         <source>`Grave accents` - Traditional MySQL quotes</source>
         <translation>&apos;작은 따옴표&apos; - MySQL 전통 인용 부호</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1525"/>
+        <location filename="../PreferencesDialog.ui" line="1532"/>
         <source>[Square brackets] - Traditional MS SQL Server quotes</source>
         <translation>[대괄호] - MS SQL 전통 인용 부호</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1550"/>
+        <location filename="../PreferencesDialog.ui" line="1557"/>
         <source>Keywords in &amp;UPPER CASE</source>
         <translation>키워드에 대해 대문자(&amp;U)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1560"/>
+        <location filename="../PreferencesDialog.ui" line="1567"/>
         <source>When set, the SQL keywords are completed in UPPER CASE letters.</source>
         <translation>활성화되면 SQL 키워드가 대문자로 완성됩니다.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1580"/>
+        <location filename="../PreferencesDialog.ui" line="1587"/>
         <source>When set, the SQL code lines that caused errors during the last execution are highlighted and the results frame indicates the error in the background</source>
         <translation>활성화되면 마지막 실행 중에 오류를 일으킨 SQL 코드 줄이 강조 표시되고 결과 프레임은 백그라운드에 오류를 나타냅니다</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1709"/>
+        <location filename="../PreferencesDialog.ui" line="1716"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite provides an SQL function for loading extensions from a shared library file. Activate this if you want to use the &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt; function from SQL code.&lt;/p&gt;&lt;p&gt;For security reasons, extension loading is turned off by default and must be enabled through this setting. You can always load extensions through the GUI, even though this option is disabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite는 공유 라이브러리 파일에서 확장을 로드하기 위한 SQL 함수를 제공합니다. SQL 코드에서 &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt; 함수를 사용하려면 이 기능을 활성화하십시오.&lt;/p&gt;&lt;p&gt;보안 상의 이유로 확장 로드는 기본적으로 비활성화되어 있으며 설정을 통해 활성화해야 합니다. 이 옵션이 비활성화되어 있더라도 항상 GUI를 통해 확장을 로드할 수 있습니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1712"/>
+        <location filename="../PreferencesDialog.ui" line="1719"/>
         <source>Allow loading extensions from SQL code</source>
         <translation>SQL 코드에서 확장기능을 불러오는 것을 허용</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1720"/>
+        <location filename="../PreferencesDialog.ui" line="1727"/>
         <source>Remote</source>
         <translation>원격</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1831"/>
+        <location filename="../PreferencesDialog.ui" line="1838"/>
         <source>CA certificates</source>
         <translation>CA 인증서</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1760"/>
-        <location filename="../PreferencesDialog.ui" line="1856"/>
+        <location filename="../PreferencesDialog.ui" line="1767"/>
+        <location filename="../PreferencesDialog.ui" line="1863"/>
         <source>Subject CN</source>
         <translation>제목 CN</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1859"/>
+        <location filename="../PreferencesDialog.ui" line="1866"/>
         <source>Common Name</source>
         <translation>일반 이름</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1864"/>
+        <location filename="../PreferencesDialog.ui" line="1871"/>
         <source>Subject O</source>
         <translation>제목 O</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1867"/>
+        <location filename="../PreferencesDialog.ui" line="1874"/>
         <source>Organization</source>
         <translation>기관</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1776"/>
-        <location filename="../PreferencesDialog.ui" line="1872"/>
+        <location filename="../PreferencesDialog.ui" line="1783"/>
+        <location filename="../PreferencesDialog.ui" line="1879"/>
         <source>Valid from</source>
         <translation>유효날짜(시작)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1781"/>
-        <location filename="../PreferencesDialog.ui" line="1877"/>
+        <location filename="../PreferencesDialog.ui" line="1788"/>
+        <location filename="../PreferencesDialog.ui" line="1884"/>
         <source>Valid to</source>
         <translation>유효날짜(끝)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1786"/>
-        <location filename="../PreferencesDialog.ui" line="1882"/>
+        <location filename="../PreferencesDialog.ui" line="1793"/>
+        <location filename="../PreferencesDialog.ui" line="1889"/>
         <source>Serial number</source>
         <translation>시리얼 넘버</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1730"/>
+        <location filename="../PreferencesDialog.ui" line="1737"/>
         <source>Your certificates</source>
         <translation>당신의 인증서</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1755"/>
+        <location filename="../PreferencesDialog.ui" line="1762"/>
         <source>File</source>
         <translation>파일</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1763"/>
+        <location filename="../PreferencesDialog.ui" line="1770"/>
         <source>Subject Common Name</source>
         <translation>주제 일반 이름</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1768"/>
+        <location filename="../PreferencesDialog.ui" line="1775"/>
         <source>Issuer CN</source>
         <translation>이슈 등록자 CN</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1771"/>
+        <location filename="../PreferencesDialog.ui" line="1778"/>
         <source>Issuer Common Name</source>
         <translation>이슈 등록자 일반 이름</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1896"/>
+        <location filename="../PreferencesDialog.ui" line="1903"/>
         <source>Clone databases into</source>
         <translation>데이터베이스 복제하기</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1387"/>
+        <location filename="../PreferencesDialog.ui" line="1394"/>
         <source>SQL editor &amp;font</source>
         <translation>SQL 편집기 글꼴(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1570"/>
+        <location filename="../PreferencesDialog.ui" line="1577"/>
         <source>Error indicators</source>
         <translation>에러 표시</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1590"/>
+        <location filename="../PreferencesDialog.ui" line="1597"/>
         <source>Hori&amp;zontal tiling</source>
         <translation>화면 수평 나누기(&amp;Z)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1600"/>
+        <location filename="../PreferencesDialog.ui" line="1607"/>
         <source>If enabled the SQL code editor and the result table view are shown side by side instead of one over the other.</source>
         <translation>활성화되면 SQL 코드 편집기와 결과 테이블 뷰가 나란히 표시됩니다.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1533"/>
+        <location filename="../PreferencesDialog.ui" line="1540"/>
         <source>Code co&amp;mpletion</source>
         <translation>코드 완성(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="858"/>
+        <location filename="../PreferencesDialog.ui" line="865"/>
         <source>Threshold for completion and calculation on selection</source>
         <translation>선택에 대한 완료 및 연산 임계 값</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="868"/>
+        <location filename="../PreferencesDialog.ui" line="875"/>
         <source>Show images in cell</source>
         <translation>셀에 이미지 표시</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="878"/>
+        <location filename="../PreferencesDialog.ui" line="885"/>
         <source>Enable this option to show a preview of BLOBs containing image data in the cells. This can affect the performance of the data browser, however.</source>
         <translation>셀에 이미지 데이터가 포함된 BLOB의 미리보기를 표시하려면 이 옵션을 활성화합니다. 그러나 이는 데이터 브라우저의 성능에 영향을 끼칠 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1353"/>
+        <location filename="../PreferencesDialog.ui" line="1360"/>
         <source>Foreground</source>
         <translation>전경색</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1424"/>
+        <location filename="../PreferencesDialog.ui" line="1431"/>
         <source>SQL &amp;results font size</source>
         <translation>SQL 결과 글꼴 크기(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1633"/>
+        <location filename="../PreferencesDialog.ui" line="1640"/>
         <source>&amp;Extensions</source>
         <translation>확장기능(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1639"/>
+        <location filename="../PreferencesDialog.ui" line="1646"/>
         <source>Select extensions to load for every database:</source>
         <translation>불러올 확장기능을 선택하세요(확장기능은 모든 데이터베이스에 반영됩니다):</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1660"/>
+        <location filename="../PreferencesDialog.ui" line="1667"/>
         <source>Add extension</source>
         <translation>확장기능 추가</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1671"/>
+        <location filename="../PreferencesDialog.ui" line="1678"/>
         <source>Remove extension</source>
         <translation>확장기능 제거</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1699"/>
+        <location filename="../PreferencesDialog.ui" line="1706"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;While supporting the REGEXP operator SQLite doesn&apos;t implement any regular expression&lt;br/&gt;algorithm but calls back the running application. DB Browser for SQLite implements this&lt;br/&gt;algorithm for you to let you use REGEXP out of the box. However, as there are multiple possible&lt;br/&gt;implementations of this and you might want to use another one, you&apos;re free to disable the&lt;br/&gt;application&apos;s implementation and load your own by using an extension. Requires restart of the application.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite에서는 기본적으로 정규 표현식 기능을 제공하지 않습니다만 애플리케이션을 실행하여 호출하는 것은 가능합니다. DB Browser for SQLite에서는 이 알고리즘을 박스 밖에서도 정규 표현식을 사용할 수 있도록 이 알고리즘을 구현해줍니다. 하지만 확장기능을 사용하여 외부에서 만든 알고리즘 구현을 사용하고자 한다면 DB Browser for SQLite에서 제공하는 구현 사용을 자유롭게 끌 수 있습니다. 이 기능은 애플리케이션을 재시작해야 합니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1702"/>
+        <location filename="../PreferencesDialog.ui" line="1709"/>
         <source>Disable Regular Expression extension</source>
         <translation>정규 표현식 확장기능 비활성화</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="54"/>
+        <location filename="../PreferencesDialog.ui" line="1962"/>
         <source>Export Settings</source>
         <translation>환경설정 내보내기</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="56"/>
+        <location filename="../PreferencesDialog.ui" line="1969"/>
         <source>Import Settings</source>
         <translation>환경설정 불러오기</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="73"/>
-        <location filename="../PreferencesDialog.cpp" line="655"/>
+        <location filename="../PreferencesDialog.cpp" line="71"/>
+        <location filename="../PreferencesDialog.cpp" line="653"/>
         <source>Choose a directory</source>
         <translation>디렉터리를 선택하세요</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="337"/>
-        <location filename="../PreferencesDialog.cpp" line="729"/>
+        <location filename="../PreferencesDialog.cpp" line="335"/>
+        <location filename="../PreferencesDialog.cpp" line="727"/>
         <source>The language will change after you restart the application.</source>
         <translation>언어 변경은 애플리케이션을 재시작해야 반영됩니다.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="416"/>
+        <location filename="../PreferencesDialog.cpp" line="414"/>
         <source>Select extension file</source>
         <translation>확장기능 파일을 선택하세요</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="417"/>
+        <location filename="../PreferencesDialog.cpp" line="415"/>
         <source>Extensions(*.so *.dylib *.dll);;All files(*)</source>
         <translation>확장기능(*.so *.dylib *dll);;모든 파일(*)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="581"/>
+        <location filename="../PreferencesDialog.cpp" line="579"/>
         <source>Import certificate file</source>
         <translation>인증서 파일 가져오기</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="589"/>
+        <location filename="../PreferencesDialog.cpp" line="587"/>
         <source>No certificates found in this file.</source>
         <translation>이 파일에는 인증서가 없습니다.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="606"/>
+        <location filename="../PreferencesDialog.cpp" line="604"/>
         <source>Are you sure you want do remove this certificate? All certificate data will be deleted from the application settings!</source>
         <translation>정말로 이 인증서를 삭제하겠습니까? 애플리케이션 설정에서 모든 증명 데이터가 삭제될 것입니다!</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="691"/>
+        <location filename="../PreferencesDialog.cpp" line="689"/>
         <source>Are you sure you want to clear all the saved settings?
 All your preferences will be lost and default values will be used.</source>
         <translation>저장된 모든 설정을 정말로 초기화하시겠습니까?
 모든 설정이 초기화되고 기본값으로 대체됩니다.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="709"/>
+        <location filename="../PreferencesDialog.cpp" line="707"/>
         <source>Save Settings File</source>
         <translation>환경설정을 내보낼 파일을 선택하세요</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="709"/>
-        <location filename="../PreferencesDialog.cpp" line="719"/>
+        <location filename="../PreferencesDialog.cpp" line="707"/>
+        <location filename="../PreferencesDialog.cpp" line="717"/>
         <source>Initialization File (*.ini)</source>
         <translation>환경설정 파일 (*.ini)</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="713"/>
+        <location filename="../PreferencesDialog.cpp" line="711"/>
         <source>The settings file has been saved in location :
 </source>
         <translation>환경설정 파일이 다음 경로에 저장되었습니다 :
 </translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="719"/>
+        <location filename="../PreferencesDialog.cpp" line="717"/>
         <source>Open Settings File</source>
         <translation>가져오려는 환경설정 파일을 선택하세요</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="726"/>
+        <location filename="../PreferencesDialog.cpp" line="724"/>
         <source>The settings file was loaded properly.</source>
         <translation>환경설정 파일을 정상적으로 불러 왔습니다.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="733"/>
+        <location filename="../PreferencesDialog.cpp" line="731"/>
         <source>The selected settings file is not a normal settings file.
 Please check again.</source>
         <translation>선택하신 환경설정 파일은 정상적인 환경설정 파일이 아닙니다.
