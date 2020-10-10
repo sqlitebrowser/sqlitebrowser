@@ -507,6 +507,10 @@ if(UNIX)
 	install(FILES src/icons/${PROJECT_NAME}.png
 		DESTINATION share/icons/hicolor/256x256/apps/)
 
+	install(FILES images/logo.svg
+		DESTINATION share/icons/hicolor/scalable/apps/
+		RENAME ${PROJECT_NAME}.svg)
+
 	install(FILES distri/${PROJECT_NAME}.desktop
 		DESTINATION share/applications/)
 
