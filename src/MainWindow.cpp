@@ -306,11 +306,10 @@ void MainWindow::init()
     // they are updated accordingly.
     connect(ui->mainTab, &QTabWidget::tabCloseRequested, this, &MainWindow::closeTab);
 
-    QAction* viewMenuPragmas = nullptr;
-
     // Add entries for toggling the visibility of main tabs
     for (QWidget* widget : {ui->structure, ui->browser, ui->pragmas, ui->query}) {
         QAction* action = ui->viewMenu->addAction(QIcon(":/icons/open_sql"), widget->accessibleName());
+        action->setObjectName(widget->accessibleName());
         action->setCheckable(true);
         action->setChecked(ui->mainTab->indexOf(widget) != -1);
         connect(action, &QAction::toggled, [=](bool show) { toggleTabVisible(widget, show); });
@@ -320,9 +319,6 @@ void MainWindow::init()
         connect(ui->mainTab, &QTabWidget::tabCloseRequested, [=](int /*index*/) {
                 action->setChecked(ui->mainTab->indexOf(widget) != -1);
             });
-
-        if (widget == ui->pragmas)
-            viewMenuPragmas = action;
     }
 
     ui->viewMenu->addSeparator();
@@ -342,8 +338,7 @@ void MainWindow::init()
     QAction* simplifyLayoutAction = layoutMenu->addAction(tr("Simplify Window Layout"));
     simplifyLayoutAction->setShortcut(QKeySequence(tr("Shift+Alt+0")));
     connect(simplifyLayoutAction, &QAction::triggered, [=]() {
-            toggleTabVisible(ui->pragmas, false);
-            viewMenuPragmas->setChecked(false);
+            ui->viewMenu->findChild<QAction *>(ui->pragmas->accessibleName())->activate(QAction::Trigger);
             ui->dockLog->hide();
             ui->dockPlot->hide();
             ui->dockSchema->hide();
