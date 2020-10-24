@@ -35,20 +35,28 @@
 	
 	static std::string unquote_text(std::string str, char quote_char)
 	{
-		if(str.front() != quote_char || str.back() != quote_char)
-			return str;
-
-		str = str.substr(1, str.size()-2);
-
-		std::string quote(2, quote_char);
-
-		size_t pos = 0;
-		while((pos = str.find(quote, pos)) != std::string::npos)
+		if(quote_char != '[')
 		{
-			str.erase(pos, 1);
-			pos += 1;               // Don't remove the other quote char too
+			if(str.front() != quote_char || str.back() != quote_char)
+				return str;
+
+			str = str.substr(1, str.size()-2);
+
+			std::string quote(2, quote_char);
+
+			size_t pos = 0;
+			while((pos = str.find(quote, pos)) != std::string::npos)
+			{
+				str.erase(pos, 1);
+				pos += 1;               // Don't remove the other quote char too
+			}
+			return str;
+		} else {
+			if(str.front() != '[' || str.back() != ']')
+				return str;
+
+			return str.substr(1, str.size()-2);
 		}
-		return str;
 	}
 }
 
