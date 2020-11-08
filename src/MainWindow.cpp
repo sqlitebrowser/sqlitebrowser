@@ -50,6 +50,7 @@
 #include <QPrinter>
 #include <QPrintPreviewDialog>
 #include <QPushButton>
+#include <QTemporaryFile>
 #include <QToolButton>
 
 #ifdef Q_OS_MACX //Needed only on macOS
@@ -1313,29 +1314,47 @@ void MainWindow::mainTabSelected(int /*tabindex*/)
 
 void MainWindow::importTableFromCSV()
 {
-    QStringList file_filter;
-    file_filter << FILE_FILTER_CSV
-                << FILE_FILTER_TSV
-                << FILE_FILTER_DSV
-                << FILE_FILTER_TXT
-                << FILE_FILTER_DAT
-                << FILE_FILTER_ALL;
-
-    QStringList wFiles = FileDialog::getOpenFileNames(
-                             OpenCSVFile,
-                             this,
-                             tr("Choose text files"),
-                             file_filter.join(";;"));
-
-    std::vector<QString> validFiles;
-    for(const auto& file : wFiles) {
-        if (QFile::exists(file))
-            validFiles.push_back(file);
-    }
-
-    if (!validFiles.empty())
+    // Are we importing from a file or from the clipboard?
+    if(sender() == ui->fileImportCSVAction)
     {
-        ImportCsvDialog dialog(validFiles, &db, this);
+        // Ask user to specify file(s)
+
+        QStringList file_filter;
+        file_filter << FILE_FILTER_CSV
+                    << FILE_FILTER_TSV
+                    << FILE_FILTER_DSV
+                    << FILE_FILTER_TXT
+                    << FILE_FILTER_DAT
+                    << FILE_FILTER_ALL;
+
+        QStringList wFiles = FileDialog::getOpenFileNames(
+                                 OpenCSVFile,
+                                 this,
+                                 tr("Choose text files"),
+                                 file_filter.join(";;"));
+
+        std::vector<QString> validFiles;
+        for(const auto& file : wFiles) {
+            if (QFile::exists(file))
+                validFiles.push_back(file);
+        }
+
+        if (!validFiles.empty())
+        {
+            ImportCsvDialog dialog(validFiles, &db, this);
+            if (dialog.exec())
+                refreshTableBrowsers();
+        }
+    } else if(sender() == ui->actionFileImportCsvClipboard) {
+        // Save clipboard content to temporary file
+
+        QTemporaryFile temp("csv_clipboard");
+        temp.open();
+        QClipboard* clipboard = QGuiApplication::clipboard();
+        temp.write(clipboard->text().toUtf8());
+        temp.close();
+
+        ImportCsvDialog dialog({temp.fileName()}, &db, this);
         if (dialog.exec())
             refreshTableBrowsers();
     }
@@ -1791,6 +1810,7 @@ void MainWindow::activateFields(bool enable)
     ui->fileExportCSVAction->setEnabled(enable);
     ui->fileExportSQLAction->setEnabled(enable);
     ui->fileImportCSVAction->setEnabled(enable && write);
+    ui->actionFileImportCsvClipboard->setEnabled(enable && write);
     ui->editCreateTableAction->setEnabled(enable && write);
     ui->editCreateIndexAction->setEnabled(enable && write);
     ui->actionDbPrint->setEnabled(enable);

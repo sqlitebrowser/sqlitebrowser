@@ -764,6 +764,7 @@ You can drag SQL statements from an object row and drop them into other applicat
      </property>
      <addaction name="fileImportSQLAction"/>
      <addaction name="fileImportCSVAction"/>
+     <addaction name="actionFileImportCsvClipboard"/>
     </widget>
     <widget class="QMenu" name="menuExport">
      <property name="title">
@@ -2219,6 +2220,14 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>Detach database file attached to the current database connection</string>
    </property>
   </action>
+  <action name="actionFileImportCsvClipboard">
+   <property name="text">
+    <string>Table from CSV data in Clipboard...</string>
+   </property>
+   <property name="toolTip">
+    <string>This treats the current clipboard contents as a CSV file and opens the same import wizard that is used for importing CSV data from a file.</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -3630,6 +3639,22 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>closeFiles()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionFileImportCsvClipboard</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>importTableFromCSV()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
