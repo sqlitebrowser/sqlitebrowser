@@ -234,7 +234,7 @@ void EditTableDialog::populateFields()
         // For the default value check if it is surrounded by parentheses and if that's the case
         // add a '=' character before the entire string to match the input format we're expecting
         // from the user when using functions in the default value field.
-        if(f.defaultValue().front() == '(' && f.defaultValue().back() == ')')
+        if(!f.defaultValue().empty() && f.defaultValue().front() == '(' && f.defaultValue().back() == ')')
             tbitem->setText(kDefault, "=" + QString::fromStdString(f.defaultValue()));
         else
             tbitem->setText(kDefault, QString::fromStdString(f.defaultValue()));
