@@ -3,17 +3,17 @@
 # Builds and uploads DB Browser for SQLite nightlies,
 # after updating the Homebrew dependencies
 
-QTVER="5.12.8"
+QTVER="5.15.1"
 BRANCH="master"
 BREW="/usr/local/bin/brew"
 BUILD_TYPE="release"
 DATE=`date "+%Y%m%d"`
 LOG="$HOME/db4s_nightlies/nightly-$DATE.log"
-LRELEASE="$HOME/Qt/${QTVER}/${QTVER}/clang_64/bin/lrelease"
-LUPDATE="$HOME/Qt/${QTVER}/${QTVER}/clang_64/bin/lupdate"
-MACDEPLOYQT="$HOME/Qt/${QTVER}/${QTVER}/clang_64/bin/macdeployqt"
+LRELEASE="$HOME/Qt/${QTVER}/clang_64/bin/lrelease"
+LUPDATE="$HOME/Qt/${QTVER}/clang_64/bin/lupdate"
+MACDEPLOYQT="$HOME/Qt/${QTVER}/clang_64/bin/macdeployqt"
 PATH="$PATH:/usr/local/bin:/usr/sbin"
-QMAKE="$HOME/Qt/${QTVER}/${QTVER}/clang_64/bin/qmake"
+QMAKE="$HOME/Qt/${QTVER}/clang_64/bin/qmake"
 
 # Add the sensitive values we don't want to store in this script file
 source ~/.db4s_secure
@@ -60,7 +60,7 @@ $BREW update >>$LOG 2>&1
 
 # Remove any existing Homebrew installed packages
 echo Remove any existing Homebrew installed packages >>$LOG 2>&1
-$BREW remove `$BREW list` --force >>$LOG 2>&1
+$BREW remove `$BREW list --formula` --force >>$LOG 2>&1
 
 # Install SQLite3 
 # Note - `brew tap sqlitebrowser/homebrew-sqlite3` needs to have been run at least once (manually) first
@@ -94,7 +94,7 @@ make -j3 >>$LOG 2>&1
 make -j3 >>$LOG 2>&1 # Seems to need a 2nd time now, due to language files needing initialisation or something
 
 # Include the depencencies in the .app bundle
-$MACDEPLOYQT src/DB\ Browser\ for\ SQLite.app -verbose=2 >>$LOG 2>&1
+$MACDEPLOYQT src/DB\ Browser\ for\ SQLite.app -verbose=2 -sign-for-notarization="${DEV_ID}">>$LOG 2>&1
 
 # Add the extensions to the .dmg
 echo Add the extensions to the .dmg >>$LOG 2>&1
@@ -114,32 +114,34 @@ cp LICENSE LICENSE-PLUGINS src/DB\ Browser\ for\ SQLite.app/Contents/Resources/ 
 # Copy the translation files to the .dmg
 mkdir -p src/DB\ Browser\ for\ SQLite.app/Contents/translations >>$LOG 2>&1
 for i in ar zh_CN zh_TW cs en fr de it ko pl pt ru es uk; do
-  cp -v $HOME/Qt/${QTVER}/${QTVER}/clang_64/translations/qt_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
-  cp -v $HOME/Qt/${QTVER}/${QTVER}/clang_64/translations/qtbase_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
-  cp -v $HOME/Qt/${QTVER}/${QTVER}/clang_64/translations/qtmultimedia_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
-  cp -v $HOME/Qt/${QTVER}/${QTVER}/clang_64/translations/qtquick1_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
-  cp -v $HOME/Qt/${QTVER}/${QTVER}/clang_64/translations/qtscript_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
-  cp -v $HOME/Qt/${QTVER}/${QTVER}/clang_64/translations/qtxmlpatterns_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
+  cp -v $HOME/Qt/${QTVER}/clang_64/translations/qt_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
+  cp -v $HOME/Qt/${QTVER}/clang_64/translations/qtbase_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
+  cp -v $HOME/Qt/${QTVER}/clang_64/translations/qtmultimedia_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
+  cp -v $HOME/Qt/${QTVER}/clang_64/translations/qtquick1_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
+  cp -v $HOME/Qt/${QTVER}/clang_64/translations/qtscript_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
+  cp -v $HOME/Qt/${QTVER}/clang_64/translations/qtxmlpatterns_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
 done
 
 # Unlock the local security keychain, so signing can be done
 security unlock-keychain -p "${KEYCHAIN_PASSWORD}" "${HOME}/Library/Keychains/login.keychain"
 
-# Sign the .app
-codesign --sign "${DEV_ID}" --verbose --deep --keychain "/Library/Keychains/System.keychain" src/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
+# Sign the added libraries
+codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp src/DB\ Browser\ for\ SQLite.app/Contents/Extensions/fileio.dylib >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp src/DB\ Browser\ for\ SQLite.app/Contents/Extensions/formats.dylib >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp src/DB\ Browser\ for\ SQLite.app/Contents/Extensions/math.dylib >>$LOG 2>&1
 
 # Make a .dmg file from the .app
 mv src/DB\ Browser\ for\ SQLite.app $HOME/appdmg/ >>$LOG 2>&1
 cd $HOME/appdmg >>$LOG 2>&1
 appdmg --quiet nightly.json DB\ Browser\ for\ SQLite_${DATE}.dmg >>$LOG 2>&1
-codesign --sign "${DEV_ID}" --verbose --deep --keychain "/Library/Keychains/System.keychain" DB\ Browser\ for\ SQLite_${DATE}.dmg >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --deep --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp DB\ Browser\ for\ SQLite_${DATE}.dmg >>$LOG 2>&1
 mv DB\ Browser\ for\ SQLite_${DATE}.dmg $HOME/db4s_nightlies/ >>$LOG 2>&1
 rm -rf $HOME/appdmg/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
 
 ### Build SQLCipher version
 # Remove any existing Homebrew installed packages
 echo Remove any existing Homebrew installed packages >>$LOG 2>&1
-$BREW remove `$BREW list` --force >>$LOG 2>&1
+$BREW remove `$BREW list --formula` --force >>$LOG 2>&1
 
 # Install SQLCipher
 echo Install SQLCipher >>$LOG 2>&1
@@ -169,8 +171,11 @@ fi
 make -j3 >>$LOG 2>&1
 make -j3 >>$LOG 2>&1 # Seems to need a 2nd time now, due to language files needing initialisation or something
 
+# Unlock the local security keychain, so signing can be done
+security unlock-keychain -p "${KEYCHAIN_PASSWORD}" "${HOME}/Library/Keychains/login.keychain"
+
 # Include the depencencies in the .app bundle
-$MACDEPLOYQT src/DB\ Browser\ for\ SQLite.app -verbose=2 >>$LOG 2>&1
+$MACDEPLOYQT src/DB\ Browser\ for\ SQLite.app -verbose=2 -sign-for-notarization="${DEV_ID}">>$LOG 2>&1
 
 # Add the extensions to the .dmg
 echo Add the extensions to the .dmg >>$LOG 2>&1
@@ -190,25 +195,27 @@ cp LICENSE LICENSE-PLUGINS src/DB\ Browser\ for\ SQLite.app/Contents/Resources/ 
 # Copy the translation files to the .dmg
 mkdir -p src/DB\ Browser\ for\ SQLite.app/Contents/translations >>$LOG 2>&1
 for i in ar zh_CN zh_TW cs en fr de it ko pl pt ru es uk; do
-  cp -v $HOME/Qt/${QTVER}/${QTVER}/clang_64/translations/qt_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
-  cp -v $HOME/Qt/${QTVER}/${QTVER}/clang_64/translations/qtbase_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
-  cp -v $HOME/Qt/${QTVER}/${QTVER}/clang_64/translations/qtmultimedia_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
-  cp -v $HOME/Qt/${QTVER}/${QTVER}/clang_64/translations/qtquick1_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
-  cp -v $HOME/Qt/${QTVER}/${QTVER}/clang_64/translations/qtscript_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
-  cp -v $HOME/Qt/${QTVER}/${QTVER}/clang_64/translations/qtxmlpatterns_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
+  cp -v $HOME/Qt/${QTVER}/clang_64/translations/qt_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
+  cp -v $HOME/Qt/${QTVER}/clang_64/translations/qtbase_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
+  cp -v $HOME/Qt/${QTVER}/clang_64/translations/qtmultimedia_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
+  cp -v $HOME/Qt/${QTVER}/clang_64/translations/qtquick1_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
+  cp -v $HOME/Qt/${QTVER}/clang_64/translations/qtscript_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
+  cp -v $HOME/Qt/${QTVER}/clang_64/translations/qtxmlpatterns_${i}.qm src/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
 done
 
 # Unlock the local security keychain, so signing can be done
 security unlock-keychain -p "${KEYCHAIN_PASSWORD}" "${HOME}/Library/Keychains/login.keychain"
 
 # Sign the .app
-codesign --sign "${DEV_ID}" --verbose --deep --keychain "/Library/Keychains/System.keychain" src/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp src/DB\ Browser\ for\ SQLite.app/Contents/Extensions/fileio.dylib >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp src/DB\ Browser\ for\ SQLite.app/Contents/Extensions/formats.dylib >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp src/DB\ Browser\ for\ SQLite.app/Contents/Extensions/math.dylib >>$LOG 2>&1
 
 # Make a .dmg file from the .app
 mv src/DB\ Browser\ for\ SQLite.app $HOME/appdmg/ >>$LOG 2>&1
 cd $HOME/appdmg >>$LOG 2>&1
 appdmg --quiet nightly.json DB\ Browser\ for\ SQLite-sqlcipher_${DATE}.dmg >>$LOG 2>&1
-codesign --sign "${DEV_ID}" --verbose --deep --keychain "/Library/Keychains/System.keychain" DB\ Browser\ for\ SQLite-sqlcipher_${DATE}.dmg >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --deep --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp DB\ Browser\ for\ SQLite-sqlcipher_${DATE}.dmg >>$LOG 2>&1
 mv DB\ Browser\ for\ SQLite-sqlcipher_${DATE}.dmg $HOME/db4s_nightlies/ >>$LOG 2>&1
 rm -rf $HOME/appdmg/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
 
