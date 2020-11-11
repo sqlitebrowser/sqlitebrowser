@@ -32,6 +32,13 @@ int main( int argc, char ** argv )
 {
 
 #ifdef Q_OS_WIN
+#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
+    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+    QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
+#endif
+#endif
+    QGuiApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
     // In Windows, there is no output to terminal for a graphical application, so we install
     // the output to message box, until the main window is shown or the application exits.
     qInstallMessageHandler(boxMessageOutput);

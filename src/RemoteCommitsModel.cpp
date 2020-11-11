@@ -83,7 +83,7 @@ void RemoteCommitsModel::refresh(const std::string& json_data, const std::string
             item->setFont(0, bold_font);
         }
 
-        parent_id = commit["parent"];
+        parent_id = commit["parent"].get<std::string>();
     }
 
     // Refresh the view
