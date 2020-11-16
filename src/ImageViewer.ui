@@ -104,7 +104,7 @@
        </property>
        <property name="icon">
         <iconset resource="icons/icons.qrc">
-         <normaloff>:/icons/monitor_link.png</normaloff>:/icons/monitor_link.png</iconset>
+         <normaloff>:/icons/monitor_link</normaloff>:/icons/monitor_link</iconset>
        </property>
        <property name="checkable">
         <bool>true</bool>
