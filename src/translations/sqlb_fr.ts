@@ -5570,7 +5570,7 @@ Please check again.</source>
     <message>
         <location filename="../RemoteDock.ui" line="173"/>
         <source>Current Database</source>
-        <translation>Bzse de DOnnées en cours</translation>
+        <translation>Base de Données en cours</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="204"/>
