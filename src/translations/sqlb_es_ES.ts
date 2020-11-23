@@ -719,7 +719,7 @@ Abortando ejecución%3.</translation>
     <message>
         <location filename="../sqlitedb.cpp" line="1555"/>
         <source>No table with name &apos;%1&apos; exists in schema &apos;%2&apos;.</source>
-        <translation>No existe una tabla con el nombre &apos;%1&apos; en el esquema &apos;%2&apos;.</translation>
+        <translation>No existe una tabla con el nombre «%1» en el esquema «%2».</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1565"/>
@@ -767,7 +767,7 @@ Abortando ejecución%3.</translation>
         <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.
 Message from database engine:
 %3</source>
-        <translation>Error renombrando la tabla &apos;%1&apos; a &apos;%2&apos;.
+        <translation>Error renombrando la tabla «%1» a «%2».
 Mensaje de la base de datos:
 %3</translation>
     </message>
@@ -2535,7 +2535,7 @@ x~y	Rango: valores entre x e y</translation>
     <message>
         <location filename="../ImportCsvDialog.cpp" line="697"/>
         <source>Importing the file &apos;%1&apos; took %2ms. Of this %3ms were spent in the row function.</source>
-        <translation>Importar el archivo &apos;%1&apos; tardó %2ms. De ellos, %3ms se gastaron en la función fila.</translation>
+        <translation>Importar el archivo «%1» tardó %2ms. De ellos, %3ms se gastaron en la función fila.</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.cpp" line="681"/>
@@ -3646,7 +3646,7 @@ Puede arrastrar sentencias SQL desde la columna Esquema y soltarlas en el editor
     <message>
         <location filename="../MainWindow.cpp" line="1931"/>
         <source>Do you want to save the changes made to SQL tabs in the project file &apos;%1&apos;?</source>
-        <translation>¿Quiere guardar los cambios hechos a las pestañas SQL en el archivo de proyecto &apos;%1&apos;?</translation>
+        <translation>¿Quiere guardar los cambios hechos a las pestañas SQL en el archivo de proyecto «%1»?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2058"/>
@@ -3663,7 +3663,7 @@ Si responde no se intentarán importar los datos del archivo SQL en la base de d
     <message>
         <location filename="../MainWindow.cpp" line="774"/>
         <source>Do you want to save the changes made to the project file &apos;%1&apos;?</source>
-        <translation>¿Quiere guardar los cambios hechos al archivo de proyecto &apos;%1&apos;?</translation>
+        <translation>¿Quiere guardar los cambios hechos al archivo de proyecto «%1»?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="956"/>
@@ -3778,12 +3778,12 @@ Si responde no se intentarán importar los datos del archivo SQL en la base de d
     <message>
         <location filename="../MainWindow.cpp" line="3597"/>
         <source>Opening &apos;%1&apos;...</source>
-        <translation>Abriendo &apos;%1&apos;...</translation>
+        <translation>Abriendo «%1»...</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3599"/>
         <source>There was an error opening &apos;%1&apos;...</source>
-        <translation>Hubo un error abriendo &apos;%1&apos;...</translation>
+        <translation>Hubo un error abriendo «%1»...</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3602"/>
@@ -3866,7 +3866,7 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="328"/>
         <source>Reset Window Layout</source>
-        <translation>Reiniciar la disposición de la ventana</translation>
+        <translation>Reiniciar disposición</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="329"/>
@@ -4078,7 +4078,7 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="3047"/>
         <source>Project saved to file &apos;%1&apos;</source>
-        <translation>Proyecto guardado en el archivo &apos;%1&apos;</translation>
+        <translation>Proyecto guardado en el archivo «%1»</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3263"/>
@@ -5626,7 +5626,7 @@ Please check again.</source>
     <message>
         <location filename="../RemoteDock.ui" line="441"/>
         <source>Use this to download a remote database for local editing using a URL as provided on the web page of the database.</source>
-        <translation>Use esto para descargar una base de datos remota para editarla localmente usando una URL provista por la página web de la base de datos.</translation>
+        <translation>Use esto para descargar una base de datos remota y editarla localmente usando una URL provista por la página web de la base de datos.</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="450"/>
@@ -5725,7 +5725,7 @@ Please enter the URL to clone from. You can generate this URL by
 clicking the &apos;Clone Database in DB4S&apos; button on the web page
 of the database.</source>
         <translation>Esto descarga una base de datos desde un servidor remoto para edición local.
-Por favor, introduzca la URL desde la que clonar. Usted puede obtener esta URL
+Por favor, introduzca la URL desde la que clonar. Puede obtener esta URL
 haciendo clic en el botón «Clonar base de datos en DB4S» de la página web
 de la base de datos.</translation>
     </message>
@@ -5748,8 +5748,8 @@ de la base de datos.</translation>
         <location filename="../RemoteDock.cpp" line="289"/>
         <source>You have modified the local clone of the database. Fetching this commit overrides these local changes.
 Are you sure you want to proceed?</source>
-        <translation>Usted ha realizado cambios en el clon local de la base de datos. Al obtener esta versión sobreescribiría los cambios locales.
-¿Está seguro de proceder?</translation>
+        <translation>Ha realizado cambios en el clon local de la base de datos. Al obtener esta versión sobreescribiría los cambios locales.
+¿Está seguro de querer proceder?</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="333"/>
