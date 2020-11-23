@@ -3442,12 +3442,12 @@ Vous pouvez faire glisser les instructions SQL d&apos;une ligne d&apos;objet et 
     <message>
         <location filename="../MainWindow.ui" line="1544"/>
         <source>Open SQL file(s)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ouvrir un fichier SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1547"/>
         <source>This button opens files containing SQL statements and loads them in new editor tabs</source>
-        <translation type="unfinished"></translation>
+        <translation>Ce bouton ouvre un fichier contenant des instructions SQL et le charge dans un nouvel onglet de l&apos;éditeur</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1556"/>
@@ -3641,7 +3641,7 @@ Motif : %1</translation>
     <message>
         <location filename="../MainWindow.cpp" line="2537"/>
         <source>DB Browser for SQLite project file (*.sqbpro)</source>
-        <translation>Projet DB Browser pour SQLite (*.sqbpro)</translation>
+        <translation>Fichier de projet DB Browser pour SQLite (*.sqbpro)</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="929"/>
@@ -3852,12 +3852,12 @@ Are you sure you want to save the database?</source>
     <message>
         <location filename="../MainWindow.cpp" line="956"/>
         <source>Edit View %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Editer la vue %1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="962"/>
         <source>Edit Trigger %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Editer le déclencheur %1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1062"/>
@@ -3941,7 +3941,8 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="3346"/>
         <source>This action will open a new SQL tab with the following statements for you to edit and run:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Need to verify if following statements ore shown bellow ou above or on the open action </translatorcomment>
+        <translation>Cette action ouvrira un nouvel onglet SQL avec les instructions suivantes que vous pourrez modifier et exécuter :</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3542"/>
@@ -5050,12 +5051,12 @@ Peut être mis à 0 pour désactiver la complétion.</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="1617"/>
         <source>Close button on tabs</source>
-        <translation type="unfinished"></translation>
+        <translation>Bouton de fermeture des onglets</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1627"/>
         <source>If enabled, SQL editor tabs will have a close button. In any case, you can use the contextual menu or the keyboard shortcut to close them.</source>
-        <translation type="unfinished"></translation>
+        <translation>Si cette option est activée, les onglets de l&apos;éditeur SQL comporteront un bouton de fermeture. Dans tous les cas, vous pouvez utiliser le menu contextuel ou le raccourci clavier pour les fermer.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1640"/>
@@ -5080,7 +5081,7 @@ Peut être mis à 0 pour désactiver la complétion.</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="1706"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;While supporting the REGEXP operator SQLite doesn&apos;t implement any regular expression&lt;br/&gt;algorithm but calls back the running application. DB Browser for SQLite implements this&lt;br/&gt;algorithm for you to let you use REGEXP out of the box. However, as there are multiple possible&lt;br/&gt;implementations of this and you might want to use another one, you&apos;re free to disable the&lt;br/&gt;application&apos;s implementation and load your own by using an extension. Requires restart of the application.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bien que SQLite supporte l&apos;opérateur REGEXP, aucun algorithme&lt;br&gt;d&apos;expression régulière est implémenté, mais il rappelle l&apos;application en cours d&apos;exécution. DB Browser pour SQLite implémente&lt;br/&gt;cet algorithme pour vous permettre d&apos;utiliser REGEXP. Cependant, comme il existe plusieurs implémentations possibles&lt;br/&gt;et que vous souhaitez peut-être utiliser autre chose, vous êtes libre de désactiver cette implémentation dans l&apos;application&lt;br/&gt;pour utiliser la votre en utilisant une extention. Cela nécessite le redémarrage de l&apos;application.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bien que SQLite supporte l&apos;opérateur REGEXP, aucun algorithme&lt;br&gt;d&apos;expression régulière est implémenté, mais il rappelle l&apos;application en cours d&apos;exécution. DB Browser pour SQLite implémente&lt;br/&gt;cet algorithme pour vous permettre d&apos;utiliser REGEXP. Cependant, comme il existe plusieurs implémentations possibles&lt;br/&gt;et que vous souhaitez peut-être utiliser autre chose, vous êtes libre de désactiver cette implémentation dans l&apos;application&lt;br/&gt;pour utiliser la votre en utilisant une extension. Cela nécessite le redémarrage de l&apos;application.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1709"/>
@@ -7131,7 +7132,7 @@ Appuyez simultanément sur %3+Maj et cliquez pour arriver ici</translation>
     <message>
         <location filename="../TableBrowser.cpp" line="42"/>
         <source>Filter in any column</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtrer dans n&apos;importe quelle colonne</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="109"/>
