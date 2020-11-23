@@ -142,32 +142,33 @@
         <location filename="../Application.cpp" line="116"/>
         <source>Usage: %1 [options] [&lt;database&gt;|&lt;project&gt;]
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Uso: %1 [opciones] [&lt;base de datos&gt;|&lt;proyecto&gt;]
+</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="119"/>
         <source>  -h, --help          Show command line options</source>
-        <translation type="unfinished"></translation>
+        <translation>  -h, --help          Mostrar opciones de línea de comandos</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="120"/>
         <source>  -q, --quit          Exit application after running scripts</source>
-        <translation type="unfinished"></translation>
+        <translation>  -q, --quit          Salir de la aplicación tras ejecutar los scripts</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="121"/>
         <source>  -s, --sql &lt;file&gt;    Execute this SQL file after opening the DB</source>
-        <translation type="unfinished"></translation>
+        <translation>  -s, --sql  [archivo]    Ejecuta este archivo de SQL tras abrir la base de datos</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="122"/>
         <source>  -t, --table &lt;table&gt; Browse this table after opening the DB</source>
-        <translation type="unfinished"></translation>
+        <translation>  -t, --table [tabla] Mostrar esta tabla en la hoja de datos tras abrir la base de datos</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="123"/>
         <source>  -R, --read-only     Open database in read-only mode</source>
-        <translation type="unfinished"></translation>
+        <translation>  -R, --read-only     Abrir base de datos en modo de solo-lectura</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="124"/>
@@ -182,37 +183,37 @@
     <message>
         <location filename="../Application.cpp" line="126"/>
         <source>  -o, --option &lt;group&gt;/&lt;setting&gt;=&lt;value&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>  -o, --option &lt;grupo&gt;/&lt;ajuste&gt;=&lt;valor&gt;</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="127"/>
         <source>                      Run application with this setting temporarily set to value</source>
-        <translation type="unfinished"></translation>
+        <translation>                      Ejecutar la aplicación con este ajuste establecido temporalmente a este valor</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="128"/>
         <source>  -O, --save-option &lt;group&gt;/&lt;setting&gt;=&lt;value&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>  -O, --save-option &lt;grupo&gt;/&lt;ajuste&gt;=&lt;valor&gt;</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="129"/>
         <source>                      Run application saving this value for this setting</source>
-        <translation type="unfinished"></translation>
+        <translation>                      Ejecutar la aplicación guardando este valor para este ajuste</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="130"/>
         <source>  -v, --version       Display the current version</source>
-        <translation type="unfinished"></translation>
+        <translation>  -v, --version       Mostrar la versión actual</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="131"/>
         <source>  &lt;database&gt;          Open this SQLite database</source>
-        <translation type="unfinished"></translation>
+        <translation>  &lt;base de datos&gt;       Abrir esta base de datos SQLite</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="132"/>
         <source>  &lt;project&gt;           Open this project file (*.sqbpro)</source>
-        <translation type="unfinished"></translation>
+        <translation>  &lt;proyecto&gt;          Abrir este archivo de proyecto (*.sqbpro)</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="140"/>
@@ -237,27 +238,27 @@
     <message>
         <location filename="../Application.cpp" line="266"/>
         <source>SQLite Version </source>
-        <translation type="unfinished">Versión de SQLite </translation>
+        <translation>Versión de SQLite </translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="268"/>
         <source>SQLCipher Version %1 (based on SQLite %2)</source>
-        <translation type="unfinished">Versión de SQLCipher %1 (basado en SQLite %2)</translation>
+        <translation>Versión de SQLCipher %1 (basado en SQLite %2)</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="271"/>
         <source>DB Browser for SQLite Version %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>«DB Browser for SQLite» Versión %1.</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="272"/>
         <source>Built for %1, running on %2</source>
-        <translation type="unfinished">Compilado para %1, ejecutándose en %2</translation>
+        <translation>Compilado para %1, ejecutándose en %2</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="273"/>
         <source>Qt Version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Versión de Qt %1</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="189"/>
@@ -415,7 +416,7 @@ Si se modificaron cualquiera de los otros ajustes para este archivo de base de d
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="28"/>
         <source>.NET DateTime.Ticks to date</source>
-        <translation type="unfinished"></translation>
+        <translation>DateTime.Ticks de .NET a fecha</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="29"/>
@@ -3732,12 +3733,12 @@ Si responde no se intentarán importar los datos del archivo SQL en la base de d
     <message>
         <location filename="../MainWindow.cpp" line="1624"/>
         <source>Opened &apos;%1&apos; in read-only mode from recent file list</source>
-        <translation type="unfinished"></translation>
+        <translation>Se ha abierto «%1» en modo de sólo lectura desde la lista de archivos recientes</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1626"/>
         <source>Opened &apos;%1&apos; from recent file list</source>
-        <translation type="unfinished"></translation>
+        <translation>Se ha abierto «%1» desde la lista de archivos recientes</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1974"/>
@@ -3860,7 +3861,7 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="325"/>
         <source>Window Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Disposición de la ventana</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="328"/>
@@ -3875,27 +3876,27 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="334"/>
         <source>Simplify Window Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Simplificar disposición</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="335"/>
         <source>Shift+Alt+0</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="344"/>
         <source>Dock Windows at Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Acoplar ventanas en la parte inferior</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="348"/>
         <source>Dock Windows at Left Side</source>
-        <translation type="unfinished"></translation>
+        <translation>Acoplar ventanas en la parte izquierda</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="352"/>
         <source>Dock Windows at Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Acoplar ventanas en la parte superior</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="378"/>
@@ -4708,12 +4709,12 @@ Aviso: aún no se han cargado todos los datos desde la tabla debido al mecanismo
     <message>
         <location filename="../PreferencesDialog.ui" line="555"/>
         <source>This sets the font size for all UI elements which do not have their own font size option.</source>
-        <translation type="unfinished"></translation>
+        <translation>Esto establece el tamaño de tipografía para todos los elementos de la interfaz de usuario que no tienen su propia opción.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="558"/>
         <source>Font size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaño de fuente</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="571"/>
@@ -4739,7 +4740,7 @@ in new project file</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="718"/>
         <source>Database structure font size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaño de fuente de la estructura de base de datos</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="791"/>
@@ -5475,37 +5476,37 @@ Please check again.</source>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="13"/>
         <source>Commit ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID versión</translation>
     </message>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="13"/>
         <source>Message</source>
-        <translation type="unfinished"></translation>
+        <translation>Mensaje</translation>
     </message>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="13"/>
         <source>Date</source>
-        <translation type="unfinished">Fecha</translation>
+        <translation>Fecha</translation>
     </message>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="13"/>
         <source>Author</source>
-        <translation type="unfinished"></translation>
+        <translation>Autor</translation>
     </message>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="13"/>
         <source>Size</source>
-        <translation type="unfinished">Tamaño</translation>
+        <translation>Tamaño</translation>
     </message>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="65"/>
         <source>Authored and committed by %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Escrito y registrado por %1</translation>
     </message>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="67"/>
         <source>Authored by %1, committed by %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Escrito por %1, registrado por %2</translation>
     </message>
 </context>
 <context>
@@ -5535,7 +5536,7 @@ Please check again.</source>
     <message>
         <location filename="../RemoteDock.ui" line="147"/>
         <source>Local</source>
-        <translation type="unfinished">Local</translation>
+        <translation>Local</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="53"/>
@@ -5555,7 +5556,7 @@ Please check again.</source>
     <message>
         <location filename="../RemoteDock.ui" line="106"/>
         <source>DBHub.io</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="139"/>
@@ -5565,137 +5566,137 @@ Please check again.</source>
     <message>
         <location filename="../RemoteDock.ui" line="173"/>
         <source>Current Database</source>
-        <translation type="unfinished"></translation>
+        <translation>Base de datos actual</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="204"/>
         <source>Clone</source>
-        <translation type="unfinished"></translation>
+        <translation>Clonar</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="213"/>
         <source>User</source>
-        <translation type="unfinished">Usuario</translation>
+        <translation>Usuario</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="230"/>
         <source>Database</source>
-        <translation type="unfinished">Base de datos</translation>
+        <translation>Base de datos</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="247"/>
         <source>Branch</source>
-        <translation type="unfinished">Rama</translation>
+        <translation>Rama</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="267"/>
         <source>Commits</source>
-        <translation type="unfinished"></translation>
+        <translation>Versiones</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="287"/>
         <source>Commits for</source>
-        <translation type="unfinished"></translation>
+        <translation>Versiones para</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="414"/>
         <source>Delete Database</source>
-        <translation type="unfinished"></translation>
+        <translation>Borrar base de datos</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="417"/>
         <source>Delete the local clone of this database</source>
-        <translation type="unfinished"></translation>
+        <translation>Borrar el clon local de la base de datos</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="426"/>
         <source>Open in Web Browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir en el navegador web</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="429"/>
         <source>Open the web page for the current database in your browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir la página web de la base de datos actual en su navegador</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="438"/>
         <source>Clone from Link</source>
-        <translation type="unfinished"></translation>
+        <translation>Clonar desde enlace</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="441"/>
         <source>Use this to download a remote database for local editing using a URL as provided on the web page of the database.</source>
-        <translation type="unfinished"></translation>
+        <translation>Use esto para descargar una base de datos remota para editarla localmente usando una URL provista por la página web de la base de datos.</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="450"/>
         <source>Refresh</source>
-        <translation type="unfinished">Refrescar</translation>
+        <translation>Refrescar</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="453"/>
         <source>Reload all data and update the views</source>
-        <translation type="unfinished"></translation>
+        <translation>Recargar todos los datos y actualizar las vistas</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="456"/>
         <source>F5</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="465"/>
         <source>Clone Database</source>
-        <translation type="unfinished"></translation>
+        <translation>Clonar base de datos</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="480"/>
         <source>Open Database</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir base de datos</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="483"/>
         <source>Open the local copy of this database</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir la copia local de esta base de datos</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="494"/>
         <source>Check out Commit</source>
-        <translation type="unfinished"></translation>
+        <translation>Obtener versión</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="497"/>
         <source>Download and open this specific commit</source>
-        <translation type="unfinished"></translation>
+        <translation>Descargar y abrir esta versión específica</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="512"/>
         <source>Check out Latest Commit</source>
-        <translation type="unfinished"></translation>
+        <translation>Obtener la última versión</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="515"/>
         <source>Check out the latest commit of the current branch</source>
-        <translation type="unfinished"></translation>
+        <translation>Obtener la última versión de la rama actual</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="520"/>
         <source>Save Revision to File</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar versión en un archivo</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="523"/>
         <source>Saves the selected revision of the database to another file</source>
-        <translation type="unfinished"></translation>
+        <translation>Guarda la versión seleccionada de la base de datos a otro archivo</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="532"/>
         <source>Upload Database</source>
-        <translation type="unfinished"></translation>
+        <translation>Cargar base de datos</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="535"/>
         <source>Upload this database as a new commit</source>
-        <translation type="unfinished"></translation>
+        <translation>Cargar en el servidor esta base de datos como una nueva versión</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="359"/>
@@ -5710,7 +5711,7 @@ Please check again.</source>
     <message>
         <location filename="../RemoteDock.cpp" line="151"/>
         <source>Select an identity to connect</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccione una identidad para conectar</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="163"/>
@@ -5723,43 +5724,47 @@ Please check again.</source>
 Please enter the URL to clone from. You can generate this URL by
 clicking the &apos;Clone Database in DB4S&apos; button on the web page
 of the database.</source>
-        <translation type="unfinished"></translation>
+        <translation>Esto descarga una base de datos desde un servidor remoto para edición local.
+Por favor, introduzca la URL desde la que clonar. Usted puede obtener esta URL
+haciendo clic en el botón «Clonar base de datos en DB4S» de la página web
+de la base de datos.</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="231"/>
         <source>Invalid URL: The host name does not match the host name of the current identity.</source>
-        <translation type="unfinished"></translation>
+        <translation>URL inválida: El nombre de &apos;host&apos; no encaja con el de la identidad actual.</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="236"/>
         <source>Invalid URL: No branch name specified.</source>
-        <translation type="unfinished"></translation>
+        <translation>URL inválida: No se ha especificado el nombre de rama.</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="241"/>
         <source>Invalid URL: No commit ID specified.</source>
-        <translation type="unfinished"></translation>
+        <translation>URL inválida: No se ha especificado el ID de versión.</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="289"/>
         <source>You have modified the local clone of the database. Fetching this commit overrides these local changes.
 Are you sure you want to proceed?</source>
-        <translation type="unfinished"></translation>
+        <translation>Usted ha realizado cambios en el clon local de la base de datos. Al obtener esta versión sobreescribiría los cambios locales.
+¿Está seguro de proceder?</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="333"/>
         <source>The database has unsaved changes. Are you sure you want to push it before saving?</source>
-        <translation type="unfinished"></translation>
+        <translation>La base de datos tiene cambios sin guardar. ¿Está seguro de enviarlos sin guardar?</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="543"/>
         <source>The database you are trying to delete is currently opened. Please close it before deleting.</source>
-        <translation type="unfinished"></translation>
+        <translation>La base de datos que pretende borrar está actualmente abierta. Por favor, ciérrela antes de borrarla.</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="549"/>
         <source>This deletes the local version of this database with all the changes you have not committed yet. Are you sure you want to delete this database?</source>
-        <translation type="unfinished"></translation>
+        <translation>Esto borra la versión local de esta base de datos con todos los cambios que aún no ha registrado. ¿Está seguro de querer borrarla?</translation>
     </message>
 </context>
 <context>
@@ -5767,32 +5772,32 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>Name</source>
-        <translation type="unfinished">Nombre</translation>
+        <translation>Nombre</translation>
     </message>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>Branch</source>
-        <translation type="unfinished">Rama</translation>
+        <translation>Rama</translation>
     </message>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>Last modified</source>
-        <translation type="unfinished">Última modificación</translation>
+        <translation>Última modificación</translation>
     </message>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>Size</source>
-        <translation type="unfinished">Tamaño</translation>
+        <translation>Tamaño</translation>
     </message>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>Commit</source>
-        <translation type="unfinished">Consolidación</translation>
+        <translation>Versión</translation>
     </message>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>File</source>
-        <translation type="unfinished">Archivo</translation>
+        <translation>Archivo</translation>
     </message>
 </context>
 <context>
@@ -5815,27 +5820,27 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../RemoteModel.cpp" line="109"/>
         <source>Commit</source>
-        <translation>Consolidación</translation>
+        <translation>Versión</translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="231"/>
         <source>Size: </source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaño: </translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="232"/>
         <source>Last Modified: </source>
-        <translation type="unfinished"></translation>
+        <translation>Última modificación: </translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="233"/>
         <source>Licence: </source>
-        <translation type="unfinished"></translation>
+        <translation>Licencia: </translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="234"/>
         <source>Default Branch: </source>
-        <translation type="unfinished"></translation>
+        <translation>Rama por defecto: </translation>
     </message>
 </context>
 <context>
@@ -5843,54 +5848,54 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../RemoteNetwork.cpp" line="218"/>
         <source>Choose a location to save the file</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccione una localización para guardar el archivo</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="250"/>
         <source>Error opening remote file at %1.
 %2</source>
-        <translation type="unfinished">Error abriendo el archivo remoto en %1.
+        <translation>Error abriendo el archivo remoto en %1.
 %2</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="329"/>
         <source>Error: Invalid client certificate specified.</source>
-        <translation type="unfinished">Error: El certificado del cliente es inválido.</translation>
+        <translation>Error: El certificado del cliente es inválido.</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="341"/>
         <source>Please enter the passphrase for this client certificate in order to authenticate.</source>
-        <translation type="unfinished">Por favor, introduzca la clave de este certificado de cliente para autenticarse.</translation>
+        <translation>Por favor, introduzca la frase de contraseña de este certificado de cliente para autenticarse.</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="365"/>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="370"/>
         <source>Uploading remote database to
 %1</source>
-        <translation type="unfinished">Subiendo base de datos remota a
+        <translation>Subiendo base de datos remota a
 %1</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="372"/>
         <source>Downloading remote database from
 %1</source>
-        <translation type="unfinished">Descargando base de datos remota desde
+        <translation>Descargando base de datos remota desde
 %1</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="390"/>
         <location filename="../RemoteNetwork.cpp" line="456"/>
         <source>Error: The network is not accessible.</source>
-        <translation type="unfinished">Error: La red no es accesible.</translation>
+        <translation>Error: La red no está accesible.</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="465"/>
         <source>Error: Cannot open the file for sending.</source>
-        <translation type="unfinished">Error: No se puede abrir el archivo para enviar.</translation>
+        <translation>Error: No se puede abrir el archivo para enviar.</translation>
     </message>
 </context>
 <context>
@@ -5908,7 +5913,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../RemotePushDialog.ui" line="39"/>
         <source>Commit message</source>
-        <translation>Mensaje de consolidación</translation>
+        <translation>Mensaje de versión</translation>
     </message>
     <message>
         <location filename="../RemotePushDialog.ui" line="63"/>
@@ -5933,7 +5938,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../RemotePushDialog.ui" line="129"/>
         <source>Username</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de usuario</translation>
     </message>
     <message>
         <location filename="../RemotePushDialog.cpp" line="72"/>
@@ -5948,7 +5953,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../RemotePushDialog.cpp" line="78"/>
         <source>Use with care. This can cause remote commits to be deleted.</source>
-        <translation>Usar con cuidado. Esto puede provocar borrados de consolidaciones remotas.</translation>
+        <translation>Usar con cuidado. Esto puede provocar borrados de versiones remotas.</translation>
     </message>
 </context>
 <context>
