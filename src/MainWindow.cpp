@@ -1834,6 +1834,7 @@ void MainWindow::activateFields(bool enable)
     ui->actionQuickCheck->setEnabled(enable);
     ui->actionForeignKeyCheck->setEnabled(enable);
     ui->actionOptimize->setEnabled(enable);
+    ui->actionRowCounts->setEnabled(enable);
     ui->dockEdit->setEnabled(enable);
     ui->dockPlot->setEnabled(enable);
 
@@ -3384,13 +3385,20 @@ void MainWindow::runSqlNewTab(const QString& query, const QString& title, const 
     else
         message = tr("This action will open a new SQL tab with the following statements for you to edit and run:");
 
-    message += QString("<blockquote><tt>%1</tt></blockquote>").arg(query) +
-               tr("Press Help for opening the corresponding SQLite reference page.");
+    message += QString("<blockquote><tt>%1</tt></blockquote>").arg(query.size() > 1000 ? query.left(1000) + "\n[...]" : query);
+    if(!helpUrl.isEmpty())
+            message += tr("Press Help for opening the corresponding SQLite reference page.");
 
     QString windowTitle = title;
     windowTitle.remove('&');
+    auto result = QMessageBox::information(this,
+                                           windowTitle,
+                                           message,
+                                           QMessageBox::Ok | QMessageBox::Default,
+                                           QMessageBox::Cancel | QMessageBox::Escape,
+                                           helpUrl.isEmpty() ? 0 : QMessageBox::Help);
 
-    switch (QMessageBox::information(this, windowTitle, message, QMessageBox::Ok | QMessageBox::Default, QMessageBox::Cancel | QMessageBox::Escape, QMessageBox::Help))
+    switch (result)
     {
     case QMessageBox::Ok: {
         if (ui->mainTab->indexOf(ui->query) == -1)
@@ -3762,4 +3770,22 @@ void MainWindow::changeTableBrowserTab(TableBrowserDock* dock)
 QList<TableBrowserDock*> MainWindow::allTableBrowserDocks() const
 {
     return ui->tabBrowsers->findChildren<TableBrowserDock*>();
+}
+
+void MainWindow::newRowCountsTab()
+{
+    QString sql;
+    for(const auto& it : db.schemata["main"])
+    {
+        if(it.second->type() == sqlb::Object::Table || it.second->type() == sqlb::Object::View)
+        {
+            sql += QString("SELECT %1 AS \"name\", %2 AS \"type\", COUNT(*) AS \"rows\" FROM %3\nUNION ").arg(
+                        QString::fromStdString(sqlb::escapeString(it.second->name())),
+                        QString::fromStdString(sqlb::escapeString(it.second->typeToString(it.second->type()))),
+                        QString::fromStdString(sqlb::escapeIdentifier(it.second->name())));
+        }
+    }
+    sql.chop(7);    // Remove the last "\nUNION " at the end
+
+    runSqlNewTab(sql, ui->actionRowCounts->text());
 }

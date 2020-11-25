@@ -217,7 +217,7 @@ private slots:
     void openFindReplaceDialog();
     void toggleSqlBlockComment();
     void openSqlPrintDialog();
-    void runSqlNewTab(const QString& query, const QString& title, const QString& helpUrl, const bool autoRun = true);
+    void runSqlNewTab(const QString& query, const QString& title, const QString& helpUrl = QString(), const bool autoRun = true);
     void printDbStructure();
     void updateDatabaseBusyStatus(bool busy, const QString& user);
     void openPreferences();
@@ -226,6 +226,7 @@ private slots:
     void saveSqlFile(int tabIndex);
     void saveAll();
     void openUrlOrFile(const QString& urlString);
+    void newRowCountsTab();
 
     int openSqlTab(bool resetCounter = false);
     void closeSqlTab(int index, bool force = false, bool askSaving = true);

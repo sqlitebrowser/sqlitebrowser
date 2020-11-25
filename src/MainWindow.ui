@@ -852,6 +852,7 @@ You can drag SQL statements from an object row and drop them into other applicat
     <addaction name="actionQuickCheck"/>
     <addaction name="actionForeignKeyCheck"/>
     <addaction name="actionOptimize"/>
+    <addaction name="actionRowCounts"/>
    </widget>
    <addaction name="fileMenu"/>
    <addaction name="editMenu"/>
@@ -2226,6 +2227,14 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    </property>
    <property name="toolTip">
     <string>This treats the current clipboard contents as a CSV file and opens the same import wizard that is used for importing CSV data from a file.</string>
+   </property>
+  </action>
+  <action name="actionRowCounts">
+   <property name="text">
+    <string>Show Row Counts</string>
+   </property>
+   <property name="toolTip">
+    <string>This shows the number of rows for each table and view in the database.</string>
    </property>
   </action>
  </widget>
@@ -3666,6 +3675,22 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionRowCounts</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>newRowCountsTab()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileOpen()</slot>
@@ -3727,5 +3752,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
   <slot>changeTableBrowserTab(int)</slot>
   <slot>renameTableBrowserTab(int)</slot>
   <slot>showContextMenuTableBrowserTabBar(QPoint)</slot>
+  <slot>newRowCountsTab()</slot>
  </slots>
 </ui>
