@@ -255,8 +255,8 @@ void PreferencesDialog::saveSettings()
     Settings::setValue("editor", "close_button_on_tabs", ui->checkCloseButtonOnTabs->isChecked());
 
     QStringList extList;
-    for(const QListWidgetItem* item : ui->listExtensions->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard))
-        extList.append(item->text());
+    for(int i=0;i<ui->listExtensions->count();++i)
+        extList.append(ui->listExtensions->item(i)->text());
     Settings::setValue("extensions", "list", extList);
     Settings::setValue("extensions", "disableregex", ui->checkRegexDisabled->isChecked());
     Settings::setValue("extensions", "enable_load_extension", ui->checkAllowLoadExtension->isChecked());
