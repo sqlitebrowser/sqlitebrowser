@@ -175,6 +175,7 @@ private slots:
     void helpWhatsThis();
     void helpAbout();
     void updateRecordText(const QPersistentModelIndex& idx, const QByteArray& text, bool isBlob);
+    void evaluateText(const QPersistentModelIndex& idx, const std::string& text);
     void toggleEditDock(bool visible);
     void dataTableSelectionChanged(const QModelIndex& index);
     void doubleClickTable(const QModelIndex& index);

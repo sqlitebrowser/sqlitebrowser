@@ -1,6 +1,5 @@
 #include "EditDialog.h"
 #include "ui_EditDialog.h"
-#include "sqlitedb.h"
 #include "Settings.h"
 #include "qhexedit.h"
 #include "docktextedit.h"
@@ -163,6 +162,7 @@ void EditDialog::loadData(const QByteArray& bArrdata)
         case TextEditor:
         case JsonEditor:
         case XmlEditor:
+        case SqlEvaluator:
 
             // The JSON widget buffer is now the main data source
             dataSource = SciBuffer;
@@ -216,6 +216,7 @@ void EditDialog::loadData(const QByteArray& bArrdata)
         case TextEditor:
         case JsonEditor:
         case XmlEditor:
+        case SqlEvaluator:
             setDataInBuffer(bArrdata, SciBuffer);
             break;
          case RtlTextEditor:
@@ -247,8 +248,9 @@ void EditDialog::loadData(const QByteArray& bArrdata)
         // Update the display if in text edit or image viewer mode
         switch (editMode) {
         case TextEditor:
-        case XmlEditor:
         case JsonEditor:
+        case XmlEditor:
+        case SqlEvaluator:
             // Disable text editing, and use a warning message as the contents
             sciEdit->setText(tr("Image data can't be viewed in this mode.") % '\n' %
                              tr("Try switching to Image or Binary mode."));
@@ -279,7 +281,7 @@ void EditDialog::loadData(const QByteArray& bArrdata)
         case TextEditor:
         case JsonEditor:
         case XmlEditor:
-
+        case SqlEvaluator:
             setDataInBuffer(bArrdata, SciBuffer);
             break;
 
@@ -316,6 +318,7 @@ void EditDialog::loadData(const QByteArray& bArrdata)
         case TextEditor:
         case JsonEditor:
         case XmlEditor:
+        case SqlEvaluator:
             // Disable text editing, and use a warning message as the contents
             sciEdit->setText(QString(tr("Binary data can't be viewed in this mode.") % '\n' %
                                      tr("Try switching to Binary mode.")));
@@ -367,6 +370,7 @@ void EditDialog::importData(bool asLink)
     switch (mode) {
     case TextEditor:
     case RtlTextEditor:
+    case SqlEvaluator:
         selectedFilter = FILE_FILTER_TXT;
         break;
     case HexEditor:
@@ -620,6 +624,9 @@ void EditDialog::accept()
                 emit recordTextUpdated(m_currentIndex, newData.toUtf8(), false);
         }
         break;
+        case DockTextEdit::SQL:
+            emit evaluateText(m_currentIndex, sciEdit->text().toStdString());
+            break;
         }
         break;
     case HexBuffer:
@@ -632,7 +639,6 @@ void EditDialog::accept()
     }
 
     if (!newTextData.isEmpty()) {
-
         QString oldData = m_currentIndex.data(Qt::EditRole).toString();
         // Check first for null case, otherwise empty strings cannot overwrite NULL values
         if ((m_currentIndex.data(Qt::EditRole).isNull() && dataType != Null) || oldData != newTextData)
@@ -675,6 +681,7 @@ void EditDialog::setDataInBuffer(const QByteArray& bArrdata, DataSources source)
     case SciBuffer:
         switch (sciEdit->language()) {
         case DockTextEdit::PlainText:
+        case DockTextEdit::SQL:
         {
             // Load the text into the text editor, remove BOM first if there is one
             QByteArray dataWithoutBom = bArrdata;
@@ -756,6 +763,10 @@ void EditDialog::editModeChanged(int newMode)
     ui->actionIndent->setEnabled(newMode == JsonEditor || newMode == XmlEditor);
     setStackCurrentIndex(newMode);
 
+    // Change focus from the mode combo to the editor to start typing.
+    if (ui->comboMode->hasFocus())
+        setFocus();
+
     // * If the dataSource is the text buffer, the data is always text *
     switch (dataSource) {
     case QtBuffer:
@@ -767,7 +778,7 @@ void EditDialog::editModeChanged(int newMode)
         case TextEditor: // Switching to one of the Scintilla editor modes
         case JsonEditor:
         case XmlEditor:
-
+        case SqlEvaluator:
             setDataInBuffer(ui->qtEdit->toPlainText().toUtf8(), SciBuffer);
             break;
 
@@ -820,9 +831,10 @@ void EditDialog::editModeChanged(int newMode)
         }
         break;
 
-        case TextEditor: // Switching to the text editor
-        case JsonEditor: // Switching to the JSON editor
-        case XmlEditor: // Switching to the XML editor
+        case TextEditor:
+        case JsonEditor:
+        case XmlEditor:
+        case SqlEvaluator:
             // The text is already in the Sci buffer but we need to perform the necessary formatting.
             setDataInBuffer(sciEdit->text().toUtf8(), SciBuffer);
 
@@ -1116,6 +1128,11 @@ void EditDialog::setStackCurrentIndex(int editMode)
         // Scintilla case: switch to the single Scintilla editor and set language
         ui->editorStack->setCurrentIndex(TextEditor);
         sciEdit->setLanguage(DockTextEdit::XML);
+        break;
+    case SqlEvaluator:
+        // Scintilla case: switch to the single Scintilla editor and set language
+        ui->editorStack->setCurrentIndex(TextEditor);
+        sciEdit->setLanguage(DockTextEdit::SQL);
         break;
     }
 }

@@ -88,6 +88,11 @@
          <string>XML</string>
         </property>
        </item>
+       <item>
+        <property name="text">
+         <string>Evaluation</string>
+        </property>
+       </item>
       </widget>
      </item>
      <item>
@@ -153,7 +158,9 @@
       <property name="whatsThis">
        <string>The text editor modes let you edit plain text, as well as JSON or XML data with syntax highlighting, automatic formatting and validation before saving.
 
-Errors are indicated with a red squiggle underline.</string>
+Errors are indicated with a red squiggle underline.
+
+In the Evaluation mode, entered SQLite expressions are evaluated and the result applied to the cell.</string>
       </property>
      </widget>
      <widget class="QWidget" name="rtlVerticalLayout">

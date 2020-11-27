@@ -428,6 +428,7 @@ void MainWindow::init()
 
     // Connect some more signals and slots
     connect(editDock, &EditDialog::recordTextUpdated, this, &MainWindow::updateRecordText);
+    connect(editDock, &EditDialog::evaluateText, this, &MainWindow::evaluateText);
     connect(editDock, &EditDialog::requestUrlOrFileOpen, this, &MainWindow::openUrlOrFile);
     connect(ui->dbTreeWidget->selectionModel(), &QItemSelectionModel::currentChanged, this, &MainWindow::changeTreeSelection);
     connect(ui->dockEdit, &QDockWidget::visibilityChanged, this, &MainWindow::toggleEditDock);
@@ -984,6 +985,12 @@ void MainWindow::helpAbout()
 void MainWindow::updateRecordText(const QPersistentModelIndex& idx, const QByteArray& text, bool isBlob)
 {
     m_currentTabTableModel->setTypedData(idx, isBlob, text);
+}
+
+void MainWindow::evaluateText(const QPersistentModelIndex& idx, const std::string& text)
+{
+    QByteArray value = db.querySingleValueFromDb("SELECT " + text, /* log */ true, DBBrowserDB::Wait);
+    m_currentTabTableModel->setTypedData(idx, !isTextOnly(value), value);
 }
 
 void MainWindow::toggleEditDock(bool visible)
