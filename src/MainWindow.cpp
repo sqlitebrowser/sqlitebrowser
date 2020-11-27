@@ -2971,7 +2971,15 @@ void MainWindow::saveProject(const QString& currentFilename)
 
         // Database file name
         xml.writeStartElement("db");
-        xml.writeAttribute("path", db.currentFile());
+        QFileInfo dbFileInfo (db.currentFile());
+        QFileInfo projectFileInfo (filename);
+
+        // Store a relative filename if the path to project and to DB is the same.
+        if(dbFileInfo.absolutePath() == projectFileInfo.absolutePath())
+            xml.writeAttribute("path", dbFileInfo.fileName());
+        else
+            xml.writeAttribute("path", db.currentFile());
+
         xml.writeAttribute("readonly", QString::number(db.readOnly()));
         xml.writeAttribute("foreign_keys", db.getPragma("foreign_keys"));
         xml.writeAttribute("case_sensitive_like", db.getPragma("case_sensitive_like"));
