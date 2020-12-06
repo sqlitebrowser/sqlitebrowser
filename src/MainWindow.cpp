@@ -183,6 +183,8 @@ void MainWindow::init()
     connect(shortcutBrowseRefreshF5, &QShortcut::activated, this, &MainWindow::refresh);
     QShortcut* shortcutBrowseRefreshCtrlR = new QShortcut(QKeySequence("Ctrl+R"), this);
     connect(shortcutBrowseRefreshCtrlR, &QShortcut::activated, this, &MainWindow::refresh);
+    QShortcut* shortcutBrowseRefreshCtrlEnter = new QShortcut(QKeySequence("Ctrl+Enter"), this);
+    connect(shortcutBrowseRefreshCtrlEnter, &QShortcut::activated, this, &MainWindow::refresh);
 
     // Add print shortcut for the DB Structure tab (dbTreeWidget) with context to the widget, so other print shortcuts aren't eclipsed.
     QShortcut* shortcutPrint = new QShortcut(QKeySequence(QKeySequence::Print), ui->dbTreeWidget, nullptr, nullptr, Qt::WidgetShortcut);
