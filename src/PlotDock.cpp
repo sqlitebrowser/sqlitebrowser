@@ -299,7 +299,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
         // regain the model column index and the datatype
         // right now datatype is only important for X axis (Y is always numeric)
         int x = xitem->data(PlotColumnField, Qt::UserRole).toInt();
-        int xtype = xitem->data(PlotColumnType, Qt::UserRole).toInt();
+        unsigned int xtype = xitem->data(PlotColumnType, Qt::UserRole).toUInt();
 
         ui->plotWidget->xAxis->setTickLabelRotation(0);
 
@@ -644,7 +644,7 @@ void PlotDock::on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem* item, int c
     // disable change updates, or we get unwanted redrawing and weird behavior
     ui->treePlotColumns->blockSignals(true);
 
-    int type = item->data(PlotColumnType, Qt::UserRole).toInt();
+    unsigned int type = item->data(PlotColumnType, Qt::UserRole).toUInt();
 
     for(size_t y_ind = 0; y_ind < 2; y_ind++)
     {
