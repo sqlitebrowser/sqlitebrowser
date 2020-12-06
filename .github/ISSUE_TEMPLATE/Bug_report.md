@@ -8,6 +8,7 @@ assignees: ''
 ---
 
 <!--
+Please fill the requested information before pressing Submit.
 Thanks for coming here to report a bug. :)
 
 Please describe it in the sections below, fill out the correct check boxes with an "x", replacing the space inside [ ], then click the "Submit new issue" button at the bottom

@@ -7,7 +7,8 @@ assignees: ''
 
 ---
 
-<!-- Thanks for coming here to suggest a new feature. :) -->
+<!-- Please fill the requested information before pressing Submit.
+     Thanks for coming here to suggest a new feature. :) -->
 
 Describe the new feature
 --------------------------
