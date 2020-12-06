@@ -112,6 +112,22 @@ EditDialog::~EditDialog()
 
 void EditDialog::setCurrentIndex(const QModelIndex& idx)
 {
+    if (m_currentIndex != QPersistentModelIndex(idx) && ui->buttonApply->isEnabled() &&
+        (sciEdit->isModified() || ui->qtEdit->document()->isModified() || hexEdit->isModified())) {
+
+        QMessageBox::StandardButton reply = QMessageBox::question(
+            this,
+            tr("Unsaved data in the cell editor"),
+            tr("The cell editor contains data not yet applied to the database.\n"
+               "Do you want to apply the edited data?"),
+            QMessageBox::Apply | QMessageBox::Discard);
+
+        if (reply == QMessageBox::Apply)
+            accept();
+    }
+
+    setDisabled(!idx.isValid());
+
     m_currentIndex = QPersistentModelIndex(idx);
 
     QByteArray bArrData = idx.data(Qt::EditRole).toByteArray();
@@ -119,6 +135,8 @@ void EditDialog::setCurrentIndex(const QModelIndex& idx)
     updateCellInfoAndMode(bArrData);
 
     ui->buttonApply->setDisabled(true);
+    sciEdit->setModified(false);
+    ui->qtEdit->document()->setModified(false);
 }
 
 void EditDialog::showEvent(QShowEvent*)
