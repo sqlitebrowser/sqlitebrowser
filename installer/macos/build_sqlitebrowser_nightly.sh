@@ -3,7 +3,7 @@
 # Builds and uploads DB Browser for SQLite nightlies,
 # after updating the Homebrew dependencies
 
-QTVER="5.15.1"
+QTVER="5.15.2"
 BRANCH="master"
 BREW="/usr/local/bin/brew"
 BUILD_TYPE="release"
