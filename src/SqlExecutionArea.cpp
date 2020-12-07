@@ -17,7 +17,8 @@ SqlExecutionArea::SqlExecutionArea(DBBrowserDB& _db, QWidget* parent) :
     db(_db),
     ui(new Ui::SqlExecutionArea),
     m_columnsResized(false),
-    error_state(false)
+    error_state(false),
+    follow_mode(false)
 {
     // Create UI
     ui->setupUi(this);
@@ -291,8 +292,15 @@ void SqlExecutionArea::saveFile(const QString& filename)
 
 void SqlExecutionArea::fileChanged(const QString& filename)
 {
+    // Ignore the signal if the file is already removed from the watcher.
     if(!fileSystemWatch.files().contains(filename))
         return;
+
+    // When in follow_mode and the file is not modified, reload without prompt.
+    if(follow_mode && !ui->editEditor->isModified()) {
+        openFile(filename);
+        return;
+    }
 
     // Stop watching the file while the dialog is open.
     fileSystemWatch.removePath(filename);
@@ -307,15 +315,13 @@ void SqlExecutionArea::fileChanged(const QString& filename)
                 this,
                 qApp->applicationName(),
                 tr("The file \"%1\" was modified by another program. Do you want to reload it?%2").arg(filename, changes),
-                QMessageBox::Yes | QMessageBox::No | QMessageBox::NoToAll);
+                QMessageBox::Yes | QMessageBox::No | QMessageBox::YesToAll | QMessageBox::NoToAll);
 
     switch (reply) {
     case QMessageBox::Yes:
-        // Read in the file
+    case QMessageBox::YesToAll:
+        // Read in the file. This will restore the watcher.
         openFile(filename);
-
-        // Start watching the file again
-        fileSystemWatch.addPath(filename);
         break;
     case QMessageBox::No:
         // The file does not match the file on the disk anymore. So set the modified flag.
@@ -330,6 +336,7 @@ void SqlExecutionArea::fileChanged(const QString& filename)
     default:
         break;
     }
+    follow_mode = reply == QMessageBox::YesToAll;
 }
 
 void SqlExecutionArea::saveState() {
