@@ -257,7 +257,7 @@ void SqlExecutionArea::openFile(const QString& filename)
 
 void SqlExecutionArea::saveFile(const QString& filename)
 {
-    // Unwatch all files now. By unwathing them before the actual saving, we are not notified of our own changes
+    // Unwatch all files now. By unwatching them before the actual saving, we are not notified of our own changes
     if(!fileSystemWatch.files().empty())
         fileSystemWatch.removePaths(fileSystemWatch.files());
 
@@ -291,23 +291,44 @@ void SqlExecutionArea::saveFile(const QString& filename)
 
 void SqlExecutionArea::fileChanged(const QString& filename)
 {
+    if(!fileSystemWatch.files().contains(filename))
+        return;
+
+    // Stop watching the file while the dialog is open.
+    fileSystemWatch.removePath(filename);
+
     // Check if there are unsaved changes in the file
     QString changes;
     if(ui->editEditor->isModified())
         changes = QString(" ") + tr("Your changes will be lost when reloading it!");
 
     // Ask user whether to realod the modified file
-    if(QMessageBox::question(
+    QMessageBox::StandardButton reply = QMessageBox::question(
                 this,
                 qApp->applicationName(),
                 tr("The file \"%1\" was modified by another program. Do you want to reload it?%2").arg(filename, changes),
-                QMessageBox::Yes | QMessageBox::Ignore) == QMessageBox::Yes)
-    {
+                QMessageBox::Yes | QMessageBox::No | QMessageBox::NoToAll);
+
+    switch (reply) {
+    case QMessageBox::Yes:
         // Read in the file
         openFile(filename);
-    } else {
-        // The file does not match the file on the disk anymore. So set the modified flag
+
+        // Start watching the file again
+        fileSystemWatch.addPath(filename);
+        break;
+    case QMessageBox::No:
+        // The file does not match the file on the disk anymore. So set the modified flag.
         ui->editEditor->setModified(true);
+        // Start watching the file again for further prompting.
+        fileSystemWatch.addPath(filename);
+        break;
+    case QMessageBox::NoToAll:
+        // Set the modified flag and the watch is not restored until the file is saved again to disk.
+        ui->editEditor->setModified(true);
+        break;
+    default:
+        break;
     }
 }
 
