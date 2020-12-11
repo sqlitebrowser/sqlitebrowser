@@ -1650,6 +1650,10 @@ void MainWindow::openRecentFile()
             read_only = true;
         }
 
+        // Holding the Shift key while opening a recent file inverts the read only flag
+        if(Application::keyboardModifiers().testFlag(Qt::ShiftModifier))
+            read_only = !read_only;
+
         if(fileOpen(file, false, read_only))
         {
             if(read_only)
@@ -1702,7 +1706,12 @@ void MainWindow::updateRecentFileActions()
         // Add shortcut for opening the file using the keyboard. However, if the application is configured to store
         // more than nine recently opened files don't set shortcuts for the later ones which wouldn't be single digit anymore.
         if(i < 9)
-            recentFileActs[i]->setShortcut(QKeySequence(static_cast<int>(Qt::CTRL + (Qt::Key_1+static_cast<unsigned int>(i)))));
+        {
+            recentFileActs[i]->setShortcuts({
+                                                QKeySequence(static_cast<int>(Qt::CTRL + (Qt::Key_1+static_cast<unsigned int>(i)))),
+                                                QKeySequence(static_cast<int>(Qt::CTRL + Qt::SHIFT + (Qt::Key_1+static_cast<unsigned int>(i))))
+                                            });
+        }
     }
     for (int j = numRecentFiles; j < MaxRecentFiles; ++j)
         recentFileActs[j]->setVisible(false);
