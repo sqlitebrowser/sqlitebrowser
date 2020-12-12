@@ -5,6 +5,7 @@
 #include "CipherSettings.h"
 #include "DotenvFormat.h"
 #include "Settings.h"
+#include "Data.h"
 
 #include <QFile>
 #include <QMessageBox>
@@ -907,30 +908,28 @@ bool DBBrowserDB::dump(const QString& filePath,
                                         reinterpret_cast<const char*>(sqlite3_column_blob(stmt, i)),
                                         fieldsize);
 
-                            if(bcontent.left(2048).contains('\0')) // binary check
+                            switch(fieldtype)
                             {
+                            case SQLITE_BLOB:
                                 stream << QString("X'%1'").arg(QString(bcontent.toHex()));
-                            }
-                            else
-                            {
-                                switch(fieldtype)
-                                {
-                                case SQLITE_TEXT:
-                                case SQLITE_BLOB:
+                                break;
+                            case SQLITE_TEXT:
+                                if(isTextOnly(bcontent))
                                     stream << sqlb::escapeString(bcontent);
+                                else
+                                    stream << QString("X'%1'").arg(QString(bcontent.toHex()));
                                 break;
-                                case SQLITE_NULL:
-                                    stream << "NULL";
+                            case SQLITE_NULL:
+                                stream << "NULL";
                                 break;
-                                case SQLITE_FLOAT:
-                                    if(bcontent.indexOf("Inf") != -1)
-                                        stream << "'" << bcontent << "'";
-                                    else
-                                        stream << bcontent;
-                                break;
-                                default:
+                            case SQLITE_FLOAT:
+                                if(bcontent.indexOf("Inf") != -1)
+                                    stream << "'" << bcontent << "'";
+                                else
                                     stream << bcontent;
-                                }
+                                break;
+                            default:
+                                stream << bcontent;
                             }
                             if(i != columns - 1)
                                 stream << ',';
