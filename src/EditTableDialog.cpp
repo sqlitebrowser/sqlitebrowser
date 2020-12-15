@@ -144,8 +144,15 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
                 {
                     // Remove the constraint with the old columns and add a new one with the new columns
                     m_table.removeConstraint(constraint);
-                    constraint->setColumnList(new_columns);
-                    m_table.addConstraint(constraint);
+                    if(constraint->type() == sqlb::Constraint::ForeignKeyConstraintType)
+                    {
+                        auto fk = std::dynamic_pointer_cast<sqlb::ForeignKeyClause>(constraint);
+                        fk->setColumnList(new_columns);
+                        m_table.addConstraint(fk);
+                    } else {
+                        constraint->setColumnList(new_columns);
+                        m_table.addConstraint(constraint);
+                    }
 
                     // Update the UI
                     populateFields();
@@ -193,6 +200,7 @@ void EditTableDialog::updateColumnWidth()
     ui->tableConstraints->setColumnWidth(kConstraintColumns, 180);
     ui->tableConstraints->setColumnWidth(kConstraintType, 130);
     ui->tableConstraints->setColumnWidth(kConstraintName, 130);
+    ui->tableConstraints->setColumnWidth(kConstraintReference, 180);
     ui->tableConstraints->setColumnWidth(kConstraintSql, 300);
 }
 
@@ -328,6 +336,9 @@ void EditTableDialog::populateConstraints()
         QTableWidgetItem* name = new QTableWidgetItem(QString::fromStdString(constraint->name()));
         name->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
         ui->tableConstraints->setItem(row, kConstraintName, name);
+
+        // Reference
+        ui->tableConstraints->setItemDelegateForColumn(kConstraintReference, m_fkEditorDelegate);
 
         // SQL
         QTableWidgetItem* sql = new QTableWidgetItem(QString::fromStdString(constraint->toSql()));
@@ -753,6 +764,10 @@ void EditTableDialog::constraintItemChanged(QTableWidgetItem* item)
     {
     case kConstraintName:
         constraint->setName(item->text().toStdString());
+        break;
+    case kConstraintReference:
+        auto fk = std::dynamic_pointer_cast<sqlb::ForeignKeyClause>(constraint);
+        fk->setFromString(item->text().toStdString());
         break;
     }
 
