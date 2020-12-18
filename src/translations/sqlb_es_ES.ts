@@ -6175,7 +6175,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="74"/>
         <source>(X,Y,Z) The iif(X,Y,Z) function returns the value Y if X is true, and Z otherwise.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X,Y,Z) La función iif(X,Y,Z) devuelve el valor Y si X es verdadero, y Z en caso contrario.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="75"/>
@@ -6190,7 +6190,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="77"/>
         <source>(X,Y) The like() function is used to implement the &quot;Y LIKE X&quot; expression.</source>
-        <translation>X,Y) La función like() se usa para implementar la expresión &quot;Y LIKE X&quot;.</translation>
+        <translation>(X,Y) La función like() se usa para implementar la expresión &quot;Y LIKE X&quot;.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="78"/>
@@ -6299,7 +6299,7 @@ El uso de esta función tiene que ser autorizado desde las Preferencias.</transl
     <message>
         <location filename="../SqlUiLexer.cpp" line="98"/>
         <source>(X,Y,Z) The substr(X,Y,Z) function returns a substring of input string X that begins with the Y-th character and which is Z characters long.</source>
-        <translation>(X,Y) La función substr(X,Y) devuelve una subcadena de la cadena X desde el Y-ésimo y que es Z caracteres de largo.</translation>
+        <translation>(X,Y,Z) La función substr(X,Y,Z) devuelve una subcadena de la cadena X desde el Y-ésimo carácter y que es Z caracteres de largo.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="99"/>
