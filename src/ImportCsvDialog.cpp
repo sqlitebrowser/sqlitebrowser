@@ -653,21 +653,25 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
                 // No need to bind NULL values here as that is the default bound value in SQLite
             } else {
                 // This is a non-empty value, or we want to insert the empty string. Just add it to the statement.
-                // Find the correct data type taken into account the locale.
-                QString content = QString::fromUtf8(rowData.fields[i].data, static_cast<int>(rowData.fields[i].data_length));
-                const QLocale &locale = ui->checkLocalConventions->isChecked() ? QLocale::system() : QLocale::c();
-                bool convert_ok;
-                sqlite_int64 int64_value = locale.toLongLong(content, &convert_ok);
-                if(convert_ok)
-                    sqlite3_bind_int64(stmt, static_cast<int>(i)+1, int64_value);
-                else {
-                    double value = locale.toDouble(content, &convert_ok);
-                    if(convert_ok)
-                        sqlite3_bind_double(stmt, static_cast<int>(i)+1, value);
-                    else
-                        // Set new data type. If we don't find any better data type, we fall back to the TEXT data type
+                bool convert_ok = false;
+                if(ui->checkLocalConventions->isChecked()) {
+                    // Find the correct data type taken into account the locale.
+                    QString content = QString::fromUtf8(rowData.fields[i].data, static_cast<int>(rowData.fields[i].data_length));
+                    const QLocale &locale = ui->checkLocalConventions->isChecked() ? QLocale::system() : QLocale::c();
+                    sqlite_int64 int64_value = locale.toLongLong(content, &convert_ok);
+                    if(convert_ok) {
+                        sqlite3_bind_int64(stmt, static_cast<int>(i)+1, int64_value);
+                    } else {
+                        double value = locale.toDouble(content, &convert_ok);
+                        if(convert_ok)
+                            sqlite3_bind_double(stmt, static_cast<int>(i)+1, value);
+                    }
+                }
 
-                        sqlite3_bind_text(stmt, static_cast<int>(i)+1, rowData.fields[i].data, static_cast<int>(rowData.fields[i].data_length), SQLITE_STATIC);
+                if(!convert_ok) {
+                    // If we don't find any better data type or we want SQLite to apply the type affinity
+                    // (impossible when using local conventions), we fall back to the TEXT data type.
+                    sqlite3_bind_text(stmt, static_cast<int>(i)+1, rowData.fields[i].data, static_cast<int>(rowData.fields[i].data_length), SQLITE_STATIC);
                 }
             }
         }
