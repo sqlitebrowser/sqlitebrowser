@@ -51,6 +51,7 @@ ImportCsvDialog::ImportCsvDialog(const std::vector<QString>& filenames, DBBrowse
     ui->checkboxHeader->blockSignals(true);
     ui->checkBoxTrimFields->blockSignals(true);
     ui->checkBoxSeparateTables->blockSignals(true);
+    ui->checkLocalConventions->blockSignals(true);
     ui->comboSeparator->blockSignals(true);
     ui->comboQuote->blockSignals(true);
     ui->comboEncoding->blockSignals(true);
@@ -58,6 +59,7 @@ ImportCsvDialog::ImportCsvDialog(const std::vector<QString>& filenames, DBBrowse
     ui->checkboxHeader->setChecked(Settings::getValue("importcsv", "firstrowheader").toBool());
     ui->checkBoxTrimFields->setChecked(Settings::getValue("importcsv", "trimfields").toBool());
     ui->checkBoxSeparateTables->setChecked(Settings::getValue("importcsv", "separatetables").toBool());
+    ui->checkLocalConventions->setChecked(Settings::getValue("importcsv", "localconventions").toBool());
     setSeparatorChar(Settings::getValue("importcsv", "separator").toChar());
     setQuoteChar(Settings::getValue("importcsv", "quotecharacter").toChar());
     setEncoding(Settings::getValue("importcsv", "encoding").toString());
@@ -65,6 +67,7 @@ ImportCsvDialog::ImportCsvDialog(const std::vector<QString>& filenames, DBBrowse
     ui->checkboxHeader->blockSignals(false);
     ui->checkBoxTrimFields->blockSignals(false);
     ui->checkBoxSeparateTables->blockSignals(false);
+    ui->checkLocalConventions->blockSignals(false);
     ui->comboSeparator->blockSignals(false);
     ui->comboQuote->blockSignals(false);
     ui->comboEncoding->blockSignals(false);
@@ -169,6 +172,7 @@ void ImportCsvDialog::accept()
     Settings::setValue("importcsv", "quotecharacter", currentQuoteChar());
     Settings::setValue("importcsv", "trimfields", ui->checkBoxTrimFields->isChecked());
     Settings::setValue("importcsv", "separatetables", ui->checkBoxSeparateTables->isChecked());
+    Settings::setValue("importcsv", "localconventions", ui->checkLocalConventions->isChecked());
     Settings::setValue("importcsv", "encoding", currentEncoding());
 
     // Get all the selected files and start the import
@@ -428,23 +432,24 @@ sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename) co
                 if(old_type != "TEXT")
                 {
                     QString content = QString::fromUtf8(rowData.fields[i].data, static_cast<int>(rowData.fields[i].data_length));
+                    const QLocale &locale = ui->checkLocalConventions->isChecked() ? QLocale::system() : QLocale::c();
 
-                    // Check if the content can be converted to an integer or to float
-                    bool convert_to_int, convert_to_float;
-                    content.toInt(&convert_to_int);
-                    content.toFloat(&convert_to_float);
+                    // Check if the content can be converted to an integer or to real
+                    bool convert_to_integer, convert_to_real;
+                    locale.toLongLong(content, &convert_to_integer);
+                    locale.toDouble(content, &convert_to_real);
 
                     // Set new data type. If we don't find any better data type, we fall back to the TEXT data type
                     std::string new_type = "TEXT";
-                    if(old_type == "INTEGER" && !convert_to_int && convert_to_float)    // So far it's integer, but now it's only convertible to float
+                    if(old_type == "INTEGER" && !convert_to_integer && convert_to_real)  // So far it's integer, but now it's only convertible to float
                         new_type = "REAL";
-                    else if(old_type.empty() && convert_to_int)                           // No type yet, but this bit is convertible to integer
+                    else if(old_type.empty() && convert_to_integer)                      // No type yet, but this bit is convertible to integer
                         new_type = "INTEGER";
-                    else if(old_type.empty() && convert_to_float)                         // No type yet and only convertible to float (less 'difficult' than integer)
+                    else if(old_type.empty() && convert_to_real)                         // No type yet and only convertible to float (less 'difficult' than integer)
                         new_type = "REAL";
-                    else if(old_type == "REAL" && convert_to_float)                     // It was float so far and still is
+                    else if(old_type == "REAL" && convert_to_real)                       // It was float so far and still is
                         new_type = "INTEGER";
-                    else if(old_type == "INTEGER" && convert_to_int)                    // It was integer so far and still is
+                    else if(old_type == "INTEGER" && convert_to_integer)                 // It was integer so far and still is
                         new_type = "INTEGER";
 
                     fieldList.at(i).setType(new_type);
@@ -647,8 +652,23 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
             } else if(!importToExistingTable && rowData.fields[i].data_length == 0) {
                 // No need to bind NULL values here as that is the default bound value in SQLite
             } else {
-                // This is a non-empty value, or we want to insert the empty string. Just add it to the statement
-                sqlite3_bind_text(stmt, static_cast<int>(i)+1, rowData.fields[i].data, static_cast<int>(rowData.fields[i].data_length), SQLITE_STATIC);
+                // This is a non-empty value, or we want to insert the empty string. Just add it to the statement.
+                // Find the correct data type taken into account the locale.
+                QString content = QString::fromUtf8(rowData.fields[i].data, static_cast<int>(rowData.fields[i].data_length));
+                const QLocale &locale = ui->checkLocalConventions->isChecked() ? QLocale::system() : QLocale::c();
+                bool convert_ok;
+                sqlite_int64 int64_value = locale.toLongLong(content, &convert_ok);
+                if(convert_ok)
+                    sqlite3_bind_int64(stmt, static_cast<int>(i)+1, int64_value);
+                else {
+                    double value = locale.toDouble(content, &convert_ok);
+                    if(convert_ok)
+                        sqlite3_bind_double(stmt, static_cast<int>(i)+1, value);
+                    else
+                        // Set new data type. If we don't find any better data type, we fall back to the TEXT data type
+
+                        sqlite3_bind_text(stmt, static_cast<int>(i)+1, rowData.fields[i].data, static_cast<int>(rowData.fields[i].data_length), SQLITE_STATIC);
+                }
             }
         }
 
@@ -822,6 +842,8 @@ void ImportCsvDialog::toggleAdvancedSection(bool show)
 {
     ui->labelNoTypeDetection->setVisible(show);
     ui->checkNoTypeDetection->setVisible(show);
+    ui->labelLocalConventions->setVisible(show);
+    ui->checkLocalConventions->setVisible(show);
     ui->labelFailOnMissing->setVisible(show);
     ui->checkFailOnMissing->setVisible(show);
     ui->labelIgnoreDefaults->setVisible(show);
