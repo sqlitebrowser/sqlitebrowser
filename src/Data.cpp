@@ -46,8 +46,16 @@ bool isTextOnly(QByteArray data, const QString& encoding, bool quickTest)
     } else {
         // Convert to Unicode if necessary
         data = decodeString(data, encoding);
+        QString text (data);
+        bool isPrintable = true;
+        for(QChar character : text) {
+            if(!character.isPrint()) {
+                isPrintable = false;
+                break;
+            }
+        }
         // Perform check
-        return QString(data).toUtf8() == data;
+        return isPrintable && text.toUtf8() == data;
     }
 }
 
