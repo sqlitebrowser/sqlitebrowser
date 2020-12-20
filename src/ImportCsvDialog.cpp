@@ -655,14 +655,13 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
                 // This is a non-empty value, or we want to insert the empty string. Just add it to the statement.
                 bool convert_ok = false;
                 if(ui->checkLocalConventions->isChecked()) {
-                    // Find the correct data type taken into account the locale.
+                    // Find the correct data type taking into account the locale.
                     QString content = QString::fromUtf8(rowData.fields[i].data, static_cast<int>(rowData.fields[i].data_length));
-                    const QLocale &locale = ui->checkLocalConventions->isChecked() ? QLocale::system() : QLocale::c();
-                    sqlite_int64 int64_value = locale.toLongLong(content, &convert_ok);
+                    sqlite_int64 int64_value = QLocale::system().toLongLong(content, &convert_ok);
                     if(convert_ok) {
                         sqlite3_bind_int64(stmt, static_cast<int>(i)+1, int64_value);
                     } else {
-                        double value = locale.toDouble(content, &convert_ok);
+                        double value = QLocale::system().toDouble(content, &convert_ok);
                         if(convert_ok)
                             sqlite3_bind_double(stmt, static_cast<int>(i)+1, value);
                     }

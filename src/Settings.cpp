@@ -186,6 +186,8 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
             return '"';
         if(name == "encoding")
             return "UTF-8";
+        if(name == "localconventions")
+            return false;
     }
 
     // exportsql group?
