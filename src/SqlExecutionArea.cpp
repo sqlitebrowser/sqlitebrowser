@@ -308,13 +308,19 @@ void SqlExecutionArea::fileChanged(const QString& filename)
     // Check if there are unsaved changes in the file
     QString changes;
     if(ui->editEditor->isModified())
-        changes = QString(" ") + tr("Your changes will be lost when reloading it!");
+        changes = QString(" <strong>") + tr("Your changes will be lost when reloading it!") + QString("</strong>");
 
-    // Ask user whether to realod the modified file
+    // Ask user whether to reload the modified file
     QMessageBox::StandardButton reply = QMessageBox::question(
                 this,
                 qApp->applicationName(),
-                tr("The file \"%1\" was modified by another program. Do you want to reload it?%2").arg(filename, changes),
+                tr("The file \"%1\" was modified by another program. Do you want to reload it?%2").arg(filename, changes) +
+                QString("<ul><li>") +
+                tr("Answer \"Yes to All\" to reload the file on any external update without further prompting.") +
+                QString("</li><li>") +
+                tr("Answer \"No to All\" to ignore any external update without further prompting.") +
+                QString("</li></ul>") +
+                tr("Modifying and saving the file will restore prompting."),
                 QMessageBox::Yes | QMessageBox::No | QMessageBox::YesToAll | QMessageBox::NoToAll);
 
     switch (reply) {
