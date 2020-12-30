@@ -5,6 +5,7 @@
 #include "sqlite.h"
 #include "FileDialog.h"
 #include "IconCache.h"
+#include "Data.h"
 
 #include <QFile>
 #include <QTextStream>
@@ -155,13 +156,16 @@ bool ExportDataDialog::exportQueryCsv(const std::string& sQuery, const QString& 
             {
                 for (int i = 0; i < columns; ++i)
                 {
-                    QString content = QString::fromUtf8(
-                                reinterpret_cast<const char*>(sqlite3_column_blob(stmt, i)),
-                                sqlite3_column_bytes(stmt, i));
+                    QByteArray blob (reinterpret_cast<const char*>(sqlite3_column_blob(stmt, i)),
+                                     sqlite3_column_bytes(stmt, i));
+                    QString content = QString::fromUtf8(blob);
 
+                    // Convert to base64 if the data is binary. This case doesn't need quotes.
+                    if(!isTextOnly(blob))
+                        stream << blob.toBase64();
                     // If no quote char is set but the content contains a line break, we enforce some quote characters. This probably isn't entirely correct
                     // but still better than having the line breaks unquoted and effectively outputting a garbage file.
-                    if(quoteChar.isNull() && content.contains(newlineStr))
+                    else if(quoteChar.isNull() && content.contains(newlineStr))
                         stream << '"' << content.replace('"', "\"\"") << '"';
                     // If the content needs to be quoted, quote it. But only if a quote char has been specified
                     else if(!quoteChar.isNull() && content.toStdString().find_first_of(special_chars) != std::string::npos)
