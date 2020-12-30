@@ -20,10 +20,12 @@ RowLoader::RowLoader (
     std::function<std::shared_ptr<sqlite3>(void)> db_getter_,
     std::function<void(QString)> statement_logger_,
     std::vector<std::string> & headers_,
+    std::vector<int>& data_types_,
     std::mutex & cache_mutex_,
     Cache & cache_data_
     )
-    : db_getter(db_getter_), statement_logger(statement_logger_), headers(headers_)
+    : db_getter(db_getter_), statement_logger(statement_logger_)
+    , headers(headers_), data_types(data_types_)
     , cache_mutex(cache_mutex_), cache_data(cache_data_)
     , query()
     , countQuery()
@@ -227,10 +229,25 @@ void RowLoader::process (Task & t)
     auto row = t.row_begin;
     if(sqlite3_prepare_v2(pDb.get(), utf8Query, utf8Query.size(), &stmt, nullptr) == SQLITE_OK)
     {
-        const size_t num_columns = headers.size();
+        size_t num_columns = 0;
+
+        bool first_row = true;
 
         while(!t.cancel && sqlite3_step(stmt) == SQLITE_ROW)
         {
+            // For the first row, determine the column names and types
+            if(first_row)
+            {
+                num_columns = static_cast<size_t>(sqlite3_data_count(stmt));
+                for(size_t i=0;i<num_columns;++i)
+                {
+                    headers.push_back(sqlite3_column_name(stmt, static_cast<int>(i)));
+                    data_types.push_back(sqlite3_column_type(stmt, static_cast<int>(i)));
+                }
+
+                first_row = false;
+            }
+
             // Construct a new row object with the right number of columns
             Cache::value_type rowdata(num_columns);
             for(size_t i=0;i<num_columns;++i)
