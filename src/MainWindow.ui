@@ -776,7 +776,7 @@ You can drag SQL statements from an object row and drop them into other applicat
     </widget>
     <widget class="QMenu" name="fileRecentFiles">
      <property name="title">
-      <string>Recent Files</string>
+      <string>&amp;Recent Files</string>
      </property>
     </widget>
     <addaction name="fileNewAction"/>
@@ -2231,7 +2231,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
   </action>
   <action name="actionRowCounts">
    <property name="text">
-    <string>Show Row Counts</string>
+    <string>Show &amp;Row Counts</string>
    </property>
    <property name="toolTip">
     <string>This shows the number of rows for each table and view in the database.</string>
