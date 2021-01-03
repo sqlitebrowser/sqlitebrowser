@@ -49,7 +49,7 @@ bool isTextOnly(QByteArray data, const QString& encoding, bool quickTest)
         QString text (data);
         bool isPrintable = true;
         for(QChar character : text) {
-            if(!character.isPrint()) {
+            if(character.isNonCharacter() || (character.category() == QChar::Other_Control && !character.isSpace())) {
                 isPrintable = false;
                 break;
             }
