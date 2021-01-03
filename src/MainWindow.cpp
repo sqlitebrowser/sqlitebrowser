@@ -481,6 +481,12 @@ void MainWindow::init()
     addShortcutsTooltip(ui->actionSqlFindReplace);
     addShortcutsTooltip(ui->actionSqlToggleComment);
 
+    // Since in some keyboards pressing F keys is cumbersome, add an alternate shortcut and document
+    // it in the toolbar.
+    ui->fileCloseAction->setShortcuts({QKeySequence(tr("Ctrl+F4")), QKeySequence(tr("Ctrl+Alt+W"))});
+    ui->actionCloseProject->setShortcuts({QKeySequence(tr("Ctrl+Shift+W")), QKeySequence(tr("Ctrl+Shift+F4"))});
+    addShortcutsTooltip(ui->fileCloseAction);
+
     // Load all settings
     reloadSettings();
 

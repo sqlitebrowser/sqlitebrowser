@@ -2193,8 +2193,11 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    <property name="toolTip">
     <string>Close project and database files and return to the initial state</string>
    </property>
+   <property name="statusTip">
+    <string>Close project and database files and return to the initial state</string>
+   </property>
    <property name="shortcut">
-    <string>Ctrl+Shift+F4</string>
+    <string>Ctrl+Shift+W</string>
    </property>
   </action>
   <action name="fileDetachAction">
