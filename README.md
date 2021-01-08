@@ -75,7 +75,7 @@ Download macOS releases here:
 The latest macOS binary can be installed via [Homebrew Cask](https://caskroom.github.io/ "Homebrew Cask"):
 
 ```
-brew cask install db-browser-for-sqlite
+brew install --cask db-browser-for-sqlite
 ```
 
 #### Nightly builds
