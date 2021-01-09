@@ -162,17 +162,28 @@ bool RunSql::executeNextStatement()
     QString error;
     if (sql3status == SQLITE_OK)
     {
-        sql3status = sqlite3_step(vm);
-        sqlite3_finalize(vm);
-
         // Get type
         StatementType query_part_type = getQueryType(queryPart.trimmed());
 
-        // SQLite returns SQLITE_DONE when a valid SELECT statement was executed but returned no results. To run into the branch that updates
-        // the status message and the table view anyway manipulate the status value here. This is also done for PRAGMA statements as they (sometimes)
-        // return rows just like SELECT statements, too.
-        if((query_part_type == SelectStatement || query_part_type == PragmaStatement) && sql3status == SQLITE_DONE)
+        // Check if this statement returned any data
+        if(sqlite3_column_count(vm))
+        {
+            // It did. So it is definitely some SELECT statement or similar and we don't need to actually execute it here
             sql3status = SQLITE_ROW;
+        } else {
+            // It did not. So it's probably some modifying SQL statement and we want to execute it here. If for some reason
+            // it turns out to return data after all, we just change the status
+            sql3status = sqlite3_step(vm);
+
+            // SQLite returns SQLITE_DONE when a valid SELECT statement was executed but returned no results. To run into the branch that updates
+            // the status message and the table view anyway manipulate the status value here. This is also done for PRAGMA statements as they (sometimes)
+            // return rows just like SELECT statements, too.
+            if((query_part_type == SelectStatement || query_part_type == PragmaStatement) && sql3status == SQLITE_DONE)
+                sql3status = SQLITE_ROW;
+        }
+
+        // Destroy statement
+        sqlite3_finalize(vm);
 
         switch(sql3status)
         {
