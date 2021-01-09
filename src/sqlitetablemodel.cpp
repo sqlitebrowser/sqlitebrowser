@@ -171,7 +171,6 @@ void SqliteTableModel::setQuery(const QString& sQuery, const QString& sCountQuer
     removeCommentsFromQuery(m_sQuery);
 
     worker->setQuery(m_sQuery, sCountQuery);
-    worker->triggerRowCountDetermination(m_lifeCounter);
 
     // now fetch the first entries
     triggerCacheLoad(static_cast<int>(m_chunkSize / 2) - 1);
@@ -851,6 +850,7 @@ void SqliteTableModel::clearCache()
     }
 
     m_cache.clear();
+    m_headers.clear();
     m_currentRowCount = 0;
     m_rowCountAvailable = RowCount::Unknown;
 }
