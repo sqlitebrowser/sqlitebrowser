@@ -229,23 +229,22 @@ void RowLoader::process (Task & t)
     auto row = t.row_begin;
     if(sqlite3_prepare_v2(pDb.get(), utf8Query, utf8Query.size(), &stmt, nullptr) == SQLITE_OK)
     {
-        size_t num_columns = 0;
-
-        bool first_row = true;
+        bool fill_headers = headers.empty();
 
         while(!t.cancel && sqlite3_step(stmt) == SQLITE_ROW)
         {
+            size_t num_columns = static_cast<size_t>(sqlite3_data_count(stmt));
+
             // For the first row, determine the column names and types
-            if(first_row)
+            if(fill_headers)
             {
-                num_columns = static_cast<size_t>(sqlite3_data_count(stmt));
                 for(size_t i=0;i<num_columns;++i)
                 {
                     headers.push_back(sqlite3_column_name(stmt, static_cast<int>(i)));
                     data_types.push_back(sqlite3_column_type(stmt, static_cast<int>(i)));
                 }
 
-                first_row = false;
+                fill_headers = false;
             }
 
             // Construct a new row object with the right number of columns
