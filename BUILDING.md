@@ -78,6 +78,10 @@ Done. :)
 **Note 2** - On CentOS 7.x, you need to replace the `qwt-qt5-devel` package name with
 `qt5-qtbase-devel` in the `dnf install` line below.
 
+
+**Note 3** - On CentOS 8 (Stream), you need to replace the `qt-devel` package name with
+`qt5-devel` in the `dnf install` line below. Make sure the `PowerTools` repo is enabled.
+
 ```
 $ sudo dnf install cmake gcc-c++ git qt-devel qt5-linguist qwt-qt5-devel \
        sqlite-devel
