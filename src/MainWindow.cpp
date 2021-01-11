@@ -755,6 +755,8 @@ void MainWindow::closeEvent( QCloseEvent* event )
 
         SqlExecutionArea::saveState();
 
+        Settings::sync();
+
         QMainWindow::closeEvent(event);
     } else {
         event->ignore();

@@ -627,3 +627,8 @@ bool Settings::importSettings(const QString fileName)
     m_hCache.clear();
     return true;
 }
+
+void Settings::sync()
+{
+    settings->sync();
+}
