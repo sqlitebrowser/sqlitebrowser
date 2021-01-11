@@ -5,7 +5,7 @@ please consult http://www.qt.io and for SQLite please see https://sqlite.org/.
 
 Please note that all versions after 3.9.1 will require:
 * Qt 5.5 or later, however we advise you to use 5.7 or later
-* A C++ compiler with support for C++11 or later
+* A C++ compiler with support for C++14 or later
 
 Without these or with older versions you won't be able to compile DB Browser for
 Sqlite anymore. This applies to all platforms. However, most likely you won't
