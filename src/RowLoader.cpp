@@ -233,11 +233,11 @@ void RowLoader::process (Task & t)
         const bool first_chunk = !cache_data.initialised();
         if(first_chunk)
         {
-            size_t num_columns = static_cast<size_t>(sqlite3_column_count(stmt));
-            for(size_t i=0;i<num_columns;++i)
+            int num_columns = sqlite3_column_count(stmt);
+            for(int i=0;i<num_columns;++i)
             {
-                headers.push_back(sqlite3_column_name(stmt, static_cast<int>(i)));
-                data_types.push_back(sqlite3_column_type(stmt, static_cast<int>(i)));
+                headers.push_back(sqlite3_column_name(stmt, i));
+                data_types.push_back(sqlite3_column_type(stmt, i));
             }
         }
 
@@ -271,8 +271,6 @@ void RowLoader::process (Task & t)
         // If there is no need to query the row count this means the number of rows we just got is the total row count.
         if(first_chunk)
         {
-            cache_data.setInitialised();
-
             if(row == t.row_end)
                 triggerRowCountDetermination(t.token);
             else

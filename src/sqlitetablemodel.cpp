@@ -67,17 +67,19 @@ void SqliteTableModel::handleFinishedFetch (int life_id, unsigned int fetched_ro
 
     Q_ASSERT(fetched_row_end >= fetched_row_begin);
 
-    // Tell the query object about the column names. We also use this property to determine if the number of columns changed for some
-    // reason and if so, we tell the view to update the table layout.
-    if(m_query.columnNames().size() != m_headers.size())
+    // Tell the query object about the column names
+    m_query.setColumNames(m_headers);
+
+    // If the cache has been uninitialised so far we set it to initialised now and
+    // tell the view to update the table layout.
+    if(!m_cache.initialised())
     {
+        m_cache.setInitialised();
         emit layoutChanged();
         emit columnsChanged();
     }
-    m_query.setColumNames(m_headers);
 
     auto old_row_count = m_currentRowCount;
-
     auto new_row_count = std::max(old_row_count, fetched_row_begin);
     new_row_count = std::max(new_row_count, fetched_row_end);
     Q_ASSERT(new_row_count >= old_row_count);
