@@ -951,7 +951,7 @@ void PlotDock::toggleLegendVisible(bool visible)
     ui->plotWidget->replot();
 }
 
-// Stack or group bars and set the appropiate bar width (since it is not automatically done by QCustomPlot).
+// Stack or group bars and set the appropriate bar width (since it is not automatically done by QCustomPlot).
 void PlotDock::adjustBars()
 {
     const double padding = 0.15;

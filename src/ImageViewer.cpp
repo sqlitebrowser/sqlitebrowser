@@ -68,7 +68,7 @@ void ImageViewer::scaleToFitWindow(bool enabled)
 
 void ImageViewer::scaleImage(int scale)
 {
-    // Make sure the slider is updated when this is called programatically
+    // Make sure the slider is updated when this is called programmatically
     ui->sliderScale->setValue(scale);
 
     // Update our scale factor
@@ -81,7 +81,7 @@ void ImageViewer::scaleImage(int scale)
     // Uncheck the fit to window button
     ui->buttonFitToWindow->setChecked(false);
 
-    // Fix scroll bars to zoom into center of viewport instead of tthe upper left corner
+    // Fix scroll bars to zoom into center of viewport instead of the upper left corner
     const auto adjust_scrollbar = [](QScrollBar* scroll_bar, qreal factor) {
         scroll_bar->setValue(static_cast<int>(factor * scroll_bar->value() + ((factor - 1) * scroll_bar->pageStep() / 2)));
     };

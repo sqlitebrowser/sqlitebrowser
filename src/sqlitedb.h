@@ -151,7 +151,7 @@ public:
     bool getRow(const sqlb::ObjectIdentifier& table, const QString& rowid, std::vector<QByteArray>& rowdata) const;
 
     /**
-     * @brief Interrupts the currenty running statement as soon as possible.
+     * @brief Interrupts the currently running statement as soon as possible.
      */
     void interruptQuery();
 

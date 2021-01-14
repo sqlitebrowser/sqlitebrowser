@@ -67,7 +67,7 @@ public:
         return is_initialised;
     }
 
-    /// mark the cache object as intialised. This is reset by the clear() function
+    /// mark the cache object as initialized. This is reset by the clear() function
     void setInitialised()
     {
         is_initialised = true;

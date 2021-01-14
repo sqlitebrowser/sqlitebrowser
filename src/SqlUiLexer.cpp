@@ -212,7 +212,7 @@ QStringList SqlUiLexer::autoCompletionWordSeparators() const
     QStringList wl;
 
     QString escapeSeparator = sqlb::escapeIdentifier(QString("."));
-    // Case for non symetric quotes, e.g. "[.]" to "].["
+    // Case for non symmetric quotes, e.g. "[.]" to "].["
     std::reverse(escapeSeparator.begin(), escapeSeparator.end());
 
     wl << "." << escapeSeparator;

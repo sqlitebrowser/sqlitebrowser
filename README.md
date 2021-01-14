@@ -129,7 +129,7 @@ Install the package using:
 
 #### Stable release
 
-For Ubuntu and derivaties, [@deepsidhu1313](https://github.com/deepsidhu1313)
+For Ubuntu and derivatives, [@deepsidhu1313](https://github.com/deepsidhu1313)
 provides a PPA with the latest release here:
 
 * https://launchpad.net/~linuxgndu/+archive/ubuntu/sqlitebrowser

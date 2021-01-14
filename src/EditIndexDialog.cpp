@@ -141,7 +141,7 @@ void EditIndexDialog::updateColumnLists()
         }
     }
 
-    // Set row count to actual count. This is needed for the intial loading, when some rows might have been omitted because they were used in the index
+    // Set row count to actual count. This is needed for the initial loading, when some rows might have been omitted because they were used in the index
     ui->tableTableColumns->setRowCount(tableRows);
 
     // Fill the index column list. This is done separately from the table column to include expression columns (these are not found in the original
