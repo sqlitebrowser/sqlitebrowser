@@ -110,7 +110,7 @@ void FilterTableHeader::clearAllCondFormats()
 
 void FilterTableHeader::editCondFormats()
 {
-    // Just get the column number and the new value and send them to anybody interested in editting conditional formatting
+    // Just get the column number and the new value and send them to anybody interested in editing conditional formatting
     emit condFormatsEdited(sender()->property("column").toUInt());
 }
 

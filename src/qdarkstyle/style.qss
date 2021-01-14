@@ -24,7 +24,7 @@ And each widget is separated with a header like this:
     QWidgetName ------
 
 This makes more easy to find and change some css field. The basic
-configuration is described bellow.
+configuration is described below.
 
     BACKGROUND -----------
 

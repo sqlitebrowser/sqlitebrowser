@@ -330,7 +330,7 @@ static int sqlite3Utf8CharLen(const char *z, int nByte){
 #define sqliteCharVal(X)   sqlite3ReadUtf8(X)
 
 /*
-** This is a macro that facilitates writting wrappers for math.h functions
+** This is a macro that facilitates writing wrappers for math.h functions
 ** it creates code for a function to use in SQlite that gets one numeric input
 ** and returns a floating point value.
 **
@@ -582,7 +582,7 @@ static void atn2Func(sqlite3_context *context, int argc, sqlite3_value **argv){
 ** Implementation of the sign() function
 ** return one of 3 possibilities +1,0 or -1 when the argument is respectively
 ** positive, 0 or negative.
-** When the argument is NULL the result is also NULL (completly conventional)
+** When the argument is NULL the result is also NULL (completely conventional)
 */
 static void signFunc(sqlite3_context *context, int argc, sqlite3_value **argv){
   double rVal=0.0;
@@ -755,7 +755,7 @@ static void properFunc(sqlite3_context *context, int argc, sqlite3_value **argv)
 }
 
 /*
-** given an input string (s) and an integer (n) adds spaces at the begining of  s
+** given an input string (s) and an integer (n) adds spaces at the beginning of  s
 ** until it has a length of n characters.
 ** When s has a length >=n it's a NOP
 ** padl(NULL) = NULL
@@ -863,7 +863,7 @@ static void padrFunc(sqlite3_context *context, int argc, sqlite3_value **argv){
 
 /*
 ** given an input string (s) and an integer (n) appends spaces at the end of  s
-** and adds spaces at the begining of s until it has a length of n characters.
+** and adds spaces at the beginning of s until it has a length of n characters.
 ** Tries to add has many characters at the left as at the right.
 ** When s has a length >=n it's a NOP
 ** padl(NULL) = NULL
@@ -1149,7 +1149,7 @@ static void rightFunc(sqlite3_context *context, int argc, sqlite3_value **argv){
 
 #ifndef HAVE_TRIM
 /*
-** removes the whitespaces at the begining of a string.
+** removes the whitespaces at the beginning of a string.
 */
 const char* ltrim(const char* s){
   while( *s==' ' )
@@ -1169,7 +1169,7 @@ void rtrim(char* s){
 }
 
 /*
-**  Removes the whitespace at the begining of a string
+**  Removes the whitespace at the beginning of a string
 */
 static void ltrimFunc(sqlite3_context *context, int argc, sqlite3_value **argv){
   const char *z;

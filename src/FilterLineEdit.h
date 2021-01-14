@@ -14,7 +14,7 @@ class FilterLineEdit : public QLineEdit
 public:
     explicit FilterLineEdit(QWidget* parent, std::vector<FilterLineEdit*>* filters = nullptr, size_t columnnum = 0);
 
-    // Override methods for programatically changing the value of the line edit
+    // Override methods for programmatically changing the value of the line edit
     void clear();
     void setText(const QString& text);
 

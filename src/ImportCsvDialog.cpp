@@ -626,7 +626,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
         qint64 timeAtStartOfRowFunction = timer.elapsed();
 #endif
 
-        // Save row num for later use. This is used in the case of an error to tell the user in which row the error ocurred
+        // Save row num for later use. This is used in the case of an error to tell the user in which row the error occurred
         lastRowNum = rowNum;
 
         // If this is the first row and we want to use the first row as table header, skip it now because this is the data import, not the header parsing

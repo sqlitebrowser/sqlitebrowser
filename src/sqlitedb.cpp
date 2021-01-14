@@ -287,7 +287,7 @@ bool DBBrowserDB::detach(const std::string& attached_as)
 
     waitForDbRelease();
 
-    // dettach database
+    // detach database
     if(!executeSQL("DETACH " + sqlb::escapeIdentifier(attached_as) + ";", false))
     {
         QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
@@ -1771,7 +1771,7 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
                     // Are we updating the field name or are we removing the field entirely?
                     if(!to.isNull())
                     {
-                        // We're updating the field name. So search for it in the index and replace it whereever it is found
+                        // We're updating the field name. So search for it in the index and replace it wherever it is found
                         for(size_t i=0;i<idx->fields.size();i++)
                         {
                             if(idx->fields[i].name() == from.toStdString())

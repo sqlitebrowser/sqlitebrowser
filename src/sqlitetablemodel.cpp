@@ -988,7 +988,7 @@ bool SqliteTableModel::completeCache () const
                              tr("Cancel"), 0, rowCount());
 
     QPushButton* cancelButton = new QPushButton(tr("Cancel"));
-    // This is to prevent distracted cancelation of the fetching and avoid the
+    // This is to prevent distracted cancellation of the fetching and avoid the
     // Snap-To Windows optional feature.
     cancelButton->setDefault(false);
     cancelButton->setAutoDefault(false);

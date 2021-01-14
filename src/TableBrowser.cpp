@@ -600,7 +600,7 @@ void TableBrowser::addCondFormat(bool isRowIdFormat, size_t column, const CondFo
     std::vector<CondFormat>& formats = isRowIdFormat ? settings.rowIdFormats[column] : settings.condFormats[column];
     m_model->addCondFormat(isRowIdFormat, column, newCondFormat);
 
-    // Conditionless formats are pushed back and others inserted at the begining, so they aren't eclipsed.
+    // Conditionless formats are pushed back and others inserted at the beginning, so they aren't eclipsed.
     if (newCondFormat.filter().isEmpty())
         formats.push_back(newCondFormat);
     else
@@ -870,7 +870,7 @@ void TableBrowser::showRowidColumn(bool show)
 
     // WORKAROUND
     // Set the opposite hidden/visible status of what we actually want for the rowid column. This is to work around a Qt bug which
-    // is present in at least version 5.7.1. The problem is this: when you browse a table/view with n colums, then switch to a table/view
+    // is present in at least version 5.7.1. The problem is this: when you browse a table/view with n columns, then switch to a table/view
     // with less than n columns, you'll be able to resize the first (hidden!) column by resizing the section to the left of the first visible
     // column. By doing so the table view gets messed up. But even when not resizing the first hidden column, tab-ing through the fields
     // will stop at the not-so-much-hidden rowid column, too. All this can be fixed by this line. I haven't managed to find another workaround
@@ -1527,7 +1527,7 @@ void TableBrowser::find(const QString& expr, bool forward, bool include_first, R
     // Reset the colour of the line edit, assuming there is no error.
     ui->editFindExpression->setStyleSheet("");
 
-    // You are not allowed to search for an ampty string
+    // You are not allowed to search for an empty string
     if(expr.isEmpty())
         return;
 

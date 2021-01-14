@@ -56,7 +56,7 @@ RemotePushDialog::RemotePushDialog(QWidget* parent, const QString& host, const Q
             ui->comboLicence->addItem(QString::fromStdString(it->second.second), QString::fromStdString(it->second.first));
     });
 
-    // Fetch list of exsisting branches
+    // Fetch list of existing branches
     reloadBranchList(branch);
 }
 

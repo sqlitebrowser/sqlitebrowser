@@ -197,7 +197,7 @@ void SqlExecutionArea::findLineEdit_textChanged(const QString &)
     // position, or from begin of the selection position.
 
     // For incremental search while typing we need to start from the
-    // begining of the current selection, otherwise we'd jump to the
+    // beginning of the current selection, otherwise we'd jump to the
     // next occurrence
     if (ui->editEditor->hasSelectedText()) {
         int lineFrom;

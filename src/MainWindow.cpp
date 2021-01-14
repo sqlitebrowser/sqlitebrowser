@@ -316,7 +316,7 @@ void MainWindow::init()
         action->setCheckable(true);
         action->setChecked(ui->mainTab->indexOf(widget) != -1);
         connect(action, &QAction::toggled, [=](bool show) { toggleTabVisible(widget, show); });
-        // Connect tabCloseRequested for setting checked the appropiate menu entry.
+        // Connect tabCloseRequested for setting checked the appropriate menu entry.
         // Note these are called after the actual tab is closed only because they are connected
         // after connecting closeTab.
         connect(ui->mainTab, &QTabWidget::tabCloseRequested, [=](int /*index*/) {
@@ -2375,7 +2375,7 @@ void MainWindow::on_actionWiki_triggered() const
     QDesktopServices::openUrl(QUrl("https://github.com/sqlitebrowser/sqlitebrowser/wiki"));
 }
 
-// 'Help | Bug Report...' link will set an appropiate body, add the system information and set the label 'bug' automatically to the issue
+// 'Help | Bug Report...' link will set an appropriate body, add the system information and set the label 'bug' automatically to the issue
 void MainWindow::on_actionBug_report_triggered() const
 {
     const QString version = Application::versionString();
@@ -2414,7 +2414,7 @@ void MainWindow::on_actionBug_report_triggered() const
     QDesktopServices::openUrl(url);
 }
 
-// 'Help | Feature Request...' link will set an appropiate body and add the label 'enhancement' automatically to the issue
+// 'Help | Feature Request...' link will set an appropriate body and add the label 'enhancement' automatically to the issue
 void MainWindow::on_actionFeature_Request_triggered() const
 {
     QUrlQuery query;
@@ -3543,7 +3543,7 @@ void MainWindow::toggleTabVisible(QWidget* tabWidget, bool show)
 
 void MainWindow::restoreOpenTabs(QString tabs)
 {
-    // Split the tab list, skiping the empty parts so the empty string turns to an empty list
+    // Split the tab list, skipping the empty parts so the empty string turns to an empty list
     // and not a list of one empty string.
     QStringList tabList = tabs.split(' ', QString::SkipEmptyParts);
 

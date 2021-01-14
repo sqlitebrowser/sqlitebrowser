@@ -85,7 +85,7 @@ void FilterLineEdit::keyReleaseEvent(QKeyEvent* event)
 
 void FilterLineEdit::clear()
 {
-    // When programatically clearing the line edit's value make sure the effects are applied immediately, i.e.
+    // When programmatically clearing the line edit's value make sure the effects are applied immediately, i.e.
     // bypass the delayed signal timer
     QLineEdit::clear();
     delayedSignalTimerTriggered();
@@ -93,7 +93,7 @@ void FilterLineEdit::clear()
 
 void FilterLineEdit::setText(const QString& text)
 {
-    // When programatically setting the line edit's value make sure the effects are applied immediately, i.e.
+    // When programmatically setting the line edit's value make sure the effects are applied immediately, i.e.
     // bypass the delayed signal timer
     QLineEdit::setText(text);
     delayedSignalTimerTriggered();

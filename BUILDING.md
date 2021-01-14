@@ -227,7 +227,7 @@ Now compile:
 
     $ make
 
-If you additionaly want an NSIS installer:
+If you additionally want an NSIS installer:
 
     $ make package
 
