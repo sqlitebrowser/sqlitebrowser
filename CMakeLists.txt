@@ -1,5 +1,8 @@
-cmake_minimum_required(VERSION 2.8.12.2)
-project(sqlitebrowser)
+cmake_minimum_required(VERSION 3.9)
+project(sqlitebrowser
+    VERSION 3.12.99
+    DESCRIPTION "GUI editor for SQLite databases"
+)
 
 OPTION(BUILD_STABLE_VERSION "Don't build the stable version by default" OFF) # Choose between building a stable version or nightly (the default), depending on whether '-DBUILD_STABLE_VERSION=1' is passed on the command line or not.
 OPTION(ENABLE_TESTING "Enable the unit tests" OFF)
@@ -643,3 +646,25 @@ if(APPLE)
         MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/src/app.plist
     )
 endif()
+
+# CPack configuration
+set(CPACK_STRIP_FILES ON)
+set(CPACK_DEBIAN_PACKAGE_PRIORITY optional)
+set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
+set(CPACK_DEBIAN_PACKAGE_GENERATE_SHLIBS ON)
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Tristan Stenner <dbbrowser@nicht.dienstli.ch>")
+set(CPACK_ARCHIVE_COMPONENT_INSTALL ON)
+if(APPLE)
+    set(CPACK_DEFAULT_GEN TBZ2)
+elseif(WIN32)
+    set(CPACK_DEFAULT_GEN ZIP)
+    set(CPACK_NSIS_MODIFY_PATH ON)
+    set(CPACK_WIX_CMAKE_PACKAGE_REGISTRY ON)
+    set(CPACK_WIX_UPGRADE_GUID "78c885a7-e9c8-4ded-9b62-9abe47466950")
+elseif(UNIX)
+    set(CPACK_DEFAULT_GEN DEB)
+    set(CPACK_SET_DESTDIR 1)
+    set(CPACK_INSTALL_PREFIX "/usr")
+endif()
+set(CPACK_GENERATOR ${CPACK_DEFAULT_GEN} CACHE STRING "CPack pkg type(s) to generate")
+include(CPack)
