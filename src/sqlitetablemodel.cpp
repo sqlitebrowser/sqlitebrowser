@@ -118,7 +118,7 @@ void SqliteTableModel::handleRowCountComplete (int life_id, int num_rows)
 void SqliteTableModel::reset()
 {
     beginResetModel();
-    clearCache();
+    m_cache.clear();
 
     m_sQuery.clear();
     m_query.clear();
@@ -851,8 +851,14 @@ void SqliteTableModel::clearCache()
         endRemoveRows();
     }
 
+    // We want to clear the cache contents here but keep the initialised flag.
+    // This is a bit hacky but the easiest way to achieve this. In the long term
+    // we might want to change this whole concept of clearing and resetting.
+    const bool cache_initialised = m_cache.initialised();
     m_cache.clear();
-    m_headers.clear();
+    if(cache_initialised)
+        m_cache.setInitialised();
+
     m_currentRowCount = 0;
     m_rowCountAvailable = RowCount::Unknown;
 }
