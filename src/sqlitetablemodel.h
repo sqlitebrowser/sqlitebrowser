@@ -149,7 +149,6 @@ public slots:
 signals:
     void finishedFetch(int fetched_row_begin, int fetched_row_end);
     void finishedRowCount();
-    void columnsChanged();
 
 protected:
     Qt::DropActions supportedDropActions() const override;
@@ -167,6 +166,9 @@ private:
     void handleRowCountComplete(int life_id, int num_rows);
 
     void buildQuery();
+
+    /// \param pDb connection to query; if null, obtains it from 'm_db'.
+    std::vector<std::string> getColumns(std::shared_ptr<sqlite3> pDb, const std::string& sQuery, std::vector<int>& fieldsTypes) const;
 
     QByteArray encode(const QByteArray& str) const;
     QByteArray decode(const QByteArray& str) const;

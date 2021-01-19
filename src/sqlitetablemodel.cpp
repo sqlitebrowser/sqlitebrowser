@@ -35,7 +35,7 @@ SqliteTableModel::SqliteTableModel(DBBrowserDB& db, QObject* parent, const QStri
     worker = new RowLoader(
         [this, force_wait](){ return m_db.get(tr("reading rows"), force_wait); },
         [this](QString stmt){ return m_db.logSQL(stmt, kLogMsg_App); },
-        m_headers, m_vDataTypes, m_mutexDataCache, m_cache
+        m_headers, m_mutexDataCache, m_cache
         );
 
     worker->start();
@@ -66,18 +66,6 @@ void SqliteTableModel::handleFinishedFetch (int life_id, unsigned int fetched_ro
         return;
 
     Q_ASSERT(fetched_row_end >= fetched_row_begin);
-
-    // Tell the query object about the column names
-    m_query.setColumNames(m_headers);
-
-    // If the cache has been uninitialised so far we set it to initialised now and
-    // tell the view to update the table layout.
-    if(!m_cache.initialised())
-    {
-        m_cache.setInitialised();
-        emit layoutChanged();
-        emit columnsChanged();
-    }
 
     auto old_row_count = m_currentRowCount;
     auto new_row_count = std::max(old_row_count, fetched_row_begin);
@@ -140,19 +128,39 @@ void SqliteTableModel::setQuery(const sqlb::Query& query)
     m_query = query;
     m_table_of_query = m_db.getObjectByName<sqlb::Table>(query.table());
 
+    // The first column is the rowid column and therefore is always of type integer
+    m_vDataTypes.emplace_back(SQLITE_INTEGER);
+
+    // Get the data types of all other columns as well as the column names
     // Set the row id columns
     if(m_table_of_query && m_table_of_query->fields.size()) // It is a table and parsing was OK
     {
         sqlb::StringVector rowids = m_table_of_query->rowidColumns();
         m_query.setRowIdColumns(rowids);
+
+        m_headers.push_back(sqlb::joinStringVector(rowids, ","));
+
+        // Store field names and affinity data types
+        for(const sqlb::Field& fld : m_table_of_query->fields)
+        {
+            m_headers.push_back(fld.name());
+            m_vDataTypes.push_back(fld.affinity());
+        }
     } else {
         // If for one reason or another (either it's a view or we couldn't parse the table statement) we couldn't get the field
         // information we retrieve it from SQLite using an extra query.
         // NOTE: It would be nice to eventually get rid of this piece here. As soon as the grammar parser is good enough...
 
+        std::string sColumnQuery = "SELECT * FROM " + query.table().toString() + ";";
         if(m_query.rowIdColumns().empty())
             m_query.setRowIdColumn("_rowid_");
+        m_headers.emplace_back("_rowid_");
+                auto columns = getColumns(nullptr, sColumnQuery, m_vDataTypes);
+                m_headers.insert(m_headers.end(), columns.begin(), columns.end());
     }
+
+    // Tell the query object about the column names
+    m_query.setColumNames(m_headers);
 
     // Apply new query and update view
     buildQuery();
@@ -174,8 +182,16 @@ void SqliteTableModel::setQuery(const QString& sQuery, const QString& sCountQuer
 
     worker->setQuery(m_sQuery, sCountQuery);
 
+    if(!dontClearHeaders)
+    {
+        auto columns = getColumns(worker->getDb(), sQuery.toStdString(), m_vDataTypes);
+        m_headers.insert(m_headers.end(), columns.begin(), columns.end());
+    }
+
     // now fetch the first entries
     triggerCacheLoad(static_cast<int>(m_chunkSize / 2) - 1);
+
+    emit layoutChanged();
 }
 
 int SqliteTableModel::rowCount(const QModelIndex&) const
@@ -774,6 +790,27 @@ void SqliteTableModel::removeCommentsFromQuery(QString& query)
         // Also remove any remaining whitespace at the end of each line
         query.replace(QRegExp("[ \t]+\n"), "\n");
     }
+}
+
+std::vector<std::string> SqliteTableModel::getColumns(std::shared_ptr<sqlite3> pDb, const std::string& sQuery, std::vector<int>& fieldsTypes) const
+{
+    if(!pDb)
+        pDb = m_db.get(tr("retrieving list of columns"));
+
+    sqlite3_stmt* stmt;
+    std::vector<std::string> listColumns;
+    if(sqlite3_prepare_v2(pDb.get(), sQuery.c_str(), static_cast<int>(sQuery.size()), &stmt, nullptr) == SQLITE_OK)
+    {
+        int columns = sqlite3_column_count(stmt);
+        for(int i = 0; i < columns; ++i)
+        {
+            listColumns.push_back(sqlite3_column_name(stmt, i));
+            fieldsTypes.push_back(sqlite3_column_type(stmt, i));
+        }
+    }
+    sqlite3_finalize(stmt);
+
+    return listColumns;
 }
 
 void addCondFormatToMap(std::map<size_t, std::vector<CondFormat>>& mCondFormats, size_t column, const CondFormat& condFormat)

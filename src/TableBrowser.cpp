@@ -348,16 +348,6 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
 
     // Connect slots
     connect(m_model, &SqliteTableModel::finishedFetch, this, &TableBrowser::fetchedData);
-    connect(m_model, &SqliteTableModel::columnsChanged, this, [this]() {
-        // Apply all settings
-        const sqlb::ObjectIdentifier tablename = currentlyBrowsedTableName();
-        const BrowseDataTableSettings& storedData = m_settings[tablename];
-
-        applyModelSettings(storedData);
-        applyViewportSettings(storedData, tablename);
-        updateRecordsetLabel();
-        emit updatePlot(ui->dataTable, m_model, &m_settings[tablename], true);
-    });
 
     // Load initial settings
     reloadSettings();
@@ -515,8 +505,10 @@ void TableBrowser::refresh()
     // Current table changed
     emit currentTableChanged(tablename);
 
-    // Set query which also resets the model
-    m_model->setQuery(buildQuery(storedData, tablename));
+    // Build query and apply settings
+   applyModelSettings(storedData, buildQuery(storedData, tablename));
+   applyViewportSettings(storedData, tablename);
+   updateRecordsetLabel();
 }
 
 void TableBrowser::clearFilters()
@@ -793,8 +785,11 @@ sqlb::Query TableBrowser::buildQuery(const BrowseDataTableSettings& storedData, 
     return query;
 }
 
-void TableBrowser::applyModelSettings(const BrowseDataTableSettings& storedData)
+void TableBrowser::applyModelSettings(const BrowseDataTableSettings& storedData, const sqlb::Query& query)
 {
+    // Set query which also resets the model
+    m_model->setQuery(query);
+
     // Regular conditional formats
     for(auto formatIt=storedData.condFormats.cbegin(); formatIt!=storedData.condFormats.cend(); ++formatIt)
         m_model->setCondFormats(false, formatIt->first, formatIt->second);

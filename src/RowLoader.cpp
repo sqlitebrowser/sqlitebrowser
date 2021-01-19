@@ -16,16 +16,14 @@ namespace {
 } // anon ns
 
 
-RowLoader::RowLoader (
-    std::function<std::shared_ptr<sqlite3>(void)> db_getter_,
+RowLoader::RowLoader (std::function<std::shared_ptr<sqlite3>(void)> db_getter_,
     std::function<void(QString)> statement_logger_,
     std::vector<std::string> & headers_,
-    std::vector<int>& data_types_,
     std::mutex & cache_mutex_,
     Cache & cache_data_
     )
     : db_getter(db_getter_), statement_logger(statement_logger_)
-    , headers(headers_), data_types(data_types_)
+    , headers(headers_)
     , cache_mutex(cache_mutex_), cache_data(cache_data_)
     , query()
     , countQuery()
@@ -229,18 +227,6 @@ void RowLoader::process (Task & t)
     auto row = t.row_begin;
     if(sqlite3_prepare_v2(pDb.get(), utf8Query, utf8Query.size(), &stmt, nullptr) == SQLITE_OK)
     {
-        // If the cache is uninitialised, retrieve the column names and types
-        const bool first_chunk = !cache_data.initialised();
-        if(first_chunk)
-        {
-            int num_columns = sqlite3_column_count(stmt);
-            for(int i=0;i<num_columns;++i)
-            {
-                headers.push_back(sqlite3_column_name(stmt, i));
-                data_types.push_back(sqlite3_column_type(stmt, i));
-            }
-        }
-
         while(!t.cancel && sqlite3_step(stmt) == SQLITE_ROW)
         {
             size_t num_columns = static_cast<size_t>(sqlite3_data_count(stmt));
@@ -269,8 +255,9 @@ void RowLoader::process (Task & t)
         // - this is the first batch of data we load for this query
         // - we got exactly the number of rows back we queried (which indicates there might be more rows)
         // If there is no need to query the row count this means the number of rows we just got is the total row count.
-        if(first_chunk)
+        if(!cache_data.initialised())
         {
+            cache_data.setInitialised();
             if(row == t.row_end)
                 triggerRowCountDetermination(t.token);
             else
