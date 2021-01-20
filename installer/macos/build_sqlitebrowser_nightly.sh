@@ -86,9 +86,9 @@ $LRELEASE src/src.pro >>$LOG 2>&1
 # Build and package standard sqlitebrowser nightly
 echo Build and package standard sqlitebrowser nightly >>$LOG 2>&1
 if [ "${BUILD_TYPE}" = "debug" ]; then
-  $QMAKE sqlitebrowser.pro -r -spec macx-clang CONFIG+=debug CONFIG+=x86_64 >>$LOG 2>&1
+  $QMAKE sqlitebrowser.pro -r -spec macx-clang CONFIG+=debug CONFIG+=x86_64 CONFIG+="c++14" >>$LOG 2>&1
 else
-  $QMAKE sqlitebrowser.pro -r -spec macx-clang CONFIG+=x86_64 >>$LOG 2>&1
+  $QMAKE sqlitebrowser.pro -r -spec macx-clang CONFIG+=x86_64 CONFIG+="c++14" >>$LOG 2>&1
 fi
 make -j3 >>$LOG 2>&1
 make -j3 >>$LOG 2>&1 # Seems to need a 2nd time now, due to language files needing initialisation or something
@@ -164,9 +164,9 @@ $LRELEASE src/src.pro >>$LOG 2>&1
 # Build and package sqlitebrowser with SQLCipher support
 echo Build and package sqlitebrowser with SQLCipher support >>$LOG 2>&1
 if [ "${BUILD_TYPE}" = "debug" ]; then
-  $QMAKE sqlitebrowser.pro -r -spec macx-clang CONFIG+=debug CONFIG+=x86_64 CONFIG+=sqlcipher >>$LOG 2>&1
+  $QMAKE sqlitebrowser.pro -r -spec macx-clang CONFIG+=debug CONFIG+=x86_64 CONFIG+=sqlcipher CONFIG+="c++14" >>$LOG 2>&1
 else
-  $QMAKE sqlitebrowser.pro -r -spec macx-clang CONFIG+=x86_64 CONFIG+=sqlcipher >>$LOG 2>&1
+  $QMAKE sqlitebrowser.pro -r -spec macx-clang CONFIG+=x86_64 CONFIG+=sqlcipher CONFIG+="c++14" >>$LOG 2>&1
 fi
 make -j3 >>$LOG 2>&1
 make -j3 >>$LOG 2>&1 # Seems to need a 2nd time now, due to language files needing initialisation or something
