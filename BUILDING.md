@@ -146,7 +146,7 @@ its name (eg ~/tmp/foo'), as compiling will error out.
 And compiling it:
 
     $ cd sqlitebrowser
-    $ qmake
+    $ qmake CONFIG+="c++14"
     $ make
     $ brew unlink sqlitefts5
     $ mv src/DB\ Browser\ for\ SQLite.app /Applications/
@@ -159,11 +159,11 @@ list, ready to launch.
 'make' step complaining about no targets.  This seems to be solvable by
 running:
 
-    $ qmake -spec macx-g++
+    $ qmake -spec macx-g++ CONFIG+="c++14"
 
 or:
 
-    $ qmake -spec macx-llvm
+    $ qmake -spec macx-llvm CONFIG+="c++14"
 
 (before the 'make' step)
 
