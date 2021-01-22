@@ -1166,7 +1166,7 @@ void EditDialog::openPrintDialog()
     QPrinter printer;
     QPrintPreviewDialog *dialog = new QPrintPreviewDialog(&printer);
 
-    connect(dialog, &QPrintPreviewDialog::paintRequested, [this](QPrinter *previewPrinter) {
+    connect(dialog, &QPrintPreviewDialog::paintRequested, this, [this](QPrinter *previewPrinter) {
         QTextDocument document;
         switch (dataSource) {
         case SciBuffer:

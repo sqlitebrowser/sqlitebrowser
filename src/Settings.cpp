@@ -20,12 +20,12 @@ static bool ends_with(const std::string& str, const std::string& with)
     return str.rfind(with) == str.size() - with.size();
 }
 
-void Settings::setUserSettingsFile(const QString userSettingsFileArg)
+void Settings::setUserSettingsFile(const QString& userSettingsFileArg)
 {
     userSettingsFile = userSettingsFileArg;
 }
 
-bool Settings::isVaildSettingsFile(const QString userSettingsFile)
+bool Settings::isVaildSettingsFile(const QString& userSettingsFile)
 {
     /*
     Variable that stores whether or not the settings file requested by the user is a normal settings file
@@ -482,17 +482,17 @@ QColor Settings::getDefaultColorValue(const std::string& group, const std::strin
             break;
         case DarkStyle :
             if(name == "null_fg_colour")
-                return QColor("#787878");
+                return QColor(0x78, 0x78, 0x78);
             if(name == "null_bg_colour")
-                return QColor("#19232D");
+                return QColor(0x19, 0x23, 0x2D);
             if(name == "reg_fg_colour")
-                return QColor("#F0F0F0");
+                return QColor(0xF0, 0xF0, 0xF0);
             if(name == "reg_bg_colour")
-                return QColor("#19232D");
+                return QColor(0x19, 0x23, 0x2D);
             if(name == "bin_fg_colour")
-                return QColor("#787878");
+                return QColor(0x78, 0x78, 0x78);
             if(name == "bin_bg_colour")
-                return QColor("#19232D");
+                return QColor(0x19, 0x23, 0x2D);
             break;
         }
     }
@@ -512,8 +512,8 @@ QColor Settings::getDefaultColorValue(const std::string& group, const std::strin
                 foregroundColour = QPalette().color(QPalette::Active, QPalette::Text);
                 break;
             case DarkStyle :
-                foregroundColour = QColor("#F0F0F0");
-                backgroundColour = QColor("#19232D");
+                foregroundColour = QColor(0xF0, 0xF0, 0xF0);
+                backgroundColour = QColor(0x19, 0x23, 0x2D);
                 break;
             }
             if(name == "foreground_colour")
@@ -584,16 +584,16 @@ void Settings::restoreDefaults ()
     m_hCache.clear();
 }
 
-void Settings::exportSettings(const QString fileName)
+void Settings::exportSettings(const QString& fileName)
 {
     QSettings* exportSettings = new QSettings(fileName, QSettings::IniFormat);
 
     const QStringList groups = settings->childGroups();
-    foreach(QString currentGroup, groups)
+    for(const QString& currentGroup : groups)
     {
         settings->beginGroup(currentGroup);
         const QStringList keys = settings->childKeys();
-        foreach(QString currentKey, keys)
+        for(const QString& currentKey : keys)
         {
             exportSettings->beginGroup(currentGroup);
             exportSettings->setValue(currentKey, getValue((currentGroup.toStdString()), (currentKey.toStdString())));
@@ -603,7 +603,7 @@ void Settings::exportSettings(const QString fileName)
     }
 }
 
-bool Settings::importSettings(const QString fileName)
+bool Settings::importSettings(const QString& fileName)
 {
     if(!isVaildSettingsFile(fileName))
         return false;
@@ -611,11 +611,11 @@ bool Settings::importSettings(const QString fileName)
     QSettings* importSettings = new QSettings(fileName, QSettings::IniFormat);
 
     const QStringList groups = importSettings->childGroups();
-    for(const QString currentGroup : groups)
+    for(const QString& currentGroup : groups)
     {
         importSettings->beginGroup(currentGroup);
         const QStringList keys = importSettings->childKeys();
-        for(const QString currentKey : keys)
+        for(const QString& currentKey : keys)
         {
             settings->beginGroup(currentGroup);
             settings->setValue(currentKey, importSettings->value(currentKey));

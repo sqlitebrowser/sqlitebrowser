@@ -13,7 +13,7 @@ class ImageViewer : public QWidget
 
 public:
     explicit ImageViewer(QWidget* parent = nullptr);
-    ~ImageViewer();
+    ~ImageViewer() override;
 
     void resetImage();
     void setImage(const QImage& image);

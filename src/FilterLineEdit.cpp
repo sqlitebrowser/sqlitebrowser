@@ -116,65 +116,65 @@ void FilterLineEdit::showContextMenu(const QPoint &pos)
     QMenu* filterMenu = editContextMenu->addMenu(tr("Set Filter Expression"));
 
     QAction* whatsThisAction = new QAction(QIcon(":/icons/whatis"), tr("What's This?"), editContextMenu);
-    connect(whatsThisAction, &QAction::triggered, [&]() {
+    connect(whatsThisAction, &QAction::triggered, this, [&]() {
             QWhatsThis::showText(pos, whatsThis(), this);
         });
 
     QAction* isNullAction = new QAction(tr("Is NULL"), editContextMenu);
-    connect(isNullAction, &QAction::triggered, [&]() {
+    connect(isNullAction, &QAction::triggered, this, [&]() {
             setText("=NULL");
         });
 
     QAction* isNotNullAction = new QAction(tr("Is not NULL"), editContextMenu);
-    connect(isNotNullAction, &QAction::triggered, [&]() {
+    connect(isNotNullAction, &QAction::triggered, this, [&]() {
             setText("<>NULL");
         });
 
     QAction* isEmptyAction = new QAction(tr("Is empty"), editContextMenu);
-    connect(isEmptyAction, &QAction::triggered, [&]() {
+    connect(isEmptyAction, &QAction::triggered, this, [&]() {
             setText("=''");
         });
 
     QAction* isNotEmptyAction = new QAction(tr("Is not empty"), editContextMenu);
-    connect(isNotEmptyAction, &QAction::triggered, [&]() {
+    connect(isNotEmptyAction, &QAction::triggered, this, [&]() {
             setText("<>''");
         });
     // Simplify this if we ever support a NOT LIKE filter
     QAction* notContainingAction = new QAction(tr("Not containing..."), editContextMenu);
-    connect(notContainingAction, &QAction::triggered, [&]() {
+    connect(notContainingAction, &QAction::triggered, this, [&]() {
             setFilterHelper(QString ("/^((?!"), QString(").)*$/"));
         });
     QAction* equalToAction = new QAction(tr("Equal to..."), editContextMenu);
-    connect(equalToAction, &QAction::triggered, [&]() {
+    connect(equalToAction, &QAction::triggered, this, [&]() {
             setFilterHelper(QString ("="));
         });
     QAction* notEqualToAction = new QAction(tr("Not equal to..."), editContextMenu);
-    connect(notEqualToAction, &QAction::triggered, [&]() {
+    connect(notEqualToAction, &QAction::triggered, this, [&]() {
             setFilterHelper(QString ("<>"));
         });
     QAction* greaterThanAction = new QAction(tr("Greater than..."), editContextMenu);
-    connect(greaterThanAction, &QAction::triggered, [&]() {
+    connect(greaterThanAction, &QAction::triggered, this, [&]() {
             setFilterHelper(QString (">"));
         });
     QAction* lessThanAction = new QAction(tr("Less than..."), editContextMenu);
-    connect(lessThanAction, &QAction::triggered, [&]() {
+    connect(lessThanAction, &QAction::triggered, this, [&]() {
             setFilterHelper(QString ("<"));
         });
     QAction* greaterEqualAction = new QAction(tr("Greater or equal..."), editContextMenu);
-    connect(greaterEqualAction, &QAction::triggered, [&]() {
+    connect(greaterEqualAction, &QAction::triggered, this, [&]() {
             setFilterHelper(QString (">="));
         });
     QAction* lessEqualAction = new QAction(tr("Less or equal..."), editContextMenu);
-    connect(lessEqualAction, &QAction::triggered, [&]() {
+    connect(lessEqualAction, &QAction::triggered, this, [&]() {
             setFilterHelper(QString ("<="));
         });
     QAction* inRangeAction = new QAction(tr("In range..."), editContextMenu);
-    connect(inRangeAction, &QAction::triggered, [&]() {
+    connect(inRangeAction, &QAction::triggered, this, [&]() {
             setFilterHelper(QString ("?~"));
         });
 
     QAction* regexpAction = new QAction(tr("Regular expression..."), editContextMenu);
-    connect(regexpAction, &QAction::triggered, [&]() {
+    connect(regexpAction, &QAction::triggered, this, [&]() {
             setFilterHelper(QString ("/"), QString ("/"));
         });
 
@@ -184,17 +184,17 @@ void FilterLineEdit::showContextMenu(const QPoint &pos)
         QAction* conditionalFormatAction;
         if (text().isEmpty()) {
             conditionalFormatAction = new QAction(QIcon(":/icons/clear_cond_formats"), tr("Clear All Conditional Formats"), editContextMenu);
-            connect(conditionalFormatAction, &QAction::triggered, [&]() {
+            connect(conditionalFormatAction, &QAction::triggered, this, [&]() {
                     emit clearAllCondFormats();
             });
         } else {
             conditionalFormatAction = new QAction(QIcon(":/icons/add_cond_format"), tr("Use for Conditional Format"), editContextMenu);
-            connect(conditionalFormatAction, &QAction::triggered, [&]() {
+            connect(conditionalFormatAction, &QAction::triggered, this, [&]() {
                     emit addFilterAsCondFormat(text());
             });
         }
         QAction* editCondFormatsAction = new QAction(QIcon(":/icons/edit_cond_formats"), tr("Edit Conditional Formats..."), editContextMenu);
-        connect(editCondFormatsAction, &QAction::triggered, [&]() {
+        connect(editCondFormatsAction, &QAction::triggered, this, [&]() {
             emit editCondFormats();
         });
         editContextMenu->addSeparator();

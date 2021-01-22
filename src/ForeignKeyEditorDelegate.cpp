@@ -30,14 +30,14 @@ public:
         layout->setMargin(0);
         setLayout(layout);
 
-        connect(m_btnReset, &QPushButton::clicked, [&]
+        connect(m_btnReset, &QPushButton::clicked, this, [&]
         {
             tablesComboBox->setCurrentIndex(-1);
             idsComboBox->setCurrentIndex(-1);
             clauseEdit->clear();
         });
 
-        connect(tablesComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+        connect(tablesComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this,
                 [=](int index)
         {
             // reset ids combo box
@@ -100,9 +100,11 @@ QWidget* ForeignKeyEditorDelegate::createEditor(QWidget* parent, const QStyleOpt
     ForeignKeyEditor* editor = new ForeignKeyEditor(parent);
     editor->setAutoFillBackground(true);
 
-    connect(editor->tablesComboBox, static_cast<void(QComboBox::*)(const QString&)>(&QComboBox::currentIndexChanged),
-            [=](const QString& tableName)
+    connect(editor->tablesComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this,
+            [=](int idx)
     {
+        QString tableName = editor->tablesComboBox->itemText(idx);
+
         QComboBox* box = editor->idsComboBox;
         box->clear();
         box->addItem(QString());                // for those heroes who don't like to specify key explicitly

@@ -310,7 +310,7 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     printAction->setShortcut(QKeySequence::Print);
 
     // Set up context menu actions
-    connect(this, &QTableView::customContextMenuRequested,
+    connect(this, &QTableView::customContextMenuRequested, this,
             [=](const QPoint& pos)
     {
         // Deactivate context menu options if there is no model set
@@ -338,70 +338,70 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
         // Show menu
         m_contextMenu->popup(viewport()->mapToGlobal(pos));
     });
-    connect(filterAction, &QAction::triggered, [&]() {
+    connect(filterAction, &QAction::triggered, this, [&]() {
         useAsFilter(QString ("="));
     });
-    connect(containingAction, &QAction::triggered, [&]() {
+    connect(containingAction, &QAction::triggered, this, [&]() {
             useAsFilter(QString (""));
         });
     // Use a regular expression for the not containing filter. Simplify this if we ever support the NOT LIKE filter.
-    connect(notContainingAction, &QAction::triggered, [&]() {
+    connect(notContainingAction, &QAction::triggered, this, [&]() {
             useAsFilter(QString ("/^((?!"), /* binary */ false, QString (").)*$/"));
         });
-    connect(notEqualToAction, &QAction::triggered, [&]() {
+    connect(notEqualToAction, &QAction::triggered, this, [&]() {
             useAsFilter(QString ("<>"));
         });
-    connect(greaterThanAction, &QAction::triggered, [&]() {
+    connect(greaterThanAction, &QAction::triggered, this, [&]() {
             useAsFilter(QString (">"));
         });
-    connect(lessThanAction, &QAction::triggered, [&]() {
+    connect(lessThanAction, &QAction::triggered, this, [&]() {
             useAsFilter(QString ("<"));
         });
-    connect(greaterEqualAction, &QAction::triggered, [&]() {
+    connect(greaterEqualAction, &QAction::triggered, this, [&]() {
             useAsFilter(QString (">="));
         });
-    connect(lessEqualAction, &QAction::triggered, [&]() {
+    connect(lessEqualAction, &QAction::triggered, this, [&]() {
             useAsFilter(QString ("<="));
         });
-    connect(inRangeAction, &QAction::triggered, [&]() {
+    connect(inRangeAction, &QAction::triggered, this, [&]() {
             useAsFilter(QString ("~"), /* binary */ true);
         });
-    connect(regexpAction, &QAction::triggered, [&]() {
+    connect(regexpAction, &QAction::triggered, this, [&]() {
             useAsFilter(QString ("/"), /* binary */ false, QString ("/"));
         });
-    connect(condFormatAction, &QAction::triggered, [&]() {
+    connect(condFormatAction, &QAction::triggered, this, [&]() {
         emit editCondFormats(currentIndex().column());
     });
 
-    connect(nullAction, &QAction::triggered, [&]() {
+    connect(nullAction, &QAction::triggered, this, [&]() {
        setToNull(selectedIndexes());
     });
-    connect(copyAction, &QAction::triggered, [&]() {
+    connect(copyAction, &QAction::triggered, this, [&]() {
        copy(false, false);
     });
     connect(cutAction, &QAction::triggered, this, &ExtendedTableWidget::cut);
-    connect(copyWithHeadersAction, &QAction::triggered, [&]() {
+    connect(copyWithHeadersAction, &QAction::triggered, this, [&]() {
        copy(true, false);
     });
-    connect(copyAsSQLAction, &QAction::triggered, [&]() {
+    connect(copyAsSQLAction, &QAction::triggered, this, [&]() {
        copy(false, true);
     });
-    connect(pasteAction, &QAction::triggered, [&]() {
+    connect(pasteAction, &QAction::triggered, this, [&]() {
        paste();
     });
-    connect(printAction, &QAction::triggered, [&]() {
+    connect(printAction, &QAction::triggered, this, [&]() {
        openPrintDialog();
     });
 
     // Add spreadsheet shortcuts for selecting entire columns or entire rows.
     QShortcut* selectColumnShortcut = new QShortcut(QKeySequence("Ctrl+Space"), this);
-    connect(selectColumnShortcut, &QShortcut::activated, [this]() {
+    connect(selectColumnShortcut, &QShortcut::activated, this, [this]() {
         if(!hasFocus() || selectionModel()->selectedIndexes().isEmpty())
             return;
         selectionModel()->select(QItemSelection(selectionModel()->selectedIndexes().first(), selectionModel()->selectedIndexes().last()), QItemSelectionModel::Select | QItemSelectionModel::Columns);
     });
     QShortcut* selectRowShortcut = new QShortcut(QKeySequence("Shift+Space"), this);
-    connect(selectRowShortcut, &QShortcut::activated, [this]() {
+    connect(selectRowShortcut, &QShortcut::activated, this, [this]() {
         if(!hasFocus() || selectionModel()->selectedIndexes().isEmpty())
             return;
         selectionModel()->select(QItemSelection(selectionModel()->selectedIndexes().first(), selectionModel()->selectedIndexes().last()), QItemSelectionModel::Select | QItemSelectionModel::Rows);
@@ -1131,7 +1131,7 @@ void ExtendedTableWidget::openPrintDialog()
     QPrinter printer;
     QPrintPreviewDialog *dialog = new QPrintPreviewDialog(&printer);
 
-    connect(dialog, &QPrintPreviewDialog::paintRequested, [mimeData](QPrinter *previewPrinter) {
+    connect(dialog, &QPrintPreviewDialog::paintRequested, this, [mimeData](QPrinter *previewPrinter) {
         QTextDocument document;
         document.setHtml(mimeData->html());
         document.print(previewPrinter);

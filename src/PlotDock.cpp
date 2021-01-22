@@ -75,14 +75,14 @@ PlotDock::PlotDock(QWidget* parent)
     QAction* copyAction = new QAction(QIcon(":/icons/copy"), tr("Copy"), m_contextMenu);
     copyAction->setShortcut(shortcutCopy->key());
     m_contextMenu->addAction(copyAction);
-    connect(copyAction, &QAction::triggered, [&]() {
+    connect(copyAction, &QAction::triggered, this, [&]() {
        copy();
     });
 
     QAction* printAction = new QAction(QIcon(":/icons/print"), tr("Print..."), m_contextMenu);
     printAction->setShortcut(shortcutPrint->key());
     m_contextMenu->addAction(printAction);
-    connect(printAction, &QAction::triggered, [&]() {
+    connect(printAction, &QAction::triggered, this, [&]() {
        openPrintDialog();
     });
 
@@ -109,7 +109,7 @@ PlotDock::PlotDock(QWidget* parent)
           ui->plotWidget->replot();
     });
 
-    connect(ui->plotWidget, &QTableView::customContextMenuRequested,
+    connect(ui->plotWidget, &QTableView::customContextMenuRequested, this,
             [=](const QPoint& pos) {
         // Show menu
         m_contextMenu->popup(ui->plotWidget->mapToGlobal(pos));

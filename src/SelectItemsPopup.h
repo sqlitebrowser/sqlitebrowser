@@ -19,7 +19,7 @@ class SelectItemsPopup : public QDialog
 
 public:
     explicit SelectItemsPopup(const std::vector<std::string>& available, const std::vector<std::string>& selected = {}, QWidget* parent = nullptr);
-    ~SelectItemsPopup();
+    ~SelectItemsPopup() override;
 
     std::vector<std::string> selectedItems() const;
 
@@ -33,7 +33,7 @@ private slots:
     void moveItemDown();
 
 protected:
-    void resizeEvent(QResizeEvent* ev);
+    void resizeEvent(QResizeEvent* ev) override;
 
 private:
     Ui::SelectItemsPopup* ui;

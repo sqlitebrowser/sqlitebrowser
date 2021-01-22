@@ -772,6 +772,8 @@ columndef:
 										}
 										break;
 									}
+									default:
+										break;
 									}
 								}
 

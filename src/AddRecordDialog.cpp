@@ -11,6 +11,8 @@
 #include <QLineEdit>
 #include <QMenu>
 
+namespace {
+
 class NullLineEdit: public QLineEdit {
     Q_OBJECT
 private:
@@ -33,23 +35,24 @@ public:
         m_isNull = value;
     }
 protected:
-    void contextMenuEvent(QContextMenuEvent *event)
-        {
-            QMenu* editContextMenu = createStandardContextMenu();
+    void contextMenuEvent(QContextMenuEvent *event) override
+    {
+        QMenu* editContextMenu = createStandardContextMenu();
 
-            QAction* nullAction = new QAction(QIcon(":/icons/set_to_null"), tr("Set to NULL"), editContextMenu);
-            connect(nullAction, &QAction::triggered, [&]() {
-                    setNull(true);
-                });
-            nullAction->setShortcut(QKeySequence(tr("Alt+Del")));
-            editContextMenu->addSeparator();
-            editContextMenu->addAction(nullAction);
+        QAction* nullAction = new QAction(QIcon(":/icons/set_to_null"), tr("Set to NULL"), editContextMenu);
+        connect(nullAction, &QAction::triggered, nullAction, [&]() {
+            setNull(true);
+        });
+        nullAction->setShortcut(QKeySequence(tr("Alt+Del")));
+        editContextMenu->addSeparator();
+        editContextMenu->addAction(nullAction);
 
-            editContextMenu->exec(event->globalPos());
-            delete editContextMenu;
-        }
+        editContextMenu->exec(event->globalPos());
+        delete editContextMenu;
+    }
 
-    void keyPressEvent(QKeyEvent *evt) {
+    void keyPressEvent(QKeyEvent *evt) override
+    {
         // Alt+Del sets field to NULL
         if((evt->modifiers() & Qt::AltModifier) && (evt->key() == Qt::Key_Delete))
             setNull(true);
@@ -111,6 +114,9 @@ public:
         }
     }
 };
+
+}
+
 
 AddRecordDialog::AddRecordDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& tableName, QWidget* parent, const std::vector<std::string>& _pseudo_pk)
     : QDialog(parent),
@@ -188,8 +194,10 @@ void AddRecordDialog::populateFields()
     {
         sqlb::TablePtr m_table = pdb.getObjectByName<sqlb::Table>(curTable);
         fields = m_table->fields;
-        for(const sqlb::Field& f : fields)
-            fks.push_back(m_table->constraint({f.name()}, sqlb::Constraint::ForeignKeyConstraintType));
+
+        std::transform(fields.begin(), fields.end(), std::back_inserter(fks), [m_table](const auto& f) {
+            return m_table->constraint({f.name()}, sqlb::Constraint::ForeignKeyConstraintType);
+        });
 
         const auto pk_constraint = m_table->primaryKey();
         if(pk_constraint)

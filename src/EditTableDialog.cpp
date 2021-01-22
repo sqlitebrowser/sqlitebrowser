@@ -58,10 +58,10 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
     constraint_menu->addAction(ui->actionAddForeignKey);
     constraint_menu->addAction(ui->actionAddUniqueConstraint);
     constraint_menu->addAction(ui->actionAddCheckConstraint);
-    connect(ui->actionAddPrimaryKey, &QAction::triggered, [this]() { addConstraint(sqlb::Constraint::PrimaryKeyConstraintType); });
-    connect(ui->actionAddForeignKey, &QAction::triggered, [this]() { addConstraint(sqlb::Constraint::ForeignKeyConstraintType); });
-    connect(ui->actionAddUniqueConstraint, &QAction::triggered, [this]() { addConstraint(sqlb::Constraint::UniqueConstraintType); });
-    connect(ui->actionAddCheckConstraint, &QAction::triggered, [this]() { addConstraint(sqlb::Constraint::CheckConstraintType); });
+    connect(ui->actionAddPrimaryKey, &QAction::triggered, this, [this]() { addConstraint(sqlb::Constraint::PrimaryKeyConstraintType); });
+    connect(ui->actionAddForeignKey, &QAction::triggered, this, [this]() { addConstraint(sqlb::Constraint::ForeignKeyConstraintType); });
+    connect(ui->actionAddUniqueConstraint, &QAction::triggered, this, [this]() { addConstraint(sqlb::Constraint::UniqueConstraintType); });
+    connect(ui->actionAddCheckConstraint, &QAction::triggered, this, [this]() { addConstraint(sqlb::Constraint::CheckConstraintType); });
     ui->buttonAddConstraint->setMenu(constraint_menu);
 
     // Get list of all collations
@@ -106,7 +106,7 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
     }
 
     // Enable/disable remove constraint button depending on whether a constraint is selected
-    connect(ui->tableConstraints, &QTableWidget::itemSelectionChanged, [this]() {
+    connect(ui->tableConstraints, &QTableWidget::itemSelectionChanged, this, [this]() {
         bool hasSelection = ui->tableConstraints->selectionModel()->hasSelection();
         ui->buttonRemoveConstraint->setEnabled(hasSelection);
     });
@@ -119,7 +119,7 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
     updateColumnWidth();
 
     // Allow editing of constraint columns by double clicking the columns column of the constraints table
-    connect(ui->tableConstraints, &QTableWidget::itemDoubleClicked, [this](QTableWidgetItem* item) {
+    connect(ui->tableConstraints, &QTableWidget::itemDoubleClicked, this, [this](QTableWidgetItem* item) {
         // Check whether the double clicked item is in the columns column
         if(item->column() == kConstraintColumns)
         {
@@ -137,7 +137,7 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
             dialog->show();
 
             // When clicking the Apply button in the popup dialog, save the new columns list
-            connect(dialog, &SelectItemsPopup::accepted, [this, dialog, constraint]() {
+            connect(dialog, &SelectItemsPopup::accepted, this, [this, dialog, constraint]() {
                 // Check if column selection changed at all
                 sqlb::StringVector new_columns = dialog->selectedItems();
                 if(constraint->columnList() != new_columns)
@@ -292,7 +292,7 @@ void EditTableDialog::populateConstraints()
         type->addItem(tr("Foreign Key"));
         type->addItem(tr("Check"));
         type->setCurrentIndex(constraint->type());
-        connect(type, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), [this, type, constraint](int index) {
+        connect(type, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, [this, type, constraint](int index) {
             // Handle change of constraint type. Effectively this means removing the old constraint and replacing it by an entirely new one.
             // Only the column list and the name can be migrated to the new constraint.
 

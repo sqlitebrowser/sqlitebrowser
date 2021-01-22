@@ -101,7 +101,7 @@ inline CSVField* addColumn(CSVRow& r, CSVField* field, bool trim)
 
 // This function takes a parsed CSV row and hands it back to the caller of the CSV parser. It returns a null pointer if the parsing should be
 // aborted, otherwise it returns a pointer to a new field object that can be used for storing the contents of the first field of the next row.
-inline CSVField* addRow(CSVParser::csvRowFunction& f, CSVRow& r, size_t& rowCount)
+inline CSVField* addRow(CSVParser::csvRowFunction f, CSVRow& r, size_t& rowCount)
 {
     // Call row function
     if(!f(rowCount, r))
@@ -285,7 +285,7 @@ CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStr
     {
         addColumn(record, field, m_bTrimFields);
 
-        if(!(field = addRow(insertFunction, record, parsedRows)))
+        if(!addRow(insertFunction, record, parsedRows))
             return ParserResult::ParserResultError;
     }
 
@@ -310,7 +310,7 @@ bool CSVParser::look_ahead(QTextStream& stream, QByteArray& sBuffer, const char*
     if(nit == *sBufferEnd && !stream.atEnd())
     {
         // Load one more byte
-        sBuffer.append(stream.read(1));
+        sBuffer.append(stream.read(1).toUtf8());
         *sBufferEnd = sBuffer.constEnd();
 
         // Restore both iterators. sBufferEnd points to the imagined char after the last one in the string. So the extra byte we've

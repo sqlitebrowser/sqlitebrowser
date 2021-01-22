@@ -67,10 +67,10 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
     popupHeaderMenu->addAction(ui->actionSetTableEncoding);
     popupHeaderMenu->addAction(ui->actionSetAllTablesEncoding);
 
-    connect(ui->actionSelectColumn, &QAction::triggered, [this]() {
+    connect(ui->actionSelectColumn, &QAction::triggered, this, [this]() {
         ui->dataTable->selectColumn(ui->actionBrowseTableEditDisplayFormat->property("clicked_column").toInt());
     });
-    connect(ui->actionFreezeColumns, &QAction::triggered, [this](bool checked) {
+    connect(ui->actionFreezeColumns, &QAction::triggered, this, [this](bool checked) {
         if(checked)
             freezeColumns(ui->actionBrowseTableEditDisplayFormat->property("clicked_column").toUInt() + 1);
         else
@@ -79,13 +79,13 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
 
     // Set up shortcuts
     QShortcut* dittoRecordShortcut = new QShortcut(QKeySequence("Ctrl+\""), this);
-    connect(dittoRecordShortcut, &QShortcut::activated, [this]() {
+    connect(dittoRecordShortcut, &QShortcut::activated, this, [this]() {
         int currentRow = ui->dataTable->currentIndex().row();
         duplicateRecord(currentRow);
     });
 
     // Lambda function for keyboard shortcuts for selecting next/previous table in Browse Data tab
-    connect(ui->dataTable, &ExtendedTableWidget::switchTable, [this](bool next) {
+    connect(ui->dataTable, &ExtendedTableWidget::switchTable, this, [this](bool next) {
         int index = ui->comboBrowseTable->currentIndex();
         int num_items = ui->comboBrowseTable->count();
         if(next)
@@ -120,10 +120,13 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
     // Set up global filter
     connect(ui->editGlobalFilter, &FilterLineEdit::delayedTextChanged, this, [this](const QString& value) {
         // Split up filter values
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
         QStringList values = value.trimmed().split(" ", QString::SkipEmptyParts);
+#else
+        QStringList values = value.trimmed().split(" ", Qt::SkipEmptyParts);
+#endif
         std::vector<QString> filters;
-        for(const auto& s : values)
-            filters.push_back(s);
+        std::copy(values.begin(), values.end(), std::back_inserter(filters));
 
         // Have they changed?
         BrowseDataTableSettings& settings = m_settings[currentlyBrowsedTableName()];
@@ -151,7 +154,7 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
     connect(ui->dataTable, &ExtendedTableWidget::openFileFromDropEvent, this, &TableBrowser::requestFileOpen);
     connect(ui->dataTable, &ExtendedTableWidget::selectedRowsToBeDeleted, this, &TableBrowser::deleteRecord);
 
-    connect(ui->dataTable, &ExtendedTableWidget::foreignKeyClicked, [this](const sqlb::ObjectIdentifier& table, const std::string& column, const QByteArray& value) {
+    connect(ui->dataTable, &ExtendedTableWidget::foreignKeyClicked, this, [this](const sqlb::ObjectIdentifier& table, const std::string& column, const QByteArray& value) {
         // Just select the column that was just clicked instead of selecting an entire range which
         // happens because of the Ctrl and Shift keys.
         ui->dataTable->selectionModel()->select(ui->dataTable->currentIndex(), QItemSelectionModel::ClearAndSelect);
@@ -289,7 +292,7 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
 
     QShortcut* shortcutActionFind = new QShortcut(QKeySequence("Ctrl+F"), this, nullptr, nullptr, Qt::WidgetWithChildrenShortcut);
     connect(shortcutActionFind, &QShortcut::activated, ui->actionFind, &QAction::trigger);
-    connect(ui->actionFind, &QAction::triggered, [this](bool checked) {
+    connect(ui->actionFind, &QAction::triggered, this, [this](bool checked) {
        if(checked)
        {
            ui->widgetReplace->hide();
@@ -303,7 +306,7 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
 
     QShortcut* shortcutActionReplace = new QShortcut(QKeySequence("Ctrl+H"), this, nullptr, nullptr, Qt::WidgetWithChildrenShortcut);
     connect(shortcutActionReplace, &QShortcut::activated, ui->actionReplace, &QAction::trigger);
-    connect(ui->actionReplace, &QAction::triggered, [this](bool checked) {
+    connect(ui->actionReplace, &QAction::triggered, this, [this](bool checked) {
        if(checked)
        {
            ui->widgetReplace->show();
@@ -462,7 +465,7 @@ void TableBrowser::refresh()
     {
         ui->dataTable->setModel(m_model);
         connect(ui->dataTable->selectionModel(), &QItemSelectionModel::currentChanged, this, &TableBrowser::selectionChanged);
-        connect(ui->dataTable->selectionModel(), &QItemSelectionModel::selectionChanged, [this](const QItemSelection&, const QItemSelection&) {
+        connect(ui->dataTable->selectionModel(), &QItemSelectionModel::selectionChanged, this, [this](const QItemSelection&, const QItemSelection&) {
             updateInsertDeleteRecordButton();
 
             const QModelIndexList& sel = ui->dataTable->selectionModel()->selectedIndexes();
@@ -1207,7 +1210,7 @@ void TableBrowser::showRecordPopupMenu(const QPoint& pos)
         // Select the row if it is not already in the selection.
         QModelIndexList rowList = ui->dataTable->selectionModel()->selectedRows();
         bool found = false;
-        for (QModelIndex index : rowList) {
+        for (const QModelIndex& index : rowList) {
             if (row == index.row()) {
                 found = true;
                 break;
@@ -1225,7 +1228,7 @@ void TableBrowser::showRecordPopupMenu(const QPoint& pos)
         action->setShortcut(QKeySequence(tr("Ctrl+\"")));
         popupRecordMenu.addAction(action);
 
-        connect(action, &QAction::triggered, [rowList, this]() {
+        connect(action, &QAction::triggered, this, [rowList, this]() {
             for (const QModelIndex& index : rowList)
                 duplicateRecord(index.row());
         });
@@ -1233,7 +1236,7 @@ void TableBrowser::showRecordPopupMenu(const QPoint& pos)
         QAction* deleteRecordAction = new QAction(QIcon(":icons/delete_record"), ui->actionDeleteRecord->text(), &popupRecordMenu);
         popupRecordMenu.addAction(deleteRecordAction);
 
-        connect(deleteRecordAction, &QAction::triggered, [&]() {
+        connect(deleteRecordAction, &QAction::triggered, this, [&]() {
             deleteRecord();
         });
 
@@ -1246,7 +1249,7 @@ void TableBrowser::showRecordPopupMenu(const QPoint& pos)
     adjustRowHeightAction->setChecked(m_adjustRows);
     popupRecordMenu.addAction(adjustRowHeightAction);
 
-    connect(adjustRowHeightAction, &QAction::toggled, [&](bool checked) {
+    connect(adjustRowHeightAction, &QAction::toggled, this, [&](bool checked) {
         m_adjustRows = checked;
         refresh();
     });

@@ -356,10 +356,11 @@ void PreferencesDialog::saveSettings(bool accept)
 
 void PreferencesDialog::showColourDialog(QTreeWidgetItem* item, int column)
 {
-    if(item->text(column).left(1) != "#")
+    QString text = item->text(column);
+    if(!text.size() || text.at(0) != '#')
         return;
 
-    QColor colour = QColorDialog::getColor(QColor(item->text(column)), this);
+    QColor colour = QColorDialog::getColor(text, this);
     if(colour.isValid())
     {
         item->setForeground(column, colour);

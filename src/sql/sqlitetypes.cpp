@@ -133,8 +133,7 @@ void UniqueConstraint::setColumnList(const StringVector& list)
 
     // Create our own column list without sort orders etc
     m_columns.clear();
-    for(const auto& c : list)
-        m_columns.push_back(IndexedColumn(c, false));
+    std::transform(list.begin(), list.end(), std::back_inserter(m_columns), [](const auto& c) { return IndexedColumn(c, false); });
 }
 
 void UniqueConstraint::addToColumnList(const std::string& key)
@@ -179,8 +178,7 @@ std::string UniqueConstraint::toSql() const
     if(m_columns.size())
     {
         std::vector<std::string> u_columns;
-        for(const auto& c : m_columns)
-            u_columns.push_back(c.toString("", " "));
+        std::transform(m_columns.begin(), m_columns.end(), std::back_inserter(u_columns), [](const auto& c) { return c.toString("", " "); });
         result += "(" + joinStringVector(u_columns, ",") + ")";
     }
 
@@ -223,8 +221,7 @@ std::string PrimaryKeyConstraint::toSql() const
         result = "CONSTRAINT " + escapeIdentifier(m_name) + " ";
 
     std::vector<std::string> pk_columns;
-    for(const auto& c : m_columns)
-        pk_columns.push_back(c.toString("", " "));
+    std::transform(m_columns.begin(), m_columns.end(), std::back_inserter(pk_columns), [](const auto& c) { return c.toString("", " "); });
     result += "PRIMARY KEY(" + joinStringVector(pk_columns, ",") + (m_auto_increment ? " AUTOINCREMENT" : "") + ")";
 
     if(!m_conflictAction.empty())
@@ -424,20 +421,14 @@ bool Table::operator==(const Table& rhs) const
 StringVector Table::fieldList() const
 {
     StringVector sl;
-
-    for(const Field& f : fields)
-        sl.push_back(f.toString());
-
+    std::transform(fields.begin(), fields.end(), std::back_inserter(sl), [](const auto& f) { return f.toString(); });
     return sl;
 }
 
 StringVector Table::fieldNames() const
 {
     StringVector sl;
-
-    for(const Field& f : fields)
-        sl.push_back(f.name());
-
+    std::transform(fields.begin(), fields.end(), std::back_inserter(sl), [](const auto& f) { return f.name(); });
     return sl;
 }
 
@@ -453,8 +444,7 @@ StringVector Table::rowidColumns() const
 FieldInfoList Table::fieldInformation() const
 {
     FieldInfoList result;
-    for(const Field& f : fields)
-        result.emplace_back(f.name(), f.type(), f.toString("  ", " "));
+    std::transform(fields.begin(), fields.end(), std::back_inserter(result), [](const auto& f) { return FieldInfo(f.name(), f.type(), f.toString("  ", " ")); });
     return result;
 }
 
@@ -558,11 +548,9 @@ ConstraintPtr Table::constraint(const StringVector& vStrFields, Constraint::Cons
 std::vector<ConstraintPtr> Table::constraints(const StringVector& vStrFields, Constraint::ConstraintTypes type) const
 {
     std::vector<ConstraintPtr> clist;
-    for(const auto& it : m_constraints)
-    {
-        if((type == Constraint::NoType || it->type() == type) && (vStrFields.empty() || it->columnList() == vStrFields))
-            clist.push_back(it);
-    }
+    std::copy_if(m_constraints.begin(), m_constraints.end(), std::back_inserter(clist), [vStrFields, type](const auto& c) {
+        return (type == Constraint::NoType || c->type() == type) && (vStrFields.empty() || c->columnList() == vStrFields);
+    });
     return clist;
 }
 
@@ -654,10 +642,7 @@ Index& Index::operator=(const Index& rhs)
 StringVector Index::columnSqlList() const
 {
     StringVector sl;
-
-    for(const IndexedColumn& c : fields)
-        sl.push_back(c.toString());
-
+    std::transform(fields.begin(), fields.end(), std::back_inserter(sl), [](const auto& c) { return c.toString(); });
     return sl;
 }
 
@@ -690,8 +675,7 @@ std::string Index::sql(const std::string& schema, bool ifNotExists) const
 FieldInfoList Index::fieldInformation() const
 {
     FieldInfoList result;
-    for(const IndexedColumn& c : fields)
-        result.emplace_back(c.name(), c.order(), c.toString("  ", " "));
+    std::transform(fields.begin(), fields.end(), std::back_inserter(result), [](const auto& c) { return FieldInfo(c.name(), c.order(), c.toString("  ", " ")); });
     return result;
 }
 
@@ -723,18 +707,14 @@ ViewPtr View::parseSQL(const std::string& sSQL)
 StringVector View::fieldNames() const
 {
     StringVector sl;
-
-    for(const Field& f : fields)
-        sl.push_back(f.name());
-
+    std::transform(fields.begin(), fields.end(), std::back_inserter(sl), [](const auto& f) { return f.name(); });
     return sl;
 }
 
 FieldInfoList View::fieldInformation() const
 {
     FieldInfoList result;
-    for(const Field& f : fields)
-        result.emplace_back(f.name(), f.type(), f.toString("  ", " "));
+    std::transform(fields.begin(), fields.end(), std::back_inserter(result), [](const auto& f) { return FieldInfo(f.name(), f.type(), f.toString("  ", " ")); });
     return result;
 }
 

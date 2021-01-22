@@ -225,16 +225,16 @@ QMimeData* DbStructureModel::mimeData(const QModelIndexList& indices) const
 
             // For names, export a (qualified) (escaped) identifier of the item for statement composition in SQL editor.
             if(objectType == "field")
-                namesData.append(getNameForDropping(item->text(ColumnSchema), item->parent()->text(ColumnName), item->text(ColumnName)));
+                namesData.append(getNameForDropping(item->text(ColumnSchema), item->parent()->text(ColumnName), item->text(ColumnName)).toUtf8());
             else if(objectType == "database")
-                namesData.append(getNameForDropping(item->text(ColumnName), "", ""));
+                namesData.append(getNameForDropping(item->text(ColumnName), "", "").toUtf8());
             else if(!objectType.isEmpty())
-                namesData.append(getNameForDropping(item->text(ColumnSchema), item->text(ColumnName), ""));
+                namesData.append(getNameForDropping(item->text(ColumnSchema), item->text(ColumnName), "").toUtf8());
 
             if(objectType != "field" && index.column() == ColumnSQL)
             {
                 // Add the SQL code used to create the object
-                sqlData.append(data(index, Qt::DisplayRole).toString() + ";\n");
+                sqlData.append(data(index, Qt::DisplayRole).toByteArray() + ";\n");
 
                 // If it is a table also add the content
                 if(objectType == "table")
@@ -254,7 +254,7 @@ QMimeData* DbStructureModel::mimeData(const QModelIndexList& indices) const
                                 insertStatement += QString("'%1',").arg(tableModel.data(tableModel.index(i, j), Qt::EditRole).toString());
                             insertStatement.chop(1);
                             insertStatement += ");\n";
-                            sqlData.append(insertStatement);
+                            sqlData.append(insertStatement.toUtf8());
                         }
                     }
                 }

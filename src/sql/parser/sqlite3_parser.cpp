@@ -1,4 +1,4 @@
-// A Bison parser, made by GNU Bison 3.7.2.
+// A Bison parser, made by GNU Bison 3.7.4.
 
 // Skeleton implementation for Bison LALR(1) parsers in C++
 
@@ -70,11 +70,9 @@
 
 			return str.substr(1, str.size()-2);
 		}
-
-		
 	}
 
-#line 78 "sqlite3_parser.cpp"
+#line 76 "sqlite3_parser.cpp"
 
 
 #ifndef YY_
@@ -167,7 +165,7 @@
 
 #line 10 "sqlite3_parser.yy"
 namespace  sqlb { namespace parser  {
-#line 171 "sqlite3_parser.cpp"
+#line 169 "sqlite3_parser.cpp"
 
   /// Build a parser object.
   parser::parser (yyscan_t yyscanner_yyarg, ParserDriver& drv_yyarg)
@@ -1435,1111 +1433,1111 @@ namespace  sqlb { namespace parser  {
           switch (yyn)
             {
   case 4: // statement: createindex_stmt
-#line 269 "sqlite3_parser.yy"
+#line 267 "sqlite3_parser.yy"
                                         { drv.result = yystack_[0].value.as < sqlb::IndexPtr > (); }
-#line 1441 "sqlite3_parser.cpp"
+#line 1439 "sqlite3_parser.cpp"
     break;
 
   case 5: // statement: createvirtualtable_stmt
-#line 270 "sqlite3_parser.yy"
+#line 268 "sqlite3_parser.yy"
                                         { drv.result = yystack_[0].value.as < sqlb::TablePtr > (); }
-#line 1447 "sqlite3_parser.cpp"
+#line 1445 "sqlite3_parser.cpp"
     break;
 
   case 6: // statement: createtable_stmt
-#line 271 "sqlite3_parser.yy"
+#line 269 "sqlite3_parser.yy"
                                         { drv.result = yystack_[0].value.as < sqlb::TablePtr > (); }
-#line 1453 "sqlite3_parser.cpp"
+#line 1451 "sqlite3_parser.cpp"
     break;
 
   case 7: // literalvalue: "numeric"
-#line 279 "sqlite3_parser.yy"
+#line 277 "sqlite3_parser.yy"
         { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1459 "sqlite3_parser.cpp"
+#line 1457 "sqlite3_parser.cpp"
     break;
 
   case 8: // literalvalue: "string literal"
-#line 280 "sqlite3_parser.yy"
+#line 278 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1465 "sqlite3_parser.cpp"
+#line 1463 "sqlite3_parser.cpp"
     break;
 
   case 9: // literalvalue: "blob literal"
-#line 281 "sqlite3_parser.yy"
+#line 279 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1471 "sqlite3_parser.cpp"
+#line 1469 "sqlite3_parser.cpp"
     break;
 
   case 10: // literalvalue: "NULL"
-#line 282 "sqlite3_parser.yy"
+#line 280 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1477 "sqlite3_parser.cpp"
+#line 1475 "sqlite3_parser.cpp"
     break;
 
   case 11: // literalvalue: "TRUE"
-#line 283 "sqlite3_parser.yy"
+#line 281 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1483 "sqlite3_parser.cpp"
+#line 1481 "sqlite3_parser.cpp"
     break;
 
   case 12: // literalvalue: "FALSE"
-#line 284 "sqlite3_parser.yy"
+#line 282 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1489 "sqlite3_parser.cpp"
+#line 1487 "sqlite3_parser.cpp"
     break;
 
   case 13: // literalvalue: "CURRENT_TIME"
-#line 285 "sqlite3_parser.yy"
+#line 283 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1495 "sqlite3_parser.cpp"
+#line 1493 "sqlite3_parser.cpp"
     break;
 
   case 14: // literalvalue: "CURRENT_DATE"
-#line 286 "sqlite3_parser.yy"
+#line 284 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1501 "sqlite3_parser.cpp"
+#line 1499 "sqlite3_parser.cpp"
     break;
 
   case 15: // literalvalue: "CURRENT_TIMESTAMP"
-#line 287 "sqlite3_parser.yy"
+#line 285 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1507 "sqlite3_parser.cpp"
+#line 1505 "sqlite3_parser.cpp"
     break;
 
   case 16: // id: "identifier"
-#line 291 "sqlite3_parser.yy"
+#line 289 "sqlite3_parser.yy"
         { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1513 "sqlite3_parser.cpp"
+#line 1511 "sqlite3_parser.cpp"
     break;
 
   case 17: // id: "quoted literal"
-#line 292 "sqlite3_parser.yy"
+#line 290 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1519 "sqlite3_parser.cpp"
+#line 1517 "sqlite3_parser.cpp"
     break;
 
   case 18: // allowed_keywords_as_identifier: "ABORT"
-#line 297 "sqlite3_parser.yy"
+#line 295 "sqlite3_parser.yy"
         { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1525 "sqlite3_parser.cpp"
+#line 1523 "sqlite3_parser.cpp"
     break;
 
   case 19: // allowed_keywords_as_identifier: "ACTION"
-#line 298 "sqlite3_parser.yy"
+#line 296 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1531 "sqlite3_parser.cpp"
+#line 1529 "sqlite3_parser.cpp"
     break;
 
   case 20: // allowed_keywords_as_identifier: "ALWAYS"
-#line 299 "sqlite3_parser.yy"
+#line 297 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1537 "sqlite3_parser.cpp"
+#line 1535 "sqlite3_parser.cpp"
     break;
 
   case 21: // allowed_keywords_as_identifier: "ASC"
-#line 300 "sqlite3_parser.yy"
+#line 298 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1543 "sqlite3_parser.cpp"
+#line 1541 "sqlite3_parser.cpp"
     break;
 
   case 22: // allowed_keywords_as_identifier: "CASCADE"
-#line 301 "sqlite3_parser.yy"
+#line 299 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1549 "sqlite3_parser.cpp"
+#line 1547 "sqlite3_parser.cpp"
     break;
 
   case 23: // allowed_keywords_as_identifier: "CAST"
-#line 302 "sqlite3_parser.yy"
+#line 300 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1555 "sqlite3_parser.cpp"
+#line 1553 "sqlite3_parser.cpp"
     break;
 
   case 24: // allowed_keywords_as_identifier: "CONFLICT"
-#line 303 "sqlite3_parser.yy"
+#line 301 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1561 "sqlite3_parser.cpp"
+#line 1559 "sqlite3_parser.cpp"
     break;
 
   case 25: // allowed_keywords_as_identifier: "DEFERRED"
-#line 304 "sqlite3_parser.yy"
+#line 302 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1567 "sqlite3_parser.cpp"
+#line 1565 "sqlite3_parser.cpp"
     break;
 
   case 26: // allowed_keywords_as_identifier: "DESC"
-#line 305 "sqlite3_parser.yy"
+#line 303 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1573 "sqlite3_parser.cpp"
+#line 1571 "sqlite3_parser.cpp"
     break;
 
   case 27: // allowed_keywords_as_identifier: "END"
-#line 306 "sqlite3_parser.yy"
+#line 304 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1579 "sqlite3_parser.cpp"
+#line 1577 "sqlite3_parser.cpp"
     break;
 
   case 28: // allowed_keywords_as_identifier: "FAIL"
-#line 307 "sqlite3_parser.yy"
+#line 305 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1585 "sqlite3_parser.cpp"
+#line 1583 "sqlite3_parser.cpp"
     break;
 
   case 29: // allowed_keywords_as_identifier: "FILTER"
-#line 308 "sqlite3_parser.yy"
+#line 306 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1591 "sqlite3_parser.cpp"
+#line 1589 "sqlite3_parser.cpp"
     break;
 
   case 30: // allowed_keywords_as_identifier: "FOLLOWING"
-#line 309 "sqlite3_parser.yy"
+#line 307 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1597 "sqlite3_parser.cpp"
+#line 1595 "sqlite3_parser.cpp"
     break;
 
   case 31: // allowed_keywords_as_identifier: "GENERATED"
-#line 310 "sqlite3_parser.yy"
+#line 308 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1603 "sqlite3_parser.cpp"
+#line 1601 "sqlite3_parser.cpp"
     break;
 
   case 32: // allowed_keywords_as_identifier: "GLOB"
-#line 311 "sqlite3_parser.yy"
+#line 309 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1609 "sqlite3_parser.cpp"
+#line 1607 "sqlite3_parser.cpp"
     break;
 
   case 33: // allowed_keywords_as_identifier: "KEY"
-#line 312 "sqlite3_parser.yy"
+#line 310 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1615 "sqlite3_parser.cpp"
+#line 1613 "sqlite3_parser.cpp"
     break;
 
   case 34: // allowed_keywords_as_identifier: "LIKE"
-#line 313 "sqlite3_parser.yy"
+#line 311 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1621 "sqlite3_parser.cpp"
+#line 1619 "sqlite3_parser.cpp"
     break;
 
   case 35: // allowed_keywords_as_identifier: "IGNORE"
-#line 314 "sqlite3_parser.yy"
+#line 312 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1627 "sqlite3_parser.cpp"
+#line 1625 "sqlite3_parser.cpp"
     break;
 
   case 36: // allowed_keywords_as_identifier: "INITIALLY"
-#line 315 "sqlite3_parser.yy"
+#line 313 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1633 "sqlite3_parser.cpp"
+#line 1631 "sqlite3_parser.cpp"
     break;
 
   case 37: // allowed_keywords_as_identifier: "IMMEDIATE"
-#line 316 "sqlite3_parser.yy"
+#line 314 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1639 "sqlite3_parser.cpp"
+#line 1637 "sqlite3_parser.cpp"
     break;
 
   case 38: // allowed_keywords_as_identifier: "MATCH"
-#line 317 "sqlite3_parser.yy"
+#line 315 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1645 "sqlite3_parser.cpp"
+#line 1643 "sqlite3_parser.cpp"
     break;
 
   case 39: // allowed_keywords_as_identifier: "NO"
-#line 318 "sqlite3_parser.yy"
+#line 316 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1651 "sqlite3_parser.cpp"
+#line 1649 "sqlite3_parser.cpp"
     break;
 
   case 40: // allowed_keywords_as_identifier: "OVER"
-#line 319 "sqlite3_parser.yy"
+#line 317 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1657 "sqlite3_parser.cpp"
+#line 1655 "sqlite3_parser.cpp"
     break;
 
   case 41: // allowed_keywords_as_identifier: "PARTITION"
-#line 320 "sqlite3_parser.yy"
+#line 318 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1663 "sqlite3_parser.cpp"
+#line 1661 "sqlite3_parser.cpp"
     break;
 
   case 42: // allowed_keywords_as_identifier: "PRECEDING"
-#line 321 "sqlite3_parser.yy"
+#line 319 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1669 "sqlite3_parser.cpp"
+#line 1667 "sqlite3_parser.cpp"
     break;
 
   case 43: // allowed_keywords_as_identifier: "RAISE"
-#line 322 "sqlite3_parser.yy"
+#line 320 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1675 "sqlite3_parser.cpp"
+#line 1673 "sqlite3_parser.cpp"
     break;
 
   case 44: // allowed_keywords_as_identifier: "RANGE"
-#line 323 "sqlite3_parser.yy"
+#line 321 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1681 "sqlite3_parser.cpp"
+#line 1679 "sqlite3_parser.cpp"
     break;
 
   case 45: // allowed_keywords_as_identifier: "REGEXP"
-#line 324 "sqlite3_parser.yy"
+#line 322 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1687 "sqlite3_parser.cpp"
+#line 1685 "sqlite3_parser.cpp"
     break;
 
   case 46: // allowed_keywords_as_identifier: "REPLACE"
-#line 325 "sqlite3_parser.yy"
+#line 323 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1693 "sqlite3_parser.cpp"
+#line 1691 "sqlite3_parser.cpp"
     break;
 
   case 47: // allowed_keywords_as_identifier: "RESTRICT"
-#line 326 "sqlite3_parser.yy"
+#line 324 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1699 "sqlite3_parser.cpp"
+#line 1697 "sqlite3_parser.cpp"
     break;
 
   case 48: // allowed_keywords_as_identifier: "ROLLBACK"
-#line 327 "sqlite3_parser.yy"
+#line 325 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1705 "sqlite3_parser.cpp"
+#line 1703 "sqlite3_parser.cpp"
     break;
 
   case 49: // allowed_keywords_as_identifier: "ROWID"
-#line 328 "sqlite3_parser.yy"
+#line 326 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1711 "sqlite3_parser.cpp"
+#line 1709 "sqlite3_parser.cpp"
     break;
 
   case 50: // allowed_keywords_as_identifier: "ROWS"
-#line 329 "sqlite3_parser.yy"
+#line 327 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1717 "sqlite3_parser.cpp"
+#line 1715 "sqlite3_parser.cpp"
     break;
 
   case 51: // allowed_keywords_as_identifier: "STORED"
-#line 330 "sqlite3_parser.yy"
+#line 328 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1723 "sqlite3_parser.cpp"
+#line 1721 "sqlite3_parser.cpp"
     break;
 
   case 52: // allowed_keywords_as_identifier: "TEMPORARY"
-#line 331 "sqlite3_parser.yy"
+#line 329 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1729 "sqlite3_parser.cpp"
+#line 1727 "sqlite3_parser.cpp"
     break;
 
   case 53: // allowed_keywords_as_identifier: "TEMP"
-#line 332 "sqlite3_parser.yy"
+#line 330 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1735 "sqlite3_parser.cpp"
+#line 1733 "sqlite3_parser.cpp"
     break;
 
   case 54: // allowed_keywords_as_identifier: "UNBOUNDED"
-#line 333 "sqlite3_parser.yy"
+#line 331 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1741 "sqlite3_parser.cpp"
+#line 1739 "sqlite3_parser.cpp"
     break;
 
   case 55: // allowed_keywords_as_identifier: "VIRTUAL"
-#line 334 "sqlite3_parser.yy"
+#line 332 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1747 "sqlite3_parser.cpp"
+#line 1745 "sqlite3_parser.cpp"
     break;
 
   case 56: // allowed_keywords_as_identifier: "WITHOUT"
-#line 335 "sqlite3_parser.yy"
+#line 333 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1753 "sqlite3_parser.cpp"
+#line 1751 "sqlite3_parser.cpp"
     break;
 
   case 57: // tableid: allowed_keywords_as_identifier
-#line 339 "sqlite3_parser.yy"
+#line 337 "sqlite3_parser.yy"
         { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1759 "sqlite3_parser.cpp"
+#line 1757 "sqlite3_parser.cpp"
     break;
 
   case 58: // tableid: "CURRENT_TIME"
-#line 340 "sqlite3_parser.yy"
+#line 338 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1765 "sqlite3_parser.cpp"
+#line 1763 "sqlite3_parser.cpp"
     break;
 
   case 59: // tableid: "CURRENT_DATE"
-#line 341 "sqlite3_parser.yy"
+#line 339 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1771 "sqlite3_parser.cpp"
+#line 1769 "sqlite3_parser.cpp"
     break;
 
   case 60: // tableid: "CURRENT_TIMESTAMP"
-#line 342 "sqlite3_parser.yy"
+#line 340 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1777 "sqlite3_parser.cpp"
+#line 1775 "sqlite3_parser.cpp"
     break;
 
   case 61: // tableid: id
-#line 343 "sqlite3_parser.yy"
+#line 341 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1783 "sqlite3_parser.cpp"
+#line 1781 "sqlite3_parser.cpp"
     break;
 
   case 62: // tableid: "string literal"
-#line 344 "sqlite3_parser.yy"
+#line 342 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = unquote_text(yystack_[0].value.as < std::string > (), '\''); }
-#line 1789 "sqlite3_parser.cpp"
+#line 1787 "sqlite3_parser.cpp"
     break;
 
   case 63: // columnid: allowed_keywords_as_identifier
-#line 348 "sqlite3_parser.yy"
+#line 346 "sqlite3_parser.yy"
         { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1795 "sqlite3_parser.cpp"
+#line 1793 "sqlite3_parser.cpp"
     break;
 
   case 64: // columnid: "CURRENT_TIME"
-#line 349 "sqlite3_parser.yy"
+#line 347 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1801 "sqlite3_parser.cpp"
+#line 1799 "sqlite3_parser.cpp"
     break;
 
   case 65: // columnid: "CURRENT_DATE"
-#line 350 "sqlite3_parser.yy"
+#line 348 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1807 "sqlite3_parser.cpp"
+#line 1805 "sqlite3_parser.cpp"
     break;
 
   case 66: // columnid: "CURRENT_TIMESTAMP"
-#line 351 "sqlite3_parser.yy"
+#line 349 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1813 "sqlite3_parser.cpp"
+#line 1811 "sqlite3_parser.cpp"
     break;
 
   case 67: // columnid: "IF"
-#line 352 "sqlite3_parser.yy"
+#line 350 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1819 "sqlite3_parser.cpp"
+#line 1817 "sqlite3_parser.cpp"
     break;
 
   case 68: // columnid: id
-#line 353 "sqlite3_parser.yy"
+#line 351 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1825 "sqlite3_parser.cpp"
+#line 1823 "sqlite3_parser.cpp"
     break;
 
   case 69: // columnid: "string literal"
-#line 354 "sqlite3_parser.yy"
+#line 352 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = unquote_text(yystack_[0].value.as < std::string > (), '\''); }
-#line 1831 "sqlite3_parser.cpp"
+#line 1829 "sqlite3_parser.cpp"
     break;
 
   case 70: // signednumber: "+" "numeric"
-#line 358 "sqlite3_parser.yy"
+#line 356 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = "+" + yystack_[0].value.as < std::string > (); }
-#line 1837 "sqlite3_parser.cpp"
+#line 1835 "sqlite3_parser.cpp"
     break;
 
   case 71: // signednumber: "-" "numeric"
-#line 359 "sqlite3_parser.yy"
+#line 357 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = "-" + yystack_[0].value.as < std::string > (); }
-#line 1843 "sqlite3_parser.cpp"
+#line 1841 "sqlite3_parser.cpp"
     break;
 
   case 72: // signednumber_or_numeric: signednumber
-#line 363 "sqlite3_parser.yy"
+#line 361 "sqlite3_parser.yy"
         { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1849 "sqlite3_parser.cpp"
+#line 1847 "sqlite3_parser.cpp"
     break;
 
   case 73: // signednumber_or_numeric: "numeric"
-#line 364 "sqlite3_parser.yy"
+#line 362 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1855 "sqlite3_parser.cpp"
+#line 1853 "sqlite3_parser.cpp"
     break;
 
   case 74: // typename_namelist: tableid
-#line 368 "sqlite3_parser.yy"
+#line 366 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1861 "sqlite3_parser.cpp"
+#line 1859 "sqlite3_parser.cpp"
     break;
 
   case 75: // typename_namelist: typename_namelist tableid
-#line 369 "sqlite3_parser.yy"
+#line 367 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = yystack_[1].value.as < std::string > () + " " + yystack_[0].value.as < std::string > (); }
-#line 1867 "sqlite3_parser.cpp"
+#line 1865 "sqlite3_parser.cpp"
     break;
 
   case 76: // type_name: typename_namelist
-#line 373 "sqlite3_parser.yy"
+#line 371 "sqlite3_parser.yy"
                                                                                         { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1873 "sqlite3_parser.cpp"
+#line 1871 "sqlite3_parser.cpp"
     break;
 
   case 77: // type_name: typename_namelist "(" signednumber_or_numeric ")"
-#line 374 "sqlite3_parser.yy"
+#line 372 "sqlite3_parser.yy"
                                                                                         { yylhs.value.as < std::string > () = yystack_[3].value.as < std::string > () + "(" + yystack_[1].value.as < std::string > () + ")"; }
-#line 1879 "sqlite3_parser.cpp"
+#line 1877 "sqlite3_parser.cpp"
     break;
 
   case 78: // type_name: typename_namelist "(" signednumber_or_numeric "," signednumber_or_numeric ")"
-#line 375 "sqlite3_parser.yy"
+#line 373 "sqlite3_parser.yy"
                                                                                         { yylhs.value.as < std::string > () = yystack_[5].value.as < std::string > () + "(" + yystack_[3].value.as < std::string > () + ", " + yystack_[1].value.as < std::string > () + ")"; }
-#line 1885 "sqlite3_parser.cpp"
+#line 1883 "sqlite3_parser.cpp"
     break;
 
   case 79: // unary_expr: "-" expr
-#line 379 "sqlite3_parser.yy"
+#line 377 "sqlite3_parser.yy"
                                 { yylhs.value.as < std::string > () = "-" + yystack_[0].value.as < std::string > (); }
-#line 1891 "sqlite3_parser.cpp"
+#line 1889 "sqlite3_parser.cpp"
     break;
 
   case 80: // unary_expr: "+" expr
-#line 380 "sqlite3_parser.yy"
+#line 378 "sqlite3_parser.yy"
                                 { yylhs.value.as < std::string > () = "+" + yystack_[0].value.as < std::string > (); }
-#line 1897 "sqlite3_parser.cpp"
+#line 1895 "sqlite3_parser.cpp"
     break;
 
   case 81: // unary_expr: "~" expr
-#line 381 "sqlite3_parser.yy"
+#line 379 "sqlite3_parser.yy"
                                 { yylhs.value.as < std::string > () = "~" + yystack_[0].value.as < std::string > (); }
-#line 1903 "sqlite3_parser.cpp"
+#line 1901 "sqlite3_parser.cpp"
     break;
 
   case 82: // unary_expr: "NOT" expr
-#line 382 "sqlite3_parser.yy"
+#line 380 "sqlite3_parser.yy"
                                 { yylhs.value.as < std::string > () = "NOT " + yystack_[0].value.as < std::string > (); }
-#line 1909 "sqlite3_parser.cpp"
+#line 1907 "sqlite3_parser.cpp"
     break;
 
   case 83: // binary_expr: expr "||" expr
-#line 386 "sqlite3_parser.yy"
+#line 384 "sqlite3_parser.yy"
                                 { yylhs.value.as < std::string > () = yystack_[2].value.as < std::string > () + " || " + yystack_[0].value.as < std::string > (); }
-#line 1915 "sqlite3_parser.cpp"
+#line 1913 "sqlite3_parser.cpp"
     break;
 
   case 84: // binary_expr: expr "*" expr
-#line 387 "sqlite3_parser.yy"
+#line 385 "sqlite3_parser.yy"
                                 { yylhs.value.as < std::string > () = yystack_[2].value.as < std::string > () + " * " + yystack_[0].value.as < std::string > (); }
-#line 1921 "sqlite3_parser.cpp"
+#line 1919 "sqlite3_parser.cpp"
     break;
 
   case 85: // binary_expr: expr "/" expr
-#line 388 "sqlite3_parser.yy"
+#line 386 "sqlite3_parser.yy"
                                 { yylhs.value.as < std::string > () = yystack_[2].value.as < std::string > () + " / " + yystack_[0].value.as < std::string > (); }
-#line 1927 "sqlite3_parser.cpp"
+#line 1925 "sqlite3_parser.cpp"
     break;
 
   case 86: // binary_expr: expr "%" expr
-#line 389 "sqlite3_parser.yy"
+#line 387 "sqlite3_parser.yy"
                                 { yylhs.value.as < std::string > () = yystack_[2].value.as < std::string > () + " % " + yystack_[0].value.as < std::string > (); }
-#line 1933 "sqlite3_parser.cpp"
+#line 1931 "sqlite3_parser.cpp"
     break;
 
   case 87: // binary_expr: expr "+" expr
-#line 390 "sqlite3_parser.yy"
+#line 388 "sqlite3_parser.yy"
                                 { yylhs.value.as < std::string > () = yystack_[2].value.as < std::string > () + " + " + yystack_[0].value.as < std::string > (); }
-#line 1939 "sqlite3_parser.cpp"
+#line 1937 "sqlite3_parser.cpp"
     break;
 
   case 88: // binary_expr: expr "-" expr
-#line 391 "sqlite3_parser.yy"
+#line 389 "sqlite3_parser.yy"
                                 { yylhs.value.as < std::string > () = yystack_[2].value.as < std::string > () + " - " + yystack_[0].value.as < std::string > (); }
-#line 1945 "sqlite3_parser.cpp"
+#line 1943 "sqlite3_parser.cpp"
     break;
 
   case 89: // binary_expr: expr "<<" expr
-#line 392 "sqlite3_parser.yy"
+#line 390 "sqlite3_parser.yy"
                                 { yylhs.value.as < std::string > () = yystack_[2].value.as < std::string > () + " << " + yystack_[0].value.as < std::string > (); }
-#line 1951 "sqlite3_parser.cpp"
+#line 1949 "sqlite3_parser.cpp"
     break;
 
   case 90: // binary_expr: expr ">>" expr
-#line 393 "sqlite3_parser.yy"
+#line 391 "sqlite3_parser.yy"
                                 { yylhs.value.as < std::string > () = yystack_[2].value.as < std::string > () + " >> " + yystack_[0].value.as < std::string > (); }
-#line 1957 "sqlite3_parser.cpp"
+#line 1955 "sqlite3_parser.cpp"
     break;
 
   case 91: // binary_expr: expr "&" expr
-#line 394 "sqlite3_parser.yy"
+#line 392 "sqlite3_parser.yy"
                                 { yylhs.value.as < std::string > () = yystack_[2].value.as < std::string > () + " & " + yystack_[0].value.as < std::string > (); }
-#line 1963 "sqlite3_parser.cpp"
+#line 1961 "sqlite3_parser.cpp"
     break;
 
   case 92: // binary_expr: expr "|" expr
-#line 395 "sqlite3_parser.yy"
+#line 393 "sqlite3_parser.yy"
                                 { yylhs.value.as < std::string > () = yystack_[2].value.as < std::string > () + " | " + yystack_[0].value.as < std::string > (); }
-#line 1969 "sqlite3_parser.cpp"
+#line 1967 "sqlite3_parser.cpp"
     break;
 
   case 93: // binary_expr: expr "<" expr
-#line 396 "sqlite3_parser.yy"
+#line 394 "sqlite3_parser.yy"
                                 { yylhs.value.as < std::string > () = yystack_[2].value.as < std::string > () + " < " + yystack_[0].value.as < std::string > (); }
-#line 1975 "sqlite3_parser.cpp"
+#line 1973 "sqlite3_parser.cpp"
     break;
 
   case 94: // binary_expr: expr "<=" expr
-#line 397 "sqlite3_parser.yy"
+#line 395 "sqlite3_parser.yy"
                                 { yylhs.value.as < std::string > () = yystack_[2].value.as < std::string > () + " <= " + yystack_[0].value.as < std::string > (); }
-#line 1981 "sqlite3_parser.cpp"
+#line 1979 "sqlite3_parser.cpp"
     break;
 
   case 95: // binary_expr: expr ">" expr
-#line 398 "sqlite3_parser.yy"
+#line 396 "sqlite3_parser.yy"
                                 { yylhs.value.as < std::string > () = yystack_[2].value.as < std::string > () + " > " + yystack_[0].value.as < std::string > (); }
-#line 1987 "sqlite3_parser.cpp"
+#line 1985 "sqlite3_parser.cpp"
     break;
 
   case 96: // binary_expr: expr ">=" expr
-#line 399 "sqlite3_parser.yy"
+#line 397 "sqlite3_parser.yy"
                                 { yylhs.value.as < std::string > () = yystack_[2].value.as < std::string > () + " >= " + yystack_[0].value.as < std::string > (); }
-#line 1993 "sqlite3_parser.cpp"
+#line 1991 "sqlite3_parser.cpp"
     break;
 
   case 97: // binary_expr: expr "=" expr
-#line 400 "sqlite3_parser.yy"
+#line 398 "sqlite3_parser.yy"
                                 { yylhs.value.as < std::string > () = yystack_[2].value.as < std::string > () + " = " + yystack_[0].value.as < std::string > (); }
-#line 1999 "sqlite3_parser.cpp"
+#line 1997 "sqlite3_parser.cpp"
     break;
 
   case 98: // binary_expr: expr "==" expr
-#line 401 "sqlite3_parser.yy"
+#line 399 "sqlite3_parser.yy"
                                 { yylhs.value.as < std::string > () = yystack_[2].value.as < std::string > () + " == " + yystack_[0].value.as < std::string > (); }
-#line 2005 "sqlite3_parser.cpp"
+#line 2003 "sqlite3_parser.cpp"
     break;
 
   case 99: // binary_expr: expr "!=" expr
-#line 402 "sqlite3_parser.yy"
+#line 400 "sqlite3_parser.yy"
                                 { yylhs.value.as < std::string > () = yystack_[2].value.as < std::string > () + " != " + yystack_[0].value.as < std::string > (); }
-#line 2011 "sqlite3_parser.cpp"
+#line 2009 "sqlite3_parser.cpp"
     break;
 
   case 100: // binary_expr: expr "<>" expr
-#line 403 "sqlite3_parser.yy"
+#line 401 "sqlite3_parser.yy"
                                 { yylhs.value.as < std::string > () = yystack_[2].value.as < std::string > () + " <> " + yystack_[0].value.as < std::string > (); }
-#line 2017 "sqlite3_parser.cpp"
+#line 2015 "sqlite3_parser.cpp"
     break;
 
   case 101: // binary_expr: expr "IS" expr
-#line 404 "sqlite3_parser.yy"
+#line 402 "sqlite3_parser.yy"
                                 { yylhs.value.as < std::string > () = yystack_[2].value.as < std::string > () + " IS " + yystack_[0].value.as < std::string > (); }
-#line 2023 "sqlite3_parser.cpp"
+#line 2021 "sqlite3_parser.cpp"
     break;
 
   case 102: // binary_expr: expr "AND" expr
-#line 405 "sqlite3_parser.yy"
+#line 403 "sqlite3_parser.yy"
                                 { yylhs.value.as < std::string > () = yystack_[2].value.as < std::string > () + " AND " + yystack_[0].value.as < std::string > (); }
-#line 2029 "sqlite3_parser.cpp"
+#line 2027 "sqlite3_parser.cpp"
     break;
 
   case 103: // binary_expr: expr "OR" expr
-#line 406 "sqlite3_parser.yy"
+#line 404 "sqlite3_parser.yy"
                                 { yylhs.value.as < std::string > () = yystack_[2].value.as < std::string > () + " OR " + yystack_[0].value.as < std::string > (); }
-#line 2035 "sqlite3_parser.cpp"
+#line 2033 "sqlite3_parser.cpp"
     break;
 
   case 104: // like_expr: expr "LIKE" expr
-#line 410 "sqlite3_parser.yy"
+#line 408 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[2].value.as < std::string > () + " LIKE " + yystack_[0].value.as < std::string > (); }
-#line 2041 "sqlite3_parser.cpp"
+#line 2039 "sqlite3_parser.cpp"
     break;
 
   case 105: // like_expr: expr "GLOB" expr
-#line 411 "sqlite3_parser.yy"
+#line 409 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[2].value.as < std::string > () + " GLOB " + yystack_[0].value.as < std::string > (); }
-#line 2047 "sqlite3_parser.cpp"
+#line 2045 "sqlite3_parser.cpp"
     break;
 
   case 106: // like_expr: expr "MATCH" expr
-#line 412 "sqlite3_parser.yy"
+#line 410 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[2].value.as < std::string > () + " MATCH " + yystack_[0].value.as < std::string > (); }
-#line 2053 "sqlite3_parser.cpp"
+#line 2051 "sqlite3_parser.cpp"
     break;
 
   case 107: // like_expr: expr "REGEXP" expr
-#line 413 "sqlite3_parser.yy"
+#line 411 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[2].value.as < std::string > () + " REGEXP " + yystack_[0].value.as < std::string > (); }
-#line 2059 "sqlite3_parser.cpp"
+#line 2057 "sqlite3_parser.cpp"
     break;
 
   case 108: // like_expr: expr "NOT" "LIKE" expr
-#line 414 "sqlite3_parser.yy"
+#line 412 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[3].value.as < std::string > () + " NOT LIKE " + yystack_[0].value.as < std::string > (); }
-#line 2065 "sqlite3_parser.cpp"
+#line 2063 "sqlite3_parser.cpp"
     break;
 
   case 109: // like_expr: expr "NOT" "GLOB" expr
-#line 415 "sqlite3_parser.yy"
+#line 413 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[3].value.as < std::string > () + " NOT GLOB " + yystack_[0].value.as < std::string > (); }
-#line 2071 "sqlite3_parser.cpp"
+#line 2069 "sqlite3_parser.cpp"
     break;
 
   case 110: // like_expr: expr "NOT" "MATCH" expr
-#line 416 "sqlite3_parser.yy"
+#line 414 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[3].value.as < std::string > () + " NOT MATCH " + yystack_[0].value.as < std::string > (); }
-#line 2077 "sqlite3_parser.cpp"
+#line 2075 "sqlite3_parser.cpp"
     break;
 
   case 111: // like_expr: expr "NOT" "REGEXP" expr
-#line 417 "sqlite3_parser.yy"
+#line 415 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[3].value.as < std::string > () + " NOT REGEXP " + yystack_[0].value.as < std::string > (); }
-#line 2083 "sqlite3_parser.cpp"
+#line 2081 "sqlite3_parser.cpp"
     break;
 
   case 112: // like_expr: expr "LIKE" expr "ESCAPE" expr
-#line 418 "sqlite3_parser.yy"
+#line 416 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[4].value.as < std::string > () + " LIKE " + yystack_[2].value.as < std::string > () + " ESCAPE " + yystack_[0].value.as < std::string > (); }
-#line 2089 "sqlite3_parser.cpp"
+#line 2087 "sqlite3_parser.cpp"
     break;
 
   case 113: // like_expr: expr "GLOB" expr "ESCAPE" expr
-#line 419 "sqlite3_parser.yy"
+#line 417 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[4].value.as < std::string > () + " GLOB " + yystack_[2].value.as < std::string > () + " ESCAPE " + yystack_[0].value.as < std::string > (); }
-#line 2095 "sqlite3_parser.cpp"
+#line 2093 "sqlite3_parser.cpp"
     break;
 
   case 114: // like_expr: expr "MATCH" expr "ESCAPE" expr
-#line 420 "sqlite3_parser.yy"
+#line 418 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[4].value.as < std::string > () + " MATCH " + yystack_[2].value.as < std::string > () + " ESCAPE " + yystack_[0].value.as < std::string > (); }
-#line 2101 "sqlite3_parser.cpp"
+#line 2099 "sqlite3_parser.cpp"
     break;
 
   case 115: // like_expr: expr "REGEXP" expr "ESCAPE" expr
-#line 421 "sqlite3_parser.yy"
+#line 419 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[4].value.as < std::string > () + " REGEXP " + yystack_[2].value.as < std::string > () + " ESCAPE " + yystack_[0].value.as < std::string > (); }
-#line 2107 "sqlite3_parser.cpp"
+#line 2105 "sqlite3_parser.cpp"
     break;
 
   case 116: // like_expr: expr "NOT" "LIKE" expr "ESCAPE" expr
-#line 422 "sqlite3_parser.yy"
+#line 420 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[5].value.as < std::string > () + " NOT LIKE " + yystack_[3].value.as < std::string > () + " ESCAPE " + yystack_[0].value.as < std::string > (); }
-#line 2113 "sqlite3_parser.cpp"
+#line 2111 "sqlite3_parser.cpp"
     break;
 
   case 117: // like_expr: expr "NOT" "GLOB" expr "ESCAPE" expr
-#line 423 "sqlite3_parser.yy"
+#line 421 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[5].value.as < std::string > () + " NOT GLOB " + yystack_[3].value.as < std::string > () + " ESCAPE " + yystack_[0].value.as < std::string > (); }
-#line 2119 "sqlite3_parser.cpp"
+#line 2117 "sqlite3_parser.cpp"
     break;
 
   case 118: // like_expr: expr "NOT" "MATCH" expr "ESCAPE" expr
-#line 424 "sqlite3_parser.yy"
+#line 422 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[5].value.as < std::string > () + " NOT MATCH " + yystack_[3].value.as < std::string > () + " ESCAPE " + yystack_[0].value.as < std::string > (); }
-#line 2125 "sqlite3_parser.cpp"
+#line 2123 "sqlite3_parser.cpp"
     break;
 
   case 119: // like_expr: expr "NOT" "REGEXP" expr "ESCAPE" expr
-#line 425 "sqlite3_parser.yy"
+#line 423 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[5].value.as < std::string > () + " NOT REGEXP " + yystack_[3].value.as < std::string > () + " ESCAPE " + yystack_[0].value.as < std::string > (); }
-#line 2131 "sqlite3_parser.cpp"
+#line 2129 "sqlite3_parser.cpp"
     break;
 
   case 120: // exprlist_expr: expr
-#line 429 "sqlite3_parser.yy"
+#line 427 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 2137 "sqlite3_parser.cpp"
+#line 2135 "sqlite3_parser.cpp"
     break;
 
   case 121: // exprlist_expr: exprlist_expr "," expr
-#line 430 "sqlite3_parser.yy"
+#line 428 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = yystack_[2].value.as < std::string > () + ", " + yystack_[0].value.as < std::string > (); }
-#line 2143 "sqlite3_parser.cpp"
+#line 2141 "sqlite3_parser.cpp"
     break;
 
   case 122: // function_expr: id "(" exprlist_expr ")"
-#line 434 "sqlite3_parser.yy"
+#line 432 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = yystack_[3].value.as < std::string > () + "(" + yystack_[1].value.as < std::string > () + ")"; }
-#line 2149 "sqlite3_parser.cpp"
+#line 2147 "sqlite3_parser.cpp"
     break;
 
   case 123: // function_expr: id "(" "DISTINCT" exprlist_expr ")"
-#line 435 "sqlite3_parser.yy"
+#line 433 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = yystack_[4].value.as < std::string > () + "(DISTINCT " + yystack_[1].value.as < std::string > () + ")"; }
-#line 2155 "sqlite3_parser.cpp"
+#line 2153 "sqlite3_parser.cpp"
     break;
 
   case 124: // function_expr: id "(" ")"
-#line 436 "sqlite3_parser.yy"
+#line 434 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = yystack_[2].value.as < std::string > () + "()"; }
-#line 2161 "sqlite3_parser.cpp"
+#line 2159 "sqlite3_parser.cpp"
     break;
 
   case 125: // function_expr: id "(" "*" ")"
-#line 437 "sqlite3_parser.yy"
+#line 435 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = yystack_[3].value.as < std::string > () + "(*)"; }
-#line 2167 "sqlite3_parser.cpp"
+#line 2165 "sqlite3_parser.cpp"
     break;
 
   case 126: // isnull_expr: expr "ISNULL"
-#line 441 "sqlite3_parser.yy"
+#line 439 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = yystack_[1].value.as < std::string > () + " ISNULL"; }
-#line 2173 "sqlite3_parser.cpp"
+#line 2171 "sqlite3_parser.cpp"
     break;
 
   case 127: // isnull_expr: expr "NOTNULL"
-#line 442 "sqlite3_parser.yy"
+#line 440 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = yystack_[1].value.as < std::string > () + " NOTNULL"; }
-#line 2179 "sqlite3_parser.cpp"
+#line 2177 "sqlite3_parser.cpp"
     break;
 
   case 128: // isnull_expr: expr "NOT" "NULL"
-#line 443 "sqlite3_parser.yy"
+#line 441 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = yystack_[2].value.as < std::string > () + " NOT NULL"; }
-#line 2185 "sqlite3_parser.cpp"
+#line 2183 "sqlite3_parser.cpp"
     break;
 
   case 129: // between_expr: expr "BETWEEN" expr "AND BETWEEN" expr
-#line 447 "sqlite3_parser.yy"
+#line 445 "sqlite3_parser.yy"
                                                                 { yylhs.value.as < std::string > () = yystack_[4].value.as < std::string > () + " BETWEEN " + yystack_[2].value.as < std::string > () + " AND " + yystack_[0].value.as < std::string > (); }
-#line 2191 "sqlite3_parser.cpp"
+#line 2189 "sqlite3_parser.cpp"
     break;
 
   case 130: // between_expr: expr "NOT" "BETWEEN" expr "AND BETWEEN" expr
-#line 448 "sqlite3_parser.yy"
+#line 446 "sqlite3_parser.yy"
                                                                 { yylhs.value.as < std::string > () = yystack_[5].value.as < std::string > () + " NOT BETWEEN " + yystack_[2].value.as < std::string > () + " AND " + yystack_[0].value.as < std::string > (); }
-#line 2197 "sqlite3_parser.cpp"
+#line 2195 "sqlite3_parser.cpp"
     break;
 
   case 131: // in_expr: expr "IN" "(" ")"
-#line 452 "sqlite3_parser.yy"
+#line 450 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[3].value.as < std::string > () + " IN ()"; }
-#line 2203 "sqlite3_parser.cpp"
+#line 2201 "sqlite3_parser.cpp"
     break;
 
   case 132: // in_expr: expr "IN" "(" select_stmt ")"
-#line 453 "sqlite3_parser.yy"
+#line 451 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[4].value.as < std::string > () + " IN (" + yystack_[1].value.as < std::string > () + ")"; }
-#line 2209 "sqlite3_parser.cpp"
+#line 2207 "sqlite3_parser.cpp"
     break;
 
   case 133: // in_expr: expr "IN" "(" exprlist_expr ")"
-#line 454 "sqlite3_parser.yy"
+#line 452 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[4].value.as < std::string > () + " IN (" + yystack_[1].value.as < std::string > () + ")"; }
-#line 2215 "sqlite3_parser.cpp"
+#line 2213 "sqlite3_parser.cpp"
     break;
 
   case 134: // in_expr: expr "IN" id "." tableid
-#line 455 "sqlite3_parser.yy"
+#line 453 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[4].value.as < std::string > () + " IN " + sqlb::escapeIdentifier(yystack_[2].value.as < std::string > ()) + "." + sqlb::escapeIdentifier(yystack_[0].value.as < std::string > ()); }
-#line 2221 "sqlite3_parser.cpp"
+#line 2219 "sqlite3_parser.cpp"
     break;
 
   case 135: // in_expr: expr "IN" tableid
-#line 456 "sqlite3_parser.yy"
+#line 454 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[2].value.as < std::string > () + " IN " + sqlb::escapeIdentifier(yystack_[0].value.as < std::string > ()); }
-#line 2227 "sqlite3_parser.cpp"
+#line 2225 "sqlite3_parser.cpp"
     break;
 
   case 136: // in_expr: expr "IN" id "." id "(" ")"
-#line 457 "sqlite3_parser.yy"
+#line 455 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[6].value.as < std::string > () + " IN " + sqlb::escapeIdentifier(yystack_[4].value.as < std::string > ()) + "." + yystack_[2].value.as < std::string > () + "()"; }
-#line 2233 "sqlite3_parser.cpp"
+#line 2231 "sqlite3_parser.cpp"
     break;
 
   case 137: // in_expr: expr "IN" id "." id "(" exprlist_expr ")"
-#line 458 "sqlite3_parser.yy"
+#line 456 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[7].value.as < std::string > () + " IN " + sqlb::escapeIdentifier(yystack_[5].value.as < std::string > ()) + "." + yystack_[3].value.as < std::string > () + "(" + yystack_[1].value.as < std::string > () + ")"; }
-#line 2239 "sqlite3_parser.cpp"
+#line 2237 "sqlite3_parser.cpp"
     break;
 
   case 138: // in_expr: expr "IN" id "(" exprlist_expr ")"
-#line 459 "sqlite3_parser.yy"
+#line 457 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[5].value.as < std::string > () + " IN " + yystack_[3].value.as < std::string > () + "(" + yystack_[1].value.as < std::string > () + ")"; }
-#line 2245 "sqlite3_parser.cpp"
+#line 2243 "sqlite3_parser.cpp"
     break;
 
   case 139: // in_expr: expr "NOT" "IN" "(" ")"
-#line 460 "sqlite3_parser.yy"
+#line 458 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[4].value.as < std::string > () + " NOT IN ()"; }
-#line 2251 "sqlite3_parser.cpp"
+#line 2249 "sqlite3_parser.cpp"
     break;
 
   case 140: // in_expr: expr "NOT" "IN" "(" select_stmt ")"
-#line 461 "sqlite3_parser.yy"
+#line 459 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[5].value.as < std::string > () + " NOT IN (" + yystack_[1].value.as < std::string > () + ")"; }
-#line 2257 "sqlite3_parser.cpp"
+#line 2255 "sqlite3_parser.cpp"
     break;
 
   case 141: // in_expr: expr "NOT" "IN" "(" exprlist_expr ")"
-#line 462 "sqlite3_parser.yy"
+#line 460 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[5].value.as < std::string > () + " NOT IN (" + yystack_[1].value.as < std::string > () + ")"; }
-#line 2263 "sqlite3_parser.cpp"
+#line 2261 "sqlite3_parser.cpp"
     break;
 
   case 142: // in_expr: expr "NOT" "IN" id "." tableid
-#line 463 "sqlite3_parser.yy"
+#line 461 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[5].value.as < std::string > () + " NOT IN " + sqlb::escapeIdentifier(yystack_[2].value.as < std::string > ()) + "." + sqlb::escapeIdentifier(yystack_[0].value.as < std::string > ()); }
-#line 2269 "sqlite3_parser.cpp"
+#line 2267 "sqlite3_parser.cpp"
     break;
 
   case 143: // in_expr: expr "NOT" "IN" tableid
-#line 464 "sqlite3_parser.yy"
+#line 462 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[3].value.as < std::string > () + " NOT IN " + sqlb::escapeIdentifier(yystack_[0].value.as < std::string > ()); }
-#line 2275 "sqlite3_parser.cpp"
+#line 2273 "sqlite3_parser.cpp"
     break;
 
   case 144: // in_expr: expr "NOT" "IN" id "." id "(" ")"
-#line 465 "sqlite3_parser.yy"
+#line 463 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[7].value.as < std::string > () + " NOT IN " + sqlb::escapeIdentifier(yystack_[4].value.as < std::string > ()) + "." + yystack_[2].value.as < std::string > () + "()"; }
-#line 2281 "sqlite3_parser.cpp"
+#line 2279 "sqlite3_parser.cpp"
     break;
 
   case 145: // in_expr: expr "NOT" "IN" id "." id "(" exprlist_expr ")"
-#line 466 "sqlite3_parser.yy"
+#line 464 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[8].value.as < std::string > () + " NOT IN " + sqlb::escapeIdentifier(yystack_[5].value.as < std::string > ()) + "." + yystack_[3].value.as < std::string > () + "(" + yystack_[1].value.as < std::string > () + ")"; }
-#line 2287 "sqlite3_parser.cpp"
+#line 2285 "sqlite3_parser.cpp"
     break;
 
   case 146: // in_expr: expr "NOT" "IN" id "(" exprlist_expr ")"
-#line 467 "sqlite3_parser.yy"
+#line 465 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[6].value.as < std::string > () + " NOT IN " + yystack_[3].value.as < std::string > () + "(" + yystack_[1].value.as < std::string > () + ")"; }
-#line 2293 "sqlite3_parser.cpp"
+#line 2291 "sqlite3_parser.cpp"
     break;
 
   case 147: // whenthenlist_expr: "WHEN" expr "THEN" expr
-#line 471 "sqlite3_parser.yy"
+#line 469 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = "WHEN " + yystack_[2].value.as < std::string > () + " THEN " + yystack_[0].value.as < std::string > (); }
-#line 2299 "sqlite3_parser.cpp"
+#line 2297 "sqlite3_parser.cpp"
     break;
 
   case 148: // whenthenlist_expr: whenthenlist_expr "WHEN" expr "THEN" expr
-#line 472 "sqlite3_parser.yy"
+#line 470 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[4].value.as < std::string > () + " WHEN" + yystack_[2].value.as < std::string > () + " THEN " + yystack_[0].value.as < std::string > (); }
-#line 2305 "sqlite3_parser.cpp"
+#line 2303 "sqlite3_parser.cpp"
     break;
 
   case 149: // case_expr: "CASE" expr whenthenlist_expr "ELSE" expr "END"
-#line 476 "sqlite3_parser.yy"
+#line 474 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = "CASE " + yystack_[4].value.as < std::string > () + " " + yystack_[3].value.as < std::string > () + " ELSE " + yystack_[1].value.as < std::string > () + " END"; }
-#line 2311 "sqlite3_parser.cpp"
+#line 2309 "sqlite3_parser.cpp"
     break;
 
   case 150: // case_expr: "CASE" expr whenthenlist_expr "END"
-#line 477 "sqlite3_parser.yy"
+#line 475 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = "CASE " + yystack_[2].value.as < std::string > () + " " + yystack_[1].value.as < std::string > () + " END"; }
-#line 2317 "sqlite3_parser.cpp"
+#line 2315 "sqlite3_parser.cpp"
     break;
 
   case 151: // case_expr: "CASE" whenthenlist_expr "ELSE" expr "END"
-#line 478 "sqlite3_parser.yy"
+#line 476 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = "CASE " + yystack_[3].value.as < std::string > () + " ELSE " + yystack_[1].value.as < std::string > () + " END"; }
-#line 2323 "sqlite3_parser.cpp"
+#line 2321 "sqlite3_parser.cpp"
     break;
 
   case 152: // case_expr: "CASE" whenthenlist_expr "END"
-#line 479 "sqlite3_parser.yy"
+#line 477 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = "CASE " + yystack_[1].value.as < std::string > () + " END"; }
-#line 2329 "sqlite3_parser.cpp"
+#line 2327 "sqlite3_parser.cpp"
     break;
 
   case 153: // raise_expr: "RAISE" "(" "IGNORE" ")"
-#line 483 "sqlite3_parser.yy"
+#line 481 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = "RAISE(IGNORE)"; }
-#line 2335 "sqlite3_parser.cpp"
+#line 2333 "sqlite3_parser.cpp"
     break;
 
   case 154: // raise_expr: "RAISE" "(" "ROLLBACK" "," "string literal" ")"
-#line 484 "sqlite3_parser.yy"
+#line 482 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = "RAISE(ROLLBACK, " + yystack_[1].value.as < std::string > () + ")"; }
-#line 2341 "sqlite3_parser.cpp"
+#line 2339 "sqlite3_parser.cpp"
     break;
 
   case 155: // raise_expr: "RAISE" "(" "ABORT" "," "string literal" ")"
-#line 485 "sqlite3_parser.yy"
+#line 483 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = "RAISE(ABORT, " + yystack_[1].value.as < std::string > () + ")"; }
-#line 2347 "sqlite3_parser.cpp"
+#line 2345 "sqlite3_parser.cpp"
     break;
 
   case 156: // raise_expr: "RAISE" "(" "FAIL" "," "string literal" ")"
-#line 486 "sqlite3_parser.yy"
+#line 484 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = "RAISE(FAIL, " + yystack_[1].value.as < std::string > () + ")"; }
-#line 2353 "sqlite3_parser.cpp"
+#line 2351 "sqlite3_parser.cpp"
     break;
 
   case 157: // expr: literalvalue
-#line 490 "sqlite3_parser.yy"
+#line 488 "sqlite3_parser.yy"
         { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 2359 "sqlite3_parser.cpp"
+#line 2357 "sqlite3_parser.cpp"
     break;
 
   case 158: // expr: allowed_keywords_as_identifier
-#line 491 "sqlite3_parser.yy"
+#line 489 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = sqlb::escapeIdentifier(yystack_[0].value.as < std::string > ()); }
-#line 2365 "sqlite3_parser.cpp"
+#line 2363 "sqlite3_parser.cpp"
     break;
 
   case 159: // expr: "bind parameter"
-#line 492 "sqlite3_parser.yy"
+#line 490 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 2371 "sqlite3_parser.cpp"
+#line 2369 "sqlite3_parser.cpp"
     break;
 
   case 160: // expr: id "." id "." id
-#line 493 "sqlite3_parser.yy"
+#line 491 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = sqlb::escapeIdentifier(yystack_[4].value.as < std::string > ()) + "." + sqlb::escapeIdentifier(yystack_[2].value.as < std::string > ()) + "." + sqlb::escapeIdentifier(yystack_[0].value.as < std::string > ()); }
-#line 2377 "sqlite3_parser.cpp"
+#line 2375 "sqlite3_parser.cpp"
     break;
 
   case 161: // expr: id "." id
-#line 494 "sqlite3_parser.yy"
+#line 492 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = sqlb::escapeIdentifier(yystack_[2].value.as < std::string > ()) + "." + sqlb::escapeIdentifier(yystack_[0].value.as < std::string > ()); }
-#line 2383 "sqlite3_parser.cpp"
+#line 2381 "sqlite3_parser.cpp"
     break;
 
   case 162: // expr: id
-#line 495 "sqlite3_parser.yy"
+#line 493 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = sqlb::escapeIdentifier(yystack_[0].value.as < std::string > ()); }
-#line 2389 "sqlite3_parser.cpp"
+#line 2387 "sqlite3_parser.cpp"
     break;
 
   case 163: // expr: unary_expr
-#line 496 "sqlite3_parser.yy"
+#line 494 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 2395 "sqlite3_parser.cpp"
+#line 2393 "sqlite3_parser.cpp"
     break;
 
   case 164: // expr: binary_expr
-#line 497 "sqlite3_parser.yy"
+#line 495 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 2401 "sqlite3_parser.cpp"
+#line 2399 "sqlite3_parser.cpp"
     break;
 
   case 165: // expr: function_expr
-#line 498 "sqlite3_parser.yy"
+#line 496 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 2407 "sqlite3_parser.cpp"
+#line 2405 "sqlite3_parser.cpp"
     break;
 
   case 166: // expr: "(" exprlist_expr ")"
-#line 499 "sqlite3_parser.yy"
+#line 497 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = "(" + yystack_[1].value.as < std::string > () + ")"; }
-#line 2413 "sqlite3_parser.cpp"
+#line 2411 "sqlite3_parser.cpp"
     break;
 
   case 167: // expr: "CAST" "(" expr "AS" type_name ")"
-#line 500 "sqlite3_parser.yy"
+#line 498 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = "CAST(" + yystack_[3].value.as < std::string > () + " AS " + yystack_[1].value.as < std::string > () + ")"; }
-#line 2419 "sqlite3_parser.cpp"
+#line 2417 "sqlite3_parser.cpp"
     break;
 
   case 168: // expr: expr "COLLATE" id
-#line 501 "sqlite3_parser.yy"
+#line 499 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = yystack_[2].value.as < std::string > () + " COLLATE " + yystack_[0].value.as < std::string > (); }
-#line 2425 "sqlite3_parser.cpp"
+#line 2423 "sqlite3_parser.cpp"
     break;
 
   case 169: // expr: like_expr
-#line 502 "sqlite3_parser.yy"
+#line 500 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 2431 "sqlite3_parser.cpp"
+#line 2429 "sqlite3_parser.cpp"
     break;
 
   case 170: // expr: isnull_expr
-#line 503 "sqlite3_parser.yy"
+#line 501 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 2437 "sqlite3_parser.cpp"
+#line 2435 "sqlite3_parser.cpp"
     break;
 
   case 171: // expr: between_expr
-#line 504 "sqlite3_parser.yy"
+#line 502 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 2443 "sqlite3_parser.cpp"
+#line 2441 "sqlite3_parser.cpp"
     break;
 
   case 172: // expr: in_expr
-#line 505 "sqlite3_parser.yy"
+#line 503 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 2449 "sqlite3_parser.cpp"
+#line 2447 "sqlite3_parser.cpp"
     break;
 
   case 173: // expr: case_expr
-#line 506 "sqlite3_parser.yy"
+#line 504 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 2455 "sqlite3_parser.cpp"
+#line 2453 "sqlite3_parser.cpp"
     break;
 
   case 174: // expr: raise_expr
-#line 507 "sqlite3_parser.yy"
+#line 505 "sqlite3_parser.yy"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 2461 "sqlite3_parser.cpp"
+#line 2459 "sqlite3_parser.cpp"
     break;
 
   case 175: // select_stmt: "SELECT"
-#line 516 "sqlite3_parser.yy"
+#line 514 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = "SELECT"; }
-#line 2467 "sqlite3_parser.cpp"
+#line 2465 "sqlite3_parser.cpp"
     break;
 
   case 176: // optional_if_not_exists: %empty
-#line 524 "sqlite3_parser.yy"
+#line 522 "sqlite3_parser.yy"
                                                 { yylhs.value.as < bool > () = false; }
-#line 2473 "sqlite3_parser.cpp"
+#line 2471 "sqlite3_parser.cpp"
     break;
 
   case 177: // optional_if_not_exists: "IF" "NOT" "EXISTS"
-#line 525 "sqlite3_parser.yy"
+#line 523 "sqlite3_parser.yy"
                                                 { yylhs.value.as < bool > () = true; }
-#line 2479 "sqlite3_parser.cpp"
+#line 2477 "sqlite3_parser.cpp"
     break;
 
   case 178: // optional_sort_order: %empty
-#line 529 "sqlite3_parser.yy"
+#line 527 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = ""; }
-#line 2485 "sqlite3_parser.cpp"
+#line 2483 "sqlite3_parser.cpp"
     break;
 
   case 179: // optional_sort_order: "ASC"
-#line 530 "sqlite3_parser.yy"
+#line 528 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = "ASC"; }
-#line 2491 "sqlite3_parser.cpp"
+#line 2489 "sqlite3_parser.cpp"
     break;
 
   case 180: // optional_sort_order: "DESC"
-#line 531 "sqlite3_parser.yy"
+#line 529 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = "DESC"; }
-#line 2497 "sqlite3_parser.cpp"
+#line 2495 "sqlite3_parser.cpp"
     break;
 
   case 181: // optional_unique: %empty
-#line 539 "sqlite3_parser.yy"
+#line 537 "sqlite3_parser.yy"
                                                 { yylhs.value.as < bool > () = false; }
-#line 2503 "sqlite3_parser.cpp"
+#line 2501 "sqlite3_parser.cpp"
     break;
 
   case 182: // optional_unique: "UNIQUE"
-#line 540 "sqlite3_parser.yy"
+#line 538 "sqlite3_parser.yy"
                                                 { yylhs.value.as < bool > () = true; }
-#line 2509 "sqlite3_parser.cpp"
+#line 2507 "sqlite3_parser.cpp"
     break;
 
   case 183: // optional_where: %empty
-#line 544 "sqlite3_parser.yy"
+#line 542 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = ""; }
-#line 2515 "sqlite3_parser.cpp"
+#line 2513 "sqlite3_parser.cpp"
     break;
 
   case 184: // optional_where: "WHERE" expr
-#line 545 "sqlite3_parser.yy"
+#line 543 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 2521 "sqlite3_parser.cpp"
+#line 2519 "sqlite3_parser.cpp"
     break;
 
   case 185: // tableid_with_uninteresting_schema: id "." tableid
-#line 549 "sqlite3_parser.yy"
+#line 547 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 2527 "sqlite3_parser.cpp"
+#line 2525 "sqlite3_parser.cpp"
     break;
 
   case 186: // tableid_with_uninteresting_schema: "TEMP" "." tableid
-#line 550 "sqlite3_parser.yy"
+#line 548 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 2533 "sqlite3_parser.cpp"
+#line 2531 "sqlite3_parser.cpp"
     break;
 
   case 187: // tableid_with_uninteresting_schema: tableid
-#line 551 "sqlite3_parser.yy"
+#line 549 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 2539 "sqlite3_parser.cpp"
+#line 2537 "sqlite3_parser.cpp"
     break;
 
   case 188: // indexed_column: expr optional_sort_order
-#line 555 "sqlite3_parser.yy"
+#line 553 "sqlite3_parser.yy"
                                                 {
 							// If the expression is only one column name and nothing else, treat it as a column name; otherwise as an expression.
 							char quote = getIdentifierQuoteChar();
@@ -2551,23 +2549,23 @@ namespace  sqlb { namespace parser  {
 								yylhs.value.as < sqlb::IndexedColumn > () = sqlb::IndexedColumn(yystack_[1].value.as < std::string > (), true, yystack_[0].value.as < std::string > ());
 							}
 						}
-#line 2555 "sqlite3_parser.cpp"
+#line 2553 "sqlite3_parser.cpp"
     break;
 
   case 189: // indexed_column_list: indexed_column
-#line 569 "sqlite3_parser.yy"
+#line 567 "sqlite3_parser.yy"
                                                         { yylhs.value.as < sqlb::IndexedColumnVector > () = sqlb::IndexedColumnVector(1, yystack_[0].value.as < sqlb::IndexedColumn > ()); }
-#line 2561 "sqlite3_parser.cpp"
+#line 2559 "sqlite3_parser.cpp"
     break;
 
   case 190: // indexed_column_list: indexed_column_list "," indexed_column
-#line 570 "sqlite3_parser.yy"
+#line 568 "sqlite3_parser.yy"
                                                         { yylhs.value.as < sqlb::IndexedColumnVector > () = yystack_[2].value.as < sqlb::IndexedColumnVector > (); yylhs.value.as < sqlb::IndexedColumnVector > ().push_back(yystack_[0].value.as < sqlb::IndexedColumn > ()); }
-#line 2567 "sqlite3_parser.cpp"
+#line 2565 "sqlite3_parser.cpp"
     break;
 
   case 191: // createindex_stmt: "CREATE" optional_unique "INDEX" optional_if_not_exists tableid_with_uninteresting_schema "ON" tableid "(" indexed_column_list ")" optional_where
-#line 574 "sqlite3_parser.yy"
+#line 572 "sqlite3_parser.yy"
                                                                                                                                                                 {
 													yylhs.value.as < sqlb::IndexPtr > () = std::make_shared<sqlb::Index>(yystack_[6].value.as < std::string > ());
 													yylhs.value.as < sqlb::IndexPtr > ()->setTable(yystack_[4].value.as < std::string > ());
@@ -2576,158 +2574,158 @@ namespace  sqlb { namespace parser  {
 													yylhs.value.as < sqlb::IndexPtr > ()->fields = yystack_[2].value.as < sqlb::IndexedColumnVector > ();
 													yylhs.value.as < sqlb::IndexPtr > ()->setFullyParsed(true);
 												}
-#line 2580 "sqlite3_parser.cpp"
+#line 2578 "sqlite3_parser.cpp"
     break;
 
   case 192: // optional_exprlist_with_paren: %empty
-#line 589 "sqlite3_parser.yy"
+#line 587 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = {}; }
-#line 2586 "sqlite3_parser.cpp"
+#line 2584 "sqlite3_parser.cpp"
     break;
 
   case 193: // optional_exprlist_with_paren: "(" ")"
-#line 590 "sqlite3_parser.yy"
+#line 588 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = {}; }
-#line 2592 "sqlite3_parser.cpp"
+#line 2590 "sqlite3_parser.cpp"
     break;
 
   case 194: // optional_exprlist_with_paren: "(" exprlist_expr ")"
-#line 591 "sqlite3_parser.yy"
+#line 589 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = yystack_[1].value.as < std::string > (); }
-#line 2598 "sqlite3_parser.cpp"
+#line 2596 "sqlite3_parser.cpp"
     break;
 
   case 195: // createvirtualtable_stmt: "CREATE" "VIRTUAL" "TABLE" optional_if_not_exists tableid_with_uninteresting_schema "USING" id optional_exprlist_with_paren
-#line 595 "sqlite3_parser.yy"
+#line 593 "sqlite3_parser.yy"
                                                                                                                                 {
 													yylhs.value.as < sqlb::TablePtr > () = std::make_shared<sqlb::Table>(yystack_[3].value.as < std::string > ());
 													yylhs.value.as < sqlb::TablePtr > ()->setVirtualUsing(yystack_[1].value.as < std::string > ());
 													yylhs.value.as < sqlb::TablePtr > ()->setFullyParsed(false);
 												}
-#line 2608 "sqlite3_parser.cpp"
+#line 2606 "sqlite3_parser.cpp"
     break;
 
   case 196: // optional_temporary: %empty
-#line 607 "sqlite3_parser.yy"
+#line 605 "sqlite3_parser.yy"
                                                         { yylhs.value.as < bool > () = false; }
-#line 2614 "sqlite3_parser.cpp"
+#line 2612 "sqlite3_parser.cpp"
     break;
 
   case 197: // optional_temporary: "TEMP"
-#line 608 "sqlite3_parser.yy"
+#line 606 "sqlite3_parser.yy"
                                                         { yylhs.value.as < bool > () = true; }
-#line 2620 "sqlite3_parser.cpp"
+#line 2618 "sqlite3_parser.cpp"
     break;
 
   case 198: // optional_temporary: "TEMPORARY"
-#line 609 "sqlite3_parser.yy"
+#line 607 "sqlite3_parser.yy"
                                                         { yylhs.value.as < bool > () = true; }
-#line 2626 "sqlite3_parser.cpp"
+#line 2624 "sqlite3_parser.cpp"
     break;
 
   case 199: // optional_withoutrowid: %empty
-#line 613 "sqlite3_parser.yy"
+#line 611 "sqlite3_parser.yy"
                                                         { yylhs.value.as < bool > () = false; }
-#line 2632 "sqlite3_parser.cpp"
+#line 2630 "sqlite3_parser.cpp"
     break;
 
   case 200: // optional_withoutrowid: "WITHOUT" "ROWID"
-#line 614 "sqlite3_parser.yy"
+#line 612 "sqlite3_parser.yy"
                                                         { yylhs.value.as < bool > () = true; }
-#line 2638 "sqlite3_parser.cpp"
+#line 2636 "sqlite3_parser.cpp"
     break;
 
   case 201: // optional_conflictclause: %empty
-#line 618 "sqlite3_parser.yy"
+#line 616 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = ""; }
-#line 2644 "sqlite3_parser.cpp"
+#line 2642 "sqlite3_parser.cpp"
     break;
 
   case 202: // optional_conflictclause: "ON" "CONFLICT" "ROLLBACK"
-#line 619 "sqlite3_parser.yy"
+#line 617 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 2650 "sqlite3_parser.cpp"
+#line 2648 "sqlite3_parser.cpp"
     break;
 
   case 203: // optional_conflictclause: "ON" "CONFLICT" "ABORT"
-#line 620 "sqlite3_parser.yy"
+#line 618 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 2656 "sqlite3_parser.cpp"
+#line 2654 "sqlite3_parser.cpp"
     break;
 
   case 204: // optional_conflictclause: "ON" "CONFLICT" "FAIL"
-#line 621 "sqlite3_parser.yy"
+#line 619 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 2662 "sqlite3_parser.cpp"
+#line 2660 "sqlite3_parser.cpp"
     break;
 
   case 205: // optional_conflictclause: "ON" "CONFLICT" "IGNORE"
-#line 622 "sqlite3_parser.yy"
+#line 620 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 2668 "sqlite3_parser.cpp"
+#line 2666 "sqlite3_parser.cpp"
     break;
 
   case 206: // optional_conflictclause: "ON" "CONFLICT" "REPLACE"
-#line 623 "sqlite3_parser.yy"
+#line 621 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 2674 "sqlite3_parser.cpp"
+#line 2672 "sqlite3_parser.cpp"
     break;
 
   case 207: // optional_typename: %empty
-#line 627 "sqlite3_parser.yy"
+#line 625 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = ""; }
-#line 2680 "sqlite3_parser.cpp"
+#line 2678 "sqlite3_parser.cpp"
     break;
 
   case 208: // optional_typename: type_name
-#line 628 "sqlite3_parser.yy"
+#line 626 "sqlite3_parser.yy"
                                                 { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 2686 "sqlite3_parser.cpp"
+#line 2684 "sqlite3_parser.cpp"
     break;
 
   case 209: // optional_storage_identifier: %empty
-#line 632 "sqlite3_parser.yy"
+#line 630 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = "VIRTUAL"; }
-#line 2692 "sqlite3_parser.cpp"
+#line 2690 "sqlite3_parser.cpp"
     break;
 
   case 210: // optional_storage_identifier: "STORED"
-#line 633 "sqlite3_parser.yy"
+#line 631 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = "STORED"; }
-#line 2698 "sqlite3_parser.cpp"
+#line 2696 "sqlite3_parser.cpp"
     break;
 
   case 211: // optional_storage_identifier: "VIRTUAL"
-#line 634 "sqlite3_parser.yy"
+#line 632 "sqlite3_parser.yy"
                                                         { yylhs.value.as < std::string > () = "VIRTUAL"; }
-#line 2704 "sqlite3_parser.cpp"
+#line 2702 "sqlite3_parser.cpp"
     break;
 
   case 212: // optional_always_generated: %empty
-#line 638 "sqlite3_parser.yy"
+#line 636 "sqlite3_parser.yy"
                                                         { yylhs.value.as < bool > () = false; }
-#line 2710 "sqlite3_parser.cpp"
+#line 2708 "sqlite3_parser.cpp"
     break;
 
   case 213: // optional_always_generated: "GENERATED" "ALWAYS"
-#line 639 "sqlite3_parser.yy"
+#line 637 "sqlite3_parser.yy"
                                                         { yylhs.value.as < bool > () = true; }
-#line 2716 "sqlite3_parser.cpp"
+#line 2714 "sqlite3_parser.cpp"
     break;
 
   case 214: // columnconstraint: optional_constraintname "PRIMARY" "KEY" optional_sort_order optional_conflictclause
-#line 643 "sqlite3_parser.yy"
+#line 641 "sqlite3_parser.yy"
                                                                                         {
 												auto pk = std::make_shared<sqlb::PrimaryKeyConstraint>(sqlb::IndexedColumnVector{sqlb::IndexedColumn("", false, yystack_[1].value.as < std::string > ())});
 												pk->setName(yystack_[4].value.as < std::string > ());
 												pk->setConflictAction(yystack_[0].value.as < std::string > ());
 												yylhs.value.as < sqlb::ConstraintPtr > () = pk;
 											}
-#line 2727 "sqlite3_parser.cpp"
+#line 2725 "sqlite3_parser.cpp"
     break;
 
   case 215: // columnconstraint: optional_constraintname "PRIMARY" "KEY" optional_sort_order optional_conflictclause "AUTOINCREMENT"
-#line 649 "sqlite3_parser.yy"
+#line 647 "sqlite3_parser.yy"
                                                                                                         {
 												auto pk = std::make_shared<sqlb::PrimaryKeyConstraint>(sqlb::IndexedColumnVector{sqlb::IndexedColumn("", false, yystack_[2].value.as < std::string > ())});
 												pk->setName(yystack_[5].value.as < std::string > ());
@@ -2735,113 +2733,113 @@ namespace  sqlb { namespace parser  {
 												pk->setAutoIncrement(true);
 												yylhs.value.as < sqlb::ConstraintPtr > () = pk;
 											}
-#line 2739 "sqlite3_parser.cpp"
+#line 2737 "sqlite3_parser.cpp"
     break;
 
   case 216: // columnconstraint: optional_constraintname "NOT" "NULL" optional_conflictclause
-#line 656 "sqlite3_parser.yy"
+#line 654 "sqlite3_parser.yy"
                                                                                         {
 												auto nn = std::make_shared<sqlb::NotNullConstraint>();
 												nn->setName(yystack_[3].value.as < std::string > ());
 												nn->setConflictAction(yystack_[0].value.as < std::string > ());
 												yylhs.value.as < sqlb::ConstraintPtr > () = nn;
 											}
-#line 2750 "sqlite3_parser.cpp"
+#line 2748 "sqlite3_parser.cpp"
     break;
 
   case 217: // columnconstraint: optional_constraintname "NULL"
-#line 662 "sqlite3_parser.yy"
+#line 660 "sqlite3_parser.yy"
                                                                                         {
 											}
-#line 2757 "sqlite3_parser.cpp"
+#line 2755 "sqlite3_parser.cpp"
     break;
 
   case 218: // columnconstraint: optional_constraintname "UNIQUE" optional_conflictclause
-#line 664 "sqlite3_parser.yy"
+#line 662 "sqlite3_parser.yy"
                                                                                         {
 												auto u = std::make_shared<sqlb::UniqueConstraint>();
 												u->setName(yystack_[2].value.as < std::string > ());
 												u->setConflictAction(yystack_[0].value.as < std::string > ());
 												yylhs.value.as < sqlb::ConstraintPtr > () = u;
 											}
-#line 2768 "sqlite3_parser.cpp"
+#line 2766 "sqlite3_parser.cpp"
     break;
 
   case 219: // columnconstraint: optional_constraintname "CHECK" "(" expr ")"
-#line 670 "sqlite3_parser.yy"
+#line 668 "sqlite3_parser.yy"
                                                                                         {
 												yylhs.value.as < sqlb::ConstraintPtr > () = std::make_shared<sqlb::CheckConstraint>(yystack_[1].value.as < std::string > ());
 												yylhs.value.as < sqlb::ConstraintPtr > ()->setName(yystack_[4].value.as < std::string > ());
 											}
-#line 2777 "sqlite3_parser.cpp"
+#line 2775 "sqlite3_parser.cpp"
     break;
 
   case 220: // columnconstraint: optional_constraintname "DEFAULT" signednumber
-#line 674 "sqlite3_parser.yy"
+#line 672 "sqlite3_parser.yy"
                                                                                         {
 												yylhs.value.as < sqlb::ConstraintPtr > () = std::make_shared<sqlb::DefaultConstraint>(yystack_[0].value.as < std::string > ());
 												yylhs.value.as < sqlb::ConstraintPtr > ()->setName(yystack_[2].value.as < std::string > ());
 											}
-#line 2786 "sqlite3_parser.cpp"
+#line 2784 "sqlite3_parser.cpp"
     break;
 
   case 221: // columnconstraint: optional_constraintname "DEFAULT" literalvalue
-#line 678 "sqlite3_parser.yy"
+#line 676 "sqlite3_parser.yy"
                                                                                         {
 												yylhs.value.as < sqlb::ConstraintPtr > () = std::make_shared<sqlb::DefaultConstraint>(yystack_[0].value.as < std::string > ());
 												yylhs.value.as < sqlb::ConstraintPtr > ()->setName(yystack_[2].value.as < std::string > ());
 											}
-#line 2795 "sqlite3_parser.cpp"
+#line 2793 "sqlite3_parser.cpp"
     break;
 
   case 222: // columnconstraint: optional_constraintname "DEFAULT" id
-#line 682 "sqlite3_parser.yy"
+#line 680 "sqlite3_parser.yy"
                                                                                         {
 												yylhs.value.as < sqlb::ConstraintPtr > () = std::make_shared<sqlb::DefaultConstraint>(yystack_[0].value.as < std::string > ());
 												yylhs.value.as < sqlb::ConstraintPtr > ()->setName(yystack_[2].value.as < std::string > ());
 											}
-#line 2804 "sqlite3_parser.cpp"
+#line 2802 "sqlite3_parser.cpp"
     break;
 
   case 223: // columnconstraint: optional_constraintname "DEFAULT" allowed_keywords_as_identifier
-#line 686 "sqlite3_parser.yy"
+#line 684 "sqlite3_parser.yy"
                                                                                         {	// We must allow the same keywords as unquoted default values as in the columnid context.
 												// But we do not use columnid here in order to avoid reduce/reduce conflicts.
 												yylhs.value.as < sqlb::ConstraintPtr > () = std::make_shared<sqlb::DefaultConstraint>(yystack_[0].value.as < std::string > ());
 												yylhs.value.as < sqlb::ConstraintPtr > ()->setName(yystack_[2].value.as < std::string > ());
 											}
-#line 2814 "sqlite3_parser.cpp"
+#line 2812 "sqlite3_parser.cpp"
     break;
 
   case 224: // columnconstraint: optional_constraintname "DEFAULT" "IF"
-#line 691 "sqlite3_parser.yy"
+#line 689 "sqlite3_parser.yy"
                                                                                         {	// Same as above.
 												yylhs.value.as < sqlb::ConstraintPtr > () = std::make_shared<sqlb::DefaultConstraint>(yystack_[0].value.as < std::string > ());
 												yylhs.value.as < sqlb::ConstraintPtr > ()->setName(yystack_[2].value.as < std::string > ());
 											}
-#line 2823 "sqlite3_parser.cpp"
+#line 2821 "sqlite3_parser.cpp"
     break;
 
   case 225: // columnconstraint: optional_constraintname "DEFAULT" "(" expr ")"
-#line 695 "sqlite3_parser.yy"
+#line 693 "sqlite3_parser.yy"
                                                                                         {
 												yylhs.value.as < sqlb::ConstraintPtr > () = std::make_shared<sqlb::DefaultConstraint>("(" + yystack_[1].value.as < std::string > () + ")");
 												yylhs.value.as < sqlb::ConstraintPtr > ()->setName(yystack_[4].value.as < std::string > ());
 											}
-#line 2832 "sqlite3_parser.cpp"
+#line 2830 "sqlite3_parser.cpp"
     break;
 
   case 226: // columnconstraint: optional_constraintname "COLLATE" id
-#line 699 "sqlite3_parser.yy"
+#line 697 "sqlite3_parser.yy"
                                                                                         {
 												yylhs.value.as < sqlb::ConstraintPtr > () = std::make_shared<sqlb::CollateConstraint>(yystack_[0].value.as < std::string > ());
 												yylhs.value.as < sqlb::ConstraintPtr > ()->setName(yystack_[2].value.as < std::string > ());
 											}
-#line 2841 "sqlite3_parser.cpp"
+#line 2839 "sqlite3_parser.cpp"
     break;
 
   case 227: // columnconstraint: optional_constraintname "REFERENCES" tableid optional_columnid_with_paren_list optional_fk_clause
-#line 703 "sqlite3_parser.yy"
+#line 701 "sqlite3_parser.yy"
                                                                                                                 {	// TODO Solve shift/reduce conflict. It is not super important though as shifting seems to be right here.
 												auto fk = std::make_shared<sqlb::ForeignKeyClause>();
 												fk->setName(yystack_[4].value.as < std::string > ());
@@ -2850,32 +2848,32 @@ namespace  sqlb { namespace parser  {
 												fk->setConstraint(yystack_[0].value.as < std::string > ());
 												yylhs.value.as < sqlb::ConstraintPtr > () = fk;
 											}
-#line 2854 "sqlite3_parser.cpp"
+#line 2852 "sqlite3_parser.cpp"
     break;
 
   case 228: // columnconstraint: optional_constraintname optional_always_generated "AS" "(" expr ")" optional_storage_identifier
-#line 711 "sqlite3_parser.yy"
+#line 709 "sqlite3_parser.yy"
                                                                                                         {		// TODO Solve shift/reduce conflict.
 												yylhs.value.as < sqlb::ConstraintPtr > () = std::make_shared<sqlb::GeneratedColumnConstraint>(yystack_[2].value.as < std::string > (), yystack_[0].value.as < std::string > ());
 												yylhs.value.as < sqlb::ConstraintPtr > ()->setName(yystack_[6].value.as < std::string > ());
 											}
-#line 2863 "sqlite3_parser.cpp"
+#line 2861 "sqlite3_parser.cpp"
     break;
 
   case 229: // columnconstraint_list: columnconstraint
-#line 718 "sqlite3_parser.yy"
+#line 716 "sqlite3_parser.yy"
                                                         { yylhs.value.as < sqlb::ConstraintSet > () = { yystack_[0].value.as < sqlb::ConstraintPtr > () }; }
-#line 2869 "sqlite3_parser.cpp"
+#line 2867 "sqlite3_parser.cpp"
     break;
 
   case 230: // columnconstraint_list: columnconstraint_list columnconstraint
-#line 719 "sqlite3_parser.yy"
+#line 717 "sqlite3_parser.yy"
                                                         { yylhs.value.as < sqlb::ConstraintSet > () = yystack_[1].value.as < sqlb::ConstraintSet > (); yylhs.value.as < sqlb::ConstraintSet > ().insert(yystack_[0].value.as < sqlb::ConstraintPtr > ()); }
-#line 2875 "sqlite3_parser.cpp"
+#line 2873 "sqlite3_parser.cpp"
     break;
 
   case 231: // columndef: columnid optional_typename columnconstraint_list
-#line 723 "sqlite3_parser.yy"
+#line 721 "sqlite3_parser.yy"
                                                                 {
 								sqlb::Field f(yystack_[2].value.as < std::string > (), yystack_[1].value.as < std::string > ());
 								sqlb::ConstraintSet table_constraints{};
@@ -2930,6 +2928,8 @@ namespace  sqlb { namespace parser  {
 										}
 										break;
 									}
+									default:
+										break;
 									}
 								}
 
@@ -4645,30 +4645,30 @@ namespace  sqlb { namespace parser  {
   const short
   parser::yyrline_[] =
   {
-       0,   264,   264,   265,   269,   270,   271,   279,   280,   281,
-     282,   283,   284,   285,   286,   287,   291,   292,   297,   298,
-     299,   300,   301,   302,   303,   304,   305,   306,   307,   308,
-     309,   310,   311,   312,   313,   314,   315,   316,   317,   318,
-     319,   320,   321,   322,   323,   324,   325,   326,   327,   328,
-     329,   330,   331,   332,   333,   334,   335,   339,   340,   341,
-     342,   343,   344,   348,   349,   350,   351,   352,   353,   354,
-     358,   359,   363,   364,   368,   369,   373,   374,   375,   379,
-     380,   381,   382,   386,   387,   388,   389,   390,   391,   392,
-     393,   394,   395,   396,   397,   398,   399,   400,   401,   402,
-     403,   404,   405,   406,   410,   411,   412,   413,   414,   415,
-     416,   417,   418,   419,   420,   421,   422,   423,   424,   425,
-     429,   430,   434,   435,   436,   437,   441,   442,   443,   447,
-     448,   452,   453,   454,   455,   456,   457,   458,   459,   460,
-     461,   462,   463,   464,   465,   466,   467,   471,   472,   476,
-     477,   478,   479,   483,   484,   485,   486,   490,   491,   492,
-     493,   494,   495,   496,   497,   498,   499,   500,   501,   502,
-     503,   504,   505,   506,   507,   516,   524,   525,   529,   530,
-     531,   539,   540,   544,   545,   549,   550,   551,   555,   569,
-     570,   574,   589,   590,   591,   595,   607,   608,   609,   613,
-     614,   618,   619,   620,   621,   622,   623,   627,   628,   632,
-     633,   634,   638,   639,   643,   649,   656,   662,   664,   670,
-     674,   678,   682,   686,   691,   695,   699,   703,   711,   718,
-     719,   723,   782,   786,   787,   791,   792,   793,   797,   798,
+       0,   262,   262,   263,   267,   268,   269,   277,   278,   279,
+     280,   281,   282,   283,   284,   285,   289,   290,   295,   296,
+     297,   298,   299,   300,   301,   302,   303,   304,   305,   306,
+     307,   308,   309,   310,   311,   312,   313,   314,   315,   316,
+     317,   318,   319,   320,   321,   322,   323,   324,   325,   326,
+     327,   328,   329,   330,   331,   332,   333,   337,   338,   339,
+     340,   341,   342,   346,   347,   348,   349,   350,   351,   352,
+     356,   357,   361,   362,   366,   367,   371,   372,   373,   377,
+     378,   379,   380,   384,   385,   386,   387,   388,   389,   390,
+     391,   392,   393,   394,   395,   396,   397,   398,   399,   400,
+     401,   402,   403,   404,   408,   409,   410,   411,   412,   413,
+     414,   415,   416,   417,   418,   419,   420,   421,   422,   423,
+     427,   428,   432,   433,   434,   435,   439,   440,   441,   445,
+     446,   450,   451,   452,   453,   454,   455,   456,   457,   458,
+     459,   460,   461,   462,   463,   464,   465,   469,   470,   474,
+     475,   476,   477,   481,   482,   483,   484,   488,   489,   490,
+     491,   492,   493,   494,   495,   496,   497,   498,   499,   500,
+     501,   502,   503,   504,   505,   514,   522,   523,   527,   528,
+     529,   537,   538,   542,   543,   547,   548,   549,   553,   567,
+     568,   572,   587,   588,   589,   593,   605,   606,   607,   611,
+     612,   616,   617,   618,   619,   620,   621,   625,   626,   630,
+     631,   632,   636,   637,   641,   647,   654,   660,   662,   668,
+     672,   676,   680,   684,   689,   693,   697,   701,   709,   716,
+     717,   721,   782,   786,   787,   791,   792,   793,   797,   798,
      802,   803,   807,   808,   809,   810,   811,   812,   813,   814,
      815,   816,   817,   818,   819,   820,   821,   822,   826,   827,
      831,   832,   833,   834,   835,   836,   837,   838,   839,   840,

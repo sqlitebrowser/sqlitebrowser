@@ -1,6 +1,5 @@
 #include <QApplication>
 #include <QtNetwork/QNetworkAccessManager>
-#include <QtNetwork/QNetworkConfigurationManager>
 #include <QMessageBox>
 #include <QtNetwork/QNetworkReply>
 #include <QFile>
@@ -27,18 +26,10 @@ using json = nlohmann::json;
 
 RemoteNetwork::RemoteNetwork() :
     m_manager(new QNetworkAccessManager),
-    m_configurationManager(new QNetworkConfigurationManager),
-    m_progress(nullptr)
+    m_progress(nullptr),
+    m_sslConfiguration(QSslConfiguration::defaultConfiguration())
 {
-    // Update network configurations
-    connect(m_configurationManager, &QNetworkConfigurationManager::updateCompleted, [this]() {
-        m_manager->setConfiguration(m_configurationManager->defaultConfiguration());
-
-        emit networkReady();
-    });
-
     // Set up SSL configuration
-    m_sslConfiguration = QSslConfiguration::defaultConfiguration();
     m_sslConfiguration.setPeerVerifyMode(QSslSocket::VerifyPeer);
 
     // Load CA certs from resource file
@@ -228,6 +219,8 @@ void RemoteNetwork::gotReply(QNetworkReply* reply)
             file.close();
         }
         break;
+    case RequestTypeCustom:
+        break;
     }
 
     // Delete reply later, i.e. after returning from this slot function
@@ -384,13 +377,6 @@ void RemoteNetwork::prepareProgressDialog(QNetworkReply* reply, bool upload, con
 void RemoteNetwork::fetch(const QUrl& url, RequestType type, const QString& clientCert,
                           std::function<void(QByteArray)> when_finished, bool synchronous, bool ignore_errors)
 {
-    // Check if network is accessible. If not, abort right here
-    if(m_manager->networkAccessible() == QNetworkAccessManager::NotAccessible)
-    {
-        QMessageBox::warning(nullptr, qApp->applicationName(), tr("Error: The network is not accessible."));
-        return;
-    }
-
     // Build network request
     QNetworkRequest request;
     request.setUrl(url);
@@ -450,13 +436,6 @@ void RemoteNetwork::push(const QString& filename, const QUrl& url, const QString
                          const QString& commitMessage, const QString& licence, bool isPublic, const QString& branch,
                          bool forcePush, const QString& last_commit)
 {
-    // Check if network is accessible. If not, abort right here
-    if(m_manager->networkAccessible() == QNetworkAccessManager::NotAccessible)
-    {
-        QMessageBox::warning(nullptr, qApp->applicationName(), tr("Error: The network is not accessible."));
-        return;
-    }
-
     // Open the file to send and check if it exists
     QFile* file = new QFile(filename);
     if(!file->open(QFile::ReadOnly))

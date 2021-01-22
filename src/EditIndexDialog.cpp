@@ -75,7 +75,7 @@ EditIndexDialog::EditIndexDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
     }
 
     // Add event handler for index column name changes. These are only allowed for expression columns, though.
-    connect(ui->tableIndexColumns, &QTableWidget::itemChanged,
+    connect(ui->tableIndexColumns, &QTableWidget::itemChanged, this,
             [=](QTableWidgetItem* item)
     {
         index.fields[static_cast<size_t>(item->row())].setName(item->text().toStdString());
@@ -166,7 +166,7 @@ void EditIndexDialog::updateColumnLists()
         order->addItem("DESC");
         order->setCurrentText(QString::fromStdString(indexFields.at(i).order()).toUpper());
         ui->tableIndexColumns->setCellWidget(static_cast<int>(i), 1, order);
-        connect(order, &QComboBox::currentTextChanged,
+        connect(order, &QComboBox::currentTextChanged, this,
                 [=](QString new_order)
         {
             auto colnum = sqlb::findField(index, indexFields.at(i).name());

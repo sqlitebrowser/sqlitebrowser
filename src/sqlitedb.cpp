@@ -1393,8 +1393,7 @@ bool DBBrowserDB::deleteRecords(const sqlb::ObjectIdentifier& table, const std::
 
     // Quote all values in advance
     std::vector<std::string> quoted_rowids;
-    for(QString rowid : rowids)
-        quoted_rowids.push_back(sqlb::escapeString(rowid.toStdString()));
+    std::transform(rowids.begin(), rowids.end(), std::back_inserter(quoted_rowids), [](const auto& rowid) { return sqlb::escapeString((rowid.toStdString())); });
 
     // For a single rowid column we can use a SELECT ... IN(...) statement which is faster.
     // For multiple rowid columns we have to use sqlb_make_single_value to decode the composed rowid values.

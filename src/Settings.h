@@ -15,15 +15,15 @@ public:
         DarkStyle
     };
 
-    static void setUserSettingsFile(const QString userSettingsFileArg);
+    static void setUserSettingsFile(const QString& userSettingsFileArg);
     static QVariant getValue(const std::string& group, const std::string& name);
     static void setValue(const std::string& group, const std::string& name, const QVariant& value, bool dont_save_to_disk = false);
     static void clearValue(const std::string& group, const std::string& name);
     static void restoreDefaults();
 
     static void rememberDefaultFontSize(int size) { m_defaultFontSize = size; }
-    static void exportSettings(const QString fileName);
-    static bool importSettings(const QString fileName);
+    static void exportSettings(const QString& fileName);
+    static bool importSettings(const QString& fileName);
     static void sync();
 
 private:
@@ -43,7 +43,7 @@ private:
     static QSettings* settings;
 
     // This works verify that the settings file provided by the user is a normal settings file
-    static bool isVaildSettingsFile(const QString userSettingsFile);
+    static bool isVaildSettingsFile(const QString& userSettingsFile);
 
     // This works initialize QSettings object
     static void setSettingsObject();

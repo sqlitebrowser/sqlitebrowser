@@ -246,8 +246,7 @@ void ImportCsvDialog::updatePreview()
 
     // Set horizontal header data
     QStringList horizontalHeader;
-    for(const sqlb::Field& field : fieldList)
-        horizontalHeader.push_back(QString::fromStdString(field.name()));
+    std::transform(fieldList.begin(), fieldList.end(), std::back_inserter(horizontalHeader), [](const auto& field) { return QString::fromStdString(field.name()); });
     ui->tablePreview->setHorizontalHeaderLabels(horizontalHeader);
 
     // Parse file

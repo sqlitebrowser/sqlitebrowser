@@ -57,7 +57,8 @@ class TableBrowser : public QWidget
 
 public:
     explicit TableBrowser(DBBrowserDB* _db, QWidget* parent = nullptr);
-    ~TableBrowser();
+    ~TableBrowser() override;
+
     void reset();
     static void resetSharedSettings();
 

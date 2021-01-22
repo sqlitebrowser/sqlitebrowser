@@ -28,7 +28,7 @@ TableBrowserDock::TableBrowserDock(QWidget* parent, MainWindow* mainWindow)
     connect(this, &TableBrowserDock::customContextMenuRequested, this, &TableBrowserDock::showContextMenuTableBrowserTabBar);
 
     // Connect browser signals
-    connect(browser, &TableBrowser::currentTableChanged, [this](const sqlb::ObjectIdentifier& table) {
+    connect(browser, &TableBrowser::currentTableChanged, this, [this](const sqlb::ObjectIdentifier& table) {
         // Only update dock name when no custom name was set
         if(!property("custom_title").toBool())
             setWindowTitle(QString::fromStdString(table.toDisplayString()));
@@ -64,13 +64,13 @@ void TableBrowserDock::showContextMenuTableBrowserTabBar(const QPoint& pos)
 
     QAction* actionRename = new QAction(this);
     actionRename->setText(tr("Rename Data Browser"));
-    connect(actionRename, &QAction::triggered, [this]() {
+    connect(actionRename, &QAction::triggered, this, [this]() {
         renameTableBrowserTab();
     });
 
     QAction* actionClose = new QAction(this);
     actionClose->setText(tr("Close Data Browser"));
-    connect(actionClose, &QAction::triggered, [this]() {
+    connect(actionClose, &QAction::triggered, this, [this]() {
         deleteLater();
     });
 

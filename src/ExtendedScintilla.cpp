@@ -89,7 +89,11 @@ void ExtendedScintilla::updateLineNumberAreaWidth()
 
     // Calculate the width of this number if it was all zeros (this is because a 1 might require less space than a 0 and this could
     // cause some flickering depending on the font) and set the new margin width.
+#if QT_VERSION < QT_VERSION_CHECK(5, 11, 0)
     setMarginWidth(0, QFontMetrics(font()).width(QString("0").repeated(digits)) + 5);
+#else
+    setMarginWidth(0, QFontMetrics(font()).horizontalAdvance(QString("0").repeated(digits)) + 5);
+#endif
 }
 
 void ExtendedScintilla::dropEvent(QDropEvent* e)
@@ -138,8 +142,8 @@ void ExtendedScintilla::reloadCommonSettings()
         setMarginsForegroundColor(QPalette().color(QPalette::Active, QPalette::WindowText));
         break;
     case Settings::DarkStyle :
-        setMarginsBackgroundColor(QColor("#32414B"));
-        setMarginsForegroundColor(QColor("#EFF0F1"));
+        setMarginsBackgroundColor(QColor(0x32, 0x41, 0x4B));
+        setMarginsForegroundColor(QColor(0xEF, 0xF0, 0xF1));
         break;
     }
     setPaper(Settings::getValue("syntaxhighlighter", "background_colour").toString());
@@ -304,7 +308,7 @@ void ExtendedScintilla::openPrintDialog()
     QsciPrinter printer;
     QPrintPreviewDialog *dialog = new QPrintPreviewDialog(&printer);
 
-    connect(dialog, &QPrintPreviewDialog::paintRequested, [&](QPrinter *previewPrinter) {
+    connect(dialog, &QPrintPreviewDialog::paintRequested, this, [&](QPrinter *previewPrinter) {
         QsciPrinter* sciPrinter = static_cast<QsciPrinter*>(previewPrinter);
         sciPrinter->printRange(this);
     });

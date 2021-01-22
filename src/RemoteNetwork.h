@@ -8,7 +8,6 @@
 #include <map>
 
 class QNetworkAccessManager;
-class QNetworkConfigurationManager;
 class QNetworkReply;
 class QProgressDialog;
 class QNetworkRequest;
@@ -53,10 +52,6 @@ public:
               const QString& branch = QString("master"), bool forcePush = false, const QString& last_commit = QString());
 
 signals:
-    // As soon as you can safely open a network connection, this signal is emitted. This can be used to delay early network requests
-    // which might otherwise fail.
-    void networkReady();
-
     // The fetchFinished() signal is emitted when a fetch() call for a database is finished
     void fetchFinished(QString filename, QString identity, const QUrl& url, std::string new_commit_id, std::string branch,
                        QDateTime last_modified, QIODevice* device);
@@ -88,7 +83,6 @@ private:
     bool handleReply(QNetworkReply* reply);
 
     QNetworkAccessManager* m_manager;
-    QNetworkConfigurationManager* m_configurationManager;
     QProgressDialog* m_progress;
     QSslConfiguration m_sslConfiguration;
     std::map<QString, QSslCertificate> m_clientCertFiles;
