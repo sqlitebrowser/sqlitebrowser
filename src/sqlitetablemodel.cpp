@@ -106,7 +106,12 @@ void SqliteTableModel::handleRowCountComplete (int life_id, int num_rows)
 void SqliteTableModel::reset()
 {
     beginResetModel();
+
+    // We first clear the cache here in order to unset the cache initialised flag,
+    // then call the clearCache function to deal with the clean up
+    // TODO This whole resetting and clearing should be refactored
     m_cache.clear();
+    clearCache();
 
     m_sQuery.clear();
     m_query.clear();
