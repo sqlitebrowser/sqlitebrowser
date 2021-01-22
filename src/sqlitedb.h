@@ -80,6 +80,7 @@ public:
     bool detach(const std::string& attached_as);
     bool create ( const QString & db);
     bool close();
+    bool saveAs(const std::string& filename);
 
     // This returns the SQLite version as well as the SQLCipher if DB4S is compiled with encryption support
     static void getSqliteVersion(QString& sqlite, QString& sqlcipher);

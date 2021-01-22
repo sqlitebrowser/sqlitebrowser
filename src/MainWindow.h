@@ -167,6 +167,7 @@ private slots:
     void fileNewInMemoryDatabase();
     void refreshTableBrowsers(bool force_refresh = false);
     bool fileClose();
+    bool fileSaveAs();
     void createTable();
     void createIndex();
     void compact();

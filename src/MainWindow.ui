@@ -785,6 +785,7 @@ You can drag SQL statements from an object row and drop them into other applicat
     <addaction name="fileOpenReadOnlyAction"/>
     <addaction name="fileAttachAction"/>
     <addaction name="fileRecentFiles"/>
+    <addaction name="fileSaveAsAction"/>
     <addaction name="fileCloseAction"/>
     <addaction name="separator"/>
     <addaction name="fileSaveAction"/>
@@ -2240,6 +2241,21 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>This shows the number of rows for each table and view in the database.</string>
    </property>
   </action>
+  <action name="fileSaveAsAction">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/db_save</normaloff>:/icons/db_save</iconset>
+   </property>
+   <property name="text">
+    <string>Save Database &amp;As...</string>
+   </property>
+   <property name="toolTip">
+    <string>Save the current database as a different file</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -2339,6 +2355,22 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>fileClose()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fileSaveAsAction</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>fileSaveAs()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

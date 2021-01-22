@@ -755,6 +755,62 @@ bool DBBrowserDB::close()
     return true;
 }
 
+bool DBBrowserDB::saveAs(const std::string& filename) {
+    int rc;
+    sqlite3_backup *pBackup;
+    sqlite3 *pTo;
+
+    if(!_db)
+        return false;
+
+    waitForDbRelease();
+
+    // Open the database file identified by filename. Exit early if this fails
+    // for any reason.
+    rc = sqlite3_open(filename.c_str(), &pTo);
+    if(rc!=SQLITE_OK) {
+        qWarning() << tr("Cannot open destination file: '%1'").arg(filename.c_str());
+        return false;
+    } else {
+        // Set up the backup procedure to copy from the "main" database of
+        // connection _db to the main database of connection pTo.
+        // If something goes wrong, pBackup will be set to nullptr and an error
+        // code and message left in connection pTo.
+        //
+        // If the backup object is successfully created, call backup_step()
+        // to copy data from _db to pTo. Then call backup_finish()
+        // to release resources associated with the pBackup object.  If an
+        // error occurred, then an error code and message will be left in
+        // connection pTo. If no error occurred, then the error code belonging
+        // to pTo is set to SQLITE_OK.
+        //
+        pBackup = sqlite3_backup_init(pTo, "main", _db, "main");
+        if(pBackup == nullptr) {
+            qWarning() << tr("Cannot backup to file: '%1'. Message: %2").arg(filename.c_str()).arg(sqlite3_errmsg(pTo));
+            sqlite3_close(pTo);
+            return false;
+        } else {
+            sqlite3_backup_step(pBackup, -1);
+            sqlite3_backup_finish(pBackup);
+        }
+        rc = sqlite3_errcode(pTo);
+    }
+
+    if(rc == SQLITE_OK) {
+        // Close current database and set backup as current
+        sqlite3_close(_db);
+        _db = pTo;
+        curDBFilename = QString::fromStdString(filename);
+
+        return true;
+    } else {
+        qWarning() << tr("Cannot backup to file: '%1'. Message: %2").arg(filename.c_str()).arg(sqlite3_errmsg(pTo));
+        // Close failed database connection.
+        sqlite3_close(pTo);
+        return false;
+    }
+}
+
 DBBrowserDB::db_pointer_type DBBrowserDB::get(const QString& user, bool force_wait)
 {
     if(!_db)

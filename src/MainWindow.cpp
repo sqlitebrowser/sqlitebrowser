@@ -687,6 +687,30 @@ void MainWindow::refreshTableBrowsers(bool force_refresh)
     QApplication::restoreOverrideCursor();
 }
 
+bool MainWindow::fileSaveAs() {
+
+    QString fileName =  FileDialog::getSaveFileName(
+                    OpenDatabaseFile,
+                    this,
+                    tr("Choose a database file to save under"),
+                    FileDialog::getSqlDatabaseFileFilter()
+                    );
+    // catch situation where user has canceled file selection from dialog
+    if(!fileName.isEmpty()) {
+        bool result = db.saveAs(fileName.toStdString());
+        if(result) {
+            setCurrentFile(fileName);
+            addToRecentFilesMenu(fileName);
+        } else {
+            QMessageBox::warning(this, QApplication::applicationName(),
+                                 tr("Error while saving the database to the new file."));
+        }
+        return result;
+    } else {
+        return false;
+    }
+}
+
 bool MainWindow::fileClose()
 {
     // Stop any running SQL statements before closing the database
@@ -1415,6 +1439,9 @@ void MainWindow::dbState(bool dirty)
 {
     ui->fileSaveAction->setEnabled(dirty);
     ui->fileRevertAction->setEnabled(dirty);
+    // Unfortunately, sqlite does not allow to backup the DB while there are pending savepoints,
+    // so we cannot "Save As" when the DB is dirty.
+    ui->fileSaveAsAction->setEnabled(!dirty);
 }
 
 void MainWindow::fileSave()
@@ -1824,6 +1851,7 @@ void MainWindow::activateFields(bool enable)
     bool tempDb = db.currentFile() == ":memory:";
 
     ui->fileCloseAction->setEnabled(enable);
+    ui->fileSaveAsAction->setEnabled(enable);
     ui->fileAttachAction->setEnabled(enable);
     ui->fileCompactAction->setEnabled(enable && write);
     ui->fileExportJsonAction->setEnabled(enable);
