@@ -70,7 +70,7 @@ void FileDialog::setFileDialogPath(const FileDialogTypes dialogType, const QStri
         Settings::setValue("db", "lastlocations", lastLocations);
         break;
     case 2:     // Remember last location for current session only
-        Settings::setValue("db", "lastlocations", lastLocations, true);
+        Settings::setValue("db", "lastlocations", lastLocations, false);
         break;
     case 1:     // Always use this locations
         break;  // Do nothing

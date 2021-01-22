@@ -104,11 +104,11 @@ QVariant Settings::getValue(const std::string& group, const std::string& name)
     }
 }
 
-void Settings::setValue(const std::string& group, const std::string& name, const QVariant& value, bool dont_save_to_disk)
+void Settings::setValue(const std::string& group, const std::string& name, const QVariant& value, bool save_to_disk)
 {
     // Sometime the value has to be saved for the current session only but get discarded when the application exits.
     // In order to achieve this this flag can be set which disables the save to disk mechanism and only leaves the save to cache part active.
-    if(dont_save_to_disk == false)
+    if(save_to_disk == false)
     {
         setSettingsObject();
         // Set the group and save the given value

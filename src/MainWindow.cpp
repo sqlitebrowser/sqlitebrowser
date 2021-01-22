@@ -2791,7 +2791,7 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                                                   "it completely, please use DB Browser for SQLite version 3.12 to convert it to the new file format."));
                                 msgBox.exec();
                                 if(msgBox.clickedButton() == idontcarebutton)
-                                    Settings::setValue("idontcare", "projectBrowseTable", true);
+                                    Settings::setValue("idontcare", "projectBrowseTable", false);
                             }
 
                             xml.skipCurrentElement();
@@ -3334,7 +3334,7 @@ void MainWindow::requestCollation(const QString& name, int eTextRep)
         // Cancel here if the No button was clicked
         if(msgbox.clickedButton() == button_dont_ask_again)
         {
-            Settings::setValue("db", "dont_ask_collation", true);
+            Settings::setValue("db", "dont_ask_collation", false);
         } else if(reply == QMessageBox::No) {
             return;
         }

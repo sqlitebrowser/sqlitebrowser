@@ -80,7 +80,7 @@ public:
     QModelIndex dittoRecord(int old_row);
 
     /// configure for browsing results of specified query
-    void setQuery(const QString& sQuery, const QString& sCountQuery = QString(), bool dontClearHeaders = false);
+    void setQuery(const QString& sQuery, const QString& sCountQuery = QString(), bool clearHeaders = true);
 
     std::string query() const { return m_sQuery.toStdString(); }
     std::string customQuery(bool withRowid) const { return m_query.buildQuery(withRowid); }

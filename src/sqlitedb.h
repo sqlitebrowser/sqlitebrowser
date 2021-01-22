@@ -284,13 +284,13 @@ private:
 
     bool tryEncryptionSettings(const QString& filename, bool* encrypted, CipherSettings*& cipherSettings) const;
 
-    bool dontCheckForStructureUpdates;
+    bool disableStructureUpdateChecks;
 
     class NoStructureUpdateChecks
     {
     public:
-        explicit NoStructureUpdateChecks(DBBrowserDB& db) : m_db(db) { m_db.dontCheckForStructureUpdates = true; }
-        ~NoStructureUpdateChecks() { m_db.dontCheckForStructureUpdates = false; }
+        explicit NoStructureUpdateChecks(DBBrowserDB& db) : m_db(db) { m_db.disableStructureUpdateChecks = true; }
+        ~NoStructureUpdateChecks() { m_db.disableStructureUpdateChecks = false; }
 
     private:
           DBBrowserDB& m_db;

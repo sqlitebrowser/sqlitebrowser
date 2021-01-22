@@ -56,7 +56,7 @@ int main( int argc, char ** argv )
     }
 
     // Quit application now if user doesn't want to see the UI
-    if(a.dontShowMainWindow())
+    if(!a.showMainWindow())
         return 0;
 
     qInstallMessageHandler(db4sMessageOutput);

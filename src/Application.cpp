@@ -106,7 +106,7 @@ Application::Application(int& argc, char** argv) :
     std::vector<QString> tableToBrowse;
     QStringList sqlToExecute;
     bool readOnly = false;
-    m_dontShowMainWindow = false;
+    m_showMainWindow = true;
     for(int i=1;i<arguments().size();i++)
     {
         // Check next command line argument
@@ -130,10 +130,10 @@ Application::Application(int& argc, char** argv) :
             qWarning() << qPrintable(tr("  -v, --version       Display the current version"));
             qWarning() << qPrintable(tr("  <database>          Open this SQLite database"));
             qWarning() << qPrintable(tr("  <project>           Open this project file (*.sqbpro)"));
-            m_dontShowMainWindow = true;
+            m_showMainWindow = false;
         } else if(arguments().at(i) == "-v" || arguments().at(i) == "--version") {
             qWarning() << qPrintable(versionInformation());
-            m_dontShowMainWindow = true;
+            m_showMainWindow = false;
         } else if(arguments().at(i) == "-s" || arguments().at(i) == "--sql") {
             // Run SQL file: If file exists add it to list of scripts to execute
             if(++i >= arguments().size())
@@ -148,7 +148,7 @@ Application::Application(int& argc, char** argv) :
             else
                 tableToBrowse.push_back(arguments().at(i));
         } else if(arguments().at(i) == "-q" || arguments().at(i) == "--quit") {
-            m_dontShowMainWindow = true;
+            m_showMainWindow = false;
         } else if(arguments().at(i) == "-R" || arguments().at(i) == "--read-only") {
             readOnly = true;
         } else if(arguments().at(i) == "-S" || arguments().at(i) == "--settings") {
@@ -177,7 +177,7 @@ Application::Application(int& argc, char** argv) :
                             value = option.at(1).split(",");
                         else
                             value = option.at(1);
-                        Settings::setValue(setting.at(0).toStdString(), setting.at(1).toStdString(), value, !saveToDisk);
+                        Settings::setValue(setting.at(0).toStdString(), setting.at(1).toStdString(), value, saveToDisk);
                     }
                 }
             }
@@ -190,7 +190,7 @@ Application::Application(int& argc, char** argv) :
         }
     }
 
-    if(m_dontShowMainWindow) {
+    if(!m_showMainWindow) {
         m_mainWindow = nullptr;
         return;
     }

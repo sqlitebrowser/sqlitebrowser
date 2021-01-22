@@ -99,7 +99,7 @@ DBBrowserDB::DBBrowserDB() :
     db_used(false),
     isEncrypted(false),
     isReadOnly(false),
-    dontCheckForStructureUpdates(false)
+    disableStructureUpdateChecks(false)
 {
     // Register error log callback. This needs to be done before SQLite is first used
     Callback<void(void*, int, const char*)>::func = std::bind(&DBBrowserDB::errorLogCallback, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
@@ -183,7 +183,7 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
     if (isOpen()) close();
 
     isEncrypted = false;
-    dontCheckForStructureUpdates = false;
+    disableStructureUpdateChecks = false;
 
     // Get encryption settings for database file
     CipherSettings* cipherSettings = nullptr;
@@ -1086,7 +1086,7 @@ bool DBBrowserDB::executeSQL(const std::string& statement, bool dirtyDB, bool lo
     if (SQLITE_OK == sqlite3_exec(_db, statement.c_str(), callback ? callbackWrapper : nullptr, &callback, &errmsg))
     {
         // Update DB structure after executing an SQL statement. But try to avoid doing unnecessary updates.
-        if(!dontCheckForStructureUpdates && (starts_with_ci(statement, "ALTER") ||
+        if(!disableStructureUpdateChecks && (starts_with_ci(statement, "ALTER") ||
                 starts_with_ci(statement, "CREATE") ||
                 starts_with_ci(statement, "DROP") ||
                 starts_with_ci(statement, "ROLLBACK")))
@@ -1186,7 +1186,7 @@ bool DBBrowserDB::executeMultiSQL(QByteArray query, bool dirty, bool log)
             }
 
             // Check whether the DB structure is changed by this statement
-            if(!dontCheckForStructureUpdates && !structure_updated)
+            if(!disableStructureUpdateChecks && !structure_updated)
             {
                 // Check if it's a modifying statement
                 if(next_statement.compare(0, 5, "ALTER") == 0 ||

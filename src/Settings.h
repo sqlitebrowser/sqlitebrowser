@@ -17,7 +17,7 @@ public:
 
     static void setUserSettingsFile(const QString& userSettingsFileArg);
     static QVariant getValue(const std::string& group, const std::string& name);
-    static void setValue(const std::string& group, const std::string& name, const QVariant& value, bool dont_save_to_disk = false);
+    static void setValue(const std::string& group, const std::string& name, const QVariant& value, bool save_to_disk = true);
     static void clearValue(const std::string& group, const std::string& name);
     static void restoreDefaults();
 
