@@ -1,44 +1,31 @@
+os: linux
 language: cpp
-sudo: required
-dist: xenial
+dist: bionic
 
 branches:
   only:
   - master
 
-# env:
-#   - ARCH=x86_64 DOCKER_IMAGE=amd64/ubuntu:trusty
-#   - ARCH=i686 DOCKER_IMAGE=i386/ubuntu:trusty
-
-matrix:
+jobs:
   fast_finish: true
   include:
   - compiler: gcc
-    addons:
-      apt:
-        sources:
-        - ubuntu-toolchain-r-test
-        packages:
-        - g++-5
-    env: COMPILER=g++-5 CXX=g++-5
+    env: COMPILER=g++ CXX=g++
   - compiler: clang
-    addons:
-      apt:
-        sources:
-        - ubuntu-toolchain-r-test
-        - llvm-toolchain-precise-3.8
-        packages:
-        - clang-3.8
-    env: COMPILER=clang++-3.8
+    env: COMPILER=clang++
 
-before_install:
-- sudo apt-get update -qq
-- sudo apt-get --force-yes install build-essential git-core cmake libsqlite3-dev qt5-default qttools5-dev-tools libsqlcipher-dev qtbase5-dev libqt5scintilla2-dev libqcustomplot-dev qttools5-dev
-
-
-install:
-- if [ "$CXX" = "g++" ]; then export CXX="g++-5" CC="gcc-5"; fi
-- if [ "$CXX" = "clang++" ]; then export CXX="clang++-3.8" CC="clang-3.8"; fi
+addons:
+  apt:
+    packages:
+      - build-essential
+      - git-core
+      - cmake
+      - libsqlite3-dev
+      - qt5-default
+      - qttools5-dev-tools
+      - libsqlcipher-dev
+      - qtbase5-dev
+      - qttools5-dev
 
 script:
 - mkdir build
@@ -46,23 +33,22 @@ script:
 - mkdir appbuild
 - mkdir appdir
 - cd build
-- cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DENABLE_TESTING=ON ..
+- cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DENABLE_TESTING=ON -DFORCE_INTERNAL_QSCINTILLA=ON ..
 - make
 - ctest -V
 - cd ../build_cipher
-- cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DENABLE_TESTING=ON -Dsqlcipher=1 ..
+- cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DENABLE_TESTING=ON -DFORCE_INTERNAL_QSCINTILLA=ON -Dsqlcipher=1 ..
 - make
 - ctest -V
 - cd ../appbuild
-- cmake -DCMAKE_INSTALL_PREFIX:PATH=../appdir/usr -Wno-dev -Dsqlcipher=1 -DSQLITE_ENABLE_JSON1=1 ..
+- cmake -DCMAKE_INSTALL_PREFIX:PATH=../appdir/usr -Wno-dev -DFORCE_INTERNAL_QSCINTILLA=ON -Dsqlcipher=1 -DSQLITE_ENABLE_JSON1=1 ..
 - make install
 - cd ..
 - git rev-list master --count
-- wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/6/linuxdeployqt-6-x86_64.AppImage"
-- chmod a+x linuxdeployqt-6-x86_64.AppImage
-- export VERSION=$(printf "`master`-`git rev-list HEAD --count`-` git -C . rev-parse --short HEAD`")    #$(git rev-parse --short HEAD) # linuxdeployqt uses this for naming the file
-- ./linuxdeployqt-6-x86_64.AppImage appdir/usr/share/applications/*.desktop -appimage
-
+- wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
+- chmod a+x linuxdeployqt-continuous-x86_64.AppImage
+- export VERSION=$(printf "master-`git rev-list HEAD --count`-` git -C . rev-parse --short HEAD`")
+- ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -appimage
 
 after_success:
   - find appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq
@@ -74,9 +60,6 @@ notifications:
   email:
    recipients:
    - github@mkleusberg.de
-   - innermous@gmail.com
-   - justin@postgresql.org
-   - mgrojo@gmail.com
    on_success: never
    on_failure: always
   slack:
