@@ -1052,7 +1052,7 @@ Les erreurs sont signalées par un trait de soulignement rouge.</translation>
     <message>
         <location filename="../EditDialog.ui" line="292"/>
         <source>Open preview dialog for printing displayed text</source>
-        <translation>Ouvrir un apperçu du texte avant son impression</translation>
+        <translation>Ouvrir un aperçu du texte avant son impression</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="310"/>
@@ -2319,7 +2319,7 @@ x~y	Fourchette : valeurs entre x et y
     <message>
         <location filename="../ImageViewer.ui" line="126"/>
         <source>Open preview dialog for printing displayed image</source>
-        <translation type="unfinished">Ouvrir un apperçu de l&apos;image pour son impression</translation>
+        <translation type="unfinished">Ouvrir un aperçu de l&apos;image pour son impression</translation>
     </message>
     <message>
         <location filename="../ImageViewer.ui" line="129"/>
@@ -3739,12 +3739,12 @@ Si vous répondez non, nous essaierons d&apos;importer les données du fichier S
     <message>
         <location filename="../MainWindow.cpp" line="684"/>
         <source>You are still executing SQL statements. Closing the database now will stop their execution, possibly leaving the database in an inconsistent state. Are you sure you want to close the database?</source>
-        <translation>Des traitements SQL sont en cours d&apos;exécution. Fermer la Base de Données maintrenant arrêtera ces traitements. Cela risque de laisser la Base de Données dans un état incohérent. Êtes-vous sûr de vouloir fermer la Base de Données ?</translation>
+        <translation>Des traitements SQL sont en cours d&apos;exécution. Fermer la Base de Données maintenant arrêtera ces traitements. Cela risque de laisser la Base de Données dans un état incohérent. Êtes-vous sûr de vouloir fermer la Base de Données ?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="774"/>
         <source>Do you want to save the changes made to the project file &apos;%1&apos;?</source>
-        <translation>Voulez-vous enregistrer les changements effectués dans la dans le fichier projet &apos;%1&apos; ?</translation>
+        <translation>Voulez-vous enregistrer les changements effectués dans le fichier projet &apos;%1&apos; ?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1454"/>
@@ -3798,23 +3798,23 @@ Are you sure?</source>
         <location filename="../MainWindow.cpp" line="857"/>
         <source>Are you sure you want to delete the table &apos;%1&apos;?
 All data associated with the table will be lost.</source>
-        <translation>Êtes vous sûr de vouloir supprimer la table %1 ?
+        <translation>Êtes-vous sûr de vouloir supprimer la table %1 ?
 Toutes les données de la table seront perdues.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="859"/>
         <source>Are you sure you want to delete the view &apos;%1&apos;?</source>
-        <translation>Êtes vous sûr de voulolir supprimer la vue %1 ?</translation>
+        <translation>Êtes-vous sûr de vouloir supprimer la vue %1 ?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="861"/>
         <source>Are you sure you want to delete the trigger &apos;%1&apos;?</source>
-        <translation>Êtes vous sûr de voulolir supprimer le déclencheur %1 ?</translation>
+        <translation>Êtes-vous sûr de vouloir supprimer le déclencheur %1 ?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="863"/>
         <source>Are you sure you want to delete the index &apos;%1&apos;?</source>
-        <translation>Êtes vous sûr de voulolir supprimer l&apos;index %1 ?</translation>
+        <translation>Êtes-vous sûr de vouloir supprimer l&apos;index %1 ?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="874"/>
@@ -6764,12 +6764,12 @@ Appuyez simultanément sur %3+Maj et cliquez pour arriver ici</translation>
     <message>
         <location filename="../TableBrowser.ui" line="583"/>
         <source>Unlock view editing</source>
-        <translation>Dévérouiller l&apos;éditeur de vues</translation>
+        <translation>Déverrouiller l&apos;éditeur de vues</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="586"/>
         <source>This unlocks the current view for editing. However, you will need appropriate triggers for editing.</source>
-        <translation>Permet de dévérouiller la vue courante pour l&apos;éditer. Cependant, vous aurez besoin de déclencheurs appropriés pour faire cela.</translation>
+        <translation>Permet de déverrouiller la vue courante pour l&apos;éditer. Cependant, vous aurez besoin de déclencheurs appropriés pour faire cela.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="591"/>
