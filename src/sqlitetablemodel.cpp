@@ -107,12 +107,7 @@ void SqliteTableModel::reset()
 {
     beginResetModel();
 
-    // We first clear the cache here in order to unset the cache initialised flag,
-    // then call the clearCache function to deal with the clean up
-    // TODO This whole resetting and clearing should be refactored
-    m_cache.clear();
     clearCache();
-
     m_sQuery.clear();
     m_query.clear();
     m_table_of_query.reset();
@@ -133,9 +128,6 @@ void SqliteTableModel::setQuery(const sqlb::Query& query)
     m_query = query;
     m_table_of_query = m_db.getObjectByName<sqlb::Table>(query.table());
 
-    // The first column is the rowid column and therefore is always of type integer
-    m_vDataTypes.emplace_back(SQLITE_INTEGER);
-
     // Get the data types of all other columns as well as the column names
     // Set the row id columns
     if(m_table_of_query && m_table_of_query->fields.size()) // It is a table and parsing was OK
@@ -143,6 +135,7 @@ void SqliteTableModel::setQuery(const sqlb::Query& query)
         sqlb::StringVector rowids = m_table_of_query->rowidColumns();
         m_query.setRowIdColumns(rowids);
 
+        m_vDataTypes.emplace_back(SQLITE_INTEGER);  // TODO This is not necessarily true for tables without ROWID or with multiple PKs
         m_headers.push_back(sqlb::joinStringVector(rowids, ","));
 
         // Store field names and affinity data types
@@ -154,44 +147,31 @@ void SqliteTableModel::setQuery(const sqlb::Query& query)
     } else {
         // If for one reason or another (either it's a view or we couldn't parse the table statement) we couldn't get the field
         // information we retrieve it from SQLite using an extra query.
-        // NOTE: It would be nice to eventually get rid of this piece here. As soon as the grammar parser is good enough...
 
-        std::string sColumnQuery = "SELECT * FROM " + query.table().toString() + ";";
         if(m_query.rowIdColumns().empty())
             m_query.setRowIdColumn("_rowid_");
-        m_headers.emplace_back("_rowid_");
-                auto columns = getColumns(nullptr, sColumnQuery, m_vDataTypes);
-                m_headers.insert(m_headers.end(), columns.begin(), columns.end());
+
+        getColumnNames("SELECT _rowid_,* FROM " + query.table().toString());
     }
 
     // Tell the query object about the column names
     m_query.setColumNames(m_headers);
 
     // Apply new query and update view
-    buildQuery();
+    updateAndRunQuery();
 }
 
-void SqliteTableModel::setQuery(const QString& sQuery, const QString& sCountQuery, bool clearHeaders)
+void SqliteTableModel::setQuery(const QString& sQuery)
 {
-    // clear
-    if(clearHeaders)
-        reset();
-    else
-        clearCache();
-
-    if(!m_db.isOpen())
-        return;
+    // Reset
+    reset();
 
     m_sQuery = sQuery.trimmed();
     removeCommentsFromQuery(m_sQuery);
 
-    worker->setQuery(m_sQuery, sCountQuery);
+    getColumnNames(sQuery.toStdString());
 
-    if(clearHeaders)
-    {
-        auto columns = getColumns(worker->getDb(), sQuery.toStdString(), m_vDataTypes);
-        m_headers.insert(m_headers.end(), columns.begin(), columns.end());
-    }
+    worker->setQuery(m_sQuery, QString());
 
     // now fetch the first entries
     triggerCacheLoad(static_cast<int>(m_chunkSize / 2) - 1);
@@ -606,7 +586,7 @@ void SqliteTableModel::sort(const std::vector<sqlb::SortedColumn>& columns)
 
     // Set the new query (but only if a table has already been set
     if(!m_query.table().isEmpty())
-        buildQuery();
+        updateAndRunQuery();
 }
 
 SqliteTableModel::Row SqliteTableModel::makeDefaultCacheEntry () const
@@ -728,9 +708,19 @@ QModelIndex SqliteTableModel::dittoRecord(int old_row)
     return index(new_row, static_cast<int>(firstEditedColumn));
 }
 
-void SqliteTableModel::buildQuery()
+void SqliteTableModel::updateAndRunQuery()
 {
-    setQuery(QString::fromStdString(m_query.buildQuery(true)), QString::fromStdString(m_query.buildCountQuery()), false);
+    clearCache();
+
+    // Update the query
+    m_sQuery = QString::fromStdString(m_query.buildQuery(true));
+    QString sCountQuery = QString::fromStdString(m_query.buildCountQuery());
+    worker->setQuery(m_sQuery, sCountQuery);
+
+    // now fetch the first entries
+    triggerCacheLoad(static_cast<int>(m_chunkSize / 2) - 1);
+
+    emit layoutChanged();
 }
 
 void SqliteTableModel::removeCommentsFromQuery(QString& query)
@@ -797,28 +787,24 @@ void SqliteTableModel::removeCommentsFromQuery(QString& query)
     }
 }
 
-std::vector<std::string> SqliteTableModel::getColumns(std::shared_ptr<sqlite3> pDb, const std::string& sQuery, std::vector<int>& fieldsTypes) const
+void SqliteTableModel::getColumnNames(const std::string& sQuery)
 {
-    if(!pDb)
-        pDb = m_db.get(tr("retrieving list of columns"));
+    auto pDb = m_db.get(tr("retrieving list of columns"));
 
     sqlite3_stmt* stmt;
-    std::vector<std::string> listColumns;
     if(sqlite3_prepare_v2(pDb.get(), sQuery.c_str(), static_cast<int>(sQuery.size()), &stmt, nullptr) == SQLITE_OK)
     {
         int columns = sqlite3_column_count(stmt);
         for(int i = 0; i < columns; ++i)
         {
-            listColumns.push_back(sqlite3_column_name(stmt, i));
-            fieldsTypes.push_back(sqlite3_column_type(stmt, i));
+            m_headers.push_back(sqlite3_column_name(stmt, i));
+            m_vDataTypes.push_back(sqlite3_column_type(stmt, i));
         }
     }
     sqlite3_finalize(stmt);
-
-    return listColumns;
 }
 
-void addCondFormatToMap(std::map<size_t, std::vector<CondFormat>>& mCondFormats, size_t column, const CondFormat& condFormat)
+static void addCondFormatToMap(std::map<size_t, std::vector<CondFormat>>& mCondFormats, size_t column, const CondFormat& condFormat)
 {
     // If the condition is already present in the vector, update that entry and respect the order, since two entries with the same
     // condition do not make sense.
@@ -864,7 +850,7 @@ void SqliteTableModel::updateFilter(size_t column, const QString& value)
         m_query.where()[column] = whereClause;
 
     // Build the new query
-    buildQuery();
+    updateAndRunQuery();
 }
 
 void SqliteTableModel::updateGlobalFilter(const std::vector<QString>& values)
@@ -875,7 +861,7 @@ void SqliteTableModel::updateGlobalFilter(const std::vector<QString>& values)
     m_query.setGlobalWhere(filters);
 
     // Build the new query
-    buildQuery();
+    updateAndRunQuery();
 }
 
 void SqliteTableModel::clearCache()
@@ -893,13 +879,7 @@ void SqliteTableModel::clearCache()
         endRemoveRows();
     }
 
-    // We want to clear the cache contents here but keep the initialised flag.
-    // This is a bit hacky but the easiest way to achieve this. In the long term
-    // we might want to change this whole concept of clearing and resetting.
-    const bool cache_initialised = m_cache.initialised();
     m_cache.clear();
-    if(cache_initialised)
-        m_cache.setInitialised();
 
     m_currentRowCount = 0;
     m_rowCountAvailable = RowCount::Unknown;
@@ -971,7 +951,7 @@ void SqliteTableModel::setPseudoPk(std::vector<std::string> pseudoPk)
     if(m_headers.size())
         m_headers[0] = sqlb::joinStringVector(pseudoPk, ",");
 
-    buildQuery();
+    updateAndRunQuery();
 }
 
 bool SqliteTableModel::hasPseudoPk() const

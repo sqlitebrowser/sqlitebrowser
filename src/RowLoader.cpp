@@ -27,6 +27,7 @@ RowLoader::RowLoader (std::function<std::shared_ptr<sqlite3>(void)> db_getter_,
     , cache_mutex(cache_mutex_), cache_data(cache_data_)
     , query()
     , countQuery()
+    , first_chunk_loaded(false)
     , num_tasks(0)
     , pDb(nullptr)
     , stop_requested(false)
@@ -39,6 +40,7 @@ void RowLoader::setQuery (const QString& new_query, const QString& newCountQuery
 {
     std::lock_guard<std::mutex> lk(m);
     query = new_query;
+    first_chunk_loaded = false;
     if (newCountQuery.isEmpty())
         // If it is a normal query - hopefully starting with SELECT - just do a COUNT on it and return the results
         countQuery = QString("SELECT COUNT(*) FROM (%1);").arg(rtrimChar(query, ';'));
@@ -255,9 +257,9 @@ void RowLoader::process (Task & t)
         // - this is the first batch of data we load for this query
         // - we got exactly the number of rows back we queried (which indicates there might be more rows)
         // If there is no need to query the row count this means the number of rows we just got is the total row count.
-        if(!cache_data.initialised())
+        if(!first_chunk_loaded)
         {
-            cache_data.setInitialised();
+            first_chunk_loaded = true;
             if(row == t.row_end)
                 triggerRowCountDetermination(t.token);
             else

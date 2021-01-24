@@ -80,7 +80,7 @@ public:
     QModelIndex dittoRecord(int old_row);
 
     /// configure for browsing results of specified query
-    void setQuery(const QString& sQuery, const QString& sCountQuery = QString(), bool clearHeaders = true);
+    void setQuery(const QString& sQuery);
 
     std::string query() const { return m_sQuery.toStdString(); }
     std::string customQuery(bool withRowid) const { return m_query.buildQuery(withRowid); }
@@ -165,10 +165,9 @@ private:
     void handleFinishedFetch(int life_id, unsigned int fetched_row_begin, unsigned int fetched_row_end);
     void handleRowCountComplete(int life_id, int num_rows);
 
-    void buildQuery();
+    void updateAndRunQuery();
 
-    /// \param pDb connection to query; if null, obtains it from 'm_db'.
-    std::vector<std::string> getColumns(std::shared_ptr<sqlite3> pDb, const std::string& sQuery, std::vector<int>& fieldsTypes) const;
+    void getColumnNames(const std::string& sQuery);
 
     QByteArray encode(const QByteArray& str) const;
     QByteArray decode(const QByteArray& str) const;

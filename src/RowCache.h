@@ -61,18 +61,6 @@ public:
     /// to remove already-loaded rows from both ends.
     void smallestNonAvailableRange (size_t & row_begin, size_t & row_end) const;
 
-    /// \returns whether this cache object is marked as initialised
-    bool initialised() const
-    {
-        return is_initialised;
-    }
-
-    /// mark the cache object as initialized. This is reset by the clear() function
-    void setInitialised()
-    {
-        is_initialised = true;
-    }
-
 private:
     /// a single segment containing contiguous entries
     struct Segment
@@ -88,9 +76,6 @@ private:
     /// position
     using Segments = std::vector<Segment>;
     Segments segments;
-
-    // Set to true when the cache is first initialised no matter whether it contains any data or represents an empty table
-    bool is_initialised;
 
     // ------------------------------------------------------------------------------
 
@@ -127,7 +112,6 @@ private:
 
 template <typename T>
 RowCache<T>::RowCache ()
-    : is_initialised(false)
 {
 }
 
@@ -250,7 +234,6 @@ void RowCache<T>::erase (size_t pos)
 template <typename T>
 void RowCache<T>::clear ()
 {
-    is_initialised = false;
     segments.clear();
 }
 
