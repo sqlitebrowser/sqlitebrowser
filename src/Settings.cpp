@@ -108,7 +108,7 @@ void Settings::setValue(const std::string& group, const std::string& name, const
 {
     // Sometime the value has to be saved for the current session only but get discarded when the application exits.
     // In order to achieve this this flag can be set which disables the save to disk mechanism and only leaves the save to cache part active.
-    if(save_to_disk == false)
+    if(save_to_disk)
     {
         setSettingsObject();
         // Set the group and save the given value
