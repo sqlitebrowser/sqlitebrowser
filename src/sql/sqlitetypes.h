@@ -73,17 +73,6 @@ using IndexedColumnVector = std::vector<IndexedColumn>;
 using ConstraintSet = std::set<ConstraintPtr>;
 using FieldInfoList = std::vector<FieldInfo>;
 
-struct FieldInfo
-{
-    FieldInfo(const std::string& name_, const std::string& type_, const std::string& sql_)
-        : name(name_), type(type_), sql(sql_)
-    {}
-
-    std::string name;
-    std::string type;
-    std::string sql;
-};
-
 class Object
 {
 public:
@@ -429,6 +418,18 @@ private:
     std::shared_ptr<UniqueConstraint> m_unique;
     std::shared_ptr<CollateConstraint> m_collation;
     std::shared_ptr<GeneratedColumnConstraint> m_generated;
+};
+
+struct FieldInfo
+{
+    FieldInfo(const std::string& name_, const std::string& type_, const std::string& sql_, Field::Affinity affinity_)
+        : name(name_), type(type_), sql(sql_), affinity(affinity_)
+    {}
+
+    std::string name;
+    std::string type;
+    std::string sql;
+    Field::Affinity affinity;
 };
 
 class Table : public Object

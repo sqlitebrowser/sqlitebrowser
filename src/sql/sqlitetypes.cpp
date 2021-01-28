@@ -444,7 +444,7 @@ StringVector Table::rowidColumns() const
 FieldInfoList Table::fieldInformation() const
 {
     FieldInfoList result;
-    std::transform(fields.begin(), fields.end(), std::back_inserter(result), [](const auto& f) { return FieldInfo(f.name(), f.type(), f.toString("  ", " ")); });
+    std::transform(fields.begin(), fields.end(), std::back_inserter(result), [](const auto& f) { return FieldInfo(f.name(), f.type(), f.toString("  ", " "), f.affinity()); });
     return result;
 }
 
@@ -675,7 +675,7 @@ std::string Index::sql(const std::string& schema, bool ifNotExists) const
 FieldInfoList Index::fieldInformation() const
 {
     FieldInfoList result;
-    std::transform(fields.begin(), fields.end(), std::back_inserter(result), [](const auto& c) { return FieldInfo(c.name(), c.order(), c.toString("  ", " ")); });
+    std::transform(fields.begin(), fields.end(), std::back_inserter(result), [](const auto& c) { return FieldInfo(c.name(), c.order(), c.toString("  ", " "), Field::IntegerAffinity); });
     return result;
 }
 
@@ -714,7 +714,7 @@ StringVector View::fieldNames() const
 FieldInfoList View::fieldInformation() const
 {
     FieldInfoList result;
-    std::transform(fields.begin(), fields.end(), std::back_inserter(result), [](const auto& f) { return FieldInfo(f.name(), f.type(), f.toString("  ", " ")); });
+    std::transform(fields.begin(), fields.end(), std::back_inserter(result), [](const auto& f) { return FieldInfo(f.name(), f.type(), f.toString("  ", " "), f.affinity()); });
     return result;
 }
 

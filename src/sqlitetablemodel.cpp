@@ -126,32 +126,27 @@ void SqliteTableModel::setQuery(const sqlb::Query& query)
 
     // Save the query
     m_query = query;
-    m_table_of_query = m_db.getObjectByName<sqlb::Table>(query.table());
 
-    // Get the data types of all other columns as well as the column names
+    // Retrieve field names and types
+    sqlb::ObjectPtr object = m_db.getObjectByName(query.table());
+
     // Set the row id columns
-    if(m_table_of_query && m_table_of_query->fields.size()) // It is a table and parsing was OK
+    m_table_of_query = std::dynamic_pointer_cast<sqlb::Table>(object);
+    if(m_table_of_query)    // It is a table
     {
-        sqlb::StringVector rowids = m_table_of_query->rowidColumns();
-        m_query.setRowIdColumns(rowids);
-
-        m_vDataTypes.emplace_back(SQLITE_INTEGER);  // TODO This is not necessarily true for tables without ROWID or with multiple PKs
-        m_headers.push_back(sqlb::joinStringVector(rowids, ","));
-
-        // Store field names and affinity data types
-        for(const sqlb::Field& fld : m_table_of_query->fields)
-        {
-            m_headers.push_back(fld.name());
-            m_vDataTypes.push_back(fld.affinity());
-        }
+        m_query.setRowIdColumns(m_table_of_query->rowidColumns());
     } else {
-        // If for one reason or another (either it's a view or we couldn't parse the table statement) we couldn't get the field
-        // information we retrieve it from SQLite using an extra query.
-
         if(m_query.rowIdColumns().empty())
             m_query.setRowIdColumn("_rowid_");
+    }
+    m_vDataTypes.emplace_back(SQLITE_INTEGER);  // TODO This is not necessarily true for tables without ROWID or with multiple PKs
+    m_headers.push_back(sqlb::joinStringVector(m_query.rowIdColumns(), ","));
 
-        getColumnNames("SELECT _rowid_,* FROM " + query.table().toString());
+    // Store field names and affinity data types
+    for(const auto& fld : object->fieldInformation())
+    {
+        m_headers.push_back(fld.name);
+        m_vDataTypes.push_back(fld.affinity);
     }
 
     // Tell the query object about the column names
