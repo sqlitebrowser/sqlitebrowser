@@ -839,12 +839,12 @@ void SqliteTableModel::setCondFormats(const bool isRowIdFormat, size_t column, c
     emit layoutChanged();
 }
 
-void SqliteTableModel::updateFilter(size_t column, const QString& value)
+void SqliteTableModel::updateFilter(const std::string& column, const QString& value)
 {
     std::string whereClause = CondFormat::filterToSqlCondition(value, m_encoding);
 
     // If the value was set to an empty string remove any filter for this column. Otherwise insert a new filter rule or replace the old one if there is already one
-    if(whereClause.empty())
+       if(whereClause.empty())
         m_query.where().erase(column);
     else
         m_query.where()[column] = whereClause;

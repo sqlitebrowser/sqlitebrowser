@@ -558,17 +558,18 @@ void TableBrowser::updateFilter(size_t column, const QString& value)
     ui->dataTable->verticalHeader()->setMinimumWidth(ui->dataTable->verticalHeader()->width());
 
     // Update the filter in the model and its query
-    m_model->updateFilter(column, value);
+    const std::string column_name = model()->headerData(static_cast<int>(column), Qt::Horizontal, Qt::EditRole).toString().toStdString();
+    m_model->updateFilter(column_name, value);
 
     // Save the new filter settings
     BrowseDataTableSettings& settings = m_settings[currentlyBrowsedTableName()];
     if(value.isEmpty())
     {
-        if(settings.filterValues.erase(column) > 0)
+        if(settings.filterValues.erase(column_name) > 0)
             emit projectModified();
     } else {
-        if (settings.filterValues[column] != value) {
-            settings.filterValues[column] = value;
+        if (settings.filterValues[column_name] != value) {
+            settings.filterValues[column_name] = value;
             emit projectModified();
         }
     }
@@ -662,8 +663,9 @@ void TableBrowser::modifyFormat(std::function<void(CondFormat&)> changeFunction)
     if (columns.size() > 0) {
         for (size_t column : columns) {
             QString filter;
-            if (m_settings[currentlyBrowsedTableName()].filterValues.count(column) > 0)
-                filter = m_settings[currentlyBrowsedTableName()].filterValues.at(column);
+            const std::string column_name = model()->headerData(static_cast<int>(column), Qt::Horizontal, Qt::EditRole).toString().toStdString();
+            if (m_settings[currentlyBrowsedTableName()].filterValues.count(column_name) > 0)
+                filter = m_settings[currentlyBrowsedTableName()].filterValues.at(column_name);
             modifySingleFormat(false, filter, currentIndex().sibling(currentIndex().row(), static_cast<int>(column)), changeFunction);
         }
     } else {
@@ -928,8 +930,9 @@ void TableBrowser::generateFilters()
     // Set filters blocking signals for this since the filter is already applied to the browse table model
     FilterTableHeader* filterHeader = qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader());
     bool oldState = filterHeader->blockSignals(true);
+    auto obj = db->getObjectByName(currentlyBrowsedTableName());
     for(auto filterIt=settings.filterValues.cbegin();filterIt!=settings.filterValues.cend();++filterIt)
-        ui->dataTable->setFilter(static_cast<size_t>(filterIt->first), filterIt->second);
+        ui->dataTable->setFilter(sqlb::getFieldNumber(obj, filterIt->first) + 1, filterIt->second);
     filterHeader->blockSignals(oldState);
 }
 
@@ -1489,15 +1492,15 @@ void TableBrowser::jumpToRow(const sqlb::ObjectIdentifier& table, std::string co
         column = obj->primaryKey()->columnList().front();
 
     // If column doesn't exist don't do anything
-    auto column_index = sqlb::findField(obj, column);
-    if(column_index == obj->fields.end())
+    auto column_it = sqlb::findField(obj, column);
+    if(column_it == obj->fields.end())
         return;
 
     // Jump to table
     setCurrentTable(table);
 
     // Set filter
-    m_settings[table].filterValues[static_cast<size_t>(column_index-obj->fields.begin()+1)] = value;
+    m_settings[table].filterValues[column_it->name()] = value;
     refresh();
 }
 

@@ -143,7 +143,7 @@ public:
     void reloadSettings();
 
 public slots:
-    void updateFilter(size_t column, const QString& value);
+    void updateFilter(const std::string& column, const QString& value);
     void updateGlobalFilter(const std::vector<QString>& values);
 
 signals:

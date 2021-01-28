@@ -25,11 +25,8 @@ std::string Query::buildWherePart() const
     {
         for(auto i=m_where.cbegin();i!=m_where.cend();++i)
         {
-            if(i->first >= m_column_names.size())
-                continue;
-
-            const auto it = findSelectedColumnByName(m_column_names.at(i->first));
-            std::string column = sqlb::escapeIdentifier(m_column_names.at(i->first));
+            const auto it = findSelectedColumnByName(i->first);
+            std::string column = sqlb::escapeIdentifier(i->first);
             if(it != m_selected_columns.cend() && it->selector != column)
                 column = it->selector;
             where += column + " " + i->second + " AND ";

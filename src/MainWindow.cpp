@@ -2539,7 +2539,7 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, sqlb:
                     size_t index = xml.attributes().value("index").toUInt();
                     QString value = xml.attributes().value("value").toString();
                     if(!value.isEmpty())
-                        settings.filterValues[index] = value;
+                        settings.filterValues[field_information.at(index).name] = value;
                     xml.skipCurrentElement();
                 }
             }
@@ -2922,7 +2922,7 @@ static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, s
     xml.writeStartElement("filter_values");
     for(auto iter=object.filterValues.cbegin(); iter!=object.filterValues.cend(); ++iter) {
         xml.writeStartElement("column");
-        xml.writeAttribute("index", QString::number(iter->first));
+        xml.writeAttribute("index", QString::number(sqlb::getFieldNumber(obj, iter->first)));
         xml.writeAttribute("value", iter->second);
         xml.writeEndElement();
     }
