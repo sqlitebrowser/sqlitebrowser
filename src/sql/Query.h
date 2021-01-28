@@ -10,25 +10,35 @@
 namespace sqlb
 {
 
-enum SortDirection
+struct OrderBy
 {
-    Ascending,
-    Descending
-};
+    enum SortDirection
+    {
+        Ascending,
+        Descending
+    };
 
-struct SortedColumn
-{
-    SortedColumn(size_t column_, SortDirection direction_) :
-        column(column_),
+    OrderBy(const std::string& expr_, SortDirection direction_) :
+        expr(expr_),
+        is_expression(false),
         direction(direction_)
     {}
 
-    bool operator==(const SortedColumn& rhs) const
+    bool operator==(const OrderBy& rhs) const
     {
-        return column == rhs.column && direction == rhs.direction;
+        return direction == rhs.direction && is_expression == rhs.is_expression && expr == rhs.expr;
     }
 
-    size_t column;
+    std::string toSql() const
+    {
+        if(is_expression)
+            return sqlb::escapeIdentifier(expr) + (direction == Ascending ? " ASC" : " DESC");
+        else
+            return expr + (direction == Ascending ? " ASC" : " DESC");
+    }
+
+    std::string expr;
+    bool is_expression;
     SortDirection direction;
 };
 
@@ -76,9 +86,9 @@ public:
     std::vector<std::string>& globalWhere() { return m_global_where; }
     void setGlobalWhere(const std::vector<std::string>& w) { m_global_where = w; }
 
-    const std::vector<SortedColumn>& orderBy() const { return m_sort; }
-    std::vector<SortedColumn>& orderBy() { return m_sort; }
-    void setOrderBy(const std::vector<SortedColumn>& columns) { m_sort = columns; }
+    const std::vector<OrderBy>& orderBy() const { return m_sort; }
+    std::vector<OrderBy>& orderBy() { return m_sort; }
+    void setOrderBy(const std::vector<OrderBy>& columns) { m_sort = columns; }
 
 private:
     std::vector<std::string> m_column_names;
@@ -87,7 +97,7 @@ private:
     std::vector<SelectedColumn> m_selected_columns;
     std::unordered_map<size_t, std::string> m_where;    // TODO The two where variables should be merged into a single variable which ...
     std::vector<std::string> m_global_where;            // ... holds some sort of general tree structure for all sorts of where conditions.
-    std::vector<SortedColumn> m_sort;
+    std::vector<OrderBy> m_sort;
 
     std::vector<SelectedColumn>::iterator findSelectedColumnByName(const std::string& name);
     std::vector<SelectedColumn>::const_iterator findSelectedColumnByName(const std::string& name) const;

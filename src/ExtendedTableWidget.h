@@ -64,7 +64,7 @@ public:
 
     int numVisibleRows() const;
 
-    void sortByColumns(const std::vector<sqlb::SortedColumn>& columns);
+    void sortByColumns(const std::vector<sqlb::OrderBy>& columns);
 
     void setFrozenColumns(size_t count);
 

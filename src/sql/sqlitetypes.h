@@ -671,6 +671,26 @@ bool removeField(T& object, const std::string& name)
     return removeField(&object, name);
 }
 
+/**
+ * @brief getFieldNumber returns the number of the field with the given name in an object. This is supposed to be a temporary helper function only.
+ * @param object
+ * @param name
+ * @return number of the field
+ *
+ * TODO Remove this function. Whereever it is used we make the assumption that the queried columns are exactly equal to the columns of the table or view.
+ *      For more complex queries this is not true and in fact it already is a dubious assumption because we also select the rowid column.
+ */
+inline size_t getFieldNumber(ObjectPtr object, const std::string& name)
+{
+    const auto object_fields = object->fieldInformation();
+    for(size_t i=0;i<object_fields.size();i++)
+    {
+        if(object_fields[i].name == name)
+            return i;
+    }
+    return 0;
+}
+
 } //namespace sqlb
 
 #endif

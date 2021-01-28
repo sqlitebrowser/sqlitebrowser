@@ -89,7 +89,7 @@ public:
     void setQuery(const sqlb::Query& query);
 
     void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
-    void sort(const std::vector<sqlb::SortedColumn>& columns);
+    void sort(const std::vector<sqlb::OrderBy>& columns);
     sqlb::ObjectIdentifier currentTableName() const { return m_query.table(); }
 
     Qt::ItemFlags flags(const QModelIndex& index) const override;

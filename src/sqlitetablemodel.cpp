@@ -221,22 +221,22 @@ QVariant SqliteTableModel::headerData(int section, Qt::Orientation orientation, 
     {
         // if we have a VIRTUAL table the model will not be valid, with no header data
         if(static_cast<size_t>(section) < m_headers.size()) {
-            const QString plainHeader = QString::fromStdString(m_headers.at(static_cast<size_t>(section)));
+            const std::string plainHeader = m_headers.at(static_cast<size_t>(section));
             // In the edit role, return a plain column name, but in the display role, add the sort indicator.
             if (role == Qt::EditRole)
-                return plainHeader;
+                return QString::fromStdString(plainHeader);
             else {
                 QString sortIndicator;
                 for(size_t i = 0; i < m_query.orderBy().size(); i++) {
-                    const sqlb::SortedColumn sortedColumn = m_query.orderBy()[i];
+                    const sqlb::OrderBy sortedColumn = m_query.orderBy()[i];
                     // Append sort indicator with direction and ordinal number in superscript style
-                    if (sortedColumn.column == static_cast<size_t>(section)) {
-                        sortIndicator = sortedColumn.direction == sqlb::Ascending ? " ▾" : " ▴";
+                    if (sortedColumn.expr == plainHeader) {
+                        sortIndicator = sortedColumn.direction == sqlb::OrderBy::Ascending ? " ▾" : " ▴";
                         sortIndicator.append(toSuperScript(i+1));
                         break;
                     }
                 }
-                return plainHeader + sortIndicator;
+                return QString::fromStdString(plainHeader) + sortIndicator;
             }
         }
         return QString::number(section + 1);
@@ -570,12 +570,12 @@ Qt::ItemFlags SqliteTableModel::flags(const QModelIndex& index) const
 void SqliteTableModel::sort(int column, Qt::SortOrder order)
 {
     // Construct a sort order list from this item and forward it to the function to sort by lists
-    std::vector<sqlb::SortedColumn> list;
-    list.emplace_back(column, order == Qt::AscendingOrder ? sqlb::Ascending : sqlb::Descending);
+    std::vector<sqlb::OrderBy> list;
+    list.emplace_back(m_headers.at(static_cast<size_t>(column)), order == Qt::AscendingOrder ? sqlb::OrderBy::Ascending : sqlb::OrderBy::Descending);
     sort(list);
 }
 
-void SqliteTableModel::sort(const std::vector<sqlb::SortedColumn>& columns)
+void SqliteTableModel::sort(const std::vector<sqlb::OrderBy>& columns)
 {
     // Don't do anything when the sort order hasn't changed
     if(m_query.orderBy() == columns)

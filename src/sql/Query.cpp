@@ -114,11 +114,7 @@ std::string Query::buildQuery(bool withRowid) const
     // Sorting
     std::string order_by;
     for(const auto& sorted_column : m_sort)
-    {
-        if(sorted_column.column < m_column_names.size())
-            order_by += sqlb::escapeIdentifier(m_column_names.at(sorted_column.column)) + " "
-                    + (sorted_column.direction == sqlb::Ascending ? "ASC" : "DESC") + ",";
-    }
+        order_by += sorted_column.toSql() + ",";
     if(order_by.size())
     {
         order_by.pop_back();

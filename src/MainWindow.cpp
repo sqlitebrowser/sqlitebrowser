@@ -2500,8 +2500,10 @@ static void loadCondFormatMap(BrowseDataTableSettings::CondFormatMap& condFormat
     }
 }
 
-static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, QXmlStreamReader& xml)
+static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, sqlb::ObjectPtr obj, QXmlStreamReader& xml)
 {
+    const auto field_information = obj->fieldInformation();
+
     settings.showRowid = xml.attributes().value("show_row_id").toInt();
     settings.encoding = xml.attributes().value("encoding").toString();
     settings.plotXAxis = xml.attributes().value("plot_x_axis").toString();
@@ -2518,7 +2520,8 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, QXmlS
                 {
                     int index = xml.attributes().value("index").toInt();
                     int mode = xml.attributes().value("mode").toInt();
-                    settings.sortColumns.emplace_back(index, mode == Qt::AscendingOrder ? sqlb::Ascending : sqlb::Descending);
+                    if(static_cast<size_t>(index) < field_information.size())
+                        settings.sortColumns.emplace_back(field_information.at(static_cast<size_t>(index)).name, mode == Qt::AscendingOrder ? sqlb::OrderBy::Ascending : sqlb::OrderBy::Descending);
                     xml.skipCurrentElement();
                 }
             }
@@ -2804,7 +2807,7 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                                         sqlb::ObjectIdentifier (xml.attributes().value("schema").toString().toStdString(),
                                                                 xml.attributes().value("name").toString().toStdString());
                                     BrowseDataTableSettings settings;
-                                    loadBrowseDataTableSettings(settings, xml);
+                                    loadBrowseDataTableSettings(settings, db.getObjectByName(tableIdentifier), xml);
                                     TableBrowser::setSettings(tableIdentifier, settings);
                                 }
                             }
@@ -2890,7 +2893,7 @@ static void saveCondFormatMap(const QString& elementName, const BrowseDataTableS
     xml.writeEndElement();
 }
 
-static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, QXmlStreamWriter& xml)
+static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, sqlb::ObjectPtr obj, QXmlStreamWriter& xml)
 {
     xml.writeAttribute("show_row_id", QString::number(object.showRowid));
     xml.writeAttribute("encoding", object.encoding);
@@ -2902,7 +2905,7 @@ static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, Q
     for(const auto& column : object.sortColumns)
     {
         xml.writeStartElement("column");
-        xml.writeAttribute("index", QString::number(column.column));
+        xml.writeAttribute("index", QString::number(sqlb::getFieldNumber(obj, column.expr)));
         xml.writeAttribute("mode", QString::number(column.direction));
         xml.writeEndElement();
     }
@@ -3094,7 +3097,9 @@ void MainWindow::saveProject(const QString& currentFilename)
             xml.writeStartElement("table");
             xml.writeAttribute("schema", QString::fromStdString(tableIt->first.schema()));
             xml.writeAttribute("name", QString::fromStdString(tableIt->first.name()));
-            saveBrowseDataTableSettings(tableIt->second, xml);
+
+            auto obj = db.getObjectByName(tableIt->first);
+            saveBrowseDataTableSettings(tableIt->second, obj, xml);
             xml.writeEndElement();
         }
         // </browse_table_settings>
@@ -3812,7 +3817,9 @@ void MainWindow::changeTableBrowserTab(TableBrowserDock* dock)
         dock->setFocusStyle(true);
 
         m_currentTabTableModel = dock->tableBrowser()->model();
-        plotDock->updatePlot(m_currentTabTableModel, &dock->tableBrowser()->settings(dock->tableBrowser()->currentlyBrowsedTableName()), true, false);
+        const auto current_table_name = dock->tableBrowser()->currentlyBrowsedTableName();
+        if(!current_table_name.isEmpty())
+            plotDock->updatePlot(m_currentTabTableModel, &dock->tableBrowser()->settings(current_table_name), true, false);
     }
 }
 

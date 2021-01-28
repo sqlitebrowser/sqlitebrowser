@@ -1111,6 +1111,9 @@ void TableBrowser::headerClicked(int logicalindex)
     // Get the current list of sort columns
     auto& columns = settings.sortColumns;
 
+    // Get the name of the column the user clicked on
+    std::string column = model()->headerData(logicalindex, Qt::Horizontal, Qt::EditRole).toString().toStdString();
+
     // Before sorting, first check if the Control key is pressed. If it is, we want to append this column to the list of sort columns. If it is not,
     // we want to sort only by the new column.
     if(QApplication::keyboardModifiers().testFlag(Qt::ControlModifier))
@@ -1120,27 +1123,26 @@ void TableBrowser::headerClicked(int logicalindex)
         // If the column was control+clicked again, change its sort order.
         // If not already in the sort order, add the column as a new sort column to the list.
         bool present = false;
-        for(sqlb::SortedColumn& sortedCol : columns) {
-
-            if(sortedCol.column == static_cast<size_t>(logicalindex)) {
-                sortedCol.direction = (sortedCol.direction == sqlb::Ascending ? sqlb::Descending : sqlb::Ascending);
+        for(sqlb::OrderBy& sortedCol : columns) {
+            if(sortedCol.expr == column) {
+                sortedCol.direction = (sortedCol.direction == sqlb::OrderBy::Ascending ? sqlb::OrderBy::Descending : sqlb::OrderBy::Ascending);
                 present = true;
                 break;
             }
         }
         if(!present)
-            columns.emplace_back(logicalindex, sqlb::Ascending);
+            columns.emplace_back(column, sqlb::OrderBy::Ascending);
     } else {
         // Single column sorting
 
         // If we have exactly one sort column and it is the column which was just clicked, change its sort order.
         // If not, clear the list of sorting columns and replace it by a single new sort column.
-        if(columns.size() == 1 && columns.front().column == static_cast<size_t>(logicalindex))
+        if(columns.size() == 1 && columns.front().expr == column)
         {
-            columns.front().direction = (columns.front().direction == sqlb::Ascending ? sqlb::Descending : sqlb::Ascending);
+            columns.front().direction = (columns.front().direction == sqlb::OrderBy::Ascending ? sqlb::OrderBy::Descending : sqlb::OrderBy::Ascending);
         } else {
             columns.clear();
-            columns.emplace_back(logicalindex, sqlb::Ascending);
+            columns.emplace_back(column, sqlb::OrderBy::Ascending);
         }
     }
 
