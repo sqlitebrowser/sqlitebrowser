@@ -35,18 +35,6 @@ bool Object::operator==(const Object& rhs) const
     return true;
 }
 
-std::string Object::typeToString(Types type)
-{
-    switch(type)
-    {
-    case Types::Table: return "table";
-    case Types::Index: return "index";
-    case Types::View: return "view";
-    case Types::Trigger: return "trigger";
-    }
-    return std::string();
-}
-
 ConstraintPtr Constraint::makeConstraint(ConstraintTypes type)
 {
     switch(type)
@@ -441,13 +429,6 @@ StringVector Table::rowidColumns() const
         return {"_rowid_"};
 }
 
-FieldInfoList Table::fieldInformation() const
-{
-    FieldInfoList result;
-    std::transform(fields.begin(), fields.end(), std::back_inserter(result), [](const auto& f) { return FieldInfo(f.name(), f.type(), f.toString("  ", " "), f.affinity()); });
-    return result;
-}
-
 TablePtr Table::parseSQL(const std::string& sSQL)
 {
     parser::ParserDriver drv;
@@ -458,7 +439,9 @@ TablePtr Table::parseSQL(const std::string& sSQL)
         return t;
     } else {
         std::cerr << "Sqlite parse error: " << sSQL << std::endl;
-        return std::make_shared<Table>("");
+        TablePtr t = std::make_shared<Table>("");
+        t->setOriginalSql(sSQL);
+        return t;
     }
 }
 
@@ -672,13 +655,6 @@ std::string Index::sql(const std::string& schema, bool ifNotExists) const
     return sql + ";";
 }
 
-FieldInfoList Index::fieldInformation() const
-{
-    FieldInfoList result;
-    std::transform(fields.begin(), fields.end(), std::back_inserter(result), [](const auto& c) { return FieldInfo(c.name(), c.order(), c.toString("  ", " "), Field::IntegerAffinity); });
-    return result;
-}
-
 IndexPtr Index::parseSQL(const std::string& sSQL)
 {
     parser::ParserDriver drv;
@@ -689,8 +665,16 @@ IndexPtr Index::parseSQL(const std::string& sSQL)
         return i;
     } else {
         std::cerr << "Sqlite parse error: " << sSQL << std::endl;
-        return std::make_shared<Index>("");
+        IndexPtr i = std::make_shared<Index>("");
+        i->setOriginalSql(sSQL);
+        return i;
     }
+}
+
+template<>
+std::string getBaseTable<Index>(IndexPtr object)
+{
+    return object->table();
 }
 
 
@@ -704,20 +688,6 @@ ViewPtr View::parseSQL(const std::string& sSQL)
     return v;
 }
 
-StringVector View::fieldNames() const
-{
-    StringVector sl;
-    std::transform(fields.begin(), fields.end(), std::back_inserter(sl), [](const auto& f) { return f.name(); });
-    return sl;
-}
-
-FieldInfoList View::fieldInformation() const
-{
-    FieldInfoList result;
-    std::transform(fields.begin(), fields.end(), std::back_inserter(result), [](const auto& f) { return FieldInfo(f.name(), f.type(), f.toString("  ", " "), f.affinity()); });
-    return result;
-}
-
 
 TriggerPtr Trigger::parseSQL(const std::string& sSQL)
 {
@@ -726,6 +696,12 @@ TriggerPtr Trigger::parseSQL(const std::string& sSQL)
     auto t = std::make_shared<Trigger>("");
     t->setOriginalSql(sSQL);
     return t;
+}
+
+template<>
+std::string getBaseTable<Trigger>(TriggerPtr object)
+{
+    return object->table();
 }
 
 } //namespace sqlb

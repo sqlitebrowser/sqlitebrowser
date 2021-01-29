@@ -25,7 +25,19 @@ enum LogMessageType
     kLogMsg_ErrorLog
 };
 
-using objectMap = std::multimap<std::string, sqlb::ObjectPtr>;  // Maps from object type (table, index, view, trigger) to a pointer to the object representation
+struct objectMap
+{
+    // These map from object name to object pointer
+    std::map<std::string, sqlb::TablePtr> tables;       // This stores tables AND views
+    std::map<std::string, sqlb::IndexPtr> indices;
+    std::map<std::string, sqlb::TriggerPtr> triggers;
+
+    bool empty() const
+    {
+        return tables.empty() && indices.empty() && triggers.empty();
+    }
+};
+
 using schemaMap = std::map<std::string, objectMap>;             // Maps from the schema name (main, temp, attached schemas) to the object map for that schema
 
 int collCompare(void* pArg, int sizeA, const void* sA, int sizeB, const void* sB);
@@ -209,15 +221,28 @@ public:
      */
     bool alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb::Table& new_table, AlterTableTrackColumns track_columns, std::string newSchemaName = std::string());
 
-    template<typename T = sqlb::Object>
-    const std::shared_ptr<T> getObjectByName(const sqlb::ObjectIdentifier& name) const
+    const sqlb::TablePtr getTableByName(const sqlb::ObjectIdentifier& name) const
     {
-        for(auto& it : schemata.at(name.schema()))
-        {
-            if(it.second->name() == name.name())
-                return std::dynamic_pointer_cast<T>(it.second);
-        }
-        return std::shared_ptr<T>();
+        const auto& schema = schemata.at(name.schema());
+        if(schema.tables.count(name.name()))
+            return schema.tables.at(name.name());
+        return sqlb::TablePtr{};
+    }
+
+    const sqlb::IndexPtr getIndexByName(const sqlb::ObjectIdentifier& name) const
+    {
+        const auto& schema = schemata.at(name.schema());
+        if(schema.indices.count(name.name()))
+            return schema.indices.at(name.name());
+        return sqlb::IndexPtr{};
+    }
+
+    const sqlb::TriggerPtr getTriggerByName(const sqlb::ObjectIdentifier& name) const
+    {
+        const auto& schema = schemata.at(name.schema());
+        if(schema.triggers.count(name.name()))
+            return schema.triggers.at(name.name());
+        return sqlb::TriggerPtr{};
     }
 
     bool isOpen() const;

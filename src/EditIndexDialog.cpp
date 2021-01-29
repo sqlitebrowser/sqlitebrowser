@@ -25,20 +25,18 @@ EditIndexDialog::EditIndexDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
     {
         for(const auto& it : pdb.schemata)
         {
-            auto tables = it.second.equal_range("table");
-            for(auto jt=tables.first;jt!=tables.second;++jt)
+            for(const auto& jt : it.second.tables)
             {
                 // Only show the schema name for non-main schemata
-                sqlb::ObjectIdentifier obj(it.first, jt->second->name());
+                sqlb::ObjectIdentifier obj(it.first, jt.first);
                 dbobjs.insert({obj.toDisplayString(), obj});
             }
         }
     } else {            // If this is an existing index, only offer tables of the current database schema
-        auto tables = pdb.schemata[curIndex.schema()].equal_range("table");
-        for(auto it=tables.first;it!=tables.second;++it)
+        for(const auto& it : pdb.schemata[curIndex.schema()].tables)
         {
             // Only show the schema name for non-main schemata
-            sqlb::ObjectIdentifier obj(curIndex.schema(), it->second->name());
+            sqlb::ObjectIdentifier obj(curIndex.schema(), it.first);
             dbobjs.insert({obj.toDisplayString(), obj});
         }
     }
@@ -54,7 +52,7 @@ EditIndexDialog::EditIndexDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
     if(!newIndex)
     {
         // Load the current layout and fill in the dialog fields
-        index = *(pdb.getObjectByName<sqlb::Index>(curIndex));
+        index = *pdb.getIndexByName(curIndex);
 
         ui->editIndexName->blockSignals(true);
         ui->editIndexName->setText(QString::fromStdString(index.name()));
@@ -114,26 +112,25 @@ void EditIndexDialog::tableChanged(const QString& new_table, bool initialLoad)
 void EditIndexDialog::updateColumnLists()
 {
     // Fill the table column list
-    sqlb::TablePtr table = pdb.getObjectByName<sqlb::Table>(sqlb::ObjectIdentifier(ui->comboTableName->currentData().toString().toStdString()));
+    sqlb::TablePtr table = pdb.getTableByName(sqlb::ObjectIdentifier(ui->comboTableName->currentData().toString().toStdString()));
     if(!table)
         return;
-    sqlb::FieldInfoList tableFields = table->fieldInformation();
-    ui->tableTableColumns->setRowCount(static_cast<int>(tableFields.size()));
+    ui->tableTableColumns->setRowCount(static_cast<int>(table->fields.size()));
     int tableRows = 0;
-    for(size_t i=0;i<tableFields.size();++i)
+    for(const auto& field: table->fields)
     {
         // When we're doing the initial loading and this field already is in the index to edit, then don't add it to the
         // list of table columns. It will be added to the list of index columns in the next step. When this is not the initial
         // loading, the index column list is empty, so this check will always be true.
-        if(sqlb::findField(index, tableFields.at(i).name) == index.fields.end())
+        if(sqlb::findField(index, field.name()) == index.fields.end())
         {
             // Put the name of the field in the first column
-            QTableWidgetItem* name = new QTableWidgetItem(QString::fromStdString(tableFields.at(i).name));
+            QTableWidgetItem* name = new QTableWidgetItem(QString::fromStdString(field.name()));
             name->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
             ui->tableTableColumns->setItem(tableRows, 0, name);
 
             // Put the data type in the second column
-            QTableWidgetItem* type = new QTableWidgetItem(QString::fromStdString(tableFields.at(i).type));
+            QTableWidgetItem* type = new QTableWidgetItem(QString::fromStdString(field.type()));
             type->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
             ui->tableTableColumns->setItem(tableRows, 1, type);
 

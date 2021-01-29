@@ -78,7 +78,7 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
     if(m_bNewTable == false)
     {
         // Existing table, so load and set the current layout
-        m_table = *(pdb.getObjectByName<sqlb::Table>(curTable));
+        m_table = *pdb.getTableByName(curTable);
         ui->labelEditWarning->setVisible(!m_table.fullyParsed());
 
         // Initialise the list of tracked columns for table layout changes
@@ -492,13 +492,11 @@ void EditTableDialog::fieldItemChanged(QTreeWidgetItem *item, int column)
             if(!m_bNewTable)
             {
                 const auto pk = m_table.primaryKey();
-                const auto tables = pdb.schemata[curTable.schema()].equal_range("table");
-                for(auto it=tables.first;it!=tables.second;++it)
+                for(const auto& it : pdb.schemata[curTable.schema()].tables)
                 {
-                    const sqlb::ObjectPtr& fkobj = it->second;
+                    const sqlb::TablePtr& fkobj = it.second;
 
-
-                    auto fks = std::dynamic_pointer_cast<sqlb::Table>(fkobj)->constraints({}, sqlb::Constraint::ForeignKeyConstraintType);
+                    auto fks = fkobj->constraints({}, sqlb::Constraint::ForeignKeyConstraintType);
                     for(const sqlb::ConstraintPtr& fkptr : fks)
                     {
                         auto fk = std::dynamic_pointer_cast<sqlb::ForeignKeyClause>(fkptr);
@@ -591,7 +589,7 @@ void EditTableDialog::fieldItemChanged(QTreeWidgetItem *item, int column)
                 // to at least replace all troublesome NULL values by the default value
                 SqliteTableModel m(pdb, this);
                 m.setQuery(QString("SELECT COUNT(%1) FROM %2 WHERE coalesce(NULL,%3) IS NULL;").arg(
-                           QString::fromStdString(sqlb::joinStringVector(sqlb::escapeIdentifier(pdb.getObjectByName<sqlb::Table>(curTable)->rowidColumns()), ",")),
+                           QString::fromStdString(sqlb::joinStringVector(sqlb::escapeIdentifier(pdb.getTableByName(curTable)->rowidColumns()), ",")),
                            QString::fromStdString(curTable.toString()),
                            QString::fromStdString(sqlb::escapeIdentifier(field.name()))));
                 if(!m.completeCache())

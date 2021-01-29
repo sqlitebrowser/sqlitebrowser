@@ -61,7 +61,6 @@ class Trigger;
 class Field;
 class Constraint;
 class IndexedColumn;
-struct FieldInfo;
 using ObjectPtr = std::shared_ptr<Object>;
 using TablePtr = std::shared_ptr<Table>;
 using IndexPtr = std::shared_ptr<Index>;
@@ -71,26 +70,14 @@ using ConstraintPtr = std::shared_ptr<Constraint>;
 using FieldVector = std::vector<Field>;
 using IndexedColumnVector = std::vector<IndexedColumn>;
 using ConstraintSet = std::set<ConstraintPtr>;
-using FieldInfoList = std::vector<FieldInfo>;
 
 class Object
 {
 public:
-    enum Types
-    {
-        Table,
-        Index,
-        View,
-        Trigger
-    };
-
     explicit Object(const std::string& name): m_name(name), m_fullyParsed(false) {}
     virtual ~Object() = default;
 
     bool operator==(const Object& rhs) const;
-
-    virtual Types type() const = 0;
-    static std::string typeToString(Types type);
 
     void setName(const std::string& name) { m_name = name; }
     const std::string& name() const { return m_name; }
@@ -98,12 +85,8 @@ public:
     void setOriginalSql(const std::string& original_sql) { m_originalSql = original_sql; }
     std::string originalSql() const { return m_originalSql; }
 
-    virtual std::string baseTable() const { return std::string(); }
-
     void setFullyParsed(bool fully_parsed) { m_fullyParsed = fully_parsed; }
     bool fullyParsed() const { return m_fullyParsed; }
-
-    virtual FieldInfoList fieldInformation() const { return FieldInfoList(); }
 
     /**
      * @brief Returns the CREATE statement for this object
@@ -420,18 +403,6 @@ private:
     std::shared_ptr<GeneratedColumnConstraint> m_generated;
 };
 
-struct FieldInfo
-{
-    FieldInfo(const std::string& name_, const std::string& type_, const std::string& sql_, Field::Affinity affinity_)
-        : name(name_), type(type_), sql(sql_), affinity(affinity_)
-    {}
-
-    std::string name;
-    std::string type;
-    std::string sql;
-    Field::Affinity affinity;
-};
-
 class Table : public Object
 {
 public:
@@ -441,7 +412,7 @@ public:
 
     bool operator==(const Table& rhs) const;
 
-    Types type() const override { return Object::Table; }
+    virtual bool isView() const { return false; }
 
     FieldVector fields;
     using field_type = Field;
@@ -462,8 +433,6 @@ public:
     void setVirtualUsing(const std::string& virt_using) { m_virtual = virt_using; }
     const std::string& virtualUsing() const { return m_virtual; }
     bool isVirtual() const { return !m_virtual.empty(); }
-
-    FieldInfoList fieldInformation() const override;
 
     void addConstraint(ConstraintPtr constraint);
     void setConstraint(ConstraintPtr constraint);
@@ -531,13 +500,9 @@ public:
     explicit Index(const std::string& name): Object(name), m_unique(false) {}
     Index& operator=(const Index& rhs);
 
-    Types type() const override { return Object::Index; }
-
     IndexedColumnVector fields;
     using field_type = IndexedColumn;
     using field_iterator = IndexedColumnVector::iterator;
-
-    std::string baseTable() const override { return m_table; }
 
     void setUnique(bool unique) { m_unique = unique; }
     bool unique() const { return m_unique; }
@@ -561,8 +526,6 @@ public:
      */
     static IndexPtr parseSQL(const std::string& sSQL);
 
-    FieldInfoList fieldInformation() const override;
-
 private:
     StringVector columnSqlList() const;
 
@@ -571,23 +534,17 @@ private:
     std::string m_whereExpr;
 };
 
-class View : public Object
+class View : public Table
 {
 public:
-    explicit View(const std::string& name): Object(name) {}
+    explicit View(const std::string& name): Table(name) {}
 
-    Types type() const override { return Object::View; }
-
-    FieldVector fields;
+    virtual bool isView() const override { return true; }
 
     std::string sql(const std::string& /*schema*/ = "main", bool /*ifNotExists*/ = false) const override
     { /* TODO */ return m_originalSql; }
 
     static ViewPtr parseSQL(const std::string& sSQL);
-
-    StringVector fieldNames() const;
-
-    FieldInfoList fieldInformation() const override;
 };
 
 class Trigger : public Object
@@ -595,14 +552,10 @@ class Trigger : public Object
 public:
     explicit Trigger(const std::string& name): Object(name) {}
 
-    Types type() const override { return Object::Trigger; }
-
     std::string sql(const std::string& /*schema*/ = "main", bool /*ifNotExists*/ = false) const override
     { /* TODO */ return m_originalSql; }
 
     static TriggerPtr parseSQL(const std::string& sSQL);
-
-    std::string baseTable() const override { return m_table; }
 
     void setTable(const std::string& table) { m_table = table; }
     std::string table() const { return m_table; }
@@ -610,6 +563,22 @@ public:
 private:
     std::string m_table;
 };
+
+/**
+ * @brief Return the name of the base table of the given object. For indices and triggers that is the table which the object is related to.
+ */
+
+template<typename T>
+std::string getBaseTable(std::shared_ptr<T> /*object*/)
+{
+    return std::string{};
+}
+
+template<>
+std::string getBaseTable<Index>(IndexPtr object);
+
+template<>
+std::string getBaseTable<Trigger>(TriggerPtr object);
 
 /**
  * @brief findField Finds a field in the database object and returns an iterator to it.
@@ -681,12 +650,11 @@ bool removeField(T& object, const std::string& name)
  * TODO Remove this function. Whereever it is used we make the assumption that the queried columns are exactly equal to the columns of the table or view.
  *      For more complex queries this is not true and in fact it already is a dubious assumption because we also select the rowid column.
  */
-inline size_t getFieldNumber(ObjectPtr object, const std::string& name)
+inline size_t getFieldNumber(TablePtr object, const std::string& name)
 {
-    const auto object_fields = object->fieldInformation();
-    for(size_t i=0;i<object_fields.size();i++)
+    for(size_t i=0;i<object->fields.size();i++)
     {
-        if(object_fields[i].name == name)
+        if(object->fields[i].name() == name)
             return i;
     }
     return 0;

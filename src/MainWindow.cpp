@@ -641,16 +641,12 @@ void MainWindow::populateStructure(const std::vector<sqlb::ObjectIdentifier>& ol
     {
         SqlUiLexer::TablesAndColumnsMap tablesToColumnsMap;
 
-        for(const auto& jt : it.second)
+        for(const auto& jt : it.second.tables)
         {
-            if(jt.second->type() == sqlb::Object::Types::Table || jt.second->type() == sqlb::Object::Types::View)
-            {
-                QString objectname = QString::fromStdString(jt.second->name());
+            QString objectname = QString::fromStdString(jt.first);
 
-                sqlb::FieldInfoList fi = jt.second->fieldInformation();
-                for(const sqlb::FieldInfo& f : fi)
-                    tablesToColumnsMap[objectname].push_back(QString::fromStdString(f.name));
-            }
+            for(const auto& f : jt.second->fields)
+                tablesToColumnsMap[objectname].push_back(QString::fromStdString(f.name()));
         }
 
         qualifiedTablesMap[QString::fromStdString(it.first)] = tablesToColumnsMap;
@@ -989,13 +985,13 @@ void MainWindow::editObject()
         if(dialog.exec())
             refreshTableBrowsers();
     } else if(type == "view") {
-        sqlb::ViewPtr view = db.getObjectByName<sqlb::View>(obj);
+        sqlb::TablePtr view = db.getTableByName(obj);
         runSqlNewTab(QString("DROP VIEW %1;\n%2").arg(QString::fromStdString(obj.toString()), QString::fromStdString(view->sql())),
                      tr("Edit View %1").arg(QString::fromStdString(obj.toDisplayString())),
                      "https://www.sqlite.org/lang_createview.html",
                      /* autoRun */ false);
     } else if(type == "trigger") {
-        sqlb::TriggerPtr trigger = db.getObjectByName<sqlb::Trigger>(obj);
+        sqlb::TriggerPtr trigger = db.getTriggerByName(obj);
         runSqlNewTab(QString("DROP TRIGGER %1;\n%2").arg(QString::fromStdString(obj.toString()), QString::fromStdString(trigger->sql())),
                      tr("Edit Trigger %1").arg(QString::fromStdString(obj.toDisplayString())),
                      "https://www.sqlite.org/lang_createtrigger.html",
@@ -2500,10 +2496,8 @@ static void loadCondFormatMap(BrowseDataTableSettings::CondFormatMap& condFormat
     }
 }
 
-static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, sqlb::ObjectPtr obj, QXmlStreamReader& xml)
+static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, sqlb::TablePtr obj, QXmlStreamReader& xml)
 {
-    const auto field_information = obj->fieldInformation();
-
     settings.showRowid = xml.attributes().value("show_row_id").toInt();
     settings.encoding = xml.attributes().value("encoding").toString();
     settings.plotXAxis = xml.attributes().value("plot_x_axis").toString();
@@ -2520,8 +2514,8 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, sqlb:
                 {
                     int index = xml.attributes().value("index").toInt();
                     int mode = xml.attributes().value("mode").toInt();
-                    if(static_cast<size_t>(index) < field_information.size())
-                        settings.sortColumns.emplace_back(field_information.at(static_cast<size_t>(index)).name, mode == Qt::AscendingOrder ? sqlb::OrderBy::Ascending : sqlb::OrderBy::Descending);
+                    if(static_cast<size_t>(index) < obj->fields.size())
+                        settings.sortColumns.emplace_back(obj->fields.at(static_cast<size_t>(index)).name(), mode == Qt::AscendingOrder ? sqlb::OrderBy::Ascending : sqlb::OrderBy::Descending);
                     xml.skipCurrentElement();
                 }
             }
@@ -2539,7 +2533,7 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, sqlb:
                     size_t index = xml.attributes().value("index").toUInt();
                     QString value = xml.attributes().value("value").toString();
                     if(!value.isEmpty())
-                        settings.filterValues[field_information.at(index).name] = value;
+                        settings.filterValues[obj->fields.at(index).name()] = value;
                     xml.skipCurrentElement();
                 }
             }
@@ -2807,7 +2801,7 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                                         sqlb::ObjectIdentifier (xml.attributes().value("schema").toString().toStdString(),
                                                                 xml.attributes().value("name").toString().toStdString());
                                     BrowseDataTableSettings settings;
-                                    loadBrowseDataTableSettings(settings, db.getObjectByName(tableIdentifier), xml);
+                                    loadBrowseDataTableSettings(settings, db.getTableByName(tableIdentifier), xml);
                                     TableBrowser::setSettings(tableIdentifier, settings);
                                 }
                             }
@@ -2893,7 +2887,7 @@ static void saveCondFormatMap(const QString& elementName, const BrowseDataTableS
     xml.writeEndElement();
 }
 
-static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, sqlb::ObjectPtr obj, QXmlStreamWriter& xml)
+static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, sqlb::TablePtr obj, QXmlStreamWriter& xml)
 {
     xml.writeAttribute("show_row_id", QString::number(object.showRowid));
     xml.writeAttribute("encoding", object.encoding);
@@ -3098,7 +3092,7 @@ void MainWindow::saveProject(const QString& currentFilename)
             xml.writeAttribute("schema", QString::fromStdString(tableIt->first.schema()));
             xml.writeAttribute("name", QString::fromStdString(tableIt->first.name()));
 
-            auto obj = db.getObjectByName(tableIt->first);
+            auto obj = db.getTableByName(tableIt->first);
             saveBrowseDataTableSettings(tableIt->second, obj, xml);
             xml.writeEndElement();
         }
@@ -3409,7 +3403,7 @@ void MainWindow::saveAsView(const std::string& query)
         name = QInputDialog::getText(this, qApp->applicationName(), tr("Please specify the view name")).trimmed();
         if(name.isNull())
             return;
-        if(db.getObjectByName(sqlb::ObjectIdentifier("main", name.toStdString())) != nullptr)
+        if(db.getTableByName(sqlb::ObjectIdentifier("main", name.toStdString())))
             QMessageBox::warning(this, qApp->applicationName(), tr("There is already an object with that name. Please choose a different name."));
         else
             break;
@@ -3831,15 +3825,12 @@ QList<TableBrowserDock*> MainWindow::allTableBrowserDocks() const
 void MainWindow::newRowCountsTab()
 {
     QString sql;
-    for(const auto& it : db.schemata["main"])
+    for(const auto& it : db.schemata["main"].tables)
     {
-        if(it.second->type() == sqlb::Object::Table || it.second->type() == sqlb::Object::View)
-        {
-            sql += QString("SELECT %1 AS \"name\", %2 AS \"type\", COUNT(*) AS \"rows\" FROM %3\nUNION ").arg(
-                        QString::fromStdString(sqlb::escapeString(it.second->name())),
-                        QString::fromStdString(sqlb::escapeString(it.second->typeToString(it.second->type()))),
-                        QString::fromStdString(sqlb::escapeIdentifier(it.second->name())));
-        }
+        sql += QString("SELECT %1 AS \"name\", '%2' AS \"type\", COUNT(*) AS \"rows\" FROM %3\nUNION ").arg(
+                    QString::fromStdString(sqlb::escapeString(it.first)),
+                    QString::fromStdString(it.second->isView() ? "view" : "table"),
+                    QString::fromStdString(sqlb::escapeIdentifier(it.first)));
     }
     sql.chop(7);    // Remove the last "\nUNION " at the end
 

@@ -139,12 +139,12 @@ QWidget* ExtendedTableWidgetEditorDelegate::createEditor(QWidget* parent, const 
         std::string column;
         // If no column name is set, assume the primary key is meant
         if(fk.columns().empty()) {
-            sqlb::TablePtr obj = m->db().getObjectByName<sqlb::Table>(foreignTable);
+            sqlb::TablePtr obj = m->db().getTableByName(foreignTable);
             column = obj->primaryKey()->columnList().front();
         } else
             column = fk.columns().at(0);
 
-        sqlb::TablePtr currentTable = m->db().getObjectByName<sqlb::Table>(m->currentTableName());
+        sqlb::TablePtr currentTable = m->db().getTableByName(m->currentTableName());
         QString query = QString("SELECT %1 FROM %2").arg(QString::fromStdString(sqlb::escapeIdentifier(column)), QString::fromStdString(foreignTable.toString()));
 
         // if the current column of the current table does NOT have not-null constraint,
@@ -792,7 +792,7 @@ void ExtendedTableWidget::cut()
 {
     const QModelIndexList& indices = selectionModel()->selectedIndexes();
     SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
-    sqlb::TablePtr currentTable = m->db().getObjectByName<sqlb::Table>(m->currentTableName());
+    sqlb::TablePtr currentTable = m->db().getTableByName(m->currentTableName());
 
     copy(false, false);
 
@@ -1164,7 +1164,7 @@ void ExtendedTableWidget::currentChanged(const QModelIndex &current, const QMode
 void ExtendedTableWidget::setToNull(const QModelIndexList& indices)
 {
     SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
-    sqlb::TablePtr currentTable = m->db().getObjectByName<sqlb::Table>(m->currentTableName());
+    sqlb::TablePtr currentTable = m->db().getTableByName(m->currentTableName());
 
     // Check if some column in the selection has a NOT NULL constraint, before trying to update the cells.
     if(currentTable) {

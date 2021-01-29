@@ -725,10 +725,10 @@ void TableBrowser::updateRecordsetLabel()
     sqlb::ObjectIdentifier current_table = currentlyBrowsedTableName();
     if(!current_table.isEmpty() && !m_model->query().empty())
     {
-        auto obj = db->getObjectByName(current_table);
+        auto obj = db->getTableByName(current_table);
         is_table_or_unlocked_view = obj && (
-                    (obj->type() == sqlb::Object::View && m_model->hasPseudoPk()) ||
-                    (obj->type() == sqlb::Object::Table));
+                    (obj->isView() && m_model->hasPseudoPk()) ||
+                    (!obj->isView()));
     }
     enableEditing(m_model->rowCountAvailable() != SqliteTableModel::RowCount::Unknown && is_table_or_unlocked_view);
 
@@ -764,20 +764,19 @@ sqlb::Query TableBrowser::buildQuery(const BrowseDataTableSettings& storedData, 
 
     // Display formats
     bool only_defaults = true;
-    const auto table = db->getObjectByName(tablename);
+    const auto table = db->getTableByName(tablename);
     if(table)
     {
         // When there is at least one custom display format, we have to set all columns for the query explicitly here
-        const sqlb::FieldInfoList& tablefields = table->fieldInformation();
-        for(size_t i=0; i<tablefields.size(); ++i)
+        for(size_t i=0; i<table->fields.size(); ++i)
         {
             QString format = contains(storedData.displayFormats, i+1) ? storedData.displayFormats.at(i+1) : QString();
             if(format.size())
             {
-                query.selectedColumns().emplace_back(tablefields.at(i).name, format.toStdString());
+                query.selectedColumns().emplace_back(table->fields.at(i).name(), format.toStdString());
                 only_defaults = false;
             } else {
-                query.selectedColumns().emplace_back(tablefields.at(i).name, tablefields.at(i).name);
+                query.selectedColumns().emplace_back(table->fields.at(i).name(), table->fields.at(i).name());
             }
         }
     }
@@ -837,12 +836,12 @@ void TableBrowser::applyViewportSettings(const BrowseDataTableSettings& storedDa
     ui->editGlobalFilter->setText(text);
 
     // Show/hide some menu options depending on whether this is a table or a view
-    const auto table = db->getObjectByName<sqlb::Table>(tablename);
-    if(table)
+    const auto table = db->getTableByName(tablename);
+    if(!table->isView())
     {
         // Table
         ui->actionUnlockViewEditing->setVisible(false);
-        ui->actionShowRowidColumn->setVisible(!std::dynamic_pointer_cast<sqlb::Table>(table)->withoutRowidTable());
+        ui->actionShowRowidColumn->setVisible(!table->withoutRowidTable());
     } else {
         // View
         ui->actionUnlockViewEditing->setVisible(true);
@@ -930,7 +929,7 @@ void TableBrowser::generateFilters()
     // Set filters blocking signals for this since the filter is already applied to the browse table model
     FilterTableHeader* filterHeader = qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader());
     bool oldState = filterHeader->blockSignals(true);
-    auto obj = db->getObjectByName(currentlyBrowsedTableName());
+    auto obj = db->getTableByName(currentlyBrowsedTableName());
     for(auto filterIt=settings.filterValues.cbegin();filterIt!=settings.filterValues.cend();++filterIt)
         ui->dataTable->setFilter(sqlb::getFieldNumber(obj, filterIt->first) + 1, filterIt->second);
     filterHeader->blockSignals(oldState);
@@ -939,10 +938,10 @@ void TableBrowser::generateFilters()
 void TableBrowser::unlockViewEditing(bool unlock, QString pk)
 {
     sqlb::ObjectIdentifier currentTable = currentlyBrowsedTableName();
-    sqlb::ViewPtr obj = db->getObjectByName<sqlb::View>(currentTable);
+    sqlb::TablePtr view = db->getTableByName(currentTable);
 
     // If this isn't a view just unlock editing and return
-    if(!obj)
+    if(!view)
     {
         m_model->setPseudoPk(m_model->pseudoPk());
         enableEditing(true);
@@ -957,7 +956,7 @@ void TableBrowser::unlockViewEditing(bool unlock, QString pk)
             bool ok;
 
             QStringList options;
-            for(const auto& n : obj->fieldNames())
+            for(const auto& n : view->fieldNames())
                 options.push_back(QString::fromStdString(n));
 
             // Ask for a PK
@@ -1210,7 +1209,7 @@ void TableBrowser::showRecordPopupMenu(const QPoint& pos)
     QMenu popupRecordMenu(this);
 
     // "Delete and duplicate records" can only be done on writable objects
-    if(db->getObjectByName(currentlyBrowsedTableName())->type() == sqlb::Object::Types::Table && !db->readOnly()) {
+    if(db->getTableByName(currentlyBrowsedTableName()) && !db->readOnly()) {
 
         // Select the row if it is not already in the selection.
         QModelIndexList rowList = ui->dataTable->selectionModel()->selectedRows();
@@ -1382,11 +1381,8 @@ void TableBrowser::editDisplayFormat()
     // column is always the rowid column. Ultimately, get the column name from the column object
     sqlb::ObjectIdentifier current_table = currentlyBrowsedTableName();
     size_t field_number = sender()->property("clicked_column").toUInt();
-    QString field_name;
-    if (db->getObjectByName(current_table)->type() == sqlb::Object::Table)
-        field_name = QString::fromStdString(db->getObjectByName<sqlb::Table>(current_table)->fields.at(field_number-1).name());
-    else
-        field_name = QString::fromStdString(db->getObjectByName<sqlb::View>(current_table)->fieldNames().at(field_number-1));
+    QString field_name = QString::fromStdString(db->getTableByName(current_table)->fields.at(field_number-1).name());
+
     // Get the current display format of the field
     QString current_displayformat = m_settings[current_table].displayFormats[field_number];
 
@@ -1483,7 +1479,7 @@ void TableBrowser::setDefaultTableEncoding()
 void TableBrowser::jumpToRow(const sqlb::ObjectIdentifier& table, std::string column, const QByteArray& value)
 {
     // First check if table exists
-    sqlb::TablePtr obj = db->getObjectByName<sqlb::Table>(table);
+    sqlb::TablePtr obj = db->getTableByName(table);
     if(!obj)
         return;
 

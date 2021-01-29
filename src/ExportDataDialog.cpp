@@ -47,18 +47,10 @@ ExportDataDialog::ExportDataDialog(DBBrowserDB& db, ExportFormats format, QWidge
         // Get list of tables to export
         for(const auto& it : pdb.schemata)
         {
-            const auto tables = it.second.equal_range("table");
-            const auto views = it.second.equal_range("view");
-            std::map<std::string, sqlb::ObjectPtr> objects;
-            for(auto jt=tables.first;jt!=tables.second;++jt)
-                objects.insert({jt->second->name(), jt->second});
-            for(auto jt=views.first;jt!=views.second;++jt)
-                objects.insert({jt->second->name(), jt->second});
-
-            for(const auto& jt : objects)
+            for(const auto& jt : it.second.tables)
             {
-                sqlb::ObjectIdentifier obj(it.first, jt.second->name());
-                QListWidgetItem* item = new QListWidgetItem(IconCache::get(sqlb::Object::typeToString(jt.second->type())), QString::fromStdString(obj.toDisplayString()));
+                sqlb::ObjectIdentifier obj(it.first, jt.first);
+                QListWidgetItem* item = new QListWidgetItem(IconCache::get(jt.second->isView() ? "view" : "table"), QString::fromStdString(obj.toDisplayString()));
                 item->setData(Qt::UserRole, QString::fromStdString(obj.toSerialised()));
                 ui->listTables->addItem(item);
             }

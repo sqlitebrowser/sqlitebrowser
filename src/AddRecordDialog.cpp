@@ -189,25 +189,22 @@ void AddRecordDialog::populateFields()
     bool auto_increment = false;
 
     // Initialize fields, fks and pk differently depending on whether it's a table or a view.
-    const sqlb::ObjectPtr obj = pdb.getObjectByName(curTable);
-    if (obj->type() == sqlb::Object::Table)
+    const sqlb::TablePtr table = pdb.getTableByName(curTable);
+    fields = table->fields;
+    if (!table->isView())
     {
-        sqlb::TablePtr m_table = pdb.getObjectByName<sqlb::Table>(curTable);
-        fields = m_table->fields;
-
-        std::transform(fields.begin(), fields.end(), std::back_inserter(fks), [m_table](const auto& f) {
-            return m_table->constraint({f.name()}, sqlb::Constraint::ForeignKeyConstraintType);
+        std::transform(fields.begin(), fields.end(), std::back_inserter(fks), [table](const auto& f) {
+            return table->constraint({f.name()}, sqlb::Constraint::ForeignKeyConstraintType);
         });
 
-        const auto pk_constraint = m_table->primaryKey();
+        const auto pk_constraint = table->primaryKey();
         if(pk_constraint)
         {
             pk = pk_constraint->columnList();
             auto_increment = pk_constraint->autoIncrement();
         }
     } else {
-        sqlb::ViewPtr m_view = pdb.getObjectByName<sqlb::View>(curTable);
-        fields = m_view->fields;
+        // It's a view
         fks.resize(fields.size(), sqlb::ConstraintPtr(nullptr));
         pk = pseudo_pk;
     }

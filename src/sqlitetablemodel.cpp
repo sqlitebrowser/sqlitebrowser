@@ -127,15 +127,14 @@ void SqliteTableModel::setQuery(const sqlb::Query& query)
     // Save the query
     m_query = query;
 
-    // Retrieve field names and types
-    sqlb::ObjectPtr object = m_db.getObjectByName(query.table());
-
     // Set the row id columns
-    m_table_of_query = std::dynamic_pointer_cast<sqlb::Table>(object);
-    if(m_table_of_query)    // It is a table
+    m_table_of_query = m_db.getTableByName(query.table());
+    if(!m_table_of_query->isView())
     {
+        // It is a table
         m_query.setRowIdColumns(m_table_of_query->rowidColumns());
     } else {
+        // It is a view
         if(m_query.rowIdColumns().empty())
             m_query.setRowIdColumn("_rowid_");
     }
@@ -143,10 +142,10 @@ void SqliteTableModel::setQuery(const sqlb::Query& query)
     m_headers.push_back(sqlb::joinStringVector(m_query.rowIdColumns(), ","));
 
     // Store field names and affinity data types
-    for(const auto& fld : object->fieldInformation())
+    for(const auto& fld : m_table_of_query->fields)
     {
-        m_headers.push_back(fld.name);
-        m_vDataTypes.push_back(fld.affinity);
+        m_headers.push_back(fld.name());
+        m_vDataTypes.push_back(fld.affinity());
     }
 
     // Tell the query object about the column names
@@ -960,7 +959,7 @@ bool SqliteTableModel::isEditable(const QModelIndex& index) const
         return false;
     if(!m_db.isOpen())
         return false;
-    if(!m_table_of_query && !m_query.hasCustomRowIdColumn())
+    if((!m_table_of_query || m_table_of_query->isView()) && !m_query.hasCustomRowIdColumn())
         return false;
 
     // Extra check when the index parameter is set and pointing to a generated column in a table

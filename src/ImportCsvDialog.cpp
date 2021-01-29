@@ -499,10 +499,10 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
 
     // Are we importing into an existing table?
     bool importToExistingTable = false;
-    const sqlb::ObjectPtr obj = pdb->getObjectByName(sqlb::ObjectIdentifier("main", tableName.toStdString()));
-    if(obj && obj->type() == sqlb::Object::Types::Table)
+    const sqlb::TablePtr tbl = pdb->getTableByName(sqlb::ObjectIdentifier("main", tableName.toStdString()));
+    if(tbl)
     {
-        if(std::dynamic_pointer_cast<sqlb::Table>(obj)->fields.size() != fieldList.size())
+        if(tbl->fields.size() != fieldList.size())
         {
             QMessageBox::warning(this, QApplication::applicationName(),
                                  tr("There is already a table named '%1' and an import into an existing table is only possible if the number of columns match.").arg(tableName));
@@ -564,7 +564,6 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
 
         // Prepare the values for each table column that are to be inserted if the field in the CSV file is empty. Depending on the data type
         // and the constraints of a field, we need to handle this case differently.
-        sqlb::TablePtr tbl = pdb->getObjectByName<sqlb::Table>(sqlb::ObjectIdentifier("main", tableName.toStdString()));
         if(tbl)
         {
             for(const sqlb::Field& f : tbl->fields)

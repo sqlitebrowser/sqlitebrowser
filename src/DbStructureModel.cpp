@@ -8,8 +8,6 @@
 #include <QMimeData>
 #include <QMessageBox>
 #include <QApplication>
-#include <unordered_map>
-#include <map>
 
 DbStructureModel::DbStructureModel(DBBrowserDB& db, QObject* parent)
     : QAbstractItemModel(parent),
@@ -304,108 +302,78 @@ bool DbStructureModel::dropMimeData(const QMimeData* data, Qt::DropAction action
     }
 }
 
-static long calc_number_of_objects_by_type(const objectMap& objmap, const std::string& type)
-{
-    auto objects = objmap.equal_range(type);
-    if(objects.first == objmap.end())
-        return 0;
-    else
-        return std::distance(objects.first, objects.second);
-}
-
 void DbStructureModel::buildTree(QTreeWidgetItem* parent, const std::string& schema)
 {
-    // Build a map from object type to tree node to simplify finding the correct tree node later
-    std::unordered_map<std::string, QTreeWidgetItem*> typeToParentItem;
-
     // Get object map for the given schema
-    objectMap objmap = m_db.schemata[schema];
+    const objectMap& objmap = m_db.schemata.at(schema);
 
     // Prepare tree
+    auto num_tables = std::count_if(objmap.tables.begin(), objmap.tables.end(), [](const auto& t) { return !t.second->isView(); });
     QTreeWidgetItem* itemTables = new QTreeWidgetItem(parent);
     itemTables->setIcon(ColumnName, IconCache::get("table"));
-    itemTables->setText(ColumnName, tr("Tables (%1)").arg(calc_number_of_objects_by_type(objmap, "table")));
-    typeToParentItem.insert({"table", itemTables});
+    itemTables->setText(ColumnName, tr("Tables (%1)").arg(num_tables));
 
     QTreeWidgetItem* itemIndices = new QTreeWidgetItem(parent);
     itemIndices->setIcon(ColumnName, IconCache::get("index"));
-    itemIndices->setText(ColumnName, tr("Indices (%1)").arg(calc_number_of_objects_by_type(objmap, "index")));
-    typeToParentItem.insert({"index", itemIndices});
+    itemIndices->setText(ColumnName, tr("Indices (%1)").arg(objmap.indices.size()));
 
+    auto num_views = std::count_if(objmap.tables.begin(), objmap.tables.end(), [](const auto& t) { return t.second->isView(); });
     QTreeWidgetItem* itemViews = new QTreeWidgetItem(parent);
     itemViews->setIcon(ColumnName, IconCache::get("view"));
-    itemViews->setText(ColumnName, tr("Views (%1)").arg(calc_number_of_objects_by_type(objmap, "view")));
-    typeToParentItem.insert({"view", itemViews});
+    itemViews->setText(ColumnName, tr("Views (%1)").arg(num_views));
 
     QTreeWidgetItem* itemTriggers = new QTreeWidgetItem(parent);
     itemTriggers->setIcon(ColumnName, IconCache::get("trigger"));
-    itemTriggers->setText(ColumnName, tr("Triggers (%1)").arg(calc_number_of_objects_by_type(objmap, "trigger")));
-    typeToParentItem.insert({"trigger", itemTriggers});
+    itemTriggers->setText(ColumnName, tr("Triggers (%1)").arg(objmap.triggers.size()));
 
-    // Get all database objects and sort them by their name.
-    // This needs to be a multimap because SQLite allows views and triggers with the same name which means that names can appear twice.
-    std::multimap<std::string, sqlb::ObjectPtr> dbobjs;
-    for(const auto& it : objmap)
-        dbobjs.insert({it.second->name(), it.second});
-
-    // Add the database objects to the tree nodes
-    for(const auto& obj : dbobjs)
+    // Add tables and views
+    for(const auto& obj : objmap.tables)
     {
-        sqlb::ObjectPtr it = obj.second;
+        QTreeWidgetItem* item = addNode(schema, obj.second->name(), obj.second->isView() ? "view" : "table", obj.second->originalSql(), obj.second->isView() ? itemViews : itemTables);
 
-        // Object node
-        QTreeWidgetItem* item = addNode(typeToParentItem.at(sqlb::Object::typeToString(it->type())), it, schema);
+        // Add an extra node for the browsable section
+        addNode(schema, obj.second->name(), obj.second->isView() ? "view" : "table", obj.second->originalSql(), browsablesRootItem);
 
-        // If it is a table or view add the field nodes, add an extra node for the browsable section
-        if(it->type() == sqlb::Object::Types::Table || it->type() == sqlb::Object::Types::View)
-            addNode(browsablesRootItem, it, schema);
-
-        // Add field nodes if there are any
-        sqlb::FieldInfoList fieldList = it->fieldInformation();
-        if(!fieldList.empty())
+        sqlb::StringVector pk_columns;
+        if(!obj.second->isView())
         {
-            sqlb::StringVector pk_columns;
-            if(it->type() == sqlb::Object::Types::Table)
-            {
-                const auto pk = std::dynamic_pointer_cast<sqlb::Table>(it)->primaryKey();
-                if(pk)
-                    pk_columns = pk->columnList();
-            }
+            const auto pk = obj.second->primaryKey();
+            if(pk)
+                pk_columns = pk->columnList();
+        }
 
-            for(const sqlb::FieldInfo& field : fieldList)
-            {
-                QTreeWidgetItem *fldItem = new QTreeWidgetItem(item);
-                bool isFK = false;
-                if(it->type() == sqlb::Object::Types::Table)
-                    isFK = std::dynamic_pointer_cast<sqlb::Table>(it)->constraint({field.name}, sqlb::Constraint::ForeignKeyConstraintType) != nullptr;
+        for(const auto& field : obj.second->fields)
+        {
+            bool isPK = contains(pk_columns, field.name());
+            bool isFK = obj.second->constraint({field.name()}, sqlb::Constraint::ForeignKeyConstraintType) != nullptr;
 
-                fldItem->setText(ColumnName, QString::fromStdString(field.name));
-                fldItem->setText(ColumnObjectType, "field");
-                fldItem->setText(ColumnDataType, QString::fromStdString(field.type));
-                fldItem->setText(ColumnSQL, QString::fromStdString(field.sql));
-                fldItem->setText(ColumnSchema, QString::fromStdString(schema));
-                if(contains(pk_columns, field.name))
-                    fldItem->setIcon(ColumnName, IconCache::get("field_key"));
-                else if(isFK)
-                    fldItem->setIcon(ColumnName, IconCache::get("field_fk"));
-                else
-                    fldItem->setIcon(ColumnName, IconCache::get("field"));
-            }
+            addNode(schema, field.name(), "field", field.toString("  ", " "), item, field.type(), isPK ? "_key" : (isFK ? "_fk" : std::string{}));
         }
     }
+
+    // Add indices
+    for(const auto& obj : objmap.indices)
+    {
+        QTreeWidgetItem* item = addNode(schema, obj.second->name(), "index", obj.second->originalSql(), itemIndices);
+
+        for(const auto& field : obj.second->fields)
+            addNode(schema, field.name(), "field", field.toString("  ", " "), item, field.order());
+    }
+
+    // Add triggers
+    for(const auto& obj : objmap.triggers)
+        addNode(schema, obj.second->name(), "trigger", obj.second->originalSql(), itemTriggers);
 }
 
-QTreeWidgetItem* DbStructureModel::addNode(QTreeWidgetItem* parent, const sqlb::ObjectPtr& object, const std::string& schema)
+QTreeWidgetItem* DbStructureModel::addNode(const std::string& schema, const std::string& name, const std::string& object_type, const std::string& sql, QTreeWidgetItem* parent_item, const std::string& data_type, const std::string& icon_suffix)
 {
-    std::string type = sqlb::Object::typeToString(object->type());
-
-    QTreeWidgetItem *item = new QTreeWidgetItem(parent);
-    item->setIcon(ColumnName, IconCache::get(type));
-    item->setText(ColumnName, QString::fromStdString(object->name()));
-    item->setText(ColumnObjectType, QString::fromStdString(type));
-    item->setText(ColumnSQL, QString::fromStdString(object->originalSql()));
+    QTreeWidgetItem* item = new QTreeWidgetItem(parent_item);
+    item->setText(ColumnName, QString::fromStdString(name));
+    item->setText(ColumnObjectType, QString::fromStdString(object_type));
+    item->setText(ColumnDataType, QString::fromStdString(data_type));
+    item->setText(ColumnSQL, QString::fromStdString(sql));
     item->setText(ColumnSchema, QString::fromStdString(schema));
-
+    item->setIcon(ColumnName, IconCache::get(object_type + icon_suffix));
     return item;
 }
 

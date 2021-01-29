@@ -83,11 +83,11 @@ ForeignKeyEditorDelegate::ForeignKeyEditorDelegate(const DBBrowserDB& db, sqlb::
 {
     for(const auto& it : m_db.schemata)
     {
-        for(const auto& jt : it.second)
+        for(const auto& jt : it.second.tables)
         {
             // Don't insert the current table into the list. The name and fields of the current table are always taken from the m_table reference
-            if(jt.second->type() == sqlb::Object::Types::Table && jt.second->name() != m_table.name())
-                m_tablesIds.insert({jt.second->name(), std::dynamic_pointer_cast<sqlb::Table>(jt.second)->fieldNames()});
+            if(jt.first != m_table.name())
+                m_tablesIds.insert({jt.first, jt.second->fieldNames()});
         }
     }
 }
