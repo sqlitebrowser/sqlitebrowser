@@ -14,6 +14,7 @@ class QDropEvent;
 class QDragMoveEvent;
 
 class FilterTableHeader;
+class ItemBorderDelegate;
 namespace sqlb { class ObjectIdentifier; }
 
 // Filter proxy model that only accepts distinct non-empty values.
@@ -106,6 +107,7 @@ private:
 
     ExtendedTableWidget* m_frozen_table_view;
     size_t m_frozen_column_count;
+    ItemBorderDelegate* m_item_border_delegate;
     void updateFrozenTableGeometry();
 
 private slots:

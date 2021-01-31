@@ -23,6 +23,7 @@
 #include <QTextDocument>
 #include <QCompleter>
 #include <QComboBox>
+#include <QPainter>
 #include <QShortcut>
 
 #include <limits>
@@ -222,11 +223,30 @@ void ExtendedTableWidgetEditorDelegate::updateEditorGeometry(QWidget* editor, co
     editor->setGeometry(option.rect);
 }
 
+class ItemBorderDelegate : public QStyledItemDelegate
+{
+public:
+    explicit ItemBorderDelegate(QObject* parent = nullptr)
+        : QStyledItemDelegate(parent)
+    {
+    }
+
+    void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override
+    {
+        QStyledItemDelegate::paint(painter, option, index);
+        QRect border(option.rect);
+        border.translate(border.width() - 1, 0);
+        border.setWidth(2);
+        painter->fillRect(border, Qt::black);
+    }
+};
+
 
 ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     QTableView(parent),
     m_frozen_table_view(qobject_cast<ExtendedTableWidget*>(parent) ? nullptr : new ExtendedTableWidget(this)),
-    m_frozen_column_count(0)
+    m_frozen_column_count(0),
+    m_item_border_delegate(new ItemBorderDelegate(this))
 {
     setHorizontalScrollMode(ExtendedTableWidget::ScrollPerPixel);
     // Force ScrollPerItem, so scrolling shows all table rows
@@ -1199,6 +1219,9 @@ void ExtendedTableWidget::setFrozenColumns(size_t count)
     // Set up frozen table view widget
     m_frozen_table_view->setModel(model());
     m_frozen_table_view->setSelectionModel(selectionModel());
+    for(int i=0;i<model()->columnCount();i++)
+        m_frozen_table_view->setItemDelegateForColumn(i, nullptr);
+    m_frozen_table_view->setItemDelegateForColumn(static_cast<int>(m_frozen_column_count-1), m_item_border_delegate);
 
     // Only show frozen columns in extra table view and copy column widths
     m_frozen_table_view->horizontalHeader()->blockSignals(true);    // Signals need to be blocked because hiding a column would emit resizedSection
