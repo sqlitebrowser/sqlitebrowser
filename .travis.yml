@@ -5,6 +5,7 @@ dist: xenial
 branches:
   only:
   - master
+  - v3.12.x
 
 # env:
 #   - ARCH=x86_64 DOCKER_IMAGE=amd64/ubuntu:trusty
@@ -60,7 +61,7 @@ script:
 - git rev-list master --count
 - wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/6/linuxdeployqt-6-x86_64.AppImage"
 - chmod a+x linuxdeployqt-6-x86_64.AppImage
-- export VERSION=$(printf "`master`-`git rev-list HEAD --count`-` git -C . rev-parse --short HEAD`")    #$(git rev-parse --short HEAD) # linuxdeployqt uses this for naming the file
+- export VERSION=$(printf "`git rev-parse --abbrev-ref HEAD`-`git rev-list HEAD --count`-` git -C . rev-parse --short HEAD`")    #$(git rev-parse --short HEAD) # linuxdeployqt uses this for naming the file
 - ./linuxdeployqt-6-x86_64.AppImage appdir/usr/share/applications/*.desktop -appimage
 
 
@@ -68,7 +69,7 @@ after_success:
   - find appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq
   - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
   - chmod a+x upload.sh
-  - UPLOADTOOL_ISPRERELEASE=true ./upload.sh DB_Browser_for_SQLite*.AppImage*
+  - UPLOADTOOL_ISPRERELEASE=true UPLOADTOOL_SUFFIX=$VERSION ./upload.sh DB_Browser_for_SQLite*.AppImage*
 
 notifications:
   email:
