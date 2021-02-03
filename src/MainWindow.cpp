@@ -1231,19 +1231,15 @@ void MainWindow::executeQuery()
     connect(execute_sql_worker.get(), &RunSql::structureUpdated, sqlWidget, [this]() {
         db.updateSchema();
     }, Qt::QueuedConnection);
-    connect(execute_sql_worker.get(), &RunSql::statementErrored, sqlWidget, [query_logger, this, sqlWidget](const QString& status_message, int from_position, int to_position) {
-        sqlWidget->getModel()->reset();
+    connect(execute_sql_worker.get(), &RunSql::statementErrored, sqlWidget, [query_logger, this](const QString& status_message, int from_position, int to_position) {
         ui->actionSqlResultsSave->setEnabled(false);
         ui->actionSqlResultsSaveAsView->setEnabled(false);
-        attachPlot(sqlWidget->getTableResult(), sqlWidget->getModel());
 
         query_logger(false, status_message, from_position, to_position);
     }, Qt::QueuedConnection);
-    connect(execute_sql_worker.get(), &RunSql::statementExecuted, sqlWidget, [query_logger, this, sqlWidget](const QString& status_message, int from_position, int to_position) {
-        sqlWidget->getModel()->reset();
+    connect(execute_sql_worker.get(), &RunSql::statementExecuted, sqlWidget, [query_logger, this](const QString& status_message, int from_position, int to_position) {
         ui->actionSqlResultsSave->setEnabled(false);
         ui->actionSqlResultsSaveAsView->setEnabled(false);
-        attachPlot(sqlWidget->getTableResult(), sqlWidget->getModel());
 
         query_logger(true, status_message, from_position, to_position);
         execute_sql_worker->startNextStatement();
@@ -1318,6 +1314,10 @@ void MainWindow::executeQuery()
 
     // Make the SQL editor widget read-only. We do this because the error indicators would be misplaced if the user changed the SQL text during execution
     sqlWidget->getEditor()->setReadOnly(true);
+
+    // Reset model and clear plot dock
+    sqlWidget->getModel()->reset();
+    attachPlot(sqlWidget->getTableResult(), sqlWidget->getModel());
 
     // Start the execution
     execute_sql_worker->start();
