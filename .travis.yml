@@ -58,7 +58,6 @@ script:
 - cmake -DCMAKE_INSTALL_PREFIX:PATH=../appdir/usr -Wno-dev -Dsqlcipher=1 -DSQLITE_ENABLE_JSON1=1 ..
 - make install
 - cd ..
-- git rev-list master --count
 - wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/6/linuxdeployqt-6-x86_64.AppImage"
 - chmod a+x linuxdeployqt-6-x86_64.AppImage
 - export VERSION=$(printf "`git rev-parse --abbrev-ref HEAD`-`git rev-list HEAD --count`-` git -C . rev-parse --short HEAD`")    #$(git rev-parse --short HEAD) # linuxdeployqt uses this for naming the file
