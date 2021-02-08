@@ -934,6 +934,9 @@ bool SqliteTableModel::dropMimeData(const QMimeData* data, Qt::DropAction, int r
 
 void SqliteTableModel::setPseudoPk(std::vector<std::string> pseudoPk)
 {
+    if(!m_table_of_query->isView())
+        return;
+
     if(pseudoPk.empty())
         pseudoPk.emplace_back("_rowid_");
 
