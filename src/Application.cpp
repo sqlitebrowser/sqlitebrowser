@@ -15,6 +15,19 @@
 #include "version.h"
 #include "sqlitedb.h"
 
+void printArgument(const QString& argument, const QString& description)
+{
+    const int fieldWidth = 20;
+
+    // Format the usage message so translators do not have to do it themselves
+    if(argument.length() > fieldWidth) {
+        qWarning() << qPrintable(QString("  %1").arg(argument, -fieldWidth));
+        qWarning() << qPrintable(QString("  %1%2").arg("", -fieldWidth).arg(description));
+    } else {
+        qWarning() << qPrintable(QString("  %1%2").arg(argument, -fieldWidth).arg(description));
+    }
+}
+
 Application::Application(int& argc, char** argv) :
     QApplication(argc, argv)
 {
@@ -113,23 +126,33 @@ Application::Application(int& argc, char** argv) :
         if(arguments().at(i) == "-h" || arguments().at(i) == "--help")
         {
             // Help
-            qWarning() << qPrintable(tr("Usage: %1 [options] [<database>|<project>]\n").
-                                     arg(QFileInfo(argv[0]).fileName()));
+            qWarning() << qPrintable(QString("%1: %2 [%3] [<%4>|<%5>]\n").
+                                     arg(tr("Usage")).arg(QFileInfo(argv[0]).fileName()).
+                                     arg(tr("options")).arg(tr("database")).arg(tr("project")));
+
             qWarning() << qPrintable(tr("Possible command line arguments:"));
-            qWarning() << qPrintable(tr("  -h, --help          Show command line options"));
-            qWarning() << qPrintable(tr("  -q, --quit          Exit application after running scripts"));
-            qWarning() << qPrintable(tr("  -s, --sql <file>    Execute this SQL file after opening the DB"));
-            qWarning() << qPrintable(tr("  -t, --table <table> Browse this table after opening the DB"));
-            qWarning() << qPrintable(tr("  -R, --read-only     Open database in read-only mode"));
-            qWarning() << qPrintable(tr("  -S, --settings <settings_file>"));
-            qWarning() << qPrintable(tr("                      Run application based on this settings file"));
-            qWarning() << qPrintable(tr("  -o, --option <group>/<setting>=<value>"));
-            qWarning() << qPrintable(tr("                      Run application with this setting temporarily set to value"));
-            qWarning() << qPrintable(tr("  -O, --save-option <group>/<setting>=<value>"));
-            qWarning() << qPrintable(tr("                      Run application saving this value for this setting"));
-            qWarning() << qPrintable(tr("  -v, --version       Display the current version"));
-            qWarning() << qPrintable(tr("  <database>          Open this SQLite database"));
-            qWarning() << qPrintable(tr("  <project>           Open this project file (*.sqbpro)"));
+            printArgument(QString("-h, --help"),
+                          tr("Show command line options"));
+            printArgument(QString("-q, --quit"),
+                          tr("Exit application after running scripts"));
+            printArgument(QString("-s, --sql <%1>").arg(tr("file")),
+                          tr("Execute this SQL file after opening the DB"));
+            printArgument(QString("-t, --table <%1>").arg(tr("table")),
+                          tr("Browse this table after opening the DB"));
+            printArgument(QString("-R, --read-only"),
+                          tr("Open database in read-only mode"));
+            printArgument(QString("-S, --settings <%1>").arg(tr("settings_file")),
+                          tr("Run application based on this settings file"));
+            printArgument(QString("-o, --option <%1>/<%2>=<%3>").arg(tr("group")).arg(tr("settings")).arg(tr("value")),
+                          tr("Run application with this setting temporarily set to value"));
+            printArgument(QString("-O, --save-option <%1>/<%2>=<%3>").arg(tr("group")).arg(tr("settings")).arg(tr("value")),
+                          tr("Run application saving this value for this setting"));
+            printArgument(QString("-v, --version"),
+                          tr("Display the current version"));
+            printArgument(QString("<%1>").arg(tr("database")),
+                          tr("Open this SQLite database"));
+            printArgument(QString("<%1>").arg(tr("project")),
+                          tr("Open this project file (*.sqbpro)"));
             m_showMainWindow = false;
         } else if(arguments().at(i) == "-v" || arguments().at(i) == "--version") {
             qWarning() << qPrintable(versionInformation());
