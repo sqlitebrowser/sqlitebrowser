@@ -601,7 +601,7 @@ void MainWindow::fileNew()
     }
 }
 
-void MainWindow::fileNewInMemoryDatabase()
+void MainWindow::fileNewInMemoryDatabase(bool open_create_dialog)
 {
     // Open an in-memory database. We use open() instead of create() here because the extra work create() does is not needed
     // when no files are stored on disk.
@@ -615,7 +615,8 @@ void MainWindow::fileNewInMemoryDatabase()
     refreshTableBrowsers();
     if(ui->tabSqlAreas->count() == 0)
         openSqlTab(true);
-    createTable();
+    if(open_create_dialog)
+        createTable();
 }
 
 void MainWindow::populateStructure(const std::vector<sqlb::ObjectIdentifier>& old_tables)
@@ -1343,8 +1344,24 @@ void MainWindow::mainTabSelected(int /*tabindex*/)
     }
 }
 
+void MainWindow::importCSVfiles(const std::vector<QString>& inputFiles)
+{
+    if (!inputFiles.empty())
+    {
+        // Allow importing to a new in-memory database that can be saved later.
+        if(!db.isOpen())
+            fileNewInMemoryDatabase(/* open_create_dialog */ false);
+
+        ImportCsvDialog dialog(inputFiles, &db, this);
+        if (dialog.exec())
+            refreshTableBrowsers();
+    }
+}
+
 void MainWindow::importTableFromCSV()
 {
+    std::vector<QString> validFiles;
+
     // Are we importing from a file or from the clipboard?
     if(sender() == ui->fileImportCSVAction)
     {
@@ -1364,18 +1381,11 @@ void MainWindow::importTableFromCSV()
                                  tr("Choose text files"),
                                  file_filter.join(";;"));
 
-        std::vector<QString> validFiles;
         for(const auto& file : wFiles) {
             if (QFile::exists(file))
                 validFiles.push_back(file);
         }
 
-        if (!validFiles.empty())
-        {
-            ImportCsvDialog dialog(validFiles, &db, this);
-            if (dialog.exec())
-                refreshTableBrowsers();
-        }
     } else if(sender() == ui->actionFileImportCsvClipboard) {
         // Save clipboard content to temporary file
 
@@ -1384,11 +1394,10 @@ void MainWindow::importTableFromCSV()
         QClipboard* clipboard = QGuiApplication::clipboard();
         temp.write(clipboard->text().toUtf8());
         temp.close();
-
-        ImportCsvDialog dialog({temp.fileName()}, &db, this);
-        if (dialog.exec())
-            refreshTableBrowsers();
+        validFiles.push_back(temp.fileName());
     }
+
+    importCSVfiles(validFiles);
 }
 
 void MainWindow::exportTableToCSV()

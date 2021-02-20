@@ -117,6 +117,7 @@ Application::Application(int& argc, char** argv) :
     // Parse command line
     QString fileToOpen;
     std::vector<QString> tableToBrowse;
+    std::vector<QString> csvToImport;
     QStringList sqlToExecute;
     bool readOnly = false;
     m_showMainWindow = true;
@@ -137,6 +138,8 @@ Application::Application(int& argc, char** argv) :
                           tr("Exit application after running scripts"));
             printArgument(QString("-s, --sql <%1>").arg(tr("file")),
                           tr("Execute this SQL file after opening the DB"));
+            printArgument(QString("--import-csv <%1>").arg(tr("file")),
+                          tr("Import this CSV file into the passed DB or into a new DB"));
             printArgument(QString("-t, --table <%1>").arg(tr("table")),
                           tr("Browse this table after opening the DB"));
             printArgument(QString("-R, --read-only"),
@@ -160,16 +163,23 @@ Application::Application(int& argc, char** argv) :
         } else if(arguments().at(i) == "-s" || arguments().at(i) == "--sql") {
             // Run SQL file: If file exists add it to list of scripts to execute
             if(++i >= arguments().size())
-                qWarning() << qPrintable(tr("The -s/--sql option requires an argument"));
+                qWarning() << qPrintable(tr("The %1 option requires an argument").arg("-s/--sql"));
             else if(!QFile::exists(arguments().at(i)))
                 qWarning() << qPrintable(tr("The file %1 does not exist").arg(arguments().at(i)));
             else
                 sqlToExecute.append(arguments().at(i));
         } else if(arguments().at(i) == "-t" || arguments().at(i) == "--table") {
             if(++i >= arguments().size())
-                qWarning() << qPrintable(tr("The -t/--table option requires an argument"));
+                qWarning() << qPrintable(tr("The %1 option requires an argument").arg("-t/--table"));
             else
                 tableToBrowse.push_back(arguments().at(i));
+        } else if(arguments().at(i) == "--import-csv") {
+            if(++i >= arguments().size())
+                qWarning() << qPrintable(tr("The %1 option requires an argument").arg("--import-csv"));
+            else if(!QFile::exists(arguments().at(i)))
+                qWarning() << qPrintable(tr("The file %1 does not exist").arg(arguments().at(i)));
+            else
+                csvToImport.push_back(arguments().at(i));
         } else if(arguments().at(i) == "-q" || arguments().at(i) == "--quit") {
             m_showMainWindow = false;
         } else if(arguments().at(i) == "-R" || arguments().at(i) == "--read-only") {
@@ -248,6 +258,8 @@ Application::Application(int& argc, char** argv) :
                 m_mainWindow->refresh();
         }
     }
+    if(!csvToImport.empty())
+        m_mainWindow->importCSVfiles(csvToImport);
 }
 
 Application::~Application()

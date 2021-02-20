@@ -158,13 +158,14 @@ public slots:
     void fileDetachTreeViewSelected(QTreeView* treeView);
     void reloadSettings();
     bool closeFiles();
+    void importCSVfiles(const std::vector<QString>& inputFiles);
 
 private slots:
     void createTreeContextMenu(const QPoint & qPoint);
     void createSchemaDockContextMenu(const QPoint & qPoint);
     void changeTreeSelection();
     void fileNew();
-    void fileNewInMemoryDatabase();
+    void fileNewInMemoryDatabase(bool open_create_dialog = true);
     void refreshTableBrowsers(bool force_refresh = false);
     bool fileClose();
     bool fileSaveAs();
