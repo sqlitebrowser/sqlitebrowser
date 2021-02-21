@@ -5,6 +5,7 @@
 #include <QImageReader>
 #include <QLocale>
 #include <QTextCodec>
+#include <QFile>
 
 #include <algorithm>
 
@@ -56,6 +57,17 @@ bool isTextOnly(QByteArray data, const QString& encoding, bool quickTest)
         }
         // Perform check
         return isPrintable && text.toUtf8() == data;
+    }
+}
+
+bool isTextOnlyFile(const QString& fileName)
+{
+    QFile file(fileName);
+    if (file.open(QFile::ReadOnly)) {
+        QByteArray data = file.read(512);
+        return isTextOnly(data);
+    } else {
+        return false;
     }
 }
 

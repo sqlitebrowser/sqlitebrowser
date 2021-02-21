@@ -10,6 +10,9 @@
 // text but makes it less reliable
 bool isTextOnly(QByteArray data, const QString& encoding = QString(), bool quickTest = false);
 
+// Determine if file is a text file reading first 512 bytes and calling isTextOnly().
+bool isTextOnlyFile(const QString& fileName);
+
 // This returns true if text contains some character whose direction is right-to-left.
 bool containsRightToLeft(const QString& text);
 

@@ -530,6 +530,10 @@ bool MainWindow::fileOpen(const QString& fileName, bool openFromProject, bool re
         if(loadProject(wFile, readOnly))
         {
             retval = true;
+        } else if(isTextOnlyFile(wFile)) {
+            // If it's a text file, cannot be an SQLite/SQLCipher database,
+            // so try to import it as CSV.
+            importCSVfiles({wFile});
         } else {
             // Close the database. If the user didn't want to close it, though, stop here
             if (db.isOpen())

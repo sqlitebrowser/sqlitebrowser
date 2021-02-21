@@ -127,9 +127,10 @@ Application::Application(int& argc, char** argv) :
         if(arguments().at(i) == "-h" || arguments().at(i) == "--help")
         {
             // Help
-            qWarning() << qPrintable(QString("%1: %2 [%3] [<%4>|<%5>]\n").
+            qWarning() << qPrintable(QString("%1: %2 [%3] [<%4>|<%5>|%6]\n").
                                      arg(tr("Usage")).arg(QFileInfo(argv[0]).fileName()).
-                                     arg(tr("options")).arg(tr("database")).arg(tr("project")));
+                                     arg(tr("options")).arg(tr("database")).arg(tr("project")).
+                                     arg(tr("csv-file")));
 
             qWarning() << qPrintable(tr("Possible command line arguments:"));
             printArgument(QString("-h, --help"),
@@ -156,6 +157,8 @@ Application::Application(int& argc, char** argv) :
                           tr("Open this SQLite database"));
             printArgument(QString("<%1>").arg(tr("project")),
                           tr("Open this project file (*.sqbpro)"));
+            printArgument(QString("<%1>").arg(tr("csv-file")),
+                          tr("Import this CSV file into an in-memory database"));
             m_showMainWindow = false;
         } else if(arguments().at(i) == "-v" || arguments().at(i) == "--version") {
             qWarning() << qPrintable(versionInformation());
