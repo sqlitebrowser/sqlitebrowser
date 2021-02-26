@@ -401,14 +401,8 @@ sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename) co
             // If the user wants to use the first row as table header and if this is the first row, extract a field name
             if(rowNum == 0 && ui->checkboxHeader->isChecked())
             {
-                // Take field name from CSV and remove invalid characters
+                // Take field name from CSV
                 fieldname = std::string(rowData.fields[i].data, rowData.fields[i].data_length);
-                fieldname.erase(std::remove(fieldname.begin(), fieldname.end(), '`'), fieldname.end());
-                fieldname.erase(std::remove(fieldname.begin(), fieldname.end(), ' '), fieldname.end());
-                fieldname.erase(std::remove(fieldname.begin(), fieldname.end(), '"'), fieldname.end());
-                fieldname.erase(std::remove(fieldname.begin(), fieldname.end(), '\''), fieldname.end());
-                fieldname.erase(std::remove(fieldname.begin(), fieldname.end(), ','), fieldname.end());
-                fieldname.erase(std::remove(fieldname.begin(), fieldname.end(), ';'), fieldname.end());
             }
 
             // If we don't have a field name by now, generate one
