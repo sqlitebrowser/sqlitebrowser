@@ -149,7 +149,7 @@ void SqliteTableModel::setQuery(const sqlb::Query& query)
     }
 
     // Tell the query object about the column names
-    m_query.setColumNames(m_headers);
+    m_query.setColumnNames(m_headers);
 
     // Apply new query and update view
     updateAndRunQuery();
