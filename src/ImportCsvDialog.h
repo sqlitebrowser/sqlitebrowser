@@ -62,6 +62,8 @@ private:
     std::string currentOnConflictStrategy() const;
 
     char32_t toUtf8(const QString& s) const;
+
+    static QChar getSettingsChar(const std::string& group, const std::string& name);
 };
 
 #endif

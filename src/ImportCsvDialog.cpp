@@ -26,6 +26,18 @@
 #include <QElapsedTimer>
 #endif
 
+QChar ImportCsvDialog::getSettingsChar(const std::string& group, const std::string& name)
+{
+    QVariant value = Settings::getValue(group, name);
+    // QVariant is not able to return the character as a QChar when QString is stored.
+    // We do it manually, since it is versatile, when the option is passed from the command line,
+    // for example.
+    if(value.userType() == QMetaType::QString)
+        return value.toString().at(0);
+    else
+        return value.toChar();
+}
+
 ImportCsvDialog::ImportCsvDialog(const std::vector<QString>& filenames, DBBrowserDB* db, QWidget* parent)
     : QDialog(parent),
       ui(new Ui::ImportCsvDialog),
@@ -60,8 +72,8 @@ ImportCsvDialog::ImportCsvDialog(const std::vector<QString>& filenames, DBBrowse
     ui->checkBoxTrimFields->setChecked(Settings::getValue("importcsv", "trimfields").toBool());
     ui->checkBoxSeparateTables->setChecked(Settings::getValue("importcsv", "separatetables").toBool());
     ui->checkLocalConventions->setChecked(Settings::getValue("importcsv", "localconventions").toBool());
-    setSeparatorChar(Settings::getValue("importcsv", "separator").toChar());
-    setQuoteChar(Settings::getValue("importcsv", "quotecharacter").toChar());
+    setSeparatorChar(getSettingsChar("importcsv", "separator"));
+    setQuoteChar(getSettingsChar("importcsv", "quotecharacter"));
     setEncoding(Settings::getValue("importcsv", "encoding").toString());
 
     ui->checkboxHeader->blockSignals(false);
