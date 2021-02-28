@@ -22,6 +22,7 @@
       <li>Examine a log of all SQL commands issued by the application</li>
     </ul>
   </description>
+  <content_rating type="oars-1.1" />
   <screenshots>
     <screenshot type="default">
       <image>https://raw.githubusercontent.com/sqlitebrowser/db4s-screenshots/master/v3.3/gnome3_2-execute.png</image>
@@ -42,4 +43,7 @@
   </screenshots>
   <url type="homepage">https://sqlitebrowser.org/</url>
   <url type="bugtracker">https://github.com/sqlitebrowser/sqlitebrowser/issues</url>
+  <releases>
+    <release version="3.12.1" date="2020-11-09" />
+  </releases>
 </component>
