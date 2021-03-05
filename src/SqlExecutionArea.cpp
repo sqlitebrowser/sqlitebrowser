@@ -131,6 +131,12 @@ void SqlExecutionArea::saveAsCsv()
     dialog.exec();
 }
 
+void SqlExecutionArea::saveAsJson()
+{
+    ExportDataDialog dialog(db, ExportDataDialog::ExportFormatJson, this, model->query());
+    dialog.exec();
+}
+
 void SqlExecutionArea::reloadSettings()
 {
     // Reload editor and table settings

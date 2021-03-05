@@ -266,6 +266,7 @@ void MainWindow::init()
 
     popupSaveSqlResultsMenu = new QMenu(this);
     popupSaveSqlResultsMenu->addAction(ui->actionSqlResultsExportCsv);
+    popupSaveSqlResultsMenu->addAction(ui->actionSqlResultsExportJson);
     popupSaveSqlResultsMenu->addAction(ui->actionSqlResultsSaveAsView);
     ui->actionSqlResultsSave->setMenu(popupSaveSqlResultsMenu);
     qobject_cast<QToolButton*>(ui->toolbarSql->widgetForAction(ui->actionSqlResultsSave))->setPopupMode(QToolButton::InstantPopup);
@@ -2210,6 +2211,11 @@ void MainWindow::saveSqlFileAs()
 void MainWindow::saveSqlResultsAsCsv()
 {
     qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget())->saveAsCsv();
+}
+
+void MainWindow::saveSqlResultsAsJson()
+{
+    qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget())->saveAsJson();
 }
 
 void MainWindow::saveSqlResultsAsView()

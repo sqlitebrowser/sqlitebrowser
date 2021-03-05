@@ -1916,6 +1916,11 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>Export to &amp;CSV</string>
    </property>
   </action>
+  <action name="actionSqlResultsExportJson">
+   <property name="text">
+    <string>Export to &amp;JSON</string>
+   </property>
+  </action>
   <action name="actionSqlResultsSaveAsView">
    <property name="text">
     <string>Save as &amp;view</string>
@@ -3123,6 +3128,22 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>saveSqlResultsAsCsv()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSqlResultsExportJson</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>saveSqlResultsAsJson()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

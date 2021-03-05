@@ -198,6 +198,7 @@ private slots:
     void saveSqlFile();
     void saveSqlFileAs();
     void saveSqlResultsAsCsv();
+    void saveSqlResultsAsJson();
     void saveSqlResultsAsView();
     void loadExtension();
     void checkNewVersion(const QString& versionstring, const QString& url);

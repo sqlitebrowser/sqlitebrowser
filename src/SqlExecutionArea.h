@@ -46,6 +46,7 @@ public:
 public slots:
     void finishExecution(const QString& result, const bool ok);
     void saveAsCsv();
+    void saveAsJson();
     void reloadSettings();
     void fetchedData();
     void setFindFrameVisibility(bool show);
