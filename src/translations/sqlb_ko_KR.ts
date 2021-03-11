@@ -71,7 +71,7 @@
         <location filename="../AddRecordDialog.cpp" line="239"/>
         <source>Auto-increment
 </source>
-        <translation>자동 증가(Auti-increment)
+        <translation>자동 증가(Auto-increment)
 </translation>
     </message>
     <message>
