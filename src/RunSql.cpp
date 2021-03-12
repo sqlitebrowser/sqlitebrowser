@@ -165,8 +165,8 @@ bool RunSql::executeNextStatement()
         // Get type
         StatementType query_part_type = getQueryType(queryPart.trimmed());
 
-        // Check if this statement returned any data
-        if(sqlite3_column_count(vm))
+        // Check if this statement returned any data. We skip this check if this is an ALTER TABLE statement which, for some reason, are reported to return one column.
+        if(query_part_type != AlterStatement && sqlite3_column_count(vm))
         {
             // It did. So it is definitely some SELECT statement or similar and we don't need to actually execute it here
             sql3status = SQLITE_ROW;
