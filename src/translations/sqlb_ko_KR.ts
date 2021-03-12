@@ -777,13 +777,13 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../sqlitedb.cpp" line="772"/>
         <source>Cannot open destination file: &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">대상 파일을 열 수 없습니다.: &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="789"/>
         <location filename="../sqlitedb.cpp" line="807"/>
         <source>Cannot backup to file: &apos;%1&apos;. Message: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>파일로 백업할 수 없습니다.: &apos;%1&apos;. 메시지: %2</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="847"/>
@@ -3159,7 +3159,7 @@ You can drag SQL statements from an object row and drop them into other applicat
     <message>
         <location filename="../MainWindow.ui" line="779"/>
         <source>&amp;Recent Files</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">최근 파일 열기(&amp;R)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1225"/>
@@ -3352,7 +3352,7 @@ You can drag SQL statements from an object row and drop them into other applicat
     <message>
         <location filename="../MainWindow.ui" line="1921"/>
         <source>Export to &amp;JSON</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;JSON으로 내보내기</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1926"/>
@@ -3506,32 +3506,32 @@ You can drag SQL statements from an object row and drop them into other applicat
     <message>
         <location filename="../MainWindow.ui" line="2235"/>
         <source>Table from CSV data in Clipboard...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">클립보드에 저장된 CSV 데이터에서 테이블 가져오기...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2238"/>
         <source>This treats the current clipboard contents as a CSV file and opens the same import wizard that is used for importing CSV data from a file.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">현재 클립보드에 저장된 내용을 CSV파일로 간주하여 파일로부터 CSV데이터를 불러올때 사용되는 불러오기 마법사를 엽니다.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2243"/>
         <source>Show &amp;Row Counts</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">행 개수 보기 (&amp;R)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2246"/>
         <source>This shows the number of rows for each table and view in the database.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">데이터베이스의 각 테이블과 뷰에 저장된 행의 개수를 표시합니다.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2258"/>
         <source>Save Database &amp;As...</source>
-        <translation type="unfinished"></translation>
+        <translation>다른 이름으로 저장하기...(&amp;A)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2261"/>
         <source>Save the current database as a different file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">현재 데이터베이스를 다른 파일로 저장하기</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="486"/>
@@ -4049,12 +4049,12 @@ Reason: %1</source>
     <message>
         <location filename="../MainWindow.cpp" line="697"/>
         <source>Choose a database file to save under</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">저장하려는 파일명을 선택하세요</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="708"/>
         <source>Error while saving the database to the new file.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">데이터베이스를 새 파일에 저장할 때 오류가 발생했습니다.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="897"/>
@@ -4944,7 +4944,7 @@ in new project file</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="596"/>
         <source>If this is turned on, then changes to the SQL editor generate a save a project confirmation dialog when closing the SQL editor tab.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">이 기능을 켜면 SQL편집기 탭을 닫을 때 코드 변경사항을 프로젝트에 저장할 지 물어봅니다.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="687"/>
@@ -5917,7 +5917,7 @@ Please check again.</source>
     <message>
         <location filename="../RemoteDock.ui" line="240"/>
         <source>&amp;User</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">사용자(&amp;U)</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="257"/>
@@ -6337,7 +6337,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="325"/>
         <source>Answer &quot;Yes to All&quot; to reload the file on any external update without further prompting.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">외부 갱신이 있을때 물어보지 않고 파일을 다시 불러게 하려면 &quot;모두 예&quot;를 누르세요.</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="327"/>
