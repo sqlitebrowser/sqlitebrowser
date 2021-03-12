@@ -670,6 +670,20 @@
     <string>This button exports the data of the browsed table as currently displayed (after filters, display formats and order column) as a CSV file.</string>
    </property>
   </action>
+  <action name="actionFilteredTableExportJson">
+   <property name="text">
+    <string>Export to &amp;JSON</string>
+   </property>
+   <property name="toolTip">
+    <string>Export the filtered data to JSON</string>
+   </property>
+   <property name="statusTip">
+    <string>Export the filtered data to JSON</string>
+   </property>
+   <property name="whatsThis">
+    <string>This button exports the data of the browsed table as currently displayed (after filters, display formats and order column) as a JSON file.</string>
+   </property>
+  </action>
   <action name="actionFilterSaveAsView">
    <property name="text">
     <string>Save as &amp;view</string>
@@ -1324,7 +1338,23 @@
    <sender>actionFilteredTableExportCsv</sender>
    <signal>triggered()</signal>
    <receiver>TableBrowser</receiver>
-   <slot>exportFilteredTable()</slot>
+   <slot>exportCsvFilteredTable()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionFilteredTableExportJson</sender>
+   <signal>triggered()</signal>
+   <receiver>TableBrowser</receiver>
+   <slot>exportJsonFilteredTable()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -1431,7 +1461,8 @@
   <slot>addRecord()</slot>
   <slot>deleteRecord()</slot>
   <slot>insertValues()</slot>
-  <slot>exportFilteredTable</slot>
+  <slot>exportCsvFilteredTable</slot>
+  <slot>exportJsonFilteredTable</slot>
   <slot>saveFilterAsView</slot>
   <slot>setDefaultTableEncoding()</slot>
   <slot>hideColumns()</slot>

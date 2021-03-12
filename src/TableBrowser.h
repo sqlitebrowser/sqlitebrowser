@@ -130,7 +130,8 @@ private slots:
     void on_actionClearFilters_triggered();
     void on_actionClearSorting_triggered();
     void editDisplayFormat();
-    void exportFilteredTable();
+    void exportCsvFilteredTable();
+    void exportJsonFilteredTable();
     void saveFilterAsView();
     void setTableEncoding(bool forAllTables = false);
     void setDefaultTableEncoding();

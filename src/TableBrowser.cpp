@@ -50,6 +50,7 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
 
     popupSaveFilterAsMenu = new QMenu(this);
     popupSaveFilterAsMenu->addAction(ui->actionFilteredTableExportCsv);
+    popupSaveFilterAsMenu->addAction(ui->actionFilteredTableExportJson);
     popupSaveFilterAsMenu->addAction(ui->actionFilterSaveAsView);
     ui->actionSaveFilterAsPopup->setMenu(popupSaveFilterAsMenu);
     qobject_cast<QToolButton*>(ui->browseToolbar->widgetForAction(ui->actionSaveFilterAsPopup))->setPopupMode(QToolButton::InstantPopup);
@@ -1403,9 +1404,15 @@ void TableBrowser::editDisplayFormat()
     }
 }
 
-void TableBrowser::exportFilteredTable()
+void TableBrowser::exportCsvFilteredTable()
 {
     ExportDataDialog dialog(*db, ExportDataDialog::ExportFormatCsv, this, m_model->customQuery(false));
+    dialog.exec();
+}
+
+void TableBrowser::exportJsonFilteredTable()
+{
+    ExportDataDialog dialog(*db, ExportDataDialog::ExportFormatJson, this, m_model->customQuery(false));
     dialog.exec();
 }
 
