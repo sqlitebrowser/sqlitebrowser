@@ -1411,11 +1411,8 @@ void TableBrowser::exportFilteredTable()
 
 void TableBrowser::saveFilterAsView()
 {
-    if (m_model->filterCount() > 0)
-        // Save as view a custom query without rowid
-        emit createView(m_model->customQuery(false));
-    else
-        QMessageBox::information(this, qApp->applicationName(), tr("There is no filter set for this table. View will not be created."));
+    // Save as view a custom query without rowid
+    emit createView(m_model->customQuery(false));
 }
 
 void TableBrowser::setTableEncoding(bool forAllTables)
