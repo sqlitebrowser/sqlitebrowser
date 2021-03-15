@@ -4,6 +4,20 @@
 #include "Qsci/qsciapis.h"
 #include "Settings.h"
 #include "sqlitedb.h"
+#include "sqlite3.h"
+
+namespace
+{
+    const int SQLITE_VER_NUMBER_3_35 = 3035000;
+
+    bool enabledMathFunctions()
+    {
+        bool enabled = (sqlite3_libversion_number() >= SQLITE_VER_NUMBER_3_35) &&
+                       ((sqlite3_compileoption_used("SQLITE_OMIT_COMPILEOPTION_DIAGS") == 1) ||
+                        (sqlite3_compileoption_used("SQLITE_ENABLE_MATH_FUNCTIONS") == 1 ) );
+        return enabled;
+    }
+}
 
 SqlUiLexer::SqlUiLexer(QObject* parent) :
     QsciLexerSQL(parent)
@@ -134,7 +148,11 @@ void SqlUiLexer::setupAutoCompletion()
             << "first_value" + tr("(expr) This built-in window function calculates the window frame for each row in the same way as an aggregate window function. It returns the value of expr evaluated against the first row in the window frame for each row.")
             << "last_value" + tr("(expr) This built-in window function calculates the window frame for each row in the same way as an aggregate window function. It returns the value of expr evaluated against the last row in the window frame for each row.")
             << "nth_value" + tr("(expr,N) This built-in window function calculates the window frame for each row in the same way as an aggregate window function. It returns the value of expr evaluated against the row N of the window frame. Rows are numbered within the window frame starting from 1 in the order defined by the ORDER BY clause if one is present, or in arbitrary order otherwise. If there is no Nth row in the partition, then NULL is returned.")
-            // Math functions introduced from SQLite 3.3.5
+            ;
+
+    if (enabledMathFunctions()) {
+        functionPatterns
+            // Math functions introduced from SQLite 3.35
             << "acos" + tr("(X) Return the arccosine of X. The result is in radians.")
             << "acosh" + tr("(X) Return the hyperbolic arccosine of X.")
             << "asin" + tr("(X) Return the arcsine of X. The result is in radians.")
@@ -166,6 +184,8 @@ void SqlUiLexer::setupAutoCompletion()
             << "tanh" + tr("(X) Return the hyperbolic tangent of X.")
             << "trunc" + tr("(X) Return the representable integer in between X and 0 (inclusive) that is furthest away from zero. Or, in other words, return the integer part of X, rounding toward zero.")
             ;
+    }
+
 
     listFunctions.clear();
     for(const QString& keyword : functionPatterns)
