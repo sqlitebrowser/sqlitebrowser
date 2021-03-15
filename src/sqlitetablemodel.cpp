@@ -719,58 +719,50 @@ void SqliteTableModel::updateAndRunQuery()
 
 void SqliteTableModel::removeCommentsFromQuery(QString& query)
 {
+    // Store the current size so we can easily check later if the string has been changed
     int oldSize = query.size();
 
-    // first remove block comments
+    // This implements a simple state machine to strip the query from comments
+    QChar quote;
+    for(int i=0;i<query.size();i++)
     {
-        QRegExp rxSQL("^((?:(?:[^'/]|/(?![*]))*|'[^']*')*)(/[*](?:[^*]|[*](?!/))*[*]/)(.*)$");	// set up regex to find block comment
-        QString result;
-
-        while(query.size() != 0)
+        // Are we in quote state?
+        if(quote.isNull())
         {
-            int pos = rxSQL.indexIn(query);
-            if(pos > -1)
+            // We are currently not in quote state
+
+            // So are we starting a quote?
+            if((query.at(i) == '\'' || query.at(i) == '\"' || query.at(i) == '[') && (i == 0 || query.at(i-1) != '\\'))
             {
-                result += rxSQL.cap(1) + " ";
-                query = rxSQL.cap(3);
-            } else {
-                result += query;
-                query.clear();
+                // Quoted text is beginning. Switch to the quote state
+
+                quote = query.at(i);
+            } else if(query.at(i) == '-' && i+1 < query.size() && query.at(i+1) == '-') {
+                // This is an end of line comment. Remove anything till the end of the line or the end of the string if this is the last line
+
+                int pos_next_line_break = query.indexOf('\n', i);
+                if(pos_next_line_break == -1)
+                    query = query.left(i);
+                else
+                    query.remove(i, pos_next_line_break - i);       // The \n is left in intentionally
+            } else if(query.at(i) == '/' && i+1 < query.size() && query.at(i+1) == '*') {
+                // This is a block comment. Remove anything till the end of the block or the end of the string if the block is not closed
+                int pos_end_comment = query.indexOf("*/", i);
+                if(pos_end_comment == -1)
+                    query = query.left(i);
+                else
+                    query.remove(i, pos_end_comment - i + 2);       // Add 2 to include the */
             }
+        } else {
+            // We are currently in quote state
+
+            // If this is the closing quote character, switch back to normal state
+            if((query.at(i) == quote) && (i == 0 || query.at(i-1) != '\\'))
+                quote = 0;
         }
-        query = result;
     }
 
-    // deal with end-of-line comments
-    {
-        /* The regular expression for removing end of line comments works like this:
-         * ^((?:(?:[^'-]|-(?!-))*|(?:'[^']*'))*)(--.*)$
-         * ^                                          $ # anchor beginning and end of string so we use it all
-         *  (                                  )(    )  # two separate capture groups for code and comment
-         *                                       --.*   # comment starts with -- and consumes everything afterwards
-         *   (?:                 |           )*         # code is none or many strings alternating with non-strings
-         *                        (?:'[^']*')           # a string is a quote, followed by none or more non-quotes, followed by a quote
-         *      (?:[^'-]|-(?!-))*                       # non-string is a sequence of characters which aren't quotes or hyphens,
-         */
-
-        QRegExp rxSQL("^((?:(?:[^'-]|-(?!-))*|(?:'[^']*'))*)(--[^\\r\\n]*)([\\r\\n]*)(.*)$");	// set up regex to find end-of-line comment
-        QString result;
-
-        while(query.size() != 0)
-        {
-            int pos = rxSQL.indexIn(query);
-            if(pos > -1)
-            {
-                result += rxSQL.cap(1) + rxSQL.cap(3);
-                query = rxSQL.cap(4);
-            } else {
-                result += query;
-                query.clear();
-            }
-        }
-
-        query = result.trimmed();
-    }
+    query = query.trimmed();
 
     if (oldSize != query.size()) {
         // Remove multiple line breaks that might have been created by deleting comments till the end of the line but not including the line break
