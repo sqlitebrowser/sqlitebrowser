@@ -1,8 +1,8 @@
-// A Bison parser, made by GNU Bison 3.7.4.
+// A Bison parser, made by GNU Bison 3.7.5.
 
 // Skeleton interface for Bison LALR(1) parsers in C++
 
-// Copyright (C) 2002-2015, 2018-2020 Free Software Foundation, Inc.
+// Copyright (C) 2002-2015, 2018-2021 Free Software Foundation, Inc.
 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -55,7 +55,7 @@
 	typedef void* yyscan_t;
 
 	// Colum definitions are a tuple of two elements: the Field object and a set of table constraints
-	using ColumndefData = std::tuple<sqlb::Field, sqlb::ConstraintSet>;
+	using ColumndefData = std::tuple<sqlb::Field, sqlb::ConstraintVector>;
 
 #line 61 "sqlite3_parser.hpp"
 
@@ -128,9 +128,9 @@
 
 /* Suppress unused-variable warnings by "using" E.  */
 #if ! defined lint || defined __GNUC__
-# define YYUSE(E) ((void) (E))
+# define YY_USE(E) ((void) (E))
 #else
-# define YYUSE(E) /* empty */
+# define YY_USE(E) /* empty */
 #endif
 
 #if defined __GNUC__ && ! defined __ICC && 407 <= __GNUC__ * 100 + __GNUC_MINOR__
@@ -423,7 +423,7 @@ namespace  sqlb { namespace parser  {
       // columnconstraint_list
       // tableconstraint_list
       // optional_tableconstraint_list
-      char dummy4[sizeof (sqlb::ConstraintSet)];
+      char dummy4[sizeof (sqlb::ConstraintVector)];
 
       // createindex_stmt
       char dummy5[sizeof (sqlb::IndexPtr)];
@@ -980,7 +980,7 @@ namespace  sqlb { namespace parser  {
       case symbol_kind::S_columnconstraint_list: // columnconstraint_list
       case symbol_kind::S_tableconstraint_list: // tableconstraint_list
       case symbol_kind::S_optional_tableconstraint_list: // optional_tableconstraint_list
-        value.move< sqlb::ConstraintSet > (std::move (that.value));
+        value.move< sqlb::ConstraintVector > (std::move (that.value));
         break;
 
       case symbol_kind::S_createindex_stmt: // createindex_stmt
@@ -1201,13 +1201,13 @@ namespace  sqlb { namespace parser  {
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, sqlb::ConstraintSet&& v, location_type&& l)
+      basic_symbol (typename Base::kind_type t, sqlb::ConstraintVector&& v, location_type&& l)
         : Base (t)
         , value (std::move (v))
         , location (std::move (l))
       {}
 #else
-      basic_symbol (typename Base::kind_type t, const sqlb::ConstraintSet& v, const location_type& l)
+      basic_symbol (typename Base::kind_type t, const sqlb::ConstraintVector& v, const location_type& l)
         : Base (t)
         , value (v)
         , location (l)
@@ -1319,7 +1319,7 @@ namespace  sqlb { namespace parser  {
       }
 
       /// Destroy contents, and record that is empty.
-      void clear ()
+      void clear () YY_NOEXCEPT
       {
         // User destructor.
         symbol_kind_type yykind = this->kind ();
@@ -1354,7 +1354,7 @@ switch (yykind)
       case symbol_kind::S_columnconstraint_list: // columnconstraint_list
       case symbol_kind::S_tableconstraint_list: // tableconstraint_list
       case symbol_kind::S_optional_tableconstraint_list: // optional_tableconstraint_list
-        value.template destroy< sqlb::ConstraintSet > ();
+        value.template destroy< sqlb::ConstraintVector > ();
         break;
 
       case symbol_kind::S_createindex_stmt: // createindex_stmt
@@ -1565,7 +1565,7 @@ switch (yykind)
       by_kind (kind_type t);
 
       /// Record that this symbol is empty.
-      void clear ();
+      void clear () YY_NOEXCEPT;
 
       /// Steal the symbol kind from \a that.
       void move (by_kind& that);
@@ -3425,9 +3425,9 @@ switch (yykind)
     {
     public:
       context (const parser& yyparser, const symbol_type& yyla);
-      const symbol_type& lookahead () const { return yyla_; }
-      symbol_kind_type token () const { return yyla_.kind (); }
-      const location_type& location () const { return yyla_.location; }
+      const symbol_type& lookahead () const YY_NOEXCEPT { return yyla_; }
+      symbol_kind_type token () const YY_NOEXCEPT { return yyla_.kind (); }
+      const location_type& location () const YY_NOEXCEPT { return yyla_.location; }
 
       /// Put in YYARG at most YYARGN of the expected tokens, and return the
       /// number of tokens stored in YYARG.  If YYARG is null, return the
@@ -3850,7 +3850,7 @@ switch (yykind)
       case symbol_kind::S_columnconstraint_list: // columnconstraint_list
       case symbol_kind::S_tableconstraint_list: // tableconstraint_list
       case symbol_kind::S_optional_tableconstraint_list: // optional_tableconstraint_list
-        value.copy< sqlb::ConstraintSet > (YY_MOVE (that.value));
+        value.copy< sqlb::ConstraintVector > (YY_MOVE (that.value));
         break;
 
       case symbol_kind::S_createindex_stmt: // createindex_stmt
@@ -4054,7 +4054,7 @@ switch (yykind)
       case symbol_kind::S_columnconstraint_list: // columnconstraint_list
       case symbol_kind::S_tableconstraint_list: // tableconstraint_list
       case symbol_kind::S_optional_tableconstraint_list: // optional_tableconstraint_list
-        value.move< sqlb::ConstraintSet > (YY_MOVE (s.value));
+        value.move< sqlb::ConstraintVector > (YY_MOVE (s.value));
         break;
 
       case symbol_kind::S_createindex_stmt: // createindex_stmt
@@ -4243,7 +4243,7 @@ switch (yykind)
 
   inline
   void
-  parser::by_kind::clear ()
+  parser::by_kind::clear () YY_NOEXCEPT
   {
     kind_ = symbol_kind::S_YYEMPTY;
   }

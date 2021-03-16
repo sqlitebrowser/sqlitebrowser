@@ -482,7 +482,7 @@ std::string Table::sql(const std::string& schema, bool ifNotExists) const
 
 void Table::addConstraint(ConstraintPtr constraint)
 {
-    m_constraints.insert(constraint);
+    m_constraints.push_back(constraint);
 }
 
 void Table::setConstraint(ConstraintPtr constraint)
@@ -537,19 +537,19 @@ std::vector<ConstraintPtr> Table::constraints(const StringVector& vStrFields, Co
     return clist;
 }
 
-void Table::setConstraints(const ConstraintSet& constraints)
+void Table::setConstraints(const ConstraintVector& constraints)
 {
     m_constraints = constraints;
 }
 
 void Table::replaceConstraint(ConstraintPtr from, ConstraintPtr to)
 {
-    auto it = m_constraints.find(from);
+    auto it = std::find(m_constraints.begin(), m_constraints.end(), from);
     if(it == m_constraints.end())
             return;
 
-    m_constraints.erase(it);    // Erase old constraint
-    m_constraints.insert(to);   // Insert new constraint
+    m_constraints.erase(it);        // Erase old constraint
+    m_constraints.push_back(to);    // Insert new constraint
 }
 
 std::shared_ptr<PrimaryKeyConstraint> Table::primaryKey()

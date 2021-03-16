@@ -69,7 +69,7 @@ using TriggerPtr = std::shared_ptr<Trigger>;
 using ConstraintPtr = std::shared_ptr<Constraint>;
 using FieldVector = std::vector<Field>;
 using IndexedColumnVector = std::vector<IndexedColumn>;
-using ConstraintSet = std::set<ConstraintPtr>;
+using ConstraintVector = std::vector<ConstraintPtr>;
 
 class Object
 {
@@ -440,8 +440,8 @@ public:
     void removeConstraints(const StringVector& vStrFields = StringVector(), Constraint::ConstraintTypes type = Constraint::NoType);
     ConstraintPtr constraint(const StringVector& vStrFields = StringVector(), Constraint::ConstraintTypes type = Constraint::NoType) const;   //! Only returns the first constraint, if any
     std::vector<ConstraintPtr> constraints(const StringVector& vStrFields = StringVector(), Constraint::ConstraintTypes type = Constraint::NoType) const;
-    ConstraintSet allConstraints() const { return m_constraints; }
-    void setConstraints(const ConstraintSet& constraints);
+    ConstraintVector allConstraints() const { return m_constraints; }
+    void setConstraints(const ConstraintVector& constraints);
     void replaceConstraint(ConstraintPtr from, ConstraintPtr to);
     std::shared_ptr<PrimaryKeyConstraint> primaryKey();
     void removeKeyFromAllConstraints(const std::string& key);
@@ -458,7 +458,7 @@ private:
 
 private:
     bool m_withoutRowid;
-    ConstraintSet m_constraints;
+    ConstraintVector m_constraints;
     std::string m_virtual;
 };
 

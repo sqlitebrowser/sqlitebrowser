@@ -1,8 +1,8 @@
-// A Bison parser, made by GNU Bison 3.7.4.
+// A Bison parser, made by GNU Bison 3.7.5.
 
 // Skeleton implementation for Bison LALR(1) parsers in C++
 
-// Copyright (C) 2002-2015, 2018-2020 Free Software Foundation, Inc.
+// Copyright (C) 2002-2015, 2018-2021 Free Software Foundation, Inc.
 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -149,7 +149,7 @@
 #else // !YYDEBUG
 
 # define YYCDEBUG if (false) std::cerr
-# define YY_SYMBOL_PRINT(Title, Symbol)  YYUSE (Symbol)
+# define YY_SYMBOL_PRINT(Title, Symbol)  YY_USE (Symbol)
 # define YY_REDUCE_PRINT(Rule)           static_cast<void> (0)
 # define YY_STACK_PRINT()                static_cast<void> (0)
 
@@ -254,7 +254,7 @@ namespace  sqlb { namespace parser  {
       case symbol_kind::S_columnconstraint_list: // columnconstraint_list
       case symbol_kind::S_tableconstraint_list: // tableconstraint_list
       case symbol_kind::S_optional_tableconstraint_list: // optional_tableconstraint_list
-        value.YY_MOVE_OR_COPY< sqlb::ConstraintSet > (YY_MOVE (that.value));
+        value.YY_MOVE_OR_COPY< sqlb::ConstraintVector > (YY_MOVE (that.value));
         break;
 
       case symbol_kind::S_createindex_stmt: // createindex_stmt
@@ -444,7 +444,7 @@ namespace  sqlb { namespace parser  {
       case symbol_kind::S_columnconstraint_list: // columnconstraint_list
       case symbol_kind::S_tableconstraint_list: // tableconstraint_list
       case symbol_kind::S_optional_tableconstraint_list: // optional_tableconstraint_list
-        value.move< sqlb::ConstraintSet > (YY_MOVE (that.value));
+        value.move< sqlb::ConstraintVector > (YY_MOVE (that.value));
         break;
 
       case symbol_kind::S_createindex_stmt: // createindex_stmt
@@ -634,7 +634,7 @@ namespace  sqlb { namespace parser  {
       case symbol_kind::S_columnconstraint_list: // columnconstraint_list
       case symbol_kind::S_tableconstraint_list: // tableconstraint_list
       case symbol_kind::S_optional_tableconstraint_list: // optional_tableconstraint_list
-        value.copy< sqlb::ConstraintSet > (that.value);
+        value.copy< sqlb::ConstraintVector > (that.value);
         break;
 
       case symbol_kind::S_createindex_stmt: // createindex_stmt
@@ -823,7 +823,7 @@ namespace  sqlb { namespace parser  {
       case symbol_kind::S_columnconstraint_list: // columnconstraint_list
       case symbol_kind::S_tableconstraint_list: // tableconstraint_list
       case symbol_kind::S_optional_tableconstraint_list: // optional_tableconstraint_list
-        value.move< sqlb::ConstraintSet > (that.value);
+        value.move< sqlb::ConstraintVector > (that.value);
         break;
 
       case symbol_kind::S_createindex_stmt: // createindex_stmt
@@ -1003,7 +1003,7 @@ namespace  sqlb { namespace parser  {
   parser::yy_print_ (std::ostream& yyo, const basic_symbol<Base>& yysym) const
   {
     std::ostream& yyoutput = yyo;
-    YYUSE (yyoutput);
+    YY_USE (yyoutput);
     if (yysym.empty ())
       yyo << "empty symbol";
     else
@@ -1012,7 +1012,7 @@ namespace  sqlb { namespace parser  {
         yyo << (yykind < YYNTOKENS ? "token" : "nterm")
             << ' ' << yysym.name () << " ("
             << yysym.location << ": ";
-        YYUSE (yykind);
+        YY_USE (yykind);
         yyo << ')';
       }
   }
@@ -1257,7 +1257,7 @@ namespace  sqlb { namespace parser  {
       case symbol_kind::S_columnconstraint_list: // columnconstraint_list
       case symbol_kind::S_tableconstraint_list: // tableconstraint_list
       case symbol_kind::S_optional_tableconstraint_list: // optional_tableconstraint_list
-        yylhs.value.emplace< sqlb::ConstraintSet > ();
+        yylhs.value.emplace< sqlb::ConstraintVector > ();
         break;
 
       case symbol_kind::S_createindex_stmt: // createindex_stmt
@@ -2862,13 +2862,13 @@ namespace  sqlb { namespace parser  {
 
   case 229: // columnconstraint_list: columnconstraint
 #line 716 "sqlite3_parser.yy"
-                                                        { yylhs.value.as < sqlb::ConstraintSet > () = { yystack_[0].value.as < sqlb::ConstraintPtr > () }; }
+                                                        { yylhs.value.as < sqlb::ConstraintVector > () = { yystack_[0].value.as < sqlb::ConstraintPtr > () }; }
 #line 2867 "sqlite3_parser.cpp"
     break;
 
   case 230: // columnconstraint_list: columnconstraint_list columnconstraint
 #line 717 "sqlite3_parser.yy"
-                                                        { yylhs.value.as < sqlb::ConstraintSet > () = yystack_[1].value.as < sqlb::ConstraintSet > (); yylhs.value.as < sqlb::ConstraintSet > ().insert(yystack_[0].value.as < sqlb::ConstraintPtr > ()); }
+                                                        { yylhs.value.as < sqlb::ConstraintVector > () = yystack_[1].value.as < sqlb::ConstraintVector > (); yylhs.value.as < sqlb::ConstraintVector > ().push_back(yystack_[0].value.as < sqlb::ConstraintPtr > ()); }
 #line 2873 "sqlite3_parser.cpp"
     break;
 
@@ -2876,8 +2876,8 @@ namespace  sqlb { namespace parser  {
 #line 721 "sqlite3_parser.yy"
                                                                 {
 								sqlb::Field f(yystack_[2].value.as < std::string > (), yystack_[1].value.as < std::string > ());
-								sqlb::ConstraintSet table_constraints{};
-								for(const auto& c : yystack_[0].value.as < sqlb::ConstraintSet > ())
+								sqlb::ConstraintVector table_constraints{};
+								for(const auto& c : yystack_[0].value.as < sqlb::ConstraintVector > ())
 								{
 									if(!c)
 										continue;
@@ -2893,7 +2893,7 @@ namespace  sqlb { namespace parser  {
 											c->setColumnList({yystack_[2].value.as < std::string > ()});
 										else
 											c->replaceInColumnList("", yystack_[2].value.as < std::string > ());
-										table_constraints.insert(c);
+										table_constraints.push_back(c);
 										break;
 									}
 									case sqlb::Constraint::NotNullConstraintType:
@@ -2940,7 +2940,7 @@ namespace  sqlb { namespace parser  {
 
   case 232: // columndef: columnid optional_typename
 #line 782 "sqlite3_parser.yy"
-                                                        { yylhs.value.as < ColumndefData > () = std::make_tuple(sqlb::Field(yystack_[1].value.as < std::string > (), yystack_[0].value.as < std::string > ()), sqlb::ConstraintSet{}); }
+                                                        { yylhs.value.as < ColumndefData > () = std::make_tuple(sqlb::Field(yystack_[1].value.as < std::string > (), yystack_[0].value.as < std::string > ()), sqlb::ConstraintVector{}); }
 #line 2945 "sqlite3_parser.cpp"
     break;
 
@@ -3245,31 +3245,31 @@ namespace  sqlb { namespace parser  {
 
   case 279: // tableconstraint_list: tableconstraint
 #line 879 "sqlite3_parser.yy"
-                                                        { yylhs.value.as < sqlb::ConstraintSet > () = {yystack_[0].value.as < sqlb::ConstraintPtr > ()}; }
+                                                        { yylhs.value.as < sqlb::ConstraintVector > () = {yystack_[0].value.as < sqlb::ConstraintPtr > ()}; }
 #line 3250 "sqlite3_parser.cpp"
     break;
 
   case 280: // tableconstraint_list: tableconstraint_list "," tableconstraint
 #line 880 "sqlite3_parser.yy"
-                                                        { yylhs.value.as < sqlb::ConstraintSet > () = yystack_[2].value.as < sqlb::ConstraintSet > (); yylhs.value.as < sqlb::ConstraintSet > ().insert(yystack_[0].value.as < sqlb::ConstraintPtr > ()); }
+                                                        { yylhs.value.as < sqlb::ConstraintVector > () = yystack_[2].value.as < sqlb::ConstraintVector > (); yylhs.value.as < sqlb::ConstraintVector > ().push_back(yystack_[0].value.as < sqlb::ConstraintPtr > ()); }
 #line 3256 "sqlite3_parser.cpp"
     break;
 
   case 281: // tableconstraint_list: tableconstraint_list tableconstraint
 #line 881 "sqlite3_parser.yy"
-                                                        { yylhs.value.as < sqlb::ConstraintSet > () = yystack_[1].value.as < sqlb::ConstraintSet > (); yylhs.value.as < sqlb::ConstraintSet > ().insert(yystack_[0].value.as < sqlb::ConstraintPtr > ()); }
+                                                        { yylhs.value.as < sqlb::ConstraintVector > () = yystack_[1].value.as < sqlb::ConstraintVector > (); yylhs.value.as < sqlb::ConstraintVector > ().push_back(yystack_[0].value.as < sqlb::ConstraintPtr > ()); }
 #line 3262 "sqlite3_parser.cpp"
     break;
 
   case 282: // optional_tableconstraint_list: %empty
 #line 885 "sqlite3_parser.yy"
-                                                        { yylhs.value.as < sqlb::ConstraintSet > () = {}; }
+                                                        { yylhs.value.as < sqlb::ConstraintVector > () = {}; }
 #line 3268 "sqlite3_parser.cpp"
     break;
 
   case 283: // optional_tableconstraint_list: "," tableconstraint_list
 #line 886 "sqlite3_parser.yy"
-                                                        { yylhs.value.as < sqlb::ConstraintSet > () = yystack_[0].value.as < sqlb::ConstraintSet > (); }
+                                                        { yylhs.value.as < sqlb::ConstraintVector > () = yystack_[0].value.as < sqlb::ConstraintVector > (); }
 #line 3274 "sqlite3_parser.cpp"
     break;
 
@@ -3287,13 +3287,13 @@ namespace  sqlb { namespace parser  {
                                                                                                                                                                                         {
 										yylhs.value.as < sqlb::TablePtr > () = std::make_shared<sqlb::Table>(yystack_[5].value.as < std::string > ());
 										yylhs.value.as < sqlb::TablePtr > ()->setWithoutRowidTable(yystack_[0].value.as < bool > ());
-										yylhs.value.as < sqlb::TablePtr > ()->setConstraints(yystack_[2].value.as < sqlb::ConstraintSet > ());
+										yylhs.value.as < sqlb::TablePtr > ()->setConstraints(yystack_[2].value.as < sqlb::ConstraintVector > ());
 										yylhs.value.as < sqlb::TablePtr > ()->setFullyParsed(true);
 
 										for(const auto& column : yystack_[3].value.as < std::vector<ColumndefData> > ())
 										{
 											sqlb::Field f;
-											sqlb::ConstraintSet c;
+											sqlb::ConstraintVector c;
 											std::tie(f, c) = column;
 
 											yylhs.value.as < sqlb::TablePtr > ()->fields.push_back(f);
@@ -3782,7 +3782,7 @@ namespace  sqlb { namespace parser  {
   const short
   parser::yydefgoto_[] =
   {
-      -1,     2,     3,   127,   128,   129,    70,    94,   208,   209,
+       0,     2,     3,   127,   128,   129,    70,    94,   208,   209,
      103,   104,   130,   131,   132,   133,   134,   135,   136,   137,
      160,   138,   139,   140,    98,    19,   202,    11,   286,    71,
      142,   143,     4,   100,     5,    12,   230,   305,   105,   471,
