@@ -19,5 +19,6 @@
         <file alias="pl_PL">pl.png</file>
         <file alias="ja_JP">jp.png</file>
         <file alias="nl_NL">nl.png</file>
+        <file alias="sv_SE">sv.png</file>
     </qresource>
 </RCC>
