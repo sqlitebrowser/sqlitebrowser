@@ -64,16 +64,13 @@ void Constraint::removeFromColumnList(const std::string& key)
 
 bool ForeignKeyClause::isSet() const
 {
-    return m_override.size() || m_table.size();
+    return m_table.size();
 }
 
 std::string ForeignKeyClause::toString() const
 {
     if(!isSet())
         return std::string();
-
-    if(m_override.size())
-        return m_override;
 
     std::string result = escapeIdentifier(m_table);
 
@@ -84,11 +81,6 @@ std::string ForeignKeyClause::toString() const
         result += " " + m_constraint;
 
     return result;
-}
-
-void ForeignKeyClause::setFromString(const std::string& fk)
-{
-    m_override = fk;
 }
 
 std::string ForeignKeyClause::toSql() const

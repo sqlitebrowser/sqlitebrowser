@@ -158,9 +158,8 @@ public:
 
     bool isSet() const;
     std::string toString() const;
-    void setFromString(const std::string& fk);
 
-    void setTable(const std::string& table) { m_override.clear(); m_table = table; }
+    void setTable(const std::string& table) { m_table = table; }
     const std::string& table() const { return m_table; }
 
     void setColumns(const StringVector& columns) { m_columns = columns; }
@@ -177,8 +176,6 @@ private:
     std::string m_table;
     StringVector m_columns;
     std::string m_constraint;
-
-    std::string m_override;
 };
 
 class UniqueConstraint : public Constraint
