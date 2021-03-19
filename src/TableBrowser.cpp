@@ -129,6 +129,8 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
         std::vector<QString> filters;
         std::copy(values.begin(), values.end(), std::back_inserter(filters));
 
+        ui->actionClearFilters->setEnabled(m_model->filterCount() > 0 || !ui->editGlobalFilter->text().isEmpty());
+
         // Have they changed?
         BrowseDataTableSettings& settings = m_settings[currentlyBrowsedTableName()];
         if(filters != settings.globalFilters)
@@ -562,6 +564,8 @@ void TableBrowser::updateFilter(size_t column, const QString& value)
     const std::string column_name = model()->headerData(static_cast<int>(column), Qt::Horizontal, Qt::EditRole).toString().toStdString();
     m_model->updateFilter(column_name, value);
 
+    ui->actionClearFilters->setEnabled(m_model->filterCount() > 0 || !ui->editGlobalFilter->text().isEmpty());
+
     // Save the new filter settings
     BrowseDataTableSettings& settings = m_settings[currentlyBrowsedTableName()];
     if(value.isEmpty())
@@ -754,6 +758,7 @@ sqlb::Query TableBrowser::buildQuery(const BrowseDataTableSettings& storedData, 
 
     // Sorting
     query.setOrderBy(storedData.sortColumns);
+    ui->actionClearSorting->setEnabled(storedData.sortColumns.size() > 0);
 
     // Filters
     for(auto it=storedData.filterValues.cbegin();it!=storedData.filterValues.cend();++it)
@@ -934,6 +939,8 @@ void TableBrowser::generateFilters()
     for(auto filterIt=settings.filterValues.cbegin();filterIt!=settings.filterValues.cend();++filterIt)
         ui->dataTable->setFilter(sqlb::getFieldNumber(obj, filterIt->first) + 1, filterIt->second);
     filterHeader->blockSignals(oldState);
+
+    ui->actionClearFilters->setEnabled(m_model->filterCount() > 0 || !ui->editGlobalFilter->text().isEmpty());
 }
 
 void TableBrowser::unlockViewEditing(bool unlock, QString pk)
@@ -1151,6 +1158,8 @@ void TableBrowser::headerClicked(int logicalindex)
 
     // Do the actual sorting
     ui->dataTable->sortByColumns(columns);
+
+    ui->actionClearSorting->setEnabled(columns.size() > 0);
 
     // select the first item in the column so the header is bold
     // we might try to select the last selected item
@@ -1373,6 +1382,8 @@ void TableBrowser::on_actionClearSorting_triggered()
     columns.clear();
     // Set cleared vector of sort-by columns
     m_model->sort(columns);
+
+    ui->actionClearSorting->setEnabled(false);
 }
 
 void TableBrowser::editDisplayFormat()
