@@ -1363,7 +1363,7 @@ void TableBrowser::selectTableLine(int lineToSelect)
 
 void TableBrowser::on_actionClearFilters_triggered()
 {
-    ui->dataTable->filterHeader()->clearFilters();
+    clearFilters();
 }
 
 void TableBrowser::on_actionClearSorting_triggered()
