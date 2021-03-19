@@ -514,24 +514,32 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
                                  tr("There is already a table named '%1' and an import into an existing table is only possible if the number of columns match.").arg(tableName));
             return true;
         } else {
-            // Only ask whether to import into the existing table if the 'Yes all' button has not been clicked (yet)
-            if(!dontAskForExistingTableAgain.contains(tableName))
+            // Only ask whether to import into any table if the 'Yes to All' button has not been clicked (yet) (empty string is included).
+            // Only ask whether to import into the existing table if the 'Yes' button has not been clicked (yet) for that table.
+            if(!dontAskForExistingTableAgain.contains("") && !dontAskForExistingTableAgain.contains(tableName))
             {
                 int answer = QMessageBox::question(this, QApplication::applicationName(),
                                                    tr("There is already a table named '%1'. Do you want to import the data into it?").arg(tableName),
                                                    QMessageBox::Yes | QMessageBox::No | QMessageBox::YesAll | QMessageBox::Cancel, QMessageBox::No);
 
                 // Stop now if the No button has been clicked
-                if(answer == QMessageBox::No)
+                switch (answer) {
+                case QMessageBox::No:
                     return true;
-
+                  
                 // Stop now if the Cancel button has been clicked. But also indicate, that the entire import process should be stopped.
-                if(answer == QMessageBox::Cancel)
+                case QMessageBox::Cancel:
                     return false;
 
-                // If the 'Yes all' button has been clicked, save that for later
-                if(answer == QMessageBox::YesAll)
+                // If the 'Yes' button has been clicked, save the answer for that table for later
+                case QMessageBox::Yes:
                     dontAskForExistingTableAgain.append(tableName);
+                    break;
+                // If the 'Yes to All' button has been clicked, save the answer for any future table name. An empty string is used in that case.
+                case QMessageBox::YesAll:
+                    dontAskForExistingTableAgain.append("");
+                    break;
+                }
             }
 
             // If we reached this point, this means that either the 'Yes' or the 'Yes all' button has been clicked or that no message box was shown at all
