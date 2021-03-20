@@ -65,7 +65,7 @@ bool isTextOnlyFile(const QString& fileName)
     QFile file(fileName);
     if (file.open(QFile::ReadOnly)) {
         QByteArray data = file.read(512);
-        return isTextOnly(data);
+        return !data.isEmpty() && isTextOnly(data);
     } else {
         return false;
     }
