@@ -5,6 +5,7 @@
 #include <QStyledItemDelegate>
 #include <QSortFilterProxyModel>
 #include <unordered_set>
+#include <set>
 
 #include "sql/Query.h"
 
@@ -60,8 +61,10 @@ public:
 public:
     // Get set of selected columns (all cells in column has to be selected)
     std::unordered_set<size_t> selectedCols() const;
-    // Get set of columns traversed by selection (only some cells in column has to be selected)
+    // Get set of columns traversed by selection (only some cells in column have to be selected)
     std::unordered_set<size_t> colsInSelection() const;
+    // Get set of ordered rows traversed by selection (only some cells in row have to be selected)
+    std::set<size_t> rowsInSelection() const;
 
     int numVisibleRows() const;
 

@@ -418,13 +418,13 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     connect(selectColumnShortcut, &QShortcut::activated, this, [this]() {
         if(!hasFocus() || selectionModel()->selectedIndexes().isEmpty())
             return;
-        selectionModel()->select(QItemSelection(selectionModel()->selectedIndexes().first(), selectionModel()->selectedIndexes().last()), QItemSelectionModel::Select | QItemSelectionModel::Columns);
+        selectionModel()->select(selectionModel()->selection(), QItemSelectionModel::Select | QItemSelectionModel::Columns);
     });
     QShortcut* selectRowShortcut = new QShortcut(QKeySequence("Shift+Space"), this);
     connect(selectRowShortcut, &QShortcut::activated, this, [this]() {
         if(!hasFocus() || selectionModel()->selectedIndexes().isEmpty())
             return;
-        selectionModel()->select(QItemSelection(selectionModel()->selectedIndexes().first(), selectionModel()->selectedIndexes().last()), QItemSelectionModel::Select | QItemSelectionModel::Rows);
+        selectionModel()->select(selectionModel()->selection(), QItemSelectionModel::Select | QItemSelectionModel::Rows);
     });
 
     // Set up frozen columns child widget
@@ -573,6 +573,13 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
     htmlResult.append("<style type=\"text/css\">br{mso-data-placement:same-cell;}</style></head><body>"
                       "<table border=1 cellspacing=0 cellpadding=2>");
 
+    // Insert the columns in a set, since they could be non-contiguous.
+    std::set<int> colsInIndexes, rowsInIndexes;
+    for(const QModelIndex & idx : indices) {
+        colsInIndexes.insert(idx.column());
+        rowsInIndexes.insert(idx.row());
+    }
+
     int currentRow = indices.first().row();
 
     const QString fieldSepText = "\t";
@@ -586,10 +593,11 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
     // Table headers
     if (withHeaders || inSQL) {
         htmlResult.append("<tr><th>");
-        int firstColumn = indices.front().column();
-        for(int i = firstColumn; i <= indices.back().column(); i++) {
-            QByteArray headerText = model()->headerData(i, Qt::Horizontal, Qt::EditRole).toByteArray();
-            if (i != firstColumn) {
+        int firstColumn = *colsInIndexes.begin();
+
+        for(int col : colsInIndexes) {
+            QByteArray headerText = model()->headerData(col, Qt::Horizontal, Qt::EditRole).toByteArray();
+            if (col != firstColumn) {
                 result.append(fieldSepText);
                 htmlResult.append("</th><th>");
                 sqlInsertStatement.append(", ");
@@ -604,79 +612,89 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
         sqlInsertStatement.append(") VALUES (");
     }
 
-    // Table data rows
-    for(const QModelIndex& index : indices) {
-        QFont font;
-        font.fromString(index.data(Qt::FontRole).toString());
-        const QString fontStyle(font.italic() ? "italic" : "normal");
-        const QString fontWeigth(font.bold() ? "bold" : "normal");
-        const QString fontDecoration(font.underline() ? " text-decoration: underline;" : "");
-        const QColor bgColor(index.data(Qt::BackgroundRole).toString());
-        const QColor fgColor(index.data(Qt::ForegroundRole).toString());
-        const Qt::Alignment align(index.data(Qt::TextAlignmentRole).toInt());
-        const QString textAlign(CondFormat::alignmentTexts().at(CondFormat::fromCombinedAlignment(align)).toLower());
-        const QString style = QString("font-family: '%1'; font-size: %2pt; font-style: %3; font-weight: %4;%5 "
-                                      "background-color: %6; color: %7; text-align: %8").arg(
-                    font.family().toHtmlEscaped(),
-                    QString::number(font.pointSize()),
-                    fontStyle,
-                    fontWeigth,
-                    fontDecoration,
-                    bgColor.name(),
-                    fgColor.name(),
-                    textAlign);
+    // Iterate over rows x cols checking if the index actually exists when needed, in order
+    // to support non-rectangular selections.
+    for(const int row : rowsInIndexes) {
+        for(const int column : colsInIndexes) {
 
-        // Separators. For first cell, only opening table row tags must be added for the HTML and nothing for the text version.
-        if (indices.first() == index) {
-            htmlResult.append(QString("<tr><td style=\"%1\">").arg(style));
-            sqlResult.append(sqlInsertStatement);
-        } else if (index.row() != currentRow) {
-            result.append(rowSepText);
-            htmlResult.append(QString("</td></tr><tr><td style=\"%1\">").arg(style));
-            sqlResult.append(");" + rowSepText + sqlInsertStatement);
-        } else {
-            result.append(fieldSepText);
-            htmlResult.append(QString("</td><td style=\"%1\">").arg(style));
-            sqlResult.append(", ");
-        }
-        currentRow = index.row();
+            const QModelIndex index = indices.first().sibling(row, column);
+            QString style;
+            if(indices.contains(index)) {
+                QFont font;
+                font.fromString(index.data(Qt::FontRole).toString());
+                const QString fontStyle(font.italic() ? "italic" : "normal");
+                const QString fontWeigth(font.bold() ? "bold" : "normal");
+                const QString fontDecoration(font.underline() ? " text-decoration: underline;" : "");
+                const QColor bgColor(index.data(Qt::BackgroundRole).toString());
+                const QColor fgColor(index.data(Qt::ForegroundRole).toString());
+                const Qt::Alignment align(index.data(Qt::TextAlignmentRole).toInt());
+                const QString textAlign(CondFormat::alignmentTexts().at(CondFormat::fromCombinedAlignment(align)).toLower());
+                style = QString("style=\"font-family: '%1'; font-size: %2pt; font-style: %3; font-weight: %4;%5 "
+                                "background-color: %6; color: %7; text-align: %8\"").arg(
+                                    font.family().toHtmlEscaped(),
+                                    QString::number(font.pointSize()),
+                                    fontStyle,
+                                    fontWeigth,
+                                    fontDecoration,
+                                    bgColor.name(),
+                                    fgColor.name(),
+                                    textAlign);
+            }
 
-        QImage img;
-        QVariant bArrdata = index.data(Qt::EditRole);
+            // Separators. For first cell, only opening table row tags must be added for the HTML and nothing for the text version.
+            if (index.row() == *rowsInIndexes.begin() && index.column() == *colsInIndexes.begin()) {
+                htmlResult.append(QString("<tr><td %1>").arg(style));
+                sqlResult.append(sqlInsertStatement);
+            } else if (index.row() != currentRow) {
+                result.append(rowSepText);
+                htmlResult.append(QString("</td></tr><tr><td %1>").arg(style));
+                sqlResult.append(");" + rowSepText + sqlInsertStatement);
+            } else {
+                result.append(fieldSepText);
+                htmlResult.append(QString("</td><td %1>").arg(style));
+                sqlResult.append(", ");
+            }
 
-        // Table cell data: image? Store it as an embedded image in HTML
-        if (!inSQL && img.loadFromData(bArrdata.toByteArray()))
-        {
-            QByteArray ba;
-            QBuffer buffer(&ba);
-            buffer.open(QIODevice::WriteOnly);
-            img.save(&buffer, "PNG");
-            buffer.close();
+            currentRow = index.row();
 
-            QString imageBase64 = ba.toBase64();
-            htmlResult.append("<img src=\"data:image/png;base64,");
-            htmlResult.append(imageBase64);
-            result.append(QString());
-            htmlResult.append("\" alt=\"Image\">");
-        } else {
-            QByteArray text;
-            if (!m->isBinary(index)) {
-                text = bArrdata.toByteArray();
+            QImage img;
+            QVariant bArrdata = indices.contains(index) ? index.data(Qt::EditRole) : QVariant();
 
-                // Table cell data: text
-                if (text.contains('\n') || text.contains('\t'))
-                    htmlResult.append("<pre>" + QString(text).toHtmlEscaped() + "</pre>");
-                else
-                    htmlResult.append(QString(text).toHtmlEscaped());
+            // Table cell data: image? Store it as an embedded image in HTML
+            if (!inSQL && img.loadFromData(bArrdata.toByteArray()))
+            {
+                QByteArray ba;
+                QBuffer buffer(&ba);
+                buffer.open(QIODevice::WriteOnly);
+                img.save(&buffer, "PNG");
+                buffer.close();
 
-                result.append(text);
-                sqlResult.append(sqlb::escapeString(text));
-            } else
-                // Table cell data: binary. Save as BLOB literal in SQL
-                sqlResult.append( "X'" + bArrdata.toByteArray().toHex() + "'" );
+                QString imageBase64 = ba.toBase64();
+                htmlResult.append("<img src=\"data:image/png;base64,");
+                htmlResult.append(imageBase64);
+                result.append(QString());
+                htmlResult.append("\" alt=\"Image\">");
+            } else {
+                if (bArrdata.isNull()) {
+                    sqlResult.append("NULL");
+                } else if(!m->isBinary(index)) {
+                    QByteArray text = bArrdata.toByteArray();
 
+                    // Table cell data: text
+                    if (text.contains('\n') || text.contains('\t'))
+                        htmlResult.append("<pre>" + QString(text).toHtmlEscaped() + "</pre>");
+                    else
+                        htmlResult.append(QString(text).toHtmlEscaped());
+
+                    result.append(text);
+                    sqlResult.append(sqlb::escapeString(text));
+                } else
+                    // Table cell data: binary. Save as BLOB literal in SQL
+                    sqlResult.append( "X'" + bArrdata.toByteArray().toHex() + "'" );
+            }
         }
     }
+
     sqlResult.append(");");
 
     if ( inSQL )
@@ -1020,6 +1038,14 @@ std::unordered_set<size_t> ExtendedTableWidget::colsInSelection() const
     for(const QModelIndex & idx : selectedIndexes())
         colsInSelection.insert(static_cast<size_t>(idx.column()));
     return colsInSelection;
+}
+
+std::set<size_t> ExtendedTableWidget::rowsInSelection() const
+{
+    std::set<size_t> rowsInSelection;
+    for(const QModelIndex & idx : selectedIndexes())
+        rowsInSelection.insert(static_cast<size_t>(idx.row()));
+    return rowsInSelection;
 }
 
 void ExtendedTableWidget::cellClicked(const QModelIndex& index)

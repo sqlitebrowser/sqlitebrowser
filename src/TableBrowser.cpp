@@ -474,9 +474,9 @@ void TableBrowser::refresh()
             const QModelIndexList& sel = ui->dataTable->selectionModel()->selectedIndexes();
             QString statusMessage;
             if (sel.count() > 1) {
-                int rows = sel.last().row() - sel.first().row() + 1;
+                int rows = static_cast<int>(ui->dataTable->rowsInSelection().size());
                 statusMessage = tr("%n row(s)", "", rows);
-                int columns = sel.last().column() - sel.first().column() + 1;
+                int columns = static_cast<int>(ui->dataTable->colsInSelection().size());
                 statusMessage += tr(", %n column(s)", "", columns);
 
                 if (sel.count() < Settings::getValue("databrowser", "complete_threshold").toInt()) {
@@ -1075,8 +1075,6 @@ void TableBrowser::updateInsertDeleteRecordButton()
 {
     // Update the delete record button to reflect number of selected records
 
-    // NOTE: We're assuming here that the selection is always contiguous, i.e. that there are never two selected
-    // rows with a non-selected row in between.
     int rows = 0;
 
     // If there is no model yet (because e.g. no database file is opened) there is no selection model either. So we need to check for that here
@@ -1303,22 +1301,29 @@ void TableBrowser::deleteRecord()
         if(ui->dataTable->selectionModel()->selectedIndexes().isEmpty())
             return;
 
-        int old_row = ui->dataTable->currentIndex().row();
         while(ui->dataTable->selectionModel()->hasSelection())
         {
-            int first_selected_row = ui->dataTable->selectionModel()->selectedIndexes().first().row();
-            int last_selected_row = ui->dataTable->selectionModel()->selectedIndexes().last().row();
-            int selected_rows_count = last_selected_row - first_selected_row + 1;
-            if(!m_model->removeRows(first_selected_row, selected_rows_count))
+            std::set<size_t> row_set = ui->dataTable->rowsInSelection();
+            int first_selected_row = static_cast<int>(*row_set.begin());
+            int rows_to_remove = 0;
+            int previous_row = first_selected_row - 1;
+
+            // Non-contiguous selection: remove only the contiguous
+            // rows in the selection in each cycle until the entire
+            // selection has been removed.
+            for(size_t row : row_set) {
+                if(previous_row == static_cast<int>(row - 1))
+                    rows_to_remove++;
+                else
+                    break;
+            }
+
+            if(!m_model->removeRows(first_selected_row, rows_to_remove))
             {
                 QMessageBox::warning(this, QApplication::applicationName(), tr("Error deleting record:\n%1").arg(db->lastError()));
                 break;
             }
         }
-
-        if(old_row > m_model->rowCount())
-            old_row = m_model->rowCount();
-        selectTableLine(old_row);
     } else {
         QMessageBox::information( this, QApplication::applicationName(), tr("Please select a record first"));
     }

@@ -192,7 +192,7 @@
       <enum>Qt::CopyAction</enum>
      </property>
      <property name="selectionMode">
-      <enum>QAbstractItemView::ContiguousSelection</enum>
+      <enum>QAbstractItemView::ExtendedSelection</enum>
      </property>
     </widget>
    </item>
