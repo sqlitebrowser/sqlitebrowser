@@ -10,6 +10,8 @@ string(TIMESTAMP BUILD_VERSION "%Y%m%d")
 option(BUILD_STABLE_VERSION "Don't build the stable version by default" OFF)
 if(NOT BUILD_STABLE_VERSION)
     add_definitions(-DBUILD_VERSION=${BUILD_VERSION})
+else()
+	add_definitions(-DSQLITE_ENABLE_FTS5=1)
 endif()
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" "${CMAKE_MODULE_PATH}")
