@@ -12,7 +12,8 @@ class Settings
 public:
     enum AppStyle {
         FollowDesktopStyle,
-        DarkStyle
+        DarkStyle,
+        LightStyle
     };
 
     static void setUserSettingsFile(const QString& userSettingsFileArg);

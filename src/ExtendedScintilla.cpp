@@ -145,6 +145,10 @@ void ExtendedScintilla::reloadCommonSettings()
         setMarginsBackgroundColor(QColor(0x32, 0x41, 0x4B));
         setMarginsForegroundColor(QColor(0xEF, 0xF0, 0xF1));
         break;
+    case Settings::LightStyle :
+        setMarginsBackgroundColor(QColor("#C9CDD0"));
+        setMarginsForegroundColor(QColor("#000000"));
+        break;
     }
     setPaper(Settings::getValue("syntaxhighlighter", "background_colour").toString());
     setColor(Settings::getValue("syntaxhighlighter", "foreground_colour").toString());

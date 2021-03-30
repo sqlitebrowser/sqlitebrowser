@@ -152,7 +152,8 @@ RESOURCES += icons/icons.qrc \
              translations/flags/flags.qrc \
              translations/translations.qrc \
              certs/CaCerts.qrc \
-             qdarkstyle/style.qrc
+             qdarkstyle/dark/darkstyle.qrc \
+             qdarkstyle/light/lightstyle.qrc
 
 FORMS += \
     ImageViewer.ui \

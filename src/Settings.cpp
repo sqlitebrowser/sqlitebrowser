@@ -494,6 +494,16 @@ QColor Settings::getDefaultColorValue(const std::string& group, const std::strin
             if(name == "bin_bg_colour")
                 return QColor(0x19, 0x23, 0x2D);
             break;
+        case LightStyle :
+            if(name == "null_fg_colour" || name == "bin_fg_colour")
+                return QColor("#A5A9AC");
+            if(name == "null_bg_colour" || name == "bin_bg_colour")
+                return QColor("#FAFAFA");
+            if(name == "reg_fg_colour")
+                return QColor("#000000");
+            if(name == "reg_bg_colour")
+                return QColor("#FAFAFA");
+            break;
         }
     }
 
@@ -514,6 +524,10 @@ QColor Settings::getDefaultColorValue(const std::string& group, const std::strin
             case DarkStyle :
                 foregroundColour = QColor(0xF0, 0xF0, 0xF0);
                 backgroundColour = QColor(0x19, 0x23, 0x2D);
+                break;
+            case LightStyle :
+                foregroundColour = QColor("#000000");
+                backgroundColour = QColor("#FAFAFA");
                 break;
             }
             if(name == "foreground_colour")
@@ -536,7 +550,7 @@ QColor Settings::getDefaultColorValue(const std::string& group, const std::strin
                 else if(name == "comment_colour")
                     return QColor(Qt::green);
                 else if(name == "identifier_colour")
-                    return QColor(Qt::magenta);
+                    return QColor(221, 160, 221);
                 else if(name == "string_colour")
                     return QColor(Qt::lightGray);
                 else if(name == "currentline_colour")

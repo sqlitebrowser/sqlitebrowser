@@ -274,7 +274,8 @@ set(SQLB_RESOURCES
 	src/translations/flags/flags.qrc
 	src/translations/translations.qrc
 	src/certs/CaCerts.qrc
-	src/qdarkstyle/style.qrc
+	src/qdarkstyle/dark/darkstyle.qrc
+	src/qdarkstyle/light/lightstyle.qrc
 )
 
 set(SQLB_MISC

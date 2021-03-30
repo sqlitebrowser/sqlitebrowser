@@ -2287,13 +2287,16 @@ void MainWindow::reloadSettings()
         updateRecentFileActions();
     }
 
-    switch (static_cast<Settings::AppStyle>(Settings::getValue("General", "appStyle").toInt())) {
+    Settings::AppStyle style = static_cast<Settings::AppStyle>(Settings::getValue("General", "appStyle").toInt());
+
+    switch (style) {
     case Settings::FollowDesktopStyle :
         qApp->setStyleSheet("");
 
         break;
     case Settings::DarkStyle :
-        QFile f(":qdarkstyle/style.qss");
+    case Settings::LightStyle :
+        QFile f(style == Settings::DarkStyle ? ":qdarkstyle/dark/style.qss" : ":qdarkstyle/light/style.qss");
         if (!f.exists()) {
             QMessageBox::warning(this, qApp->applicationName(),
                                tr("Could not find resource file: %1").arg(f.fileName()));
