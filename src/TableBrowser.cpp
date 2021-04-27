@@ -515,6 +515,7 @@ void TableBrowser::refresh()
    applyModelSettings(storedData, buildQuery(storedData, tablename));
    applyViewportSettings(storedData, tablename);
    updateRecordsetLabel();
+   emit updatePlot(ui->dataTable, m_model, &m_settings[tablename], true);
 }
 
 void TableBrowser::clearFilters()
