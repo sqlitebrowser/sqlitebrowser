@@ -2,7 +2,7 @@
 #define GEN_VERSION_H
 #define MAJOR_VERSION 3
 #define MINOR_VERSION 12
-#define PATCH_VERSION 1
+#define PATCH_VERSION 2
 
 #define str(s) #s
 #define xstr(s) str(s)
