@@ -40,6 +40,7 @@ The info below often helps, please fill it out if you're able to. :)
 
 #### What is your DB4S version?
 
+- [ ] 3.12.2
 - [ ] 3.12.1
 - [ ] 3.12.0
 - [ ] 3.11.x
