@@ -2,7 +2,7 @@
 #define FOREIGNKEYDELEGATE_H
 
 #include <QStyledItemDelegate>
-#include <unordered_map>
+#include <map>
 #include <vector>
 #include <string>
 
@@ -28,7 +28,7 @@ public:
 private:
     const DBBrowserDB& m_db;
     sqlb::Table& m_table;
-    mutable std::unordered_map<std::string, std::vector<std::string>> m_tablesIds;
+    mutable std::map<std::string, std::vector<std::string>> m_tablesIds;
 };
 
 #endif // FOREIGNKEYDELEGATE_H
