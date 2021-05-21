@@ -84,7 +84,11 @@ ForeignKeyEditorDelegate::ForeignKeyEditorDelegate(const DBBrowserDB& db, sqlb::
     for(const auto& it : m_db.schemata)
     {
         for(const auto& jt : it.second.tables)
-            m_tablesIds.insert({jt.first, jt.second->fieldNames()});
+        {
+            // Don't insert the current table into the list. The name and fields of the current table are always taken from the m_table reference
+            if(jt.first != m_table.name())
+                m_tablesIds.insert({jt.first, jt.second->fieldNames()});
+        }
     }
 }
 
@@ -120,6 +124,8 @@ QWidget* ForeignKeyEditorDelegate::createEditor(QWidget* parent, const QStyleOpt
     });
 
     editor->tablesComboBox->clear();
+    editor->tablesComboBox->addItem(QString::fromStdString(m_table.name()));    // For recursive foreign keys
+    editor->tablesComboBox->insertSeparator(1);
     for(const auto& i : m_tablesIds)
         editor->tablesComboBox->addItem(QString::fromStdString(i.first));
 
