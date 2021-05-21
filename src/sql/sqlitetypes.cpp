@@ -505,7 +505,7 @@ void Table::removeConstraints(const StringVector& vStrFields, Constraint::Constr
     for(auto it = m_constraints.begin();it!=m_constraints.end();)
     {
         if((*it)->columnList() == vStrFields && (*it)->type() == type)
-            m_constraints.erase(it++);
+            it = m_constraints.erase(it);
         else
             ++it;
     }
