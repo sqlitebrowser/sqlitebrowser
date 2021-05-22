@@ -220,7 +220,7 @@ void RowLoader::process (Task & t)
                 queryTemp.contains(QRegExp("\\s(UNION)|(INTERSECT)|(EXCEPT)\\s", Qt::CaseInsensitive)))
             sLimitQuery = queryTemp;
         else
-            sLimitQuery = queryTemp + QString(" LIMIT %1, %2;").arg(t.row_begin).arg(t.row_end-t.row_begin);
+            sLimitQuery = queryTemp + QString(" LIMIT %1 OFFSET %2;").arg(t.row_end-t.row_begin).arg(t.row_begin);
     }
     statement_logger(sLimitQuery);
 
