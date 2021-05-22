@@ -566,7 +566,7 @@ bool MainWindow::fileOpen(const QString& fileName, bool openFromProject, bool re
                 else if(ui->mainTab->currentWidget() == ui->pragmas)
                     loadPragmas();
 
-                refreshTableBrowsers(true);
+                refreshTableBrowsers();
 
                 // Update remote dock
                 remoteDock->fileOpened(wFile);
@@ -672,14 +672,14 @@ void MainWindow::populateStructure(const std::vector<sqlb::ObjectIdentifier>& ol
     ui->treeSchemaDock->resizeColumnToContents(DbStructureModel::ColumnName);
 }
 
-void MainWindow::refreshTableBrowsers(bool force_refresh)
+void MainWindow::refreshTableBrowsers()
 {
     QApplication::setOverrideCursor(Qt::WaitCursor);
     for(const auto& d : allTableBrowserDocks())
     {
         // When in the Browse Data tab update all docks. Otherwise just update the floating ones because they might
         // be visible even when another tab is active.
-        if(force_refresh || ui->mainTab->currentWidget() == ui->browser || d->isFloating())
+        if(ui->mainTab->currentWidget() == ui->browser || d->isFloating())
         {
             TableBrowser* t = d->tableBrowser();
             if(t)
