@@ -951,7 +951,10 @@ void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
             } else {
                 // When pressing Delete only set the value to empty string
                 for(const QModelIndex& index : selectedIndexes())
-                    model()->setData(index, "");
+                {
+                    if(!model()->setData(index, ""))
+                        return;
+                }
             }
         }
     } else if(event->modifiers().testFlag(Qt::ControlModifier) && (event->key() == Qt::Key_PageUp || event->key() == Qt::Key_PageDown)) {
