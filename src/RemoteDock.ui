@@ -196,7 +196,7 @@
                 <x>0</x>
                 <y>0</y>
                 <width>520</width>
-                <height>321</height>
+                <height>315</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -482,9 +482,6 @@
    </property>
    <property name="toolTip">
     <string>Reload all data and update the views</string>
-   </property>
-   <property name="shortcut">
-    <string>F5</string>
    </property>
   </action>
   <action name="actionCloneDatabaseDoubleClick">
