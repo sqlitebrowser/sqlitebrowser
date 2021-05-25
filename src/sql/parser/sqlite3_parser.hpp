@@ -507,6 +507,7 @@ namespace  sqlb { namespace parser  {
       // "REGEXP"
       // "REPLACE"
       // "RESTRICT"
+      // "RETURNING"
       // "ROLLBACK"
       // "ROWID"
       // "ROWS"
@@ -709,31 +710,32 @@ namespace  sqlb { namespace parser  {
     TOK_REGEXP = 344,              // "REGEXP"
     TOK_REPLACE = 345,             // "REPLACE"
     TOK_RESTRICT = 346,            // "RESTRICT"
-    TOK_ROLLBACK = 347,            // "ROLLBACK"
-    TOK_ROWID = 348,               // "ROWID"
-    TOK_ROWS = 349,                // "ROWS"
-    TOK_SELECT = 350,              // "SELECT"
-    TOK_SET = 351,                 // "SET"
-    TOK_STORED = 352,              // "STORED"
-    TOK_TABLE = 353,               // "TABLE"
-    TOK_TEMP = 354,                // "TEMP"
-    TOK_TEMPORARY = 355,           // "TEMPORARY"
-    TOK_THEN = 356,                // "THEN"
-    TOK_TRUE = 357,                // "TRUE"
-    TOK_UNBOUNDED = 358,           // "UNBOUNDED"
-    TOK_UNIQUE = 359,              // "UNIQUE"
-    TOK_UPDATE = 360,              // "UPDATE"
-    TOK_USING = 361,               // "USING"
-    TOK_VIRTUAL = 362,             // "VIRTUAL"
-    TOK_WHEN = 363,                // "WHEN"
-    TOK_WHERE = 364,               // "WHERE"
-    TOK_WITHOUT = 365,             // "WITHOUT"
-    TOK_IDENTIFIER = 366,          // "identifier"
-    TOK_NUMERIC = 367,             // "numeric"
-    TOK_STRINGLITERAL = 368,       // "string literal"
-    TOK_QUOTEDLITERAL = 369,       // "quoted literal"
-    TOK_BLOBLITERAL = 370,         // "blob literal"
-    TOK_BINDPARAMETER = 371        // "bind parameter"
+    TOK_RETURNING = 347,           // "RETURNING"
+    TOK_ROLLBACK = 348,            // "ROLLBACK"
+    TOK_ROWID = 349,               // "ROWID"
+    TOK_ROWS = 350,                // "ROWS"
+    TOK_SELECT = 351,              // "SELECT"
+    TOK_SET = 352,                 // "SET"
+    TOK_STORED = 353,              // "STORED"
+    TOK_TABLE = 354,               // "TABLE"
+    TOK_TEMP = 355,                // "TEMP"
+    TOK_TEMPORARY = 356,           // "TEMPORARY"
+    TOK_THEN = 357,                // "THEN"
+    TOK_TRUE = 358,                // "TRUE"
+    TOK_UNBOUNDED = 359,           // "UNBOUNDED"
+    TOK_UNIQUE = 360,              // "UNIQUE"
+    TOK_UPDATE = 361,              // "UPDATE"
+    TOK_USING = 362,               // "USING"
+    TOK_VIRTUAL = 363,             // "VIRTUAL"
+    TOK_WHEN = 364,                // "WHEN"
+    TOK_WHERE = 365,               // "WHERE"
+    TOK_WITHOUT = 366,             // "WITHOUT"
+    TOK_IDENTIFIER = 367,          // "identifier"
+    TOK_NUMERIC = 368,             // "numeric"
+    TOK_STRINGLITERAL = 369,       // "string literal"
+    TOK_QUOTEDLITERAL = 370,       // "quoted literal"
+    TOK_BLOBLITERAL = 371,         // "blob literal"
+    TOK_BINDPARAMETER = 372        // "bind parameter"
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -750,7 +752,7 @@ namespace  sqlb { namespace parser  {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 117, ///< Number of tokens.
+        YYNTOKENS = 118, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // "end of file"
         S_YYerror = 1,                           // error
@@ -844,86 +846,87 @@ namespace  sqlb { namespace parser  {
         S_REGEXP = 89,                           // "REGEXP"
         S_REPLACE = 90,                          // "REPLACE"
         S_RESTRICT = 91,                         // "RESTRICT"
-        S_ROLLBACK = 92,                         // "ROLLBACK"
-        S_ROWID = 93,                            // "ROWID"
-        S_ROWS = 94,                             // "ROWS"
-        S_SELECT = 95,                           // "SELECT"
-        S_SET = 96,                              // "SET"
-        S_STORED = 97,                           // "STORED"
-        S_TABLE = 98,                            // "TABLE"
-        S_TEMP = 99,                             // "TEMP"
-        S_TEMPORARY = 100,                       // "TEMPORARY"
-        S_THEN = 101,                            // "THEN"
-        S_TRUE = 102,                            // "TRUE"
-        S_UNBOUNDED = 103,                       // "UNBOUNDED"
-        S_UNIQUE = 104,                          // "UNIQUE"
-        S_UPDATE = 105,                          // "UPDATE"
-        S_USING = 106,                           // "USING"
-        S_VIRTUAL = 107,                         // "VIRTUAL"
-        S_WHEN = 108,                            // "WHEN"
-        S_WHERE = 109,                           // "WHERE"
-        S_WITHOUT = 110,                         // "WITHOUT"
-        S_IDENTIFIER = 111,                      // "identifier"
-        S_NUMERIC = 112,                         // "numeric"
-        S_STRINGLITERAL = 113,                   // "string literal"
-        S_QUOTEDLITERAL = 114,                   // "quoted literal"
-        S_BLOBLITERAL = 115,                     // "blob literal"
-        S_BINDPARAMETER = 116,                   // "bind parameter"
-        S_YYACCEPT = 117,                        // $accept
-        S_sql = 118,                             // sql
-        S_statement = 119,                       // statement
-        S_literalvalue = 120,                    // literalvalue
-        S_id = 121,                              // id
-        S_allowed_keywords_as_identifier = 122,  // allowed_keywords_as_identifier
-        S_tableid = 123,                         // tableid
-        S_columnid = 124,                        // columnid
-        S_signednumber = 125,                    // signednumber
-        S_signednumber_or_numeric = 126,         // signednumber_or_numeric
-        S_typename_namelist = 127,               // typename_namelist
-        S_type_name = 128,                       // type_name
-        S_unary_expr = 129,                      // unary_expr
-        S_binary_expr = 130,                     // binary_expr
-        S_like_expr = 131,                       // like_expr
-        S_exprlist_expr = 132,                   // exprlist_expr
-        S_function_expr = 133,                   // function_expr
-        S_isnull_expr = 134,                     // isnull_expr
-        S_between_expr = 135,                    // between_expr
-        S_in_expr = 136,                         // in_expr
-        S_whenthenlist_expr = 137,               // whenthenlist_expr
-        S_case_expr = 138,                       // case_expr
-        S_raise_expr = 139,                      // raise_expr
-        S_expr = 140,                            // expr
-        S_select_stmt = 141,                     // select_stmt
-        S_optional_if_not_exists = 142,          // optional_if_not_exists
-        S_optional_sort_order = 143,             // optional_sort_order
-        S_optional_unique = 144,                 // optional_unique
-        S_optional_where = 145,                  // optional_where
-        S_tableid_with_uninteresting_schema = 146, // tableid_with_uninteresting_schema
-        S_indexed_column = 147,                  // indexed_column
-        S_indexed_column_list = 148,             // indexed_column_list
-        S_createindex_stmt = 149,                // createindex_stmt
-        S_optional_exprlist_with_paren = 150,    // optional_exprlist_with_paren
-        S_createvirtualtable_stmt = 151,         // createvirtualtable_stmt
-        S_optional_temporary = 152,              // optional_temporary
-        S_optional_withoutrowid = 153,           // optional_withoutrowid
-        S_optional_conflictclause = 154,         // optional_conflictclause
-        S_optional_typename = 155,               // optional_typename
-        S_optional_storage_identifier = 156,     // optional_storage_identifier
-        S_optional_always_generated = 157,       // optional_always_generated
-        S_columnconstraint = 158,                // columnconstraint
-        S_columnconstraint_list = 159,           // columnconstraint_list
-        S_columndef = 160,                       // columndef
-        S_columndef_list = 161,                  // columndef_list
-        S_optional_constraintname = 162,         // optional_constraintname
-        S_columnid_list = 163,                   // columnid_list
-        S_optional_columnid_with_paren_list = 164, // optional_columnid_with_paren_list
-        S_fk_clause_part = 165,                  // fk_clause_part
-        S_fk_clause_part_list = 166,             // fk_clause_part_list
-        S_optional_fk_clause = 167,              // optional_fk_clause
-        S_tableconstraint = 168,                 // tableconstraint
-        S_tableconstraint_list = 169,            // tableconstraint_list
-        S_optional_tableconstraint_list = 170,   // optional_tableconstraint_list
-        S_createtable_stmt = 171                 // createtable_stmt
+        S_RETURNING = 92,                        // "RETURNING"
+        S_ROLLBACK = 93,                         // "ROLLBACK"
+        S_ROWID = 94,                            // "ROWID"
+        S_ROWS = 95,                             // "ROWS"
+        S_SELECT = 96,                           // "SELECT"
+        S_SET = 97,                              // "SET"
+        S_STORED = 98,                           // "STORED"
+        S_TABLE = 99,                            // "TABLE"
+        S_TEMP = 100,                            // "TEMP"
+        S_TEMPORARY = 101,                       // "TEMPORARY"
+        S_THEN = 102,                            // "THEN"
+        S_TRUE = 103,                            // "TRUE"
+        S_UNBOUNDED = 104,                       // "UNBOUNDED"
+        S_UNIQUE = 105,                          // "UNIQUE"
+        S_UPDATE = 106,                          // "UPDATE"
+        S_USING = 107,                           // "USING"
+        S_VIRTUAL = 108,                         // "VIRTUAL"
+        S_WHEN = 109,                            // "WHEN"
+        S_WHERE = 110,                           // "WHERE"
+        S_WITHOUT = 111,                         // "WITHOUT"
+        S_IDENTIFIER = 112,                      // "identifier"
+        S_NUMERIC = 113,                         // "numeric"
+        S_STRINGLITERAL = 114,                   // "string literal"
+        S_QUOTEDLITERAL = 115,                   // "quoted literal"
+        S_BLOBLITERAL = 116,                     // "blob literal"
+        S_BINDPARAMETER = 117,                   // "bind parameter"
+        S_YYACCEPT = 118,                        // $accept
+        S_sql = 119,                             // sql
+        S_statement = 120,                       // statement
+        S_literalvalue = 121,                    // literalvalue
+        S_id = 122,                              // id
+        S_allowed_keywords_as_identifier = 123,  // allowed_keywords_as_identifier
+        S_tableid = 124,                         // tableid
+        S_columnid = 125,                        // columnid
+        S_signednumber = 126,                    // signednumber
+        S_signednumber_or_numeric = 127,         // signednumber_or_numeric
+        S_typename_namelist = 128,               // typename_namelist
+        S_type_name = 129,                       // type_name
+        S_unary_expr = 130,                      // unary_expr
+        S_binary_expr = 131,                     // binary_expr
+        S_like_expr = 132,                       // like_expr
+        S_exprlist_expr = 133,                   // exprlist_expr
+        S_function_expr = 134,                   // function_expr
+        S_isnull_expr = 135,                     // isnull_expr
+        S_between_expr = 136,                    // between_expr
+        S_in_expr = 137,                         // in_expr
+        S_whenthenlist_expr = 138,               // whenthenlist_expr
+        S_case_expr = 139,                       // case_expr
+        S_raise_expr = 140,                      // raise_expr
+        S_expr = 141,                            // expr
+        S_select_stmt = 142,                     // select_stmt
+        S_optional_if_not_exists = 143,          // optional_if_not_exists
+        S_optional_sort_order = 144,             // optional_sort_order
+        S_optional_unique = 145,                 // optional_unique
+        S_optional_where = 146,                  // optional_where
+        S_tableid_with_uninteresting_schema = 147, // tableid_with_uninteresting_schema
+        S_indexed_column = 148,                  // indexed_column
+        S_indexed_column_list = 149,             // indexed_column_list
+        S_createindex_stmt = 150,                // createindex_stmt
+        S_optional_exprlist_with_paren = 151,    // optional_exprlist_with_paren
+        S_createvirtualtable_stmt = 152,         // createvirtualtable_stmt
+        S_optional_temporary = 153,              // optional_temporary
+        S_optional_withoutrowid = 154,           // optional_withoutrowid
+        S_optional_conflictclause = 155,         // optional_conflictclause
+        S_optional_typename = 156,               // optional_typename
+        S_optional_storage_identifier = 157,     // optional_storage_identifier
+        S_optional_always_generated = 158,       // optional_always_generated
+        S_columnconstraint = 159,                // columnconstraint
+        S_columnconstraint_list = 160,           // columnconstraint_list
+        S_columndef = 161,                       // columndef
+        S_columndef_list = 162,                  // columndef_list
+        S_optional_constraintname = 163,         // optional_constraintname
+        S_columnid_list = 164,                   // columnid_list
+        S_optional_columnid_with_paren_list = 165, // optional_columnid_with_paren_list
+        S_fk_clause_part = 166,                  // fk_clause_part
+        S_fk_clause_part_list = 167,             // fk_clause_part_list
+        S_optional_fk_clause = 168,              // optional_fk_clause
+        S_tableconstraint = 169,                 // tableconstraint
+        S_tableconstraint_list = 170,            // tableconstraint_list
+        S_optional_tableconstraint_list = 171,   // optional_tableconstraint_list
+        S_createtable_stmt = 172                 // createtable_stmt
       };
     };
 
@@ -1070,6 +1073,7 @@ namespace  sqlb { namespace parser  {
       case symbol_kind::S_REGEXP: // "REGEXP"
       case symbol_kind::S_REPLACE: // "REPLACE"
       case symbol_kind::S_RESTRICT: // "RESTRICT"
+      case symbol_kind::S_RETURNING: // "RETURNING"
       case symbol_kind::S_ROLLBACK: // "ROLLBACK"
       case symbol_kind::S_ROWID: // "ROWID"
       case symbol_kind::S_ROWS: // "ROWS"
@@ -1444,6 +1448,7 @@ switch (yykind)
       case symbol_kind::S_REGEXP: // "REGEXP"
       case symbol_kind::S_REPLACE: // "REPLACE"
       case symbol_kind::S_RESTRICT: // "RESTRICT"
+      case symbol_kind::S_RETURNING: // "RETURNING"
       case symbol_kind::S_ROLLBACK: // "ROLLBACK"
       case symbol_kind::S_ROWID: // "ROWID"
       case symbol_kind::S_ROWS: // "ROWS"
@@ -3047,6 +3052,21 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
+      make_RETURNING (std::string v, location_type l)
+      {
+        return symbol_type (token::TOK_RETURNING, std::move (v), std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_RETURNING (const std::string& v, const location_type& l)
+      {
+        return symbol_type (token::TOK_RETURNING, v, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
       make_ROLLBACK (std::string v, location_type l)
       {
         return symbol_type (token::TOK_ROLLBACK, std::move (v), std::move (l));
@@ -3749,7 +3769,7 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 3320,     ///< Last index in yytable_.
+      yylast_ = 3424,     ///< Last index in yytable_.
       yynnts_ = 55,  ///< Number of nonterminal symbols.
       yyfinal_ = 13 ///< Termination state number.
     };
@@ -3808,10 +3828,10 @@ switch (yykind)
       85,    86,    87,    88,    89,    90,    91,    92,    93,    94,
       95,    96,    97,    98,    99,   100,   101,   102,   103,   104,
      105,   106,   107,   108,   109,   110,   111,   112,   113,   114,
-     115,   116
+     115,   116,   117
     };
     // Last valid token kind.
-    const int code_max = 371;
+    const int code_max = 372;
 
     if (t <= 0)
       return symbol_kind::S_YYEOF;
@@ -3940,6 +3960,7 @@ switch (yykind)
       case symbol_kind::S_REGEXP: // "REGEXP"
       case symbol_kind::S_REPLACE: // "REPLACE"
       case symbol_kind::S_RESTRICT: // "RESTRICT"
+      case symbol_kind::S_RETURNING: // "RETURNING"
       case symbol_kind::S_ROLLBACK: // "ROLLBACK"
       case symbol_kind::S_ROWID: // "ROWID"
       case symbol_kind::S_ROWS: // "ROWS"
@@ -4144,6 +4165,7 @@ switch (yykind)
       case symbol_kind::S_REGEXP: // "REGEXP"
       case symbol_kind::S_REPLACE: // "REPLACE"
       case symbol_kind::S_RESTRICT: // "RESTRICT"
+      case symbol_kind::S_RETURNING: // "RETURNING"
       case symbol_kind::S_ROLLBACK: // "ROLLBACK"
       case symbol_kind::S_ROWID: // "ROWID"
       case symbol_kind::S_ROWS: // "ROWS"
@@ -4272,7 +4294,7 @@ switch (yykind)
 
 #line 10 "sqlite3_parser.yy"
 } } //  sqlb::parser 
-#line 4276 "sqlite3_parser.hpp"
+#line 4298 "sqlite3_parser.hpp"
 
 
 

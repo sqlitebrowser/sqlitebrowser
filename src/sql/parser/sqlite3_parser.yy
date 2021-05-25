@@ -154,6 +154,7 @@
 %token <std::string> REGEXP "REGEXP"
 %token <std::string> REPLACE "REPLACE"
 %token <std::string> RESTRICT "RESTRICT"
+%token <std::string> RETURNING "RETURNING"
 %token <std::string> ROLLBACK "ROLLBACK"
 %token <std::string> ROWID "ROWID"
 %token <std::string> ROWS "ROWS"
@@ -322,6 +323,7 @@ allowed_keywords_as_identifier:
 	| REGEXP
 	| REPLACE
 	| RESTRICT
+	| RETURNING
 	| ROLLBACK
 	| ROWID
 	| ROWS

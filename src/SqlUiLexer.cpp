@@ -56,7 +56,7 @@ void SqlUiLexer::setupAutoCompletion()
             << "OF" << "OFFSET" << "ON" << "OR" << "ORDER"
             << "OUTER" << "OVER" << "PARTITION" << "PLAN" << "PRAGMA" << "PRECEDING" << "PRIMARY" << "QUERY"
             << "RAISE" << "RANGE" << "RECURSIVE" << "REFERENCES" << "REGEXP" << "REINDEX" << "RELEASE"
-            << "RENAME" << "REPLACE" << "RESTRICT" << "RIGHT" << "ROLLBACK"
+            << "RENAME" << "REPLACE" << "RESTRICT" << "RETURNING" << "RIGHT" << "ROLLBACK"
             << "ROWID" << "ROW" << "ROWS" << "SAVEPOINT" << "SELECT" << "SET" << "STORED" << "TABLE"
             << "TEMP" << "TEMPORARY" << "THEN" << "TO" << "TRANSACTION"
             << "TRIGGER" << "UNBOUNDED" << "UNION" << "UNIQUE" << "UPDATE" << "USING"
