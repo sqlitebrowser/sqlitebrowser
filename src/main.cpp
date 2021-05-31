@@ -30,22 +30,22 @@ void boxMessageOutput(QtMsgType, const QMessageLogContext &, const QString &msg)
 
 class DB4SProxyStyle final : public QProxyStyle {
 public:
-  DB4SProxyStyle(int toolBarIconSize)
-      : QProxyStyle(nullptr), toolBarIconSize_(toolBarIconSize) {}
+    DB4SProxyStyle(int toolBarIconSize)
+        : QProxyStyle(nullptr), toolBarIconSize_(toolBarIconSize) {}
 
-  int pixelMetric(QStyle::PixelMetric metric,
-                  const QStyleOption *option = nullptr,
-                  const QWidget *widget = nullptr) const override {
+    int pixelMetric(QStyle::PixelMetric metric,
+                    const QStyleOption *option = nullptr,
+                    const QWidget *widget = nullptr) const override {
 
-    if (metric == QStyle::PM_ToolBarIconSize) {
-      return toolBarIconSize_;
+        if (metric == QStyle::PM_ToolBarIconSize) {
+            return toolBarIconSize_;
+        }
+
+        return QProxyStyle::pixelMetric(metric, option, widget);
     }
 
-    return QProxyStyle::pixelMetric(metric, option, widget);
-  }
-
 private:
-  int toolBarIconSize_;
+    int toolBarIconSize_;
 };
 
 int main( int argc, char ** argv )
