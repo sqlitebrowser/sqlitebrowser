@@ -5765,7 +5765,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>Last modified</source>
-        <translation type="unfinished">Ultima modifca</translation>
+        <translation type="unfinished">Ultima modifica</translation>
     </message>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
@@ -5798,7 +5798,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../RemoteModel.cpp" line="109"/>
         <source>Last modified</source>
-        <translation>Ultima modifca</translation>
+        <translation>Ultima modifica</translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="109"/>
