@@ -173,7 +173,7 @@
              </property>
              <property name="icon">
               <iconset resource="icons/icons.qrc">
-               <normaloff>:/icons/cog_go.png</normaloff>:/icons/cog_go.png</iconset>
+               <normaloff>:/icons/cog_go</normaloff>:/icons/cog_go</iconset>
              </property>
             </widget>
            </item>

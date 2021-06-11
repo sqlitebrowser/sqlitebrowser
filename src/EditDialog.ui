@@ -112,7 +112,7 @@
        <property name="icon">
         <iconset resource="icons/icons.qrc">
          <normaloff>:/icons/keyword</normaloff>
-         <normalon>:/icons/cog_go.png</normalon>:/icons/keyword</iconset>
+         <normalon>:/icons/cog_go</normalon>:/icons/keyword</iconset>
        </property>
        <property name="checkable">
         <bool>true</bool>

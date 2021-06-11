@@ -188,7 +188,7 @@
       </property>
       <property name="icon">
        <iconset resource="icons/icons.qrc">
-        <normaloff>:/icons/text_bold.png</normaloff>:/icons/text_bold.png</iconset>
+        <normaloff>:/icons/text_bold</normaloff>:/icons/text_bold</iconset>
       </property>
      </column>
      <column>
@@ -200,7 +200,7 @@
       </property>
       <property name="icon">
        <iconset resource="icons/icons.qrc">
-        <normaloff>:/icons/text_italic.png</normaloff>:/icons/text_italic.png</iconset>
+        <normaloff>:/icons/text_italic</normaloff>:/icons/text_italic</iconset>
       </property>
      </column>
      <column>
@@ -212,7 +212,7 @@
       </property>
       <property name="icon">
        <iconset resource="icons/icons.qrc">
-        <normaloff>:/icons/text_underline.png</normaloff>:/icons/text_underline.png</iconset>
+        <normaloff>:/icons/text_underline</normaloff>:/icons/text_underline</iconset>
       </property>
      </column>
      <column>
