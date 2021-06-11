@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+	width="16" height="16" version="1.1">
+	<title>Funnel Delete</title>
+	<desc>Funnel Delete</desc>
+	<g id="icon" transform="translate(8,8)">
+		<defs>
+			<linearGradient id="backing" x1="0%" y1="0%" x2="100%" y2="100%">
+				<stop offset="0%" stop-color="#c3c3c3" />
+				<stop offset="100%" stop-color="#9a9a9a" />
+			</linearGradient>
+			<linearGradient id="center" x1="0%" y1="0%" x2="100%" y2="100%">
+				<stop offset="0%" stop-color="#f3f3f3" />
+				<stop offset="100%" stop-color="#c3c3c3" />
+			</linearGradient>
+			<linearGradient id="inner" x1="0%" y1="0%" x2="100%" y2="100%">
+				<stop offset="0%" stop-color="#ffffff" />
+				<stop offset="100%" stop-color="#f1f1f1" />
+			</linearGradient>
+			<linearGradient id="top" x1="0%" y1="0%" x2="100%" y2="100%">
+				<stop offset="0%" stop-color="#dadada" />
+				<stop offset="50%" stop-color="#c1c1c1" />
+				<stop offset="100%" stop-color="#cfcfcf" />
+			</linearGradient>
+		</defs>
+		<path fill="url(#backing)" d="M-2,1 l-5,-5 c0,-4 14,-4 14,0 l-5,5 v7 l-4,-4 v-2"/>
+		<path fill="url(#inner)" d="M-1,1 l-5,-5 c0,-3 12,-3 12,0 l-5,5 v4.8 l-2,-2" />
+		<path fill="url(#center)" d="M0,1 l-5,-5 c0,-2 10,-2 10,0 l-5,5 " />
+		<path fill="url(#top)" d="M-5,-4 c0,-2 10,-2 10,0 c0,1 -10,1 -10,0" />
+	</g>
+	<g id="delete" transform="translate(12.5,12.5)">
+		<defs>
+			<linearGradient id="backing_delete" x1="0%" y1="0%" x2="100%"
+				y2="100%">
+				<stop offset="0%" stop-color="#c4581e" />
+				<stop offset="100%" stop-color="#b84503" />
+			</linearGradient>
+			<linearGradient id="center_delete" x1="0%" y1="0%" x2="100%"
+				y2="100%">
+				<stop offset="0%" stop-color="#fed6b8" />
+				<stop offset="100%" stop-color="#dd6401" />
+			</linearGradient>
+		</defs>
+		<circle id="back" r="3.5" fill="url(#backing_delete)" />
+		<circle id="center-dot" r="2.5" fill="url(#center_delete)" />
+		<path fill="#fff" d="M-1.5,-0.5 h3 v1 h-3 v-1 z " />
+	</g>
+</svg>

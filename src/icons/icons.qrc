@@ -10,13 +10,13 @@
         <file alias="up">bullet_arrow_up.svg</file>
         <file alias="cancel">cancel.svg</file>
         <file alias="function">chart_curve.svg</file>
-        <file alias="clear_filters">clear_filters.png</file>
-        <file alias="clear_sorting">clear_sorting.png</file>
+        <file alias="clear_filters">funnel_delete.svg</file>
+        <file alias="clear_sorting">clear_sorting.svg</file>
         <file alias="keyword">cog.svg</file>
         <file alias="cog_go">cog_go.svg</file>
         <file>color_swatch.svg</file>
         <file alias="close">cross.svg</file>
-        <file alias="cut">cut.png</file>
+        <file alias="cut">edit_cut.svg</file>
         <file>database.svg</file>
         <file alias="db_new">database_add.svg</file>
         <file alias="db_open">database_go.svg</file>
@@ -24,7 +24,7 @@
         <file alias="db_revert">database_refresh.svg</file>
         <file alias="db_save">database_save.svg</file>
         <file alias="save_all">database_save.svg</file>
-        <file alias="filter">filter.png</file>
+        <file alias="filter">funnel.svg</file>
         <file>folder.svg</file>
         <file alias="document_open">folder_page.svg</file>
         <file>folder_user.svg</file>
@@ -33,25 +33,25 @@
         <file alias="clear_cond_formats">font_delete.svg</file>
         <file alias="edit_cond_formats">font_edit.svg</file>
         <file alias="whatis">help.svg</file>
-        <file alias="hourglass">hourglass.png</file>
+        <file alias="hourglass">hourglass.svg</file>
         <file alias="encryption">key.svg</file>
         <file alias="toolbar">layout_sidebar.svg</file>
         <file alias="db_detach">link_break.svg</file>
         <file alias="monitor_link">monitor_link.svg</file>
         <file>package.svg</file>
         <file alias="project_open">package_go.svg</file>
-        <file alias="project_save_as">package_rename.png</file>
-        <file alias="project_save">package_save.png</file>
+        <file alias="project_save_as">package_rename.svg</file>
+        <file alias="project_save">package_save.svg</file>
         <file alias="field_add">page_add.svg</file>
         <file alias="copy">page_copy.svg</file>
-        <file alias="sql_copy">page_copy_sql.png</file>
+        <file alias="sql_copy">script_copy.svg</file>
         <file alias="field_delete">page_delete.svg</file>
         <file alias="field_edit">page_edit.svg</file>
         <file alias="find">page_find.svg</file>
         <file alias="field">page_green.svg</file>
         <file alias="field_key">page_key.svg</file>
         <file alias="browser_open">page_link.svg</file>
-        <file alias="background_color">color_hsl.svg</file>
+        <file alias="background_color">page_white_color.svg</file>
         <file alias="paste">page_paste.svg</file>
         <file alias="save_sql">page_save.svg</file>
         <file alias="special_copy">page_white_copy.svg</file>
@@ -100,7 +100,7 @@
         <file alias="text_indent">text_padding_left.svg</file>
         <file alias="comment_block">text_padding_top.svg</file>
         <file alias="foreground_color">color_wheel.svg</file>
-        <file alias="text_replace">text_replace.png</file>
+        <file alias="text_replace">find_edit.svg</file>
         <file alias="text_underline">text_underlined.svg</file>
         <file alias="set_to_null">textfield_delete.svg</file>
         <file alias="settings">wrench.svg</file>

@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="16"
+   height="16"
+   version="1.1"
+   id="svg23"
+   sodipodi:docname="clear_sorting.svg"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
+  <metadata
+     id="metadata29">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Arrow Up</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs27">
+    <linearGradient
+       y2="-5.2915026"
+       x2="-5.2915026"
+       y1="5.2915026"
+       x1="5.2915026"
+       id="arrow-backing-6"
+       gradientTransform="scale(0.75592895,1.3228757)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         id="stop896"
+         stop-color="#72c466"
+         offset="0%" />
+      <stop
+         id="stop898"
+         stop-color="#22601e"
+         offset="100%" />
+    </linearGradient>
+    <linearGradient
+       y2="-3.8729833"
+       x2="-3.8729833"
+       y1="3.8729833"
+       x1="3.8729833"
+       id="arrow-center-7"
+       gradientTransform="scale(0.64549722,1.5491933)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         id="stop901"
+         stop-color="#a7d69e"
+         offset="0%" />
+      <stop
+         id="stop903"
+         stop-color="#78bd72"
+         offset="100%" />
+    </linearGradient>
+    <linearGradient
+       y2="3.5"
+       x2="3.5"
+       y1="-3.5"
+       x1="-3.5"
+       id="backing_delete"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         id="stop1006"
+         stop-color="#c4581e"
+         offset="0%" />
+      <stop
+         id="stop1008"
+         stop-color="#b84503"
+         offset="100%" />
+    </linearGradient>
+    <linearGradient
+       y2="2.5"
+       x2="2.5"
+       y1="-2.5"
+       x1="-2.5"
+       id="center_delete"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         id="stop1011"
+         stop-color="#fed6b8"
+         offset="0%" />
+      <stop
+         id="stop1013"
+         stop-color="#dd6401"
+         offset="100%" />
+    </linearGradient>
+    <linearGradient
+       y2="7.0381582"
+       x2="7.3088566"
+       y1="-7.579555"
+       x1="-7.3088566"
+       id="backing"
+       gradientTransform="scale(1.0827936,0.92353707)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         id="stop1159"
+         stop-color="#cdcdcd"
+         offset="0%" />
+      <stop
+         id="stop1161"
+         stop-color="#6e6e6e"
+         offset="100%" />
+    </linearGradient>
+    <linearGradient
+       y2="3.5"
+       x2="3.5"
+       y1="-3.5"
+       x1="-3.5"
+       id="backing_delete-5"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         id="stop1175"
+         stop-color="#c4581e"
+         offset="0%" />
+      <stop
+         id="stop1177"
+         stop-color="#b84503"
+         offset="100%" />
+    </linearGradient>
+    <linearGradient
+       y2="2.5"
+       x2="2.5"
+       y1="-2.5"
+       x1="-2.5"
+       id="center_delete-6"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         id="stop1180"
+         stop-color="#fed6b8"
+         offset="0%" />
+      <stop
+         id="stop1182"
+         stop-color="#dd6401"
+         offset="100%" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1052"
+     id="namedview25"
+     showgrid="false"
+     inkscape:zoom="10.429825"
+     inkscape:cx="-25.401707"
+     inkscape:cy="4.0180205"
+     inkscape:window-x="1366"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg23" />
+  <title
+     id="title2">Arrow Up</title>
+  <desc
+     id="desc4">Arrow Up Top</desc>
+  <g
+     id="icon"
+     transform="matrix(0.76279069,0,0,0.76279069,3.9325189,6.3395348)">
+    <defs
+       id="defs16">
+      <linearGradient
+         id="arrow-backing"
+         x1="-5.2915025"
+         y1="-5.2915025"
+         x2="5.2915025"
+         y2="5.2915025"
+         gradientTransform="scale(0.75592895,1.3228757)"
+         gradientUnits="userSpaceOnUse">
+        <stop
+           offset="0%"
+           stop-color="#72c466"
+           id="stop6" />
+        <stop
+           offset="100%"
+           stop-color="#22601e"
+           id="stop8" />
+      </linearGradient>
+      <linearGradient
+         id="arrow-center"
+         x1="-3.8729832"
+         y1="-3.8729832"
+         x2="3.8729832"
+         y2="3.8729832"
+         gradientTransform="scale(0.64549722,1.5491933)"
+         gradientUnits="userSpaceOnUse">
+        <stop
+           offset="0%"
+           stop-color="#a7d69e"
+           id="stop11" />
+        <stop
+           offset="100%"
+           stop-color="#78bd72"
+           id="stop13" />
+      </linearGradient>
+    </defs>
+    <path
+       d="m -2,-3 h -2 l 4,-4 4,4 H 2 V 7 h -4 z"
+       id="path18"
+       style="fill:url(#arrow-backing)"
+       inkscape:connector-curvature="0" />
+    <path
+       d="M -1,-3.5 H -2.5 L 0,-6 2.5,-3.5 H 1 V 6 h -2 z"
+       id="path20"
+       style="fill:url(#arrow-center)"
+       inkscape:connector-curvature="0" />
+  </g>
+  <g
+     transform="matrix(0.76279069,0,0,0.76279069,8.9488372,6.3395348)"
+     id="icon-3">
+    <g
+       id="g912"
+       transform="scale(-1)">
+      <defs
+         id="defs906">
+        <linearGradient
+           y2="0"
+           x2="0"
+           y1="1"
+           x1="1"
+           id="linearGradient933">
+          <stop
+             id="stop929"
+             stop-color="#72c466"
+             offset="0%" />
+          <stop
+             id="stop931"
+             stop-color="#22601e"
+             offset="100%" />
+        </linearGradient>
+        <linearGradient
+           y2="0"
+           x2="0"
+           y1="1"
+           x1="1"
+           id="linearGradient939">
+          <stop
+             id="stop935"
+             stop-color="#a7d69e"
+             offset="0%" />
+          <stop
+             id="stop937"
+             stop-color="#78bd72"
+             offset="100%" />
+        </linearGradient>
+      </defs>
+      <path
+         style="fill:url(#arrow-backing-6)"
+         id="path908"
+         d="m -2,-3 h -2 l 4,-4 4,4 H 2 V 7 h -4 z"
+         inkscape:connector-curvature="0" />
+      <path
+         style="fill:url(#arrow-center-7)"
+         id="path910"
+         d="M -1,-3.5 H -2.5 L 0,-6 2.5,-3.5 H 1 V 6 h -2 z"
+         inkscape:connector-curvature="0" />
+    </g>
+  </g>
+  <g
+     transform="translate(12.508475,12.474576)"
+     id="delete">
+    <defs
+       id="defs1016">
+      <linearGradient
+         y2="1"
+         x2="1"
+         y1="0"
+         x1="0"
+         id="linearGradient1041">
+        <stop
+           id="stop1037"
+           stop-color="#c4581e"
+           offset="0%" />
+        <stop
+           id="stop1039"
+           stop-color="#b84503"
+           offset="100%" />
+      </linearGradient>
+      <linearGradient
+         y2="1"
+         x2="1"
+         y1="0"
+         x1="0"
+         id="linearGradient1047">
+        <stop
+           id="stop1043"
+           stop-color="#fed6b8"
+           offset="0%" />
+        <stop
+           id="stop1045"
+           stop-color="#dd6401"
+           offset="100%" />
+      </linearGradient>
+    </defs>
+    <circle
+       r="3.5"
+       id="back"
+       cx="0"
+       cy="0"
+       style="fill:url(#backing_delete)" />
+    <circle
+       r="2.5"
+       id="center-dot"
+       cx="0"
+       cy="0"
+       style="fill:url(#center_delete)" />
+    <path
+       id="path1020"
+       d="m -1.5,-0.5 h 3 v 1 h -3 z"
+       inkscape:connector-curvature="0"
+       style="fill:#ffffff" />
+  </g>
+</svg>

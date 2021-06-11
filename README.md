@@ -299,6 +299,8 @@ Version 2, as well as the GNU General Public License Version 3 or later.
 
 Modification or redistribution is permitted under the conditions of these licenses.
 
+Check `LICENSE-PLUGINS` for other rights regarding included third-party resources.
+
   [travis-img]: https://travis-ci.org/sqlitebrowser/sqlitebrowser.svg?branch=master
   [travis]: https://travis-ci.org/sqlitebrowser/sqlitebrowser
 

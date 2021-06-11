@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+	width="16" height="16" version="1.1">
+	<title>Find Edit</title>
+	<desc>Find Edit</desc>
+	<g id="icon" transform="translate(8,8)">
+		<defs>
+			<linearGradient id="backing" x1="0%" y1="0%" x2="100%" y2="100%">
+				<stop offset="0%" stop-color="#767a80" />
+				<stop offset="100%" stop-color="#000000" />
+			</linearGradient>
+			<linearGradient id="block" x1="0%" y1="0%" x2="100%" y2="0%">
+				<stop offset="0%" stop-color="#86929f" />
+				<stop offset="33%" stop-color="#bac3cc" />
+				<stop offset="100%" stop-color="#8b98a6" />
+			</linearGradient>
+			<linearGradient id="shade" x1="0%" y1="0%" x2="100%" y2="0%">
+				<stop offset="0%" stop-color="#000" stop-opacity="0" />
+				<stop offset="20%" stop-color="#000" stop-opacity="0.7" />
+				<stop offset="100%" stop-color="#000" />
+			</linearGradient>
+			<linearGradient id="shade2" x1="0%" y1="0%" x2="100%" y2="0%">
+				<stop offset="0%" stop-color="#000" />
+				<stop offset="80%" stop-color="#000" stop-opacity="0.7" />
+				<stop offset="100%" stop-color="#000" stop-opacity="0" />
+			</linearGradient>
+			<linearGradient id="swivel-shade" x1="0%" y1="0%" x2="0%" y2="100%">
+				<stop offset="0%" stop-color="#000" stop-opacity="0.4" />
+				<stop offset="100%" stop-color="#000" stop-opacity="0" />
+			</linearGradient>
+			<linearGradient id="swivel" x1="0%" y1="0%" x2="100%" y2="0%">
+				<stop offset="0%" stop-color="#7b91aa" />
+				<stop offset="33%" stop-color="#94a7ba" />
+				<stop offset="100%" stop-color="#7d8d9f" />
+			</linearGradient>
+			<linearGradient id="top-left" x1="0%" y1="0%" x2="100%" y2="100%">
+				<stop offset="0%" stop-color="#7d8a96" />
+				<stop offset="100%" stop-color="#484f56" />
+			</linearGradient>
+			<linearGradient id="top-right" x1="0%" y1="0%" x2="100%" y2="100%">
+				<stop offset="0%" stop-color="#93a0ae" />
+				<stop offset="100%" stop-color="#010101" />
+			</linearGradient>
+			<linearGradient id="top-center" x1="0%" y1="0%" x2="100%" y2="100%">
+				<stop offset="0%" stop-color="#aeb8c3" />
+				<stop offset="100%" stop-color="#5e6770" />
+			</linearGradient>
+		</defs>
+		<path fill="url(#backing)"
+			d="M0,0 h6 v5.5 a0.5,0.5 0 0,1 -.5,0.5 h-5 a0.5,0.5 0 0,1 -.5,-.5 v-5.5 m-1,0 h-6 v5.5 a0.5,0.5 0 0,0 0.5,0.5 h5 a0.5,0.5 0 0,0 0.5,-.5 l0-5.5 z" />
+		<rect width="1" height="1.5" x="-1" y="-1" fill="url(#backing)" />
+		<rect width="4" height="4" x="1" y="1" fill="url(#block)" />
+		<rect width="4" height="4" x="-6" y="1" fill="url(#block)" />
+		<rect width="2" height="3" x="-7" y="2" fill="url(#shade2)" opacity="0.3" />
+		<rect width="2" height="3" x="0" y="2" fill="url(#shade2)" opacity="0.3" />
+		<rect width="3" height="3" x="-4" y="2" fill="url(#shade)" opacity="0.3" />
+		<rect width="3" height="3" x="3" y="2" fill="url(#shade)" opacity="0.3" />
+		<path fill="url(#top-right)"
+			d="M0,0 v-6 h3 v1.5 a0.5,0.5 0 0,0 0.5,0.5 l0.5,0 a2,2 0 0,1 2,2 v2 " />
+		<path fill="url(#top-center)"
+			d="M1,0 v-5 h1 v1.5 a0.5,0.5 0 0,0 0.5,0.5 l0.5,0 a2,2 0 0,1 2,2 v1 " />
+		<path fill="url(#top-left)"
+			d="M-1,0 v-6 h-3 v1.5 a0.5,0.5 0 0,1 -.5,0.5 l-0.5,0 a2,2 0 0,0 -2,2 v2 " />
+		<path fill="url(#top-center)"
+			d="M-2,0 v-5 h-1 v1.5 a0.5,0.5 0 0,1 -.5,0.5 l-0.5,0 a2,2 0 0,0 -2,2 v1 " />
+		<rect width="5" height="2" x="-3" y="-3" fill="url(#swivel)" />
+		<rect width="5" height="1.5" x="-3" y="-3" fill="url(#swivel-shade)" />
+		<g id="pencil" transform="translate(2,2)">
+			<defs>
+				<linearGradient id="top_center" x1="0%" y1="0%" x2="100%" y2="0%">
+					<stop offset="0%" stop-color="#f7e1c9" />
+					<stop offset="100%" stop-color="#f4cfa5" />
+				</linearGradient>
+				<linearGradient id="pencil-back" x1="100%" y1="0%" x2="0%"
+					y2="100%">
+					<stop offset="0%" stop-color="#ca9350" stop-opacity="1.0" />
+					<stop offset="20%" stop-color="#ca9350" stop-opacity="0.5" />
+					<stop offset="30%" stop-color="#ca9350" stop-opacity="0.0" />
+					<stop offset="55%" stop-color="#936d1e" stop-opacity="0.0" />
+					<stop offset="65%" stop-color="#936d1e" stop-opacity="0.3" />
+					<stop offset="80%" stop-color="#936d1e" stop-opacity="0.9" />
+					<stop offset="92%" stop-color="#936d1e" stop-opacity="1.0" />
+					<stop offset="94%" stop-color="#594212" stop-opacity="1.0" />
+				</linearGradient>
+				<linearGradient id="pencil-cross" x1="37%" y1="37%" x2="63%"
+					y2="63%">
+					<stop offset="0%" stop-color="#e4ba2f" />
+					<stop offset="100%" stop-color="#d98f3b" />
+				</linearGradient>
+				<linearGradient id="pencil-nib" x1="100%" y1="0%" x2="0%" y2="100%">
+					<stop offset="0%" stop-color="#fae7d1" stop-opacity="1.0" />
+					<stop offset="75%" stop-color="#fae7d1" stop-opacity="0.9" />
+					<stop offset="100%" stop-color="#fae7d1" stop-opacity="0.0" />
+				</linearGradient>
+				<linearGradient id="pencil-outer" x1="37%" y1="37%" x2="63%"
+					y2="63%">
+					<stop offset="0%" stop-color="#f8edc3" />
+					<stop offset="10%" stop-color="#fcf4b3" />
+					<stop offset="45%" stop-color="#f4d644" />
+					<stop offset="55%" stop-color="#f4d644" />
+					<stop offset="90%" stop-color="#fcf4b3" />
+					<stop offset="100%" stop-color="#faee8e" />
+				</linearGradient>
+				<linearGradient id="pencil-nib-shadow" x1="0%" y1="0%" x2="100%"
+					y2="100%">
+					<stop offset="0%" stop-color="#e07500" stop-opacity="0.0" />
+					<stop offset="40%" stop-color="#e07500" stop-opacity="0.2" />
+					<stop offset="50%" stop-color="#e07500" stop-opacity="0.45" />
+					<stop offset="60%" stop-color="#e07500" stop-opacity="0.4" />
+					<stop offset="100%" stop-color="#e07500" stop-opacity="0.0" />
+				</linearGradient>
+			</defs>
+			<path fill="url(#pencil-cross)" d="M2,-5 l-8,8 v3 h3 l8,-8 a2,1.25 45 0,0 -3,-3" />
+			<path fill="url(#pencil-back)" d="M2,-5 l-8,8 v3 h3 l8,-8 a2,1.25 45 0,0 -3,-3" />
+			<ellipse transform="translate(3.5,-3.5) rotate(45)" cx="0" cy="0" rx="1.25"
+				ry="0.75" fill="url(#top_center)" />
+			<path fill="url(#pencil-nib)" d="M-5,5 h2 l1,-1 a1.41,0.75 45 0,1 -2,-2 l-1,1 v2" />
+			<path fill="url(#pencil-nib-shadow)" d="M-5,5 h2 l1,-1 a1.41,0.75 45 0,1 -2,-2 l-1,1 v2" />
+			<path fill="url(#pencil-outer)"
+				d="M2,-4 l-5.5,5.5 a1.41,0.75 45 0,0 2,2 l5.5,-5.5 a1.41,0.75 45 0,1 -2,-2" />
+		</g>
+	</g>
+</svg>
