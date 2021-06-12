@@ -9,6 +9,7 @@
 #include <QFileInfo>
 #include <QProxyStyle>
 #include <QStyleOption>
+#include <QDesktopWidget>
 
 #include "Application.h"
 #include "MainWindow.h"
@@ -19,8 +20,11 @@
 
 class DB4SProxyStyle final : public QProxyStyle {
 public:
-    DB4SProxyStyle(int toolBarIconSize, int menuItemIconSize, QStyle *style = nullptr)
-        : QProxyStyle(style), m_toolBarIconSize(toolBarIconSize), m_menuItemIconSize(menuItemIconSize) {}
+    DB4SProxyStyle(int toolBarIconSize, int menuItemIconSize, qreal dpi, QStyle *style = nullptr)
+        : QProxyStyle(style),
+          m_toolBarIconSize(toolBarIconSize * dpi / 96),
+          m_menuItemIconSize(menuItemIconSize * dpi / 96),
+          m_smallIconSize(10 * dpi / 96) {}
 
     int pixelMetric(QStyle::PixelMetric metric,
                     const QStyleOption *option = nullptr,
@@ -38,7 +42,7 @@ public:
             // if we don't return size before QDockWidgets are created,
             // any of the widgets with custom stylesheet are rendered with huge float,close buttons
             // look void TableBrowserDock::setFocusStyle
-            return 12;
+            return m_smallIconSize;
         }
         return QProxyStyle::pixelMetric(metric, option, widget);
     }
@@ -46,6 +50,7 @@ public:
 private:
     int m_toolBarIconSize;
     int m_menuItemIconSize;
+    int m_smallIconSize;
 };
 
 void printArgument(const QString& argument, const QString& description)
@@ -61,12 +66,10 @@ void printArgument(const QString& argument, const QString& description)
     }
 }
 
+#include <QScreen>
 Application::Application(int& argc, char** argv) :
     QApplication(argc, argv)
 {
-    // Set StyleProxy
-    setStyle(new DB4SProxyStyle(20, 16, style()));
-
     // Get 'DB4S_SETTINGS_FILE' environment variable
     const auto env = qgetenv("DB4S_SETTINGS_FILE");
 
@@ -270,6 +273,13 @@ Application::Application(int& argc, char** argv) :
     // Show main window
     m_mainWindow = new MainWindow();
     m_mainWindow->show();
+    auto *screen = screenAt(m_mainWindow->geometry().topLeft());
+    if (screen == nullptr && !screens().isEmpty()) {
+        screen = screens().at(0);
+    }
+    // Set StyleProxy
+    setStyle(new DB4SProxyStyle(16, 13, screen != nullptr ? screen->logicalDotsPerInch() : 96, style()));
+
     connect(this, &Application::lastWindowClosed, this, &Application::quit);
 
     // Open database if one was specified
