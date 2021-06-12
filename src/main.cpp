@@ -2,7 +2,6 @@
 #include "Application.h"
 #include "sqlite.h"
 #include <QMessageBox>
-#include <QProxyStyle>
 
 static QString message = QString();
 
@@ -28,36 +27,15 @@ void boxMessageOutput(QtMsgType, const QMessageLogContext &, const QString &msg)
     message += msg + "\n";
 }
 
-class DB4SProxyStyle final : public QProxyStyle {
-public:
-    DB4SProxyStyle(int toolBarIconSize)
-        : QProxyStyle(nullptr), toolBarIconSize_(toolBarIconSize) {}
-
-    int pixelMetric(QStyle::PixelMetric metric,
-                    const QStyleOption *option = nullptr,
-                    const QWidget *widget = nullptr) const override {
-
-        if (metric == QStyle::PM_ToolBarIconSize) {
-            return toolBarIconSize_;
-        }
-
-        return QProxyStyle::pixelMetric(metric, option, widget);
-    }
-
-private:
-    int toolBarIconSize_;
-};
-
 int main( int argc, char ** argv )
 {
-
 #if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
-    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
 #if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
-    QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
+    QApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
 #endif
 #endif
-    QGuiApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
+    QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
 #ifdef Q_OS_WIN
     // In Windows, there is no output to terminal for a graphical application, so we install
     // the output to message box, until the main window is shown or the application exits.
@@ -66,9 +44,6 @@ int main( int argc, char ** argv )
 
     // Create application object. All the initialisation stuff happens in there
     Application a(argc, argv);
-
-    // Set default QToolbar->iconSize via StyleProxy
-    a.setStyle(new DB4SProxyStyle(16));
 
     // If there has been invocations to the message handler, show it to user in a message box.
     if(!message.isEmpty()) {

@@ -7,6 +7,8 @@
 #include <QDebug>
 #include <QAction>
 #include <QFileInfo>
+#include <QProxyStyle>
+#include <QStyleOption>
 
 #include "Application.h"
 #include "MainWindow.h"
@@ -14,6 +16,37 @@
 #include "Settings.h"
 #include "version.h"
 #include "sqlitedb.h"
+
+class DB4SProxyStyle final : public QProxyStyle {
+public:
+    DB4SProxyStyle(int toolBarIconSize, int menuItemIconSize, QStyle *style = nullptr)
+        : QProxyStyle(style), m_toolBarIconSize(toolBarIconSize), m_menuItemIconSize(menuItemIconSize) {}
+
+    int pixelMetric(QStyle::PixelMetric metric,
+                    const QStyleOption *option = nullptr,
+                    const QWidget *widget = nullptr) const override {
+        if (metric == PM_ToolBarIconSize) {
+            return m_toolBarIconSize;
+        } else if (metric == PM_SmallIconSize) {
+            // set maximum icon size for SmallIcon
+
+            // Set default MenuIcon size
+            if(option && option->type == QStyleOption::SO_MenuItem) {
+                return m_menuItemIconSize;
+            }
+
+            // if we don't return size before QDockWidgets are created,
+            // any of the widgets with custom stylesheet are rendered with huge float,close buttons
+            // look void TableBrowserDock::setFocusStyle
+            return 12;
+        }
+        return QProxyStyle::pixelMetric(metric, option, widget);
+    }
+
+private:
+    int m_toolBarIconSize;
+    int m_menuItemIconSize;
+};
 
 void printArgument(const QString& argument, const QString& description)
 {
@@ -31,12 +64,15 @@ void printArgument(const QString& argument, const QString& description)
 Application::Application(int& argc, char** argv) :
     QApplication(argc, argv)
 {
+    // Set StyleProxy
+    setStyle(new DB4SProxyStyle(20, 16, style()));
+
     // Get 'DB4S_SETTINGS_FILE' environment variable
-    const char* env = getenv("DB4S_SETTINGS_FILE");
+    const auto env = qgetenv("DB4S_SETTINGS_FILE");
 
     // If 'DB4S_SETTINGS_FILE' environment variable exists
-    if(env)
-        Settings::setUserSettingsFile(QString::fromStdString(env));
+    if(!env.isEmpty())
+        Settings::setUserSettingsFile(env);
 
     for(int i=1;i<arguments().size();i++)
     {
@@ -44,10 +80,10 @@ Application::Application(int& argc, char** argv) :
         {
             if(++i < arguments().size())
             {
-                if(env)
+                if(!env.isEmpty())
                 {
                     qWarning() << qPrintable(tr("The user settings file location is replaced with the argument value instead of the environment variable value."));
-                    qWarning() << qPrintable(tr("Ignored environment variable(DB4S_SETTINGS_FILE) value : ") + QString::fromStdString(env));
+                    qWarning() << qPrintable(tr("Ignored environment variable(DB4S_SETTINGS_FILE) value : ") + env);
                 }
                 Settings::setUserSettingsFile(arguments().at(i));
             }
