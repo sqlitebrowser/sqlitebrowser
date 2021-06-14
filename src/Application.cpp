@@ -10,6 +10,7 @@
 #include <QProxyStyle>
 #include <QStyleOption>
 #include <QDesktopWidget>
+#include <QScreen>
 
 #include "Application.h"
 #include "MainWindow.h"
@@ -20,37 +21,48 @@
 
 class DB4SProxyStyle final : public QProxyStyle {
 public:
-    DB4SProxyStyle(int toolBarIconSize, int menuItemIconSize, qreal dpi, QStyle *style = nullptr)
-        : QProxyStyle(style),
-          m_toolBarIconSize(toolBarIconSize * dpi / 96),
-          m_menuItemIconSize(menuItemIconSize * dpi / 96),
-          m_smallIconSize(10 * dpi / 96) {}
+    DB4SProxyStyle(int toolBarIconSize, qreal dpi, QStyle *style)
+        : QProxyStyle(style), m_toolBarIconSize(toolBarIconSize * dpi / 96)
+    {
+#ifdef Q_OS_WIN
+        m_smallIconSize = 11 * dpi / 96;
+
+        QStyleOption so(QStyleOption::Version, QStyleOption::SO_MenuItem);
+        m_menuItemIconSize = style->pixelMetric(PM_SmallIconSize, &so);
+#endif
+    }
 
     int pixelMetric(QStyle::PixelMetric metric,
                     const QStyleOption *option = nullptr,
-                    const QWidget *widget = nullptr) const override {
+                    const QWidget *widget = nullptr) const override
+    {
         if (metric == PM_ToolBarIconSize) {
             return m_toolBarIconSize;
-        } else if (metric == PM_SmallIconSize) {
+        }
+#ifdef Q_OS_WIN
+        else if (metric == PM_SmallIconSize) {
             // set maximum icon size for SmallIcon
 
             // Set default MenuIcon size
-            if(option && option->type == QStyleOption::SO_MenuItem) {
+            if (option && option->type == QStyleOption::SO_MenuItem) {
                 return m_menuItemIconSize;
             }
 
             // if we don't return size before QDockWidgets are created,
             // any of the widgets with custom stylesheet are rendered with huge float,close buttons
-            // look void TableBrowserDock::setFocusStyle
+            // see void TableBrowserDock::setFocusStyle
             return m_smallIconSize;
         }
+#endif
         return QProxyStyle::pixelMetric(metric, option, widget);
     }
 
 private:
     int m_toolBarIconSize;
+#ifdef Q_OS_WIN
     int m_menuItemIconSize;
     int m_smallIconSize;
+#endif
 };
 
 void printArgument(const QString& argument, const QString& description)
@@ -66,7 +78,6 @@ void printArgument(const QString& argument, const QString& description)
     }
 }
 
-#include <QScreen>
 Application::Application(int& argc, char** argv) :
     QApplication(argc, argv)
 {
@@ -273,12 +284,14 @@ Application::Application(int& argc, char** argv) :
     // Show main window
     m_mainWindow = new MainWindow();
     m_mainWindow->show();
-    auto *screen = screenAt(m_mainWindow->geometry().topLeft());
-    if (screen == nullptr && !screens().isEmpty()) {
-        screen = screens().at(0);
+    QScreen *screen = nullptr;
+    QList<QScreen *> screen_list = screens();
+    if (!screen_list.isEmpty()) {
+        int sn = desktop()->screenNumber(m_mainWindow);
+        screen = sn != -1 ? screen_list.at(sn) : screen_list.at(0);
     }
     // Set StyleProxy
-    setStyle(new DB4SProxyStyle(16, 13, screen != nullptr ? screen->logicalDotsPerInch() : 96, style()));
+    setStyle(new DB4SProxyStyle(18, screen != nullptr ? screen->logicalDotsPerInch() : 96, style()));
 
     connect(this, &Application::lastWindowClosed, this, &Application::quit);
 
