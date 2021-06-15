@@ -281,18 +281,13 @@ Application::Application(int& argc, char** argv) :
         return;
     }
 
+    // Set StyleProxy
+    QScreen *screen = primaryScreen();
+    setStyle(new DB4SProxyStyle(18, screen != nullptr ? screen->logicalDotsPerInch() : 96, style()));
+
     // Show main window
     m_mainWindow = new MainWindow();
     m_mainWindow->show();
-    QScreen *screen = nullptr;
-    QList<QScreen *> screen_list = screens();
-    if (!screen_list.isEmpty()) {
-        int sn = desktop()->screenNumber(m_mainWindow);
-        screen = sn != -1 ? screen_list.at(sn) : screen_list.at(0);
-    }
-    // Set StyleProxy
-    setStyle(new DB4SProxyStyle(18, screen != nullptr ? screen->logicalDotsPerInch() : 96, style()));
-
     connect(this, &Application::lastWindowClosed, this, &Application::quit);
 
     // Open database if one was specified
