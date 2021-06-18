@@ -22,10 +22,10 @@
 class DB4SProxyStyle final : public QProxyStyle {
 public:
     DB4SProxyStyle(int toolBarIconSize, qreal dpi, QStyle *style)
-        : QProxyStyle(style), m_toolBarIconSize(toolBarIconSize * dpi / 96)
+        : QProxyStyle(style), m_toolBarIconSize(static_cast<int>(toolBarIconSize * dpi / 96))
     {
 #ifdef Q_OS_WIN
-        m_smallIconSize = 11 * dpi / 96;
+        m_smallIconSize = static_cast<int>(11 * dpi / 96);
 
         QStyleOption so(QStyleOption::Version, QStyleOption::SO_MenuItem);
         m_menuItemIconSize = style->pixelMetric(PM_SmallIconSize, &so);
