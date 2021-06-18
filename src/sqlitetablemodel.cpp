@@ -653,7 +653,7 @@ bool SqliteTableModel::removeRows(int row, int count, const QModelIndex& parent)
         return false;
     }
 
-    std::vector<QString> rowids;
+    std::vector<QByteArray> rowids;
     for(int i=count-1;i>=0;i--)
     {
         if(m_cache.count(static_cast<size_t>(row+i))) {

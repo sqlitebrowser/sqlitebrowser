@@ -46,6 +46,7 @@ namespace sqlb
 {
 QString escapeIdentifier(const QString& id);
 QString escapeString(const QString& literal);
+QString escapeByteArray(const QByteArray& literal);
 }
 
 /// represents a single SQLite database. except when noted otherwise,
@@ -193,8 +194,8 @@ private:
 
 public:
     QString addRecord(const sqlb::ObjectIdentifier& tablename);
-    bool deleteRecords(const sqlb::ObjectIdentifier& table, const std::vector<QString>& rowids, const sqlb::StringVector& pseudo_pk = {});
-    bool updateRecord(const sqlb::ObjectIdentifier& table, const std::string& column, const QString& rowid, const QByteArray& value, int force_type = 0, const sqlb::StringVector& pseudo_pk = {});
+    bool deleteRecords(const sqlb::ObjectIdentifier& table, const std::vector<QByteArray>& rowids, const sqlb::StringVector& pseudo_pk = {});
+    bool updateRecord(const sqlb::ObjectIdentifier& table, const std::string& column, const QByteArray& rowid, const QByteArray& value, int force_type = 0, const sqlb::StringVector& pseudo_pk = {});
 
     bool createTable(const sqlb::ObjectIdentifier& name, const sqlb::FieldVector& structure);
     bool renameTable(const std::string& schema, const std::string& from_table, const std::string& to_table);
