@@ -50,9 +50,17 @@ void TableBrowserDock::setFocusStyle(bool on)
 {
     // Highlight title bar when dock widget is active
     if(on)
-        setStyleSheet("QDockWidget::title {background:palette(highlight);}");
+        setStyleSheet(QStringLiteral(
+            "QDockWidget::title {"
+                "background:palette(AlternateBase);"
+                "text-align: center;"
+                "border-bottom: 2px solid palette(highlight);"
+            "}"));
     else
-        setStyleSheet(QString());
+        setStyleSheet(QStringLiteral(
+            "QDockWidget::title {"
+                "text-align: center;"
+            "}"));
 }
 
 void TableBrowserDock::showContextMenuTableBrowserTabBar(const QPoint& pos)

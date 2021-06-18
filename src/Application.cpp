@@ -7,6 +7,10 @@
 #include <QDebug>
 #include <QAction>
 #include <QFileInfo>
+#include <QProxyStyle>
+#include <QStyleOption>
+#include <QDesktopWidget>
+#include <QScreen>
 
 #include "Application.h"
 #include "MainWindow.h"
@@ -14,6 +18,52 @@
 #include "Settings.h"
 #include "version.h"
 #include "sqlitedb.h"
+
+class DB4SProxyStyle final : public QProxyStyle {
+public:
+    DB4SProxyStyle(int toolBarIconSize, qreal dpi, QStyle *style)
+        : QProxyStyle(style), m_toolBarIconSize(static_cast<int>(toolBarIconSize * dpi / 96))
+    {
+#ifdef Q_OS_WIN
+        m_smallIconSize = static_cast<int>(11 * dpi / 96);
+
+        QStyleOption so(QStyleOption::Version, QStyleOption::SO_MenuItem);
+        m_menuItemIconSize = style->pixelMetric(PM_SmallIconSize, &so);
+#endif
+    }
+
+    int pixelMetric(QStyle::PixelMetric metric,
+                    const QStyleOption *option = nullptr,
+                    const QWidget *widget = nullptr) const override
+    {
+        if (metric == PM_ToolBarIconSize) {
+            return m_toolBarIconSize;
+        }
+#ifdef Q_OS_WIN
+        else if (metric == PM_SmallIconSize) {
+            // set maximum icon size for SmallIcon
+
+            // Set default MenuIcon size
+            if (option && option->type == QStyleOption::SO_MenuItem) {
+                return m_menuItemIconSize;
+            }
+
+            // if we don't return size before QDockWidgets are created,
+            // any of the widgets with custom stylesheet are rendered with huge float,close buttons
+            // see void TableBrowserDock::setFocusStyle
+            return m_smallIconSize;
+        }
+#endif
+        return QProxyStyle::pixelMetric(metric, option, widget);
+    }
+
+private:
+    int m_toolBarIconSize;
+#ifdef Q_OS_WIN
+    int m_menuItemIconSize;
+    int m_smallIconSize;
+#endif
+};
 
 void printArgument(const QString& argument, const QString& description)
 {
@@ -32,11 +82,11 @@ Application::Application(int& argc, char** argv) :
     QApplication(argc, argv)
 {
     // Get 'DB4S_SETTINGS_FILE' environment variable
-    const char* env = getenv("DB4S_SETTINGS_FILE");
+    const auto env = qgetenv("DB4S_SETTINGS_FILE");
 
     // If 'DB4S_SETTINGS_FILE' environment variable exists
-    if(env)
-        Settings::setUserSettingsFile(QString::fromStdString(env));
+    if(!env.isEmpty())
+        Settings::setUserSettingsFile(env);
 
     for(int i=1;i<arguments().size();i++)
     {
@@ -44,10 +94,10 @@ Application::Application(int& argc, char** argv) :
         {
             if(++i < arguments().size())
             {
-                if(env)
+                if(!env.isEmpty())
                 {
                     qWarning() << qPrintable(tr("The user settings file location is replaced with the argument value instead of the environment variable value."));
-                    qWarning() << qPrintable(tr("Ignored environment variable(DB4S_SETTINGS_FILE) value : ") + QString::fromStdString(env));
+                    qWarning() << qPrintable(tr("Ignored environment variable(DB4S_SETTINGS_FILE) value : ") + env);
                 }
                 Settings::setUserSettingsFile(arguments().at(i));
             }
@@ -230,6 +280,10 @@ Application::Application(int& argc, char** argv) :
         m_mainWindow = nullptr;
         return;
     }
+
+    // Set StyleProxy
+    QScreen *screen = primaryScreen();
+    setStyle(new DB4SProxyStyle(18, screen != nullptr ? screen->logicalDotsPerInch() : 96, style()));
 
     // Show main window
     m_mainWindow = new MainWindow();
