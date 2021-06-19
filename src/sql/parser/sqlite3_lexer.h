@@ -2,9 +2,9 @@
 #define yyHEADER_H 1
 #define yyIN_HEADER 1
 
-#line 6 "sqlite3_lexer.h"
+#line 5 "sqlite3_lexer.h"
 
-#line 8 "sqlite3_lexer.h"
+#line 7 "sqlite3_lexer.h"
 
 #define  YY_INT_ALIGNED short int
 
@@ -605,6 +605,6 @@ extern int yylex (yyscan_t yyscanner);
 #line 239 "sqlite3_lexer.ll"
 
 
-#line 609 "sqlite3_lexer.h"
+#line 608 "sqlite3_lexer.h"
 #undef yyIN_HEADER
 #endif /* yyHEADER_H */
