@@ -1390,6 +1390,7 @@ void MainWindow::importTableFromCSV()
             if (QFile::exists(file))
                 validFiles.push_back(file);
         }
+        importCSVfiles(validFiles);
 
     } else if(sender() == ui->actionFileImportCsvClipboard) {
         // Save clipboard content to temporary file
@@ -1400,9 +1401,12 @@ void MainWindow::importTableFromCSV()
         temp.write(clipboard->text().toUtf8());
         temp.close();
         validFiles.push_back(temp.fileName());
+
+        // Note that the temporary file will be removed when the object is
+        // destroyed, so the reading must be done in the same scope.
+        importCSVfiles(validFiles);
     }
 
-    importCSVfiles(validFiles);
 }
 
 void MainWindow::exportTableToCSV()
