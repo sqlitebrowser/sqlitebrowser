@@ -32,9 +32,9 @@ struct OrderBy
     std::string toSql() const
     {
         if(is_expression)
-            return sqlb::escapeIdentifier(expr) + (direction == Ascending ? " ASC" : " DESC");
-        else
             return expr + (direction == Ascending ? " ASC" : " DESC");
+        else
+            return sqlb::escapeIdentifier(expr) + (direction == Ascending ? " ASC" : " DESC");
     }
 
     std::string expr;
