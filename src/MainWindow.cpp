@@ -3825,6 +3825,8 @@ TableBrowserDock* MainWindow::newTableBrowserTab(const sqlb::ObjectIdentifier& t
     d->activateWindow();
     changeTableBrowserTab(d);
 
+    d->tableBrowser()->refresh();
+
     return d;
 }
 
