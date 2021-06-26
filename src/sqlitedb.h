@@ -129,7 +129,8 @@ public:
     bool releaseAllSavepoints();
     bool revertAll();
 
-    bool dump(const QString& filename, const std::vector<std::string>& tablesToDump, bool insertColNames, bool insertNew, bool exportSchema, bool exportData, bool keepOldSchema) const;
+    bool dump(const QString& filename, const std::vector<std::string>& tablesToDump,
+              bool insertColNames, bool insertNew, bool keepOriginal, bool exportSchema, bool exportData, bool keepOldSchema) const;
 
     enum ChoiceOnUse
     {

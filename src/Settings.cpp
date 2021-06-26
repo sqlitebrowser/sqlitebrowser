@@ -193,7 +193,7 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
     // exportsql group?
     if(group == "exportsql")
     {
-        if(name == "insertcolnames" || name == "insertmultiple")
+        if(name == "insertcolnames" || name == "insertmultiple" || name == "keeporiginal")
             return false;
         if(name == "oldschema")
             return 0;

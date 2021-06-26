@@ -870,6 +870,7 @@ bool DBBrowserDB::dump(const QString& filePath,
     const std::vector<std::string>& tablesToDump,
     bool insertColNames,
     bool insertNewSyntx,
+    bool keepOriginal,
     bool exportSchema,
     bool exportData,
     bool keepOldSchema) const
@@ -919,11 +920,18 @@ bool DBBrowserDB::dump(const QString& filePath,
                 if(!keepOldSchema)
                     stream << QString("DROP TABLE IF EXISTS %1;\n").arg(QString::fromStdString(sqlb::escapeIdentifier(it->name())));
 
-                if(it->fullyParsed())
-                    stream << QString::fromStdString(it->sql("main", true)) << "\n";
-                else
-                    stream << QString::fromStdString(it->originalSql()) << ";\n";
+                if(it->fullyParsed() && !keepOriginal)
+                    stream << QString::fromStdString(it->sql("main", keepOldSchema)) << "\n";
+                else {
+                    QString statement = QString::fromStdString(it->originalSql());
+                    if(keepOldSchema) {
+                        // The statement is guaranteed by SQLite to start with "CREATE TABLE"
+                        const int createTableLength = 12;
+                        statement.replace(0, createTableLength, "CREATE TABLE IF NOT EXISTS");
+                    }
+                    stream << statement << ";\n";
                 }
+            }
         }
 
         // Now export the data as well
@@ -1016,7 +1024,7 @@ bool DBBrowserDB::dump(const QString& filePath,
         // Finally export all objects other than tables
         if(exportSchema)
         {
-            auto writeSchema = [&stream, &tablesToDump, keepOldSchema](const QString& type, auto objects) {
+            auto writeSchema = [&stream, &tablesToDump, keepOldSchema, keepOriginal](const QString& type, auto objects) {
                 for(const auto& obj : objects)
                 {
                     const auto& it = obj.second;
@@ -1034,8 +1042,8 @@ bool DBBrowserDB::dump(const QString& filePath,
                                       type.toUpper(),
                                       QString::fromStdString(sqlb::escapeIdentifier(it->name())));
 
-                        if(it->fullyParsed())
-                            stream << QString::fromStdString(it->sql("main", true)) << "\n";
+                        if(it->fullyParsed() && !keepOriginal)
+                            stream << QString::fromStdString(it->sql("main", keepOldSchema)) << "\n";
                         else
                             stream << QString::fromStdString(it->originalSql()) << ";\n";
                     }

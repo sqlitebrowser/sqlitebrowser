@@ -89,14 +89,7 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
-         <widget class="QCheckBox" name="checkMultiple">
-          <property name="text">
-           <string>Multiple rows (VALUES) per INSERT statement</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0">
+        <item row="5" column="0">
          <spacer name="verticalSpacer">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -109,7 +102,28 @@
           </property>
          </spacer>
         </item>
-        <item row="2" column="0">
+        <item row="4" column="0">
+         <widget class="QComboBox" name="comboOldSchema">
+          <item>
+           <property name="text">
+            <string>Keep old schema (CREATE TABLE IF NOT EXISTS)</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Overwrite old schema (DROP TABLE, then CREATE TABLE)</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QCheckBox" name="checkMultiple">
+          <property name="text">
+           <string>Multiple rows (VALUES) per INSERT statement</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
          <widget class="QComboBox" name="comboWhat">
           <item>
            <property name="text">
@@ -128,18 +142,11 @@
           </item>
          </widget>
         </item>
-        <item row="3" column="0">
-         <widget class="QComboBox" name="comboOldSchema">
-          <item>
-           <property name="text">
-            <string>Keep old schema (CREATE TABLE IF NOT EXISTS)</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Overwrite old schema (DROP TABLE, then CREATE TABLE)</string>
-           </property>
-          </item>
+        <item row="2" column="0">
+         <widget class="QCheckBox" name="checkOriginal">
+          <property name="text">
+           <string>Keep original CREATE statements</string>
+          </property>
          </widget>
         </item>
        </layout>

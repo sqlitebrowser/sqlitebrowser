@@ -26,6 +26,7 @@ ExportSqlDialog::ExportSqlDialog(DBBrowserDB* db, QWidget* parent, const QString
     // Load settings
     ui->checkColNames->setChecked(Settings::getValue("exportsql", "insertcolnames").toBool());
     ui->checkMultiple->setChecked(Settings::getValue("exportsql", "insertmultiple").toBool());
+    ui->checkOriginal->setChecked(Settings::getValue("exportsql", "keeporiginal").toBool());
     ui->comboOldSchema->setCurrentIndex(Settings::getValue("exportsql", "oldschema").toInt());
 
     // Get list of tables to export
@@ -94,6 +95,7 @@ void ExportSqlDialog::accept()
     // Save settings
     Settings::setValue("exportsql", "insertcolnames", ui->checkColNames->isChecked());
     Settings::setValue("exportsql", "insertmultiple", ui->checkMultiple->isChecked());
+    Settings::setValue("exportsql", "keeporiginal", ui->checkOriginal->isChecked());
     Settings::setValue("exportsql", "oldschema", ui->comboOldSchema->currentIndex());
 
     std::vector<std::string> tables;
@@ -110,6 +112,7 @@ void ExportSqlDialog::accept()
                             tables,
                             ui->checkColNames->isChecked(),
                             ui->checkMultiple->isChecked(),
+                            ui->checkOriginal->isChecked(),
                             exportSchema,
                             exportData,
                             keepSchema);
