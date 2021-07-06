@@ -753,7 +753,9 @@ void TableBrowser::updateRecordsetLabel()
 
 sqlb::Query TableBrowser::buildQuery(const BrowseDataTableSettings& storedData, const sqlb::ObjectIdentifier& tablename) const
 {
-    sqlb::Query query(tablename);
+    const auto table = db->getTableByName(tablename);
+
+    sqlb::Query query(tablename, table && table->isView());
 
     // Construct a query from the retrieved settings
 
@@ -771,7 +773,6 @@ sqlb::Query TableBrowser::buildQuery(const BrowseDataTableSettings& storedData, 
 
     // Display formats
     bool only_defaults = true;
-    const auto table = db->getTableByName(tablename);
     if(table)
     {
         // When there is at least one custom display format, we have to set all columns for the query explicitly here

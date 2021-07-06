@@ -57,8 +57,9 @@ class Query
 {
 public:
     Query() {}
-    explicit Query(const sqlb::ObjectIdentifier& table) :
-        m_table(table)
+    explicit Query(const sqlb::ObjectIdentifier& table, bool is_view = false) :
+        m_table(table),
+        m_is_view(is_view)
     {}
 
     void clear();
@@ -98,6 +99,7 @@ private:
     std::unordered_map<std::string, std::string> m_where;   // TODO The two where variables should be merged into a single variable which ...
     std::vector<std::string> m_global_where;                // ... holds some sort of general tree structure for all sorts of where conditions.
     std::vector<OrderBy> m_sort;
+    bool m_is_view;
 
     std::vector<SelectedColumn>::iterator findSelectedColumnByName(const std::string& name);
     std::vector<SelectedColumn>::const_iterator findSelectedColumnByName(const std::string& name) const;

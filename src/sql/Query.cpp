@@ -81,7 +81,13 @@ std::string Query::buildQuery(bool withRowid) const
         // If there is only one rowid column, we leave it as is.
         if(m_rowid_columns.size() == 1)
         {
-            selector = sqlb::escapeIdentifier(m_rowid_columns.at(0)) + ",";
+            // As of SQLite 3.36 when selecting rowid from a view SQLite does not return NULL anymore but instead returns "rowid" and throws
+            // an error. To avoid that error (we don't actually care for the value of this column, so the value is not the issue here) we
+            // explicitly select NULL (without any quotes) here.
+            if(m_is_view && !hasCustomRowIdColumn())
+                selector = "NULL,";
+            else
+                selector = sqlb::escapeIdentifier(m_rowid_columns.at(0)) + ",";
         } else {
             selector += "sqlb_make_single_value(";
             for(size_t i=0;i<m_rowid_columns.size();i++)
