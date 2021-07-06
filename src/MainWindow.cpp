@@ -1123,6 +1123,8 @@ void MainWindow::executeQuery()
 
     // Remove any error indicators
     editor->clearErrorIndicators();
+    sqlWidget->getStatusEdit()->clear();
+    sqlWidget->getStatusEdit()->setStyleSheet("");
 
     // Determine execution mode: execute all, execute selection or execute current line
     enum executionMode
