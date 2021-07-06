@@ -115,7 +115,7 @@ void MainWindow::init()
                 QString url = info.at(1).trimmed();
                 checkNewVersion(version, url);
             }
-        });
+        }, false, true);
     }
 #endif
 
