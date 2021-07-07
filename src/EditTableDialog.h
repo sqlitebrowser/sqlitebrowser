@@ -47,7 +47,8 @@ private:
         kConstraintColumns = 0,
         kConstraintType = 1,
         kConstraintName = 2,
-        kConstraintSql = 3
+        kConstraintReference = 3,
+        kConstraintSql = 4
     };
 
     enum MoveFieldDirection

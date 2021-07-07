@@ -99,7 +99,7 @@
      </property>
      <widget class="QTabWidget" name="groupDefinition">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="groupFieldsPage1">
        <attribute name="title">
@@ -427,6 +427,11 @@
           <column>
            <property name="text">
             <string>Name</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Reference</string>
            </property>
           </column>
           <column>
