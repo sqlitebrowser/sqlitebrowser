@@ -36,6 +36,7 @@ ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(DBBrowserDB& db, const sqlb
     ui->comboDisplayFormat->addItem(tr("Upper case"), "upper");
     ui->comboDisplayFormat->insertSeparator(ui->comboDisplayFormat->count());
     ui->comboDisplayFormat->addItem(tr("Binary GUID to text"), "guid");
+    ui->comboDisplayFormat->addItem(tr("SpatiaLite Geometry to SVG"), "geomToSVG");
     ui->comboDisplayFormat->insertSeparator(ui->comboDisplayFormat->count());
     ui->comboDisplayFormat->addItem(tr("Custom"), "custom");
 
@@ -70,6 +71,16 @@ ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(DBBrowserDB& db, const sqlb
                               "substr(hex(" + e_column_name + "), 13, 2) || '-' || " +
                               "substr(hex(" + e_column_name + "), 17, 4) || '-' || " +
                               "substr(hex(" + e_column_name + "), 21, 12)";
+    formatFunctions["geomToSVG"] = QString(
+R"('<svg xmlns="http://www.w3.org/2000/svg">'
+|| '<path d="'
+|| AsSVG(
+        ScaleCoords(
+            ST_Translate(%1, -St_MinX(%1), -St_MaxY(%1), 0)
+        , 319 / (MAX(St_MaxX(%1) - St_MinX(%1), St_MaxY(%1) - St_MinY(%1))))
+   , 1, 5)
+|| '" stroke="darkblue" fill="#b5cfed" stroke-width="1"/>'
+|| '</svg>')").arg(e_column_name);
 
     // Set the current format, if it's empty set the default format
     if(current_format.isEmpty())
