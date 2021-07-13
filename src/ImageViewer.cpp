@@ -1,17 +1,22 @@
 #include "ImageViewer.h"
 #include "ui_ImageViewer.h"
 
+#include <cmath>
 #include <QPrinter>
 #include <QPrintPreviewDialog>
 #include <QPainter>
 #include <QScrollBar>
+#include <QResizeEvent>
+#include <QMouseEvent>
 
 ImageViewer::ImageViewer(QWidget* parent) :
     QWidget(parent),
     ui(new Ui::ImageViewer),
-    m_image_size(0, 0)
+    m_image_size(0, 0),
+    m_pan_mode{false}
 {
     ui->setupUi(this);
+    ui->scrollArea->installEventFilter(this);
     connect(ui->buttonOriginalSize, &QToolButton::clicked, this, [this]{ scaleImage(100); });
 
     ui->labelView->addAction(ui->actionPrintImage);
@@ -37,10 +42,48 @@ void ImageViewer::setImage(const QImage& image)
 
     // If the image is larger than the viewport scale it to fit the viewport.
     // If the image is smaller than the viewport show it in its original size.
-    if(image.size().width() > widget_size.width() || image.size().height() > widget_size.height())
+    if(!isQSizeCovered(m_image_size))
         ui->buttonFitToWindow->setChecked(true);
     else
         scaleImage(100);
+}
+
+bool ImageViewer::isQSizeCovered(QSize rect)
+{
+    auto widget_size = ui->scrollArea->size();
+    return widget_size.width() >= rect.width() && widget_size.height() >= rect.height();
+}
+
+bool ImageViewer::eventFilter(QObject *obj, QEvent *e) {
+    auto e_type = e->type();
+    if (ui->buttonFitToWindow->isChecked()) {
+        if (e_type == QEvent::Resize)
+            scaleToFitWindow(true);
+    } else if (e_type >= QEvent::MouseButtonPress && e_type <= QEvent::MouseMove) {
+        auto *mouse_event = static_cast<QMouseEvent*>(e);
+        if (e_type == QEvent::MouseButtonPress && mouse_event->button() == Qt::LeftButton &&
+            !isQSizeCovered(ui->labelView->size())) {
+            m_mouse_down = mouse_event->globalPos();
+            m_pan_mode = true;
+            ui->scrollArea->setCursor(Qt::ClosedHandCursor);
+        } else if (e_type == QEvent::MouseMove && m_pan_mode) {
+            auto dx = mouse_event->globalX() - m_mouse_down.x();
+            auto dy = mouse_event->globalY() - m_mouse_down.y();
+            if (dx != 0) {
+                ui->scrollArea->horizontalScrollBar()->setValue(ui->scrollArea->horizontalScrollBar()->value() - dx);
+                m_mouse_down.setX(mouse_event->globalX());
+            }
+
+            if (dy != 0) {
+                ui->scrollArea->verticalScrollBar()->setValue(ui->scrollArea->verticalScrollBar()->value() - dy);
+                m_mouse_down.setY(mouse_event->globalY());
+            }
+        } else if (e_type == QEvent::MouseButtonRelease && mouse_event->button() == Qt::LeftButton) {
+            m_pan_mode = false;
+            ui->scrollArea->setCursor(Qt::ArrowCursor);
+        }
+    }
+    return false;
 }
 
 void ImageViewer::openPrintImageDialog()
@@ -73,10 +116,11 @@ void ImageViewer::scaleToFitWindow(bool enabled)
     ui->scrollArea->setWidgetResizable(enabled);
 
     // When disabling the fit to window scaling, revert back to the original image size
-    if(!enabled)
+    if(!enabled) {
         scaleImage(100);
-    else
+    } else {
         ui->labelView->setMaximumSize(m_image_size.scaled(ui->scrollArea->size(), Qt::KeepAspectRatio));
+    }
 }
 
 void ImageViewer::scaleImage(int scale)
@@ -91,7 +135,7 @@ void ImageViewer::scaleImage(int scale)
     auto max_size_old = ui->labelView->maximumSize();
     ui->labelView->setMaximumSize(m_image_size * scale_factor);
     ui->labelView->resize(ui->labelView->maximumSize());
-    auto factor_change = ui->labelView->maximumSize().width() / double(max_size_old.width());
+    auto factor_change = ui->labelView->maximumSize().width() / static_cast<double>(max_size_old.width());
 
     // Uncheck the fit to window button
     ui->buttonFitToWindow->setChecked(false);

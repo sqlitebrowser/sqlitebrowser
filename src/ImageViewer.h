@@ -27,8 +27,12 @@ private slots:
 
 private:
     Ui::ImageViewer* ui;
-
     QSize m_image_size;
+    bool m_pan_mode;
+    QPoint m_mouse_down;
+
+    bool eventFilter(QObject *obj, QEvent *e) override;
+    bool isQSizeCovered(QSize rect);
 };
 
 #endif
