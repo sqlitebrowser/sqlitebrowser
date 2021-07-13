@@ -31,9 +31,10 @@ void ImageViewer::setImage(const QImage& image)
 {
     ui->labelView->setPixmap(QPixmap::fromImage(image));
 
+    auto widget_size = ui->scrollArea->size();
     // If the image is larger than the viewport scale it to fit the viewport.
     // If the image is smaller than the viewport show it in its original size.
-    if(image.size().width() > ui->labelView->size().width() || image.size().height() > ui->labelView->size().height())
+    if(image.size().width() > widget_size.width() || image.size().height() > widget_size.height())
         ui->buttonFitToWindow->setChecked(true);
     else
         scaleImage(100);
