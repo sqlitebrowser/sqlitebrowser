@@ -31,6 +31,9 @@
    </property>
    <item>
     <widget class="QScrollArea" name="scrollArea">
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
      <widget class="QLabel" name="labelView">
       <property name="geometry">
        <rect>
@@ -131,6 +134,7 @@
   </action>
  </widget>
  <resources>
+  <include location="icons/icons.qrc"/>
   <include location="icons/icons.qrc"/>
  </resources>
  <connections>
