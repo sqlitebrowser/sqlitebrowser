@@ -28,7 +28,7 @@ private slots:
 private:
     Ui::ImageViewer* ui;
 
-    qreal m_scale_factor;
+    QSize m_image_size;
 };
 
 #endif

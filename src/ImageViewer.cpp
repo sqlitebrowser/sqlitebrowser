@@ -9,7 +9,7 @@
 ImageViewer::ImageViewer(QWidget* parent) :
     QWidget(parent),
     ui(new Ui::ImageViewer),
-    m_scale_factor(1.0)
+    m_image_size(0, 0)
 {
     ui->setupUi(this);
     connect(ui->buttonOriginalSize, &QToolButton::clicked, this, [this]{ scaleImage(100); });
@@ -29,9 +29,12 @@ void ImageViewer::resetImage()
 
 void ImageViewer::setImage(const QImage& image)
 {
+    auto widget_size = ui->scrollArea->size();
+    m_image_size = image.size();
+    ui->labelView->setMaximumSize(m_image_size.scaled(widget_size, Qt::KeepAspectRatio));
+
     ui->labelView->setPixmap(QPixmap::fromImage(image));
 
-    auto widget_size = ui->scrollArea->size();
     // If the image is larger than the viewport scale it to fit the viewport.
     // If the image is smaller than the viewport show it in its original size.
     if(image.size().width() > widget_size.width() || image.size().height() > widget_size.height())
@@ -72,6 +75,8 @@ void ImageViewer::scaleToFitWindow(bool enabled)
     // When disabling the fit to window scaling, revert back to the original image size
     if(!enabled)
         scaleImage(100);
+    else
+        ui->labelView->setMaximumSize(m_image_size.scaled(ui->scrollArea->size(), Qt::KeepAspectRatio));
 }
 
 void ImageViewer::scaleImage(int scale)
@@ -80,16 +85,13 @@ void ImageViewer::scaleImage(int scale)
     ui->sliderScale->setValue(scale);
 
     // Update our scale factor
-    qreal factor_change = (scale / 100.0) / m_scale_factor;
-    m_scale_factor = scale / 100.0;
+    auto scale_factor = scale / 100.0;
 
     // Resize the image
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-    QPixmap pixmap = *ui->labelView->pixmap();
-#else
-    QPixmap pixmap = ui->labelView->pixmap(Qt::ReturnByValue);
-#endif
-    ui->labelView->resize(m_scale_factor * pixmap.size());
+    auto max_size_old = ui->labelView->maximumSize();
+    ui->labelView->setMaximumSize(m_image_size * scale_factor);
+    ui->labelView->resize(ui->labelView->maximumSize());
+    auto factor_change = ui->labelView->maximumSize().width() / double(max_size_old.width());
 
     // Uncheck the fit to window button
     ui->buttonFitToWindow->setChecked(false);
