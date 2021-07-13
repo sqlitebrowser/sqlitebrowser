@@ -8,7 +8,8 @@
 
 ImageViewer::ImageViewer(QWidget* parent) :
     QWidget(parent),
-    ui(new Ui::ImageViewer)
+    ui(new Ui::ImageViewer),
+    m_scale_factor(1.0)
 {
     ui->setupUi(this);
     connect(ui->buttonOriginalSize, &QToolButton::clicked, this, [this]{ scaleImage(100); });
