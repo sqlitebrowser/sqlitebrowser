@@ -1,0 +1,88 @@
+[paths]
+astyle = [
+  "src/*.cpp",
+  "src/*.h",
+  "src/extensions/*.c",
+  "src/tests/*.cpp",
+  "src/tests/*.h"
+]
+astyle_recursive = [
+  "src/sql/*.cpp",
+  "src/sql/*.h"
+]
+xmllint = [
+  "distri/sqlitebrowser.desktop.appdata.xml",
+  "distri/mime/packages/db4s-sqbpro.xml"
+]
+cmake-format = [
+  "CMakeLists.txt",
+  "libs/qhexedit/CMakeLists.txt",
+  "libs/qscintilla/Qt4Qt5/CMakeLists.txt",
+  "libs/json/CMakeLists.txt",
+  "libs/qcustomplot-source/CMakeLists.txt",
+  "src/tests/CMakeLists.txt"
+]
+
+[[tools]]
+
+  [tools.name]
+  name_text = "astyle"
+  name_exec = "astyle"
+
+  [tools.arg_version]
+  arg = "version"
+  oper = "LE"
+  value = "3.1"
+
+  [tools.arg_conf]
+  arg = "options"
+  value = "astylerc"
+
+[[tools]]
+
+  [tools.name]
+  name_text = "astyle_recursive"
+  copy = "astyle"
+
+  [tools.arg_extra]
+  recursive = ""
+
+[[tools]]
+
+  [tools.name]
+  name_text = "xmllint"
+  name_exec = "xmllint"
+  force_equal = false
+
+  [tools.arg_version]
+  arg = "version"
+
+  [tools.arg_file]
+  arg_input = ""
+  arg_output = "output"
+
+  [tools.env]
+  # environment setting for proper xml file indentation - four spaces
+  XMLLINT_INDENT = "    "
+
+  [tools.arg_extra]
+  format = ""
+
+[[tools]]
+
+  [tools.name]
+  name_text = "cmake-format"
+  name_exec = "cmake-format"
+  force_equal = false
+
+  [tools.arg_version]
+  arg = "version"
+
+  [tools.arg_conf]
+  arg = "config-files"
+  value = "cmake-format.json"
+
+  [tools.arg_file]
+  # if not defined - ensure a tools.arg_extra w/ key 'in-place' is defined.
+  arg_input = ""
+  arg_output = "outfile-path"

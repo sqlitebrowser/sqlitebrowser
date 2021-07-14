@@ -1,0 +1,11 @@
+####################
+# PyQCA - pylint configurations for DB4S
+####################
+[FORMAT]
+# Maximum number of characters on a single line.
+max-line-length=120
+
+[MISCELLANEOUS]
+notes=FIXME,
+      XXX
+# disable TODO's
