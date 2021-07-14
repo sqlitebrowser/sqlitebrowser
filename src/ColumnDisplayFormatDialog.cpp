@@ -77,7 +77,7 @@ R"('<svg xmlns="http://www.w3.org/2000/svg">'
 || AsSVG(
         ScaleCoords(
             ST_Translate(%1, -St_MinX(%1), -St_MaxY(%1), 0)
-        , 319 / (MAX(St_MaxX(%1) - St_MinX(%1), St_MaxY(%1) - St_MinY(%1))))
+        , 639 / (MAX(St_MaxX(%1) - St_MinX(%1), St_MaxY(%1) - St_MinY(%1))))
    , 1, 5)
 || '" stroke="darkblue" fill="#b5cfed" stroke-width="1"/>'
 || '</svg>')").arg(e_column_name);
