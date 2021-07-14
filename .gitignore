@@ -16,7 +16,6 @@ src/sqlitebrowser
 src/Makefile*
 src/debug
 src/release
-src/gen_version.h
 
 # ignore compiled translation files
 src/translations/*.qm

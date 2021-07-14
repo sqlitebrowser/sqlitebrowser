@@ -1,0 +1,15 @@
+// version file to be preprocessed by CMake
+#ifndef GEN_VERSION_H
+#define GEN_VERSION_H
+#define MAJOR_VERSION @PROJECT_VERSION_MAJOR@
+#define MINOR_VERSION @PROJECT_VERSION_MINOR@
+#define PATCH_VERSION @PROJECT_VERSION_PATCH@
+
+#define APP_VERSION "@PROJECT_VERSION@"
+
+// If it is defined by the compiler, then it is a nightly build, and in the YYYYMMDD format.
+#ifndef BUILD_VERSION
+    #define BUILD_VERSION 0
+#endif
+
+#endif

@@ -1,15 +1,23 @@
-cmake_minimum_required(VERSION 2.8.12.2)
-project(sqlitebrowser)
+cmake_minimum_required(VERSION 3.9)
+project(sqlitebrowser
+	VERSION 3.12.1
+	DESCRIPTION "GUI editor for SQLite databases"
+	)
 
 # BUILD_VERSION is the current date in YYYYMMDD format. It is only
 # used by the nightly version to add the date of the build.
 string(TIMESTAMP BUILD_VERSION "%Y%m%d")
 
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+add_executable(${PROJECT_NAME} WIN32)
+
 # Choose between building a stable version or nightly (the default), depending
 # on whether '-DBUILD_STABLE_VERSION=1' is passed on the command line or not.
 option(BUILD_STABLE_VERSION "Don't build the stable version by default" OFF)
 if(NOT BUILD_STABLE_VERSION)
-    add_definitions(-DBUILD_VERSION=${BUILD_VERSION})
+    target_compile_definitions(${PROJECT_NAME} PRIVATE BUILD_VERSION=${BUILD_VERSION})
 endif()
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" "${CMAKE_MODULE_PATH}")
@@ -84,7 +92,7 @@ if(FORCE_INTERNAL_QHEXEDIT)
 else()
     find_package(QHexEdit)
 endif()
-set(JSON_DIR libs/json)
+include_directories(${CMAKE_CURRENT_LIST_DIR}/libs/json)
 
 if(NOT QSCINTILLA_FOUND)
     set(QSCINTILLA_DIR libs/qscintilla/Qt4Qt5)
@@ -95,21 +103,21 @@ if(NOT QHexEdit_FOUND)
     set(QHexEdit_INCL_DIR ${QHexEdit_DIR}/src)
     add_subdirectory(${QHexEdit_DIR})
 endif()
-add_subdirectory(${JSON_DIR})
 if(NOT QCustomPlot_FOUND)
     set(QCustomPlot_DIR libs/qcustomplot-source)
     add_subdirectory(${QCustomPlot_DIR})
 endif()
 
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
 if(ENABLE_TESTING)
     enable_testing()
 endif()
 
-set(SQLB_HDR
-	src/version.h
+# generate file with version information
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/version.h.in
+	${CMAKE_CURRENT_BINARY_DIR}/version.h)
+
+target_sources(${PROJECT_NAME}
+	PRIVATE
 	src/sql/sqlitetypes.h
 	src/sql/Query.h
 	src/sql/ObjectIdentifier.h
@@ -123,7 +131,8 @@ set(SQLB_HDR
 	src/sql/parser/sqlite3_parser.hpp
 )
 
-set(SQLB_MOC_HDR
+target_sources(${PROJECT_NAME}
+	PRIVATE
 	src/sqlitedb.h
 	src/AboutDialog.h
 	src/EditIndexDialog.h
@@ -178,7 +187,8 @@ set(SQLB_MOC_HDR
 	src/TableBrowserDock.h
 )
 
-set(SQLB_SRC
+target_sources(${PROJECT_NAME}
+	PRIVATE
 	src/AboutDialog.cpp
 	src/EditIndexDialog.cpp
 	src/EditDialog.cpp
@@ -354,12 +364,12 @@ if(WIN32)
 	# resource compilation for MinGW
 		ADD_CUSTOM_COMMAND(OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/sqlbicon.o"
 			COMMAND windres "-I${CMAKE_CURRENT_SOURCE_DIR}" "-i${CMAKE_CURRENT_SOURCE_DIR}/src/winapp.rc" -o "${CMAKE_CURRENT_BINARY_DIR}/sqlbicon.o" VERBATIM)
-		set(SQLB_SRC ${SQLB_SRC} "${CMAKE_CURRENT_BINARY_DIR}/sqlbicon.o")
+		target_sources(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/sqlbicon.o")
 		set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-subsystem,windows")
 		set(WIN32_STATIC_LINK -Wl,-Bstatic -lssl -lcrypto -lws2_32)
 		set(ADDITIONAL_LIBS lzma)
 	ELSE( MINGW )
-		set(SQLB_SRC ${SQLB_SRC} "${CMAKE_CURRENT_SOURCE_DIR}/src/winapp.rc")
+		target_sources(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src/winapp.rc")
 	ENDIF( MINGW )
 else()
 	set(LPTHREAD pthread)
@@ -397,11 +407,9 @@ if(WIN32 AND MSVC)
 	include_directories(${SQLITE3_INCLUDE_DIR})
 endif()
 
-include_directories(
-		"${CMAKE_CURRENT_BINARY_DIR}"
-		${JSON_DIR}
-		${ADDITIONAL_INCLUDE_PATHS}
-		src)
+target_include_directories(${PROJECT_NAME} PRIVATE
+	${ADDITIONAL_INCLUDE_PATHS}
+	src)
 if(QHexEdit_FOUND)
     include_directories(${QHexEdit_INCLUDE_DIR})
 else()
@@ -418,9 +426,8 @@ else()
     include_directories(${QSCINTILLA_DIR})
 endif()
 
-add_executable(${PROJECT_NAME}
-		${SQLB_HDR}
-		${SQLB_SRC}
+target_sources(${PROJECT_NAME}
+	PRIVATE
 		${SQLB_FORM_HDR}
 		${SQLB_MOC}
 		${SQLB_RESOURCES_RCC}
@@ -588,3 +595,26 @@ if(WIN32 AND MSVC)
 			distri/winlaunch.bat
 		DESTINATION "/")
 endif()
+
+# CPack configuration
+set(CPACK_STRIP_FILES ON)
+set(CPACK_DEBIAN_PACKAGE_PRIORITY optional)
+set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
+set(CPACK_DEBIAN_PACKAGE_GENERATE_SHLIBS ON)
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Tristan Stenner <dbbrowser@nicht.dienstli.ch>")
+set(CPACK_ARCHIVE_COMPONENT_INSTALL ON)
+if(APPLE)
+	set(CPACK_DEFAULT_GEN TBZ2)
+elseif(WIN32)
+	set(CPACK_DEFAULT_GEN ZIP)
+	set(CPACK_NSIS_MODIFY_PATH ON)
+	set(CPACK_WIX_CMAKE_PACKAGE_REGISTRY ON)
+	set(CPACK_WIX_UPGRADE_GUID "78c885a7-e9c8-4ded-9b62-9abe47466950")
+elseif(UNIX)
+	set(CPACK_DEFAULT_GEN DEB)
+	set(CPACK_SET_DESTDIR 1)
+	set(CPACK_INSTALL_PREFIX "/usr")
+endif()
+set(CPACK_GENERATOR ${CPACK_DEFAULT_GEN} CACHE STRING "CPack pkg type(s) to generate")
+include(CPack)
+
