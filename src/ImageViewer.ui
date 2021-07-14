@@ -135,7 +135,6 @@
  </widget>
  <resources>
   <include location="icons/icons.qrc"/>
-  <include location="icons/icons.qrc"/>
  </resources>
  <connections>
   <connection>

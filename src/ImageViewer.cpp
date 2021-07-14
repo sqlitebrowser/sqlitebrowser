@@ -1,13 +1,12 @@
 #include "ImageViewer.h"
 #include "ui_ImageViewer.h"
 
-#include <cmath>
-#include <QPrinter>
-#include <QPrintPreviewDialog>
-#include <QPainter>
-#include <QScrollBar>
-#include <QResizeEvent>
 #include <QMouseEvent>
+#include <QPainter>
+#include <QPrintPreviewDialog>
+#include <QPrinter>
+#include <QResizeEvent>
+#include <QScrollBar>
 
 ImageViewer::ImageViewer(QWidget* parent) :
     QWidget(parent),
