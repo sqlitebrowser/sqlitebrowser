@@ -17,6 +17,7 @@ public:
 
 private:
     Ui::AboutDialog *ui;
+    void showEvent(QShowEvent *e) override;
 };
 
 #endif
