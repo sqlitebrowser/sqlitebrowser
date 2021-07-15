@@ -33,6 +33,8 @@ private:
 
     bool eventFilter(QObject *obj, QEvent *e) override;
     bool isQSizeCovered(QSize rect);
+    void setNoFitWithoutSignal();
+    void setSliderValueWithoutSignal(int value);
 };
 
 #endif

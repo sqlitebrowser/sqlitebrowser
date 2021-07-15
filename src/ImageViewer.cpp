@@ -58,15 +58,12 @@ bool ImageViewer::eventFilter(QObject *obj, QEvent *e) {
     auto e_type = e->type();
 
     if (e_type == QEvent::Wheel) {
-        if (ui->buttonFitToWindow->isChecked()) {
-            scaleToFitWindow(false);
-        }
         auto *wheel_event = static_cast<QWheelEvent*>(e);
         auto step = ui->sliderScale->pageStep();
         if (wheel_event->angleDelta().y() < 0) {
             step = -step;
         }
-        ui->sliderScale->setValue(ui->sliderScale->value() + step);
+        scaleImage(ui->sliderScale->value() + step);
         e->accept();
         return true;
     }
@@ -134,13 +131,37 @@ void ImageViewer::scaleToFitWindow(bool enabled)
         scaleImage(100);
     } else {
         ui->labelView->setMaximumSize(m_image_size.scaled(ui->scrollArea->viewport()->size(), Qt::KeepAspectRatio));
+        setSliderValueWithoutSignal(ui->labelView->maximumWidth() / static_cast<double>(m_image_size.width()) * 100);
     }
+}
+
+void ImageViewer::setNoFitWithoutSignal()
+{
+    if (ui->buttonFitToWindow->isChecked()) {
+        ui->buttonFitToWindow->blockSignals(true);
+        ui->scrollArea->setWidgetResizable(false);
+        ui->buttonFitToWindow->setChecked(false);
+        ui->buttonFitToWindow->blockSignals(false);
+    }
+}
+
+void ImageViewer::setSliderValueWithoutSignal(int value)
+{
+    ui->sliderScale->blockSignals(true);
+    ui->sliderScale->setValue(value);
+    ui->sliderScale->blockSignals(false);
 }
 
 void ImageViewer::scaleImage(int scale)
 {
+    // Clamp scale to the sliderScale min/max
+    scale = std::min(ui->sliderScale->maximum(), std::max(ui->sliderScale->minimum(), scale));
+
     // Make sure the slider is updated when this is called programmatically
-    ui->sliderScale->setValue(scale);
+    setSliderValueWithoutSignal(scale);
+
+    // Uncheck the fit to window button
+    setNoFitWithoutSignal();
 
     // Update our scale factor
     auto scale_factor = scale / 100.0;
@@ -149,10 +170,7 @@ void ImageViewer::scaleImage(int scale)
     auto max_size_old = ui->labelView->maximumSize();
     ui->labelView->setMaximumSize(m_image_size * scale_factor);
     ui->labelView->resize(ui->labelView->maximumSize());
-    auto factor_change = ui->labelView->maximumSize().width() / static_cast<double>(max_size_old.width());
-
-    // Uncheck the fit to window button
-    ui->buttonFitToWindow->setChecked(false);
+    auto factor_change = ui->labelView->maximumWidth() / static_cast<double>(max_size_old.width());
 
     // Fix scroll bars to zoom into center of viewport instead of the upper left corner
     const auto adjust_scrollbar = [](QScrollBar* scroll_bar, qreal factor) {
