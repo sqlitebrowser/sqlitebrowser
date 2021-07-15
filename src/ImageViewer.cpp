@@ -7,6 +7,7 @@
 #include <QPrinter>
 #include <QResizeEvent>
 #include <QScrollBar>
+#include <QWheelEvent>
 
 ImageViewer::ImageViewer(QWidget* parent) :
     QWidget(parent),
@@ -55,6 +56,21 @@ bool ImageViewer::isQSizeCovered(QSize rect)
 
 bool ImageViewer::eventFilter(QObject *obj, QEvent *e) {
     auto e_type = e->type();
+
+    if (e_type == QEvent::Wheel) {
+        if (ui->buttonFitToWindow->isChecked()) {
+            scaleToFitWindow(false);
+        }
+        auto *wheel_event = static_cast<QWheelEvent*>(e);
+        auto step = ui->sliderScale->pageStep();
+        if (wheel_event->angleDelta().y() < 0) {
+            step = -step;
+        }
+        ui->sliderScale->setValue(ui->sliderScale->value() + step);
+        e->accept();
+        return true;
+    }
+
     if (ui->buttonFitToWindow->isChecked()) {
         if (e_type == QEvent::Resize)
             scaleToFitWindow(true);
@@ -68,14 +84,13 @@ bool ImageViewer::eventFilter(QObject *obj, QEvent *e) {
         } else if (e_type == QEvent::MouseMove && m_pan_mode) {
             auto dx = mouse_event->globalX() - m_mouse_down.x();
             auto dy = mouse_event->globalY() - m_mouse_down.y();
+            m_mouse_down = mouse_event->globalPos();
             if (dx != 0) {
                 ui->scrollArea->horizontalScrollBar()->setValue(ui->scrollArea->horizontalScrollBar()->value() - dx);
-                m_mouse_down.setX(mouse_event->globalX());
             }
 
             if (dy != 0) {
                 ui->scrollArea->verticalScrollBar()->setValue(ui->scrollArea->verticalScrollBar()->value() - dy);
-                m_mouse_down.setY(mouse_event->globalY());
             }
         } else if (e_type == QEvent::MouseButtonRelease && mouse_event->button() == Qt::LeftButton) {
             m_pan_mode = false;
