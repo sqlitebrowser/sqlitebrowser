@@ -15,7 +15,7 @@ ImageViewer::ImageViewer(QWidget* parent) :
     m_pan_mode{false}
 {
     ui->setupUi(this);
-    ui->scrollArea->installEventFilter(this);
+    ui->scrollArea->viewport()->installEventFilter(this);
     connect(ui->buttonOriginalSize, &QToolButton::clicked, this, [this]{ scaleImage(100); });
 
     ui->labelView->addAction(ui->actionPrintImage);
@@ -33,7 +33,7 @@ void ImageViewer::resetImage()
 
 void ImageViewer::setImage(const QImage& image)
 {
-    auto widget_size = ui->scrollArea->size();
+    auto widget_size = ui->scrollArea->viewport()->size();
     m_image_size = image.size();
     ui->labelView->setMaximumSize(m_image_size.scaled(widget_size, Qt::KeepAspectRatio));
 
@@ -49,7 +49,7 @@ void ImageViewer::setImage(const QImage& image)
 
 bool ImageViewer::isQSizeCovered(QSize rect)
 {
-    auto widget_size = ui->scrollArea->size();
+    auto widget_size = ui->scrollArea->viewport()->size();
     return widget_size.width() >= rect.width() && widget_size.height() >= rect.height();
 }
 
@@ -118,7 +118,7 @@ void ImageViewer::scaleToFitWindow(bool enabled)
     if(!enabled) {
         scaleImage(100);
     } else {
-        ui->labelView->setMaximumSize(m_image_size.scaled(ui->scrollArea->size(), Qt::KeepAspectRatio));
+        ui->labelView->setMaximumSize(m_image_size.scaled(ui->scrollArea->viewport()->size(), Qt::KeepAspectRatio));
     }
 }
 
