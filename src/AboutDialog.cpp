@@ -11,7 +11,7 @@ AboutDialog::AboutDialog(QWidget *parent) :
     ui->label_version->setText(Application::versionInformation());
 }
 
-void AboutDialog::showEvent(QShowEvent *e)
+void AboutDialog::showEvent(QShowEvent *)
 {
     this->adjustSize();
     this->setFixedSize(this->width(), this->height());
