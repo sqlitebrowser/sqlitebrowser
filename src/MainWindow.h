@@ -158,7 +158,7 @@ public slots:
     void fileDetachTreeViewSelected(QTreeView* treeView);
     void reloadSettings();
     bool closeFiles();
-    void importCSVfiles(const std::vector<QString>& inputFiles);
+    void importCSVfiles(const std::vector<QString>& inputFiles, const QString& table = QString());
 
 private slots:
     void createTreeContextMenu(const QPoint & qPoint);

@@ -192,7 +192,7 @@ Application::Application(int& argc, char** argv) :
             printArgument(QString("--import-csv <%1>").arg(tr("file")),
                           tr("Import this CSV file into the passed DB or into a new DB"));
             printArgument(QString("-t, --table <%1>").arg(tr("table")),
-                          tr("Browse this table after opening the DB"));
+                          tr("Browse this table, or use it as target of a data import"));
             printArgument(QString("-R, --read-only"),
                           tr("Open database in read-only mode"));
             printArgument(QString("-S, --settings <%1>").arg(tr("settings_file")),
@@ -315,8 +315,13 @@ Application::Application(int& argc, char** argv) :
                 m_mainWindow->refresh();
         }
     }
-    if(!csvToImport.empty())
-        m_mainWindow->importCSVfiles(csvToImport);
+    if(!csvToImport.empty()) {
+        if(tableToBrowse.empty()) {
+            m_mainWindow->importCSVfiles(csvToImport);
+        } else {
+            m_mainWindow->importCSVfiles(csvToImport, tableToBrowse.front());
+        }
+    }
 }
 
 Application::~Application()

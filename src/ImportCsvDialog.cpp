@@ -38,7 +38,7 @@ QChar ImportCsvDialog::getSettingsChar(const std::string& group, const std::stri
         return value.toChar();
 }
 
-ImportCsvDialog::ImportCsvDialog(const std::vector<QString>& filenames, DBBrowserDB* db, QWidget* parent)
+ImportCsvDialog::ImportCsvDialog(const std::vector<QString>& filenames, DBBrowserDB* db, QWidget* parent, const QString& table)
     : QDialog(parent),
       ui(new Ui::ImportCsvDialog),
       csvFilenames(filenames),
@@ -49,10 +49,14 @@ ImportCsvDialog::ImportCsvDialog(const std::vector<QString>& filenames, DBBrowse
     // Hide "Advanced" section of the settings
     toggleAdvancedSection(false);
 
-    // Get the actual file name out of the provided path and use it as the default table name for import
-    // For importing several files at once, the fields have to be the same so we can safely use the first
-    QFileInfo file(filenames.front());
-    ui->editName->setText(file.baseName());
+    if(!table.isEmpty()) {
+        ui->editName->setText(table);
+    } else {
+        // Get the actual file name out of the provided path and use it as the default table name for import
+        // For importing several files at once, the fields have to be the same so we can safely use the first
+        QFileInfo file(filenames.front());
+        ui->editName->setText(file.baseName());
+    }
 
     // Create a list of all available encodings and create an auto completion list from them
     encodingCompleter = new QCompleter(toStringList(QTextCodec::availableCodecs()), this);
@@ -526,7 +530,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
                 switch (answer) {
                 case QMessageBox::No:
                     return true;
-                  
+
                 // Stop now if the Cancel button has been clicked. But also indicate, that the entire import process should be stopped.
                 case QMessageBox::Cancel:
                     return false;

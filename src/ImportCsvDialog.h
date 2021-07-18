@@ -19,7 +19,7 @@ class ImportCsvDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ImportCsvDialog(const std::vector<QString>& filenames, DBBrowserDB* db, QWidget* parent = nullptr);
+  explicit ImportCsvDialog(const std::vector<QString>& filenames, DBBrowserDB* db, QWidget* parent = nullptr, const QString& table = QString());
     ~ImportCsvDialog() override;
 
 private slots:

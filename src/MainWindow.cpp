@@ -1351,7 +1351,7 @@ void MainWindow::mainTabSelected(int /*tabindex*/)
     }
 }
 
-void MainWindow::importCSVfiles(const std::vector<QString>& inputFiles)
+void MainWindow::importCSVfiles(const std::vector<QString>& inputFiles, const QString& table)
 {
     if (!inputFiles.empty())
     {
@@ -1359,7 +1359,7 @@ void MainWindow::importCSVfiles(const std::vector<QString>& inputFiles)
         if(!db.isOpen())
             fileNewInMemoryDatabase(/* open_create_dialog */ false);
 
-        ImportCsvDialog dialog(inputFiles, &db, this);
+        ImportCsvDialog dialog(inputFiles, &db, this, table);
         if (dialog.exec())
             refreshTableBrowsers();
     }
