@@ -183,11 +183,11 @@ void EditTableDialog::keyPressEvent(QKeyEvent *evt)
 void EditTableDialog::updateColumnWidth()
 {
     ui->treeWidget->setColumnWidth(kName, 190);
-    ui->treeWidget->setColumnWidth(kType, 100);
-    ui->treeWidget->setColumnWidth(kNotNull, 30);
-    ui->treeWidget->setColumnWidth(kPrimaryKey, 30);
-    ui->treeWidget->setColumnWidth(kAutoIncrement, 30);
-    ui->treeWidget->setColumnWidth(kUnique, 30);
+    ui->treeWidget->setColumnWidth(kType, 150);
+    ui->treeWidget->setColumnWidth(kNotNull, 25);
+    ui->treeWidget->setColumnWidth(kPrimaryKey, 25);
+    ui->treeWidget->setColumnWidth(kAutoIncrement, 25);
+    ui->treeWidget->setColumnWidth(kUnique, 25);
     ui->treeWidget->setColumnWidth(kForeignKey, 500);
 
     ui->tableConstraints->setColumnWidth(kConstraintColumns, 180);
