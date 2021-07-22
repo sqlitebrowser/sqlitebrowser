@@ -11,3 +11,4 @@ X-MultipleArgs=false
 Type=Application
 Categories=Development;Utility;Database;
 MimeType=application/vnd.db4s-project+xml;application/sqlitebrowser;application/x-sqlitebrowser;application/vnd.sqlite3;application/geopackage+sqlite3;application/x-sqlite2;application/x-sqlite3;text/csv;
+StartupWMClass=sqlitebrowser
