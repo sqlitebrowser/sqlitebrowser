@@ -1011,6 +1011,7 @@ void EditDialog::switchEditorMode(bool autoSwitchForType)
         // Switch automatically the editing mode according to the detected data.
         switch (dataType) {
         case Image:
+        case SVG:
             ui->comboMode->setCurrentIndex(ImageEditor);
             break;
         case Binary:
@@ -1026,7 +1027,6 @@ void EditDialog::switchEditorMode(bool autoSwitchForType)
         case JSON:
             ui->comboMode->setCurrentIndex(JsonEditor);
             break;
-        case SVG:
         case XML:
             ui->comboMode->setCurrentIndex(XmlEditor);
             break;
