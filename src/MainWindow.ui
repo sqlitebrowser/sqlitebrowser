@@ -1549,6 +1549,9 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    <property name="whatsThis">
     <string>This button opens files containing SQL statements and loads them in new editor tabs</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+T</string>
+   </property>
   </action>
   <action name="actionSqlSaveFile">
    <property name="icon">

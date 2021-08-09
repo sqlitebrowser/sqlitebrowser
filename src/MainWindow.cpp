@@ -473,6 +473,7 @@ void MainWindow::init()
     // Add the documentation of shortcuts, which aren't otherwise visible in the user interface, to some buttons.
     addShortcutsTooltip(ui->actionDbPrint);
     addShortcutsTooltip(ui->actionSqlOpenTab);
+    addShortcutsTooltip(ui->actionSqlOpenFile);
     addShortcutsTooltip(ui->actionSqlPrint);
     addShortcutsTooltip(ui->actionExecuteSql, {shortcutBrowseRefreshF5->key(), shortcutBrowseRefreshCtrlR->key()});
     addShortcutsTooltip(ui->actionSqlExecuteLine);
