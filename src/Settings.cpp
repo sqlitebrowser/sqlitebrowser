@@ -40,10 +40,10 @@ bool Settings::isVaildSettingsFile(const QString& userSettingsFile)
         QFile *file = new QFile;
         file->setFileName(userSettingsFile);
 
-        if(file->open(QIODevice::ReadOnly))
+        if(file->open(QIODevice::ReadOnly | QIODevice::Text))
         {
             if(file->exists() &&
-              QString::compare(QString::fromStdString("[%General]\n"), file->readLine(), Qt::CaseInsensitive) != 0)
+              QString::compare(QString("[%General]\n"), file->readLine(), Qt::CaseInsensitive) != 0)
                 isNormalUserSettingsFile = false;
         }
 
