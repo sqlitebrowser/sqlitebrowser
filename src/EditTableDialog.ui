@@ -86,6 +86,47 @@
            </property>
           </widget>
          </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>On Conflict</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QComboBox" name="comboOnConflict">
+           <item>
+            <property name="text">
+             <string notr="true"/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string notr="true">ROLLBACK</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string notr="true">ABORT</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string notr="true">FAIL</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string notr="true">IGNORE</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string notr="true">REPLACE</string>
+            </property>
+           </item>
+          </widget>
+         </item>
         </layout>
        </widget>
       </item>
@@ -778,6 +819,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>comboOnConflict</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>EditTableDialog</receiver>
+   <slot>setOnConflict(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>371</x>
+     <y>168</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>490</x>
+     <y>211</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fieldSelectionChanged()</slot>
@@ -793,5 +850,6 @@
   <slot>removeConstraint()</slot>
   <slot>moveTop()</slot>
   <slot>moveBottom()</slot>
+  <slot>setOnConflict(QString)</slot>
  </slots>
 </ui>

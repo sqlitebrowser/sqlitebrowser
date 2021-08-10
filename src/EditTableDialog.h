@@ -85,6 +85,7 @@ private slots:
     void changeSchema(const QString& schema);
     void removeConstraint();
     void addConstraint(sqlb::Constraint::ConstraintTypes type);
+    void setOnConflict(const QString& on_conflict);
 
 private:
     Ui::EditTableDialog* ui;

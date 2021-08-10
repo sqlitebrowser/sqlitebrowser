@@ -96,6 +96,13 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
         ui->comboSchema->setCurrentText(QString::fromStdString(curTable.schema()));
         ui->comboSchema->blockSignals(false);
 
+        if(m_table.primaryKey())
+        {
+            ui->checkWithoutRowid->blockSignals(true);
+            ui->comboOnConflict->setCurrentText(QString::fromStdString(m_table.primaryKey()->conflictAction()).toUpper());
+            ui->checkWithoutRowid->blockSignals(false);
+        }
+
         populateFields();
         populateConstraints();
     } else {
@@ -977,6 +984,26 @@ void EditTableDialog::setWithoutRowid(bool without_rowid)
 
 void EditTableDialog::changeSchema(const QString& /*schema*/)
 {
+    // Update the SQL preview
+    updateSqlText();
+}
+
+void EditTableDialog::setOnConflict(const QString& on_conflict)
+{
+    if(m_table.primaryKey())
+    {
+        m_table.primaryKey()->setConflictAction(on_conflict.toStdString());
+    } else {
+        QMessageBox::information(this, QApplication::applicationName(),
+                                 tr("Please add a field which meets the following criteria before setting the on conflict action:\n"
+                                    " - Primary key flag set"));
+
+        ui->comboOnConflict->blockSignals(true);
+        ui->comboOnConflict->setCurrentText(QString());
+        ui->comboOnConflict->blockSignals(false);
+        return;
+    }
+
     // Update the SQL preview
     updateSqlText();
 }
