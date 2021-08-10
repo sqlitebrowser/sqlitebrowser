@@ -376,7 +376,29 @@ Table& Table::operator=(const Table& rhs)
     // Make copies of the fields and the constraints. This is necessary in order to avoid any unwanted changes to the application's main database
     // schema representation just by modifying a reference to the fields or constraints and thinking it operates on a copy.
     std::copy(rhs.fields.begin(), rhs.fields.end(), std::back_inserter(fields));
-    m_constraints = rhs.m_constraints;
+    std::transform(rhs.m_constraints.begin(), rhs.m_constraints.end(), std::back_inserter(m_constraints), [](ConstraintPtr e) -> ConstraintPtr {
+        switch(e->type())
+        {
+        case Constraint::PrimaryKeyConstraintType:
+            return std::make_shared<PrimaryKeyConstraint>(*std::dynamic_pointer_cast<sqlb::PrimaryKeyConstraint>(e));
+        case Constraint::UniqueConstraintType:
+            return std::make_shared<UniqueConstraint>(*std::dynamic_pointer_cast<sqlb::UniqueConstraint>(e));
+        case Constraint::ForeignKeyConstraintType:
+            return std::make_shared<ForeignKeyClause>(*std::dynamic_pointer_cast<sqlb::ForeignKeyClause>(e));
+        case Constraint::CheckConstraintType:
+            return std::make_shared<CheckConstraint>(*std::dynamic_pointer_cast<sqlb::CheckConstraint>(e));
+        case Constraint::GeneratedColumnConstraintType:
+            return std::make_shared<GeneratedColumnConstraint>(*std::dynamic_pointer_cast<sqlb::GeneratedColumnConstraint>(e));
+        case Constraint::NotNullConstraintType:
+            return std::make_shared<NotNullConstraint>(*std::dynamic_pointer_cast<sqlb::NotNullConstraint>(e));
+        case Constraint::DefaultConstraintType:
+            return std::make_shared<DefaultConstraint>(*std::dynamic_pointer_cast<sqlb::DefaultConstraint>(e));
+        case Constraint::CollateConstraintType:
+            return std::make_shared<CollateConstraint>(*std::dynamic_pointer_cast<sqlb::CollateConstraint>(e));
+        default:
+            return nullptr;
+        }
+    });
 
     return *this;
 }
