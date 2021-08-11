@@ -26,6 +26,7 @@ addons:
       - libsqlcipher-dev
       - qtbase5-dev
       - qttools5-dev
+      - libqt5svg5
 
 script:
 - mkdir build
