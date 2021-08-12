@@ -105,6 +105,11 @@ ColumnDisplayFormatDialog::~ColumnDisplayFormatDialog()
     delete ui;
 }
 
+void ColumnDisplayFormatDialog::showEvent(QShowEvent *)
+{
+    adjustSize();
+}
+
 QString ColumnDisplayFormatDialog::selectedDisplayFormat() const
 {
     if(ui->comboDisplayFormat->currentData().toString() == "default")
