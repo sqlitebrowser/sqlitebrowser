@@ -13,7 +13,7 @@ LRELEASE="$HOME/Qt/${QTVER}/clang_64/bin/lrelease"
 LUPDATE="$HOME/Qt/${QTVER}/clang_64/bin/lupdate"
 MACDEPLOYQT="$HOME/Qt/${QTVER}/clang_64/bin/macdeployqt"
 PATH="$PATH:/usr/local/bin:/usr/sbin"
-QMAKE="$HOME/Qt/${QTVER}/clang_64/bin/qmake"
+CMAKE="/usr/local/bin/cmake"
 
 # Add the sensitive values we don't want to store in this script file
 source ~/.db4s_secure
@@ -85,13 +85,16 @@ $LRELEASE src/src.pro >>$LOG 2>&1
 
 # Build and package standard sqlitebrowser nightly
 echo Build and package standard sqlitebrowser nightly >>$LOG 2>&1
+mkdir build >>$LOG 2>&1
+cd build >>$LOG 2>&1
 if [ "${BUILD_TYPE}" = "debug" ]; then
-  $QMAKE sqlitebrowser.pro -r -spec macx-clang CONFIG+=debug CONFIG+=x86_64 CONFIG+="c++14" >>$LOG 2>&1
+  $CMAKE -DCMAKE_BUILD_TYPE=Debug .. >>$LOG 2>&1
 else
-  $QMAKE sqlitebrowser.pro -r -spec macx-clang CONFIG+=x86_64 CONFIG+="c++14" >>$LOG 2>&1
+  $CMAKE .. >>$LOG 2>&1
 fi
 make -j3 >>$LOG 2>&1
-make -j3 >>$LOG 2>&1 # Seems to need a 2nd time now, due to language files needing initialisation or something
+cd .. >>$LOG 2>&1
+cp -R build/sqlitebrowser.app src/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
 
 # Include the depencencies in the .app bundle
 $MACDEPLOYQT src/DB\ Browser\ for\ SQLite.app -verbose=2 -sign-for-notarization="${DEV_ID}">>$LOG 2>&1
@@ -163,13 +166,16 @@ $LRELEASE src/src.pro >>$LOG 2>&1
 
 # Build and package sqlitebrowser with SQLCipher support
 echo Build and package sqlitebrowser with SQLCipher support >>$LOG 2>&1
+mkdir build >>$LOG 2>&1
+cd build >>$LOG 2>&1
 if [ "${BUILD_TYPE}" = "debug" ]; then
-  $QMAKE sqlitebrowser.pro -r -spec macx-clang CONFIG+=debug CONFIG+=x86_64 CONFIG+=sqlcipher CONFIG+="c++14" >>$LOG 2>&1
+  $CMAKE -DCMAKE_BUILD_TYPE=Debug -Dsqlcipher=1 .. >>$LOG 2>&1
 else
-  $QMAKE sqlitebrowser.pro -r -spec macx-clang CONFIG+=x86_64 CONFIG+=sqlcipher CONFIG+="c++14" >>$LOG 2>&1
+  $CMAKE -Dsqlcipher=1 .. >>$LOG 2>&1
 fi
 make -j3 >>$LOG 2>&1
-make -j3 >>$LOG 2>&1 # Seems to need a 2nd time now, due to language files needing initialisation or something
+cd .. >>$LOG 2>&1
+cp -R build/sqlitebrowser.app src/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
 
 # Unlock the local security keychain, so signing can be done
 security unlock-keychain -p "${KEYCHAIN_PASSWORD}" "${HOME}/Library/Keychains/login.keychain"

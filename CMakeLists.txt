@@ -69,6 +69,14 @@ if(WIN32 AND MSVC)
 	set(CMAKE_PREFIX_PATH "${QT5_PATH};${SQLITE3_PATH}")
 endif()
 
+# See https://github.com/Homebrew/homebrew-core/issues/8392#issuecomment-325226494
+if(APPLE AND EXISTS /usr/local/opt/qt5)
+	# Homebrew installs Qt5 (up to at least 5.9.1) in
+	# /usr/local/qt5, ensure it can be found by CMake since
+	# it is not in the default /usr/local prefix.
+	list(APPEND CMAKE_PREFIX_PATH "/usr/local/opt/qt5")
+endif()
+
 find_package(Qt5 REQUIRED COMPONENTS Concurrent Gui LinguistTools Network PrintSupport Test Widgets Xml)
 
 if(NOT FORCE_INTERNAL_QSCINTILLA)
@@ -418,14 +426,23 @@ else()
     include_directories(${QSCINTILLA_DIR})
 endif()
 
-add_executable(${PROJECT_NAME}
+if(NOT APPLE)
+	add_executable(${PROJECT_NAME}
+			${SQLB_HDR}
+			${SQLB_SRC}
+			${SQLB_FORM_HDR}
+			${SQLB_MOC}
+			${SQLB_RESOURCES_RCC}
+			${SQLB_MISC})
+else()
+	add_executable(${PROJECT_NAME} MACOSX_BUNDLE
 		${SQLB_HDR}
 		${SQLB_SRC}
 		${SQLB_FORM_HDR}
 		${SQLB_MOC}
 		${SQLB_RESOURCES_RCC}
 		${SQLB_MISC})
-
+endif()
 
 # Warnings
 if (ALL_WARNINGS AND CMAKE_COMPILER_IS_GNUCC)
@@ -495,7 +512,7 @@ if(WIN32 AND MSVC)
     endif()
 endif()
 
-if(NOT WIN32)
+if(NOT WIN32 AND NOT APPLE)
 	install(TARGETS ${PROJECT_NAME}
 		RUNTIME DESTINATION bin
 		LIBRARY DESTINATION lib)
@@ -587,4 +604,11 @@ if(WIN32 AND MSVC)
 	install(FILES
 			distri/winlaunch.bat
 		DESTINATION "/")
+endif()
+
+if(APPLE)
+	set_target_properties(${PROJECT_NAME} PROPERTIES
+		BUNDLE True
+		MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/src/app.plist
+	)
 endif()
