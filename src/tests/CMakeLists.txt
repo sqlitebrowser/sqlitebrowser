@@ -1,7 +1,7 @@
 include_directories("${CMAKE_CURRENT_BINARY_DIR}" ..)
 
 if(NOT WIN32)
-	set(LPTHREAD pthread)
+    set(LPTHREAD pthread)
 endif()
 
 # test-sqlobjects

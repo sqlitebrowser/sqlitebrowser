@@ -17,10 +17,10 @@ set(QHEXEDIT_HDR
 )
 
 set(QHEXEDIT_MOC_HDR
-	src/qhexedit.h
-	src/commands.h
+    src/qhexedit.h
+    src/commands.h
 )
 
-add_library(qhexedit ${QHEXEDIT_SRC} ${QHEXEDIT_HDR} ${QHEXEDIT_MOC})
+add_library(qhexedit ${QHEXEDIT_SRC} ${QHEXEDIT_HDR} ${QHEXEDIT_MOC_HDR} ${QHEXEDIT_MOC})
 
 target_link_libraries(qhexedit Qt5::Widgets)
