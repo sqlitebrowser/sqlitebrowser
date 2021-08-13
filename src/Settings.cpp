@@ -294,6 +294,8 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
             return 10;
         if(name == "symbol_limit")
             return 5000;
+        if (name == "rows_limit")
+            return 10'000'000;
         if(name == "complete_threshold")
             return 1000;
         if(name == "image_preview")
