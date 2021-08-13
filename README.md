@@ -313,7 +313,7 @@ Check `LICENSE-PLUGINS` for other rights regarding included third-party resource
   [download-img]: https://img.shields.io/github/downloads/sqlitebrowser/sqlitebrowser/total.svg
   [download]: https://github.com/sqlitebrowser/sqlitebrowser/releases
 
-  [qt-img]: https://img.shields.io/badge/Qt-qmake-green.svg
+  [qt-img]: https://img.shields.io/badge/Qt-cmake-green.svg
   [qt]: https://www.qt.io
 
   [coverity-img]: https://img.shields.io/coverity/scan/11712.svg
