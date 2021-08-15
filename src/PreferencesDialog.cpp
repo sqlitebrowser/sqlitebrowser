@@ -190,6 +190,7 @@ void PreferencesDialog::loadSettings()
 
     ui->spinEditorFontSize->setValue(Settings::getValue("editor", "fontsize").toInt());
     ui->spinTabSize->setValue(Settings::getValue("editor", "tabsize").toInt());
+    ui->checkIndentationUseTabs->setChecked(Settings::getValue("editor", "indentation_use_tabs").toBool());
     ui->spinLogFontSize->setValue(Settings::getValue("log", "fontsize").toInt());
     ui->wrapComboBox->setCurrentIndex(Settings::getValue("editor", "wrap_lines").toInt());
     ui->quoteComboBox->setCurrentIndex(Settings::getValue("editor", "identifier_quotes").toInt());
@@ -257,6 +258,7 @@ void PreferencesDialog::saveSettings(bool accept)
     Settings::setValue("editor", "font", ui->comboEditorFont->currentText());
     Settings::setValue("editor", "fontsize", ui->spinEditorFontSize->value());
     Settings::setValue("editor", "tabsize", ui->spinTabSize->value());
+    Settings::setValue("editor", "indentation_use_tabs", ui->checkIndentationUseTabs->isChecked());
     Settings::setValue("log", "fontsize", ui->spinLogFontSize->value());
     Settings::setValue("editor", "wrap_lines", ui->wrapComboBox->currentIndex());
     Settings::setValue("editor", "identifier_quotes", ui->quoteComboBox->currentIndex());

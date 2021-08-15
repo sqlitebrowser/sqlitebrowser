@@ -356,9 +356,9 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
     if(group == "editor")
     {
         if(name == "tabsize")
-        {
             return 4;
-        }
+        if(name == "indentation_use_tabs")
+            return true;
     }
 
     // editor/wrap_lines

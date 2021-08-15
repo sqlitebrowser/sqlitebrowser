@@ -1471,6 +1471,26 @@ Can be set to 0 for disabling completion.</string>
           </widget>
          </item>
          <item row="3" column="0">
+          <widget class="QLabel" name="label_28">
+           <property name="text">
+            <string>Use tabs for indentation</string>
+           </property>
+           <property name="buddy">
+            <cstring>checkAutoCompletion</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QCheckBox" name="checkIndentationUseTabs">
+           <property name="toolTip">
+            <string>When set, the Tab key will insert tab and space characters for indentation. Otherwise, just spaces will be used.</string>
+           </property>
+           <property name="text">
+            <string>enabled</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
           <widget class="QLabel" name="wrapLabel">
            <property name="text">
             <string>&amp;Wrap lines</string>
@@ -1480,7 +1500,7 @@ Can be set to 0 for disabling completion.</string>
            </property>
           </widget>
          </item>
-         <item row="3" column="1">
+         <item row="4" column="1">
           <widget class="QComboBox" name="wrapComboBox">
            <item>
             <property name="text">
@@ -1504,7 +1524,7 @@ Can be set to 0 for disabling completion.</string>
            </item>
           </widget>
          </item>
-         <item row="4" column="0">
+         <item row="5" column="0">
           <widget class="QLabel" name="label_25">
            <property name="text">
             <string>&amp;Quotes for identifiers</string>
@@ -1514,7 +1534,7 @@ Can be set to 0 for disabling completion.</string>
            </property>
           </widget>
          </item>
-         <item row="4" column="1">
+         <item row="5" column="1">
           <widget class="QComboBox" name="quoteComboBox">
            <property name="toolTip">
             <string>Choose the quoting mechanism used by the application for identifiers in SQL code.</string>
@@ -1539,7 +1559,7 @@ Can be set to 0 for disabling completion.</string>
            </item>
           </widget>
          </item>
-         <item row="5" column="0">
+         <item row="6" column="0">
           <widget class="QLabel" name="label_20">
            <property name="text">
             <string>Code co&amp;mpletion</string>
@@ -1549,14 +1569,14 @@ Can be set to 0 for disabling completion.</string>
            </property>
           </widget>
          </item>
-         <item row="5" column="1">
+         <item row="6" column="1">
           <widget class="QCheckBox" name="checkAutoCompletion">
            <property name="text">
             <string>enabled</string>
            </property>
           </widget>
          </item>
-         <item row="6" column="0">
+         <item row="7" column="0">
           <widget class="QLabel" name="label_24">
            <property name="text">
             <string>Keywords in &amp;UPPER CASE</string>
@@ -1566,7 +1586,7 @@ Can be set to 0 for disabling completion.</string>
            </property>
           </widget>
          </item>
-         <item row="6" column="1">
+         <item row="7" column="1">
           <widget class="QCheckBox" name="checkCompleteUpper">
            <property name="toolTip">
             <string>When set, the SQL keywords are completed in UPPER CASE letters.</string>
@@ -1576,7 +1596,7 @@ Can be set to 0 for disabling completion.</string>
            </property>
           </widget>
          </item>
-         <item row="7" column="0">
+         <item row="8" column="0">
           <widget class="QLabel" name="label_15">
            <property name="text">
             <string>Error indicators</string>
@@ -1586,7 +1606,7 @@ Can be set to 0 for disabling completion.</string>
            </property>
           </widget>
          </item>
-         <item row="7" column="1">
+         <item row="8" column="1">
           <widget class="QCheckBox" name="checkErrorIndicators">
            <property name="toolTip">
             <string>When set, the SQL code lines that caused errors during the last execution are highlighted and the results frame indicates the error in the background</string>
@@ -1596,7 +1616,7 @@ Can be set to 0 for disabling completion.</string>
            </property>
           </widget>
          </item>
-         <item row="8" column="0">
+         <item row="9" column="0">
           <widget class="QLabel" name="label_10">
            <property name="text">
             <string>Hori&amp;zontal tiling</string>
@@ -1606,7 +1626,7 @@ Can be set to 0 for disabling completion.</string>
            </property>
           </widget>
          </item>
-         <item row="8" column="1">
+         <item row="9" column="1">
           <widget class="QCheckBox" name="checkHorizontalTiling">
            <property name="toolTip">
             <string>If enabled the SQL code editor and the result table view are shown side by side instead of one over the other.</string>
@@ -1616,7 +1636,7 @@ Can be set to 0 for disabling completion.</string>
            </property>
           </widget>
          </item>
-         <item row="9" column="0">
+         <item row="10" column="0">
           <widget class="QLabel" name="labelCloseButtonOnTabs">
            <property name="text">
             <string>Close button on tabs</string>
@@ -1626,7 +1646,7 @@ Can be set to 0 for disabling completion.</string>
            </property>
           </widget>
          </item>
-         <item row="9" column="1">
+         <item row="10" column="1">
           <widget class="QCheckBox" name="checkCloseButtonOnTabs">
            <property name="toolTip">
             <string>If enabled, SQL editor tabs will have a close button. In any case, you can use the contextual menu or the keyboard shortcut to close them.</string>

@@ -205,8 +205,10 @@ void ExtendedScintilla::reloadLexerSettings(QsciLexer *lexer)
     setCaretLineBackgroundColor(QColor(Settings::getValue("syntaxhighlighter", "currentline_colour").toString()));
     setCaretForegroundColor(foreground);
 
-    // Set tab width
+    // Set tab settings
     setTabWidth(Settings::getValue("editor", "tabsize").toInt());
+    setIndentationsUseTabs(Settings::getValue("editor", "indentation_use_tabs").toBool());
+
     if(lexer)
         lexer->refreshProperties();
 
