@@ -9,11 +9,10 @@ BREW="/usr/local/bin/brew"
 BUILD_TYPE="release"
 DATE=`date "+%Y%m%d"`
 LOG="$HOME/db4s_nightlies/nightly-$DATE.log"
-LRELEASE="$HOME/Qt/${QTVER}/clang_64/bin/lrelease"
-LUPDATE="$HOME/Qt/${QTVER}/clang_64/bin/lupdate"
 MACDEPLOYQT="$HOME/Qt/${QTVER}/clang_64/bin/macdeployqt"
 PATH="$PATH:/usr/local/bin:/usr/sbin"
 CMAKE="/usr/local/bin/cmake"
+QT5_DIR="$HOME/Qt/${QTVER}/clang_64"
 
 # Add the sensitive values we don't want to store in this script file
 source ~/.db4s_secure
@@ -56,11 +55,17 @@ sudo chown -Rh jc:staff /usr/local >>$LOG 2>&1
 echo Update Homebrew >>$LOG 2>&1
 $BREW update >>$LOG 2>&1
 
+# Set Qt path
+export CMAKE_PREFIX_PATH=${QT5_DIR}
+
 ### Build standard version
 
 # Remove any existing Homebrew installed packages
 echo Remove any existing Homebrew installed packages >>$LOG 2>&1
 $BREW remove `$BREW list --formula` --force >>$LOG 2>&1
+
+# Install CMake
+$BREW install cmake >>$LOG 2>&1
 
 # Install SQLite3 
 # Note - `brew tap sqlitebrowser/homebrew-sqlite3` needs to have been run at least once (manually) first
@@ -77,11 +82,6 @@ git checkout $BRANCH >>$LOG 2>&1
 git reset --hard HEAD >>$LOG 2>&1
 git clean -dffx >>$LOG 2>&1
 git pull >>$LOG 2>&1
-
-# Update the translation files
-echo Updating the translations >>$LOG 2>&1
-$LUPDATE src/src.pro >>$LOG 2>&1
-$LRELEASE src/src.pro >>$LOG 2>&1
 
 # Build and package standard sqlitebrowser nightly
 echo Build and package standard sqlitebrowser nightly >>$LOG 2>&1
@@ -146,6 +146,9 @@ rm -rf $HOME/appdmg/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
 echo Remove any existing Homebrew installed packages >>$LOG 2>&1
 $BREW remove `$BREW list --formula` --force >>$LOG 2>&1
 
+# Install CMake
+$BREW install cmake >>$LOG 2>&1
+
 # Install SQLCipher
 echo Install SQLCipher >>$LOG 2>&1
 $BREW install sqlcipherdb4s >>$LOG 2>&1
@@ -158,11 +161,6 @@ git clean -dffx >>$LOG 2>&1
 git checkout $BRANCH >>$LOG 2>&1
 git reset --hard HEAD >>$LOG 2>&1
 git clean -dffx >>$LOG 2>&1
-
-# Update the translation files
-echo Updating the translations >>$LOG 2>&1
-$LUPDATE src/src.pro >>$LOG 2>&1
-$LRELEASE src/src.pro >>$LOG 2>&1
 
 # Build and package sqlitebrowser with SQLCipher support
 echo Build and package sqlitebrowser with SQLCipher support >>$LOG 2>&1
