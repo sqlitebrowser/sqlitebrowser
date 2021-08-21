@@ -6,6 +6,7 @@
 [![Download][download-img]][download]
 [![Qt][qt-img]][qt]
 [![Coverity][coverity-img]][coverity]
+[![C/C++ CI][ghaction-img]][ghaction]
 [![Patreon][patreon-img]][patreon]
 
 ![DB Browser for SQLite Screenshot](https://github.com/sqlitebrowser/sqlitebrowser/raw/master/images/sqlitebrowser.png "DB Browser for SQLite Screenshot")
@@ -324,3 +325,6 @@ Check `LICENSE-PLUGINS` for other rights regarding included third-party resource
 
   [wiki-img]: https://img.shields.io/badge/docs-Wiki-blue.svg
   [wiki]: https://github.com/sqlitebrowser/sqlitebrowser/wiki
+
+  [ghaction-img]: https://github.com/sqlitebrowser/sqlitebrowser/actions/workflows/cppcmake.yml/badge.svg
+  [ghaction]: https://github.com/sqlitebrowser/sqlitebrowser/actions/workflows/cppcmake.yml
