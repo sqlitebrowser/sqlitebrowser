@@ -14,7 +14,7 @@ mkdir /nightlies/win32/${YEARMONTH}
 mkdir /nightlies/win64/${YEARMONTH}
 
 # Move builds
-mv /nightlies/osx/DB*${YEARMONTHOSX}* /nightlies/osx/${YEARMONTH}/
+mv /nightlies/osx/DB*${YEARMONTHOSX}* /nightlies/osx/night*${YEARMONTHOSX}* /nightlies/osx/${YEARMONTH}/
 mv /nightlies/win32/DB*${YEARMONTH}* /nightlies/win32/${YEARMONTH}/
 mv /nightlies/win64/DB*${YEARMONTH}* /nightlies/win64/${YEARMONTH}/
 
