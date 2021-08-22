@@ -116,9 +116,6 @@ public:
     // can be edited. This makes a difference for generated columns which are in (editable) tables but cannot be modified anyway.
     bool isEditable(const QModelIndex& index = QModelIndex()) const;
 
-    // Helper function for removing all comments from a SQL query
-    static void removeCommentsFromQuery(QString& query);
-
     // Conditional formats are of two kinds: regular conditional formats (including condition-free formats applying to any value in the
     // column) and formats applying to a particular row-id and which have always precedence over the first kind and whose filter apply
     // to the row-id column.

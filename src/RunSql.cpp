@@ -1,7 +1,7 @@
 #include "RunSql.h"
 #include "sqlite.h"
 #include "sqlitedb.h"
-#include "sqlitetablemodel.h"
+#include "Data.h"
 
 #include <chrono>
 #include <QApplication>
@@ -86,7 +86,7 @@ bool RunSql::executeNextStatement()
     // Remove trailing comments so we don't get fooled by some trailing text at the end of the stream.
     // Otherwise we'll pass them to SQLite and its execution will trigger a savepoint that wouldn't be
     // reverted.
-    SqliteTableModel::removeCommentsFromQuery(qtail);
+    removeCommentsFromQuery(qtail);
     if (qtail.isEmpty())
         return false;
 
