@@ -304,8 +304,8 @@ Modification or redistribution is permitted under the conditions of these licens
 
 Check `LICENSE-PLUGINS` for other rights regarding included third-party resources.
 
-  [travis-img]: https://travis-ci.org/sqlitebrowser/sqlitebrowser.svg?branch=master
-  [travis]: https://travis-ci.org/sqlitebrowser/sqlitebrowser
+  [travis-img]: https://travis-ci.com/sqlitebrowser/sqlitebrowser.svg?branch=master
+  [travis]: https://app.travis-ci.com/github/sqlitebrowser/sqlitebrowser
 
   [gitter-img]: https://badges.gitter.im/sqlitebrowser/sqlitebrowser.svg
   [gitter]: https://gitter.im/sqlitebrowser/sqlitebrowser
