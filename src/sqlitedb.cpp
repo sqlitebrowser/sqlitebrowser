@@ -17,16 +17,14 @@
 #include <QDebug>
 #include <QThread>
 #include <QRegularExpression>
-#include <json.hpp>
 
 #include <algorithm>
 #include <array>
 #include <atomic>
 #include <cctype>
 #include <chrono>
+#include <cstring>
 #include <functional>
-
-using json = nlohmann::json;
 
 QStringList DBBrowserDB::Datatypes = {"INTEGER", "TEXT", "BLOB", "REAL", "NUMERIC"};
 
@@ -86,15 +84,14 @@ static int sqlite_compare_utf16ci( void* /*arg*/,int size1, const void *str1, in
 
 static void sqlite_make_single_value(sqlite3_context* ctx, int num_arguments, sqlite3_value* arguments[])
 {
-    json array;
+    QByteArray output;
     for(int i=0;i<num_arguments;i++)
-        array.push_back(reinterpret_cast<const char*>(sqlite3_value_text(arguments[i])));
+        output += QByteArray::number(sqlite3_value_bytes(arguments[i])) + ":" + reinterpret_cast<const char*>(sqlite3_value_text(arguments[i]));
 
-    std::string output = array.dump();
-    char* output_str = new char[output.size()+1];
-    std::strcpy(output_str, output.c_str());
+    char* output_str = new char[static_cast<size_t>(output.size()) + 1];
+    std::strcpy(output_str, output);
 
-    sqlite3_result_text(ctx, output_str, static_cast<int>(output.length()), [](void* ptr) {
+    sqlite3_result_text(ctx, output_str, output.size(), [](void* ptr) {
         char* cptr = static_cast<char*>(ptr);
         delete cptr;
     });

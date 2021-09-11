@@ -16,11 +16,7 @@
 #include <QRegularExpression>
 #include <QPushButton>
 
-#include <json.hpp>
-
 #include "RowLoader.h"
-
-using json = nlohmann::json;
 
 SqliteTableModel::SqliteTableModel(DBBrowserDB& db, QObject* parent, const QString& encoding, bool force_wait)
     : QAbstractTableModel(parent)
@@ -514,14 +510,15 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
                 {
                     cached_row[0] = newValue;
                 } else {
-                    json array;
                     assert(m_headers.size() == cached_row.size());
+                    QByteArray output;
                     for(size_t i=0;i<m_query.rowIdColumns().size();i++)
                     {
                         auto it = std::find(m_headers.begin()+1, m_headers.end(), m_query.rowIdColumns().at(i));    // +1 in order to omit the rowid column itself
-                        array.push_back(cached_row[static_cast<size_t>(std::distance(m_headers.begin(), it))]);
+                        auto v = cached_row[static_cast<size_t>(std::distance(m_headers.begin(), it))];
+                        output += QByteArray::number(v.size()) + ":" + v;
                     }
-                    cached_row[0] = QByteArray::fromStdString(array.dump());
+                    cached_row[0] = output;
                 }
                 const QModelIndex& rowidIndex = index.sibling(index.row(), 0);
                 lock.unlock();
