@@ -4,6 +4,7 @@
 #include "Settings.h"
 #include "Data.h"
 #include "CondFormat.h"
+#include "RowLoader.h"
 
 #include <QMessageBox>
 #include <QApplication>
@@ -16,7 +17,7 @@
 #include <QRegularExpression>
 #include <QPushButton>
 
-#include "RowLoader.h"
+#include <cassert>
 
 SqliteTableModel::SqliteTableModel(DBBrowserDB& db, QObject* parent, const QString& encoding, bool force_wait)
     : QAbstractTableModel(parent)
