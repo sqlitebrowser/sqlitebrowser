@@ -8,6 +8,7 @@
 [![Coverity][coverity-img]][coverity]
 [![C/C++ CI][ghaction-img]][ghaction]
 [![Patreon][patreon-img]][patreon]
+Changed it a little
 
 ![DB Browser for SQLite Screenshot](https://github.com/sqlitebrowser/sqlitebrowser/raw/master/images/sqlitebrowser.png "DB Browser for SQLite Screenshot")
 
