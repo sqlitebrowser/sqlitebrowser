@@ -195,6 +195,12 @@ bool RunSql::executeNextStatement()
             releaseDbAccess();
 
             lk.lock();
+
+            // in case of usage of RETURNING keyword with INSERT/UPDATE/DELETE
+            if (query_part_type == StatementType::InsertStatement || query_part_type == StatementType::UpdateStatement || 
+                query_part_type == StatementType::DeleteStatement)
+                modified = true;
+
             may_continue_with_execution = false;
 
             auto time_end = std::chrono::high_resolution_clock::now();

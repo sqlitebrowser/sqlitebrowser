@@ -203,7 +203,11 @@ void RowLoader::run ()
 void RowLoader::process (Task & t)
 {
     QString sLimitQuery;
-    if(query.startsWith("PRAGMA", Qt::CaseInsensitive) || query.startsWith("EXPLAIN", Qt::CaseInsensitive))
+    if(query.startsWith("PRAGMA", Qt::CaseInsensitive) || query.startsWith("EXPLAIN", Qt::CaseInsensitive) || 
+        // With RETURNING keyword DELETE,INSERT,UPDATE can return rows
+        // https://www.sqlite.org/lang_returning.html
+        query.startsWith("DELETE", Qt::CaseInsensitive) || query.startsWith("INSERT", Qt::CaseInsensitive) ||
+        query.startsWith("UPDATE", Qt::CaseInsensitive))
     {
         sLimitQuery = query;
     } else {
