@@ -6,14 +6,10 @@
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="16"
-   height="16"
-   version="1.1"
    id="svg74"
-   sodipodi:docname="package_save.svg"
-   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
+   version="1.1"
+   height="16"
+   width="16">
   <metadata
      id="metadata80">
     <rdf:RDF>
@@ -29,603 +25,579 @@
   <defs
      id="defs78">
     <linearGradient
-       y2="3.1622777"
-       x2="-4.7434165"
-       y1="-6.3245553"
-       x1="4.7434165"
-       id="center"
-       gradientTransform="scale(1.0540926,0.9486833)"
-       gradientUnits="userSpaceOnUse">
-      <stop
-         id="stop1003"
-         stop-color="#a0bedc"
-         offset="0%" />
-      <stop
-         id="stop1005"
-         stop-color="#b3d2f1"
-         offset="10%" />
-      <stop
-         id="stop1007"
-         stop-color="#d5e5fe"
-         offset="50%" />
-    </linearGradient>
-    <linearGradient
-       y2="-7.1157103"
-       x2="6.0008064"
-       y1="-4.0661202"
-       x1="2.9512163"
-       id="corner"
-       gradientTransform="scale(1.01653,0.98373875)"
-       gradientUnits="userSpaceOnUse">
-      <stop
-         id="stop1010"
-         stop-color="#cde6fc"
-         offset="0%" />
-      <stop
-         id="stop1012"
-         stop-color="#7db2e2"
-         offset="100%" />
-    </linearGradient>
-    <linearGradient
-       y2="7.4833148"
-       x2="7.4833148"
-       y1="-7.4833148"
-       x1="-7.4833148"
-       id="backing"
-       gradientTransform="scale(0.93541435,1.069045)"
-       gradientUnits="userSpaceOnUse">
-      <stop
-         id="stop1015"
-         stop-color="#4f8cc8"
-         offset="0%" />
-      <stop
-         id="stop1017"
-         stop-color="#2e62b7"
-         offset="100%" />
-    </linearGradient>
-    <linearGradient
-       y2="5.4772256"
-       x2="2.7386128"
-       y1="10.954451"
-       x1="-2.7386128"
-       id="base"
-       gradientTransform="scale(1.8257419,0.54772256)"
-       gradientUnits="userSpaceOnUse">
-      <stop
-         id="stop1020"
-         stop-color="#68bffd"
-         offset="0%" />
-      <stop
-         id="stop1022"
-         stop-color="#4fb2f7"
-         offset="100%" />
-    </linearGradient>
-    <linearGradient
-       y2="11.313708"
-       x2="1.4142136"
-       y1="14.142136"
-       x1="-1.4142136"
-       id="base-center"
-       gradientTransform="scale(2.8284271,0.35355339)"
-       gradientUnits="userSpaceOnUse">
-      <stop
-         id="stop1025"
-         stop-color="#a0d8ff"
-         offset="0%" />
-      <stop
-         id="stop1027"
-         stop-color="#93d4ff"
-         offset="100%" />
-    </linearGradient>
-    <linearGradient
-       y2="6.4807407"
-       x2="-6.4807407"
-       y1="-6.4807407"
-       x1="6.4807407"
-       id="line"
-       gradientTransform="scale(0.9258201,1.0801234)"
-       gradientUnits="userSpaceOnUse">
-      <stop
-         id="stop1030"
-         stop-color="#fff"
-         offset="0%" />
-      <stop
-         id="stop1032"
-         stop-color="#eaf1f8"
-         offset="100%" />
-    </linearGradient>
-    <linearGradient
-       y2="5"
-       x2="-6"
-       y1="-5"
-       x1="-6"
-       id="backing_disk"
-       gradientUnits="userSpaceOnUse">
-      <stop
-         id="stop1051"
-         stop-color="#6e97d4"
-         offset="0%" />
-      <stop
-         id="stop1053"
-         stop-color="#5884c3"
-         offset="100%" />
-    </linearGradient>
-    <linearGradient
-       y2="100%"
-       x2="100%"
-       y1="0%"
-       x1="0%"
-       id="center_disk">
-      <stop
-         id="stop1056"
-         stop-color="#b0cdf3"
-         offset="0%" />
-      <stop
-         id="stop1058"
-         stop-color="#85a2dd"
-         offset="100%" />
-    </linearGradient>
-    <linearGradient
-       y2="0%"
-       x2="100%"
-       y1="0%"
-       x1="0%"
-       id="label_disk">
-      <stop
-         id="stop1061"
-         stop-color="#a8d782"
-         offset="0%" />
-      <stop
-         id="stop1063"
-         stop-color="#d7f4a2"
-         offset="100%" />
-    </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#center_disk"
-       id="linearGradient1196"
-       x1="-5"
-       y1="-4"
-       x2="3"
-       y2="4"
-       gradientUnits="userSpaceOnUse" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#center_disk"
-       id="linearGradient1198"
-       x1="-4.2426407"
-       y1="-2.8284271"
-       x2="-2.8284271"
-       y2="-1.4142136"
-       gradientTransform="scale(0.70710678,1.4142136)"
-       gradientUnits="userSpaceOnUse" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#label_disk"
-       id="linearGradient1220"
        gradientUnits="userSpaceOnUse"
-       x1="-3"
-       y1="2"
+       gradientTransform="scale(1.0540926,0.9486833)"
+       id="center"
+       x1="4.7434165"
+       y1="-6.3245553"
+       x2="-4.7434165"
+       y2="3.1622777">
+      <stop
+         offset="0%"
+         stop-color="#a0bedc"
+         id="stop1003" />
+      <stop
+         offset="10%"
+         stop-color="#b3d2f1"
+         id="stop1005" />
+      <stop
+         offset="50%"
+         stop-color="#d5e5fe"
+         id="stop1007" />
+    </linearGradient>
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="scale(1.01653,0.98373875)"
+       id="corner"
+       x1="2.9512163"
+       y1="-4.0661202"
+       x2="6.0008064"
+       y2="-7.1157103">
+      <stop
+         offset="0%"
+         stop-color="#cde6fc"
+         id="stop1010" />
+      <stop
+         offset="100%"
+         stop-color="#7db2e2"
+         id="stop1012" />
+    </linearGradient>
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="scale(0.93541435,1.069045)"
+       id="backing"
+       x1="-7.4833148"
+       y1="-7.4833148"
+       x2="7.4833148"
+       y2="7.4833148">
+      <stop
+         offset="0%"
+         stop-color="#4f8cc8"
+         id="stop1015" />
+      <stop
+         offset="100%"
+         stop-color="#2e62b7"
+         id="stop1017" />
+    </linearGradient>
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="scale(1.8257419,0.54772256)"
+       id="base"
+       x1="-2.7386128"
+       y1="10.954451"
+       x2="2.7386128"
+       y2="5.4772256">
+      <stop
+         offset="0%"
+         stop-color="#68bffd"
+         id="stop1020" />
+      <stop
+         offset="100%"
+         stop-color="#4fb2f7"
+         id="stop1022" />
+    </linearGradient>
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="scale(2.8284271,0.35355339)"
+       id="base-center"
+       x1="-1.4142136"
+       y1="14.142136"
+       x2="1.4142136"
+       y2="11.313708">
+      <stop
+         offset="0%"
+         stop-color="#a0d8ff"
+         id="stop1025" />
+      <stop
+         offset="100%"
+         stop-color="#93d4ff"
+         id="stop1027" />
+    </linearGradient>
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="scale(0.9258201,1.0801234)"
+       id="line"
+       x1="6.4807407"
+       y1="-6.4807407"
+       x2="-6.4807407"
+       y2="6.4807407">
+      <stop
+         offset="0%"
+         stop-color="#fff"
+         id="stop1030" />
+      <stop
+         offset="100%"
+         stop-color="#eaf1f8"
+         id="stop1032" />
+    </linearGradient>
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       id="backing_disk"
+       x1="-6"
+       y1="-5"
+       x2="-6"
+       y2="5">
+      <stop
+         offset="0%"
+         stop-color="#6e97d4"
+         id="stop1051" />
+      <stop
+         offset="100%"
+         stop-color="#5884c3"
+         id="stop1053" />
+    </linearGradient>
+    <linearGradient
+       id="center_disk"
+       x1="0%"
+       y1="0%"
+       x2="100%"
+       y2="100%">
+      <stop
+         offset="0%"
+         stop-color="#b0cdf3"
+         id="stop1056" />
+      <stop
+         offset="100%"
+         stop-color="#85a2dd"
+         id="stop1058" />
+    </linearGradient>
+    <linearGradient
+       id="label_disk"
+       x1="0%"
+       y1="0%"
+       x2="100%"
+       y2="0%">
+      <stop
+         offset="0%"
+         stop-color="#a8d782"
+         id="stop1061" />
+      <stop
+         offset="100%"
+         stop-color="#d7f4a2"
+         id="stop1063" />
+    </linearGradient>
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       y2="4"
+       x2="3"
+       y1="-4"
+       x1="-5"
+       id="linearGradient1196"
+       xlink:href="#center_disk" />
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="scale(0.70710678,1.4142136)"
+       y2="-1.4142136"
+       x2="-2.8284271"
+       y1="-2.8284271"
+       x1="-4.2426407"
+       id="linearGradient1198"
+       xlink:href="#center_disk" />
+    <linearGradient
+       y2="2"
        x2="-1"
-       y2="2" />
+       y1="2"
+       x1="-3"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient1220"
+       xlink:href="#label_disk" />
   </defs>
-  <sodipodi:namedview
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1"
-     objecttolerance="10"
-     gridtolerance="10"
-     guidetolerance="10"
-     inkscape:pageopacity="0"
-     inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="1052"
-     id="namedview76"
-     showgrid="false"
-     inkscape:zoom="14.75"
-     inkscape:cx="-0.06779661"
-     inkscape:cy="8"
-     inkscape:window-x="1366"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg74" />
   <title
      id="title2">Package</title>
   <desc
      id="desc4">Package Software</desc>
   <g
-     id="icon"
-     transform="translate(8,8)">
+     transform="translate(8,8)"
+     id="icon">
     <defs
        id="defs51">
       <linearGradient
-         id="backing-right"
-         x1="0%"
-         y1="0%"
+         y2="100%"
          x2="100%"
-         y2="100%">
+         y1="0%"
+         x1="0%"
+         id="backing-right">
         <stop
-           offset="0%"
+           id="stop6"
            stop-color="#d9b74f"
-           id="stop6" />
+           offset="0%" />
         <stop
-           offset="100%"
+           id="stop8"
            stop-color="#c88e2c"
-           id="stop8" />
+           offset="100%" />
       </linearGradient>
       <linearGradient
-         id="backing-left"
-         x1="0%"
-         y1="0%"
+         y2="100%"
          x2="100%"
-         y2="100%">
+         y1="0%"
+         x1="0%"
+         id="backing-left">
         <stop
-           offset="0%"
+           id="stop11"
            stop-color="#d7b04a"
-           id="stop11" />
+           offset="0%" />
         <stop
-           offset="100%"
+           id="stop13"
            stop-color="#c58726"
-           id="stop13" />
+           offset="100%" />
       </linearGradient>
       <linearGradient
-         id="inner-right"
-         x1="0%"
-         y1="0%"
+         y2="100%"
          x2="100%"
-         y2="100%">
+         y1="0%"
+         x1="0%"
+         id="inner-right">
         <stop
-           offset="0%"
+           id="stop16"
            stop-color="#fef8e1"
-           id="stop16" />
+           offset="0%" />
         <stop
-           offset="100%"
+           id="stop18"
            stop-color="#e8e8e8"
-           id="stop18" />
+           offset="100%" />
       </linearGradient>
       <linearGradient
-         id="inner-left"
-         x1="0%"
-         y1="0%"
+         y2="100%"
          x2="100%"
-         y2="100%">
+         y1="0%"
+         x1="0%"
+         id="inner-left">
         <stop
-           offset="0%"
+           id="stop21"
            stop-color="#f7e4b2"
-           id="stop21" />
+           offset="0%" />
         <stop
-           offset="100%"
+           id="stop23"
            stop-color="#ecc483"
-           id="stop23" />
+           offset="100%" />
       </linearGradient>
       <linearGradient
-         id="center-right"
-         x1="0%"
-         y1="0%"
+         y2="100%"
          x2="100%"
-         y2="100%">
+         y1="0%"
+         x1="0%"
+         id="center-right">
         <stop
-           offset="20%"
+           id="stop26"
            stop-color="#fff3d4"
-           id="stop26" />
+           offset="20%" />
         <stop
-           offset="100%"
+           id="stop28"
            stop-color="#fee094"
-           id="stop28" />
+           offset="100%" />
       </linearGradient>
       <linearGradient
-         id="center-left"
-         x1="0%"
-         y1="0%"
+         y2="100%"
          x2="100%"
-         y2="100%">
+         y1="0%"
+         x1="0%"
+         id="center-left">
         <stop
-           offset="20%"
+           id="stop31"
            stop-color="#efc748"
-           id="stop31" />
+           offset="20%" />
         <stop
-           offset="100%"
+           id="stop33"
            stop-color="#de9f32"
-           id="stop33" />
+           offset="100%" />
       </linearGradient>
       <linearGradient
-         id="top"
-         x1="0%"
+         y2="0%"
+         x2="100%"
          y1="100%"
-         x2="100%"
-         y2="0%">
+         x1="0%"
+         id="top">
         <stop
-           offset="0%"
+           id="stop36"
            stop-color="#f7d589"
-           id="stop36" />
+           offset="0%" />
         <stop
-           offset="100%"
+           id="stop38"
            stop-color="#f5cf7f"
-           id="stop38" />
+           offset="100%" />
       </linearGradient>
       <linearGradient
-         id="lower-flap"
-         x1="0%"
-         y1="0%"
+         y2="100%"
          x2="100%"
-         y2="100%">
+         y1="0%"
+         x1="0%"
+         id="lower-flap">
         <stop
-           offset="0%"
-           stop-color="#fef8e1"
+           id="stop41"
            stop-opacity="1.0"
-           id="stop41" />
-        <stop
-           offset="100%"
            stop-color="#fef8e1"
+           offset="0%" />
+        <stop
+           id="stop43"
            stop-opacity="0.0"
-           id="stop43" />
+           stop-color="#fef8e1"
+           offset="100%" />
       </linearGradient>
       <linearGradient
-         id="upper-flap"
-         x1="0%"
-         y1="0%"
+         y2="100%"
          x2="100%"
-         y2="100%">
+         y1="0%"
+         x1="0%"
+         id="upper-flap">
         <stop
-           offset="0%"
-           stop-color="#fef8e1"
+           id="stop46"
            stop-opacity="0.0"
-           id="stop46" />
-        <stop
-           offset="100%"
            stop-color="#fef8e1"
+           offset="0%" />
+        <stop
+           id="stop48"
            stop-opacity="1.0"
-           id="stop48" />
+           stop-color="#fef8e1"
+           offset="100%" />
       </linearGradient>
     </defs>
     <path
-       fill="url(#backing-right)"
+       id="path53"
        d="M0,-8 l-8,4 v8 l8,4 z"
-       id="path53" />
+       fill="url(#backing-right)" />
     <path
-       fill="url(#backing-left)"
+       id="path55"
        d="M0,-8 l8,4 v8 l-8,4 z"
-       id="path55" />
+       fill="url(#backing-left)" />
     <path
-       fill="url(#inner-right)"
+       id="path57"
        d="M0,-7 l-7,3.5 v7 l7,3.5 z"
-       id="path57" />
+       fill="url(#inner-right)" />
     <path
-       fill="url(#inner-left)"
+       id="path59"
        d="M0,-7 l7,3.5 v7 l-7,3.5 z"
-       id="path59" />
+       fill="url(#inner-left)" />
     <path
-       fill="url(#center-right)"
+       id="path61"
        d="M-6,-2.5 v5.5 l6,3 v-5.5"
-       id="path61" />
+       fill="url(#center-right)" />
     <path
-       fill="url(#center-left)"
+       id="path63"
        d="M6,-2.5 v5.5 l-6,3 v-5.5"
-       id="path63" />
+       fill="url(#center-left)" />
     <path
-       fill="url(#top)"
+       id="path65"
        d="M-6,-3 l6,3 l6,-3 l-6,-3 l-6,3"
-       id="path65" />
+       fill="url(#top)" />
     <path
-       fill="url(#lower-flap)"
+       id="path67"
        d="M0,0 v-3.5 h6.5"
-       id="path67" />
+       fill="url(#lower-flap)" />
     <path
-       fill="url(#upper-flap)"
+       id="path69"
        d="M-6,-3 l6,-1 v-2"
-       id="path69" />
+       fill="url(#upper-flap)" />
     <path
-       fill="#765219"
-       opacity="0.5"
+       id="path71"
        d="M-6,-3 h5 l1,3 v-4 v-2 l1,2.5 h-1 v-0.5"
-       id="path71" />
+       opacity="0.5"
+       fill="#765219" />
   </g>
   <g
-     transform="translate(9,8)"
-     id="icon-3">
+     id="icon-3"
+     transform="translate(9,8)">
     <defs
        id="defs1035">
       <linearGradient
-         y2="1"
-         x2="0"
-         y1="0"
+         id="linearGradient1127"
          x1="1"
-         id="linearGradient1127">
+         y1="0"
+         x2="0"
+         y2="1">
         <stop
-           id="stop1121"
+           offset="0%"
            stop-color="#a0bedc"
-           offset="0%" />
+           id="stop1121" />
         <stop
-           id="stop1123"
+           offset="10%"
            stop-color="#b3d2f1"
-           offset="10%" />
+           id="stop1123" />
         <stop
-           id="stop1125"
+           offset="50%"
            stop-color="#d5e5fe"
-           offset="50%" />
+           id="stop1125" />
       </linearGradient>
       <linearGradient
-         y2="0"
-         x2="1"
-         y1="1"
+         id="linearGradient1133"
          x1="0"
-         id="linearGradient1133">
+         y1="1"
+         x2="1"
+         y2="0">
         <stop
-           id="stop1129"
+           offset="0%"
            stop-color="#cde6fc"
-           offset="0%" />
+           id="stop1129" />
         <stop
-           id="stop1131"
+           offset="100%"
            stop-color="#7db2e2"
-           offset="100%" />
+           id="stop1131" />
       </linearGradient>
       <linearGradient
-         y2="1"
-         x2="1"
-         y1="0"
+         id="linearGradient1139"
          x1="0"
-         id="linearGradient1139">
+         y1="0"
+         x2="1"
+         y2="1">
         <stop
-           id="stop1135"
+           offset="0%"
            stop-color="#4f8cc8"
-           offset="0%" />
+           id="stop1135" />
         <stop
-           id="stop1137"
+           offset="100%"
            stop-color="#2e62b7"
-           offset="100%" />
+           id="stop1137" />
       </linearGradient>
       <linearGradient
-         y2="0"
-         x2="1"
-         y1="1"
+         id="linearGradient1145"
          x1="0"
-         id="linearGradient1145">
+         y1="1"
+         x2="1"
+         y2="0">
         <stop
-           id="stop1141"
+           offset="0%"
            stop-color="#68bffd"
-           offset="0%" />
+           id="stop1141" />
         <stop
-           id="stop1143"
+           offset="100%"
            stop-color="#4fb2f7"
-           offset="100%" />
+           id="stop1143" />
       </linearGradient>
       <linearGradient
-         y2="0"
-         x2="1"
-         y1="1"
+         id="linearGradient1151"
          x1="0"
-         id="linearGradient1151">
+         y1="1"
+         x2="1"
+         y2="0">
         <stop
-           id="stop1147"
+           offset="0%"
            stop-color="#a0d8ff"
-           offset="0%" />
+           id="stop1147" />
         <stop
-           id="stop1149"
+           offset="100%"
            stop-color="#93d4ff"
-           offset="100%" />
+           id="stop1149" />
       </linearGradient>
       <linearGradient
-         y2="1"
-         x2="0"
-         y1="0"
+         id="linearGradient1157"
          x1="1"
-         id="linearGradient1157">
+         y1="0"
+         x2="0"
+         y2="1">
         <stop
-           id="stop1153"
+           offset="0%"
            stop-color="#fff"
-           offset="0%" />
+           id="stop1153" />
         <stop
-           id="stop1155"
+           offset="100%"
            stop-color="#eaf1f8"
-           offset="100%" />
+           id="stop1155" />
       </linearGradient>
     </defs>
     <g
-       transform="translate(3,3)"
-       id="save">
+       id="save"
+       transform="translate(3,3)">
       <defs
          id="defs1066">
         <linearGradient
-           y2="1"
+           id="linearGradient1171"
+           x1="0"
+           y1="0"
            x2="0"
-           y1="0"
-           x1="0"
-           id="linearGradient1171">
+           y2="1">
           <stop
-             id="stop1167"
+             offset="0%"
              stop-color="#6e97d4"
-             offset="0%" />
+             id="stop1167" />
           <stop
-             id="stop1169"
+             offset="100%"
              stop-color="#5884c3"
-             offset="100%" />
+             id="stop1169" />
         </linearGradient>
         <linearGradient
-           y2="1"
-           x2="1"
-           y1="0"
+           id="linearGradient1177"
            x1="0"
-           id="linearGradient1177">
+           y1="0"
+           x2="1"
+           y2="1">
           <stop
-             id="stop1173"
+             offset="0%"
              stop-color="#b0cdf3"
-             offset="0%" />
+             id="stop1173" />
           <stop
-             id="stop1175"
+             offset="100%"
              stop-color="#85a2dd"
-             offset="100%" />
+             id="stop1175" />
         </linearGradient>
         <linearGradient
-           y2="0"
-           x2="1"
-           y1="0"
+           id="linearGradient1183"
            x1="0"
-           id="linearGradient1183">
+           y1="0"
+           x2="1"
+           y2="0">
           <stop
-             id="stop1179"
+             offset="0%"
              stop-color="#a8d782"
-             offset="0%" />
+             id="stop1179" />
           <stop
-             id="stop1181"
+             offset="100%"
              stop-color="#d7f4a2"
-             offset="100%" />
+             id="stop1181" />
         </linearGradient>
       </defs>
       <path
-         id="path1068"
+         style="fill:url(#backing_disk)"
          d="m 0,-5 h -5 a 1,1 0 0 0 -1,1 v 8 a 1,1 0 0 0 1,1 H 3 A 1,1 0 0 0 4,4 V -3 L 2,-5 Z"
-         inkscape:connector-curvature="0"
-         style="fill:url(#backing_disk)" />
+         id="path1068" />
       <rect
-         id="rect1070"
-         height="8"
-         width="8"
-         y="-4"
+         style="fill:url(#linearGradient1196)"
          x="-5"
-         style="fill:url(#linearGradient1196)" />
-      <rect
-         id="rect1072"
-         height="3"
-         width="6"
          y="-4"
-         x="-4"
-         style="fill:#ffffff" />
+         width="8"
+         height="8"
+         id="rect1070" />
       <rect
-         id="rect1074"
-         height="2"
+         style="fill:#ffffff"
+         x="-4"
+         y="-4"
+         width="6"
+         height="3"
+         id="rect1072" />
+      <rect
+         style="fill:url(#linearGradient1198)"
+         x="-3"
+         y="-4"
          width="1"
-         y="-4"
-         x="-3"
-         style="fill:url(#linearGradient1198)" />
-      <rect
-         id="rect1076"
-         height="3"
-         width="6"
-         y="1"
-         x="-4"
-         style="fill:#ffffff" />
-      <rect
          height="2"
-         width="2"
-         y="2"
-         x="-3"
-         id="label_disk_part"
-         style="fill:url(#linearGradient1220)" />
-      <use
-         id="use1079"
-         transform="rotate(180,-1,3)"
-         xlink:href="#label_disk_part"
-         x="0"
-         y="0"
-         width="100%"
-         height="100%" />
+         id="rect1074" />
       <rect
-         id="rect1081"
-         height="6"
-         width="10"
-         y="-3"
+         style="fill:#ffffff"
+         x="-4"
+         y="1"
+         width="6"
+         height="3"
+         id="rect1076" />
+      <rect
+         style="fill:url(#linearGradient1220)"
+         id="label_disk_part"
+         x="-3"
+         y="2"
+         width="2"
+         height="2" />
+      <use
+         height="100%"
+         width="100%"
+         y="0"
+         x="0"
+         xlink:href="#label_disk_part"
+         transform="rotate(180,-1,3)"
+         id="use1079" />
+      <rect
+         style="opacity:0.05;fill:#000000"
          x="-6"
-         style="opacity:0.05;fill:#000000" />
+         y="-3"
+         width="10"
+         height="6"
+         id="rect1081" />
     </g>
   </g>
 </svg>

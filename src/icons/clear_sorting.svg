@@ -5,14 +5,10 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="16"
-   height="16"
-   version="1.1"
    id="svg23"
-   sodipodi:docname="clear_sorting.svg"
-   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
+   version="1.1"
+   height="16"
+   width="16">
   <metadata
      id="metadata29">
     <rdf:RDF>
@@ -28,299 +24,274 @@
   <defs
      id="defs27">
     <linearGradient
-       y2="-5.2915026"
-       x2="-5.2915026"
-       y1="5.2915026"
-       x1="5.2915026"
-       id="arrow-backing-6"
+       gradientUnits="userSpaceOnUse"
        gradientTransform="scale(0.75592895,1.3228757)"
-       gradientUnits="userSpaceOnUse">
+       id="arrow-backing-6"
+       x1="5.2915026"
+       y1="5.2915026"
+       x2="-5.2915026"
+       y2="-5.2915026">
       <stop
-         id="stop896"
+         offset="0%"
          stop-color="#72c466"
-         offset="0%" />
+         id="stop896" />
       <stop
-         id="stop898"
+         offset="100%"
          stop-color="#22601e"
-         offset="100%" />
+         id="stop898" />
     </linearGradient>
     <linearGradient
-       y2="-3.8729833"
-       x2="-3.8729833"
-       y1="3.8729833"
-       x1="3.8729833"
-       id="arrow-center-7"
+       gradientUnits="userSpaceOnUse"
        gradientTransform="scale(0.64549722,1.5491933)"
-       gradientUnits="userSpaceOnUse">
+       id="arrow-center-7"
+       x1="3.8729833"
+       y1="3.8729833"
+       x2="-3.8729833"
+       y2="-3.8729833">
       <stop
-         id="stop901"
+         offset="0%"
          stop-color="#a7d69e"
-         offset="0%" />
+         id="stop901" />
       <stop
-         id="stop903"
+         offset="100%"
          stop-color="#78bd72"
-         offset="100%" />
+         id="stop903" />
     </linearGradient>
     <linearGradient
-       y2="3.5"
-       x2="3.5"
-       y1="-3.5"
-       x1="-3.5"
+       gradientUnits="userSpaceOnUse"
        id="backing_delete"
-       gradientUnits="userSpaceOnUse">
-      <stop
-         id="stop1006"
-         stop-color="#c4581e"
-         offset="0%" />
-      <stop
-         id="stop1008"
-         stop-color="#b84503"
-         offset="100%" />
-    </linearGradient>
-    <linearGradient
-       y2="2.5"
-       x2="2.5"
-       y1="-2.5"
-       x1="-2.5"
-       id="center_delete"
-       gradientUnits="userSpaceOnUse">
-      <stop
-         id="stop1011"
-         stop-color="#fed6b8"
-         offset="0%" />
-      <stop
-         id="stop1013"
-         stop-color="#dd6401"
-         offset="100%" />
-    </linearGradient>
-    <linearGradient
-       y2="7.0381582"
-       x2="7.3088566"
-       y1="-7.579555"
-       x1="-7.3088566"
-       id="backing"
-       gradientTransform="scale(1.0827936,0.92353707)"
-       gradientUnits="userSpaceOnUse">
-      <stop
-         id="stop1159"
-         stop-color="#cdcdcd"
-         offset="0%" />
-      <stop
-         id="stop1161"
-         stop-color="#6e6e6e"
-         offset="100%" />
-    </linearGradient>
-    <linearGradient
-       y2="3.5"
-       x2="3.5"
-       y1="-3.5"
        x1="-3.5"
-       id="backing_delete-5"
-       gradientUnits="userSpaceOnUse">
+       y1="-3.5"
+       x2="3.5"
+       y2="3.5">
       <stop
-         id="stop1175"
+         offset="0%"
          stop-color="#c4581e"
-         offset="0%" />
+         id="stop1006" />
       <stop
-         id="stop1177"
+         offset="100%"
          stop-color="#b84503"
-         offset="100%" />
+         id="stop1008" />
     </linearGradient>
     <linearGradient
-       y2="2.5"
-       x2="2.5"
-       y1="-2.5"
+       gradientUnits="userSpaceOnUse"
+       id="center_delete"
        x1="-2.5"
-       id="center_delete-6"
-       gradientUnits="userSpaceOnUse">
+       y1="-2.5"
+       x2="2.5"
+       y2="2.5">
       <stop
-         id="stop1180"
+         offset="0%"
          stop-color="#fed6b8"
-         offset="0%" />
+         id="stop1011" />
       <stop
-         id="stop1182"
+         offset="100%"
          stop-color="#dd6401"
-         offset="100%" />
+         id="stop1013" />
+    </linearGradient>
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="scale(1.0827936,0.92353707)"
+       id="backing"
+       x1="-7.3088566"
+       y1="-7.579555"
+       x2="7.3088566"
+       y2="7.0381582">
+      <stop
+         offset="0%"
+         stop-color="#cdcdcd"
+         id="stop1159" />
+      <stop
+         offset="100%"
+         stop-color="#6e6e6e"
+         id="stop1161" />
+    </linearGradient>
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       id="backing_delete-5"
+       x1="-3.5"
+       y1="-3.5"
+       x2="3.5"
+       y2="3.5">
+      <stop
+         offset="0%"
+         stop-color="#c4581e"
+         id="stop1175" />
+      <stop
+         offset="100%"
+         stop-color="#b84503"
+         id="stop1177" />
+    </linearGradient>
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       id="center_delete-6"
+       x1="-2.5"
+       y1="-2.5"
+       x2="2.5"
+       y2="2.5">
+      <stop
+         offset="0%"
+         stop-color="#fed6b8"
+         id="stop1180" />
+      <stop
+         offset="100%"
+         stop-color="#dd6401"
+         id="stop1182" />
     </linearGradient>
   </defs>
-  <sodipodi:namedview
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1"
-     objecttolerance="10"
-     gridtolerance="10"
-     guidetolerance="10"
-     inkscape:pageopacity="0"
-     inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="1052"
-     id="namedview25"
-     showgrid="false"
-     inkscape:zoom="10.429825"
-     inkscape:cx="-25.401707"
-     inkscape:cy="4.0180205"
-     inkscape:window-x="1366"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg23" />
   <title
      id="title2">Arrow Up</title>
   <desc
      id="desc4">Arrow Up Top</desc>
   <g
-     id="icon"
-     transform="matrix(0.76279069,0,0,0.76279069,3.9325189,6.3395348)">
+     transform="matrix(0.76279069,0,0,0.76279069,3.9325189,6.3395348)"
+     id="icon">
     <defs
        id="defs16">
       <linearGradient
-         id="arrow-backing"
-         x1="-5.2915025"
-         y1="-5.2915025"
-         x2="5.2915025"
-         y2="5.2915025"
+         gradientUnits="userSpaceOnUse"
          gradientTransform="scale(0.75592895,1.3228757)"
-         gradientUnits="userSpaceOnUse">
+         y2="5.2915025"
+         x2="5.2915025"
+         y1="-5.2915025"
+         x1="-5.2915025"
+         id="arrow-backing">
         <stop
-           offset="0%"
+           id="stop6"
            stop-color="#72c466"
-           id="stop6" />
+           offset="0%" />
         <stop
-           offset="100%"
+           id="stop8"
            stop-color="#22601e"
-           id="stop8" />
+           offset="100%" />
       </linearGradient>
       <linearGradient
-         id="arrow-center"
-         x1="-3.8729832"
-         y1="-3.8729832"
-         x2="3.8729832"
-         y2="3.8729832"
+         gradientUnits="userSpaceOnUse"
          gradientTransform="scale(0.64549722,1.5491933)"
-         gradientUnits="userSpaceOnUse">
+         y2="3.8729832"
+         x2="3.8729832"
+         y1="-3.8729832"
+         x1="-3.8729832"
+         id="arrow-center">
         <stop
-           offset="0%"
+           id="stop11"
            stop-color="#a7d69e"
-           id="stop11" />
+           offset="0%" />
         <stop
-           offset="100%"
+           id="stop13"
            stop-color="#78bd72"
-           id="stop13" />
+           offset="100%" />
       </linearGradient>
     </defs>
     <path
-       d="m -2,-3 h -2 l 4,-4 4,4 H 2 V 7 h -4 z"
-       id="path18"
        style="fill:url(#arrow-backing)"
-       inkscape:connector-curvature="0" />
+       id="path18"
+       d="m -2,-3 h -2 l 4,-4 4,4 H 2 V 7 h -4 z" />
     <path
-       d="M -1,-3.5 H -2.5 L 0,-6 2.5,-3.5 H 1 V 6 h -2 z"
-       id="path20"
        style="fill:url(#arrow-center)"
-       inkscape:connector-curvature="0" />
+       id="path20"
+       d="M -1,-3.5 H -2.5 L 0,-6 2.5,-3.5 H 1 V 6 h -2 z" />
   </g>
   <g
-     transform="matrix(0.76279069,0,0,0.76279069,8.9488372,6.3395348)"
-     id="icon-3">
+     id="icon-3"
+     transform="matrix(0.76279069,0,0,0.76279069,8.9488372,6.3395348)">
     <g
-       id="g912"
-       transform="scale(-1)">
+       transform="scale(-1)"
+       id="g912">
       <defs
          id="defs906">
         <linearGradient
-           y2="0"
-           x2="0"
-           y1="1"
+           id="linearGradient933"
            x1="1"
-           id="linearGradient933">
+           y1="1"
+           x2="0"
+           y2="0">
           <stop
-             id="stop929"
+             offset="0%"
              stop-color="#72c466"
-             offset="0%" />
+             id="stop929" />
           <stop
-             id="stop931"
+             offset="100%"
              stop-color="#22601e"
-             offset="100%" />
+             id="stop931" />
         </linearGradient>
         <linearGradient
-           y2="0"
-           x2="0"
-           y1="1"
+           id="linearGradient939"
            x1="1"
-           id="linearGradient939">
+           y1="1"
+           x2="0"
+           y2="0">
           <stop
-             id="stop935"
+             offset="0%"
              stop-color="#a7d69e"
-             offset="0%" />
+             id="stop935" />
           <stop
-             id="stop937"
+             offset="100%"
              stop-color="#78bd72"
-             offset="100%" />
+             id="stop937" />
         </linearGradient>
       </defs>
       <path
-         style="fill:url(#arrow-backing-6)"
-         id="path908"
          d="m -2,-3 h -2 l 4,-4 4,4 H 2 V 7 h -4 z"
-         inkscape:connector-curvature="0" />
+         id="path908"
+         style="fill:url(#arrow-backing-6)" />
       <path
-         style="fill:url(#arrow-center-7)"
-         id="path910"
          d="M -1,-3.5 H -2.5 L 0,-6 2.5,-3.5 H 1 V 6 h -2 z"
-         inkscape:connector-curvature="0" />
+         id="path910"
+         style="fill:url(#arrow-center-7)" />
     </g>
   </g>
   <g
-     transform="translate(12.508475,12.474576)"
-     id="delete">
+     id="delete"
+     transform="translate(12.508475,12.474576)">
     <defs
        id="defs1016">
       <linearGradient
-         y2="1"
-         x2="1"
-         y1="0"
+         id="linearGradient1041"
          x1="0"
-         id="linearGradient1041">
+         y1="0"
+         x2="1"
+         y2="1">
         <stop
-           id="stop1037"
+           offset="0%"
            stop-color="#c4581e"
-           offset="0%" />
+           id="stop1037" />
         <stop
-           id="stop1039"
+           offset="100%"
            stop-color="#b84503"
-           offset="100%" />
+           id="stop1039" />
       </linearGradient>
       <linearGradient
-         y2="1"
-         x2="1"
-         y1="0"
+         id="linearGradient1047"
          x1="0"
-         id="linearGradient1047">
+         y1="0"
+         x2="1"
+         y2="1">
         <stop
-           id="stop1043"
+           offset="0%"
            stop-color="#fed6b8"
-           offset="0%" />
+           id="stop1043" />
         <stop
-           id="stop1045"
+           offset="100%"
            stop-color="#dd6401"
-           offset="100%" />
+           id="stop1045" />
       </linearGradient>
     </defs>
     <circle
-       r="3.5"
+       style="fill:url(#backing_delete)"
+       cy="0"
+       cx="0"
        id="back"
-       cx="0"
-       cy="0"
-       style="fill:url(#backing_delete)" />
+       r="3.5" />
     <circle
-       r="2.5"
-       id="center-dot"
-       cx="0"
+       style="fill:url(#center_delete)"
        cy="0"
-       style="fill:url(#center_delete)" />
+       cx="0"
+       id="center-dot"
+       r="2.5" />
     <path
-       id="path1020"
+       style="fill:#ffffff"
        d="m -1.5,-0.5 h 3 v 1 h -3 z"
-       inkscape:connector-curvature="0"
-       style="fill:#ffffff" />
+       id="path1020" />
   </g>
 </svg>
