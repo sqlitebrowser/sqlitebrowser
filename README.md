@@ -17,7 +17,7 @@ _DB Browser for SQLite_ (DB4S) is a high quality, visual, open source tool to
 create, design, and edit database files compatible with SQLite.
 
 DB4S is for users and developers who want to create, search, and edit
-databases.  DB4S uses a familiar spreadsheet-like interface, and complicated SQL commands do not have to be learned.
+databases.  DB4S uses a familiar spreadsheet-like interface, so complicated SQL commands do not have to be learned.
 
 Controls and wizards are available for users to:
 
@@ -57,7 +57,7 @@ Download Windows releases here:
 
 * https://sqlitebrowser.org/dl/#windows
 
-**Note** - If for some reason the standard Windows release does not work
+**Note:** If for some reason the standard Windows release does not work
 (e.g. gives an error), try a nightly build.  Nightly builds often fix bugs
 reported after the last release. :D
 
@@ -69,7 +69,7 @@ DB Browser for SQLite works well on macOS.
 
 * macOS 10.12 (Sierra) - 10.15 (Catalina) are tested and known to work.
 
-macOS 10.13 is needed for the latest release (v3.12.2), but v3.12.0 will work on macOS 10.12 (Thanks to @Kadigan for pointing this out).
+macOS 10.13 is needed for the latest release (v3.12.2), but v3.12.0 will work on macOS 10.12 (thanks to @Kadigan for pointing this out).
 
 Download macOS releases here:
 
@@ -91,7 +91,7 @@ and also you can be installed via [Homebrew Cask](https://caskroom.github.io/ "H
     $ brew tap homebrew/cask-versions
     $ brew cask install db-browser-for-sqlite-nightly
 
-**Note** - You can **NOT** install nightly builds with Homebrew if you already have the stable version installed.
+**Note:** You can **NOT** install nightly builds with Homebrew if you already have the stable version installed.
 
 ## Linux
 
@@ -117,7 +117,7 @@ Install for Fedora (i386 and x86_64) by issuing the following command:
 
 ### Debian
 
-Note that Debian focuses more on stability rather than newest features. Therefore packages will typically contain some older (but well tested) version, compared to the latest release.
+Debian focuses more on stability rather than newest features. Therefore packages will typically contain an older (but well tested) version, compared to the latest release.
 
 Update the cache using:
 
@@ -137,7 +137,7 @@ provides a PPA with the latest release here:
 
 * https://launchpad.net/~linuxgndu/+archive/ubuntu/sqlitebrowser
 
-To add this ppa just type in these commands in terminal:
+To add this PPA just type in this command in terminal:
 
     sudo add-apt-repository -y ppa:linuxgndu/sqlitebrowser
 
@@ -164,7 +164,7 @@ Nightly builds are available here:
 
 * https://launchpad.net/~linuxgndu/+archive/ubuntu/sqlitebrowser-testing
 
-To add this ppa, type these commands into the terminal:
+To add this PPA, type these commands into the terminal:
 
     sudo add-apt-repository -y ppa:linuxgndu/sqlitebrowser-testing
 
@@ -178,8 +178,7 @@ Install the package using:
 
 ### Other Linux
 
-On others, compile DB4S using the instructions
-in [BUILDING.md](BUILDING.md).
+On others, compile DB4S using the instructions in [BUILDING.md](BUILDING.md).
 
 ## FreeBSD
 
@@ -259,7 +258,7 @@ Follow us on Twitter: https://twitter.com/sqlitebrowser
 ## History
 
 This program was developed originally by Mauricio Piacentini
-([@piacentini](https://github.com/piacentini)) from Tabuleiro Producoes, as
+([@piacentini](https://github.com/piacentini)) from Tabuleiro Producoes as
 the Arca Database Browser. The original version was used as a free companion
 tool to the Arca Database Xtra, a commercial product that embeds SQLite
 databases with some additional extensions to handle compressed and binary data.
@@ -267,7 +266,7 @@ databases with some additional extensions to handle compressed and binary data.
 The original code was trimmed and adjusted to be compatible with standard
 SQLite 2.x databases. The resulting program was renamed SQLite Database
 Browser, and released into the Public Domain by Mauricio. Icons were
-contributed by [Raquel Ravanini](http://www.raquelravanini.com), also from
+contributed by [Raquel Ravanini](http://www.raquelravanini.com) and
 Tabuleiro. Jens Miltner ([@jmiltner](https://github.com/jmiltner)) contributed
 the code to support SQLite 3.x databases for the 1.2 release.
 
@@ -279,13 +278,13 @@ became involved, and have been the main driving force from that point.  Justin
 Clift ([@justinclift](https://github.com/justinclift)) helps out with testing
 on OSX, and started the new github.com/sqlitebrowser organisation on GitHub.
 
-[John T. Haller](http://johnhaller.com), of
-[PortableApps.com](http://portableapps.com) fame, created the new logo.  He
+[John T. Haller](https://johnhaller.com), of
+[PortableApps.com](https://portableapps.com) fame, created the new logo.  He
 based it on the Tango icon set (public domain).
 
 In August 2014, the project was renamed to "Database Browser for SQLite" at
-the request of [Richard Hipp](http://www.hwaci.com/drh) (creator of
-[SQLite](http://sqlite.org)), as the previous name was creating unintended
+the request of [Richard Hipp](https://www.hwaci.com/drh) (creator of
+[SQLite](https://sqlite.org)), as the previous name was creating unintended
 support issues.
 
 In September 2014, the project was renamed to "DB Browser for SQLite", to
