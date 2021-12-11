@@ -1,6 +1,5 @@
 #include "EditDialog.h"
 #include "ui_EditDialog.h"
-#include "sqlitedb.h"
 #include "Settings.h"
 #include "qhexedit.h"
 #include "docktextedit.h"
@@ -113,6 +112,22 @@ EditDialog::~EditDialog()
 
 void EditDialog::setCurrentIndex(const QModelIndex& idx)
 {
+    if (m_currentIndex != QPersistentModelIndex(idx) && ui->buttonApply->isEnabled() &&
+        (sciEdit->isModified() || ui->qtEdit->document()->isModified() || hexEdit->isModified())) {
+
+        QMessageBox::StandardButton reply = QMessageBox::question(
+            this,
+            tr("Unsaved data in the cell editor"),
+            tr("The cell editor contains data not yet applied to the database.\n"
+               "Do you want to apply the edited data?"),
+            QMessageBox::Apply | QMessageBox::Discard);
+
+        if (reply == QMessageBox::Apply)
+            accept();
+    }
+
+    setDisabled(!idx.isValid());
+
     m_currentIndex = QPersistentModelIndex(idx);
 
     QByteArray bArrData = idx.data(Qt::EditRole).toByteArray();
@@ -120,6 +135,8 @@ void EditDialog::setCurrentIndex(const QModelIndex& idx)
     updateCellInfoAndMode(bArrData);
 
     ui->buttonApply->setDisabled(true);
+    sciEdit->setModified(false);
+    ui->qtEdit->document()->setModified(false);
 }
 
 void EditDialog::showEvent(QShowEvent*)
@@ -163,6 +180,7 @@ void EditDialog::loadData(const QByteArray& bArrdata)
         case TextEditor:
         case JsonEditor:
         case XmlEditor:
+        case SqlEvaluator:
 
             // The JSON widget buffer is now the main data source
             dataSource = SciBuffer;
@@ -216,6 +234,7 @@ void EditDialog::loadData(const QByteArray& bArrdata)
         case TextEditor:
         case JsonEditor:
         case XmlEditor:
+        case SqlEvaluator:
             setDataInBuffer(bArrdata, SciBuffer);
             break;
          case RtlTextEditor:
@@ -247,8 +266,9 @@ void EditDialog::loadData(const QByteArray& bArrdata)
         // Update the display if in text edit or image viewer mode
         switch (editMode) {
         case TextEditor:
-        case XmlEditor:
         case JsonEditor:
+        case XmlEditor:
+        case SqlEvaluator:
             // Disable text editing, and use a warning message as the contents
             sciEdit->setText(tr("Image data can't be viewed in this mode.") % '\n' %
                              tr("Try switching to Image or Binary mode."));
@@ -279,7 +299,7 @@ void EditDialog::loadData(const QByteArray& bArrdata)
         case TextEditor:
         case JsonEditor:
         case XmlEditor:
-
+        case SqlEvaluator:
             setDataInBuffer(bArrdata, SciBuffer);
             break;
 
@@ -316,6 +336,7 @@ void EditDialog::loadData(const QByteArray& bArrdata)
         case TextEditor:
         case JsonEditor:
         case XmlEditor:
+        case SqlEvaluator:
             // Disable text editing, and use a warning message as the contents
             sciEdit->setText(QString(tr("Binary data can't be viewed in this mode.") % '\n' %
                                      tr("Try switching to Binary mode.")));
@@ -367,6 +388,7 @@ void EditDialog::importData(bool asLink)
     switch (mode) {
     case TextEditor:
     case RtlTextEditor:
+    case SqlEvaluator:
         selectedFilter = FILE_FILTER_TXT;
         break;
     case HexEditor:
@@ -432,7 +454,7 @@ void EditDialog::exportData()
         break;
     case RtlText:
     case Text:
-        // Include the XML case on the text data type, since XML detection is not very sofisticated.
+        // Include the XML case on the text data type, since XML detection is not very sophisticated.
         if (ui->comboMode->currentIndex() == XmlEditor)
             filters << FILE_FILTER_XML
                     << FILE_FILTER_TXT;
@@ -620,6 +642,9 @@ void EditDialog::accept()
                 emit recordTextUpdated(m_currentIndex, newData.toUtf8(), false);
         }
         break;
+        case DockTextEdit::SQL:
+            emit evaluateText(m_currentIndex, sciEdit->text().toStdString());
+            break;
         }
         break;
     case HexBuffer:
@@ -632,7 +657,6 @@ void EditDialog::accept()
     }
 
     if (!newTextData.isEmpty()) {
-
         QString oldData = m_currentIndex.data(Qt::EditRole).toString();
         // Check first for null case, otherwise empty strings cannot overwrite NULL values
         if ((m_currentIndex.data(Qt::EditRole).isNull() && dataType != Null) || oldData != newTextData)
@@ -675,6 +699,7 @@ void EditDialog::setDataInBuffer(const QByteArray& bArrdata, DataSources source)
     case SciBuffer:
         switch (sciEdit->language()) {
         case DockTextEdit::PlainText:
+        case DockTextEdit::SQL:
         {
             // Load the text into the text editor, remove BOM first if there is one
             QByteArray dataWithoutBom = bArrdata;
@@ -756,6 +781,10 @@ void EditDialog::editModeChanged(int newMode)
     ui->actionIndent->setEnabled(newMode == JsonEditor || newMode == XmlEditor);
     setStackCurrentIndex(newMode);
 
+    // Change focus from the mode combo to the editor to start typing.
+    if (ui->comboMode->hasFocus())
+        setFocus();
+
     // * If the dataSource is the text buffer, the data is always text *
     switch (dataSource) {
     case QtBuffer:
@@ -767,7 +796,7 @@ void EditDialog::editModeChanged(int newMode)
         case TextEditor: // Switching to one of the Scintilla editor modes
         case JsonEditor:
         case XmlEditor:
-
+        case SqlEvaluator:
             setDataInBuffer(ui->qtEdit->toPlainText().toUtf8(), SciBuffer);
             break;
 
@@ -820,9 +849,10 @@ void EditDialog::editModeChanged(int newMode)
         }
         break;
 
-        case TextEditor: // Switching to the text editor
-        case JsonEditor: // Switching to the JSON editor
-        case XmlEditor: // Switching to the XML editor
+        case TextEditor:
+        case JsonEditor:
+        case XmlEditor:
+        case SqlEvaluator:
             // The text is already in the Sci buffer but we need to perform the necessary formatting.
             setDataInBuffer(sciEdit->text().toUtf8(), SciBuffer);
 
@@ -981,6 +1011,7 @@ void EditDialog::switchEditorMode(bool autoSwitchForType)
         // Switch automatically the editing mode according to the detected data.
         switch (dataType) {
         case Image:
+        case SVG:
             ui->comboMode->setCurrentIndex(ImageEditor);
             break;
         case Binary:
@@ -996,7 +1027,6 @@ void EditDialog::switchEditorMode(bool autoSwitchForType)
         case JSON:
             ui->comboMode->setCurrentIndex(JsonEditor);
             break;
-        case SVG:
         case XML:
             ui->comboMode->setCurrentIndex(XmlEditor);
             break;
@@ -1117,6 +1147,11 @@ void EditDialog::setStackCurrentIndex(int editMode)
         ui->editorStack->setCurrentIndex(TextEditor);
         sciEdit->setLanguage(DockTextEdit::XML);
         break;
+    case SqlEvaluator:
+        // Scintilla case: switch to the single Scintilla editor and set language
+        ui->editorStack->setCurrentIndex(TextEditor);
+        sciEdit->setLanguage(DockTextEdit::SQL);
+        break;
     }
 }
 
@@ -1131,7 +1166,7 @@ void EditDialog::openPrintDialog()
     QPrinter printer;
     QPrintPreviewDialog *dialog = new QPrintPreviewDialog(&printer);
 
-    connect(dialog, &QPrintPreviewDialog::paintRequested, [this](QPrinter *previewPrinter) {
+    connect(dialog, &QPrintPreviewDialog::paintRequested, this, [this](QPrinter *previewPrinter) {
         QTextDocument document;
         switch (dataSource) {
         case SciBuffer:
@@ -1202,37 +1237,46 @@ void EditDialog::openDataWithExternal()
     case Null:
         return;
     }
-    QTemporaryFile file (QDir::tempPath() + QString("/DB4S-XXXXXX") + extension);
+    QTemporaryFile* file = new QTemporaryFile (QDir::tempPath() + QString("/DB4S-XXXXXX") + extension);
 
-    if(file.open())
-    {
+    if(!file->open()) {
+        QMessageBox::warning(this, qApp->applicationName(),
+                             tr("Couldn't save file: %1.").arg(file->fileName()));
+        delete file;
+    } else {
         switch (dataSource) {
         case HexBuffer:
-            file.write(hexEdit->data());
+            file->write(hexEdit->data());
             break;
         case SciBuffer:
-            file.write(sciEdit->text().toUtf8());
+            file->write(sciEdit->text().toUtf8());
             break;
         case QtBuffer:
-            file.write(ui->qtEdit->toPlainText().toUtf8());
+            file->write(ui->qtEdit->toPlainText().toUtf8());
             break;
         }
-        file.close();
-
-        emit requestUrlOrFileOpen(file.fileName());
+        // We don't want the file to be automatically removed by Qt when destroyed.
+        file->setAutoRemove(false);
+        // But we don't want Qt to keep the file open (and locked in Windows),
+        // and the only way is to destroy the object.
+        QString fileName = file->fileName();
+        delete file;
+        emit requestUrlOrFileOpen(fileName);
 
         QMessageBox::StandardButton reply = QMessageBox::information
             (nullptr,
              QApplication::applicationName(),
              tr("The data has been saved to a temporary file and has been opened with the default application. "
-                "You can now edit the file and, when you are ready, apply the saved new data to the cell editor or cancel any changes."),
+                "You can now edit the file and, when you are ready, apply the saved new data to the cell or cancel any changes."),
              QMessageBox::Apply | QMessageBox::Cancel);
 
-        QFile readFile(file.fileName());
+        QFile readFile(fileName);
         if(reply == QMessageBox::Apply && readFile.open(QIODevice::ReadOnly)){
             QByteArray d = readFile.readAll();
             loadData(d);
             readFile.close();
+            accept();
         }
+        readFile.remove();
     }
 }

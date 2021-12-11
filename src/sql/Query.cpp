@@ -25,12 +25,9 @@ std::string Query::buildWherePart() const
     {
         for(auto i=m_where.cbegin();i!=m_where.cend();++i)
         {
-            if(i->first >= m_column_names.size())
-                continue;
-
-            const auto it = findSelectedColumnByName(m_column_names.at(i->first));
-            std::string column = sqlb::escapeIdentifier(m_column_names.at(i->first));
-            if(it != m_selected_columns.cend() && it->selector != column)
+            const auto it = findSelectedColumnByName(i->first);
+            std::string column = sqlb::escapeIdentifier(i->first);
+            if(it != m_selected_columns.cend() && it->selector != i->first)
                 column = it->selector;
             where += column + " " + i->second + " AND ";
         }
@@ -84,7 +81,13 @@ std::string Query::buildQuery(bool withRowid) const
         // If there is only one rowid column, we leave it as is.
         if(m_rowid_columns.size() == 1)
         {
-            selector = sqlb::escapeIdentifier(m_rowid_columns.at(0)) + ",";
+            // As of SQLite 3.36 when selecting rowid from a view SQLite does not return NULL anymore but instead returns "rowid" and throws
+            // an error. To avoid that error (we don't actually care for the value of this column, so the value is not the issue here) we
+            // explicitly select NULL (without any quotes) here.
+            if(m_is_view && !hasCustomRowIdColumn())
+                selector = "NULL,";
+            else
+                selector = sqlb::escapeIdentifier(m_rowid_columns.at(0)) + ",";
         } else {
             selector += "sqlb_make_single_value(";
             for(size_t i=0;i<m_rowid_columns.size();i++)
@@ -114,11 +117,7 @@ std::string Query::buildQuery(bool withRowid) const
     // Sorting
     std::string order_by;
     for(const auto& sorted_column : m_sort)
-    {
-        if(sorted_column.column < m_column_names.size())
-            order_by += sqlb::escapeIdentifier(m_column_names.at(sorted_column.column)) + " "
-                    + (sorted_column.direction == sqlb::Ascending ? "ASC" : "DESC") + ",";
-    }
+        order_by += sorted_column.toSql() + ",";
     if(order_by.size())
     {
         order_by.pop_back();

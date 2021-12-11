@@ -4,6 +4,20 @@
 #include "Qsci/qsciapis.h"
 #include "Settings.h"
 #include "sqlitedb.h"
+#include "sqlite3.h"
+
+namespace
+{
+    const int SQLITE_VER_NUMBER_3_35 = 3035000;
+
+    bool enabledMathFunctions()
+    {
+        bool enabled = (sqlite3_libversion_number() >= SQLITE_VER_NUMBER_3_35) &&
+                       ((sqlite3_compileoption_used("SQLITE_OMIT_COMPILEOPTION_DIAGS") == 1) ||
+                        (sqlite3_compileoption_used("SQLITE_ENABLE_MATH_FUNCTIONS") == 1 ) );
+        return enabled;
+    }
+}
 
 SqlUiLexer::SqlUiLexer(QObject* parent) :
     QsciLexerSQL(parent)
@@ -42,7 +56,7 @@ void SqlUiLexer::setupAutoCompletion()
             << "OF" << "OFFSET" << "ON" << "OR" << "ORDER"
             << "OUTER" << "OVER" << "PARTITION" << "PLAN" << "PRAGMA" << "PRECEDING" << "PRIMARY" << "QUERY"
             << "RAISE" << "RANGE" << "RECURSIVE" << "REFERENCES" << "REGEXP" << "REINDEX" << "RELEASE"
-            << "RENAME" << "REPLACE" << "RESTRICT" << "RIGHT" << "ROLLBACK"
+            << "RENAME" << "REPLACE" << "RESTRICT" << "RETURNING" << "RIGHT" << "ROLLBACK"
             << "ROWID" << "ROW" << "ROWS" << "SAVEPOINT" << "SELECT" << "SET" << "STORED" << "TABLE"
             << "TEMP" << "TEMPORARY" << "THEN" << "TO" << "TRANSACTION"
             << "TRIGGER" << "UNBOUNDED" << "UNION" << "UNIQUE" << "UPDATE" << "USING"
@@ -136,6 +150,43 @@ void SqlUiLexer::setupAutoCompletion()
             << "nth_value" + tr("(expr,N) This built-in window function calculates the window frame for each row in the same way as an aggregate window function. It returns the value of expr evaluated against the row N of the window frame. Rows are numbered within the window frame starting from 1 in the order defined by the ORDER BY clause if one is present, or in arbitrary order otherwise. If there is no Nth row in the partition, then NULL is returned.")
             ;
 
+    if (enabledMathFunctions()) {
+        functionPatterns
+            // Math functions introduced from SQLite 3.35
+            << "acos" + tr("(X) Return the arccosine of X. The result is in radians.")
+            << "acosh" + tr("(X) Return the hyperbolic arccosine of X.")
+            << "asin" + tr("(X) Return the arcsine of X. The result is in radians.")
+            << "asinh" + tr("(X) Return the hyperbolic arcsine of X.")
+            << "atan" + tr("(X) Return the arctangent of X. The result is in radians.")
+            << "atan2" + tr("(X,Y) Return the arctangent of Y/X. The result is in radians. he result is placed into correct quadrant depending on the signs of X and Y.")
+            << "atanh" + tr("(X) Return the hyperbolic arctangent of X.")
+            << "ceil" + tr("(X) Return the first representable integer value greater than or equal to X. For positive values of X, this routine rounds away from zero. For negative values of X, this routine rounds toward zero.")
+            << "ceiling" + tr("(X) Return the first representable integer value greater than or equal to X. For positive values of X, this routine rounds away from zero. For negative values of X, this routine rounds toward zero.")
+            << "cos" + tr("(X) Return the cosine of X. X is in radians.")
+            << "cosh" + tr("(X) Return the hyperbolic cosine of X.")
+            << "degrees" + tr("(X) Convert value X from radians into degrees.")
+            << "exp" + tr("(X) Compute e (Euler's number, approximately 2.71828182845905) raised to the power X.")
+            << "floor" + tr("(X) Return the first representable integer value less than or equal to X. For positive numbers, this function rounds toward zero. For negative numbers, this function rounds away from zero.")
+            << "ln" + tr("(X) Return the natural logarithm of X.")
+            << "log" + tr("(B,X) Return the base-B logarithm of X.")
+            << "log" + tr("(X) Return the base-10 logarithm for X.")
+            << "log10" + tr("(X) Return the base-10 logarithm for X.")
+            << "log2" + tr("(X) Return the logarithm base-2 for the number X.")
+            << "mod" + tr("(X,Y) Return the remainder after dividing X by Y.")
+            << "pi" + tr("() Return an approximation for π.")
+            << "pow" + tr("(X,Y) Compute X raised to the power Y.")
+            << "power" + tr("(X,Y) Compute X raised to the power Y.")
+            << "radians" + tr("(X) Convert X from degrees into radians.")
+            << "sin" + tr("(X) Return the sine of X. X is in radians.")
+            << "sinh" + tr("(X) Return the hyperbolic sine of X.")
+            << "sqrt" + tr("(X) Return the square root of X. NULL is returned if X is negative.")
+            << "tan" + tr("(X) Return the tangent of X. X is in radians.")
+            << "tanh" + tr("(X) Return the hyperbolic tangent of X.")
+            << "trunc" + tr("(X) Return the representable integer in between X and 0 (inclusive) that is furthest away from zero. Or, in other words, return the integer part of X, rounding toward zero.")
+            ;
+    }
+
+
     listFunctions.clear();
     for(const QString& keyword : functionPatterns)
     {
@@ -212,7 +263,7 @@ QStringList SqlUiLexer::autoCompletionWordSeparators() const
     QStringList wl;
 
     QString escapeSeparator = sqlb::escapeIdentifier(QString("."));
-    // Case for non symetric quotes, e.g. "[.]" to "].["
+    // Case for non symmetric quotes, e.g. "[.]" to "].["
     std::reverse(escapeSeparator.begin(), escapeSeparator.end());
 
     wl << "." << escapeSeparator;

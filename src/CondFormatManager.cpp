@@ -123,6 +123,10 @@ void CondFormatManager::addItem(const CondFormat& aCondFormat)
 
     newItem->setText(ColumnFilter, aCondFormat.filter());
     ui->tableCondFormats->insertTopLevelItem(i, newItem);
+
+    for(int col = ColumnForeground; col < ColumnFilter; ++col) {
+        ui->tableCondFormats->resizeColumnToContents(col);
+    }
 }
 
 void CondFormatManager::removeItem()

@@ -40,7 +40,7 @@ U3	[\xe0-\xef]
 U4	[\xf0-\xf4]
 UNICODE	{U2}{U}|{U3}{U}{U}|{U4}{U}{U}{U}
 
-ID			([a-z_]|{UNICODE})([a-z0-9_]|{UNICODE})*
+ID			([a-z_]|{UNICODE})([a-z0-9_$]|{UNICODE})*
 
 GRAVEQUOTEDID		`([^\n`]|(``))*`
 SQUAREBRACKETID		\[([^\n\]])*\]
@@ -175,6 +175,7 @@ WS			[ \t\f]
 "REGEXP"		return TOKEN(REGEXP);
 "REPLACE"		return TOKEN(REPLACE);
 "RESTRICT"		return TOKEN(RESTRICT);
+"RETURNING"		return TOKEN(RETURNING);
 "ROLLBACK"		return TOKEN(ROLLBACK);
 "ROWID"			return TOKEN(ROWID);
 "ROWS"			return TOKEN(ROWS);

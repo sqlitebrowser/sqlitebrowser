@@ -56,6 +56,9 @@ static const QString FILE_FILTER_HEX(QObject::tr("Hex Dump Files (*.dat *.bin)")
 // Dynamic/Shared Objects File Extension Filter
 static const QString FILE_FILTER_DYN(QObject::tr("Extensions (*.so *.dylib *.dll)"));
 
+// Initialization File Extension Filter
+static const QString FILE_FILTER_INI(QObject::tr("Initialization File (*.ini)"));
+
 enum FileDialogTypes {
     NoSpecificType,
 
@@ -74,7 +77,10 @@ enum FileDialogTypes {
     OpenDataFile,
 
     OpenExtensionFile,
-    OpenCertificateFile
+    OpenCertificateFile,
+
+    CreateSettingsFile,
+    OpenSettingsFile
 };
 
 class FileDialog : public QFileDialog

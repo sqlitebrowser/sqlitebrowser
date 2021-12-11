@@ -192,7 +192,7 @@
       <enum>Qt::CopyAction</enum>
      </property>
      <property name="selectionMode">
-      <enum>QAbstractItemView::ContiguousSelection</enum>
+      <enum>QAbstractItemView::ExtendedSelection</enum>
      </property>
     </widget>
    </item>
@@ -460,7 +460,7 @@
        </property>
        <property name="icon">
         <iconset resource="icons/icons.qrc">
-         <normaloff>:/icons/resultset_first.png</normaloff>:/icons/resultset_first.png</iconset>
+         <normaloff>:/icons/resultset_first</normaloff>:/icons/resultset_first</iconset>
        </property>
       </widget>
      </item>
@@ -477,7 +477,7 @@
        </property>
        <property name="icon">
         <iconset resource="icons/icons.qrc">
-         <normaloff>:/icons/resultset_previous.png</normaloff>:/icons/resultset_previous.png</iconset>
+         <normaloff>:/icons/resultset_previous</normaloff>:/icons/resultset_previous</iconset>
        </property>
       </widget>
      </item>
@@ -670,6 +670,20 @@
     <string>This button exports the data of the browsed table as currently displayed (after filters, display formats and order column) as a CSV file.</string>
    </property>
   </action>
+  <action name="actionFilteredTableExportJson">
+   <property name="text">
+    <string>Export to &amp;JSON</string>
+   </property>
+   <property name="toolTip">
+    <string>Export the filtered data to JSON</string>
+   </property>
+   <property name="statusTip">
+    <string>Export the filtered data to JSON</string>
+   </property>
+   <property name="whatsThis">
+    <string>This button exports the data of the browsed table as currently displayed (after filters, display formats and order column) as a JSON file.</string>
+   </property>
+  </action>
   <action name="actionFilterSaveAsView">
    <property name="text">
     <string>Save as &amp;view</string>
@@ -836,7 +850,7 @@
    </property>
    <property name="icon">
     <iconset resource="icons/icons.qrc">
-     <normaloff>:/icons/text_bold.png</normaloff>:/icons/text_bold.png</iconset>
+     <normaloff>:/icons/text_bold</normaloff>:/icons/text_bold</iconset>
    </property>
    <property name="text">
     <string>Bold</string>
@@ -854,7 +868,7 @@
    </property>
    <property name="icon">
     <iconset resource="icons/icons.qrc">
-     <normaloff>:/icons/text_italic.png</normaloff>:/icons/text_italic.png</iconset>
+     <normaloff>:/icons/text_italic</normaloff>:/icons/text_italic</iconset>
    </property>
    <property name="text">
     <string>Italic</string>
@@ -869,7 +883,7 @@
    </property>
    <property name="icon">
     <iconset resource="icons/icons.qrc">
-     <normaloff>:/icons/text_underline.png</normaloff>:/icons/text_underline.png</iconset>
+     <normaloff>:/icons/text_underline</normaloff>:/icons/text_underline</iconset>
    </property>
    <property name="text">
     <string>Underline</string>
@@ -887,7 +901,7 @@
    </property>
    <property name="icon">
     <iconset resource="icons/icons.qrc">
-     <normaloff>:/icons/text_align_right.png</normaloff>:/icons/text_align_right.png</iconset>
+     <normaloff>:/icons/text_align_right</normaloff>:/icons/text_align_right</iconset>
    </property>
    <property name="text">
     <string>Align Right</string>
@@ -902,7 +916,7 @@
    </property>
    <property name="icon">
     <iconset resource="icons/icons.qrc">
-     <normaloff>:/icons/text_align_left.png</normaloff>:/icons/text_align_left.png</iconset>
+     <normaloff>:/icons/text_align_left</normaloff>:/icons/text_align_left</iconset>
    </property>
    <property name="text">
     <string>Align Left</string>
@@ -917,7 +931,7 @@
    </property>
    <property name="icon">
     <iconset resource="icons/icons.qrc">
-     <normaloff>:/icons/text_align_center.png</normaloff>:/icons/text_align_center.png</iconset>
+     <normaloff>:/icons/text_align_center</normaloff>:/icons/text_align_center</iconset>
    </property>
    <property name="text">
     <string>Center Horizontally</string>
@@ -932,7 +946,7 @@
    </property>
    <property name="icon">
     <iconset resource="icons/icons.qrc">
-     <normaloff>:/icons/text_align_justify.png</normaloff>:/icons/text_align_justify.png</iconset>
+     <normaloff>:/icons/text_align_justify</normaloff>:/icons/text_align_justify</iconset>
    </property>
    <property name="text">
     <string>Justify</string>
@@ -1040,6 +1054,17 @@
    </property>
    <property name="toolTip">
     <string>Replace text in cells</string>
+   </property>
+  </action>
+  <action name="actionFreezeColumns">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Freeze columns</string>
+   </property>
+   <property name="toolTip">
+    <string>Make all columns from the first column up to this column not move when scrolling horizontally</string>
    </property>
   </action>
  </widget>
@@ -1313,7 +1338,23 @@
    <sender>actionFilteredTableExportCsv</sender>
    <signal>triggered()</signal>
    <receiver>TableBrowser</receiver>
-   <slot>exportFilteredTable()</slot>
+   <slot>exportCsvFilteredTable()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionFilteredTableExportJson</sender>
+   <signal>triggered()</signal>
+   <receiver>TableBrowser</receiver>
+   <slot>exportJsonFilteredTable()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -1420,7 +1461,8 @@
   <slot>addRecord()</slot>
   <slot>deleteRecord()</slot>
   <slot>insertValues()</slot>
-  <slot>exportFilteredTable</slot>
+  <slot>exportCsvFilteredTable</slot>
+  <slot>exportJsonFilteredTable</slot>
   <slot>saveFilterAsView</slot>
   <slot>setDefaultTableEncoding()</slot>
   <slot>hideColumns()</slot>

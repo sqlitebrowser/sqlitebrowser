@@ -46,6 +46,7 @@ public:
 public slots:
     void finishExecution(const QString& result, const bool ok);
     void saveAsCsv();
+    void saveAsJson();
     void reloadSettings();
     void fetchedData();
     void setFindFrameVisibility(bool show);
@@ -71,6 +72,7 @@ private:
     bool m_columnsResized;              // This is set to true if the columns of the table view were already adjusted to fit their contents
     bool showErrorIndicators;
     bool error_state;
+    bool follow_mode;
 };
 
 #endif

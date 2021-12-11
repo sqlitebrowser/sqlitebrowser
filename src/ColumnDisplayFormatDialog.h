@@ -25,6 +25,9 @@ public:
 
     QString selectedDisplayFormat() const;
 
+protected:
+    void showEvent(QShowEvent *) override;
+
 private slots:
     void updateSqlCode();
     void accept() override;

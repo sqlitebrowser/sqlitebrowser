@@ -81,6 +81,8 @@ private:
 
     mutable std::future<void> row_counter;
 
+    bool first_chunk_loaded;
+
     size_t num_tasks;
     std::shared_ptr<sqlite3> pDb; //< exclusive access while held...
 

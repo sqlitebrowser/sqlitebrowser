@@ -96,6 +96,7 @@ private:
     QMenu* m_contextMenu;
     bool m_showLegend;
     bool m_stackedBars;
+    bool m_fixedFormat;
     Palette m_graphPalette;
     std::vector<QCPAxis *> yAxes;
     std::vector<int> PlotColumnY;
@@ -108,6 +109,7 @@ private:
      */
     QVariant::Type guessDataType(SqliteTableModel* model, int column) const;
     void adjustBars();
+    void adjustAxisFormat();
 
 private slots:
     void on_treePlotColumns_itemChanged(QTreeWidgetItem* item, int column);

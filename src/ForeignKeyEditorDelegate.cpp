@@ -30,14 +30,14 @@ public:
         layout->setMargin(0);
         setLayout(layout);
 
-        connect(m_btnReset, &QPushButton::clicked, [&]
+        connect(m_btnReset, &QPushButton::clicked, this, [&]
         {
             tablesComboBox->setCurrentIndex(-1);
             idsComboBox->setCurrentIndex(-1);
             clauseEdit->clear();
         });
 
-        connect(tablesComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+        connect(tablesComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this,
                 [=](int index)
         {
             // reset ids combo box
@@ -83,11 +83,11 @@ ForeignKeyEditorDelegate::ForeignKeyEditorDelegate(const DBBrowserDB& db, sqlb::
 {
     for(const auto& it : m_db.schemata)
     {
-        for(const auto& jt : it.second)
+        for(const auto& jt : it.second.tables)
         {
             // Don't insert the current table into the list. The name and fields of the current table are always taken from the m_table reference
-            if(jt.second->type() == sqlb::Object::Types::Table && jt.second->name() != m_table.name())
-                m_tablesIds.insert({jt.second->name(), std::dynamic_pointer_cast<sqlb::Table>(jt.second)->fieldNames()});
+            if(jt.first != m_table.name())
+                m_tablesIds.insert({jt.first, jt.second->fieldNames()});
         }
     }
 }
@@ -100,9 +100,11 @@ QWidget* ForeignKeyEditorDelegate::createEditor(QWidget* parent, const QStyleOpt
     ForeignKeyEditor* editor = new ForeignKeyEditor(parent);
     editor->setAutoFillBackground(true);
 
-    connect(editor->tablesComboBox, static_cast<void(QComboBox::*)(const QString&)>(&QComboBox::currentIndexChanged),
-            [=](const QString& tableName)
+    connect(editor->tablesComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this,
+            [=](int idx)
     {
+        QString tableName = editor->tablesComboBox->itemText(idx);
+
         QComboBox* box = editor->idsComboBox;
         box->clear();
         box->addItem(QString());                // for those heroes who don't like to specify key explicitly
@@ -122,9 +124,10 @@ QWidget* ForeignKeyEditorDelegate::createEditor(QWidget* parent, const QStyleOpt
     });
 
     editor->tablesComboBox->clear();
+    editor->tablesComboBox->addItem(QString::fromStdString(m_table.name()));    // For recursive foreign keys
+    editor->tablesComboBox->insertSeparator(1);
     for(const auto& i : m_tablesIds)
         editor->tablesComboBox->addItem(QString::fromStdString(i.first));
-    editor->tablesComboBox->addItem(QString::fromStdString(m_table.name()));    // For recursive foreign keys
 
     return editor;
 }

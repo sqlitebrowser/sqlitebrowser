@@ -1,5 +1,6 @@
 #include "docktextedit.h"
 #include "Settings.h"
+#include "SqlUiLexer.h"
 
 #include <Qsci/qscistyle.h>
 #include <Qsci/qscilexerjson.h>
@@ -9,7 +10,7 @@ QsciLexerJSON* DockTextEdit::jsonLexer = nullptr;
 QsciLexerXML* DockTextEdit::xmlLexer = nullptr;
 
 DockTextEdit::DockTextEdit(QWidget* parent) :
-    ExtendedScintilla(parent)
+    SqlTextEdit(parent)
 {
     // Create lexer objects if not done yet
     if(jsonLexer == nullptr)
@@ -29,7 +30,8 @@ DockTextEdit::DockTextEdit(QWidget* parent) :
 
 void DockTextEdit::reloadSettings()
 {
-    // Set the parent settings for both lexers
+    // Set the parent settings for all lexers
+    SqlTextEdit::reloadSettings();
     reloadLexerSettings(jsonLexer);
     reloadLexerSettings(xmlLexer);
 
@@ -92,6 +94,10 @@ void DockTextEdit::setLanguage(Language lang)
         break;
     case XML:
         setLexer(xmlLexer);
+        setFolding(QsciScintilla::BoxedTreeFoldStyle);
+        break;
+    case SQL:
+        setLexer(sqlLexer);
         setFolding(QsciScintilla::BoxedTreeFoldStyle);
         break;
     }

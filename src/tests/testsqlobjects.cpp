@@ -545,6 +545,17 @@ void TestTable::complexExpression()
     QCOMPARE(std::dynamic_pointer_cast<sqlb::CheckConstraint>(c.at(0))->expression(), "(\"a\" = 'S' AND \"b\" IS NOT NULL) OR (\"a\" IN ('A', 'P'))");
 }
 
+void TestTable::parseIdentifierWithDollar()
+{
+    std::string sql = "CREATE TABLE te$st(te$st$ INTEGER);";
+
+    Table tab(*Table::parseSQL(sql));
+    QCOMPARE(tab.name(), "te$st");
+
+    QCOMPARE(tab.fields.at(0).name(), "te$st$");
+    QCOMPARE(tab.fields.at(0).type(), "INTEGER");
+}
+
 void TestTable::parseTest()
 {
     QFETCH(std::string, sql);

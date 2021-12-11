@@ -158,15 +158,17 @@ public slots:
     void fileDetachTreeViewSelected(QTreeView* treeView);
     void reloadSettings();
     bool closeFiles();
+    void importCSVfiles(const std::vector<QString>& inputFiles, const QString& table = QString());
 
 private slots:
     void createTreeContextMenu(const QPoint & qPoint);
     void createSchemaDockContextMenu(const QPoint & qPoint);
     void changeTreeSelection();
     void fileNew();
-    void fileNewInMemoryDatabase();
-    void refreshTableBrowsers(bool force_refresh = false);
+    void fileNewInMemoryDatabase(bool open_create_dialog = true);
+    void refreshTableBrowsers();
     bool fileClose();
+    bool fileSaveAs();
     void createTable();
     void createIndex();
     void compact();
@@ -175,6 +177,7 @@ private slots:
     void helpWhatsThis();
     void helpAbout();
     void updateRecordText(const QPersistentModelIndex& idx, const QByteArray& text, bool isBlob);
+    void evaluateText(const QPersistentModelIndex& idx, const std::string& text);
     void toggleEditDock(bool visible);
     void dataTableSelectionChanged(const QModelIndex& index);
     void doubleClickTable(const QModelIndex& index);
@@ -195,6 +198,7 @@ private slots:
     void saveSqlFile();
     void saveSqlFileAs();
     void saveSqlResultsAsCsv();
+    void saveSqlResultsAsJson();
     void saveSqlResultsAsView();
     void loadExtension();
     void checkNewVersion(const QString& versionstring, const QString& url);
@@ -216,7 +220,7 @@ private slots:
     void openFindReplaceDialog();
     void toggleSqlBlockComment();
     void openSqlPrintDialog();
-    void runSqlNewTab(const QString& query, const QString& title, const QString& helpUrl, const bool autoRun = true);
+    void runSqlNewTab(const QString& query, const QString& title, const QString& helpUrl = QString(), const bool autoRun = true);
     void printDbStructure();
     void updateDatabaseBusyStatus(bool busy, const QString& user);
     void openPreferences();
@@ -225,6 +229,7 @@ private slots:
     void saveSqlFile(int tabIndex);
     void saveAll();
     void openUrlOrFile(const QString& urlString);
+    void newRowCountsTab();
 
     int openSqlTab(bool resetCounter = false);
     void closeSqlTab(int index, bool force = false, bool askSaving = true);

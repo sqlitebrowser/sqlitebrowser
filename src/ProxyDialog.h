@@ -13,7 +13,7 @@ class ProxyDialog : public QDialog
 
 public:
     explicit ProxyDialog(QWidget* parent = nullptr);
-    ~ProxyDialog();
+    ~ProxyDialog() override;
 
     void saveSettings() const;
 

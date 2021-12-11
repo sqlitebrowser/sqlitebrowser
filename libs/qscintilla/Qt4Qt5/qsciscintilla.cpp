@@ -470,7 +470,10 @@ void QsciScintilla::handleCallTipClick(int dir)
     if (ct_cursor > 0)
         ct.prepend('\001');
 
-    SendScintilla(SCI_CALLTIPSHOW, adjustedCallTipPosition(shift), ct.toLatin1().data());
+    ScintillaBytes ct_bytes = textAsBytes(ct);
+    const char *cts = ScintillaBytesConstData(ct_bytes);
+
+    SendScintilla(SCI_CALLTIPSHOW, adjustedCallTipPosition(shift), cts);
 }
 
 

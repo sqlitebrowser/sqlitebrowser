@@ -26,12 +26,12 @@ ExportSqlDialog::ExportSqlDialog(DBBrowserDB* db, QWidget* parent, const QString
     // Load settings
     ui->checkColNames->setChecked(Settings::getValue("exportsql", "insertcolnames").toBool());
     ui->checkMultiple->setChecked(Settings::getValue("exportsql", "insertmultiple").toBool());
+    ui->checkOriginal->setChecked(Settings::getValue("exportsql", "keeporiginal").toBool());
     ui->comboOldSchema->setCurrentIndex(Settings::getValue("exportsql", "oldschema").toInt());
 
     // Get list of tables to export
-    const auto objects = pdb->schemata["main"].equal_range("table");
-    for(auto it=objects.first;it!=objects.second;++it)
-        ui->listTables->addItem(new QListWidgetItem(IconCache::get(sqlb::Object::typeToString(it->second->type())), QString::fromStdString(it->second->name())));
+    for(const auto& it : pdb->schemata["main"].tables)
+        ui->listTables->addItem(new QListWidgetItem(IconCache::get(it.second->isView() ? "view" : "table"), QString::fromStdString(it.first)));
 
     // Sort list of tables and select the table specified in the
     // selection parameter or all tables if table not specified
@@ -95,6 +95,7 @@ void ExportSqlDialog::accept()
     // Save settings
     Settings::setValue("exportsql", "insertcolnames", ui->checkColNames->isChecked());
     Settings::setValue("exportsql", "insertmultiple", ui->checkMultiple->isChecked());
+    Settings::setValue("exportsql", "keeporiginal", ui->checkOriginal->isChecked());
     Settings::setValue("exportsql", "oldschema", ui->comboOldSchema->currentIndex());
 
     std::vector<std::string> tables;
@@ -111,6 +112,7 @@ void ExportSqlDialog::accept()
                             tables,
                             ui->checkColNames->isChecked(),
                             ui->checkMultiple->isChecked(),
+                            ui->checkOriginal->isChecked(),
                             exportSchema,
                             exportData,
                             keepSchema);

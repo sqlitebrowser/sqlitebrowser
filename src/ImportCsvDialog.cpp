@@ -26,7 +26,19 @@
 #include <QElapsedTimer>
 #endif
 
-ImportCsvDialog::ImportCsvDialog(const std::vector<QString>& filenames, DBBrowserDB* db, QWidget* parent)
+QChar ImportCsvDialog::getSettingsChar(const std::string& group, const std::string& name)
+{
+    QVariant value = Settings::getValue(group, name);
+    // QVariant is not able to return the character as a QChar when QString is stored.
+    // We do it manually, since it is versatile, when the option is passed from the command line,
+    // for example.
+    if(value.userType() == QMetaType::QString)
+        return value.toString().at(0);
+    else
+        return value.toChar();
+}
+
+ImportCsvDialog::ImportCsvDialog(const std::vector<QString>& filenames, DBBrowserDB* db, QWidget* parent, const QString& table)
     : QDialog(parent),
       ui(new Ui::ImportCsvDialog),
       csvFilenames(filenames),
@@ -37,10 +49,14 @@ ImportCsvDialog::ImportCsvDialog(const std::vector<QString>& filenames, DBBrowse
     // Hide "Advanced" section of the settings
     toggleAdvancedSection(false);
 
-    // Get the actual file name out of the provided path and use it as the default table name for import
-    // For importing several files at once, the fields have to be the same so we can safely use the first
-    QFileInfo file(filenames.front());
-    ui->editName->setText(file.baseName());
+    if(!table.isEmpty()) {
+        ui->editName->setText(table);
+    } else {
+        // Get the actual file name out of the provided path and use it as the default table name for import
+        // For importing several files at once, the fields have to be the same so we can safely use the first
+        QFileInfo file(filenames.front());
+        ui->editName->setText(file.baseName());
+    }
 
     // Create a list of all available encodings and create an auto completion list from them
     encodingCompleter = new QCompleter(toStringList(QTextCodec::availableCodecs()), this);
@@ -51,6 +67,7 @@ ImportCsvDialog::ImportCsvDialog(const std::vector<QString>& filenames, DBBrowse
     ui->checkboxHeader->blockSignals(true);
     ui->checkBoxTrimFields->blockSignals(true);
     ui->checkBoxSeparateTables->blockSignals(true);
+    ui->checkLocalConventions->blockSignals(true);
     ui->comboSeparator->blockSignals(true);
     ui->comboQuote->blockSignals(true);
     ui->comboEncoding->blockSignals(true);
@@ -58,13 +75,15 @@ ImportCsvDialog::ImportCsvDialog(const std::vector<QString>& filenames, DBBrowse
     ui->checkboxHeader->setChecked(Settings::getValue("importcsv", "firstrowheader").toBool());
     ui->checkBoxTrimFields->setChecked(Settings::getValue("importcsv", "trimfields").toBool());
     ui->checkBoxSeparateTables->setChecked(Settings::getValue("importcsv", "separatetables").toBool());
-    setSeparatorChar(Settings::getValue("importcsv", "separator").toChar());
-    setQuoteChar(Settings::getValue("importcsv", "quotecharacter").toChar());
+    ui->checkLocalConventions->setChecked(Settings::getValue("importcsv", "localconventions").toBool());
+    setSeparatorChar(getSettingsChar("importcsv", "separator"));
+    setQuoteChar(getSettingsChar("importcsv", "quotecharacter"));
     setEncoding(Settings::getValue("importcsv", "encoding").toString());
 
     ui->checkboxHeader->blockSignals(false);
     ui->checkBoxTrimFields->blockSignals(false);
     ui->checkBoxSeparateTables->blockSignals(false);
+    ui->checkLocalConventions->blockSignals(false);
     ui->comboSeparator->blockSignals(false);
     ui->comboQuote->blockSignals(false);
     ui->comboEncoding->blockSignals(false);
@@ -169,6 +188,7 @@ void ImportCsvDialog::accept()
     Settings::setValue("importcsv", "quotecharacter", currentQuoteChar());
     Settings::setValue("importcsv", "trimfields", ui->checkBoxTrimFields->isChecked());
     Settings::setValue("importcsv", "separatetables", ui->checkBoxSeparateTables->isChecked());
+    Settings::setValue("importcsv", "localconventions", ui->checkLocalConventions->isChecked());
     Settings::setValue("importcsv", "encoding", currentEncoding());
 
     // Get all the selected files and start the import
@@ -242,8 +262,7 @@ void ImportCsvDialog::updatePreview()
 
     // Set horizontal header data
     QStringList horizontalHeader;
-    for(const sqlb::Field& field : fieldList)
-        horizontalHeader.push_back(QString::fromStdString(field.name()));
+    std::transform(fieldList.begin(), fieldList.end(), std::back_inserter(horizontalHeader), [](const auto& field) { return QString::fromStdString(field.name()); });
     ui->tablePreview->setHorizontalHeaderLabels(horizontalHeader);
 
     // Parse file
@@ -398,14 +417,8 @@ sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename) co
             // If the user wants to use the first row as table header and if this is the first row, extract a field name
             if(rowNum == 0 && ui->checkboxHeader->isChecked())
             {
-                // Take field name from CSV and remove invalid characters
+                // Take field name from CSV
                 fieldname = std::string(rowData.fields[i].data, rowData.fields[i].data_length);
-                fieldname.erase(std::remove(fieldname.begin(), fieldname.end(), '`'), fieldname.end());
-                fieldname.erase(std::remove(fieldname.begin(), fieldname.end(), ' '), fieldname.end());
-                fieldname.erase(std::remove(fieldname.begin(), fieldname.end(), '"'), fieldname.end());
-                fieldname.erase(std::remove(fieldname.begin(), fieldname.end(), '\''), fieldname.end());
-                fieldname.erase(std::remove(fieldname.begin(), fieldname.end(), ','), fieldname.end());
-                fieldname.erase(std::remove(fieldname.begin(), fieldname.end(), ';'), fieldname.end());
             }
 
             // If we don't have a field name by now, generate one
@@ -428,23 +441,24 @@ sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename) co
                 if(old_type != "TEXT")
                 {
                     QString content = QString::fromUtf8(rowData.fields[i].data, static_cast<int>(rowData.fields[i].data_length));
+                    const QLocale &locale = ui->checkLocalConventions->isChecked() ? QLocale::system() : QLocale::c();
 
-                    // Check if the content can be converted to an integer or to float
-                    bool convert_to_int, convert_to_float;
-                    content.toInt(&convert_to_int);
-                    content.toFloat(&convert_to_float);
+                    // Check if the content can be converted to an integer or to real
+                    bool convert_to_integer, convert_to_real;
+                    locale.toLongLong(content, &convert_to_integer);
+                    locale.toDouble(content, &convert_to_real);
 
                     // Set new data type. If we don't find any better data type, we fall back to the TEXT data type
                     std::string new_type = "TEXT";
-                    if(old_type == "INTEGER" && !convert_to_int && convert_to_float)    // So far it's integer, but now it's only convertible to float
+                    if(old_type == "INTEGER" && !convert_to_integer && convert_to_real)  // So far it's integer, but now it's only convertible to float
                         new_type = "REAL";
-                    else if(old_type.empty() && convert_to_int)                           // No type yet, but this bit is convertible to integer
+                    else if(old_type.empty() && convert_to_integer)                      // No type yet, but this bit is convertible to integer
                         new_type = "INTEGER";
-                    else if(old_type.empty() && convert_to_float)                         // No type yet and only convertible to float (less 'difficult' than integer)
+                    else if(old_type.empty() && convert_to_real)                         // No type yet and only convertible to float (less 'difficult' than integer)
                         new_type = "REAL";
-                    else if(old_type == "REAL" && convert_to_float)                     // It was float so far and still is
+                    else if(old_type == "REAL" && convert_to_real)                       // It was float so far and still is
                         new_type = "INTEGER";
-                    else if(old_type == "INTEGER" && convert_to_int)                    // It was integer so far and still is
+                    else if(old_type == "INTEGER" && convert_to_integer)                 // It was integer so far and still is
                         new_type = "INTEGER";
 
                     fieldList.at(i).setType(new_type);
@@ -495,33 +509,41 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
 
     // Are we importing into an existing table?
     bool importToExistingTable = false;
-    const sqlb::ObjectPtr obj = pdb->getObjectByName(sqlb::ObjectIdentifier("main", tableName.toStdString()));
-    if(obj && obj->type() == sqlb::Object::Types::Table)
+    const sqlb::TablePtr tbl = pdb->getTableByName(sqlb::ObjectIdentifier("main", tableName.toStdString()));
+    if(tbl)
     {
-        if(std::dynamic_pointer_cast<sqlb::Table>(obj)->fields.size() != fieldList.size())
+        if(tbl->fields.size() != fieldList.size())
         {
             QMessageBox::warning(this, QApplication::applicationName(),
                                  tr("There is already a table named '%1' and an import into an existing table is only possible if the number of columns match.").arg(tableName));
             return true;
         } else {
-            // Only ask whether to import into the existing table if the 'Yes all' button has not been clicked (yet)
-            if(!dontAskForExistingTableAgain.contains(tableName))
+            // Only ask whether to import into any table if the 'Yes to All' button has not been clicked (yet) (empty string is included).
+            // Only ask whether to import into the existing table if the 'Yes' button has not been clicked (yet) for that table.
+            if(!dontAskForExistingTableAgain.contains("") && !dontAskForExistingTableAgain.contains(tableName))
             {
                 int answer = QMessageBox::question(this, QApplication::applicationName(),
                                                    tr("There is already a table named '%1'. Do you want to import the data into it?").arg(tableName),
                                                    QMessageBox::Yes | QMessageBox::No | QMessageBox::YesAll | QMessageBox::Cancel, QMessageBox::No);
 
                 // Stop now if the No button has been clicked
-                if(answer == QMessageBox::No)
+                switch (answer) {
+                case QMessageBox::No:
                     return true;
 
                 // Stop now if the Cancel button has been clicked. But also indicate, that the entire import process should be stopped.
-                if(answer == QMessageBox::Cancel)
+                case QMessageBox::Cancel:
                     return false;
 
-                // If the 'Yes all' button has been clicked, save that for later
-                if(answer == QMessageBox::YesAll)
+                // If the 'Yes' button has been clicked, save the answer for that table for later
+                case QMessageBox::Yes:
                     dontAskForExistingTableAgain.append(tableName);
+                    break;
+                // If the 'Yes to All' button has been clicked, save the answer for any future table name. An empty string is used in that case.
+                case QMessageBox::YesAll:
+                    dontAskForExistingTableAgain.append("");
+                    break;
+                }
             }
 
             // If we reached this point, this means that either the 'Yes' or the 'Yes all' button has been clicked or that no message box was shown at all
@@ -560,7 +582,6 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
 
         // Prepare the values for each table column that are to be inserted if the field in the CSV file is empty. Depending on the data type
         // and the constraints of a field, we need to handle this case differently.
-        sqlb::TablePtr tbl = pdb->getObjectByName<sqlb::Table>(sqlb::ObjectIdentifier("main", tableName.toStdString()));
         if(tbl)
         {
             for(const sqlb::Field& f : tbl->fields)
@@ -621,7 +642,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
         qint64 timeAtStartOfRowFunction = timer.elapsed();
 #endif
 
-        // Save row num for later use. This is used in the case of an error to tell the user in which row the error ocurred
+        // Save row num for later use. This is used in the case of an error to tell the user in which row the error occurred
         lastRowNum = rowNum;
 
         // If this is the first row and we want to use the first row as table header, skip it now because this is the data import, not the header parsing
@@ -647,8 +668,26 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
             } else if(!importToExistingTable && rowData.fields[i].data_length == 0) {
                 // No need to bind NULL values here as that is the default bound value in SQLite
             } else {
-                // This is a non-empty value, or we want to insert the empty string. Just add it to the statement
-                sqlite3_bind_text(stmt, static_cast<int>(i)+1, rowData.fields[i].data, static_cast<int>(rowData.fields[i].data_length), SQLITE_STATIC);
+                // This is a non-empty value, or we want to insert the empty string. Just add it to the statement.
+                bool convert_ok = false;
+                if(ui->checkLocalConventions->isChecked()) {
+                    // Find the correct data type taking into account the locale.
+                    QString content = QString::fromUtf8(rowData.fields[i].data, static_cast<int>(rowData.fields[i].data_length));
+                    sqlite_int64 int64_value = QLocale::system().toLongLong(content, &convert_ok);
+                    if(convert_ok) {
+                        sqlite3_bind_int64(stmt, static_cast<int>(i)+1, int64_value);
+                    } else {
+                        double value = QLocale::system().toDouble(content, &convert_ok);
+                        if(convert_ok)
+                            sqlite3_bind_double(stmt, static_cast<int>(i)+1, value);
+                    }
+                }
+
+                if(!convert_ok) {
+                    // If we don't find any better data type or we want SQLite to apply the type affinity
+                    // (impossible when using local conventions), we fall back to the TEXT data type.
+                    sqlite3_bind_text(stmt, static_cast<int>(i)+1, rowData.fields[i].data, static_cast<int>(rowData.fields[i].data_length), SQLITE_STATIC);
+                }
             }
         }
 
@@ -822,6 +861,8 @@ void ImportCsvDialog::toggleAdvancedSection(bool show)
 {
     ui->labelNoTypeDetection->setVisible(show);
     ui->checkNoTypeDetection->setVisible(show);
+    ui->labelLocalConventions->setVisible(show);
+    ui->checkLocalConventions->setVisible(show);
     ui->labelFailOnMissing->setVisible(show);
     ui->checkFailOnMissing->setVisible(show);
     ui->labelIgnoreDefaults->setVisible(show);

@@ -4,6 +4,7 @@
 #include "Settings.h"
 #include "Data.h"
 #include "CondFormat.h"
+#include "RowLoader.h"
 
 #include <QMessageBox>
 #include <QApplication>
@@ -14,11 +15,9 @@
 #include <QtConcurrent/QtConcurrentRun>
 #include <QProgressDialog>
 #include <QRegularExpression>
-#include <json.hpp>
+#include <QPushButton>
 
-#include "RowLoader.h"
-
-using json = nlohmann::json;
+#include <cassert>
 
 SqliteTableModel::SqliteTableModel(DBBrowserDB& db, QObject* parent, const QString& encoding, bool force_wait)
     : QAbstractTableModel(parent)
@@ -66,7 +65,6 @@ void SqliteTableModel::handleFinishedFetch (int life_id, unsigned int fetched_ro
     Q_ASSERT(fetched_row_end >= fetched_row_begin);
 
     auto old_row_count = m_currentRowCount;
-
     auto new_row_count = std::max(old_row_count, fetched_row_begin);
     new_row_count = std::max(new_row_count, fetched_row_end);
     Q_ASSERT(new_row_count >= old_row_count);
@@ -105,8 +103,8 @@ void SqliteTableModel::handleRowCountComplete (int life_id, int num_rows)
 void SqliteTableModel::reset()
 {
     beginResetModel();
-    clearCache();
 
+    clearCache();
     m_sQuery.clear();
     m_query.clear();
     m_table_of_query.reset();
@@ -125,66 +123,46 @@ void SqliteTableModel::setQuery(const sqlb::Query& query)
 
     // Save the query
     m_query = query;
-    m_table_of_query = m_db.getObjectByName<sqlb::Table>(query.table());
 
-    // The first column is the rowid column and therefore is always of type integer
-    m_vDataTypes.emplace_back(SQLITE_INTEGER);
-
-    // Get the data types of all other columns as well as the column names
-    if(m_table_of_query && m_table_of_query->fields.size()) // It is a table and parsing was OK
+    // Set the row id columns
+    m_table_of_query = m_db.getTableByName(query.table());
+    if(!m_table_of_query->isView())
     {
-        sqlb::StringVector rowids = m_table_of_query->rowidColumns();
-        m_query.setRowIdColumns(rowids);
-        m_headers.push_back(sqlb::joinStringVector(rowids, ","));
-
-        // Store field names and affinity data types
-        for(const sqlb::Field& fld : m_table_of_query->fields)
-        {
-            m_headers.push_back(fld.name());
-            m_vDataTypes.push_back(fld.affinity());
-        }
+        // It is a table
+        m_query.setRowIdColumns(m_table_of_query->rowidColumns());
     } else {
-        // If for one reason or another (either it's a view or we couldn't parse the table statement) we couldn't get the field
-        // information we retrieve it from SQLite using an extra query.
-        // NOTE: It would be nice to eventually get rid of this piece here. As soon as the grammar parser is good enough...
-
-        std::string sColumnQuery = "SELECT * FROM " + query.table().toString() + ";";
+        // It is a view
         if(m_query.rowIdColumns().empty())
             m_query.setRowIdColumn("_rowid_");
-        m_headers.emplace_back("_rowid_");
-        auto columns = getColumns(nullptr, sColumnQuery, m_vDataTypes);
-        m_headers.insert(m_headers.end(), columns.begin(), columns.end());
+    }
+    m_vDataTypes.emplace_back(SQLITE_INTEGER);  // TODO This is not necessarily true for tables without ROWID or with multiple PKs
+    m_headers.push_back(sqlb::joinStringVector(m_query.rowIdColumns(), ","));
+
+    // Store field names and affinity data types
+    for(const auto& fld : m_table_of_query->fields)
+    {
+        m_headers.push_back(fld.name());
+        m_vDataTypes.push_back(fld.affinity());
     }
 
     // Tell the query object about the column names
-    m_query.setColumNames(m_headers);
+    m_query.setColumnNames(m_headers);
 
     // Apply new query and update view
-    buildQuery();
+    updateAndRunQuery();
 }
 
-void SqliteTableModel::setQuery(const QString& sQuery, const QString& sCountQuery, bool dontClearHeaders)
+void SqliteTableModel::setQuery(const QString& sQuery)
 {
-    // clear
-    if(!dontClearHeaders)
-        reset();
-    else
-        clearCache();
-
-    if(!m_db.isOpen())
-        return;
+    // Reset
+    reset();
 
     m_sQuery = sQuery.trimmed();
     removeCommentsFromQuery(m_sQuery);
 
-    worker->setQuery(m_sQuery, sCountQuery);
-    worker->triggerRowCountDetermination(m_lifeCounter);
+    getColumnNames(sQuery.toStdString());
 
-    if(!dontClearHeaders)
-    {
-        auto columns = getColumns(worker->getDb(), sQuery.toStdString(), m_vDataTypes);
-        m_headers.insert(m_headers.end(), columns.begin(), columns.end());
-    }
+    worker->setQuery(m_sQuery, QString());
 
     // now fetch the first entries
     triggerCacheLoad(static_cast<int>(m_chunkSize / 2) - 1);
@@ -234,22 +212,22 @@ QVariant SqliteTableModel::headerData(int section, Qt::Orientation orientation, 
     {
         // if we have a VIRTUAL table the model will not be valid, with no header data
         if(static_cast<size_t>(section) < m_headers.size()) {
-            const QString plainHeader = QString::fromStdString(m_headers.at(static_cast<size_t>(section)));
+            const std::string plainHeader = m_headers.at(static_cast<size_t>(section));
             // In the edit role, return a plain column name, but in the display role, add the sort indicator.
             if (role == Qt::EditRole)
-                return plainHeader;
+                return QString::fromStdString(plainHeader);
             else {
                 QString sortIndicator;
                 for(size_t i = 0; i < m_query.orderBy().size(); i++) {
-                    const sqlb::SortedColumn sortedColumn = m_query.orderBy()[i];
+                    const sqlb::OrderBy sortedColumn = m_query.orderBy()[i];
                     // Append sort indicator with direction and ordinal number in superscript style
-                    if (sortedColumn.column == static_cast<size_t>(section)) {
-                        sortIndicator = sortedColumn.direction == sqlb::Ascending ? " ▾" : " ▴";
+                    if (sortedColumn.expr == plainHeader) {
+                        sortIndicator = sortedColumn.direction == sqlb::OrderBy::Ascending ? " ▾" : " ▴";
                         sortIndicator.append(toSuperScript(i+1));
                         break;
                     }
                 }
-                return plainHeader + sortIndicator;
+                return QString::fromStdString(plainHeader) + sortIndicator;
             }
         }
         return QString::number(section + 1);
@@ -533,14 +511,15 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
                 {
                     cached_row[0] = newValue;
                 } else {
-                    json array;
                     assert(m_headers.size() == cached_row.size());
+                    QByteArray output;
                     for(size_t i=0;i<m_query.rowIdColumns().size();i++)
                     {
                         auto it = std::find(m_headers.begin()+1, m_headers.end(), m_query.rowIdColumns().at(i));    // +1 in order to omit the rowid column itself
-                        array.push_back(cached_row[static_cast<size_t>(std::distance(m_headers.begin(), it))]);
+                        auto v = cached_row[static_cast<size_t>(std::distance(m_headers.begin(), it))];
+                        output += QByteArray::number(v.size()) + ":" + v;
                     }
-                    cached_row[0] = QByteArray::fromStdString(array.dump());
+                    cached_row[0] = output;
                 }
                 const QModelIndex& rowidIndex = index.sibling(index.row(), 0);
                 lock.unlock();
@@ -583,12 +562,12 @@ Qt::ItemFlags SqliteTableModel::flags(const QModelIndex& index) const
 void SqliteTableModel::sort(int column, Qt::SortOrder order)
 {
     // Construct a sort order list from this item and forward it to the function to sort by lists
-    std::vector<sqlb::SortedColumn> list;
-    list.emplace_back(column, order == Qt::AscendingOrder ? sqlb::Ascending : sqlb::Descending);
+    std::vector<sqlb::OrderBy> list;
+    list.emplace_back(m_headers.at(static_cast<size_t>(column)), order == Qt::AscendingOrder ? sqlb::OrderBy::Ascending : sqlb::OrderBy::Descending);
     sort(list);
 }
 
-void SqliteTableModel::sort(const std::vector<sqlb::SortedColumn>& columns)
+void SqliteTableModel::sort(const std::vector<sqlb::OrderBy>& columns)
 {
     // Don't do anything when the sort order hasn't changed
     if(m_query.orderBy() == columns)
@@ -599,7 +578,7 @@ void SqliteTableModel::sort(const std::vector<sqlb::SortedColumn>& columns)
 
     // Set the new query (but only if a table has already been set
     if(!m_query.table().isEmpty())
-        buildQuery();
+        updateAndRunQuery();
 }
 
 SqliteTableModel::Row SqliteTableModel::makeDefaultCacheEntry () const
@@ -672,7 +651,7 @@ bool SqliteTableModel::removeRows(int row, int count, const QModelIndex& parent)
         return false;
     }
 
-    std::vector<QString> rowids;
+    std::vector<QByteArray> rowids;
     for(int i=count-1;i>=0;i--)
     {
         if(m_cache.count(static_cast<size_t>(row+i))) {
@@ -721,100 +700,39 @@ QModelIndex SqliteTableModel::dittoRecord(int old_row)
     return index(new_row, static_cast<int>(firstEditedColumn));
 }
 
-void SqliteTableModel::buildQuery()
+void SqliteTableModel::updateAndRunQuery()
 {
-    setQuery(QString::fromStdString(m_query.buildQuery(true)), QString::fromStdString(m_query.buildCountQuery()), true);
+    clearCache();
+
+    // Update the query
+    m_sQuery = QString::fromStdString(m_query.buildQuery(true));
+    QString sCountQuery = QString::fromStdString(m_query.buildCountQuery());
+    worker->setQuery(m_sQuery, sCountQuery);
+
+    // now fetch the first entries
+    triggerCacheLoad(static_cast<int>(m_chunkSize / 2) - 1);
+
+    emit layoutChanged();
 }
 
-void SqliteTableModel::removeCommentsFromQuery(QString& query)
+void SqliteTableModel::getColumnNames(const std::string& sQuery)
 {
-    int oldSize = query.size();
-
-    // first remove block comments
-    {
-        QRegExp rxSQL("^((?:(?:[^'/]|/(?![*]))*|'[^']*')*)(/[*](?:[^*]|[*](?!/))*[*]/)(.*)$");	// set up regex to find block comment
-        QString result;
-
-        while(query.size() != 0)
-        {
-            int pos = rxSQL.indexIn(query);
-            if(pos > -1)
-            {
-                result += rxSQL.cap(1) + " ";
-                query = rxSQL.cap(3);
-            } else {
-                result += query;
-                query.clear();
-            }
-        }
-        query = result;
-    }
-
-    // deal with end-of-line comments
-    {
-        /* The regular expression for removing end of line comments works like this:
-         * ^((?:(?:[^'-]|-(?!-))*|(?:'[^']*'))*)(--.*)$
-         * ^                                          $ # anchor beginning and end of string so we use it all
-         *  (                                  )(    )  # two separate capture groups for code and comment
-         *                                       --.*   # comment starts with -- and consumes everything afterwards
-         *   (?:                 |           )*         # code is none or many strings alternating with non-strings
-         *                        (?:'[^']*')           # a string is a quote, followed by none or more non-quotes, followed by a quote
-         *      (?:[^'-]|-(?!-))*                       # non-string is a sequence of characters which aren't quotes or hyphens,
-         */
-
-        QRegExp rxSQL("^((?:(?:[^'-]|-(?!-))*|(?:'[^']*'))*)(--[^\\r\\n]*)([\\r\\n]*)(.*)$");	// set up regex to find end-of-line comment
-        QString result;
-
-        while(query.size() != 0)
-        {
-            int pos = rxSQL.indexIn(query);
-            if(pos > -1)
-            {
-                result += rxSQL.cap(1) + rxSQL.cap(3);
-                query = rxSQL.cap(4);
-            } else {
-                result += query;
-                query.clear();
-            }
-        }
-
-        query = result.trimmed();
-    }
-
-    if (oldSize != query.size()) {
-        // Remove multiple line breaks that might have been created by deleting comments till the end of the line but not including the line break
-        query.replace(QRegExp("\\n+"), "\n");
-
-        // Also remove any remaining whitespace at the end of each line
-        query.replace(QRegExp("[ \t]+\n"), "\n");
-    }
-}
-
-std::vector<std::string> SqliteTableModel::getColumns(std::shared_ptr<sqlite3> pDb, const std::string& sQuery, std::vector<int>& fieldsTypes) const
-{
-    if(!pDb)
-        pDb = m_db.get(tr("retrieving list of columns"));
+    auto pDb = m_db.get(tr("retrieving list of columns"));
 
     sqlite3_stmt* stmt;
-    std::vector<std::string> listColumns;
     if(sqlite3_prepare_v2(pDb.get(), sQuery.c_str(), static_cast<int>(sQuery.size()), &stmt, nullptr) == SQLITE_OK)
     {
-        if(sqlite3_step(stmt) == SQLITE_ROW)
+        int columns = sqlite3_column_count(stmt);
+        for(int i = 0; i < columns; ++i)
         {
-            int columns = sqlite3_data_count(stmt);
-            for(int i = 0; i < columns; ++i)
-            {
-                listColumns.push_back(sqlite3_column_name(stmt, i));
-                fieldsTypes.push_back(sqlite3_column_type(stmt, i));
-            }
+            m_headers.push_back(sqlite3_column_name(stmt, i));
+            m_vDataTypes.push_back(sqlite3_column_type(stmt, i));
         }
     }
     sqlite3_finalize(stmt);
-
-    return listColumns;
 }
 
-void addCondFormatToMap(std::map<size_t, std::vector<CondFormat>>& mCondFormats, size_t column, const CondFormat& condFormat)
+static void addCondFormatToMap(std::map<size_t, std::vector<CondFormat>>& mCondFormats, size_t column, const CondFormat& condFormat)
 {
     // If the condition is already present in the vector, update that entry and respect the order, since two entries with the same
     // condition do not make sense.
@@ -849,18 +767,18 @@ void SqliteTableModel::setCondFormats(const bool isRowIdFormat, size_t column, c
     emit layoutChanged();
 }
 
-void SqliteTableModel::updateFilter(size_t column, const QString& value)
+void SqliteTableModel::updateFilter(const std::string& column, const QString& value)
 {
     std::string whereClause = CondFormat::filterToSqlCondition(value, m_encoding);
 
     // If the value was set to an empty string remove any filter for this column. Otherwise insert a new filter rule or replace the old one if there is already one
-    if(whereClause.empty())
+       if(whereClause.empty())
         m_query.where().erase(column);
     else
         m_query.where()[column] = whereClause;
 
     // Build the new query
-    buildQuery();
+    updateAndRunQuery();
 }
 
 void SqliteTableModel::updateGlobalFilter(const std::vector<QString>& values)
@@ -871,7 +789,7 @@ void SqliteTableModel::updateGlobalFilter(const std::vector<QString>& values)
     m_query.setGlobalWhere(filters);
 
     // Build the new query
-    buildQuery();
+    updateAndRunQuery();
 }
 
 void SqliteTableModel::clearCache()
@@ -890,6 +808,7 @@ void SqliteTableModel::clearCache()
     }
 
     m_cache.clear();
+
     m_currentRowCount = 0;
     m_rowCountAvailable = RowCount::Unknown;
 }
@@ -949,6 +868,9 @@ bool SqliteTableModel::dropMimeData(const QMimeData* data, Qt::DropAction, int r
 
 void SqliteTableModel::setPseudoPk(std::vector<std::string> pseudoPk)
 {
+    if(!m_table_of_query->isView())
+        return;
+
     if(pseudoPk.empty())
         pseudoPk.emplace_back("_rowid_");
 
@@ -960,7 +882,7 @@ void SqliteTableModel::setPseudoPk(std::vector<std::string> pseudoPk)
     if(m_headers.size())
         m_headers[0] = sqlb::joinStringVector(pseudoPk, ",");
 
-    buildQuery();
+    updateAndRunQuery();
 }
 
 bool SqliteTableModel::hasPseudoPk() const
@@ -974,7 +896,7 @@ bool SqliteTableModel::isEditable(const QModelIndex& index) const
         return false;
     if(!m_db.isOpen())
         return false;
-    if(!m_table_of_query && !m_query.hasCustomRowIdColumn())
+    if((!m_table_of_query || m_table_of_query->isView()) && !m_query.hasCustomRowIdColumn())
         return false;
 
     // Extra check when the index parameter is set and pointing to a generated column in a table
@@ -1023,6 +945,14 @@ bool SqliteTableModel::completeCache () const
     // cancel button if we allow cancellation here. This isn't
     QProgressDialog progress(tr("Fetching data..."),
                              tr("Cancel"), 0, rowCount());
+
+    QPushButton* cancelButton = new QPushButton(tr("Cancel"));
+    // This is to prevent distracted cancellation of the fetching and avoid the
+    // Snap-To Windows optional feature.
+    cancelButton->setDefault(false);
+    cancelButton->setAutoDefault(false);
+    progress.setCancelButton(cancelButton);
+
     progress.setWindowModality(Qt::ApplicationModal);
     progress.show();
 

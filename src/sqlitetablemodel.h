@@ -80,7 +80,7 @@ public:
     QModelIndex dittoRecord(int old_row);
 
     /// configure for browsing results of specified query
-    void setQuery(const QString& sQuery, const QString& sCountQuery = QString(), bool dontClearHeaders = false);
+    void setQuery(const QString& sQuery);
 
     std::string query() const { return m_sQuery.toStdString(); }
     std::string customQuery(bool withRowid) const { return m_query.buildQuery(withRowid); }
@@ -89,7 +89,7 @@ public:
     void setQuery(const sqlb::Query& query);
 
     void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
-    void sort(const std::vector<sqlb::SortedColumn>& columns);
+    void sort(const std::vector<sqlb::OrderBy>& columns);
     sqlb::ObjectIdentifier currentTableName() const { return m_query.table(); }
 
     Qt::ItemFlags flags(const QModelIndex& index) const override;
@@ -116,9 +116,6 @@ public:
     // can be edited. This makes a difference for generated columns which are in (editable) tables but cannot be modified anyway.
     bool isEditable(const QModelIndex& index = QModelIndex()) const;
 
-    // Helper function for removing all comments from a SQL query
-    static void removeCommentsFromQuery(QString& query);
-
     // Conditional formats are of two kinds: regular conditional formats (including condition-free formats applying to any value in the
     // column) and formats applying to a particular row-id and which have always precedence over the first kind and whose filter apply
     // to the row-id column.
@@ -143,7 +140,7 @@ public:
     void reloadSettings();
 
 public slots:
-    void updateFilter(size_t column, const QString& value);
+    void updateFilter(const std::string& column, const QString& value);
     void updateGlobalFilter(const std::vector<QString>& values);
 
 signals:
@@ -165,10 +162,9 @@ private:
     void handleFinishedFetch(int life_id, unsigned int fetched_row_begin, unsigned int fetched_row_end);
     void handleRowCountComplete(int life_id, int num_rows);
 
-    void buildQuery();
+    void updateAndRunQuery();
 
-    /// \param pDb connection to query; if null, obtains it from 'm_db'.
-    std::vector<std::string> getColumns(std::shared_ptr<sqlite3> pDb, const std::string& sQuery, std::vector<int>& fieldsTypes) const;
+    void getColumnNames(const std::string& sQuery);
 
     QByteArray encode(const QByteArray& str) const;
     QByteArray decode(const QByteArray& str) const;

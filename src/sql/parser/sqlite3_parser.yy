@@ -18,7 +18,7 @@
 	typedef void* yyscan_t;
 
 	// Colum definitions are a tuple of two elements: the Field object and a set of table constraints
-	using ColumndefData = std::tuple<sqlb::Field, sqlb::ConstraintSet>;
+	using ColumndefData = std::tuple<sqlb::Field, sqlb::ConstraintVector>;
 }
 
 // The parsing context
@@ -35,20 +35,28 @@
 	
 	static std::string unquote_text(std::string str, char quote_char)
 	{
-		if(str.front() != quote_char || str.back() != quote_char)
-			return str;
-
-		str = str.substr(1, str.size()-2);
-
-		std::string quote(2, quote_char);
-
-		size_t pos = 0;
-		while((pos = str.find(quote, pos)) != std::string::npos)
+		if(quote_char != '[')
 		{
-			str.erase(pos, 1);
-			pos += 1;               // Don't remove the other quote char too
+			if(str.front() != quote_char || str.back() != quote_char)
+				return str;
+
+			str = str.substr(1, str.size()-2);
+
+			std::string quote(2, quote_char);
+
+			size_t pos = 0;
+			while((pos = str.find(quote, pos)) != std::string::npos)
+			{
+				str.erase(pos, 1);
+				pos += 1;               // Don't remove the other quote char too
+			}
+			return str;
+		} else {
+			if(str.front() != '[' || str.back() != ']')
+				return str;
+
+			return str.substr(1, str.size()-2);
 		}
-		return str;
 	}
 }
 
@@ -146,6 +154,7 @@
 %token <std::string> REGEXP "REGEXP"
 %token <std::string> REPLACE "REPLACE"
 %token <std::string> RESTRICT "RESTRICT"
+%token <std::string> RETURNING "RETURNING"
 %token <std::string> ROLLBACK "ROLLBACK"
 %token <std::string> ROWID "ROWID"
 %token <std::string> ROWS "ROWS"
@@ -214,7 +223,7 @@
 %type <std::string> optional_typename
 %type <std::string> optional_storage_identifier
 %type <bool> optional_always_generated
-%type <sqlb::ConstraintSet> columnconstraint_list
+%type <sqlb::ConstraintVector> columnconstraint_list
 %type <sqlb::ConstraintPtr> columnconstraint
 %type <ColumndefData> columndef
 %type <std::vector<ColumndefData>> columndef_list
@@ -224,8 +233,8 @@
 %type <std::string> fk_clause_part_list
 %type <std::string> optional_fk_clause
 %type <sqlb::ConstraintPtr> tableconstraint
-%type <sqlb::ConstraintSet> tableconstraint_list
-%type <sqlb::ConstraintSet> optional_tableconstraint_list
+%type <sqlb::ConstraintVector> tableconstraint_list
+%type <sqlb::ConstraintVector> optional_tableconstraint_list
 %type <sqlb::TablePtr> createtable_stmt
 
 %%
@@ -314,6 +323,7 @@ allowed_keywords_as_identifier:
 	| REGEXP
 	| REPLACE
 	| RESTRICT
+	| RETURNING
 	| ROLLBACK
 	| ROWID
 	| ROWS
@@ -706,13 +716,13 @@ columnconstraint:
 
 columnconstraint_list:
 	columnconstraint				{ $$ = { $1 }; }
-	| columnconstraint_list columnconstraint	{ $$ = $1; $$.insert($2); }
+	| columnconstraint_list columnconstraint	{ $$ = $1; $$.push_back($2); }
 	;
 
 columndef:
 	columnid optional_typename columnconstraint_list	{
 								sqlb::Field f($1, $2);
-								sqlb::ConstraintSet table_constraints{};
+								sqlb::ConstraintVector table_constraints{};
 								for(const auto& c : $3)
 								{
 									if(!c)
@@ -729,7 +739,7 @@ columndef:
 											c->setColumnList({$1});
 										else
 											c->replaceInColumnList("", $1);
-										table_constraints.insert(c);
+										table_constraints.push_back(c);
 										break;
 									}
 									case sqlb::Constraint::NotNullConstraintType:
@@ -764,12 +774,14 @@ columndef:
 										}
 										break;
 									}
+									default:
+										break;
 									}
 								}
 
 								$$ = std::make_tuple(f, table_constraints);
 							}
-	| columnid optional_typename			{ $$ = std::make_tuple(sqlb::Field($1, $2), sqlb::ConstraintSet{}); }
+	| columnid optional_typename			{ $$ = std::make_tuple(sqlb::Field($1, $2), sqlb::ConstraintVector{}); }
 	;
 
 columndef_list:
@@ -867,8 +879,8 @@ tableconstraint:
 
 tableconstraint_list:
 	tableconstraint					{ $$ = {$1}; }
-	| tableconstraint_list "," tableconstraint	{ $$ = $1; $$.insert($3); }
-	| tableconstraint_list tableconstraint		{ $$ = $1; $$.insert($2); }
+	| tableconstraint_list "," tableconstraint	{ $$ = $1; $$.push_back($3); }
+	| tableconstraint_list tableconstraint		{ $$ = $1; $$.push_back($2); }
 	;
 
 optional_tableconstraint_list:
@@ -890,7 +902,7 @@ createtable_stmt:
 										for(const auto& column : $7)
 										{
 											sqlb::Field f;
-											sqlb::ConstraintSet c;
+											sqlb::ConstraintVector c;
 											std::tie(f, c) = column;
 
 											$$->fields.push_back(f);

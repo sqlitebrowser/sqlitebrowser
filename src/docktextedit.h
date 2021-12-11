@@ -1,16 +1,17 @@
 #ifndef DOCKTEXTEDIT_H
 #define DOCKTEXTEDIT_H
 
-#include "ExtendedScintilla.h"
+#include "sqltextedit.h"
 
 class QsciLexerJSON;
 class QsciLexerXML;
+class SqlUiLexer;
 
 /**
  * @brief The DockTextEdit class
- * This class is based on our Extended QScintilla widget
+ * This class extends our QScintilla SQL Text Edit adding XML, JSON and plain text modes.
  */
-class DockTextEdit : public ExtendedScintilla
+class DockTextEdit : public SqlTextEdit
 {
     Q_OBJECT
 
@@ -22,7 +23,8 @@ public:
     {
         PlainText,
         JSON,
-        XML
+        XML,
+        SQL
     };
 
     void setLanguage(Language lang);
@@ -40,6 +42,7 @@ public slots:
 protected:
     static QsciLexerJSON* jsonLexer;
     static QsciLexerXML* xmlLexer;
+
 private:
     Language m_language;
     QFont plainTextFont;

@@ -6,7 +6,7 @@ FILES=()	# array accumulating names of converted images
 # commands to give to convert for each iteration
 MAGICK_CMDS="+antialias -units PixelsPerInch -alpha set -background transparent"
 SRC_FILE="../../images/logo.svg" # conversion source
-ICO_FILE="../iconwin.ico"        # ouput icon file
+ICO_FILE="../iconwin.ico"        # output icon file
 for imgsize in 16 32 64 128
 do
     RESIZE="${imgsize}x${imgsize}"

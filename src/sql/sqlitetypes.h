@@ -27,16 +27,9 @@ bool compare_ci(const T& a, const T& b)
 {
     // Note: This function does not have to be (actually it must not be) fully UTF-8 aware because SQLite itself is not either.
 
-    if(a.length() != b.length())
-        return false;
-    return std::equal(a.begin(), a.end(), b.begin(), [](unsigned char c1, unsigned char c2) {
+    return std::equal(a.begin(), a.end(), b.begin(), b.end(), [](unsigned char c1, unsigned char c2) {
         return std::tolower(c1) == std::tolower(c2);
     });
-
-    // TODO Replace the entire code above by the following once we have enabled C++14 support
-    /*return std::equal(a.begin(), a.end(), b.begin(), b.end(), [](unsigned char c1, unsigned char c2) {
-        return std::tolower(c1) == std::tolower(c2);
-    });*/
 }
 
 template<typename T>
@@ -68,7 +61,6 @@ class Trigger;
 class Field;
 class Constraint;
 class IndexedColumn;
-struct FieldInfo;
 using ObjectPtr = std::shared_ptr<Object>;
 using TablePtr = std::shared_ptr<Table>;
 using IndexPtr = std::shared_ptr<Index>;
@@ -77,38 +69,15 @@ using TriggerPtr = std::shared_ptr<Trigger>;
 using ConstraintPtr = std::shared_ptr<Constraint>;
 using FieldVector = std::vector<Field>;
 using IndexedColumnVector = std::vector<IndexedColumn>;
-using ConstraintSet = std::set<ConstraintPtr>;
-using FieldInfoList = std::vector<FieldInfo>;
-
-struct FieldInfo
-{
-    FieldInfo(const std::string& name_, const std::string& type_, const std::string& sql_)
-        : name(name_), type(type_), sql(sql_)
-    {}
-
-    std::string name;
-    std::string type;
-    std::string sql;
-};
+using ConstraintVector = std::vector<ConstraintPtr>;
 
 class Object
 {
 public:
-    enum Types
-    {
-        Table,
-        Index,
-        View,
-        Trigger
-    };
-
     explicit Object(const std::string& name): m_name(name), m_fullyParsed(false) {}
     virtual ~Object() = default;
 
     bool operator==(const Object& rhs) const;
-
-    virtual Types type() const = 0;
-    static std::string typeToString(Types type);
 
     void setName(const std::string& name) { m_name = name; }
     const std::string& name() const { return m_name; }
@@ -116,12 +85,8 @@ public:
     void setOriginalSql(const std::string& original_sql) { m_originalSql = original_sql; }
     std::string originalSql() const { return m_originalSql; }
 
-    virtual std::string baseTable() const { return std::string(); }
-
     void setFullyParsed(bool fully_parsed) { m_fullyParsed = fully_parsed; }
     bool fullyParsed() const { return m_fullyParsed; }
-
-    virtual FieldInfoList fieldInformation() const { return FieldInfoList(); }
 
     /**
      * @brief Returns the CREATE statement for this object
@@ -193,9 +158,8 @@ public:
 
     bool isSet() const;
     std::string toString() const;
-    void setFromString(const std::string& fk);
 
-    void setTable(const std::string& table) { m_override.clear(); m_table = table; }
+    void setTable(const std::string& table) { m_table = table; }
     const std::string& table() const { return m_table; }
 
     void setColumns(const StringVector& columns) { m_columns = columns; }
@@ -212,8 +176,6 @@ private:
     std::string m_table;
     StringVector m_columns;
     std::string m_constraint;
-
-    std::string m_override;
 };
 
 class UniqueConstraint : public Constraint
@@ -447,7 +409,7 @@ public:
 
     bool operator==(const Table& rhs) const;
 
-    Types type() const override { return Object::Table; }
+    virtual bool isView() const { return false; }
 
     FieldVector fields;
     using field_type = Field;
@@ -469,16 +431,14 @@ public:
     const std::string& virtualUsing() const { return m_virtual; }
     bool isVirtual() const { return !m_virtual.empty(); }
 
-    FieldInfoList fieldInformation() const override;
-
     void addConstraint(ConstraintPtr constraint);
     void setConstraint(ConstraintPtr constraint);
     void removeConstraint(ConstraintPtr constraint);
     void removeConstraints(const StringVector& vStrFields = StringVector(), Constraint::ConstraintTypes type = Constraint::NoType);
     ConstraintPtr constraint(const StringVector& vStrFields = StringVector(), Constraint::ConstraintTypes type = Constraint::NoType) const;   //! Only returns the first constraint, if any
     std::vector<ConstraintPtr> constraints(const StringVector& vStrFields = StringVector(), Constraint::ConstraintTypes type = Constraint::NoType) const;
-    ConstraintSet allConstraints() const { return m_constraints; }
-    void setConstraints(const ConstraintSet& constraints);
+    ConstraintVector allConstraints() const { return m_constraints; }
+    void setConstraints(const ConstraintVector& constraints);
     void replaceConstraint(ConstraintPtr from, ConstraintPtr to);
     std::shared_ptr<PrimaryKeyConstraint> primaryKey();
     void removeKeyFromAllConstraints(const std::string& key);
@@ -495,7 +455,7 @@ private:
 
 private:
     bool m_withoutRowid;
-    ConstraintSet m_constraints;
+    ConstraintVector m_constraints;
     std::string m_virtual;
 };
 
@@ -537,13 +497,9 @@ public:
     explicit Index(const std::string& name): Object(name), m_unique(false) {}
     Index& operator=(const Index& rhs);
 
-    Types type() const override { return Object::Index; }
-
     IndexedColumnVector fields;
     using field_type = IndexedColumn;
     using field_iterator = IndexedColumnVector::iterator;
-
-    std::string baseTable() const override { return m_table; }
 
     void setUnique(bool unique) { m_unique = unique; }
     bool unique() const { return m_unique; }
@@ -567,8 +523,6 @@ public:
      */
     static IndexPtr parseSQL(const std::string& sSQL);
 
-    FieldInfoList fieldInformation() const override;
-
 private:
     StringVector columnSqlList() const;
 
@@ -577,23 +531,17 @@ private:
     std::string m_whereExpr;
 };
 
-class View : public Object
+class View : public Table
 {
 public:
-    explicit View(const std::string& name): Object(name) {}
+    explicit View(const std::string& name): Table(name) {}
 
-    Types type() const override { return Object::View; }
-
-    FieldVector fields;
+    virtual bool isView() const override { return true; }
 
     std::string sql(const std::string& /*schema*/ = "main", bool /*ifNotExists*/ = false) const override
     { /* TODO */ return m_originalSql; }
 
     static ViewPtr parseSQL(const std::string& sSQL);
-
-    StringVector fieldNames() const;
-
-    FieldInfoList fieldInformation() const override;
 };
 
 class Trigger : public Object
@@ -601,14 +549,10 @@ class Trigger : public Object
 public:
     explicit Trigger(const std::string& name): Object(name) {}
 
-    Types type() const override { return Object::Trigger; }
-
     std::string sql(const std::string& /*schema*/ = "main", bool /*ifNotExists*/ = false) const override
     { /* TODO */ return m_originalSql; }
 
     static TriggerPtr parseSQL(const std::string& sSQL);
-
-    std::string baseTable() const override { return m_table; }
 
     void setTable(const std::string& table) { m_table = table; }
     std::string table() const { return m_table; }
@@ -616,6 +560,22 @@ public:
 private:
     std::string m_table;
 };
+
+/**
+ * @brief Return the name of the base table of the given object. For indices and triggers that is the table which the object is related to.
+ */
+
+template<typename T>
+std::string getBaseTable(std::shared_ptr<T> /*object*/)
+{
+    return std::string{};
+}
+
+template<>
+std::string getBaseTable<Index>(IndexPtr object);
+
+template<>
+std::string getBaseTable<Trigger>(TriggerPtr object);
 
 /**
  * @brief findField Finds a field in the database object and returns an iterator to it.
@@ -676,6 +636,25 @@ template<typename T, typename = typename std::enable_if<!is_shared_ptr<T>::value
 bool removeField(T& object, const std::string& name)
 {
     return removeField(&object, name);
+}
+
+/**
+ * @brief getFieldNumber returns the number of the field with the given name in an object. This is supposed to be a temporary helper function only.
+ * @param object
+ * @param name
+ * @return number of the field
+ *
+ * TODO Remove this function. Whereever it is used we make the assumption that the queried columns are exactly equal to the columns of the table or view.
+ *      For more complex queries this is not true and in fact it already is a dubious assumption because we also select the rowid column.
+ */
+inline size_t getFieldNumber(TablePtr object, const std::string& name)
+{
+    for(size_t i=0;i<object->fields.size();i++)
+    {
+        if(object->fields[i].name() == name)
+            return i;
+    }
+    return 0;
 }
 
 } //namespace sqlb

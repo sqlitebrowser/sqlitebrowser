@@ -88,6 +88,11 @@
          <string>XML</string>
         </property>
        </item>
+       <item>
+        <property name="text">
+         <string>Evaluation</string>
+        </property>
+       </item>
       </widget>
      </item>
      <item>
@@ -107,7 +112,7 @@
        <property name="icon">
         <iconset resource="icons/icons.qrc">
          <normaloff>:/icons/keyword</normaloff>
-         <normalon>:/icons/cog_go.png</normalon>:/icons/keyword</iconset>
+         <normalon>:/icons/cog_go</normalon>:/icons/keyword</iconset>
        </property>
        <property name="checkable">
         <bool>true</bool>
@@ -153,11 +158,16 @@
       <property name="whatsThis">
        <string>The text editor modes let you edit plain text, as well as JSON or XML data with syntax highlighting, automatic formatting and validation before saving.
 
-Errors are indicated with a red squiggle underline.</string>
+Errors are indicated with a red squiggle underline.
+
+In the Evaluation mode, entered SQLite expressions are evaluated and the result applied to the cell.</string>
       </property>
      </widget>
      <widget class="QWidget" name="rtlVerticalLayout">
       <layout class="QVBoxLayout" name="verticalLayout_3">
+       <property name="spacing">
+        <number>0</number>
+       </property>
        <property name="leftMargin">
         <number>0</number>
        </property>

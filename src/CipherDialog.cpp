@@ -79,10 +79,9 @@ CipherSettings CipherDialog::getCipherSettings() const
 
 void CipherDialog::checkInputFields()
 {
+    CipherSettings::KeyFormats keyFormat = CipherSettings::getKeyFormat(ui->comboKeyFormat->currentIndex());
     if(sender() == ui->comboKeyFormat)
     {
-        CipherSettings::KeyFormats keyFormat = CipherSettings::getKeyFormat(ui->comboKeyFormat->currentIndex());
-
         if(keyFormat == CipherSettings::KeyFormats::Passphrase)
         {
             ui->editPassword->setValidator(nullptr);
@@ -99,8 +98,14 @@ void CipherDialog::checkInputFields()
     }
 
     bool valid = true;
-    if(encryptMode)
-        valid = ui->editPassword->text() == ui->editPassword2->text();
+    if(encryptMode) {
+        const QString password1 = ui->editPassword->text();
+        valid = password1 == ui->editPassword2->text();
+
+        if (keyFormat == CipherSettings::KeyFormats::RawKey) {
+            valid &= password1.isEmpty() || password1.length() > 2;
+        }
+    }
 
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(valid);
 }

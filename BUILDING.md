@@ -3,7 +3,10 @@
 DB Browser for SQLite requires Qt as well as SQLite. For more information on Qt
 please consult http://www.qt.io and for SQLite please see https://sqlite.org/.
 
-Please note that all versions after 3.9.1 will require:
+Please note that all versions after 3.12.1 will require:
+* A C++ compiler with support for C++14 or later
+
+All versions after 3.9.1 will require:
 * Qt 5.5 or later, however we advise you to use 5.7 or later
 * A C++ compiler with support for C++11 or later
 
@@ -51,7 +54,7 @@ The same process works for building the code in any platform supported by Qt
 (including other Unix systems with X11.)
 
 
-### Ubuntu Linux
+### Ubuntu / Debian Linux
 
 ```bash
 $ sudo apt install build-essential git-core cmake libsqlite3-dev qt5-default qttools5-dev-tools \
@@ -65,6 +68,8 @@ $ make
 $ sudo make install
 ```
 
+**Note** - Use `cmake -DFORCE_INTERNAL_QSCINTILLA=ON -Dsqlcipher=1 -Wno-dev ..` if you're using Debian and meet errors during compiling.
+
 This should complete without errors, giving you a binary file called 'sqlitebrowser'.
 
 Done. :)
@@ -75,6 +80,10 @@ Done. :)
 
 **Note 2** - On CentOS 7.x, you need to replace the `qwt-qt5-devel` package name with
 `qt5-qtbase-devel` in the `dnf install` line below.
+
+
+**Note 3** - On CentOS 8 (Stream), you need to replace the `qt-devel` package name with
+`qt5-devel` in the `dnf install` line below. Make sure the `PowerTools` repo is enabled.
 
 ```
 $ sudo dnf install cmake gcc-c++ git qt-devel qt5-linguist qwt-qt5-devel \
@@ -128,6 +137,7 @@ It requires SQLite and Qt 5.x to be installed first.  These are the
     $ brew tap sqlitebrowser/sqlite3
     $ brew install sqlitefts5
     $ brew install qt
+    $ brew install cmake
     $ brew link sqlitefts5 --force
 
 Then it's just a matter of getting the source:
@@ -140,42 +150,15 @@ its name (eg ~/tmp/foo'), as compiling will error out.
 And compiling it:
 
     $ cd sqlitebrowser
-    $ qmake
-    $ make
-    $ brew unlink sqlitefts5
-    $ mv src/DB\ Browser\ for\ SQLite.app /Applications/
-
-An icon for "DB Browser for SQLite" should now be in your main OSX Applications
-list, ready to launch.
-
-**Note 2** - There have been occasional [reports of compilation problems on OSX
-10.9](https://github.com/sqlitebrowser/sqlitebrowser/issues/38), with the
-'make' step complaining about no targets.  This seems to be solvable by
-running:
-
-    $ qmake -spec macx-g++
-
-or:
-
-    $ qmake -spec macx-llvm
-
-(before the 'make' step)
-
-### Building with CMake
-
-Install Qt and SQLite as instructed in the previous section and clone the repo to a directory (it's `sqlitebrowser` as usual).
-
-Install CMake:
-
-    $ brew install cmake
-
-And build with these commands:
-
-    $ cd sqlitebrowser
     $ mkdir build       # You can easily make a fresh build again by removing this directory
     $ cd build
     $ cmake -DCMAKE_PREFIX_PATH=/usr/local/opt/qt ..
     $ cmake --build .
+    $ brew unlink sqlitefts5
+    $ mv sqlitebrowser.app /Applications/DB\ Browser\ for\ SQLite.app
+
+An icon for "DB Browser for SQLite" should now be in your main OSX Applications
+list, ready to launch.
 
 ### Compiling on Windows with MSVC
 
@@ -221,7 +204,7 @@ Now compile:
 
     $ make
 
-If you additionaly want an NSIS installer:
+If you additionally want an NSIS installer:
 
     $ make package
 
@@ -243,12 +226,11 @@ to download and compile the code as described on the
 
 If SQLCipher is installed, simply follow the standard instructions for your
 platform but enable the 'sqlcipher' build option by replacing any calls to
-cmake and qmake like this:
+cmake like this:
 ```
 If it says...			Change it to...
 cmake				cmake -Dsqlcipher=1
 cmake ..			cmake -Dsqlcipher=1 ..
-qmake				qmake CONFIG+=sqlcipher
 ```
 
 ## Building and running the Unit Tests

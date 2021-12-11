@@ -27,9 +27,9 @@ class TableBrowser;
 struct BrowseDataTableSettings
 {
     using CondFormatMap = std::map<size_t, std::vector<CondFormat>>;
-    std::vector<sqlb::SortedColumn> sortColumns;
+    std::vector<sqlb::OrderBy> sortColumns;
     std::map<int, int> columnWidths;
-    std::map<size_t, QString> filterValues;
+    std::map<std::string, QString> filterValues;
     CondFormatMap condFormats;
     CondFormatMap rowIdFormats;
     std::map<size_t, QString> displayFormats;
@@ -40,11 +40,13 @@ struct BrowseDataTableSettings
     QString unlockViewPk;
     std::map<int, bool> hiddenColumns;
     std::vector<QString> globalFilters;
+    size_t frozenColumns;
 
     BrowseDataTableSettings() :
         showRowid(false),
         plotYAxes({std::map<QString, PlotDock::PlotSettings>(), std::map<QString, PlotDock::PlotSettings>()}),
-        unlockViewPk("_rowid_")
+        unlockViewPk("_rowid_"),
+        frozenColumns(0)
     {
     }
 };
@@ -55,7 +57,8 @@ class TableBrowser : public QWidget
 
 public:
     explicit TableBrowser(DBBrowserDB* _db, QWidget* parent = nullptr);
-    ~TableBrowser();
+    ~TableBrowser() override;
+
     void reset();
     static void resetSharedSettings();
 
@@ -105,6 +108,7 @@ private slots:
     void editCondFormats(size_t column);
     void enableEditing(bool enable_edit);
     void showRowidColumn(bool show);
+    void freezeColumns(size_t columns);
     void unlockViewEditing(bool unlock, QString pk = QString());
     void hideColumns(int column = -1, bool hide = true);
     void on_actionShowAllColumns_triggered();
@@ -126,7 +130,8 @@ private slots:
     void on_actionClearFilters_triggered();
     void on_actionClearSorting_triggered();
     void editDisplayFormat();
-    void exportFilteredTable();
+    void exportCsvFilteredTable();
+    void exportJsonFilteredTable();
     void saveFilterAsView();
     void setTableEncoding(bool forAllTables = false);
     void setDefaultTableEncoding();

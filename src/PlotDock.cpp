@@ -34,7 +34,8 @@ PlotDock::PlotDock(QWidget* parent)
       m_currentPlotModel(nullptr),
       m_currentTableSettings(nullptr),
       m_showLegend(false),
-      m_stackedBars(false)
+      m_stackedBars(false),
+      m_fixedFormat(false)
 {
     ui->setupUi(this);
 
@@ -74,14 +75,14 @@ PlotDock::PlotDock(QWidget* parent)
     QAction* copyAction = new QAction(QIcon(":/icons/copy"), tr("Copy"), m_contextMenu);
     copyAction->setShortcut(shortcutCopy->key());
     m_contextMenu->addAction(copyAction);
-    connect(copyAction, &QAction::triggered, [&]() {
+    connect(copyAction, &QAction::triggered, this, [&]() {
        copy();
     });
 
     QAction* printAction = new QAction(QIcon(":/icons/print"), tr("Print..."), m_contextMenu);
     printAction->setShortcut(shortcutPrint->key());
     m_contextMenu->addAction(printAction);
-    connect(printAction, &QAction::triggered, [&]() {
+    connect(printAction, &QAction::triggered, this, [&]() {
        openPrintDialog();
     });
 
@@ -97,7 +98,18 @@ PlotDock::PlotDock(QWidget* parent)
 
     connect(stackedBarsAction, &QAction::toggled, this, &PlotDock::toggleStackedBars);
 
-    connect(ui->plotWidget, &QTableView::customContextMenuRequested,
+    QAction* fixedFormatsAction = new QAction(tr("Fixed number format"), m_contextMenu);
+    fixedFormatsAction->setCheckable(true);
+    m_contextMenu->addAction(fixedFormatsAction);
+
+    connect(fixedFormatsAction, &QAction::toggled, this,
+      [=](bool fixed) {
+          m_fixedFormat = fixed;
+          adjustAxisFormat();
+          ui->plotWidget->replot();
+    });
+
+    connect(ui->plotWidget, &QTableView::customContextMenuRequested, this,
             [=](const QPoint& pos) {
         // Show menu
         m_contextMenu->popup(ui->plotWidget->mapToGlobal(pos));
@@ -287,7 +299,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
         // regain the model column index and the datatype
         // right now datatype is only important for X axis (Y is always numeric)
         int x = xitem->data(PlotColumnField, Qt::UserRole).toInt();
-        int xtype = xitem->data(PlotColumnType, Qt::UserRole).toInt();
+        unsigned int xtype = xitem->data(PlotColumnType, Qt::UserRole).toUInt();
 
         ui->plotWidget->xAxis->setTickLabelRotation(0);
 
@@ -540,6 +552,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
     }
 
     adjustBars();
+    adjustAxisFormat();
     ui->plotWidget->replot();
 
     // Warn user if not all data has been fetched and hint about the button for loading all the data
@@ -631,7 +644,7 @@ void PlotDock::on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem* item, int c
     // disable change updates, or we get unwanted redrawing and weird behavior
     ui->treePlotColumns->blockSignals(true);
 
-    int type = item->data(PlotColumnType, Qt::UserRole).toInt();
+    unsigned int type = item->data(PlotColumnType, Qt::UserRole).toUInt();
 
     for(size_t y_ind = 0; y_ind < 2; y_ind++)
     {
@@ -938,7 +951,7 @@ void PlotDock::toggleLegendVisible(bool visible)
     ui->plotWidget->replot();
 }
 
-// Stack or group bars and set the appropiate bar width (since it is not automatically done by QCustomPlot).
+// Stack or group bars and set the appropriate bar width (since it is not automatically done by QCustomPlot).
 void PlotDock::adjustBars()
 {
     const double padding = 0.15;
@@ -971,6 +984,19 @@ void PlotDock::adjustBars()
             previousBar = bar;
         }
     }
+}
+
+void PlotDock::adjustAxisFormat()
+{
+    const QString format = m_fixedFormat? "f" : "gb";
+    ui->plotWidget->xAxis->setNumberFormat(format);
+    ui->plotWidget->yAxis->setNumberFormat(format);
+    ui->plotWidget->yAxis2->setNumberFormat(format);
+
+    const int precision = m_fixedFormat? 0 : 6;
+    ui->plotWidget->xAxis->setNumberPrecision(precision);
+    ui->plotWidget->yAxis->setNumberPrecision(precision);
+    ui->plotWidget->yAxis2->setNumberPrecision(precision);
 }
 
 void PlotDock::toggleStackedBars(bool stacked)

@@ -39,6 +39,7 @@ private slots:
     void extraParentheses();
     void moduloOperator();
     void complexExpression();
+    void parseIdentifierWithDollar();
 
     void parseTest();
     void parseTest_data();

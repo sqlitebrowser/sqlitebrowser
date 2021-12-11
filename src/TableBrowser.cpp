@@ -50,12 +50,14 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
 
     popupSaveFilterAsMenu = new QMenu(this);
     popupSaveFilterAsMenu->addAction(ui->actionFilteredTableExportCsv);
+    popupSaveFilterAsMenu->addAction(ui->actionFilteredTableExportJson);
     popupSaveFilterAsMenu->addAction(ui->actionFilterSaveAsView);
     ui->actionSaveFilterAsPopup->setMenu(popupSaveFilterAsMenu);
     qobject_cast<QToolButton*>(ui->browseToolbar->widgetForAction(ui->actionSaveFilterAsPopup))->setPopupMode(QToolButton::InstantPopup);
 
     popupHeaderMenu = new QMenu(this);
     popupHeaderMenu->addAction(ui->actionShowRowidColumn);
+    popupHeaderMenu->addAction(ui->actionFreezeColumns);
     popupHeaderMenu->addAction(ui->actionHideColumns);
     popupHeaderMenu->addAction(ui->actionShowAllColumns);
     popupHeaderMenu->addAction(ui->actionSelectColumn);
@@ -66,19 +68,25 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
     popupHeaderMenu->addAction(ui->actionSetTableEncoding);
     popupHeaderMenu->addAction(ui->actionSetAllTablesEncoding);
 
-    connect(ui->actionSelectColumn, &QAction::triggered, [this]() {
+    connect(ui->actionSelectColumn, &QAction::triggered, this, [this]() {
         ui->dataTable->selectColumn(ui->actionBrowseTableEditDisplayFormat->property("clicked_column").toInt());
-      });
+    });
+    connect(ui->actionFreezeColumns, &QAction::triggered, this, [this](bool checked) {
+        if(checked)
+            freezeColumns(ui->actionBrowseTableEditDisplayFormat->property("clicked_column").toUInt() + 1);
+        else
+            freezeColumns(0);
+    });
 
     // Set up shortcuts
     QShortcut* dittoRecordShortcut = new QShortcut(QKeySequence("Ctrl+\""), this);
-    connect(dittoRecordShortcut, &QShortcut::activated, [this]() {
+    connect(dittoRecordShortcut, &QShortcut::activated, this, [this]() {
         int currentRow = ui->dataTable->currentIndex().row();
         duplicateRecord(currentRow);
     });
 
     // Lambda function for keyboard shortcuts for selecting next/previous table in Browse Data tab
-    connect(ui->dataTable, &ExtendedTableWidget::switchTable, [this](bool next) {
+    connect(ui->dataTable, &ExtendedTableWidget::switchTable, this, [this](bool next) {
         int index = ui->comboBrowseTable->currentIndex();
         int num_items = ui->comboBrowseTable->count();
         if(next)
@@ -113,10 +121,15 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
     // Set up global filter
     connect(ui->editGlobalFilter, &FilterLineEdit::delayedTextChanged, this, [this](const QString& value) {
         // Split up filter values
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
         QStringList values = value.trimmed().split(" ", QString::SkipEmptyParts);
+#else
+        QStringList values = value.trimmed().split(" ", Qt::SkipEmptyParts);
+#endif
         std::vector<QString> filters;
-        for(const auto& s : values)
-            filters.push_back(s);
+        std::copy(values.begin(), values.end(), std::back_inserter(filters));
+
+        ui->actionClearFilters->setEnabled(m_model->filterCount() > 0 || !ui->editGlobalFilter->text().isEmpty());
 
         // Have they changed?
         BrowseDataTableSettings& settings = m_settings[currentlyBrowsedTableName()];
@@ -144,7 +157,7 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
     connect(ui->dataTable, &ExtendedTableWidget::openFileFromDropEvent, this, &TableBrowser::requestFileOpen);
     connect(ui->dataTable, &ExtendedTableWidget::selectedRowsToBeDeleted, this, &TableBrowser::deleteRecord);
 
-    connect(ui->dataTable, &ExtendedTableWidget::foreignKeyClicked, [this](const sqlb::ObjectIdentifier& table, const std::string& column, const QByteArray& value) {
+    connect(ui->dataTable, &ExtendedTableWidget::foreignKeyClicked, this, [this](const sqlb::ObjectIdentifier& table, const std::string& column, const QByteArray& value) {
         // Just select the column that was just clicked instead of selecting an entire range which
         // happens because of the Ctrl and Shift keys.
         ui->dataTable->selectionModel()->select(ui->dataTable->currentIndex(), QItemSelectionModel::ClearAndSelect);
@@ -282,7 +295,7 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
 
     QShortcut* shortcutActionFind = new QShortcut(QKeySequence("Ctrl+F"), this, nullptr, nullptr, Qt::WidgetWithChildrenShortcut);
     connect(shortcutActionFind, &QShortcut::activated, ui->actionFind, &QAction::trigger);
-    connect(ui->actionFind, &QAction::triggered, [this](bool checked) {
+    connect(ui->actionFind, &QAction::triggered, this, [this](bool checked) {
        if(checked)
        {
            ui->widgetReplace->hide();
@@ -296,7 +309,7 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
 
     QShortcut* shortcutActionReplace = new QShortcut(QKeySequence("Ctrl+H"), this, nullptr, nullptr, Qt::WidgetWithChildrenShortcut);
     connect(shortcutActionReplace, &QShortcut::activated, ui->actionReplace, &QAction::trigger);
-    connect(ui->actionReplace, &QAction::triggered, [this](bool checked) {
+    connect(ui->actionReplace, &QAction::triggered, this, [this](bool checked) {
        if(checked)
        {
            ui->widgetReplace->show();
@@ -455,15 +468,15 @@ void TableBrowser::refresh()
     {
         ui->dataTable->setModel(m_model);
         connect(ui->dataTable->selectionModel(), &QItemSelectionModel::currentChanged, this, &TableBrowser::selectionChanged);
-        connect(ui->dataTable->selectionModel(), &QItemSelectionModel::selectionChanged, [this](const QItemSelection&, const QItemSelection&) {
+        connect(ui->dataTable->selectionModel(), &QItemSelectionModel::selectionChanged, this, [this](const QItemSelection&, const QItemSelection&) {
             updateInsertDeleteRecordButton();
 
             const QModelIndexList& sel = ui->dataTable->selectionModel()->selectedIndexes();
             QString statusMessage;
             if (sel.count() > 1) {
-                int rows = sel.last().row() - sel.first().row() + 1;
+                int rows = static_cast<int>(ui->dataTable->rowsInSelection().size());
                 statusMessage = tr("%n row(s)", "", rows);
-                int columns = sel.last().column() - sel.first().column() + 1;
+                int columns = static_cast<int>(ui->dataTable->colsInSelection().size());
                 statusMessage += tr(", %n column(s)", "", columns);
 
                 if (sel.count() < Settings::getValue("databrowser", "complete_threshold").toInt()) {
@@ -499,9 +512,10 @@ void TableBrowser::refresh()
     emit currentTableChanged(tablename);
 
     // Build query and apply settings
-    applyModelSettings(storedData, buildQuery(storedData, tablename));
-    applyViewportSettings(storedData, tablename);
-    updateRecordsetLabel();
+   applyModelSettings(storedData, buildQuery(storedData, tablename));
+   applyViewportSettings(storedData, tablename);
+   updateRecordsetLabel();
+   emit updatePlot(ui->dataTable, m_model, &m_settings[tablename], true);
 }
 
 void TableBrowser::clearFilters()
@@ -548,17 +562,20 @@ void TableBrowser::updateFilter(size_t column, const QString& value)
     ui->dataTable->verticalHeader()->setMinimumWidth(ui->dataTable->verticalHeader()->width());
 
     // Update the filter in the model and its query
-    m_model->updateFilter(column, value);
+    const std::string column_name = model()->headerData(static_cast<int>(column), Qt::Horizontal, Qt::EditRole).toString().toStdString();
+    m_model->updateFilter(column_name, value);
+
+    ui->actionClearFilters->setEnabled(m_model->filterCount() > 0 || !ui->editGlobalFilter->text().isEmpty());
 
     // Save the new filter settings
     BrowseDataTableSettings& settings = m_settings[currentlyBrowsedTableName()];
     if(value.isEmpty())
     {
-        if(settings.filterValues.erase(column) > 0)
+        if(settings.filterValues.erase(column_name) > 0)
             emit projectModified();
     } else {
-        if (settings.filterValues[column] != value) {
-            settings.filterValues[column] = value;
+        if (settings.filterValues[column_name] != value) {
+            settings.filterValues[column_name] = value;
             emit projectModified();
         }
     }
@@ -585,7 +602,7 @@ void TableBrowser::addCondFormat(bool isRowIdFormat, size_t column, const CondFo
     std::vector<CondFormat>& formats = isRowIdFormat ? settings.rowIdFormats[column] : settings.condFormats[column];
     m_model->addCondFormat(isRowIdFormat, column, newCondFormat);
 
-    // Conditionless formats are pushed back and others inserted at the begining, so they aren't eclipsed.
+    // Conditionless formats are pushed back and others inserted at the beginning, so they aren't eclipsed.
     if (newCondFormat.filter().isEmpty())
         formats.push_back(newCondFormat);
     else
@@ -652,8 +669,9 @@ void TableBrowser::modifyFormat(std::function<void(CondFormat&)> changeFunction)
     if (columns.size() > 0) {
         for (size_t column : columns) {
             QString filter;
-            if (m_settings[currentlyBrowsedTableName()].filterValues.count(column) > 0)
-                filter = m_settings[currentlyBrowsedTableName()].filterValues.at(column);
+            const std::string column_name = model()->headerData(static_cast<int>(column), Qt::Horizontal, Qt::EditRole).toString().toStdString();
+            if (m_settings[currentlyBrowsedTableName()].filterValues.count(column_name) > 0)
+                filter = m_settings[currentlyBrowsedTableName()].filterValues.at(column_name);
             modifySingleFormat(false, filter, currentIndex().sibling(currentIndex().row(), static_cast<int>(column)), changeFunction);
         }
     } else {
@@ -713,10 +731,10 @@ void TableBrowser::updateRecordsetLabel()
     sqlb::ObjectIdentifier current_table = currentlyBrowsedTableName();
     if(!current_table.isEmpty() && !m_model->query().empty())
     {
-        auto obj = db->getObjectByName(current_table);
+        auto obj = db->getTableByName(current_table);
         is_table_or_unlocked_view = obj && (
-                    (obj->type() == sqlb::Object::View && m_model->hasPseudoPk()) ||
-                    (obj->type() == sqlb::Object::Table));
+                    (obj->isView() && m_model->hasPseudoPk()) ||
+                    (!obj->isView()));
     }
     enableEditing(m_model->rowCountAvailable() != SqliteTableModel::RowCount::Unknown && is_table_or_unlocked_view);
 
@@ -728,19 +746,22 @@ void TableBrowser::updateRecordsetLabel()
             generateFilters();
             ui->dataTable->adjustSize();
         } else if(!needs_filters && header->hasFilters()) {
-            header->generateFilters(0);
+            ui->dataTable->generateFilters(0, false);
         }
     }
 }
 
 sqlb::Query TableBrowser::buildQuery(const BrowseDataTableSettings& storedData, const sqlb::ObjectIdentifier& tablename) const
 {
-    sqlb::Query query(tablename);
+    const auto table = db->getTableByName(tablename);
+
+    sqlb::Query query(tablename, table && table->isView());
 
     // Construct a query from the retrieved settings
 
     // Sorting
     query.setOrderBy(storedData.sortColumns);
+    ui->actionClearSorting->setEnabled(storedData.sortColumns.size() > 0);
 
     // Filters
     for(auto it=storedData.filterValues.cbegin();it!=storedData.filterValues.cend();++it)
@@ -752,20 +773,18 @@ sqlb::Query TableBrowser::buildQuery(const BrowseDataTableSettings& storedData, 
 
     // Display formats
     bool only_defaults = true;
-    const auto table = db->getObjectByName(tablename);
     if(table)
     {
         // When there is at least one custom display format, we have to set all columns for the query explicitly here
-        const sqlb::FieldInfoList& tablefields = table->fieldInformation();
-        for(size_t i=0; i<tablefields.size(); ++i)
+        for(size_t i=0; i<table->fields.size(); ++i)
         {
             QString format = contains(storedData.displayFormats, i+1) ? storedData.displayFormats.at(i+1) : QString();
             if(format.size())
             {
-                query.selectedColumns().emplace_back(tablefields.at(i).name, format.toStdString());
+                query.selectedColumns().emplace_back(table->fields.at(i).name(), format.toStdString());
                 only_defaults = false;
             } else {
-                query.selectedColumns().emplace_back(tablefields.at(i).name, tablefields.at(i).name);
+                query.selectedColumns().emplace_back(table->fields.at(i).name(), table->fields.at(i).name());
             }
         }
     }
@@ -825,17 +844,20 @@ void TableBrowser::applyViewportSettings(const BrowseDataTableSettings& storedDa
     ui->editGlobalFilter->setText(text);
 
     // Show/hide some menu options depending on whether this is a table or a view
-    const auto table = db->getObjectByName<sqlb::Table>(tablename);
-    if(table)
+    const auto table = db->getTableByName(tablename);
+    if(!table->isView())
     {
         // Table
         ui->actionUnlockViewEditing->setVisible(false);
-        ui->actionShowRowidColumn->setVisible(!std::dynamic_pointer_cast<sqlb::Table>(table)->withoutRowidTable());
+        ui->actionShowRowidColumn->setVisible(!table->withoutRowidTable());
     } else {
         // View
         ui->actionUnlockViewEditing->setVisible(true);
         ui->actionShowRowidColumn->setVisible(false);
     }
+
+    // Frozen columns
+    freezeColumns(storedData.frozenColumns);
 }
 
 void TableBrowser::enableEditing(bool enable_edit)
@@ -850,12 +872,12 @@ void TableBrowser::enableEditing(bool enable_edit)
 
 void TableBrowser::showRowidColumn(bool show)
 {
-    // Block all signals from the horizontal header. Otherwise the QHeaderView::sectionResized signal causes us trouble
-    ui->dataTable->horizontalHeader()->blockSignals(true);
+    // Disconnect the resized signal from the horizontal header. Otherwise it's resetting the automatic column widths
+    disconnect(ui->dataTable->horizontalHeader(), &QHeaderView::sectionResized, this, &TableBrowser::updateColumnWidth);
 
     // WORKAROUND
     // Set the opposite hidden/visible status of what we actually want for the rowid column. This is to work around a Qt bug which
-    // is present in at least version 5.7.1. The problem is this: when you browse a table/view with n colums, then switch to a table/view
+    // is present in at least version 5.7.1. The problem is this: when you browse a table/view with n columns, then switch to a table/view
     // with less than n columns, you'll be able to resize the first (hidden!) column by resizing the section to the left of the first visible
     // column. By doing so the table view gets messed up. But even when not resizing the first hidden column, tab-ing through the fields
     // will stop at the not-so-much-hidden rowid column, too. All this can be fixed by this line. I haven't managed to find another workaround
@@ -864,6 +886,8 @@ void TableBrowser::showRowidColumn(bool show)
 
     // Show/hide rowid column
     ui->dataTable->setColumnHidden(0, !show);
+    if(show)
+        ui->dataTable->setColumnWidth(0, ui->dataTable->horizontalHeader()->defaultSectionSize());
 
     // Update checked status of the popup menu action
     ui->actionShowRowidColumn->setChecked(show);
@@ -878,35 +902,56 @@ void TableBrowser::showRowidColumn(bool show)
     // Update the filter row
     generateFilters();
 
-    // Re-enable signals
-    ui->dataTable->horizontalHeader()->blockSignals(false);
+    // Re-enable signal
+    connect(ui->dataTable->horizontalHeader(), &QHeaderView::sectionResized, this, &TableBrowser::updateColumnWidth);
 
     ui->dataTable->update();
+}
+
+void TableBrowser::freezeColumns(size_t columns)
+{
+    // Update checked status of the popup menu action
+    ui->actionFreezeColumns->setChecked(columns != 0);
+
+    // Save settings for this table
+    sqlb::ObjectIdentifier current_table = currentlyBrowsedTableName();
+    if (m_settings[current_table].frozenColumns != columns) {
+        emit projectModified();
+        m_settings[current_table].frozenColumns = columns;
+    }
+
+    // Apply settings
+    ui->dataTable->horizontalHeader()->blockSignals(true);
+    ui->dataTable->setFrozenColumns(columns);
+    generateFilters();
+    ui->dataTable->horizontalHeader()->blockSignals(false);
 }
 
 void TableBrowser::generateFilters()
 {
     // Generate a new row of filter line edits
     const auto& settings = m_settings[currentlyBrowsedTableName()];
-    qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader())->generateFilters(static_cast<size_t>(m_model->columnCount()),
-                                                                                         settings.showRowid);
+    ui->dataTable->generateFilters(static_cast<size_t>(m_model->columnCount()), settings.showRowid);
 
     // Apply the stored filter strings to the new row of line edits
     // Set filters blocking signals for this since the filter is already applied to the browse table model
     FilterTableHeader* filterHeader = qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader());
     bool oldState = filterHeader->blockSignals(true);
+    auto obj = db->getTableByName(currentlyBrowsedTableName());
     for(auto filterIt=settings.filterValues.cbegin();filterIt!=settings.filterValues.cend();++filterIt)
-        filterHeader->setFilter(static_cast<size_t>(filterIt->first), filterIt->second);
+        ui->dataTable->setFilter(sqlb::getFieldNumber(obj, filterIt->first) + 1, filterIt->second);
     filterHeader->blockSignals(oldState);
+
+    ui->actionClearFilters->setEnabled(m_model->filterCount() > 0 || !ui->editGlobalFilter->text().isEmpty());
 }
 
 void TableBrowser::unlockViewEditing(bool unlock, QString pk)
 {
     sqlb::ObjectIdentifier currentTable = currentlyBrowsedTableName();
-    sqlb::ViewPtr obj = db->getObjectByName<sqlb::View>(currentTable);
+    sqlb::TablePtr view = db->getTableByName(currentTable);
 
     // If this isn't a view just unlock editing and return
-    if(!obj)
+    if(!view)
     {
         m_model->setPseudoPk(m_model->pseudoPk());
         enableEditing(true);
@@ -921,7 +966,7 @@ void TableBrowser::unlockViewEditing(bool unlock, QString pk)
             bool ok;
 
             QStringList options;
-            for(const auto& n : obj->fieldNames())
+            for(const auto& n : view->fieldNames())
                 options.push_back(QString::fromStdString(n));
 
             // Ask for a PK
@@ -1032,8 +1077,6 @@ void TableBrowser::updateInsertDeleteRecordButton()
 {
     // Update the delete record button to reflect number of selected records
 
-    // NOTE: We're assuming here that the selection is always contiguous, i.e. that there are never two selected
-    // rows with a non-selected row in between.
     int rows = 0;
 
     // If there is no model yet (because e.g. no database file is opened) there is no selection model either. So we need to check for that here
@@ -1078,6 +1121,9 @@ void TableBrowser::headerClicked(int logicalindex)
     // Get the current list of sort columns
     auto& columns = settings.sortColumns;
 
+    // Get the name of the column the user clicked on
+    std::string column = model()->headerData(logicalindex, Qt::Horizontal, Qt::EditRole).toString().toStdString();
+
     // Before sorting, first check if the Control key is pressed. If it is, we want to append this column to the list of sort columns. If it is not,
     // we want to sort only by the new column.
     if(QApplication::keyboardModifiers().testFlag(Qt::ControlModifier))
@@ -1087,32 +1133,33 @@ void TableBrowser::headerClicked(int logicalindex)
         // If the column was control+clicked again, change its sort order.
         // If not already in the sort order, add the column as a new sort column to the list.
         bool present = false;
-        for(sqlb::SortedColumn& sortedCol : columns) {
-
-            if(sortedCol.column == static_cast<size_t>(logicalindex)) {
-                sortedCol.direction = (sortedCol.direction == sqlb::Ascending ? sqlb::Descending : sqlb::Ascending);
+        for(sqlb::OrderBy& sortedCol : columns) {
+            if(sortedCol.expr == column) {
+                sortedCol.direction = (sortedCol.direction == sqlb::OrderBy::Ascending ? sqlb::OrderBy::Descending : sqlb::OrderBy::Ascending);
                 present = true;
                 break;
             }
         }
         if(!present)
-            columns.emplace_back(logicalindex, sqlb::Ascending);
+            columns.emplace_back(column, sqlb::OrderBy::Ascending);
     } else {
         // Single column sorting
 
         // If we have exactly one sort column and it is the column which was just clicked, change its sort order.
         // If not, clear the list of sorting columns and replace it by a single new sort column.
-        if(columns.size() == 1 && columns.front().column == static_cast<size_t>(logicalindex))
+        if(columns.size() == 1 && columns.front().expr == column)
         {
-            columns.front().direction = (columns.front().direction == sqlb::Ascending ? sqlb::Descending : sqlb::Ascending);
+            columns.front().direction = (columns.front().direction == sqlb::OrderBy::Ascending ? sqlb::OrderBy::Descending : sqlb::OrderBy::Ascending);
         } else {
             columns.clear();
-            columns.emplace_back(logicalindex, sqlb::Ascending);
+            columns.emplace_back(column, sqlb::OrderBy::Ascending);
         }
     }
 
     // Do the actual sorting
     ui->dataTable->sortByColumns(columns);
+
+    ui->actionClearSorting->setEnabled(columns.size() > 0);
 
     // select the first item in the column so the header is bold
     // we might try to select the last selected item
@@ -1172,12 +1219,12 @@ void TableBrowser::showRecordPopupMenu(const QPoint& pos)
     QMenu popupRecordMenu(this);
 
     // "Delete and duplicate records" can only be done on writable objects
-    if(db->getObjectByName(currentlyBrowsedTableName())->type() == sqlb::Object::Types::Table && !db->readOnly()) {
+    if(db->getTableByName(currentlyBrowsedTableName()) && !db->readOnly()) {
 
         // Select the row if it is not already in the selection.
         QModelIndexList rowList = ui->dataTable->selectionModel()->selectedRows();
         bool found = false;
-        for (QModelIndex index : rowList) {
+        for (const QModelIndex& index : rowList) {
             if (row == index.row()) {
                 found = true;
                 break;
@@ -1195,7 +1242,7 @@ void TableBrowser::showRecordPopupMenu(const QPoint& pos)
         action->setShortcut(QKeySequence(tr("Ctrl+\"")));
         popupRecordMenu.addAction(action);
 
-        connect(action, &QAction::triggered, [rowList, this]() {
+        connect(action, &QAction::triggered, this, [rowList, this]() {
             for (const QModelIndex& index : rowList)
                 duplicateRecord(index.row());
         });
@@ -1203,7 +1250,7 @@ void TableBrowser::showRecordPopupMenu(const QPoint& pos)
         QAction* deleteRecordAction = new QAction(QIcon(":icons/delete_record"), ui->actionDeleteRecord->text(), &popupRecordMenu);
         popupRecordMenu.addAction(deleteRecordAction);
 
-        connect(deleteRecordAction, &QAction::triggered, [&]() {
+        connect(deleteRecordAction, &QAction::triggered, this, [&]() {
             deleteRecord();
         });
 
@@ -1216,7 +1263,7 @@ void TableBrowser::showRecordPopupMenu(const QPoint& pos)
     adjustRowHeightAction->setChecked(m_adjustRows);
     popupRecordMenu.addAction(adjustRowHeightAction);
 
-    connect(adjustRowHeightAction, &QAction::toggled, [&](bool checked) {
+    connect(adjustRowHeightAction, &QAction::toggled, this, [&](bool checked) {
         m_adjustRows = checked;
         refresh();
     });
@@ -1256,22 +1303,29 @@ void TableBrowser::deleteRecord()
         if(ui->dataTable->selectionModel()->selectedIndexes().isEmpty())
             return;
 
-        int old_row = ui->dataTable->currentIndex().row();
         while(ui->dataTable->selectionModel()->hasSelection())
         {
-            int first_selected_row = ui->dataTable->selectionModel()->selectedIndexes().first().row();
-            int last_selected_row = ui->dataTable->selectionModel()->selectedIndexes().last().row();
-            int selected_rows_count = last_selected_row - first_selected_row + 1;
-            if(!m_model->removeRows(first_selected_row, selected_rows_count))
+            std::set<size_t> row_set = ui->dataTable->rowsInSelection();
+            int first_selected_row = static_cast<int>(*row_set.begin());
+            int rows_to_remove = 0;
+            int previous_row = first_selected_row - 1;
+
+            // Non-contiguous selection: remove only the contiguous
+            // rows in the selection in each cycle until the entire
+            // selection has been removed.
+            for(size_t row : row_set) {
+                if(previous_row == static_cast<int>(row - 1))
+                    rows_to_remove++;
+                else
+                    break;
+            }
+
+            if(!m_model->removeRows(first_selected_row, rows_to_remove))
             {
                 QMessageBox::warning(this, QApplication::applicationName(), tr("Error deleting record:\n%1").arg(db->lastError()));
                 break;
             }
         }
-
-        if(old_row > m_model->rowCount())
-            old_row = m_model->rowCount();
-        selectTableLine(old_row);
     } else {
         QMessageBox::information( this, QApplication::applicationName(), tr("Please select a record first"));
     }
@@ -1325,7 +1379,7 @@ void TableBrowser::selectTableLine(int lineToSelect)
 
 void TableBrowser::on_actionClearFilters_triggered()
 {
-    ui->dataTable->filterHeader()->clearFilters();
+    clearFilters();
 }
 
 void TableBrowser::on_actionClearSorting_triggered()
@@ -1335,6 +1389,8 @@ void TableBrowser::on_actionClearSorting_triggered()
     columns.clear();
     // Set cleared vector of sort-by columns
     m_model->sort(columns);
+
+    ui->actionClearSorting->setEnabled(false);
 }
 
 void TableBrowser::editDisplayFormat()
@@ -1344,11 +1400,8 @@ void TableBrowser::editDisplayFormat()
     // column is always the rowid column. Ultimately, get the column name from the column object
     sqlb::ObjectIdentifier current_table = currentlyBrowsedTableName();
     size_t field_number = sender()->property("clicked_column").toUInt();
-    QString field_name;
-    if (db->getObjectByName(current_table)->type() == sqlb::Object::Table)
-        field_name = QString::fromStdString(db->getObjectByName<sqlb::Table>(current_table)->fields.at(field_number-1).name());
-    else
-        field_name = QString::fromStdString(db->getObjectByName<sqlb::View>(current_table)->fieldNames().at(field_number-1));
+    QString field_name = QString::fromStdString(db->getTableByName(current_table)->fields.at(field_number-1).name());
+
     // Get the current display format of the field
     QString current_displayformat = m_settings[current_table].displayFormats[field_number];
 
@@ -1369,19 +1422,22 @@ void TableBrowser::editDisplayFormat()
     }
 }
 
-void TableBrowser::exportFilteredTable()
+void TableBrowser::exportCsvFilteredTable()
 {
     ExportDataDialog dialog(*db, ExportDataDialog::ExportFormatCsv, this, m_model->customQuery(false));
     dialog.exec();
 }
 
+void TableBrowser::exportJsonFilteredTable()
+{
+    ExportDataDialog dialog(*db, ExportDataDialog::ExportFormatJson, this, m_model->customQuery(false));
+    dialog.exec();
+}
+
 void TableBrowser::saveFilterAsView()
 {
-    if (m_model->filterCount() > 0)
-        // Save as view a custom query without rowid
-        emit createView(m_model->customQuery(false));
-    else
-        QMessageBox::information(this, qApp->applicationName(), tr("There is no filter set for this table. View will not be created."));
+    // Save as view a custom query without rowid
+    emit createView(m_model->customQuery(false));
 }
 
 void TableBrowser::setTableEncoding(bool forAllTables)
@@ -1445,7 +1501,7 @@ void TableBrowser::setDefaultTableEncoding()
 void TableBrowser::jumpToRow(const sqlb::ObjectIdentifier& table, std::string column, const QByteArray& value)
 {
     // First check if table exists
-    sqlb::TablePtr obj = db->getObjectByName<sqlb::Table>(table);
+    sqlb::TablePtr obj = db->getTableByName(table);
     if(!obj)
         return;
 
@@ -1454,15 +1510,15 @@ void TableBrowser::jumpToRow(const sqlb::ObjectIdentifier& table, std::string co
         column = obj->primaryKey()->columnList().front();
 
     // If column doesn't exist don't do anything
-    auto column_index = sqlb::findField(obj, column);
-    if(column_index == obj->fields.end())
+    auto column_it = sqlb::findField(obj, column);
+    if(column_it == obj->fields.end())
         return;
 
     // Jump to table
     setCurrentTable(table);
 
     // Set filter
-    m_settings[table].filterValues[static_cast<size_t>(column_index-obj->fields.begin()+1)] = value;
+    m_settings[table].filterValues[column_it->name()] = value;
     refresh();
 }
 
@@ -1492,7 +1548,7 @@ void TableBrowser::find(const QString& expr, bool forward, bool include_first, R
     // Reset the colour of the line edit, assuming there is no error.
     ui->editFindExpression->setStyleSheet("");
 
-    // You are not allowed to search for an ampty string
+    // You are not allowed to search for an empty string
     if(expr.isEmpty())
         return;
 

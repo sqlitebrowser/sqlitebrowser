@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   id="svg23"
+   version="1.1"
+   height="16"
+   width="16">
+  <metadata
+     id="metadata29">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Arrow Up</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs27">
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="scale(0.75592895,1.3228757)"
+       id="arrow-backing-6"
+       x1="5.2915026"
+       y1="5.2915026"
+       x2="-5.2915026"
+       y2="-5.2915026">
+      <stop
+         offset="0%"
+         stop-color="#72c466"
+         id="stop896" />
+      <stop
+         offset="100%"
+         stop-color="#22601e"
+         id="stop898" />
+    </linearGradient>
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="scale(0.64549722,1.5491933)"
+       id="arrow-center-7"
+       x1="3.8729833"
+       y1="3.8729833"
+       x2="-3.8729833"
+       y2="-3.8729833">
+      <stop
+         offset="0%"
+         stop-color="#a7d69e"
+         id="stop901" />
+      <stop
+         offset="100%"
+         stop-color="#78bd72"
+         id="stop903" />
+    </linearGradient>
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       id="backing_delete"
+       x1="-3.5"
+       y1="-3.5"
+       x2="3.5"
+       y2="3.5">
+      <stop
+         offset="0%"
+         stop-color="#c4581e"
+         id="stop1006" />
+      <stop
+         offset="100%"
+         stop-color="#b84503"
+         id="stop1008" />
+    </linearGradient>
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       id="center_delete"
+       x1="-2.5"
+       y1="-2.5"
+       x2="2.5"
+       y2="2.5">
+      <stop
+         offset="0%"
+         stop-color="#fed6b8"
+         id="stop1011" />
+      <stop
+         offset="100%"
+         stop-color="#dd6401"
+         id="stop1013" />
+    </linearGradient>
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="scale(1.0827936,0.92353707)"
+       id="backing"
+       x1="-7.3088566"
+       y1="-7.579555"
+       x2="7.3088566"
+       y2="7.0381582">
+      <stop
+         offset="0%"
+         stop-color="#cdcdcd"
+         id="stop1159" />
+      <stop
+         offset="100%"
+         stop-color="#6e6e6e"
+         id="stop1161" />
+    </linearGradient>
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       id="backing_delete-5"
+       x1="-3.5"
+       y1="-3.5"
+       x2="3.5"
+       y2="3.5">
+      <stop
+         offset="0%"
+         stop-color="#c4581e"
+         id="stop1175" />
+      <stop
+         offset="100%"
+         stop-color="#b84503"
+         id="stop1177" />
+    </linearGradient>
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       id="center_delete-6"
+       x1="-2.5"
+       y1="-2.5"
+       x2="2.5"
+       y2="2.5">
+      <stop
+         offset="0%"
+         stop-color="#fed6b8"
+         id="stop1180" />
+      <stop
+         offset="100%"
+         stop-color="#dd6401"
+         id="stop1182" />
+    </linearGradient>
+  </defs>
+  <title
+     id="title2">Arrow Up</title>
+  <desc
+     id="desc4">Arrow Up Top</desc>
+  <g
+     transform="matrix(0.76279069,0,0,0.76279069,3.9325189,6.3395348)"
+     id="icon">
+    <defs
+       id="defs16">
+      <linearGradient
+         gradientUnits="userSpaceOnUse"
+         gradientTransform="scale(0.75592895,1.3228757)"
+         y2="5.2915025"
+         x2="5.2915025"
+         y1="-5.2915025"
+         x1="-5.2915025"
+         id="arrow-backing">
+        <stop
+           id="stop6"
+           stop-color="#72c466"
+           offset="0%" />
+        <stop
+           id="stop8"
+           stop-color="#22601e"
+           offset="100%" />
+      </linearGradient>
+      <linearGradient
+         gradientUnits="userSpaceOnUse"
+         gradientTransform="scale(0.64549722,1.5491933)"
+         y2="3.8729832"
+         x2="3.8729832"
+         y1="-3.8729832"
+         x1="-3.8729832"
+         id="arrow-center">
+        <stop
+           id="stop11"
+           stop-color="#a7d69e"
+           offset="0%" />
+        <stop
+           id="stop13"
+           stop-color="#78bd72"
+           offset="100%" />
+      </linearGradient>
+    </defs>
+    <path
+       style="fill:url(#arrow-backing)"
+       id="path18"
+       d="m -2,-3 h -2 l 4,-4 4,4 H 2 V 7 h -4 z" />
+    <path
+       style="fill:url(#arrow-center)"
+       id="path20"
+       d="M -1,-3.5 H -2.5 L 0,-6 2.5,-3.5 H 1 V 6 h -2 z" />
+  </g>
+  <g
+     id="icon-3"
+     transform="matrix(0.76279069,0,0,0.76279069,8.9488372,6.3395348)">
+    <g
+       transform="scale(-1)"
+       id="g912">
+      <defs
+         id="defs906">
+        <linearGradient
+           id="linearGradient933"
+           x1="1"
+           y1="1"
+           x2="0"
+           y2="0">
+          <stop
+             offset="0%"
+             stop-color="#72c466"
+             id="stop929" />
+          <stop
+             offset="100%"
+             stop-color="#22601e"
+             id="stop931" />
+        </linearGradient>
+        <linearGradient
+           id="linearGradient939"
+           x1="1"
+           y1="1"
+           x2="0"
+           y2="0">
+          <stop
+             offset="0%"
+             stop-color="#a7d69e"
+             id="stop935" />
+          <stop
+             offset="100%"
+             stop-color="#78bd72"
+             id="stop937" />
+        </linearGradient>
+      </defs>
+      <path
+         d="m -2,-3 h -2 l 4,-4 4,4 H 2 V 7 h -4 z"
+         id="path908"
+         style="fill:url(#arrow-backing-6)" />
+      <path
+         d="M -1,-3.5 H -2.5 L 0,-6 2.5,-3.5 H 1 V 6 h -2 z"
+         id="path910"
+         style="fill:url(#arrow-center-7)" />
+    </g>
+  </g>
+  <g
+     id="delete"
+     transform="translate(12.508475,12.474576)">
+    <defs
+       id="defs1016">
+      <linearGradient
+         id="linearGradient1041"
+         x1="0"
+         y1="0"
+         x2="1"
+         y2="1">
+        <stop
+           offset="0%"
+           stop-color="#c4581e"
+           id="stop1037" />
+        <stop
+           offset="100%"
+           stop-color="#b84503"
+           id="stop1039" />
+      </linearGradient>
+      <linearGradient
+         id="linearGradient1047"
+         x1="0"
+         y1="0"
+         x2="1"
+         y2="1">
+        <stop
+           offset="0%"
+           stop-color="#fed6b8"
+           id="stop1043" />
+        <stop
+           offset="100%"
+           stop-color="#dd6401"
+           id="stop1045" />
+      </linearGradient>
+    </defs>
+    <circle
+       style="fill:url(#backing_delete)"
+       cy="0"
+       cx="0"
+       id="back"
+       r="3.5" />
+    <circle
+       style="fill:url(#center_delete)"
+       cy="0"
+       cx="0"
+       id="center-dot"
+       r="2.5" />
+    <path
+       style="fill:#ffffff"
+       d="m -1.5,-0.5 h 3 v 1 h -3 z"
+       id="path1020" />
+  </g>
+</svg>

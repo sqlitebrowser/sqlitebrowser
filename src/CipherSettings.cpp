@@ -16,7 +16,11 @@ std::string CipherSettings::getPassword() const
         return sqlb::escapeString(password);
     } else {
         // Remove the '0x' part at the beginning
-        return "\"x'" + password.substr(2) + "'\"";
+        if (password.length() > 2) {
+            return "\"x'" + password.substr(2) + "'\"";
+        }
+
+        return "''";
     }
 }
 

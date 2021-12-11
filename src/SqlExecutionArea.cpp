@@ -17,7 +17,8 @@ SqlExecutionArea::SqlExecutionArea(DBBrowserDB& _db, QWidget* parent) :
     db(_db),
     ui(new Ui::SqlExecutionArea),
     m_columnsResized(false),
-    error_state(false)
+    error_state(false),
+    follow_mode(false)
 {
     // Create UI
     ui->setupUi(this);
@@ -43,10 +44,10 @@ SqlExecutionArea::SqlExecutionArea(DBBrowserDB& _db, QWidget* parent) :
 
     // Save to settings when sppliter is moved, but only to memory.
     connect(ui->splitter, &QSplitter::splitterMoved, this,  [this]() {
-            Settings::setValue("editor", "splitter1_sizes", ui->splitter->saveState(), /* dont_save_to_disk */ true);
+            Settings::setValue("editor", "splitter1_sizes", ui->splitter->saveState(), /* save_to_disk */ false);
         });
     connect(ui->splitter_2, &QSplitter::splitterMoved, this, [this]() {
-            Settings::setValue("editor", "splitter2_sizes", ui->splitter_2->saveState(), /* dont_save_to_disk */ true);
+            Settings::setValue("editor", "splitter2_sizes", ui->splitter_2->saveState(), /* save_to_disk */ false);
         });
 
     // Set collapsible the editErrors panel
@@ -130,6 +131,12 @@ void SqlExecutionArea::saveAsCsv()
     dialog.exec();
 }
 
+void SqlExecutionArea::saveAsJson()
+{
+    ExportDataDialog dialog(db, ExportDataDialog::ExportFormatJson, this, model->query());
+    dialog.exec();
+}
+
 void SqlExecutionArea::reloadSettings()
 {
     // Reload editor and table settings
@@ -196,7 +203,7 @@ void SqlExecutionArea::findLineEdit_textChanged(const QString &)
     // position, or from begin of the selection position.
 
     // For incremental search while typing we need to start from the
-    // begining of the current selection, otherwise we'd jump to the
+    // beginning of the current selection, otherwise we'd jump to the
     // next occurrence
     if (ui->editEditor->hasSelectedText()) {
         int lineFrom;
@@ -257,7 +264,7 @@ void SqlExecutionArea::openFile(const QString& filename)
 
 void SqlExecutionArea::saveFile(const QString& filename)
 {
-    // Unwatch all files now. By unwathing them before the actual saving, we are not notified of our own changes
+    // Unwatch all files now. By unwatching them before the actual saving, we are not notified of our own changes
     if(!fileSystemWatch.files().empty())
         fileSystemWatch.removePaths(fileSystemWatch.files());
 
@@ -291,24 +298,57 @@ void SqlExecutionArea::saveFile(const QString& filename)
 
 void SqlExecutionArea::fileChanged(const QString& filename)
 {
+    // Ignore the signal if the file is already removed from the watcher.
+    if(!fileSystemWatch.files().contains(filename))
+        return;
+
+    // When in follow_mode and the file is not modified, reload without prompt.
+    if(follow_mode && !ui->editEditor->isModified()) {
+        openFile(filename);
+        return;
+    }
+
+    // Stop watching the file while the dialog is open.
+    fileSystemWatch.removePath(filename);
+
     // Check if there are unsaved changes in the file
     QString changes;
     if(ui->editEditor->isModified())
-        changes = QString(" ") + tr("Your changes will be lost when reloading it!");
+        changes = QString(" <strong>") + tr("Your changes will be lost when reloading it!") + QString("</strong>");
 
-    // Ask user whether to realod the modified file
-    if(QMessageBox::question(
+    // Ask user whether to reload the modified file
+    QMessageBox::StandardButton reply = QMessageBox::question(
                 this,
                 qApp->applicationName(),
-                tr("The file \"%1\" was modified by another program. Do you want to reload it?%2").arg(filename, changes),
-                QMessageBox::Yes | QMessageBox::Ignore) == QMessageBox::Yes)
-    {
-        // Read in the file
+                tr("The file \"%1\" was modified by another program. Do you want to reload it?%2").arg(filename, changes) +
+                QString("<ul><li>") +
+                tr("Answer \"Yes to All\" to reload the file on any external update without further prompting.") +
+                QString("</li><li>") +
+                tr("Answer \"No to All\" to ignore any external update without further prompting.") +
+                QString("</li></ul>") +
+                tr("Modifying and saving the file will restore prompting."),
+                QMessageBox::Yes | QMessageBox::No | QMessageBox::YesToAll | QMessageBox::NoToAll);
+
+    switch (reply) {
+    case QMessageBox::Yes:
+    case QMessageBox::YesToAll:
+        // Read in the file. This will restore the watcher.
         openFile(filename);
-    } else {
-        // The file does not match the file on the disk anymore. So set the modified flag
+        break;
+    case QMessageBox::No:
+        // The file does not match the file on the disk anymore. So set the modified flag.
         ui->editEditor->setModified(true);
+        // Start watching the file again for further prompting.
+        fileSystemWatch.addPath(filename);
+        break;
+    case QMessageBox::NoToAll:
+        // Set the modified flag and the watch is not restored until the file is saved again to disk.
+        ui->editEditor->setModified(true);
+        break;
+    default:
+        break;
     }
+    follow_mode = reply == QMessageBox::YesToAll;
 }
 
 void SqlExecutionArea::saveState() {

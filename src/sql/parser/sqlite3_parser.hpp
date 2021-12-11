@@ -1,8 +1,8 @@
-// A Bison parser, made by GNU Bison 3.6.3.
+// A Bison parser, made by GNU Bison 3.7.5.
 
 // Skeleton interface for Bison LALR(1) parsers in C++
 
-// Copyright (C) 2002-2015, 2018-2020 Free Software Foundation, Inc.
+// Copyright (C) 2002-2015, 2018-2021 Free Software Foundation, Inc.
 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -55,7 +55,7 @@
 	typedef void* yyscan_t;
 
 	// Colum definitions are a tuple of two elements: the Field object and a set of table constraints
-	using ColumndefData = std::tuple<sqlb::Field, sqlb::ConstraintSet>;
+	using ColumndefData = std::tuple<sqlb::Field, sqlb::ConstraintVector>;
 
 #line 61 "sqlite3_parser.hpp"
 
@@ -128,9 +128,9 @@
 
 /* Suppress unused-variable warnings by "using" E.  */
 #if ! defined lint || defined __GNUC__
-# define YYUSE(E) ((void) (E))
+# define YY_USE(E) ((void) (E))
 #else
-# define YYUSE(E) /* empty */
+# define YY_USE(E) /* empty */
 #endif
 
 #if defined __GNUC__ && ! defined __ICC && 407 <= __GNUC__ * 100 + __GNUC_MINOR__
@@ -423,7 +423,7 @@ namespace  sqlb { namespace parser  {
       // columnconstraint_list
       // tableconstraint_list
       // optional_tableconstraint_list
-      char dummy4[sizeof (sqlb::ConstraintSet)];
+      char dummy4[sizeof (sqlb::ConstraintVector)];
 
       // createindex_stmt
       char dummy5[sizeof (sqlb::IndexPtr)];
@@ -507,6 +507,7 @@ namespace  sqlb { namespace parser  {
       // "REGEXP"
       // "REPLACE"
       // "RESTRICT"
+      // "RETURNING"
       // "ROLLBACK"
       // "ROWID"
       // "ROWS"
@@ -709,31 +710,32 @@ namespace  sqlb { namespace parser  {
     TOK_REGEXP = 344,              // "REGEXP"
     TOK_REPLACE = 345,             // "REPLACE"
     TOK_RESTRICT = 346,            // "RESTRICT"
-    TOK_ROLLBACK = 347,            // "ROLLBACK"
-    TOK_ROWID = 348,               // "ROWID"
-    TOK_ROWS = 349,                // "ROWS"
-    TOK_SELECT = 350,              // "SELECT"
-    TOK_SET = 351,                 // "SET"
-    TOK_STORED = 352,              // "STORED"
-    TOK_TABLE = 353,               // "TABLE"
-    TOK_TEMP = 354,                // "TEMP"
-    TOK_TEMPORARY = 355,           // "TEMPORARY"
-    TOK_THEN = 356,                // "THEN"
-    TOK_TRUE = 357,                // "TRUE"
-    TOK_UNBOUNDED = 358,           // "UNBOUNDED"
-    TOK_UNIQUE = 359,              // "UNIQUE"
-    TOK_UPDATE = 360,              // "UPDATE"
-    TOK_USING = 361,               // "USING"
-    TOK_VIRTUAL = 362,             // "VIRTUAL"
-    TOK_WHEN = 363,                // "WHEN"
-    TOK_WHERE = 364,               // "WHERE"
-    TOK_WITHOUT = 365,             // "WITHOUT"
-    TOK_IDENTIFIER = 366,          // "identifier"
-    TOK_NUMERIC = 367,             // "numeric"
-    TOK_STRINGLITERAL = 368,       // "string literal"
-    TOK_QUOTEDLITERAL = 369,       // "quoted literal"
-    TOK_BLOBLITERAL = 370,         // "blob literal"
-    TOK_BINDPARAMETER = 371        // "bind parameter"
+    TOK_RETURNING = 347,           // "RETURNING"
+    TOK_ROLLBACK = 348,            // "ROLLBACK"
+    TOK_ROWID = 349,               // "ROWID"
+    TOK_ROWS = 350,                // "ROWS"
+    TOK_SELECT = 351,              // "SELECT"
+    TOK_SET = 352,                 // "SET"
+    TOK_STORED = 353,              // "STORED"
+    TOK_TABLE = 354,               // "TABLE"
+    TOK_TEMP = 355,                // "TEMP"
+    TOK_TEMPORARY = 356,           // "TEMPORARY"
+    TOK_THEN = 357,                // "THEN"
+    TOK_TRUE = 358,                // "TRUE"
+    TOK_UNBOUNDED = 359,           // "UNBOUNDED"
+    TOK_UNIQUE = 360,              // "UNIQUE"
+    TOK_UPDATE = 361,              // "UPDATE"
+    TOK_USING = 362,               // "USING"
+    TOK_VIRTUAL = 363,             // "VIRTUAL"
+    TOK_WHEN = 364,                // "WHEN"
+    TOK_WHERE = 365,               // "WHERE"
+    TOK_WITHOUT = 366,             // "WITHOUT"
+    TOK_IDENTIFIER = 367,          // "identifier"
+    TOK_NUMERIC = 368,             // "numeric"
+    TOK_STRINGLITERAL = 369,       // "string literal"
+    TOK_QUOTEDLITERAL = 370,       // "quoted literal"
+    TOK_BLOBLITERAL = 371,         // "blob literal"
+    TOK_BINDPARAMETER = 372        // "bind parameter"
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -750,7 +752,7 @@ namespace  sqlb { namespace parser  {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 117, ///< Number of tokens.
+        YYNTOKENS = 118, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // "end of file"
         S_YYerror = 1,                           // error
@@ -844,86 +846,87 @@ namespace  sqlb { namespace parser  {
         S_REGEXP = 89,                           // "REGEXP"
         S_REPLACE = 90,                          // "REPLACE"
         S_RESTRICT = 91,                         // "RESTRICT"
-        S_ROLLBACK = 92,                         // "ROLLBACK"
-        S_ROWID = 93,                            // "ROWID"
-        S_ROWS = 94,                             // "ROWS"
-        S_SELECT = 95,                           // "SELECT"
-        S_SET = 96,                              // "SET"
-        S_STORED = 97,                           // "STORED"
-        S_TABLE = 98,                            // "TABLE"
-        S_TEMP = 99,                             // "TEMP"
-        S_TEMPORARY = 100,                       // "TEMPORARY"
-        S_THEN = 101,                            // "THEN"
-        S_TRUE = 102,                            // "TRUE"
-        S_UNBOUNDED = 103,                       // "UNBOUNDED"
-        S_UNIQUE = 104,                          // "UNIQUE"
-        S_UPDATE = 105,                          // "UPDATE"
-        S_USING = 106,                           // "USING"
-        S_VIRTUAL = 107,                         // "VIRTUAL"
-        S_WHEN = 108,                            // "WHEN"
-        S_WHERE = 109,                           // "WHERE"
-        S_WITHOUT = 110,                         // "WITHOUT"
-        S_IDENTIFIER = 111,                      // "identifier"
-        S_NUMERIC = 112,                         // "numeric"
-        S_STRINGLITERAL = 113,                   // "string literal"
-        S_QUOTEDLITERAL = 114,                   // "quoted literal"
-        S_BLOBLITERAL = 115,                     // "blob literal"
-        S_BINDPARAMETER = 116,                   // "bind parameter"
-        S_YYACCEPT = 117,                        // $accept
-        S_sql = 118,                             // sql
-        S_statement = 119,                       // statement
-        S_literalvalue = 120,                    // literalvalue
-        S_id = 121,                              // id
-        S_allowed_keywords_as_identifier = 122,  // allowed_keywords_as_identifier
-        S_tableid = 123,                         // tableid
-        S_columnid = 124,                        // columnid
-        S_signednumber = 125,                    // signednumber
-        S_signednumber_or_numeric = 126,         // signednumber_or_numeric
-        S_typename_namelist = 127,               // typename_namelist
-        S_type_name = 128,                       // type_name
-        S_unary_expr = 129,                      // unary_expr
-        S_binary_expr = 130,                     // binary_expr
-        S_like_expr = 131,                       // like_expr
-        S_exprlist_expr = 132,                   // exprlist_expr
-        S_function_expr = 133,                   // function_expr
-        S_isnull_expr = 134,                     // isnull_expr
-        S_between_expr = 135,                    // between_expr
-        S_in_expr = 136,                         // in_expr
-        S_whenthenlist_expr = 137,               // whenthenlist_expr
-        S_case_expr = 138,                       // case_expr
-        S_raise_expr = 139,                      // raise_expr
-        S_expr = 140,                            // expr
-        S_select_stmt = 141,                     // select_stmt
-        S_optional_if_not_exists = 142,          // optional_if_not_exists
-        S_optional_sort_order = 143,             // optional_sort_order
-        S_optional_unique = 144,                 // optional_unique
-        S_optional_where = 145,                  // optional_where
-        S_tableid_with_uninteresting_schema = 146, // tableid_with_uninteresting_schema
-        S_indexed_column = 147,                  // indexed_column
-        S_indexed_column_list = 148,             // indexed_column_list
-        S_createindex_stmt = 149,                // createindex_stmt
-        S_optional_exprlist_with_paren = 150,    // optional_exprlist_with_paren
-        S_createvirtualtable_stmt = 151,         // createvirtualtable_stmt
-        S_optional_temporary = 152,              // optional_temporary
-        S_optional_withoutrowid = 153,           // optional_withoutrowid
-        S_optional_conflictclause = 154,         // optional_conflictclause
-        S_optional_typename = 155,               // optional_typename
-        S_optional_storage_identifier = 156,     // optional_storage_identifier
-        S_optional_always_generated = 157,       // optional_always_generated
-        S_columnconstraint = 158,                // columnconstraint
-        S_columnconstraint_list = 159,           // columnconstraint_list
-        S_columndef = 160,                       // columndef
-        S_columndef_list = 161,                  // columndef_list
-        S_optional_constraintname = 162,         // optional_constraintname
-        S_columnid_list = 163,                   // columnid_list
-        S_optional_columnid_with_paren_list = 164, // optional_columnid_with_paren_list
-        S_fk_clause_part = 165,                  // fk_clause_part
-        S_fk_clause_part_list = 166,             // fk_clause_part_list
-        S_optional_fk_clause = 167,              // optional_fk_clause
-        S_tableconstraint = 168,                 // tableconstraint
-        S_tableconstraint_list = 169,            // tableconstraint_list
-        S_optional_tableconstraint_list = 170,   // optional_tableconstraint_list
-        S_createtable_stmt = 171                 // createtable_stmt
+        S_RETURNING = 92,                        // "RETURNING"
+        S_ROLLBACK = 93,                         // "ROLLBACK"
+        S_ROWID = 94,                            // "ROWID"
+        S_ROWS = 95,                             // "ROWS"
+        S_SELECT = 96,                           // "SELECT"
+        S_SET = 97,                              // "SET"
+        S_STORED = 98,                           // "STORED"
+        S_TABLE = 99,                            // "TABLE"
+        S_TEMP = 100,                            // "TEMP"
+        S_TEMPORARY = 101,                       // "TEMPORARY"
+        S_THEN = 102,                            // "THEN"
+        S_TRUE = 103,                            // "TRUE"
+        S_UNBOUNDED = 104,                       // "UNBOUNDED"
+        S_UNIQUE = 105,                          // "UNIQUE"
+        S_UPDATE = 106,                          // "UPDATE"
+        S_USING = 107,                           // "USING"
+        S_VIRTUAL = 108,                         // "VIRTUAL"
+        S_WHEN = 109,                            // "WHEN"
+        S_WHERE = 110,                           // "WHERE"
+        S_WITHOUT = 111,                         // "WITHOUT"
+        S_IDENTIFIER = 112,                      // "identifier"
+        S_NUMERIC = 113,                         // "numeric"
+        S_STRINGLITERAL = 114,                   // "string literal"
+        S_QUOTEDLITERAL = 115,                   // "quoted literal"
+        S_BLOBLITERAL = 116,                     // "blob literal"
+        S_BINDPARAMETER = 117,                   // "bind parameter"
+        S_YYACCEPT = 118,                        // $accept
+        S_sql = 119,                             // sql
+        S_statement = 120,                       // statement
+        S_literalvalue = 121,                    // literalvalue
+        S_id = 122,                              // id
+        S_allowed_keywords_as_identifier = 123,  // allowed_keywords_as_identifier
+        S_tableid = 124,                         // tableid
+        S_columnid = 125,                        // columnid
+        S_signednumber = 126,                    // signednumber
+        S_signednumber_or_numeric = 127,         // signednumber_or_numeric
+        S_typename_namelist = 128,               // typename_namelist
+        S_type_name = 129,                       // type_name
+        S_unary_expr = 130,                      // unary_expr
+        S_binary_expr = 131,                     // binary_expr
+        S_like_expr = 132,                       // like_expr
+        S_exprlist_expr = 133,                   // exprlist_expr
+        S_function_expr = 134,                   // function_expr
+        S_isnull_expr = 135,                     // isnull_expr
+        S_between_expr = 136,                    // between_expr
+        S_in_expr = 137,                         // in_expr
+        S_whenthenlist_expr = 138,               // whenthenlist_expr
+        S_case_expr = 139,                       // case_expr
+        S_raise_expr = 140,                      // raise_expr
+        S_expr = 141,                            // expr
+        S_select_stmt = 142,                     // select_stmt
+        S_optional_if_not_exists = 143,          // optional_if_not_exists
+        S_optional_sort_order = 144,             // optional_sort_order
+        S_optional_unique = 145,                 // optional_unique
+        S_optional_where = 146,                  // optional_where
+        S_tableid_with_uninteresting_schema = 147, // tableid_with_uninteresting_schema
+        S_indexed_column = 148,                  // indexed_column
+        S_indexed_column_list = 149,             // indexed_column_list
+        S_createindex_stmt = 150,                // createindex_stmt
+        S_optional_exprlist_with_paren = 151,    // optional_exprlist_with_paren
+        S_createvirtualtable_stmt = 152,         // createvirtualtable_stmt
+        S_optional_temporary = 153,              // optional_temporary
+        S_optional_withoutrowid = 154,           // optional_withoutrowid
+        S_optional_conflictclause = 155,         // optional_conflictclause
+        S_optional_typename = 156,               // optional_typename
+        S_optional_storage_identifier = 157,     // optional_storage_identifier
+        S_optional_always_generated = 158,       // optional_always_generated
+        S_columnconstraint = 159,                // columnconstraint
+        S_columnconstraint_list = 160,           // columnconstraint_list
+        S_columndef = 161,                       // columndef
+        S_columndef_list = 162,                  // columndef_list
+        S_optional_constraintname = 163,         // optional_constraintname
+        S_columnid_list = 164,                   // columnid_list
+        S_optional_columnid_with_paren_list = 165, // optional_columnid_with_paren_list
+        S_fk_clause_part = 166,                  // fk_clause_part
+        S_fk_clause_part_list = 167,             // fk_clause_part_list
+        S_optional_fk_clause = 168,              // optional_fk_clause
+        S_tableconstraint = 169,                 // tableconstraint
+        S_tableconstraint_list = 170,            // tableconstraint_list
+        S_optional_tableconstraint_list = 171,   // optional_tableconstraint_list
+        S_createtable_stmt = 172                 // createtable_stmt
       };
     };
 
@@ -960,178 +963,179 @@ namespace  sqlb { namespace parser  {
       {
         switch (this->kind ())
     {
-      case 160: // columndef
+      case symbol_kind::S_columndef: // columndef
         value.move< ColumndefData > (std::move (that.value));
         break;
 
-      case 142: // optional_if_not_exists
-      case 144: // optional_unique
-      case 152: // optional_temporary
-      case 153: // optional_withoutrowid
-      case 157: // optional_always_generated
+      case symbol_kind::S_optional_if_not_exists: // optional_if_not_exists
+      case symbol_kind::S_optional_unique: // optional_unique
+      case symbol_kind::S_optional_temporary: // optional_temporary
+      case symbol_kind::S_optional_withoutrowid: // optional_withoutrowid
+      case symbol_kind::S_optional_always_generated: // optional_always_generated
         value.move< bool > (std::move (that.value));
         break;
 
-      case 158: // columnconstraint
-      case 168: // tableconstraint
+      case symbol_kind::S_columnconstraint: // columnconstraint
+      case symbol_kind::S_tableconstraint: // tableconstraint
         value.move< sqlb::ConstraintPtr > (std::move (that.value));
         break;
 
-      case 159: // columnconstraint_list
-      case 169: // tableconstraint_list
-      case 170: // optional_tableconstraint_list
-        value.move< sqlb::ConstraintSet > (std::move (that.value));
+      case symbol_kind::S_columnconstraint_list: // columnconstraint_list
+      case symbol_kind::S_tableconstraint_list: // tableconstraint_list
+      case symbol_kind::S_optional_tableconstraint_list: // optional_tableconstraint_list
+        value.move< sqlb::ConstraintVector > (std::move (that.value));
         break;
 
-      case 149: // createindex_stmt
+      case symbol_kind::S_createindex_stmt: // createindex_stmt
         value.move< sqlb::IndexPtr > (std::move (that.value));
         break;
 
-      case 147: // indexed_column
+      case symbol_kind::S_indexed_column: // indexed_column
         value.move< sqlb::IndexedColumn > (std::move (that.value));
         break;
 
-      case 148: // indexed_column_list
+      case symbol_kind::S_indexed_column_list: // indexed_column_list
         value.move< sqlb::IndexedColumnVector > (std::move (that.value));
         break;
 
-      case 163: // columnid_list
-      case 164: // optional_columnid_with_paren_list
+      case symbol_kind::S_columnid_list: // columnid_list
+      case symbol_kind::S_optional_columnid_with_paren_list: // optional_columnid_with_paren_list
         value.move< sqlb::StringVector > (std::move (that.value));
         break;
 
-      case 151: // createvirtualtable_stmt
-      case 171: // createtable_stmt
+      case symbol_kind::S_createvirtualtable_stmt: // createvirtualtable_stmt
+      case symbol_kind::S_createtable_stmt: // createtable_stmt
         value.move< sqlb::TablePtr > (std::move (that.value));
         break;
 
-      case 27: // "ABORT"
-      case 28: // "ACTION"
-      case 29: // "ALWAYS"
-      case 30: // "AND"
-      case 31: // "AND BETWEEN"
-      case 32: // "AS"
-      case 33: // "ASC"
-      case 34: // "AUTOINCREMENT"
-      case 35: // "BETWEEN"
-      case 36: // "CASCADE"
-      case 37: // "CASE"
-      case 38: // "CAST"
-      case 39: // "CHECK"
-      case 40: // "COLLATE"
-      case 41: // "CONFLICT"
-      case 42: // "CONSTRAINT"
-      case 43: // "CREATE"
-      case 44: // "CURRENT_DATE"
-      case 45: // "CURRENT_TIME"
-      case 46: // "CURRENT_TIMESTAMP"
-      case 47: // "DEFAULT"
-      case 48: // "DEFERRABLE"
-      case 49: // "DEFERRED"
-      case 50: // "DELETE"
-      case 51: // "DESC"
-      case 52: // "DISTINCT"
-      case 53: // "ELSE"
-      case 54: // "END"
-      case 55: // "ESCAPE"
-      case 56: // "EXISTS"
-      case 57: // "FAIL"
-      case 58: // "FALSE"
-      case 59: // "FILTER"
-      case 60: // "FOLLOWING"
-      case 61: // "FOREIGN"
-      case 62: // "GENERATED"
-      case 63: // "GLOB"
-      case 64: // "IF"
-      case 65: // "IGNORE"
-      case 66: // "IMMEDIATE"
-      case 67: // "IN"
-      case 68: // "INDEX"
-      case 69: // "INITIALLY"
-      case 70: // "INSERT"
-      case 71: // "IS"
-      case 72: // "ISNULL"
-      case 73: // "KEY"
-      case 74: // "LIKE"
-      case 75: // "MATCH"
-      case 76: // "NO"
-      case 77: // "NOT"
-      case 78: // "NOTNULL"
-      case 79: // "NULL"
-      case 80: // "ON"
-      case 81: // "OR"
-      case 82: // "OVER"
-      case 83: // "PARTITION"
-      case 84: // "PRECEDING"
-      case 85: // "PRIMARY"
-      case 86: // "RAISE"
-      case 87: // "RANGE"
-      case 88: // "REFERENCES"
-      case 89: // "REGEXP"
-      case 90: // "REPLACE"
-      case 91: // "RESTRICT"
-      case 92: // "ROLLBACK"
-      case 93: // "ROWID"
-      case 94: // "ROWS"
-      case 95: // "SELECT"
-      case 96: // "SET"
-      case 97: // "STORED"
-      case 98: // "TABLE"
-      case 99: // "TEMP"
-      case 100: // "TEMPORARY"
-      case 101: // "THEN"
-      case 102: // "TRUE"
-      case 103: // "UNBOUNDED"
-      case 104: // "UNIQUE"
-      case 105: // "UPDATE"
-      case 106: // "USING"
-      case 107: // "VIRTUAL"
-      case 108: // "WHEN"
-      case 109: // "WHERE"
-      case 110: // "WITHOUT"
-      case 111: // "identifier"
-      case 112: // "numeric"
-      case 113: // "string literal"
-      case 114: // "quoted literal"
-      case 115: // "blob literal"
-      case 116: // "bind parameter"
-      case 120: // literalvalue
-      case 121: // id
-      case 122: // allowed_keywords_as_identifier
-      case 123: // tableid
-      case 124: // columnid
-      case 125: // signednumber
-      case 126: // signednumber_or_numeric
-      case 127: // typename_namelist
-      case 128: // type_name
-      case 129: // unary_expr
-      case 130: // binary_expr
-      case 131: // like_expr
-      case 132: // exprlist_expr
-      case 133: // function_expr
-      case 134: // isnull_expr
-      case 135: // between_expr
-      case 136: // in_expr
-      case 137: // whenthenlist_expr
-      case 138: // case_expr
-      case 139: // raise_expr
-      case 140: // expr
-      case 141: // select_stmt
-      case 143: // optional_sort_order
-      case 145: // optional_where
-      case 146: // tableid_with_uninteresting_schema
-      case 150: // optional_exprlist_with_paren
-      case 154: // optional_conflictclause
-      case 155: // optional_typename
-      case 156: // optional_storage_identifier
-      case 162: // optional_constraintname
-      case 165: // fk_clause_part
-      case 166: // fk_clause_part_list
-      case 167: // optional_fk_clause
+      case symbol_kind::S_ABORT: // "ABORT"
+      case symbol_kind::S_ACTION: // "ACTION"
+      case symbol_kind::S_ALWAYS: // "ALWAYS"
+      case symbol_kind::S_AND: // "AND"
+      case symbol_kind::S_AND_BETWEEN: // "AND BETWEEN"
+      case symbol_kind::S_AS: // "AS"
+      case symbol_kind::S_ASC: // "ASC"
+      case symbol_kind::S_AUTOINCREMENT: // "AUTOINCREMENT"
+      case symbol_kind::S_BETWEEN: // "BETWEEN"
+      case symbol_kind::S_CASCADE: // "CASCADE"
+      case symbol_kind::S_CASE: // "CASE"
+      case symbol_kind::S_CAST: // "CAST"
+      case symbol_kind::S_CHECK: // "CHECK"
+      case symbol_kind::S_COLLATE: // "COLLATE"
+      case symbol_kind::S_CONFLICT: // "CONFLICT"
+      case symbol_kind::S_CONSTRAINT: // "CONSTRAINT"
+      case symbol_kind::S_CREATE: // "CREATE"
+      case symbol_kind::S_CURRENT_DATE: // "CURRENT_DATE"
+      case symbol_kind::S_CURRENT_TIME: // "CURRENT_TIME"
+      case symbol_kind::S_CURRENT_TIMESTAMP: // "CURRENT_TIMESTAMP"
+      case symbol_kind::S_DEFAULT: // "DEFAULT"
+      case symbol_kind::S_DEFERRABLE: // "DEFERRABLE"
+      case symbol_kind::S_DEFERRED: // "DEFERRED"
+      case symbol_kind::S_DELETE: // "DELETE"
+      case symbol_kind::S_DESC: // "DESC"
+      case symbol_kind::S_DISTINCT: // "DISTINCT"
+      case symbol_kind::S_ELSE: // "ELSE"
+      case symbol_kind::S_END: // "END"
+      case symbol_kind::S_ESCAPE: // "ESCAPE"
+      case symbol_kind::S_EXISTS: // "EXISTS"
+      case symbol_kind::S_FAIL: // "FAIL"
+      case symbol_kind::S_FALSE: // "FALSE"
+      case symbol_kind::S_FILTER: // "FILTER"
+      case symbol_kind::S_FOLLOWING: // "FOLLOWING"
+      case symbol_kind::S_FOREIGN: // "FOREIGN"
+      case symbol_kind::S_GENERATED: // "GENERATED"
+      case symbol_kind::S_GLOB: // "GLOB"
+      case symbol_kind::S_IF: // "IF"
+      case symbol_kind::S_IGNORE: // "IGNORE"
+      case symbol_kind::S_IMMEDIATE: // "IMMEDIATE"
+      case symbol_kind::S_IN: // "IN"
+      case symbol_kind::S_INDEX: // "INDEX"
+      case symbol_kind::S_INITIALLY: // "INITIALLY"
+      case symbol_kind::S_INSERT: // "INSERT"
+      case symbol_kind::S_IS: // "IS"
+      case symbol_kind::S_ISNULL: // "ISNULL"
+      case symbol_kind::S_KEY: // "KEY"
+      case symbol_kind::S_LIKE: // "LIKE"
+      case symbol_kind::S_MATCH: // "MATCH"
+      case symbol_kind::S_NO: // "NO"
+      case symbol_kind::S_NOT: // "NOT"
+      case symbol_kind::S_NOTNULL: // "NOTNULL"
+      case symbol_kind::S_NULL: // "NULL"
+      case symbol_kind::S_ON: // "ON"
+      case symbol_kind::S_OR: // "OR"
+      case symbol_kind::S_OVER: // "OVER"
+      case symbol_kind::S_PARTITION: // "PARTITION"
+      case symbol_kind::S_PRECEDING: // "PRECEDING"
+      case symbol_kind::S_PRIMARY: // "PRIMARY"
+      case symbol_kind::S_RAISE: // "RAISE"
+      case symbol_kind::S_RANGE: // "RANGE"
+      case symbol_kind::S_REFERENCES: // "REFERENCES"
+      case symbol_kind::S_REGEXP: // "REGEXP"
+      case symbol_kind::S_REPLACE: // "REPLACE"
+      case symbol_kind::S_RESTRICT: // "RESTRICT"
+      case symbol_kind::S_RETURNING: // "RETURNING"
+      case symbol_kind::S_ROLLBACK: // "ROLLBACK"
+      case symbol_kind::S_ROWID: // "ROWID"
+      case symbol_kind::S_ROWS: // "ROWS"
+      case symbol_kind::S_SELECT: // "SELECT"
+      case symbol_kind::S_SET: // "SET"
+      case symbol_kind::S_STORED: // "STORED"
+      case symbol_kind::S_TABLE: // "TABLE"
+      case symbol_kind::S_TEMP: // "TEMP"
+      case symbol_kind::S_TEMPORARY: // "TEMPORARY"
+      case symbol_kind::S_THEN: // "THEN"
+      case symbol_kind::S_TRUE: // "TRUE"
+      case symbol_kind::S_UNBOUNDED: // "UNBOUNDED"
+      case symbol_kind::S_UNIQUE: // "UNIQUE"
+      case symbol_kind::S_UPDATE: // "UPDATE"
+      case symbol_kind::S_USING: // "USING"
+      case symbol_kind::S_VIRTUAL: // "VIRTUAL"
+      case symbol_kind::S_WHEN: // "WHEN"
+      case symbol_kind::S_WHERE: // "WHERE"
+      case symbol_kind::S_WITHOUT: // "WITHOUT"
+      case symbol_kind::S_IDENTIFIER: // "identifier"
+      case symbol_kind::S_NUMERIC: // "numeric"
+      case symbol_kind::S_STRINGLITERAL: // "string literal"
+      case symbol_kind::S_QUOTEDLITERAL: // "quoted literal"
+      case symbol_kind::S_BLOBLITERAL: // "blob literal"
+      case symbol_kind::S_BINDPARAMETER: // "bind parameter"
+      case symbol_kind::S_literalvalue: // literalvalue
+      case symbol_kind::S_id: // id
+      case symbol_kind::S_allowed_keywords_as_identifier: // allowed_keywords_as_identifier
+      case symbol_kind::S_tableid: // tableid
+      case symbol_kind::S_columnid: // columnid
+      case symbol_kind::S_signednumber: // signednumber
+      case symbol_kind::S_signednumber_or_numeric: // signednumber_or_numeric
+      case symbol_kind::S_typename_namelist: // typename_namelist
+      case symbol_kind::S_type_name: // type_name
+      case symbol_kind::S_unary_expr: // unary_expr
+      case symbol_kind::S_binary_expr: // binary_expr
+      case symbol_kind::S_like_expr: // like_expr
+      case symbol_kind::S_exprlist_expr: // exprlist_expr
+      case symbol_kind::S_function_expr: // function_expr
+      case symbol_kind::S_isnull_expr: // isnull_expr
+      case symbol_kind::S_between_expr: // between_expr
+      case symbol_kind::S_in_expr: // in_expr
+      case symbol_kind::S_whenthenlist_expr: // whenthenlist_expr
+      case symbol_kind::S_case_expr: // case_expr
+      case symbol_kind::S_raise_expr: // raise_expr
+      case symbol_kind::S_expr: // expr
+      case symbol_kind::S_select_stmt: // select_stmt
+      case symbol_kind::S_optional_sort_order: // optional_sort_order
+      case symbol_kind::S_optional_where: // optional_where
+      case symbol_kind::S_tableid_with_uninteresting_schema: // tableid_with_uninteresting_schema
+      case symbol_kind::S_optional_exprlist_with_paren: // optional_exprlist_with_paren
+      case symbol_kind::S_optional_conflictclause: // optional_conflictclause
+      case symbol_kind::S_optional_typename: // optional_typename
+      case symbol_kind::S_optional_storage_identifier: // optional_storage_identifier
+      case symbol_kind::S_optional_constraintname: // optional_constraintname
+      case symbol_kind::S_fk_clause_part: // fk_clause_part
+      case symbol_kind::S_fk_clause_part_list: // fk_clause_part_list
+      case symbol_kind::S_optional_fk_clause: // optional_fk_clause
         value.move< std::string > (std::move (that.value));
         break;
 
-      case 161: // columndef_list
+      case symbol_kind::S_columndef_list: // columndef_list
         value.move< std::vector<ColumndefData> > (std::move (that.value));
         break;
 
@@ -1145,7 +1149,7 @@ namespace  sqlb { namespace parser  {
       /// Copy constructor.
       basic_symbol (const basic_symbol& that);
 
-      /// Constructor for valueless symbols, and symbols from each type.
+      /// Constructors for typed symbols.
 #if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, location_type&& l)
         : Base (t)
@@ -1157,6 +1161,7 @@ namespace  sqlb { namespace parser  {
         , location (l)
       {}
 #endif
+
 #if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, ColumndefData&& v, location_type&& l)
         : Base (t)
@@ -1170,6 +1175,7 @@ namespace  sqlb { namespace parser  {
         , location (l)
       {}
 #endif
+
 #if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, bool&& v, location_type&& l)
         : Base (t)
@@ -1183,6 +1189,7 @@ namespace  sqlb { namespace parser  {
         , location (l)
       {}
 #endif
+
 #if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, sqlb::ConstraintPtr&& v, location_type&& l)
         : Base (t)
@@ -1196,19 +1203,21 @@ namespace  sqlb { namespace parser  {
         , location (l)
       {}
 #endif
+
 #if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, sqlb::ConstraintSet&& v, location_type&& l)
+      basic_symbol (typename Base::kind_type t, sqlb::ConstraintVector&& v, location_type&& l)
         : Base (t)
         , value (std::move (v))
         , location (std::move (l))
       {}
 #else
-      basic_symbol (typename Base::kind_type t, const sqlb::ConstraintSet& v, const location_type& l)
+      basic_symbol (typename Base::kind_type t, const sqlb::ConstraintVector& v, const location_type& l)
         : Base (t)
         , value (v)
         , location (l)
       {}
 #endif
+
 #if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, sqlb::IndexPtr&& v, location_type&& l)
         : Base (t)
@@ -1222,6 +1231,7 @@ namespace  sqlb { namespace parser  {
         , location (l)
       {}
 #endif
+
 #if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, sqlb::IndexedColumn&& v, location_type&& l)
         : Base (t)
@@ -1235,6 +1245,7 @@ namespace  sqlb { namespace parser  {
         , location (l)
       {}
 #endif
+
 #if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, sqlb::IndexedColumnVector&& v, location_type&& l)
         : Base (t)
@@ -1248,6 +1259,7 @@ namespace  sqlb { namespace parser  {
         , location (l)
       {}
 #endif
+
 #if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, sqlb::StringVector&& v, location_type&& l)
         : Base (t)
@@ -1261,6 +1273,7 @@ namespace  sqlb { namespace parser  {
         , location (l)
       {}
 #endif
+
 #if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, sqlb::TablePtr&& v, location_type&& l)
         : Base (t)
@@ -1274,6 +1287,7 @@ namespace  sqlb { namespace parser  {
         , location (l)
       {}
 #endif
+
 #if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, std::string&& v, location_type&& l)
         : Base (t)
@@ -1287,6 +1301,7 @@ namespace  sqlb { namespace parser  {
         , location (l)
       {}
 #endif
+
 #if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, std::vector<ColumndefData>&& v, location_type&& l)
         : Base (t)
@@ -1308,7 +1323,7 @@ namespace  sqlb { namespace parser  {
       }
 
       /// Destroy contents, and record that is empty.
-      void clear ()
+      void clear () YY_NOEXCEPT
       {
         // User destructor.
         symbol_kind_type yykind = this->kind ();
@@ -1323,178 +1338,179 @@ namespace  sqlb { namespace parser  {
         // Value type destructor.
 switch (yykind)
     {
-      case 160: // columndef
+      case symbol_kind::S_columndef: // columndef
         value.template destroy< ColumndefData > ();
         break;
 
-      case 142: // optional_if_not_exists
-      case 144: // optional_unique
-      case 152: // optional_temporary
-      case 153: // optional_withoutrowid
-      case 157: // optional_always_generated
+      case symbol_kind::S_optional_if_not_exists: // optional_if_not_exists
+      case symbol_kind::S_optional_unique: // optional_unique
+      case symbol_kind::S_optional_temporary: // optional_temporary
+      case symbol_kind::S_optional_withoutrowid: // optional_withoutrowid
+      case symbol_kind::S_optional_always_generated: // optional_always_generated
         value.template destroy< bool > ();
         break;
 
-      case 158: // columnconstraint
-      case 168: // tableconstraint
+      case symbol_kind::S_columnconstraint: // columnconstraint
+      case symbol_kind::S_tableconstraint: // tableconstraint
         value.template destroy< sqlb::ConstraintPtr > ();
         break;
 
-      case 159: // columnconstraint_list
-      case 169: // tableconstraint_list
-      case 170: // optional_tableconstraint_list
-        value.template destroy< sqlb::ConstraintSet > ();
+      case symbol_kind::S_columnconstraint_list: // columnconstraint_list
+      case symbol_kind::S_tableconstraint_list: // tableconstraint_list
+      case symbol_kind::S_optional_tableconstraint_list: // optional_tableconstraint_list
+        value.template destroy< sqlb::ConstraintVector > ();
         break;
 
-      case 149: // createindex_stmt
+      case symbol_kind::S_createindex_stmt: // createindex_stmt
         value.template destroy< sqlb::IndexPtr > ();
         break;
 
-      case 147: // indexed_column
+      case symbol_kind::S_indexed_column: // indexed_column
         value.template destroy< sqlb::IndexedColumn > ();
         break;
 
-      case 148: // indexed_column_list
+      case symbol_kind::S_indexed_column_list: // indexed_column_list
         value.template destroy< sqlb::IndexedColumnVector > ();
         break;
 
-      case 163: // columnid_list
-      case 164: // optional_columnid_with_paren_list
+      case symbol_kind::S_columnid_list: // columnid_list
+      case symbol_kind::S_optional_columnid_with_paren_list: // optional_columnid_with_paren_list
         value.template destroy< sqlb::StringVector > ();
         break;
 
-      case 151: // createvirtualtable_stmt
-      case 171: // createtable_stmt
+      case symbol_kind::S_createvirtualtable_stmt: // createvirtualtable_stmt
+      case symbol_kind::S_createtable_stmt: // createtable_stmt
         value.template destroy< sqlb::TablePtr > ();
         break;
 
-      case 27: // "ABORT"
-      case 28: // "ACTION"
-      case 29: // "ALWAYS"
-      case 30: // "AND"
-      case 31: // "AND BETWEEN"
-      case 32: // "AS"
-      case 33: // "ASC"
-      case 34: // "AUTOINCREMENT"
-      case 35: // "BETWEEN"
-      case 36: // "CASCADE"
-      case 37: // "CASE"
-      case 38: // "CAST"
-      case 39: // "CHECK"
-      case 40: // "COLLATE"
-      case 41: // "CONFLICT"
-      case 42: // "CONSTRAINT"
-      case 43: // "CREATE"
-      case 44: // "CURRENT_DATE"
-      case 45: // "CURRENT_TIME"
-      case 46: // "CURRENT_TIMESTAMP"
-      case 47: // "DEFAULT"
-      case 48: // "DEFERRABLE"
-      case 49: // "DEFERRED"
-      case 50: // "DELETE"
-      case 51: // "DESC"
-      case 52: // "DISTINCT"
-      case 53: // "ELSE"
-      case 54: // "END"
-      case 55: // "ESCAPE"
-      case 56: // "EXISTS"
-      case 57: // "FAIL"
-      case 58: // "FALSE"
-      case 59: // "FILTER"
-      case 60: // "FOLLOWING"
-      case 61: // "FOREIGN"
-      case 62: // "GENERATED"
-      case 63: // "GLOB"
-      case 64: // "IF"
-      case 65: // "IGNORE"
-      case 66: // "IMMEDIATE"
-      case 67: // "IN"
-      case 68: // "INDEX"
-      case 69: // "INITIALLY"
-      case 70: // "INSERT"
-      case 71: // "IS"
-      case 72: // "ISNULL"
-      case 73: // "KEY"
-      case 74: // "LIKE"
-      case 75: // "MATCH"
-      case 76: // "NO"
-      case 77: // "NOT"
-      case 78: // "NOTNULL"
-      case 79: // "NULL"
-      case 80: // "ON"
-      case 81: // "OR"
-      case 82: // "OVER"
-      case 83: // "PARTITION"
-      case 84: // "PRECEDING"
-      case 85: // "PRIMARY"
-      case 86: // "RAISE"
-      case 87: // "RANGE"
-      case 88: // "REFERENCES"
-      case 89: // "REGEXP"
-      case 90: // "REPLACE"
-      case 91: // "RESTRICT"
-      case 92: // "ROLLBACK"
-      case 93: // "ROWID"
-      case 94: // "ROWS"
-      case 95: // "SELECT"
-      case 96: // "SET"
-      case 97: // "STORED"
-      case 98: // "TABLE"
-      case 99: // "TEMP"
-      case 100: // "TEMPORARY"
-      case 101: // "THEN"
-      case 102: // "TRUE"
-      case 103: // "UNBOUNDED"
-      case 104: // "UNIQUE"
-      case 105: // "UPDATE"
-      case 106: // "USING"
-      case 107: // "VIRTUAL"
-      case 108: // "WHEN"
-      case 109: // "WHERE"
-      case 110: // "WITHOUT"
-      case 111: // "identifier"
-      case 112: // "numeric"
-      case 113: // "string literal"
-      case 114: // "quoted literal"
-      case 115: // "blob literal"
-      case 116: // "bind parameter"
-      case 120: // literalvalue
-      case 121: // id
-      case 122: // allowed_keywords_as_identifier
-      case 123: // tableid
-      case 124: // columnid
-      case 125: // signednumber
-      case 126: // signednumber_or_numeric
-      case 127: // typename_namelist
-      case 128: // type_name
-      case 129: // unary_expr
-      case 130: // binary_expr
-      case 131: // like_expr
-      case 132: // exprlist_expr
-      case 133: // function_expr
-      case 134: // isnull_expr
-      case 135: // between_expr
-      case 136: // in_expr
-      case 137: // whenthenlist_expr
-      case 138: // case_expr
-      case 139: // raise_expr
-      case 140: // expr
-      case 141: // select_stmt
-      case 143: // optional_sort_order
-      case 145: // optional_where
-      case 146: // tableid_with_uninteresting_schema
-      case 150: // optional_exprlist_with_paren
-      case 154: // optional_conflictclause
-      case 155: // optional_typename
-      case 156: // optional_storage_identifier
-      case 162: // optional_constraintname
-      case 165: // fk_clause_part
-      case 166: // fk_clause_part_list
-      case 167: // optional_fk_clause
+      case symbol_kind::S_ABORT: // "ABORT"
+      case symbol_kind::S_ACTION: // "ACTION"
+      case symbol_kind::S_ALWAYS: // "ALWAYS"
+      case symbol_kind::S_AND: // "AND"
+      case symbol_kind::S_AND_BETWEEN: // "AND BETWEEN"
+      case symbol_kind::S_AS: // "AS"
+      case symbol_kind::S_ASC: // "ASC"
+      case symbol_kind::S_AUTOINCREMENT: // "AUTOINCREMENT"
+      case symbol_kind::S_BETWEEN: // "BETWEEN"
+      case symbol_kind::S_CASCADE: // "CASCADE"
+      case symbol_kind::S_CASE: // "CASE"
+      case symbol_kind::S_CAST: // "CAST"
+      case symbol_kind::S_CHECK: // "CHECK"
+      case symbol_kind::S_COLLATE: // "COLLATE"
+      case symbol_kind::S_CONFLICT: // "CONFLICT"
+      case symbol_kind::S_CONSTRAINT: // "CONSTRAINT"
+      case symbol_kind::S_CREATE: // "CREATE"
+      case symbol_kind::S_CURRENT_DATE: // "CURRENT_DATE"
+      case symbol_kind::S_CURRENT_TIME: // "CURRENT_TIME"
+      case symbol_kind::S_CURRENT_TIMESTAMP: // "CURRENT_TIMESTAMP"
+      case symbol_kind::S_DEFAULT: // "DEFAULT"
+      case symbol_kind::S_DEFERRABLE: // "DEFERRABLE"
+      case symbol_kind::S_DEFERRED: // "DEFERRED"
+      case symbol_kind::S_DELETE: // "DELETE"
+      case symbol_kind::S_DESC: // "DESC"
+      case symbol_kind::S_DISTINCT: // "DISTINCT"
+      case symbol_kind::S_ELSE: // "ELSE"
+      case symbol_kind::S_END: // "END"
+      case symbol_kind::S_ESCAPE: // "ESCAPE"
+      case symbol_kind::S_EXISTS: // "EXISTS"
+      case symbol_kind::S_FAIL: // "FAIL"
+      case symbol_kind::S_FALSE: // "FALSE"
+      case symbol_kind::S_FILTER: // "FILTER"
+      case symbol_kind::S_FOLLOWING: // "FOLLOWING"
+      case symbol_kind::S_FOREIGN: // "FOREIGN"
+      case symbol_kind::S_GENERATED: // "GENERATED"
+      case symbol_kind::S_GLOB: // "GLOB"
+      case symbol_kind::S_IF: // "IF"
+      case symbol_kind::S_IGNORE: // "IGNORE"
+      case symbol_kind::S_IMMEDIATE: // "IMMEDIATE"
+      case symbol_kind::S_IN: // "IN"
+      case symbol_kind::S_INDEX: // "INDEX"
+      case symbol_kind::S_INITIALLY: // "INITIALLY"
+      case symbol_kind::S_INSERT: // "INSERT"
+      case symbol_kind::S_IS: // "IS"
+      case symbol_kind::S_ISNULL: // "ISNULL"
+      case symbol_kind::S_KEY: // "KEY"
+      case symbol_kind::S_LIKE: // "LIKE"
+      case symbol_kind::S_MATCH: // "MATCH"
+      case symbol_kind::S_NO: // "NO"
+      case symbol_kind::S_NOT: // "NOT"
+      case symbol_kind::S_NOTNULL: // "NOTNULL"
+      case symbol_kind::S_NULL: // "NULL"
+      case symbol_kind::S_ON: // "ON"
+      case symbol_kind::S_OR: // "OR"
+      case symbol_kind::S_OVER: // "OVER"
+      case symbol_kind::S_PARTITION: // "PARTITION"
+      case symbol_kind::S_PRECEDING: // "PRECEDING"
+      case symbol_kind::S_PRIMARY: // "PRIMARY"
+      case symbol_kind::S_RAISE: // "RAISE"
+      case symbol_kind::S_RANGE: // "RANGE"
+      case symbol_kind::S_REFERENCES: // "REFERENCES"
+      case symbol_kind::S_REGEXP: // "REGEXP"
+      case symbol_kind::S_REPLACE: // "REPLACE"
+      case symbol_kind::S_RESTRICT: // "RESTRICT"
+      case symbol_kind::S_RETURNING: // "RETURNING"
+      case symbol_kind::S_ROLLBACK: // "ROLLBACK"
+      case symbol_kind::S_ROWID: // "ROWID"
+      case symbol_kind::S_ROWS: // "ROWS"
+      case symbol_kind::S_SELECT: // "SELECT"
+      case symbol_kind::S_SET: // "SET"
+      case symbol_kind::S_STORED: // "STORED"
+      case symbol_kind::S_TABLE: // "TABLE"
+      case symbol_kind::S_TEMP: // "TEMP"
+      case symbol_kind::S_TEMPORARY: // "TEMPORARY"
+      case symbol_kind::S_THEN: // "THEN"
+      case symbol_kind::S_TRUE: // "TRUE"
+      case symbol_kind::S_UNBOUNDED: // "UNBOUNDED"
+      case symbol_kind::S_UNIQUE: // "UNIQUE"
+      case symbol_kind::S_UPDATE: // "UPDATE"
+      case symbol_kind::S_USING: // "USING"
+      case symbol_kind::S_VIRTUAL: // "VIRTUAL"
+      case symbol_kind::S_WHEN: // "WHEN"
+      case symbol_kind::S_WHERE: // "WHERE"
+      case symbol_kind::S_WITHOUT: // "WITHOUT"
+      case symbol_kind::S_IDENTIFIER: // "identifier"
+      case symbol_kind::S_NUMERIC: // "numeric"
+      case symbol_kind::S_STRINGLITERAL: // "string literal"
+      case symbol_kind::S_QUOTEDLITERAL: // "quoted literal"
+      case symbol_kind::S_BLOBLITERAL: // "blob literal"
+      case symbol_kind::S_BINDPARAMETER: // "bind parameter"
+      case symbol_kind::S_literalvalue: // literalvalue
+      case symbol_kind::S_id: // id
+      case symbol_kind::S_allowed_keywords_as_identifier: // allowed_keywords_as_identifier
+      case symbol_kind::S_tableid: // tableid
+      case symbol_kind::S_columnid: // columnid
+      case symbol_kind::S_signednumber: // signednumber
+      case symbol_kind::S_signednumber_or_numeric: // signednumber_or_numeric
+      case symbol_kind::S_typename_namelist: // typename_namelist
+      case symbol_kind::S_type_name: // type_name
+      case symbol_kind::S_unary_expr: // unary_expr
+      case symbol_kind::S_binary_expr: // binary_expr
+      case symbol_kind::S_like_expr: // like_expr
+      case symbol_kind::S_exprlist_expr: // exprlist_expr
+      case symbol_kind::S_function_expr: // function_expr
+      case symbol_kind::S_isnull_expr: // isnull_expr
+      case symbol_kind::S_between_expr: // between_expr
+      case symbol_kind::S_in_expr: // in_expr
+      case symbol_kind::S_whenthenlist_expr: // whenthenlist_expr
+      case symbol_kind::S_case_expr: // case_expr
+      case symbol_kind::S_raise_expr: // raise_expr
+      case symbol_kind::S_expr: // expr
+      case symbol_kind::S_select_stmt: // select_stmt
+      case symbol_kind::S_optional_sort_order: // optional_sort_order
+      case symbol_kind::S_optional_where: // optional_where
+      case symbol_kind::S_tableid_with_uninteresting_schema: // tableid_with_uninteresting_schema
+      case symbol_kind::S_optional_exprlist_with_paren: // optional_exprlist_with_paren
+      case symbol_kind::S_optional_conflictclause: // optional_conflictclause
+      case symbol_kind::S_optional_typename: // optional_typename
+      case symbol_kind::S_optional_storage_identifier: // optional_storage_identifier
+      case symbol_kind::S_optional_constraintname: // optional_constraintname
+      case symbol_kind::S_fk_clause_part: // fk_clause_part
+      case symbol_kind::S_fk_clause_part_list: // fk_clause_part_list
+      case symbol_kind::S_optional_fk_clause: // optional_fk_clause
         value.template destroy< std::string > ();
         break;
 
-      case 161: // columndef_list
+      case symbol_kind::S_columndef_list: // columndef_list
         value.template destroy< std::vector<ColumndefData> > ();
         break;
 
@@ -1554,7 +1570,7 @@ switch (yykind)
       by_kind (kind_type t);
 
       /// Record that this symbol is empty.
-      void clear ();
+      void clear () YY_NOEXCEPT;
 
       /// Steal the symbol kind from \a that.
       void move (by_kind& that);
@@ -1587,29 +1603,24 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       symbol_type (int tok, location_type l)
         : super_type(token_type (tok), std::move (l))
-      {
-        YY_ASSERT (tok == token::TOK_EOF || tok == token::TOK_YYerror || tok == token::TOK_YYUNDEF || tok == token::TOK_LPAREN || tok == token::TOK_RPAREN || tok == token::TOK_DOT || tok == token::TOK_COMMA || tok == token::TOK_SEMI || tok == token::TOK_PLUS || tok == token::TOK_MINUS || tok == token::TOK_STAR || tok == token::TOK_SLASH || tok == token::TOK_TILDE || tok == token::TOK_AMPERSAND || tok == token::TOK_PERCENT || tok == token::TOK_BITOR || tok == token::TOK_OROP || tok == token::TOK_EQUAL || tok == token::TOK_EQUAL2 || tok == token::TOK_GREATER || tok == token::TOK_GREATEREQUAL || tok == token::TOK_LOWER || tok == token::TOK_LOWEREQUAL || tok == token::TOK_UNEQUAL || tok == token::TOK_UNEQUAL2 || tok == token::TOK_BITWISELEFT || tok == token::TOK_BITWISERIGHT);
-      }
 #else
       symbol_type (int tok, const location_type& l)
         : super_type(token_type (tok), l)
-      {
-        YY_ASSERT (tok == token::TOK_EOF || tok == token::TOK_YYerror || tok == token::TOK_YYUNDEF || tok == token::TOK_LPAREN || tok == token::TOK_RPAREN || tok == token::TOK_DOT || tok == token::TOK_COMMA || tok == token::TOK_SEMI || tok == token::TOK_PLUS || tok == token::TOK_MINUS || tok == token::TOK_STAR || tok == token::TOK_SLASH || tok == token::TOK_TILDE || tok == token::TOK_AMPERSAND || tok == token::TOK_PERCENT || tok == token::TOK_BITOR || tok == token::TOK_OROP || tok == token::TOK_EQUAL || tok == token::TOK_EQUAL2 || tok == token::TOK_GREATER || tok == token::TOK_GREATEREQUAL || tok == token::TOK_LOWER || tok == token::TOK_LOWEREQUAL || tok == token::TOK_UNEQUAL || tok == token::TOK_UNEQUAL2 || tok == token::TOK_BITWISELEFT || tok == token::TOK_BITWISERIGHT);
-      }
 #endif
+      {
+        YY_ASSERT (tok == token::TOK_EOF
+                   || (token::TOK_YYerror <= tok && tok <= token::TOK_BITWISERIGHT));
+      }
 #if 201103L <= YY_CPLUSPLUS
       symbol_type (int tok, std::string v, location_type l)
         : super_type(token_type (tok), std::move (v), std::move (l))
-      {
-        YY_ASSERT (tok == token::TOK_ABORT || tok == token::TOK_ACTION || tok == token::TOK_ALWAYS || tok == token::TOK_AND || tok == token::TOK_AND_BETWEEN || tok == token::TOK_AS || tok == token::TOK_ASC || tok == token::TOK_AUTOINCREMENT || tok == token::TOK_BETWEEN || tok == token::TOK_CASCADE || tok == token::TOK_CASE || tok == token::TOK_CAST || tok == token::TOK_CHECK || tok == token::TOK_COLLATE || tok == token::TOK_CONFLICT || tok == token::TOK_CONSTRAINT || tok == token::TOK_CREATE || tok == token::TOK_CURRENT_DATE || tok == token::TOK_CURRENT_TIME || tok == token::TOK_CURRENT_TIMESTAMP || tok == token::TOK_DEFAULT || tok == token::TOK_DEFERRABLE || tok == token::TOK_DEFERRED || tok == token::TOK_DELETE || tok == token::TOK_DESC || tok == token::TOK_DISTINCT || tok == token::TOK_ELSE || tok == token::TOK_END || tok == token::TOK_ESCAPE || tok == token::TOK_EXISTS || tok == token::TOK_FAIL || tok == token::TOK_FALSE || tok == token::TOK_FILTER || tok == token::TOK_FOLLOWING || tok == token::TOK_FOREIGN || tok == token::TOK_GENERATED || tok == token::TOK_GLOB || tok == token::TOK_IF || tok == token::TOK_IGNORE || tok == token::TOK_IMMEDIATE || tok == token::TOK_IN || tok == token::TOK_INDEX || tok == token::TOK_INITIALLY || tok == token::TOK_INSERT || tok == token::TOK_IS || tok == token::TOK_ISNULL || tok == token::TOK_KEY || tok == token::TOK_LIKE || tok == token::TOK_MATCH || tok == token::TOK_NO || tok == token::TOK_NOT || tok == token::TOK_NOTNULL || tok == token::TOK_NULL || tok == token::TOK_ON || tok == token::TOK_OR || tok == token::TOK_OVER || tok == token::TOK_PARTITION || tok == token::TOK_PRECEDING || tok == token::TOK_PRIMARY || tok == token::TOK_RAISE || tok == token::TOK_RANGE || tok == token::TOK_REFERENCES || tok == token::TOK_REGEXP || tok == token::TOK_REPLACE || tok == token::TOK_RESTRICT || tok == token::TOK_ROLLBACK || tok == token::TOK_ROWID || tok == token::TOK_ROWS || tok == token::TOK_SELECT || tok == token::TOK_SET || tok == token::TOK_STORED || tok == token::TOK_TABLE || tok == token::TOK_TEMP || tok == token::TOK_TEMPORARY || tok == token::TOK_THEN || tok == token::TOK_TRUE || tok == token::TOK_UNBOUNDED || tok == token::TOK_UNIQUE || tok == token::TOK_UPDATE || tok == token::TOK_USING || tok == token::TOK_VIRTUAL || tok == token::TOK_WHEN || tok == token::TOK_WHERE || tok == token::TOK_WITHOUT || tok == token::TOK_IDENTIFIER || tok == token::TOK_NUMERIC || tok == token::TOK_STRINGLITERAL || tok == token::TOK_QUOTEDLITERAL || tok == token::TOK_BLOBLITERAL || tok == token::TOK_BINDPARAMETER);
-      }
 #else
       symbol_type (int tok, const std::string& v, const location_type& l)
         : super_type(token_type (tok), v, l)
-      {
-        YY_ASSERT (tok == token::TOK_ABORT || tok == token::TOK_ACTION || tok == token::TOK_ALWAYS || tok == token::TOK_AND || tok == token::TOK_AND_BETWEEN || tok == token::TOK_AS || tok == token::TOK_ASC || tok == token::TOK_AUTOINCREMENT || tok == token::TOK_BETWEEN || tok == token::TOK_CASCADE || tok == token::TOK_CASE || tok == token::TOK_CAST || tok == token::TOK_CHECK || tok == token::TOK_COLLATE || tok == token::TOK_CONFLICT || tok == token::TOK_CONSTRAINT || tok == token::TOK_CREATE || tok == token::TOK_CURRENT_DATE || tok == token::TOK_CURRENT_TIME || tok == token::TOK_CURRENT_TIMESTAMP || tok == token::TOK_DEFAULT || tok == token::TOK_DEFERRABLE || tok == token::TOK_DEFERRED || tok == token::TOK_DELETE || tok == token::TOK_DESC || tok == token::TOK_DISTINCT || tok == token::TOK_ELSE || tok == token::TOK_END || tok == token::TOK_ESCAPE || tok == token::TOK_EXISTS || tok == token::TOK_FAIL || tok == token::TOK_FALSE || tok == token::TOK_FILTER || tok == token::TOK_FOLLOWING || tok == token::TOK_FOREIGN || tok == token::TOK_GENERATED || tok == token::TOK_GLOB || tok == token::TOK_IF || tok == token::TOK_IGNORE || tok == token::TOK_IMMEDIATE || tok == token::TOK_IN || tok == token::TOK_INDEX || tok == token::TOK_INITIALLY || tok == token::TOK_INSERT || tok == token::TOK_IS || tok == token::TOK_ISNULL || tok == token::TOK_KEY || tok == token::TOK_LIKE || tok == token::TOK_MATCH || tok == token::TOK_NO || tok == token::TOK_NOT || tok == token::TOK_NOTNULL || tok == token::TOK_NULL || tok == token::TOK_ON || tok == token::TOK_OR || tok == token::TOK_OVER || tok == token::TOK_PARTITION || tok == token::TOK_PRECEDING || tok == token::TOK_PRIMARY || tok == token::TOK_RAISE || tok == token::TOK_RANGE || tok == token::TOK_REFERENCES || tok == token::TOK_REGEXP || tok == token::TOK_REPLACE || tok == token::TOK_RESTRICT || tok == token::TOK_ROLLBACK || tok == token::TOK_ROWID || tok == token::TOK_ROWS || tok == token::TOK_SELECT || tok == token::TOK_SET || tok == token::TOK_STORED || tok == token::TOK_TABLE || tok == token::TOK_TEMP || tok == token::TOK_TEMPORARY || tok == token::TOK_THEN || tok == token::TOK_TRUE || tok == token::TOK_UNBOUNDED || tok == token::TOK_UNIQUE || tok == token::TOK_UPDATE || tok == token::TOK_USING || tok == token::TOK_VIRTUAL || tok == token::TOK_WHEN || tok == token::TOK_WHERE || tok == token::TOK_WITHOUT || tok == token::TOK_IDENTIFIER || tok == token::TOK_NUMERIC || tok == token::TOK_STRINGLITERAL || tok == token::TOK_QUOTEDLITERAL || tok == token::TOK_BLOBLITERAL || tok == token::TOK_BINDPARAMETER);
-      }
 #endif
+      {
+        YY_ASSERT ((token::TOK_ABORT <= tok && tok <= token::TOK_BINDPARAMETER));
+      }
     };
 
     /// Build a parser object.
@@ -3041,6 +3052,21 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
+      make_RETURNING (std::string v, location_type l)
+      {
+        return symbol_type (token::TOK_RETURNING, std::move (v), std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_RETURNING (const std::string& v, const location_type& l)
+      {
+        return symbol_type (token::TOK_RETURNING, v, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
       make_ROLLBACK (std::string v, location_type l)
       {
         return symbol_type (token::TOK_ROLLBACK, std::move (v), std::move (l));
@@ -3419,9 +3445,9 @@ switch (yykind)
     {
     public:
       context (const parser& yyparser, const symbol_type& yyla);
-      const symbol_type& lookahead () const { return yyla_; }
-      symbol_kind_type token () const { return yyla_.kind (); }
-      const location_type& location () const { return yyla_.location; }
+      const symbol_type& lookahead () const YY_NOEXCEPT { return yyla_; }
+      symbol_kind_type token () const YY_NOEXCEPT { return yyla_.kind (); }
+      const location_type& location () const YY_NOEXCEPT { return yyla_.location; }
 
       /// Put in YYARG at most YYARGN of the expected tokens, and return the
       /// number of tokens stored in YYARG.  If YYARG is null, return the
@@ -3564,7 +3590,7 @@ switch (yykind)
       void move (by_state& that);
 
       /// The symbol kind (corresponding to \a state).
-      /// \a S_YYEMPTY when empty.
+      /// \a symbol_kind::S_YYEMPTY when empty.
       symbol_kind_type kind () const YY_NOEXCEPT;
 
       /// The state number used to denote an empty symbol.
@@ -3743,7 +3769,7 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 3320,     ///< Last index in yytable_.
+      yylast_ = 3424,     ///< Last index in yytable_.
       yynnts_ = 55,  ///< Number of nonterminal symbols.
       yyfinal_ = 13 ///< Termination state number.
     };
@@ -3802,13 +3828,14 @@ switch (yykind)
       85,    86,    87,    88,    89,    90,    91,    92,    93,    94,
       95,    96,    97,    98,    99,   100,   101,   102,   103,   104,
      105,   106,   107,   108,   109,   110,   111,   112,   113,   114,
-     115,   116
+     115,   116,   117
     };
-    const int user_token_number_max_ = 371;
+    // Last valid token kind.
+    const int code_max = 372;
 
     if (t <= 0)
       return symbol_kind::S_YYEOF;
-    else if (t <= user_token_number_max_)
+    else if (t <= code_max)
       return YY_CAST (symbol_kind_type, translate_table[t]);
     else
       return symbol_kind::S_YYUNDEF;
@@ -3823,178 +3850,179 @@ switch (yykind)
   {
     switch (this->kind ())
     {
-      case 160: // columndef
+      case symbol_kind::S_columndef: // columndef
         value.copy< ColumndefData > (YY_MOVE (that.value));
         break;
 
-      case 142: // optional_if_not_exists
-      case 144: // optional_unique
-      case 152: // optional_temporary
-      case 153: // optional_withoutrowid
-      case 157: // optional_always_generated
+      case symbol_kind::S_optional_if_not_exists: // optional_if_not_exists
+      case symbol_kind::S_optional_unique: // optional_unique
+      case symbol_kind::S_optional_temporary: // optional_temporary
+      case symbol_kind::S_optional_withoutrowid: // optional_withoutrowid
+      case symbol_kind::S_optional_always_generated: // optional_always_generated
         value.copy< bool > (YY_MOVE (that.value));
         break;
 
-      case 158: // columnconstraint
-      case 168: // tableconstraint
+      case symbol_kind::S_columnconstraint: // columnconstraint
+      case symbol_kind::S_tableconstraint: // tableconstraint
         value.copy< sqlb::ConstraintPtr > (YY_MOVE (that.value));
         break;
 
-      case 159: // columnconstraint_list
-      case 169: // tableconstraint_list
-      case 170: // optional_tableconstraint_list
-        value.copy< sqlb::ConstraintSet > (YY_MOVE (that.value));
+      case symbol_kind::S_columnconstraint_list: // columnconstraint_list
+      case symbol_kind::S_tableconstraint_list: // tableconstraint_list
+      case symbol_kind::S_optional_tableconstraint_list: // optional_tableconstraint_list
+        value.copy< sqlb::ConstraintVector > (YY_MOVE (that.value));
         break;
 
-      case 149: // createindex_stmt
+      case symbol_kind::S_createindex_stmt: // createindex_stmt
         value.copy< sqlb::IndexPtr > (YY_MOVE (that.value));
         break;
 
-      case 147: // indexed_column
+      case symbol_kind::S_indexed_column: // indexed_column
         value.copy< sqlb::IndexedColumn > (YY_MOVE (that.value));
         break;
 
-      case 148: // indexed_column_list
+      case symbol_kind::S_indexed_column_list: // indexed_column_list
         value.copy< sqlb::IndexedColumnVector > (YY_MOVE (that.value));
         break;
 
-      case 163: // columnid_list
-      case 164: // optional_columnid_with_paren_list
+      case symbol_kind::S_columnid_list: // columnid_list
+      case symbol_kind::S_optional_columnid_with_paren_list: // optional_columnid_with_paren_list
         value.copy< sqlb::StringVector > (YY_MOVE (that.value));
         break;
 
-      case 151: // createvirtualtable_stmt
-      case 171: // createtable_stmt
+      case symbol_kind::S_createvirtualtable_stmt: // createvirtualtable_stmt
+      case symbol_kind::S_createtable_stmt: // createtable_stmt
         value.copy< sqlb::TablePtr > (YY_MOVE (that.value));
         break;
 
-      case 27: // "ABORT"
-      case 28: // "ACTION"
-      case 29: // "ALWAYS"
-      case 30: // "AND"
-      case 31: // "AND BETWEEN"
-      case 32: // "AS"
-      case 33: // "ASC"
-      case 34: // "AUTOINCREMENT"
-      case 35: // "BETWEEN"
-      case 36: // "CASCADE"
-      case 37: // "CASE"
-      case 38: // "CAST"
-      case 39: // "CHECK"
-      case 40: // "COLLATE"
-      case 41: // "CONFLICT"
-      case 42: // "CONSTRAINT"
-      case 43: // "CREATE"
-      case 44: // "CURRENT_DATE"
-      case 45: // "CURRENT_TIME"
-      case 46: // "CURRENT_TIMESTAMP"
-      case 47: // "DEFAULT"
-      case 48: // "DEFERRABLE"
-      case 49: // "DEFERRED"
-      case 50: // "DELETE"
-      case 51: // "DESC"
-      case 52: // "DISTINCT"
-      case 53: // "ELSE"
-      case 54: // "END"
-      case 55: // "ESCAPE"
-      case 56: // "EXISTS"
-      case 57: // "FAIL"
-      case 58: // "FALSE"
-      case 59: // "FILTER"
-      case 60: // "FOLLOWING"
-      case 61: // "FOREIGN"
-      case 62: // "GENERATED"
-      case 63: // "GLOB"
-      case 64: // "IF"
-      case 65: // "IGNORE"
-      case 66: // "IMMEDIATE"
-      case 67: // "IN"
-      case 68: // "INDEX"
-      case 69: // "INITIALLY"
-      case 70: // "INSERT"
-      case 71: // "IS"
-      case 72: // "ISNULL"
-      case 73: // "KEY"
-      case 74: // "LIKE"
-      case 75: // "MATCH"
-      case 76: // "NO"
-      case 77: // "NOT"
-      case 78: // "NOTNULL"
-      case 79: // "NULL"
-      case 80: // "ON"
-      case 81: // "OR"
-      case 82: // "OVER"
-      case 83: // "PARTITION"
-      case 84: // "PRECEDING"
-      case 85: // "PRIMARY"
-      case 86: // "RAISE"
-      case 87: // "RANGE"
-      case 88: // "REFERENCES"
-      case 89: // "REGEXP"
-      case 90: // "REPLACE"
-      case 91: // "RESTRICT"
-      case 92: // "ROLLBACK"
-      case 93: // "ROWID"
-      case 94: // "ROWS"
-      case 95: // "SELECT"
-      case 96: // "SET"
-      case 97: // "STORED"
-      case 98: // "TABLE"
-      case 99: // "TEMP"
-      case 100: // "TEMPORARY"
-      case 101: // "THEN"
-      case 102: // "TRUE"
-      case 103: // "UNBOUNDED"
-      case 104: // "UNIQUE"
-      case 105: // "UPDATE"
-      case 106: // "USING"
-      case 107: // "VIRTUAL"
-      case 108: // "WHEN"
-      case 109: // "WHERE"
-      case 110: // "WITHOUT"
-      case 111: // "identifier"
-      case 112: // "numeric"
-      case 113: // "string literal"
-      case 114: // "quoted literal"
-      case 115: // "blob literal"
-      case 116: // "bind parameter"
-      case 120: // literalvalue
-      case 121: // id
-      case 122: // allowed_keywords_as_identifier
-      case 123: // tableid
-      case 124: // columnid
-      case 125: // signednumber
-      case 126: // signednumber_or_numeric
-      case 127: // typename_namelist
-      case 128: // type_name
-      case 129: // unary_expr
-      case 130: // binary_expr
-      case 131: // like_expr
-      case 132: // exprlist_expr
-      case 133: // function_expr
-      case 134: // isnull_expr
-      case 135: // between_expr
-      case 136: // in_expr
-      case 137: // whenthenlist_expr
-      case 138: // case_expr
-      case 139: // raise_expr
-      case 140: // expr
-      case 141: // select_stmt
-      case 143: // optional_sort_order
-      case 145: // optional_where
-      case 146: // tableid_with_uninteresting_schema
-      case 150: // optional_exprlist_with_paren
-      case 154: // optional_conflictclause
-      case 155: // optional_typename
-      case 156: // optional_storage_identifier
-      case 162: // optional_constraintname
-      case 165: // fk_clause_part
-      case 166: // fk_clause_part_list
-      case 167: // optional_fk_clause
+      case symbol_kind::S_ABORT: // "ABORT"
+      case symbol_kind::S_ACTION: // "ACTION"
+      case symbol_kind::S_ALWAYS: // "ALWAYS"
+      case symbol_kind::S_AND: // "AND"
+      case symbol_kind::S_AND_BETWEEN: // "AND BETWEEN"
+      case symbol_kind::S_AS: // "AS"
+      case symbol_kind::S_ASC: // "ASC"
+      case symbol_kind::S_AUTOINCREMENT: // "AUTOINCREMENT"
+      case symbol_kind::S_BETWEEN: // "BETWEEN"
+      case symbol_kind::S_CASCADE: // "CASCADE"
+      case symbol_kind::S_CASE: // "CASE"
+      case symbol_kind::S_CAST: // "CAST"
+      case symbol_kind::S_CHECK: // "CHECK"
+      case symbol_kind::S_COLLATE: // "COLLATE"
+      case symbol_kind::S_CONFLICT: // "CONFLICT"
+      case symbol_kind::S_CONSTRAINT: // "CONSTRAINT"
+      case symbol_kind::S_CREATE: // "CREATE"
+      case symbol_kind::S_CURRENT_DATE: // "CURRENT_DATE"
+      case symbol_kind::S_CURRENT_TIME: // "CURRENT_TIME"
+      case symbol_kind::S_CURRENT_TIMESTAMP: // "CURRENT_TIMESTAMP"
+      case symbol_kind::S_DEFAULT: // "DEFAULT"
+      case symbol_kind::S_DEFERRABLE: // "DEFERRABLE"
+      case symbol_kind::S_DEFERRED: // "DEFERRED"
+      case symbol_kind::S_DELETE: // "DELETE"
+      case symbol_kind::S_DESC: // "DESC"
+      case symbol_kind::S_DISTINCT: // "DISTINCT"
+      case symbol_kind::S_ELSE: // "ELSE"
+      case symbol_kind::S_END: // "END"
+      case symbol_kind::S_ESCAPE: // "ESCAPE"
+      case symbol_kind::S_EXISTS: // "EXISTS"
+      case symbol_kind::S_FAIL: // "FAIL"
+      case symbol_kind::S_FALSE: // "FALSE"
+      case symbol_kind::S_FILTER: // "FILTER"
+      case symbol_kind::S_FOLLOWING: // "FOLLOWING"
+      case symbol_kind::S_FOREIGN: // "FOREIGN"
+      case symbol_kind::S_GENERATED: // "GENERATED"
+      case symbol_kind::S_GLOB: // "GLOB"
+      case symbol_kind::S_IF: // "IF"
+      case symbol_kind::S_IGNORE: // "IGNORE"
+      case symbol_kind::S_IMMEDIATE: // "IMMEDIATE"
+      case symbol_kind::S_IN: // "IN"
+      case symbol_kind::S_INDEX: // "INDEX"
+      case symbol_kind::S_INITIALLY: // "INITIALLY"
+      case symbol_kind::S_INSERT: // "INSERT"
+      case symbol_kind::S_IS: // "IS"
+      case symbol_kind::S_ISNULL: // "ISNULL"
+      case symbol_kind::S_KEY: // "KEY"
+      case symbol_kind::S_LIKE: // "LIKE"
+      case symbol_kind::S_MATCH: // "MATCH"
+      case symbol_kind::S_NO: // "NO"
+      case symbol_kind::S_NOT: // "NOT"
+      case symbol_kind::S_NOTNULL: // "NOTNULL"
+      case symbol_kind::S_NULL: // "NULL"
+      case symbol_kind::S_ON: // "ON"
+      case symbol_kind::S_OR: // "OR"
+      case symbol_kind::S_OVER: // "OVER"
+      case symbol_kind::S_PARTITION: // "PARTITION"
+      case symbol_kind::S_PRECEDING: // "PRECEDING"
+      case symbol_kind::S_PRIMARY: // "PRIMARY"
+      case symbol_kind::S_RAISE: // "RAISE"
+      case symbol_kind::S_RANGE: // "RANGE"
+      case symbol_kind::S_REFERENCES: // "REFERENCES"
+      case symbol_kind::S_REGEXP: // "REGEXP"
+      case symbol_kind::S_REPLACE: // "REPLACE"
+      case symbol_kind::S_RESTRICT: // "RESTRICT"
+      case symbol_kind::S_RETURNING: // "RETURNING"
+      case symbol_kind::S_ROLLBACK: // "ROLLBACK"
+      case symbol_kind::S_ROWID: // "ROWID"
+      case symbol_kind::S_ROWS: // "ROWS"
+      case symbol_kind::S_SELECT: // "SELECT"
+      case symbol_kind::S_SET: // "SET"
+      case symbol_kind::S_STORED: // "STORED"
+      case symbol_kind::S_TABLE: // "TABLE"
+      case symbol_kind::S_TEMP: // "TEMP"
+      case symbol_kind::S_TEMPORARY: // "TEMPORARY"
+      case symbol_kind::S_THEN: // "THEN"
+      case symbol_kind::S_TRUE: // "TRUE"
+      case symbol_kind::S_UNBOUNDED: // "UNBOUNDED"
+      case symbol_kind::S_UNIQUE: // "UNIQUE"
+      case symbol_kind::S_UPDATE: // "UPDATE"
+      case symbol_kind::S_USING: // "USING"
+      case symbol_kind::S_VIRTUAL: // "VIRTUAL"
+      case symbol_kind::S_WHEN: // "WHEN"
+      case symbol_kind::S_WHERE: // "WHERE"
+      case symbol_kind::S_WITHOUT: // "WITHOUT"
+      case symbol_kind::S_IDENTIFIER: // "identifier"
+      case symbol_kind::S_NUMERIC: // "numeric"
+      case symbol_kind::S_STRINGLITERAL: // "string literal"
+      case symbol_kind::S_QUOTEDLITERAL: // "quoted literal"
+      case symbol_kind::S_BLOBLITERAL: // "blob literal"
+      case symbol_kind::S_BINDPARAMETER: // "bind parameter"
+      case symbol_kind::S_literalvalue: // literalvalue
+      case symbol_kind::S_id: // id
+      case symbol_kind::S_allowed_keywords_as_identifier: // allowed_keywords_as_identifier
+      case symbol_kind::S_tableid: // tableid
+      case symbol_kind::S_columnid: // columnid
+      case symbol_kind::S_signednumber: // signednumber
+      case symbol_kind::S_signednumber_or_numeric: // signednumber_or_numeric
+      case symbol_kind::S_typename_namelist: // typename_namelist
+      case symbol_kind::S_type_name: // type_name
+      case symbol_kind::S_unary_expr: // unary_expr
+      case symbol_kind::S_binary_expr: // binary_expr
+      case symbol_kind::S_like_expr: // like_expr
+      case symbol_kind::S_exprlist_expr: // exprlist_expr
+      case symbol_kind::S_function_expr: // function_expr
+      case symbol_kind::S_isnull_expr: // isnull_expr
+      case symbol_kind::S_between_expr: // between_expr
+      case symbol_kind::S_in_expr: // in_expr
+      case symbol_kind::S_whenthenlist_expr: // whenthenlist_expr
+      case symbol_kind::S_case_expr: // case_expr
+      case symbol_kind::S_raise_expr: // raise_expr
+      case symbol_kind::S_expr: // expr
+      case symbol_kind::S_select_stmt: // select_stmt
+      case symbol_kind::S_optional_sort_order: // optional_sort_order
+      case symbol_kind::S_optional_where: // optional_where
+      case symbol_kind::S_tableid_with_uninteresting_schema: // tableid_with_uninteresting_schema
+      case symbol_kind::S_optional_exprlist_with_paren: // optional_exprlist_with_paren
+      case symbol_kind::S_optional_conflictclause: // optional_conflictclause
+      case symbol_kind::S_optional_typename: // optional_typename
+      case symbol_kind::S_optional_storage_identifier: // optional_storage_identifier
+      case symbol_kind::S_optional_constraintname: // optional_constraintname
+      case symbol_kind::S_fk_clause_part: // fk_clause_part
+      case symbol_kind::S_fk_clause_part_list: // fk_clause_part_list
+      case symbol_kind::S_optional_fk_clause: // optional_fk_clause
         value.copy< std::string > (YY_MOVE (that.value));
         break;
 
-      case 161: // columndef_list
+      case symbol_kind::S_columndef_list: // columndef_list
         value.copy< std::vector<ColumndefData> > (YY_MOVE (that.value));
         break;
 
@@ -4027,178 +4055,179 @@ switch (yykind)
     super_type::move (s);
     switch (this->kind ())
     {
-      case 160: // columndef
+      case symbol_kind::S_columndef: // columndef
         value.move< ColumndefData > (YY_MOVE (s.value));
         break;
 
-      case 142: // optional_if_not_exists
-      case 144: // optional_unique
-      case 152: // optional_temporary
-      case 153: // optional_withoutrowid
-      case 157: // optional_always_generated
+      case symbol_kind::S_optional_if_not_exists: // optional_if_not_exists
+      case symbol_kind::S_optional_unique: // optional_unique
+      case symbol_kind::S_optional_temporary: // optional_temporary
+      case symbol_kind::S_optional_withoutrowid: // optional_withoutrowid
+      case symbol_kind::S_optional_always_generated: // optional_always_generated
         value.move< bool > (YY_MOVE (s.value));
         break;
 
-      case 158: // columnconstraint
-      case 168: // tableconstraint
+      case symbol_kind::S_columnconstraint: // columnconstraint
+      case symbol_kind::S_tableconstraint: // tableconstraint
         value.move< sqlb::ConstraintPtr > (YY_MOVE (s.value));
         break;
 
-      case 159: // columnconstraint_list
-      case 169: // tableconstraint_list
-      case 170: // optional_tableconstraint_list
-        value.move< sqlb::ConstraintSet > (YY_MOVE (s.value));
+      case symbol_kind::S_columnconstraint_list: // columnconstraint_list
+      case symbol_kind::S_tableconstraint_list: // tableconstraint_list
+      case symbol_kind::S_optional_tableconstraint_list: // optional_tableconstraint_list
+        value.move< sqlb::ConstraintVector > (YY_MOVE (s.value));
         break;
 
-      case 149: // createindex_stmt
+      case symbol_kind::S_createindex_stmt: // createindex_stmt
         value.move< sqlb::IndexPtr > (YY_MOVE (s.value));
         break;
 
-      case 147: // indexed_column
+      case symbol_kind::S_indexed_column: // indexed_column
         value.move< sqlb::IndexedColumn > (YY_MOVE (s.value));
         break;
 
-      case 148: // indexed_column_list
+      case symbol_kind::S_indexed_column_list: // indexed_column_list
         value.move< sqlb::IndexedColumnVector > (YY_MOVE (s.value));
         break;
 
-      case 163: // columnid_list
-      case 164: // optional_columnid_with_paren_list
+      case symbol_kind::S_columnid_list: // columnid_list
+      case symbol_kind::S_optional_columnid_with_paren_list: // optional_columnid_with_paren_list
         value.move< sqlb::StringVector > (YY_MOVE (s.value));
         break;
 
-      case 151: // createvirtualtable_stmt
-      case 171: // createtable_stmt
+      case symbol_kind::S_createvirtualtable_stmt: // createvirtualtable_stmt
+      case symbol_kind::S_createtable_stmt: // createtable_stmt
         value.move< sqlb::TablePtr > (YY_MOVE (s.value));
         break;
 
-      case 27: // "ABORT"
-      case 28: // "ACTION"
-      case 29: // "ALWAYS"
-      case 30: // "AND"
-      case 31: // "AND BETWEEN"
-      case 32: // "AS"
-      case 33: // "ASC"
-      case 34: // "AUTOINCREMENT"
-      case 35: // "BETWEEN"
-      case 36: // "CASCADE"
-      case 37: // "CASE"
-      case 38: // "CAST"
-      case 39: // "CHECK"
-      case 40: // "COLLATE"
-      case 41: // "CONFLICT"
-      case 42: // "CONSTRAINT"
-      case 43: // "CREATE"
-      case 44: // "CURRENT_DATE"
-      case 45: // "CURRENT_TIME"
-      case 46: // "CURRENT_TIMESTAMP"
-      case 47: // "DEFAULT"
-      case 48: // "DEFERRABLE"
-      case 49: // "DEFERRED"
-      case 50: // "DELETE"
-      case 51: // "DESC"
-      case 52: // "DISTINCT"
-      case 53: // "ELSE"
-      case 54: // "END"
-      case 55: // "ESCAPE"
-      case 56: // "EXISTS"
-      case 57: // "FAIL"
-      case 58: // "FALSE"
-      case 59: // "FILTER"
-      case 60: // "FOLLOWING"
-      case 61: // "FOREIGN"
-      case 62: // "GENERATED"
-      case 63: // "GLOB"
-      case 64: // "IF"
-      case 65: // "IGNORE"
-      case 66: // "IMMEDIATE"
-      case 67: // "IN"
-      case 68: // "INDEX"
-      case 69: // "INITIALLY"
-      case 70: // "INSERT"
-      case 71: // "IS"
-      case 72: // "ISNULL"
-      case 73: // "KEY"
-      case 74: // "LIKE"
-      case 75: // "MATCH"
-      case 76: // "NO"
-      case 77: // "NOT"
-      case 78: // "NOTNULL"
-      case 79: // "NULL"
-      case 80: // "ON"
-      case 81: // "OR"
-      case 82: // "OVER"
-      case 83: // "PARTITION"
-      case 84: // "PRECEDING"
-      case 85: // "PRIMARY"
-      case 86: // "RAISE"
-      case 87: // "RANGE"
-      case 88: // "REFERENCES"
-      case 89: // "REGEXP"
-      case 90: // "REPLACE"
-      case 91: // "RESTRICT"
-      case 92: // "ROLLBACK"
-      case 93: // "ROWID"
-      case 94: // "ROWS"
-      case 95: // "SELECT"
-      case 96: // "SET"
-      case 97: // "STORED"
-      case 98: // "TABLE"
-      case 99: // "TEMP"
-      case 100: // "TEMPORARY"
-      case 101: // "THEN"
-      case 102: // "TRUE"
-      case 103: // "UNBOUNDED"
-      case 104: // "UNIQUE"
-      case 105: // "UPDATE"
-      case 106: // "USING"
-      case 107: // "VIRTUAL"
-      case 108: // "WHEN"
-      case 109: // "WHERE"
-      case 110: // "WITHOUT"
-      case 111: // "identifier"
-      case 112: // "numeric"
-      case 113: // "string literal"
-      case 114: // "quoted literal"
-      case 115: // "blob literal"
-      case 116: // "bind parameter"
-      case 120: // literalvalue
-      case 121: // id
-      case 122: // allowed_keywords_as_identifier
-      case 123: // tableid
-      case 124: // columnid
-      case 125: // signednumber
-      case 126: // signednumber_or_numeric
-      case 127: // typename_namelist
-      case 128: // type_name
-      case 129: // unary_expr
-      case 130: // binary_expr
-      case 131: // like_expr
-      case 132: // exprlist_expr
-      case 133: // function_expr
-      case 134: // isnull_expr
-      case 135: // between_expr
-      case 136: // in_expr
-      case 137: // whenthenlist_expr
-      case 138: // case_expr
-      case 139: // raise_expr
-      case 140: // expr
-      case 141: // select_stmt
-      case 143: // optional_sort_order
-      case 145: // optional_where
-      case 146: // tableid_with_uninteresting_schema
-      case 150: // optional_exprlist_with_paren
-      case 154: // optional_conflictclause
-      case 155: // optional_typename
-      case 156: // optional_storage_identifier
-      case 162: // optional_constraintname
-      case 165: // fk_clause_part
-      case 166: // fk_clause_part_list
-      case 167: // optional_fk_clause
+      case symbol_kind::S_ABORT: // "ABORT"
+      case symbol_kind::S_ACTION: // "ACTION"
+      case symbol_kind::S_ALWAYS: // "ALWAYS"
+      case symbol_kind::S_AND: // "AND"
+      case symbol_kind::S_AND_BETWEEN: // "AND BETWEEN"
+      case symbol_kind::S_AS: // "AS"
+      case symbol_kind::S_ASC: // "ASC"
+      case symbol_kind::S_AUTOINCREMENT: // "AUTOINCREMENT"
+      case symbol_kind::S_BETWEEN: // "BETWEEN"
+      case symbol_kind::S_CASCADE: // "CASCADE"
+      case symbol_kind::S_CASE: // "CASE"
+      case symbol_kind::S_CAST: // "CAST"
+      case symbol_kind::S_CHECK: // "CHECK"
+      case symbol_kind::S_COLLATE: // "COLLATE"
+      case symbol_kind::S_CONFLICT: // "CONFLICT"
+      case symbol_kind::S_CONSTRAINT: // "CONSTRAINT"
+      case symbol_kind::S_CREATE: // "CREATE"
+      case symbol_kind::S_CURRENT_DATE: // "CURRENT_DATE"
+      case symbol_kind::S_CURRENT_TIME: // "CURRENT_TIME"
+      case symbol_kind::S_CURRENT_TIMESTAMP: // "CURRENT_TIMESTAMP"
+      case symbol_kind::S_DEFAULT: // "DEFAULT"
+      case symbol_kind::S_DEFERRABLE: // "DEFERRABLE"
+      case symbol_kind::S_DEFERRED: // "DEFERRED"
+      case symbol_kind::S_DELETE: // "DELETE"
+      case symbol_kind::S_DESC: // "DESC"
+      case symbol_kind::S_DISTINCT: // "DISTINCT"
+      case symbol_kind::S_ELSE: // "ELSE"
+      case symbol_kind::S_END: // "END"
+      case symbol_kind::S_ESCAPE: // "ESCAPE"
+      case symbol_kind::S_EXISTS: // "EXISTS"
+      case symbol_kind::S_FAIL: // "FAIL"
+      case symbol_kind::S_FALSE: // "FALSE"
+      case symbol_kind::S_FILTER: // "FILTER"
+      case symbol_kind::S_FOLLOWING: // "FOLLOWING"
+      case symbol_kind::S_FOREIGN: // "FOREIGN"
+      case symbol_kind::S_GENERATED: // "GENERATED"
+      case symbol_kind::S_GLOB: // "GLOB"
+      case symbol_kind::S_IF: // "IF"
+      case symbol_kind::S_IGNORE: // "IGNORE"
+      case symbol_kind::S_IMMEDIATE: // "IMMEDIATE"
+      case symbol_kind::S_IN: // "IN"
+      case symbol_kind::S_INDEX: // "INDEX"
+      case symbol_kind::S_INITIALLY: // "INITIALLY"
+      case symbol_kind::S_INSERT: // "INSERT"
+      case symbol_kind::S_IS: // "IS"
+      case symbol_kind::S_ISNULL: // "ISNULL"
+      case symbol_kind::S_KEY: // "KEY"
+      case symbol_kind::S_LIKE: // "LIKE"
+      case symbol_kind::S_MATCH: // "MATCH"
+      case symbol_kind::S_NO: // "NO"
+      case symbol_kind::S_NOT: // "NOT"
+      case symbol_kind::S_NOTNULL: // "NOTNULL"
+      case symbol_kind::S_NULL: // "NULL"
+      case symbol_kind::S_ON: // "ON"
+      case symbol_kind::S_OR: // "OR"
+      case symbol_kind::S_OVER: // "OVER"
+      case symbol_kind::S_PARTITION: // "PARTITION"
+      case symbol_kind::S_PRECEDING: // "PRECEDING"
+      case symbol_kind::S_PRIMARY: // "PRIMARY"
+      case symbol_kind::S_RAISE: // "RAISE"
+      case symbol_kind::S_RANGE: // "RANGE"
+      case symbol_kind::S_REFERENCES: // "REFERENCES"
+      case symbol_kind::S_REGEXP: // "REGEXP"
+      case symbol_kind::S_REPLACE: // "REPLACE"
+      case symbol_kind::S_RESTRICT: // "RESTRICT"
+      case symbol_kind::S_RETURNING: // "RETURNING"
+      case symbol_kind::S_ROLLBACK: // "ROLLBACK"
+      case symbol_kind::S_ROWID: // "ROWID"
+      case symbol_kind::S_ROWS: // "ROWS"
+      case symbol_kind::S_SELECT: // "SELECT"
+      case symbol_kind::S_SET: // "SET"
+      case symbol_kind::S_STORED: // "STORED"
+      case symbol_kind::S_TABLE: // "TABLE"
+      case symbol_kind::S_TEMP: // "TEMP"
+      case symbol_kind::S_TEMPORARY: // "TEMPORARY"
+      case symbol_kind::S_THEN: // "THEN"
+      case symbol_kind::S_TRUE: // "TRUE"
+      case symbol_kind::S_UNBOUNDED: // "UNBOUNDED"
+      case symbol_kind::S_UNIQUE: // "UNIQUE"
+      case symbol_kind::S_UPDATE: // "UPDATE"
+      case symbol_kind::S_USING: // "USING"
+      case symbol_kind::S_VIRTUAL: // "VIRTUAL"
+      case symbol_kind::S_WHEN: // "WHEN"
+      case symbol_kind::S_WHERE: // "WHERE"
+      case symbol_kind::S_WITHOUT: // "WITHOUT"
+      case symbol_kind::S_IDENTIFIER: // "identifier"
+      case symbol_kind::S_NUMERIC: // "numeric"
+      case symbol_kind::S_STRINGLITERAL: // "string literal"
+      case symbol_kind::S_QUOTEDLITERAL: // "quoted literal"
+      case symbol_kind::S_BLOBLITERAL: // "blob literal"
+      case symbol_kind::S_BINDPARAMETER: // "bind parameter"
+      case symbol_kind::S_literalvalue: // literalvalue
+      case symbol_kind::S_id: // id
+      case symbol_kind::S_allowed_keywords_as_identifier: // allowed_keywords_as_identifier
+      case symbol_kind::S_tableid: // tableid
+      case symbol_kind::S_columnid: // columnid
+      case symbol_kind::S_signednumber: // signednumber
+      case symbol_kind::S_signednumber_or_numeric: // signednumber_or_numeric
+      case symbol_kind::S_typename_namelist: // typename_namelist
+      case symbol_kind::S_type_name: // type_name
+      case symbol_kind::S_unary_expr: // unary_expr
+      case symbol_kind::S_binary_expr: // binary_expr
+      case symbol_kind::S_like_expr: // like_expr
+      case symbol_kind::S_exprlist_expr: // exprlist_expr
+      case symbol_kind::S_function_expr: // function_expr
+      case symbol_kind::S_isnull_expr: // isnull_expr
+      case symbol_kind::S_between_expr: // between_expr
+      case symbol_kind::S_in_expr: // in_expr
+      case symbol_kind::S_whenthenlist_expr: // whenthenlist_expr
+      case symbol_kind::S_case_expr: // case_expr
+      case symbol_kind::S_raise_expr: // raise_expr
+      case symbol_kind::S_expr: // expr
+      case symbol_kind::S_select_stmt: // select_stmt
+      case symbol_kind::S_optional_sort_order: // optional_sort_order
+      case symbol_kind::S_optional_where: // optional_where
+      case symbol_kind::S_tableid_with_uninteresting_schema: // tableid_with_uninteresting_schema
+      case symbol_kind::S_optional_exprlist_with_paren: // optional_exprlist_with_paren
+      case symbol_kind::S_optional_conflictclause: // optional_conflictclause
+      case symbol_kind::S_optional_typename: // optional_typename
+      case symbol_kind::S_optional_storage_identifier: // optional_storage_identifier
+      case symbol_kind::S_optional_constraintname: // optional_constraintname
+      case symbol_kind::S_fk_clause_part: // fk_clause_part
+      case symbol_kind::S_fk_clause_part_list: // fk_clause_part_list
+      case symbol_kind::S_optional_fk_clause: // optional_fk_clause
         value.move< std::string > (YY_MOVE (s.value));
         break;
 
-      case 161: // columndef_list
+      case symbol_kind::S_columndef_list: // columndef_list
         value.move< std::vector<ColumndefData> > (YY_MOVE (s.value));
         break;
 
@@ -4236,7 +4265,7 @@ switch (yykind)
 
   inline
   void
-  parser::by_kind::clear ()
+  parser::by_kind::clear () YY_NOEXCEPT
   {
     kind_ = symbol_kind::S_YYEMPTY;
   }
@@ -4265,8 +4294,7 @@ switch (yykind)
 
 #line 10 "sqlite3_parser.yy"
 } } //  sqlb::parser 
-#line 4269 "sqlite3_parser.hpp"
-
+#line 4298 "sqlite3_parser.hpp"
 
 
 

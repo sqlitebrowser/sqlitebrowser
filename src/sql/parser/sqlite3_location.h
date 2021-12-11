@@ -1,8 +1,8 @@
-// A Bison parser, made by GNU Bison 3.6.3.
+// A Bison parser, made by GNU Bison 3.7.5.
 
 // Locations for Bison parsers in C++
 
-// Copyright (C) 2002-2015, 2018-2020 Free Software Foundation, Inc.
+// Copyright (C) 2002-2015, 2018-2021 Free Software Foundation, Inc.
 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -61,11 +61,13 @@ namespace  sqlb { namespace parser  {
   class position
   {
   public:
+    /// Type for file name.
+    typedef const std::string filename_type;
     /// Type for line and column numbers.
     typedef int counter_type;
 
     /// Construct a position.
-    explicit position (std::string* f = YY_NULLPTR,
+    explicit position (filename_type* f = YY_NULLPTR,
                        counter_type l = 1,
                        counter_type c = 1)
       : filename (f)
@@ -75,7 +77,7 @@ namespace  sqlb { namespace parser  {
 
 
     /// Initialization.
-    void initialize (std::string* fn = YY_NULLPTR,
+    void initialize (filename_type* fn = YY_NULLPTR,
                      counter_type l = 1,
                      counter_type c = 1)
     {
@@ -104,7 +106,7 @@ namespace  sqlb { namespace parser  {
     /** \} */
 
     /// File name to which this position refers.
-    std::string* filename;
+    filename_type* filename;
     /// Current line number.
     counter_type line;
     /// Current column number.
@@ -147,24 +149,6 @@ namespace  sqlb { namespace parser  {
     return res -= width;
   }
 
-  /// Compare two position objects.
-  inline bool
-  operator== (const position& pos1, const position& pos2)
-  {
-    return (pos1.line == pos2.line
-            && pos1.column == pos2.column
-            && (pos1.filename == pos2.filename
-                || (pos1.filename && pos2.filename
-                    && *pos1.filename == *pos2.filename)));
-  }
-
-  /// Compare two position objects.
-  inline bool
-  operator!= (const position& pos1, const position& pos2)
-  {
-    return !(pos1 == pos2);
-  }
-
   /** \brief Intercept output stream redirection.
    ** \param ostr the destination output stream
    ** \param pos a reference to the position to redirect
@@ -182,6 +166,8 @@ namespace  sqlb { namespace parser  {
   class location
   {
   public:
+    /// Type for file name.
+    typedef position::filename_type filename_type;
     /// Type for line and column numbers.
     typedef position::counter_type counter_type;
 
@@ -198,7 +184,7 @@ namespace  sqlb { namespace parser  {
     {}
 
     /// Construct a 0-width location in \a f, \a l, \a c.
-    explicit location (std::string* f,
+    explicit location (filename_type* f,
                        counter_type l = 1,
                        counter_type c = 1)
       : begin (f, l, c)
@@ -207,7 +193,7 @@ namespace  sqlb { namespace parser  {
 
 
     /// Initialization.
-    void initialize (std::string* f = YY_NULLPTR,
+    void initialize (filename_type* f = YY_NULLPTR,
                      counter_type l = 1,
                      counter_type c = 1)
     {
@@ -289,20 +275,6 @@ namespace  sqlb { namespace parser  {
     return res -= width;
   }
 
-  /// Compare two location objects.
-  inline bool
-  operator== (const location& loc1, const location& loc2)
-  {
-    return loc1.begin == loc2.begin && loc1.end == loc2.end;
-  }
-
-  /// Compare two location objects.
-  inline bool
-  operator!= (const location& loc1, const location& loc2)
-  {
-    return !(loc1 == loc2);
-  }
-
   /** \brief Intercept output stream redirection.
    ** \param ostr the destination output stream
    ** \param loc a reference to the location to redirect
@@ -329,6 +301,6 @@ namespace  sqlb { namespace parser  {
 
 #line 10 "sqlite3_parser.yy"
 } } //  sqlb::parser 
-#line 333 "sqlite3_location.h"
+#line 305 "sqlite3_location.h"
 
 #endif // !YY_YY_SQLITE3_LOCATION_H_INCLUDED

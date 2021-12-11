@@ -99,11 +99,11 @@ std::string CondFormat::filterToSqlCondition(const QString& value, const QString
                 op = value.left(2);
                 val = value.mid(2);
             }
-        } else if(value.left(1) == ">" || value.left(1) == "<") {
+        } else if(value.at(0) == '>' || value.at(0) == '<') {
             value.midRef(1).toFloat(&numeric);
             op = value.at(0);
             val = value.mid(1);
-        } else if(value.left(1) == "=") {
+        } else if(value.at(0) == '=') {
             val = value.mid(1);
 
             // Check if value to compare with is 'NULL'
@@ -117,7 +117,7 @@ std::string CondFormat::filterToSqlCondition(const QString& value, const QString
                 op = "IS";
                 numeric = true;
             }
-        } else if(value.left(1) == "/" && value.right(1) == "/" && value.size() > 2) {
+        } else if(value.at(0) == '/' && value.at(value.size()-1) == '/' && value.size() > 2) {
             val = value.mid(1, value.length() - 2);
             op = "REGEXP";
             numeric = false;

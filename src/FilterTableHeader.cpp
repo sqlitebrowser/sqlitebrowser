@@ -29,7 +29,7 @@ FilterTableHeader::FilterTableHeader(QTableView* parent) :
     setContextMenuPolicy(Qt::CustomContextMenu);
 }
 
-void FilterTableHeader::generateFilters(size_t number, bool showFirst)
+void FilterTableHeader::generateFilters(size_t number, size_t number_of_hidden_filters)
 {
     // Delete all the current filter widgets
     qDeleteAll(filterWidgets);
@@ -39,10 +39,7 @@ void FilterTableHeader::generateFilters(size_t number, bool showFirst)
     for(size_t i=0;i < number; ++i)
     {
         FilterLineEdit* l = new FilterLineEdit(this, &filterWidgets, i);
-        if(!showFirst && i == 0)        // This hides the first input widget which belongs to the hidden rowid column
-            l->setVisible(false);
-        else
-            l->setVisible(true);
+        l->setVisible(i >= number_of_hidden_filters);
         connect(l, &FilterLineEdit::delayedTextChanged, this, &FilterTableHeader::inputChanged);
         connect(l, &FilterLineEdit::addFilterAsCondFormat, this, &FilterTableHeader::addFilterAsCondFormat);
         connect(l, &FilterLineEdit::clearAllCondFormats, this, &FilterTableHeader::clearAllCondFormats);
@@ -51,7 +48,7 @@ void FilterTableHeader::generateFilters(size_t number, bool showFirst)
     }
 
     // Position them correctly
-    adjustPositions();
+    updateGeometries();
 }
 
 QSize FilterTableHeader::sizeHint() const
@@ -113,7 +110,7 @@ void FilterTableHeader::clearAllCondFormats()
 
 void FilterTableHeader::editCondFormats()
 {
-    // Just get the column number and the new value and send them to anybody interested in editting conditional formatting
+    // Just get the column number and the new value and send them to anybody interested in editing conditional formatting
     emit condFormatsEdited(sender()->property("column").toUInt());
 }
 
@@ -127,4 +124,9 @@ void FilterTableHeader::setFilter(size_t column, const QString& value)
 {
     if(column < filterWidgets.size())
         filterWidgets.at(column)->setText(value);
+}
+
+QString FilterTableHeader::filterValue(size_t column) const
+{
+    return filterWidgets[column]->text();
 }

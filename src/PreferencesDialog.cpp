@@ -49,6 +49,10 @@ PreferencesDialog::PreferencesDialog(QWidget* parent, Tabs tab)
 
     // Set current tab
     ui->tabWidget->setCurrentIndex(tab);
+
+    // Connect 'Export Settings' and 'Import Settings' buttons
+    connect(ui->buttonExportSettings, &QPushButton::clicked, this, &PreferencesDialog::exportSettings);
+    connect(ui->buttonImportSettings, &QPushButton::clicked, this, &PreferencesDialog::importSettings);
 }
 
 /*
@@ -76,6 +80,7 @@ void PreferencesDialog::loadSettings()
     ui->encodingComboBox->setCurrentIndex(ui->encodingComboBox->findText(Settings::getValue("db", "defaultencoding").toString(), Qt::MatchFixedString));
     ui->comboDefaultLocation->setCurrentIndex(Settings::getValue("db", "savedefaultlocation").toInt());
     ui->locationEdit->setText(QDir::toNativeSeparators(Settings::getValue("db", "defaultlocation").toString()));
+    ui->checkPromptSQLTabsInNewProject->setChecked(Settings::getValue("General", "promptsqltabsinnewproject").toBool());
     ui->checkUpdates->setChecked(Settings::getValue("checkversion", "enabled").toBool());
 
     ui->checkHideSchemaLinebreaks->setChecked(Settings::getValue("db", "hideschemalinebreaks").toBool());
@@ -185,6 +190,7 @@ void PreferencesDialog::loadSettings()
 
     ui->spinEditorFontSize->setValue(Settings::getValue("editor", "fontsize").toInt());
     ui->spinTabSize->setValue(Settings::getValue("editor", "tabsize").toInt());
+    ui->checkIndentationUseTabs->setChecked(Settings::getValue("editor", "indentation_use_tabs").toBool());
     ui->spinLogFontSize->setValue(Settings::getValue("log", "fontsize").toInt());
     ui->wrapComboBox->setCurrentIndex(Settings::getValue("editor", "wrap_lines").toInt());
     ui->quoteComboBox->setCurrentIndex(Settings::getValue("editor", "identifier_quotes").toInt());
@@ -209,7 +215,7 @@ void PreferencesDialog::loadSettings()
     ui->spinMaxRecentFiles->setValue(Settings::getValue("General", "maxRecentFiles").toInt());
 }
 
-void PreferencesDialog::saveSettings()
+void PreferencesDialog::saveSettings(bool accept)
 {
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
@@ -252,6 +258,7 @@ void PreferencesDialog::saveSettings()
     Settings::setValue("editor", "font", ui->comboEditorFont->currentText());
     Settings::setValue("editor", "fontsize", ui->spinEditorFontSize->value());
     Settings::setValue("editor", "tabsize", ui->spinTabSize->value());
+    Settings::setValue("editor", "indentation_use_tabs", ui->checkIndentationUseTabs->isChecked());
     Settings::setValue("log", "fontsize", ui->spinLogFontSize->value());
     Settings::setValue("editor", "wrap_lines", ui->wrapComboBox->currentIndex());
     Settings::setValue("editor", "identifier_quotes", ui->quoteComboBox->currentIndex());
@@ -262,8 +269,8 @@ void PreferencesDialog::saveSettings()
     Settings::setValue("editor", "close_button_on_tabs", ui->checkCloseButtonOnTabs->isChecked());
 
     QStringList extList;
-    for(const QListWidgetItem* item : ui->listExtensions->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard))
-        extList.append(item->text());
+    for(int i=0;i<ui->listExtensions->count();++i)
+        extList.append(ui->listExtensions->item(i)->text());
     Settings::setValue("extensions", "list", extList);
     Settings::setValue("extensions", "disableregex", ui->checkRegexDisabled->isChecked());
     Settings::setValue("extensions", "enable_load_extension", ui->checkAllowLoadExtension->isChecked());
@@ -339,20 +346,23 @@ void PreferencesDialog::saveSettings()
     Settings::setValue("General", "DBFileExtensions", m_dbFileExtensions.join(";;") );
     Settings::setValue("General", "fontsize", ui->spinGeneralFontSize->value());
     Settings::setValue("General", "maxRecentFiles", ui->spinMaxRecentFiles->value());
+    Settings::setValue("General", "promptsqltabsinnewproject", ui->checkPromptSQLTabsInNewProject->isChecked());
 
     m_proxyDialog->saveSettings();
 
-    accept();
+    if(accept)
+        PreferencesDialog::accept();
 
     QApplication::restoreOverrideCursor();
 }
 
 void PreferencesDialog::showColourDialog(QTreeWidgetItem* item, int column)
 {
-    if(item->text(column).left(1) != "#")
+    QString text = item->text(column);
+    if(!text.size() || text.at(0) != '#')
         return;
 
-    QColor colour = QColorDialog::getColor(QColor(item->text(column)), this);
+    QColor colour = QColorDialog::getColor(text, this);
     if(colour.isValid())
     {
         item->setForeground(column, colour);
@@ -691,4 +701,37 @@ void PreferencesDialog::on_buttonBox_clicked(QAbstractButton* button)
 void PreferencesDialog::configureProxy()
 {
     m_proxyDialog->show();
+}
+
+void PreferencesDialog::exportSettings()
+{
+    saveSettings(false);
+
+    const QString fileName = FileDialog::getSaveFileName(CreateSettingsFile, this, tr("Save Settings File"), tr("Initialization File (*.ini)"));
+    if(!fileName.isEmpty())
+    {
+        Settings::exportSettings(fileName);
+        QMessageBox::information(this, QApplication::applicationName(), (tr("The settings file has been saved in location :\n") + fileName));
+    }
+}
+
+void PreferencesDialog::importSettings()
+{
+    const QString fileName = FileDialog::getOpenFileName(OpenSettingsFile, this, tr("Open Settings File"), tr("Initialization File (*.ini)"));
+    const QVariant existingLanguage = Settings::getValue("General", "language");
+
+    if(!fileName.isEmpty())
+    {
+        if(Settings::importSettings(fileName))
+        {
+            QMessageBox::information(this, QApplication::applicationName(), tr("The settings file was loaded properly."));
+            if (existingLanguage != Settings::getValue("General", "language"))
+                QMessageBox::information(this, QApplication::applicationName(),
+                                         tr("The language will change after you restart the application."));
+
+            accept();
+        } else {
+            QMessageBox::critical(this, QApplication::applicationName(), tr("The selected settings file is not a normal settings file.\nPlease check again."));
+        }
+    }
 }

@@ -6,16 +6,104 @@
 #include <QLocale>
 #include <QDebug>
 #include <QAction>
+#include <QFileInfo>
+#include <QProxyStyle>
+#include <QStyleOption>
+#include <QDesktopWidget>
+#include <QScreen>
 
 #include "Application.h"
 #include "MainWindow.h"
 #include "RemoteNetwork.h"
 #include "Settings.h"
 #include "version.h"
+#include "sqlitedb.h"
+
+class DB4SProxyStyle final : public QProxyStyle {
+public:
+    DB4SProxyStyle(int toolBarIconSize, qreal dpi, QStyle *style)
+        : QProxyStyle(style), m_toolBarIconSize(static_cast<int>(toolBarIconSize * dpi / 96))
+    {
+#ifdef Q_OS_WIN
+        m_smallIconSize = static_cast<int>(11 * dpi / 96);
+
+        QStyleOption so(QStyleOption::Version, QStyleOption::SO_MenuItem);
+        m_menuItemIconSize = style->pixelMetric(PM_SmallIconSize, &so);
+#endif
+    }
+
+    int pixelMetric(QStyle::PixelMetric metric,
+                    const QStyleOption *option = nullptr,
+                    const QWidget *widget = nullptr) const override
+    {
+        if (metric == PM_ToolBarIconSize) {
+            return m_toolBarIconSize;
+        }
+#ifdef Q_OS_WIN
+        else if (metric == PM_SmallIconSize) {
+            // set maximum icon size for SmallIcon
+
+            // Set default MenuIcon size
+            if (option && option->type == QStyleOption::SO_MenuItem) {
+                return m_menuItemIconSize;
+            }
+
+            // if we don't return size before QDockWidgets are created,
+            // any of the widgets with custom stylesheet are rendered with huge float,close buttons
+            // see void TableBrowserDock::setFocusStyle
+            return m_smallIconSize;
+        }
+#endif
+        return QProxyStyle::pixelMetric(metric, option, widget);
+    }
+
+private:
+    int m_toolBarIconSize;
+#ifdef Q_OS_WIN
+    int m_menuItemIconSize;
+    int m_smallIconSize;
+#endif
+};
+
+void printArgument(const QString& argument, const QString& description)
+{
+    const int fieldWidth = 20;
+
+    // Format the usage message so translators do not have to do it themselves
+    if(argument.length() > fieldWidth) {
+        qWarning() << qPrintable(QString("  %1").arg(argument, -fieldWidth));
+        qWarning() << qPrintable(QString("  %1%2").arg("", -fieldWidth).arg(description));
+    } else {
+        qWarning() << qPrintable(QString("  %1%2").arg(argument, -fieldWidth).arg(description));
+    }
+}
 
 Application::Application(int& argc, char** argv) :
     QApplication(argc, argv)
 {
+    // Get 'DB4S_SETTINGS_FILE' environment variable
+    const auto env = qgetenv("DB4S_SETTINGS_FILE");
+
+    // If 'DB4S_SETTINGS_FILE' environment variable exists
+    if(!env.isEmpty())
+        Settings::setUserSettingsFile(env);
+
+    for(int i=1;i<arguments().size();i++)
+    {
+        if(arguments().at(i) == "-S" || arguments().at(i) == "--settings")
+        {
+            if(++i < arguments().size())
+            {
+                if(!env.isEmpty())
+                {
+                    qWarning() << qPrintable(tr("The user settings file location is replaced with the argument value instead of the environment variable value."));
+                    qWarning() << qPrintable(tr("Ignored environment variable(DB4S_SETTINGS_FILE) value : ") + env);
+                }
+                Settings::setUserSettingsFile(arguments().at(i));
+            }
+        }
+    }
+
     // Set organisation and application names
     setOrganizationName("sqlitebrowser");
     setApplicationName("DB Browser for SQLite");
@@ -79,47 +167,81 @@ Application::Application(int& argc, char** argv) :
     // Parse command line
     QString fileToOpen;
     std::vector<QString> tableToBrowse;
+    std::vector<QString> csvToImport;
     QStringList sqlToExecute;
     bool readOnly = false;
-    m_dontShowMainWindow = false;
+    m_showMainWindow = true;
     for(int i=1;i<arguments().size();i++)
     {
         // Check next command line argument
         if(arguments().at(i) == "-h" || arguments().at(i) == "--help")
         {
             // Help
-            qWarning() << qPrintable(tr("Usage: %1 [options] [db]\n").arg(argv[0]));
+            qWarning() << qPrintable(QString("%1: %2 [%3] [<%4>|<%5>|%6]\n").
+                                     arg(tr("Usage")).arg(QFileInfo(argv[0]).fileName()).
+                                     arg(tr("options")).arg(tr("database")).arg(tr("project")).
+                                     arg(tr("csv-file")));
+
             qWarning() << qPrintable(tr("Possible command line arguments:"));
-            qWarning() << qPrintable(tr("  -h, --help\t\tShow command line options"));
-            qWarning() << qPrintable(tr("  -q, --quit\t\tExit application after running scripts"));
-            qWarning() << qPrintable(tr("  -s, --sql [file]\tExecute this SQL file after opening the DB"));
-            qWarning() << qPrintable(tr("  -t, --table [table]\tBrowse this table after opening the DB"));
-            qWarning() << qPrintable(tr("  -R, --read-only\tOpen database in read-only mode"));
-            qWarning() << qPrintable(tr("  -o, --option [group/setting=value]\tRun application with this setting temporarily set to value"));
-            qWarning() << qPrintable(tr("  -O, --save-option [group/setting=value]\tRun application saving this value for this setting"));
-            qWarning() << qPrintable(tr("  -v, --version\t\tDisplay the current version"));
-            qWarning() << qPrintable(tr("  [file]\t\tOpen this SQLite database"));
-            m_dontShowMainWindow = true;
+            printArgument(QString("-h, --help"),
+                          tr("Show command line options"));
+            printArgument(QString("-q, --quit"),
+                          tr("Exit application after running scripts"));
+            printArgument(QString("-s, --sql <%1>").arg(tr("file")),
+                          tr("Execute this SQL file after opening the DB"));
+            printArgument(QString("--import-csv <%1>").arg(tr("file")),
+                          tr("Import this CSV file into the passed DB or into a new DB"));
+            printArgument(QString("-t, --table <%1>").arg(tr("table")),
+                          tr("Browse this table, or use it as target of a data import"));
+            printArgument(QString("-R, --read-only"),
+                          tr("Open database in read-only mode"));
+            printArgument(QString("-S, --settings <%1>").arg(tr("settings_file")),
+                          tr("Run application based on this settings file"));
+            printArgument(QString("-o, --option <%1>/<%2>=<%3>").arg(tr("group")).arg(tr("settings")).arg(tr("value")),
+                          tr("Run application with this setting temporarily set to value"));
+            printArgument(QString("-O, --save-option <%1>/<%2>=<%3>").arg(tr("group")).arg(tr("settings")).arg(tr("value")),
+                          tr("Run application saving this value for this setting"));
+            printArgument(QString("-v, --version"),
+                          tr("Display the current version"));
+            printArgument(QString("<%1>").arg(tr("database")),
+                          tr("Open this SQLite database"));
+            printArgument(QString("<%1>").arg(tr("project")),
+                          tr("Open this project file (*.sqbpro)"));
+            printArgument(QString("<%1>").arg(tr("csv-file")),
+                          tr("Import this CSV file into an in-memory database"));
+            m_showMainWindow = false;
         } else if(arguments().at(i) == "-v" || arguments().at(i) == "--version") {
-            qWarning() << qPrintable(tr("This is DB Browser for SQLite version %1.").arg(versionString()));
-            m_dontShowMainWindow = true;
+            qWarning() << qPrintable(versionInformation());
+            m_showMainWindow = false;
         } else if(arguments().at(i) == "-s" || arguments().at(i) == "--sql") {
             // Run SQL file: If file exists add it to list of scripts to execute
             if(++i >= arguments().size())
-                qWarning() << qPrintable(tr("The -s/--sql option requires an argument"));
+                qWarning() << qPrintable(tr("The %1 option requires an argument").arg("-s/--sql"));
             else if(!QFile::exists(arguments().at(i)))
                 qWarning() << qPrintable(tr("The file %1 does not exist").arg(arguments().at(i)));
             else
                 sqlToExecute.append(arguments().at(i));
         } else if(arguments().at(i) == "-t" || arguments().at(i) == "--table") {
             if(++i >= arguments().size())
-                qWarning() << qPrintable(tr("The -t/--table option requires an argument"));
+                qWarning() << qPrintable(tr("The %1 option requires an argument").arg("-t/--table"));
             else
                 tableToBrowse.push_back(arguments().at(i));
+        } else if(arguments().at(i) == "--import-csv") {
+            if(++i >= arguments().size())
+                qWarning() << qPrintable(tr("The %1 option requires an argument").arg("--import-csv"));
+            else if(!QFile::exists(arguments().at(i)))
+                qWarning() << qPrintable(tr("The file %1 does not exist").arg(arguments().at(i)));
+            else
+                csvToImport.push_back(arguments().at(i));
         } else if(arguments().at(i) == "-q" || arguments().at(i) == "--quit") {
-            m_dontShowMainWindow = true;
+            m_showMainWindow = false;
         } else if(arguments().at(i) == "-R" || arguments().at(i) == "--read-only") {
             readOnly = true;
+        } else if(arguments().at(i) == "-S" || arguments().at(i) == "--settings") {
+            // This option has already been handled above
+            // For here, only print the error when no parameter value is given
+            if(++i >= arguments().size())
+                qWarning() << qPrintable(tr("The -S/--settings option requires an argument. The option is ignored."));
         } else if(arguments().at(i) == "-o" || arguments().at(i) == "--option" ||
                   arguments().at(i) == "-O" || arguments().at(i) == "--save-option") {
             const QString optionWarning = tr("The -o/--option and -O/--save-option options require an argument in the form group/setting=value");
@@ -141,7 +263,7 @@ Application::Application(int& argc, char** argv) :
                             value = option.at(1).split(",");
                         else
                             value = option.at(1);
-                        Settings::setValue(setting.at(0).toStdString(), setting.at(1).toStdString(), value, !saveToDisk);
+                        Settings::setValue(setting.at(0).toStdString(), setting.at(1).toStdString(), value, saveToDisk);
                     }
                 }
             }
@@ -154,10 +276,14 @@ Application::Application(int& argc, char** argv) :
         }
     }
 
-    if(m_dontShowMainWindow) {
+    if(!m_showMainWindow) {
         m_mainWindow = nullptr;
         return;
     }
+
+    // Set StyleProxy
+    QScreen *screen = primaryScreen();
+    setStyle(new DB4SProxyStyle(18, screen != nullptr ? screen->logicalDotsPerInch() : 96, style()));
 
     // Show main window
     m_mainWindow = new MainWindow();
@@ -185,6 +311,15 @@ Application::Application(int& argc, char** argv) :
             // Jump to table if the -t/--table parameter was set
             for(const QString& t : tableToBrowse)
                 m_mainWindow->switchToBrowseDataTab(sqlb::ObjectIdentifier("main", t.toStdString()));
+            if(!tableToBrowse.empty())
+                m_mainWindow->refresh();
+        }
+    }
+    if(!csvToImport.empty()) {
+        if(tableToBrowse.empty()) {
+            m_mainWindow->importCSVfiles(csvToImport);
+        } else {
+            m_mainWindow->importCSVfiles(csvToImport, tableToBrowse.front());
         }
     }
 }
@@ -218,6 +353,23 @@ QString Application::versionString()
 #else
     return QString("%1").arg(APP_VERSION);
 #endif
+}
+
+QString Application::versionInformation()
+{
+    QString sqlite_version, sqlcipher_version;
+    DBBrowserDB::getSqliteVersion(sqlite_version, sqlcipher_version);
+    if(sqlcipher_version.isNull())
+        sqlite_version = tr("SQLite Version ") + sqlite_version;
+    else
+        sqlite_version = tr("SQLCipher Version %1 (based on SQLite %2)").arg(sqlcipher_version, sqlite_version);
+
+    return
+        tr("DB Browser for SQLite Version %1.").arg(versionString() + "\n\n" +
+        tr("Built for %1, running on %2").arg(QSysInfo::buildAbi(), QSysInfo::currentCpuArchitecture()) + "\n" +
+        tr("Qt Version %1").arg(QT_VERSION_STR) + "\n" +
+        sqlite_version
+        );
 }
 
 void Application::reloadSettings()

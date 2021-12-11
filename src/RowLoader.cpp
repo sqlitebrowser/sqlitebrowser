@@ -16,17 +16,18 @@ namespace {
 } // anon ns
 
 
-RowLoader::RowLoader (
-    std::function<std::shared_ptr<sqlite3>(void)> db_getter_,
+RowLoader::RowLoader (std::function<std::shared_ptr<sqlite3>(void)> db_getter_,
     std::function<void(QString)> statement_logger_,
     std::vector<std::string> & headers_,
     std::mutex & cache_mutex_,
     Cache & cache_data_
     )
-    : db_getter(db_getter_), statement_logger(statement_logger_), headers(headers_)
+    : db_getter(db_getter_), statement_logger(statement_logger_)
+    , headers(headers_)
     , cache_mutex(cache_mutex_), cache_data(cache_data_)
     , query()
     , countQuery()
+    , first_chunk_loaded(false)
     , num_tasks(0)
     , pDb(nullptr)
     , stop_requested(false)
@@ -39,6 +40,7 @@ void RowLoader::setQuery (const QString& new_query, const QString& newCountQuery
 {
     std::lock_guard<std::mutex> lk(m);
     query = new_query;
+    first_chunk_loaded = false;
     if (newCountQuery.isEmpty())
         // If it is a normal query - hopefully starting with SELECT - just do a COUNT on it and return the results
         countQuery = QString("SELECT COUNT(*) FROM (%1);").arg(rtrimChar(query, ';'));
@@ -218,7 +220,7 @@ void RowLoader::process (Task & t)
                 queryTemp.contains(QRegExp("\\s(UNION)|(INTERSECT)|(EXCEPT)\\s", Qt::CaseInsensitive)))
             sLimitQuery = queryTemp;
         else
-            sLimitQuery = queryTemp + QString(" LIMIT %1, %2;").arg(t.row_begin).arg(t.row_end-t.row_begin);
+            sLimitQuery = queryTemp + QString(" LIMIT %1 OFFSET %2;").arg(t.row_end-t.row_begin).arg(t.row_begin);
     }
     statement_logger(sLimitQuery);
 
@@ -227,10 +229,10 @@ void RowLoader::process (Task & t)
     auto row = t.row_begin;
     if(sqlite3_prepare_v2(pDb.get(), utf8Query, utf8Query.size(), &stmt, nullptr) == SQLITE_OK)
     {
-        const size_t num_columns = headers.size();
-
         while(!t.cancel && sqlite3_step(stmt) == SQLITE_ROW)
         {
+            size_t num_columns = static_cast<size_t>(sqlite3_data_count(stmt));
+
             // Construct a new row object with the right number of columns
             Cache::value_type rowdata(num_columns);
             for(size_t i=0;i<num_columns;++i)
@@ -250,6 +252,19 @@ void RowLoader::process (Task & t)
         }
 
         sqlite3_finalize(stmt);
+
+        // Query the total row count if and only if:
+        // - this is the first batch of data we load for this query
+        // - we got exactly the number of rows back we queried (which indicates there might be more rows)
+        // If there is no need to query the row count this means the number of rows we just got is the total row count.
+        if(!first_chunk_loaded)
+        {
+            first_chunk_loaded = true;
+            if(row == t.row_end)
+                triggerRowCountDetermination(t.token);
+            else
+                emit rowCountComplete(t.token, static_cast<int>(row-t.row_begin));
+        }
     }
 
     emit fetched(t.token, t.row_begin, row);

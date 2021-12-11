@@ -186,121 +186,152 @@
             <number>0</number>
            </property>
            <item>
-            <widget class="QToolBar" name="toolBar">
-             <property name="movable">
-              <bool>false</bool>
+            <widget class="QScrollArea" name="scrollArea">
+             <property name="widgetResizable">
+              <bool>true</bool>
              </property>
-             <property name="floatable">
-              <bool>false</bool>
-             </property>
-             <addaction name="actionRefresh"/>
-             <addaction name="actionDatabaseOpenBrowser"/>
-             <addaction name="actionFetchLatestCommit"/>
-            </widget>
-           </item>
-           <item>
-            <widget class="QGroupBox" name="groupBox">
-             <property name="title">
-              <string>Clone</string>
-             </property>
-             <layout class="QFormLayout" name="formLayout">
-              <property name="verticalSpacing">
-               <number>0</number>
+             <widget class="QWidget" name="scrollAreaWidgetContents">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>520</width>
+                <height>315</height>
+               </rect>
               </property>
-              <item row="0" column="0">
-               <widget class="QLabel" name="label">
-                <property name="text">
-                 <string>User</string>
-                </property>
-                <property name="buddy">
-                 <cstring>editDatabaseUser</cstring>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QLineEdit" name="editDatabaseUser">
-                <property name="readOnly">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="label_4">
-                <property name="text">
-                 <string>Database</string>
-                </property>
-                <property name="buddy">
-                 <cstring>editDatabaseFile</cstring>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QLineEdit" name="editDatabaseFile">
-                <property name="readOnly">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="label_6">
-                <property name="text">
-                 <string>Branch</string>
-                </property>
-                <property name="buddy">
-                 <cstring>editDatabaseBranch</cstring>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="1">
-               <widget class="QLineEdit" name="editDatabaseBranch">
-                <property name="readOnly">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QGroupBox" name="groupBox_2">
-             <property name="title">
-              <string>Commits</string>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout_6">
-              <property name="leftMargin">
-               <number>2</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>2</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_4">
-                <item>
-                 <widget class="QLabel" name="label_3">
-                  <property name="text">
-                   <string>Commits for</string>
+              <layout class="QVBoxLayout" name="verticalLayout_8">
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QToolBar" name="toolBar">
+                 <property name="movable">
+                  <bool>false</bool>
+                 </property>
+                 <property name="floatable">
+                  <bool>false</bool>
+                 </property>
+                 <addaction name="actionRefresh"/>
+                 <addaction name="actionDatabaseOpenBrowser"/>
+                 <addaction name="actionFetchLatestCommit"/>
+                </widget>
+               </item>
+               <item>
+                <widget class="QGroupBox" name="groupBox">
+                 <property name="title">
+                  <string>Clone</string>
+                 </property>
+                 <layout class="QFormLayout" name="formLayout">
+                  <property name="verticalSpacing">
+                   <number>0</number>
                   </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QComboBox" name="comboDatabaseBranch"/>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <widget class="QTreeView" name="treeDatabaseCommits">
-                <property name="contextMenuPolicy">
-                 <enum>Qt::ActionsContextMenu</enum>
-                </property>
-               </widget>
-              </item>
-             </layout>
+                  <item row="0" column="0">
+                   <widget class="QLabel" name="label">
+                    <property name="text">
+                     <string>&amp;User</string>
+                    </property>
+                    <property name="buddy">
+                     <cstring>editDatabaseUser</cstring>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="QLineEdit" name="editDatabaseUser">
+                    <property name="readOnly">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="QLabel" name="label_4">
+                    <property name="text">
+                     <string>&amp;Database</string>
+                    </property>
+                    <property name="buddy">
+                     <cstring>editDatabaseFile</cstring>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <widget class="QLineEdit" name="editDatabaseFile">
+                    <property name="readOnly">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="0">
+                   <widget class="QLabel" name="label_6">
+                    <property name="text">
+                     <string>Branch</string>
+                    </property>
+                    <property name="buddy">
+                     <cstring>editDatabaseBranch</cstring>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="1">
+                   <widget class="QLineEdit" name="editDatabaseBranch">
+                    <property name="readOnly">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item>
+                <widget class="QGroupBox" name="groupBox_2">
+                 <property name="title">
+                  <string>Commits</string>
+                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_6">
+                  <property name="leftMargin">
+                   <number>2</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>2</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>0</number>
+                  </property>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_4">
+                    <item>
+                     <widget class="QLabel" name="label_3">
+                      <property name="text">
+                       <string>Commits for</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QComboBox" name="comboDatabaseBranch"/>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <widget class="QTreeView" name="treeDatabaseCommits">
+                    <property name="contextMenuPolicy">
+                     <enum>Qt::ActionsContextMenu</enum>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+              </layout>
+             </widget>
             </widget>
            </item>
           </layout>
@@ -451,9 +482,6 @@
    </property>
    <property name="toolTip">
     <string>Reload all data and update the views</string>
-   </property>
-   <property name="shortcut">
-    <string>F5</string>
    </property>
   </action>
   <action name="actionCloneDatabaseDoubleClick">

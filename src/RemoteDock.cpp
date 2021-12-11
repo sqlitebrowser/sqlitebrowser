@@ -53,7 +53,7 @@ RemoteDock::RemoteDock(MainWindow* parent)
 
     // When the Preferences link is clicked in the no-certificates-label, open the preferences dialog. For other links than the ones we know,
     // just open them in a web browser
-    connect(ui->labelNoCert, &QLabel::linkActivated, [this](const QString& link) {
+    connect(ui->labelNoCert, &QLabel::linkActivated, this, [this](const QString& link) {
         if(link == "#preferences")
         {
             PreferencesDialog dialog(mainWindow, PreferencesDialog::TabRemote);
@@ -65,13 +65,13 @@ RemoteDock::RemoteDock(MainWindow* parent)
     });
 
     // When changing the current branch in the branches combo box, update the tree view accordingly
-    connect(ui->comboDatabaseBranch, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), [this](int /*index*/) {
+    connect(ui->comboDatabaseBranch, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, [this](int /*index*/) {
         remoteCommitsModel->refresh(current_commit_json, ui->comboDatabaseBranch->currentData().toString().toStdString(), currently_opened_file_info.commit_id);
         ui->treeDatabaseCommits->expandAll();
     });
 
     // Fetch latest commit action
-    connect(ui->actionFetchLatestCommit, &QAction::triggered, [this]() {
+    connect(ui->actionFetchLatestCommit, &QAction::triggered, this, [this]() {
         // Fetch last commit of current branch
         // The URL and the branch name is that of the currently opened database file.
         // The latest commit id is stored in the data bits of the branch combo box.
@@ -85,20 +85,20 @@ RemoteDock::RemoteDock(MainWindow* parent)
     });
 
     // Prepare context menu for list of remote databases
-    connect(ui->treeRemote->selectionModel(), &QItemSelectionModel::currentChanged, [this](const QModelIndex& index, const QModelIndex&) {
+    connect(ui->treeRemote->selectionModel(), &QItemSelectionModel::currentChanged, this, [this](const QModelIndex& index, const QModelIndex&) {
         // Only enable database actions when a database was selected
         bool enable = index.isValid() &&
                 remoteModel->modelIndexToItem(index)->value(RemoteModelColumnType).toString() == "database";
         ui->actionCloneDatabaseDoubleClick->setEnabled(enable);
     });
-    ui->treeRemote->selectionModel()->currentChanged(QModelIndex(), QModelIndex()); // Enable/disable all action initially
-    connect(ui->actionCloneDatabaseDoubleClick, &QAction::triggered, [this]() {
+    emit ui->treeRemote->selectionModel()->currentChanged(QModelIndex(), QModelIndex()); // Enable/disable all action initially
+    connect(ui->actionCloneDatabaseDoubleClick, &QAction::triggered, this, [this]() {
        fetchDatabase(ui->treeRemote->currentIndex());
     });
     ui->treeRemote->addAction(ui->actionCloneDatabaseDoubleClick);
 
     // Prepare context menu for list of local clones
-    connect(ui->treeLocal->selectionModel(), &QItemSelectionModel::currentChanged, [this](const QModelIndex& index, const QModelIndex&) {
+    connect(ui->treeLocal->selectionModel(), &QItemSelectionModel::currentChanged, this, [this](const QModelIndex& index, const QModelIndex&) {
         // Only enable database actions when a database was selected
         bool enable = index.isValid() &&
                 !index.sibling(index.row(), RemoteLocalFilesModel::ColumnFile).data().isNull();
@@ -106,11 +106,11 @@ RemoteDock::RemoteDock(MainWindow* parent)
         ui->actionPushLocalDatabase->setEnabled(enable);
         ui->actionDeleteDatabase->setEnabled(enable);
     });
-    ui->treeLocal->selectionModel()->currentChanged(QModelIndex(), QModelIndex()); // Enable/disable all action initially
-    connect(ui->actionOpenLocalDatabase, &QAction::triggered, [this]() {
+    emit ui->treeLocal->selectionModel()->currentChanged(QModelIndex(), QModelIndex()); // Enable/disable all action initially
+    connect(ui->actionOpenLocalDatabase, &QAction::triggered, this, [this]() {
        openLocalFile(ui->treeLocal->currentIndex());
     });
-    connect(ui->actionDeleteDatabase, &QAction::triggered, [this]() {
+    connect(ui->actionDeleteDatabase, &QAction::triggered, this, [this]() {
        deleteLocalDatabase(ui->treeLocal->currentIndex());
     });
     ui->treeLocal->addAction(ui->actionOpenLocalDatabase);
@@ -118,17 +118,17 @@ RemoteDock::RemoteDock(MainWindow* parent)
     ui->treeLocal->addAction(ui->actionDeleteDatabase);
 
     // Prepare context menu for list of commits
-    connect(ui->treeDatabaseCommits->selectionModel(), &QItemSelectionModel::currentChanged, [this](const QModelIndex& index, const QModelIndex&) {
+    connect(ui->treeDatabaseCommits->selectionModel(), &QItemSelectionModel::currentChanged, this, [this](const QModelIndex& index, const QModelIndex&) {
         // Only enable database actions when a commit was selected
         bool enable = index.isValid();
         ui->actionFetchCommit->setEnabled(enable);
         ui->actionDownloadCommit->setEnabled(enable);
     });
-    ui->treeDatabaseCommits->selectionModel()->currentChanged(QModelIndex(), QModelIndex()); // Enable/disable all action initially
-    connect(ui->actionFetchCommit, &QAction::triggered, [this]() {
+    emit ui->treeDatabaseCommits->selectionModel()->currentChanged(QModelIndex(), QModelIndex()); // Enable/disable all action initially
+    connect(ui->actionFetchCommit, &QAction::triggered, this, [this]() {
        fetchCommit(ui->treeDatabaseCommits->currentIndex());
     });
-    connect(ui->actionDownloadCommit, &QAction::triggered, [this]() {
+    connect(ui->actionDownloadCommit, &QAction::triggered, this, [this]() {
        fetchCommit(ui->treeDatabaseCommits->currentIndex(), RemoteNetwork::RequestTypeDownload);
     });
     ui->treeDatabaseCommits->addAction(ui->actionFetchCommit);
@@ -379,14 +379,18 @@ void RemoteDock::pushDatabase(const QString& path, const QString& branch)
 
     // Build push URL
     QString url = host;
-    url.append(RemoteNetwork::get().getInfoFromClientCert(remoteModel->currentClientCertificate(), RemoteNetwork::CertInfoUser));
+    url.append(pushDialog.user());
     url.append("/");
     url.append(pushDialog.name());
 
-    // Check if we are pushing a cloned database. Only in this case we provide the last known commit id
+    // Check if we are pushing a cloned database. Only in this case we provide the last known commit id.
+    // For this check we use the branch name which was used for cloning this database rather than the
+    // branch name which was selected in the push dialog. This is because we want to figure out the
+    // current commit id of we are currently looking at rather than some other commit id or none at all
+    // when creating a new branch.
     QString commit_id;
     if(path.startsWith(Settings::getValue("remote", "clonedirectory").toString()))
-        commit_id = QString::fromStdString(remoteDatabase.localLastCommitId(remoteModel->currentClientCertificate(), url, pushDialog.branch().toStdString()));
+        commit_id = QString::fromStdString(remoteDatabase.localLastCommitId(remoteModel->currentClientCertificate(), url, branch.toStdString()));
 
     // Push database
     RemoteNetwork::get().push(path, url, remoteModel->currentClientCertificate(), pushDialog.name(),

@@ -17,11 +17,14 @@ public:
     explicit Application(int& argc, char** argv);
     ~Application() override;
 
-    bool dontShowMainWindow() const { return m_dontShowMainWindow; }
+    bool showMainWindow() const { return m_showMainWindow; }
 
     MainWindow* mainWindow() { return m_mainWindow; }
 
+    // DB4S version number as string
     static QString versionString();
+    // Version of DB4S and dependencies as string
+    static QString versionInformation();
 
     static void reloadSettings();
 
@@ -29,7 +32,7 @@ protected:
     bool event(QEvent* event) override;
 
 private:
-    bool m_dontShowMainWindow;
+    bool m_showMainWindow;
     MainWindow* m_mainWindow;
     QTranslator* m_translatorQt;
     QTranslator* m_translatorApp;

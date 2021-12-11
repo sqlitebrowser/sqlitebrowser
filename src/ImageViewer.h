@@ -13,7 +13,7 @@ class ImageViewer : public QWidget
 
 public:
     explicit ImageViewer(QWidget* parent = nullptr);
-    ~ImageViewer();
+    ~ImageViewer() override;
 
     void resetImage();
     void setImage(const QImage& image);
@@ -27,8 +27,14 @@ private slots:
 
 private:
     Ui::ImageViewer* ui;
+    QSize m_image_size;
+    bool m_pan_mode;
+    QPoint m_mouse_down;
 
-    qreal m_scale_factor;
+    bool eventFilter(QObject *obj, QEvent *e) override;
+    bool isQSizeCovered(QSize rect);
+    void setNoFitWithoutSignal();
+    void setSliderValueWithoutSignal(int value);
 };
 
 #endif

@@ -291,6 +291,7 @@
  <connections/>
  <slots>
   <slot>saveAsCsv()</slot>
+  <slot>saveAsJson()</slot>
   <slot>saveAsView()</slot>
  </slots>
 </ui>
