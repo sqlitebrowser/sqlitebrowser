@@ -1,6 +1,6 @@
           name:                   sqlitebrowser  # the name of the snap
-          # version:              3.10.1  # the version of the snap
           version:                master
+          base:                   core20
           version-script:         printf "`cat currentrelease | head -n 1 `-`git rev-list master --count`-` git -C . rev-parse --short HEAD`"
 
           summary:                DB Browser for SQLite  # 79 char long summary
@@ -18,14 +18,16 @@
             * Examine a log of all SQL commands issued by the application
             SQLite Database Browser is not a visual shell for the sqlite command line tool. It does not require familiarity with SQL commands.
           confinement:            strict  # use "strict" to enforce system access only via declared interfaces
-
           grade:                  stable
           icon:                   images/logo.svg
           type:                   app
           apps:
             sqlitebrowser:
-              command:            desktop-launch $SNAP/bin/sqlitebrowser
-              desktop:            share/applications/sqlitebrowser.desktop
+              command: usr/local/bin/sqlitebrowser
+              command-chain:
+              - bin/desktop-launch
+              - usr/local/bin/sqlitebrowser
+              desktop:           usr/local/share/applications/sqlitebrowser.desktop
               environment:
                 DISABLE_WAYLAND:  1
                 TMPDIR:           $XDG_RUNTIME_DIR
@@ -38,7 +40,6 @@
                 XKB_CONFIG_ROOT: '$SNAP/usr/share/X11/xkb'
                 XDG_CONFIG_DIRS: '$SNAP/etc/xdg:$XDG_CONFIG_DIRS'
                 XDG_DATA_HOME: '$SNAP/usr/share'
-                DISABLE_WAYLAND: '1'
                 QT_QPA_PLATFORMTHEME: qt5ct
               plugs:
                 - desktop
@@ -65,7 +66,7 @@
           parts:
               sqlitebrowser:
                   plugin:         cmake
-                  configflags:    ["-DUSE_QT5=True", "-Dsqlcipher=1", "-Wno-dev","-DSQLITE_ENABLE_JSON1=1"]
+                  cmake-parameters:   ["-DUSE_QT5=True", "-Dsqlcipher=1", "-Wno-dev","-DSQLITE_ENABLE_JSON1=1"]
                   source:         .
               desktop-qt5:
                 build-packages:
@@ -89,7 +90,6 @@
                 - libqt5gui5
                 - libgdk-pixbuf2.0-0
                 - libqt5svg5
-                - appmenu-qt5
                 - libglib2.0-bin
                 - libgtk-3-bin
                 - unity-gtk3-module
@@ -98,7 +98,9 @@
                 - xdg-user-dirs
                 - ibus-gtk3
                 - libibus-1.0-5
+                - libgtk2.0-0
               dump:
+                  source:         .
                   plugin:         dump
                   after:
                   - desktop-qt5
@@ -115,6 +117,11 @@
                   - libgail-3-dev
                   - libgail-dev
                   - qtwayland5
+                  - libqscintilla2-qt5-15
+                  - libqt5printsupport5
+                  - libqt5xml5
+                  - libsqlcipher0
+                  - libgtk-3-0
                   filesets:
                       wanted:
                       - bin/*
