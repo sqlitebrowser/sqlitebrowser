@@ -3,6 +3,7 @@
 #define SQLITETYPES_H
 
 #include <algorithm>
+#include <bitset>
 #include <cctype>
 #include <map>
 #include <memory>
@@ -403,7 +404,7 @@ private:
 class Table : public Object
 {
 public:
-    explicit Table(const std::string& name): Object(name), m_withoutRowid(false) {}
+    explicit Table(const std::string& name): Object(name) {}
     explicit Table(const Table& table);
     Table& operator=(const Table& rhs);
 
@@ -415,6 +416,15 @@ public:
     using field_type = Field;
     using field_iterator = FieldVector::iterator;
 
+
+    enum Options
+    {
+        WithoutRowid,
+        Strict,
+
+        NumOptions
+    };
+
     /**
      * @brief Returns the CREATE TABLE statement for this table object
      * @return A std::string with the CREATE TABLE object.
@@ -424,8 +434,11 @@ public:
     StringVector fieldNames() const;
 
     StringVector rowidColumns() const;
-    void setWithoutRowidTable(bool without_rowid) {  m_withoutRowid = without_rowid; }
-    bool withoutRowidTable() const { return m_withoutRowid; }
+    void setWithoutRowidTable(bool without_rowid) {  m_options.set(WithoutRowid, without_rowid); }
+    bool withoutRowidTable() const { return m_options.test(WithoutRowid); }
+
+    void setStrict(bool strict) { m_options.set(Strict, strict); }
+    bool isStrict() const { return m_options.test(Strict); }
 
     void setVirtualUsing(const std::string& virt_using) { m_virtual = virt_using; }
     const std::string& virtualUsing() const { return m_virtual; }
@@ -450,13 +463,14 @@ public:
      * @return The table object. The table object may be empty if parsing failed.
      */
     static TablePtr parseSQL(const std::string& sSQL);
+
 private:
     StringVector fieldList() const;
 
 private:
-    bool m_withoutRowid;
     ConstraintVector m_constraints;
     std::string m_virtual;
+    std::bitset<NumOptions> m_options;
 };
 
 class IndexedColumn

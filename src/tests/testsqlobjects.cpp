@@ -139,6 +139,36 @@ void TestTable::withoutRowid()
                        ") WITHOUT ROWID;");
 }
 
+void TestTable::strict()
+{
+    Table tt("testtable");
+    tt.fields.emplace_back("a", "integer");
+    tt.fields.emplace_back("b", "integer");
+    tt.setStrict(true);
+
+    QCOMPARE(tt.sql(), "CREATE TABLE \"testtable\" (\n"
+                       "\t\"a\"\tinteger,\n"
+                       "\t\"b\"\tinteger\n"
+                       ") STRICT;");
+}
+
+void TestTable::strictAndWithoutRowid()
+{
+    Table tt("testtable");
+    Field f("a", "integer");
+    tt.fields.push_back(f);
+    tt.fields.emplace_back("b", "integer");
+    tt.setStrict(true);
+    tt.setWithoutRowidTable(true);
+    tt.addConstraint(ConstraintPtr(new PrimaryKeyConstraint({f.name()})));
+
+    QCOMPARE(tt.sql(), "CREATE TABLE \"testtable\" (\n"
+                       "\t\"a\"\tinteger,\n"
+                       "\t\"b\"\tinteger,\n"
+                       "\tPRIMARY KEY(\"a\")\n"
+                       ") WITHOUT ROWID,STRICT;");
+}
+
 void TestTable::foreignKeys()
 {
     Table tt("testtable");
@@ -328,6 +358,30 @@ void TestTable::parseSQLWithoutRowid()
 
     QCOMPARE(tab.primaryKey()->columnList(), {"a"});
     QCOMPARE(tab.rowidColumns(), {"a"});
+    QCOMPARE(tab.withoutRowidTable(), true);
+    QCOMPARE(tab.isStrict(), false);
+}
+
+void TestTable::parseSQLStrictTable()
+{
+    Table tab(*Table::parseSQL("CREATE TABLE test(a integer, b any) STRICT"));
+
+    QCOMPARE(tab.name(), "test");
+    QCOMPARE(tab.fields.at(0).name(), "a");
+    QCOMPARE(tab.fields.at(1).name(), "b");
+    QCOMPARE(tab.isStrict(), true);
+    QCOMPARE(tab.withoutRowidTable(), false);
+}
+
+void TestTable::parseSQLStrictAndWithoutRowidTable()
+{
+    Table tab(*Table::parseSQL("CREATE TABLE test(a integer, b any) STRICT, WITHOUT ROWID"));
+
+    QCOMPARE(tab.name(), "test");
+    QCOMPARE(tab.fields.at(0).name(), "a");
+    QCOMPARE(tab.fields.at(1).name(), "b");
+    QCOMPARE(tab.isStrict(), true);
+    QCOMPARE(tab.withoutRowidTable(), true);
 }
 
 void TestTable::parseNonASCIIChars()

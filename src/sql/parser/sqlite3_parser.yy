@@ -161,6 +161,7 @@
 %token <std::string> SELECT "SELECT"
 %token <std::string> SET "SET"
 %token <std::string> STORED "STORED"
+%token <std::string> STRICT "STRICT"
 %token <std::string> TABLE "TABLE"
 %token <std::string> TEMP "TEMP"
 %token <std::string> TEMPORARY "TEMPORARY"
@@ -206,7 +207,6 @@
 %type <bool> optional_if_not_exists
 %type <bool> optional_unique
 %type <bool> optional_temporary
-%type <bool> optional_withoutrowid
 %type <std::string> optional_sort_order
 %type <std::string> optional_where
 %type <std::string> optional_constraintname
@@ -235,6 +235,9 @@
 %type <sqlb::ConstraintPtr> tableconstraint
 %type <sqlb::ConstraintVector> tableconstraint_list
 %type <sqlb::ConstraintVector> optional_tableconstraint_list
+%type <std::bitset<sqlb::Table::NumOptions>> tableoption
+%type <std::bitset<sqlb::Table::NumOptions>> tableoptions_list
+%type <std::bitset<sqlb::Table::NumOptions>> optional_tableoptions_list
 %type <sqlb::TablePtr> createtable_stmt
 
 %%
@@ -328,6 +331,7 @@ allowed_keywords_as_identifier:
 	| ROWID
 	| ROWS
 	| STORED
+	| STRICT
 	| TEMPORARY
 	| TEMP
 	| UNBOUNDED
@@ -609,9 +613,20 @@ optional_temporary:
 	| TEMPORARY					{ $$ = true; }
 	;
 
-optional_withoutrowid:
-	%empty						{ $$ = false; }
-	| WITHOUT ROWID					{ $$ = true; }
+tableoption:
+	WITHOUT ROWID					{ $$.set(sqlb::Table::WithoutRowid, true); }
+	| STRICT					{ $$.set(sqlb::Table::Strict, true); }
+	;
+
+tableoptions_list:
+	tableoption					{ $$ = $1; }
+	| tableoptions_list "," tableoption		{ $$ = $1 | $3; }
+	| tableoptions_list tableoption			{ $$ = $1 | $2; }
+	;
+
+optional_tableoptions_list:
+	%empty						{}
+	| tableoptions_list				{ $$ = $1; }
 	;
 
 optional_conflictclause:
@@ -893,9 +908,10 @@ createtable_stmt:
 										$$ = std::make_shared<sqlb::Table>($5);
 										$$->setFullyParsed(false);
 									}
-	| CREATE optional_temporary TABLE optional_if_not_exists tableid_with_uninteresting_schema "(" columndef_list optional_tableconstraint_list ")" optional_withoutrowid		{
+	| CREATE optional_temporary TABLE optional_if_not_exists tableid_with_uninteresting_schema "(" columndef_list optional_tableconstraint_list ")" optional_tableoptions_list		{
 										$$ = std::make_shared<sqlb::Table>($5);
-										$$->setWithoutRowidTable($10);
+										$$->setWithoutRowidTable($10.test(sqlb::Table::WithoutRowid));
+										$$->setStrict($10.test(sqlb::Table::Strict));
 										$$->setConstraints($8);
 										$$->setFullyParsed(true);
 

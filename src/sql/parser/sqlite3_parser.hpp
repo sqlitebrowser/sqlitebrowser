@@ -1,4 +1,4 @@
-// A Bison parser, made by GNU Bison 3.7.5.
+// A Bison parser, made by GNU Bison 3.8.2.
 
 // Skeleton interface for Bison LALR(1) parsers in C++
 
@@ -15,7 +15,7 @@
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 // As a special exception, you may create a larger work that contains
 // part or all of the Bison parser skeleton and distribute that work
@@ -133,12 +133,18 @@
 # define YY_USE(E) /* empty */
 #endif
 
-#if defined __GNUC__ && ! defined __ICC && 407 <= __GNUC__ * 100 + __GNUC_MINOR__
 /* Suppress an incorrect diagnostic about yylval being uninitialized.  */
-# define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN                            \
+#if defined __GNUC__ && ! defined __ICC && 406 <= __GNUC__ * 100 + __GNUC_MINOR__
+# if __GNUC__ * 100 + __GNUC_MINOR__ < 407
+#  define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN                           \
+    _Pragma ("GCC diagnostic push")                                     \
+    _Pragma ("GCC diagnostic ignored \"-Wuninitialized\"")
+# else
+#  define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN                           \
     _Pragma ("GCC diagnostic push")                                     \
     _Pragma ("GCC diagnostic ignored \"-Wuninitialized\"")              \
     _Pragma ("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
+# endif
 # define YY_IGNORE_MAYBE_UNINITIALIZED_END      \
     _Pragma ("GCC diagnostic pop")
 #else
@@ -192,7 +198,7 @@
 
 #line 10 "sqlite3_parser.yy"
 namespace  sqlb { namespace parser  {
-#line 196 "sqlite3_parser.hpp"
+#line 202 "sqlite3_parser.hpp"
 
 
 
@@ -201,27 +207,32 @@ namespace  sqlb { namespace parser  {
   class parser
   {
   public:
-#ifndef YYSTYPE
+#ifdef YYSTYPE
+# ifdef __GNUC__
+#  pragma GCC message "bison: do not #define YYSTYPE in C++, use %define api.value.type"
+# endif
+    typedef YYSTYPE value_type;
+#else
   /// A buffer to store and retrieve objects.
   ///
   /// Sort of a variant, but does not keep track of the nature
   /// of the stored data, since that knowledge is available
   /// via the current parser state.
-  class semantic_type
+  class value_type
   {
   public:
     /// Type of *this.
-    typedef semantic_type self_type;
+    typedef value_type self_type;
 
     /// Empty construction.
-    semantic_type () YY_NOEXCEPT
-      : yybuffer_ ()
+    value_type () YY_NOEXCEPT
+      : yyraw_ ()
       , yytypeid_ (YY_NULLPTR)
     {}
 
     /// Construct and fill.
     template <typename T>
-    semantic_type (YY_RVREF (T) t)
+    value_type (YY_RVREF (T) t)
       : yytypeid_ (&typeid (T))
     {
       YY_ASSERT (sizeof (T) <= size);
@@ -230,13 +241,13 @@ namespace  sqlb { namespace parser  {
 
 #if 201103L <= YY_CPLUSPLUS
     /// Non copyable.
-    semantic_type (const self_type&) = delete;
+    value_type (const self_type&) = delete;
     /// Non copyable.
     self_type& operator= (const self_type&) = delete;
 #endif
 
     /// Destruction, allowed only if empty.
-    ~semantic_type () YY_NOEXCEPT
+    ~value_type () YY_NOEXCEPT
     {
       YY_ASSERT (!yytypeid_);
     }
@@ -380,7 +391,7 @@ namespace  sqlb { namespace parser  {
   private:
 #if YY_CPLUSPLUS < 201103L
     /// Non copyable.
-    semantic_type (const self_type&);
+    value_type (const self_type&);
     /// Non copyable.
     self_type& operator= (const self_type&);
 #endif
@@ -390,7 +401,7 @@ namespace  sqlb { namespace parser  {
     T*
     yyas_ () YY_NOEXCEPT
     {
-      void *yyp = yybuffer_.yyraw;
+      void *yyp = yyraw_;
       return static_cast<T*> (yyp);
      }
 
@@ -399,7 +410,7 @@ namespace  sqlb { namespace parser  {
     const T*
     yyas_ () const YY_NOEXCEPT
     {
-      const void *yyp = yybuffer_.yyraw;
+      const void *yyp = yyraw_;
       return static_cast<const T*> (yyp);
      }
 
@@ -412,7 +423,6 @@ namespace  sqlb { namespace parser  {
       // optional_if_not_exists
       // optional_unique
       // optional_temporary
-      // optional_withoutrowid
       // optional_always_generated
       char dummy2[sizeof (bool)];
 
@@ -441,6 +451,11 @@ namespace  sqlb { namespace parser  {
       // createvirtualtable_stmt
       // createtable_stmt
       char dummy9[sizeof (sqlb::TablePtr)];
+
+      // tableoption
+      // tableoptions_list
+      // optional_tableoptions_list
+      char dummy10[sizeof (std::bitset<sqlb::Table::NumOptions>)];
 
       // "ABORT"
       // "ACTION"
@@ -514,6 +529,7 @@ namespace  sqlb { namespace parser  {
       // "SELECT"
       // "SET"
       // "STORED"
+      // "STRICT"
       // "TABLE"
       // "TEMP"
       // "TEMPORARY"
@@ -566,10 +582,10 @@ namespace  sqlb { namespace parser  {
       // fk_clause_part
       // fk_clause_part_list
       // optional_fk_clause
-      char dummy10[sizeof (std::string)];
+      char dummy11[sizeof (std::string)];
 
       // columndef_list
-      char dummy11[sizeof (std::vector<ColumndefData>)];
+      char dummy12[sizeof (std::vector<ColumndefData>)];
     };
 
     /// The size of the largest semantic type.
@@ -579,18 +595,19 @@ namespace  sqlb { namespace parser  {
     union
     {
       /// Strongest alignment constraints.
-      long double yyalign_me;
+      long double yyalign_me_;
       /// A buffer large enough to store any of the semantic values.
-      char yyraw[size];
-    } yybuffer_;
+      char yyraw_[size];
+    };
 
     /// Whether the content is built: if defined, the name of the stored type.
     const std::type_info *yytypeid_;
   };
 
-#else
-    typedef YYSTYPE semantic_type;
 #endif
+    /// Backward compatibility (Bison 3.8).
+    typedef value_type semantic_type;
+
     /// Symbol locations.
     typedef location location_type;
 
@@ -717,32 +734,33 @@ namespace  sqlb { namespace parser  {
     TOK_SELECT = 351,              // "SELECT"
     TOK_SET = 352,                 // "SET"
     TOK_STORED = 353,              // "STORED"
-    TOK_TABLE = 354,               // "TABLE"
-    TOK_TEMP = 355,                // "TEMP"
-    TOK_TEMPORARY = 356,           // "TEMPORARY"
-    TOK_THEN = 357,                // "THEN"
-    TOK_TRUE = 358,                // "TRUE"
-    TOK_UNBOUNDED = 359,           // "UNBOUNDED"
-    TOK_UNIQUE = 360,              // "UNIQUE"
-    TOK_UPDATE = 361,              // "UPDATE"
-    TOK_USING = 362,               // "USING"
-    TOK_VIRTUAL = 363,             // "VIRTUAL"
-    TOK_WHEN = 364,                // "WHEN"
-    TOK_WHERE = 365,               // "WHERE"
-    TOK_WITHOUT = 366,             // "WITHOUT"
-    TOK_IDENTIFIER = 367,          // "identifier"
-    TOK_NUMERIC = 368,             // "numeric"
-    TOK_STRINGLITERAL = 369,       // "string literal"
-    TOK_QUOTEDLITERAL = 370,       // "quoted literal"
-    TOK_BLOBLITERAL = 371,         // "blob literal"
-    TOK_BINDPARAMETER = 372        // "bind parameter"
+    TOK_STRICT = 354,              // "STRICT"
+    TOK_TABLE = 355,               // "TABLE"
+    TOK_TEMP = 356,                // "TEMP"
+    TOK_TEMPORARY = 357,           // "TEMPORARY"
+    TOK_THEN = 358,                // "THEN"
+    TOK_TRUE = 359,                // "TRUE"
+    TOK_UNBOUNDED = 360,           // "UNBOUNDED"
+    TOK_UNIQUE = 361,              // "UNIQUE"
+    TOK_UPDATE = 362,              // "UPDATE"
+    TOK_USING = 363,               // "USING"
+    TOK_VIRTUAL = 364,             // "VIRTUAL"
+    TOK_WHEN = 365,                // "WHEN"
+    TOK_WHERE = 366,               // "WHERE"
+    TOK_WITHOUT = 367,             // "WITHOUT"
+    TOK_IDENTIFIER = 368,          // "identifier"
+    TOK_NUMERIC = 369,             // "numeric"
+    TOK_STRINGLITERAL = 370,       // "string literal"
+    TOK_QUOTEDLITERAL = 371,       // "quoted literal"
+    TOK_BLOBLITERAL = 372,         // "blob literal"
+    TOK_BINDPARAMETER = 373        // "bind parameter"
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
     };
 
     /// Token kind, as returned by yylex.
-    typedef token::yytokentype token_kind_type;
+    typedef token::token_kind_type token_kind_type;
 
     /// Backward compatibility alias (Bison 3.6).
     typedef token_kind_type token_type;
@@ -752,7 +770,7 @@ namespace  sqlb { namespace parser  {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 118, ///< Number of tokens.
+        YYNTOKENS = 119, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // "end of file"
         S_YYerror = 1,                           // error
@@ -853,80 +871,83 @@ namespace  sqlb { namespace parser  {
         S_SELECT = 96,                           // "SELECT"
         S_SET = 97,                              // "SET"
         S_STORED = 98,                           // "STORED"
-        S_TABLE = 99,                            // "TABLE"
-        S_TEMP = 100,                            // "TEMP"
-        S_TEMPORARY = 101,                       // "TEMPORARY"
-        S_THEN = 102,                            // "THEN"
-        S_TRUE = 103,                            // "TRUE"
-        S_UNBOUNDED = 104,                       // "UNBOUNDED"
-        S_UNIQUE = 105,                          // "UNIQUE"
-        S_UPDATE = 106,                          // "UPDATE"
-        S_USING = 107,                           // "USING"
-        S_VIRTUAL = 108,                         // "VIRTUAL"
-        S_WHEN = 109,                            // "WHEN"
-        S_WHERE = 110,                           // "WHERE"
-        S_WITHOUT = 111,                         // "WITHOUT"
-        S_IDENTIFIER = 112,                      // "identifier"
-        S_NUMERIC = 113,                         // "numeric"
-        S_STRINGLITERAL = 114,                   // "string literal"
-        S_QUOTEDLITERAL = 115,                   // "quoted literal"
-        S_BLOBLITERAL = 116,                     // "blob literal"
-        S_BINDPARAMETER = 117,                   // "bind parameter"
-        S_YYACCEPT = 118,                        // $accept
-        S_sql = 119,                             // sql
-        S_statement = 120,                       // statement
-        S_literalvalue = 121,                    // literalvalue
-        S_id = 122,                              // id
-        S_allowed_keywords_as_identifier = 123,  // allowed_keywords_as_identifier
-        S_tableid = 124,                         // tableid
-        S_columnid = 125,                        // columnid
-        S_signednumber = 126,                    // signednumber
-        S_signednumber_or_numeric = 127,         // signednumber_or_numeric
-        S_typename_namelist = 128,               // typename_namelist
-        S_type_name = 129,                       // type_name
-        S_unary_expr = 130,                      // unary_expr
-        S_binary_expr = 131,                     // binary_expr
-        S_like_expr = 132,                       // like_expr
-        S_exprlist_expr = 133,                   // exprlist_expr
-        S_function_expr = 134,                   // function_expr
-        S_isnull_expr = 135,                     // isnull_expr
-        S_between_expr = 136,                    // between_expr
-        S_in_expr = 137,                         // in_expr
-        S_whenthenlist_expr = 138,               // whenthenlist_expr
-        S_case_expr = 139,                       // case_expr
-        S_raise_expr = 140,                      // raise_expr
-        S_expr = 141,                            // expr
-        S_select_stmt = 142,                     // select_stmt
-        S_optional_if_not_exists = 143,          // optional_if_not_exists
-        S_optional_sort_order = 144,             // optional_sort_order
-        S_optional_unique = 145,                 // optional_unique
-        S_optional_where = 146,                  // optional_where
-        S_tableid_with_uninteresting_schema = 147, // tableid_with_uninteresting_schema
-        S_indexed_column = 148,                  // indexed_column
-        S_indexed_column_list = 149,             // indexed_column_list
-        S_createindex_stmt = 150,                // createindex_stmt
-        S_optional_exprlist_with_paren = 151,    // optional_exprlist_with_paren
-        S_createvirtualtable_stmt = 152,         // createvirtualtable_stmt
-        S_optional_temporary = 153,              // optional_temporary
-        S_optional_withoutrowid = 154,           // optional_withoutrowid
-        S_optional_conflictclause = 155,         // optional_conflictclause
-        S_optional_typename = 156,               // optional_typename
-        S_optional_storage_identifier = 157,     // optional_storage_identifier
-        S_optional_always_generated = 158,       // optional_always_generated
-        S_columnconstraint = 159,                // columnconstraint
-        S_columnconstraint_list = 160,           // columnconstraint_list
-        S_columndef = 161,                       // columndef
-        S_columndef_list = 162,                  // columndef_list
-        S_optional_constraintname = 163,         // optional_constraintname
-        S_columnid_list = 164,                   // columnid_list
-        S_optional_columnid_with_paren_list = 165, // optional_columnid_with_paren_list
-        S_fk_clause_part = 166,                  // fk_clause_part
-        S_fk_clause_part_list = 167,             // fk_clause_part_list
-        S_optional_fk_clause = 168,              // optional_fk_clause
-        S_tableconstraint = 169,                 // tableconstraint
-        S_tableconstraint_list = 170,            // tableconstraint_list
-        S_optional_tableconstraint_list = 171,   // optional_tableconstraint_list
-        S_createtable_stmt = 172                 // createtable_stmt
+        S_STRICT = 99,                           // "STRICT"
+        S_TABLE = 100,                           // "TABLE"
+        S_TEMP = 101,                            // "TEMP"
+        S_TEMPORARY = 102,                       // "TEMPORARY"
+        S_THEN = 103,                            // "THEN"
+        S_TRUE = 104,                            // "TRUE"
+        S_UNBOUNDED = 105,                       // "UNBOUNDED"
+        S_UNIQUE = 106,                          // "UNIQUE"
+        S_UPDATE = 107,                          // "UPDATE"
+        S_USING = 108,                           // "USING"
+        S_VIRTUAL = 109,                         // "VIRTUAL"
+        S_WHEN = 110,                            // "WHEN"
+        S_WHERE = 111,                           // "WHERE"
+        S_WITHOUT = 112,                         // "WITHOUT"
+        S_IDENTIFIER = 113,                      // "identifier"
+        S_NUMERIC = 114,                         // "numeric"
+        S_STRINGLITERAL = 115,                   // "string literal"
+        S_QUOTEDLITERAL = 116,                   // "quoted literal"
+        S_BLOBLITERAL = 117,                     // "blob literal"
+        S_BINDPARAMETER = 118,                   // "bind parameter"
+        S_YYACCEPT = 119,                        // $accept
+        S_sql = 120,                             // sql
+        S_statement = 121,                       // statement
+        S_literalvalue = 122,                    // literalvalue
+        S_id = 123,                              // id
+        S_allowed_keywords_as_identifier = 124,  // allowed_keywords_as_identifier
+        S_tableid = 125,                         // tableid
+        S_columnid = 126,                        // columnid
+        S_signednumber = 127,                    // signednumber
+        S_signednumber_or_numeric = 128,         // signednumber_or_numeric
+        S_typename_namelist = 129,               // typename_namelist
+        S_type_name = 130,                       // type_name
+        S_unary_expr = 131,                      // unary_expr
+        S_binary_expr = 132,                     // binary_expr
+        S_like_expr = 133,                       // like_expr
+        S_exprlist_expr = 134,                   // exprlist_expr
+        S_function_expr = 135,                   // function_expr
+        S_isnull_expr = 136,                     // isnull_expr
+        S_between_expr = 137,                    // between_expr
+        S_in_expr = 138,                         // in_expr
+        S_whenthenlist_expr = 139,               // whenthenlist_expr
+        S_case_expr = 140,                       // case_expr
+        S_raise_expr = 141,                      // raise_expr
+        S_expr = 142,                            // expr
+        S_select_stmt = 143,                     // select_stmt
+        S_optional_if_not_exists = 144,          // optional_if_not_exists
+        S_optional_sort_order = 145,             // optional_sort_order
+        S_optional_unique = 146,                 // optional_unique
+        S_optional_where = 147,                  // optional_where
+        S_tableid_with_uninteresting_schema = 148, // tableid_with_uninteresting_schema
+        S_indexed_column = 149,                  // indexed_column
+        S_indexed_column_list = 150,             // indexed_column_list
+        S_createindex_stmt = 151,                // createindex_stmt
+        S_optional_exprlist_with_paren = 152,    // optional_exprlist_with_paren
+        S_createvirtualtable_stmt = 153,         // createvirtualtable_stmt
+        S_optional_temporary = 154,              // optional_temporary
+        S_tableoption = 155,                     // tableoption
+        S_tableoptions_list = 156,               // tableoptions_list
+        S_optional_tableoptions_list = 157,      // optional_tableoptions_list
+        S_optional_conflictclause = 158,         // optional_conflictclause
+        S_optional_typename = 159,               // optional_typename
+        S_optional_storage_identifier = 160,     // optional_storage_identifier
+        S_optional_always_generated = 161,       // optional_always_generated
+        S_columnconstraint = 162,                // columnconstraint
+        S_columnconstraint_list = 163,           // columnconstraint_list
+        S_columndef = 164,                       // columndef
+        S_columndef_list = 165,                  // columndef_list
+        S_optional_constraintname = 166,         // optional_constraintname
+        S_columnid_list = 167,                   // columnid_list
+        S_optional_columnid_with_paren_list = 168, // optional_columnid_with_paren_list
+        S_fk_clause_part = 169,                  // fk_clause_part
+        S_fk_clause_part_list = 170,             // fk_clause_part_list
+        S_optional_fk_clause = 171,              // optional_fk_clause
+        S_tableconstraint = 172,                 // tableconstraint
+        S_tableconstraint_list = 173,            // tableconstraint_list
+        S_optional_tableconstraint_list = 174,   // optional_tableconstraint_list
+        S_createtable_stmt = 175                 // createtable_stmt
       };
     };
 
@@ -949,7 +970,7 @@ namespace  sqlb { namespace parser  {
       typedef Base super_type;
 
       /// Default constructor.
-      basic_symbol ()
+      basic_symbol () YY_NOEXCEPT
         : value ()
         , location ()
       {}
@@ -970,7 +991,6 @@ namespace  sqlb { namespace parser  {
       case symbol_kind::S_optional_if_not_exists: // optional_if_not_exists
       case symbol_kind::S_optional_unique: // optional_unique
       case symbol_kind::S_optional_temporary: // optional_temporary
-      case symbol_kind::S_optional_withoutrowid: // optional_withoutrowid
       case symbol_kind::S_optional_always_generated: // optional_always_generated
         value.move< bool > (std::move (that.value));
         break;
@@ -1006,6 +1026,12 @@ namespace  sqlb { namespace parser  {
       case symbol_kind::S_createvirtualtable_stmt: // createvirtualtable_stmt
       case symbol_kind::S_createtable_stmt: // createtable_stmt
         value.move< sqlb::TablePtr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_tableoption: // tableoption
+      case symbol_kind::S_tableoptions_list: // tableoptions_list
+      case symbol_kind::S_optional_tableoptions_list: // optional_tableoptions_list
+        value.move< std::bitset<sqlb::Table::NumOptions> > (std::move (that.value));
         break;
 
       case symbol_kind::S_ABORT: // "ABORT"
@@ -1080,6 +1106,7 @@ namespace  sqlb { namespace parser  {
       case symbol_kind::S_SELECT: // "SELECT"
       case symbol_kind::S_SET: // "SET"
       case symbol_kind::S_STORED: // "STORED"
+      case symbol_kind::S_STRICT: // "STRICT"
       case symbol_kind::S_TABLE: // "TABLE"
       case symbol_kind::S_TEMP: // "TEMP"
       case symbol_kind::S_TEMPORARY: // "TEMPORARY"
@@ -1289,6 +1316,20 @@ namespace  sqlb { namespace parser  {
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, std::bitset<sqlb::Table::NumOptions>&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const std::bitset<sqlb::Table::NumOptions>& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, std::string&& v, location_type&& l)
         : Base (t)
         , value (std::move (v))
@@ -1322,6 +1363,8 @@ namespace  sqlb { namespace parser  {
         clear ();
       }
 
+
+
       /// Destroy contents, and record that is empty.
       void clear () YY_NOEXCEPT
       {
@@ -1345,7 +1388,6 @@ switch (yykind)
       case symbol_kind::S_optional_if_not_exists: // optional_if_not_exists
       case symbol_kind::S_optional_unique: // optional_unique
       case symbol_kind::S_optional_temporary: // optional_temporary
-      case symbol_kind::S_optional_withoutrowid: // optional_withoutrowid
       case symbol_kind::S_optional_always_generated: // optional_always_generated
         value.template destroy< bool > ();
         break;
@@ -1381,6 +1423,12 @@ switch (yykind)
       case symbol_kind::S_createvirtualtable_stmt: // createvirtualtable_stmt
       case symbol_kind::S_createtable_stmt: // createtable_stmt
         value.template destroy< sqlb::TablePtr > ();
+        break;
+
+      case symbol_kind::S_tableoption: // tableoption
+      case symbol_kind::S_tableoptions_list: // tableoptions_list
+      case symbol_kind::S_optional_tableoptions_list: // optional_tableoptions_list
+        value.template destroy< std::bitset<sqlb::Table::NumOptions> > ();
         break;
 
       case symbol_kind::S_ABORT: // "ABORT"
@@ -1455,6 +1503,7 @@ switch (yykind)
       case symbol_kind::S_SELECT: // "SELECT"
       case symbol_kind::S_SET: // "SET"
       case symbol_kind::S_STORED: // "STORED"
+      case symbol_kind::S_STRICT: // "STRICT"
       case symbol_kind::S_TABLE: // "TABLE"
       case symbol_kind::S_TEMP: // "TEMP"
       case symbol_kind::S_TEMPORARY: // "TEMPORARY"
@@ -1537,7 +1586,7 @@ switch (yykind)
       void move (basic_symbol& s);
 
       /// The semantic value.
-      semantic_type value;
+      value_type value;
 
       /// The location.
       location_type location;
@@ -1552,22 +1601,24 @@ switch (yykind)
     /// Type access provider for token (enum) based symbols.
     struct by_kind
     {
-      /// Default constructor.
-      by_kind ();
-
-#if 201103L <= YY_CPLUSPLUS
-      /// Move constructor.
-      by_kind (by_kind&& that);
-#endif
-
-      /// Copy constructor.
-      by_kind (const by_kind& that);
-
       /// The symbol kind as needed by the constructor.
       typedef token_kind_type kind_type;
 
+      /// Default constructor.
+      by_kind () YY_NOEXCEPT;
+
+#if 201103L <= YY_CPLUSPLUS
+      /// Move constructor.
+      by_kind (by_kind&& that) YY_NOEXCEPT;
+#endif
+
+      /// Copy constructor.
+      by_kind (const by_kind& that) YY_NOEXCEPT;
+
       /// Constructor from (external) token numbers.
-      by_kind (kind_type t);
+      by_kind (kind_type t) YY_NOEXCEPT;
+
+
 
       /// Record that this symbol is empty.
       void clear () YY_NOEXCEPT;
@@ -1597,29 +1648,33 @@ switch (yykind)
       typedef basic_symbol<by_kind> super_type;
 
       /// Empty symbol.
-      symbol_type () {}
+      symbol_type () YY_NOEXCEPT {}
 
       /// Constructor for valueless symbols, and symbols from each type.
 #if 201103L <= YY_CPLUSPLUS
       symbol_type (int tok, location_type l)
-        : super_type(token_type (tok), std::move (l))
+        : super_type (token_kind_type (tok), std::move (l))
 #else
       symbol_type (int tok, const location_type& l)
-        : super_type(token_type (tok), l)
+        : super_type (token_kind_type (tok), l)
 #endif
       {
+#if !defined _MSC_VER || defined __clang__
         YY_ASSERT (tok == token::TOK_EOF
                    || (token::TOK_YYerror <= tok && tok <= token::TOK_BITWISERIGHT));
+#endif
       }
 #if 201103L <= YY_CPLUSPLUS
       symbol_type (int tok, std::string v, location_type l)
-        : super_type(token_type (tok), std::move (v), std::move (l))
+        : super_type (token_kind_type (tok), std::move (v), std::move (l))
 #else
       symbol_type (int tok, const std::string& v, const location_type& l)
-        : super_type(token_type (tok), v, l)
+        : super_type (token_kind_type (tok), v, l)
 #endif
       {
+#if !defined _MSC_VER || defined __clang__
         YY_ASSERT ((token::TOK_ABORT <= tok && tok <= token::TOK_BINDPARAMETER));
+#endif
       }
     };
 
@@ -1668,7 +1723,7 @@ switch (yykind)
     /// YYSYMBOL.  No bounds checking.
     static std::string symbol_name (symbol_kind_type yysymbol);
 
-    // Implementation of make_symbol for each symbol type.
+    // Implementation of make_symbol for each token kind.
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
@@ -3157,6 +3212,21 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
+      make_STRICT (std::string v, location_type l)
+      {
+        return symbol_type (token::TOK_STRICT, std::move (v), std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_STRICT (const std::string& v, const location_type& l)
+      {
+        return symbol_type (token::TOK_STRICT, v, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
       make_TABLE (std::string v, location_type l)
       {
         return symbol_type (token::TOK_TABLE, std::move (v), std::move (l));
@@ -3485,19 +3555,19 @@ switch (yykind)
 
     /// Whether the given \c yypact_ value indicates a defaulted state.
     /// \param yyvalue   the value to check
-    static bool yy_pact_value_is_default_ (int yyvalue);
+    static bool yy_pact_value_is_default_ (int yyvalue) YY_NOEXCEPT;
 
     /// Whether the given \c yytable_ value indicates a syntax error.
     /// \param yyvalue   the value to check
-    static bool yy_table_value_is_error_ (int yyvalue);
+    static bool yy_table_value_is_error_ (int yyvalue) YY_NOEXCEPT;
 
     static const short yypact_ninf_;
     static const short yytable_ninf_;
 
     /// Convert a scanner token kind \a t to a symbol kind.
     /// In theory \a t should be a token_kind_type, but character literals
-    /// are valid, yet not members of the token_type enum.
-    static symbol_kind_type yytranslate_ (int t);
+    /// are valid, yet not members of the token_kind_type enum.
+    static symbol_kind_type yytranslate_ (int t) YY_NOEXCEPT;
 
     /// Convert the symbol name \a n to a form suitable for a diagnostic.
     static std::string yytnamerr_ (const char *yystr);
@@ -3529,14 +3599,14 @@ switch (yykind)
 
     static const short yycheck_[];
 
-    // YYSTOS[STATE-NUM] -- The (internal number of the) accessing
-    // symbol of state STATE-NUM.
+    // YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
+    // state STATE-NUM.
     static const unsigned char yystos_[];
 
-    // YYR1[YYN] -- Symbol number of symbol that rule YYN derives.
+    // YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.
     static const unsigned char yyr1_[];
 
-    // YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.
+    // YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.
     static const signed char yyr2_[];
 
 
@@ -3635,7 +3705,7 @@ switch (yykind)
       typedef typename S::size_type size_type;
       typedef typename std::ptrdiff_t index_type;
 
-      stack (size_type n = 200)
+      stack (size_type n = 200) YY_NOEXCEPT
         : seq_ (n)
       {}
 
@@ -3714,7 +3784,7 @@ switch (yykind)
       class slice
       {
       public:
-        slice (const stack& stack, index_type range)
+        slice (const stack& stack, index_type range) YY_NOEXCEPT
           : stack_ (stack)
           , range_ (range)
         {}
@@ -3764,13 +3834,13 @@ switch (yykind)
     void yypush_ (const char* m, state_type s, YY_MOVE_REF (symbol_type) sym);
 
     /// Pop \a n symbols from the stack.
-    void yypop_ (int n = 1);
+    void yypop_ (int n = 1) YY_NOEXCEPT;
 
     /// Constants.
     enum
     {
-      yylast_ = 3424,     ///< Last index in yytable_.
-      yynnts_ = 55,  ///< Number of nonterminal symbols.
+      yylast_ = 3375,     ///< Last index in yytable_.
+      yynnts_ = 57,  ///< Number of nonterminal symbols.
       yyfinal_ = 13 ///< Termination state number.
     };
 
@@ -3783,7 +3853,7 @@ switch (yykind)
 
   inline
   parser::symbol_kind_type
-  parser::yytranslate_ (int t)
+  parser::yytranslate_ (int t) YY_NOEXCEPT
   {
     // YYTRANSLATE[TOKEN-NUM] -- Symbol number corresponding to
     // TOKEN-NUM as returned by yylex.
@@ -3828,15 +3898,15 @@ switch (yykind)
       85,    86,    87,    88,    89,    90,    91,    92,    93,    94,
       95,    96,    97,    98,    99,   100,   101,   102,   103,   104,
      105,   106,   107,   108,   109,   110,   111,   112,   113,   114,
-     115,   116,   117
+     115,   116,   117,   118
     };
     // Last valid token kind.
-    const int code_max = 372;
+    const int code_max = 373;
 
     if (t <= 0)
       return symbol_kind::S_YYEOF;
     else if (t <= code_max)
-      return YY_CAST (symbol_kind_type, translate_table[t]);
+      return static_cast <symbol_kind_type> (translate_table[t]);
     else
       return symbol_kind::S_YYUNDEF;
   }
@@ -3857,7 +3927,6 @@ switch (yykind)
       case symbol_kind::S_optional_if_not_exists: // optional_if_not_exists
       case symbol_kind::S_optional_unique: // optional_unique
       case symbol_kind::S_optional_temporary: // optional_temporary
-      case symbol_kind::S_optional_withoutrowid: // optional_withoutrowid
       case symbol_kind::S_optional_always_generated: // optional_always_generated
         value.copy< bool > (YY_MOVE (that.value));
         break;
@@ -3893,6 +3962,12 @@ switch (yykind)
       case symbol_kind::S_createvirtualtable_stmt: // createvirtualtable_stmt
       case symbol_kind::S_createtable_stmt: // createtable_stmt
         value.copy< sqlb::TablePtr > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_tableoption: // tableoption
+      case symbol_kind::S_tableoptions_list: // tableoptions_list
+      case symbol_kind::S_optional_tableoptions_list: // optional_tableoptions_list
+        value.copy< std::bitset<sqlb::Table::NumOptions> > (YY_MOVE (that.value));
         break;
 
       case symbol_kind::S_ABORT: // "ABORT"
@@ -3967,6 +4042,7 @@ switch (yykind)
       case symbol_kind::S_SELECT: // "SELECT"
       case symbol_kind::S_SET: // "SET"
       case symbol_kind::S_STORED: // "STORED"
+      case symbol_kind::S_STRICT: // "STRICT"
       case symbol_kind::S_TABLE: // "TABLE"
       case symbol_kind::S_TEMP: // "TEMP"
       case symbol_kind::S_TEMPORARY: // "TEMPORARY"
@@ -4034,12 +4110,14 @@ switch (yykind)
 
 
 
+
   template <typename Base>
   parser::symbol_kind_type
   parser::basic_symbol<Base>::type_get () const YY_NOEXCEPT
   {
     return this->kind ();
   }
+
 
   template <typename Base>
   bool
@@ -4062,7 +4140,6 @@ switch (yykind)
       case symbol_kind::S_optional_if_not_exists: // optional_if_not_exists
       case symbol_kind::S_optional_unique: // optional_unique
       case symbol_kind::S_optional_temporary: // optional_temporary
-      case symbol_kind::S_optional_withoutrowid: // optional_withoutrowid
       case symbol_kind::S_optional_always_generated: // optional_always_generated
         value.move< bool > (YY_MOVE (s.value));
         break;
@@ -4098,6 +4175,12 @@ switch (yykind)
       case symbol_kind::S_createvirtualtable_stmt: // createvirtualtable_stmt
       case symbol_kind::S_createtable_stmt: // createtable_stmt
         value.move< sqlb::TablePtr > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_tableoption: // tableoption
+      case symbol_kind::S_tableoptions_list: // tableoptions_list
+      case symbol_kind::S_optional_tableoptions_list: // optional_tableoptions_list
+        value.move< std::bitset<sqlb::Table::NumOptions> > (YY_MOVE (s.value));
         break;
 
       case symbol_kind::S_ABORT: // "ABORT"
@@ -4172,6 +4255,7 @@ switch (yykind)
       case symbol_kind::S_SELECT: // "SELECT"
       case symbol_kind::S_SET: // "SET"
       case symbol_kind::S_STORED: // "STORED"
+      case symbol_kind::S_STRICT: // "STRICT"
       case symbol_kind::S_TABLE: // "TABLE"
       case symbol_kind::S_TEMP: // "TEMP"
       case symbol_kind::S_TEMPORARY: // "TEMPORARY"
@@ -4240,13 +4324,13 @@ switch (yykind)
 
   // by_kind.
   inline
-  parser::by_kind::by_kind ()
+  parser::by_kind::by_kind () YY_NOEXCEPT
     : kind_ (symbol_kind::S_YYEMPTY)
   {}
 
 #if 201103L <= YY_CPLUSPLUS
   inline
-  parser::by_kind::by_kind (by_kind&& that)
+  parser::by_kind::by_kind (by_kind&& that) YY_NOEXCEPT
     : kind_ (that.kind_)
   {
     that.clear ();
@@ -4254,14 +4338,16 @@ switch (yykind)
 #endif
 
   inline
-  parser::by_kind::by_kind (const by_kind& that)
+  parser::by_kind::by_kind (const by_kind& that) YY_NOEXCEPT
     : kind_ (that.kind_)
   {}
 
   inline
-  parser::by_kind::by_kind (token_kind_type t)
+  parser::by_kind::by_kind (token_kind_type t) YY_NOEXCEPT
     : kind_ (yytranslate_ (t))
   {}
+
+
 
   inline
   void
@@ -4285,6 +4371,7 @@ switch (yykind)
     return kind_;
   }
 
+
   inline
   parser::symbol_kind_type
   parser::by_kind::type_get () const YY_NOEXCEPT
@@ -4292,9 +4379,10 @@ switch (yykind)
     return this->kind ();
   }
 
+
 #line 10 "sqlite3_parser.yy"
 } } //  sqlb::parser 
-#line 4298 "sqlite3_parser.hpp"
+#line 4386 "sqlite3_parser.hpp"
 
 
 

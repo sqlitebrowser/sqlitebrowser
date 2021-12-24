@@ -366,7 +366,7 @@ Table& Table::operator=(const Table& rhs)
     Object::operator=(rhs);
 
     // Just assign the simple values
-    m_withoutRowid = rhs.m_withoutRowid;
+    m_options = rhs.m_options;
     m_virtual = rhs.m_virtual;
 
     // Clear the fields and the constraints first in order to avoid duplicates and/or old data in the next step
@@ -408,7 +408,7 @@ bool Table::operator==(const Table& rhs) const
     if(!Object::operator==(rhs))
         return false;
 
-    if(m_withoutRowid != rhs.m_withoutRowid)
+    if(m_options != rhs.m_options)
         return false;
     if(m_virtual != rhs.m_virtual)
         return false;
@@ -437,7 +437,7 @@ StringVector Table::fieldNames() const
 StringVector Table::rowidColumns() const
 {
     // For WITHOUT ROWID tables this function returns the names of the primary key column. For ordinary tables with a rowid column, it returns "_rowid_"
-    if(m_withoutRowid)
+    if(withoutRowidTable())
         return const_cast<Table*>(this)->primaryKey()->columnList();
     else
         return {"_rowid_"};
@@ -487,9 +487,31 @@ std::string Table::sql(const std::string& schema, bool ifNotExists) const
 
     sql += "\n)";
 
-    // without rowid
-    if(withoutRowidTable())
-        sql += " WITHOUT ROWID";
+    // Table options
+    bool first_option = true;
+    for(size_t i=0;i<NumOptions;i++)
+    {
+        if(m_options.test(i))
+        {
+            if(first_option)
+            {
+                sql += " ";
+                first_option = false;
+            } else {
+                sql += ",";
+            }
+
+            switch(i)
+            {
+            case WithoutRowid:
+                sql += "WITHOUT ROWID";
+                break;
+            case Strict:
+                sql += "STRICT";
+                break;
+            }
+        }
+    }
 
     return sql + ";";
 }
