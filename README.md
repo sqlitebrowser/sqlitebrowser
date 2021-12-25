@@ -35,10 +35,11 @@ Controls and wizards are available for users to:
 
 ## What it is not
 
-This program is not a visual shell for the sqlite command line tool, and does
-not require familiarity with SQL commands. It is a tool to be used by both
-developers and end users, and must remain as simple to use as possible
-in order to achieve these goals.
+Even though DB4S comes with a spreadsheet-like interface, it is not meant to replace your spreadsheet application.
+We implement a few convenience functions which go beyond a simple database frontend but do not add them when they
+do not make sense in a database context or are so complex to implement that they will only ever be a poor
+replacement for your favorite spreadsheet application. We are a small time with limited time after all. Thanks
+for your understanding :)
 
 ## Wiki
 
