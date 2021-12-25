@@ -2525,7 +2525,7 @@ namespace  sqlb { namespace parser  {
 
   case 180: // optional_sort_order: %empty
 #line 533 "sqlite3_parser.yy"
-                                                { yylhs.value.as < std::string > () = ""; }
+                                                { }
 #line 2530 "sqlite3_parser.cpp"
     break;
 
@@ -2555,7 +2555,7 @@ namespace  sqlb { namespace parser  {
 
   case 185: // optional_where: %empty
 #line 548 "sqlite3_parser.yy"
-                                                { yylhs.value.as < std::string > () = ""; }
+                                                { }
 #line 2560 "sqlite3_parser.cpp"
     break;
 
@@ -2626,13 +2626,13 @@ namespace  sqlb { namespace parser  {
 
   case 194: // optional_exprlist_with_paren: %empty
 #line 593 "sqlite3_parser.yy"
-                                                { yylhs.value.as < std::string > () = {}; }
+                                                { }
 #line 2631 "sqlite3_parser.cpp"
     break;
 
   case 195: // optional_exprlist_with_paren: "(" ")"
 #line 594 "sqlite3_parser.yy"
-                                                { yylhs.value.as < std::string > () = {}; }
+                                                { }
 #line 2637 "sqlite3_parser.cpp"
     break;
 
@@ -2702,7 +2702,7 @@ namespace  sqlb { namespace parser  {
 
   case 206: // optional_tableoptions_list: %empty
 #line 628 "sqlite3_parser.yy"
-                                                        {}
+                                                        { }
 #line 2707 "sqlite3_parser.cpp"
     break;
 
@@ -2714,7 +2714,7 @@ namespace  sqlb { namespace parser  {
 
   case 208: // optional_conflictclause: %empty
 #line 633 "sqlite3_parser.yy"
-                                                        { yylhs.value.as < std::string > () = ""; }
+                                                        { }
 #line 2719 "sqlite3_parser.cpp"
     break;
 
@@ -2750,7 +2750,7 @@ namespace  sqlb { namespace parser  {
 
   case 214: // optional_typename: %empty
 #line 642 "sqlite3_parser.yy"
-                                                { yylhs.value.as < std::string > () = ""; }
+                                                { }
 #line 2755 "sqlite3_parser.cpp"
     break;
 
@@ -3035,7 +3035,7 @@ namespace  sqlb { namespace parser  {
 
   case 242: // optional_constraintname: %empty
 #line 808 "sqlite3_parser.yy"
-                                                        { yylhs.value.as < std::string > () = ""; }
+                                                        { }
 #line 3040 "sqlite3_parser.cpp"
     break;
 
@@ -3065,7 +3065,7 @@ namespace  sqlb { namespace parser  {
 
   case 247: // optional_columnid_with_paren_list: %empty
 #line 819 "sqlite3_parser.yy"
-                                                        { yylhs.value.as < sqlb::StringVector > () = sqlb::StringVector(); }
+                                                        { }
 #line 3070 "sqlite3_parser.cpp"
     break;
 
@@ -3185,7 +3185,7 @@ namespace  sqlb { namespace parser  {
 
   case 267: // optional_fk_clause: %empty
 #line 848 "sqlite3_parser.yy"
-                                                                        { yylhs.value.as < std::string > () = ""; }
+                                                                        { }
 #line 3190 "sqlite3_parser.cpp"
     break;
 
@@ -3340,7 +3340,7 @@ namespace  sqlb { namespace parser  {
 
   case 289: // optional_tableconstraint_list: %empty
 #line 902 "sqlite3_parser.yy"
-                                                        { yylhs.value.as < sqlb::ConstraintVector > () = {}; }
+                                                        { }
 #line 3345 "sqlite3_parser.cpp"
     break;
 

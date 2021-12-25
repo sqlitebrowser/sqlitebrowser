@@ -530,7 +530,7 @@ optional_if_not_exists:
 	;
 
 optional_sort_order:
-	%empty					{ $$ = ""; }
+	%empty					{ }
 	| ASC					{ $$ = "ASC"; }
 	| DESC					{ $$ = "DESC"; }
 	;
@@ -545,7 +545,7 @@ optional_unique:
 	;
 
 optional_where:
-	%empty					{ $$ = ""; }
+	%empty					{ }
 	| WHERE expr				{ $$ = $2; }
 	;
 
@@ -590,8 +590,8 @@ createindex_stmt:
  */
 
 optional_exprlist_with_paren:
-	%empty					{ $$ = {}; }
-	| "(" ")"				{ $$ = {}; }
+	%empty					{ }
+	| "(" ")"				{ }
 	| "(" exprlist_expr ")"			{ $$ = $2; }
 	;
 
@@ -625,12 +625,12 @@ tableoptions_list:
 	;
 
 optional_tableoptions_list:
-	%empty						{}
+	%empty						{ }
 	| tableoptions_list				{ $$ = $1; }
 	;
 
 optional_conflictclause:
-	%empty						{ $$ = ""; }
+	%empty						{ }
 	| ON CONFLICT ROLLBACK				{ $$ = $3; }
 	| ON CONFLICT ABORT				{ $$ = $3; }
 	| ON CONFLICT FAIL				{ $$ = $3; }
@@ -639,7 +639,7 @@ optional_conflictclause:
 	;
 
 optional_typename:
-	%empty					{ $$ = ""; }
+	%empty					{ }
 	| type_name				{ $$ = $1; }
 	;
 
@@ -805,7 +805,7 @@ columndef_list:
 	;
 
 optional_constraintname:
-	%empty						{ $$ = ""; }
+	%empty						{ }
 	| CONSTRAINT id					{ $$ = $2; }
 	| CONSTRAINT STRINGLITERAL			{ $$ = $2; }
 	;
@@ -816,7 +816,7 @@ columnid_list:
 	;
 
 optional_columnid_with_paren_list:
-	%empty						{ $$ = sqlb::StringVector(); }
+	%empty						{ }
 	| "(" columnid_list ")"				{ $$ = $2; }
 	;
 
@@ -845,7 +845,7 @@ fk_clause_part_list:
 	;
 
 optional_fk_clause:
-	%empty								{ $$ = ""; }
+	%empty								{ }
 	| fk_clause_part_list						{ $$ = $1; }
 	| fk_clause_part_list DEFERRABLE INITIALLY DEFERRED		{ $$ = $1 + " " + $2 + " " + $3 + " " + $4; }
 	| fk_clause_part_list DEFERRABLE INITIALLY IMMEDIATE		{ $$ = $1 + " " + $2 + " " + $3 + " " + $4; }
@@ -899,7 +899,7 @@ tableconstraint_list:
 	;
 
 optional_tableconstraint_list:
-	%empty						{ $$ = {}; }
+	%empty						{ }
 	| "," tableconstraint_list			{ $$ = $2; }
 	;
 
