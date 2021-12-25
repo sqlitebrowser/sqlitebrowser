@@ -82,6 +82,7 @@ private slots:
     void moveTop();
     void moveBottom();
     void setWithoutRowid(bool without_rowid);
+    void setStrict(bool strict);
     void changeSchema(const QString& schema);
     void removeConstraint();
     void addConstraint(sqlb::Constraint::ConstraintTypes type);

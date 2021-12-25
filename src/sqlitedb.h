@@ -265,6 +265,7 @@ public:
     void loadExtensionsFromSettings();
 
     static QStringList Datatypes;
+    static QStringList DatatypesStrict;
 
 private:
     std::vector<std::pair<std::string, std::string> > queryColumnInformation(const std::string& schema_name, const std::string& object_name) const;

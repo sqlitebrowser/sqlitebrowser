@@ -27,6 +27,7 @@
 #include <functional>
 
 QStringList DBBrowserDB::Datatypes = {"INTEGER", "TEXT", "BLOB", "REAL", "NUMERIC"};
+QStringList DBBrowserDB::DatatypesStrict = {"INT", "INTEGER", "TEXT", "BLOB", "REAL", "ANY"};
 
 // Helper template to allow turning member functions into a C-style function pointer
 // See https://stackoverflow.com/questions/19808054/convert-c-function-pointer-to-c-function-pointer/19809787

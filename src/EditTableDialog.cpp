@@ -90,6 +90,9 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
         ui->checkWithoutRowid->blockSignals(true);
         ui->checkWithoutRowid->setChecked(m_table.withoutRowidTable());
         ui->checkWithoutRowid->blockSignals(false);
+        ui->checkStrict->blockSignals(true);
+        ui->checkStrict->setChecked(m_table.isStrict());
+        ui->checkStrict->blockSignals(false);
         ui->comboSchema->blockSignals(true);
         for(const auto& n : pdb.schemata)                       // Load list of database schemata
             ui->comboSchema->addItem(QString::fromStdString(n.first));
@@ -218,9 +221,9 @@ void EditTableDialog::populateFields()
         tbitem->setText(kName, QString::fromStdString(f.name()));
         QComboBox* typeBox = new QComboBox(ui->treeWidget);
         typeBox->setProperty("column", QString::fromStdString(f.name()));
-        typeBox->setEditable(true);
-        typeBox->addItems(DBBrowserDB::Datatypes);
-        int index = typeBox->findText(QString::fromStdString(f.type()), Qt::MatchExactly);
+        typeBox->setEditable(!m_table.isStrict());  // Strict tables do not allow arbitrary types
+        typeBox->addItems(m_table.isStrict() ? DBBrowserDB::DatatypesStrict : DBBrowserDB::Datatypes);
+        int index = typeBox->findText(QString::fromStdString(f.type()), Qt::MatchFixedString);
         if(index == -1)
         {
             // non standard named type
@@ -786,8 +789,8 @@ void EditTableDialog::addField()
 
     QComboBox* typeBox = new QComboBox(ui->treeWidget);
     typeBox->setProperty("column", tbitem->text(kName));
-    typeBox->setEditable(true);
-    typeBox->addItems(DBBrowserDB::Datatypes);
+    typeBox->setEditable(!m_table.isStrict());  // Strict tables do not allow arbitrary types
+    typeBox->addItems(m_table.isStrict() ? DBBrowserDB::DatatypesStrict : DBBrowserDB::Datatypes);
 
     int defaultFieldTypeIndex = Settings::getValue("db", "defaultfieldtype").toInt();
 
@@ -976,6 +979,39 @@ void EditTableDialog::setWithoutRowid(bool without_rowid)
     } else {
         // If the without rowid flag is unset no further checks are required. Just unset the without rowid flag
         m_table.setWithoutRowidTable(false);
+    }
+
+    // Update the SQL preview
+    updateSqlText();
+}
+
+void EditTableDialog::setStrict(bool strict)
+{
+    // Set the strict option
+    m_table.setStrict(strict);
+
+    // Replace list of possible data types in each type combo box
+    for(int i=0;i<ui->treeWidget->topLevelItemCount();i++)
+    {
+        QComboBox* w = qobject_cast<QComboBox*>(ui->treeWidget->itemWidget(ui->treeWidget->topLevelItem(i), kType));
+        QString value = w->currentText();
+        w->blockSignals(true);
+        w->clear();
+        w->addItems(strict ? DBBrowserDB::DatatypesStrict : DBBrowserDB::Datatypes);
+        w->setEditable(!strict);    // Strict tables do not allow arbitrary types
+        int pos = w->findText(value, Qt::MatchFixedString);
+        w->blockSignals(false);
+
+        if(pos >= 0)
+        {
+            w->setCurrentIndex(pos);
+        } else {
+            // When the old value cannot be found we default to ANY for strict tables. For ordinary tables we just add the former value.
+            if(strict)
+                w->setCurrentText("ANY");
+            else
+                w->setCurrentText(value);
+        }
     }
 
     // Update the SQL preview

@@ -38,7 +38,7 @@ void SqlUiLexer::setupAutoCompletion()
     keywordPatterns
             // Keywords
             << "ABORT" << "ACTION" << "ADD" << "AFTER" << "ALL"
-            << "ALTER" << "ALWAYS" << "ANALYZE" << "AND" << "AS" << "ASC"
+            << "ALTER" << "ALWAYS" << "ANALYZE" << "AND" << "ANY" << "AS" << "ASC"
             << "ATTACH" << "AUTOINCREMENT" << "BEFORE" << "BEGIN" << "BETWEEN"
             << "BY" << "CASCADE" << "CASE" << "CAST" << "CHECK"
             << "COLLATE" << "COLUMN" << "COMMIT" << "CONFLICT" << "CONSTRAINT"
@@ -57,7 +57,7 @@ void SqlUiLexer::setupAutoCompletion()
             << "OUTER" << "OVER" << "PARTITION" << "PLAN" << "PRAGMA" << "PRECEDING" << "PRIMARY" << "QUERY"
             << "RAISE" << "RANGE" << "RECURSIVE" << "REFERENCES" << "REGEXP" << "REINDEX" << "RELEASE"
             << "RENAME" << "REPLACE" << "RESTRICT" << "RETURNING" << "RIGHT" << "ROLLBACK"
-            << "ROWID" << "ROW" << "ROWS" << "SAVEPOINT" << "SELECT" << "SET" << "STORED" << "TABLE"
+            << "ROWID" << "ROW" << "ROWS" << "SAVEPOINT" << "SELECT" << "SET" << "STORED" << "STRICT" << "TABLE"
             << "TEMP" << "TEMPORARY" << "THEN" << "TO" << "TRANSACTION"
             << "TRIGGER" << "UNBOUNDED" << "UNION" << "UNIQUE" << "UPDATE" << "USING"
             << "VACUUM" << "VALUES" << "VIEW" << "VIRTUAL" << "WHEN"

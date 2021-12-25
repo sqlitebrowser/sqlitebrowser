@@ -86,14 +86,14 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="0">
+         <item row="3" column="0">
           <widget class="QLabel" name="label_2">
            <property name="text">
             <string>On Conflict</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="1">
+         <item row="3" column="1">
           <widget class="QComboBox" name="comboOnConflict">
            <item>
             <property name="text">
@@ -125,6 +125,23 @@
              <string notr="true">REPLACE</string>
             </property>
            </item>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_3">
+           <property name="text">
+            <string>Strict</string>
+           </property>
+           <property name="buddy">
+            <cstring>checkStrict</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QCheckBox" name="checkStrict">
+           <property name="toolTip">
+            <string>When the strict option is enabled SQLite enforces the data types of each column when updating or inserting data.</string>
+           </property>
           </widget>
          </item>
         </layout>
@@ -562,6 +579,8 @@
   <tabstop>buttonMore</tabstop>
   <tabstop>comboSchema</tabstop>
   <tabstop>checkWithoutRowid</tabstop>
+  <tabstop>checkStrict</tabstop>
+  <tabstop>comboOnConflict</tabstop>
   <tabstop>groupDefinition</tabstop>
   <tabstop>addFieldButton</tabstop>
   <tabstop>removeFieldButton</tabstop>
@@ -570,7 +589,6 @@
   <tabstop>buttonMoveDown</tabstop>
   <tabstop>buttonMoveBottom</tabstop>
   <tabstop>treeWidget</tabstop>
-  <tabstop>sqlTextEdit</tabstop>
   <tabstop>buttonAddConstraint</tabstop>
   <tabstop>buttonRemoveConstraint</tabstop>
   <tabstop>tableConstraints</tabstop>
@@ -634,8 +652,8 @@
    <slot>addField()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>82</x>
-     <y>248</y>
+     <x>79</x>
+     <y>311</y>
     </hint>
     <hint type="destinationlabel">
      <x>79</x>
@@ -650,8 +668,8 @@
    <slot>removeField()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>178</x>
-     <y>248</y>
+     <x>169</x>
+     <y>311</y>
     </hint>
     <hint type="destinationlabel">
      <x>249</x>
@@ -682,8 +700,8 @@
    <slot>moveUp()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>400</x>
-     <y>248</y>
+     <x>376</x>
+     <y>311</y>
     </hint>
     <hint type="destinationlabel">
      <x>308</x>
@@ -698,8 +716,8 @@
    <slot>moveDown()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>519</x>
-     <y>248</y>
+     <x>487</x>
+     <y>311</y>
     </hint>
     <hint type="destinationlabel">
      <x>308</x>
@@ -746,8 +764,8 @@
    <slot>fieldSelectionChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>324</x>
-     <y>294</y>
+     <x>335</x>
+     <y>475</y>
     </hint>
     <hint type="destinationlabel">
      <x>324</x>
@@ -779,7 +797,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>119</x>
-     <y>253</y>
+     <y>315</y>
     </hint>
     <hint type="destinationlabel">
      <x>647</x>
@@ -794,8 +812,8 @@
    <slot>moveTop()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>207</x>
-     <y>240</y>
+     <x>283</x>
+     <y>311</y>
     </hint>
     <hint type="destinationlabel">
      <x>202</x>
@@ -810,8 +828,8 @@
    <slot>moveBottom()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>530</x>
-     <y>246</y>
+     <x>625</x>
+     <y>311</y>
     </hint>
     <hint type="destinationlabel">
      <x>400</x>
@@ -826,12 +844,28 @@
    <slot>setOnConflict(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>371</x>
-     <y>168</y>
+     <x>516</x>
+     <y>219</y>
     </hint>
     <hint type="destinationlabel">
      <x>490</x>
      <y>211</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkStrict</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>EditTableDialog</receiver>
+   <slot>setStrict(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>457</x>
+     <y>177</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
     </hint>
    </hints>
   </connection>
@@ -851,5 +885,6 @@
   <slot>moveTop()</slot>
   <slot>moveBottom()</slot>
   <slot>setOnConflict(QString)</slot>
+  <slot>setStrict(bool)</slot>
  </slots>
 </ui>
