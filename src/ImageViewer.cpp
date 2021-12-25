@@ -54,7 +54,7 @@ bool ImageViewer::isQSizeCovered(QSize rect)
     return widget_size.width() >= rect.width() && widget_size.height() >= rect.height();
 }
 
-bool ImageViewer::eventFilter(QObject *obj, QEvent *e) {
+bool ImageViewer::eventFilter(QObject* /*obj*/, QEvent* e) {
     auto e_type = e->type();
 
     if (e_type == QEvent::Wheel) {
@@ -131,7 +131,7 @@ void ImageViewer::scaleToFitWindow(bool enabled)
         scaleImage(100);
     } else {
         ui->labelView->setMaximumSize(m_image_size.scaled(ui->scrollArea->viewport()->size(), Qt::KeepAspectRatio));
-        setSliderValueWithoutSignal(ui->labelView->maximumWidth() / static_cast<double>(m_image_size.width()) * 100);
+        setSliderValueWithoutSignal(static_cast<int>(ui->labelView->maximumWidth() / static_cast<double>(m_image_size.width()) * 100));
     }
 }
 
