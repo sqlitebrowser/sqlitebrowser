@@ -58,10 +58,8 @@ endif()
 
 # Fix warning of AUTOMOC behavior
 if(POLICY CMP0071)
-    # Use of AUTOMOC is set to old for now for consistency.
-    # Affects of 'new' behavior is as yet to be determined.
     # https://cmake.org/cmake/help/latest/policy/CMP0071.html
-    cmake_policy(SET CMP0071 OLD)
+    cmake_policy(SET CMP0071 NEW)
 endif()
 
 if(WIN32 AND MSVC)
