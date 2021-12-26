@@ -1,12 +1,11 @@
 # DB Browser for SQLite
 
 [![Wiki][wiki-img]][wiki]
-[![Build Status][travis-img]][travis]
+[![C/C++ CI][ghaction-img]][ghaction]
 [![Join the chat at https://gitter.im/sqlitebrowser/sqlitebrowser][gitter-img]][gitter]
 [![Download][download-img]][download]
 [![Qt][qt-img]][qt]
 [![Coverity][coverity-img]][coverity]
-[![C/C++ CI][ghaction-img]][ghaction]
 [![Patreon][patreon-img]][patreon]
 
 ![DB Browser for SQLite Screenshot](https://github.com/sqlitebrowser/sqlitebrowser/raw/master/images/sqlitebrowser.png "DB Browser for SQLite Screenshot")
@@ -303,9 +302,6 @@ Version 2, as well as the GNU General Public License Version 3 or later.
 Modification or redistribution is permitted under the conditions of these licenses.
 
 Check `LICENSE-PLUGINS` for other rights regarding included third-party resources.
-
-  [travis-img]: https://travis-ci.com/sqlitebrowser/sqlitebrowser.svg?branch=master
-  [travis]: https://app.travis-ci.com/github/sqlitebrowser/sqlitebrowser
 
   [gitter-img]: https://badges.gitter.im/sqlitebrowser/sqlitebrowser.svg
   [gitter]: https://gitter.im/sqlitebrowser/sqlitebrowser
