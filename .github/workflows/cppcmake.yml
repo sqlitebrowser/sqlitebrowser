@@ -1,4 +1,4 @@
-name: C/C++ CI
+name: CI
 
 on:
   push:
@@ -6,6 +6,7 @@ on:
     tags:
     paths_ignore: ['docs/**', '.travis.yml']
   pull_request:
+    branches: ['*']
   release:
     types: ['created']
 
@@ -15,57 +16,57 @@ defaults:
 
 jobs:
   build:
-    name: ${{ matrix.config.name }}
-    runs-on: ${{ matrix.config.os }}
+    name: ${{ matrix.os }} - SQLCipher ${{ matrix.sqlcipher }}
+    runs-on: ${{ matrix.os }}
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
-        config:
-        - {name: "ubuntu-20.04", os: "ubuntu-20.04"}
-
+        os: [ubuntu-20.04]
+        sqlcipher: ["0", "1"]
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v2
     - name: Install dependencies
       run: |
            sudo apt-get update
-           sudo apt-get install qttools5-dev libqt5scintilla2-dev libqcustomplot-dev libsqlite3-dev
+           sudo apt-get install qttools5-dev libqt5scintilla2-dev libqcustomplot-dev libsqlite3-dev libqt5svg5 libsqlcipher-dev
     - name: Configure CMake
       run: |
            cmake --version
            cmake -S . -B build -DCMAKE_BUILD_TYPE=Release \
                 -DCMAKE_INSTALL_PREFIX=${PWD}/install \
                 -DCPACK_PACKAGE_DIRECTORY=${PWD}/package \
-                -DENABLE_TESTING=ON
-    - name: make
+                -DENABLE_TESTING=ON \
+                -Dsqlcipher=${{ matrix.sqlcipher }}
+    - name: Run make
       run: cmake --build build --config Release -j --target install
     - name: run tests
-      run: ctest -C Release
-    - name: package
+      run: ctest -V -C Release --test-dir build
+    - name: Package
       run: |
            cmake --build build --config Release -j --target package
            cmake -E remove_directory package/_CPack_Packages
-    - name: upload package
+    - name: Upload package
       uses: actions/upload-artifact@master
       with:
-        name: pkg-${{ matrix.config.name }}
+        name: pkg-${{ matrix.os }}-sqlcipher${{ matrix.sqlcipher }}
         path: package
-    - name: upload to release page
+    - name: Upload to release page
       if: github.event_name == 'release'
       env:
-        TOKEN: "token ${{ secrets.GITHUB_TOKEN }}"
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         TAG: ${{ github.event.release.tag_name }}
         UPLOAD_URL: ${{ github.event.release.upload_url }}
       run: |
               # Do try this at home! The REST API is documented at
               # https://docs.github.com/en/free-pro-team@latest/rest and you can get a personal
               # access token at https://github.com/settings/tokens
-              # (set TOKEN to "bearer abcdef1234")
+              # (set GITHUB_TOKEN to "bearer abcdef1234")
               # you can get the UPLOAD_URL with a short bash snippet; make sure to set the env var TAG:
               # UPLOAD_URL=$(curl -H 'Accept: application/vnd.github.v3+json' $GITHUB_API_URL/repos/$GITHUB_REPOSITORY/releases/tags/$TAG | jq -r .upload_url)
               UPLOAD_URL=${UPLOAD_URL%\{*} # remove "{name,label}" suffix
               for pkg in package/*.*; do
                 NAME=$(basename $pkg)
                 MIME=$(file --mime-type $pkg|cut -d ' ' -f2)
-                curl -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: $TOKEN" -H "Content-Type: $MIME" --data-binary @$pkg $UPLOAD_URL?name=$NAME
+                curl -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token $GITHUB_TOKEN" -H "Content-Type: $MIME" --data-binary @$pkg $UPLOAD_URL?name=$NAME
               done
-

@@ -1,0 +1,60 @@
+name: AppImage
+
+on:
+  push:
+    branches: [master]
+    tags:
+  release:
+    types: ['created']
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    name: ${{ matrix.os }} - SQLCipher ${{ matrix.sqlcipher }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ubuntu-18.04]
+        sqlcipher: ["0", "1"]
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Install dependencies
+      run: |
+           sudo apt-get update
+           sudo apt-get install qttools5-dev libqt5scintilla2-dev libqcustomplot-dev libsqlite3-dev libqt5svg5 libsqlcipher-dev qt5-default
+    - name: Configure CMake
+      run: |
+           mkdir appbuild
+           mkdir appdir
+           cd appbuild
+           cmake -DCMAKE_INSTALL_PREFIX:PATH=../appdir/usr -Wno-dev -DFORCE_INTERNAL_QSCINTILLA=ON -Dsqlcipher=${{ matrix.sqlcipher }} -DSQLITE_ENABLE_JSON1=1 ..
+    - name: Run make
+      run: |
+           cd appbuild
+           make install
+    - name: Build AppImage
+      run: |
+           git rev-list master --count
+           wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
+           chmod a+x linuxdeployqt-continuous-x86_64.AppImage
+           export VERSION=$(printf "master-`git rev-list HEAD --count`-` git -C . rev-parse --short HEAD`")
+           ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -appimage
+    - name: Rename AppImage
+      if: ${{ matrix.sqlcipher == 1 }}
+      run: |
+           export FILE=$(ls DB_Browser_for_SQLite*.AppImage)
+           export FILE=${FILE/SQLite/SQLCipher}
+           mv DB_Browser_for_SQLite*.AppImage $FILE
+    - name: Upload to release page
+      env:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      run: |
+           find appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq
+           wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
+           chmod a+x upload.sh
+           UPLOADTOOL_ISPRERELEASE=true ./upload.sh DB_Browser_for_*.AppImage
