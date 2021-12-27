@@ -600,7 +600,7 @@ void Settings::restoreDefaults ()
 
 void Settings::exportSettings(const QString& fileName)
 {
-    QSettings* exportSettings = new QSettings(fileName, QSettings::IniFormat);
+    QSettings exportSettings(fileName, QSettings::IniFormat);
 
     const QStringList groups = settings->childGroups();
     for(const QString& currentGroup : groups)
@@ -609,9 +609,9 @@ void Settings::exportSettings(const QString& fileName)
         const QStringList keys = settings->childKeys();
         for(const QString& currentKey : keys)
         {
-            exportSettings->beginGroup(currentGroup);
-            exportSettings->setValue(currentKey, getValue((currentGroup.toStdString()), (currentKey.toStdString())));
-            exportSettings->endGroup();
+            exportSettings.beginGroup(currentGroup);
+            exportSettings.setValue(currentKey, getValue((currentGroup.toStdString()), (currentKey.toStdString())));
+            exportSettings.endGroup();
         }
         settings->endGroup();
     }
@@ -622,20 +622,20 @@ bool Settings::importSettings(const QString& fileName)
     if(!isVaildSettingsFile(fileName))
         return false;
 
-    QSettings* importSettings = new QSettings(fileName, QSettings::IniFormat);
+    QSettings importSettings(fileName, QSettings::IniFormat);
 
-    const QStringList groups = importSettings->childGroups();
+    const QStringList groups = importSettings.childGroups();
     for(const QString& currentGroup : groups)
     {
-        importSettings->beginGroup(currentGroup);
-        const QStringList keys = importSettings->childKeys();
+        importSettings.beginGroup(currentGroup);
+        const QStringList keys = importSettings.childKeys();
         for(const QString& currentKey : keys)
         {
             settings->beginGroup(currentGroup);
-            settings->setValue(currentKey, importSettings->value(currentKey));
+            settings->setValue(currentKey, importSettings.value(currentKey));
             settings->endGroup();
         }
-        importSettings->endGroup();
+        importSettings.endGroup();
     }
 
     m_hCache.clear();
