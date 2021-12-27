@@ -833,10 +833,10 @@ void MainWindow::attachPlot(ExtendedTableWidget* tableWidget, SqliteTableModel* 
 {
     plotDock->updatePlot(model, settings, true, keepOrResetSelection);
     // Disconnect previous connection
-    disconnect(plotDock, SIGNAL(pointsSelected(int,int)), nullptr, nullptr);
+    disconnect(plotDock, &PlotDock::pointsSelected, nullptr, nullptr);
     if(tableWidget) {
         // Connect plot selection to the current table results widget.
-        connect(plotDock, SIGNAL(pointsSelected(int,int)), tableWidget, SLOT(selectTableLines(int, int)));
+        connect(plotDock, &PlotDock::pointsSelected, tableWidget, &ExtendedTableWidget::selectTableLines);
         connect(tableWidget, &ExtendedTableWidget::destroyed, plotDock, &PlotDock::resetPlot);
         // Disconnect requestUrlOrFileOpen in order to make sure that there is only one connection. Otherwise we can open it several times.
         disconnect(tableWidget, &ExtendedTableWidget::requestUrlOrFileOpen, this, &MainWindow::openUrlOrFile);
