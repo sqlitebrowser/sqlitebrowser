@@ -310,7 +310,7 @@ private:
     void collationNeeded(void* pData, sqlite3* db, int eTextRep, const char* sCollationName);
     void errorLogCallback(void* user_data, int error_code, const char* message);
 
-    bool tryEncryptionSettings(const QString& filename, bool* encrypted, CipherSettings*& cipherSettings) const;
+    bool tryEncryptionSettings(const QString& filename, bool* encrypted, CipherSettings* cipherSettings) const;
 
     bool disableStructureUpdateChecks;
 

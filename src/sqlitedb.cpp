@@ -190,8 +190,8 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
     disableStructureUpdateChecks = false;
 
     // Get encryption settings for database file
-    CipherSettings* cipherSettings = nullptr;
-    if(tryEncryptionSettings(db, &isEncrypted, cipherSettings) == false)
+    CipherSettings cipherSettings;
+    if(tryEncryptionSettings(db, &isEncrypted, &cipherSettings) == false)
         return false;
 
     // Open database file
@@ -203,17 +203,16 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
 
     // Set encryption details if database is encrypted
 #ifdef ENABLE_SQLCIPHER
-    if(isEncrypted && cipherSettings)
+    if(isEncrypted)
     {
-        executeSQL("PRAGMA key = " + cipherSettings->getPassword(), false, false);
-        executeSQL("PRAGMA cipher_page_size = " + std::to_string(cipherSettings->getPageSize()), false, false);
-        executeSQL("PRAGMA kdf_iter = " + std::to_string(cipherSettings->getKdfIterations()), false, false);
-        executeSQL("PRAGMA cipher_hmac_algorithm = " + cipherSettings->getHmacAlgorithm(), false, false);
-        executeSQL("PRAGMA cipher_kdf_algorithm = " + cipherSettings->getKdfAlgorithm(), false, false);
-        executeSQL("PRAGMA cipher_plaintext_header_size = " + std::to_string(cipherSettings->getPlaintextHeaderSize()), false, false);
+        executeSQL("PRAGMA key = " + cipherSettings.getPassword(), false, false);
+        executeSQL("PRAGMA cipher_page_size = " + std::to_string(cipherSettings.getPageSize()), false, false);
+        executeSQL("PRAGMA kdf_iter = " + std::to_string(cipherSettings.getKdfIterations()), false, false);
+        executeSQL("PRAGMA cipher_hmac_algorithm = " + cipherSettings.getHmacAlgorithm(), false, false);
+        executeSQL("PRAGMA cipher_kdf_algorithm = " + cipherSettings.getKdfAlgorithm(), false, false);
+        executeSQL("PRAGMA cipher_plaintext_header_size = " + std::to_string(cipherSettings.getPlaintextHeaderSize()), false, false);
     }
 #endif
-    delete cipherSettings;
 
     if (_db)
     {
@@ -331,42 +330,42 @@ bool DBBrowserDB::attach(const QString& filePath, QString attach_as)
 
 #ifdef ENABLE_SQLCIPHER
     // Try encryption settings
-    CipherSettings* cipherSettings = nullptr;
+    CipherSettings cipherSettings;
     bool is_encrypted;
-    if(tryEncryptionSettings(filePath, &is_encrypted, cipherSettings) == false)
+    if(tryEncryptionSettings(filePath, &is_encrypted, &cipherSettings) == false)
         return false;
 
     // Attach database
     std::string key;
-    if(cipherSettings && is_encrypted)
-        key = "KEY " + cipherSettings->getPassword();
+    if(is_encrypted)
+        key = "KEY " + cipherSettings.getPassword();
     else
         key = "KEY ''";
 
     // Only apply cipher settings if the database is encrypted
-    if(cipherSettings && is_encrypted)
+    if(is_encrypted)
     {
-        if(!executeSQL("PRAGMA cipher_default_page_size = " + std::to_string(cipherSettings->getPageSize()), false))
+        if(!executeSQL("PRAGMA cipher_default_page_size = " + std::to_string(cipherSettings.getPageSize()), false))
         {
             QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
             return false;
         }
-        if(!executeSQL("PRAGMA cipher_default_kdf_iter = " + std::to_string(cipherSettings->getKdfIterations()), false))
+        if(!executeSQL("PRAGMA cipher_default_kdf_iter = " + std::to_string(cipherSettings.getKdfIterations()), false))
         {
             QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
             return false;
         }
-        if(!executeSQL("PRAGMA cipher_hmac_algorithm = " + cipherSettings->getHmacAlgorithm(), false))
+        if(!executeSQL("PRAGMA cipher_hmac_algorithm = " + cipherSettings.getHmacAlgorithm(), false))
         {
             QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
             return false;
         }
-        if(!executeSQL("PRAGMA cipher_kdf_algorithm = " + cipherSettings->getKdfAlgorithm(), false))
+        if(!executeSQL("PRAGMA cipher_kdf_algorithm = " + cipherSettings.getKdfAlgorithm(), false))
         {
             QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
             return false;
         }
-        if(!executeSQL("PRAGMA cipher_plaintext_header_size = " + std::to_string(cipherSettings->getPlaintextHeaderSize()), false))
+        if(!executeSQL("PRAGMA cipher_plaintext_header_size = " + std::to_string(cipherSettings.getPlaintextHeaderSize()), false))
         {
             QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
             return false;
@@ -380,7 +379,6 @@ bool DBBrowserDB::attach(const QString& filePath, QString attach_as)
     }
 
     // Clean up cipher settings
-    delete cipherSettings;
 #else
     // Attach database
     if(!executeSQL("ATTACH " + sqlb::escapeString(filePath.toStdString()) + " AS " + sqlb::escapeIdentifier(attach_as.toStdString()), false))
@@ -396,7 +394,7 @@ bool DBBrowserDB::attach(const QString& filePath, QString attach_as)
     return true;
 }
 
-bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted, CipherSettings*& cipherSettings) const
+bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted, CipherSettings* cipherSettings) const
 {
     lastErrorMessage = tr("Invalid file format");
 
@@ -431,7 +429,6 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
 #endif
 
     *encrypted = false;
-    cipherSettings = nullptr;
     while(true)
     {
         const std::string statement = "SELECT COUNT(*) FROM sqlite_master;";
@@ -482,9 +479,6 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
                     std::string hmacAlgorithm = dotenv.value(databaseFileName + "_hmacAlgorithm", QString::fromStdString(enc_default_hmac_algorithm)).toString().toStdString();
                     std::string kdfAlgorithm = dotenv.value(databaseFileName + "_kdfAlgorithm", QString::fromStdString(enc_default_kdf_algorithm)).toString().toStdString();
 
-                    delete cipherSettings;
-                    cipherSettings = new CipherSettings();
-
                     cipherSettings->setKeyFormat(keyFormat);
                     cipherSettings->setPassword(password);
                     cipherSettings->setPageSize(pageSize);
@@ -501,14 +495,11 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
             } else {
 	            CipherDialog *cipherDialog = new CipherDialog(nullptr, false);
 	            if(cipherDialog->exec())
-	            {
-	                delete cipherSettings;
-	                cipherSettings = new CipherSettings(cipherDialog->getCipherSettings());
+                {
+                    *cipherSettings = cipherDialog->getCipherSettings();
 	            } else {
 	                sqlite3_close(dbHandle);
-	                *encrypted = false;
-	                delete cipherSettings;
-	                cipherSettings = nullptr;
+                    *encrypted = false;
 	                return false;
 	            }
 	        }
@@ -516,11 +507,7 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
             // Close and reopen database first to be in a clean state after the failed read attempt from above
             sqlite3_close(dbHandle);
             if(sqlite3_open_v2(filePath.toUtf8(), &dbHandle, SQLITE_OPEN_READONLY, nullptr) != SQLITE_OK)
-            {
-                delete cipherSettings;
-                cipherSettings = nullptr;
                 return false;
-            }
 
             // Set the key
             sqlite3_exec(dbHandle, ("PRAGMA key = " + cipherSettings->getPassword()).c_str(), nullptr, nullptr, nullptr);
