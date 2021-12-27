@@ -48,7 +48,7 @@ body:
     validations:
       required: true
   - type: dropdown
-    id: browsers
+    id: os
     attributes:
       label: What OS are you seeing the problem on?
       multiple: true
@@ -57,9 +57,9 @@ body:
         - Linux
         - MacOS
         - Other
-   validations:
+    validations:
       required: true
- - type: textarea
+  - type: textarea
     id: logs
     attributes:
       label: Relevant log output
