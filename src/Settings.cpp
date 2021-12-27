@@ -496,13 +496,13 @@ QColor Settings::getDefaultColorValue(const std::string& group, const std::strin
             break;
         case LightStyle :
             if(name == "null_fg_colour" || name == "bin_fg_colour")
-                return QColor("#A5A9AC");
+                return QColor(0xA5, 0xA9, 0xAC);
             if(name == "null_bg_colour" || name == "bin_bg_colour")
-                return QColor("#FAFAFA");
+                return QColor(0xFA, 0xFA, 0xFA);
             if(name == "reg_fg_colour")
-                return QColor("#000000");
+                return QColor(0x00, 0x00, 0x00);
             if(name == "reg_bg_colour")
-                return QColor("#FAFAFA");
+                return QColor(0xFA, 0xFA, 0xFA);
             break;
         }
     }
@@ -526,8 +526,8 @@ QColor Settings::getDefaultColorValue(const std::string& group, const std::strin
                 backgroundColour = QColor(0x19, 0x23, 0x2D);
                 break;
             case LightStyle :
-                foregroundColour = QColor("#000000");
-                backgroundColour = QColor("#FAFAFA");
+                foregroundColour = QColor(0x00, 0x00, 0x00);
+                backgroundColour = QColor(0xFA, 0xFA, 0xFA);
                 break;
             }
             if(name == "foreground_colour")
