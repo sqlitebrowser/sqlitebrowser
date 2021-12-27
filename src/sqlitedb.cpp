@@ -747,10 +747,6 @@ bool DBBrowserDB::close()
 }
 
 bool DBBrowserDB::saveAs(const std::string& filename) {
-    int rc;
-    sqlite3_backup *pBackup;
-    sqlite3 *pTo;
-
     if(!_db)
         return false;
 
@@ -758,7 +754,8 @@ bool DBBrowserDB::saveAs(const std::string& filename) {
 
     // Open the database file identified by filename. Exit early if this fails
     // for any reason.
-    rc = sqlite3_open(filename.c_str(), &pTo);
+    sqlite3* pTo;
+    int rc = sqlite3_open(filename.c_str(), &pTo);
     if(rc!=SQLITE_OK) {
         qWarning() << tr("Cannot open destination file: '%1'").arg(filename.c_str());
         return false;
@@ -775,7 +772,7 @@ bool DBBrowserDB::saveAs(const std::string& filename) {
         // connection pTo. If no error occurred, then the error code belonging
         // to pTo is set to SQLITE_OK.
         //
-        pBackup = sqlite3_backup_init(pTo, "main", _db, "main");
+        sqlite3_backup* pBackup = sqlite3_backup_init(pTo, "main", _db, "main");
         if(pBackup == nullptr) {
             qWarning() << tr("Cannot backup to file: '%1'. Message: %2").arg(filename.c_str(), sqlite3_errmsg(pTo));
             sqlite3_close(pTo);
