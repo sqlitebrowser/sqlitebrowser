@@ -631,7 +631,11 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
     sQuery.append(")");
     sqlite3_stmt* stmt;
     auto pDb = pdb->get(tr("importing CSV"));
-    sqlite3_prepare_v2(pDb.get(), sQuery.c_str(), static_cast<int>(sQuery.size()), &stmt, nullptr);
+    if(sqlite3_prepare_v2(pDb.get(), sQuery.c_str(), static_cast<int>(sQuery.size()), &stmt, nullptr) != SQLITE_OK)
+    {
+        rollback(this, pdb, nullptr, restorepointName, 0, tr("Could not prepare INSERT statement: %1").arg(pdb->lastError()));
+        return false;
+    }
 
     // Parse entire file
     size_t lastRowNum = 0;
