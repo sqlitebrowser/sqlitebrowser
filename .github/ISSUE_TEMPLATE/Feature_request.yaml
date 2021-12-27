@@ -20,7 +20,7 @@ body:
     validations:
       required: false
   - type: textarea
-    id: examples
+    id: screenshot
     attributes:
       label: Do you have a screenshot? Please add screenshots to help explain your idea.
     validations:
