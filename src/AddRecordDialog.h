@@ -40,7 +40,7 @@ private slots:
     void accept() override;
     void itemChanged(QTreeWidgetItem* item, int column);
     void help();
-    void on_buttonBox_clicked(QAbstractButton* button);
+    void buttonBoxClicked(QAbstractButton* button);
 
 private:
     Ui::AddRecordDialog* ui;

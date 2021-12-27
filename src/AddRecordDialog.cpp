@@ -351,7 +351,7 @@ void AddRecordDialog::help()
     QWhatsThis::enterWhatsThisMode();
 }
 
-void AddRecordDialog::on_buttonBox_clicked(QAbstractButton* button)
+void AddRecordDialog::buttonBoxClicked(QAbstractButton* button)
 {
     if (button == ui->buttonBox->button(QDialogButtonBox::Cancel))
         reject();

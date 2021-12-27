@@ -48,7 +48,6 @@ PlotDock::PlotDock(QWidget* parent)
     ui->comboPointShape->setCurrentIndex(Settings::getValue("PlotDock", "pointShape").toInt());
 
     // Connect signals
-    connect(ui->treePlotColumns, &QTreeWidget::itemChanged, this, &PlotDock::on_treePlotColumns_itemChanged);
     connect(ui->plotWidget, &QCustomPlot::selectionChangedByUser, this, &PlotDock::selectionChanged);
 
     // connect slots that takes care that when an axis is selected, only that direction can be dragged and zoomed:
@@ -573,7 +572,7 @@ void PlotDock::resetPlot()
     updatePlot(nullptr);
 }
 
-void PlotDock::on_treePlotColumns_itemChanged(QTreeWidgetItem* changeitem, int column)
+void PlotDock::columnItemChanged(QTreeWidgetItem* changeitem, int column)
 {
     // disable change updates, or we get unwanted redrawing and weird behavior
     ui->treePlotColumns->blockSignals(true);
@@ -639,7 +638,7 @@ void PlotDock::on_treePlotColumns_itemChanged(QTreeWidgetItem* changeitem, int c
     updatePlot(m_currentPlotModel, m_currentTableSettings, false);
 }
 
-void PlotDock::on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem* item, int column)
+void PlotDock::columnItemDoubleClicked(QTreeWidgetItem* item, int column)
 {
     // disable change updates, or we get unwanted redrawing and weird behavior
     ui->treePlotColumns->blockSignals(true);
@@ -684,7 +683,7 @@ void PlotDock::on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem* item, int c
     updatePlot(m_currentPlotModel, m_currentTableSettings, false);
 }
 
-void PlotDock::on_butSavePlot_clicked()
+void PlotDock::savePlot()
 {
     QString fileName = FileDialog::getSaveFileName(
                            CreateDataFile,
@@ -717,7 +716,7 @@ void PlotDock::on_butSavePlot_clicked()
     }
 }
 
-void PlotDock::on_comboLineType_currentIndexChanged(int index)
+void PlotDock::lineTypeChanged(int index)
 {
     Q_ASSERT(index >= QCPGraph::lsNone &&
              index <= QCPGraph::lsImpulse);
@@ -760,7 +759,7 @@ void PlotDock::on_comboLineType_currentIndexChanged(int index)
     }
 }
 
-void PlotDock::on_comboPointShape_currentIndexChanged(int index)
+void PlotDock::pointShapeChanged(int index)
 {
     // WARN: because ssDot point shape is removed
     if (index > 0) index += 1;

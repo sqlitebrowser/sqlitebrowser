@@ -672,7 +672,7 @@ void PreferencesDialog::updatePreviewFont()
     }
 }
 
-void PreferencesDialog::on_buttonManageFileExtension_clicked()
+void PreferencesDialog::showFileExtensionManager()
 {
     FileExtensionManager *manager = new FileExtensionManager(m_dbFileExtensions, this);
 
@@ -682,7 +682,7 @@ void PreferencesDialog::on_buttonManageFileExtension_clicked()
     }
 }
 
-void PreferencesDialog::on_buttonBox_clicked(QAbstractButton* button)
+void PreferencesDialog::buttonBoxClicked(QAbstractButton* button)
 {
     if (button == ui->buttonBox->button(QDialogButtonBox::Cancel))
         reject();

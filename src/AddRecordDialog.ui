@@ -139,7 +139,7 @@
    <sender>buttonBox</sender>
    <signal>clicked(QAbstractButton*)</signal>
    <receiver>AddRecordDialog</receiver>
-   <slot>on_buttonBox_clicked(QAbstractButton*)</slot>
+   <slot>buttonBoxClicked(QAbstractButton*)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>324</x>
@@ -153,6 +153,6 @@
   </connection>
  </connections>
  <slots>
-  <slot>itemChanged()</slot>
+  <slot>buttonBoxClicked(QAbstractButton*)</slot>
  </slots>
 </ui>

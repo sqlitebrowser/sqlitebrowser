@@ -2419,13 +2419,13 @@ void MainWindow::checkNewVersion(const QString& versionstring, const QString& ur
     }
 }
 
-void MainWindow::on_actionWiki_triggered() const
+void MainWindow::openLinkWiki() const
 {
     QDesktopServices::openUrl(QUrl("https://github.com/sqlitebrowser/sqlitebrowser/wiki"));
 }
 
 // 'Help | Bug Report...' link will set an appropriate body, add the system information and set the label 'bug' automatically to the issue
-void MainWindow::on_actionBug_report_triggered() const
+void MainWindow::openLinkBugReport() const
 {
     const QString version = Application::versionString();
     const QString os = QSysInfo::prettyProductName();
@@ -2464,7 +2464,7 @@ void MainWindow::on_actionBug_report_triggered() const
 }
 
 // 'Help | Feature Request...' link will set an appropriate body and add the label 'enhancement' automatically to the issue
-void MainWindow::on_actionFeature_Request_triggered() const
+void MainWindow::openLinkFeatureRequest() const
 {
     QUrlQuery query;
 
@@ -2478,17 +2478,17 @@ void MainWindow::on_actionFeature_Request_triggered() const
     QDesktopServices::openUrl(url);
 }
 
-void MainWindow::on_actionSqlCipherFaq_triggered() const
+void MainWindow::openLinkSqlCipherFaq() const
 {
     QDesktopServices::openUrl(QUrl("https://discuss.zetetic.net/c/sqlcipher/sqlcipher-faq"));
 }
 
-void MainWindow::on_actionWebsite_triggered() const
+void MainWindow::openLinkWebsite() const
 {
     QDesktopServices::openUrl(QUrl("https://sqlitebrowser.org"));
 }
 
-void MainWindow::on_actionDonatePatreon_triggered() const
+void MainWindow::openLinkDonatePatreon() const
 {
     QDesktopServices::openUrl(QUrl("https://www.patreon.com/bePatron?u=11578749"));
 }

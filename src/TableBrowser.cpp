@@ -823,7 +823,7 @@ void TableBrowser::applyViewportSettings(const BrowseDataTableSettings& storedDa
     unlockViewEditing(!storedData.unlockViewPk.isEmpty() && storedData.unlockViewPk != "_rowid_", storedData.unlockViewPk);
 
     // Column hidden status
-    on_actionShowAllColumns_triggered();
+    showAllColumns();
     for(auto hiddenIt=storedData.hiddenColumns.cbegin();hiddenIt!=storedData.hiddenColumns.cend();++hiddenIt)
         hideColumns(hiddenIt->first, hiddenIt->second);
 
@@ -1064,7 +1064,7 @@ void TableBrowser::hideColumns(int column, bool hide)
     emit projectModified();
 }
 
-void TableBrowser::on_actionShowAllColumns_triggered()
+void TableBrowser::showAllColumns()
 {
     for(int col = 1; col < ui->dataTable->model()->columnCount(); col++)
     {
@@ -1377,12 +1377,7 @@ void TableBrowser::selectTableLine(int lineToSelect)
     ui->dataTable->selectTableLine(lineToSelect);
 }
 
-void TableBrowser::on_actionClearFilters_triggered()
-{
-    clearFilters();
-}
-
-void TableBrowser::on_actionClearSorting_triggered()
+void TableBrowser::clearSorting()
 {
     // Get the current list of sort columns
     auto& columns = m_settings[currentlyBrowsedTableName()].sortColumns;

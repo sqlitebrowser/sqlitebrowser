@@ -202,12 +202,12 @@ private slots:
     void saveSqlResultsAsView();
     void loadExtension();
     void checkNewVersion(const QString& versionstring, const QString& url);
-    void on_actionWiki_triggered() const;
-    void on_actionBug_report_triggered() const;
-    void on_actionFeature_Request_triggered() const;
-    void on_actionSqlCipherFaq_triggered() const;
-    void on_actionWebsite_triggered() const;
-    void on_actionDonatePatreon_triggered() const;
+    void openLinkWiki() const;
+    void openLinkBugReport() const;
+    void openLinkFeatureRequest() const;
+    void openLinkSqlCipherFaq() const;
+    void openLinkWebsite() const;
+    void openLinkDonatePatreon() const;
     bool loadProject(QString filename = QString(), bool readOnly = false);
     void saveProject();
     void saveProjectAs();

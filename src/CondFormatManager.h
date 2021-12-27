@@ -47,7 +47,7 @@ private slots:
     void moveItem(int offset);
     void upItem();
     void downItem();
-    void on_buttonBox_clicked(QAbstractButton* button);
+    void buttonBoxClicked(QAbstractButton* button);
     
 public slots:
     void itemClicked(QTreeWidgetItem* item, int column);

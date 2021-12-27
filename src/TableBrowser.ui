@@ -1446,6 +1446,54 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionClearFilters</sender>
+   <signal>triggered()</signal>
+   <receiver>TableBrowser</receiver>
+   <slot>clearFilters()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionClearSorting</sender>
+   <signal>triggered()</signal>
+   <receiver>TableBrowser</receiver>
+   <slot>clearSorting()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionShowAllColumns</sender>
+   <signal>triggered()</signal>
+   <receiver>TableBrowser</receiver>
+   <slot>showAllColumns()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>refresh()</slot>
@@ -1467,5 +1515,8 @@
   <slot>setDefaultTableEncoding()</slot>
   <slot>hideColumns()</slot>
   <slot>setTableEncoding()</slot>
+  <slot>clearFilters()</slot>
+  <slot>clearSorting()</slot>
+  <slot>showAllColumns()</slot>
  </slots>
 </ui>
