@@ -777,7 +777,7 @@ bool DBBrowserDB::saveAs(const std::string& filename) {
         //
         pBackup = sqlite3_backup_init(pTo, "main", _db, "main");
         if(pBackup == nullptr) {
-            qWarning() << tr("Cannot backup to file: '%1'. Message: %2").arg(filename.c_str()).arg(sqlite3_errmsg(pTo));
+            qWarning() << tr("Cannot backup to file: '%1'. Message: %2").arg(filename.c_str(), sqlite3_errmsg(pTo));
             sqlite3_close(pTo);
             return false;
         } else {
@@ -795,7 +795,7 @@ bool DBBrowserDB::saveAs(const std::string& filename) {
 
         return true;
     } else {
-        qWarning() << tr("Cannot backup to file: '%1'. Message: %2").arg(filename.c_str()).arg(sqlite3_errmsg(pTo));
+        qWarning() << tr("Cannot backup to file: '%1'. Message: %2").arg(filename.c_str(), sqlite3_errmsg(pTo));
         // Close failed database connection.
         sqlite3_close(pTo);
         return false;
