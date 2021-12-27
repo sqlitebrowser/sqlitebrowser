@@ -41,7 +41,7 @@ private:
 
     QStringList listTables;
     QStringList listFunctions;
-    QStringList keywordPatterns;
+    static const QStringList keywordPatterns;
 };
 
 #endif
