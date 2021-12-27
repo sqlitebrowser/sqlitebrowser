@@ -1,0 +1,73 @@
+name: Bug Report
+description: Create a report to help us improve
+title: ""
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: textarea
+    id: what-did-you-do
+    attributes:
+      label: What did you do?
+      description: Also tell us, what did you do before the issue appeared?
+      placeholder: Tell us what you did!
+      value: "I selected/clicked/opened..."
+    validations:
+      required: true
+  - type: textarea
+    id: what-did-you-expect
+    attributes:
+      label: What did you expect to see?
+      description: Tell us, what did you expect to happen?
+      placeholder: Tell us what you expected.
+      value: "I expected that..."
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What did you see instead?
+      description: Finally tell us, what did happen, that you did not expect?
+      placeholder: Tell us what you see!
+      value: "What happened instead was..."
+    validations:
+      required: true
+  - type: dropdown
+    id: version
+    attributes:
+      label: Version
+      description: What version of our software are you running?
+      options:
+        - 3.12.2
+        - 3.12.1
+        - 3.12.0
+        - 3.11.x
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: What OS are you seeing the problem on?
+      multiple: true
+      options:
+        - Windows
+        - Linux
+        - MacOS
+        - Other
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: shell
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Prevention against duplicate issues
+      description: By submitting this issue, you confirm that you have searched for similarissues before opening this.
+      options:
+        - label: I have searched for similar issues
+          required: true
