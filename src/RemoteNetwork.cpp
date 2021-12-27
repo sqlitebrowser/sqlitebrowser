@@ -34,7 +34,7 @@ RemoteNetwork::RemoteNetwork() :
 
     // Load CA certs from resource file
     QDir dirCaCerts(":/certs");
-    QStringList caCertsList = dirCaCerts.entryList();
+    const QStringList caCertsList = dirCaCerts.entryList();
     QList<QSslCertificate> caCerts;
     for(const QString& caCertName : caCertsList)
         caCerts += QSslCertificate::fromPath(":/certs/" + caCertName);
@@ -58,7 +58,7 @@ void RemoteNetwork::reloadSettings()
 {
     // Load all configured client certificates
     m_clientCertFiles.clear();
-    auto client_certs = Settings::getValue("remote", "client_certificates").toStringList();
+    const auto client_certs = Settings::getValue("remote", "client_certificates").toStringList();
     for(const QString& path : client_certs)
     {
         QFile file(path);

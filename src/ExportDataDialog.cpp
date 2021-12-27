@@ -328,7 +328,7 @@ void ExportDataDialog::accept()
         exportQuery(m_sQuery, sFilename);
     } else {
         // called from the File export menu
-        QList<QListWidgetItem*> selectedItems = ui->listTables->selectedItems();
+        const QList<QListWidgetItem*> selectedItems = ui->listTables->selectedItems();
 
         if(selectedItems.isEmpty())
         {

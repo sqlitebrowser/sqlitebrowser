@@ -2146,7 +2146,7 @@ void DBBrowserDB::loadExtensionsFromSettings()
 
     sqlite3_enable_load_extension(_db, Settings::getValue("extensions", "enable_load_extension").toBool());
 
-    QStringList list = Settings::getValue("extensions", "list").toStringList();
+    const QStringList list = Settings::getValue("extensions", "list").toStringList();
     for(const QString& ext : list)
     {
         if(loadExtension(ext) == false)

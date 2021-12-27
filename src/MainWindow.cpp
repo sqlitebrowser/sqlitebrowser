@@ -1383,7 +1383,7 @@ void MainWindow::importTableFromCSV()
                     << FILE_FILTER_DAT
                     << FILE_FILTER_ALL;
 
-        QStringList wFiles = FileDialog::getOpenFileNames(
+        const QStringList wFiles = FileDialog::getOpenFileNames(
                                  OpenCSVFile,
                                  this,
                                  tr("Choose text files"),
@@ -1816,7 +1816,7 @@ void MainWindow::dragEnterEvent(QDragEnterEvent *event)
 
 void MainWindow::dropEvent(QDropEvent *event)
 {
-    QList<QUrl> urls = event->mimeData()->urls();
+    const QList<QUrl> urls = event->mimeData()->urls();
 
     if( urls.isEmpty() )
         return;
@@ -2141,7 +2141,7 @@ void MainWindow::changeSqlTab(int index)
 
 void MainWindow::openSqlFile()
 {
-    QStringList wfiles = FileDialog::getOpenFileNames(
+    const QStringList wfiles = FileDialog::getOpenFileNames(
                 OpenSQLFile,
                 this,
                 tr("Select SQL file to open"),
@@ -3600,9 +3600,9 @@ void MainWindow::restoreOpenTabs(QString tabs)
     // Split the tab list, skipping the empty parts so the empty string turns to an empty list
     // and not a list of one empty string.
 #if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
-    QStringList tabList = tabs.split(' ', QString::SkipEmptyParts);
+    const QStringList tabList = tabs.split(' ', QString::SkipEmptyParts);
 #else
-    QStringList tabList = tabs.split(' ', Qt::SkipEmptyParts);
+    const QStringList tabList = tabs.split(' ', Qt::SkipEmptyParts);
 #endif
 
     // Clear the tabs and then add them in the order specified by the setting.

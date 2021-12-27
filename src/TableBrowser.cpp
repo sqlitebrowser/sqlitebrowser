@@ -1224,7 +1224,7 @@ void TableBrowser::showRecordPopupMenu(const QPoint& pos)
         // Select the row if it is not already in the selection.
         QModelIndexList rowList = ui->dataTable->selectionModel()->selectedRows();
         bool found = false;
-        for (const QModelIndex& index : rowList) {
+        for (const QModelIndex& index : qAsConst(rowList)) {
             if (row == index.row()) {
                 found = true;
                 break;

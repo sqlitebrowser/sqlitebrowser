@@ -575,7 +575,7 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
 
     // Insert the columns in a set, since they could be non-contiguous.
     std::set<int> colsInIndexes, rowsInIndexes;
-    for(const QModelIndex & idx : indices) {
+    for(const QModelIndex & idx : qAsConst(indices)) {
         colsInIndexes.insert(idx.column());
         rowsInIndexes.insert(idx.row());
     }

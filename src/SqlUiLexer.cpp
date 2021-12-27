@@ -65,7 +65,7 @@ void SqlUiLexer::setupAutoCompletion()
             // Data types
             << "INT" << "INTEGER" << "REAL" << "TEXT" << "BLOB" << "NUMERIC" << "CHAR";
     bool upperKeywords = Settings::getValue("editor", "upper_keywords").toBool();
-    for(const QString& keyword : keywordPatterns)
+    for(const QString& keyword : qAsConst(keywordPatterns))
     {
         if (upperKeywords)
             autocompleteApi->add(keyword + "?" + QString::number(ApiCompleterIconIdKeyword));
@@ -188,7 +188,7 @@ void SqlUiLexer::setupAutoCompletion()
 
 
     listFunctions.clear();
-    for(const QString& keyword : functionPatterns)
+    for(const QString& keyword : qAsConst(functionPatterns))
     {
         QString fn = keyword.left(keyword.indexOf('('));
         QString descr = keyword.mid(keyword.indexOf('('));

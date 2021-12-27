@@ -151,10 +151,10 @@ void RemoteDock::reloadSettings()
     ui->comboUser->addItem(tr("Select an identity to connect"), "dummy");
 
     // Load list of client certs
-    QStringList client_certs = Settings::getValue("remote", "client_certificates").toStringList();
+    const QStringList client_certs = Settings::getValue("remote", "client_certificates").toStringList();
     for(const QString& file : client_certs)
     {
-        auto certs = QSslCertificate::fromPath(file);
+        const auto certs = QSslCertificate::fromPath(file);
         for(const QSslCertificate& cert : certs)
             ui->comboUser->addItem(cert.subjectInfo(QSslCertificate::CommonName).at(0), file);
     }

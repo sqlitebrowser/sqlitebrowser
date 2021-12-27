@@ -172,10 +172,10 @@ void PreferencesDialog::loadSettings()
         }
     }
     {
-        QStringList client_certs = Settings::getValue("remote", "client_certificates").toStringList();
+        const QStringList client_certs = Settings::getValue("remote", "client_certificates").toStringList();
         for(const QString& file : client_certs)
         {
-            auto certs = QSslCertificate::fromPath(file);
+            const auto certs = QSslCertificate::fromPath(file);
             for(const QSslCertificate& cert : certs)
                 addClientCertToTable(file, cert);
         }
@@ -322,7 +322,7 @@ void PreferencesDialog::saveSettings(bool accept)
             new_client_certs.push_back(copy_to);
         }
     }
-    for(const QString& file : old_client_certs)
+    for(const QString& file : qAsConst(old_client_certs))
     {
         // Now only the deleted client certs are still in the old list. Delete the cert files associated with them.
         QFile::remove(file);
@@ -451,7 +451,7 @@ void PreferencesDialog::fillLanguageBox()
     // Get available *.qm files from translation dir near executable as well as from resources
     QFileInfoList file_infos = translationsDir.entryInfoList();
     file_infos += QDir(":/translations").entryInfoList();
-    for(const QFileInfo& file : file_infos)
+    for(const QFileInfo& file : qAsConst(file_infos))
     {
         QLocale locale(file.baseName().remove("sqlb_"));
 
