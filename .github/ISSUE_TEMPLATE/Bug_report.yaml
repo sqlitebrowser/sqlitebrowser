@@ -57,7 +57,9 @@ body:
         - Linux
         - MacOS
         - Other
-  - type: textarea
+   validations:
+      required: true
+ - type: textarea
     id: logs
     attributes:
       label: Relevant log output
@@ -67,7 +69,7 @@ body:
     id: terms
     attributes:
       label: Prevention against duplicate issues
-      description: By submitting this issue, you confirm that you have searched for similarissues before opening this.
+      description: By submitting this issue, you confirm that you have searched for similar issues before opening a new one. You could comment or subscribe to the found issue.
       options:
         - label: I have searched for similar issues
           required: true
