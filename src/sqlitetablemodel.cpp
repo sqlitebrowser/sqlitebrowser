@@ -223,7 +223,8 @@ QVariant SqliteTableModel::headerData(int section, Qt::Orientation orientation, 
                     // Append sort indicator with direction and ordinal number in superscript style
                     if (sortedColumn.expr == plainHeader) {
                         sortIndicator = sortedColumn.direction == sqlb::OrderBy::Ascending ? " ▴" : " ▾";
-                        sortIndicator.append(toSuperScript(i+1));
+                        if(m_query.orderBy().size() > 1)
+                            sortIndicator.append(toSuperScript(i+1));
                         break;
                     }
                 }
