@@ -27,7 +27,7 @@ body:
     id: what-happened
     attributes:
       label: What did you see instead?
-      description: Finally tell us, what happened, that you did not expect?
+      description: Finally tell us, what happened, that you did not expect? Screenshots or video recordings help.
       placeholder: What happened instead was...
     validations:
       required: true
@@ -41,6 +41,7 @@ body:
         - 3.12.1
         - 3.12.0
         - 3.11.x
+        - 3.12.99 (nightly)
         - Other
     validations:
       required: true
@@ -56,11 +57,19 @@ body:
         - Other
     validations:
       required: true
+  - type: input
+    id: os-version
+    attributes:
+      label: OS version
+      description: "Identify the OS version"
+      placeholder: "Windows 10, Ubuntu Linux 20.04..."
+    validations:
+      required: false
   - type: textarea
     id: logs
     attributes:
       label: Relevant log output
-      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      description: Please copy and paste any relevant log output (console, "SQL Log" pane, etc.). This will be automatically formatted into code, so no need for backticks.
       render: shell
   - type: checkboxes
     id: terms
