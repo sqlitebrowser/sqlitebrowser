@@ -1,3 +1,5 @@
+#define QT_NO_FLOAT16_OPERATORS     // This works around https://bugreports.qt.io/browse/QTBUG-72073 which makes the build fail on MSVC 2017 and Qt 5.12
+
 #include "PlotDock.h"
 #include "ui_PlotDock.h"
 #include "Settings.h"
