@@ -205,18 +205,31 @@ static QString toSuperScript(T number)
 
 QVariant SqliteTableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (role != Qt::DisplayRole && role != Qt::EditRole)
+    if (role != Qt::DisplayRole && role != Qt::EditRole && role != Qt::DecorationRole)
         return QVariant();
 
     if (orientation == Qt::Horizontal)
     {
+        size_t column = static_cast<size_t>(section);
         // if we have a VIRTUAL table the model will not be valid, with no header data
-        if(static_cast<size_t>(section) < m_headers.size()) {
+        if(column < m_headers.size()) {
             const std::string plainHeader = m_headers.at(static_cast<size_t>(section));
             // In the edit role, return a plain column name, but in the display role, add the sort indicator.
-            if (role == Qt::EditRole)
+            switch (role) {
+            case Qt::EditRole:
                 return QString::fromStdString(plainHeader);
-            else {
+            case Qt::DecorationRole: {
+                bool is_key = false;
+                if (contains(m_query.rowIdColumns(), m_headers.at(column))) {
+                    is_key = true;
+                } else if (m_table_of_query) {
+                    auto field = sqlb::findField(m_table_of_query, m_headers.at(column));
+                    const auto pk = m_table_of_query->primaryKey();
+                    is_key = pk && contains(pk->columnList(), field->name());
+                }
+                return is_key ? QImage(":/icons/field_key") : QVariant();
+            }
+            default:
                 QString sortIndicator;
                 for(size_t i = 0; i < m_query.orderBy().size(); i++) {
                     const sqlb::OrderBy sortedColumn = m_query.orderBy()[i];
