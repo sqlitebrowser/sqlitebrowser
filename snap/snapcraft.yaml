@@ -112,6 +112,7 @@
                 - ibus-gtk3
                 - libibus-1.0-5
                 - libgtk2.0-0
+                - qt5-image-formats-plugins
               dump:
                   source:         .
                   plugin:         dump
