@@ -31,10 +31,10 @@
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-find_library(QHexEdit_LIBRARY qhexedit)
+find_library(QHexEdit_LIBRARY NAMES qhexedit qhexedit-qt5)
 set(QHexEdit_LIBRARIES "${QHexEdit_LIBRARY}")
 
-find_path(QHexEdit_INCLUDE_DIR qhexedit.h)
+find_path(QHexEdit_INCLUDE_DIR qhexedit.h PATH_SUFFIXES qhexedit2)
 set(QHexEdit_INCLUDE_DIRS "${QHexEdit_INCLUDE_DIR}")
 
 include(FindPackageHandleStandardArgs)
