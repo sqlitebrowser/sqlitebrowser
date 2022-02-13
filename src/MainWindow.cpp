@@ -2139,6 +2139,15 @@ void MainWindow::changeSqlTab(int index)
     }
 }
 
+void MainWindow::openSqlFile(int tabindex, QString filename)
+{
+    SqlExecutionArea* sqlarea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(tabindex));
+    sqlarea->openFile(filename);
+    QFileInfo fileinfo(filename);
+    ui->tabSqlAreas->setTabText(tabindex, fileinfo.fileName());
+    ui->tabSqlAreas->setTabIcon(tabindex, QIcon(":/icons/document_open"));
+}
+
 void MainWindow::openSqlFile()
 {
     const QStringList wfiles = FileDialog::getOpenFileNames(
@@ -2159,12 +2168,7 @@ void MainWindow::openSqlFile()
             else
                 index = openSqlTab();
 
-            SqlExecutionArea* sqlarea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index));
-            sqlarea->openFile(file);
-
-            QFileInfo fileinfo(file);
-            ui->tabSqlAreas->setTabText(index, fileinfo.fileName());
-            ui->tabSqlAreas->setTabIcon(index, QIcon(":/icons/document_open"));
+            openSqlFile(index, file);
         }
     }
 }
@@ -2851,10 +2855,18 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                         {
                             // SQL editor tab
                             int index = openSqlTab();
-                            ui->tabSqlAreas->setTabText(index, xml.attributes().value("name").toString());
-                            SqlTextEdit* sqlEditor = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index))->getEditor();
-                            sqlEditor->setText(xml.readElementText());
-                            sqlEditor->setModified(false);
+
+                            // if it has the filename attribute, it's a linked file, otherwise it's
+                            // a free SQL buffer saved in the project.
+                            if(xml.attributes().hasAttribute("filename")) {
+                                openSqlFile(index, xml.attributes().value("filename").toString());
+                                xml.skipCurrentElement();
+                            } else {
+                                ui->tabSqlAreas->setTabText(index, xml.attributes().value("name").toString());
+                                SqlTextEdit* sqlEditor = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index))->getEditor();
+                                sqlEditor->setText(xml.readElementText());
+                                sqlEditor->setModified(false);
+                            }
                         } else if(xml.name() == "current_tab") {
                             // Currently selected tab
                             ui->tabSqlAreas->setCurrentIndex(xml.attributes().value("id").toString().toInt());
@@ -3135,10 +3147,17 @@ void MainWindow::saveProject(const QString& currentFilename)
         for(int i=0;i<ui->tabSqlAreas->count();i++)                                     // All SQL tabs content
         {
             SqlExecutionArea* sqlArea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i));
+            QString sqlFilename = sqlArea->fileName();
             xml.writeStartElement("sql");
             xml.writeAttribute("name", ui->tabSqlAreas->tabText(i));
-            xml.writeCharacters(sqlArea->getSql());
-            sqlArea->getEditor()->setModified(false);
+            if(sqlFilename.isEmpty()) {
+                xml.writeCharacters(sqlArea->getSql());
+                sqlArea->getEditor()->setModified(false);
+            } else {
+                xml.writeAttribute("filename", sqlFilename);
+                // Backwards compatibility, so older versions do not break.
+                xml.writeCharacters(tr("-- Reference to file \"%1\" (not supported by this version) --").arg(sqlFilename));
+            }
             xml.writeEndElement();
         }
         xml.writeStartElement("current_tab");                                           // Currently selected tab

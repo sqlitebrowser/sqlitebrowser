@@ -243,7 +243,7 @@ void SqlExecutionArea::openFile(const QString& filename)
     f.open(QIODevice::ReadOnly);
     if(!f.isOpen())
     {
-        QMessageBox::warning(this, qApp->applicationName(), tr("Couldn't read file: %1.").arg(f.errorString()));
+        QMessageBox::warning(this, qApp->applicationName(), tr("Couldn't read file \"%1\": %2.").arg(filename, f.errorString()));
         return;
     }
 

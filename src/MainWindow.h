@@ -194,6 +194,7 @@ private slots:
     void updatePragmaUi();
     void savePragmas();
     void mainTabSelected( int tabindex );
+    void openSqlFile(int tabindex, QString filename);
     void openSqlFile();
     void saveSqlFile();
     void saveSqlFileAs();
