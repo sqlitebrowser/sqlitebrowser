@@ -205,7 +205,7 @@ static QString toSuperScript(T number)
 
 QVariant SqliteTableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (role != Qt::DisplayRole && role != Qt::EditRole && role != Qt::DecorationRole)
+    if (role != Qt::DisplayRole && role != Qt::EditRole && role != Qt::FontRole)
         return QVariant();
 
     if (orientation == Qt::Horizontal)
@@ -218,16 +218,22 @@ QVariant SqliteTableModel::headerData(int section, Qt::Orientation orientation, 
             switch (role) {
             case Qt::EditRole:
                 return QString::fromStdString(plainHeader);
-            case Qt::DecorationRole: {
-                bool is_key = false;
+            case Qt::FontRole: {
+                bool is_pk = false;
+                bool is_fk = getForeignKeyClause(column-1).isSet();
+
                 if (contains(m_query.rowIdColumns(), m_headers.at(column))) {
-                    is_key = true;
+                    is_pk = true;
                 } else if (m_table_of_query) {
                     auto field = sqlb::findField(m_table_of_query, m_headers.at(column));
                     const auto pk = m_table_of_query->primaryKey();
-                    is_key = pk && contains(pk->columnList(), field->name());
+                    is_pk = pk && contains(pk->columnList(), field->name());
                 }
-                return is_key ? QImage(":/icons/field_key") : QVariant();
+
+                QFont font;
+                font.setUnderline(is_pk);
+                font.setItalic(is_fk);
+                return font;
             }
             default:
                 QString sortIndicator;
