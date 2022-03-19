@@ -6119,7 +6119,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="303"/>
         <source>The file &quot;%1&quot; was modified by another program. Do you want to reload it?%2</source>
-        <translation>Le fichier &quot;%1&quot; a été modifié par un autre programme. Vioulez-vous le recharger ? %2</translation>
+        <translation>Le fichier &quot;%1&quot; a été modifié par un autre programme. Voulez-vous le recharger ? %2</translation>
     </message>
 </context>
 <context>
