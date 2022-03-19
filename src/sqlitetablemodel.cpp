@@ -227,7 +227,7 @@ QVariant SqliteTableModel::headerData(int section, Qt::Orientation orientation, 
                 } else if (m_table_of_query) {
                     auto field = sqlb::findField(m_table_of_query, m_headers.at(column));
                     const auto pk = m_table_of_query->primaryKey();
-                    is_pk = pk && contains(pk->columnList(), field->name());
+                    is_pk = field != m_table_of_query->fields.end() && pk && contains(pk->columnList(), field->name());
                 }
 
                 QFont font;
