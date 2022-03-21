@@ -71,6 +71,7 @@ public:
     QComboBox* tablesComboBox;
     QComboBox* idsComboBox;
     QLineEdit* clauseEdit; // for ON CASCADE and such
+    std::shared_ptr<sqlb::ForeignKeyClause> foreignKey;   // This can be used for storing a pointer to the foreign key object currently edited
 
 private:
     QPushButton* m_btnReset;
@@ -138,12 +139,12 @@ void ForeignKeyEditorDelegate::setEditorData(QWidget* editor, const QModelIndex&
 
     size_t column = static_cast<size_t>(index.row()); // weird? I know right
     const sqlb::Field& field = m_table.fields.at(column);
-    auto fk = std::dynamic_pointer_cast<sqlb::ForeignKeyClause>(m_table.constraint({field.name()}, sqlb::Constraint::ForeignKeyConstraintType));
-    if (fk) {
-        fkEditor->tablesComboBox->setCurrentText(QString::fromStdString(fk->table()));
-        fkEditor->clauseEdit->setText(QString::fromStdString(fk->constraint()));
-        if (!fk->columns().empty())
-            fkEditor->idsComboBox->setCurrentText(QString::fromStdString(fk->columns().front()));
+    fkEditor->foreignKey = m_table.foreignKey({field.name()});
+    if (fkEditor->foreignKey) {
+        fkEditor->tablesComboBox->setCurrentText(QString::fromStdString(fkEditor->foreignKey->table()));
+        fkEditor->clauseEdit->setText(QString::fromStdString(fkEditor->foreignKey->constraint()));
+        if (!fkEditor->foreignKey->columns().empty())
+            fkEditor->idsComboBox->setCurrentText(QString::fromStdString(fkEditor->foreignKey->columns().front()));
     } else {
         fkEditor->tablesComboBox->setCurrentIndex(-1);
     }
@@ -156,28 +157,27 @@ void ForeignKeyEditorDelegate::setModelData(QWidget* editor, QAbstractItemModel*
 
     size_t column = static_cast<size_t>(index.row());
     const sqlb::Field& field = m_table.fields.at(column);
-    if (sql.isEmpty()) {
+    if (sql.isEmpty() && fkEditor->foreignKey) {
         // Remove the foreign key
-        m_table.removeConstraints({field.name()}, sqlb::Constraint::ConstraintTypes::ForeignKeyConstraintType);
+        m_table.removeConstraint(fkEditor->foreignKey);
     } else {
-        // Set the foreign key
-        sqlb::ForeignKeyClause* fk = new sqlb::ForeignKeyClause;
-
-        const QString table     = fkEditor->tablesComboBox->currentText();
-        const std::string id    = fkEditor->idsComboBox->currentText().toStdString();
-        const QString clause    = fkEditor->clauseEdit->text();
-
-        fk->setTable(table.toStdString());
-        fk->setColumnList({ field.name() });
-
-        if (!id.empty())
-            fk->setColumns({id});
-
-        if (!clause.trimmed().isEmpty()) {
-            fk->setConstraint(clause.toStdString());
+        // Create a new foreign key object if required
+        if(!fkEditor->foreignKey)
+        {
+            fkEditor->foreignKey = std::make_shared<sqlb::ForeignKeyClause>();
+            m_table.addConstraint({field.name()}, fkEditor->foreignKey);
         }
 
-        m_table.setConstraint(sqlb::ConstraintPtr(fk));
+        // Set data
+        const auto table  = fkEditor->tablesComboBox->currentText().toStdString();
+        const auto id     = fkEditor->idsComboBox->currentText().toStdString();
+        const auto clause = fkEditor->clauseEdit->text().trimmed().toStdString();
+        fkEditor->foreignKey->setTable(table);
+        if(id.empty())
+            fkEditor->foreignKey->setColumns({});
+        else
+            fkEditor->foreignKey->setColumns({id});
+        fkEditor->foreignKey->setConstraint(clause);
     }
 
     model->setData(index, sql);

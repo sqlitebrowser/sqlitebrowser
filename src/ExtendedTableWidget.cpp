@@ -131,19 +131,18 @@ QWidget* ExtendedTableWidgetEditorDelegate::createEditor(QWidget* parent, const 
     emit dataAboutToBeEdited(index);
 
     SqliteTableModel* m = qobject_cast<SqliteTableModel*>(const_cast<QAbstractItemModel*>(index.model()));
-    sqlb::ForeignKeyClause fk = m->getForeignKeyClause(static_cast<size_t>(index.column()-1));
+    auto fk = m->getForeignKeyClause(static_cast<size_t>(index.column()-1));
 
-    if(fk.isSet()) {
-
-        sqlb::ObjectIdentifier foreignTable = sqlb::ObjectIdentifier(m->currentTableName().schema(), fk.table());
+    if(fk) {
+        sqlb::ObjectIdentifier foreignTable = sqlb::ObjectIdentifier(m->currentTableName().schema(), fk->table());
 
         std::string column;
         // If no column name is set, assume the primary key is meant
-        if(fk.columns().empty()) {
+        if(fk->columns().empty()) {
             sqlb::TablePtr obj = m->db().getTableByName(foreignTable);
-            column = obj->primaryKey()->columnList().front();
+            column = obj->primaryKeyColumns().front().name();
         } else
-            column = fk.columns().at(0);
+            column = fk->columns().at(0);
 
         sqlb::TablePtr currentTable = m->db().getTableByName(m->currentTableName());
         QString query = QString("SELECT %1 FROM %2").arg(QString::fromStdString(sqlb::escapeIdentifier(column)), QString::fromStdString(foreignTable.toString()));
@@ -1057,11 +1056,11 @@ void ExtendedTableWidget::cellClicked(const QModelIndex& index)
     if(qApp->keyboardModifiers().testFlag(Qt::ControlModifier) && qApp->keyboardModifiers().testFlag(Qt::ShiftModifier) && model())
     {
         SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
-        sqlb::ForeignKeyClause fk = m->getForeignKeyClause(static_cast<size_t>(index.column()-1));
+        auto fk = m->getForeignKeyClause(static_cast<size_t>(index.column()-1));
 
-        if(fk.isSet())
-            emit foreignKeyClicked(sqlb::ObjectIdentifier(m->currentTableName().schema(), fk.table()),
-                                   fk.columns().size() ? fk.columns().at(0) : "",
+        if(fk)
+            emit foreignKeyClicked(sqlb::ObjectIdentifier(m->currentTableName().schema(), fk->table()),
+                                   fk->columns().size() ? fk->columns().at(0) : "",
                                    m->data(index, Qt::EditRole).toByteArray());
         else {
             // If this column does not have a foreign-key, try to interpret it as a filename/URL and open it in external application.

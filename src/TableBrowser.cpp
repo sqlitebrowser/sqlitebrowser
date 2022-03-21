@@ -1502,7 +1502,7 @@ void TableBrowser::jumpToRow(const sqlb::ObjectIdentifier& table, std::string co
 
     // If no column name is set, assume the primary key is meant
     if(!column.size())
-        column = obj->primaryKey()->columnList().front();
+        column = obj->primaryKeyColumns().front().name();
 
     // If column doesn't exist don't do anything
     auto column_it = sqlb::findField(obj, column);

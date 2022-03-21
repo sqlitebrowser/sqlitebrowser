@@ -184,8 +184,8 @@ void AddRecordDialog::populateFields()
     ui->treeWidget->setItemDelegateForColumn(kValue, new EditDelegate(this));
 
     sqlb::FieldVector fields;
-    std::vector<sqlb::ConstraintPtr> fks;
-    sqlb::StringVector pk;
+    std::vector<std::shared_ptr<sqlb::ForeignKeyClause>> fks;
+    sqlb::IndexedColumnVector pk;
     bool auto_increment = false;
 
     // Initialize fields, fks and pk differently depending on whether it's a table or a view.
@@ -194,19 +194,19 @@ void AddRecordDialog::populateFields()
     if (!table->isView())
     {
         std::transform(fields.begin(), fields.end(), std::back_inserter(fks), [table](const auto& f) {
-            return table->constraint({f.name()}, sqlb::Constraint::ForeignKeyConstraintType);
+            return table->foreignKey({f.name()});
         });
 
         const auto pk_constraint = table->primaryKey();
         if(pk_constraint)
         {
-            pk = pk_constraint->columnList();
+            pk = table->primaryKeyColumns();
             auto_increment = pk_constraint->autoIncrement();
         }
     } else {
         // It's a view
-        fks.resize(fields.size(), sqlb::ConstraintPtr(nullptr));
-        pk = pseudo_pk;
+        fks.resize(fields.size(), nullptr);
+        std::transform(pseudo_pk.begin(), pseudo_pk.end(), std::back_inserter(pk), [](const auto& e) { return sqlb::IndexedColumn(e, false); });
     }
 
     for(uint i = 0; i < fields.size(); i++)
@@ -244,7 +244,7 @@ void AddRecordDialog::populateFields()
         if (!f.check().empty())
             toolTip.append(tr("Check constraint:\t %1\n").arg(QString::fromStdString(f.check())));
 
-        auto fk = std::dynamic_pointer_cast<sqlb::ForeignKeyClause>(fks[i]);
+        auto fk = fks[i];
         if(fk)
             toolTip.append(tr("Foreign key:\t %1\n").arg(QString::fromStdString(fk->toString())));
 

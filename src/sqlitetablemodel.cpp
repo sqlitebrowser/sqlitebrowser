@@ -223,14 +223,14 @@ QVariant SqliteTableModel::headerData(int section, Qt::Orientation orientation, 
                 return QString::fromStdString(plainHeader);
             case Qt::FontRole: {
                 bool is_pk = false;
-                bool is_fk = getForeignKeyClause(column-1).isSet();
+                bool is_fk = getForeignKeyClause(column-1) != nullptr;
 
                 if (contains(m_query.rowIdColumns(), m_headers.at(column))) {
                     is_pk = true;
                 } else if (m_table_of_query) {
                     auto field = sqlb::findField(m_table_of_query, m_headers.at(column));
-                    const auto pk = m_table_of_query->primaryKey();
-                    is_pk = field != m_table_of_query->fields.end() && pk && contains(pk->columnList(), field->name());
+                    const auto pk = m_table_of_query->primaryKeyColumns();
+                    is_pk = field != m_table_of_query->fields.end() && contains(pk, field->name());
                 }
 
                 QFont font;
@@ -398,11 +398,11 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
         // Regular case (not null, not binary and no matching conditional format)
         return m_regBgColour;
     } else if(role == Qt::ToolTipRole) {
-        sqlb::ForeignKeyClause fk = getForeignKeyClause(column-1);
-        if(fk.isSet())
+        auto fk = getForeignKeyClause(column-1);
+        if(fk)
             return tr("References %1(%2)\nHold %3Shift and click to jump there").arg(
-                    QString::fromStdString(fk.table()),
-                    QString::fromStdString(sqlb::joinStringVector(fk.columns(), ",")),
+                    QString::fromStdString(fk->table()),
+                    QString::fromStdString(sqlb::joinStringVector(fk->columns(), ",")),
                     QKeySequence(Qt::CTRL).toString(QKeySequence::NativeText));
     } else if (role == Qt::TextAlignmentRole) {
         // Align horizontally according to conditional format or default (left for text and right for numbers)
@@ -429,14 +429,12 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-sqlb::ForeignKeyClause SqliteTableModel::getForeignKeyClause(size_t column) const
+std::shared_ptr<sqlb::ForeignKeyClause> SqliteTableModel::getForeignKeyClause(size_t column) const
 {
-    static const sqlb::ForeignKeyClause empty_foreign_key_clause;
-
     // No foreign keys when not browsing a table. This usually happens when executing custom SQL statements
     // and browsing the result set instead of browsing an entire table.
     if(m_query.table().isEmpty())
-        return empty_foreign_key_clause;
+        return nullptr;
 
     // Check if database object is a table. If it isn't stop here and don't return a foreign key.
     // This happens for views which don't have foreign keys (though we might want to think about
@@ -447,12 +445,10 @@ sqlb::ForeignKeyClause SqliteTableModel::getForeignKeyClause(size_t column) cons
         // Note that the rowid column has number -1 here, it can safely be excluded since there will never be a
         // foreign key on that column.
 
-        sqlb::ConstraintPtr ptr = m_table_of_query->constraint({m_table_of_query->fields.at(column).name()}, sqlb::Constraint::ForeignKeyConstraintType);
-        if(ptr)
-            return *(std::dynamic_pointer_cast<sqlb::ForeignKeyClause>(ptr));
+        return m_table_of_query->foreignKey({m_table_of_query->fields.at(column).name()});
     }
 
-    return empty_foreign_key_clause;
+    return nullptr;
 }
 
 bool SqliteTableModel::setData(const QModelIndex& index, const QVariant& value, int role)
@@ -490,8 +486,8 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
             if(m_table_of_query)
             {
                 auto field = sqlb::findField(m_table_of_query, m_headers.at(column));
-                const auto pk = m_table_of_query->primaryKey();
-                if(pk && contains(pk->columnList(), field->name()) && field->isInteger())
+                const auto pk = m_table_of_query->primaryKeyColumns();
+                if(contains(pk, field->name()) && field->isInteger())
                     newValue = "0";
             }
         }
@@ -709,9 +705,9 @@ QModelIndex SqliteTableModel::dittoRecord(int old_row)
     size_t firstEditedColumn = 0;
     int new_row = rowCount() - 1;
 
-    const auto pk = m_table_of_query->primaryKey();
+    const auto pk = m_table_of_query->primaryKeyColumns();
     for (size_t col = 0; col < m_table_of_query->fields.size(); ++col) {
-        if(!pk || !contains(pk->columnList(), m_table_of_query->fields.at(col).name())) {
+        if(pk.empty() || !contains(pk, m_table_of_query->fields.at(col).name())) {
             if (!firstEditedColumn)
                 firstEditedColumn = col + 1;
 

@@ -1337,6 +1337,8 @@ std::string DBBrowserDB::emptyInsertStmt(const std::string& schemaName, const sq
 {
     std::string stmt = "INSERT INTO " + sqlb::escapeIdentifier(schemaName) + "." + sqlb::escapeIdentifier(t.name());
 
+    const auto pk = t.primaryKeyColumns();
+
     sqlb::StringVector vals;
     sqlb::StringVector fields;
     for(const sqlb::Field& f : t.fields)
@@ -1345,8 +1347,7 @@ std::string DBBrowserDB::emptyInsertStmt(const std::string& schemaName, const sq
         if(f.generated())
             continue;
 
-        sqlb::ConstraintPtr pk = t.constraint({f.name()}, sqlb::Constraint::PrimaryKeyConstraintType);
-        if(pk)
+        if(pk.size() == 1 &&  pk.at(0) == f.name())
         {
             fields.push_back(f.name());
 

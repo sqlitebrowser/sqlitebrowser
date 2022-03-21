@@ -17,8 +17,15 @@
 	namespace sqlb { namespace parser { class ParserDriver; } }
 	typedef void* yyscan_t;
 
+	struct Constraints
+	{
+		std::multimap<sqlb::IndexedColumnVector, std::shared_ptr<sqlb::UniqueConstraint>> index;
+		std::multimap<sqlb::StringVector, std::shared_ptr<sqlb::ForeignKeyClause>> fk;
+		std::vector<std::shared_ptr<sqlb::CheckConstraint>> check;
+	};
+
 	// Colum definitions are a tuple of two elements: the Field object and a set of table constraints
-	using ColumndefData = std::tuple<sqlb::Field, sqlb::ConstraintVector>;
+	using ColumndefData = std::tuple<sqlb::Field, Constraints>;
 }
 
 // The parsing context
@@ -223,7 +230,7 @@
 %type <std::string> optional_typename
 %type <std::string> optional_storage_identifier
 %type <bool> optional_always_generated
-%type <sqlb::ConstraintVector> columnconstraint_list
+%type <std::vector<sqlb::ConstraintPtr>> columnconstraint_list
 %type <sqlb::ConstraintPtr> columnconstraint
 %type <ColumndefData> columndef
 %type <std::vector<ColumndefData>> columndef_list
@@ -232,9 +239,9 @@
 %type <std::string> fk_clause_part
 %type <std::string> fk_clause_part_list
 %type <std::string> optional_fk_clause
-%type <sqlb::ConstraintPtr> tableconstraint
-%type <sqlb::ConstraintVector> tableconstraint_list
-%type <sqlb::ConstraintVector> optional_tableconstraint_list
+%type <Constraints> tableconstraint
+%type <Constraints> tableconstraint_list
+%type <Constraints> optional_tableconstraint_list
 %type <std::bitset<sqlb::Table::NumOptions>> tableoption
 %type <std::bitset<sqlb::Table::NumOptions>> tableoptions_list
 %type <std::bitset<sqlb::Table::NumOptions>> optional_tableoptions_list
@@ -656,13 +663,13 @@ optional_always_generated:
 
 columnconstraint:
 	optional_constraintname PRIMARY KEY optional_sort_order optional_conflictclause	{
-												auto pk = std::make_shared<sqlb::PrimaryKeyConstraint>(sqlb::IndexedColumnVector{sqlb::IndexedColumn("", false, $4)});
+												auto pk = std::make_shared<sqlb::PrimaryKeyConstraint>();
 												pk->setName($1);
 												pk->setConflictAction($5);
 												$$ = pk;
 											}
 	| optional_constraintname PRIMARY KEY optional_sort_order optional_conflictclause AUTOINCREMENT	{
-												auto pk = std::make_shared<sqlb::PrimaryKeyConstraint>(sqlb::IndexedColumnVector{sqlb::IndexedColumn("", false, $4)});
+												auto pk = std::make_shared<sqlb::PrimaryKeyConstraint>();
 												pk->setName($1);
 												pk->setConflictAction($5);
 												pk->setAutoIncrement(true);
@@ -737,7 +744,7 @@ columnconstraint_list:
 columndef:
 	columnid optional_typename columnconstraint_list	{
 								sqlb::Field f($1, $2);
-								sqlb::ConstraintVector table_constraints{};
+								Constraints table_constraints;
 								for(const auto& c : $3)
 								{
 									if(!c)
@@ -745,18 +752,14 @@ columndef:
 
 									switch(c->type())
 									{
+									// Primary key and foreign key constraints are converted to table constraints
+									// because we cannot store them as column constraints at the moment.
 									case sqlb::Constraint::PrimaryKeyConstraintType:
-									case sqlb::Constraint::ForeignKeyConstraintType:
-									{
-										// Primary key and foreign key constraints are converted to table constraints
-										// because we cannot store them as column constraints at the moment.
-										if(c->columnList().empty())
-											c->setColumnList({$1});
-										else
-											c->replaceInColumnList("", $1);
-										table_constraints.push_back(c);
+										table_constraints.index.insert(std::make_pair(sqlb::IndexedColumnVector{sqlb::IndexedColumn($1, false)}, std::dynamic_pointer_cast<sqlb::UniqueConstraint>(c)));
 										break;
-									}
+									case sqlb::Constraint::ForeignKeyConstraintType:
+										table_constraints.fk.insert(std::make_pair(sqlb::StringVector{$1}, std::dynamic_pointer_cast<sqlb::ForeignKeyClause>(c)));
+										break;
 									case sqlb::Constraint::NotNullConstraintType:
 										f.setNotNull(std::dynamic_pointer_cast<sqlb::NotNullConstraint>(c));
 										break;
@@ -789,14 +792,12 @@ columndef:
 										}
 										break;
 									}
-									default:
-										break;
 									}
 								}
 
 								$$ = std::make_tuple(f, table_constraints);
 							}
-	| columnid optional_typename			{ $$ = std::make_tuple(sqlb::Field($1, $2), sqlb::ConstraintVector{}); }
+	| columnid optional_typename			{ $$ = std::make_tuple(sqlb::Field($1, $2), Constraints{}); }
 	;
 
 columndef_list:
@@ -863,39 +864,41 @@ optional_fk_clause:
 
 tableconstraint:
 	optional_constraintname PRIMARY KEY "(" indexed_column_list ")" optional_conflictclause		{
-														auto pk = std::make_shared<sqlb::PrimaryKeyConstraint>($5);
+														auto pk = std::make_shared<sqlb::PrimaryKeyConstraint>();
 														pk->setName($1);
 														pk->setConflictAction($7);
-														$$ = pk;
+														$$.index.insert(std::make_pair($5, pk));
 													}
 	| optional_constraintname PRIMARY KEY "(" indexed_column_list AUTOINCREMENT ")" optional_conflictclause	{
-														auto pk = std::make_shared<sqlb::PrimaryKeyConstraint>($5);
+														auto pk = std::make_shared<sqlb::PrimaryKeyConstraint>();
 														pk->setName($1);
 														pk->setConflictAction($8);
 														pk->setAutoIncrement(true);
-														$$ = pk;
+														$$.index.insert(std::make_pair($5, pk));
 													}
 	| optional_constraintname UNIQUE "(" indexed_column_list ")" optional_conflictclause		{
-														auto u = std::make_shared<sqlb::UniqueConstraint>($4);
+														auto u = std::make_shared<sqlb::UniqueConstraint>();
 														u->setName($1);
 														u->setConflictAction($6);
-														$$ = u;
+														sqlb::StringVector columns;
+														$$.index.insert(std::make_pair($4, u));
 													}
 	| optional_constraintname CHECK "(" expr ")"							{
-														$$ = std::make_shared<sqlb::CheckConstraint>($4);
-														$$->setName($1);
+														auto c = std::make_shared<sqlb::CheckConstraint>($4);
+														c->setName($1);
+														$$.check.push_back(c);
 													}
 	| optional_constraintname FOREIGN KEY "(" columnid_list ")" REFERENCES tableid optional_columnid_with_paren_list optional_fk_clause	{
-														$$ = std::make_shared<sqlb::ForeignKeyClause>($8, $9, $10);
-														$$->setColumnList($5);
-														$$->setName($1);
+														auto f = std::make_shared<sqlb::ForeignKeyClause>($8, $9, $10);
+														f->setName($1);
+														$$.fk.insert(std::make_pair($5, f));
 													}
 	;
 
 tableconstraint_list:
-	tableconstraint					{ $$ = {$1}; }
-	| tableconstraint_list "," tableconstraint	{ $$ = $1; $$.push_back($3); }
-	| tableconstraint_list tableconstraint		{ $$ = $1; $$.push_back($2); }
+	tableconstraint					{ $$ = $1; }
+	| tableconstraint_list "," tableconstraint	{ $$ = $1; $$.index.insert($3.index.begin(), $3.index.end()); $$.fk.insert($3.fk.begin(), $3.fk.end()); std::copy($3.check.begin(), $3.check.end(), std::back_inserter($$.check)); }
+	| tableconstraint_list tableconstraint		{ $$ = $1; $$.index.insert($2.index.begin(), $2.index.end()); $$.fk.insert($2.fk.begin(), $2.fk.end()); std::copy($2.check.begin(), $2.check.end(), std::back_inserter($$.check)); }
 	;
 
 optional_tableconstraint_list:
@@ -912,17 +915,26 @@ createtable_stmt:
 										$$ = std::make_shared<sqlb::Table>($5);
 										$$->setWithoutRowidTable($10.test(sqlb::Table::WithoutRowid));
 										$$->setStrict($10.test(sqlb::Table::Strict));
-										$$->setConstraints($8);
+										for(const auto& i : $8.index)
+											$$->addConstraint(i.first, i.second);
+										for(const auto& i : $8.fk)
+											$$->addConstraint(i.first, i.second);
+										for(const auto& i : $8.check)
+											$$->addConstraint(i);
 										$$->setFullyParsed(true);
 
 										for(const auto& column : $7)
 										{
 											sqlb::Field f;
-											sqlb::ConstraintVector c;
+											Constraints c;
 											std::tie(f, c) = column;
 
 											$$->fields.push_back(f);
-											for(const auto& i : c)
+											for(const auto& i : c.index)
+												$$->addConstraint(i.first, i.second);
+											for(const auto& i : c.fk)
+												$$->addConstraint(i.first, i.second);
+											for(const auto& i : c.check)
 												$$->addConstraint(i);
 										}
 									}

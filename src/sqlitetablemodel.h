@@ -104,7 +104,7 @@ public:
     bool hasPseudoPk() const;
     std::vector<std::string> pseudoPk() const { return m_query.rowIdColumns(); }
 
-    sqlb::ForeignKeyClause getForeignKeyClause(size_t column) const;
+    std::shared_ptr<sqlb::ForeignKeyClause> getForeignKeyClause(size_t column) const;
 
     // This returns true if the model and, if set, the index can be edited. Not specifying the index parameter asks whether the model can
     // be edited in general (i.e. inserting and deleting rows as well as updating some cells). Specifying the index parameter asks whether

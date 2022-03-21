@@ -334,18 +334,18 @@ void DbStructureModel::buildTree(QTreeWidgetItem* parent, const std::string& sch
         // Add an extra node for the browsable section
         addNode(schema, obj.second->name(), obj.second->isView() ? "view" : "table", obj.second->originalSql(), browsablesRootItem);
 
-        sqlb::StringVector pk_columns;
+        sqlb::IndexedColumnVector pk_columns;
         if(!obj.second->isView())
         {
             const auto pk = obj.second->primaryKey();
             if(pk)
-                pk_columns = pk->columnList();
+                pk_columns = obj.second->primaryKeyColumns();
         }
 
         for(const auto& field : obj.second->fields)
         {
             bool isPK = contains(pk_columns, field.name());
-            bool isFK = obj.second->constraint({field.name()}, sqlb::Constraint::ForeignKeyConstraintType) != nullptr;
+            bool isFK = obj.second->foreignKey({field.name()}) != nullptr;
 
             addNode(schema, field.name(), "field", field.toString("  ", " "), item, field.type(), isPK ? "_key" : (isFK ? "_fk" : std::string{}));
         }
