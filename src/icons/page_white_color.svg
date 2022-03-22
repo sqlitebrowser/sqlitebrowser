@@ -58,11 +58,6 @@
 					<stop offset="50%" stop-color="#f0f" />
 					<stop offset="100%" stop-color="#f0f" stop-opacity="0" />
 				</linearGradient>
-				<radialGradient id="white">
-					<stop offset="0%" stop-color="#fff" stop-opacity="0" />
-					<stop offset="80%" stop-color="#fff" stop-opacity="0" />
-					<stop offset="100%" stop-color="#fff" />
-				</radialGradient>
 				<mask id="Mask">
 					<path fill="url(#masker)" d="M0,0 l6.062177,3.5 a7,7 0 0,1 -12.124354,0 Z" />
 				</mask>
@@ -80,7 +75,6 @@
 				fill="url(#blue)" mask="url(#Mask)" />
 			<path transform="rotate(150)" d="M0,0 l6.062177,3.5 a7,7 0 0,1 -12.124354,0 Z"
 				fill="url(#green)" mask="url(#Mask)" />
-			<circle id="round" r="6" fill="url(#white)" />
 		</g>
 	</g>
 </svg>
