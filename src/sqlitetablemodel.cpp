@@ -208,6 +208,9 @@ QVariant SqliteTableModel::headerData(int section, Qt::Orientation orientation, 
     if (role != Qt::DisplayRole && role != Qt::EditRole && role != Qt::FontRole)
         return QVariant();
 
+    if (orientation == Qt::Vertical && role == Qt::FontRole)
+        return QVariant();
+
     if (orientation == Qt::Horizontal)
     {
         size_t column = static_cast<size_t>(section);
