@@ -1264,8 +1264,12 @@ void MainWindow::executeQuery()
 
         // Wait until the initial loading of data (= first chunk and row count) has been performed
         auto conn = std::make_shared<QMetaObject::Connection>();
-        *conn = connect(model, &SqliteTableModel::finishedFetch, this, [=](int, int) {
-            // Disconnect this connection right now. This avoids calling this slot another time for the row count
+        *conn = connect(model, &SqliteTableModel::finishedFetch, this, [=](int begin, int end) {
+            // Skip callback if it's is a chunk load.
+            // Now query_logger displays the correct value for "rows returned", not "Prefetch block size"
+            if (begin == 0 && end > 0) {
+                return;
+            }
             disconnect(*conn);
 
             attachPlot(sqlWidget->getTableResult(), sqlWidget->getModel());
