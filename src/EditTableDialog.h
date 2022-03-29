@@ -58,6 +58,14 @@ private:
         MoveBottom
     };
 
+    enum TableConstraintType
+    {
+        PrimaryKey,
+        Unique,
+        ForeignKey,
+        Check
+    };
+
     void updateColumnWidth();
     void updateSqlText();
 
@@ -85,7 +93,7 @@ private slots:
     void setStrict(bool strict);
     void changeSchema(const QString& schema);
     void removeConstraint();
-    void addConstraint(sqlb::Constraint::ConstraintTypes type);
+    void addConstraint(EditTableDialog::TableConstraintType type);
     void setOnConflict(const QString& on_conflict);
 
 private:

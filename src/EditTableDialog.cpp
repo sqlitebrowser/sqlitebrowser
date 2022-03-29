@@ -60,10 +60,10 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
     constraint_menu->addAction(ui->actionAddForeignKey);
     constraint_menu->addAction(ui->actionAddUniqueConstraint);
     constraint_menu->addAction(ui->actionAddCheckConstraint);
-    connect(ui->actionAddPrimaryKey, &QAction::triggered, this, [this]() { addConstraint(sqlb::Constraint::PrimaryKeyConstraintType); });
-    connect(ui->actionAddForeignKey, &QAction::triggered, this, [this]() { addConstraint(sqlb::Constraint::ForeignKeyConstraintType); });
-    connect(ui->actionAddUniqueConstraint, &QAction::triggered, this, [this]() { addConstraint(sqlb::Constraint::UniqueConstraintType); });
-    connect(ui->actionAddCheckConstraint, &QAction::triggered, this, [this]() { addConstraint(sqlb::Constraint::CheckConstraintType); });
+    connect(ui->actionAddPrimaryKey, &QAction::triggered, this, [this]() { addConstraint(TableConstraintType::PrimaryKey); });
+    connect(ui->actionAddForeignKey, &QAction::triggered, this, [this]() { addConstraint(TableConstraintType::ForeignKey); });
+    connect(ui->actionAddUniqueConstraint, &QAction::triggered, this, [this]() { addConstraint(TableConstraintType::Unique); });
+    connect(ui->actionAddCheckConstraint, &QAction::triggered, this, [this]() { addConstraint(TableConstraintType::Check); });
     ui->buttonAddConstraint->setMenu(constraint_menu);
 
     // Get list of all collations
@@ -1095,10 +1095,10 @@ void EditTableDialog::removeConstraint()
     populateFields();
 }
 
-void EditTableDialog::addConstraint(sqlb::Constraint::ConstraintTypes type)
+void EditTableDialog::addConstraint(TableConstraintType type)
 {
     // There can only be one primary key
-    if(type == sqlb::Constraint::PrimaryKeyConstraintType)
+    if(type == TableConstraintType::PrimaryKey)
     {
         if(m_table.primaryKey())
         {
@@ -1109,11 +1109,11 @@ void EditTableDialog::addConstraint(sqlb::Constraint::ConstraintTypes type)
 
         // Create new constraint
         m_table.addConstraint(sqlb::IndexedColumnVector{}, std::make_shared<sqlb::PrimaryKeyConstraint>());
-    } else if(type == sqlb::Constraint::UniqueConstraintType)
+    } else if(type == TableConstraintType::Unique)
         m_table.addConstraint(sqlb::IndexedColumnVector{}, std::make_shared<sqlb::UniqueConstraint>());
-    else if(type == sqlb::Constraint::ForeignKeyConstraintType)
+    else if(type == TableConstraintType::ForeignKey)
         m_table.addConstraint(sqlb::StringVector{}, std::make_shared<sqlb::ForeignKeyClause>());
-    else if(type == sqlb::Constraint::CheckConstraintType)
+    else if(type == TableConstraintType::Check)
         m_table.addConstraint(std::make_shared<sqlb::CheckConstraint>());
 
     // Update SQL and view
