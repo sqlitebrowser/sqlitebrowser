@@ -73,8 +73,6 @@ choco install sqlitestudio
 (e.g. gives an error), try a nightly build.  Nightly builds often fix bugs
 reported after the last release. :D
 
-
-
 ## macOS
 
 #### Stable release
