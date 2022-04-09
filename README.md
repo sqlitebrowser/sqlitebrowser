@@ -66,7 +66,7 @@ winget install -e --id DBBrowserForSQLite.DBBrowserForSQLite
 Or use chocolatey:
 
 ```
-choco install sqlitestudio
+choco install sqlitebrowser
 ```
 
 **Note:** If for some reason the standard Windows release does not work
