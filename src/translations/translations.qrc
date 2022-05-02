@@ -17,5 +17,6 @@
         <file alias="sqlb_it">sqlb_it.qm</file>
         <file alias="sqlb_ja">sqlb_ja.qm</file>
         <file alias="sqlb_nl">sqlb_nl.qm</file>
+        <file alias="sqlb_id">sqlb_id.qm</file>
     </qresource>
 </RCC>
