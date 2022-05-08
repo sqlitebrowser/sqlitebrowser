@@ -44,6 +44,7 @@
   <url type="homepage">https://sqlitebrowser.org/</url>
   <url type="bugtracker">https://github.com/sqlitebrowser/sqlitebrowser/issues</url>
   <releases>
+    <release version="3.12.2" date="2021-05-17" />
     <release version="3.12.1" date="2020-11-09" />
   </releases>
 </component>
