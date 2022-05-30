@@ -748,6 +748,14 @@
     <string>Change the default encoding assumed for all tables in the database</string>
    </property>
   </action>
+  <action name="actionCopyColumnName">
+   <property name="text">
+    <string>Copy column name</string>
+   </property>
+   <property name="toolTip">
+    <string>Copy the database table column name to your clipboard</string>
+   </property>
+  </action>
   <action name="actionClearFilters">
    <property name="icon">
     <iconset resource="icons/icons.qrc">

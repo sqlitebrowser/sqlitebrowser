@@ -12,6 +12,7 @@
 #include "sqlitetablemodel.h"
 #include "ui_TableBrowser.h"
 
+#include <QClipboard>
 #include <QInputDialog>
 #include <QMenu>
 #include <QMessageBox>
@@ -67,6 +68,8 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
     popupHeaderMenu->addSeparator();
     popupHeaderMenu->addAction(ui->actionSetTableEncoding);
     popupHeaderMenu->addAction(ui->actionSetAllTablesEncoding);
+    popupHeaderMenu->addSeparator();
+    popupHeaderMenu->addAction(ui->actionCopyColumnName);
 
     connect(ui->actionSelectColumn, &QAction::triggered, this, [this]() {
         ui->dataTable->selectColumn(ui->actionBrowseTableEditDisplayFormat->property("clicked_column").toInt());
@@ -1491,6 +1494,15 @@ void TableBrowser::setTableEncoding(bool forAllTables)
 void TableBrowser::setDefaultTableEncoding()
 {
     setTableEncoding(true);
+}
+
+void TableBrowser::copyColumnName(){
+    sqlb::ObjectIdentifier current_table = currentlyBrowsedTableName();
+    int col_index = ui->actionBrowseTableEditDisplayFormat->property("clicked_column").toInt();
+    QString field_name = QString::fromStdString(db->getTableByName(current_table)->fields.at(col_index - 1).name());
+
+    QClipboard *clipboard = QApplication::clipboard();
+    clipboard->setText(field_name);
 }
 
 void TableBrowser::jumpToRow(const sqlb::ObjectIdentifier& table, std::string column, const QByteArray& value)
