@@ -570,6 +570,9 @@ indexed_column:
 								(quote != '[' && std::count($1.begin(), $1.end(), quote) == 2 && $1.front() == quote && $1.back() == quote))
 							{
 								$$ = sqlb::IndexedColumn(unquote_text($1, quote), false, $2);
+							} else if(std::count($1.begin(), $1.end(), '\'') == 2 && $1.front() == '\'' && $1.back() == '\'') {
+								// Also remove single quotes when this actually is a string literal but looks like a columnid
+								$$ = sqlb::IndexedColumn(unquote_text($1, '\''), false, $2);
 							} else {
 								$$ = sqlb::IndexedColumn($1, true, $2);
 							}
