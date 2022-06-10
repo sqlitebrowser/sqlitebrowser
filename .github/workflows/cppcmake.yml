@@ -4,7 +4,7 @@ on:
   push:
     branches: ['*']
     tags:
-    paths_ignore: ['docs/**', '.travis.yml']
+    paths_ignore: ['docs/**']
   pull_request:
     branches: ['*']
   release:
