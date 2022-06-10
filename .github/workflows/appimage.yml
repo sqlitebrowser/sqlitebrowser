@@ -26,7 +26,16 @@ jobs:
     - name: Install dependencies
       run: |
            sudo apt-get update
-           sudo apt-get install qttools5-dev libqt5scintilla2-dev libqcustomplot-dev libsqlite3-dev libqt5svg5 libsqlcipher-dev qt5-default
+           sudo apt-get install qttools5-dev libqt5scintilla2-dev libqcustomplot-dev libqt5svg5 libsqlcipher-dev qt5-default
+    - name: Build SQLite
+      if: matrix.sqlcipher == '0'
+      run: |
+           wget -O sqlite.tar.gz https://sqlite.org/2022/sqlite-autoconf-3380500.tar.gz
+           tar -xzf sqlite.tar.gz
+           cd sqlite-autoconf-*
+           ./configure
+           make
+           sudo make install
     - name: Configure CMake
       run: |
            mkdir appbuild
@@ -45,7 +54,7 @@ jobs:
            export VERSION=$(printf "master-`git rev-list HEAD --count`-` git -C . rev-parse --short HEAD`")
            ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -appimage
     - name: Rename AppImage
-      if: ${{ matrix.sqlcipher == 1 }}
+      if: matrix.sqlcipher == '1'
       run: |
            export FILE=$(ls DB_Browser_for_SQLite*.AppImage)
            export FILE=${FILE/SQLite/SQLCipher}
