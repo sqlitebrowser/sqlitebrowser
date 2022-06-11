@@ -33,7 +33,7 @@ jobs:
            wget -O sqlite.tar.gz https://sqlite.org/2022/sqlite-autoconf-3380500.tar.gz
            tar -xzf sqlite.tar.gz
            cd sqlite-autoconf-*
-           ./configure
+           ./configure --enable-static
            make
            sudo make install
     - name: Configure CMake
@@ -41,7 +41,7 @@ jobs:
            mkdir appbuild
            mkdir appdir
            cd appbuild
-           cmake -DCMAKE_INSTALL_PREFIX:PATH=../appdir/usr -Wno-dev -DFORCE_INTERNAL_QSCINTILLA=ON -DLOCAL_SQLITE=ON -Dsqlcipher=${{ matrix.sqlcipher }} ..
+           cmake -DCMAKE_INSTALL_PREFIX:PATH=../appdir/usr -Wno-dev -DFORCE_INTERNAL_QSCINTILLA=ON -DSTATIC_SQLITE=${{ matrix.sqlcipher == '0' }} -DLOCAL_SQLITE=ON -Dsqlcipher=${{ matrix.sqlcipher }} ..
     - name: Run make
       run: |
            cd appbuild

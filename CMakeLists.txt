@@ -12,6 +12,7 @@ OPTION(FORCE_INTERNAL_QHEXEDIT "Don't use distribution's QHexEdit even if availa
 OPTION(ALL_WARNINGS "Enable some useful warning flags" OFF)
 OPTION(sqlcipher "Build with SQLCipher library" OFF)
 OPTION(LOCAL_SQLITE "Prefer SQLite in /usr/local on Unix-like systems" OFF)
+OPTION(STATIC_SQLITE "Link SQLite statically" OFF)
 
 # BUILD_VERSION is the current date in YYYYMMDD format. It is only
 # used by the nightly version to add the date of the build.
@@ -423,6 +424,10 @@ else()
     find_library(LIBSQLITE ${LIBSQLITE_NAME})
 endif()
 
+if(STATIC_SQLITE)
+    string(REPLACE ".so" ".a" LIBSQLITE ${LIBSQLITE})
+endif()
+
 if(WIN32 AND MSVC)
     find_path(SQLITE3_INCLUDE_DIR sqlite3.h)
     if(sqlcipher)
@@ -536,6 +541,10 @@ if(NOT WIN32 AND NOT APPLE)
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION lib
     )
+endif()
+
+if(STATIC_SQLITE AND UNIX)
+    target_link_libraries(${PROJECT_NAME} dl)
 endif()
 
 if(ENABLE_TESTING)
