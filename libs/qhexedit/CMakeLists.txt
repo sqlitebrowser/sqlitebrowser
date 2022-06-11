@@ -22,5 +22,7 @@ set(QHEXEDIT_MOC_HDR
 )
 
 add_library(qhexedit ${QHEXEDIT_SRC} ${QHEXEDIT_HDR} ${QHEXEDIT_MOC_HDR} ${QHEXEDIT_MOC})
-
+target_include_directories(qhexedit INTERFACE src)
 target_link_libraries(qhexedit Qt5::Widgets)
+
+add_library(QHexEdit::QHexEdit ALIAS qhexedit)

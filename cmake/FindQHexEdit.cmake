@@ -49,3 +49,11 @@ mark_as_advanced(
   QHexEdit_INCLUDE_DIRS
   QHexEdit_LIBRARIES
 )
+
+if (QHexEdit_FOUND AND NOT TARGET QHexEdit::QHexEdit)
+  add_library(QHexEdit::QHexEdit UNKNOWN IMPORTED)
+  set_target_properties(QHexEdit::QHexEdit PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES ${QHexEdit_INCLUDE_DIRS}
+    IMPORTED_LOCATION ${QHexEdit_LIBRARIES}
+  )
+endif()
