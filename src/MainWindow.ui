@@ -1417,7 +1417,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>&amp;Modify Table...</string>
    </property>
    <property name="whatsThis">
-    <string>Open the Modify Table wizard, where it is possible to rename an existing table. It is also possible to add or delete fields form a table, as well as modify field names and types.</string>
+    <string>Open the Modify Table wizard, where it is possible to rename an existing table. It is also possible to add or delete fields from a table, as well as modify field names and types.</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
