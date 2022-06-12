@@ -399,7 +399,7 @@ else()
     set(LIBSQLITE_NAME SQLite3)
 endif()
 
-# add extra library path for MacOS and FreeBSD and when LOCAL_SQLITE is true
+# add extra library path for MacOS and FreeBSD
 set(EXTRAPATH APPLE OR ${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD")
 if(EXTRAPATH)
     list(PREPEND CMAKE_PREFIX_PATH /usr/local/opt/sqlite/lib)
@@ -447,9 +447,12 @@ target_link_libraries(${PROJECT_NAME}
     ${WIN32_STATIC_LINK}
     ${ADDITIONAL_LIBS}
 )
-target_link_libraries(${PROJECT_NAME} QHexEdit::QHexEdit)
-target_link_libraries(${PROJECT_NAME} QCustomPlot::QCustomPlot)
-target_link_libraries(${PROJECT_NAME} QScintilla::QScintilla)
+
+target_link_libraries(${PROJECT_NAME}
+    QHexEdit::QHexEdit
+    QCustomPlot::QCustomPlot
+    QScintilla::QScintilla
+)
 
 if(MSVC)
     set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "DB Browser for SQLite")
