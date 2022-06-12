@@ -476,7 +476,7 @@ if(NOT WIN32 AND NOT APPLE)
     )
 endif()
 
-if(STATIC_SQLITE AND UNIX)
+if(UNIX)
     target_link_libraries(${PROJECT_NAME} dl)
 endif()
 
