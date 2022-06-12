@@ -11,7 +11,6 @@ OPTION(FORCE_INTERNAL_QCUSTOMPLOT "Don't use distribution's QCustomPlot even if 
 OPTION(FORCE_INTERNAL_QHEXEDIT "Don't use distribution's QHexEdit even if available" ON)
 OPTION(ALL_WARNINGS "Enable some useful warning flags" OFF)
 OPTION(sqlcipher "Build with SQLCipher library" OFF)
-OPTION(LOCAL_SQLITE "Prefer SQLite in /usr/local on Unix-like systems" OFF)
 
 # BUILD_VERSION is the current date in YYYYMMDD format. It is only
 # used by the nightly version to add the date of the build.
@@ -401,7 +400,7 @@ else()
 endif()
 
 # add extra library path for MacOS and FreeBSD and when LOCAL_SQLITE is true
-set(EXTRAPATH APPLE OR ${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD" OR LOCAL_SQLITE)
+set(EXTRAPATH APPLE OR ${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD")
 if(EXTRAPATH)
     list(PREPEND CMAKE_PREFIX_PATH /usr/local/lib /usr/local/opt/sqlite/lib)
 endif()
