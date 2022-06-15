@@ -22,6 +22,7 @@ FilterTableHeader::FilterTableHeader(QTableView* parent) :
 
     // Do some connects: Basically just resize and reposition the input widgets whenever anything changes
     connect(this, &FilterTableHeader::sectionResized, this, &FilterTableHeader::adjustPositions);
+    connect(this, &FilterTableHeader::sectionClicked, this, &FilterTableHeader::adjustPositions);
     connect(parent->horizontalScrollBar(), &QScrollBar::valueChanged, this, &FilterTableHeader::adjustPositions);
     connect(parent->verticalScrollBar(), &QScrollBar::valueChanged, this, &FilterTableHeader::adjustPositions);
 
@@ -75,13 +76,13 @@ void FilterTableHeader::updateGeometries()
 
 void FilterTableHeader::adjustPositions()
 {
+    // The two adds some extra space between the header label and the input widget
+    const int y = QHeaderView::sizeHint().height() + 2;
     // Loop through all widgets
     for(int i=0;i < static_cast<int>(filterWidgets.size()); ++i)
     {
         // Get the current widget, move it and resize it
         QWidget* w = filterWidgets.at(static_cast<size_t>(i));
-        // The two adds some extra space between the header label and the input widget
-        int y = QHeaderView::sizeHint().height() + 2;
         if (QApplication::layoutDirection() == Qt::RightToLeft)
             w->move(width() - (sectionPosition(i) + sectionSize(i) - offset()), y);
         else
