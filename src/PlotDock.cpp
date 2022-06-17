@@ -987,17 +987,25 @@ void PlotDock::adjustBars()
     }
 }
 
+namespace {
+    void adjustOneAxisFormat (QCPAxis* axis, bool fixedFormat) {
+        const QString format = fixedFormat? "f" : "gb";
+        axis->setNumberFormat(format);
+        int precision;
+        // Different values for big numbers and small numbers.
+        if (axis->range().center() > 999 && axis->range().size() > 10)
+            precision = fixedFormat? 0 : 2;
+        else
+            precision = fixedFormat? 2 : 6;
+        axis->setNumberPrecision(precision);
+    }
+}
+
 void PlotDock::adjustAxisFormat()
 {
-    const QString format = m_fixedFormat? "f" : "gb";
-    ui->plotWidget->xAxis->setNumberFormat(format);
-    ui->plotWidget->yAxis->setNumberFormat(format);
-    ui->plotWidget->yAxis2->setNumberFormat(format);
-
-    const int precision = m_fixedFormat? 0 : 6;
-    ui->plotWidget->xAxis->setNumberPrecision(precision);
-    ui->plotWidget->yAxis->setNumberPrecision(precision);
-    ui->plotWidget->yAxis2->setNumberPrecision(precision);
+    adjustOneAxisFormat(ui->plotWidget->xAxis, m_fixedFormat);
+    adjustOneAxisFormat(ui->plotWidget->yAxis, m_fixedFormat);
+    adjustOneAxisFormat(ui->plotWidget->yAxis2, m_fixedFormat);
 }
 
 void PlotDock::toggleStackedBars(bool stacked)
