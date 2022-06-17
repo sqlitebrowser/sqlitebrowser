@@ -1206,7 +1206,7 @@ static void rtrimFunc(sqlite3_context *context, int argc, sqlite3_value **argv){
 }
 
 /*
-**  Removes the whitespace at the begining and end of a string
+**  Removes the whitespace at the beginning and end of a string
 */
 static void trimFunc(sqlite3_context *context, int argc, sqlite3_value **argv){
   const char *z;
