@@ -81,8 +81,16 @@ void printArgument(const QString& argument, const QString& description)
 Application::Application(int& argc, char** argv) :
     QApplication(argc, argv)
 {
-    if (QFile::exists("./configuration/config.conf"))  Settings::setUserSettingsFile("./configuration.config.conf");
-    if (QFile::exists("./configuration/config.ini"))  Settings::setUserSettingsFile("./configuration.config.ini");
+    // Check user configuration file is exists
+    bool isUserConfigurationFileExists;
+    if(QFile::exists("./configuration/config.conf")) {
+        Settings::setUserSettingsFile("./configuration.config.conf");
+        isUserConfigurationFileExists = true;
+    }
+    if(QFile::exists("./configuration/config.ini")){
+        Settings::setUserSettingsFile("./configuration.config.ini");
+        isUserConfigurationFileExists = true;
+    }
 
     // Get 'DB4S_SETTINGS_FILE' environment variable
     const auto env = qgetenv("DB4S_SETTINGS_FILE");
@@ -101,6 +109,12 @@ Application::Application(int& argc, char** argv) :
                 {
                     qWarning() << qPrintable(tr("The user settings file location is replaced with the argument value instead of the environment variable value."));
                     qWarning() << qPrintable(tr("Ignored environment variable(DB4S_SETTINGS_FILE) value : ") + env);
+                } else if(!env.isEmpty() && isUserConfigurationFileExists) {
+                    qWarning() << qPrintable(tr("Environment variable and settings file inside the 'configuration' folder are ignored"));
+                    qWarning() << qPrintable(tr("Settings are loaded from a file provided as an argument value."));
+                } else if (isUserConfigurationFileExists) {
+                    qWarning() << qPrintable(tr("Settings file inside the 'configuration' folder is ignored"));
+                    qWarning() << qPrintable(tr("Settings are loaded from a file provided as an argument value."));
                 }
                 Settings::setUserSettingsFile(arguments().at(i));
             }
