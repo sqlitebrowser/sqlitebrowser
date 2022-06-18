@@ -81,6 +81,9 @@ void printArgument(const QString& argument, const QString& description)
 Application::Application(int& argc, char** argv) :
     QApplication(argc, argv)
 {
+    if (QFile::exists("./configuration/config.conf"))  Settings::setUserSettingsFile("./configuration.config.conf");
+    if (QFile::exists("./configuration/config.ini"))  Settings::setUserSettingsFile("./configuration.config.ini");
+
     // Get 'DB4S_SETTINGS_FILE' environment variable
     const auto env = qgetenv("DB4S_SETTINGS_FILE");
 
