@@ -21,7 +21,10 @@ public:
     ~EditDialog() override;
 
     void setCurrentIndex(const QModelIndex& idx);
+    bool isModified() const;
+    void setModified(bool modified);
     QPersistentModelIndex currentIndex() const { return m_currentIndex; }
+    void promptSaveData();
 
 public slots:
     void setFocus();

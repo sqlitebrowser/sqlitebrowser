@@ -20,7 +20,6 @@
 #include "ExportSqlDialog.h"
 #include "SqlUiLexer.h"
 #include "FileDialog.h"
-#include "FilterTableHeader.h"
 #include "RemoteDock.h"
 #include "FindReplaceDialog.h"
 #include "RunSql.h"
@@ -3837,6 +3836,7 @@ TableBrowserDock* MainWindow::newTableBrowserTab(const sqlb::ObjectIdentifier& t
         auto& settings = d->tableBrowser()->settings(d->tableBrowser()->currentlyBrowsedTableName());
         plotDock->updatePlot(d->tableBrowser()->model(), &settings, true, false);
     });
+    connect(d->tableBrowser(), &TableBrowser::prepareForFilter, editDock, &EditDialog::promptSaveData);
 
     // Set up dock and add it to the tab
     ui->tabBrowsers->addDockWidget(Qt::TopDockWidgetArea, d);

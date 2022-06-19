@@ -83,6 +83,12 @@ void FilterLineEdit::keyReleaseEvent(QKeyEvent* event)
     }
 }
 
+void FilterLineEdit::focusInEvent(QFocusEvent* event)
+{
+    QLineEdit::focusInEvent(event);
+    emit filterFocused();
+}
+
 void FilterLineEdit::clear()
 {
     // When programmatically clearing the line edit's value make sure the effects are applied immediately, i.e.

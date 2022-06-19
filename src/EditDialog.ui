@@ -214,7 +214,7 @@ In the Evaluation mode, entered SQLite expressions are evaluated and the result 
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QLabel" name="labelType">
+        <widget class="QLabel" name="labelCell">
          <property name="sizePolicy">
           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -228,7 +228,7 @@ In the Evaluation mode, entered SQLite expressions are evaluated and the result 
           </size>
          </property>
          <property name="text">
-          <string>Type of data currently in cell</string>
+          <string>Identification of the cell currently in the editor</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
@@ -236,7 +236,7 @@ In the Evaluation mode, entered SQLite expressions are evaluated and the result 
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="labelSize">
+        <widget class="QLabel" name="labelInfo">
          <property name="sizePolicy">
           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -250,7 +250,7 @@ In the Evaluation mode, entered SQLite expressions are evaluated and the result 
           </size>
          </property>
          <property name="text">
-          <string>Size of data currently in table</string>
+          <string>Type and size of data currently in table</string>
          </property>
          <property name="textFormat">
           <enum>Qt::PlainText</enum>

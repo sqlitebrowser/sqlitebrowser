@@ -97,6 +97,7 @@ signals:
     void currentTableChanged(sqlb::ObjectIdentifier table);
     void foreignKeyClicked(sqlb::ObjectIdentifier table, std::string column, QByteArray value);
     void dataAboutToBeEdited(const QModelIndex& index);
+    void prepareForFilter();
 
 private slots:
     void clear();

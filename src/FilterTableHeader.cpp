@@ -42,6 +42,7 @@ void FilterTableHeader::generateFilters(size_t number, size_t number_of_hidden_f
         FilterLineEdit* l = new FilterLineEdit(this, &filterWidgets, i);
         l->setVisible(i >= number_of_hidden_filters);
         connect(l, &FilterLineEdit::delayedTextChanged, this, &FilterTableHeader::inputChanged);
+        connect(l, &FilterLineEdit::filterFocused, this, [this](){emit filterFocused();});
         connect(l, &FilterLineEdit::addFilterAsCondFormat, this, &FilterTableHeader::addFilterAsCondFormat);
         connect(l, &FilterLineEdit::clearAllCondFormats, this, &FilterTableHeader::clearAllCondFormats);
         connect(l, &FilterLineEdit::editCondFormats, this, &FilterTableHeader::editCondFormats);
