@@ -1991,6 +1991,20 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>New In-&amp;Memory Database</string>
    </property>
   </action>
+  <action name="actionDropSelectQueryCheck">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Drag &amp;&amp; Drop SELECT Query</string>
+   </property>
+   <property name="statusTip">
+    <string>When dragging fields from the same table or a single table, drop a SELECT query into the editor</string>
+   </property>
+   <property name="whatsThis">
+    <string>When dragging fields from the same table or a single table, drop a SELECT query into the editor</string>
+   </property>
+  </action>
   <action name="actionDropQualifiedCheck">
    <property name="checkable">
     <bool>true</bool>

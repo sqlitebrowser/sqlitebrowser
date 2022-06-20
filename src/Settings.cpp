@@ -425,6 +425,9 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
     // SchemaDock Drag & drop settings
     if(group == "SchemaDock")
     {
+        if(name == "dropSelectQuery")
+            return true;
+
         if(name == "dropQualifiedNames")
             return false;
 
