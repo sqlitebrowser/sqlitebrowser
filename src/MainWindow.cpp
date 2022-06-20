@@ -2140,6 +2140,12 @@ void MainWindow::changeSqlTab(int index)
         ui->actionExecuteSql->setEnabled(false);
         ui->actionSqlStop->setEnabled(true);
     }
+    SqlExecutionArea* sqlWidget = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
+    if (sqlWidget) {
+      m_currentTabTableModel = sqlWidget->getModel();
+
+      dataTableSelectionChanged(sqlWidget->getTableResult()->currentIndex());
+    }
 }
 
 void MainWindow::openSqlFile(int tabindex, QString filename)
