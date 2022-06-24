@@ -3795,8 +3795,13 @@ void MainWindow::tableBrowserTabClosed()
     // the last dock which is closed instead of if there is no dock remaining.
     if(allTableBrowserDocks().size() == 1)
     {
-        newTableBrowserTab();
+        newTableBrowserTab({}, /* forceHideTitlebar */ true);
     } else {
+        // If only one dock will be left, make sure its titlebar is hidden.
+        if(allTableBrowserDocks().size() == 2) {
+            for(auto dock : allTableBrowserDocks())
+                dock->setTitleBarWidget(new QWidget(dock));
+        }
         // If the currently active tab is closed activate another tab
         if(currentTableBrowser && sender() == currentTableBrowser->parent())
         {
@@ -3807,7 +3812,7 @@ void MainWindow::tableBrowserTabClosed()
     }
 }
 
-TableBrowserDock* MainWindow::newTableBrowserTab(const sqlb::ObjectIdentifier& tableToBrowse)
+TableBrowserDock* MainWindow::newTableBrowserTab(const sqlb::ObjectIdentifier& tableToBrowse, bool forceHideTitleBar)
 {
     // Prepare new dock
     TableBrowserDock* d = new TableBrowserDock(ui->tabBrowsers, this);
@@ -3847,6 +3852,14 @@ TableBrowserDock* MainWindow::newTableBrowserTab(const sqlb::ObjectIdentifier& t
         plotDock->updatePlot(d->tableBrowser()->model(), &settings, true, false);
     });
     connect(d->tableBrowser(), &TableBrowser::prepareForFilter, editDock, &EditDialog::promptSaveData);
+
+    // Restore titlebar for any other widget
+    for(auto dock : allTableBrowserDocks())
+        dock->setTitleBarWidget(nullptr);
+
+    // Hide titlebar if it is the only one dock
+    if(allTableBrowserDocks().size() == 0 || forceHideTitleBar)
+        d->setTitleBarWidget(new QWidget(d));
 
     // Set up dock and add it to the tab
     ui->tabBrowsers->addDockWidget(Qt::TopDockWidgetArea, d);

@@ -34,6 +34,8 @@ TableBrowserDock::TableBrowserDock(QWidget* parent, MainWindow* mainWindow)
             setWindowTitle(QString::fromStdString(table.toDisplayString()));
     });
 
+    connect(browser, &TableBrowser::newDockRequested, this, &TableBrowserDock::newDockRequested);
+
     // Update view
     browser->refresh();
 

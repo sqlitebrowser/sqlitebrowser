@@ -98,6 +98,7 @@ signals:
     void foreignKeyClicked(sqlb::ObjectIdentifier table, std::string column, QByteArray value);
     void dataAboutToBeEdited(const QModelIndex& index);
     void prepareForFilter();
+    void newDockRequested();
 
 private slots:
     void clear();

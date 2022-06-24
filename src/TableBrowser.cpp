@@ -172,11 +172,13 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
         emit foreignKeyClicked(table, column, value);
     });
 
+    connect(ui->actionAddDock, &QAction::triggered, this, [this]() {
+        emit newDockRequested();
+    });
     connect(ui->actionRefresh, &QAction::triggered, this, [this]() {
         db->updateSchema();
         refresh();
     });
-
     connect(ui->fontComboBox, &QFontComboBox::currentFontChanged, this, [this](const QFont &font) {
         modifyFormat([font](CondFormat& format) { format.setFontFamily(font.family()); });
     });

@@ -238,7 +238,7 @@ private slots:
     void renameSqlTab(int index);
     void showContextMenuSqlTabBar(const QPoint& pos);
 
-    TableBrowserDock* newTableBrowserTab(const sqlb::ObjectIdentifier& tableToBrowse = {});
+    TableBrowserDock* newTableBrowserTab(const sqlb::ObjectIdentifier& tableToBrowse = {}, bool forceHideTitleBar = false);
     void tableBrowserTabClosed();
     void changeTableBrowserTab(TableBrowserDock* dock);
 };

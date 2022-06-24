@@ -74,6 +74,7 @@
        <property name="toolButtonStyle">
         <enum>Qt::ToolButtonIconOnly</enum>
        </property>
+       <addaction name="actionAddDock"/>
        <addaction name="actionRefresh"/>
        <addaction name="actionClearFilters"/>
        <addaction name="actionClearSorting"/>
@@ -806,6 +807,24 @@
    </property>
    <property name="shortcutContext">
     <enum>Qt::WidgetShortcut</enum>
+   </property>
+  </action>
+  <action name="actionAddDock">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/new_tab</normaloff>:/icons/new_tab</iconset>
+   </property>
+   <property name="text">
+    <string>New Data Browser</string>
+   </property>
+   <property name="toolTip">
+    <string>Add a new docked Data Browser</string>
+   </property>
+   <property name="statusTip">
+    <string>Add a new docked Data Browser</string>
+   </property>
+   <property name="whatsThis">
+    <string>This button adss a new docked Data Browser, which you can detach and arrange in different layouts.</string>
    </property>
   </action>
   <action name="actionRefresh">
