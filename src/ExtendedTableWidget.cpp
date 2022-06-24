@@ -962,11 +962,25 @@ void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
         return;
     }
 
+    // Discoverability of Ctrl+Shift+Click to follow foreign keys or URLs
+    if(event->modifiers().testFlag(Qt::ControlModifier) && event->modifiers().testFlag(Qt::ShiftModifier))
+        QApplication::setOverrideCursor(Qt::PointingHandCursor);
+
     // This prevents the current selection from being changed when pressing tab to move to the next filter. Note that this is in an 'if' condition,
     // not in an 'else if' because this way, when the tab key was pressed and the focus was on the last cell, a new row is inserted and then the tab
     // key press is processed a second time to move the cursor as well
     if((event->key() != Qt::Key_Tab && event->key() != Qt::Key_Backtab) || hasFocus())
         QTableView::keyPressEvent(event);
+}
+
+void ExtendedTableWidget::keyReleaseEvent(QKeyEvent* event)
+{
+
+    // Restore the PointingHandCursor override
+    if(!event->modifiers().testFlag(Qt::ControlModifier) || !event->modifiers().testFlag(Qt::ShiftModifier))
+        QApplication::restoreOverrideCursor();
+
+    QTableView::keyReleaseEvent(event);
 }
 
 void ExtendedTableWidget::updateGeometries()
