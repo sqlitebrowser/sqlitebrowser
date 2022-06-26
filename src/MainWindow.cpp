@@ -3797,10 +3797,12 @@ void MainWindow::tableBrowserTabClosed()
     {
         newTableBrowserTab({}, /* forceHideTitlebar */ true);
     } else {
-        // If only one dock will be left, make sure its titlebar is hidden.
+        // If only one dock will be left, make sure its titlebar is hidden,
+        // unless it's floating, so it can be closed or restored.
         if(allTableBrowserDocks().size() == 2) {
             for(auto dock : allTableBrowserDocks())
-                dock->setTitleBarWidget(new QWidget(dock));
+                if(!dock->isFloating())
+                    dock->setTitleBarWidget(new QWidget(dock));
         }
         // If the currently active tab is closed activate another tab
         if(currentTableBrowser && sender() == currentTableBrowser->parent())
@@ -3858,7 +3860,7 @@ TableBrowserDock* MainWindow::newTableBrowserTab(const sqlb::ObjectIdentifier& t
         dock->setTitleBarWidget(nullptr);
 
     // Hide titlebar if it is the only one dock
-    if(allTableBrowserDocks().size() == 0 || forceHideTitleBar)
+    if(allTableBrowserDocks().size() == 1 || forceHideTitleBar)
         d->setTitleBarWidget(new QWidget(d));
 
     // Set up dock and add it to the tab
