@@ -136,6 +136,7 @@ private slots:
     void saveFilterAsView();
     void setTableEncoding(bool forAllTables = false);
     void setDefaultTableEncoding();
+    void copyColumnName();
     void fetchedData();
 
 private:
