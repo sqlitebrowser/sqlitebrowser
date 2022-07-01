@@ -9,7 +9,7 @@ bool DotenvFormat::readEnvFile(QIODevice &device, QSettings::SettingsMap &map)
 
     QString line;
 
-    QRegularExpression keyValueRegex("^\\s*([\\w\\.\\-]+)\\s*=\\s*(.*)\\s*$");
+    QRegularExpression keyValueRegex("^\\s*([\\w\\.\\-\\@]+)\\s*=\\s*(.*)\\s*$");
 
     while (in.readLineInto(&line)) {
         QRegularExpressionMatch match = keyValueRegex.match(line);
