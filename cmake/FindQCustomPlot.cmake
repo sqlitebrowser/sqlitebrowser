@@ -49,3 +49,11 @@ mark_as_advanced(
   QCustomPlot_INCLUDE_DIRS
   QCustomPlot_LIBRARIES
 )
+
+if (QCustomPlot_FOUND AND NOT TARGET QCustomPlot::QCustomPlot)
+  add_library(QCustomPlot::QCustomPlot UNKNOWN IMPORTED)
+  set_target_properties(QCustomPlot::QCustomPlot PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES ${QCustomPlot_INCLUDE_DIRS}
+    IMPORTED_LOCATION ${QCustomPlot_LIBRARIES}
+  )
+endif()

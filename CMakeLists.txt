@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.9)
+cmake_minimum_required(VERSION 3.15)
 project(sqlitebrowser
     VERSION 3.12.99
     DESCRIPTION "GUI editor for SQLite databases"
@@ -11,14 +11,11 @@ OPTION(FORCE_INTERNAL_QCUSTOMPLOT "Don't use distribution's QCustomPlot even if 
 OPTION(FORCE_INTERNAL_QHEXEDIT "Don't use distribution's QHexEdit even if available" ON)
 OPTION(ALL_WARNINGS "Enable some useful warning flags" OFF)
 OPTION(sqlcipher "Build with SQLCipher library" OFF)
-OPTION(LOCAL_SQLITE "Prefer SQLite in /usr/local on Unix-like systems" OFF)
-OPTION(STATIC_SQLITE "Link SQLite statically" OFF)
 
 # BUILD_VERSION is the current date in YYYYMMDD format. It is only
 # used by the nightly version to add the date of the build.
 string(TIMESTAMP BUILD_VERSION "%Y%m%d")
 
-add_definitions(-std=c++14)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
@@ -33,24 +30,18 @@ else()
     add_executable(${PROJECT_NAME})
 endif()
 
+# BUILD_VERSION is the current date in YYYYMMDD format. It is only
+# used by the nightly version to add the date of the build.
+string(TIMESTAMP BUILD_VERSION "%Y%m%d")
+
 if(NOT BUILD_STABLE_VERSION)
     target_compile_definitions(${PROJECT_NAME} PRIVATE BUILD_VERSION=${BUILD_VERSION})
 endif()
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" "${CMAKE_MODULE_PATH}")
 
-# BUILD_VERSION is the current date in YYYYMMDD format. It is only
-# used by the nightly version to add the date of the build.
-string(TIMESTAMP BUILD_VERSION "%Y%m%d")
-
-set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" "${CMAKE_MODULE_PATH}")
-
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release")
-endif()
-
-if(NOT BUILD_STABLE_VERSION)
-    add_definitions(-DBUILD_VERSION=${BUILD_VERSION})
 endif()
 
 # Fix behavior of CMAKE_CXX_STANDARD when targeting macOS.
@@ -64,7 +55,7 @@ if(POLICY CMP0071)
     cmake_policy(SET CMP0071 NEW)
 endif()
 
-if(WIN32 AND MSVC)
+if(MSVC)
     if(CMAKE_CL_64)
         # Paths for 64-bit windows builds
         set(OPENSSL_PATH "C:/dev/OpenSSL-Win64" CACHE PATH "OpenSSL Path")
@@ -91,7 +82,7 @@ if(WIN32 AND MSVC)
         endif()
     endif()
 
-    set(CMAKE_PREFIX_PATH "${QT5_PATH};${SQLITE3_PATH}")
+    list(PREPEND CMAKE_PREFIX_PATH ${QT5_PATH} ${SQLITE3_PATH})
 endif()
 
 # See https://github.com/Homebrew/homebrew-core/issues/8392#issuecomment-325226494
@@ -105,32 +96,25 @@ endif()
 find_package(Qt5 REQUIRED COMPONENTS Concurrent Gui LinguistTools Network PrintSupport Test Widgets Xml)
 
 if(NOT FORCE_INTERNAL_QSCINTILLA)
-    find_package(QScintilla 2.8.10 QUIET)
+    find_package(QScintilla 2.8.10)
 endif()
-if(FORCE_INTERNAL_QCUSTOMPLOT)
-    set(QCustomPlot_FOUND FALSE)
-else()
+if(NOT FORCE_INTERNAL_QCUSTOMPLOT)
     find_package(QCustomPlot)
 endif()
-if(FORCE_INTERNAL_QHEXEDIT)
-    set(QHexEdit_FOUND FALSE)
-else()
+if(NOT FORCE_INTERNAL_QHEXEDIT)
     find_package(QHexEdit)
 endif()
-include_directories(${CMAKE_CURRENT_LIST_DIR}/libs/json)
+
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/libs/json)
 
 if(NOT QSCINTILLA_FOUND)
-    set(QSCINTILLA_DIR libs/qscintilla/Qt4Qt5)
-    add_subdirectory(${QSCINTILLA_DIR})
+    add_subdirectory(libs/qscintilla/Qt4Qt5)
 endif()
 if(NOT QHexEdit_FOUND)
-    set(QHexEdit_DIR libs/qhexedit)
-    set(QHexEdit_INCL_DIR ${QHexEdit_DIR}/src)
-    add_subdirectory(${QHexEdit_DIR})
+    add_subdirectory(libs/qhexedit)
 endif()
 if(NOT QCustomPlot_FOUND)
-    set(QCustomPlot_DIR libs/qcustomplot-source)
-    add_subdirectory(${QCustomPlot_DIR})
+    add_subdirectory(libs/qcustomplot-source)
 endif()
 
 if(ENABLE_TESTING)
@@ -410,54 +394,33 @@ endif()
 # SQLCipher option
 if(sqlcipher)
     add_definitions(-DENABLE_SQLCIPHER)
-    set(LIBSQLITE_NAME sqlcipher)
+    set(LIBSQLITE_NAME SQLCipher)
 else()
-    set(LIBSQLITE_NAME sqlite3)
+    set(LIBSQLITE_NAME SQLite3)
 endif()
 
 # add extra library path for MacOS and FreeBSD
 set(EXTRAPATH APPLE OR ${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD")
-if(LOCAL_SQLITE OR EXTRAPATH)
-    find_library(LIBSQLITE ${LIBSQLITE_NAME} HINTS /usr/local/lib /usr/local/opt/sqlite/lib)
-    set(ADDITIONAL_INCLUDE_PATHS /usr/local/include /usr/local/opt/sqlite/include)
+if(EXTRAPATH)
+    list(PREPEND CMAKE_PREFIX_PATH /usr/local/opt/sqlite/lib)
+endif()
+
+find_package(${LIBSQLITE_NAME})
+if (sqlcipher)
+    target_link_libraries(${PROJECT_NAME} SQLCipher::SQLCipher)
 else()
-    find_library(LIBSQLITE ${LIBSQLITE_NAME})
+    target_link_libraries(${PROJECT_NAME} SQLite::SQLite3)
 endif()
 
-if(STATIC_SQLITE)
-    string(REPLACE ".so" ".a" LIBSQLITE ${LIBSQLITE})
-endif()
-
-if(WIN32 AND MSVC)
-    find_path(SQLITE3_INCLUDE_DIR sqlite3.h)
+if(MSVC)
     if(sqlcipher)
         find_file(SQLITE3_DLL sqlcipher.dll)
     else()
         find_file(SQLITE3_DLL sqlite3.dll)
     endif()
-    include_directories(${SQLITE3_INCLUDE_DIR})
 endif()
 
-target_include_directories(${PROJECT_NAME} PRIVATE
-    ${ADDITIONAL_INCLUDE_PATHS}
-    src
-)
-
-if(QHexEdit_FOUND)
-    include_directories(${QHexEdit_INCLUDE_DIR})
-else()
-    include_directories(${QHexEdit_INCL_DIR})
-endif()
-if(QCustomPlot_FOUND)
-    include_directories(${QCustomPlot_INCLUDE_DIR})
-else()
-    include_directories(${QCustomPlot_DIR})
-endif()
-if(QSCINTILLA_FOUND)
-    include_directories(${QSCINTILLA_INCLUDE_DIR})
-else()
-    include_directories(${QSCINTILLA_DIR})
-endif()
+target_include_directories(${PROJECT_NAME} PRIVATE src)
 
 target_sources(${PROJECT_NAME}
     PRIVATE
@@ -476,52 +439,22 @@ if(ALL_WARNINGS AND CMAKE_COMPILER_IS_GNUCC)
     endif()
 endif()
 
-if(NOT QHexEdit_FOUND)
-    add_dependencies(${PROJECT_NAME} qhexedit)
-endif()
-if(NOT QCustomPlot_FOUND)
-    add_dependencies(${PROJECT_NAME} qcustomplot)
-endif()
-if(NOT QSCINTILLA_FOUND)
-    add_dependencies(${PROJECT_NAME} qscintilla2)
-endif()
-
-if(NOT QHexEdit_FOUND)
-    link_directories("${CMAKE_CURRENT_BINARY_DIR}/${QHexEdit_DIR}")
-endif()
-if(NOT QCustomPlot_FOUND)
-    link_directories("${CMAKE_CURRENT_BINARY_DIR}/${QCustomPlot_DIR}")
-endif()
-if(NOT QSCINTILLA_FOUND)
-    link_directories("${CMAKE_CURRENT_BINARY_DIR}/${QSCINTILLA_DIR}")
-endif()
-
 set(QT_LIBS Qt5::Gui Qt5::Test Qt5::PrintSupport Qt5::Widgets Qt5::Network Qt5::Concurrent Qt5::Xml)
 
 target_link_libraries(${PROJECT_NAME}
     ${LPTHREAD}
     ${QT_LIBS}
     ${WIN32_STATIC_LINK}
-    ${LIBSQLITE}
     ${ADDITIONAL_LIBS}
 )
-if(QHexEdit_FOUND)
-    target_link_libraries(${PROJECT_NAME} ${QHexEdit_LIBRARIES})
-else()
-    target_link_libraries(${PROJECT_NAME} qhexedit)
-endif()
-if(QCustomPlot_FOUND)
-    target_link_libraries(${PROJECT_NAME} ${QCustomPlot_LIBRARIES})
-else()
-    target_link_libraries(${PROJECT_NAME} qcustomplot)
-endif()
-if(QSCINTILLA_FOUND)
-    target_link_libraries(${PROJECT_NAME} ${QSCINTILLA_LIBRARIES})
-else()
-    target_link_libraries(${PROJECT_NAME} qscintilla2)
-endif()
 
-if(WIN32 AND MSVC)
+target_link_libraries(${PROJECT_NAME}
+    QHexEdit::QHexEdit
+    QCustomPlot::QCustomPlot
+    QScintilla::QScintilla
+)
+
+if(MSVC)
     set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "DB Browser for SQLite")
     set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS_DEBUG "/SUBSYSTEM:CONSOLE")
     set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_DEFINITIONS_DEBUG "_CONSOLE")
@@ -543,7 +476,7 @@ if(NOT WIN32 AND NOT APPLE)
     )
 endif()
 
-if(STATIC_SQLITE AND UNIX)
+if(UNIX)
     target_link_libraries(${PROJECT_NAME} dl)
 endif()
 

@@ -170,12 +170,14 @@ set(QSCINTILLA_MOC_HDR
 
 QT5_WRAP_CPP(QSCINTILLA_WRAP_MOC_HDR ${QSCINTILLA_MOC_HDR})
 
-include_directories(. ../include ../lexlib ../src)
-
 add_library(qscintilla2 ${QSCINTILLA_SRC} ${QSCINTILLA_HDR} ${QSCINTILLA_MOC_HDR} ${QSCINTILLA_MOC} ${QSCINTILLA_WRAP_MOC_HDR})
+target_include_directories(qscintilla2 PRIVATE ../include ../lexlib ../src)
+target_include_directories(qscintilla2 INTERFACE .)
 
 target_link_libraries(qscintilla2 Qt5::Widgets Qt5::PrintSupport)
 
 if (APPLE)
     target_link_libraries(qscintilla2 Qt5::MacExtras)
 endif()
+
+add_library(QScintilla::QScintilla ALIAS qscintilla2)
