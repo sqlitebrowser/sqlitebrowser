@@ -3843,7 +3843,7 @@ TableBrowserDock* MainWindow::newTableBrowserTab(const sqlb::ObjectIdentifier& t
     connect(d->tableBrowser(), &TableBrowser::statusMessageRequested, ui->statusbar, [this](const QString& message) {
         ui->statusbar->showMessage(message);
     });
-    connect(d->tableBrowser(), &TableBrowser::foreignKeyClicked, this, [this](const sqlb::ObjectIdentifier& table, std::string column, const QByteArray& value) {
+    connect(d->tableBrowser(), &TableBrowser::foreignKeyClicked, this, [this](const sqlb::ObjectIdentifier& table, const std::string& column, const QByteArray& value) {
         TableBrowserDock* foreign_key_dock = newTableBrowserTab(table);
         foreign_key_dock->tableBrowser()->jumpToRow(table, column, value);
         Application::processEvents();   // For some reason this is required for raise() to work here.

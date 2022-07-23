@@ -64,7 +64,7 @@ private:
 
         DBBrowserDB * pParent;
 
-        void operator() (sqlite3 * db) const
+        void operator() (const sqlite3* db) const
         {
             if(!db || !pParent)
                 return;
