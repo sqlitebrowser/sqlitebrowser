@@ -145,6 +145,7 @@ WS			[ \t\f]
 "FILTER"		return TOKEN(FILTER);
 "FOLLOWING"		return TOKEN(FOLLOWING);
 "FOREIGN"		return TOKEN(FOREIGN);
+"FROM"			return TOKEN(FROM);
 "GENERATED"		return TOKEN(GENERATED);
 "GLOB"			return TOKEN(GLOB);
 "IF"			return TOKEN(IF);

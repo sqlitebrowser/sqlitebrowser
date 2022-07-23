@@ -131,6 +131,7 @@
 %token <std::string> FILTER "FILTER"
 %token <std::string> FOLLOWING "FOLLOWING"
 %token <std::string> FOREIGN "FOREIGN"
+%token <std::string> FROM "FROM"
 %token <std::string> GENERATED "GENERATED"
 %token <std::string> GLOB "GLOB"
 %token <std::string> IF "IF"
@@ -387,34 +388,36 @@ type_name:
 	;
 
 unary_expr:
-	"-" expr %prec TILDE	{ $$ = "-" + $2; }
-	| "+" expr %prec TILDE	{ $$ = "+" + $2; }
-	| "~" expr		{ $$ = "~" + $2; }
-	| NOT expr		{ $$ = "NOT " + $2; }
+	"-" expr %prec TILDE			{ $$ = "-" + $2; }
+	| "+" expr %prec TILDE			{ $$ = "+" + $2; }
+	| "~" expr				{ $$ = "~" + $2; }
+	| NOT expr				{ $$ = "NOT " + $2; }
 	;
 
 binary_expr:
-	expr "||" expr		{ $$ = $1 + " || " + $3; }
-	| expr "*" expr		{ $$ = $1 + " * " + $3; }
-	| expr "/" expr		{ $$ = $1 + " / " + $3; }
-	| expr "%" expr		{ $$ = $1 + " % " + $3; }
-	| expr "+" expr		{ $$ = $1 + " + " + $3; }
-	| expr "-" expr		{ $$ = $1 + " - " + $3; }
-	| expr "<<" expr	{ $$ = $1 + " << " + $3; }
-	| expr ">>" expr	{ $$ = $1 + " >> " + $3; }
-	| expr "&" expr		{ $$ = $1 + " & " + $3; }
-	| expr "|" expr		{ $$ = $1 + " | " + $3; }
-	| expr "<" expr		{ $$ = $1 + " < " + $3; }
-	| expr "<=" expr	{ $$ = $1 + " <= " + $3; }
-	| expr ">" expr		{ $$ = $1 + " > " + $3; }
-	| expr ">=" expr	{ $$ = $1 + " >= " + $3; }
-	| expr "=" expr		{ $$ = $1 + " = " + $3; }
-	| expr "==" expr	{ $$ = $1 + " == " + $3; }
-	| expr "!=" expr	{ $$ = $1 + " != " + $3; }
-	| expr "<>" expr	{ $$ = $1 + " <> " + $3; }
-	| expr IS expr		{ $$ = $1 + " IS " + $3; }
-	| expr AND expr		{ $$ = $1 + " AND " + $3; }
-	| expr OR expr		{ $$ = $1 + " OR " + $3; }
+	expr "||" expr					{ $$ = $1 + " || " + $3; }
+	| expr "*" expr					{ $$ = $1 + " * " + $3; }
+	| expr "/" expr					{ $$ = $1 + " / " + $3; }
+	| expr "%" expr					{ $$ = $1 + " % " + $3; }
+	| expr "+" expr					{ $$ = $1 + " + " + $3; }
+	| expr "-" expr					{ $$ = $1 + " - " + $3; }
+	| expr "<<" expr				{ $$ = $1 + " << " + $3; }
+	| expr ">>" expr				{ $$ = $1 + " >> " + $3; }
+	| expr "&" expr					{ $$ = $1 + " & " + $3; }
+	| expr "|" expr					{ $$ = $1 + " | " + $3; }
+	| expr "<" expr					{ $$ = $1 + " < " + $3; }
+	| expr "<=" expr				{ $$ = $1 + " <= " + $3; }
+	| expr ">" expr					{ $$ = $1 + " > " + $3; }
+	| expr ">=" expr				{ $$ = $1 + " >= " + $3; }
+	| expr "=" expr					{ $$ = $1 + " = " + $3; }
+	| expr "==" expr				{ $$ = $1 + " == " + $3; }
+	| expr "!=" expr				{ $$ = $1 + " != " + $3; }
+	| expr "<>" expr				{ $$ = $1 + " <> " + $3; }
+	| expr IS expr					{ $$ = $1 + " IS " + $3; }
+	| expr IS DISTINCT FROM expr %prec TILDE	{ $$ = $1 + " IS DISTINCT FROM " + $5; }
+	| expr IS NOT DISTINCT FROM expr %prec TILDE	{ $$ = $1 + " IS NOT DISTINCT FROM " + $6; }
+	| expr AND expr					{ $$ = $1 + " AND " + $3; }
+	| expr OR expr					{ $$ = $1 + " OR " + $3; }
 	;
 
 like_expr:
