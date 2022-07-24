@@ -590,6 +590,87 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="tab_3">
+       <attribute name="title">
+        <string>Check Constraints</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="QToolButton" name="buttonAddCheckConstraint">
+            <property name="text">
+             <string>Add</string>
+            </property>
+            <property name="popupMode">
+             <enum>QToolButton::InstantPopup</enum>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="buttonRemoveCheckConstraint">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Remove</string>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="tableCheckConstraints">
+          <property name="alternatingRowColors">
+           <bool>true</bool>
+          </property>
+          <property name="horizontalScrollMode">
+           <enum>QAbstractItemView::ScrollPerPixel</enum>
+          </property>
+          <column>
+           <property name="text">
+            <string>Check</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Name</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>SQL</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
      <widget class="SqlTextEdit" name="sqlTextEdit" native="true">
       <property name="readOnly" stdset="0">
@@ -637,14 +718,6 @@
    </property>
    <property name="toolTip">
     <string>Add a unique constraint</string>
-   </property>
-  </action>
-  <action name="actionAddCheckConstraint">
-   <property name="text">
-    <string>Check</string>
-   </property>
-   <property name="toolTip">
-    <string>Add a check constraint</string>
    </property>
   </action>
  </widget>
@@ -983,6 +1056,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>buttonAddCheckConstraint</sender>
+   <signal>clicked()</signal>
+   <receiver>EditTableDialog</receiver>
+   <slot>addCheckConstraint()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>40</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonRemoveCheckConstraint</sender>
+   <signal>clicked()</signal>
+   <receiver>EditTableDialog</receiver>
+   <slot>removeCheckConstraint()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>97</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fieldSelectionChanged()</slot>
@@ -1002,5 +1107,7 @@
   <slot>setStrict(bool)</slot>
   <slot>addForeignKey()</slot>
   <slot>removeForeignKey()</slot>
+  <slot>addCheckConstraint()</slot>
+  <slot>removeCheckConstraint()</slot>
  </slots>
 </ui>

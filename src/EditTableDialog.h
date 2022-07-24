@@ -57,6 +57,12 @@ private:
         kForeignKeySql
     };
 
+    enum CheckConstraintColumns {
+        kCheckConstraintCheck = 0,
+        kCheckConstraintName,
+        kCheckConstraintSql,
+    };
+
     enum MoveFieldDirection
     {
         MoveUp,
@@ -68,8 +74,7 @@ private:
     enum TableConstraintType
     {
         PrimaryKey,
-        Unique,
-        Check
+        Unique
     };
 
     void updateColumnWidth();
@@ -81,6 +86,7 @@ private slots:
     void populateFields();
     void populateConstraints();
     void populateForeignKeys();
+    void populateCheckConstraints();
     void addField();
     void removeField();
     void fieldSelectionChanged();
@@ -90,6 +96,7 @@ private slots:
     void fieldItemChanged(QTreeWidgetItem* item, int column);
     void constraintItemChanged(QTableWidgetItem* item);
     void foreignKeyItemChanged(QTableWidgetItem* item);
+    void checkConstraintItemChanged(QTableWidgetItem* item);
     void constraintItemDoubleClicked(QTableWidgetItem* item);
     void foreignKeyItemDoubleClicked(QTableWidgetItem* item);
     void updateTypeAndCollation(QObject *object);
@@ -107,6 +114,8 @@ private slots:
     void removeConstraint();
     void addForeignKey();
     void removeForeignKey();
+    void addCheckConstraint();
+    void removeCheckConstraint();
 
 
 private:
