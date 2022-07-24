@@ -43,7 +43,7 @@ private:
         kForeignKey = 9
     };
 
-    enum ConstraintColumns {
+    enum IndexConstraintColumns {
         kConstraintColumns = 0,
         kConstraintType = 1,
         kConstraintName = 2,
@@ -71,12 +71,6 @@ private:
         MoveBottom
     };
 
-    enum TableConstraintType
-    {
-        PrimaryKey,
-        Unique
-    };
-
     void updateColumnWidth();
     void updateSqlText();
 
@@ -84,7 +78,7 @@ private:
 
 private slots:
     void populateFields();
-    void populateConstraints();
+    void populateIndexConstraints();
     void populateForeignKeys();
     void populateCheckConstraints();
     void addField();
@@ -94,10 +88,10 @@ private slots:
     void reject() override;
     void checkInput();
     void fieldItemChanged(QTreeWidgetItem* item, int column);
-    void constraintItemChanged(QTableWidgetItem* item);
+    void indexConstraintItemChanged(QTableWidgetItem* item);
     void foreignKeyItemChanged(QTableWidgetItem* item);
     void checkConstraintItemChanged(QTableWidgetItem* item);
-    void constraintItemDoubleClicked(QTableWidgetItem* item);
+    void indexConstraintItemDoubleClicked(QTableWidgetItem* item);
     void foreignKeyItemDoubleClicked(QTableWidgetItem* item);
     void updateTypeAndCollation(QObject *object);
     bool eventFilter(QObject *object, QEvent *event) override;
@@ -110,8 +104,8 @@ private slots:
     void setStrict(bool strict);
     void changeSchema(const QString& schema);
     void setOnConflict(const QString& on_conflict);
-    void addConstraint(EditTableDialog::TableConstraintType type);
-    void removeConstraint();
+    void addIndexConstraint(bool primary_key);
+    void removeIndexConstraint();
     void addForeignKey();
     void removeForeignKey();
     void addCheckConstraint();

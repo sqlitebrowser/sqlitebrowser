@@ -404,13 +404,13 @@
       </widget>
       <widget class="QWidget" name="tab">
        <attribute name="title">
-        <string>Constraints</string>
+        <string>Index Constraints</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
-           <widget class="QToolButton" name="buttonAddConstraint">
+           <widget class="QToolButton" name="buttonAddIndexConstraint">
             <property name="text">
              <string>Add constraint</string>
             </property>
@@ -430,7 +430,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QToolButton" name="buttonRemoveConstraint">
+           <widget class="QToolButton" name="buttonRemoveIndexConstraint">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -465,7 +465,7 @@
          </layout>
         </item>
         <item>
-         <widget class="QTableWidget" name="tableConstraints">
+         <widget class="QTableWidget" name="tableIndexConstraints">
           <property name="alternatingRowColors">
            <bool>true</bool>
           </property>
@@ -744,9 +744,9 @@
   <tabstop>buttonMoveDown</tabstop>
   <tabstop>buttonMoveBottom</tabstop>
   <tabstop>treeWidget</tabstop>
-  <tabstop>buttonAddConstraint</tabstop>
-  <tabstop>buttonRemoveConstraint</tabstop>
-  <tabstop>tableConstraints</tabstop>
+  <tabstop>buttonAddIndexConstraint</tabstop>
+  <tabstop>buttonRemoveIndexConstraint</tabstop>
+  <tabstop>tableIndexConstraints</tabstop>
  </tabstops>
  <resources>
   <include location="icons/icons.qrc"/>
@@ -945,10 +945,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>buttonRemoveConstraint</sender>
+   <sender>buttonRemoveIndexConstraint</sender>
    <signal>clicked()</signal>
    <receiver>EditTableDialog</receiver>
-   <slot>removeConstraint()</slot>
+   <slot>removeIndexConstraint()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>119</x>
@@ -1100,7 +1100,7 @@
   <slot>moveDown()</slot>
   <slot>setWithoutRowid(bool)</slot>
   <slot>changeSchema(QString)</slot>
-  <slot>removeConstraint()</slot>
+  <slot>removeIndexConstraint()</slot>
   <slot>moveTop()</slot>
   <slot>moveBottom()</slot>
   <slot>setOnConflict(QString)</slot>
