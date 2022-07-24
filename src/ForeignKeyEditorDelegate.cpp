@@ -6,6 +6,8 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 
+Q_DECLARE_METATYPE(sqlb::StringVector)
+
 class ForeignKeyEditor : public QWidget
 {
     Q_OBJECT
@@ -137,9 +139,13 @@ void ForeignKeyEditorDelegate::setEditorData(QWidget* editor, const QModelIndex&
 {
     ForeignKeyEditor* fkEditor = static_cast<ForeignKeyEditor*>(editor);
 
-    size_t column = static_cast<size_t>(index.row()); // weird? I know right
-    const sqlb::Field& field = m_table.fields.at(column);
-    fkEditor->foreignKey = m_table.foreignKey({field.name()});
+    // First try to get the fields list by assuming this is called for a constraints table in which the first column contains a list of fields.
+    // If this fails, assume this is called for a fields table in which the first column contains the name of a single table field.
+    sqlb::StringVector fields = index.sibling(index.row(), 0).data(Qt::UserRole).value<sqlb::StringVector>();
+    if(fields.empty())
+        fields.push_back(index.sibling(index.row(), 0).data().toString().toStdString());
+    fkEditor->foreignKey = m_table.foreignKey(fields);
+
     if (fkEditor->foreignKey) {
         fkEditor->tablesComboBox->setCurrentText(QString::fromStdString(fkEditor->foreignKey->table()));
         fkEditor->clauseEdit->setText(QString::fromStdString(fkEditor->foreignKey->constraint()));
@@ -155,8 +161,12 @@ void ForeignKeyEditorDelegate::setModelData(QWidget* editor, QAbstractItemModel*
     ForeignKeyEditor* fkEditor = static_cast<ForeignKeyEditor*>(editor);
     QString sql = fkEditor->getSql();
 
-    size_t column = static_cast<size_t>(index.row());
-    const sqlb::Field& field = m_table.fields.at(column);
+    // First try to get the fields list by assuming this is called for a constraints table in which the first column contains a list of fields.
+    // If this fails, assume this is called for a fields table in which the first column contains the name of a single table field.
+    sqlb::StringVector fields = index.sibling(index.row(), 0).data(Qt::UserRole).value<sqlb::StringVector>();
+    if(fields.empty())
+        fields.push_back(index.sibling(index.row(), 0).data().toString().toStdString());
+
     if (sql.isEmpty() && fkEditor->foreignKey) {
         // Remove the foreign key
         m_table.removeConstraint(fkEditor->foreignKey);
@@ -165,7 +175,7 @@ void ForeignKeyEditorDelegate::setModelData(QWidget* editor, QAbstractItemModel*
         if(!fkEditor->foreignKey)
         {
             fkEditor->foreignKey = std::make_shared<sqlb::ForeignKeyClause>();
-            m_table.addConstraint({field.name()}, fkEditor->foreignKey);
+            m_table.addConstraint(fields, fkEditor->foreignKey);
         }
 
         // Set data
