@@ -54,17 +54,16 @@
 	namespace sqlb { namespace parser { class ParserDriver; } }
 	typedef void* yyscan_t;
 
-	struct Constraints
+	struct TableConstraints
 	{
 		std::multimap<sqlb::IndexedColumnVector, std::shared_ptr<sqlb::UniqueConstraint>> index;
 		std::multimap<sqlb::StringVector, std::shared_ptr<sqlb::ForeignKeyClause>> fk;
 		std::vector<std::shared_ptr<sqlb::CheckConstraint>> check;
 	};
 
-	// Colum definitions are a tuple of two elements: the Field object and a set of table constraints
-	using ColumndefData = std::tuple<sqlb::Field, Constraints>;
+	using ColumnList = std::pair<std::vector<std::shared_ptr<sqlb::Field>>, TableConstraints>;
 
-#line 68 "sqlite3_parser.hpp"
+#line 67 "sqlite3_parser.hpp"
 
 # include <cassert>
 # include <cstdlib> // std::abort
@@ -205,7 +204,7 @@
 
 #line 10 "sqlite3_parser.yy"
 namespace  sqlb { namespace parser  {
-#line 209 "sqlite3_parser.hpp"
+#line 208 "sqlite3_parser.hpp"
 
 
 
@@ -424,13 +423,14 @@ namespace  sqlb { namespace parser  {
     /// An auxiliary type to compute the largest semantic type.
     union union_type
     {
-      // columndef
-      char dummy1[sizeof (ColumndefData)];
+      // columndef_list
+      char dummy1[sizeof (ColumnList)];
 
+      // columnconstraint_list
       // tableconstraint
       // tableconstraint_list
       // optional_tableconstraint_list
-      char dummy2[sizeof (Constraints)];
+      char dummy2[sizeof (TableConstraints)];
 
       // optional_if_not_exists
       // optional_unique
@@ -438,30 +438,33 @@ namespace  sqlb { namespace parser  {
       // optional_always_generated
       char dummy3[sizeof (bool)];
 
-      // columnconstraint
-      char dummy4[sizeof (sqlb::ConstraintPtr)];
-
       // createindex_stmt
-      char dummy5[sizeof (sqlb::IndexPtr)];
+      char dummy4[sizeof (sqlb::IndexPtr)];
 
       // indexed_column
-      char dummy6[sizeof (sqlb::IndexedColumn)];
+      char dummy5[sizeof (sqlb::IndexedColumn)];
 
       // indexed_column_list
-      char dummy7[sizeof (sqlb::IndexedColumnVector)];
+      char dummy6[sizeof (sqlb::IndexedColumnVector)];
 
       // columnid_list
       // optional_columnid_with_paren_list
-      char dummy8[sizeof (sqlb::StringVector)];
+      char dummy7[sizeof (sqlb::StringVector)];
 
       // createvirtualtable_stmt
       // createtable_stmt
-      char dummy9[sizeof (sqlb::TablePtr)];
+      char dummy8[sizeof (sqlb::TablePtr)];
 
       // tableoption
       // tableoptions_list
       // optional_tableoptions_list
-      char dummy10[sizeof (std::bitset<sqlb::Table::NumOptions>)];
+      char dummy9[sizeof (std::bitset<sqlb::Table::NumOptions>)];
+
+      // columnconstraint
+      char dummy10[sizeof (std::pair<std::shared_ptr<sqlb::PrimaryKeyConstraint>, std::shared_ptr<sqlb::ForeignKeyClause>>)];
+
+      // columndef
+      char dummy11[sizeof (std::shared_ptr<sqlb::Field>)];
 
       // "ABORT"
       // "ACTION"
@@ -589,13 +592,7 @@ namespace  sqlb { namespace parser  {
       // fk_clause_part
       // fk_clause_part_list
       // optional_fk_clause
-      char dummy11[sizeof (std::string)];
-
-      // columndef_list
-      char dummy12[sizeof (std::vector<ColumndefData>)];
-
-      // columnconstraint_list
-      char dummy13[sizeof (std::vector<sqlb::ConstraintPtr>)];
+      char dummy12[sizeof (std::string)];
     };
 
     /// The size of the largest semantic type.
@@ -996,14 +993,15 @@ namespace  sqlb { namespace parser  {
       {
         switch (this->kind ())
     {
-      case symbol_kind::S_columndef: // columndef
-        value.move< ColumndefData > (std::move (that.value));
+      case symbol_kind::S_columndef_list: // columndef_list
+        value.move< ColumnList > (std::move (that.value));
         break;
 
+      case symbol_kind::S_columnconstraint_list: // columnconstraint_list
       case symbol_kind::S_tableconstraint: // tableconstraint
       case symbol_kind::S_tableconstraint_list: // tableconstraint_list
       case symbol_kind::S_optional_tableconstraint_list: // optional_tableconstraint_list
-        value.move< Constraints > (std::move (that.value));
+        value.move< TableConstraints > (std::move (that.value));
         break;
 
       case symbol_kind::S_optional_if_not_exists: // optional_if_not_exists
@@ -1011,10 +1009,6 @@ namespace  sqlb { namespace parser  {
       case symbol_kind::S_optional_temporary: // optional_temporary
       case symbol_kind::S_optional_always_generated: // optional_always_generated
         value.move< bool > (std::move (that.value));
-        break;
-
-      case symbol_kind::S_columnconstraint: // columnconstraint
-        value.move< sqlb::ConstraintPtr > (std::move (that.value));
         break;
 
       case symbol_kind::S_createindex_stmt: // createindex_stmt
@@ -1043,6 +1037,14 @@ namespace  sqlb { namespace parser  {
       case symbol_kind::S_tableoptions_list: // tableoptions_list
       case symbol_kind::S_optional_tableoptions_list: // optional_tableoptions_list
         value.move< std::bitset<sqlb::Table::NumOptions> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_columnconstraint: // columnconstraint
+        value.move< std::pair<std::shared_ptr<sqlb::PrimaryKeyConstraint>, std::shared_ptr<sqlb::ForeignKeyClause>> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_columndef: // columndef
+        value.move< std::shared_ptr<sqlb::Field> > (std::move (that.value));
         break;
 
       case symbol_kind::S_ABORT: // "ABORT"
@@ -1174,14 +1176,6 @@ namespace  sqlb { namespace parser  {
         value.move< std::string > (std::move (that.value));
         break;
 
-      case symbol_kind::S_columndef_list: // columndef_list
-        value.move< std::vector<ColumndefData> > (std::move (that.value));
-        break;
-
-      case symbol_kind::S_columnconstraint_list: // columnconstraint_list
-        value.move< std::vector<sqlb::ConstraintPtr> > (std::move (that.value));
-        break;
-
       default:
         break;
     }
@@ -1206,13 +1200,13 @@ namespace  sqlb { namespace parser  {
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, ColumndefData&& v, location_type&& l)
+      basic_symbol (typename Base::kind_type t, ColumnList&& v, location_type&& l)
         : Base (t)
         , value (std::move (v))
         , location (std::move (l))
       {}
 #else
-      basic_symbol (typename Base::kind_type t, const ColumndefData& v, const location_type& l)
+      basic_symbol (typename Base::kind_type t, const ColumnList& v, const location_type& l)
         : Base (t)
         , value (v)
         , location (l)
@@ -1220,13 +1214,13 @@ namespace  sqlb { namespace parser  {
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, Constraints&& v, location_type&& l)
+      basic_symbol (typename Base::kind_type t, TableConstraints&& v, location_type&& l)
         : Base (t)
         , value (std::move (v))
         , location (std::move (l))
       {}
 #else
-      basic_symbol (typename Base::kind_type t, const Constraints& v, const location_type& l)
+      basic_symbol (typename Base::kind_type t, const TableConstraints& v, const location_type& l)
         : Base (t)
         , value (v)
         , location (l)
@@ -1241,20 +1235,6 @@ namespace  sqlb { namespace parser  {
       {}
 #else
       basic_symbol (typename Base::kind_type t, const bool& v, const location_type& l)
-        : Base (t)
-        , value (v)
-        , location (l)
-      {}
-#endif
-
-#if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, sqlb::ConstraintPtr&& v, location_type&& l)
-        : Base (t)
-        , value (std::move (v))
-        , location (std::move (l))
-      {}
-#else
-      basic_symbol (typename Base::kind_type t, const sqlb::ConstraintPtr& v, const location_type& l)
         : Base (t)
         , value (v)
         , location (l)
@@ -1346,6 +1326,34 @@ namespace  sqlb { namespace parser  {
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, std::pair<std::shared_ptr<sqlb::PrimaryKeyConstraint>, std::shared_ptr<sqlb::ForeignKeyClause>>&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const std::pair<std::shared_ptr<sqlb::PrimaryKeyConstraint>, std::shared_ptr<sqlb::ForeignKeyClause>>& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, std::shared_ptr<sqlb::Field>&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const std::shared_ptr<sqlb::Field>& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, std::string&& v, location_type&& l)
         : Base (t)
         , value (std::move (v))
@@ -1353,34 +1361,6 @@ namespace  sqlb { namespace parser  {
       {}
 #else
       basic_symbol (typename Base::kind_type t, const std::string& v, const location_type& l)
-        : Base (t)
-        , value (v)
-        , location (l)
-      {}
-#endif
-
-#if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, std::vector<ColumndefData>&& v, location_type&& l)
-        : Base (t)
-        , value (std::move (v))
-        , location (std::move (l))
-      {}
-#else
-      basic_symbol (typename Base::kind_type t, const std::vector<ColumndefData>& v, const location_type& l)
-        : Base (t)
-        , value (v)
-        , location (l)
-      {}
-#endif
-
-#if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, std::vector<sqlb::ConstraintPtr>&& v, location_type&& l)
-        : Base (t)
-        , value (std::move (v))
-        , location (std::move (l))
-      {}
-#else
-      basic_symbol (typename Base::kind_type t, const std::vector<sqlb::ConstraintPtr>& v, const location_type& l)
         : Base (t)
         , value (v)
         , location (l)
@@ -1411,14 +1391,15 @@ namespace  sqlb { namespace parser  {
         // Value type destructor.
 switch (yykind)
     {
-      case symbol_kind::S_columndef: // columndef
-        value.template destroy< ColumndefData > ();
+      case symbol_kind::S_columndef_list: // columndef_list
+        value.template destroy< ColumnList > ();
         break;
 
+      case symbol_kind::S_columnconstraint_list: // columnconstraint_list
       case symbol_kind::S_tableconstraint: // tableconstraint
       case symbol_kind::S_tableconstraint_list: // tableconstraint_list
       case symbol_kind::S_optional_tableconstraint_list: // optional_tableconstraint_list
-        value.template destroy< Constraints > ();
+        value.template destroy< TableConstraints > ();
         break;
 
       case symbol_kind::S_optional_if_not_exists: // optional_if_not_exists
@@ -1426,10 +1407,6 @@ switch (yykind)
       case symbol_kind::S_optional_temporary: // optional_temporary
       case symbol_kind::S_optional_always_generated: // optional_always_generated
         value.template destroy< bool > ();
-        break;
-
-      case symbol_kind::S_columnconstraint: // columnconstraint
-        value.template destroy< sqlb::ConstraintPtr > ();
         break;
 
       case symbol_kind::S_createindex_stmt: // createindex_stmt
@@ -1458,6 +1435,14 @@ switch (yykind)
       case symbol_kind::S_tableoptions_list: // tableoptions_list
       case symbol_kind::S_optional_tableoptions_list: // optional_tableoptions_list
         value.template destroy< std::bitset<sqlb::Table::NumOptions> > ();
+        break;
+
+      case symbol_kind::S_columnconstraint: // columnconstraint
+        value.template destroy< std::pair<std::shared_ptr<sqlb::PrimaryKeyConstraint>, std::shared_ptr<sqlb::ForeignKeyClause>> > ();
+        break;
+
+      case symbol_kind::S_columndef: // columndef
+        value.template destroy< std::shared_ptr<sqlb::Field> > ();
         break;
 
       case symbol_kind::S_ABORT: // "ABORT"
@@ -1587,14 +1572,6 @@ switch (yykind)
       case symbol_kind::S_fk_clause_part_list: // fk_clause_part_list
       case symbol_kind::S_optional_fk_clause: // optional_fk_clause
         value.template destroy< std::string > ();
-        break;
-
-      case symbol_kind::S_columndef_list: // columndef_list
-        value.template destroy< std::vector<ColumndefData> > ();
-        break;
-
-      case symbol_kind::S_columnconstraint_list: // columnconstraint_list
-        value.template destroy< std::vector<sqlb::ConstraintPtr> > ();
         break;
 
       default:
@@ -3888,7 +3865,7 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 3702,     ///< Last index in yytable_.
+      yylast_ = 3719,     ///< Last index in yytable_.
       yynnts_ = 57,  ///< Number of nonterminal symbols.
       yyfinal_ = 13 ///< Termination state number.
     };
@@ -3969,14 +3946,15 @@ switch (yykind)
   {
     switch (this->kind ())
     {
-      case symbol_kind::S_columndef: // columndef
-        value.copy< ColumndefData > (YY_MOVE (that.value));
+      case symbol_kind::S_columndef_list: // columndef_list
+        value.copy< ColumnList > (YY_MOVE (that.value));
         break;
 
+      case symbol_kind::S_columnconstraint_list: // columnconstraint_list
       case symbol_kind::S_tableconstraint: // tableconstraint
       case symbol_kind::S_tableconstraint_list: // tableconstraint_list
       case symbol_kind::S_optional_tableconstraint_list: // optional_tableconstraint_list
-        value.copy< Constraints > (YY_MOVE (that.value));
+        value.copy< TableConstraints > (YY_MOVE (that.value));
         break;
 
       case symbol_kind::S_optional_if_not_exists: // optional_if_not_exists
@@ -3984,10 +3962,6 @@ switch (yykind)
       case symbol_kind::S_optional_temporary: // optional_temporary
       case symbol_kind::S_optional_always_generated: // optional_always_generated
         value.copy< bool > (YY_MOVE (that.value));
-        break;
-
-      case symbol_kind::S_columnconstraint: // columnconstraint
-        value.copy< sqlb::ConstraintPtr > (YY_MOVE (that.value));
         break;
 
       case symbol_kind::S_createindex_stmt: // createindex_stmt
@@ -4016,6 +3990,14 @@ switch (yykind)
       case symbol_kind::S_tableoptions_list: // tableoptions_list
       case symbol_kind::S_optional_tableoptions_list: // optional_tableoptions_list
         value.copy< std::bitset<sqlb::Table::NumOptions> > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_columnconstraint: // columnconstraint
+        value.copy< std::pair<std::shared_ptr<sqlb::PrimaryKeyConstraint>, std::shared_ptr<sqlb::ForeignKeyClause>> > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_columndef: // columndef
+        value.copy< std::shared_ptr<sqlb::Field> > (YY_MOVE (that.value));
         break;
 
       case symbol_kind::S_ABORT: // "ABORT"
@@ -4147,14 +4129,6 @@ switch (yykind)
         value.copy< std::string > (YY_MOVE (that.value));
         break;
 
-      case symbol_kind::S_columndef_list: // columndef_list
-        value.copy< std::vector<ColumndefData> > (YY_MOVE (that.value));
-        break;
-
-      case symbol_kind::S_columnconstraint_list: // columnconstraint_list
-        value.copy< std::vector<sqlb::ConstraintPtr> > (YY_MOVE (that.value));
-        break;
-
       default:
         break;
     }
@@ -4186,14 +4160,15 @@ switch (yykind)
     super_type::move (s);
     switch (this->kind ())
     {
-      case symbol_kind::S_columndef: // columndef
-        value.move< ColumndefData > (YY_MOVE (s.value));
+      case symbol_kind::S_columndef_list: // columndef_list
+        value.move< ColumnList > (YY_MOVE (s.value));
         break;
 
+      case symbol_kind::S_columnconstraint_list: // columnconstraint_list
       case symbol_kind::S_tableconstraint: // tableconstraint
       case symbol_kind::S_tableconstraint_list: // tableconstraint_list
       case symbol_kind::S_optional_tableconstraint_list: // optional_tableconstraint_list
-        value.move< Constraints > (YY_MOVE (s.value));
+        value.move< TableConstraints > (YY_MOVE (s.value));
         break;
 
       case symbol_kind::S_optional_if_not_exists: // optional_if_not_exists
@@ -4201,10 +4176,6 @@ switch (yykind)
       case symbol_kind::S_optional_temporary: // optional_temporary
       case symbol_kind::S_optional_always_generated: // optional_always_generated
         value.move< bool > (YY_MOVE (s.value));
-        break;
-
-      case symbol_kind::S_columnconstraint: // columnconstraint
-        value.move< sqlb::ConstraintPtr > (YY_MOVE (s.value));
         break;
 
       case symbol_kind::S_createindex_stmt: // createindex_stmt
@@ -4233,6 +4204,14 @@ switch (yykind)
       case symbol_kind::S_tableoptions_list: // tableoptions_list
       case symbol_kind::S_optional_tableoptions_list: // optional_tableoptions_list
         value.move< std::bitset<sqlb::Table::NumOptions> > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_columnconstraint: // columnconstraint
+        value.move< std::pair<std::shared_ptr<sqlb::PrimaryKeyConstraint>, std::shared_ptr<sqlb::ForeignKeyClause>> > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_columndef: // columndef
+        value.move< std::shared_ptr<sqlb::Field> > (YY_MOVE (s.value));
         break;
 
       case symbol_kind::S_ABORT: // "ABORT"
@@ -4364,14 +4343,6 @@ switch (yykind)
         value.move< std::string > (YY_MOVE (s.value));
         break;
 
-      case symbol_kind::S_columndef_list: // columndef_list
-        value.move< std::vector<ColumndefData> > (YY_MOVE (s.value));
-        break;
-
-      case symbol_kind::S_columnconstraint_list: // columnconstraint_list
-        value.move< std::vector<sqlb::ConstraintPtr> > (YY_MOVE (s.value));
-        break;
-
       default:
         break;
     }
@@ -4439,7 +4410,7 @@ switch (yykind)
 
 #line 10 "sqlite3_parser.yy"
 } } //  sqlb::parser 
-#line 4443 "sqlite3_parser.hpp"
+#line 4414 "sqlite3_parser.hpp"
 
 
 

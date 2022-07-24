@@ -280,7 +280,7 @@ Table& Table::operator=(const Table& rhs)
     std::copy(rhs.fields.begin(), rhs.fields.end(), std::back_inserter(fields));
     for(const auto& e : rhs.m_indexConstraints)
     {
-        if(e.second->type() == Constraint::PrimaryKeyConstraintType)
+        if(e.second->isPrimaryKey())
             m_indexConstraints.insert(std::make_pair(e.first, std::make_shared<PrimaryKeyConstraint>(*std::dynamic_pointer_cast<PrimaryKeyConstraint>(e.second))));
         else
             m_indexConstraints.insert(std::make_pair(e.first, std::make_shared<UniqueConstraint>(*e.second)));
@@ -431,52 +431,46 @@ void Table::addConstraint(const IndexedColumnVector& columns, std::shared_ptr<Fo
     m_foreignKeys.insert(std::make_pair(c, constraint));
 }
 
-void Table::removeConstraint(ConstraintPtr constraint)
+void Table::removeConstraint(std::shared_ptr<UniqueConstraint> constraint)
 {
     auto c = std::find_if(m_indexConstraints.begin(), m_indexConstraints.end(), [constraint](const auto& e) { return e.second == constraint; });
     if(c != m_indexConstraints.end())
-    {
         m_indexConstraints.erase(c);
-        return;
-    }
-
-    auto fk = std::find_if(m_foreignKeys.begin(), m_foreignKeys.end(), [constraint](const auto& e) { return e.second == constraint; });
-    if(fk != m_foreignKeys.end())
-    {
-        m_foreignKeys.erase(fk);
-        return;
-    }
-
-    auto check = std::find_if(m_checkConstraints.begin(), m_checkConstraints.end(), [constraint](const auto& e) { return e == constraint; });
-    if(check != m_checkConstraints.end())
-        m_checkConstraints.erase(check);
 }
 
-void Table::addKeyToConstraint(ConstraintPtr constraint, const std::string& key)
+void Table::removeConstraint(std::shared_ptr<ForeignKeyClause> constraint)
 {
-    const auto find_and_add = [constraint, key](auto& container, auto& it, const auto& create) {
+    auto c = std::find_if(m_foreignKeys.begin(), m_foreignKeys.end(), [constraint](const auto& e) { return e.second == constraint; });
+    if(c != m_foreignKeys.end())
+        m_foreignKeys.erase(c);
+}
+
+void Table::removeConstraint(std::shared_ptr<CheckConstraint> constraint)
+{
+    m_checkConstraints.erase(std::remove_if(m_checkConstraints.begin(), m_checkConstraints.end(), [constraint](const auto& e) { return e == constraint; }));
+}
+
+void Table::addKeyToConstraint(std::shared_ptr<UniqueConstraint> constraint, const std::string& key)
+{
+    // Search for matching constraint
+    for(auto it=m_indexConstraints.begin();it!=m_indexConstraints.end();++it)
+    {
         if(it->second == constraint)
         {
             // Add key to the column list
             auto new_columns = it->first;
-            new_columns.push_back(create(key));
+            new_columns.emplace_back(key, false);
 
-            container.insert(std::make_pair(new_columns, it->second));
-            it = container.erase(it);
+            m_indexConstraints.insert(std::make_pair(new_columns, it->second));
+            it = m_indexConstraints.erase(it);
         }
-    };
-
-    // Search for matching constraint
-    for(auto it=m_indexConstraints.begin();it!=m_indexConstraints.end();++it)
-        find_and_add(m_indexConstraints, it, [](const std::string& name) { return IndexedColumn(name, false); });
-
-    for(auto it=m_foreignKeys.begin();it!=m_foreignKeys.end();++it)
-        find_and_add(m_foreignKeys, it, [](const std::string& name) { return name; });
+    }
 }
 
-void Table::removeKeyFromConstraint(ConstraintPtr constraint, const std::string& key)
+void Table::removeKeyFromConstraint(std::shared_ptr<UniqueConstraint> constraint, const std::string& key)
 {
-    auto match_and_remove = [constraint, key](auto& container, auto& it) {
+    for(auto it=m_indexConstraints.begin();it!=m_indexConstraints.end();++it)
+    {
         if(it->second == constraint)
         {
             // Remove key from the column list
@@ -486,19 +480,13 @@ void Table::removeKeyFromConstraint(ConstraintPtr constraint, const std::string&
             // If the column list is empty now, remove the entire constraint. Otherwise save the updated column list
             if(new_columns.empty())
             {
-                it = container.erase(it);
+                it = m_indexConstraints.erase(it);
             } else {
-                container.insert(std::make_pair(new_columns, it->second));
-                it = container.erase(it);
+                m_indexConstraints.insert(std::make_pair(new_columns, it->second));
+                it = m_indexConstraints.erase(it);
             }
         }
-    };
-
-    for(auto it=m_indexConstraints.begin();it!=m_indexConstraints.end();++it)
-        match_and_remove(m_indexConstraints, it);
-
-    for(auto it=m_foreignKeys.begin();it!=m_foreignKeys.end();++it)
-        match_and_remove(m_foreignKeys, it);
+    }
 }
 
 void Table::removeKeyFromAllConstraints(const std::string& key)
@@ -566,7 +554,7 @@ void Table::renameKeyInAllConstraints(const std::string& key, const std::string&
 
 std::shared_ptr<PrimaryKeyConstraint> Table::primaryKey() const
 {
-    const auto it = std::find_if(m_indexConstraints.begin(), m_indexConstraints.end(), [](const auto& e) { return e.second->type() == Constraint::PrimaryKeyConstraintType; });
+    const auto it = std::find_if(m_indexConstraints.begin(), m_indexConstraints.end(), [](const auto& e) { return e.second->isPrimaryKey(); });
     if(it != m_indexConstraints.end())
         return std::dynamic_pointer_cast<PrimaryKeyConstraint>(it->second);
     return nullptr;
@@ -574,7 +562,7 @@ std::shared_ptr<PrimaryKeyConstraint> Table::primaryKey() const
 
 IndexedColumnVector Table::primaryKeyColumns() const
 {
-    const auto it = std::find_if(m_indexConstraints.begin(), m_indexConstraints.end(), [](const auto& e) { return e.second->type() == Constraint::PrimaryKeyConstraintType; });
+    const auto it = std::find_if(m_indexConstraints.begin(), m_indexConstraints.end(), [](const auto& e) { return e.second->isPrimaryKey(); });
     if(it != m_indexConstraints.end())
         return it->first;
     return {};

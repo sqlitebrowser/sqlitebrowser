@@ -286,7 +286,7 @@ void EditTableDialog::populateIndexConstraints()
         QComboBox* type = new QComboBox(this);
         type->addItem(tr("Primary Key"), "pk");
         type->addItem(tr("Unique"), "u");
-        type->setCurrentIndex(it.second->type());
+        type->setCurrentIndex(it.second->isPrimaryKey() ? 0 : 1);
         connect(type, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, [this, type, it](int index) {
             // Handle change of constraint type. Effectively this means removing the old constraint and replacing it by an entirely new one.
 
@@ -298,7 +298,7 @@ void EditTableDialog::populateIndexConstraints()
 
                 // Set combo box back to original constraint type
                 type->blockSignals(true);
-                type->setCurrentIndex(it.second->type());
+                type->setCurrentIndex(it.second->isPrimaryKey() ? 0 : 1);
                 type->blockSignals(false);
                 return;
             }
@@ -307,7 +307,6 @@ void EditTableDialog::populateIndexConstraints()
             m_table.removeConstraint(it.second);
 
             // Add new constraint depending on selected type
-            sqlb::ConstraintPtr new_constraint;
             if(type->itemData(index).toString() == "pk")
             {
                 auto pk = std::make_shared<sqlb::PrimaryKeyConstraint>();
@@ -902,9 +901,9 @@ void EditTableDialog::indexConstraintItemDoubleClicked(QTableWidgetItem* item)
             {
                 // Remove the constraint with the old columns and add a new one with the new columns
                 m_table.removeConstraint(constraint);
-                if(constraint->type() == sqlb::Constraint::PrimaryKeyConstraintType)
+                if(constraint->isPrimaryKey())
                     m_table.addConstraint(new_columns, std::dynamic_pointer_cast<sqlb::PrimaryKeyConstraint>(constraint));
-                else if(constraint->type() == sqlb::Constraint::UniqueConstraintType)
+                else
                     m_table.addConstraint(new_columns, std::dynamic_pointer_cast<sqlb::UniqueConstraint>(constraint));
 
                 // Update the UI

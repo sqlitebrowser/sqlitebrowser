@@ -64,7 +64,6 @@ using TablePtr = std::shared_ptr<Table>;
 using IndexPtr = std::shared_ptr<Index>;
 using ViewPtr = std::shared_ptr<View>;
 using TriggerPtr = std::shared_ptr<Trigger>;
-using ConstraintPtr = std::shared_ptr<Constraint>;
 using FieldVector = std::vector<Field>;
 using IndexedColumnVector = std::vector<IndexedColumn>;
 
@@ -106,22 +105,6 @@ protected:
 class Constraint
 {
 public:
-    enum ConstraintTypes
-    {
-        PrimaryKeyConstraintType,
-        UniqueConstraintType,
-        ForeignKeyConstraintType,
-        CheckConstraintType,
-        GeneratedColumnConstraintType,
-        NotNullConstraintType,
-        DefaultConstraintType,
-        CollateConstraintType,
-    };
-
-    virtual ~Constraint() = default;
-
-    virtual ConstraintTypes type() const = 0;
-
     void setName(const std::string& name) { m_name = name; }
     const std::string& name() const { return m_name; }
 
@@ -152,8 +135,6 @@ public:
 
     std::string toSql(const StringVector& columns) const;
 
-    ConstraintTypes type() const override { return ForeignKeyConstraintType; }
-
 private:
     std::string m_table;
     StringVector m_columns;
@@ -163,12 +144,14 @@ private:
 class UniqueConstraint : public Constraint
 {
 public:
+    virtual ~UniqueConstraint() = default;
+
     void setConflictAction(const std::string& conflict) { m_conflictAction = conflict; }
     const std::string& conflictAction() const { return m_conflictAction; }
 
     virtual std::string toSql(const IndexedColumnVector& columns) const;
 
-    ConstraintTypes type() const override { return UniqueConstraintType; }
+    virtual bool isPrimaryKey() const { return false; }
 
 protected:
     std::string m_conflictAction;
@@ -182,8 +165,6 @@ public:
     const std::string& conflictAction() const { return m_conflictAction; }
 
     std::string toSql() const;
-
-    ConstraintTypes type() const override { return NotNullConstraintType; }
 
 protected:
     std::string m_conflictAction;
@@ -203,9 +184,8 @@ public:
     void setAutoIncrement(bool ai) { m_auto_increment = ai; }
     bool autoIncrement() const { return m_auto_increment; }
 
+    bool isPrimaryKey() const override { return true; }
     std::string toSql(const IndexedColumnVector& columns) const override;
-
-    ConstraintTypes type() const override { return PrimaryKeyConstraintType; }
 
 private:
     bool m_auto_increment;
@@ -224,8 +204,6 @@ public:
 
     std::string toSql() const;
 
-    ConstraintTypes type() const override { return CheckConstraintType; }
-
 private:
     std::string m_expression;
 };
@@ -243,8 +221,6 @@ public:
 
     std::string toSql() const;
 
-    ConstraintTypes type() const override { return DefaultConstraintType; }
-
 private:
     std::string m_value;
 };
@@ -261,8 +237,6 @@ public:
     const std::string& collation() const { return m_collation; }
 
     std::string toSql() const;
-
-    ConstraintTypes type() const override { return CollateConstraintType; }
 
 private:
     std::string m_collation;
@@ -284,8 +258,6 @@ public:
     std::string storage() const { return m_storage.empty() ? "VIRTUAL" : m_storage; }
 
     std::string toSql() const;
-
-    ConstraintTypes type() const override { return GeneratedColumnConstraintType; }
 
 private:
     std::string m_expression;
@@ -417,9 +389,11 @@ public:
     void addConstraint(const IndexedColumnVector& columns, std::shared_ptr<UniqueConstraint> constraint) { m_indexConstraints.insert(std::make_pair(columns, constraint)); }
     void addConstraint(const StringVector& columns, std::shared_ptr<ForeignKeyClause> constraint) { m_foreignKeys.insert(std::make_pair(columns, constraint)); }
     void addConstraint(std::shared_ptr<CheckConstraint> constraint) { m_checkConstraints.push_back(constraint); }
-    void removeConstraint(ConstraintPtr constraint);
-    void addKeyToConstraint(ConstraintPtr constraint, const std::string& key);
-    void removeKeyFromConstraint(ConstraintPtr constraint, const std::string& key);
+    void removeConstraint(std::shared_ptr<UniqueConstraint> constraint);
+    void removeConstraint(std::shared_ptr<ForeignKeyClause> constraint);
+    void removeConstraint(std::shared_ptr<CheckConstraint> constraint);
+    void addKeyToConstraint(std::shared_ptr<UniqueConstraint> constraint, const std::string& key);
+    void removeKeyFromConstraint(std::shared_ptr<UniqueConstraint> constraint, const std::string& key);
     void removeKeyFromAllConstraints(const std::string& key);
     void renameKeyInAllConstraints(const std::string& key, const std::string& to);
 
