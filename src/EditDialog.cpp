@@ -39,18 +39,25 @@ EditDialog::EditDialog(QWidget* parent)
     ui->buttonApply->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Return));
     ui->buttonApply->setToolTip(ui->buttonApply->toolTip() + " [" + ui->buttonApply->shortcut().toString(QKeySequence::NativeText) + "]");
 
-    QHBoxLayout* hexLayout = new QHBoxLayout(ui->editorBinary);
-    hexEdit = new QHexEdit(this);
-    hexLayout->addWidget(hexEdit);
-    hexEdit->setOverwriteMode(false);
-
-    QHBoxLayout* sciLayout = new QHBoxLayout(ui->editorSci);
+    // Text editor
     sciEdit = new DockTextEdit(this);
-    sciLayout->addWidget(sciEdit);
+    sciEdit->setWhatsThis(tr("The text editor modes let you edit plain text, as well as JSON or XML data with syntax highlighting, automatic formatting and validation before saving.\n\nErrors are indicated with a red squiggle underline.\n\nIn the Evaluation mode, entered SQLite expressions are evaluated and the result applied to the cell."));
+    ui->editorStack->insertWidget(TextEditor, sciEdit);
 
-    QHBoxLayout* imageLayout = new QHBoxLayout(ui->editorImage);
+    // Binary editor
+    hexEdit = new QHexEdit(this);
+    hexEdit->setOverwriteMode(false);
+    hexEdit->setContextMenuPolicy(Qt::ActionsContextMenu);
+    hexEdit->addAction(ui->actionPrint);
+    hexEdit->addAction(ui->actionCopyHexAscii);
+    ui->editorStack->insertWidget(HexEditor, hexEdit);
+
+    // Image editor
     imageEdit = new ImageViewer(this);
-    imageLayout->addWidget(imageEdit);
+    imageEdit->setContextMenuPolicy(Qt::ActionsContextMenu);
+    ui->editorStack->insertWidget(ImageEditor, imageEdit);
+
+    ui->editorStack->setCurrentIndex(0);
 
     QShortcut* ins = new QShortcut(QKeySequence(Qt::Key_Insert), this);
     connect(ins, &QShortcut::activated, this, &EditDialog::toggleOverwriteMode);
@@ -63,10 +70,6 @@ EditDialog::EditDialog(QWidget* parent)
     // Create shortcuts for the widgets that doesn't have its own print action or printing mechanism.
     QShortcut* shortcutPrint = new QShortcut(QKeySequence::Print, this, nullptr, nullptr, Qt::WidgetShortcut);
     connect(shortcutPrint, &QShortcut::activated, this, &EditDialog::openPrintDialog);
-
-    // Add actions to editors that have a context menu based on actions. This also activates the shortcuts.
-    ui->editorBinary->addAction(ui->actionPrint);
-    ui->editorBinary->addAction(ui->actionCopyHexAscii);
 
     // Set up popup menus
     QMenu* popupImportFileMenu = new QMenu(this);

@@ -17,17 +17,20 @@
    <string>This area displays information about the data present in this database cell</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_5">
+   <property name="spacing">
+    <number>0</number>
+   </property>
    <property name="leftMargin">
     <number>2</number>
    </property>
    <property name="topMargin">
-    <number>2</number>
+    <number>0</number>
    </property>
    <property name="rightMargin">
     <number>2</number>
    </property>
    <property name="bottomMargin">
-    <number>2</number>
+    <number>0</number>
    </property>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
@@ -137,6 +140,15 @@
      </item>
      <item>
       <widget class="QToolBar" name="editCellToolbar">
+       <property name="movable">
+        <bool>false</bool>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>16</width>
+         <height>16</height>
+        </size>
+       </property>
        <addaction name="actionWordWrap"/>
        <addaction name="actionIndent"/>
        <addaction name="actionImport"/>
@@ -154,57 +166,17 @@
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="editorSci">
+     <widget class="QTextEdit" name="qtEdit">
+      <property name="font">
+       <font>
+        <family>Monospace</family>
+       </font>
+      </property>
       <property name="whatsThis">
-       <string>The text editor modes let you edit plain text, as well as JSON or XML data with syntax highlighting, automatic formatting and validation before saving.
-
-Errors are indicated with a red squiggle underline.
-
-In the Evaluation mode, entered SQLite expressions are evaluated and the result applied to the cell.</string>
+       <string>This Qt editor is used for right-to-left scripts, which are not supported by the default Text editor. The presence of right-to-left characters is detected and this editor mode is automatically selected.</string>
       </property>
-     </widget>
-     <widget class="QWidget" name="rtlVerticalLayout">
-      <layout class="QVBoxLayout" name="verticalLayout_3">
-       <property name="spacing">
-        <number>0</number>
-       </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="QTextEdit" name="qtEdit">
-         <property name="font">
-          <font>
-           <family>Monospace</family>
-          </font>
-         </property>
-         <property name="whatsThis">
-          <string>This Qt editor is used for right-to-left scripts, which are not supported by the default Text editor. The presence of right-to-left characters is detected and this editor mode is automatically selected.</string>
-         </property>
-         <property name="acceptRichText">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="editorBinary">
-      <property name="contextMenuPolicy">
-       <enum>Qt::ActionsContextMenu</enum>
-      </property>
-     </widget>
-     <widget class="QWidget" name="editorImage">
-      <property name="contextMenuPolicy">
-       <enum>Qt::ActionsContextMenu</enum>
+      <property name="acceptRichText">
+       <bool>false</bool>
       </property>
      </widget>
     </widget>

@@ -181,7 +181,7 @@ You can drag SQL statements from an object row and drop them into other applicat
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>676</width>
+             <width>673</width>
              <height>544</height>
             </rect>
            </property>
@@ -906,13 +906,13 @@ You can drag SQL statements from an object row and drop them into other applicat
       <number>2</number>
      </property>
      <property name="topMargin">
-      <number>2</number>
+      <number>0</number>
      </property>
      <property name="rightMargin">
       <number>2</number>
      </property>
      <property name="bottomMargin">
-      <number>2</number>
+      <number>0</number>
      </property>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -1003,7 +1003,7 @@ You can drag SQL statements from an object row and drop them into other applicat
           <pointsize>8</pointsize>
          </font>
         </property>
-        <property name="readOnly">
+        <property name="readOnly" stdset="0">
          <bool>true</bool>
         </property>
        </widget>
@@ -1014,7 +1014,7 @@ You can drag SQL statements from an object row and drop them into other applicat
           <pointsize>8</pointsize>
          </font>
         </property>
-        <property name="readOnly">
+        <property name="readOnly" stdset="0">
          <bool>true</bool>
         </property>
        </widget>
@@ -1061,13 +1061,13 @@ You can drag SQL statements from an object row and drop them into other applicat
       <number>2</number>
      </property>
      <property name="topMargin">
-      <number>2</number>
+      <number>0</number>
      </property>
      <property name="rightMargin">
       <number>2</number>
      </property>
      <property name="bottomMargin">
-      <number>2</number>
+      <number>0</number>
      </property>
      <item>
       <widget class="QTreeView" name="treeSchemaDock">
@@ -1079,6 +1079,12 @@ You can drag SQL statements from an object row and drop them into other applicat
 You can drag multiple object names from the Name column and drop them into the SQL editor and you can adjust the properties of the dropped names using the context menu. This would help you in composing SQL statements.
 You can drag SQL statements from the Schema column and drop them into the SQL editor or into other applications.
 </string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Plain</enum>
        </property>
        <property name="dragEnabled">
         <bool>true</bool>
@@ -2282,7 +2288,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
  <customwidgets>
   <customwidget>
    <class>SqlTextEdit</class>
-   <extends>QTextEdit</extends>
+   <extends>QWidget</extends>
    <header>sqltextedit.h</header>
    <container>1</container>
   </customwidget>
