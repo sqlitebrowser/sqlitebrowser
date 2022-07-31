@@ -2693,7 +2693,9 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                         // New DB filename is pending to be saved
                         isProjectModified = true;
                     }
-                    fileOpen(dbfilename, true, readOnly);
+                    if(!fileOpen(dbfilename, true, readOnly)) {
+                        qWarning() << tr("DB file '%1' could not be opened").arg(dbfilename);
+                    }
                     ui->dbTreeWidget->collapseAll();
 
                     // PRAGMAs
@@ -2846,9 +2848,15 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
                                     sqlb::ObjectIdentifier tableIdentifier =
                                         sqlb::ObjectIdentifier (xml.attributes().value("schema").toString().toStdString(),
                                                                 xml.attributes().value("name").toString().toStdString());
-                                    BrowseDataTableSettings settings;
-                                    loadBrowseDataTableSettings(settings, db.getTableByName(tableIdentifier), xml);
-                                    TableBrowser::setSettings(tableIdentifier, settings);
+                                    sqlb::TablePtr table = db.getTableByName(tableIdentifier);
+                                    if(table == nullptr) {
+                                        qWarning() << tr("Table '%1' not found; settings ignored")
+                                            .arg(QString::fromStdString(tableIdentifier.toString()));
+                                    } else {
+                                        BrowseDataTableSettings settings;
+                                        loadBrowseDataTableSettings(settings, table, xml);
+                                        TableBrowser::setSettings(tableIdentifier, settings);
+                                    }
                                 }
                             }
                         } else {

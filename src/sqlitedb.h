@@ -225,6 +225,8 @@ public:
 
     const sqlb::TablePtr getTableByName(const sqlb::ObjectIdentifier& name) const
     {
+        if(schemata.empty() || name.schema().empty())
+            return sqlb::TablePtr{};
         const auto& schema = schemata.at(name.schema());
         if(schema.tables.count(name.name()))
             return schema.tables.at(name.name());
@@ -233,6 +235,8 @@ public:
 
     const sqlb::IndexPtr getIndexByName(const sqlb::ObjectIdentifier& name) const
     {
+        if(schemata.empty() || name.schema().empty())
+            return sqlb::IndexPtr{};
         const auto& schema = schemata.at(name.schema());
         if(schema.indices.count(name.name()))
             return schema.indices.at(name.name());
@@ -241,6 +245,8 @@ public:
 
     const sqlb::TriggerPtr getTriggerByName(const sqlb::ObjectIdentifier& name) const
     {
+        if(schemata.empty() || name.schema().empty())
+            return sqlb::TriggerPtr{};
         const auto& schema = schemata.at(name.schema());
         if(schema.triggers.count(name.name()))
             return schema.triggers.at(name.name());
