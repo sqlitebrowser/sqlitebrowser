@@ -438,7 +438,7 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
         if(err == SQLITE_BUSY || err == SQLITE_PERM || err == SQLITE_NOMEM || err == SQLITE_IOERR || err == SQLITE_CORRUPT || err == SQLITE_CANTOPEN)
         {
             lastErrorMessage = QString::fromUtf8(sqlite3_errmsg(dbHandle));
-            sqlite3_close(dbHandle);
+            sqlite3_close_v2(dbHandle);
             return false;
         }
 
@@ -498,14 +498,14 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
                 {
                     *cipherSettings = cipherDialog->getCipherSettings();
 	            } else {
-	                sqlite3_close(dbHandle);
+	                sqlite3_close_v2(dbHandle);
                     *encrypted = false;
 	                return false;
 	            }
 	        }
 
             // Close and reopen database first to be in a clean state after the failed read attempt from above
-            sqlite3_close(dbHandle);
+            sqlite3_close_v2(dbHandle);
             if(sqlite3_open_v2(filePath.toUtf8(), &dbHandle, SQLITE_OPEN_READONLY, nullptr) != SQLITE_OK)
                 return false;
 
@@ -527,12 +527,12 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
             *encrypted = true;
 #else
             lastErrorMessage = QString::fromUtf8(sqlite3_errmsg(dbHandle));
-            sqlite3_close(dbHandle);
+            sqlite3_close_v2(dbHandle);
             return false;
 #endif
         } else {
             sqlite3_finalize(vm);
-            sqlite3_close(dbHandle);
+            sqlite3_close_v2(dbHandle);
             return true;
         }
     }
@@ -559,7 +559,7 @@ void DBBrowserDB::getSqliteVersion(QString& sqlite, QString& sqlcipher)
             sqlite3_finalize(stmt);
         }
 
-        sqlite3_close(dummy);
+        sqlite3_close_v2(dummy);
     }
 #endif
 }
@@ -668,7 +668,7 @@ bool DBBrowserDB::create ( const QString & db)
 
     if( openresult != SQLITE_OK ){
         lastErrorMessage = QString::fromUtf8(sqlite3_errmsg(_db));
-        sqlite3_close(_db);
+        sqlite3_close_v2(_db);
         _db = nullptr;
         return false;
     }
@@ -686,7 +686,7 @@ bool DBBrowserDB::create ( const QString & db)
 
         // Close database and open it through the code for opening existing database files. This is slightly less efficient but saves us some duplicate
         // code.
-        sqlite3_close(_db);
+        sqlite3_close_v2(_db);
         return open(db);
     } else {
         return false;
@@ -731,7 +731,7 @@ bool DBBrowserDB::close()
             revertAll(); //not really necessary, I think... but will not hurt.
     }
 
-    if(sqlite3_close(_db) != SQLITE_OK)
+    if(sqlite3_close_v2(_db) != SQLITE_OK)
         qWarning() << tr("Database didn't close correctly, probably still busy");
 
     _db = nullptr;
@@ -775,7 +775,7 @@ bool DBBrowserDB::saveAs(const std::string& filename) {
         sqlite3_backup* pBackup = sqlite3_backup_init(pTo, "main", _db, "main");
         if(pBackup == nullptr) {
             qWarning() << tr("Cannot backup to file: '%1'. Message: %2").arg(filename.c_str(), sqlite3_errmsg(pTo));
-            sqlite3_close(pTo);
+            sqlite3_close_v2(pTo);
             return false;
         } else {
             sqlite3_backup_step(pBackup, -1);
@@ -786,7 +786,7 @@ bool DBBrowserDB::saveAs(const std::string& filename) {
 
     if(rc == SQLITE_OK) {
         // Close current database and set backup as current
-        sqlite3_close(_db);
+        sqlite3_close_v2(_db);
         _db = pTo;
         curDBFilename = QString::fromStdString(filename);
 
@@ -794,7 +794,7 @@ bool DBBrowserDB::saveAs(const std::string& filename) {
     } else {
         qWarning() << tr("Cannot backup to file: '%1'. Message: %2").arg(filename.c_str(), sqlite3_errmsg(pTo));
         // Close failed database connection.
-        sqlite3_close(pTo);
+        sqlite3_close_v2(pTo);
         return false;
     }
 }
