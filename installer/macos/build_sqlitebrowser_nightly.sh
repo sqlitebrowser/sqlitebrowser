@@ -88,9 +88,9 @@ echo Build and package standard sqlitebrowser nightly >>$LOG 2>&1
 mkdir build >>$LOG 2>&1
 cd build >>$LOG 2>&1
 if [ "${BUILD_TYPE}" = "debug" ]; then
-  $CMAKE -DCMAKE_BUILD_TYPE=Debug .. >>$LOG 2>&1
+  $CMAKE -DCMAKE_BUILD_TYPE=Debug -DSQLite3_INCLUDE_DIR=/usr/local/opt/sqlitefts5/include .. >>$LOG 2>&1
 else
-  $CMAKE .. >>$LOG 2>&1
+  $CMAKE -DSQLite3_INCLUDE_DIR=/usr/local/opt/sqlitefts5/include .. >>$LOG 2>&1
 fi
 make -j3 >>$LOG 2>&1
 cd .. >>$LOG 2>&1
