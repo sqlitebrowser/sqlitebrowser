@@ -403,6 +403,7 @@ endif()
 set(EXTRAPATH APPLE OR ${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD")
 if(EXTRAPATH)
     list(PREPEND CMAKE_PREFIX_PATH /usr/local/opt/sqlite/lib)
+    list(PREPEND CMAKE_PREFIX_PATH /usr/local/opt/sqlitefts5/lib)
 endif()
 
 find_package(${LIBSQLITE_NAME})
