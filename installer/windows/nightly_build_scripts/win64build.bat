@@ -4,7 +4,7 @@ MKDIR "%DEST_PATH%"
 
 SET ZIP_EXE="C:\Program Files\7-Zip\7z.exe"
 SET SQLITE_DIR=C:\\dev\\SQLite-Win64
-SET SQLCIPHER_DIR=C:\\git_repos\\SQLCipher-Win64
+SET SQLCIPHER_ROOT_DIR=C:\\git_repos\\SQLCipher-Win64
 SET SQLCIPHER_TAG=v4.4.2
 
 :: You need to change the date format in Windows settings to YYYY-MM-DD
@@ -93,8 +93,10 @@ devenv /Build Release sqlitebrowser.sln /project "ALL_BUILD"
 :: WIN64 SQLCIPHER BUILD PROCEDURE
 
 :: Build SQLCipher x64
-CD %SQLCIPHER_DIR%
+CD %SQLCIPHER_ROOT_DIR%
 nmake /f Makefile.msc sqlcipher.dll USE_AMALGAMATION=1 NO_TCL=1 SQLITE3DLL=sqlcipher.dll SQLITE3LIB=sqlcipher.lib SQLITE3EXE=sqlcipher.exe LTLINKOPTS="C:\dev\OpenSSL-Win64\lib\libcrypto.lib" OPT_FEATURE_FLAGS="-DSQLITE_TEMP_STORE=2 -DSQLITE_HAS_CODEC=1 -DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_FTS5=1 -DSQLITE_ENABLE_FTS3_PARENTHESIS=1 -DSQLITE_ENABLE_STAT4=1 -DSQLITE_SOUNDEX=1 -DSQLITE_ENABLE_JSON1=1 -DSQLITE_ENABLE_GEOPOLY=1 -DSQLITE_ENABLE_RTREE=1 -DSQLCIPHER_CRYPTO_OPENSSL=1 -DSQLITE_MAX_ATTACHED=125 -IC:\dev\OpenSSL-Win64\include"
+MKDIR "sqlcipher"
+COPY "sqlite3.h" "sqlcipher"
 
 :: Run CMake for SQLCipher x64
 CD C:\\builds
