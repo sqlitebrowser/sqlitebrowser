@@ -59,7 +59,7 @@ if(MSVC)
     if(CMAKE_CL_64)
         # Paths for 64-bit windows builds
         set(OPENSSL_PATH "C:/dev/OpenSSL-Win64" CACHE PATH "OpenSSL Path")
-        set(QT5_PATH "C:/dev/Qt/5.12.8/5.12.8/msvc2017_64" CACHE PATH "Qt5 Path")
+        set(QT5_PATH "C:/dev/Qt/5.12.12/msvc2017_64" CACHE PATH "Qt5 Path")
 
         # Choose between SQLCipher or SQLite, depending whether
         # -Dsqlcipher=on is passed on the command line
@@ -71,7 +71,7 @@ if(MSVC)
     else()
         # Paths for 32-bit windows builds
         set(OPENSSL_PATH "C:/dev/OpenSSL-Win32" CACHE PATH "OpenSSL Path")
-        set(QT5_PATH "C:/dev/Qt/5.12.8/5.12.8/msvc2017" CACHE PATH "Qt5 Path")
+        set(QT5_PATH "C:/dev/Qt/5.12.12/msvc2017" CACHE PATH "Qt5 Path")
 
         # Choose between SQLCipher or SQLite, depending whether
         # -Dsqlcipher=on is passed on the command line
