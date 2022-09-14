@@ -470,7 +470,7 @@ if(MSVC)
     endif()
 endif()
 
-if(NOT WIN32 AND NOT APPLE)
+if((NOT WIN32 AND NOT APPLE) OR MINGW)
     install(TARGETS ${PROJECT_NAME}
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION lib
