@@ -1,0 +1,13 @@
+name: Publish to WinGet
+on:
+  release:
+    types: [released]
+jobs:
+  publish:
+    # Action can only be run on windows
+    runs-on: windows-latest
+    steps:
+      - uses: vedantmgoyal2009/winget-releaser@latest
+        with:
+          identifier: DBBrowserForSQLite.DBBrowserForSQLite
+          token: ${{ secrets.WINGET_TOKEN }}
