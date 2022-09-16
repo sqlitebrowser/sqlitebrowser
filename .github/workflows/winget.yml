@@ -10,4 +10,5 @@ jobs:
       - uses: vedantmgoyal2009/winget-releaser@latest
         with:
           identifier: DBBrowserForSQLite.DBBrowserForSQLite
+          installers-regex: '\.msi$' # Only .msi files
           token: ${{ secrets.WINGET_TOKEN }}
