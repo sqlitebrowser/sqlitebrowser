@@ -49,7 +49,7 @@ fi
 
 # Ensure Homebrew is owned by my user
 echo Ensure Homebrew is owned by my user >>$LOG 2>&1
-sudo chown -Rh jc:staff /usr/local >>$LOG 2>&1
+sudo chown -Rh $USER: /usr/local >>$LOG 2>&1
 
 # Update Homebrew
 echo Update Homebrew >>$LOG 2>&1
@@ -65,7 +65,7 @@ echo Remove any existing Homebrew installed packages >>$LOG 2>&1
 $BREW remove `$BREW list --formula` --force >>$LOG 2>&1
 
 # Install CMake
-$BREW install cmake >>$LOG 2>&1
+$BREW install --formula cmake >>$LOG 2>&1
 
 # Install SQLite3 
 # Note - `brew tap sqlitebrowser/homebrew-sqlite3` needs to have been run at least once (manually) first
@@ -124,13 +124,8 @@ for i in ar zh_CN zh_TW cs en fr de it ko pl pt ru es uk; do
   cp -v $HOME/Qt/${QTVER}/clang_64/translations/qtxmlpatterns_${i}.qm build/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
 done
 
-# Unlock the local security keychain, so signing can be done
-security unlock-keychain -p "${KEYCHAIN_PASSWORD}" "${HOME}/Library/Keychains/login.keychain"
-
 # Sign the added libraries
-codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/fileio.dylib >>$LOG 2>&1
-codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/formats.dylib >>$LOG 2>&1
-codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/math.dylib >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
 
 # Make a .dmg file from the .app
 mv build/DB\ Browser\ for\ SQLite.app $HOME/appdmg/ >>$LOG 2>&1
@@ -146,7 +141,7 @@ echo Remove any existing Homebrew installed packages >>$LOG 2>&1
 $BREW remove `$BREW list --formula` --force >>$LOG 2>&1
 
 # Install CMake
-$BREW install cmake >>$LOG 2>&1
+$BREW install --formula cmake >>$LOG 2>&1
 
 # Install SQLCipher
 echo Install SQLCipher >>$LOG 2>&1
@@ -172,9 +167,6 @@ else
 fi
 make -j3 >>$LOG 2>&1
 cd .. >>$LOG 2>&1
-
-# Unlock the local security keychain, so signing can be done
-security unlock-keychain -p "${KEYCHAIN_PASSWORD}" "${HOME}/Library/Keychains/login.keychain"
 
 # Include the depencencies in the .app bundle
 $MACDEPLOYQT build/DB\ Browser\ for\ SQLite.app -verbose=2 -sign-for-notarization="${DEV_ID}">>$LOG 2>&1
@@ -205,13 +197,8 @@ for i in ar zh_CN zh_TW cs en fr de it ko pl pt ru es uk; do
   cp -v $HOME/Qt/${QTVER}/clang_64/translations/qtxmlpatterns_${i}.qm build/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
 done
 
-# Unlock the local security keychain, so signing can be done
-security unlock-keychain -p "${KEYCHAIN_PASSWORD}" "${HOME}/Library/Keychains/login.keychain"
-
 # Sign the .app
-codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/fileio.dylib >>$LOG 2>&1
-codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/formats.dylib >>$LOG 2>&1
-codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/math.dylib >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
 
 # Make a .dmg file from the .app
 mv build/DB\ Browser\ for\ SQLite.app $HOME/appdmg/ >>$LOG 2>&1
