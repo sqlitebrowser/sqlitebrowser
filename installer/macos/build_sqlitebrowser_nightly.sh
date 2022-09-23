@@ -17,6 +17,10 @@ QT5_DIR="$HOME/Qt/${QTVER}/clang_64"
 # Add the sensitive values we don't want to store in this script file
 source ~/.db4s_secure
 
+# Load NVM, for appdmg to work
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
 # Update the branch to build, if specified on the command line with "-b [branch name]"
 if [ "$1" = "-b" ]; then
   if [ ! -z "$2" ]; then
