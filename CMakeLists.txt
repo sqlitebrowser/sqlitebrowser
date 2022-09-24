@@ -93,6 +93,14 @@ if(APPLE AND EXISTS /usr/local/opt/qt5)
     list(APPEND CMAKE_PREFIX_PATH "/usr/local/opt/qt5")
 endif()
 
+# For M1 Mac's
+if(APPLE AND EXISTS /opt/homebrew/opt/qt5)
+    list(APPEND CMAKE_PREFIX_PATH "/opt/homebrew/opt/qt5")
+endif()
+if(APPLE AND EXISTS /opt/homebrew/opt/sqlitefts5)
+    list(PREPEND CMAKE_PREFIX_PATH "/opt/homebrew/opt/sqlitefts5")
+endif()
+
 find_package(Qt5 REQUIRED COMPONENTS Concurrent Gui LinguistTools Network PrintSupport Test Widgets Xml)
 
 if(NOT FORCE_INTERNAL_QSCINTILLA)
