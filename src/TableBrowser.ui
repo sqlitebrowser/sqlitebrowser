@@ -832,7 +832,7 @@
     <string>Add a new docked Data Browser</string>
    </property>
    <property name="whatsThis">
-    <string>This button adss a new docked Data Browser, which you can detach and arrange in different layouts.</string>
+    <string>This button adds a new docked Data Browser, which you can detach and arrange in different layouts.</string>
    </property>
   </action>
   <action name="actionRefresh">
