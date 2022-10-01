@@ -7379,7 +7379,7 @@ Hold %3Shift and click to jump there</source>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="835"/>
-        <source>This button adss a new docked Data Browser, which you can detach and arrange in different layouts.</source>
+        <source>This button adds a new docked Data Browser, which you can detach and arrange in different layouts.</source>
         <translation>이 버튼은 분리하고 다른 레이아웃으로 정렬할 수 있는 도킹된 새 데이터 브라우저를 추가합니다.</translation>
     </message>
     <message>
