@@ -128,6 +128,10 @@ for i in ar zh_CN zh_TW cs en fr de it ko pl pt ru es uk; do
   cp -v $HOME/Qt/${QTVER}/clang_64/translations/qtxmlpatterns_${i}.qm build/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
 done
 
+# Add the icon file
+cp installer/macos/macapp.icns build/DB\ Browser\ for\ SQLite.app/Contents/Resources/ >>$LOG 2>&1
+/usr/libexec/PlistBuddy -c "Set :CFBundleIconFile macapp.icns" build/DB\ Browser\ for\ SQLite.app/Contents/Info.plist >>$LOG 2>&1
+
 # Sign the added libraries
 codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
 
@@ -200,6 +204,10 @@ for i in ar zh_CN zh_TW cs en fr de it ko pl pt ru es uk; do
   cp -v $HOME/Qt/${QTVER}/clang_64/translations/qtscript_${i}.qm build/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
   cp -v $HOME/Qt/${QTVER}/clang_64/translations/qtxmlpatterns_${i}.qm build/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
 done
+
+# Add the icon file
+cp installer/macos/macapp.icns build/DB\ Browser\ for\ SQLite.app/Contents/Resources/ >>$LOG 2>&1
+/usr/libexec/PlistBuddy -c "Set :CFBundleIconFile macapp.icns" build/DB\ Browser\ for\ SQLite.app/Contents/Info.plist >>$LOG 2>&1
 
 # Sign the .app
 codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
