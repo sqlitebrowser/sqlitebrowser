@@ -138,9 +138,9 @@ codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keycha
 # Make a .dmg file from the .app
 mv build/DB\ Browser\ for\ SQLite.app $HOME/appdmg/ >>$LOG 2>&1
 cd $HOME/appdmg >>$LOG 2>&1
-appdmg --quiet nightly.json DB\ Browser\ for\ SQLite_${DATE}.dmg >>$LOG 2>&1
-codesign --sign "${DEV_ID}" --verbose --deep --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp DB\ Browser\ for\ SQLite_${DATE}.dmg >>$LOG 2>&1
-mv DB\ Browser\ for\ SQLite_${DATE}.dmg $HOME/db4s_nightlies/ >>$LOG 2>&1
+appdmg --quiet nightly.json DB\ Browser\ for\ SQLite-intel_${DATE}.dmg >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --deep --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp DB\ Browser\ for\ SQLite-intel_${DATE}.dmg >>$LOG 2>&1
+mv DB\ Browser\ for\ SQLite-intel_${DATE}.dmg $HOME/db4s_nightlies/ >>$LOG 2>&1
 rm -rf $HOME/appdmg/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
 
 ### Build SQLCipher version
@@ -215,9 +215,9 @@ codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keycha
 # Make a .dmg file from the .app
 mv build/DB\ Browser\ for\ SQLite.app $HOME/appdmg/ >>$LOG 2>&1
 cd $HOME/appdmg >>$LOG 2>&1
-appdmg --quiet nightly.json DB\ Browser\ for\ SQLite-sqlcipher_${DATE}.dmg >>$LOG 2>&1
-codesign --sign "${DEV_ID}" --verbose --deep --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp DB\ Browser\ for\ SQLite-sqlcipher_${DATE}.dmg >>$LOG 2>&1
-mv DB\ Browser\ for\ SQLite-sqlcipher_${DATE}.dmg $HOME/db4s_nightlies/ >>$LOG 2>&1
+appdmg --quiet nightly.json DB\ Browser\ for\ SQLite-sqlcipher-intel_${DATE}.dmg >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --deep --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp DB\ Browser\ for\ SQLite-sqlcipher-intel_${DATE}.dmg >>$LOG 2>&1
+mv DB\ Browser\ for\ SQLite-sqlcipher-intel_${DATE}.dmg $HOME/db4s_nightlies/ >>$LOG 2>&1
 rm -rf $HOME/appdmg/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
 
 # If building a non-master branch, remove it now that we're finished
@@ -233,8 +233,8 @@ fi
 # Upload nightly builds and the build log thus far
 echo Upload nightly builds >>$LOG 2>&1
 rsync -aP $HOME/db4s_nightlies/DB\ Browser\ for\ SQLite*${DATE}.dmg ${LOG} ${UPLOAD_SERVER}:/nightlies/osx/ >>$LOG 2>&1
-ssh -q ${UPLOAD_SERVER} "cd /nightlies/latest; rm -f *dmg" >>$LOG 2>&1
-ssh -q ${UPLOAD_SERVER} "cd /nightlies/latest; cp /nightlies/osx/DB\ Browser\ for\ SQLite_${DATE}.dmg /nightlies/latest/DB.Browser.for.SQLite.dmg" >>$LOG 2>&1
-ssh -q ${UPLOAD_SERVER} "cd /nightlies/latest; cp /nightlies/osx/DB\ Browser\ for\ SQLite-sqlcipher_${DATE}.dmg /nightlies/latest/DB.Browser.for.SQLite-sqlcipher.dmg" >>$LOG 2>&1
+ssh -q ${UPLOAD_SERVER} "cd /nightlies/latest; rm -f *intel*dmg" >>$LOG 2>&1
+ssh -q ${UPLOAD_SERVER} "cd /nightlies/latest; cp /nightlies/osx/DB\ Browser\ for\ SQLite-intel_${DATE}.dmg /nightlies/latest/DB.Browser.for.SQLite-intel.dmg" >>$LOG 2>&1
+ssh -q ${UPLOAD_SERVER} "cd /nightlies/latest; cp /nightlies/osx/DB\ Browser\ for\ SQLite-sqlcipher-intel_${DATE}.dmg /nightlies/latest/DB.Browser.for.SQLite-sqlcipher-intel.dmg" >>$LOG 2>&1
 
 echo Done! >>$LOG 2>&1
