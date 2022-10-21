@@ -97,6 +97,8 @@ signals:
     void currentTableChanged(sqlb::ObjectIdentifier table);
     void foreignKeyClicked(sqlb::ObjectIdentifier table, std::string column, QByteArray value);
     void dataAboutToBeEdited(const QModelIndex& index);
+    void prepareForFilter();
+    void newDockRequested();
 
 private slots:
     void clear();
@@ -111,7 +113,7 @@ private slots:
     void freezeColumns(size_t columns);
     void unlockViewEditing(bool unlock, QString pk = QString());
     void hideColumns(int column = -1, bool hide = true);
-    void on_actionShowAllColumns_triggered();
+    void showAllColumns();
     void updateInsertDeleteRecordButton();
     void duplicateRecord(int currentRow);
     void headerClicked(int logicalindex);
@@ -127,14 +129,14 @@ private slots:
     void navigateEnd();
     void navigateGoto();
     void selectTableLine(int lineToSelect);
-    void on_actionClearFilters_triggered();
-    void on_actionClearSorting_triggered();
+    void clearSorting();
     void editDisplayFormat();
     void exportCsvFilteredTable();
     void exportJsonFilteredTable();
     void saveFilterAsView();
     void setTableEncoding(bool forAllTables = false);
     void setDefaultTableEncoding();
+    void copyColumnName();
     void fetchedData();
 
 private:

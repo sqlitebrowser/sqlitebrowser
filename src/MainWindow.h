@@ -194,6 +194,7 @@ private slots:
     void updatePragmaUi();
     void savePragmas();
     void mainTabSelected( int tabindex );
+    void openSqlFile(int tabindex, QString filename);
     void openSqlFile();
     void saveSqlFile();
     void saveSqlFileAs();
@@ -202,12 +203,12 @@ private slots:
     void saveSqlResultsAsView();
     void loadExtension();
     void checkNewVersion(const QString& versionstring, const QString& url);
-    void on_actionWiki_triggered() const;
-    void on_actionBug_report_triggered() const;
-    void on_actionFeature_Request_triggered() const;
-    void on_actionSqlCipherFaq_triggered() const;
-    void on_actionWebsite_triggered() const;
-    void on_actionDonatePatreon_triggered() const;
+    void openLinkWiki() const;
+    void openLinkBugReport() const;
+    void openLinkFeatureRequest() const;
+    void openLinkSqlCipherFaq() const;
+    void openLinkWebsite() const;
+    void openLinkDonatePatreon() const;
     bool loadProject(QString filename = QString(), bool readOnly = false);
     void saveProject();
     void saveProjectAs();
@@ -237,7 +238,7 @@ private slots:
     void renameSqlTab(int index);
     void showContextMenuSqlTabBar(const QPoint& pos);
 
-    TableBrowserDock* newTableBrowserTab(const sqlb::ObjectIdentifier& tableToBrowse = {});
+    TableBrowserDock* newTableBrowserTab(const sqlb::ObjectIdentifier& tableToBrowse = {}, bool forceHideTitleBar = false);
     void tableBrowserTabClosed();
     void changeTableBrowserTab(TableBrowserDock* dock);
 };

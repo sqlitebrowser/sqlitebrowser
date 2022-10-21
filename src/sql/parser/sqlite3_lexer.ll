@@ -145,6 +145,7 @@ WS			[ \t\f]
 "FILTER"		return TOKEN(FILTER);
 "FOLLOWING"		return TOKEN(FOLLOWING);
 "FOREIGN"		return TOKEN(FOREIGN);
+"FROM"			return TOKEN(FROM);
 "GENERATED"		return TOKEN(GENERATED);
 "GLOB"			return TOKEN(GLOB);
 "IF"			return TOKEN(IF);
@@ -182,6 +183,7 @@ WS			[ \t\f]
 "SELECT"		return TOKEN(SELECT);
 "SET"			return TOKEN(SET);
 "STORED"		return TOKEN(STORED);
+"STRICT"		return TOKEN(STRICT);
 "TABLE"			return TOKEN(TABLE);
 "TEMP"			return TOKEN(TEMP);
 "TEMPORARY"		return TOKEN(TEMPORARY);

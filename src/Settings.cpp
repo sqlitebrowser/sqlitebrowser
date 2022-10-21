@@ -425,6 +425,9 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
     // SchemaDock Drag & drop settings
     if(group == "SchemaDock")
     {
+        if(name == "dropSelectQuery")
+            return true;
+
         if(name == "dropQualifiedNames")
             return false;
 
@@ -496,13 +499,13 @@ QColor Settings::getDefaultColorValue(const std::string& group, const std::strin
             break;
         case LightStyle :
             if(name == "null_fg_colour" || name == "bin_fg_colour")
-                return QColor("#A5A9AC");
+                return QColor(0xA5, 0xA9, 0xAC);
             if(name == "null_bg_colour" || name == "bin_bg_colour")
-                return QColor("#FAFAFA");
+                return QColor(0xFA, 0xFA, 0xFA);
             if(name == "reg_fg_colour")
-                return QColor("#000000");
+                return QColor(0x00, 0x00, 0x00);
             if(name == "reg_bg_colour")
-                return QColor("#FAFAFA");
+                return QColor(0xFA, 0xFA, 0xFA);
             break;
         }
     }
@@ -526,8 +529,8 @@ QColor Settings::getDefaultColorValue(const std::string& group, const std::strin
                 backgroundColour = QColor(0x19, 0x23, 0x2D);
                 break;
             case LightStyle :
-                foregroundColour = QColor("#000000");
-                backgroundColour = QColor("#FAFAFA");
+                foregroundColour = QColor(0x00, 0x00, 0x00);
+                backgroundColour = QColor(0xFA, 0xFA, 0xFA);
                 break;
             }
             if(name == "foreground_colour")
@@ -600,7 +603,7 @@ void Settings::restoreDefaults ()
 
 void Settings::exportSettings(const QString& fileName)
 {
-    QSettings* exportSettings = new QSettings(fileName, QSettings::IniFormat);
+    QSettings exportSettings(fileName, QSettings::IniFormat);
 
     const QStringList groups = settings->childGroups();
     for(const QString& currentGroup : groups)
@@ -609,9 +612,9 @@ void Settings::exportSettings(const QString& fileName)
         const QStringList keys = settings->childKeys();
         for(const QString& currentKey : keys)
         {
-            exportSettings->beginGroup(currentGroup);
-            exportSettings->setValue(currentKey, getValue((currentGroup.toStdString()), (currentKey.toStdString())));
-            exportSettings->endGroup();
+            exportSettings.beginGroup(currentGroup);
+            exportSettings.setValue(currentKey, getValue((currentGroup.toStdString()), (currentKey.toStdString())));
+            exportSettings.endGroup();
         }
         settings->endGroup();
     }
@@ -622,20 +625,20 @@ bool Settings::importSettings(const QString& fileName)
     if(!isVaildSettingsFile(fileName))
         return false;
 
-    QSettings* importSettings = new QSettings(fileName, QSettings::IniFormat);
+    QSettings importSettings(fileName, QSettings::IniFormat);
 
-    const QStringList groups = importSettings->childGroups();
+    const QStringList groups = importSettings.childGroups();
     for(const QString& currentGroup : groups)
     {
-        importSettings->beginGroup(currentGroup);
-        const QStringList keys = importSettings->childKeys();
+        importSettings.beginGroup(currentGroup);
+        const QStringList keys = importSettings.childKeys();
         for(const QString& currentKey : keys)
         {
             settings->beginGroup(currentGroup);
-            settings->setValue(currentKey, importSettings->value(currentKey));
+            settings->setValue(currentKey, importSettings.value(currentKey));
             settings->endGroup();
         }
-        importSettings->endGroup();
+        importSettings.endGroup();
     }
 
     m_hCache.clear();

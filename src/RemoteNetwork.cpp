@@ -34,7 +34,7 @@ RemoteNetwork::RemoteNetwork() :
 
     // Load CA certs from resource file
     QDir dirCaCerts(":/certs");
-    QStringList caCertsList = dirCaCerts.entryList();
+    const QStringList caCertsList = dirCaCerts.entryList();
     QList<QSslCertificate> caCerts;
     for(const QString& caCertName : caCertsList)
         caCerts += QSslCertificate::fromPath(":/certs/" + caCertName);
@@ -58,7 +58,7 @@ void RemoteNetwork::reloadSettings()
 {
     // Load all configured client certificates
     m_clientCertFiles.clear();
-    auto client_certs = Settings::getValue("remote", "client_certificates").toStringList();
+    const auto client_certs = Settings::getValue("remote", "client_certificates").toStringList();
     for(const QString& path : client_certs)
     {
         QFile file(path);
@@ -306,7 +306,7 @@ QString RemoteNetwork::getInfoFromClientCert(const QString& cert, CertInfo info)
         // Assemble the full URL from the host name. We use port 443 by default but for
         // local development purposes we use 5550 instead.
         QString host = cn_parts.last();
-        host = QString("https://%1%2/").arg(host).arg(host.contains("docker-dev") ? ":5550" : "");
+        host = QString("https://%1%2/").arg(host, host.contains("docker-dev") ? ":5550" : "");
         return host;
     }
 

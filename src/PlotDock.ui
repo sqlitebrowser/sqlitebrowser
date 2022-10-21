@@ -18,13 +18,13 @@
     <number>2</number>
    </property>
    <property name="topMargin">
-    <number>2</number>
+    <number>0</number>
    </property>
    <property name="rightMargin">
     <number>2</number>
    </property>
    <property name="bottomMargin">
-    <number>2</number>
+    <number>0</number>
    </property>
    <item>
     <widget class="QSplitter" name="splitterForPlot">
@@ -366,8 +366,93 @@ Select the axes or axes labels to drag and zoom only in that orientation.</strin
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>treePlotColumns</sender>
+   <signal>itemChanged(QTreeWidgetItem*,int)</signal>
+   <receiver>PlotDock</receiver>
+   <slot>columnItemChanged(QTreeWidgetItem*,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treePlotColumns</sender>
+   <signal>itemDoubleClicked(QTreeWidgetItem*,int)</signal>
+   <receiver>PlotDock</receiver>
+   <slot>columnItemDoubleClicked(QTreeWidgetItem*,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>butSavePlot</sender>
+   <signal>clicked()</signal>
+   <receiver>PlotDock</receiver>
+   <slot>savePlot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboLineType</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>PlotDock</receiver>
+   <slot>lineTypeChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboPointShape</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>PlotDock</receiver>
+   <slot>pointShapeChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fetchAllData()</slot>
+  <slot>columnItemChanged(QTreeWidgetItem*,int)</slot>
+  <slot>columnItemDoubleClicked(QTreeWidgetItem*,int)</slot>
+  <slot>savePlot()</slot>
+  <slot>lineTypeChanged(int)</slot>
+  <slot>pointShapeChanged(int)</slot>
  </slots>
 </ui>

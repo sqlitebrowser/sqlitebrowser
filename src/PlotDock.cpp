@@ -1,3 +1,5 @@
+#define QT_NO_FLOAT16_OPERATORS     // This works around https://bugreports.qt.io/browse/QTBUG-72073 which makes the build fail on MSVC 2017 and Qt 5.12
+
 #include "PlotDock.h"
 #include "ui_PlotDock.h"
 #include "Settings.h"
@@ -48,7 +50,6 @@ PlotDock::PlotDock(QWidget* parent)
     ui->comboPointShape->setCurrentIndex(Settings::getValue("PlotDock", "pointShape").toInt());
 
     // Connect signals
-    connect(ui->treePlotColumns, &QTreeWidget::itemChanged, this, &PlotDock::on_treePlotColumns_itemChanged);
     connect(ui->plotWidget, &QCustomPlot::selectionChangedByUser, this, &PlotDock::selectionChanged);
 
     // connect slots that takes care that when an axis is selected, only that direction can be dragged and zoomed:
@@ -573,7 +574,7 @@ void PlotDock::resetPlot()
     updatePlot(nullptr);
 }
 
-void PlotDock::on_treePlotColumns_itemChanged(QTreeWidgetItem* changeitem, int column)
+void PlotDock::columnItemChanged(QTreeWidgetItem* changeitem, int column)
 {
     // disable change updates, or we get unwanted redrawing and weird behavior
     ui->treePlotColumns->blockSignals(true);
@@ -639,7 +640,7 @@ void PlotDock::on_treePlotColumns_itemChanged(QTreeWidgetItem* changeitem, int c
     updatePlot(m_currentPlotModel, m_currentTableSettings, false);
 }
 
-void PlotDock::on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem* item, int column)
+void PlotDock::columnItemDoubleClicked(QTreeWidgetItem* item, int column)
 {
     // disable change updates, or we get unwanted redrawing and weird behavior
     ui->treePlotColumns->blockSignals(true);
@@ -684,7 +685,7 @@ void PlotDock::on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem* item, int c
     updatePlot(m_currentPlotModel, m_currentTableSettings, false);
 }
 
-void PlotDock::on_butSavePlot_clicked()
+void PlotDock::savePlot()
 {
     QString fileName = FileDialog::getSaveFileName(
                            CreateDataFile,
@@ -717,7 +718,7 @@ void PlotDock::on_butSavePlot_clicked()
     }
 }
 
-void PlotDock::on_comboLineType_currentIndexChanged(int index)
+void PlotDock::lineTypeChanged(int index)
 {
     Q_ASSERT(index >= QCPGraph::lsNone &&
              index <= QCPGraph::lsImpulse);
@@ -760,7 +761,7 @@ void PlotDock::on_comboLineType_currentIndexChanged(int index)
     }
 }
 
-void PlotDock::on_comboPointShape_currentIndexChanged(int index)
+void PlotDock::pointShapeChanged(int index)
 {
     // WARN: because ssDot point shape is removed
     if (index > 0) index += 1;
@@ -986,17 +987,25 @@ void PlotDock::adjustBars()
     }
 }
 
+namespace {
+    void adjustOneAxisFormat (QCPAxis* axis, bool fixedFormat) {
+        const QString format = fixedFormat? "f" : "gb";
+        axis->setNumberFormat(format);
+        int precision;
+        // Different values for big numbers and small numbers.
+        if (axis->range().center() > 999 && axis->range().size() > 10)
+            precision = fixedFormat? 0 : 2;
+        else
+            precision = fixedFormat? 2 : 6;
+        axis->setNumberPrecision(precision);
+    }
+}
+
 void PlotDock::adjustAxisFormat()
 {
-    const QString format = m_fixedFormat? "f" : "gb";
-    ui->plotWidget->xAxis->setNumberFormat(format);
-    ui->plotWidget->yAxis->setNumberFormat(format);
-    ui->plotWidget->yAxis2->setNumberFormat(format);
-
-    const int precision = m_fixedFormat? 0 : 6;
-    ui->plotWidget->xAxis->setNumberPrecision(precision);
-    ui->plotWidget->yAxis->setNumberPrecision(precision);
-    ui->plotWidget->yAxis2->setNumberPrecision(precision);
+    adjustOneAxisFormat(ui->plotWidget->xAxis, m_fixedFormat);
+    adjustOneAxisFormat(ui->plotWidget->yAxis, m_fixedFormat);
+    adjustOneAxisFormat(ui->plotWidget->yAxis2, m_fixedFormat);
 }
 
 void PlotDock::toggleStackedBars(bool stacked)

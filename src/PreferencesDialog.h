@@ -48,8 +48,8 @@ private slots:
     void adjustColorsToStyle(int style);
     void configureProxy();
 
-    void on_buttonManageFileExtension_clicked();
-    void on_buttonBox_clicked(QAbstractButton* button);
+    void showFileExtensionManager();
+    void buttonBoxClicked(QAbstractButton* button);
 
 private:
     Ui::PreferencesDialog* ui;

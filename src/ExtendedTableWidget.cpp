@@ -131,19 +131,18 @@ QWidget* ExtendedTableWidgetEditorDelegate::createEditor(QWidget* parent, const 
     emit dataAboutToBeEdited(index);
 
     SqliteTableModel* m = qobject_cast<SqliteTableModel*>(const_cast<QAbstractItemModel*>(index.model()));
-    sqlb::ForeignKeyClause fk = m->getForeignKeyClause(static_cast<size_t>(index.column()-1));
+    auto fk = m->getForeignKeyClause(static_cast<size_t>(index.column()-1));
 
-    if(fk.isSet()) {
-
-        sqlb::ObjectIdentifier foreignTable = sqlb::ObjectIdentifier(m->currentTableName().schema(), fk.table());
+    if(fk) {
+        sqlb::ObjectIdentifier foreignTable = sqlb::ObjectIdentifier(m->currentTableName().schema(), fk->table());
 
         std::string column;
         // If no column name is set, assume the primary key is meant
-        if(fk.columns().empty()) {
+        if(fk->columns().empty()) {
             sqlb::TablePtr obj = m->db().getTableByName(foreignTable);
-            column = obj->primaryKey()->columnList().front();
+            column = obj->primaryKeyColumns().front().name();
         } else
-            column = fk.columns().at(0);
+            column = fk->columns().at(0);
 
         sqlb::TablePtr currentTable = m->db().getTableByName(m->currentTableName());
         QString query = QString("SELECT %1 FROM %2").arg(QString::fromStdString(sqlb::escapeIdentifier(column)), QString::fromStdString(foreignTable.toString()));
@@ -575,7 +574,7 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
 
     // Insert the columns in a set, since they could be non-contiguous.
     std::set<int> colsInIndexes, rowsInIndexes;
-    for(const QModelIndex & idx : indices) {
+    for(const QModelIndex & idx : qAsConst(indices)) {
         colsInIndexes.insert(idx.column());
         rowsInIndexes.insert(idx.row());
     }
@@ -963,11 +962,25 @@ void ExtendedTableWidget::keyPressEvent(QKeyEvent* event)
         return;
     }
 
+    // Discoverability of Ctrl+Shift+Click to follow foreign keys or URLs
+    if(event->modifiers().testFlag(Qt::ControlModifier) && event->modifiers().testFlag(Qt::ShiftModifier))
+        QApplication::setOverrideCursor(Qt::PointingHandCursor);
+
     // This prevents the current selection from being changed when pressing tab to move to the next filter. Note that this is in an 'if' condition,
     // not in an 'else if' because this way, when the tab key was pressed and the focus was on the last cell, a new row is inserted and then the tab
     // key press is processed a second time to move the cursor as well
     if((event->key() != Qt::Key_Tab && event->key() != Qt::Key_Backtab) || hasFocus())
         QTableView::keyPressEvent(event);
+}
+
+void ExtendedTableWidget::keyReleaseEvent(QKeyEvent* event)
+{
+
+    // Restore the PointingHandCursor override
+    if(!event->modifiers().testFlag(Qt::ControlModifier) || !event->modifiers().testFlag(Qt::ShiftModifier))
+        QApplication::restoreOverrideCursor();
+
+    QTableView::keyReleaseEvent(event);
 }
 
 void ExtendedTableWidget::updateGeometries()
@@ -1057,11 +1070,11 @@ void ExtendedTableWidget::cellClicked(const QModelIndex& index)
     if(qApp->keyboardModifiers().testFlag(Qt::ControlModifier) && qApp->keyboardModifiers().testFlag(Qt::ShiftModifier) && model())
     {
         SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
-        sqlb::ForeignKeyClause fk = m->getForeignKeyClause(static_cast<size_t>(index.column()-1));
+        auto fk = m->getForeignKeyClause(static_cast<size_t>(index.column()-1));
 
-        if(fk.isSet())
-            emit foreignKeyClicked(sqlb::ObjectIdentifier(m->currentTableName().schema(), fk.table()),
-                                   fk.columns().size() ? fk.columns().at(0) : "",
+        if(fk)
+            emit foreignKeyClicked(sqlb::ObjectIdentifier(m->currentTableName().schema(), fk->table()),
+                                   fk->columns().size() ? fk->columns().at(0) : "",
                                    m->data(index, Qt::EditRole).toByteArray());
         else {
             // If this column does not have a foreign-key, try to interpret it as a filename/URL and open it in external application.

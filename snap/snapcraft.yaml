@@ -21,6 +21,19 @@
           grade:                  stable
           icon:                   images/logo.svg
           type:                   app
+          plugs:
+            gtk-3-themes:
+              interface: content
+              target: $SNAP/data-dir/themes
+              default-provider: gtk-common-themes:gtk-3-themes
+            sound-themes:
+              interface: content
+              target: $SNAP/data-dir/sounds
+              default-provider: gtk-common-themes:sound-themes
+            icon-themes:
+              interface: content
+              target: $SNAP/data-dir/icons
+              default-provider: gtk-common-themes:icon-themes
           apps:
             sqlitebrowser:
               command: usr/local/bin/sqlitebrowser
@@ -99,6 +112,7 @@
                 - ibus-gtk3
                 - libibus-1.0-5
                 - libgtk2.0-0
+                - qt5-image-formats-plugins
               dump:
                   source:         .
                   plugin:         dump

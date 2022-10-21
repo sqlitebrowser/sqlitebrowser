@@ -56,7 +56,10 @@ struct SelectedColumn
 class Query
 {
 public:
-    Query() {}
+    Query() :
+        m_is_view(false)
+    {}
+
     explicit Query(const sqlb::ObjectIdentifier& table, bool is_view = false) :
         m_table(table),
         m_is_view(is_view)

@@ -2233,7 +2233,7 @@ Can be set to 0 for disabling completion.</string>
    <sender>buttonBox</sender>
    <signal>clicked(QAbstractButton*)</signal>
    <receiver>PreferencesDialog</receiver>
-   <slot>on_buttonBox_clicked(QAbstractButton*)</slot>
+   <slot>buttonBoxClicked(QAbstractButton*)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>394</x>
@@ -2261,6 +2261,22 @@ Can be set to 0 for disabling completion.</string>
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>buttonManageFileExtension</sender>
+   <signal>clicked()</signal>
+   <receiver>PreferencesDialog</receiver>
+   <slot>showFileExtensionManager()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>saveSettings()</slot>
@@ -2273,5 +2289,7 @@ Can be set to 0 for disabling completion.</string>
   <slot>removeClientCertificate()</slot>
   <slot>chooseRemoteCloneDirectory()</slot>
   <slot>configureProxy()</slot>
+  <slot>buttonBoxClicked()</slot>
+  <slot>showFileExtensionManager()</slot>
  </slots>
 </ui>

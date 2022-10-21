@@ -40,6 +40,7 @@ public slots:
     void reloadData();
     void setDropQualifiedNames(bool value) { m_dropQualifiedNames = value; }
     void setDropEnquotedNames(bool value) { m_dropEnquotedNames = value; }
+    void setDropSelectQuery(bool value) { m_dropSelectQuery = value; }
 
 private:
     DBBrowserDB& m_db;
@@ -47,6 +48,7 @@ private:
     QTreeWidgetItem* browsablesRootItem;
     bool m_dropQualifiedNames;
     bool m_dropEnquotedNames;
+    bool m_dropSelectQuery;
 
     void buildTree(QTreeWidgetItem* parent, const std::string& schema);
     QTreeWidgetItem* addNode(const std::string& schema, const std::string& name, const std::string& object_type, const std::string& sql, QTreeWidgetItem* parent_item, const std::string& data_type = {}, const std::string& icon_suffix = {});

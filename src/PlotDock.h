@@ -112,11 +112,11 @@ private:
     void adjustAxisFormat();
 
 private slots:
-    void on_treePlotColumns_itemChanged(QTreeWidgetItem* item, int column);
-    void on_treePlotColumns_itemDoubleClicked(QTreeWidgetItem* item, int column);
-    void on_butSavePlot_clicked();
-    void on_comboLineType_currentIndexChanged(int index);
-    void on_comboPointShape_currentIndexChanged(int index);
+    void columnItemChanged(QTreeWidgetItem* item, int column);
+    void columnItemDoubleClicked(QTreeWidgetItem* item, int column);
+    void savePlot();
+    void lineTypeChanged(int index);
+    void pointShapeChanged(int index);
     void selectionChanged();
     void mousePress();
     void mouseWheel();

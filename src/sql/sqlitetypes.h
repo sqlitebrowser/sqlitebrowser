@@ -3,6 +3,7 @@
 #define SQLITETYPES_H
 
 #include <algorithm>
+#include <bitset>
 #include <cctype>
 #include <map>
 #include <memory>
@@ -50,9 +51,6 @@ namespace sqlb {
 
 using StringVector = std::vector<std::string>;
 
-StringVector escapeIdentifier(StringVector ids);
-std::string joinStringVector(const StringVector& vec, const std::string& delim);
-
 class Object;
 class Table;
 class Index;
@@ -66,10 +64,12 @@ using TablePtr = std::shared_ptr<Table>;
 using IndexPtr = std::shared_ptr<Index>;
 using ViewPtr = std::shared_ptr<View>;
 using TriggerPtr = std::shared_ptr<Trigger>;
-using ConstraintPtr = std::shared_ptr<Constraint>;
 using FieldVector = std::vector<Field>;
 using IndexedColumnVector = std::vector<IndexedColumn>;
-using ConstraintVector = std::vector<ConstraintPtr>;
+
+StringVector escapeIdentifier(StringVector ids);
+std::string joinStringVector(const StringVector& vec, const std::string& delim);
+std::string joinStringVector(const IndexedColumnVector& vec, const std::string& delim);
 
 class Object
 {
@@ -105,44 +105,10 @@ protected:
 class Constraint
 {
 public:
-    enum ConstraintTypes
-    {
-        PrimaryKeyConstraintType,
-        UniqueConstraintType,
-        ForeignKeyConstraintType,
-        CheckConstraintType,
-        GeneratedColumnConstraintType,
-        NotNullConstraintType,
-        DefaultConstraintType,
-        CollateConstraintType,
-
-        NoType = 999,
-    };
-
-    explicit Constraint(const StringVector& columns = {}, const std::string& name = std::string())
-        : column_list(columns),
-          m_name(name)
-    {
-    }
-    virtual ~Constraint() = default;
-
-    static ConstraintPtr makeConstraint(ConstraintTypes type);
-
-    virtual ConstraintTypes type() const = 0;
-
     void setName(const std::string& name) { m_name = name; }
     const std::string& name() const { return m_name; }
 
-    StringVector columnList() const { return column_list; }
-    virtual void setColumnList(const StringVector& list) { column_list = list; }
-    virtual void addToColumnList(const std::string& key) { column_list.push_back(key); }
-    virtual void replaceInColumnList(const std::string& from, const std::string& to);
-    virtual void removeFromColumnList(const std::string& key);
-
-    virtual std::string toSql() const = 0;
-
 protected:
-    StringVector column_list;
     std::string m_name;
 };
 
@@ -156,7 +122,6 @@ public:
     {
     }
 
-    bool isSet() const;
     std::string toString() const;
 
     void setTable(const std::string& table) { m_table = table; }
@@ -168,9 +133,7 @@ public:
     void setConstraint(const std::string& constraint) { m_constraint = constraint; }
     const std::string& constraint() const { return m_constraint; }
 
-    std::string toSql() const override;
-
-    ConstraintTypes type() const override { return ForeignKeyConstraintType; }
+    std::string toSql(const StringVector& columns) const;
 
 private:
     std::string m_table;
@@ -181,26 +144,16 @@ private:
 class UniqueConstraint : public Constraint
 {
 public:
-    explicit UniqueConstraint(const IndexedColumnVector& columns = {});
-    explicit UniqueConstraint(const StringVector& columns);
+    virtual ~UniqueConstraint() = default;
 
     void setConflictAction(const std::string& conflict) { m_conflictAction = conflict; }
     const std::string& conflictAction() const { return m_conflictAction; }
 
-    // We override these because we maintain our own copy of the column_list variable in m_columns.
-    // This needs to be done because in a unique constraint we can add expressions, sort order, etc. to the
-    // list of columns.
-    void setColumnList(const StringVector& list) override;
-    void addToColumnList(const std::string& key) override;
-    void replaceInColumnList(const std::string& from, const std::string& to) override;
-    void removeFromColumnList(const std::string& key) override;
+    virtual std::string toSql(const IndexedColumnVector& columns) const;
 
-    std::string toSql() const override;
-
-    ConstraintTypes type() const override { return UniqueConstraintType; }
+    virtual bool isPrimaryKey() const { return false; }
 
 protected:
-    IndexedColumnVector m_columns;
     std::string m_conflictAction;
 };
 
@@ -211,9 +164,7 @@ public:
     void setConflictAction(const std::string& conflict) { m_conflictAction = conflict; }
     const std::string& conflictAction() const { return m_conflictAction; }
 
-    std::string toSql() const override;
-
-    ConstraintTypes type() const override { return NotNullConstraintType; }
+    std::string toSql() const;
 
 protected:
     std::string m_conflictAction;
@@ -226,15 +177,15 @@ class PrimaryKeyConstraint : public UniqueConstraint
     // and both need to maintain a copy of the column list with sort order information etc.
 
 public:
-    explicit PrimaryKeyConstraint(const IndexedColumnVector& columns = {});
-    explicit PrimaryKeyConstraint(const StringVector& columns);
+    PrimaryKeyConstraint()
+        : m_auto_increment(false)
+    {}
 
     void setAutoIncrement(bool ai) { m_auto_increment = ai; }
     bool autoIncrement() const { return m_auto_increment; }
 
-    std::string toSql() const override;
-
-    ConstraintTypes type() const override { return PrimaryKeyConstraintType; }
+    bool isPrimaryKey() const override { return true; }
+    std::string toSql(const IndexedColumnVector& columns) const override;
 
 private:
     bool m_auto_increment;
@@ -251,9 +202,7 @@ public:
     void setExpression(const std::string& expr) { m_expression = expr; }
     const std::string& expression() const { return m_expression; }
 
-    std::string toSql() const override;
-
-    ConstraintTypes type() const override { return CheckConstraintType; }
+    std::string toSql() const;
 
 private:
     std::string m_expression;
@@ -270,9 +219,7 @@ public:
     void setValue(const std::string& value) { m_value = value; }
     const std::string& value() const { return m_value; }
 
-    std::string toSql() const override;
-
-    ConstraintTypes type() const override { return DefaultConstraintType; }
+    std::string toSql() const;
 
 private:
     std::string m_value;
@@ -289,9 +236,7 @@ public:
     void setCollation(const std::string& collation) { m_collation = collation; }
     const std::string& collation() const { return m_collation; }
 
-    std::string toSql() const override;
-
-    ConstraintTypes type() const override { return CollateConstraintType; }
+    std::string toSql() const;
 
 private:
     std::string m_collation;
@@ -312,9 +257,7 @@ public:
     void setStorage(const std::string& storage) { m_storage = storage; }
     std::string storage() const { return m_storage.empty() ? "VIRTUAL" : m_storage; }
 
-    std::string toSql() const override;
-
-    ConstraintTypes type() const override { return GeneratedColumnConstraintType; }
+    std::string toSql() const;
 
 private:
     std::string m_expression;
@@ -403,7 +346,7 @@ private:
 class Table : public Object
 {
 public:
-    explicit Table(const std::string& name): Object(name), m_withoutRowid(false) {}
+    explicit Table(const std::string& name): Object(name) {}
     explicit Table(const Table& table);
     Table& operator=(const Table& rhs);
 
@@ -415,6 +358,14 @@ public:
     using field_type = Field;
     using field_iterator = FieldVector::iterator;
 
+    enum Options
+    {
+        WithoutRowid,
+        Strict,
+
+        NumOptions
+    };
+
     /**
      * @brief Returns the CREATE TABLE statement for this table object
      * @return A std::string with the CREATE TABLE object.
@@ -424,25 +375,40 @@ public:
     StringVector fieldNames() const;
 
     StringVector rowidColumns() const;
-    void setWithoutRowidTable(bool without_rowid) {  m_withoutRowid = without_rowid; }
-    bool withoutRowidTable() const { return m_withoutRowid; }
+    void setWithoutRowidTable(bool without_rowid) {  m_options.set(WithoutRowid, without_rowid); }
+    bool withoutRowidTable() const { return m_options.test(WithoutRowid); }
+
+    void setStrict(bool strict) { m_options.set(Strict, strict); }
+    bool isStrict() const { return m_options.test(Strict); }
 
     void setVirtualUsing(const std::string& virt_using) { m_virtual = virt_using; }
     const std::string& virtualUsing() const { return m_virtual; }
     bool isVirtual() const { return !m_virtual.empty(); }
 
-    void addConstraint(ConstraintPtr constraint);
-    void setConstraint(ConstraintPtr constraint);
-    void removeConstraint(ConstraintPtr constraint);
-    void removeConstraints(const StringVector& vStrFields = StringVector(), Constraint::ConstraintTypes type = Constraint::NoType);
-    ConstraintPtr constraint(const StringVector& vStrFields = StringVector(), Constraint::ConstraintTypes type = Constraint::NoType) const;   //! Only returns the first constraint, if any
-    std::vector<ConstraintPtr> constraints(const StringVector& vStrFields = StringVector(), Constraint::ConstraintTypes type = Constraint::NoType) const;
-    ConstraintVector allConstraints() const { return m_constraints; }
-    void setConstraints(const ConstraintVector& constraints);
-    void replaceConstraint(ConstraintPtr from, ConstraintPtr to);
-    std::shared_ptr<PrimaryKeyConstraint> primaryKey();
+    void addConstraint(const IndexedColumnVector& columns, std::shared_ptr<PrimaryKeyConstraint> constraint) { m_indexConstraints.insert(std::make_pair(columns, constraint)); }
+    void addConstraint(const IndexedColumnVector& columns, std::shared_ptr<UniqueConstraint> constraint) { m_indexConstraints.insert(std::make_pair(columns, constraint)); }
+    void addConstraint(const StringVector& columns, std::shared_ptr<ForeignKeyClause> constraint) { m_foreignKeys.insert(std::make_pair(columns, constraint)); }
+    void addConstraint(std::shared_ptr<CheckConstraint> constraint) { m_checkConstraints.push_back(constraint); }
+    void removeConstraint(std::shared_ptr<UniqueConstraint> constraint);
+    void removeConstraint(std::shared_ptr<ForeignKeyClause> constraint);
+    void removeConstraint(std::shared_ptr<CheckConstraint> constraint);
+    void addKeyToConstraint(std::shared_ptr<UniqueConstraint> constraint, const std::string& key);
+    void removeKeyFromConstraint(std::shared_ptr<UniqueConstraint> constraint, const std::string& key);
     void removeKeyFromAllConstraints(const std::string& key);
     void renameKeyInAllConstraints(const std::string& key, const std::string& to);
+
+    // These three functions are helper functions which we need for some templated code. As soon as we
+    // switch to C++17 we should be able to rewrite that code so we can get rid of these.
+    void addConstraint(const StringVector& columns, std::shared_ptr<PrimaryKeyConstraint> constraint);
+    void addConstraint(const StringVector& columns, std::shared_ptr<UniqueConstraint> constraint);
+    void addConstraint(const IndexedColumnVector& columns, std::shared_ptr<ForeignKeyClause> constraint);
+
+    std::shared_ptr<PrimaryKeyConstraint> primaryKey() const;
+    IndexedColumnVector primaryKeyColumns() const;
+    std::multimap<IndexedColumnVector, std::shared_ptr<UniqueConstraint>> indexConstraints() const { return m_indexConstraints; }
+    std::multimap<StringVector, std::shared_ptr<ForeignKeyClause>> foreignKeys() const { return m_foreignKeys; }
+    std::shared_ptr<ForeignKeyClause> foreignKey(const StringVector& columns) const;    //! Only returns the first foreign key, if any
+    std::vector<std::shared_ptr<CheckConstraint>> checkConstraints() const { return m_checkConstraints; }
 
     /**
      * @brief parseSQL Parses the create Table statement in sSQL.
@@ -450,13 +416,16 @@ public:
      * @return The table object. The table object may be empty if parsing failed.
      */
     static TablePtr parseSQL(const std::string& sSQL);
+
 private:
     StringVector fieldList() const;
 
 private:
-    bool m_withoutRowid;
-    ConstraintVector m_constraints;
+    std::multimap<IndexedColumnVector, std::shared_ptr<UniqueConstraint>> m_indexConstraints;       // This stores both UNIQUE and PRIMARY KEY constraints
+    std::multimap<StringVector, std::shared_ptr<ForeignKeyClause>> m_foreignKeys;
+    std::vector<std::shared_ptr<CheckConstraint>> m_checkConstraints;
     std::string m_virtual;
+    std::bitset<NumOptions> m_options;
 };
 
 class IndexedColumn
@@ -473,6 +442,11 @@ public:
           m_order(order)
     {
     }
+
+    bool operator==(const std::string& name) const { return !m_isExpression && m_name == name; }
+    bool operator!=(const std::string& name) const { return !m_isExpression && m_name != name; }
+    bool operator==(const IndexedColumn& other) const { return m_name == other.m_name && m_isExpression == other.m_isExpression && m_order == other.m_order; }
+    bool operator<(const IndexedColumn& other) const { return m_name < other.m_name; }
 
     void setName(const std::string& name) { m_name = name; }
     const std::string& name() const { return m_name; }

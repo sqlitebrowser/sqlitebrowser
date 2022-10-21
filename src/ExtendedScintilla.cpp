@@ -57,6 +57,7 @@ ExtendedScintilla::ExtendedScintilla(QWidget* parent) :
 
     // Connect signals
     connect(this, &ExtendedScintilla::linesChanged, this, &ExtendedScintilla::updateLineNumberAreaWidth);
+    connect(this, &QsciScintillaBase::SCN_ZOOM, this, &ExtendedScintilla::updateLineNumberAreaWidth);
 
     // The shortcuts are constrained to the Widget context so they do not conflict with other SqlTextEdit widgets in the Main Window.
     QShortcut* shortcutFindReplace = new QShortcut(QKeySequence(tr("Ctrl+H")), this, nullptr, nullptr, Qt::WidgetShortcut);
@@ -89,11 +90,7 @@ void ExtendedScintilla::updateLineNumberAreaWidth()
 
     // Calculate the width of this number if it was all zeros (this is because a 1 might require less space than a 0 and this could
     // cause some flickering depending on the font) and set the new margin width.
-#if QT_VERSION < QT_VERSION_CHECK(5, 11, 0)
-    setMarginWidth(0, QFontMetrics(font()).width(QString("0").repeated(digits)) + 5);
-#else
-    setMarginWidth(0, QFontMetrics(font()).horizontalAdvance(QString("0").repeated(digits)) + 5);
-#endif
+    setMarginWidth(0, QString("0").repeated(digits+1));
 }
 
 void ExtendedScintilla::dropEvent(QDropEvent* e)
@@ -146,8 +143,8 @@ void ExtendedScintilla::reloadCommonSettings()
         setMarginsForegroundColor(QColor(0xEF, 0xF0, 0xF1));
         break;
     case Settings::LightStyle :
-        setMarginsBackgroundColor(QColor("#C9CDD0"));
-        setMarginsForegroundColor(QColor("#000000"));
+        setMarginsBackgroundColor(QColor(0xC9, 0xCD, 0xD0));
+        setMarginsForegroundColor(QColor(0x00, 0x00, 0x00));
         break;
     }
     setPaper(Settings::getValue("syntaxhighlighter", "background_colour").toString());

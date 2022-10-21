@@ -64,7 +64,7 @@ private:
 
         DBBrowserDB * pParent;
 
-        void operator() (sqlite3 * db) const
+        void operator() (const sqlite3* db) const
         {
             if(!db || !pParent)
                 return;
@@ -225,6 +225,8 @@ public:
 
     const sqlb::TablePtr getTableByName(const sqlb::ObjectIdentifier& name) const
     {
+        if(schemata.empty() || name.schema().empty())
+            return sqlb::TablePtr{};
         const auto& schema = schemata.at(name.schema());
         if(schema.tables.count(name.name()))
             return schema.tables.at(name.name());
@@ -233,6 +235,8 @@ public:
 
     const sqlb::IndexPtr getIndexByName(const sqlb::ObjectIdentifier& name) const
     {
+        if(schemata.empty() || name.schema().empty())
+            return sqlb::IndexPtr{};
         const auto& schema = schemata.at(name.schema());
         if(schema.indices.count(name.name()))
             return schema.indices.at(name.name());
@@ -241,6 +245,8 @@ public:
 
     const sqlb::TriggerPtr getTriggerByName(const sqlb::ObjectIdentifier& name) const
     {
+        if(schemata.empty() || name.schema().empty())
+            return sqlb::TriggerPtr{};
         const auto& schema = schemata.at(name.schema());
         if(schema.triggers.count(name.name()))
             return schema.triggers.at(name.name());
@@ -265,6 +271,7 @@ public:
     void loadExtensionsFromSettings();
 
     static QStringList Datatypes;
+    static QStringList DatatypesStrict;
 
 private:
     std::vector<std::pair<std::string, std::string> > queryColumnInformation(const std::string& schema_name, const std::string& object_name) const;
@@ -309,7 +316,7 @@ private:
     void collationNeeded(void* pData, sqlite3* db, int eTextRep, const char* sCollationName);
     void errorLogCallback(void* user_data, int error_code, const char* message);
 
-    bool tryEncryptionSettings(const QString& filename, bool* encrypted, CipherSettings*& cipherSettings) const;
+    bool tryEncryptionSettings(const QString& filename, bool* encrypted, CipherSettings* cipherSettings) const;
 
     bool disableStructureUpdateChecks;
 

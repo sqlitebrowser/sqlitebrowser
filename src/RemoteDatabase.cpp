@@ -412,7 +412,11 @@ void RemoteDatabase::localDeleteFile(QString filename)
         sqlite3_finalize(stmt);
         return;
     }
-    sqlite3_step(stmt);
+    if(sqlite3_step(stmt) != SQLITE_DONE)
+    {
+        sqlite3_finalize(stmt);
+        return;
+    }
     sqlite3_finalize(stmt);
 
     // Delete the actual file on disk

@@ -236,7 +236,7 @@ void CondFormatManager::itemClicked(QTreeWidgetItem* item, int column)
     }
 }
 
-void CondFormatManager::on_buttonBox_clicked(QAbstractButton* button)
+void CondFormatManager::buttonBoxClicked(QAbstractButton* button)
 {
     if (button == ui->buttonBox->button(QDialogButtonBox::Cancel))
         reject();

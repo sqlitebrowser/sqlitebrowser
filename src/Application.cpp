@@ -177,10 +177,10 @@ Application::Application(int& argc, char** argv) :
         if(arguments().at(i) == "-h" || arguments().at(i) == "--help")
         {
             // Help
-            qWarning() << qPrintable(QString("%1: %2 [%3] [<%4>|<%5>|%6]\n").
-                                     arg(tr("Usage")).arg(QFileInfo(argv[0]).fileName()).
-                                     arg(tr("options")).arg(tr("database")).arg(tr("project")).
-                                     arg(tr("csv-file")));
+            qWarning() << qPrintable(QString("%1: %2 [%3] [<%4>|<%5>|%6]\n").arg(
+                                     tr("Usage"), QFileInfo(argv[0]).fileName(),
+                                     tr("options"), tr("database"), tr("project"),
+                                     tr("csv-file")));
 
             qWarning() << qPrintable(tr("Possible command line arguments:"));
             printArgument(QString("-h, --help"),
@@ -197,9 +197,9 @@ Application::Application(int& argc, char** argv) :
                           tr("Open database in read-only mode"));
             printArgument(QString("-S, --settings <%1>").arg(tr("settings_file")),
                           tr("Run application based on this settings file"));
-            printArgument(QString("-o, --option <%1>/<%2>=<%3>").arg(tr("group")).arg(tr("settings")).arg(tr("value")),
+            printArgument(QString("-o, --option <%1>/<%2>=<%3>").arg(tr("group"), tr("settings"), tr("value")),
                           tr("Run application with this setting temporarily set to value"));
-            printArgument(QString("-O, --save-option <%1>/<%2>=<%3>").arg(tr("group")).arg(tr("settings")).arg(tr("value")),
+            printArgument(QString("-O, --save-option <%1>/<%2>=<%3>").arg(tr("group"), tr("settings"), tr("value")),
                           tr("Run application saving this value for this setting"));
             printArgument(QString("-v, --version"),
                           tr("Display the current version"));

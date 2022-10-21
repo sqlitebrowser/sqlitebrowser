@@ -125,3 +125,11 @@ mark_as_advanced (
   QSCINTILLA_VERSION_STRING
   QSCINTILLA_ROOT_DIR
 )
+
+if (QScintilla_FOUND AND NOT TARGET QScintilla::QScintilla)
+  add_library(QScintilla::QScintilla UNKNOWN IMPORTED)
+  set_target_properties(QScintilla::QScintilla PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES ${QSCINTILLA_INCLUDE_DIRS}
+    IMPORTED_LOCATION ${QSCINTILLA_LIBRARIES}
+  )
+endif()

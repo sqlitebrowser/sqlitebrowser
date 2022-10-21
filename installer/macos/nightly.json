@@ -3,6 +3,7 @@
   "icon": "macapp.icns",
   "icon-size": 128,
   "background": "background.png",
+  "format": "ULFO",
   "window": {
   	"size": {
   		"width": 500,

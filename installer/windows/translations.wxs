@@ -96,8 +96,8 @@
                 <Component><File Source="$(var.QtPath)\translations\qtscript_pl.qm" /></Component>
                 <Component><File Source="$(var.QtPath)\translations\qtxmlpatterns_pl.qm" /></Component>
 
-                <!-- Portuguese -->
-                <Component><File Source="$(var.QtPath)\translations\qt_pt.qm" /></Component>
+                <!-- Brazilian Portuguese -->
+                <Component><File Source="$(var.QtPath)\translations\qt_pt_BR.qm" /></Component>
 
                 <!-- Russian -->
                 <Component><File Source="$(var.QtPath)\translations\qt_ru.qm" /></Component>
@@ -196,8 +196,8 @@
             <ComponentRef Id="qtscript_pl.qm" />
             <ComponentRef Id="qtxmlpatterns_pl.qm" />
 
-            <!-- Portuguese -->
-            <ComponentRef Id="qt_pt.qm" />
+            <!-- Brazilian Portuguese -->
+            <ComponentRef Id="qt_pt_BR.qm" />
 
             <!-- Russian -->
             <ComponentRef Id="qt_ru.qm" />

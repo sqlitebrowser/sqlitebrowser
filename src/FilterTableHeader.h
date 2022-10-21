@@ -25,6 +25,7 @@ public slots:
 
 signals:
     void filterChanged(size_t column, QString value);
+    void filterFocused();
     void addCondFormat(size_t column, QString filter);
     void allCondFormatsCleared(size_t column);
     void condFormatsEdited(size_t column);

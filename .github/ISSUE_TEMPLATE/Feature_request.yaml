@@ -1,0 +1,27 @@
+name: Feature Request
+description: Suggest an idea or request a new feature.
+title: "[Feature]: "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for coming here to suggest a new feature. Please answer these questions before submitting your feature request.
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the new feature
+    validations:
+      required: true
+  - type: textarea
+    id: examples
+    attributes:
+      label: Does this feature exist in another product or project? Please provide a link
+    validations:
+      required: false
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Do you have a screenshot? Please add screenshots to help explain your idea.
+    validations:
+      required: false

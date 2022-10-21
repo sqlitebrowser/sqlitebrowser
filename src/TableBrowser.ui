@@ -74,6 +74,7 @@
        <property name="toolButtonStyle">
         <enum>Qt::ToolButtonIconOnly</enum>
        </property>
+       <addaction name="actionAddDock"/>
        <addaction name="actionRefresh"/>
        <addaction name="actionClearFilters"/>
        <addaction name="actionClearSorting"/>
@@ -748,6 +749,14 @@
     <string>Change the default encoding assumed for all tables in the database</string>
    </property>
   </action>
+  <action name="actionCopyColumnName">
+   <property name="text">
+    <string>Copy column name</string>
+   </property>
+   <property name="toolTip">
+    <string>Copy the database table column name to your clipboard</string>
+   </property>
+  </action>
   <action name="actionClearFilters">
    <property name="icon">
     <iconset resource="icons/icons.qrc">
@@ -806,6 +815,24 @@
    </property>
    <property name="shortcutContext">
     <enum>Qt::WidgetShortcut</enum>
+   </property>
+  </action>
+  <action name="actionAddDock">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/new_tab</normaloff>:/icons/new_tab</iconset>
+   </property>
+   <property name="text">
+    <string>New Data Browser</string>
+   </property>
+   <property name="toolTip">
+    <string>Add a new docked Data Browser</string>
+   </property>
+   <property name="statusTip">
+    <string>Add a new docked Data Browser</string>
+   </property>
+   <property name="whatsThis">
+    <string>This button adds a new docked Data Browser, which you can detach and arrange in different layouts.</string>
    </property>
   </action>
   <action name="actionRefresh">
@@ -1399,6 +1426,22 @@
    </hints>
   </connection>
   <connection>
+   <sender>actionCopyColumnName</sender>
+   <signal>triggered()</signal>
+   <receiver>TableBrowser</receiver>
+   <slot>copyColumnName()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
    <sender>actionSetAllTablesEncoding</sender>
    <signal>triggered()</signal>
    <receiver>TableBrowser</receiver>
@@ -1446,6 +1489,54 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionClearFilters</sender>
+   <signal>triggered()</signal>
+   <receiver>TableBrowser</receiver>
+   <slot>clearFilters()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionClearSorting</sender>
+   <signal>triggered()</signal>
+   <receiver>TableBrowser</receiver>
+   <slot>clearSorting()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionShowAllColumns</sender>
+   <signal>triggered()</signal>
+   <receiver>TableBrowser</receiver>
+   <slot>showAllColumns()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>refresh()</slot>
@@ -1467,5 +1558,8 @@
   <slot>setDefaultTableEncoding()</slot>
   <slot>hideColumns()</slot>
   <slot>setTableEncoding()</slot>
+  <slot>clearFilters()</slot>
+  <slot>clearSorting()</slot>
+  <slot>showAllColumns()</slot>
  </slots>
 </ui>

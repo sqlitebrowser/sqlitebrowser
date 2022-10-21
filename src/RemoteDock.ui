@@ -18,13 +18,13 @@
     <number>2</number>
    </property>
    <property name="topMargin">
-    <number>2</number>
+    <number>0</number>
    </property>
    <property name="rightMargin">
     <number>2</number>
    </property>
    <property name="bottomMargin">
-    <number>2</number>
+    <number>0</number>
    </property>
    <item>
     <widget class="QStackedWidget" name="stack">
@@ -196,7 +196,7 @@
                 <x>0</x>
                 <y>0</y>
                 <width>520</width>
-                <height>315</height>
+                <height>319</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_8">

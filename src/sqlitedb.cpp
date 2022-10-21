@@ -27,6 +27,7 @@
 #include <functional>
 
 QStringList DBBrowserDB::Datatypes = {"INTEGER", "TEXT", "BLOB", "REAL", "NUMERIC"};
+QStringList DBBrowserDB::DatatypesStrict = {"INT", "INTEGER", "TEXT", "BLOB", "REAL", "ANY"};
 
 // Helper template to allow turning member functions into a C-style function pointer
 // See https://stackoverflow.com/questions/19808054/convert-c-function-pointer-to-c-function-pointer/19809787
@@ -189,8 +190,8 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
     disableStructureUpdateChecks = false;
 
     // Get encryption settings for database file
-    CipherSettings* cipherSettings = nullptr;
-    if(tryEncryptionSettings(db, &isEncrypted, cipherSettings) == false)
+    CipherSettings cipherSettings;
+    if(tryEncryptionSettings(db, &isEncrypted, &cipherSettings) == false)
         return false;
 
     // Open database file
@@ -202,17 +203,16 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
 
     // Set encryption details if database is encrypted
 #ifdef ENABLE_SQLCIPHER
-    if(isEncrypted && cipherSettings)
+    if(isEncrypted)
     {
-        executeSQL("PRAGMA key = " + cipherSettings->getPassword(), false, false);
-        executeSQL("PRAGMA cipher_page_size = " + std::to_string(cipherSettings->getPageSize()), false, false);
-        executeSQL("PRAGMA kdf_iter = " + std::to_string(cipherSettings->getKdfIterations()), false, false);
-        executeSQL("PRAGMA cipher_hmac_algorithm = " + cipherSettings->getHmacAlgorithm(), false, false);
-        executeSQL("PRAGMA cipher_kdf_algorithm = " + cipherSettings->getKdfAlgorithm(), false, false);
-        executeSQL("PRAGMA cipher_plaintext_header_size = " + std::to_string(cipherSettings->getPlaintextHeaderSize()), false, false);
+        executeSQL("PRAGMA key = " + cipherSettings.getPassword(), false, false);
+        executeSQL("PRAGMA cipher_page_size = " + std::to_string(cipherSettings.getPageSize()), false, false);
+        executeSQL("PRAGMA kdf_iter = " + std::to_string(cipherSettings.getKdfIterations()), false, false);
+        executeSQL("PRAGMA cipher_hmac_algorithm = " + cipherSettings.getHmacAlgorithm(), false, false);
+        executeSQL("PRAGMA cipher_kdf_algorithm = " + cipherSettings.getKdfAlgorithm(), false, false);
+        executeSQL("PRAGMA cipher_plaintext_header_size = " + std::to_string(cipherSettings.getPlaintextHeaderSize()), false, false);
     }
 #endif
-    delete cipherSettings;
 
     if (_db)
     {
@@ -330,42 +330,42 @@ bool DBBrowserDB::attach(const QString& filePath, QString attach_as)
 
 #ifdef ENABLE_SQLCIPHER
     // Try encryption settings
-    CipherSettings* cipherSettings = nullptr;
+    CipherSettings cipherSettings;
     bool is_encrypted;
-    if(tryEncryptionSettings(filePath, &is_encrypted, cipherSettings) == false)
+    if(tryEncryptionSettings(filePath, &is_encrypted, &cipherSettings) == false)
         return false;
 
     // Attach database
     std::string key;
-    if(cipherSettings && is_encrypted)
-        key = "KEY " + cipherSettings->getPassword();
+    if(is_encrypted)
+        key = "KEY " + cipherSettings.getPassword();
     else
         key = "KEY ''";
 
     // Only apply cipher settings if the database is encrypted
-    if(cipherSettings && is_encrypted)
+    if(is_encrypted)
     {
-        if(!executeSQL("PRAGMA cipher_default_page_size = " + std::to_string(cipherSettings->getPageSize()), false))
+        if(!executeSQL("PRAGMA cipher_default_page_size = " + std::to_string(cipherSettings.getPageSize()), false))
         {
             QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
             return false;
         }
-        if(!executeSQL("PRAGMA cipher_default_kdf_iter = " + std::to_string(cipherSettings->getKdfIterations()), false))
+        if(!executeSQL("PRAGMA cipher_default_kdf_iter = " + std::to_string(cipherSettings.getKdfIterations()), false))
         {
             QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
             return false;
         }
-        if(!executeSQL("PRAGMA cipher_hmac_algorithm = " + cipherSettings->getHmacAlgorithm(), false))
+        if(!executeSQL("PRAGMA cipher_hmac_algorithm = " + cipherSettings.getHmacAlgorithm(), false))
         {
             QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
             return false;
         }
-        if(!executeSQL("PRAGMA cipher_kdf_algorithm = " + cipherSettings->getKdfAlgorithm(), false))
+        if(!executeSQL("PRAGMA cipher_kdf_algorithm = " + cipherSettings.getKdfAlgorithm(), false))
         {
             QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
             return false;
         }
-        if(!executeSQL("PRAGMA cipher_plaintext_header_size = " + std::to_string(cipherSettings->getPlaintextHeaderSize()), false))
+        if(!executeSQL("PRAGMA cipher_plaintext_header_size = " + std::to_string(cipherSettings.getPlaintextHeaderSize()), false))
         {
             QMessageBox::warning(nullptr, qApp->applicationName(), lastErrorMessage);
             return false;
@@ -379,7 +379,6 @@ bool DBBrowserDB::attach(const QString& filePath, QString attach_as)
     }
 
     // Clean up cipher settings
-    delete cipherSettings;
 #else
     // Attach database
     if(!executeSQL("ATTACH " + sqlb::escapeString(filePath.toStdString()) + " AS " + sqlb::escapeIdentifier(attach_as.toStdString()), false))
@@ -395,7 +394,7 @@ bool DBBrowserDB::attach(const QString& filePath, QString attach_as)
     return true;
 }
 
-bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted, CipherSettings*& cipherSettings) const
+bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted, CipherSettings* cipherSettings) const
 {
     lastErrorMessage = tr("Invalid file format");
 
@@ -430,7 +429,6 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
 #endif
 
     *encrypted = false;
-    cipherSettings = nullptr;
     while(true)
     {
         const std::string statement = "SELECT COUNT(*) FROM sqlite_master;";
@@ -440,7 +438,7 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
         if(err == SQLITE_BUSY || err == SQLITE_PERM || err == SQLITE_NOMEM || err == SQLITE_IOERR || err == SQLITE_CORRUPT || err == SQLITE_CANTOPEN)
         {
             lastErrorMessage = QString::fromUtf8(sqlite3_errmsg(dbHandle));
-            sqlite3_close(dbHandle);
+            sqlite3_close_v2(dbHandle);
             return false;
         }
 
@@ -481,9 +479,6 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
                     std::string hmacAlgorithm = dotenv.value(databaseFileName + "_hmacAlgorithm", QString::fromStdString(enc_default_hmac_algorithm)).toString().toStdString();
                     std::string kdfAlgorithm = dotenv.value(databaseFileName + "_kdfAlgorithm", QString::fromStdString(enc_default_kdf_algorithm)).toString().toStdString();
 
-                    delete cipherSettings;
-                    cipherSettings = new CipherSettings();
-
                     cipherSettings->setKeyFormat(keyFormat);
                     cipherSettings->setPassword(password);
                     cipherSettings->setPageSize(pageSize);
@@ -500,26 +495,19 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
             } else {
 	            CipherDialog *cipherDialog = new CipherDialog(nullptr, false);
 	            if(cipherDialog->exec())
-	            {
-	                delete cipherSettings;
-	                cipherSettings = new CipherSettings(cipherDialog->getCipherSettings());
+                {
+                    *cipherSettings = cipherDialog->getCipherSettings();
 	            } else {
-	                sqlite3_close(dbHandle);
-	                *encrypted = false;
-	                delete cipherSettings;
-	                cipherSettings = nullptr;
+	                sqlite3_close_v2(dbHandle);
+                    *encrypted = false;
 	                return false;
 	            }
 	        }
 
             // Close and reopen database first to be in a clean state after the failed read attempt from above
-            sqlite3_close(dbHandle);
+            sqlite3_close_v2(dbHandle);
             if(sqlite3_open_v2(filePath.toUtf8(), &dbHandle, SQLITE_OPEN_READONLY, nullptr) != SQLITE_OK)
-            {
-                delete cipherSettings;
-                cipherSettings = nullptr;
                 return false;
-            }
 
             // Set the key
             sqlite3_exec(dbHandle, ("PRAGMA key = " + cipherSettings->getPassword()).c_str(), nullptr, nullptr, nullptr);
@@ -539,12 +527,12 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
             *encrypted = true;
 #else
             lastErrorMessage = QString::fromUtf8(sqlite3_errmsg(dbHandle));
-            sqlite3_close(dbHandle);
+            sqlite3_close_v2(dbHandle);
             return false;
 #endif
         } else {
             sqlite3_finalize(vm);
-            sqlite3_close(dbHandle);
+            sqlite3_close_v2(dbHandle);
             return true;
         }
     }
@@ -571,7 +559,7 @@ void DBBrowserDB::getSqliteVersion(QString& sqlite, QString& sqlcipher)
             sqlite3_finalize(stmt);
         }
 
-        sqlite3_close(dummy);
+        sqlite3_close_v2(dummy);
     }
 #endif
 }
@@ -680,7 +668,7 @@ bool DBBrowserDB::create ( const QString & db)
 
     if( openresult != SQLITE_OK ){
         lastErrorMessage = QString::fromUtf8(sqlite3_errmsg(_db));
-        sqlite3_close(_db);
+        sqlite3_close_v2(_db);
         _db = nullptr;
         return false;
     }
@@ -698,7 +686,7 @@ bool DBBrowserDB::create ( const QString & db)
 
         // Close database and open it through the code for opening existing database files. This is slightly less efficient but saves us some duplicate
         // code.
-        sqlite3_close(_db);
+        sqlite3_close_v2(_db);
         return open(db);
     } else {
         return false;
@@ -743,7 +731,7 @@ bool DBBrowserDB::close()
             revertAll(); //not really necessary, I think... but will not hurt.
     }
 
-    if(sqlite3_close(_db) != SQLITE_OK)
+    if(sqlite3_close_v2(_db) != SQLITE_OK)
         qWarning() << tr("Database didn't close correctly, probably still busy");
 
     _db = nullptr;
@@ -759,10 +747,6 @@ bool DBBrowserDB::close()
 }
 
 bool DBBrowserDB::saveAs(const std::string& filename) {
-    int rc;
-    sqlite3_backup *pBackup;
-    sqlite3 *pTo;
-
     if(!_db)
         return false;
 
@@ -770,7 +754,8 @@ bool DBBrowserDB::saveAs(const std::string& filename) {
 
     // Open the database file identified by filename. Exit early if this fails
     // for any reason.
-    rc = sqlite3_open(filename.c_str(), &pTo);
+    sqlite3* pTo;
+    int rc = sqlite3_open(filename.c_str(), &pTo);
     if(rc!=SQLITE_OK) {
         qWarning() << tr("Cannot open destination file: '%1'").arg(filename.c_str());
         return false;
@@ -787,10 +772,10 @@ bool DBBrowserDB::saveAs(const std::string& filename) {
         // connection pTo. If no error occurred, then the error code belonging
         // to pTo is set to SQLITE_OK.
         //
-        pBackup = sqlite3_backup_init(pTo, "main", _db, "main");
+        sqlite3_backup* pBackup = sqlite3_backup_init(pTo, "main", _db, "main");
         if(pBackup == nullptr) {
-            qWarning() << tr("Cannot backup to file: '%1'. Message: %2").arg(filename.c_str()).arg(sqlite3_errmsg(pTo));
-            sqlite3_close(pTo);
+            qWarning() << tr("Cannot backup to file: '%1'. Message: %2").arg(filename.c_str(), sqlite3_errmsg(pTo));
+            sqlite3_close_v2(pTo);
             return false;
         } else {
             sqlite3_backup_step(pBackup, -1);
@@ -801,15 +786,15 @@ bool DBBrowserDB::saveAs(const std::string& filename) {
 
     if(rc == SQLITE_OK) {
         // Close current database and set backup as current
-        sqlite3_close(_db);
+        sqlite3_close_v2(_db);
         _db = pTo;
         curDBFilename = QString::fromStdString(filename);
 
         return true;
     } else {
-        qWarning() << tr("Cannot backup to file: '%1'. Message: %2").arg(filename.c_str()).arg(sqlite3_errmsg(pTo));
+        qWarning() << tr("Cannot backup to file: '%1'. Message: %2").arg(filename.c_str(), sqlite3_errmsg(pTo));
         // Close failed database connection.
-        sqlite3_close(pTo);
+        sqlite3_close_v2(pTo);
         return false;
     }
 }
@@ -1344,13 +1329,30 @@ bool DBBrowserDB::getRow(const sqlb::ObjectIdentifier& table, const QString& row
 
 unsigned long DBBrowserDB::max(const sqlb::ObjectIdentifier& tableName, const std::string& field) const
 {
-    std::string query = "SELECT MAX(CAST(" + sqlb::escapeIdentifier(field) + " AS INTEGER)) FROM " + tableName.toString();
+    // This query returns the maximum value of the given table and column
+    std::string query = "SELECT MAX(CAST(" + sqlb::escapeIdentifier(field) + " AS INTEGER)) FROM " + tableName.toString() + ")";
+
+    // If, however, there is a sequence table in this database and the given column is the primary key of the table, we try to look up a value in the sequence table
+    if(schemata.at(tableName.schema()).tables.count("sqlite_sequence"))
+    {
+        auto pk = getTableByName(tableName)->primaryKeyColumns();
+        if(pk.size() == 1 && pk.front().name() == field)
+        {
+            // This SQL statement tries to do two things in one statement: get the current sequence number for this table from the sqlite_sequence table or, if there is no record for the table, return the highest integer value in the given column.
+            // This works by querying the sqlite_sequence table and using an aggregate function (SUM in this case) to make sure to always get exactly one result row, no matter if there is a sequence record or not. We then let COALESCE decide
+            // whether to return that sequence value if there is one or fall back to the SELECT MAX statement from avove if there is no sequence value.
+            query = "SELECT COALESCE(SUM(seq), (" + query + ") FROM sqlite_sequence WHERE name=" + sqlb::escapeString(tableName.name());
+         }
+    }
+
     return querySingleValueFromDb(query).toULong();
 }
 
 std::string DBBrowserDB::emptyInsertStmt(const std::string& schemaName, const sqlb::Table& t, const QString& pk_value) const
 {
     std::string stmt = "INSERT INTO " + sqlb::escapeIdentifier(schemaName) + "." + sqlb::escapeIdentifier(t.name());
+
+    const auto pk = t.primaryKeyColumns();
 
     sqlb::StringVector vals;
     sqlb::StringVector fields;
@@ -1360,8 +1362,7 @@ std::string DBBrowserDB::emptyInsertStmt(const std::string& schemaName, const sq
         if(f.generated())
             continue;
 
-        sqlb::ConstraintPtr pk = t.constraint({f.name()}, sqlb::Constraint::PrimaryKeyConstraintType);
-        if(pk)
+        if(pk.size() == 1 &&  pk.at(0) == f.name())
         {
             fields.push_back(f.name());
 
@@ -2158,7 +2159,7 @@ void DBBrowserDB::loadExtensionsFromSettings()
 
     sqlite3_enable_load_extension(_db, Settings::getValue("extensions", "enable_load_extension").toBool());
 
-    QStringList list = Settings::getValue("extensions", "list").toStringList();
+    const QStringList list = Settings::getValue("extensions", "list").toStringList();
     for(const QString& ext : list)
     {
         if(loadExtension(ext) == false)

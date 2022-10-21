@@ -28,9 +28,11 @@ signals:
     void addFilterAsCondFormat(QString text);
     void clearAllCondFormats();
     void editCondFormats();
+    void filterFocused();
 
 protected:
     void keyReleaseEvent(QKeyEvent* event) override;
+    void focusInEvent(QFocusEvent* event) override;
     void setFilterHelper(const QString& filterOperator, const QString& operatorSuffix = QString());
 
 private:

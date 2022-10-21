@@ -13,6 +13,8 @@ private slots:
     void autoincrement();
     void notnull();
     void withoutRowid();
+    void strict();
+    void strictAndWithoutRowid();
     void foreignKeys();
     void uniqueConstraint();
 
@@ -25,6 +27,8 @@ private slots:
     void parseSQLKeywordInIdentifier();
     void parseSQLSomeKeywordsInIdentifier();
     void parseSQLWithoutRowid();
+    void parseSQLStrictTable();
+    void parseSQLStrictAndWithoutRowidTable();
     void parseNonASCIIChars();
     void parseNonASCIICharsEs();
     void parseSQLEscapedQuotes();

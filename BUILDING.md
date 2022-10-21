@@ -57,8 +57,9 @@ The same process works for building the code in any platform supported by Qt
 ### Ubuntu / Debian Linux
 
 ```bash
-$ sudo apt install build-essential git-core cmake libsqlite3-dev qt5-default qttools5-dev-tools \
-    libsqlcipher-dev qtbase5-dev libqt5scintilla2-dev libqcustomplot-dev qttools5-dev
+$ sudo apt install build-essential git cmake libsqlite3-dev qtchooser qt5-qmake qtbase5-dev-tools\
+    qttools5-dev-tools libsqlcipher-dev qtbase5-dev libqt5scintilla2-dev libqcustomplot-dev\
+    qttools5-dev
 $ git clone https://github.com/sqlitebrowser/sqlitebrowser
 $ cd sqlitebrowser
 $ mkdir build

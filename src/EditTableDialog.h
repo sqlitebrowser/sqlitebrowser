@@ -43,11 +43,24 @@ private:
         kForeignKey = 9
     };
 
-    enum ConstraintColumns {
+    enum IndexConstraintColumns {
         kConstraintColumns = 0,
         kConstraintType = 1,
         kConstraintName = 2,
         kConstraintSql = 3
+    };
+
+    enum ForeignKeyColumns {
+        kForeignKeyColumns = 0,
+        kForeignKeyName,
+        kForeignKeyReferences,
+        kForeignKeySql
+    };
+
+    enum CheckConstraintColumns {
+        kCheckConstraintCheck = 0,
+        kCheckConstraintName,
+        kCheckConstraintSql,
     };
 
     enum MoveFieldDirection
@@ -65,7 +78,9 @@ private:
 
 private slots:
     void populateFields();
-    void populateConstraints();
+    void populateIndexConstraints();
+    void populateForeignKeys();
+    void populateCheckConstraints();
     void addField();
     void removeField();
     void fieldSelectionChanged();
@@ -73,7 +88,11 @@ private slots:
     void reject() override;
     void checkInput();
     void fieldItemChanged(QTreeWidgetItem* item, int column);
-    void constraintItemChanged(QTableWidgetItem* item);
+    void indexConstraintItemChanged(QTableWidgetItem* item);
+    void foreignKeyItemChanged(QTableWidgetItem* item);
+    void checkConstraintItemChanged(QTableWidgetItem* item);
+    void indexConstraintItemDoubleClicked(QTableWidgetItem* item);
+    void foreignKeyItemDoubleClicked(QTableWidgetItem* item);
     void updateTypeAndCollation(QObject *object);
     bool eventFilter(QObject *object, QEvent *event) override;
     void updateTypeAndCollation();
@@ -82,15 +101,20 @@ private slots:
     void moveTop();
     void moveBottom();
     void setWithoutRowid(bool without_rowid);
+    void setStrict(bool strict);
     void changeSchema(const QString& schema);
-    void removeConstraint();
-    void addConstraint(sqlb::Constraint::ConstraintTypes type);
     void setOnConflict(const QString& on_conflict);
+    void addIndexConstraint(bool primary_key);
+    void removeIndexConstraint();
+    void addForeignKey();
+    void removeForeignKey();
+    void addCheckConstraint();
+    void removeCheckConstraint();
+
 
 private:
     Ui::EditTableDialog* ui;
     DBBrowserDB& pdb;
-    ForeignKeyEditorDelegate* m_fkEditorDelegate;
     sqlb::ObjectIdentifier curTable;
     std::map<QString, QString> trackColumns;
     sqlb::Table m_table;

@@ -17,8 +17,14 @@
 	namespace sqlb { namespace parser { class ParserDriver; } }
 	typedef void* yyscan_t;
 
-	// Colum definitions are a tuple of two elements: the Field object and a set of table constraints
-	using ColumndefData = std::tuple<sqlb::Field, sqlb::ConstraintVector>;
+	struct TableConstraints
+	{
+		std::multimap<sqlb::IndexedColumnVector, std::shared_ptr<sqlb::UniqueConstraint>> index;
+		std::multimap<sqlb::StringVector, std::shared_ptr<sqlb::ForeignKeyClause>> fk;
+		std::vector<std::shared_ptr<sqlb::CheckConstraint>> check;
+	};
+
+	using ColumnList = std::pair<std::vector<std::shared_ptr<sqlb::Field>>, TableConstraints>;
 }
 
 // The parsing context
@@ -124,6 +130,7 @@
 %token <std::string> FILTER "FILTER"
 %token <std::string> FOLLOWING "FOLLOWING"
 %token <std::string> FOREIGN "FOREIGN"
+%token <std::string> FROM "FROM"
 %token <std::string> GENERATED "GENERATED"
 %token <std::string> GLOB "GLOB"
 %token <std::string> IF "IF"
@@ -161,6 +168,7 @@
 %token <std::string> SELECT "SELECT"
 %token <std::string> SET "SET"
 %token <std::string> STORED "STORED"
+%token <std::string> STRICT "STRICT"
 %token <std::string> TABLE "TABLE"
 %token <std::string> TEMP "TEMP"
 %token <std::string> TEMPORARY "TEMPORARY"
@@ -206,7 +214,6 @@
 %type <bool> optional_if_not_exists
 %type <bool> optional_unique
 %type <bool> optional_temporary
-%type <bool> optional_withoutrowid
 %type <std::string> optional_sort_order
 %type <std::string> optional_where
 %type <std::string> optional_constraintname
@@ -223,18 +230,21 @@
 %type <std::string> optional_typename
 %type <std::string> optional_storage_identifier
 %type <bool> optional_always_generated
-%type <sqlb::ConstraintVector> columnconstraint_list
-%type <sqlb::ConstraintPtr> columnconstraint
-%type <ColumndefData> columndef
-%type <std::vector<ColumndefData>> columndef_list
+%type <TableConstraints> columnconstraint_list
+%type <std::pair<std::shared_ptr<sqlb::PrimaryKeyConstraint>, std::shared_ptr<sqlb::ForeignKeyClause>>> columnconstraint
+%type <std::shared_ptr<sqlb::Field>> columndef
+%type <ColumnList> columndef_list
 %type <sqlb::StringVector> columnid_list
 %type <sqlb::StringVector> optional_columnid_with_paren_list
 %type <std::string> fk_clause_part
 %type <std::string> fk_clause_part_list
 %type <std::string> optional_fk_clause
-%type <sqlb::ConstraintPtr> tableconstraint
-%type <sqlb::ConstraintVector> tableconstraint_list
-%type <sqlb::ConstraintVector> optional_tableconstraint_list
+%type <TableConstraints> tableconstraint
+%type <TableConstraints> tableconstraint_list
+%type <TableConstraints> optional_tableconstraint_list
+%type <std::bitset<sqlb::Table::NumOptions>> tableoption
+%type <std::bitset<sqlb::Table::NumOptions>> tableoptions_list
+%type <std::bitset<sqlb::Table::NumOptions>> optional_tableoptions_list
 %type <sqlb::TablePtr> createtable_stmt
 
 %%
@@ -328,6 +338,7 @@ allowed_keywords_as_identifier:
 	| ROWID
 	| ROWS
 	| STORED
+	| STRICT
 	| TEMPORARY
 	| TEMP
 	| UNBOUNDED
@@ -376,34 +387,36 @@ type_name:
 	;
 
 unary_expr:
-	"-" expr %prec TILDE	{ $$ = "-" + $2; }
-	| "+" expr %prec TILDE	{ $$ = "+" + $2; }
-	| "~" expr		{ $$ = "~" + $2; }
-	| NOT expr		{ $$ = "NOT " + $2; }
+	"-" expr %prec TILDE			{ $$ = "-" + $2; }
+	| "+" expr %prec TILDE			{ $$ = "+" + $2; }
+	| "~" expr				{ $$ = "~" + $2; }
+	| NOT expr				{ $$ = "NOT " + $2; }
 	;
 
 binary_expr:
-	expr "||" expr		{ $$ = $1 + " || " + $3; }
-	| expr "*" expr		{ $$ = $1 + " * " + $3; }
-	| expr "/" expr		{ $$ = $1 + " / " + $3; }
-	| expr "%" expr		{ $$ = $1 + " % " + $3; }
-	| expr "+" expr		{ $$ = $1 + " + " + $3; }
-	| expr "-" expr		{ $$ = $1 + " - " + $3; }
-	| expr "<<" expr	{ $$ = $1 + " << " + $3; }
-	| expr ">>" expr	{ $$ = $1 + " >> " + $3; }
-	| expr "&" expr		{ $$ = $1 + " & " + $3; }
-	| expr "|" expr		{ $$ = $1 + " | " + $3; }
-	| expr "<" expr		{ $$ = $1 + " < " + $3; }
-	| expr "<=" expr	{ $$ = $1 + " <= " + $3; }
-	| expr ">" expr		{ $$ = $1 + " > " + $3; }
-	| expr ">=" expr	{ $$ = $1 + " >= " + $3; }
-	| expr "=" expr		{ $$ = $1 + " = " + $3; }
-	| expr "==" expr	{ $$ = $1 + " == " + $3; }
-	| expr "!=" expr	{ $$ = $1 + " != " + $3; }
-	| expr "<>" expr	{ $$ = $1 + " <> " + $3; }
-	| expr IS expr		{ $$ = $1 + " IS " + $3; }
-	| expr AND expr		{ $$ = $1 + " AND " + $3; }
-	| expr OR expr		{ $$ = $1 + " OR " + $3; }
+	expr "||" expr					{ $$ = $1 + " || " + $3; }
+	| expr "*" expr					{ $$ = $1 + " * " + $3; }
+	| expr "/" expr					{ $$ = $1 + " / " + $3; }
+	| expr "%" expr					{ $$ = $1 + " % " + $3; }
+	| expr "+" expr					{ $$ = $1 + " + " + $3; }
+	| expr "-" expr					{ $$ = $1 + " - " + $3; }
+	| expr "<<" expr				{ $$ = $1 + " << " + $3; }
+	| expr ">>" expr				{ $$ = $1 + " >> " + $3; }
+	| expr "&" expr					{ $$ = $1 + " & " + $3; }
+	| expr "|" expr					{ $$ = $1 + " | " + $3; }
+	| expr "<" expr					{ $$ = $1 + " < " + $3; }
+	| expr "<=" expr				{ $$ = $1 + " <= " + $3; }
+	| expr ">" expr					{ $$ = $1 + " > " + $3; }
+	| expr ">=" expr				{ $$ = $1 + " >= " + $3; }
+	| expr "=" expr					{ $$ = $1 + " = " + $3; }
+	| expr "==" expr				{ $$ = $1 + " == " + $3; }
+	| expr "!=" expr				{ $$ = $1 + " != " + $3; }
+	| expr "<>" expr				{ $$ = $1 + " <> " + $3; }
+	| expr IS expr					{ $$ = $1 + " IS " + $3; }
+	| expr IS DISTINCT FROM expr %prec TILDE	{ $$ = $1 + " IS DISTINCT FROM " + $5; }
+	| expr IS NOT DISTINCT FROM expr %prec TILDE	{ $$ = $1 + " IS NOT DISTINCT FROM " + $6; }
+	| expr AND expr					{ $$ = $1 + " AND " + $3; }
+	| expr OR expr					{ $$ = $1 + " OR " + $3; }
 	;
 
 like_expr:
@@ -526,7 +539,7 @@ optional_if_not_exists:
 	;
 
 optional_sort_order:
-	%empty					{ $$ = ""; }
+	%empty					{ }
 	| ASC					{ $$ = "ASC"; }
 	| DESC					{ $$ = "DESC"; }
 	;
@@ -541,7 +554,7 @@ optional_unique:
 	;
 
 optional_where:
-	%empty					{ $$ = ""; }
+	%empty					{ }
 	| WHERE expr				{ $$ = $2; }
 	;
 
@@ -559,6 +572,9 @@ indexed_column:
 								(quote != '[' && std::count($1.begin(), $1.end(), quote) == 2 && $1.front() == quote && $1.back() == quote))
 							{
 								$$ = sqlb::IndexedColumn(unquote_text($1, quote), false, $2);
+							} else if(std::count($1.begin(), $1.end(), '\'') == 2 && $1.front() == '\'' && $1.back() == '\'') {
+								// Also remove single quotes when this actually is a string literal but looks like a columnid
+								$$ = sqlb::IndexedColumn(unquote_text($1, '\''), false, $2);
 							} else {
 								$$ = sqlb::IndexedColumn($1, true, $2);
 							}
@@ -586,8 +602,8 @@ createindex_stmt:
  */
 
 optional_exprlist_with_paren:
-	%empty					{ $$ = {}; }
-	| "(" ")"				{ $$ = {}; }
+	%empty					{ }
+	| "(" ")"				{ }
 	| "(" exprlist_expr ")"			{ $$ = $2; }
 	;
 
@@ -609,13 +625,24 @@ optional_temporary:
 	| TEMPORARY					{ $$ = true; }
 	;
 
-optional_withoutrowid:
-	%empty						{ $$ = false; }
-	| WITHOUT ROWID					{ $$ = true; }
+tableoption:
+	WITHOUT ROWID					{ $$.set(sqlb::Table::WithoutRowid, true); }
+	| STRICT					{ $$.set(sqlb::Table::Strict, true); }
+	;
+
+tableoptions_list:
+	tableoption					{ $$ = $1; }
+	| tableoptions_list "," tableoption		{ $$ = $1 | $3; }
+	| tableoptions_list tableoption			{ $$ = $1 | $2; }
+	;
+
+optional_tableoptions_list:
+	%empty						{ }
+	| tableoptions_list				{ $$ = $1; }
 	;
 
 optional_conflictclause:
-	%empty						{ $$ = ""; }
+	%empty						{ }
 	| ON CONFLICT ROLLBACK				{ $$ = $3; }
 	| ON CONFLICT ABORT				{ $$ = $3; }
 	| ON CONFLICT FAIL				{ $$ = $3; }
@@ -624,7 +651,7 @@ optional_conflictclause:
 	;
 
 optional_typename:
-	%empty					{ $$ = ""; }
+	%empty					{ }
 	| type_name				{ $$ = $1; }
 	;
 
@@ -641,23 +668,23 @@ optional_always_generated:
 
 columnconstraint:
 	optional_constraintname PRIMARY KEY optional_sort_order optional_conflictclause	{
-												auto pk = std::make_shared<sqlb::PrimaryKeyConstraint>(sqlb::IndexedColumnVector{sqlb::IndexedColumn("", false, $4)});
+												auto pk = std::make_shared<sqlb::PrimaryKeyConstraint>();
 												pk->setName($1);
 												pk->setConflictAction($5);
-												$$ = pk;
+												$$.first = pk;
 											}
 	| optional_constraintname PRIMARY KEY optional_sort_order optional_conflictclause AUTOINCREMENT	{
-												auto pk = std::make_shared<sqlb::PrimaryKeyConstraint>(sqlb::IndexedColumnVector{sqlb::IndexedColumn("", false, $4)});
+												auto pk = std::make_shared<sqlb::PrimaryKeyConstraint>();
 												pk->setName($1);
 												pk->setConflictAction($5);
 												pk->setAutoIncrement(true);
-												$$ = pk;
+												$$.first = pk;
 											}
 	| optional_constraintname NOT NULL optional_conflictclause			{
 												auto nn = std::make_shared<sqlb::NotNullConstraint>();
 												nn->setName($1);
 												nn->setConflictAction($4);
-												$$ = nn;
+												drv.last_table_column->setNotNull(nn);
 											}
 	| optional_constraintname NULL 							{
 											}
@@ -665,40 +692,48 @@ columnconstraint:
 												auto u = std::make_shared<sqlb::UniqueConstraint>();
 												u->setName($1);
 												u->setConflictAction($3);
-												$$ = u;
+												drv.last_table_column->setUnique(u);
 											}
 	| optional_constraintname CHECK "(" expr ")"					{
-												$$ = std::make_shared<sqlb::CheckConstraint>($4);
-												$$->setName($1);
+												auto c = std::make_shared<sqlb::CheckConstraint>($4);
+												c->setName($1);
+												drv.last_table_column->setCheck(c);
 											}
 	| optional_constraintname DEFAULT signednumber					{
-												$$ = std::make_shared<sqlb::DefaultConstraint>($3);
-												$$->setName($1);
+												auto d = std::make_shared<sqlb::DefaultConstraint>($3);
+												d->setName($1);
+												drv.last_table_column->setDefaultValue(d);
 											}
 	| optional_constraintname DEFAULT literalvalue					{
-												$$ = std::make_shared<sqlb::DefaultConstraint>($3);
-												$$->setName($1);
+												auto d = std::make_shared<sqlb::DefaultConstraint>($3);
+												d->setName($1);
+												drv.last_table_column->setDefaultValue(d);
 											}
 	| optional_constraintname DEFAULT id						{
-												$$ = std::make_shared<sqlb::DefaultConstraint>($3);
-												$$->setName($1);
+												auto d = std::make_shared<sqlb::DefaultConstraint>($3);
+												d->setName($1);
+												drv.last_table_column->setDefaultValue(d);
 											}
 	| optional_constraintname DEFAULT allowed_keywords_as_identifier		{	// We must allow the same keywords as unquoted default values as in the columnid context.
 												// But we do not use columnid here in order to avoid reduce/reduce conflicts.
-												$$ = std::make_shared<sqlb::DefaultConstraint>($3);
-												$$->setName($1);
+												auto d = std::make_shared<sqlb::DefaultConstraint>($3);
+												d->setName($1);
+												drv.last_table_column->setDefaultValue(d);
 											}
 	| optional_constraintname DEFAULT IF						{	// Same as above.
-												$$ = std::make_shared<sqlb::DefaultConstraint>($3);
-												$$->setName($1);
+												auto d = std::make_shared<sqlb::DefaultConstraint>($3);
+												d->setName($1);
+												drv.last_table_column->setDefaultValue(d);
 											}
 	| optional_constraintname DEFAULT "(" expr ")"					{
-												$$ = std::make_shared<sqlb::DefaultConstraint>("(" + $4 + ")");
-												$$->setName($1);
+												auto d = std::make_shared<sqlb::DefaultConstraint>("(" + $4 + ")");
+												d->setName($1);
+												drv.last_table_column->setDefaultValue(d);
 											}
 	| optional_constraintname COLLATE id						{
-												$$ = std::make_shared<sqlb::CollateConstraint>($3);
-												$$->setName($1);
+												auto c = std::make_shared<sqlb::CollateConstraint>($3);
+												c->setName($1);
+												drv.last_table_column->setCollation(c);
 											}
 	| optional_constraintname REFERENCES tableid optional_columnid_with_paren_list optional_fk_clause	{	// TODO Solve shift/reduce conflict. It is not super important though as shifting seems to be right here.
 												auto fk = std::make_shared<sqlb::ForeignKeyClause>();
@@ -706,91 +741,53 @@ columnconstraint:
 												fk->setTable($3);
 												fk->setColumns($4);
 												fk->setConstraint($5);
-												$$ = fk;
+												$$.second = fk;
 											}
 	| optional_constraintname optional_always_generated AS "(" expr ")" optional_storage_identifier	{		// TODO Solve shift/reduce conflict.
-												$$ = std::make_shared<sqlb::GeneratedColumnConstraint>($5, $7);
-												$$->setName($1);
+												auto g = std::make_shared<sqlb::GeneratedColumnConstraint>($5, $7);
+												g->setName($1);
+
+												drv.last_table_column->setGenerated(g);
+
+												// This is a hack which removes any "GENERATED ALWAYS" from the end of the type name.
+												// As of now these are shifted to the type instead of reducing the type when seeing the GENERATED identifier.
+												// TODO Remove this once the grammar is conflict free
+												const std::string generated_always = "GENERATED ALWAYS";
+												if(drv.last_table_column->type().size() >= generated_always.size() && drv.last_table_column->type().compare(drv.last_table_column->type().size() - generated_always.size(), generated_always.size(), generated_always) == 0)
+												{
+													std::string type = drv.last_table_column->type().substr(0, drv.last_table_column->type().size()-generated_always.size());
+													if(type.back() == ' ')
+														type.pop_back();
+													drv.last_table_column->setType(type);
+												}
 											}
 	;
 
 columnconstraint_list:
-	columnconstraint				{ $$ = { $1 }; }
-	| columnconstraint_list columnconstraint	{ $$ = $1; $$.push_back($2); }
+	%empty						{ }
+	| columnconstraint_list columnconstraint	{
+								$$ = $1;
+
+								// Primary key and foreign key constraints are converted to table constraints
+								// because we cannot store them as column constraints at the moment.
+								if($2.first)
+									$$.index.insert(std::make_pair(sqlb::IndexedColumnVector{sqlb::IndexedColumn(drv.last_table_column->name(), false)}, $2.first));
+								if($2.second)
+									$$.fk.insert(std::make_pair(sqlb::StringVector{drv.last_table_column->name()}, $2.second));
+							}
 	;
 
 columndef:
-	columnid optional_typename columnconstraint_list	{
-								sqlb::Field f($1, $2);
-								sqlb::ConstraintVector table_constraints{};
-								for(const auto& c : $3)
-								{
-									if(!c)
-										continue;
-
-									switch(c->type())
-									{
-									case sqlb::Constraint::PrimaryKeyConstraintType:
-									case sqlb::Constraint::ForeignKeyConstraintType:
-									{
-										// Primary key and foreign key constraints are converted to table constraints
-										// because we cannot store them as column constraints at the moment.
-										if(c->columnList().empty())
-											c->setColumnList({$1});
-										else
-											c->replaceInColumnList("", $1);
-										table_constraints.push_back(c);
-										break;
-									}
-									case sqlb::Constraint::NotNullConstraintType:
-										f.setNotNull(std::dynamic_pointer_cast<sqlb::NotNullConstraint>(c));
-										break;
-									case sqlb::Constraint::UniqueConstraintType:
-										f.setUnique(std::dynamic_pointer_cast<sqlb::UniqueConstraint>(c));
-										break;
-									case sqlb::Constraint::CheckConstraintType:
-										f.setCheck(std::dynamic_pointer_cast<sqlb::CheckConstraint>(c));
-										break;
-									case sqlb::Constraint::DefaultConstraintType:
-										f.setDefaultValue(std::dynamic_pointer_cast<sqlb::DefaultConstraint>(c));
-										break;
-									case sqlb::Constraint::CollateConstraintType:
-										f.setCollation(std::dynamic_pointer_cast<sqlb::CollateConstraint>(c));
-										break;
-									case sqlb::Constraint::GeneratedColumnConstraintType:
-									{
-										f.setGenerated(std::dynamic_pointer_cast<sqlb::GeneratedColumnConstraint>(c));
-
-										// This is a hack which removes any "GENERATED ALWAYS" from the end of the type name.
-										// As of now these are shifted to the type instead of reducing the type when seeing the GENERATED identifier.
-										// TODO Remove this once the grammar is conflict free
-										const std::string generated_always = "GENERATED ALWAYS";
-										if(f.type().size() >= generated_always.size() && f.type().compare(f.type().size() - generated_always.size(), generated_always.size(), generated_always) == 0)
-										{
-											std::string type = f.type().substr(0, f.type().size()-generated_always.size());
-											if(type.back() == ' ')
-												type.pop_back();
-											f.setType(type);
-										}
-										break;
-									}
-									default:
-										break;
-									}
-								}
-
-								$$ = std::make_tuple(f, table_constraints);
-							}
-	| columnid optional_typename			{ $$ = std::make_tuple(sqlb::Field($1, $2), sqlb::ConstraintVector{}); }
+	columnid optional_typename			{ $$ = std::make_shared<sqlb::Field>($1, $2); drv.last_table_column = $$; }
 	;
 
 columndef_list:
-	columndef					{ $$ = {$1}; }
-	| columndef_list "," columndef			{ $$ = $1; $$.push_back($3); }
+	columndef columnconstraint_list				{ $$.first.push_back($1); $$.second = $2; }
+	| columndef_list "," columndef columnconstraint_list	{ $$ = $1; $$.first.push_back($3); $$.second.index.insert($4.index.begin(), $4.index.end()); $$.second.fk.insert($4.fk.begin(), $4.fk.end()); }
 	;
 
 optional_constraintname:
-	%empty						{ $$ = ""; }
+	%empty						{ }
 	| CONSTRAINT id					{ $$ = $2; }
 	| CONSTRAINT STRINGLITERAL			{ $$ = $2; }
 	;
@@ -801,7 +798,7 @@ columnid_list:
 	;
 
 optional_columnid_with_paren_list:
-	%empty						{ $$ = sqlb::StringVector(); }
+	%empty						{ }
 	| "(" columnid_list ")"				{ $$ = $2; }
 	;
 
@@ -830,7 +827,7 @@ fk_clause_part_list:
 	;
 
 optional_fk_clause:
-	%empty								{ $$ = ""; }
+	%empty								{ }
 	| fk_clause_part_list						{ $$ = $1; }
 	| fk_clause_part_list DEFERRABLE INITIALLY DEFERRED		{ $$ = $1 + " " + $2 + " " + $3 + " " + $4; }
 	| fk_clause_part_list DEFERRABLE INITIALLY IMMEDIATE		{ $$ = $1 + " " + $2 + " " + $3 + " " + $4; }
@@ -848,43 +845,45 @@ optional_fk_clause:
 
 tableconstraint:
 	optional_constraintname PRIMARY KEY "(" indexed_column_list ")" optional_conflictclause		{
-														auto pk = std::make_shared<sqlb::PrimaryKeyConstraint>($5);
+														auto pk = std::make_shared<sqlb::PrimaryKeyConstraint>();
 														pk->setName($1);
 														pk->setConflictAction($7);
-														$$ = pk;
+														$$.index.insert(std::make_pair($5, pk));
 													}
 	| optional_constraintname PRIMARY KEY "(" indexed_column_list AUTOINCREMENT ")" optional_conflictclause	{
-														auto pk = std::make_shared<sqlb::PrimaryKeyConstraint>($5);
+														auto pk = std::make_shared<sqlb::PrimaryKeyConstraint>();
 														pk->setName($1);
 														pk->setConflictAction($8);
 														pk->setAutoIncrement(true);
-														$$ = pk;
+														$$.index.insert(std::make_pair($5, pk));
 													}
 	| optional_constraintname UNIQUE "(" indexed_column_list ")" optional_conflictclause		{
-														auto u = std::make_shared<sqlb::UniqueConstraint>($4);
+														auto u = std::make_shared<sqlb::UniqueConstraint>();
 														u->setName($1);
 														u->setConflictAction($6);
-														$$ = u;
+														sqlb::StringVector columns;
+														$$.index.insert(std::make_pair($4, u));
 													}
 	| optional_constraintname CHECK "(" expr ")"							{
-														$$ = std::make_shared<sqlb::CheckConstraint>($4);
-														$$->setName($1);
+														auto c = std::make_shared<sqlb::CheckConstraint>($4);
+														c->setName($1);
+														$$.check.push_back(c);
 													}
 	| optional_constraintname FOREIGN KEY "(" columnid_list ")" REFERENCES tableid optional_columnid_with_paren_list optional_fk_clause	{
-														$$ = std::make_shared<sqlb::ForeignKeyClause>($8, $9, $10);
-														$$->setColumnList($5);
-														$$->setName($1);
+														auto f = std::make_shared<sqlb::ForeignKeyClause>($8, $9, $10);
+														f->setName($1);
+														$$.fk.insert(std::make_pair($5, f));
 													}
 	;
 
 tableconstraint_list:
-	tableconstraint					{ $$ = {$1}; }
-	| tableconstraint_list "," tableconstraint	{ $$ = $1; $$.push_back($3); }
-	| tableconstraint_list tableconstraint		{ $$ = $1; $$.push_back($2); }
+	tableconstraint					{ $$ = $1; }
+	| tableconstraint_list "," tableconstraint	{ $$ = $1; $$.index.insert($3.index.begin(), $3.index.end()); $$.fk.insert($3.fk.begin(), $3.fk.end()); std::copy($3.check.begin(), $3.check.end(), std::back_inserter($$.check)); }
+	| tableconstraint_list tableconstraint		{ $$ = $1; $$.index.insert($2.index.begin(), $2.index.end()); $$.fk.insert($2.fk.begin(), $2.fk.end()); std::copy($2.check.begin(), $2.check.end(), std::back_inserter($$.check)); }
 	;
 
 optional_tableconstraint_list:
-	%empty						{ $$ = {}; }
+	%empty						{ }
 	| "," tableconstraint_list			{ $$ = $2; }
 	;
 
@@ -893,22 +892,24 @@ createtable_stmt:
 										$$ = std::make_shared<sqlb::Table>($5);
 										$$->setFullyParsed(false);
 									}
-	| CREATE optional_temporary TABLE optional_if_not_exists tableid_with_uninteresting_schema "(" columndef_list optional_tableconstraint_list ")" optional_withoutrowid		{
+	| CREATE optional_temporary TABLE optional_if_not_exists tableid_with_uninteresting_schema "(" columndef_list optional_tableconstraint_list ")" optional_tableoptions_list		{
 										$$ = std::make_shared<sqlb::Table>($5);
-										$$->setWithoutRowidTable($10);
-										$$->setConstraints($8);
+										$$->setWithoutRowidTable($10.test(sqlb::Table::WithoutRowid));
+										$$->setStrict($10.test(sqlb::Table::Strict));
+										for(const auto& i : $8.index)
+											$$->addConstraint(i.first, i.second);
+										for(const auto& i : $8.fk)
+											$$->addConstraint(i.first, i.second);
+										for(const auto& i : $8.check)
+											$$->addConstraint(i);
 										$$->setFullyParsed(true);
 
-										for(const auto& column : $7)
-										{
-											sqlb::Field f;
-											sqlb::ConstraintVector c;
-											std::tie(f, c) = column;
-
-											$$->fields.push_back(f);
-											for(const auto& i : c)
-												$$->addConstraint(i);
-										}
+										for(const auto& f : $7.first)
+											$$->fields.push_back(*f);
+										for(const auto& pk : $7.second.index)
+											$$->addConstraint(pk.first, pk.second);
+										for(const auto& fk : $7.second.fk)
+											$$->addConstraint(fk.first, fk.second);
 									}
 	;
 

@@ -1,12 +1,11 @@
 # DB Browser for SQLite
 
 [![Wiki][wiki-img]][wiki]
-[![Build Status][travis-img]][travis]
+[![C/C++ CI][ghaction-img]][ghaction]
 [![Join the chat at https://gitter.im/sqlitebrowser/sqlitebrowser][gitter-img]][gitter]
 [![Download][download-img]][download]
 [![Qt][qt-img]][qt]
 [![Coverity][coverity-img]][coverity]
-[![C/C++ CI][ghaction-img]][ghaction]
 [![Patreon][patreon-img]][patreon]
 
 ![DB Browser for SQLite Screenshot](https://github.com/sqlitebrowser/sqlitebrowser/raw/master/images/sqlitebrowser.png "DB Browser for SQLite Screenshot")
@@ -35,10 +34,11 @@ Controls and wizards are available for users to:
 
 ## What it is not
 
-This program is not a visual shell for the sqlite command line tool, and does
-not require familiarity with SQL commands. It is a tool to be used by both
-developers and end users, and must remain as simple to use as possible
-in order to achieve these goals.
+Even though DB4S comes with a spreadsheet-like interface, it is not meant to replace your spreadsheet application.
+We implement a few convenience functions which go beyond a simple database frontend but do not add them when they
+do not make sense in a database context or are so complex to implement that they will only ever be a poor
+replacement for your favorite spreadsheet application. We are a small team with limited time after all. Thanks
+for your understanding :)
 
 ## Wiki
 
@@ -302,9 +302,6 @@ Version 2, as well as the GNU General Public License Version 3 or later.
 Modification or redistribution is permitted under the conditions of these licenses.
 
 Check `LICENSE-PLUGINS` for other rights regarding included third-party resources.
-
-  [travis-img]: https://travis-ci.com/sqlitebrowser/sqlitebrowser.svg?branch=master
-  [travis]: https://app.travis-ci.com/github/sqlitebrowser/sqlitebrowser
 
   [gitter-img]: https://badges.gitter.im/sqlitebrowser/sqlitebrowser.svg
   [gitter]: https://gitter.im/sqlitebrowser/sqlitebrowser

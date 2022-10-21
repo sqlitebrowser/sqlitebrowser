@@ -15,7 +15,11 @@
 
 #include <algorithm>
 
-Q_DECLARE_METATYPE(sqlb::ConstraintPtr)
+Q_DECLARE_METATYPE(std::shared_ptr<sqlb::UniqueConstraint>)
+Q_DECLARE_METATYPE(std::shared_ptr<sqlb::ForeignKeyClause>)
+Q_DECLARE_METATYPE(std::shared_ptr<sqlb::CheckConstraint>)
+Q_DECLARE_METATYPE(sqlb::StringVector)
+Q_DECLARE_METATYPE(sqlb::IndexedColumnVector)
 
 // Styled Item Delegate for non-editable columns
 class NoEditDelegate: public QStyledItemDelegate {
@@ -39,11 +43,14 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
     ui->setupUi(this);
     ui->widgetExtension->setVisible(false);
     connect(ui->treeWidget, &QTreeWidget::itemChanged, this, &EditTableDialog::fieldItemChanged);
-    connect(ui->tableConstraints, &QTableWidget::itemChanged, this, &EditTableDialog::constraintItemChanged);
+    connect(ui->tableIndexConstraints, &QTableWidget::itemChanged, this, &EditTableDialog::indexConstraintItemChanged);
+    connect(ui->tableForeignKeys, &QTableWidget::itemChanged, this, &EditTableDialog::foreignKeyItemChanged);
+    connect(ui->tableCheckConstraints, &QTableWidget::itemChanged, this, &EditTableDialog::checkConstraintItemChanged);
 
     // Set item delegate for foreign key column
-    m_fkEditorDelegate = new ForeignKeyEditorDelegate(db, m_table, this);
-    ui->treeWidget->setItemDelegateForColumn(kForeignKey, m_fkEditorDelegate);
+    ui->treeWidget->setItemDelegateForColumn(kForeignKey, new ForeignKeyEditorDelegate(db, m_table, this));
+    ui->tableForeignKeys->setItemDelegateForColumn(kForeignKeyReferences, new ForeignKeyEditorDelegate(db, m_table, this));
+
     // Disallow edition of checkable columns or columns with combo-boxes
     ui->treeWidget->setItemDelegateForColumn(kType, new NoEditDelegate(this));
     ui->treeWidget->setItemDelegateForColumn(kNotNull, new NoEditDelegate(this));
@@ -55,14 +62,10 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
     // Set up popup menu for adding constraints
     QMenu* constraint_menu = new QMenu(this);
     constraint_menu->addAction(ui->actionAddPrimaryKey);
-    constraint_menu->addAction(ui->actionAddForeignKey);
     constraint_menu->addAction(ui->actionAddUniqueConstraint);
-    constraint_menu->addAction(ui->actionAddCheckConstraint);
-    connect(ui->actionAddPrimaryKey, &QAction::triggered, this, [this]() { addConstraint(sqlb::Constraint::PrimaryKeyConstraintType); });
-    connect(ui->actionAddForeignKey, &QAction::triggered, this, [this]() { addConstraint(sqlb::Constraint::ForeignKeyConstraintType); });
-    connect(ui->actionAddUniqueConstraint, &QAction::triggered, this, [this]() { addConstraint(sqlb::Constraint::UniqueConstraintType); });
-    connect(ui->actionAddCheckConstraint, &QAction::triggered, this, [this]() { addConstraint(sqlb::Constraint::CheckConstraintType); });
-    ui->buttonAddConstraint->setMenu(constraint_menu);
+    connect(ui->actionAddPrimaryKey, &QAction::triggered, this, [this]() { addIndexConstraint(true); });
+    connect(ui->actionAddUniqueConstraint, &QAction::triggered, this, [this]() { addIndexConstraint(false); });
+    ui->buttonAddIndexConstraint->setMenu(constraint_menu);
 
     // Get list of all collations
     db.executeSQL("PRAGMA collation_list;", false, true, [this](int column_count, std::vector<QByteArray> columns, std::vector<QByteArray>) -> bool {
@@ -90,6 +93,9 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
         ui->checkWithoutRowid->blockSignals(true);
         ui->checkWithoutRowid->setChecked(m_table.withoutRowidTable());
         ui->checkWithoutRowid->blockSignals(false);
+        ui->checkStrict->blockSignals(true);
+        ui->checkStrict->setChecked(m_table.isStrict());
+        ui->checkStrict->blockSignals(false);
         ui->comboSchema->blockSignals(true);
         for(const auto& n : pdb.schemata)                       // Load list of database schemata
             ui->comboSchema->addItem(QString::fromStdString(n.first));
@@ -104,7 +110,9 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
         }
 
         populateFields();
-        populateConstraints();
+        populateIndexConstraints();
+        populateForeignKeys();
+        populateCheckConstraints();
     } else {
         for(const auto& n : pdb.schemata)                       // Load list of database schemata
             ui->comboSchema->addItem(QString::fromStdString(n.first));
@@ -113,9 +121,17 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
     }
 
     // Enable/disable remove constraint button depending on whether a constraint is selected
-    connect(ui->tableConstraints, &QTableWidget::itemSelectionChanged, this, [this]() {
-        bool hasSelection = ui->tableConstraints->selectionModel()->hasSelection();
-        ui->buttonRemoveConstraint->setEnabled(hasSelection);
+    connect(ui->tableIndexConstraints, &QTableWidget::itemSelectionChanged, this, [this]() {
+        bool hasSelection = ui->tableIndexConstraints->selectionModel()->hasSelection();
+        ui->buttonRemoveIndexConstraint->setEnabled(hasSelection);
+    });
+    connect(ui->tableForeignKeys, &QTableWidget::itemSelectionChanged, this, [this]() {
+        bool hasSelection = ui->tableForeignKeys->selectionModel()->hasSelection();
+        ui->buttonRemoveForeignKey->setEnabled(hasSelection);
+    });
+    connect(ui->tableCheckConstraints, &QTableWidget::itemSelectionChanged, this, [this]() {
+        bool hasSelection = ui->tableCheckConstraints->selectionModel()->hasSelection();
+        ui->buttonRemoveCheckConstraint->setEnabled(hasSelection);
     });
 
     // And create a savepoint
@@ -126,42 +142,8 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
     updateColumnWidth();
 
     // Allow editing of constraint columns by double clicking the columns column of the constraints table
-    connect(ui->tableConstraints, &QTableWidget::itemDoubleClicked, this, [this](QTableWidgetItem* item) {
-        // Check whether the double clicked item is in the columns column
-        if(item->column() == kConstraintColumns)
-        {
-            sqlb::ConstraintPtr constraint = ui->tableConstraints->item(item->row(), kConstraintColumns)->data(Qt::UserRole).value<sqlb::ConstraintPtr>();
-
-            // Do not allow editing the columns list of a CHECK constraint because CHECK constraints are independent of column lists
-            if(constraint->type() == sqlb::Constraint::CheckConstraintType)
-                return;
-
-            // Show the select items popup dialog
-            SelectItemsPopup* dialog = new SelectItemsPopup(m_table.fieldNames(), item->data(Qt::UserRole).value<sqlb::ConstraintPtr>()->columnList(), this);
-            QRect item_rect = ui->tableConstraints->visualItemRect(item);
-            dialog->move(ui->tableConstraints->mapToGlobal(QPoint(ui->tableConstraints->x() + item_rect.x(),
-                                                                  ui->tableConstraints->y() + item_rect.y() + item_rect.height() / 2)));
-            dialog->show();
-
-            // When clicking the Apply button in the popup dialog, save the new columns list
-            connect(dialog, &SelectItemsPopup::accepted, this, [this, dialog, constraint]() {
-                // Check if column selection changed at all
-                sqlb::StringVector new_columns = dialog->selectedItems();
-                if(constraint->columnList() != new_columns)
-                {
-                    // Remove the constraint with the old columns and add a new one with the new columns
-                    m_table.removeConstraint(constraint);
-                    constraint->setColumnList(new_columns);
-                    m_table.addConstraint(constraint);
-
-                    // Update the UI
-                    populateFields();
-                    populateConstraints();
-                    updateSqlText();
-                }
-            });
-        }
-    });
+    connect(ui->tableIndexConstraints, &QTableWidget::itemDoubleClicked, this, &EditTableDialog::indexConstraintItemDoubleClicked);
+    connect(ui->tableForeignKeys, &QTableWidget::itemDoubleClicked, this, &EditTableDialog::foreignKeyItemDoubleClicked);
 
     // (De-)activate fields
     checkInput();
@@ -197,10 +179,19 @@ void EditTableDialog::updateColumnWidth()
     ui->treeWidget->setColumnWidth(kUnique, 25);
     ui->treeWidget->setColumnWidth(kForeignKey, 500);
 
-    ui->tableConstraints->setColumnWidth(kConstraintColumns, 180);
-    ui->tableConstraints->setColumnWidth(kConstraintType, 130);
-    ui->tableConstraints->setColumnWidth(kConstraintName, 130);
-    ui->tableConstraints->setColumnWidth(kConstraintSql, 300);
+    ui->tableIndexConstraints->setColumnWidth(kConstraintColumns, 180);
+    ui->tableIndexConstraints->setColumnWidth(kConstraintType, 130);
+    ui->tableIndexConstraints->setColumnWidth(kConstraintName, 120);
+    ui->tableIndexConstraints->setColumnWidth(kConstraintSql, 300);
+
+    ui->tableForeignKeys->setColumnWidth(kForeignKeyColumns, 120);
+    ui->tableForeignKeys->setColumnWidth(kForeignKeyName, 120);
+    ui->tableForeignKeys->setColumnWidth(kForeignKeyReferences, 300);
+    ui->tableForeignKeys->setColumnWidth(kForeignKeySql, 300);
+
+    ui->tableCheckConstraints->setColumnWidth(kCheckConstraintCheck, 400);
+    ui->tableCheckConstraints->setColumnWidth(kCheckConstraintName, 120);
+    ui->tableCheckConstraints->setColumnWidth(kCheckConstraintSql, 300);
 }
 
 void EditTableDialog::populateFields()
@@ -211,6 +202,7 @@ void EditTableDialog::populateFields()
     ui->treeWidget->clear();
     const auto& fields = m_table.fields;
     const auto pk = m_table.primaryKey();
+    const auto pkColumns = m_table.primaryKeyColumns();
     for(const sqlb::Field& f : fields)
     {
         QTreeWidgetItem *tbitem = new QTreeWidgetItem(ui->treeWidget);
@@ -218,9 +210,9 @@ void EditTableDialog::populateFields()
         tbitem->setText(kName, QString::fromStdString(f.name()));
         QComboBox* typeBox = new QComboBox(ui->treeWidget);
         typeBox->setProperty("column", QString::fromStdString(f.name()));
-        typeBox->setEditable(true);
-        typeBox->addItems(DBBrowserDB::Datatypes);
-        int index = typeBox->findText(QString::fromStdString(f.type()), Qt::MatchExactly);
+        typeBox->setEditable(!m_table.isStrict());  // Strict tables do not allow arbitrary types
+        typeBox->addItems(m_table.isStrict() ? DBBrowserDB::DatatypesStrict : DBBrowserDB::Datatypes);
+        int index = typeBox->findText(QString::fromStdString(f.type()), Qt::MatchFixedString);
         if(index == -1)
         {
             // non standard named type
@@ -234,8 +226,8 @@ void EditTableDialog::populateFields()
         ui->treeWidget->setItemWidget(tbitem, kType, typeBox);
 
         tbitem->setCheckState(kNotNull, f.notnull() ? Qt::Checked : Qt::Unchecked);
-        tbitem->setCheckState(kPrimaryKey, pk && contains(pk->columnList(), f.name()) ? Qt::Checked : Qt::Unchecked);
-        tbitem->setCheckState(kAutoIncrement, pk && pk->autoIncrement() && contains(pk->columnList(), f.name()) ? Qt::Checked : Qt::Unchecked);
+        tbitem->setCheckState(kPrimaryKey, pk && contains(pkColumns, f.name()) ? Qt::Checked : Qt::Unchecked);
+        tbitem->setCheckState(kAutoIncrement, pk && pk->autoIncrement() && contains(pkColumns, f.name()) ? Qt::Checked : Qt::Unchecked);
         tbitem->setCheckState(kUnique, f.unique() ? Qt::Checked : Qt::Unchecked);
 
         // For the default value check if it is surrounded by parentheses and if that's the case
@@ -263,7 +255,7 @@ void EditTableDialog::populateFields()
         connect(collationBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateTypeAndCollation()));
         ui->treeWidget->setItemWidget(tbitem, kCollation, collationBox);
 
-        auto fk = std::dynamic_pointer_cast<sqlb::ForeignKeyClause>(m_table.constraint({f.name()}, sqlb::Constraint::ForeignKeyConstraintType));
+        auto fk = m_table.foreignKey({f.name()});
         if(fk)
             tbitem->setText(kForeignKey, QString::fromStdString(fk->toString()));
         ui->treeWidget->addTopLevelItem(tbitem);
@@ -273,35 +265,30 @@ void EditTableDialog::populateFields()
     ui->treeWidget->blockSignals(false);
 }
 
-void EditTableDialog::populateConstraints()
+void EditTableDialog::populateIndexConstraints()
 {
     // Disable the itemChanged signal or the table item will be updated while filling the treewidget
-    ui->tableConstraints->blockSignals(true);
+    ui->tableIndexConstraints->blockSignals(true);
 
-    const auto& constraints = m_table.allConstraints();
+    const auto& indexConstraints = m_table.indexConstraints();
+    ui->tableIndexConstraints->setRowCount(static_cast<int>(indexConstraints.size()));
 
-    ui->tableConstraints->setRowCount(static_cast<int>(constraints.size()));
     int row = 0;
-    for(const auto& constraint : constraints)
+    for(const auto& it : indexConstraints)
     {
-        const auto columns = constraint->columnList();
-
         // Columns
-        QTableWidgetItem* column = new QTableWidgetItem(QString::fromStdString(sqlb::joinStringVector(columns, ",")));
+        QTableWidgetItem* column = new QTableWidgetItem(QString::fromStdString(sqlb::joinStringVector(it.first, ",")));
         column->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-        column->setData(Qt::UserRole, QVariant::fromValue<sqlb::ConstraintPtr>(constraint));      // Remember address of constraint object. This is used for modifying it later
-        ui->tableConstraints->setItem(row, kConstraintColumns, column);
+        column->setData(Qt::UserRole, QVariant::fromValue(it.first));           // Remember columns of constraint object. This is used for modifying it later
+        ui->tableIndexConstraints->setItem(row, kConstraintColumns, column);
 
         // Type
         QComboBox* type = new QComboBox(this);
-        type->addItem(tr("Primary Key"));       // NOTE: The order of the items here have to match the order in the sqlb::Constraint::ConstraintTypes enum!
-        type->addItem(tr("Unique"));
-        type->addItem(tr("Foreign Key"));
-        type->addItem(tr("Check"));
-        type->setCurrentIndex(constraint->type());
-        connect(type, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, [this, type, constraint](int index) {
+        type->addItem(tr("Primary Key"), "pk");
+        type->addItem(tr("Unique"), "u");
+        type->setCurrentIndex(it.second->isPrimaryKey() ? 0 : 1);
+        connect(type, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, [this, type, it](int index) {
             // Handle change of constraint type. Effectively this means removing the old constraint and replacing it by an entirely new one.
-            // Only the column list and the name can be migrated to the new constraint.
 
             // Make sure there is only one primary key at a time
             if(index == 0 && m_table.primaryKey())
@@ -311,40 +298,124 @@ void EditTableDialog::populateConstraints()
 
                 // Set combo box back to original constraint type
                 type->blockSignals(true);
-                type->setCurrentIndex(constraint->type());
+                type->setCurrentIndex(it.second->isPrimaryKey() ? 0 : 1);
                 type->blockSignals(false);
                 return;
             }
 
-            // Create new constraint depending on selected type
-            sqlb::ConstraintPtr new_constraint = sqlb::Constraint::makeConstraint(static_cast<sqlb::Constraint::ConstraintTypes>(index));
-            new_constraint->setName(constraint->name());
-            new_constraint->setColumnList(constraint->columnList());
+            // Remove old constraint
+            m_table.removeConstraint(it.second);
 
-            // Replace old by new constraint
-            m_table.replaceConstraint(constraint, new_constraint);
+            // Add new constraint depending on selected type
+            if(type->itemData(index).toString() == "pk")
+            {
+                auto pk = std::make_shared<sqlb::PrimaryKeyConstraint>();
+                pk->setName(it.second->name());
+                m_table.addConstraint(it.first, pk);
+            } else if(type->itemData(index).toString() == "u") {
+                auto u = std::make_shared<sqlb::UniqueConstraint>();
+                u->setName(it.second->name());
+                m_table.addConstraint(it.first, u);
+            }
 
             // Update SQL and view
             populateFields();
-            populateConstraints();
+            populateIndexConstraints();
             updateSqlText();
         });
-        ui->tableConstraints->setCellWidget(row, kConstraintType, type);
+
+        QTableWidgetItem* typeColumn = new QTableWidgetItem();
+        typeColumn->setData(Qt::UserRole, QVariant::fromValue<std::shared_ptr<sqlb::UniqueConstraint>>(it.second));     // Remember address of constraint object. This is used for modifying it later
+        ui->tableIndexConstraints->setCellWidget(row, kConstraintType, type);
+        ui->tableIndexConstraints->setItem(row, kConstraintType, typeColumn);
 
         // Name
-        QTableWidgetItem* name = new QTableWidgetItem(QString::fromStdString(constraint->name()));
+        QTableWidgetItem* name = new QTableWidgetItem(QString::fromStdString(it.second->name()));
         name->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
-        ui->tableConstraints->setItem(row, kConstraintName, name);
+        ui->tableIndexConstraints->setItem(row, kConstraintName, name);
 
         // SQL
-        QTableWidgetItem* sql = new QTableWidgetItem(QString::fromStdString(constraint->toSql()));
+        QTableWidgetItem* sql = new QTableWidgetItem(QString::fromStdString(it.second->toSql(it.first)));
         sql->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-        ui->tableConstraints->setItem(row, kConstraintSql, sql);
+        ui->tableIndexConstraints->setItem(row, kConstraintSql, sql);
 
         row++;
     }
 
-    ui->tableConstraints->blockSignals(false);
+    ui->tableIndexConstraints->blockSignals(false);
+}
+
+void EditTableDialog::populateForeignKeys()
+{
+    // Disable the itemChanged signal or the table item will be updated while filling the treewidget
+    ui->tableForeignKeys->blockSignals(true);
+
+    const auto& foreignKeys = m_table.foreignKeys();
+
+    ui->tableForeignKeys->setRowCount(static_cast<int>(foreignKeys.size()));
+
+    int row = 0;
+    for(const auto& it : foreignKeys)
+    {
+        // Columns
+        QTableWidgetItem* columns = new QTableWidgetItem(QString::fromStdString(sqlb::joinStringVector(it.first, ",")));
+        columns->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
+        columns->setData(Qt::UserRole, QVariant::fromValue(it.first));          // Remember columns of constraint object. This is used for modifying it later
+        ui->tableForeignKeys->setItem(row, kForeignKeyColumns, columns);
+
+        // Name
+        QTableWidgetItem* name = new QTableWidgetItem(QString::fromStdString(it.second->name()));
+        name->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
+        ui->tableForeignKeys->setItem(row, kForeignKeyName, name);
+
+        // References
+        QTableWidgetItem* references = new QTableWidgetItem(QString::fromStdString(it.second->toString()));
+        references->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
+        references->setData(Qt::UserRole, QVariant::fromValue(it.second));      // Remember address of constraint object. This is used for modifying it later
+        ui->tableForeignKeys->setItem(row, kForeignKeyReferences, references);
+
+        // SQL
+        QTableWidgetItem* sql = new QTableWidgetItem(QString::fromStdString(it.second->toSql(it.first)));
+        sql->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+        ui->tableForeignKeys->setItem(row, kForeignKeySql, sql);
+
+        row++;
+    }
+
+    ui->tableForeignKeys->blockSignals(false);
+}
+
+void EditTableDialog::populateCheckConstraints()
+{
+    // Disable the itemChanged signal or the table item will be updated while filling the treewidget
+    ui->tableCheckConstraints->blockSignals(true);
+
+    const auto& checkConstraints = m_table.checkConstraints();
+    ui->tableCheckConstraints->setRowCount(static_cast<int>(checkConstraints.size()));
+
+    int row = 0;
+    for(const auto& it : checkConstraints)
+    {
+        // Check
+        QTableWidgetItem* check = new QTableWidgetItem(QString::fromStdString(it->expression()));
+        check->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
+        check->setData(Qt::UserRole, QVariant::fromValue(it));              // Remember address of constraint object. This is used for modifying it later
+        ui->tableCheckConstraints->setItem(row, kCheckConstraintCheck, check);
+
+        // Name
+        QTableWidgetItem* name = new QTableWidgetItem(QString::fromStdString(it->name()));
+        name->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
+        ui->tableCheckConstraints->setItem(row, kCheckConstraintName, name);
+
+        // SQL
+        QTableWidgetItem* sql = new QTableWidgetItem(QString::fromStdString(it->toSql()));
+        sql->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+        ui->tableCheckConstraints->setItem(row, kCheckConstraintSql, sql);
+
+        row++;
+    }
+
+    ui->tableCheckConstraints->blockSignals(false);
 }
 
 void EditTableDialog::accept()
@@ -404,7 +475,7 @@ void EditTableDialog::checkInput()
         // update fk's that refer to table itself recursively
         const auto& fields = m_table.fields;
         for(const sqlb::Field& f : fields) {
-            auto fk = std::dynamic_pointer_cast<sqlb::ForeignKeyClause>(m_table.constraint({f.name()}, sqlb::Constraint::ForeignKeyConstraintType));
+            auto fk = m_table.foreignKey({f.name()});
             if(fk && oldTableName == fk->table())
                 fk->setTable(normTableName);
         }
@@ -499,17 +570,17 @@ void EditTableDialog::fieldItemChanged(QTreeWidgetItem *item, int column)
             if(!m_bNewTable)
             {
                 const auto pk = m_table.primaryKey();
+                const auto pkColumns = m_table.primaryKeyColumns();
                 for(const auto& it : pdb.schemata[curTable.schema()].tables)
                 {
                     const sqlb::TablePtr& fkobj = it.second;
 
-                    auto fks = fkobj->constraints({}, sqlb::Constraint::ForeignKeyConstraintType);
-                    for(const sqlb::ConstraintPtr& fkptr : fks)
+                    auto constraints = fkobj->foreignKeys();
+                    for(const auto& fk : constraints)
                     {
-                        auto fk = std::dynamic_pointer_cast<sqlb::ForeignKeyClause>(fkptr);
-                        if(fk->table() == m_table.name())
+                        if(fk.second->table() == m_table.name())
                         {
-                            if(contains(fk->columns(), field.name()) || (pk && contains(pk->columnList(), field.name())))
+                            if(contains(fk.second->columns(), field.name()) || (pk && contains(pkColumns, field.name())))
                             {
                                 QMessageBox::warning(this, qApp->applicationName(), tr("This column is referenced in a foreign key in table %1 and thus "
                                                                                        "its name cannot be changed.")
@@ -541,7 +612,8 @@ void EditTableDialog::fieldItemChanged(QTreeWidgetItem *item, int column)
             }
 
             // Update the constraints view
-            populateConstraints();
+            populateIndexConstraints();
+            populateForeignKeys();
             } break;
         case kType:
         case kCollation:
@@ -555,18 +627,12 @@ void EditTableDialog::fieldItemChanged(QTreeWidgetItem *item, int column)
             {
                 // There already is a primary key for this table. So edit that one as there always can only be one primary key anyway.
                 if(item->checkState(column) == Qt::Checked)
-                {
-                    pk->addToColumnList(field.name());
-                } else {
-                    pk->removeFromColumnList(field.name());
-
-                    // If this is now a primary key constraint without any columns, remove it entirely
-                    if(pk->columnList().empty())
-                        m_table.removeConstraints({}, sqlb::Constraint::PrimaryKeyConstraintType);
-                }
+                    m_table.addKeyToConstraint(pk, field.name());
+                else
+                    m_table.removeKeyFromConstraint(pk, field.name());
             } else if(item->checkState(column) == Qt::Checked) {
                 // There is no primary key in the table yet. This means we need to add a default one.
-                m_table.addConstraint(sqlb::ConstraintPtr(new sqlb::PrimaryKeyConstraint({field.name()})));
+                m_table.addConstraint({sqlb::IndexedColumn(field.name(), false)}, std::make_shared<sqlb::PrimaryKeyConstraint>());
             }
 
             if(item->checkState(column) == Qt::Checked)
@@ -583,7 +649,7 @@ void EditTableDialog::fieldItemChanged(QTreeWidgetItem *item, int column)
             }
 
             // Update the constraints view
-            populateConstraints();
+            populateIndexConstraints();
         }
         break;
         case kNotNull:
@@ -748,10 +814,10 @@ void EditTableDialog::fieldItemChanged(QTreeWidgetItem *item, int column)
     checkInput();
 }
 
-void EditTableDialog::constraintItemChanged(QTableWidgetItem* item)
+void EditTableDialog::indexConstraintItemChanged(QTableWidgetItem* item)
 {
     // Find modified constraint
-    sqlb::ConstraintPtr constraint = ui->tableConstraints->item(item->row(), kConstraintColumns)->data(Qt::UserRole).value<sqlb::ConstraintPtr>();
+    auto constraint = ui->tableIndexConstraints->item(item->row(), kConstraintType)->data(Qt::UserRole).value<std::shared_ptr<sqlb::UniqueConstraint>>();
 
     // Which column has been modified?
     switch(item->column())
@@ -762,8 +828,125 @@ void EditTableDialog::constraintItemChanged(QTableWidgetItem* item)
     }
 
     // Update SQL
-    ui->tableConstraints->item(item->row(), kConstraintSql)->setText(QString::fromStdString(constraint->toSql()));
+    populateIndexConstraints();
     checkInput();
+}
+
+void EditTableDialog::foreignKeyItemChanged(QTableWidgetItem* item)
+{
+    // Find modified foreign key
+    auto fk = ui->tableForeignKeys->item(item->row(), kForeignKeyReferences)->data(Qt::UserRole).value<std::shared_ptr<sqlb::ForeignKeyClause>>();
+
+    // Which column has been modified?
+    switch(item->column())
+    {
+    case kForeignKeyName:
+        fk->setName(item->text().toStdString());
+        break;
+    }
+
+    // Update SQL
+    populateFields();
+    populateForeignKeys();
+    checkInput();
+}
+
+void EditTableDialog::checkConstraintItemChanged(QTableWidgetItem* item)
+{
+    // Find modified check constraint
+    auto c = ui->tableCheckConstraints->item(item->row(), kCheckConstraintCheck)->data(Qt::UserRole).value<std::shared_ptr<sqlb::CheckConstraint>>();
+
+    // Which column has been modified?
+    switch(item->column())
+    {
+    case kCheckConstraintCheck:
+        c->setExpression(item->text().toStdString());
+        break;
+    case kCheckConstraintName:
+        c->setName(item->text().toStdString());
+        break;
+    }
+
+    // Update SQL
+    populateFields();
+    populateCheckConstraints();
+    checkInput();
+}
+
+void EditTableDialog::indexConstraintItemDoubleClicked(QTableWidgetItem* item)
+{
+    // Check whether the double clicked item is in the columns column
+    if(item->column() == kConstraintColumns)
+    {
+        sqlb::IndexedColumnVector indexed_columns = ui->tableIndexConstraints->item(item->row(), item->column())->data(Qt::UserRole).value<sqlb::IndexedColumnVector>();
+
+        sqlb::StringVector columns;
+        std::transform(indexed_columns.begin(), indexed_columns.end(), std::back_inserter(columns), [](const auto& e) { return e.name(); });
+
+        // Show the select items popup dialog
+        SelectItemsPopup* dialog = new SelectItemsPopup(m_table.fieldNames(), columns, this);
+        QRect item_rect = ui->tableIndexConstraints->visualItemRect(item);
+        dialog->move(ui->tableIndexConstraints->mapToGlobal(QPoint(ui->tableIndexConstraints->x() + item_rect.x(),
+                                                                   ui->tableIndexConstraints->y() + item_rect.y() + item_rect.height() / 2)));
+        dialog->show();
+
+        // Get constraint
+        auto constraint = ui->tableIndexConstraints->item(item->row(), kConstraintType)->data(Qt::UserRole).value<std::shared_ptr<sqlb::UniqueConstraint>>();
+
+        // When clicking the Apply button in the popup dialog, save the new columns list
+        connect(dialog, &SelectItemsPopup::accepted, this, [this, dialog, constraint, columns]() {
+            // Check if column selection changed at all
+            sqlb::StringVector new_columns = dialog->selectedItems();
+            if(columns != new_columns)
+            {
+                // Remove the constraint with the old columns and add a new one with the new columns
+                m_table.removeConstraint(constraint);
+                if(constraint->isPrimaryKey())
+                    m_table.addConstraint(new_columns, std::dynamic_pointer_cast<sqlb::PrimaryKeyConstraint>(constraint));
+                else
+                    m_table.addConstraint(new_columns, std::dynamic_pointer_cast<sqlb::UniqueConstraint>(constraint));
+
+                // Update the UI
+                populateFields();
+                populateIndexConstraints();
+                updateSqlText();
+            }
+        });
+    }
+}
+
+void EditTableDialog::foreignKeyItemDoubleClicked(QTableWidgetItem* item)
+{
+    // Check whether the double clicked item is in the columns column
+    if(item->column() == kForeignKeyColumns)
+    {
+        auto columns = ui->tableForeignKeys->item(item->row(), item->column())->data(Qt::UserRole).value<sqlb::StringVector>();
+        auto fk = item->tableWidget()->item(item->row(), kForeignKeyReferences)->data(Qt::UserRole).value<std::shared_ptr<sqlb::ForeignKeyClause>>();
+
+        // Show the select items popup dialog
+        SelectItemsPopup* dialog = new SelectItemsPopup(m_table.fieldNames(), columns, this);
+        QRect item_rect = ui->tableForeignKeys->visualItemRect(item);
+        dialog->move(item->tableWidget()->mapToGlobal(QPoint(ui->tableForeignKeys->x() + item_rect.x(),
+                                                             ui->tableForeignKeys->y() + item_rect.y() + item_rect.height() / 2)));
+        dialog->show();
+
+        // When clicking the Apply button in the popup dialog, save the new columns list
+        connect(dialog, &SelectItemsPopup::accepted, this, [this, dialog, fk, columns]() {
+            // Check if column selection changed at all
+            sqlb::StringVector new_columns = dialog->selectedItems();
+            if(columns != new_columns)
+            {
+                // Remove the constraint with the old columns and add a new one with the new columns
+                m_table.removeConstraint(fk);
+                m_table.addConstraint(new_columns, fk);
+
+                // Update the UI
+                populateFields();
+                populateForeignKeys();
+                updateSqlText();
+            }
+        });
+    }
 }
 
 void EditTableDialog::addField()
@@ -786,8 +969,8 @@ void EditTableDialog::addField()
 
     QComboBox* typeBox = new QComboBox(ui->treeWidget);
     typeBox->setProperty("column", tbitem->text(kName));
-    typeBox->setEditable(true);
-    typeBox->addItems(DBBrowserDB::Datatypes);
+    typeBox->setEditable(!m_table.isStrict());  // Strict tables do not allow arbitrary types
+    typeBox->addItems(m_table.isStrict() ? DBBrowserDB::DatatypesStrict : DBBrowserDB::Datatypes);
 
     int defaultFieldTypeIndex = Settings::getValue("db", "defaultfieldtype").toInt();
 
@@ -855,7 +1038,8 @@ void EditTableDialog::removeField()
     delete ui->treeWidget->currentItem();
 
     // Update the constraints view
-    populateConstraints();
+    populateIndexConstraints();
+    populateForeignKeys();
 
     checkInput();
 }
@@ -982,6 +1166,39 @@ void EditTableDialog::setWithoutRowid(bool without_rowid)
     updateSqlText();
 }
 
+void EditTableDialog::setStrict(bool strict)
+{
+    // Set the strict option
+    m_table.setStrict(strict);
+
+    // Replace list of possible data types in each type combo box
+    for(int i=0;i<ui->treeWidget->topLevelItemCount();i++)
+    {
+        QComboBox* w = qobject_cast<QComboBox*>(ui->treeWidget->itemWidget(ui->treeWidget->topLevelItem(i), kType));
+        QString value = w->currentText();
+        w->blockSignals(true);
+        w->clear();
+        w->addItems(strict ? DBBrowserDB::DatatypesStrict : DBBrowserDB::Datatypes);
+        w->setEditable(!strict);    // Strict tables do not allow arbitrary types
+        int pos = w->findText(value, Qt::MatchFixedString);
+        w->blockSignals(false);
+
+        if(pos >= 0)
+        {
+            w->setCurrentIndex(pos);
+        } else {
+            // When the old value cannot be found we default to ANY for strict tables. For ordinary tables we just add the former value.
+            if(strict)
+                w->setCurrentText("ANY");
+            else
+                w->setCurrentText(value);
+        }
+    }
+
+    // Update the SQL preview
+    updateSqlText();
+}
+
 void EditTableDialog::changeSchema(const QString& /*schema*/)
 {
     // Update the SQL preview
@@ -1008,29 +1225,29 @@ void EditTableDialog::setOnConflict(const QString& on_conflict)
     updateSqlText();
 }
 
-void EditTableDialog::removeConstraint()
+void EditTableDialog::removeIndexConstraint()
 {
     // Is there any item selected to delete?
-    if(!ui->tableConstraints->currentItem())
+    if(!ui->tableIndexConstraints->currentItem())
         return;
 
     // Find constraint to delete
-    int row = ui->tableConstraints->currentRow();
-    sqlb::ConstraintPtr constraint = ui->tableConstraints->item(row, kConstraintColumns)->data(Qt::UserRole).value<sqlb::ConstraintPtr>();
+    int row = ui->tableIndexConstraints->currentRow();
+    auto constraint = ui->tableIndexConstraints->item(row, kConstraintType)->data(Qt::UserRole).value<std::shared_ptr<sqlb::UniqueConstraint>>();
 
     // Remove the constraint. If there is more than one constraint with this combination of columns and constraint type, only delete the first one.
     m_table.removeConstraint(constraint);
-    ui->tableConstraints->removeRow(ui->tableConstraints->currentRow());
+    ui->tableIndexConstraints->removeRow(ui->tableIndexConstraints->currentRow());
 
     // Update SQL and view
     updateSqlText();
     populateFields();
 }
 
-void EditTableDialog::addConstraint(sqlb::Constraint::ConstraintTypes type)
+void EditTableDialog::addIndexConstraint(bool primary_key)
 {
     // There can only be one primary key
-    if(type == sqlb::Constraint::PrimaryKeyConstraintType)
+    if(primary_key)
     {
         if(m_table.primaryKey())
         {
@@ -1038,14 +1255,66 @@ void EditTableDialog::addConstraint(sqlb::Constraint::ConstraintTypes type)
                                                                        "key instead."));
             return;
         }
-    }
 
-    // Create new constraint
-    sqlb::ConstraintPtr constraint = sqlb::Constraint::makeConstraint(type);
-    m_table.addConstraint(constraint);
+        // Create new constraint
+        m_table.addConstraint(sqlb::IndexedColumnVector{}, std::make_shared<sqlb::PrimaryKeyConstraint>());
+    } else
+        m_table.addConstraint(sqlb::IndexedColumnVector{}, std::make_shared<sqlb::UniqueConstraint>());
 
     // Update SQL and view
     populateFields();
-    populateConstraints();
+    populateIndexConstraints();
+    updateSqlText();
+}
+
+void EditTableDialog::addForeignKey()
+{
+    m_table.addConstraint(sqlb::StringVector{}, std::make_shared<sqlb::ForeignKeyClause>());
+
+    // Update SQL and view
+    populateFields();
+    populateForeignKeys();
+    updateSqlText();
+}
+
+void EditTableDialog::removeForeignKey()
+{
+    // Is there any item selected to delete?
+    if(!ui->tableForeignKeys->currentItem())
+        return;
+
+    // Find and remove the selected foreign key
+    int row = ui->tableForeignKeys->currentRow();
+    auto fk = ui->tableForeignKeys->item(row, kForeignKeyReferences)->data(Qt::UserRole).value<std::shared_ptr<sqlb::ForeignKeyClause>>();
+    m_table.removeConstraint(fk);
+    ui->tableForeignKeys->removeRow(row);
+
+    // Update SQL and view
+    updateSqlText();
+    populateFields();
+}
+
+void EditTableDialog::addCheckConstraint()
+{
+    m_table.addConstraint(std::make_shared<sqlb::CheckConstraint>());
+
+    // Update SQL and view
+    populateCheckConstraints();
+    updateSqlText();
+}
+
+void EditTableDialog::removeCheckConstraint()
+{
+    // Is there any item selected to delete?
+    if(!ui->tableCheckConstraints->currentItem())
+        return;
+
+    // Find and remove the selected check constraint
+    int row = ui->tableCheckConstraints->currentRow();
+    auto check = ui->tableCheckConstraints->item(row, kConstraintType)->data(Qt::UserRole).value<std::shared_ptr<sqlb::CheckConstraint>>();
+    m_table.removeConstraint(check);
+    ui->tableCheckConstraints->removeRow(row);
+
+    // Update SQL
     updateSqlText();
 }

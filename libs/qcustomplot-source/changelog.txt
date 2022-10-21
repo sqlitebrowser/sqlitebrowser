@@ -1,3 +1,37 @@
+#### Version 2.1.0 released on 29.03.21 ####
+
+Added features:
+  - Compatibility up to Qt 6.0
+  - Tech Preview: Radial Plots (see setupPolarPlotDemo in examples project)
+  - QCPAxisTickerDateTime can now be configured with a QTimeZone for adjusting the label display to arbitrary time zones
+  - QCPColorGradient (and thus also QCPColorMap) now has explicit configurable NaN handling (see QCPColorGradient::setNanHandling)
+  - added timing/benchmarking method QCustomPlot::replotTime(bool average) which returns the milliseconds per replot
+  - QCustomPlot::plottableAt has an optional output parameter dataIndex, providing the index of the data point at the probed position
+  - QCustomPlot::plottableAt<T> template method allows limiting the search to the specified QCPAbstractPlottable subclass T
+  - QCustomPlot::itemAt<T> template method allows limiting the search to the specified QCPAbstractItem subclass T
+  - Added Interaction flag QCP::iSelectPlottablesBeyondAxisRect, allows selection of data points very close to (and beyond of) the axes
+  - QCPAxisTickerDateTime::dateTimeToKey(QDate &) now also takes a TimeSpec to specify the interpretation of the start-of-day
+  - QCPAxisTickerLog now switches to linear ticks if zoomed in beyond where logarithmic ticks are reasonable
+  - Added QCustomPlot::afterLayout signal, for user code that crucially depends on layout sizes/positions, right before the draw step during a replot
+  
+Bugfixes:
+  - Fixed bug where QCPLayer::replot wouldn't issue full replot even though invalidated buffers existed
+  - Fixed QCPCurve bug causing rendering artifacts when using keys/values smaller than about 1e-12 in some constellations
+  - Fixed getValueRange when used with explicit keyRange, now doesn't use key range expanded by one point to each side anymore
+  - Fixed bug of QCPAxis tick label font size change only propagating to the layout after second call to replot
+  - Fixed bug of QCPTextElement not respecting the configured text alignment flag (setTextFlags)
+  - Various documentation typos and improvements
+  
+Other:
+  - QCP Now requires C++11. However, Qt4.6 compatibility is maintained in the QCP 2.x release series
+  - QCPColorScale is now initialized with gpCold gradient preset, which prevents color maps turning black when linking them to a default-created color scale without explicitly setting a gradient
+  - QCPLegend::clearItems is now faster in case of many legend items (>1000)
+  - Modernized expressions and thereby avoided some warnings (e.g. nullptr and casts)
+  - Switched to foreach (Qt macro) where possible (in preparation for switch to range-based for (C++11), soonest at next major release)
+  - Work around Qt bug, drawing lines with pen width 1 as slow as with pen widths > 1 (polyfill instead of line algorithm, also on Normal-DPI), by using pen width 0 in such cases.
+  - Added QCP::Interaction flag iNone=0x000 to allow explicitly specifying no interaction (Avoids QFlags::zero, which was deprecated in Qt5.14)
+  - QCP is now compatible with defines QT_USE_QSTRINGBUILDER, QT_USE_FAST_CONCATENATION (Qt<4.8), QT_USE_FAST_OPERATOR_PLUS (Qt<4.8)
+
 #### Version 2.0.1 released on 25.06.18 ####
 
 Bugfixes:

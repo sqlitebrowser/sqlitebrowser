@@ -12,6 +12,7 @@
 #include "sqlitetablemodel.h"
 #include "ui_TableBrowser.h"
 
+#include <QClipboard>
 #include <QInputDialog>
 #include <QMenu>
 #include <QMessageBox>
@@ -67,6 +68,8 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
     popupHeaderMenu->addSeparator();
     popupHeaderMenu->addAction(ui->actionSetTableEncoding);
     popupHeaderMenu->addAction(ui->actionSetAllTablesEncoding);
+    popupHeaderMenu->addSeparator();
+    popupHeaderMenu->addAction(ui->actionCopyColumnName);
 
     connect(ui->actionSelectColumn, &QAction::triggered, this, [this]() {
         ui->dataTable->selectColumn(ui->actionBrowseTableEditDisplayFormat->property("clicked_column").toInt());
@@ -112,6 +115,9 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
 
     // Set up filters
     connect(ui->dataTable->filterHeader(), &FilterTableHeader::filterChanged, this, &TableBrowser::updateFilter);
+    connect(ui->dataTable->filterHeader(), &FilterTableHeader::filterFocused, this, [this]() {
+        emit prepareForFilter();
+    });
     connect(ui->dataTable->filterHeader(), &FilterTableHeader::addCondFormat, this, &TableBrowser::addCondFormatFromFilter);
     connect(ui->dataTable->filterHeader(), &FilterTableHeader::allCondFormatsCleared, this, &TableBrowser::clearAllCondFormats);
     connect(ui->dataTable->filterHeader(), &FilterTableHeader::condFormatsEdited, this, &TableBrowser::editCondFormats);
@@ -119,6 +125,9 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
     connect(ui->dataTable, &ExtendedTableWidget::dataAboutToBeEdited, this, &TableBrowser::dataAboutToBeEdited);
 
     // Set up global filter
+    connect(ui->editGlobalFilter, &FilterLineEdit::filterFocused, this, [this]() {
+        emit prepareForFilter();
+    });
     connect(ui->editGlobalFilter, &FilterLineEdit::delayedTextChanged, this, [this](const QString& value) {
         // Split up filter values
 #if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
@@ -166,11 +175,13 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
         emit foreignKeyClicked(table, column, value);
     });
 
+    connect(ui->actionAddDock, &QAction::triggered, this, [this]() {
+        emit newDockRequested();
+    });
     connect(ui->actionRefresh, &QAction::triggered, this, [this]() {
         db->updateSchema();
         refresh();
     });
-
     connect(ui->fontComboBox, &QFontComboBox::currentFontChanged, this, [this](const QFont &font) {
         modifyFormat([font](CondFormat& format) { format.setFontFamily(font.family()); });
     });
@@ -823,7 +834,7 @@ void TableBrowser::applyViewportSettings(const BrowseDataTableSettings& storedDa
     unlockViewEditing(!storedData.unlockViewPk.isEmpty() && storedData.unlockViewPk != "_rowid_", storedData.unlockViewPk);
 
     // Column hidden status
-    on_actionShowAllColumns_triggered();
+    showAllColumns();
     for(auto hiddenIt=storedData.hiddenColumns.cbegin();hiddenIt!=storedData.hiddenColumns.cend();++hiddenIt)
         hideColumns(hiddenIt->first, hiddenIt->second);
 
@@ -1064,7 +1075,7 @@ void TableBrowser::hideColumns(int column, bool hide)
     emit projectModified();
 }
 
-void TableBrowser::on_actionShowAllColumns_triggered()
+void TableBrowser::showAllColumns()
 {
     for(int col = 1; col < ui->dataTable->model()->columnCount(); col++)
     {
@@ -1224,7 +1235,7 @@ void TableBrowser::showRecordPopupMenu(const QPoint& pos)
         // Select the row if it is not already in the selection.
         QModelIndexList rowList = ui->dataTable->selectionModel()->selectedRows();
         bool found = false;
-        for (const QModelIndex& index : rowList) {
+        for (const QModelIndex& index : qAsConst(rowList)) {
             if (row == index.row()) {
                 found = true;
                 break;
@@ -1377,12 +1388,7 @@ void TableBrowser::selectTableLine(int lineToSelect)
     ui->dataTable->selectTableLine(lineToSelect);
 }
 
-void TableBrowser::on_actionClearFilters_triggered()
-{
-    clearFilters();
-}
-
-void TableBrowser::on_actionClearSorting_triggered()
+void TableBrowser::clearSorting()
 {
     // Get the current list of sort columns
     auto& columns = m_settings[currentlyBrowsedTableName()].sortColumns;
@@ -1498,6 +1504,15 @@ void TableBrowser::setDefaultTableEncoding()
     setTableEncoding(true);
 }
 
+void TableBrowser::copyColumnName(){
+    sqlb::ObjectIdentifier current_table = currentlyBrowsedTableName();
+    int col_index = ui->actionBrowseTableEditDisplayFormat->property("clicked_column").toInt();
+    QString field_name = QString::fromStdString(db->getTableByName(current_table)->fields.at(col_index - 1).name());
+
+    QClipboard *clipboard = QApplication::clipboard();
+    clipboard->setText(field_name);
+}
+
 void TableBrowser::jumpToRow(const sqlb::ObjectIdentifier& table, std::string column, const QByteArray& value)
 {
     // First check if table exists
@@ -1507,7 +1522,7 @@ void TableBrowser::jumpToRow(const sqlb::ObjectIdentifier& table, std::string co
 
     // If no column name is set, assume the primary key is meant
     if(!column.size())
-        column = obj->primaryKey()->columnList().front();
+        column = obj->primaryKeyColumns().front().name();
 
     // If column doesn't exist don't do anything
     auto column_it = sqlb::findField(obj, column);

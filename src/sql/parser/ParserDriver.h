@@ -18,6 +18,8 @@ namespace parser
 
 class ParserDriver
 {
+    friend parser;
+
 public:
     ParserDriver();
 
@@ -51,6 +53,10 @@ private:
     // Scanner buffer
     typedef struct yy_buffer_state* YY_BUFFER_STATE;
     YY_BUFFER_STATE buffer;
+
+    // This is a purely internal variable used for parsing CREATE TABLE statements. It stores a pointer to the table column which
+    // is currently being parsed. This allows us to modify the column and add additional constraints when we see them.
+    std::shared_ptr<sqlb::Field> last_table_column;
 };
 
 }

@@ -86,14 +86,14 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="0">
+         <item row="3" column="0">
           <widget class="QLabel" name="label_2">
            <property name="text">
             <string>On Conflict</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="1">
+         <item row="3" column="1">
           <widget class="QComboBox" name="comboOnConflict">
            <item>
             <property name="text">
@@ -125,6 +125,23 @@
              <string notr="true">REPLACE</string>
             </property>
            </item>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_3">
+           <property name="text">
+            <string>Strict</string>
+           </property>
+           <property name="buddy">
+            <cstring>checkStrict</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QCheckBox" name="checkStrict">
+           <property name="toolTip">
+            <string>When the strict option is enabled SQLite enforces the data types of each column when updating or inserting data.</string>
+           </property>
           </widget>
          </item>
         </layout>
@@ -387,13 +404,13 @@
       </widget>
       <widget class="QWidget" name="tab">
        <attribute name="title">
-        <string>Constraints</string>
+        <string>Index Constraints</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
-           <widget class="QToolButton" name="buttonAddConstraint">
+           <widget class="QToolButton" name="buttonAddIndexConstraint">
             <property name="text">
              <string>Add constraint</string>
             </property>
@@ -413,7 +430,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QToolButton" name="buttonRemoveConstraint">
+           <widget class="QToolButton" name="buttonRemoveIndexConstraint">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -448,7 +465,7 @@
          </layout>
         </item>
         <item>
-         <widget class="QTableWidget" name="tableConstraints">
+         <widget class="QTableWidget" name="tableIndexConstraints">
           <property name="alternatingRowColors">
            <bool>true</bool>
           </property>
@@ -463,6 +480,181 @@
           <column>
            <property name="text">
             <string>Type</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Name</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>SQL</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>Foreign Keys</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_5">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QToolButton" name="buttonAddForeignKey">
+            <property name="text">
+             <string>Add</string>
+            </property>
+            <property name="icon">
+             <iconset resource="icons/icons.qrc">
+              <normaloff>:/icons/index_create</normaloff>:/icons/index_create</iconset>
+            </property>
+            <property name="popupMode">
+             <enum>QToolButton::InstantPopup</enum>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="buttonRemoveForeignKey">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Remove</string>
+            </property>
+            <property name="icon">
+             <iconset resource="icons/icons.qrc">
+              <normaloff>:/icons/index_delete</normaloff>:/icons/index_delete</iconset>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="tableForeignKeys">
+          <property name="alternatingRowColors">
+           <bool>true</bool>
+          </property>
+          <property name="horizontalScrollMode">
+           <enum>QAbstractItemView::ScrollPerPixel</enum>
+          </property>
+          <column>
+           <property name="text">
+            <string>Columns</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Name</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>References</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>SQL</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_3">
+       <attribute name="title">
+        <string>Check Constraints</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="QToolButton" name="buttonAddCheckConstraint">
+            <property name="text">
+             <string>Add</string>
+            </property>
+            <property name="popupMode">
+             <enum>QToolButton::InstantPopup</enum>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="buttonRemoveCheckConstraint">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Remove</string>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="tableCheckConstraints">
+          <property name="alternatingRowColors">
+           <bool>true</bool>
+          </property>
+          <property name="horizontalScrollMode">
+           <enum>QAbstractItemView::ScrollPerPixel</enum>
+          </property>
+          <column>
+           <property name="text">
+            <string>Check</string>
            </property>
           </column>
           <column>
@@ -520,32 +712,12 @@
     <string>Add a primary key constraint</string>
    </property>
   </action>
-  <action name="actionAddForeignKey">
-   <property name="icon">
-    <iconset resource="icons/icons.qrc">
-     <normaloff>:/icons/field_fk</normaloff>:/icons/field_fk</iconset>
-   </property>
-   <property name="text">
-    <string>Foreign Key</string>
-   </property>
-   <property name="toolTip">
-    <string>Add a foreign key constraint</string>
-   </property>
-  </action>
   <action name="actionAddUniqueConstraint">
    <property name="text">
     <string>Unique</string>
    </property>
    <property name="toolTip">
     <string>Add a unique constraint</string>
-   </property>
-  </action>
-  <action name="actionAddCheckConstraint">
-   <property name="text">
-    <string>Check</string>
-   </property>
-   <property name="toolTip">
-    <string>Add a check constraint</string>
    </property>
   </action>
  </widget>
@@ -562,6 +734,8 @@
   <tabstop>buttonMore</tabstop>
   <tabstop>comboSchema</tabstop>
   <tabstop>checkWithoutRowid</tabstop>
+  <tabstop>checkStrict</tabstop>
+  <tabstop>comboOnConflict</tabstop>
   <tabstop>groupDefinition</tabstop>
   <tabstop>addFieldButton</tabstop>
   <tabstop>removeFieldButton</tabstop>
@@ -570,10 +744,9 @@
   <tabstop>buttonMoveDown</tabstop>
   <tabstop>buttonMoveBottom</tabstop>
   <tabstop>treeWidget</tabstop>
-  <tabstop>sqlTextEdit</tabstop>
-  <tabstop>buttonAddConstraint</tabstop>
-  <tabstop>buttonRemoveConstraint</tabstop>
-  <tabstop>tableConstraints</tabstop>
+  <tabstop>buttonAddIndexConstraint</tabstop>
+  <tabstop>buttonRemoveIndexConstraint</tabstop>
+  <tabstop>tableIndexConstraints</tabstop>
  </tabstops>
  <resources>
   <include location="icons/icons.qrc"/>
@@ -634,8 +807,8 @@
    <slot>addField()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>82</x>
-     <y>248</y>
+     <x>79</x>
+     <y>311</y>
     </hint>
     <hint type="destinationlabel">
      <x>79</x>
@@ -650,8 +823,8 @@
    <slot>removeField()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>178</x>
-     <y>248</y>
+     <x>169</x>
+     <y>311</y>
     </hint>
     <hint type="destinationlabel">
      <x>249</x>
@@ -682,8 +855,8 @@
    <slot>moveUp()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>400</x>
-     <y>248</y>
+     <x>376</x>
+     <y>311</y>
     </hint>
     <hint type="destinationlabel">
      <x>308</x>
@@ -698,8 +871,8 @@
    <slot>moveDown()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>519</x>
-     <y>248</y>
+     <x>487</x>
+     <y>311</y>
     </hint>
     <hint type="destinationlabel">
      <x>308</x>
@@ -746,8 +919,8 @@
    <slot>fieldSelectionChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>324</x>
-     <y>294</y>
+     <x>335</x>
+     <y>475</y>
     </hint>
     <hint type="destinationlabel">
      <x>324</x>
@@ -772,14 +945,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>buttonRemoveConstraint</sender>
+   <sender>buttonRemoveIndexConstraint</sender>
    <signal>clicked()</signal>
    <receiver>EditTableDialog</receiver>
-   <slot>removeConstraint()</slot>
+   <slot>removeIndexConstraint()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>119</x>
-     <y>253</y>
+     <y>315</y>
     </hint>
     <hint type="destinationlabel">
      <x>647</x>
@@ -794,8 +967,8 @@
    <slot>moveTop()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>207</x>
-     <y>240</y>
+     <x>283</x>
+     <y>311</y>
     </hint>
     <hint type="destinationlabel">
      <x>202</x>
@@ -810,8 +983,8 @@
    <slot>moveBottom()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>530</x>
-     <y>246</y>
+     <x>625</x>
+     <y>311</y>
     </hint>
     <hint type="destinationlabel">
      <x>400</x>
@@ -826,12 +999,92 @@
    <slot>setOnConflict(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>371</x>
-     <y>168</y>
+     <x>516</x>
+     <y>219</y>
     </hint>
     <hint type="destinationlabel">
      <x>490</x>
      <y>211</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkStrict</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>EditTableDialog</receiver>
+   <slot>setStrict(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>457</x>
+     <y>177</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonRemoveForeignKey</sender>
+   <signal>clicked()</signal>
+   <receiver>EditTableDialog</receiver>
+   <slot>removeForeignKey()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>127</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonAddForeignKey</sender>
+   <signal>clicked()</signal>
+   <receiver>EditTableDialog</receiver>
+   <slot>addForeignKey()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>50</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonAddCheckConstraint</sender>
+   <signal>clicked()</signal>
+   <receiver>EditTableDialog</receiver>
+   <slot>addCheckConstraint()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>40</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonRemoveCheckConstraint</sender>
+   <signal>clicked()</signal>
+   <receiver>EditTableDialog</receiver>
+   <slot>removeCheckConstraint()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>97</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
     </hint>
    </hints>
   </connection>
@@ -847,9 +1100,14 @@
   <slot>moveDown()</slot>
   <slot>setWithoutRowid(bool)</slot>
   <slot>changeSchema(QString)</slot>
-  <slot>removeConstraint()</slot>
+  <slot>removeIndexConstraint()</slot>
   <slot>moveTop()</slot>
   <slot>moveBottom()</slot>
   <slot>setOnConflict(QString)</slot>
+  <slot>setStrict(bool)</slot>
+  <slot>addForeignKey()</slot>
+  <slot>removeForeignKey()</slot>
+  <slot>addCheckConstraint()</slot>
+  <slot>removeCheckConstraint()</slot>
  </slots>
 </ui>

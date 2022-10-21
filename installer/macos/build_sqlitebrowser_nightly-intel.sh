@@ -17,6 +17,10 @@ QT5_DIR="$HOME/Qt/${QTVER}/clang_64"
 # Add the sensitive values we don't want to store in this script file
 source ~/.db4s_secure
 
+# Load NVM, for appdmg to work
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
 # Update the branch to build, if specified on the command line with "-b [branch name]"
 if [ "$1" = "-b" ]; then
   if [ ! -z "$2" ]; then
@@ -49,7 +53,7 @@ fi
 
 # Ensure Homebrew is owned by my user
 echo Ensure Homebrew is owned by my user >>$LOG 2>&1
-sudo chown -Rh jc:staff /usr/local >>$LOG 2>&1
+sudo chown -Rh $USER: /usr/local >>$LOG 2>&1
 
 # Update Homebrew
 echo Update Homebrew >>$LOG 2>&1
@@ -65,7 +69,7 @@ echo Remove any existing Homebrew installed packages >>$LOG 2>&1
 $BREW remove `$BREW list --formula` --force >>$LOG 2>&1
 
 # Install CMake
-$BREW install cmake >>$LOG 2>&1
+$BREW install --formula cmake >>$LOG 2>&1
 
 # Install SQLite3 
 # Note - `brew tap sqlitebrowser/homebrew-sqlite3` needs to have been run at least once (manually) first
@@ -88,9 +92,9 @@ echo Build and package standard sqlitebrowser nightly >>$LOG 2>&1
 mkdir build >>$LOG 2>&1
 cd build >>$LOG 2>&1
 if [ "${BUILD_TYPE}" = "debug" ]; then
-  $CMAKE -DCMAKE_BUILD_TYPE=Debug .. >>$LOG 2>&1
+  $CMAKE -DCMAKE_BUILD_TYPE=Debug -DSQLite3_INCLUDE_DIR=/usr/local/opt/sqlitefts5/include .. >>$LOG 2>&1
 else
-  $CMAKE .. >>$LOG 2>&1
+  $CMAKE -DSQLite3_INCLUDE_DIR=/usr/local/opt/sqlitefts5/include .. >>$LOG 2>&1
 fi
 make -j3 >>$LOG 2>&1
 cd .. >>$LOG 2>&1
@@ -124,20 +128,19 @@ for i in ar zh_CN zh_TW cs en fr de it ko pl pt ru es uk; do
   cp -v $HOME/Qt/${QTVER}/clang_64/translations/qtxmlpatterns_${i}.qm build/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
 done
 
-# Unlock the local security keychain, so signing can be done
-security unlock-keychain -p "${KEYCHAIN_PASSWORD}" "${HOME}/Library/Keychains/login.keychain"
+# Add the icon file
+cp installer/macos/macapp.icns build/DB\ Browser\ for\ SQLite.app/Contents/Resources/ >>$LOG 2>&1
+/usr/libexec/PlistBuddy -c "Set :CFBundleIconFile macapp.icns" build/DB\ Browser\ for\ SQLite.app/Contents/Info.plist >>$LOG 2>&1
 
 # Sign the added libraries
-codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/fileio.dylib >>$LOG 2>&1
-codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/formats.dylib >>$LOG 2>&1
-codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/math.dylib >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
 
 # Make a .dmg file from the .app
 mv build/DB\ Browser\ for\ SQLite.app $HOME/appdmg/ >>$LOG 2>&1
 cd $HOME/appdmg >>$LOG 2>&1
-appdmg --quiet nightly.json DB\ Browser\ for\ SQLite_${DATE}.dmg >>$LOG 2>&1
-codesign --sign "${DEV_ID}" --verbose --deep --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp DB\ Browser\ for\ SQLite_${DATE}.dmg >>$LOG 2>&1
-mv DB\ Browser\ for\ SQLite_${DATE}.dmg $HOME/db4s_nightlies/ >>$LOG 2>&1
+appdmg --quiet nightly.json DB\ Browser\ for\ SQLite-intel_${DATE}.dmg >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --deep --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp DB\ Browser\ for\ SQLite-intel_${DATE}.dmg >>$LOG 2>&1
+mv DB\ Browser\ for\ SQLite-intel_${DATE}.dmg $HOME/db4s_nightlies/ >>$LOG 2>&1
 rm -rf $HOME/appdmg/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
 
 ### Build SQLCipher version
@@ -146,7 +149,7 @@ echo Remove any existing Homebrew installed packages >>$LOG 2>&1
 $BREW remove `$BREW list --formula` --force >>$LOG 2>&1
 
 # Install CMake
-$BREW install cmake >>$LOG 2>&1
+$BREW install --formula cmake >>$LOG 2>&1
 
 # Install SQLCipher
 echo Install SQLCipher >>$LOG 2>&1
@@ -172,9 +175,6 @@ else
 fi
 make -j3 >>$LOG 2>&1
 cd .. >>$LOG 2>&1
-
-# Unlock the local security keychain, so signing can be done
-security unlock-keychain -p "${KEYCHAIN_PASSWORD}" "${HOME}/Library/Keychains/login.keychain"
 
 # Include the depencencies in the .app bundle
 $MACDEPLOYQT build/DB\ Browser\ for\ SQLite.app -verbose=2 -sign-for-notarization="${DEV_ID}">>$LOG 2>&1
@@ -205,20 +205,19 @@ for i in ar zh_CN zh_TW cs en fr de it ko pl pt ru es uk; do
   cp -v $HOME/Qt/${QTVER}/clang_64/translations/qtxmlpatterns_${i}.qm build/DB\ Browser\ for\ SQLite.app/Contents/translations/ >>$LOG 2>&1
 done
 
-# Unlock the local security keychain, so signing can be done
-security unlock-keychain -p "${KEYCHAIN_PASSWORD}" "${HOME}/Library/Keychains/login.keychain"
+# Add the icon file
+cp installer/macos/macapp.icns build/DB\ Browser\ for\ SQLite.app/Contents/Resources/ >>$LOG 2>&1
+/usr/libexec/PlistBuddy -c "Set :CFBundleIconFile macapp.icns" build/DB\ Browser\ for\ SQLite.app/Contents/Info.plist >>$LOG 2>&1
 
 # Sign the .app
-codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/fileio.dylib >>$LOG 2>&1
-codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/formats.dylib >>$LOG 2>&1
-codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/math.dylib >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
 
 # Make a .dmg file from the .app
 mv build/DB\ Browser\ for\ SQLite.app $HOME/appdmg/ >>$LOG 2>&1
 cd $HOME/appdmg >>$LOG 2>&1
-appdmg --quiet nightly.json DB\ Browser\ for\ SQLite-sqlcipher_${DATE}.dmg >>$LOG 2>&1
-codesign --sign "${DEV_ID}" --verbose --deep --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp DB\ Browser\ for\ SQLite-sqlcipher_${DATE}.dmg >>$LOG 2>&1
-mv DB\ Browser\ for\ SQLite-sqlcipher_${DATE}.dmg $HOME/db4s_nightlies/ >>$LOG 2>&1
+appdmg --quiet nightly.json DB\ Browser\ for\ SQLite-sqlcipher-intel_${DATE}.dmg >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --deep --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp DB\ Browser\ for\ SQLite-sqlcipher-intel_${DATE}.dmg >>$LOG 2>&1
+mv DB\ Browser\ for\ SQLite-sqlcipher-intel_${DATE}.dmg $HOME/db4s_nightlies/ >>$LOG 2>&1
 rm -rf $HOME/appdmg/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
 
 # If building a non-master branch, remove it now that we're finished
@@ -234,8 +233,8 @@ fi
 # Upload nightly builds and the build log thus far
 echo Upload nightly builds >>$LOG 2>&1
 rsync -aP $HOME/db4s_nightlies/DB\ Browser\ for\ SQLite*${DATE}.dmg ${LOG} ${UPLOAD_SERVER}:/nightlies/osx/ >>$LOG 2>&1
-ssh -q ${UPLOAD_SERVER} "cd /nightlies/latest; rm -f *dmg" >>$LOG 2>&1
-ssh -q ${UPLOAD_SERVER} "cd /nightlies/latest; cp /nightlies/osx/DB\ Browser\ for\ SQLite_${DATE}.dmg /nightlies/latest/DB.Browser.for.SQLite.dmg" >>$LOG 2>&1
-ssh -q ${UPLOAD_SERVER} "cd /nightlies/latest; cp /nightlies/osx/DB\ Browser\ for\ SQLite-sqlcipher_${DATE}.dmg /nightlies/latest/DB.Browser.for.SQLite-sqlcipher.dmg" >>$LOG 2>&1
+ssh -q ${UPLOAD_SERVER} "cd /nightlies/latest; rm -f *intel*dmg" >>$LOG 2>&1
+ssh -q ${UPLOAD_SERVER} "cd /nightlies/latest; cp /nightlies/osx/DB\ Browser\ for\ SQLite-intel_${DATE}.dmg /nightlies/latest/DB.Browser.for.SQLite-intel.dmg" >>$LOG 2>&1
+ssh -q ${UPLOAD_SERVER} "cd /nightlies/latest; cp /nightlies/osx/DB\ Browser\ for\ SQLite-sqlcipher-intel_${DATE}.dmg /nightlies/latest/DB.Browser.for.SQLite-sqlcipher-intel.dmg" >>$LOG 2>&1
 
 echo Done! >>$LOG 2>&1
