@@ -7,6 +7,8 @@
 [![Qt][qt-img]][qt]
 [![Coverity][coverity-img]][coverity]
 [![Patreon][patreon-img]][patreon]
+[![sqlitebrowser](https://snapcraft.io/sqlitebrowser/badge.svg)](https://snapcraft.io/sqlitebrowser)
+[![sqlitebrowser](https://snapcraft.io/sqlitebrowser/trending.svg?name=0)](https://snapcraft.io/sqlitebrowser)
 
 ![DB Browser for SQLite Screenshot](https://github.com/sqlitebrowser/sqlitebrowser/raw/master/images/sqlitebrowser.png "DB Browser for SQLite Screenshot")
 
@@ -149,14 +151,7 @@ Install the package using:
 
     sudo apt-get install sqlitebrowser
 
-Ubuntu 14.04.X, 15.04.X, 15.10.X and 16.04.X are supported for now (until
-Launchpad decides to discontinue building for any series).
-
-Ubuntu Precise (12.04) and Utopic (14.10) are not supported:
-* Precise does not have a new enough Qt package in its repository by default,
-  which is a dependency
-* Launchpad does not support Utopic any more, which has reached its End of
-  Life
+Packages for Older Ubuntu releases are supported while launchpad keeps building those or if Older Ubuntu release has dependency packages that are required to build the latest version of Sqlitebrowser. We don't remove builds from our ppa repos, so users can still install older version of sqlitebrowser if they like. Alternatively Linux users can also switch to Snap packages if Snap packages are supported by the distro they are using.
 
 #### Nightly builds
 
