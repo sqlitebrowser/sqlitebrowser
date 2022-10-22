@@ -131,14 +131,24 @@ done
 cp installer/macos/macapp.icns build/DB\ Browser\ for\ SQLite.app/Contents/Resources/ >>$LOG 2>&1
 /usr/libexec/PlistBuddy -c "Set :CFBundleIconFile macapp.icns" build/DB\ Browser\ for\ SQLite.app/Contents/Info.plist >>$LOG 2>&1
 
-# Sign the added libraries
+# Sign the manually added extensions.  Needs to be done prior to the ".app signing" bit below, as that doesn't seem to sign these... which results in notarisation failure later on
+codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/fileio.dylib >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/formats.dylib >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/math.dylib >>$LOG 2>&1
+
+# Sign the app (again).  Needs to be done after the extensions are manually signed (above), else notarisation fails
 codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
 
 # Make a .dmg file from the .app
 mv build/DB\ Browser\ for\ SQLite.app $HOME/appdmg/ >>$LOG 2>&1
 cd $HOME/appdmg >>$LOG 2>&1
 appdmg --quiet nightly.json DB\ Browser\ for\ SQLite-arm64_${DATE}.dmg >>$LOG 2>&1
-codesign --sign "${DEV_ID}" --verbose --deep --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp DB\ Browser\ for\ SQLite-arm64_${DATE}.dmg >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp DB\ Browser\ for\ SQLite-arm64_${DATE}.dmg >>$LOG 2>&1
+
+# Notarise the .app
+security unlock-keychain -p "${KEYCHAIN_PASSWORD}" db4s.keychain
+xcrun notarytool submit --apple-id "${APPLE_ID}" --team-id "${TEAM_ID}" --wait --keychain-profile "${PROFILE_NAME}" --keychain /Users/jc/Library/Keychains/db4s.keychain-db DB\ Browser\ for\ SQLite-arm64_${DATE}.dmg >>$LOG 2>&1
+xcrun stapler staple DB\ Browser\ for\ SQLite-arm64_${DATE}.dmg >>$LOG 2>&1
 mv DB\ Browser\ for\ SQLite-arm64_${DATE}.dmg $HOME/db4s_nightlies/ >>$LOG 2>&1
 rm -rf $HOME/appdmg/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
 
@@ -211,14 +221,24 @@ done
 cp installer/macos/macapp.icns build/DB\ Browser\ for\ SQLite.app/Contents/Resources/ >>$LOG 2>&1
 /usr/libexec/PlistBuddy -c "Set :CFBundleIconFile macapp.icns" build/DB\ Browser\ for\ SQLite.app/Contents/Info.plist >>$LOG 2>&1
 
-# Sign the .app
+# Sign the manually added extensions.  Needs to be done prior to the ".app signing" bit below, as that doesn't seem to sign these... which results in notarisation failure later on
+codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/fileio.dylib >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/formats.dylib >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/math.dylib >>$LOG 2>&1
+
+# Sign the app (again).  Needs to be done after the extensions are manually signed (above), else notarisation fails
 codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
 
 # Make a .dmg file from the .app
 mv build/DB\ Browser\ for\ SQLite.app $HOME/appdmg/ >>$LOG 2>&1
 cd $HOME/appdmg >>$LOG 2>&1
 appdmg --quiet nightly.json DB\ Browser\ for\ SQLite-sqlcipher-arm64_${DATE}.dmg >>$LOG 2>&1
-codesign --sign "${DEV_ID}" --verbose --deep --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp DB\ Browser\ for\ SQLite-sqlcipher-arm64_${DATE}.dmg >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp DB\ Browser\ for\ SQLite-sqlcipher-arm64_${DATE}.dmg >>$LOG 2>&1
+
+# Notarise the .app
+security unlock-keychain -p "${KEYCHAIN_PASSWORD}" db4s.keychain
+xcrun notarytool submit --apple-id "${APPLE_ID}" --team-id "${TEAM_ID}" --wait --keychain-profile "${PROFILE_NAME}" --keychain /Users/jc/Library/Keychains/db4s.keychain-db DB\ Browser\ for\ SQLite-sqlcipher-arm64_${DATE}.dmg >>$LOG 2>&1
+xcrun stapler staple DB\ Browser\ for\ SQLite-sqlcipher-arm64_${DATE}.dmg >>$LOG 2>&1
 mv DB\ Browser\ for\ SQLite-sqlcipher-arm64_${DATE}.dmg $HOME/db4s_nightlies/ >>$LOG 2>&1
 rm -rf $HOME/appdmg/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
 
