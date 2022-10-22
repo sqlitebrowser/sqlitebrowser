@@ -151,7 +151,7 @@ Install the package using:
 
     sudo apt-get install sqlitebrowser
 
-Packages for Older Ubuntu releases are supported until launchpad keeps building those or if Older Ubuntu release has dependency packages that are required to build the latest version of Sqlitebrowser. We don't remove builds from our ppa repos, so users can still install older version of sqlitebrowser if they like. Alterntaively Linux users can also switch to Snap packages if Snap packages are supported by the distro they are using.
+Packages for Older Ubuntu releases are supported while launchpad keeps building those or if Older Ubuntu release has dependency packages that are required to build the latest version of Sqlitebrowser. We don't remove builds from our ppa repos, so users can still install older version of sqlitebrowser if they like. Alternatively Linux users can also switch to Snap packages if Snap packages are supported by the distro they are using.
 
 #### Nightly builds
 
