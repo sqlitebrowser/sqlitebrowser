@@ -132,16 +132,47 @@ done
 cp installer/macos/macapp.icns build/DB\ Browser\ for\ SQLite.app/Contents/Resources/ >>$LOG 2>&1
 /usr/libexec/PlistBuddy -c "Set :CFBundleIconFile macapp.icns" build/DB\ Browser\ for\ SQLite.app/Contents/Info.plist >>$LOG 2>&1
 
-# Sign the added libraries
+# Sign the manually added extensions.  Needs to be done prior to the ".app signing" bit below, as that doesn't seem to sign these... which results in notarisation failure later on
+codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/fileio.dylib >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/formats.dylib >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/math.dylib >>$LOG 2>&1
+
+# Sign the app (again).  Needs to be done after the extensions are manually signed (above), else notarisation fails
 codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
 
 # Make a .dmg file from the .app
 mv build/DB\ Browser\ for\ SQLite.app $HOME/appdmg/ >>$LOG 2>&1
 cd $HOME/appdmg >>$LOG 2>&1
 appdmg --quiet nightly.json DB\ Browser\ for\ SQLite-intel_${DATE}.dmg >>$LOG 2>&1
-codesign --sign "${DEV_ID}" --verbose --deep --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp DB\ Browser\ for\ SQLite-intel_${DATE}.dmg >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp DB\ Browser\ for\ SQLite-intel_${DATE}.dmg >>$LOG 2>&1
+
+# Submit the app for notarization (altool based approach)
+REQUEST_UUID=`xcrun altool --notarize-app --primary-bundle-id "net.sourceforge.sqlitebrowser" -u "${APPLE_ID}" -p @env:NOTARIZATION_PASSWORD --output-format json --file DB\ Browser\ for\ SQLite-intel_${DATE}.dmg 2>&1 | jq -r '."notarization-upload"."RequestUUID"'`
+
+# Check the status of our submission, every 30 seconds for up to 5 minutes
+maxLoops=10
+currLoop=1
+while [ $currLoop -le $maxLoops ]; do
+  sleep 30
+  SUBMISSION_CHECK=`xcrun altool -u "${APPLE_ID}" -p @env:NOTARIZATION_PASSWORD --notarization-info ${REQUEST_UUID} --output-format json | jq . | grep -v "LogFileURL\|RequestUUID" 2>&1 | tee -a $LOG`
+  SUBMISSION_STATUS=`echo $SUBMISSION_CHECK | jq -r '."notarization-info"."Status"'`
+  if [ "${SUBMISSION_STATUS}" = "success" ]; then
+    echo Notarisation succeeded! >>$LOG 2>&1
+    xcrun stapler staple DB\ Browser\ for\ SQLite-intel_${DATE}.dmg >>$LOG 2>&1
+    xcrun stapler validate DB\ Browser\ for\ SQLite-intel_${DATE}.dmg >>$LOG 2>&1
+    break
+  elif [ "${SUBMISSION_STATUS}" = "in progress"  ]; then
+    echo Submission is still being processed - loop ${currLoop} >>$LOG 2>&1
+    currLoop=$(( $currLoop + 1 ))
+  else
+    echo Notarisation failed. >>$LOG 2>&1
+    break
+  fi
+done
+
 mv DB\ Browser\ for\ SQLite-intel_${DATE}.dmg $HOME/db4s_nightlies/ >>$LOG 2>&1
 rm -rf $HOME/appdmg/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
+
 
 ### Build SQLCipher version
 # Remove any existing Homebrew installed packages
@@ -209,6 +240,11 @@ done
 cp installer/macos/macapp.icns build/DB\ Browser\ for\ SQLite.app/Contents/Resources/ >>$LOG 2>&1
 /usr/libexec/PlistBuddy -c "Set :CFBundleIconFile macapp.icns" build/DB\ Browser\ for\ SQLite.app/Contents/Info.plist >>$LOG 2>&1
 
+# Sign the manually added extensions.  Needs to be done prior to the ".app signing" bit below, as that doesn't seem to sign these... which results in notarisation failure later on
+codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/fileio.dylib >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/formats.dylib >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/math.dylib >>$LOG 2>&1
+
 # Sign the .app
 codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
 
@@ -216,7 +252,32 @@ codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keycha
 mv build/DB\ Browser\ for\ SQLite.app $HOME/appdmg/ >>$LOG 2>&1
 cd $HOME/appdmg >>$LOG 2>&1
 appdmg --quiet nightly.json DB\ Browser\ for\ SQLite-sqlcipher-intel_${DATE}.dmg >>$LOG 2>&1
-codesign --sign "${DEV_ID}" --verbose --deep --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp DB\ Browser\ for\ SQLite-sqlcipher-intel_${DATE}.dmg >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp DB\ Browser\ for\ SQLite-sqlcipher-intel_${DATE}.dmg >>$LOG 2>&1
+
+# Submit the app for notarization (altool based approach)
+REQUEST_UUID=`xcrun altool --notarize-app --primary-bundle-id "net.sourceforge.sqlitebrowser" -u "${APPLE_ID}" -p @env:NOTARIZATION_PASSWORD --output-format json --file DB\ Browser\ for\ SQLite-sqlcipher-intel_${DATE}.dmg 2>&1 | jq -r '."notarization-upload"."RequestUUID"'`
+
+# Check the status of our submission, every 30 seconds for up to 5 minutes
+maxLoops=10
+currLoop=1
+while [ $currLoop -le $maxLoops ]; do
+  sleep 30
+  SUBMISSION_CHECK=`xcrun altool -u "${APPLE_ID}" -p @env:NOTARIZATION_PASSWORD --notarization-info ${REQUEST_UUID} --output-format json | jq . | grep -v "LogFileURL\|RequestUUID" 2>&1 | tee -a $LOG`
+  SUBMISSION_STATUS=`echo $SUBMISSION_CHECK | jq -r '."notarization-info"."Status"'`
+  if [ "${SUBMISSION_STATUS}" = "success" ]; then
+    echo Notarisation succeeded! >>$LOG 2>&1
+    xcrun stapler staple DB\ Browser\ for\ SQLite-sqlcipher-intel_${DATE}.dmg >>$LOG 2>&1
+    xcrun stapler validate DB\ Browser\ for\ SQLite-sqlcipher-intel_${DATE}.dmg >>$LOG 2>&1
+    break
+  elif [ "${SUBMISSION_STATUS}" = "in progress"  ]; then
+    echo Submission is still being processed - loop ${currLoop} >>$LOG 2>&1
+    currLoop=$(( $currLoop + 1 ))
+  else
+    echo Notarisation failed. >>$LOG 2>&1
+    break
+  fi
+done
+
 mv DB\ Browser\ for\ SQLite-sqlcipher-intel_${DATE}.dmg $HOME/db4s_nightlies/ >>$LOG 2>&1
 rm -rf $HOME/appdmg/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
 
@@ -232,9 +293,9 @@ fi
 
 # Upload nightly builds and the build log thus far
 echo Upload nightly builds >>$LOG 2>&1
-rsync -aP $HOME/db4s_nightlies/DB\ Browser\ for\ SQLite*${DATE}.dmg ${LOG} ${UPLOAD_SERVER}:/nightlies/osx/ >>$LOG 2>&1
+rsync -aP $HOME/db4s_nightlies/DB\ Browser\ for\ SQLite*${DATE}.dmg ${LOG} ${UPLOAD_SERVER}:/nightlies/macos-intel/ >>$LOG 2>&1
 ssh -q ${UPLOAD_SERVER} "cd /nightlies/latest; rm -f *intel*dmg" >>$LOG 2>&1
-ssh -q ${UPLOAD_SERVER} "cd /nightlies/latest; cp /nightlies/osx/DB\ Browser\ for\ SQLite-intel_${DATE}.dmg /nightlies/latest/DB.Browser.for.SQLite-intel.dmg" >>$LOG 2>&1
-ssh -q ${UPLOAD_SERVER} "cd /nightlies/latest; cp /nightlies/osx/DB\ Browser\ for\ SQLite-sqlcipher-intel_${DATE}.dmg /nightlies/latest/DB.Browser.for.SQLite-sqlcipher-intel.dmg" >>$LOG 2>&1
+ssh -q ${UPLOAD_SERVER} "cd /nightlies/latest; cp /nightlies/macos-intel/DB\ Browser\ for\ SQLite-intel_${DATE}.dmg /nightlies/latest/DB.Browser.for.SQLite-intel.dmg" >>$LOG 2>&1
+ssh -q ${UPLOAD_SERVER} "cd /nightlies/latest; cp /nightlies/macos-intel/DB\ Browser\ for\ SQLite-sqlcipher-intel_${DATE}.dmg /nightlies/latest/DB.Browser.for.SQLite-sqlcipher-intel.dmg" >>$LOG 2>&1
 
 echo Done! >>$LOG 2>&1

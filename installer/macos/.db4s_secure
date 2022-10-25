@@ -6,3 +6,6 @@ KEYCHAIN_PASSWORD="yourpassword"
 PROFILE_NAME="used-to-locate-your-app-specific-password"
 TEAM_ID="1122334455"
 UPLOAD_SERVER="user@example.org"
+
+# This one needs to be exported, otherwise xcrun commands won't receive it
+export NOTARIZATION_PASSWORD="Your Apple Notarization service app specific password" # For xcrun altool, as used on macOS Catalina
