@@ -20,5 +20,6 @@
         <file alias="ja_JP">jp.png</file>
         <file alias="nl_NL">nl.png</file>
         <file alias="sv_SE">sv.png</file>
+        <file alias="id_ID">id.png</file>
     </qresource>
 </RCC>
