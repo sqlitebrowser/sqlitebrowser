@@ -137,7 +137,7 @@ It requires SQLite and Qt 5.x to be installed first.  These are the
 
     $ brew tap sqlitebrowser/sqlite3
     $ brew install sqlitefts5
-    $ brew install qt
+    $ brew install qt@5
     $ brew install cmake
     $ brew link sqlitefts5 --force
 
@@ -153,7 +153,7 @@ And compiling it:
     $ cd sqlitebrowser
     $ mkdir build       # You can easily make a fresh build again by removing this directory
     $ cd build
-    $ cmake -DCMAKE_PREFIX_PATH=/usr/local/opt/qt ..
+    $ cmake -DCMAKE_PREFIX_PATH=/usr/local/opt/qt@5 ..
     $ cmake --build .
     $ brew unlink sqlitefts5
     $ mv sqlitebrowser.app /Applications/DB\ Browser\ for\ SQLite.app
