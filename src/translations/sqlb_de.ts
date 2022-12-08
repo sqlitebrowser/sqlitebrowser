@@ -157,7 +157,7 @@
     <message>
         <location filename="../Application.cpp" line="121"/>
         <source>  -s, --sql &lt;file&gt;    Execute this SQL file after opening the DB</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Diese SQL.Datei ausführen, nachdem die Datenbank aufgemacht wurde.</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="122"/>
@@ -212,7 +212,7 @@
     <message>
         <location filename="../Application.cpp" line="132"/>
         <source>  &lt;project&gt;           Open this project file (*.sqbpro)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Diese Projektdatei (*.sqbpro) aufmachen</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="140"/>
