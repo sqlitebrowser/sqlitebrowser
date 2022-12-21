@@ -5,7 +5,7 @@ MKDIR "%DEST_PATH%"
 SET ZIP_EXE="C:\Program Files\7-Zip\7z.exe"
 SET SQLITE_DIR=C:\\dev\\SQLite-Win32
 SET SQLCIPHER_ROOT_DIR=C:\\git_repos\\SQLCipher-Win32
-SET SQLCIPHER_TAG=v4.4.2
+SET SQLCIPHER_TAG=v4.5.3
 
 :: You need to change the date format in Windows settings to YYYY-MM-DD
 :: before this will work properly. ;)
