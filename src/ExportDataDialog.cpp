@@ -107,7 +107,7 @@ bool ExportDataDialog::exportQueryCsv(const std::string& sQuery, const QString& 
 
     // Chars that require escaping
     std::string special_chars = newlineStr.toStdString() + sepChar.toLatin1() + quoteChar.toLatin1();
-
+    bool writeError = false;
     // Open file
     QFile file(sFilename);
     if(file.open(QIODevice::WriteOnly))
@@ -144,7 +144,7 @@ bool ExportDataDialog::exportQueryCsv(const std::string& sQuery, const QString& 
             QApplication::setOverrideCursor(Qt::WaitCursor);
             int columns = sqlite3_column_count(stmt);
             size_t counter = 0;
-            while(sqlite3_step(stmt) == SQLITE_ROW)
+            while(!writeError && sqlite3_step(stmt) == SQLITE_ROW)
             {
                 for (int i = 0; i < columns; ++i)
                 {
@@ -178,6 +178,7 @@ bool ExportDataDialog::exportQueryCsv(const std::string& sQuery, const QString& 
                     qApp->processEvents();
                 counter++;
             }
+            writeError = stream.status() != QTextStream::Ok;
         }
         sqlite3_finalize(stmt);
 
@@ -186,6 +187,14 @@ bool ExportDataDialog::exportQueryCsv(const std::string& sQuery, const QString& 
 
         // Done writing the file
         file.close();
+
+        if(writeError || file.error() != QFileDevice::NoError) {
+            QMessageBox::warning(this, QApplication::applicationName(),
+                                 tr("Error while writing the file '%1': %2")
+                                 .arg(sFilename, file.errorString()));
+            return false;
+        }
+
     } else {
         QMessageBox::warning(this, QApplication::applicationName(),
                              tr("Could not open output file: %1").arg(sFilename));
@@ -280,6 +289,14 @@ bool ExportDataDialog::exportQueryJson(const std::string& sQuery, const QString&
 
         // Done writing the file
         file.close();
+
+        if(file.error() != QFileDevice::NoError) {
+          QMessageBox::warning(this, QApplication::applicationName(),
+                               tr("Error while writing the file '%1': %2")
+                               .arg(sFilename, file.errorString()));
+          return false;
+        }
+
     } else {
         QMessageBox::warning(this, QApplication::applicationName(),
                              tr("Could not open output file: %1").arg(sFilename));
