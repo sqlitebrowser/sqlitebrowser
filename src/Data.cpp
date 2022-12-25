@@ -186,49 +186,49 @@ void removeCommentsFromQuery(QString& query)
     QChar quote;
     for(int i=0;i<query.size();i++)
     {
-	// Are we in quote state?
-	if(quote.isNull())
-	{
-		// We are currently not in quote state
+        // Are we in quote state?
+        if(quote.isNull())
+        {
+            // We are currently not in quote state
 
-		// So are we starting a quote?
-		if((query.at(i) == '\'' || query.at(i) == '\"' || query.at(i) == '[') && (i == 0 || query.at(i-1) != '\\'))
-	    {
-		// Quoted text is beginning. Switch to the quote state
+            // So are we starting a quote?
+            if((query.at(i) == '\'' || query.at(i) == '\"' || query.at(i) == '[') && (i == 0 || query.at(i-1) != '\\'))
+            {
+                // Quoted text is beginning. Switch to the quote state
 
-		quote = query.at(i);
-	    } else if(query.at(i) == '-' && i+1 < query.size() && query.at(i+1) == '-') {
-		// This is an end of line comment. Remove anything till the end of the line or the end of the string if this is the last line
+                quote = query.at(i);
+            } else if(query.at(i) == '-' && i+1 < query.size() && query.at(i+1) == '-') {
+                // This is an end of line comment. Remove anything till the end of the line or the end of the string if this is the last line
 
-		int pos_next_line_break = query.indexOf('\n', i);
-		if(pos_next_line_break == -1)
-			query = query.left(i);
-		else
-			query.remove(i, pos_next_line_break - i);       // The \n is left in intentionally
-	    } else if(query.at(i) == '/' && i+1 < query.size() && query.at(i+1) == '*') {
-		// This is a block comment. Remove anything till the end of the block or the end of the string if the block is not closed
-		int pos_end_comment = query.indexOf("*/", i);
-		if(pos_end_comment == -1)
-			query = query.left(i);
-		else
-			query.remove(i, pos_end_comment - i + 2);       // Add 2 to include the */
-	    }
-	} else {
-		// We are currently in quote state
+                int pos_next_line_break = query.indexOf('\n', i);
+                if(pos_next_line_break == -1)
+                    query = query.left(i);
+                else
+                    query.remove(i, pos_next_line_break - i);       // The \n is left in intentionally
+            } else if(query.at(i) == '/' && i+1 < query.size() && query.at(i+1) == '*') {
+                // This is a block comment. Remove anything till the end of the block or the end of the string if the block is not closed
+                int pos_end_comment = query.indexOf("*/", i);
+                if(pos_end_comment == -1)
+                    query = query.left(i);
+                else
+                    query.remove(i, pos_end_comment - i + 2);       // Add 2 to include the */
+            }
+        } else {
+            // We are currently in quote state
 
-		// If this is the closing quote character, switch back to normal state
-		if((query.at(i) == quote) && (i == 0 || query.at(i-1) != '\\'))
-		quote = 0;
-	}
+            // If this is the closing quote character, switch back to normal state
+            if((query.at(i) == quote) && (i == 0 || query.at(i-1) != '\\'))
+                quote = 0;
+        }
     }
 
     query = query.trimmed();
 
     if (oldSize != query.size()) {
-	// Remove multiple line breaks that might have been created by deleting comments till the end of the line but not including the line break
-	query.replace(QRegExp("\\n+"), "\n");
+        // Remove multiple line breaks that might have been created by deleting comments till the end of the line but not including the line break
+        query.replace(QRegExp("\\n+"), "\n");
 
-	// Also remove any remaining whitespace at the end of each line
-	query.replace(QRegExp("[ \t]+\n"), "\n");
+        // Also remove any remaining whitespace at the end of each line
+        query.replace(QRegExp("[ \t]+\n"), "\n");
     }
 }
