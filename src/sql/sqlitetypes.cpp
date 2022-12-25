@@ -485,6 +485,10 @@ void Table::removeKeyFromConstraint(std::shared_ptr<UniqueConstraint> constraint
                 m_indexConstraints.insert(std::make_pair(new_columns, it->second));
                 it = m_indexConstraints.erase(it);
             }
+
+            // If container is empty now, return here instead of advancing the iterator
+            if(m_indexConstraints.empty())
+                return;
         }
     }
 }
@@ -507,6 +511,10 @@ void Table::removeKeyFromAllConstraints(const std::string& key)
                 container.insert(std::make_pair(new_columns, it->second));
                 it = container.erase(it);
             }
+
+            // If container is empty now, return here instead of advancing the iterator
+            if(container.empty())
+                return;
         }
     };
 
