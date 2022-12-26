@@ -81,18 +81,32 @@ bool RunSql::executeNextStatement()
     if(queries_left_to_execute.isEmpty())
         return false;
 
-    // What type of query is this?
-    QString qtail = QString(queries_left_to_execute).trimmed();
-    // Remove trailing comments so we don't get fooled by some trailing text at the end of the stream.
-    // Otherwise we'll pass them to SQLite and its execution will trigger a savepoint that wouldn't be
-    // reverted.
-    removeCommentsFromQuery(qtail);
-    if (qtail.isEmpty())
-        return false;
+    // Start execution timer
+    auto time_start = std::chrono::high_resolution_clock::now();
 
-    StatementType query_type = getQueryType(qtail);
+    // Prepare next statement
+    const char* tail = queries_left_to_execute.data();
+    int tail_length = queries_left_to_execute.length();
+    const char* qbegin = tail;
+    acquireDbAccess();
+    sqlite3_stmt* vm;
+    int sql3status = sqlite3_prepare_v2(pDb.get(), tail, tail_length, &vm, &tail);
+    QString executed_query = QString::fromUtf8(qbegin, static_cast<int>(tail - qbegin)).trimmed();
+    int tail_length_before = tail_length;
+    tail_length -= static_cast<int>(tail - qbegin);
+    int end_of_current_statement_position = execute_current_position + tail_length_before - tail_length;
+    queries_left_to_execute = QByteArray(tail);     // Save remaining statements
+    lk.unlock();
 
-    // Check whether the DB structure is changed by this statement
+    // Measure time up until here. We do that to not include the time spent on opening any message boxes or creating savepoints
+    // because both are not part of the actual query execution.
+    auto time_end_prepare = std::chrono::high_resolution_clock::now();
+    auto time_for_prepare_in_ms = std::chrono::duration_cast<std::chrono::milliseconds>(time_end_prepare - time_start);
+
+    // What type of query was this?
+    StatementType query_type = getQueryType(executed_query);
+
+    // Check whether the DB structure will be changed by actually running this statement
     if(!structure_updated && (query_type == AlterStatement ||
                               query_type == CreateStatement ||
                               query_type == DropStatement ||
@@ -102,14 +116,12 @@ bool RunSql::executeNextStatement()
         structure_updated = true;
 
     // Check whether this is trying to set a pragma or to vacuum the database
-    // TODO This is wrong. The '=' or the 'defer_foreign_keys' might be in a completely different statement of the queries string.
-    if((query_type == PragmaStatement && qtail.contains('=') && !qtail.contains("defer_foreign_keys", Qt::CaseInsensitive)) || query_type == VacuumStatement)
+    if((query_type == PragmaStatement && executed_query.contains('=') && !executed_query.contains("defer_foreign_keys", Qt::CaseInsensitive)) || query_type == VacuumStatement)
     {
         // We're trying to set a pragma. If the database has been modified it needs to be committed first. We'll need to ask the
         // user about that
         if(db.getDirty())
         {
-            lk.unlock();
             // Ask user, then check if we should abort execution or continue with it. We depend on a BlockingQueueConnection here which makes sure to
             // block this worker thread until the slot function in the main thread is completed and could tell us about its decision.
             emit confirmSaveBeforePragmaOrVacuum();
@@ -122,7 +134,6 @@ bool RunSql::executeNextStatement()
                 emit statementErrored(tr("Execution aborted by user"), execute_current_position, execute_current_position + (query_type == PragmaStatement ? 5 : 6));
                 return false;
             }
-            lk.lock();
         }
     } else {
         // We're not trying to set a pragma or to vacuum the database. In this case make sure a savepoint has been created in order to avoid committing
@@ -132,41 +143,22 @@ bool RunSql::executeNextStatement()
         {
             // We have to start a transaction before we create the prepared statement otherwise every executed
             // statement will get committed after the prepared statement gets finalized
+            releaseDbAccess();
             db.setSavepoint();
+            acquireDbAccess();
             savepoint_created = true;
         }
     }
 
-    // Start execution timer. We do that after opening any message boxes and after creating savepoints because both are not part of the actual
-    // query execution.
-    auto time_start = std::chrono::high_resolution_clock::now();
+    // Start measuring time from here again
+    time_start = std::chrono::high_resolution_clock::now();
 
-    // Execute next statement
-    const char* tail = queries_left_to_execute.data();
-    int tail_length = queries_left_to_execute.length();
-    lk.unlock();
-    const char* qbegin = tail;
-    acquireDbAccess();
-    sqlite3_stmt* vm;
-    int sql3status = sqlite3_prepare_v2(pDb.get(), tail, tail_length, &vm, &tail);
-    QString queryPart = QString::fromUtf8(qbegin, static_cast<int>(tail - qbegin));
-    int tail_length_before = tail_length;
-    tail_length -= static_cast<int>(tail - qbegin);
-    int end_of_current_statement_position = execute_current_position + tail_length_before - tail_length;
-
-    // Save remaining statements
-    lk.lock();
-    queries_left_to_execute = QByteArray(tail);
-    lk.unlock();
-
+    // Execute prepared statement
     QString error;
     if (sql3status == SQLITE_OK)
     {
-        // Get type
-        StatementType query_part_type = getQueryType(queryPart.trimmed());
-
         // Check if this statement returned any data. We skip this check if this is an ALTER TABLE statement which, for some reason, are reported to return one column.
-        if(query_part_type != AlterStatement && sqlite3_column_count(vm))
+        if(query_type != AlterStatement && sqlite3_column_count(vm))
         {
             // It did. So it is definitely some SELECT statement or similar and we don't need to actually execute it here
             sql3status = SQLITE_ROW;
@@ -178,7 +170,7 @@ bool RunSql::executeNextStatement()
             // SQLite returns SQLITE_DONE when a valid SELECT statement was executed but returned no results. To run into the branch that updates
             // the status message and the table view anyway manipulate the status value here. This is also done for PRAGMA statements as they (sometimes)
             // return rows just like SELECT statements, too.
-            if((query_part_type == SelectStatement || query_part_type == PragmaStatement) && sql3status == SQLITE_DONE)
+            if((query_type == SelectStatement || query_type == PragmaStatement) && sql3status == SQLITE_DONE)
                 sql3status = SQLITE_ROW;
         }
 
@@ -198,8 +190,8 @@ bool RunSql::executeNextStatement()
             may_continue_with_execution = false;
 
             auto time_end = std::chrono::high_resolution_clock::now();
-            auto time_in_ms = std::chrono::duration_cast<std::chrono::milliseconds>(time_end - time_start);
-            emit statementReturnsRows(queryPart, execute_current_position, end_of_current_statement_position, time_in_ms.count());
+            auto time_in_ms = std::chrono::duration_cast<std::chrono::milliseconds>(time_end - time_start) + time_for_prepare_in_ms;
+            emit statementReturnsRows(executed_query, execute_current_position, end_of_current_statement_position, time_in_ms.count());
 
             // Make sure the next statement isn't executed until we're told to do so
             if(interrupt_after_statements)
@@ -214,7 +206,7 @@ bool RunSql::executeNextStatement()
             // But do set the modified flag because statements that don't return data, often modify the database.
 
             QString stmtHasChangedDatabase;
-            if(query_part_type == InsertStatement || query_part_type == UpdateStatement || query_part_type == DeleteStatement)
+            if(query_type == InsertStatement || query_type == UpdateStatement || query_type == DeleteStatement)
                 stmtHasChangedDatabase = tr(", %1 rows affected").arg(sqlite3_changes(pDb.get()));
 
             releaseDbAccess();
@@ -222,13 +214,13 @@ bool RunSql::executeNextStatement()
             lk.lock();
 
             // Attach/Detach statements don't modify the original database
-            if(query_part_type != StatementType::AttachStatement && query_part_type != StatementType::DetachStatement)
+            if(query_type != StatementType::AttachStatement && query_type != StatementType::DetachStatement)
                 modified = true;
 
             may_continue_with_execution = false;
 
             auto time_end = std::chrono::high_resolution_clock::now();
-            auto time_in_ms = std::chrono::duration_cast<std::chrono::milliseconds>(time_end - time_start);
+            auto time_in_ms = std::chrono::duration_cast<std::chrono::milliseconds>(time_end - time_start) + time_for_prepare_in_ms;
             emit statementExecuted(tr("query executed successfully. Took %1ms%2").arg(time_in_ms.count()).arg(stmtHasChangedDatabase),
                                    execute_current_position, end_of_current_statement_position);
 
