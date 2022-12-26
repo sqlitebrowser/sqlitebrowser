@@ -1194,7 +1194,8 @@ void MainWindow::executeQuery()
     }
 
     // Prepare a lambda function for logging the results of a query
-    auto query_logger = [this, sqlWidget, editor](bool ok, const QString& status_message, int from_position, int to_position) {
+    auto logged_queries = std::make_shared<QString>();
+    auto query_logger = [sqlWidget, editor, logged_queries](bool ok, const QString& status_message, int from_position, int to_position) {
         int execute_from_line, execute_from_index;
         editor->lineIndexFromPosition(from_position, &execute_from_line, &execute_from_index);
 
@@ -1224,10 +1225,10 @@ void MainWindow::executeQuery()
         // The query takes the last placeholder as it may itself contain the sequence '%' + number.
         QString query = editor->text(from_position, to_position);
         QString log_message = "-- " + tr("At line %1:").arg(execute_from_line+1) + "\n" + query.trimmed() + "\n-- " + tr("Result: %1").arg(status_message);
-        db.logSQL(log_message, kLogMsg_User);
+        logged_queries->append(log_message + "\n");
 
-        log_message = tr("Result: %2").arg(status_message) + "\n" + tr("At line %1:").arg(execute_from_line+1) + "\n" + query.trimmed();
         // Update the execution area
+        log_message = tr("Result: %2").arg(status_message) + "\n" + tr("At line %1:").arg(execute_from_line+1) + "\n" + query.trimmed();
         sqlWidget->finishExecution(log_message, ok);
     };
 
@@ -1296,7 +1297,10 @@ void MainWindow::executeQuery()
             execute_sql_worker->stop();
 
     }, Qt::BlockingQueuedConnection);
-    connect(execute_sql_worker.get(), &RunSql::finished, sqlWidget, [this, current_tab, sqlWidget]() {
+    connect(execute_sql_worker.get(), &RunSql::finished, sqlWidget, [this, current_tab, sqlWidget, logged_queries]() {
+        // Update the SQL log
+        db.logSQL(*logged_queries, kLogMsg_User);
+
         // We work with a pointer to the current tab here instead of its index because the user might reorder the tabs in the meantime.
         // We set different icons for general tabs, which are either new or loaded from the project file, and for tabs loaded from a file.
         if(sqlWidget->fileName().isEmpty())
