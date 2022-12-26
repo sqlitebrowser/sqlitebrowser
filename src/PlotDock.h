@@ -12,6 +12,7 @@ class QMenu;
 class QPrinter;
 class QTreeWidgetItem;
 class QCPAxis;
+class QMouseEvent;
 
 class SqliteTableModel;
 struct BrowseDataTableSettings;
@@ -100,6 +101,7 @@ private:
     Palette m_graphPalette;
     std::vector<QCPAxis *> yAxes;
     std::vector<int> PlotColumnY;
+    unsigned int m_xtype;
 
     /*!
      * \brief guessdatatype try to parse the first 10 rows and decide the datatype
@@ -120,6 +122,7 @@ private slots:
     void selectionChanged();
     void mousePress();
     void mouseWheel();
+    void mouseMove(QMouseEvent* event);
     void copy();
     void toggleLegendVisible(bool visible);
     void toggleStackedBars(bool stacked);

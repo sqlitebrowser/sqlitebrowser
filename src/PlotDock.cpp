@@ -21,6 +21,9 @@
 #include <QElapsedTimer>
 #endif
 
+#include <QMouseEvent>
+#include <QLocale>
+
 static int random_number(int from, int to)
 {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
@@ -37,7 +40,8 @@ PlotDock::PlotDock(QWidget* parent)
       m_currentTableSettings(nullptr),
       m_showLegend(false),
       m_stackedBars(false),
-      m_fixedFormat(false)
+      m_fixedFormat(false),
+      m_xtype(QVariant::Invalid)
 {
     ui->setupUi(this);
 
@@ -55,6 +59,7 @@ PlotDock::PlotDock(QWidget* parent)
     // connect slots that takes care that when an axis is selected, only that direction can be dragged and zoomed:
     connect(ui->plotWidget, &QCustomPlot::mousePress, this, &PlotDock::mousePress);
     connect(ui->plotWidget, &QCustomPlot::mouseWheel, this, &PlotDock::mouseWheel);
+    connect(ui->plotWidget, &QCustomPlot::mouseMove, this, &PlotDock::mouseMove);
 
     // Enable: click on items to select them, Ctrl+Click for multi-selection, mouse-wheel for zooming and mouse drag for
     // changing the visible range.
@@ -300,12 +305,12 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
         // regain the model column index and the datatype
         // right now datatype is only important for X axis (Y is always numeric)
         int x = xitem->data(PlotColumnField, Qt::UserRole).toInt();
-        unsigned int xtype = xitem->data(PlotColumnType, Qt::UserRole).toUInt();
+        m_xtype = xitem->data(PlotColumnType, Qt::UserRole).toUInt();
 
         ui->plotWidget->xAxis->setTickLabelRotation(0);
 
         // check if we have a x axis with datetime data
-        switch (xtype) {
+        switch (m_xtype) {
         case QVariant::Date: {
             QSharedPointer<QCPAxisTickerDateTime> ticker(new QCPAxisTickerDateTime);
             ticker->setDateTimeFormat("yyyy-MM-dd");
@@ -379,7 +384,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                         // NULL values produce gaps in the linear graphs. We use NaN values in
                         // that case as required by QCustomPlot.
                         // Bar plots will display the configured string for NULL values.
-                        if(xtype == QVariant::String) {
+                        if(m_xtype == QVariant::String) {
                             xdata[j] = j+1;
                             labels << model->data(model->index(j, x), Qt::DisplayRole).toString();
                         } else
@@ -387,7 +392,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                     } else {
 
                         // convert x type axis if it's datetime
-                        switch (xtype) {
+                        switch (m_xtype) {
                         case QVariant::DateTime:
                         case QVariant::Date: {
                             QString s = model->data(model->index(j, x)).toString();
@@ -441,8 +446,8 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                 }
 
                 // Line type and point shape are not supported by the String X type (Bars)
-                ui->comboLineType->setEnabled(xtype != QVariant::String);
-                ui->comboPointShape->setEnabled(xtype != QVariant::String);
+                ui->comboLineType->setEnabled(m_xtype != QVariant::String);
+                ui->comboPointShape->setEnabled(m_xtype != QVariant::String);
 
                 // WARN: ssDot is removed
                 int shapeIdx = ui->comboPointShape->currentIndex();
@@ -455,7 +460,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
                 // When it is not sorted by x, we draw a curve, so the order selected by the user in the table or in the query is
                 // respected.  In this case the line will have loops and only None and Line is supported as line style.
                 // TODO: how to make the user aware of this without disturbing.
-                if (xtype == QVariant::String) {
+                if (m_xtype == QVariant::String) {
 
                     for(size_t y_ind = 0; y_ind < 2; y_ind++)
                     {
@@ -903,6 +908,34 @@ void PlotDock::mousePress()
       QList< QCPAxis *> axList = {ui->plotWidget->xAxis,yAxes[0], yAxes[1]};
       ui->plotWidget->axisRect()->setRangeDragAxes(axList);
     }
+}
+
+void PlotDock::mouseMove(QMouseEvent* event)
+{
+    double x = ui->plotWidget->xAxis->pixelToCoord(event->pos().x());
+    double y = ui->plotWidget->yAxis->pixelToCoord(event->pos().y());
+
+    QString xLabel;
+
+    switch (m_xtype) {
+    case QVariant::Date:
+        xLabel = QDateTime::fromMSecsSinceEpoch(static_cast<qint64>(x*1000.0)).toString("yyyy-MM-dd, ");
+        break;
+    case QVariant::Time:
+        xLabel = QDateTime::fromMSecsSinceEpoch(static_cast<qint64>(x*1000.0), Qt::UTC).toString("hh:mm:ss, ");
+        break;
+    case QVariant::DateTime:
+        xLabel = QDateTime::fromMSecsSinceEpoch(static_cast<qint64>(x*1000.0)).toString("yyyy-MM-dd hh:mm:ss, ");
+        break;
+    case QVariant::String:
+        // In this case, only the y value is displayed
+        xLabel = QString("y=");
+        break;
+    default:
+        xLabel = QLocale().toString(x) + ", ";
+    }
+
+    ui->plotWidget->setToolTip(xLabel + QLocale().toString(y));
 }
 
 void PlotDock::mouseWheel()
