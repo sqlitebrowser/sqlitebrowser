@@ -177,8 +177,8 @@ bool ExportDataDialog::exportQueryCsv(const std::string& sQuery, const QString& 
                 if(counter % 1000 == 0)
                     qApp->processEvents();
                 counter++;
+                writeError = stream.status() != QTextStream::Ok;
             }
-            writeError = stream.status() != QTextStream::Ok;
         }
         sqlite3_finalize(stmt);
 
@@ -283,6 +283,7 @@ bool ExportDataDialog::exportQueryJson(const std::string& sQuery, const QString&
 
         // Create JSON document
         file.write(json_table.dump(ui->checkPrettyPrint->isChecked() ? 4 : -1).c_str());
+        bool writeError = file.error() != QFileDevice::NoError;
 
         QApplication::restoreOverrideCursor();
         qApp->processEvents();
@@ -290,7 +291,7 @@ bool ExportDataDialog::exportQueryJson(const std::string& sQuery, const QString&
         // Done writing the file
         file.close();
 
-        if(file.error() != QFileDevice::NoError) {
+        if(writeError || file.error() != QFileDevice::NoError) {
           QMessageBox::warning(this, QApplication::applicationName(),
                                tr("Error while writing the file '%1': %2")
                                .arg(sFilename, file.errorString()));
@@ -328,6 +329,8 @@ void ExportDataDialog::accept()
         break;
     }
 
+    bool success = true;
+    
     if(!m_sQuery.empty())
     {
         // called from sqlexecute query tab
@@ -342,7 +345,7 @@ void ExportDataDialog::accept()
             return;
         }
 
-        exportQuery(m_sQuery, sFilename);
+        success = exportQuery(m_sQuery, sFilename);
     } else {
         // called from the File export menu
         const QList<QListWidgetItem*> selectedItems = ui->listTables->selectedItems();
@@ -395,7 +398,7 @@ void ExportDataDialog::accept()
             // if we are called from execute sql tab, query is already set
             // and we only export 1 select
             std::string sQuery = "SELECT * FROM " + sqlb::ObjectIdentifier(selectedItems.at(i)->data(Qt::UserRole).toString().toStdString()).toString() + ";";
-            exportQuery(sQuery, filenames.at(i));
+            success = exportQuery(sQuery, filenames.at(i)) && success;
         }
     }
 
@@ -407,7 +410,11 @@ void ExportDataDialog::accept()
     Settings::setValue("exportcsv", "newlinecharacters", currentNewLineString());
 
     // Notify the user the export has completed
-    QMessageBox::information(this, QApplication::applicationName(), tr("Export completed."));
+    if(success) {
+        QMessageBox::information(this, QApplication::applicationName(), tr("Export completed."));
+    } else {
+        QMessageBox::warning(this, QApplication::applicationName(), tr("Export finished with errors."));
+    }
     QDialog::accept();
 }
 

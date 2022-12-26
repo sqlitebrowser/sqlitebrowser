@@ -1045,7 +1045,7 @@ bool DBBrowserDB::dump(const QString& filePath,
 
         QApplication::restoreOverrideCursor();
         qApp->processEvents();
-        return true;
+        return stream.status() == QTextStream::Ok && file.error() == QFileDevice::NoError;
     }
     return false;
 }
