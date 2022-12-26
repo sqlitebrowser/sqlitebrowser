@@ -103,60 +103,60 @@ bool RunSql::executeNextStatement()
     auto time_end_prepare = std::chrono::high_resolution_clock::now();
     auto time_for_prepare_in_ms = std::chrono::duration_cast<std::chrono::milliseconds>(time_end_prepare - time_start);
 
-    // What type of query was this?
-    StatementType query_type = getQueryType(executed_query);
-
-    // Check whether the DB structure will be changed by actually running this statement
-    if(!structure_updated && (query_type == AlterStatement ||
-                              query_type == CreateStatement ||
-                              query_type == DropStatement ||
-                              query_type == RollbackStatement ||
-                              query_type == AttachStatement ||
-                              query_type == DetachStatement))
-        structure_updated = true;
-
-    // Check whether this is trying to set a pragma or to vacuum the database
-    if((query_type == PragmaStatement && executed_query.contains('=') && !executed_query.contains("defer_foreign_keys", Qt::CaseInsensitive)) || query_type == VacuumStatement)
-    {
-        // We're trying to set a pragma. If the database has been modified it needs to be committed first. We'll need to ask the
-        // user about that
-        if(db.getDirty())
-        {
-            // Ask user, then check if we should abort execution or continue with it. We depend on a BlockingQueueConnection here which makes sure to
-            // block this worker thread until the slot function in the main thread is completed and could tell us about its decision.
-            emit confirmSaveBeforePragmaOrVacuum();
-            if(!queries_left_to_execute.isEmpty())
-            {
-                // Commit all changes
-                db.releaseAllSavepoints();
-            } else {
-                // Abort
-                emit statementErrored(tr("Execution aborted by user"), execute_current_position, execute_current_position + (query_type == PragmaStatement ? 5 : 6));
-                return false;
-            }
-        }
-    } else {
-        // We're not trying to set a pragma or to vacuum the database. In this case make sure a savepoint has been created in order to avoid committing
-        // all changes to the database immediately. Don't set more than one savepoint.
-
-        if(!savepoint_created && !db.readOnly())
-        {
-            // We have to start a transaction before we create the prepared statement otherwise every executed
-            // statement will get committed after the prepared statement gets finalized
-            releaseDbAccess();
-            db.setSavepoint();
-            acquireDbAccess();
-            savepoint_created = true;
-        }
-    }
-
-    // Start measuring time from here again
-    time_start = std::chrono::high_resolution_clock::now();
-
     // Execute prepared statement
     QString error;
     if (sql3status == SQLITE_OK)
     {
+        // What type of query was this?
+        StatementType query_type = getQueryType(executed_query);
+
+        // Check whether the DB structure will be changed by actually running this statement
+        if(!structure_updated && (query_type == AlterStatement ||
+                                  query_type == CreateStatement ||
+                                  query_type == DropStatement ||
+                                  query_type == RollbackStatement ||
+                                  query_type == AttachStatement ||
+                                  query_type == DetachStatement))
+            structure_updated = true;
+
+        // Check whether this is trying to set a pragma or to vacuum the database
+        if((query_type == PragmaStatement && executed_query.contains('=') && !executed_query.contains("defer_foreign_keys", Qt::CaseInsensitive)) || query_type == VacuumStatement)
+        {
+            // We're trying to set a pragma. If the database has been modified it needs to be committed first. We'll need to ask the
+            // user about that
+            if(db.getDirty())
+            {
+                // Ask user, then check if we should abort execution or continue with it. We depend on a BlockingQueueConnection here which makes sure to
+                // block this worker thread until the slot function in the main thread is completed and could tell us about its decision.
+                emit confirmSaveBeforePragmaOrVacuum();
+                if(!queries_left_to_execute.isEmpty())
+                {
+                    // Commit all changes
+                    db.releaseAllSavepoints();
+                } else {
+                    // Abort
+                    emit statementErrored(tr("Execution aborted by user"), execute_current_position, execute_current_position + (query_type == PragmaStatement ? 5 : 6));
+                    return false;
+                }
+            }
+        } else {
+            // We're not trying to set a pragma or to vacuum the database. In this case make sure a savepoint has been created in order to avoid committing
+            // all changes to the database immediately. Don't set more than one savepoint.
+
+            if(!savepoint_created && !db.readOnly())
+            {
+                // We have to start a transaction before we create the prepared statement otherwise every executed
+                // statement will get committed after the prepared statement gets finalized
+                releaseDbAccess();
+                db.setSavepoint();
+                acquireDbAccess();
+                savepoint_created = true;
+            }
+        }
+
+        // Start measuring time from here again
+        time_start = std::chrono::high_resolution_clock::now();
+
         // Check if this statement returned any data. We skip this check if this is an ALTER TABLE statement which, for some reason, are reported to return one column.
         if(query_type != AlterStatement && sqlite3_column_count(vm))
         {
