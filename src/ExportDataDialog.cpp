@@ -7,7 +7,7 @@
 #include "IconCache.h"
 #include "Data.h"
 
-#include <QFile>
+#include <QSaveFile>
 #include <QTextStream>
 #include <QMessageBox>
 #include <QTextCodec>
@@ -109,7 +109,7 @@ bool ExportDataDialog::exportQueryCsv(const std::string& sQuery, const QString& 
     std::string special_chars = newlineStr.toStdString() + sepChar.toLatin1() + quoteChar.toLatin1();
     bool writeError = false;
     // Open file
-    QFile file(sFilename);
+    QSaveFile file(sFilename);
     if(file.open(QIODevice::WriteOnly))
     {
         // Open text stream to the file
@@ -186,7 +186,9 @@ bool ExportDataDialog::exportQueryCsv(const std::string& sQuery, const QString& 
         qApp->processEvents();
 
         // Done writing the file
-        file.close();
+        if(!file.commit()) {
+            writeError = true;
+        }
 
         if(writeError || file.error() != QFileDevice::NoError) {
             QMessageBox::warning(this, QApplication::applicationName(),
@@ -207,7 +209,7 @@ bool ExportDataDialog::exportQueryCsv(const std::string& sQuery, const QString& 
 bool ExportDataDialog::exportQueryJson(const std::string& sQuery, const QString& sFilename)
 {
     // Open file
-    QFile file(sFilename);
+    QSaveFile file(sFilename);
     if(file.open(QIODevice::WriteOnly))
     {
         auto pDb = pdb.get(tr("exporting JSON"));
@@ -289,7 +291,9 @@ bool ExportDataDialog::exportQueryJson(const std::string& sQuery, const QString&
         qApp->processEvents();
 
         // Done writing the file
-        file.close();
+        if(!file.commit()) {
+            writeError = true;
+        }
 
         if(writeError || file.error() != QFileDevice::NoError) {
           QMessageBox::warning(this, QApplication::applicationName(),
