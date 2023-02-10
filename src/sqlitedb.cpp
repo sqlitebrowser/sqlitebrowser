@@ -1797,6 +1797,11 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
         if(to.isNull())
             continue;
 
+        // Ignore generated columns
+        auto it = sqlb::findField(new_table, to.toStdString());
+        if(it->generated())
+            continue;
+
         copy_values_from.push_back(from.toStdString());
         copy_values_to.push_back(to.toStdString());
     }
