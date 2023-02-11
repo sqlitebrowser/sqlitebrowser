@@ -53,7 +53,7 @@ class CSVParser
 public:
     using csvRowFunction = std::function<bool(size_t, CSVRow)>;
 
-    CSVParser(bool trimfields = true, char32_t fieldseparator = ',', char32_t quotechar = '"');
+    explicit CSVParser(bool trimfields = true, char32_t fieldseparator = ',', char32_t quotechar = '"');
     ~CSVParser();
 
     enum ParserResult

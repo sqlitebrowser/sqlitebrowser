@@ -115,7 +115,7 @@ protected:
 class ForeignKeyClause : public Constraint
 {
 public:
-    ForeignKeyClause(const std::string& table = std::string(), const StringVector& columns = {}, const std::string& constraint = std::string())
+    explicit ForeignKeyClause(const std::string& table = std::string(), const StringVector& columns = {}, const std::string& constraint = std::string())
         : m_table(table),
           m_columns(columns),
           m_constraint(constraint)
