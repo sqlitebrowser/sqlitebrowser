@@ -30,7 +30,7 @@ jobs:
     - name: Build SQLite
       if: matrix.sqlcipher == '0'
       run: |
-           wget -O sqlite.tar.gz https://sqlite.org/2022/sqlite-autoconf-3380500.tar.gz
+           wget -O sqlite.tar.gz https://sqlite.org/2022/sqlite-autoconf-3400100.tar.gz
            tar -xzf sqlite.tar.gz
            cd sqlite-autoconf-*
            ./configure --enable-shared=no
