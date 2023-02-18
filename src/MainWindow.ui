@@ -82,6 +82,8 @@
           <addaction name="editDeleteObjectAction"/>
           <addaction name="separator"/>
           <addaction name="actionDbPrint"/>
+          <addaction name="separator"/>
+          <addaction name="actionRefreshStructure"/>
          </widget>
         </item>
         <item>
@@ -891,9 +893,6 @@ You can drag SQL statements from an object row and drop them into other applicat
    <widget class="QWidget" name="dockWidgetContents_4"/>
   </widget>
   <widget class="QDockWidget" name="dockLog">
-   <property name="features">
-    <set>QDockWidget::AllDockWidgetFeatures</set>
-   </property>
    <property name="windowTitle">
     <string>SQL &amp;Log</string>
    </property>
@@ -1035,9 +1034,6 @@ You can drag SQL statements from an object row and drop them into other applicat
    </widget>
   </widget>
   <widget class="QDockWidget" name="dockPlot">
-   <property name="features">
-    <set>QDockWidget::AllDockWidgetFeatures</set>
-   </property>
    <property name="windowTitle">
     <string>&amp;Plot</string>
    </property>
@@ -2282,6 +2278,18 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    </property>
    <property name="toolTip">
     <string>Save the current database as a different file</string>
+   </property>
+  </action>
+  <action name="actionRefreshStructure">
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/refresh</normaloff>:/icons/refresh</iconset>
+   </property>
+   <property name="text">
+    <string>Refresh</string>
+   </property>
+   <property name="toolTip">
+    <string>Reload the database structure</string>
    </property>
   </action>
  </widget>
@@ -3863,6 +3871,22 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <hint type="destinationlabel">
      <x>-1</x>
      <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionRefreshStructure</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>refresh()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
     </hint>
    </hints>
   </connection>

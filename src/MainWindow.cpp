@@ -1891,6 +1891,7 @@ void MainWindow::activateFields(bool enable)
     ui->actionFileImportCsvClipboard->setEnabled(enable && write);
     ui->editCreateTableAction->setEnabled(enable && write);
     ui->editCreateIndexAction->setEnabled(enable && write);
+    ui->actionRefreshStructure->setEnabled(enable);
     ui->actionDbPrint->setEnabled(enable);
     ui->scrollAreaWidgetContents->setEnabled(enable);
     ui->buttonBoxPragmas->setEnabled(enable && write);
