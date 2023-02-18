@@ -116,7 +116,7 @@ endif()
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/libs/json)
 
 if(NOT QSCINTILLA_FOUND)
-    add_subdirectory(libs/qscintilla/Qt4Qt5)
+    add_subdirectory(libs/qscintilla/src)
 endif()
 if(NOT QHexEdit_FOUND)
     add_subdirectory(libs/qhexedit)
