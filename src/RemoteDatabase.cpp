@@ -67,7 +67,7 @@ void RemoteDatabase::localAssureOpened()
                                 "\"commit_id\" TEXT NOT NULL,"
                                 "\"file\" TEXT NOT NULL UNIQUE,"
                                 "\"modified\" INTEGER DEFAULT 0,"
-                                "\"branch\" TEXT NOT NULL DEFAULT \"master\""
+                                "\"branch\" TEXT NOT NULL DEFAULT \"main\""
                                 ")");
     if(sqlite3_exec(m_dbLocal, statement.toUtf8(), nullptr, nullptr, &errmsg) != SQLITE_OK)
     {

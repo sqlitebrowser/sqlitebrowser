@@ -153,7 +153,7 @@ void RemotePushDialog::reloadBranchList(const QString& select_branch)
         json obj_branches = obj["branches"];
 
         // Get default branch
-        std::string default_branch = (obj.contains("default_branch") && !obj["default_branch"].empty()) ? obj["default_branch"] : "master";
+        std::string default_branch = (obj.contains("default_branch") && !obj["default_branch"].empty()) ? obj["default_branch"] : "main";
 
         // Clear branch list and add the default branch
         ui->comboBranch->clear();

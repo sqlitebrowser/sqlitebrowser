@@ -49,7 +49,7 @@ public:
                std::function<void(QByteArray)> when_finished = {}, bool synchronous = false, bool ignore_errors = false);
     void push(const QString& filename, const QUrl& url, const QString& clientCert, const QString& remotename,
               const QString& commitMessage = QString(), const QString& licence = QString(), bool isPublic = false,
-              const QString& branch = QString("master"), bool forcePush = false, const QString& last_commit = QString());
+              const QString& branch = QString("main"), bool forcePush = false, const QString& last_commit = QString());
 
 signals:
     // The fetchFinished() signal is emitted when a fetch() call for a database is finished
