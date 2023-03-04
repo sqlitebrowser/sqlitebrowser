@@ -92,6 +92,10 @@ if(APPLE AND EXISTS /usr/local/opt/qt5)
     # it is not in the default /usr/local prefix.
     list(APPEND CMAKE_PREFIX_PATH "/usr/local/opt/qt5")
 endif()
+if(APPLE AND EXISTS /usr/local/Cellar/sqlitefts5)
+    execute_process(COMMAND bash "-c" "brew info sqlitefts5 | grep /usr | cut -f1 -d \" \" | tr  -d $\"\n\"" OUTPUT_VARIABLE SQLITEFTS5_PATH)
+    list(PREPEND CMAKE_PREFIX_PATH "${SQLITEFTS5_PATH}")
+endif()
 
 # For M1 Mac's
 if(APPLE AND EXISTS /opt/homebrew/opt/qt5)
