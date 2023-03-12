@@ -18,6 +18,23 @@ If you have any chance, please use Qt 5.7 or any later version. Even though Qt
 5.5 and 5.6 are supported by us, there might be glitches and minor problems
 when using them.
 
+----
+## Table of Contents
+- [Generic Linux and FreeBSD](#generic-linux-and-freebsd)
+- [Ubuntu / Debian Linux](#ubuntu--debian-linux)
+- [CentOS / Fedora Linux](#centos--fedora-linux)
+- [OpenSUSE](#opensuse)
+- [macOS](#macos)
+    - [Building a single executable binary](#building-a-single-executable-binary)
+    - [Building an .app bundle](#building-an-app-bundle)
+- [Compiling on Windows with MSVC](#compiling-on-windows-with-msvc)
+    - [Cross compiling for Windows](#cross-compiling-for-windows)
+- [Build with SQLCipher support](#build-with-sqlcipher-support)
+- [Building and running the Unit Tests](#building-and-running-the-unit-tests)
+    - [Build the unit tests](#build-the-unit-tests)
+    - [Run the unit tests](#run-the-unit-tests)
+----
+
 ### Generic Linux and FreeBSD
 
 The only requirements for building this code are the presence of Qt5 and

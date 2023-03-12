@@ -42,6 +42,37 @@ do not make sense in a database context or are so complex to implement that they
 replacement for your favorite spreadsheet application. We are a small team with limited time after all. Thanks
 for your understanding :)
 
+----
+## Table of Contents
+- [Wiki](#wiki)
+- [Nightly builds](#nightly-builds)
+- [Windows](#windows)
+- [macOS](#macos)
+    - [Stable release](#stable-release)
+    - [Nightly builds](#nightly-builds-1)
+- [Linux](#linux)
+    - [Arch Linux](#arch-linux)
+    - [Fedora](#fedora)
+    - [openSUSE](#opensuse)
+    - [Debian](#debian)
+    - [Ubuntu and Derivatives](#ubuntu-and-derivatives)
+        - [Stable release](#stable-release-1)
+        - [Nightly builds](#nightly-builds-2)
+    - [Other Linux](#other-linux)
+- [FreeBSD](#freebsd)
+- [Snap packages](#snap-packages)
+    - [Snap Nightlies](#snap-nightlies)
+    - [Snap Stable](#snap-stable)
+- [Compiling](#compiling)
+- [Twitter](#twitter)
+- [Website](#website)
+- [Old project page](#old-project-page)
+- [Releases](#releases)
+- [History](#history)
+- [Contributors](#contributors)
+- [License](#license)
+----
+
 ## Wiki
 
 For user and developer documentation, check out our Wiki at:
