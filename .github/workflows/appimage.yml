@@ -26,11 +26,12 @@ jobs:
     - name: Install dependencies
       run: |
            sudo apt-get update
-           sudo apt-get install qttools5-dev libqt5scintilla2-dev libqcustomplot-dev libqt5svg5 libsqlcipher-dev qt5-default
+           sudo apt-get install qttools5-dev libqt5scintilla2-dev libqcustomplot-dev libqt5svg5 libsqlcipher-dev qt5-default curl
     - name: Build SQLite
       if: matrix.sqlcipher == '0'
       run: |
-           wget -O sqlite.tar.gz https://sqlite.org/2023/sqlite-autoconf-3410100.tar.gz
+           TARBALL=$(curl -s https://www.sqlite.org/download.html | grep "d391('a2'" | cut -d "'" -f 4)
+           curl -LsS -o sqlite.tar.gz https://sqlite.org/${TARBALL}
            tar -xzf sqlite.tar.gz
            cd sqlite-autoconf-*
            ./configure --enable-shared=no
