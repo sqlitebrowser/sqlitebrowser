@@ -30,8 +30,11 @@ jobs:
     - name: Build SQLite
       if: matrix.sqlcipher == '0'
       run: |
-           TARBALL=$(curl -s https://www.sqlite.org/download.html | grep "d391('a2'" | cut -d "'" -f 4)
+           TARBALL=$(curl -s https://sqlite.org/download.html | awk '/<!--/,/-->/ {print}' | grep 'sqlite-autoconf' | cut -d ',' -f 3)
+           SHA3=$(curl -s https://sqlite.org/download.html | awk '/<!--/,/-->/ {print}' | grep 'sqlite-autoconf' | cut -d ',' -f 5)
            curl -LsS -o sqlite.tar.gz https://sqlite.org/${TARBALL}
+           VERIFY=$(openssl dgst -sha3-256 sqlite.tar.gz | cut -d ' ' -f 2)
+           if [ "$SHA3" != "$VERIFY" ]; then exit 1 ; fi
            tar -xzf sqlite.tar.gz
            cd sqlite-autoconf-*
            ./configure --enable-shared=no
