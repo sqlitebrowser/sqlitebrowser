@@ -37,7 +37,7 @@ jobs:
            if [ "$SHA3" != "$VERIFY" ]; then exit 1 ; fi
            tar -xzf sqlite.tar.gz
            cd sqlite-autoconf-*
-           ./configure --enable-shared=no
+           CPPFLAGS="-DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_MAX_VARIABLE_NUMBER=250000 -DSQLITE_ENABLE_RTREE=1 -DSQLITE_ENABLE_GEOPOLY=1 -DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_FTS3_PARENTHESIS=1 -DSQLITE_ENABLE_FTS5=1 -DSQLITE_ENABLE_STAT4=1 -DSQLITE_ENABLE_JSON1=1 -DSQLITE_SOUNDEX=1 -DSQLITE_ENABLE_MATH_FUNCTIONS=1 -DSQLITE_MAX_ATTACHED=125 -DSQLITE_ENABLE_MEMORY_MANAGEMENT=1 -DSQLITE_ENABLE_SNAPSHOT=1" ./configure --enable-shared=no
            make
            sudo make install
     - name: Configure CMake
@@ -45,7 +45,7 @@ jobs:
            mkdir appbuild
            mkdir appdir
            cd appbuild
-           cmake -DCMAKE_INSTALL_PREFIX:PATH=../appdir/usr -Wno-dev -DFORCE_INTERNAL_QSCINTILLA=ON -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_MAX_VARIABLE_NUMBER=250000 -DSQLITE_ENABLE_RTREE=1 -DSQLITE_ENABLE_GEOPOLY=1 -DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_FTS3_PARENTHESIS=1 -DSQLITE_ENABLE_FTS5=1 -DSQLITE_ENABLE_STAT4=1 -DSQLITE_ENABLE_JSON1=1 -DSQLITE_SOUNDEX=1 -DSQLITE_ENABLE_MATH_FUNCTIONS=1 -DSQLITE_MAX_ATTACHED=125 -DSQLITE_ENABLE_MEMORY_MANAGEMENT=1 -DSQLITE_ENABLE_SNAPSHOT=1 -Dsqlcipher=${{ matrix.sqlcipher }} ..
+           cmake -DCMAKE_INSTALL_PREFIX:PATH=../appdir/usr -Wno-dev -DFORCE_INTERNAL_QSCINTILLA=ON -Dsqlcipher=${{ matrix.sqlcipher }} ..
     - name: Run make
       run: |
            cd appbuild
