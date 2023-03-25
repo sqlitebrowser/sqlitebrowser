@@ -133,18 +133,8 @@ $ sudo make install
 
 ### macOS
 
-The application can be compiled to a single executable binary file, similar to
-other command line utilities, or it can be compiled to an .app bundle, suitable
-for placing in /Applications.
-
-### Building a single executable binary
-
-This is incredibly easy using [Homebrew](http://brew.sh).  Just run this command:
-
-    $ brew install sqlitebrowser
-
-And you're done.  A "sqlitebrowser" command should now be available in your PATH,
-and can also be launched through Spotlight.
+The application can be compiled to an .app bundle, suitable for placing in
+/Applications.
 
 ### Building an .app bundle
 
