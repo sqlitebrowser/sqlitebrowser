@@ -18,7 +18,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        os: [ubuntu-18.04]
+        os: [ubuntu-20.04]
         sqlcipher: ["0", "1"]
     steps:
     - name: Checkout
@@ -52,7 +52,6 @@ jobs:
            make install
     - name: Build AppImage
       run: |
-           git rev-list master --count
            wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
            chmod a+x linuxdeployqt-continuous-x86_64.AppImage
            export VERSION=$(printf "master-`git rev-list HEAD --count`-` git -C . rev-parse --short HEAD`")
@@ -67,7 +66,6 @@ jobs:
       env:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
       run: |
-           find appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq
            wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
            chmod a+x upload.sh
            UPLOADTOOL_ISPRERELEASE=true ./upload.sh DB_Browser_for_*.AppImage
