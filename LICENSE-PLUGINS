@@ -69,5 +69,10 @@ NonCommercial Share Alike 4.0
 http://creativecommons.org/licenses/by-nc-sa/4.0/
 Check https://codefisher.org/pastel-svg/ for clarification.
 
+The construction emoji for the icon used in the nightly version come
+from the OpenMoji under CC BY-SA 4.0 license.
+Check https://openmoji.org/library/emoji-1F6A7/ and
+https://openmoji.org/faq/ for clarification.
+
 Some icons might have other open licenses, check history of the files
 under `src/icons`.

@@ -1,0 +1,117 @@
+<svg width="256" height="256" xmlns="http://www.w3.org/2000/svg" xmlns:undefined="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
+  <title id="title917">logo</title>
+  <defs id="defs3">
+    <linearGradient id="linearGradient6932">
+      <stop stop-color="#a2a2a2" offset="0" id="stop6934"/>
+      <stop stop-color="#4e4e4e" offset="1" id="stop6936"/>
+    </linearGradient>
+    <linearGradient id="linearGradient6924">
+      <stop stop-color="#ffffff" id="stop6926" offset="0"/>
+      <stop stop-opacity="0" stop-color="#ffffff" id="stop6928" offset="1"/>
+    </linearGradient>
+    <linearGradient id="linearGradient4162">
+      <stop stop-color="#ababab" id="stop4164" offset="0"/>
+      <stop stop-color="#f6f6f6" offset="0.19416" id="stop4170"/>
+      <stop stop-color="#b0b0b0" id="stop4172" offset="0.39749"/>
+      <stop stop-color="#585858" id="stop4166" offset="1"/>
+    </linearGradient>
+    <linearGradient id="linearGradient4162-2">
+      <stop stop-color="#ababab" id="stop4164-3" offset="0"/>
+      <stop stop-color="#f6f6f6" offset="0.19416" id="stop4170-1"/>
+      <stop stop-color="#b0b0b0" id="stop4172-6" offset="0.39749"/>
+      <stop stop-color="#585858" id="stop4166-8" offset="1"/>
+    </linearGradient>
+    <linearGradient id="linearGradient6932-2">
+      <stop stop-color="#a2a2a2" offset="0" id="stop6934-7"/>
+      <stop stop-color="#4e4e4e" offset="1" id="stop6936-7"/>
+    </linearGradient>
+    <linearGradient id="linearGradient6924-2">
+      <stop stop-color="#ffffff" id="stop6926-6" offset="0"/>
+      <stop stop-opacity="0" stop-color="#ffffff" id="stop6928-0" offset="1"/>
+    </linearGradient>
+    <linearGradient id="linearGradient4162-3">
+      <stop stop-color="#ababab" id="stop4164-6" offset="0"/>
+      <stop stop-color="#f6f6f6" offset="0.19416" id="stop4170-2"/>
+      <stop stop-color="#b0b0b0" id="stop4172-4" offset="0.39749"/>
+      <stop stop-color="#585858" id="stop4166-5" offset="1"/>
+    </linearGradient>
+    <linearGradient id="linearGradient6932-1">
+      <stop stop-color="#a2a2a2" offset="0" id="stop6934-2"/>
+      <stop stop-color="#4e4e4e" offset="1" id="stop6936-1"/>
+    </linearGradient>
+    <linearGradient id="linearGradient6924-9">
+      <stop stop-color="#ffffff" id="stop6926-8" offset="0"/>
+      <stop stop-opacity="0" stop-color="#ffffff" id="stop6928-2" offset="1"/>
+    </linearGradient>
+    <linearGradient xlink:href="#linearGradient4162-3" id="linearGradient3933" x1="0" y1="0.43892" x2="1" y2="0.43892"/>
+    <linearGradient xlink:href="#linearGradient6932-1" id="linearGradient3935" x1="0.5" y1="0.598" x2="0.5" y2="0.4285"/>
+    <linearGradient xlink:href="#linearGradient6924-9" id="linearGradient3937" x1="0.4" y1="0.5485" x2="0.40896" y2="1.00089"/>
+    <linearGradient xlink:href="#linearGradient4162-2" id="linearGradient3939" x1="0" y1="0.43895" x2="1" y2="0.43895"/>
+    <linearGradient xlink:href="#linearGradient6932-2" id="linearGradient3941" x1="0.5" y1="0.598" x2="0.5" y2="0.4285"/>
+    <linearGradient xlink:href="#linearGradient6924-2" id="linearGradient3943" x1="0.4" y1="0.54849" x2="0.40896" y2="1.00089"/>
+    <linearGradient xlink:href="#linearGradient4162" id="linearGradient3945" x1="0" y1="0.43891" x2="1" y2="0.43891"/>
+    <linearGradient xlink:href="#linearGradient6932" id="linearGradient3947" x1="0.5" y1="0.598" x2="0.5" y2="0.4285"/>
+    <linearGradient xlink:href="#linearGradient6924" id="linearGradient3949" x1="0.4" y1="0.54847" x2="0.40896" y2="1.00089"/>
+  </defs>
+  <metadata id="metadata4">
+    image/svg+xmllogohttps://sqlitebrowser.orgDB Browser for SQLite Logo2020Jun05GPL3+
+  </metadata>
+  <g>
+    <title>Layer 1</title>
+    <g id="layer1">
+      <g id="g3916" transform="matrix(8.59688 0 0 6.30047 -74.0541 -252.36)">
+        <g id="g3795-5">
+          <path stroke-width="0.769" fill-rule="nonzero" fill="url(#linearGradient3933)" d="m23.38966,61.73539c-7.62514,0 -13.82522,2.13044 -13.82522,5.47517l0,6.55785c0,3.34473 6.20008,5.64789 13.82522,5.64789c7.62515,0 14.0721,-2.30316 14.0721,-5.64789l0,-6.55785c0,-3.34473 -6.44695,-5.47517 -14.0721,-5.47517z" id="path4152-2"/>
+          <ellipse stroke-dashoffset="0" stroke-miterlimit="10" stroke-width="1.00493" stroke="url(#linearGradient3935)" fill-rule="nonzero" fill="#c3c3c3" ry="5.5" rx="12.85714" cy="70.32254" cx="23.4682" transform="matrix(1.03729 0 0 0.954619 -0.894979 -0.0757206)" id="path3364-9"/>
+          <path fill-rule="nonzero" fill="url(#linearGradient3937)" opacity="0.49367" id="path6922-9" d="m13.09123,71.69838l0.25612,5.87607l4.67245,1.08368l-0.14286,-5.60261c0,0 2.07143,-0.03993 5.42857,-0.25421c-5.21574,-0.23308 -11.18337,-2.72511 -13.21428,-4.179c1.4169,2.09217 3,3.07607 3,3.07607z"/>
+        </g>
+        <g id="g3795-4">
+          <path stroke-width="0.769" fill-rule="nonzero" fill="url(#linearGradient3939)" d="m23.36986,51.69318c-7.62514,0 -13.82522,2.13153 -13.82522,5.47626l0,6.55785c0,3.34473 6.20008,5.64789 13.82522,5.64789c7.62515,0 14.0721,-2.30316 14.0721,-5.64789l0,-6.55785c0,-3.34473 -6.44695,-5.47626 -14.0721,-5.47626z" id="path4152-9"/>
+          <ellipse stroke-dashoffset="0" stroke-miterlimit="10" stroke-width="1.00493" stroke="url(#linearGradient3941)" fill-rule="nonzero" fill="#c3c3c3" ry="5.5" rx="12.85714" cy="59.80408" cx="23.44912" transform="matrix(1.03729 0 0 0.954619 -0.894979 -0.0757206)" id="path3364-4"/>
+          <path fill-rule="nonzero" fill="url(#linearGradient3943)" opacity="0.49367" id="path6922-6" d="m13.07143,61.65726l0.25612,5.87607l4.67245,1.08368l-0.14286,-5.60261c0,0 2.07143,-0.03981 5.42857,-0.25409c-5.21574,-0.23307 -11.18337,-2.72511 -13.21428,-4.179c1.4169,2.09217 3,3.07595 3,3.07595z"/>
+        </g>
+        <g id="g3795">
+          <path stroke-width="0.769" fill-rule="nonzero" fill="url(#linearGradient3945)" d="m23.37113,41.73413c-7.62514,0 -13.82522,2.13014 -13.82522,5.47487l0,6.55785c0,3.34473 6.20008,5.64789 13.82522,5.64789c7.62515,0 14.0721,-2.30316 14.0721,-5.64789l0,-6.55785c0,-3.34473 -6.44695,-5.47487 -14.0721,-5.47487z" id="path4152"/>
+          <ellipse stroke-dashoffset="0" stroke-miterlimit="10" stroke-width="1.00493" stroke="url(#linearGradient3947)" fill-rule="nonzero" fill="#c3c3c3" ry="5.5" rx="12.85714" cy="49.37014" cx="23.45034" transform="matrix(1.03729 0 0 0.954619 -0.894979 -0.0757206)" id="path3364"/>
+          <path fill-rule="nonzero" fill="url(#linearGradient3949)" opacity="0.49367" id="path6922" d="m13.0727,51.69682l0.25612,5.87607l4.67245,1.08368l-0.14286,-5.60261c0,0 2.07143,-0.04037 5.42857,-0.25465c-5.21574,-0.23308 -11.18337,-2.72411 -13.21428,-4.178c1.4169,2.09217 3,3.07551 3,3.07551z"/>
+        </g>
+      </g>
+    </g>
+    <g stroke="null">
+      <g stroke="null" id="svg_4">
+        <path stroke="null" d="m58.21526,256l-6.01969,0c-2.31415,0 -4.18908,-1.95581 -4.18908,-4.36842l0,-117.85597c0,-2.41261 1.87595,-4.36842 4.18908,-4.36842l6.01969,0c2.31415,0 4.18908,1.95581 4.18908,4.36842l0,117.85597c0,2.41261 -1.87629,4.36842 -4.18908,4.36842z" fill="#fff"/>
+        <path stroke="null" d="m204.08867,256l-6.01969,0c-2.31415,0 -4.18908,-2.41295 -4.18908,-5.39031l0,-111.5622c0,-2.97635 1.87595,-5.39031 4.18908,-5.39031l6.01969,0c2.31415,0 4.18908,2.41295 4.18908,5.39031l0,111.5622c0,2.97635 -1.87629,5.39031 -4.18908,5.39031z" fill="#fff"/>
+        <path stroke="null" d="m31.48364,203.17968l26.20037,0l-26.20037,26.20037l0,-26.20037z" fill="#fcea2b"/>
+        <path stroke="null" d="m57.67386,203.17968l41.75546,0l-26.20037,26.20037l-41.75546,-0.19653l26.20037,-26.00384z" fill="#3F3F3F"/>
+        <path stroke="null" d="m99.26013,203.17968l41.75546,0l-26.20037,26.20037l-41.58627,0l26.03118,-26.20037z" fill="#fcea2b"/>
+        <path stroke="null" d="m141.01559,203.17968l41.75546,0l-26.20037,26.20037l-41.75546,0l26.20037,-26.20037z" fill="#3F3F3F"/>
+        <path stroke="null" d="m182.77105,203.17968l40.23277,-0.62227l-25.7571,25.7571l-39.58986,0l25.11418,-25.13482z" fill="#fcea2b"/>
+        <path stroke="null" d="m223.00382,202.5706l0,25.7571l-25.7571,0l25.7571,-25.7571z" fill="#3F3F3F"/>
+        <path stroke="null" d="m33.17552,151.94972l25.87214,-0.11407l-25.87214,25.87214l0,-25.75808z" fill="#fcea2b"/>
+        <path stroke="null" d="m59.0612,151.84821l40.40196,0l-26.03795,25.87214l-40.23277,0l25.86876,-25.87214z" fill="#3F3F3F"/>
+        <path stroke="null" d="m99.26013,151.84821l41.75546,0l-26.20037,26.20037l-41.58627,0l26.03118,-26.20037z" fill="#fcea2b"/>
+        <path stroke="null" d="m141.01559,151.84821l41.75546,0l-26.20037,26.20037l-41.75546,0l26.20037,-26.20037z" fill="#3F3F3F"/>
+        <path stroke="null" d="m182.77105,151.84821l41.75546,0l-27.27978,25.87214l-40.67266,0.33039l26.19698,-26.20253z" fill="#fcea2b"/>
+        <path stroke="null" d="m223.00382,151.94972l0,25.7571l-25.7571,0l25.7571,-25.7571z" fill="#3F3F3F"/>
+      </g>
+      <g stroke="#000" stroke-width="2" stroke-miterlimit="10" stroke-linejoin="round" stroke-linecap="round" fill="none" id="svg_3">
+        <path stroke="null" d="m49.38367,200.64187l0,-21.48004"/>
+        <path stroke="null" d="m63.52774,228.32093l0,22.02482c0,2.27489 -1.84347,4.11802 -4.11802,4.11802l-5.91479,0c-2.27388,0 -4.11802,-1.84448 -4.11802,-4.11802l0,-20.54274"/>
+        <path stroke="null" d="m63.52774,179.15506l0,21.48004"/>
+        <path stroke="null" d="m49.38367,151.64518l0,-19.9878m14.14745,0l0,19.66635"/>
+        <path stroke="null" d="m192.71927,202.5706l0,-23.41893"/>
+        <path stroke="null" d="m206.86334,229.80978l0,20.54274c0,2.27489 -1.84347,4.11802 -4.11802,4.11802l-5.91479,0c-2.27388,0 -4.11802,-1.84448 -4.11802,-4.11802l0,-20.54274"/>
+        <path stroke="null" d="m206.86334,179.15506l0,20.1976"/>
+        <path stroke="null" d="m192.71927,150.9346l0,-19.93366m14.14745,0l0,19.61221"/>
+        <path stroke="null" d="m33.17552,151.94972l189.82831,0l0,25.7571l-189.82831,0l0,-25.7571z"/>
+        <path stroke="null" d="m33.17552,202.5706l189.82831,0l0,25.7571l-189.82831,0l0,-25.7571z"/>
+        <ellipse stroke="null" ry="15.55171" rx="15.54494" cy="116.89408" cx="56.45571"/>
+        <ellipse stroke="null" ry="15.55171" rx="15.54494" cy="116.89408" cx="199.79131"/>
+      </g>
+      <g stroke="#e27022" stroke-width="2" stroke-miterlimit="10" stroke-linejoin="round" stroke-linecap="round" fill-rule="evenodd" fill="#f4aa41" transform="translate(-2.525 -0.094)" id="svg_2">
+        <ellipse stroke="null" ry="15.55171" rx="15.54494" cy="117.19862" cx="65.01659"/>
+        <ellipse stroke="null" ry="15.55171" rx="15.54494" cy="117.19862" cx="208.31835"/>
+      </g>
+    </g>
+  </g>
+</svg>
