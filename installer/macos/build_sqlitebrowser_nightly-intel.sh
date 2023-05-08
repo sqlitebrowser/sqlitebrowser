@@ -135,24 +135,22 @@ for i in ar zh_CN zh_TW cs en fr de it ko pl pt ru es uk; do
 done
 
 # Add the icon file
-if [ "${NIGHTLY}" = "1" ]; then
-    cp installer/macos/macapp-nightly.icns build/DB\ Browser\ for\ SQLite.app/Contents/Resources/ >>$LOG 2>&1
-    /usr/libexec/PlistBuddy -c "Set :CFBundleIconFile macapp-nightly.icns" build/DB\ Browser\ for\ SQLite.app/Contents/Info.plist >>$LOG 2>&1
-else
-    cp installer/macos/macapp.icns build/DB\ Browser\ for\ SQLite.app/Contents/Resources/ >>$LOG 2>&1
-    /usr/libexec/PlistBuddy -c "Set :CFBundleIconFile macapp.icns" build/DB\ Browser\ for\ SQLite.app/Contents/Info.plist >>$LOG 2>&1
-fi
+cp installer/macos/macapp-nightly.icns build/DB\ Browser\ for\ SQLite.app/Contents/Resources/ >>$LOG 2>&1
+/usr/libexec/PlistBuddy -c "Set :CFBundleIconFile macapp-nightly.icns" build/DB\ Browser\ for\ SQLite.app/Contents/Info.plist >>$LOG 2>&1
+
+# Rename the nightly build
+mv build/DB\ Browser\ for\ SQLite.app build/DB\ Browser\ for\ SQLite\ Nightly.app >>$LOG 2>&1
 
 # Sign the manually added extensions.  Needs to be done prior to the ".app signing" bit below, as that doesn't seem to sign these... which results in notarisation failure later on
-codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/fileio.dylib >>$LOG 2>&1
-codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/formats.dylib >>$LOG 2>&1
-codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/math.dylib >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite\ Nightly.app/Contents/Extensions/fileio.dylib >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite\ Nightly.app/Contents/Extensions/formats.dylib >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite\ Nightly.app/Contents/Extensions/math.dylib >>$LOG 2>&1
 
 # Sign the app (again).  Needs to be done after the extensions are manually signed (above), else notarisation fails
-codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite\ Nightly.app >>$LOG 2>&1
 
 # Make a .dmg file from the .app
-mv build/DB\ Browser\ for\ SQLite.app $HOME/appdmg/ >>$LOG 2>&1
+mv build/DB\ Browser\ for\ SQLite\ Nightly.app $HOME/appdmg/ >>$LOG 2>&1
 cd $HOME/appdmg >>$LOG 2>&1
 appdmg --quiet nightly.json DB\ Browser\ for\ SQLite-intel_${DATE}.dmg >>$LOG 2>&1
 codesign --sign "${DEV_ID}" --verbose --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp DB\ Browser\ for\ SQLite-intel_${DATE}.dmg >>$LOG 2>&1
@@ -182,7 +180,7 @@ while [ $currLoop -le $maxLoops ]; do
 done
 
 mv DB\ Browser\ for\ SQLite-intel_${DATE}.dmg $HOME/db4s_nightlies/ >>$LOG 2>&1
-rm -rf $HOME/appdmg/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
+rm -rf $HOME/appdmg/DB\ Browser\ for\ SQLite\ Nightly.app >>$LOG 2>&1
 
 
 ### Build SQLCipher version
@@ -257,28 +255,22 @@ for i in ar zh_CN zh_TW cs en fr de it ko pl pt ru es uk; do
 done
 
 # Add the icon file
-if [ "${NIGHTLY}" = "1" ]; then
-    cp installer/macos/macapp-nightly.icns build/DB\ Browser\ for\ SQLite.app/Contents/Resources/ >>$LOG 2>&1
-    /usr/libexec/PlistBuddy -c "Set :CFBundleIconFile macapp-nightly.icns" build/DB\ Browser\ for\ SQLite.app/Contents/Info.plist >>$LOG 2>&1
-else
-    cp installer/macos/macapp.icns build/DB\ Browser\ for\ SQLite.app/Contents/Resources/ >>$LOG 2>&1
-    /usr/libexec/PlistBuddy -c "Set :CFBundleIconFile macapp.icns" build/DB\ Browser\ for\ SQLite.app/Contents/Info.plist >>$LOG 2>&1
-fi
+cp installer/macos/macapp-nightly.icns build/DB\ Browser\ for\ SQLite.app/Contents/Resources/ >>$LOG 2>&1
+/usr/libexec/PlistBuddy -c "Set :CFBundleIconFile macapp-nightly.icns" build/DB\ Browser\ for\ SQLite.app/Contents/Info.plist >>$LOG 2>&1
+
+# Rename the nightly build
+mv build/DB\ Browser\ for\ SQLite.app build/DB\ Browser\ for\ SQLite\ Nightly.app >>$LOG 2>&1
 
 # Sign the manually added extensions.  Needs to be done prior to the ".app signing" bit below, as that doesn't seem to sign these... which results in notarisation failure later on
-codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/fileio.dylib >>$LOG 2>&1
-codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/formats.dylib >>$LOG 2>&1
-codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/math.dylib >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite\ Nightly.app/Contents/Extensions/fileio.dylib >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite\ Nightly.app/Contents/Extensions/formats.dylib >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite\ Nightly.app/Contents/Extensions/math.dylib >>$LOG 2>&1
 
 # Sign the .app
-codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
+codesign --sign "${DEV_ID}" --verbose --deep --force --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp build/DB\ Browser\ for\ SQLite\ Nightly.app >>$LOG 2>&1
 
 # Make a .dmg file from the .app
-if [ "${NIGHTLY}" = "1" ]; then
-    mv build/DB\ Browser\ for\ SQLite.app $HOME/appdmg/DB\ Browser\ for\ SQLite\ Nightly.app >>$LOG 2>&1
-else
-    mv build/DB\ Browser\ for\ SQLite.app $HOME/appdmg/ >>$LOG 2>&1
-fi
+mv build/DB\ Browser\ for\ SQLite\ Nightly.app $HOME/appdmg/ >>$LOG 2>&1
 cd $HOME/appdmg >>$LOG 2>&1
 appdmg --quiet nightly.json DB\ Browser\ for\ SQLite-sqlcipher-intel_${DATE}.dmg >>$LOG 2>&1
 codesign --sign "${DEV_ID}" --verbose --keychain "/Library/Keychains/System.keychain" --options runtime --timestamp DB\ Browser\ for\ SQLite-sqlcipher-intel_${DATE}.dmg >>$LOG 2>&1
@@ -308,7 +300,7 @@ while [ $currLoop -le $maxLoops ]; do
 done
 
 mv DB\ Browser\ for\ SQLite-sqlcipher-intel_${DATE}.dmg $HOME/db4s_nightlies/ >>$LOG 2>&1
-rm -rf $HOME/appdmg/DB\ Browser\ for\ SQLite.app >>$LOG 2>&1
+rm -rf $HOME/appdmg/DB\ Browser\ for\ SQLite\ Nightly.app >>$LOG 2>&1
 
 # If building a non-master branch, remove it now that we're finished
 if [ "${BRANCH}" != "master" ]; then
