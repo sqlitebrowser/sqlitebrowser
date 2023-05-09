@@ -124,8 +124,6 @@ and also you can be installed via [Homebrew Cask](https://caskroom.github.io/ "H
     $ brew tap homebrew/cask-versions
     $ brew cask install db-browser-for-sqlite-nightly
 
-**Note:** You can **NOT** install nightly builds with Homebrew if you already have the stable version installed.
-
 ## Linux
 
 DB Browser for SQLite works well on Linux.
