@@ -122,7 +122,7 @@ Nightly builds are available here:
 and also you can be installed via [Homebrew Cask](https://caskroom.github.io/ "Homebrew Cask"):
 
     $ brew tap homebrew/cask-versions
-    $ brew cask install db-browser-for-sqlite-nightly
+    $ brew install --cask db-browser-for-sqlite-nightly
 
 ## Linux
 
