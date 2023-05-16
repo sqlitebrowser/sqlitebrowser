@@ -288,8 +288,11 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
     // Data Browser/NULL Fields
     if(group == "databrowser")
     {
-        if(name == "font")
-            return QFont().defaultFamily();
+        if(name == "font") {
+            QFont font("Monospace");
+            font.setStyleHint(QFont::TypeWriter);
+            return QFontInfo(font).family();
+        }
         if(name == "fontsize")
             return 10;
         if(name == "symbol_limit")
