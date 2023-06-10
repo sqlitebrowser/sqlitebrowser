@@ -50,7 +50,7 @@ jobs:
         run: |
           wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
           chmod a+x linuxdeployqt-continuous-x86_64.AppImage
-          export VERSION=$(printf "master-`git rev-list HEAD --count`-` git -C . rev-parse --short HEAD`")
+          export VERSION=$(printf "dev-`git -C . rev-parse --short HEAD`")
           ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -appimage
       - name: Rename AppImage
         if: matrix.sqlcipher == '1'
