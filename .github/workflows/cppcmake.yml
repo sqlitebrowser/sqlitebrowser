@@ -90,9 +90,9 @@ jobs:
           IS_SQLCIPHER: ${{ matrix.sqlcipher }}
         run: |
           if [ "${{ matrix.sqlcipher }}" = "1" ]; then
-            sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLCipher Nightly"/' CMakeLists.txt
+            sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLCipher-dev-'$(git rev-parse --short --verify HEAD)'"/' CMakeLists.txt
           else
-            sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLite Nightly"/' CMakeLists.txt
+            sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLite-dev-'$(git rev-parse --short --verify HEAD)'"/' CMakeLists.txt
           fi
           mkdir build && cd build
           cmake -DCMAKE_PREFIX_PATH=/usr/local/opt/qt@5 -Dsqlcipher=${{ matrix.sqlcipher }} ..
@@ -109,14 +109,7 @@ jobs:
           clang -I /usr/local/opt/sqlitfts5/include -L /usr/local/opt/sqlitefts5/lib -fno-common -dynamiclib src/extensions/fileio.c src/extensions/test_windirect.c
       - name: Archiving app bundle
         if: github.event_name != 'pull_request'
-        env:
-          IS_SQLCIPHER: ${{ matrix.sqlcipher }}
-        run: |
-          if [ "${{ matrix.sqlcipher }}" = "1" ]; then
-            ditto -c -k --sequesterRsrc --keepParent build/DB\ Browser\ for\ SQLCipher\ Nightly.app archive.zip
-          else
-            ditto -c -k --sequesterRsrc --keepParent build/DB\ Browser\ for\ SQLite\ Nightly.app archive.zip
-          fi
+        run: ditto -c -k --sequesterRsrc --keepParent build/*.app archive.zip
       - name: Upload archived app bundle
         if: github.event_name != 'pull_request'
         uses: actions/upload-artifact@v3
@@ -175,122 +168,105 @@ jobs:
       - name: Include the dependencies in the app bundle
         env:
           DEV_ID: ${{ secrets.MACOS_CODESIGN_DEV_ID}}
-        run: |
-          /usr/local/opt/qt@5/bin/macdeployqt build/DB\ Browser\ for\ SQLite\ Nightly.app -sign-for-notarization="$DEV_ID"
-          /usr/local/opt/qt@5/bin/macdeployqt build/DB\ Browser\ for\ SQLCipher\ Nightly.app -sign-for-notarization="$DEV_ID"
+        run: find build -name "DB Browser for SQL*.app" -exec /usr/local/opt/qt@5/bin/macdeployqt {} -sign-for-notarization="$DEV_ID" \;
       - name: Add the extension to the app bundle
         run: |
-          mkdir build/DB\ Browser\ for\ SQLite\ Nightly.app/Contents/Extensions
-          clang -I /usr/local/opt/sqlitefts5/include -L /usr/local/opt/sqlitefts5/lib -fno-common -dynamiclib src/extensions/extension-formats.c -o build/DB\ Browser\ for\ SQLite\ Nightly.app/Contents/Extensions/formats.dylib
-          if [ -f "build/DB\ Browser\ for\ SQLite\ Nightly.app/Contents/Extensions/formats.dylib" ]; then
-            install_name_tool -id "@executable_path/../Extensions/formats.dylib" build/DB\ Browser\ for\ SQLite\ Nightly.app/Contents/Extensions/formats.dylib
-            ln -s formats.dylib build/DB\ Browser\ for\ SQLite\ Nightly.app/Contents/Extensions/formats.dylib.dylib
-          fi
-          clang -I /usr/local/opt/sqlitefts5/include -L /usr/local/opt/sqlitefts5/lib -fno-common -dynamiclib src/extensions/extension-functions.c -o build/DB\ Browser\ for\ SQLite\ Nightly.app/Contents/Extensions/math.dylib
-          if [ -f "build/DB\ Browser\ for\ SQLite\ Nightly.app/Contents/Extensions/math.dylib" ]; then
-            install_name_tool -id "@executable_path/../Extensions/math.dylib" build/DB\ Browser\ for\ SQLite\ Nightly.app/Contents/Extensions/math.dylib
-            ln -s math.dylib build/DB\ Browser\ for\ SQLite\ Nightly.app/Contents/Extensions/math.dylib.dylib
-          fi
-          curl -L -o src/extensions/fileio.c 'https://sqlite.org/src/raw?filename=ext/misc/fileio.c&ci=trunk'
-          curl -L -o src/extensions/test_windirect.c 'https://sqlite.org/src/raw?filename=src/test_windirent.c&ci=trunk'
-          curl -L -o src/extensions/test_windirect.h 'https://sqlite.org/src/raw?filename=src/test_windirent.h&ci=trunk'
-          clang -I /usr/local/opt/sqlitfts5/include -L /usr/local/opt/sqlitefts5/lib -fno-common -dynamiclib src/extensions/fileio.c src/extensions/test_windirect.c -o build/DB\ Browser\ for\ SQLite\ Nightly.app/Contents/Extensions/fileio.dylib
-          if [ -f "build/DB\ Browser\ for\ SQLite\ Nightly.app/Contents/Extensions/fileio.dylib" ]; then
-            install_name_tool -id "@executable_path/../Extensions/fileio.dylib" build/DB\ Browser\ for\ SQLite\ Nightly.app/Contents/Extensions/fileio.dylib
-            ln -s fileio.dylib build/DB\ Browser\ for\ SQLite\ Nightly.app/Contents/Extensions/fileio.dylib.dylib
-          fi
+          for TARGET in $(find build -name "DB Browser for SQL*.app" | sed -e 's/ /_/g'); do
+            TARGET=$(echo $TARGET | sed -e 's/_/ /g')
+            mkdir "$TARGET/Contents/Extensions"
+            clang -I /usr/local/opt/sqlitefts5/include -L /usr/local/opt/sqlitefts5/lib -fno-common -dynamiclib src/extensions/extension-formats.c -o "$TARGET/Contents/Extensions/formats.dylib"
+            clang -I /usr/local/opt/sqlitefts5/include -L /usr/local/opt/sqlitefts5/lib -fno-common -dynamiclib src/extensions/extension-functions.c -o "$TARGET/Contents/Extensions/math.dylib"
 
-          mkdir build/DB\ Browser\ for\ SQLCipher\ Nightly.app/Contents/Extensions
-          clang -I /usr/local/opt/sqlitefts5/include -L /usr/local/opt/sqlitefts5/lib -fno-common -dynamiclib src/extensions/extension-formats.c -o build/DB\ Browser\ for\ SQLCipher\ Nightly.app/Contents/Extensions/formats.dylib
-          if [ -f "build/DB\ Browser\ for\ SQLCipher\ Nightly.app/Contents/Extensions/formats.dylib" ]; then
-            install_name_tool -id "@executable_path/../Extensions/formats.dylib" build/DB\ Browser\ for\ SQLCipher\ Nightly.app/Contents/Extensions/formats.dylib
-            ln -s formats.dylib build/DB\ Browser\ for\ SQLCipher\ Nightly.app/Contents/Extensions/formats.dylib.dylib
-          fi
-          clang -I /usr/local/opt/sqlitefts5/include -L /usr/local/opt/sqlitefts5/lib -fno-common -dynamiclib src/extensions/extension-functions.c -o build/DB\ Browser\ for\ SQLCipher\ Nightly.app/Contents/Extensions/math.dylib
-          if [ -f "build/DB\ Browser\ for\ SQLCipher\ Nightly.app/Contents/Extensions/math.dylib" ]; then
-            install_name_tool -id "@executable_path/../Extensions/math.dylib" build/DB\ Browser\ for\ SQLCipher\ Nightly.app/Contents/Extensions/math.dylib
-            ln -s math.dylib build/DB\ Browser\ for\ SQLCipher\ Nightly.app/Contents/Extensions/math.dylib.dylib
-          fi
-          curl -L -o src/extensions/fileio.c 'https://sqlite.org/src/raw?filename=ext/misc/fileio.c&ci=trunk'
-          curl -L -o src/extensions/test_windirect.c 'https://sqlite.org/src/raw?filename=src/test_windirent.c&ci=trunk'
-          curl -L -o src/extensions/test_windirect.h 'https://sqlite.org/src/raw?filename=src/test_windirent.h&ci=trunk'
-          clang -I /usr/local/opt/sqlitfts5/include -L /usr/local/opt/sqlitefts5/lib -fno-common -dynamiclib src/extensions/fileio.c src/extensions/test_windirect.c -o build/DB\ Browser\ for\ SQLCipher\ Nightly.app/Contents/Extensions/fileio.dylib
-          if [ -f "build/DB\ Browser\ for\ SQLCipher\ Nightly.app/Contents/Extensions/fileio.dylib" ]; then
-            install_name_tool -id "@executable_path/../Extensions/fileio.dylib" build/DB\ Browser\ for\ SQLCipher\ Nightly.app/Contents/Extensions/fileio.dylib
-            ln -s fileio.dylib build/DB\ Browser\ for\ SQLCipher\ Nightly.app/Contents/Extensions/fileio.dylib.dylib
-          fi
+            if [ -f "$TARGET/Contents/Extensions/formats.dylib" ]; then
+              install_name_tool -id "@executable_path/../Extensions/formats.dylib" "$TARGET/Contents/Extensions/formats.dylib"
+              ln -s formats.dylib "$TARGET/Contents/Extensions/formats.dylib.dylib"
+            fi
+            if [ -f "$TARGET/Contents/Extensions/math.dylib" ]; then
+              install_name_tool -id "@executable_path/../Extensions/math.dylib" "$TARGET/Contents/Extensions/math.dylib"
+              ln -s math.dylib "$TARGET/Contents/Extensions/math.dylib.dylib"
+            fi
+
+            curl -L -o src/extensions/fileio.c 'https://sqlite.org/src/raw?filename=ext/misc/fileio.c&ci=trunk'
+            curl -L -o src/extensions/test_windirect.c 'https://sqlite.org/src/raw?filename=src/test_windirent.c&ci=trunk'
+            curl -L -o src/extensions/test_windirect.h 'https://sqlite.org/src/raw?filename=src/test_windirent.h&ci=trunk'
+            clang -I /usr/local/opt/sqlitfts5/include -L /usr/local/opt/sqlitefts5/lib -fno-common -dynamiclib src/extensions/fileio.c src/extensions/test_windirect.c -o "$TARGET/Contents/Extensions/fileio.dylib"
+
+            if [ -f "$TARGET/Contents/Extensions/fileio.dylib" ]; then
+              install_name_tool -id "@executable_path/../Extensions/fileio.dylib" "$TARGET/Contents/Extensions/fileio.dylib"
+              ln -s fileio.dylib "$TARGET/Contents/Extensions/fileio.dylib.dylib"
+            fi
+          done
       - name: Copy the license file to the app bundle
         run: |
-          cp LICENSE LICENSE-PLUGINS build/DB\ Browser\ for\ SQLite\ Nightly.app/Contents/Resources/
-          cp LICENSE LICENSE-PLUGINS build/DB\ Browser\ for\ SQLCipher\ Nightly.app/Contents/Resources/
+          for TARGET in $(find build -name "DB Browser for SQL*.app" | sed -e 's/ /_/g'); do
+            TARGET=$(echo $TARGET | sed -e 's/_/ /g')
+            cp LICENSE "$TARGET/Contents/Resources/"
+            cp LICENSE-PLUGINS "$TARGET/Contents/Resources/"
+          done
       - name: Copy the translation files to the app bundle
         run: |
-          mkdir build/DB\ Browser\ for\ SQLite\ Nightly.app/Contents/translations
-          for i in ar cs de en es fr it ko pl pt pt_BR ru uk zh_CN zh_TW; do
-            find /usr/local/opt/qt@5/translations -name "qt_${i}.qm" 2> /dev/null -exec cp -v {} build/DB\ Browser\ for\ SQLite\ Nightly.app/Contents/translations/ \;
-            find /usr/local/opt/qt@5/translations -name "qtbase_${i}.qm" 2> /dev/null -exec cp -v {} build/DB\ Browser\ for\ SQLite\ Nightly.app/Contents/translations/ \;
-            find /usr/local/opt/qt@5/translations -name "qtmultimedia_${i}.qm" 2> /dev/null -exec cp -v {} build/DB\ Browser\ for\ SQLite\ Nightly.app/Contents/translations/ \;
-            find /usr/local/opt/qt@5/translations -name "qtscript_${i}.qm" 2> /dev/null -exec cp -v {} build/DB\ Browser\ for\ SQLite\ Nightly.app/Contents/translations/ \;
-            find /usr/local/opt/qt@5/translations -name "qtxmlpatterns_${i}.qm" 2> /dev/null -exec cp -v {} build/DB\ Browser\ for\ SQLite\ Nightly.app/Contents/translations/ \;
-          done
-
-          mkdir build/DB\ Browser\ for\ SQLCipher\ Nightly.app/Contents/translations
-          for i in ar cs de en es fr it ko pl pt pt_BR ru uk zh_CN zh_TW; do
-            find /usr/local/opt/qt@5/translations -name "qt_${i}.qm" 2> /dev/null -exec cp -v {} build/DB\ Browser\ for\ SQLCipher\ Nightly.app/Contents/translations/ \;
-            find /usr/local/opt/qt@5/translations -name "qtbase_${i}.qm" 2> /dev/null -exec cp -v {} build/DB\ Browser\ for\ SQLCipher\ Nightly.app/Contents/translations/ \;
-            find /usr/local/opt/qt@5/translations -name "qtmultimedia_${i}.qm" 2> /dev/null -exec cp -v {} build/DB\ Browser\ for\ SQLCipher\ Nightly.app/Contents/translations/ \;
-            find /usr/local/opt/qt@5/translations -name "qtscript_${i}.qm" 2> /dev/null -exec cp -v {} build/DB\ Browser\ for\ SQLCipher\ Nightly.app/Contents/translations/ \;
-            find /usr/local/opt/qt@5/translations -name "qtxmlpatterns_${i}.qm" 2> /dev/null -exec cp -v {} build/DB\ Browser\ for\ SQLCipher\ Nightly.app/Contents/translations/ \;
+          for TARGET in $(find build -name "DB Browser for SQL*.app" | sed -e 's/ /_/g'); do
+            TARGET=$(echo $TARGET | sed -e 's/_/ /g')
+            mkdir "$TARGET/Contents/translations"
+            for i in ar cs de en es fr it ko pl pt pt_BR ru uk zh_CN zh_TW; do
+              find /usr/local/opt/qt@5/translations -name "qt_${i}.qm" 2> /dev/null -exec cp -v {} "$TARGET/Contents/translations/" \;
+              find /usr/local/opt/qt@5/translations -name "qtbase_${i}.qm" 2> /dev/null -exec cp -v {} "$TARGET/Contents/translations/" \;
+              find /usr/local/opt/qt@5/translations -name "qtmultimedia_${i}.qm" 2> /dev/null -exec cp -v {} "$TARGET/Contents/translations/" \;
+              find /usr/local/opt/qt@5/translations -name "qtscript_${i}.qm" 2> /dev/null -exec cp -v {} "$TARGET/Contents/translations/" \;
+              find /usr/local/opt/qt@5/translations -name "qtxmlpatterns_${i}.qm" 2> /dev/null -exec cp -v {} "$TARGET/Contents/translations/" \;
+            done 
           done
       - name: Copy the icon file to the app bundle
         run: |
-          cp installer/macos/macapp-nightly.icns build/DB\ Browser\ for\ SQLite\ Nightly.app/Contents/Resources/
-          /usr/libexec/PlistBuddy -c "Set :CFBundleIconFile macapp-nightly.icns" build/DB\ Browser\ for\ SQLite\ Nightly.app/Contents/Info.plist
-
-          cp installer/macos/macapp-nightly.icns build/DB\ Browser\ for\ SQLCipher\ Nightly.app/Contents/Resources/
-          /usr/libexec/PlistBuddy -c "Set :CFBundleIconFile macapp-nightly.icns" build/DB\ Browser\ for\ SQLCipher\ Nightly.app/Contents/Info.plist
+          for TARGET in $(find build -name "DB Browser for SQL*.app" | sed -e 's/ /_/g'); do
+            TARGET=$(echo $TARGET | sed -e 's/_/ /g')
+            cp installer/macos/macapp.icns "$TARGET/Contents/Resources/"
+            /usr/libexec/PlistBuddy -c "Set :CFBundleIconFile macapp.icns" "$TARGET/Contents/Info.plist"
+          done
       - name: Sign the manually added extensions.
         env:
           DEV_ID: ${{ secrets.MACOS_CODESIGN_DEV_ID}}
         run: |
-          codesign --sign "$DEV_ID" --deep --force --options=runtime --strict --timestamp build/DB\ Browser\ for\ SQLite\ Nightly.app/Contents/Extensions/fileio.dylib
-          codesign --sign "$DEV_ID" --deep --force --options=runtime --strict --timestamp build/DB\ Browser\ for\ SQLite\ Nightly.app/Contents/Extensions/formats.dylib
-          codesign --sign "$DEV_ID" --deep --force --options=runtime --strict --timestamp build/DB\ Browser\ for\ SQLite\ Nightly.app/Contents/Extensions/math.dylib
-          codesign --sign "$DEV_ID" --deep --force --options=runtime --strict --timestamp build/DB\ Browser\ for\ SQLite\ Nightly.app
-
-          codesign --sign "$DEV_ID" --deep --force --options=runtime --strict --timestamp build/DB\ Browser\ for\ SQLCipher\ Nightly.app/Contents/Extensions/fileio.dylib
-          codesign --sign "$DEV_ID" --deep --force --options=runtime --strict --timestamp build/DB\ Browser\ for\ SQLCipher\ Nightly.app/Contents/Extensions/formats.dylib
-          codesign --sign "$DEV_ID" --deep --force --options=runtime --strict --timestamp build/DB\ Browser\ for\ SQLCipher\ Nightly.app/Contents/Extensions/math.dylib
-          codesign --sign "$DEV_ID" --deep --force --options=runtime --strict --timestamp build/DB\ Browser\ for\ SQLCipher\ Nightly.app
+          for TARGET in $(find build -name "DB Browser for SQL*.app" | sed -e 's/ /_/g'); do
+            TARGET=$(echo $TARGET | sed -e 's/_/ /g')
+            codesign --sign "$DEV_ID" --deep --force --options=runtime --strict --timestamp "$TARGET/Contents/Extensions/fileio.dylib"
+            codesign --sign "$DEV_ID" --deep --force --options=runtime --strict --timestamp "$TARGET/Contents/Extensions/formats.dylib"
+            codesign --sign "$DEV_ID" --deep --force --options=runtime --strict --timestamp "$TARGET/Contents/Extensions/math.dylib"
+            codesign --sign "$DEV_ID" --deep --force --options=runtime --strict --timestamp "$TARGET"
+          done
       - name: Move app bundle to installer folder for DMG creation
-        run: |
-          mv build/DB\ Browser\ for\ SQLite\ Nightly.app installer/macos/
-          mv build/DB\ Browser\ for\ SQLCipher\ Nightly.app installer/macos/
+        run: mv build/*.app installer/macos
       - name: Create the DMG
         env:
           DEV_ID: ${{ secrets.MACOS_CODESIGN_DEV_ID}}
         run: |
-          appdmg --quiet installer/macos/nightly.json DB\ Browser\ for\ SQLite\ Nightly.dmg
-          codesign --sign "$DEV_ID" --verbose --options=runtime --timestamp DB\ Browser\ for\ SQLite\ Nightly.dmg
-          codesign -vvv --deep --strict --verbose=4 DB\ Browser\ for\ SQLite\ Nightly.dmg
+          sed -i "" 's/"DB Browser for SQLite Nightly.app"/"DB Browser for SQLite-dev-'$(git rev-parse --short --verify HEAD)'.app"/' installer/macos/nightly.json
+          TARGET="DB Browser for SQLite-dev-$(git rev-parse --short --verify HEAD).dmg"
+          appdmg --quiet installer/macos/nightly.json "$TARGET"
+          codesign --sign "$DEV_ID" --verbose --options=runtime --timestamp "$TARGET"
+          codesign -vvv --deep --strict --verbose=4 "$TARGET"
 
-          appdmg --quiet installer/macos/sqlcipher-nightly.json DB\ Browser\ for\ SQLCipher\ Nightly.dmg
-          codesign --sign "$DEV_ID" --verbose --options=runtime --timestamp DB\ Browser\ for\ SQLCipher\ Nightly.dmg
-          codesign -vvv --deep --strict --verbose=4 DB\ Browser\ for\ SQLCipher\ Nightly.dmg
+          sed -i "" 's/"DB Browser for SQLCipher Nightly.app"/"DB Browser for SQLCipher-dev-'$(git rev-parse --short --verify HEAD)'.app"/' installer/macos/sqlcipher-nightly.json
+          TARGET="DB Browser for SQLCipher-dev-$(git rev-parse --short --verify HEAD).dmg"
+          appdmg --quiet installer/macos/sqlcipher-nightly.json "$TARGET"
+          codesign --sign "$DEV_ID" --verbose --options=runtime --timestamp "$TARGET"
+          codesign -vvv --deep --strict --verbose=4 "$TARGET"
       - name: Notarize the dmg
         env:
           APPLE_ID: ${{ secrets.MACOS_CODESIGN_APPLE_ID }}
           APPLE_PW: ${{ secrets.MACOS_CODESIGN_APPLE_PW }}
           TEAM_ID: ${{ secrets.MACOS_CODESIGN_TEAM_ID }}
         run: |
-          xcrun notarytool submit DB\ Browser\ for\ SQLite\ Nightly.dmg --apple-id "$APPLE_ID" --password "$APPLE_PW" --team-id "$TEAM_ID" --wait
-          xcrun notarytool submit DB\ Browser\ for\ SQLCipher\ Nightly.dmg --apple-id "$APPLE_ID" --password "$APPLE_PW" --team-id "$TEAM_ID" --wait
+          for TARGET in $(find . -name "DB Browser for SQL*.dmg" | sed -e 's/ /_/g'); do
+            TARGET=$(echo $TARGET | sed -e 's/_/ /g')
+            xcrun notarytool submit "$TARGET" --apple-id "$APPLE_ID" --password "$APPLE_PW" --team-id "$TEAM_ID" --wait
+          done
       - name: Staple the notarization ticket
-        env:
-          IS_SQLCIPHER: ${{ matrix.sqlcipher }}
         run: |
-          xcrun stapler staple DB\ Browser\ for\ SQLite\ Nightly.dmg
-          xcrun stapler staple DB\ Browser\ for\ SQLCipher\ Nightly.dmg
+          for TARGET in $(find . -name "DB Browser for SQL*.dmg" | sed -e 's/ /_/g'); do
+            TARGET=$(echo $TARGET | sed -e 's/_/ /g')
+            xcrun stapler staple "$TARGET"
+          done
       - name: Archive AppBundle
         run: tar -cvf appbundle.tar DB\ Browser\ for\ *.dmg
       - name: Upload AppBundle
