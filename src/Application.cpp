@@ -365,7 +365,8 @@ QString Application::versionInformation()
         sqlite_version = tr("SQLCipher Version %1 (based on SQLite %2)").arg(sqlcipher_version, sqlite_version);
 
     return
-        tr("DB Browser for SQLite Version %1.").arg(versionString() + "\n\n" +
+        tr("DB Browser for SQLite Version %1.").arg(versionString() + "\n" +
+        tr("Last commit hash when built: %1").arg(GIT_COMMIT_HASH) + "\n\n" +
         tr("Built for %1, running on %2").arg(QSysInfo::buildAbi(), QSysInfo::currentCpuArchitecture()) + "\n" +
         tr("Qt Version %1").arg(QT_VERSION_STR) + "\n" +
         sqlite_version

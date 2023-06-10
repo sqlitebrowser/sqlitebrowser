@@ -34,6 +34,21 @@ endif()
 # used by the nightly version to add the date of the build.
 string(TIMESTAMP BUILD_VERSION "%Y%m%d")
 
+# Determine the git commit hash
+execute_process(
+    COMMAND git rev-parse --short --verify HEAD
+    OUTPUT_VARIABLE GIT_COMMIT_HASH
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    ERROR_QUIET
+)
+
+if (GIT_COMMIT_HASH STREQUAL "")
+    MESSAGE(WARNING "Could not determine git commit hash")
+    set(GIT_COMMIT_HASH "Unknown")
+endif()
+
+add_definitions(-DGIT_COMMIT_HASH="${GIT_COMMIT_HASH}")
+
 if(NOT BUILD_STABLE_VERSION)
     target_compile_definitions(${PROJECT_NAME} PRIVATE BUILD_VERSION=${BUILD_VERSION})
 endif()
