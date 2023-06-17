@@ -132,7 +132,7 @@ DB Browser for SQLite works well on Linux.
 
 ### Arch Linux
 
-Arch Linux provides an [up to date version](https://www.archlinux.org/packages/community/x86_64/sqlitebrowser/)
+Arch Linux provides an [up to date version](https://archlinux.org/packages/extra/x86_64/sqlitebrowser/)
 
 Install with the following command:
 
