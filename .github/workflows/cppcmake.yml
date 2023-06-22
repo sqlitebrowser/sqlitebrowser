@@ -132,6 +132,7 @@ jobs:
           brew update
           brew tap sqlitebrowser/sqlite3
           brew install qt@5 sqlitefts5 sqlcipherdb4s
+          brew reinstall node
           brew link sqlitefts5 --force
           npm install -g appdmg
       - name: Download archived app bundle (SQLite)
