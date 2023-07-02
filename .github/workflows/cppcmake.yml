@@ -78,7 +78,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Install dependencies
         run : |
-          brew update
+          unset HOMEBREW_NO_INSTALL_FROM_API; brew untap homebrew/core; brew update
           brew tap sqlitebrowser/sqlite3
           brew install cmake qt@5 sqlitefts5
           if [ "${{ matrix.sqlcipher }}" = "1" ]; then
