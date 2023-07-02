@@ -168,6 +168,91 @@ And compiling it:
 An icon for "DB Browser for SQLite" should now be in your main OSX Applications
 list, ready to launch.
 
+### Building a universal binary
+Building a universal binary is only possible on ARM64 architecture Macs.
+
+#### Install dependencies
+```bash
+$ brew tap sqlitebrowser/ub
+$ brew install db4sqtub@5 db4ssqlcipherub db4ssqliteftsub@5
+```
+> If you don't need SQLCipher support, you don't need to install `db4ssqlcipherub`.<br>
+> No bottles are provided for Homebrew Formulae, so you have to build them from source, which can take a while.<br>
+> Took 1 hour based on testing on a M2 Mac Mini.
+
+#### Get the source code
+```bash
+$ git clone https://github.com/sqlitebrowser/sqlitebrowser
+or
+$ git clone git@github.com/sqlitebrowser/sqlitebrowser
+```
+
+#### Change prefix for CMakelists.txt
+```bash
+$ sed -i '' 's|/opt/homebrew/opt/qt5|/opt/homebrew/opt/db4sqtub@5|g' CMakeLists.txt
+$ sed -i '' 's|/opt/homebrew/opt/sqlitefts5|/opt/homebrew/opt/db4ssqliteftsub@5|g' CMakeLists.txt
+```
+
+#### Configure build and build
+```bash
+$ mkdir build && cd build
+# For SQLite
+$ cmake -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" ..
+# For SQLCipher
+$ cmake -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -Dsqlcipher=1 ..
+$ cmake --build .
+```
+
+#### Prepare for add the extension to the app bundle (Optional)
+```bash
+$ /opt/homebrew/opt/db4sqtub@5/bin/macdeployqt DB\ Browser\ for\ SQLite.app
+```
+
+#### Add the extension to the app bundle (Optional)
+```bash
+$ mkdir build/DB\ Browser\ for\ SQLite.app/Contents/Extensions
+$ clang -I /opt/homebrew/opt/db4ssqliteftsub@5/include -L /opt/homebrew/opt/db4ssqliteftsub@5/lib -fno-common -dynamiclib src/extensions/extension-formats.c -o formats-arm64.dylib
+$ arch -x86_64 clang -I /opt/homebrew/opt/db4ssqliteftsub@5/include -L /opt/homebrew/opt/db4ssqliteftsub@5/lib -fno-common -dynamiclib src/extensions/extension-formats.c -o formats-x86_64.dylib
+$ lipo -create -output build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/formats.dylib formats-arm64.dylib formats-x86_64.dylib
+$ install_name_tool -id "@executable_path/../Extensions/formats.dylib" build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/formats.dylib
+$ ln -s formats.dylib build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/formats.dylib.dylib
+
+$ clang -I /opt/homebrew/opt/db4ssqliteftsub@5/include -L /opt/homebrew/opt/db4ssqliteftsub@5/lib -fno-common -dynamiclib src/extensions/extension-functions.c -o math-arm64.dylib
+$ arch -x86_64 clang -I /opt/homebrew/opt/db4ssqliteftsub@5/include -L /opt/homebrew/opt/db4ssqliteftsub@5/lib -fno-common -dynamiclib src/extensions/extension-functions.c -o math-x86_64.dylib
+$ lipo -create -output build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/math.dylib math-arm64.dylib math-x86_64.dylib
+$ install_name_tool -id "@executable_path/../Extensions/math.dylib" build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/math.dylib
+$ ln -s math.dylib build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/math.dylib.dylib
+
+$ curl -L -o src/extensions/fileio.c 'https://sqlite.org/src/raw?filename=ext/misc/fileio.c&ci=trunk'
+$ curl -L -o src/extensions/test_windirent.c 'https://sqlite.org/src/raw?filename=src/test_windirent.c&ci=trunk'
+$ curl -L -o src/extensions/test_windirent.h 'https://sqlite.org/src/raw?filename=src/test_windirent.h&ci=trunk'
+$ clang -I /opt/homebrew/opt/db4ssqliteftsub@5/include -L /opt/homebrew/opt/db4ssqliteftsub@5/lib -fno-common -dynamiclib src/extensions/fileio.c src/extensions/test_windirent.c -o fileio-arm64.dylib
+$ arch -x86_64 clang -I /opt/homebrew/opt/db4ssqliteftsub@5/include -L /opt/homebrew/opt/db4ssqliteftsub@5/lib -fno-common -dynamiclib src/extensions/fileio.c src/extensions/test_windirent.c -o fileio-x86_64.dylib
+$ lipo -create -output build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/fileio.dylib fileio-arm64.dylib fileio-x86_64.dylib
+$ install_name_tool -id "@executable_path/../Extensions/fileio.dylib" build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/fileio.dylib
+$ ln -s fileio.dylib build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/fileio.dylib.dylib
+```
+
+#### Copy the license file and translations (Optional)
+```bash
+$ cp LICENSE LICENSE-PLUGINS build/DB\ Browser\ for\ SQLite.app/Contents/Resources/
+$ mkdir -p build/DB\ Browser\ for\ SQLite.app/Contents/translations
+$ for i in ar zh_CN zh_TW cs en fr de it ko pl pt pt_BR ru es uk; do
+    cp -v /opt/homebrew/opt/db4sqtub@5/translations/qt_${i}.qm build/DB\ Browser\ for\ SQLite.app/Contents/translations/
+    cp -v /opt/homebrew/opt/db4sqtub@5/translations/qtbase_${i}.qm build/DB\ Browser\ for\ SQLite.app/Contents/translations/
+    cp -v /opt/homebrew/opt/db4sqtub@5/translations/qtmultimedia${i}.qm build/DB\ Browser\ for\ SQLite.app/Contents/translations/
+    cp -v /opt/homebrew/opt/db4sqtub@5/translations/qtquick1_${i}.qm build/DB\ Browser\ for\ SQLite.app/Contents/translations/
+    cp -v /opt/homebrew/opt/db4sqtub@5/translations/qtscript_${i}.qm build/DB\ Browser\ for\ SQLite.app/Contents/translations/
+    cp -v /opt/homebrew/opt/db4sqtub@5/translations/qtxmlpatterns_${i}.qm build/DB\ Browser\ for\ SQLite.app/Contents/translations/
+  done
+```
+
+#### Add the icon file (Optional)
+```bash
+$ cp installer/macos/macapp.icns build/DB\ Browser\ for\ SQLite.app/Contents/Resources/
+$ /usr/libexec/PlistBuddy -c "Set :CFBundleIconFile macapp.icns" build/DB\ Browser\ for\ SQLite.app/Contents/Info.plist
+```
+
 ### Compiling on Windows with MSVC
 
 Complete setup, build, and packaging instructions with MSVC 2013 x64 are online
