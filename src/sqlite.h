@@ -3,12 +3,14 @@
 
 #ifdef ENABLE_SQLCIPHER
     #define SQLITE_TEMP_STORE 2
-    #define SQLITE_HAS_CODEC
-#ifdef Q_OS_WIN32
-    #include <sqlite3.h>
-#else
-    #include <sqlcipher/sqlite3.h>
-#endif
+    #ifndef SQLITE_HAS_CODEC
+        #define SQLITE_HAS_CODEC
+    #endif
+    #ifdef Q_OS_WIN32
+        #include <sqlite3.h>
+    #else
+        #include <sqlcipher/sqlite3.h>
+    #endif
 #else
     #include <sqlite3.h>
 #endif
@@ -17,7 +19,7 @@
 // yet (which introduced in this commit: https://www.sqlite.org/src/info/5716fc2341ddd8cf), we
 // define it here with a value of 0. Because it is ORed with other constants a value of 0 is a no-op.
 #ifndef SQLITE_DETERMINISTIC
-#define SQLITE_DETERMINISTIC 0
+    #define SQLITE_DETERMINISTIC 0
 #endif
 
 #endif
