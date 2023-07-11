@@ -4,6 +4,8 @@ project(sqlitebrowser
     DESCRIPTION "GUI editor for SQLite databases"
 )
 
+include(GNUInstallDirs)
+
 OPTION(BUILD_STABLE_VERSION "Don't build the stable version by default" OFF) # Choose between building a stable version or nightly (the default), depending on whether '-DBUILD_STABLE_VERSION=1' is passed on the command line or not.
 OPTION(ENABLE_TESTING "Enable the unit tests" OFF)
 OPTION(FORCE_INTERNAL_QSCINTILLA "Don't use the distribution's QScintilla library even if there is one" OFF)
@@ -496,8 +498,8 @@ endif()
 
 if((NOT WIN32 AND NOT APPLE) OR MINGW)
     install(TARGETS ${PROJECT_NAME}
-        RUNTIME DESTINATION bin
-        LIBRARY DESTINATION lib
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     )
 endif()
 
@@ -511,27 +513,27 @@ endif()
 
 if(UNIX)
     install(FILES src/icons/${PROJECT_NAME}.png
-        DESTINATION share/icons/hicolor/256x256/apps/
+        DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor/256x256/apps/
     )
 
     install(FILES images/logo.svg
-        DESTINATION share/icons/hicolor/scalable/apps/
+        DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor/scalable/apps/
         RENAME ${PROJECT_NAME}.svg
     )
 
     install(FILES distri/${PROJECT_NAME}.desktop
-        DESTINATION share/applications/
+        DESTINATION ${CMAKE_INSTALL_DATADIR}/applications/
     )
 
     install(FILES distri/${PROJECT_NAME}.desktop.appdata.xml
-        DESTINATION share/metainfo/
+        DESTINATION ${CMAKE_INSTALL_DATADIR}/metainfo/
     )
 endif()
 
 if(WIN32 AND MSVC)
     install(TARGETS ${PROJECT_NAME}
         RUNTIME DESTINATION "/"
-        LIBRARY DESTINATION lib
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     )
 
     set(QT5_BIN_PATH ${QT5_PATH}/bin)
