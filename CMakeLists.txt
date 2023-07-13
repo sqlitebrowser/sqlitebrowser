@@ -14,10 +14,6 @@ OPTION(FORCE_INTERNAL_QHEXEDIT "Don't use distribution's QHexEdit even if availa
 OPTION(ALL_WARNINGS "Enable some useful warning flags" OFF)
 OPTION(sqlcipher "Build with SQLCipher library" OFF)
 
-# BUILD_VERSION is the current date in YYYYMMDD format. It is only
-# used by the nightly version to add the date of the build.
-string(TIMESTAMP BUILD_VERSION "%Y%m%d")
-
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
@@ -31,10 +27,6 @@ elseif(WIN32)
 else()
     add_executable(${PROJECT_NAME})
 endif()
-
-# BUILD_VERSION is the current date in YYYYMMDD format. It is only
-# used by the nightly version to add the date of the build.
-string(TIMESTAMP BUILD_VERSION "%Y%m%d")
 
 # Determine the git commit hash
 execute_process(
@@ -52,6 +44,10 @@ endif()
 add_definitions(-DGIT_COMMIT_HASH="${GIT_COMMIT_HASH}")
 
 if(NOT BUILD_STABLE_VERSION)
+    # BUILD_VERSION is the current date in YYYYMMDD format. It is only
+    # used by the nightly version to add the date of the build.
+    # Default defined in Version.h.in
+    string(TIMESTAMP BUILD_VERSION "%Y%m%d")
     target_compile_definitions(${PROJECT_NAME} PRIVATE BUILD_VERSION=${BUILD_VERSION})
 endif()
 
