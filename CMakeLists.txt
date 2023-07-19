@@ -4,6 +4,23 @@ project(sqlitebrowser
     DESCRIPTION "GUI editor for SQLite databases"
 )
 
+# Fix behavior of CMAKE_CXX_STANDARD when targeting macOS.
+if(POLICY CMP0025)
+    cmake_policy(SET CMP0025 NEW)
+endif()
+
+# Fix warning of AUTOMOC behavior
+if(POLICY CMP0071)
+    # https://cmake.org/cmake/help/latest/policy/CMP0071.html
+    cmake_policy(SET CMP0071 NEW)
+endif()
+
+# Fix warning of Cached Variables
+if(POLICY CMP0102)
+    # https://cmake.org/cmake/help/latest/policy/CMP0102.html
+    cmake_policy(SET CMP0102 NEW)
+endif()
+
 include(GNUInstallDirs)
 
 OPTION(BUILD_STABLE_VERSION "Don't build the stable version by default" OFF) # Choose between building a stable version or nightly (the default), depending on whether '-DBUILD_STABLE_VERSION=1' is passed on the command line or not.
@@ -55,17 +72,6 @@ set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" "${CMAKE_MODULE_PATH}"
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release")
-endif()
-
-# Fix behavior of CMAKE_CXX_STANDARD when targeting macOS.
-if(POLICY CMP0025)
-    cmake_policy(SET CMP0025 NEW)
-endif()
-
-# Fix warning of AUTOMOC behavior
-if(POLICY CMP0071)
-    # https://cmake.org/cmake/help/latest/policy/CMP0071.html
-    cmake_policy(SET CMP0071 NEW)
 endif()
 
 if(MSVC)
