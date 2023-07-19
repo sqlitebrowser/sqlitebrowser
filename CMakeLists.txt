@@ -6,6 +6,7 @@ project(sqlitebrowser
 
 # Fix behavior of CMAKE_CXX_STANDARD when targeting macOS.
 if(POLICY CMP0025)
+    # https://cmake.org/cmake/help/latest/policy/CMP0025.html
     cmake_policy(SET CMP0025 NEW)
 endif()
 
