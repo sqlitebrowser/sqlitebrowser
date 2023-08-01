@@ -471,6 +471,8 @@ QColor Settings::getDefaultColorValue(const std::string& group, const std::strin
     // Data Browser/NULL & Binary Fields
     if(group == "databrowser")
     {
+        // The switch on style can be removed if the following issue is fixed:
+        // https://github.com/ColinDuquesnoy/QDarkStyleSheet/issues/171
         switch (style) {
         case FollowDesktopStyle :
             if(name == "null_fg_colour")
@@ -481,6 +483,10 @@ QColor Settings::getDefaultColorValue(const std::string& group, const std::strin
                 return QPalette().color(QPalette::Active, QPalette::Text).name();
             if(name == "reg_bg_colour")
                 return QPalette().color(QPalette::Active, QPalette::Base).name();
+            if(name == "formatted_fg_colour")
+                return QPalette().color(QPalette::Active, QPalette::Text).name();
+            if(name == "formatted_bg_colour")
+                return QPalette().color(QPalette::Active, QPalette::AlternateBase).name();
             if(name == "bin_fg_colour")
                 return QColor(Qt::lightGray).name();
             if(name == "bin_bg_colour")
@@ -495,6 +501,10 @@ QColor Settings::getDefaultColorValue(const std::string& group, const std::strin
                 return QColor(0xF0, 0xF0, 0xF0);
             if(name == "reg_bg_colour")
                 return QColor(0x19, 0x23, 0x2D);
+            if(name == "formatted_fg_colour")
+                return QColor(0xF0, 0xF0, 0xF0);
+            if(name == "formatted_bg_colour")
+                return QColor(0x19, 0x23, 0x2D);
             if(name == "bin_fg_colour")
                 return QColor(0x78, 0x78, 0x78);
             if(name == "bin_bg_colour")
@@ -508,6 +518,10 @@ QColor Settings::getDefaultColorValue(const std::string& group, const std::strin
             if(name == "reg_fg_colour")
                 return QColor(0x00, 0x00, 0x00);
             if(name == "reg_bg_colour")
+                return QColor(0xFA, 0xFA, 0xFA);
+            if(name == "formatted_fg_colour")
+                return QColor(0x00, 0x00, 0x00);
+            if(name == "formatted_bg_colour")
                 return QColor(0xFA, 0xFA, 0xFA);
             break;
         }

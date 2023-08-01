@@ -378,8 +378,10 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
             QVariant condFormatColor = getMatchingCondFormat(row, column, data, role);
             if (condFormatColor.isValid())
                 return condFormatColor;
-            }
-        // Regular case (not null, not binary and no matching conditional format)
+            if (hasDisplayFormat(index))
+                return m_formattedFgColour;
+        }
+        // Regular case (not null, not binary, no matching conditional format and no display format)
         return m_regFgColour;
     } else if (role == Qt::BackgroundRole) {
         if(!row_available)
@@ -394,8 +396,10 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
             QVariant condFormatColor = getMatchingCondFormat(row, column, data, role);
             if (condFormatColor.isValid())
                 return condFormatColor;
+            if (hasDisplayFormat(index))
+                return m_formattedBgColour;
         }
-        // Regular case (not null, not binary and no matching conditional format)
+        // Regular case (not null, not binary, no matching conditional format and no display format)
         return m_regBgColour;
     } else if(role == Qt::ToolTipRole) {
         auto fk = getForeignKeyClause(column-1);
@@ -558,6 +562,18 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
     return false;
 }
 
+// Custom display format set?
+bool SqliteTableModel::hasDisplayFormat (const QModelIndex& index) const
+{
+    bool custom_display_format = false;
+    if(m_query.selectedColumns().size())
+    {
+        if(index.column() > 0)
+            custom_display_format = m_query.selectedColumns().at(static_cast<size_t>(index.column())-1).selector != m_query.selectedColumns().at(static_cast<size_t>(index.column())-1).original_column;
+    }
+    return custom_display_format;
+}
+
 Qt::ItemFlags SqliteTableModel::flags(const QModelIndex& index) const
 {
     if(!index.isValid())
@@ -565,15 +581,7 @@ Qt::ItemFlags SqliteTableModel::flags(const QModelIndex& index) const
 
     Qt::ItemFlags ret = QAbstractTableModel::flags(index) | Qt::ItemIsDropEnabled;
 
-    // Custom display format set?
-    bool custom_display_format = false;
-    if(m_query.selectedColumns().size())
-    {
-        if(index.column() > 0)
-            custom_display_format = m_query.selectedColumns().at(static_cast<size_t>(index.column())-1).selector != m_query.selectedColumns().at(static_cast<size_t>(index.column())-1).original_column;
-    }
-
-    if(!isBinary(index) && !custom_display_format && isEditable(index))
+    if(!isBinary(index) && !hasDisplayFormat(index) && isEditable(index))
         ret |= Qt::ItemIsEditable;
     return ret;
 }
@@ -1120,6 +1128,8 @@ void SqliteTableModel::reloadSettings()
     m_blobText = Settings::getValue("databrowser", "blob_text").toString();
     m_regFgColour = QColor(Settings::getValue("databrowser", "reg_fg_colour").toString());
     m_regBgColour = QColor(Settings::getValue("databrowser", "reg_bg_colour").toString());
+    m_formattedFgColour = QColor(Settings::getValue("databrowser", "formatted_fg_colour").toString());
+    m_formattedBgColour = QColor(Settings::getValue("databrowser", "formatted_bg_colour").toString());
     m_nullFgColour = QColor(Settings::getValue("databrowser", "null_fg_colour").toString());
     m_nullBgColour = QColor(Settings::getValue("databrowser", "null_bg_colour").toString());
     m_binFgColour = QColor(Settings::getValue("databrowser", "bin_fg_colour").toString());

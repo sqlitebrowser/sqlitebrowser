@@ -31,6 +31,8 @@ PreferencesDialog::PreferencesDialog(QWidget* parent, Tabs tab)
     ui->fr_reg_fg->installEventFilter(this);
     ui->fr_null_bg->installEventFilter(this);
     ui->fr_null_fg->installEventFilter(this);
+    ui->fr_formatted_bg->installEventFilter(this);
+    ui->fr_formatted_fg->installEventFilter(this);
 
     connect(ui->comboDataBrowserFont, static_cast<void (QFontComboBox::*)(int)>(&QFontComboBox::currentIndexChanged), this, &PreferencesDialog::updatePreviewFont);
     connect(ui->spinDataBrowserFontSize, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &PreferencesDialog::updatePreviewFont);
@@ -111,6 +113,8 @@ void PreferencesDialog::loadSettings()
     loadColorSetting(ui->fr_bin_bg, "bin_bg");
     loadColorSetting(ui->fr_reg_fg, "reg_fg");
     loadColorSetting(ui->fr_reg_bg, "reg_bg");
+    loadColorSetting(ui->fr_formatted_fg, "formatted_fg");
+    loadColorSetting(ui->fr_formatted_bg, "formatted_bg");
 
     ui->spinSymbolLimit->setValue(Settings::getValue("databrowser", "symbol_limit").toInt());
     ui->spinCompleteThreshold->setValue(Settings::getValue("databrowser", "complete_threshold").toInt());
@@ -238,6 +242,8 @@ void PreferencesDialog::saveSettings(bool accept)
     saveColorSetting(ui->fr_null_bg, "null_bg");
     saveColorSetting(ui->fr_reg_fg, "reg_fg");
     saveColorSetting(ui->fr_reg_bg, "reg_bg");
+    saveColorSetting(ui->fr_formatted_fg, "formatted_fg");
+    saveColorSetting(ui->fr_formatted_bg, "formatted_bg");
     saveColorSetting(ui->fr_bin_fg, "bin_fg");
     saveColorSetting(ui->fr_bin_bg, "bin_bg");
     Settings::setValue("databrowser", "symbol_limit", ui->spinSymbolLimit->value());
@@ -376,6 +382,7 @@ bool PreferencesDialog::eventFilter(QObject *obj, QEvent *event)
     // Use mouse click and enter press on the frames to pop up a colour dialog
     if (obj == ui->fr_bin_bg  || obj == ui->fr_bin_fg ||
         obj == ui->fr_reg_bg  || obj == ui->fr_reg_fg ||
+        obj == ui->fr_formatted_bg || obj == ui->fr_formatted_fg ||
         obj == ui->fr_null_bg || obj == ui->fr_null_fg)
     {
         if (event->type() == QEvent::KeyPress)
@@ -521,6 +528,12 @@ void PreferencesDialog::setColorSetting(QFrame *frame, const QColor &color)
     } else if (frame ==  ui->fr_reg_fg) {
         line = ui->txtRegular;
         role = line->foregroundRole();
+    } else if (frame ==  ui->fr_formatted_bg) {
+        line = ui->txtFormatted;
+        role = line->backgroundRole();
+    } else if (frame ==  ui->fr_formatted_fg) {
+        line = ui->txtFormatted;
+        role = line->foregroundRole();
     } else if (frame ==  ui->fr_null_bg) {
         line = ui->txtNull;
         role = line->backgroundRole();
@@ -559,6 +572,8 @@ void PreferencesDialog::adjustColorsToStyle(int style)
     setColorSetting(ui->fr_bin_bg, Settings::getDefaultColorValue("databrowser", "bin_bg_colour", appStyle));
     setColorSetting(ui->fr_reg_fg, Settings::getDefaultColorValue("databrowser", "reg_fg_colour", appStyle));
     setColorSetting(ui->fr_reg_bg, Settings::getDefaultColorValue("databrowser", "reg_bg_colour", appStyle));
+    setColorSetting(ui->fr_formatted_fg, Settings::getDefaultColorValue("databrowser", "formatted_fg_colour", appStyle));
+    setColorSetting(ui->fr_formatted_bg, Settings::getDefaultColorValue("databrowser", "formatted_bg_colour", appStyle));
 
     for(int i=0; i < ui->treeSyntaxHighlighting->topLevelItemCount(); ++i)
     {
@@ -666,6 +681,7 @@ void PreferencesDialog::updatePreviewFont()
         QFont textFont(ui->comboDataBrowserFont->currentText());
         textFont.setPointSize(ui->spinDataBrowserFontSize->value());
         ui->txtRegular->setFont(textFont);
+        ui->txtFormatted->setFont(textFont);
         textFont.setItalic(true);
         ui->txtNull->setFont(textFont);
         ui->txtBlob->setFont(textFont);

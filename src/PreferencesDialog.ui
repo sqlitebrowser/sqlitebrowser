@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>755</width>
+    <width>756</width>
     <height>625</height>
    </rect>
   </property>
@@ -575,6 +575,9 @@
          <property name="text">
           <string>Max Recent Files</string>
          </property>
+         <property name="buddy">
+          <cstring>spinMaxRecentFiles</cstring>
+         </property>
         </widget>
        </item>
        <item row="4" column="1">
@@ -592,6 +595,9 @@
          <property name="text">
           <string>Prompt to save SQL tabs
 in new project file</string>
+         </property>
+         <property name="buddy">
+          <cstring>checkPromptSQLTabsInNewProject</cstring>
          </property>
         </widget>
        </item>
@@ -773,123 +779,57 @@ in new project file</string>
         <layout class="QVBoxLayout" name="verticalLayout_5">
          <item>
           <widget class="QGroupBox" name="groupBox_3">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="title">
             <string>Font</string>
            </property>
-           <layout class="QFormLayout" name="formLayout_4">
-            <item row="0" column="0">
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+           <layout class="QHBoxLayout" name="formLayout_4">
+            <item>
              <widget class="QLabel" name="label_11">
               <property name="text">
                <string>&amp;Font</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
               <property name="buddy">
                <cstring>comboDataBrowserFont</cstring>
               </property>
              </widget>
             </item>
-            <item row="0" column="1">
-             <widget class="QFontComboBox" name="comboDataBrowserFont"/>
+            <item>
+             <widget class="QFontComboBox" name="comboDataBrowserFont">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
             </item>
-            <item row="1" column="0">
+            <item>
              <widget class="QLabel" name="label_17">
               <property name="text">
                <string>Font si&amp;ze</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
               <property name="buddy">
                <cstring>spinDataBrowserFontSize</cstring>
               </property>
              </widget>
             </item>
-            <item row="1" column="1">
+            <item>
              <widget class="QSpinBox" name="spinDataBrowserFontSize"/>
-            </item>
-           </layout>
-          </widget>
-         </item>
-         <item>
-          <widget class="QGroupBox" name="groupBox_5">
-           <property name="title">
-            <string>Content</string>
-           </property>
-           <layout class="QGridLayout" name="gridLayout_5">
-            <item row="0" column="0">
-             <widget class="QLabel" name="label_symbol_limit">
-              <property name="text">
-               <string>Symbol limit in cell</string>
-              </property>
-              <property name="buddy">
-               <cstring>spinSymbolLimit</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QSpinBox" name="spinSymbolLimit">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimum">
-               <number>1</number>
-              </property>
-              <property name="maximum">
-               <number>20000</number>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QSpinBox" name="spinCompleteThreshold">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="toolTip">
-               <string>This is the maximum number of items allowed for some computationally expensive functionalities to be enabled:
-Maximum number of rows in a table for enabling the value completion based on current values in the column.
-Maximum number of indexes in a selection for calculating sum and average.
-Can be set to 0 for disabling the functionalities.</string>
-              </property>
-              <property name="whatsThis">
-               <string>This is the maximum number of rows in a table for enabling the value completion based on current values in the column.
-Can be set to 0 for disabling completion.</string>
-              </property>
-              <property name="minimum">
-               <number>0</number>
-              </property>
-              <property name="maximum">
-               <number>100000000</number>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="labelCompleteThreshold">
-              <property name="text">
-               <string>Threshold for completion and calculation on selection</string>
-              </property>
-              <property name="buddy">
-               <cstring>spinCompleteThreshold</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="label_22">
-              <property name="text">
-               <string>Show images in cell</string>
-              </property>
-              <property name="buddy">
-               <cstring>checkShowImagesInline</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QCheckBox" name="checkShowImagesInline">
-              <property name="toolTip">
-               <string>Enable this option to show a preview of BLOBs containing image data in the cells. This can affect the performance of the data browser, however.</string>
-              </property>
-             </widget>
             </item>
            </layout>
           </widget>
@@ -902,6 +842,12 @@ Can be set to 0 for disabling completion.</string>
            <layout class="QGridLayout" name="gridLayout_3">
             <item row="0" column="3">
              <widget class="QLabel" name="label_12">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text">
                <string>Displayed &amp;text</string>
               </property>
@@ -910,16 +856,6 @@ Can be set to 0 for disabling completion.</string>
               </property>
               <property name="buddy">
                <cstring>txtNull</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="0">
-             <widget class="QLabel" name="lb_binary">
-              <property name="text">
-               <string>Binary</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
               </property>
              </widget>
             </item>
@@ -933,7 +869,27 @@ Can be set to 0 for disabling completion.</string>
               </property>
              </widget>
             </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="lb_binary">
+              <property name="text">
+               <string>Binary</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
             <item row="4" column="0">
+             <widget class="QLabel" name="lb_formatted">
+              <property name="text">
+               <string>Formatted</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="0">
              <widget class="QLabel" name="lb_regular">
               <property name="text">
                <string>Regular</string>
@@ -944,6 +900,25 @@ Can be set to 0 for disabling completion.</string>
              </widget>
             </item>
             <item row="4" column="1">
+             <widget class="QFrame" name="fr_formatted_fg">
+              <property name="focusPolicy">
+               <enum>Qt::StrongFocus</enum>
+              </property>
+              <property name="toolTip">
+               <string>Click to set this color</string>
+              </property>
+              <property name="autoFillBackground">
+               <bool>true</bool>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="1">
              <widget class="QFrame" name="fr_reg_fg">
               <property name="focusPolicy">
                <enum>Qt::StrongFocus</enum>
@@ -964,6 +939,12 @@ Can be set to 0 for disabling completion.</string>
             </item>
             <item row="0" column="1">
              <widget class="QLabel" name="lb_text">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text">
                <string>Text color</string>
               </property>
@@ -993,6 +974,12 @@ Can be set to 0 for disabling completion.</string>
             </item>
             <item row="0" column="2">
              <widget class="QLabel" name="lb_background">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text">
                <string>Background color</string>
               </property>
@@ -1059,6 +1046,25 @@ Can be set to 0 for disabling completion.</string>
              </widget>
             </item>
             <item row="4" column="2">
+             <widget class="QFrame" name="fr_formatted_bg">
+              <property name="focusPolicy">
+               <enum>Qt::StrongFocus</enum>
+              </property>
+              <property name="toolTip">
+               <string>Click to set this color</string>
+              </property>
+              <property name="autoFillBackground">
+               <bool>true</bool>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="2">
              <widget class="QFrame" name="fr_reg_bg">
               <property name="focusPolicy">
                <enum>Qt::StrongFocus</enum>
@@ -1080,7 +1086,7 @@ Can be set to 0 for disabling completion.</string>
             <item row="2" column="3">
              <widget class="QLineEdit" name="txtNull">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -1096,9 +1102,30 @@ Can be set to 0 for disabling completion.</string>
              </widget>
             </item>
             <item row="4" column="3">
+             <widget class="QLineEdit" name="txtFormatted">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <italic>false</italic>
+               </font>
+              </property>
+              <property name="text">
+               <string>Preview only (N/A)</string>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="3">
              <widget class="QLineEdit" name="txtRegular">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -1119,7 +1146,7 @@ Can be set to 0 for disabling completion.</string>
             <item row="3" column="3">
              <widget class="QLineEdit" name="txtBlob">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -1141,28 +1168,102 @@ Can be set to 0 for disabling completion.</string>
           </widget>
          </item>
          <item>
-          <widget class="QGroupBox" name="groupBox_4">
-           <property name="title">
-            <string>Filters</string>
+          <widget class="QGroupBox" name="groupBox_Content">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
            </property>
-           <layout class="QFormLayout" name="gridLayout_4">
-            <item row="1" column="1">
-             <widget class="QLineEdit" name="editFilterEscape">
-              <property name="maxLength">
-               <number>1</number>
+           <property name="title">
+            <string>Content</string>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_5">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_symbol_limit">
+              <property name="text">
+               <string>Symbol limit in cell</string>
+              </property>
+              <property name="buddy">
+               <cstring>spinSymbolLimit</cstring>
               </property>
              </widget>
             </item>
             <item row="1" column="0">
-             <widget class="QLabel" name="label_18">
+             <widget class="QLabel" name="labelCompleteThreshold">
               <property name="text">
-               <string>Escape character</string>
+               <string>Threshold for completion and calculation on selection</string>
               </property>
               <property name="buddy">
-               <cstring>editFilterEscape</cstring>
+               <cstring>spinCompleteThreshold</cstring>
               </property>
              </widget>
             </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_22">
+              <property name="text">
+               <string>Show images in cell</string>
+              </property>
+              <property name="buddy">
+               <cstring>checkShowImagesInline</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QSpinBox" name="spinSymbolLimit">
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>20000</number>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QSpinBox" name="spinCompleteThreshold">
+              <property name="toolTip">
+               <string>This is the maximum number of items allowed for some computationally expensive functionalities to be enabled:
+Maximum number of rows in a table for enabling the value completion based on current values in the column.
+Maximum number of indexes in a selection for calculating sum and average.
+Can be set to 0 for disabling the functionalities.</string>
+              </property>
+              <property name="whatsThis">
+               <string>This is the maximum number of rows in a table for enabling the value completion based on current values in the column.
+Can be set to 0 for disabling completion.</string>
+              </property>
+              <property name="minimum">
+               <number>0</number>
+              </property>
+              <property name="maximum">
+               <number>100000000</number>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QCheckBox" name="checkShowImagesInline">
+              <property name="toolTip">
+               <string>Enable this option to show a preview of BLOBs containing image data in the cells. This can affect the performance of the data browser, however.</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBox_Filters">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="title">
+            <string>Filters</string>
+           </property>
+           <layout class="QFormLayout" name="gridLayout_4">
+            <property name="sizeConstraint">
+             <enum>QLayout::SetDefaultConstraint</enum>
+            </property>
             <item row="0" column="0">
              <widget class="QLabel" name="label_19">
               <property name="text">
@@ -1180,6 +1281,23 @@ Can be set to 0 for disabling completion.</string>
               </property>
               <property name="maximum">
                <number>5000</number>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_18">
+              <property name="text">
+               <string>Escape character</string>
+              </property>
+              <property name="buddy">
+               <cstring>editFilterEscape</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QLineEdit" name="editFilterEscape">
+              <property name="maxLength">
+               <number>1</number>
               </property>
              </widget>
             </item>
@@ -1670,6 +1788,9 @@ Can be set to 0 for disabling completion.</string>
          <property name="text">
           <string>Select extensions to load for every database:</string>
          </property>
+         <property name="buddy">
+          <cstring>listExtensions</cstring>
+         </property>
         </widget>
        </item>
        <item>
@@ -1927,6 +2048,9 @@ Can be set to 0 for disabling completion.</string>
            <property name="text">
             <string>Clone databases into</string>
            </property>
+           <property name="buddy">
+            <cstring>editRemoteCloneDirectory</cstring>
+           </property>
           </widget>
          </item>
          <item row="1" column="1">
@@ -1963,6 +2087,9 @@ Can be set to 0 for disabling completion.</string>
           <widget class="QLabel" name="label_21">
            <property name="text">
             <string>Proxy</string>
+           </property>
+           <property name="buddy">
+            <cstring>buttonProxy</cstring>
            </property>
           </widget>
          </item>
@@ -2025,11 +2152,13 @@ Can be set to 0 for disabling completion.</string>
   <tabstop>languageComboBox</tabstop>
   <tabstop>appStyleCombo</tabstop>
   <tabstop>spinGeneralFontSize</tabstop>
+  <tabstop>spinMaxRecentFiles</tabstop>
   <tabstop>toolbarStyleComboMain</tabstop>
   <tabstop>toolbarStyleComboStructure</tabstop>
   <tabstop>toolbarStyleComboBrowse</tabstop>
   <tabstop>toolbarStyleComboSql</tabstop>
   <tabstop>toolbarStyleComboEditCell</tabstop>
+  <tabstop>checkPromptSQLTabsInNewProject</tabstop>
   <tabstop>checkUseRemotes</tabstop>
   <tabstop>checkUpdates</tabstop>
   <tabstop>buttonManageFileExtension</tabstop>
@@ -2039,20 +2168,24 @@ Can be set to 0 for disabling completion.</string>
   <tabstop>spinPrefetchSize</tabstop>
   <tabstop>defaultFieldTypeComboBox</tabstop>
   <tabstop>spinStructureFontSize</tabstop>
+  <tabstop>editDatabaseDefaultSqlText</tabstop>
   <tabstop>comboDataBrowserFont</tabstop>
   <tabstop>spinDataBrowserFontSize</tabstop>
-  <tabstop>spinSymbolLimit</tabstop>
-  <tabstop>spinCompleteThreshold</tabstop>
-  <tabstop>checkShowImagesInline</tabstop>
   <tabstop>fr_null_fg</tabstop>
   <tabstop>fr_null_bg</tabstop>
   <tabstop>txtNull</tabstop>
   <tabstop>fr_bin_fg</tabstop>
   <tabstop>fr_bin_bg</tabstop>
   <tabstop>txtBlob</tabstop>
+  <tabstop>fr_formatted_fg</tabstop>
+  <tabstop>fr_formatted_bg</tabstop>
+  <tabstop>txtFormatted</tabstop>
   <tabstop>fr_reg_fg</tabstop>
   <tabstop>fr_reg_bg</tabstop>
   <tabstop>txtRegular</tabstop>
+  <tabstop>spinSymbolLimit</tabstop>
+  <tabstop>spinCompleteThreshold</tabstop>
+  <tabstop>checkShowImagesInline</tabstop>
   <tabstop>spinFilterDelay</tabstop>
   <tabstop>editFilterEscape</tabstop>
   <tabstop>treeSyntaxHighlighting</tabstop>
@@ -2060,6 +2193,7 @@ Can be set to 0 for disabling completion.</string>
   <tabstop>spinEditorFontSize</tabstop>
   <tabstop>spinLogFontSize</tabstop>
   <tabstop>spinTabSize</tabstop>
+  <tabstop>checkIndentationUseTabs</tabstop>
   <tabstop>wrapComboBox</tabstop>
   <tabstop>quoteComboBox</tabstop>
   <tabstop>checkAutoCompletion</tabstop>
@@ -2080,6 +2214,8 @@ Can be set to 0 for disabling completion.</string>
   <tabstop>editRemoteCloneDirectory</tabstop>
   <tabstop>buttonRemoteBrowseCloneDirectory</tabstop>
   <tabstop>tableCaCerts</tabstop>
+  <tabstop>buttonExportSettings</tabstop>
+  <tabstop>buttonImportSettings</tabstop>
  </tabstops>
  <resources>
   <include location="icons/icons.qrc"/>
@@ -2092,8 +2228,8 @@ Can be set to 0 for disabling completion.</string>
    <slot>addExtension()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>732</x>
-     <y>96</y>
+     <x>733</x>
+     <y>94</y>
     </hint>
     <hint type="destinationlabel">
      <x>245</x>
@@ -2108,8 +2244,8 @@ Can be set to 0 for disabling completion.</string>
    <slot>removeExtension()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>732</x>
-     <y>125</y>
+     <x>733</x>
+     <y>123</y>
     </hint>
     <hint type="destinationlabel">
      <x>245</x>
@@ -2140,8 +2276,8 @@ Can be set to 0 for disabling completion.</string>
    <slot>chooseLocation()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>732</x>
-     <y>106</y>
+     <x>733</x>
+     <y>103</y>
     </hint>
     <hint type="destinationlabel">
      <x>294</x>
@@ -2172,8 +2308,8 @@ Can be set to 0 for disabling completion.</string>
    <slot>addClientCertificate()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>722</x>
-     <y>110</y>
+     <x>723</x>
+     <y>108</y>
     </hint>
     <hint type="destinationlabel">
      <x>596</x>
@@ -2188,8 +2324,8 @@ Can be set to 0 for disabling completion.</string>
    <slot>removeClientCertificate()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>722</x>
-     <y>139</y>
+     <x>723</x>
+     <y>137</y>
     </hint>
     <hint type="destinationlabel">
      <x>597</x>
@@ -2204,8 +2340,8 @@ Can be set to 0 for disabling completion.</string>
    <slot>chooseRemoteCloneDirectory()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>732</x>
-     <y>538</y>
+     <x>733</x>
+     <y>568</y>
     </hint>
     <hint type="destinationlabel">
      <x>595</x>
@@ -2236,8 +2372,8 @@ Can be set to 0 for disabling completion.</string>
    <slot>buttonBoxClicked(QAbstractButton*)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>394</x>
-     <y>584</y>
+     <x>644</x>
+     <y>614</y>
     </hint>
     <hint type="destinationlabel">
      <x>385</x>
@@ -2252,8 +2388,8 @@ Can be set to 0 for disabling completion.</string>
    <slot>configureProxy()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>225</x>
-     <y>506</y>
+     <x>251</x>
+     <y>537</y>
     </hint>
     <hint type="destinationlabel">
      <x>385</x>
