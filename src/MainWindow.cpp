@@ -2339,9 +2339,12 @@ void MainWindow::reloadSettings()
         break;
     }
 
-    setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(Settings::getValue("General", "toolbarStyle").toInt()));
+    ui->toolbarDB->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(Settings::getValue("General", "toolbarStyle").toInt()));
     ui->dbToolbar->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(Settings::getValue("General", "toolbarStyleStructure").toInt()));
     ui->toolbarSql->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(Settings::getValue("General", "toolbarStyleSql").toInt()));
+    // Other toolbars will follow Main Window ToolBar Style
+    ui->toolbarExtraDB->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(Settings::getValue("General", "toolbarStyle").toInt()));
+    ui->toolbarProject->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(Settings::getValue("General", "toolbarStyle").toInt()));
 
     // Set prefetch sizes for lazy population of table models
     for(int i=0;i<ui->tabSqlAreas->count();++i)
