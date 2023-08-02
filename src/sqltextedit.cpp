@@ -7,7 +7,7 @@
 #include <Qsci/qscicommand.h>
 
 #include <QShortcut>
-#include <QRegExp>
+#include <QRegularExpression>
 
 SqlUiLexer* SqlTextEdit::sqlLexer = nullptr;
 
@@ -104,16 +104,19 @@ void SqlTextEdit::toggleBlockComment()
     if (!hasSelectedText()) {
         getCursorPosition(&lineFrom, &indexFrom);
 
+        indexTo = text(lineFrom).length();
+
         // Windows lines requires an adjustment, otherwise the selection would
         // end in the next line.
-        indexTo = text(lineFrom).endsWith("\r\n") ? lineLength(lineFrom)-1 : lineLength(lineFrom);
+        if (text(lineFrom).endsWith("\r\n"))
+            indexTo--;
 
         setSelection(lineFrom, 0, lineFrom, indexTo);
     }
 
     getSelection(&lineFrom, &indexFrom, &lineTo, &indexTo);
 
-    bool uncomment = text(lineFrom).contains(QRegExp("^[ \t]*--"));
+    bool uncomment = text(lineFrom).contains(QRegularExpression("^[ \t]*--"));
 
     // If the selection ends before the first character of a line, don't
     // take this line into account for un/commenting.
@@ -129,11 +132,13 @@ void SqlTextEdit::toggleBlockComment()
         QString lineText = text(line);
 
         if (uncomment)
-            lineText.replace(QRegExp("^([ \t]*)-- ?"), "\\1");
+            lineText.replace(QRegularExpression("^([ \t]*)-- ?"), "\\1");
         else
-            lineText.replace(QRegExp("^"), "-- ");
+            lineText.replace(QRegularExpression("^"), "-- ");
 
-        indexTo = lineText.endsWith("\r\n") ? lineLength(line)-1 : lineLength(line);
+        indexTo = text(line).length();
+        if (lineText.endsWith("\r\n"))
+            indexTo--;
 
         setSelection(line, 0, line, indexTo);
         replaceSelectedText(lineText);
