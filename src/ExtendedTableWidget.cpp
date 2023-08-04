@@ -5,6 +5,7 @@
 #include "Settings.h"
 #include "sqlitedb.h"
 #include "CondFormat.h"
+#include "Data.h"
 
 #include <QApplication>
 #include <QClipboard>
@@ -739,7 +740,7 @@ void ExtendedTableWidget::paste()
         img.save(&buffer, "PNG");       // We're always converting the image format to PNG here. TODO: Is that correct?
         buffer.close();
 
-        m->setData(indices.first(), ba);
+        m->setTypedData(indices.first(), /* isBlob = */ !isTextOnly(ba), ba);
         return;
     }
 
@@ -785,7 +786,7 @@ void ExtendedTableWidget::paste()
         for(int row=firstRow;row<firstRow+selectedRows;row++)
         {
             for(int column=firstColumn;column<firstColumn+selectedColumns;column++)
-                m->setData(m->index(row, column), bArrdata);
+                m->setTypedData(m->index(row, column), !isTextOnly(bArrdata), bArrdata);
         }
         return;
     }
