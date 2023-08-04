@@ -473,6 +473,8 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
         return false;
     }
 
+    m_db.setSavepoint("DB4S_UNDO", false);
+
     if(index.isValid() && role == Qt::EditRole)
     {
         std::unique_lock<std::mutex> lock(m_mutexDataCache);
