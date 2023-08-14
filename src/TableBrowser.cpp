@@ -358,6 +358,19 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
         find(ui->editFindExpression->text(), true, true, ReplaceMode::ReplaceAll);
     });
 
+    QShortcut* shortcutActionFilter = new QShortcut(QKeySequence("Ctrl+Shift+F"), this, nullptr, nullptr, Qt::WidgetWithChildrenShortcut);
+    connect(shortcutActionFilter, &QShortcut::activated, this, [this](){
+        // Restore cursor because in the ExtendedTableWidget it is changed to a hand when Ctrl+Shift
+        // is pressed.
+        QApplication::restoreOverrideCursor();
+        ui->dataTable->horizontalHeader()->setFocus();
+    });
+
+    QShortcut* shortcutActionGlobalFilter = new QShortcut(QKeySequence("Ctrl+Alt+F"), this, nullptr, nullptr, Qt::WidgetWithChildrenShortcut);
+    connect(shortcutActionGlobalFilter, &QShortcut::activated, this, [this](){
+        ui->editGlobalFilter->setFocus();
+    });
+
     // Recreate the model
     if(m_model)
         delete m_model;

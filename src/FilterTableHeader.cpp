@@ -37,10 +37,15 @@ void FilterTableHeader::generateFilters(size_t number, size_t number_of_hidden_f
     filterWidgets.clear();
 
     // And generate a bunch of new ones
-    for(size_t i=0;i < number; ++i)
+    for(size_t i=0; i < number; ++i)
     {
         FilterLineEdit* l = new FilterLineEdit(this, &filterWidgets, i);
         l->setVisible(i >= number_of_hidden_filters);
+
+        // Set as focus proxy the first non-row-id visible filter-line.
+        if(i!=0 && l->isVisible() && !focusProxy())
+            setFocusProxy(l);
+
         connect(l, &FilterLineEdit::delayedTextChanged, this, &FilterTableHeader::inputChanged);
         connect(l, &FilterLineEdit::filterFocused, this, [this](){emit filterFocused();});
         connect(l, &FilterLineEdit::addFilterAsCondFormat, this, &FilterTableHeader::addFilterAsCondFormat);
