@@ -363,7 +363,22 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
         // Restore cursor because in the ExtendedTableWidget it is changed to a hand when Ctrl+Shift
         // is pressed.
         QApplication::restoreOverrideCursor();
-        ui->dataTable->horizontalHeader()->setFocus();
+        FilterTableHeader* header = qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader());
+        // Set the focus to the current column if valid, otherwise, set focus to the first visible
+        // column.
+        if(!header) {
+            ui->dataTable->horizontalHeader()->setFocus();
+        } else if(currentIndex().isValid()) {
+            header->setFocusColumn(static_cast<size_t>(currentIndex().column()));
+        } else {
+            for(int col = 0; col < ui->dataTable->model()->columnCount(); col++)
+            {
+                if(!ui->dataTable->isColumnHidden(col)) {
+                    header->setFocusColumn(static_cast<size_t>(col));
+                    break;
+                }
+            }
+        }
     });
 
     QShortcut* shortcutActionGlobalFilter = new QShortcut(QKeySequence("Ctrl+Alt+F"), this, nullptr, nullptr, Qt::WidgetWithChildrenShortcut);

@@ -137,3 +137,9 @@ QString FilterTableHeader::filterValue(size_t column) const
 {
     return filterWidgets[column]->text();
 }
+
+void FilterTableHeader::setFocusColumn(size_t column)
+{
+    if(column < filterWidgets.size())
+        filterWidgets.at(column)->setFocus();
+}

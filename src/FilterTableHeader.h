@@ -16,7 +16,8 @@ public:
     QSize sizeHint() const override;
     bool hasFilters() const {return (filterWidgets.size() > 0);}
     QString filterValue(size_t column) const;
-    
+    void setFocusColumn(size_t column);
+
 public slots:
     void generateFilters(size_t number, size_t number_of_hidden_filters = 1);
     void adjustPositions();
