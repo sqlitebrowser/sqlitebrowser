@@ -880,6 +880,7 @@ void ExtendedTableWidget::useAsFilter(const QString& filterOperator, bool binary
         m_tableHeader->setFilter(column, value + filterOperator);
     else
         m_tableHeader->setFilter(column, filterOperator + value + operatorSuffix);
+    m_tableHeader->setFocusColumn(column);
 }
 
 void ExtendedTableWidget::duplicateUpperCell()
