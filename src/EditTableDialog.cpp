@@ -793,8 +793,15 @@ void EditTableDialog::fieldItemChanged(QTreeWidgetItem *item, int column)
                         {
                             new_value = new_value.trimmed().mid(1); // Leave the brackets as they are needed for a valid SQL expression
                         } else {
-                            new_value = sqlb::escapeString(new_value);
-                            item->setText(column, new_value);
+                            // Finally, the same check as in populateFields(),
+                            // add "=" to GUI field, if a function surrounded by parentheses,
+                            // or add quotes to both GUI field and stored SQL expression, otherwise.
+                            if(new_value.front() == '(' && new_value.back() == ')') {
+                                item->setText(column, '=' + new_value);
+                            } else {
+                                new_value = sqlb::escapeString(new_value);
+                                item->setText(column, new_value);
+                            }
                         }
                     }
                 }
