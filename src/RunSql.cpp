@@ -182,11 +182,17 @@ bool RunSql::executeNextStatement()
         case SQLITE_ROW:
         {
             // If we get here, the SQL statement returns some sort of data. So hand it over to the model for display. Don't set the modified flag
-            // because statements that display data don't change data as well.
+            // because statements that display data don't change data as well, except if the statement are one of INSERT/UPDATE/DELETE that could
+            // return datas with the RETURNING keyword.
 
             releaseDbAccess();
 
             lk.lock();
+
+            // Set the modified flag to true if the statement was one of INSERT/UPDATE/DELETE triggered by a possible RETURNING keyword.
+            if (query_type == InsertStatement || query_type == UpdateStatement || query_type == DeleteStatement)
+                modified = true;
+
             may_continue_with_execution = false;
 
             auto time_end = std::chrono::high_resolution_clock::now();
