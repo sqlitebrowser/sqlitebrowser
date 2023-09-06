@@ -1490,7 +1490,7 @@ void MainWindow::fileRevert()
 void MainWindow::undo()
 {
     if (db.isOpen()) {
-        db.revertToSavepoint("DB4S_UNDO");
+        db.revertToUndoSavepoint();
         refreshTableBrowsers();
     }
 }

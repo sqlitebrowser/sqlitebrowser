@@ -148,6 +148,9 @@ bool RunSql::executeNextStatement()
                 // We have to start a transaction before we create the prepared statement otherwise every executed
                 // statement will get committed after the prepared statement gets finalized
                 releaseDbAccess();
+                // Allow later undoing of this single execution with a non-unique savepoint.
+                db.setUndoSavepoint();
+                // And set the unique savepoint (if not already set) for the full current transaction.
                 db.setSavepoint();
                 acquireDbAccess();
                 savepoint_created = true;

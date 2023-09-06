@@ -484,7 +484,7 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
         return false;
     }
 
-    m_db.setSavepoint("DB4S_UNDO", false);
+    m_db.setUndoSavepoint();
 
     if(index.isValid() && role == Qt::EditRole)
     {

@@ -1271,13 +1271,13 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>&amp;Undo</string>
    </property>
    <property name="toolTip">
-    <string>Undo last change to a cell in the browser</string>
+    <string>Undo last change to the database</string>
    </property>
    <property name="statusTip">
-    <string>Undo last change to a cell in the browser</string>
+    <string>Undo last change to the database</string>
    </property>
    <property name="whatsThis">
-    <string>This action is used to undo the last change performed to a cell in the database browser. Redoing is not possible.</string>
+    <string>This action undoes the last change performed to the database in the Database Browser or in Execute SQL. Redoing is not possible.</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
