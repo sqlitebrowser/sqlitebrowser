@@ -47,10 +47,10 @@
       </property>
       <widget class="QWidget" name="structure">
        <property name="accessibleName">
-        <string extracomment="This has to be equal to the tab title in all the main tabs">Database Structure</string>
+        <string extracomment="This has to be equal to the tab title in all the main tabs">&amp;Database Structure</string>
        </property>
        <attribute name="title">
-        <string>Database Structure</string>
+        <string>&amp;Database Structure</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout">
         <property name="spacing">
@@ -117,10 +117,10 @@ You can drag SQL statements from an object row and drop them into other applicat
       </widget>
       <widget class="QWidget" name="browser">
        <property name="accessibleName">
-        <string extracomment="This has to be equal to the tab title in all the main tabs">Browse Data</string>
+        <string extracomment="This has to be equal to the tab title in all the main tabs">&amp;Browse Data</string>
        </property>
        <attribute name="title">
-        <string>Browse Data</string>
+        <string>&amp;Browse Data</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <property name="spacing">
@@ -152,10 +152,10 @@ You can drag SQL statements from an object row and drop them into other applicat
       </widget>
       <widget class="QWidget" name="pragmas">
        <property name="accessibleName">
-        <string extracomment="This has to be equal to the tab title in all the main tabs">Edit Pragmas</string>
+        <string extracomment="This has to be equal to the tab title in all the main tabs">Edit P&amp;ragmas</string>
        </property>
        <attribute name="title">
-        <string>Edit Pragmas</string>
+        <string>&amp;Edit P&amp;ragmas</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <property name="spacing">
@@ -183,8 +183,8 @@ You can drag SQL statements from an object row and drop them into other applicat
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>673</width>
-             <height>544</height>
+             <width>640</width>
+             <height>526</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -685,10 +685,10 @@ You can drag SQL statements from an object row and drop them into other applicat
       </widget>
       <widget class="QWidget" name="query">
        <property name="accessibleName">
-        <string extracomment="This has to be equal to the tab title in all the main tabs">Execute SQL</string>
+        <string extracomment="This has to be equal to the tab title in all the main tabs">E&amp;xecute SQL</string>
        </property>
        <attribute name="title">
-        <string>Execute SQL</string>
+        <string>E&amp;xecute SQL</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <property name="spacing">
@@ -753,7 +753,7 @@ You can drag SQL statements from an object row and drop them into other applicat
      <x>0</x>
      <y>0</y>
      <width>1037</width>
-     <height>23</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -1162,6 +1162,9 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    </property>
    <property name="text">
     <string>&amp;New Database...</string>
+   </property>
+   <property name="iconText">
+    <string>&amp;New Database</string>
    </property>
    <property name="toolTip">
     <string>Create a new database file</string>
@@ -1682,6 +1685,9 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    <property name="text">
     <string>Sa&amp;ve Project</string>
    </property>
+   <property name="iconText">
+    <string>&amp;Save Project</string>
+   </property>
    <property name="toolTip">
     <string>Save the current session to a file</string>
    </property>
@@ -1702,6 +1708,9 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    </property>
    <property name="text">
     <string>Open &amp;Project...</string>
+   </property>
+   <property name="iconText">
+    <string>Open &amp;Project</string>
    </property>
    <property name="toolTip">
     <string>Load a working session from a file</string>
@@ -1974,6 +1983,9 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    </property>
    <property name="text">
     <string>&amp;Open Database...</string>
+   </property>
+   <property name="iconText">
+    <string>&amp;Open Database</string>
    </property>
    <property name="toolTip">
     <string>Open an existing database file</string>
