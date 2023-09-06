@@ -2944,7 +2944,7 @@ SQL ifadelerini bir nesne satırından sürükleyip başka uygulamalara veya &ap
     </message>
     <message>
         <location filename="../MainWindow.ui" line="843"/>
-        <source>&amp;Tools</source>
+        <source>Too&amp;ls</source>
         <translation>Ara&amp;çlar</translation>
     </message>
     <message>

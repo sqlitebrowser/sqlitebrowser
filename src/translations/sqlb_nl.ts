@@ -2628,7 +2628,7 @@ Je kunt SQL-instructies vanuit een objectrij naar andere applicaties of andere v
     </message>
     <message>
         <location filename="../MainWindow.ui" line="843"/>
-        <source>&amp;Tools</source>
+        <source>Too&amp;ls</source>
         <translation>E&amp;xtra</translation>
     </message>
     <message>

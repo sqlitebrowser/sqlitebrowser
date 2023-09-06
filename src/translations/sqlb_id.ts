@@ -2728,8 +2728,8 @@ Anda dapat menyeret pernyataan SQL dari suatu baris objek dan menjatuhkan mereka
     </message>
     <message>
         <location filename="../MainWindow.ui" line="843"/>
-        <source>&amp;Tools</source>
-        <translation>Perala&amp;tan</translation>
+        <source>Too&amp;ls</source>
+        <translation>Per&amp;alatan</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="947"/>

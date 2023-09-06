@@ -2627,7 +2627,7 @@ Puoi trascinare SQL da una riga oggetto e rilasciarli dentro altri applicativi o
     </message>
     <message>
         <location filename="../MainWindow.ui" line="843"/>
-        <source>&amp;Tools</source>
+        <source>Too&amp;ls</source>
         <translation>&amp;Strumenti</translation>
     </message>
     <message>

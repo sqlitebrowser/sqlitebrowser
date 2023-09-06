@@ -2959,7 +2959,7 @@ You can drag SQL statements from an object row and drop them into other applicat
     </message>
     <message>
         <location filename="../MainWindow.ui" line="843"/>
-        <source>&amp;Tools</source>
+        <source>Too&amp;ls</source>
         <translation>工具(&amp;T)</translation>
     </message>
     <message>

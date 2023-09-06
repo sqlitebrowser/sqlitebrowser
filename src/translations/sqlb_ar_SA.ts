@@ -2735,7 +2735,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="843"/>
-        <source>&amp;Tools</source>
+        <source>Too&amp;ls</source>
         <translation>أ&amp;دوات</translation>
     </message>
     <message>

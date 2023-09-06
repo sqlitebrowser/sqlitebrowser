@@ -3361,8 +3361,8 @@ Você pode arrastar comandos SQL de uma linha e soltá-los em outras aplicaçõe
     </message>
     <message>
         <location filename="../MainWindow.ui" line="843"/>
-        <source>&amp;Tools</source>
-        <translation>Ferramen&amp;tas</translation>
+        <source>Too&amp;ls</source>
+        <translation>Ferr&amp;amentas</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="952"/>

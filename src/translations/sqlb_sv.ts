@@ -3212,7 +3212,7 @@ You can drag SQL statements from an object row and drop them into other applicat
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Tools</source>
+        <source>Too&amp;ls</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

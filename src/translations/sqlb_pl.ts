@@ -2680,7 +2680,7 @@ Można przeciągać polecenia SQL z wiersza obiektu i upuszczać je na innych ap
     </message>
     <message>
         <location filename="../MainWindow.ui" line="843"/>
-        <source>&amp;Tools</source>
+        <source>Too&amp;ls</source>
         <translation>&amp;Narzędzia</translation>
     </message>
     <message>

@@ -3081,7 +3081,7 @@ Puede arrastrar sentencias SQL desde una fila de objeto y soltarlas en otras apl
     </message>
     <message>
         <location filename="../MainWindow.ui" line="843"/>
-        <source>&amp;Tools</source>
+        <source>Too&amp;ls</source>
         <translation>&amp;Herramientas</translation>
     </message>
     <message>

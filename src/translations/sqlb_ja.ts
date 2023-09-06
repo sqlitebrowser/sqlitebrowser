@@ -2629,8 +2629,8 @@ SQL文をオブジェクト行からドラッグしほかのアプリケーシ�
     </message>
     <message>
         <location filename="../MainWindow.ui" line="843"/>
-        <source>&amp;Tools</source>
-        <translation>ツール(&amp;T)</translation>
+        <source>Too&amp;ls</source>
+        <translation>ツール(&amp;L)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="864"/>

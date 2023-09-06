@@ -2792,8 +2792,8 @@ x~y	범위: x와 y값 사이 값
     </message>
     <message>
         <location filename="../MainWindow.ui" line="845"/>
-        <source>&amp;Tools</source>
-        <translation>도구(&amp;T)</translation>
+        <source>Too&amp;ls</source>
+        <translation>도구(&amp;L)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="867"/>

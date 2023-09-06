@@ -2564,7 +2564,7 @@ x~y	Fourchette : valeurs entre x et y
     </message>
     <message>
         <location filename="../MainWindow.ui" line="843"/>
-        <source>&amp;Tools</source>
+        <source>Too&amp;ls</source>
         <translation>&amp;Outils</translation>
     </message>
     <message>
