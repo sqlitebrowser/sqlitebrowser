@@ -90,6 +90,18 @@ Download Windows releases here:
 
 * https://sqlitebrowser.org/dl/#windows
 
+Or use winget:
+
+```
+winget install -e --id DBBrowserForSQLite.DBBrowserForSQLite
+```
+
+Or use chocolatey:
+
+```
+choco install sqlitebrowser
+```
+
 **Note:** If for some reason the standard Windows release does not work
 (e.g. gives an error), try a nightly build.  Nightly builds often fix bugs
 reported after the last release. :D
