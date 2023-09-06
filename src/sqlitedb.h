@@ -123,7 +123,7 @@ public:
     **/
     db_pointer_type get (const QString& user, bool force_wait = false);
 
-    bool setSavepoint(const std::string& pointname = "RESTOREPOINT");
+    bool setSavepoint(const std::string& pointname = "RESTOREPOINT", bool unique = true);
     bool releaseSavepoint(const std::string& pointname = "RESTOREPOINT");
     bool revertToSavepoint(const std::string& pointname = "RESTOREPOINT");
     bool releaseAllSavepoints();

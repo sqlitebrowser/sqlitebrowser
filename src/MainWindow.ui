@@ -792,6 +792,7 @@ You can drag SQL statements from an object row and drop them into other applicat
     <addaction name="separator"/>
     <addaction name="fileSaveAction"/>
     <addaction name="fileRevertAction"/>
+    <addaction name="undoAction"/>
     <addaction name="separator"/>
     <addaction name="menuImport"/>
     <addaction name="menuExport"/>
@@ -882,6 +883,7 @@ You can drag SQL statements from an object row and drop them into other applicat
    <addaction name="separator"/>
    <addaction name="fileSaveAction"/>
    <addaction name="fileRevertAction"/>
+   <addaction name="undoAction"/>
   </widget>
   <widget class="QDockWidget" name="dockEdit">
    <property name="windowTitle">
@@ -1252,6 +1254,30 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    </property>
    <property name="whatsThis">
     <string>This option is used to revert the current database file to its last saved state. All changes made since the last save operation are lost.</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="undoAction">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/undo.svg</normaloff>:/icons/undo.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Undo</string>
+   </property>
+   <property name="toolTip">
+    <string>Undo last change to a cell in the browser</string>
+   </property>
+   <property name="statusTip">
+    <string>Undo last change to a cell in the browser</string>
+   </property>
+   <property name="whatsThis">
+    <string>This action is used to undo the last change performed to a cell in the database browser. Redoing is not possible.</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2531,6 +2557,22 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>fileRevert()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>undoAction</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>undo()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -3915,6 +3957,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
   <slot>importTableFromCSV()</slot>
   <slot>exportTableToCSV()</slot>
   <slot>fileRevert()</slot>
+  <slot>undo()</slot>
   <slot>fileSave()</slot>
   <slot>deleteIndex()</slot>
   <slot>createIndex()</slot>

@@ -187,6 +187,7 @@ private slots:
     void exportTableToJson();
     void fileSave();
     void fileRevert();
+    void undo();
     void exportDatabaseToSQL();
     void importDatabaseFromSQL();
     void openRecentFile();

@@ -104,5 +104,6 @@
         <file alias="text_underline">text_underlined.svg</file>
         <file alias="set_to_null">textfield_delete.svg</file>
         <file alias="settings">wrench.svg</file>
+        <file>undo.svg</file>
     </qresource>
 </RCC>

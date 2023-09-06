@@ -1457,6 +1457,7 @@ void MainWindow::dbState(bool dirty)
 {
     ui->fileSaveAction->setEnabled(dirty);
     ui->fileRevertAction->setEnabled(dirty);
+    ui->undoAction->setEnabled(dirty);
     // Unfortunately, sqlite does not allow to backup the DB while there are pending savepoints,
     // so we cannot "Save As" when the DB is dirty.
     ui->fileSaveAsAction->setEnabled(!dirty);
@@ -1483,6 +1484,14 @@ void MainWindow::fileRevert()
             db.revertAll();
             refreshTableBrowsers();
         }
+    }
+}
+
+void MainWindow::undo()
+{
+    if (db.isOpen()) {
+        db.revertToSavepoint("DB4S_UNDO");
+        refreshTableBrowsers();
     }
 }
 

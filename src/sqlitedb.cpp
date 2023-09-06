@@ -564,7 +564,7 @@ void DBBrowserDB::getSqliteVersion(QString& sqlite, QString& sqlcipher)
 #endif
 }
 
-bool DBBrowserDB::setSavepoint(const std::string& pointname)
+bool DBBrowserDB::setSavepoint(const std::string& pointname, bool unique)
 {
     if(!isOpen())
         return false;
@@ -572,7 +572,7 @@ bool DBBrowserDB::setSavepoint(const std::string& pointname)
         qWarning() << "setSavepoint: not done. DB is read-only";
         return false;
     }
-    if(contains(savepointList, pointname))
+    if(unique && contains(savepointList, pointname))
         return true;
 
     executeSQL("SAVEPOINT " + sqlb::escapeIdentifier(pointname) + ";", false, true);
