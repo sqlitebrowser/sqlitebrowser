@@ -35,6 +35,7 @@ public:
 
     /// returns logical amount of rows, whether currently cached or not
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+    int realRowCount() const;
 
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
     size_t filterCount() const;
@@ -191,6 +192,7 @@ private:
     /// the full row count, when the row-count query returns)
     RowCount m_rowCountAvailable;
     unsigned int m_currentRowCount;
+    unsigned int m_realRowCount;
 
     std::vector<std::string> m_headers;
 
@@ -239,6 +241,7 @@ private:
     QColor m_binBgColour;
     QFont m_font;
     int m_symbolLimit;
+    int m_rowsLimit;
     bool m_imagePreviewEnabled;
 
     /**

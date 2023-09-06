@@ -24,6 +24,7 @@ SqliteTableModel::SqliteTableModel(DBBrowserDB& db, QObject* parent, const QStri
     , m_db(db)
     , m_lifeCounter(0)
     , m_currentRowCount(0)
+    , m_realRowCount(0)
     , m_encoding(encoding)
 {
     // Load initial settings first
@@ -93,6 +94,11 @@ void SqliteTableModel::handleRowCountComplete (int life_id, int num_rows)
 {
     if(life_id < m_lifeCounter)
         return;
+
+    m_realRowCount = static_cast<unsigned int>(num_rows);
+    if (num_rows > m_rowsLimit) {
+        num_rows = m_rowsLimit;
+    }
 
     m_rowCountAvailable = RowCount::Complete;
     handleFinishedFetch(life_id, static_cast<unsigned int>(num_rows), static_cast<unsigned int>(num_rows));
@@ -173,6 +179,11 @@ void SqliteTableModel::setQuery(const QString& sQuery)
 int SqliteTableModel::rowCount(const QModelIndex&) const
 {
     return static_cast<int>(m_currentRowCount);
+}
+
+int SqliteTableModel::realRowCount() const
+{
+    return static_cast<int>(m_realRowCount);
 }
 
 int SqliteTableModel::columnCount(const QModelIndex&) const
@@ -662,6 +673,7 @@ bool SqliteTableModel::insertRows(int row, int count, const QModelIndex& parent)
     {
         m_cache.insert(i + static_cast<size_t>(row), std::move(tempList.at(i)));
         m_currentRowCount++;
+        m_realRowCount++;
     }
     endInsertRows();
 
@@ -695,6 +707,7 @@ bool SqliteTableModel::removeRows(int row, int count, const QModelIndex& parent)
         {
             m_cache.erase(static_cast<size_t>(row + i));
             m_currentRowCount--;
+            m_realRowCount--;
         }
 
         endRemoveRows();
@@ -837,6 +850,7 @@ void SqliteTableModel::clearCache()
     m_cache.clear();
 
     m_currentRowCount = 0;
+    m_realRowCount = 0;
     m_rowCountAvailable = RowCount::Unknown;
 }
 
@@ -1137,6 +1151,7 @@ void SqliteTableModel::reloadSettings()
     m_font = QFont(Settings::getValue("databrowser", "font").toString());
     m_font.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
     m_symbolLimit = Settings::getValue("databrowser", "symbol_limit").toInt();
+    m_rowsLimit = Settings::getValue("databrowser", "rows_limit").toInt();
     m_imagePreviewEnabled = Settings::getValue("databrowser", "image_preview").toBool();
     m_chunkSize = static_cast<std::size_t>(Settings::getValue("db", "prefetchsize").toUInt());
 }

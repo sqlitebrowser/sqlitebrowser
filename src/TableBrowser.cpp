@@ -727,6 +727,7 @@ void TableBrowser::updateRecordsetLabel()
     // Get all the numbers, i.e. the number of the first row and the last row as well as the total number of rows
     int from = ui->dataTable->verticalHeader()->visualIndexAt(0) + 1;
     int total = m_model->rowCount();
+    int real_total = m_model->realRowCount();
     int to = from + ui->dataTable->numVisibleRows() - 1;
     if(to < 0)
             to = 0;
@@ -757,10 +758,13 @@ void TableBrowser::updateRecordsetLabel()
         txt = tr("determining row count...");
         break;
     case SqliteTableModel::RowCount::Partial:
-        txt = tr("%1 - %2 of >= %3").arg(from).arg(to).arg(total);
+        txt = tr("%L1 - %L2 of >= %L3").arg(from).arg(to).arg(total);
         break;
     case SqliteTableModel::RowCount::Complete:
-        txt = tr("%1 - %2 of %3").arg(from).arg(to).arg(total);
+        txt = tr("%L1 - %L2 of %L3").arg(from).arg(to).arg(real_total);
+        if (real_total != total) {
+            txt.append(tr(" (clipped at %L1 rows)").arg(total));
+        }
         break;
     }
     ui->labelRecordset->setText(txt);
