@@ -2116,6 +2116,23 @@ int MainWindow::openSqlTab(bool resetCounter)
     w->getEditor()->setEnabledFindDialog(false);
     w->getEditor()->setFocus();
     connect(w, &SqlExecutionArea::findFrameVisibilityChanged, ui->actionSqlFind, &QAction::setChecked);
+    // Add (and remove) an asterisk next to the filename of modified file tabs.
+    connect(w->getEditor(), &SqlTextEdit::modificationChanged, this, [this](bool) {
+        for(int i=0; i < ui->tabSqlAreas->count(); ++i) {
+            SqlExecutionArea* sqlWidget = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i));
+            QString currentText = ui->tabSqlAreas->tabText(i);
+            if(!currentText.endsWith("*")) {
+                if(sqlWidget->getEditor()->isModified()) {
+                    ui->tabSqlAreas->setTabText(i, currentText + "*");
+                }
+            } else {
+                if(!sqlWidget->getEditor()->isModified()) {
+                    currentText.chop(1);
+                    ui->tabSqlAreas->setTabText(i, currentText);
+                }
+            }
+        }
+    });
 
     // Connect now the find shortcut to the editor with widget context, so it isn't ambiguous with other Scintilla Widgets.
     QShortcut* shortcutFind = new QShortcut(ui->actionSqlFind->shortcut(), w->getEditor(), nullptr, nullptr, Qt::WidgetShortcut);
