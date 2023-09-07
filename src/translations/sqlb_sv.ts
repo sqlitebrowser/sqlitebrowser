@@ -32,7 +32,8 @@
         <translation type="vanished">SQLCipher Version </translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Silk icon set by Mark James licensed under a Creative Commons Attribution 2.5 and 3.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Pastel SVG icon set by Michael Buckley under a Creative Commons
+Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;https://codefisher.org/pastel-svg/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://codefisher.org/pastel-svg/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -199,10 +200,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Browse this table after opening the DB</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Open database in read-only mode</source>
         <translation type="unfinished"></translation>
     </message>
@@ -280,6 +277,14 @@
     </message>
     <message>
         <source>Qt Version %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse this table, or use it as target of a data import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Last commit hash when built: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -464,6 +469,10 @@ Om någon annan inställning ändrades för denna databas behöver du ange och j
     </message>
     <message>
         <source>Custom display format must return only one column but it returned %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SpatiaLite Geometry to SVG</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -892,7 +901,7 @@ Message from database engine:
     </message>
     <message>
         <source>Size of data currently in table</source>
-        <translation>Storlek på data i tabell</translation>
+        <translation type="vanished">Storlek på data i tabell</translation>
     </message>
     <message>
         <source>Text files(*.txt);;All files(*)</source>
@@ -912,7 +921,7 @@ Message from database engine:
     </message>
     <message>
         <source>Type of data currently in cell: Binary</source>
-        <translation>Typ av data i cell: Binär</translation>
+        <translation type="vanished">Typ av data i cell: Binär</translation>
     </message>
     <message>
         <source>Edit database cell</source>
@@ -920,7 +929,7 @@ Message from database engine:
     </message>
     <message>
         <source>Type of data currently in cell</source>
-        <translation>Typ av data i cell</translation>
+        <translation type="vanished">Typ av data i cell</translation>
     </message>
     <message>
         <source>Export text</source>
@@ -939,7 +948,7 @@ Message from database engine:
     </message>
     <message numerus="yes">
         <source>%n byte(s)</source>
-        <translation>
+        <translation type="vanished">
             <numerusform>%n byte</numerusform>
             <numerusform>%n byte</numerusform>
         </translation>
@@ -966,7 +975,7 @@ Message from database engine:
     </message>
     <message>
         <source>Type of data currently in cell: Text / Numeric</source>
-        <translation>Typ av data i cellen: Text / Numerisk</translation>
+        <translation type="vanished">Typ av data i cellen: Text / Numerisk</translation>
     </message>
     <message>
         <source>Choose a file</source>
@@ -1141,11 +1150,6 @@ In the Evaluation mode, entered SQLite expressions are evaluated and the result 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The cell editor contains data not yet applied to the database.
-Do you want to apply the edited data?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Image data can&apos;t be viewed in this mode.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1185,29 +1189,6 @@ Do you want to apply the edited data?</source>
         <source>The cell contains invalid %1 data. Reason: %2. Do you really want to apply it to the cell?</source>
         <translation type="unfinished"></translation>
     </message>
-    <message numerus="yes">
-        <source>%n character(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>Type of data currently in cell: %1 Image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1x%2 pixel(s)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Type of data currently in cell: NULL</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Type of data currently in cell: Valid JSON</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Couldn&apos;t save file: %1.</source>
         <translation type="unfinished"></translation>
@@ -1215,6 +1196,56 @@ Do you want to apply the edited data?</source>
     <message>
         <source>The data has been saved to a temporary file and has been opened with the default application. You can now edit the file and, when you are ready, apply the saved new data to the cell or cancel any changes.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identification of the cell currently in the editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type and size of data currently in table</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The cell editor contains data not yet applied to the database.
+Do you want to apply the edited data to row=%1, column=%2?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Editing row=%1, column=%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No cell active.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type: NULL; Size: 0 bytes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Type: Text / Numeric; Size: %n character(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Type: %1 Image; Size: %2x%3 pixel(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Type: Valid JSON; Size: %n character(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Type: Binary; Size: %n byte(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -1454,10 +1485,6 @@ All sparad data i fältet försvinner.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Constraints</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Add constraint</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1486,15 +1513,7 @@ All sparad data i fältet försvinner.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add a foreign key constraint</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Add a unique constraint</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add a check constraint</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1516,6 +1535,39 @@ All sparad data i fältet försvinner.</translation>
     </message>
     <message>
         <source>This makes it impossible to enable the &apos;Unique&apos; flag. Please remove the duplicate data, which will allow the &apos;Unique&apos; flag to then be enabled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On Conflict</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Strict</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When the strict option is enabled SQLite enforces the data types of each column when updating or inserting data.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Index Constraints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Foreign Keys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>References</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Check Constraints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please add a field which meets the following criteria before setting the on conflict action:
+ - Primary key flag set</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1688,6 +1740,14 @@ All sparad data i fältet försvinner.</translation>
         <source>Export completed.</source>
         <translation type="unfinished">Export slutförd.</translation>
     </message>
+    <message>
+        <source>Error while writing the file &apos;%1&apos;: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export finished with errors.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ExportSqlDialog</name>
@@ -1761,6 +1821,10 @@ All sparad data i fältet försvinner.</translation>
     </message>
     <message>
         <source>Please select at least one table.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep original CREATE statements</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2379,6 +2443,10 @@ x~y	Range: values between x and y
         <source>Importing the file &apos;%1&apos; took %2ms. Of this %3ms were spent in the row function.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Could not prepare INSERT statement: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -2863,7 +2931,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Open the Modify Table wizard, where it is possible to rename an existing table. It is also possible to add or delete fields form a table, as well as modify field names and types.</source>
-        <translation>Öppna guide för att ändra tabell, där det är möjligt att ändra namn på en existerande tabell. Det är också möjligt att lägga till eller ta bort fält i tabell, likväl ändra namn och typer på fält.</translation>
+        <translation type="vanished">Öppna guide för att ändra tabell, där det är möjligt att ändra namn på en existerande tabell. Det är också möjligt att lägga till eller ta bort fält i tabell, likväl ändra namn och typer på fält.</translation>
     </message>
     <message>
         <source>This is the database view. You can double-click any record to edit its contents in the cell editor window.</source>
@@ -3178,33 +3246,13 @@ Försöker importera datat i SQL-filen i nuvarande databas om du svarar nej.</tr
         <translation type="vanished">Denna knapp uppdaterar datat i vald tabell.</translation>
     </message>
     <message>
-        <source>Database Structure</source>
-        <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>This is the structure of the opened database.
 You can drag SQL statements from an object row and drop them into other applications or into another instance of &apos;DB Browser for SQLite&apos;.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Browse Data</source>
-        <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edit Pragmas</source>
-        <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Warning: this pragma is not readable and this value has been inferred. Writing the pragma might overwrite a redefined LIKE provided by an SQLite extension.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Execute SQL</source>
-        <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3731,10 +3779,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Alt+0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Simplify Window Layout</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4094,6 +4138,98 @@ Skapa en backup!</translation>
     </message>
     <message>
         <source>Value is not a valid URL or filename: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Database Structure</source>
+        <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Browse Data</source>
+        <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit P&amp;ragmas</source>
+        <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Edit P&amp;ragmas</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>E&amp;xecute SQL</source>
+        <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;New Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Undo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Undo last change to the database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This action undoes the last change performed to the database in the Database Browser or in Execute SQL. Redoing is not possible.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open the Modify Table wizard, where it is possible to rename an existing table. It is also possible to add or delete fields from a table, as well as modify field names and types.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+Shift+T</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Save Project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open &amp;Project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Open Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drag &amp;&amp; Drop SELECT Query</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When dragging fields from the same table or a single table, drop a SELECT query into the editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload the database structure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+Alt+0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DB file &apos;%1&apos; could not be opened</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Table &apos;%1&apos; not found; settings ignored</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-- Reference to file &quot;%1&quot; (not supported by this version) --</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4968,6 +5104,22 @@ All your preferences will be lost and default values will be used.</source>
 Please check again.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Light style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Formatted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use tabs for indentation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When set, the Tab key will insert tab and space characters for indentation. Otherwise, just spaces will be used.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProxyDialog</name>
@@ -5284,10 +5436,6 @@ Skapa en backup!</translation>
     </message>
     <message>
         <source>Reload all data and update the views</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>F5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5667,10 +5815,6 @@ Are you sure you want to proceed?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Couldn&apos;t read file: %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Couldn&apos;t save file: %1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5692,6 +5836,10 @@ Are you sure you want to proceed?</source>
     </message>
     <message>
         <source>Modifying and saving the file will restore prompting.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t read file &quot;%1&quot;: %2.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6640,12 +6788,8 @@ Hold %3Shift and click to jump there</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1 - %2 of &gt;= %3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>%1 - %2 of %3</source>
-        <translation type="unfinished">%1 - %2 av %3</translation>
+        <translation type="obsolete">%1 - %2 av %3</translation>
     </message>
     <message>
         <source>Please enter a pseudo-primary key in order to enable editing on this view. This should be the name of a unique column in the view.</source>
@@ -6700,6 +6844,46 @@ Leave the field empty for using the database encoding.</source>
     </message>
     <message>
         <source>%1 replacement(s) made.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Clicking this button navigates up to the end in the table view above.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Klicka på denna knapp för att navigera upp till slutet av tabellvyn ovan.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Clear All Conditional Formats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy column name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy the database table column name to your clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New Data Browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add a new docked Data Browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This button adds a new docked Data Browser, which you can detach and arrange in different layouts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%L1 - %L2 of &gt;= %L3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%L1 - %L2 of %L3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> (clipped at %L1 rows)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
