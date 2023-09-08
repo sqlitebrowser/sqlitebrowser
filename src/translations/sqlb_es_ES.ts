@@ -4050,7 +4050,7 @@ Puede arrastrar sentencias SQL desde la columna Esquema y soltarlas en el editor
         <source>Select the action to apply to the dropped file(s). &lt;br/&gt;Note: only &apos;Import&apos; will process more than one file.</source>
         <translation>
             <numerusform>Seleccione la acción a aplicar al archivo.</numerusform>
-            <numerusform>Seleccione la acción a aplicar a los archivos &lt;br/&gt;Nota: sólo &apos;Importar&apos; procesará más de un archivo.</numerusform>
+            <numerusform>Seleccione la acción a aplicar a los archivos &lt;br/&gt;Nota: sólo «Importar» procesará más de un archivo.</numerusform>
         </translation>
     </message>
     <message>
@@ -4173,27 +4173,27 @@ Si responde no se intentarán importar los datos del archivo SQL en la base de d
     <message>
         <location filename="../MainWindow.cpp" line="2075"/>
         <source>The statements in the tab &apos;%1&apos; are still executing. Closing the tab will stop the execution. This might leave the database in an inconsistent state. Are you sure you want to close the tab?</source>
-        <translation>Las sentencias en la pestaña &apos;%1&apos; todavía se están ejecutando. Al cerrar la pestaña se detendrá la ejecución. Esto puede dejar la base de datos en un estado inconsistente. ¿Está seguro de que quiere cerrar la pestaña?</translation>
+        <translation>Las sentencias en la pestaña «%1»; todavía se están ejecutando. Al cerrar la pestaña se detendrá la ejecución. Esto puede dejar la base de datos en un estado inconsistente. ¿Está seguro de que quiere cerrar la pestaña?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2704"/>
         <source>DB file &apos;%1&apos; could not be opened</source>
-        <translation>El archivo de base de datos &apos;%1&apos; no se pudo abrir</translation>
+        <translation>El archivo de base de datos «%1»; no se pudo abrir</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2841"/>
         <source>This project file is using an old file format because it was created using DB Browser for SQLite version 3.10 or lower. Loading this file format is no longer fully supported. If you want to load it completely, please use DB Browser for SQLite version 3.12 to convert it to the new file format.</source>
-        <translation>Este proyecto está usando un formato de archivo antiguo porque fue creado usando DB Browser for SQLite version 3.10 o menor. La carga de este formato de archivo no está soportado en su totalidad. Si quiere cargarlo completamente, por favor, use DB Browser for SQLite version 3.12 para convertirlo al nuevo formato.</translation>
+        <translation>Este proyecto está usando un formato de archivo antiguo porque fue creado usando «DB Browser for SQLite» versión 3.10 o menor. La carga de este formato de archivo no está soportado en su totalidad. Si quiere cargarlo completamente, por favor, use «DB Browser for SQLite» versión 3.12 para convertirlo al nuevo formato.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2860"/>
         <source>Table &apos;%1&apos; not found; settings ignored</source>
-        <translation>No se ha encontrado la tabla &apos;%1&apos;; ajustes ignorados</translation>
+        <translation>No se ha encontrado la tabla «%1»;; ajustes ignorados</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3187"/>
         <source>-- Reference to file &quot;%1&quot; (not supported by this version) --</source>
-        <translation>-- Archivo citado &quot;%1&quot; (no soportado en esta version) --</translation>
+        <translation>-- Vínculo al archivo &quot;%1&quot; (no soportado en esta versión) --</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3400"/>
@@ -5176,7 +5176,7 @@ Aviso: aún no se han cargado todos los datos desde la tabla debido al mecanismo
         <location filename="../PreferencesDialog.ui" line="596"/>
         <source>Prompt to save SQL tabs
 in new project file</source>
-        <translation>Prompt para guardar pestañas SQL
+        <translation>Preguntar si guardar pestañas SQL
 en un nuevo archivo de proyecto</translation>
     </message>
     <message>
@@ -5240,7 +5240,7 @@ Se puede poner a 0 para desactivar el autocompletado.</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="1499"/>
         <source>Selection foreground</source>
-        <translation>Selección</translation>
+        <translation>Texto de la selección</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1504"/>
@@ -6018,12 +6018,12 @@ Por favor compruebe que es correcto.</translation>
     <message>
         <location filename="../RemoteDock.ui" line="83"/>
         <source>Push currently opened database to server</source>
-        <translation>Volcar la base de datos actualmente abierta al servidor</translation>
+        <translation>Cargar la base de datos actualmente abierta al servidor</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="86"/>
         <source>Upload</source>
-        <translation>Upload</translation>
+        <translation>Cargar</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="106"/>
@@ -6207,7 +6207,7 @@ de la base de datos.</translation>
     <message>
         <location filename="../RemoteDock.cpp" line="231"/>
         <source>Invalid URL: The host name does not match the host name of the current identity.</source>
-        <translation>URL inválida: El nombre de &apos;host&apos; no encaja con el de la identidad actual.</translation>
+        <translation>URL inválida: El nombre de «host» no encaja con el de la identidad actual.</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="236"/>
@@ -7084,7 +7084,7 @@ El uso de esta función tiene que ser autorizado desde las Preferencias.</transl
     <message>
         <location filename="../SqlUiLexer.cpp" line="184"/>
         <source>(X) Return the representable integer in between X and 0 (inclusive) that is furthest away from zero. Or, in other words, return the integer part of X, rounding toward zero.</source>
-        <translation>(X) Devuelve el entero representable entre X y 0 (incluído) que es está más lejos de 0. En otras palabras, devuelve la parte entera de X, redondeando hacia 0.</translation>
+        <translation>(X) Devuelve el entero representable entre X y 0 (incluído) que está más lejos de 0. En otras palabras, devuelve la parte entera de X, redondeando hacia 0.</translation>
     </message>
 </context>
 <context>
@@ -7315,18 +7315,18 @@ Mantenga pulsado %3Mayús. y haga clic para ir ahí</translation>
     <message>
         <location filename="../TableBrowser.ui" line="826"/>
         <source>New Data Browser</source>
-        <translation>Nuevo navegador de datos</translation>
+        <translation>Nuevo hoja de datos</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="829"/>
         <location filename="../TableBrowser.ui" line="832"/>
         <source>Add a new docked Data Browser</source>
-        <translation>Añadir un nuevo navegador de datos anclado</translation>
+        <translation>Añadir una nueva hoja de datos anclada</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="835"/>
         <source>This button adds a new docked Data Browser, which you can detach and arrange in different layouts.</source>
-        <translation>Este botón añade un nuevo navegador de datos anclado, que se puede desanclar y mostrar una presentación diferente.</translation>
+        <translation>Este botón añade una nueva hoja de datos anclada, que se puede desanclar y mostrar una presentación diferente.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="211"/>
@@ -8057,22 +8057,22 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
     <message>
         <location filename="../TableBrowserDock.cpp" line="72"/>
         <source>New Data Browser</source>
-        <translation>Nuevo navegador de datos</translation>
+        <translation>Nueva hoja de datos</translation>
     </message>
     <message>
         <location filename="../TableBrowserDock.cpp" line="76"/>
         <source>Rename Data Browser</source>
-        <translation>Renombrar navegador de datos</translation>
+        <translation>Renombrar hoja de datos</translation>
     </message>
     <message>
         <location filename="../TableBrowserDock.cpp" line="82"/>
         <source>Close Data Browser</source>
-        <translation>Cerrar navegador de datos</translation>
+        <translation>Cerrar hoja de datos</translation>
     </message>
     <message>
         <location filename="../TableBrowserDock.cpp" line="99"/>
         <source>Set a new name for the data browser. Use the &apos;&amp;&amp;&apos; character to allow using the following character as a keyboard shortcut.</source>
-        <translation>Pone un nuevo nombre para el navegador de datos. Use el caracter &apos;&amp;&amp;&apos; para que el caracter siguiente se use como atajo de teclado.</translation>
+        <translation>Pone un nuevo nombre para la hoja de datos. Use el caracter «&amp;&amp;» para que el caracter siguiente se use como atajo de teclado.</translation>
     </message>
 </context>
 <context>
