@@ -136,7 +136,7 @@ Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot
     <message>
         <location filename="../Application.cpp" line="99"/>
         <source>The user settings file location is replaced with the argument value instead of the environment variable value.</source>
-        <translation>La localización del archivo de ajustes de usuario es reemplazada por el valor del argumento, en vez de el valor de la variable de entorno.</translation>
+        <translation>La ubicación del archivo de ajustes de usuario es reemplazada por el valor del argumento, en vez del valor de la variable de entorno.</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="100"/>
@@ -1421,7 +1421,7 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
     <message>
         <location filename="../EditDialog.cpp" line="1300"/>
         <source>The data has been saved to a temporary file and has been opened with the default application. You can now edit the file and, when you are ready, apply the saved new data to the cell or cancel any changes.</source>
-        <translation>Los datos se han guardado en un archivo temporal y se han abierto con la aplicación predeterminada.</translation>
+        <translation>Los datos se han guardado en un archivo temporal y se han abierto con la aplicación predeterminada. Ahora puede editar el archivo y, cuando haya terminado, podrá aplicar los nuevos datos a la celda o cancelar los cambios.</translation>
     </message>
     <message>
         <source>Type of data currently in cell: Text / Numeric</source>
@@ -2738,7 +2738,7 @@ x~y	Rango: valores entre x e y</translation>
     <message>
         <location filename="../ImportCsvDialog.ui" line="366"/>
         <source>Use decimal and thousands separators according to the system locale.</source>
-        <translation>Usar separadores de decimales y de miles según convenio local.</translation>
+        <translation>Usar separadores de decimales y de miles según la configuración regional.</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="373"/>
@@ -4910,17 +4910,17 @@ Aviso: aún no se han cargado todos los datos desde la tabla debido al mecanismo
     <message>
         <location filename="../PreferencesDialog.ui" line="46"/>
         <source>Remember last location</source>
-        <translation>Recordar la última posición</translation>
+        <translation>Recordar la última ubicación</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="51"/>
         <source>Always use this location</source>
-        <translation>Usar siempre esta posición</translation>
+        <translation>Usar siempre esta ubicación</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="56"/>
         <source>Remember last location for session only</source>
-        <translation>Recordar la última posición solamente para esta sesión</translation>
+        <translation>Recordar la última ubicación solamente para esta sesión</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="85"/>
@@ -6327,7 +6327,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../RemoteNetwork.cpp" line="209"/>
         <source>Choose a location to save the file</source>
-        <translation>Seleccione una localización para guardar el archivo</translation>
+        <translation>Seleccione una ubicación para guardar el archivo</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="243"/>
