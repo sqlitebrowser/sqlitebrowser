@@ -1,0 +1,172 @@
+name: Notarize the app (macOS)
+
+inputs:
+  APPLE_ID:
+    required: true
+  APPLE_PW:
+    required: true
+  DEV_ID:
+    required: true
+  P12:
+    required: true
+  P12_PW:
+    required: true
+  KEYCHAIN_PW:
+    required: true
+  SQLCIPHER:
+    type: boolean
+    required: true
+  TEAM_ID:
+    required: true
+
+runs:
+  using: 'composite'
+
+  steps:
+    - name: Install the Apple certificate
+      env:
+        P12: ${{ inputs.P12 }}
+        P12_PW: ${{ inputs.P12_PW }}
+        KEYCHAIN_PW: ${{ inputs.KEYCHAIN_PW }}
+      shell: bash
+      run: |
+        CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+        KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+
+        echo -n "$P12" | base64 --decode -o $CERTIFICATE_PATH
+
+        security create-keychain -p "$KEYCHAIN_PW" $KEYCHAIN_PATH
+        security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+        security unlock-keychain -p "$KEYCHAIN_PW" $KEYCHAIN_PATH
+
+        security import "$CERTIFICATE_PATH" -P "$P12_PW" -A -t cert -f pkcs12 -k "$KEYCHAIN_PATH"
+        security list-keychain -d user -s $KEYCHAIN_PATH
+
+    - name: Include the dependencies in the app bundle
+      env:
+        DEV_ID: ${{ inputs.DEV_ID }}
+      shell: bash
+      run: find build -name "DB Browser for SQL*.app" -exec /usr/local/opt/qt@5/bin/macdeployqt {} -sign-for-notarization="$DEV_ID" \;
+
+    - name: Add the extension to the app bundle
+      shell: bash
+      run: |
+        for TARGET in $(find build -name "DB Browser for SQL*.app" | sed -e 's/ /_/g'); do
+          TARGET=$(echo $TARGET | sed -e 's/_/ /g')
+          mkdir "$TARGET/Contents/Extensions"
+          clang -I /usr/local/opt/sqlitefts5/include -L /usr/local/opt/sqlitefts5/lib -fno-common -dynamiclib src/extensions/extension-formats.c -o "$TARGET/Contents/Extensions/formats.dylib"
+          clang -I /usr/local/opt/sqlitefts5/include -L /usr/local/opt/sqlitefts5/lib -fno-common -dynamiclib src/extensions/extension-functions.c -o "$TARGET/Contents/Extensions/math.dylib"
+
+          if [ -f "$TARGET/Contents/Extensions/formats.dylib" ]; then
+            install_name_tool -id "@executable_path/../Extensions/formats.dylib" "$TARGET/Contents/Extensions/formats.dylib"
+            ln -s formats.dylib "$TARGET/Contents/Extensions/formats.dylib.dylib"
+          fi
+          if [ -f "$TARGET/Contents/Extensions/math.dylib" ]; then
+            install_name_tool -id "@executable_path/../Extensions/math.dylib" "$TARGET/Contents/Extensions/math.dylib"
+            ln -s math.dylib "$TARGET/Contents/Extensions/math.dylib.dylib"
+          fi
+
+          curl -L -o src/extensions/fileio.c 'https://sqlite.org/src/raw?filename=ext/misc/fileio.c&ci=trunk'
+          curl -L -o src/extensions/test_windirect.c 'https://sqlite.org/src/raw?filename=src/test_windirent.c&ci=trunk'
+          curl -L -o src/extensions/test_windirect.h 'https://sqlite.org/src/raw?filename=src/test_windirent.h&ci=trunk'
+          clang -I /usr/local/opt/sqlitfts5/include -L /usr/local/opt/sqlitefts5/lib -fno-common -dynamiclib src/extensions/fileio.c src/extensions/test_windirect.c -o "$TARGET/Contents/Extensions/fileio.dylib"
+
+          if [ -f "$TARGET/Contents/Extensions/fileio.dylib" ]; then
+            install_name_tool -id "@executable_path/../Extensions/fileio.dylib" "$TARGET/Contents/Extensions/fileio.dylib"
+            ln -s fileio.dylib "$TARGET/Contents/Extensions/fileio.dylib.dylib"
+          fi
+        done
+
+    - name: Copy the license file to the app bundle
+      shell: bash
+      run: |
+        for TARGET in $(find build -name "DB Browser for SQL*.app" | sed -e 's/ /_/g'); do
+          TARGET=$(echo $TARGET | sed -e 's/_/ /g')
+          cp LICENSE "$TARGET/Contents/Resources/"
+          cp LICENSE-PLUGINS "$TARGET/Contents/Resources/"
+        done
+
+    - name: Copy the translation files to the app bundle
+      shell: bash
+      run: |
+        for TARGET in $(find build -name "DB Browser for SQL*.app" | sed -e 's/ /_/g'); do
+          TARGET=$(echo $TARGET | sed -e 's/_/ /g')
+          mkdir "$TARGET/Contents/translations"
+          for i in ar cs de en es fr it ko pl pt pt_BR ru uk zh_CN zh_TW; do
+            find /usr/local/opt/qt@5/translations -name "qt_${i}.qm" 2> /dev/null -exec cp -v {} "$TARGET/Contents/translations/" \;
+            find /usr/local/opt/qt@5/translations -name "qtbase_${i}.qm" 2> /dev/null -exec cp -v {} "$TARGET/Contents/translations/" \;
+            find /usr/local/opt/qt@5/translations -name "qtmultimedia_${i}.qm" 2> /dev/null -exec cp -v {} "$TARGET/Contents/translations/" \;
+            find /usr/local/opt/qt@5/translations -name "qtscript_${i}.qm" 2> /dev/null -exec cp -v {} "$TARGET/Contents/translations/" \;
+            find /usr/local/opt/qt@5/translations -name "qtxmlpatterns_${i}.qm" 2> /dev/null -exec cp -v {} "$TARGET/Contents/translations/" \;
+          done 
+        done
+
+    - name: Copy the icon file to the app bundle
+      shell: bash
+      run: |
+        for TARGET in $(find build -name "DB Browser for SQL*.app" | sed -e 's/ /_/g'); do
+          TARGET=$(echo $TARGET | sed -e 's/_/ /g')
+          cp installer/macos/macapp.icns "$TARGET/Contents/Resources/"
+          /usr/libexec/PlistBuddy -c "Set :CFBundleIconFile macapp.icns" "$TARGET/Contents/Info.plist"
+        done
+
+    - name: Sign the manually added extensions.
+      env:
+        DEV_ID: ${{ inputs.DEV_ID }}
+      shell: bash
+      run: |
+        for TARGET in $(find build -name "DB Browser for SQL*.app" | sed -e 's/ /_/g'); do
+          TARGET=$(echo $TARGET | sed -e 's/_/ /g')
+          codesign --sign "$DEV_ID" --deep --force --options=runtime --strict --timestamp "$TARGET/Contents/Extensions/fileio.dylib"
+          codesign --sign "$DEV_ID" --deep --force --options=runtime --strict --timestamp "$TARGET/Contents/Extensions/formats.dylib"
+          codesign --sign "$DEV_ID" --deep --force --options=runtime --strict --timestamp "$TARGET/Contents/Extensions/math.dylib"
+          codesign --sign "$DEV_ID" --deep --force --options=runtime --strict --timestamp "$TARGET"
+        done
+
+    - name: Move app bundle to installer folder for DMG creation
+      shell: bash
+      run: mv build/*.app installer/macos
+
+    - name: Create the DMG
+      env:
+        DEV_ID: ${{ inputs.DEV_ID }}
+      shell: bash
+      run: |
+        if [ "${{ inputs.SQLCIPHER }}" = "1" ]; then
+          sed -i "" 's/"DB Browser for SQLCipher Nightly.app"/"DB Browser for SQLCipher-dev-'$(git rev-parse --short --verify HEAD)'.app"/' installer/macos/sqlcipher-nightly.json
+          TARGET="DB Browser for SQLCipher-dev-$(git rev-parse --short --verify HEAD).dmg"
+          appdmg --quiet installer/macos/sqlcipher-nightly.json "$TARGET"
+          codesign --sign "$DEV_ID" --verbose --options=runtime --timestamp "$TARGET"
+          codesign -vvv --deep --strict --verbose=4 "$TARGET"
+        else
+          sed -i "" 's/"DB Browser for SQLite Nightly.app"/"DB Browser for SQLite-dev-'$(git rev-parse --short --verify HEAD)'.app"/' installer/macos/nightly.json
+          TARGET="DB Browser for SQLite-dev-$(git rev-parse --short --verify HEAD).dmg"
+          appdmg --quiet installer/macos/nightly.json "$TARGET"
+          codesign --sign "$DEV_ID" --verbose --options=runtime --timestamp "$TARGET"
+          codesign -vvv --deep --strict --verbose=4 "$TARGET"
+        fi
+
+    - name: Notarize the dmg
+      env:
+        APPLE_ID: ${{ inputs.APPLE_ID }}
+        APPLE_PW: ${{ inputs.APPLE_PW }}
+        TEAM_ID: ${{ inputs.TEAM_ID }}
+      shell: bash
+      run: |
+        for TARGET in $(find . -name "DB Browser for SQL*.dmg" | sed -e 's/ /_/g'); do
+          TARGET=$(echo $TARGET | sed -e 's/_/ /g')
+          xcrun notarytool submit "$TARGET" --apple-id "$APPLE_ID" --password "$APPLE_PW" --team-id "$TEAM_ID" --wait
+        done
+
+    - name: Staple the notarization ticket
+      shell: bash
+      run: |
+        for TARGET in $(find . -name "DB Browser for SQL*.dmg" | sed -e 's/ /_/g'); do
+          TARGET=$(echo $TARGET | sed -e 's/_/ /g')
+          xcrun stapler staple "$TARGET"
+        done
+
+    - name: Clear keychain
+      if: always()
+      shell: bash
+      run: security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
