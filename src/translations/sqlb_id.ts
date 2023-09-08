@@ -17,7 +17,9 @@
         <location filename="../AboutDialog.ui" line="90"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Pastel SVG icon set by Michael Buckley under a Creative Commons
 Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;https://codefisher.org/pastel-svg/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://codefisher.org/pastel-svg/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Peramban DB untuk SQLite perkakas visual freeware dengan sumber terbuka, dipakai untuk membuat, merancang, dan menyunting berkas-berkas basis data SQLite.&lt;/p&gt;
+&lt;p&gt;Ini dilisensikan ganda di bawah Mozilla Public License Versi 2, maupun GNU General Public License Versi 3 atau setelahnya. Anda dapat mengubah atau mendistribusikan ulang di bawah persyaratan lisensi-lisensi ini.&lt;/p&gt;&lt;p&gt;Lihat &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; dan &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; untuk rincian.&lt;/p&gt;&lt;p&gt; Untuk informasi lebih banyak tentang program ini silakan kunjungi situs web kami di: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Perangkat lunak ini memakai Qt Toolkit GPL/LGPL dari &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;Lihat &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; untuk syarat-syarat dan informasi lisensi.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Ini juga memakai set ikon Pastel SVG oleh Michael Buckley di bawah lisensi Creative Commons
+Attribution Share Alike 4.0.&lt;br/&gt;Lihat &lt;/span&gt;&lt;a href=&quot;https://codefisher.org/pastel-svg/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://codefisher.org/pastel-svg/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; untuk rincian.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Silk icon set by Mark James licensed under a Creative Commons Attribution 2.5 and 3.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -217,136 +219,136 @@ Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot
     <message>
         <location filename="../Application.cpp" line="181"/>
         <source>Usage</source>
-        <translation type="unfinished"></translation>
+        <translation>Cara pakai</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="182"/>
         <source>options</source>
-        <translation type="unfinished"></translation>
+        <translation>opsi</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="182"/>
         <location filename="../Application.cpp" line="206"/>
         <source>database</source>
-        <translation type="unfinished"></translation>
+        <translation>basis_data</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="182"/>
         <location filename="../Application.cpp" line="208"/>
         <source>project</source>
-        <translation type="unfinished"></translation>
+        <translation>proyek</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="183"/>
         <location filename="../Application.cpp" line="210"/>
         <source>csv-file</source>
-        <translation type="unfinished"></translation>
+        <translation>berkas-csv</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="187"/>
         <source>Show command line options</source>
-        <translation type="unfinished"></translation>
+        <translation>Tampilkan opsi baris perintah</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="189"/>
         <source>Exit application after running scripts</source>
-        <translation type="unfinished"></translation>
+        <translation>Keluar aplikasi setelah menjalankan skrip</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="190"/>
         <location filename="../Application.cpp" line="192"/>
         <source>file</source>
-        <translation type="unfinished"></translation>
+        <translation>berkas</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="191"/>
         <source>Execute this SQL file after opening the DB</source>
-        <translation type="unfinished"></translation>
+        <translation>Jalankan berkas SQL ini setelah membuka DB</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="193"/>
         <source>Import this CSV file into the passed DB or into a new DB</source>
-        <translation type="unfinished"></translation>
+        <translation>Impor berkas CSV ini ke dalam DB yang diberikan atau ke dalam suatu DB baru</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="194"/>
         <source>table</source>
-        <translation type="unfinished"></translation>
+        <translation>tabel</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="195"/>
         <source>Browse this table, or use it as target of a data import</source>
-        <translation type="unfinished"></translation>
+        <translation>Ramban tabel ini, atau gunakan itu sebagai target dari suatu impor data</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="197"/>
         <source>Open database in read-only mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Buka basis data dalam mode hanya baca</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="198"/>
         <source>settings_file</source>
-        <translation type="unfinished"></translation>
+        <translation>berkas_pengaturan</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="199"/>
         <source>Run application based on this settings file</source>
-        <translation type="unfinished"></translation>
+        <translation>Jalankan aplikasi berbasis pada berkas pengaturan ini</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="200"/>
         <location filename="../Application.cpp" line="202"/>
         <source>group</source>
-        <translation type="unfinished"></translation>
+        <translation>grup</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="200"/>
         <location filename="../Application.cpp" line="202"/>
         <source>settings</source>
-        <translation type="unfinished"></translation>
+        <translation>pengaturan</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="200"/>
         <location filename="../Application.cpp" line="202"/>
         <source>value</source>
-        <translation type="unfinished"></translation>
+        <translation>nilai</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="201"/>
         <source>Run application with this setting temporarily set to value</source>
-        <translation type="unfinished"></translation>
+        <translation>Menjalankan aplikasi dengan pengaturan ini sementara ditata ke nilai</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="203"/>
         <source>Run application saving this value for this setting</source>
-        <translation type="unfinished"></translation>
+        <translation>Menjalankan aplikasi dengan menyimpan nilai bagi pengaturan ini</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="205"/>
         <source>Display the current version</source>
-        <translation type="unfinished"></translation>
+        <translation>Menampilkan versi saat ini</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="207"/>
         <source>Open this SQLite database</source>
-        <translation type="unfinished"></translation>
+        <translation>Buka basis data SQLite ini</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="209"/>
         <source>Open this project file (*.sqbpro)</source>
-        <translation type="unfinished"></translation>
+        <translation>Buka berkas proyek ini (*.sqbpro)</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="211"/>
         <source>Import this CSV file into an in-memory database</source>
-        <translation type="unfinished"></translation>
+        <translation>Impor berkas CSV ini ke dalam suatu basis data dalam memori</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="219"/>
         <location filename="../Application.cpp" line="226"/>
         <location filename="../Application.cpp" line="231"/>
         <source>The %1 option requires an argument</source>
-        <translation type="unfinished"></translation>
+        <translation>Opsi %1 memerlukan sebuah argumen</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="244"/>
@@ -381,7 +383,7 @@ Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot
     <message>
         <location filename="../Application.cpp" line="369"/>
         <source>Last commit hash when built: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Hash commit terakhir ketika dibangun: %1</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="370"/>
@@ -570,7 +572,7 @@ Bila Anda sebarang pengaturan lain diubah untuk berkas basis data ini, Anda perl
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="39"/>
         <source>SpatiaLite Geometry to SVG</source>
-        <translation type="unfinished"></translation>
+        <translation>SpatiaLite Geometry ke SVG</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="141"/>
@@ -771,13 +773,13 @@ Bila Anda sebarang pengaturan lain diubah untuk berkas basis data ini, Anda perl
     <message>
         <location filename="../sqlitedb.cpp" line="760"/>
         <source>Cannot open destination file: &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak bisa membuka berkas tujuan: &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="777"/>
         <location filename="../sqlitedb.cpp" line="795"/>
         <source>Cannot backup to file: &apos;%1&apos;. Message: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak bisa mencadangkan ke berkas: &apos;%1&apos;. Pesan %2</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="835"/>
@@ -1088,7 +1090,7 @@ Pesan dari mesin basis data:
     <message>
         <location filename="../EditDialog.ui" line="96"/>
         <source>Evaluation</source>
-        <translation type="unfinished"></translation>
+        <translation>Evaluasi</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="104"/>
@@ -1122,12 +1124,12 @@ Kesalahan diindikasikan dengan garis bawah cacing merah.</translation>
     <message>
         <location filename="../EditDialog.ui" line="203"/>
         <source>Identification of the cell currently in the editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Identifikasi dari sel yang saat ini dalam penyunting</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="225"/>
         <source>Type and size of data currently in table</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipe dan ukuran data yang saat ini dalam tabel</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="274"/>
@@ -1332,33 +1334,33 @@ Kesalahan diindikasikan dengan garis bawah cacing merah.</translation>
         <location filename="../EditDialog.cpp" line="925"/>
         <location filename="../EditDialog.cpp" line="1105"/>
         <source>Type: NULL; Size: 0 bytes</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipe: NULL; Ukuran: 0 byte</translation>
     </message>
     <message numerus="yes">
         <location filename="../EditDialog.cpp" line="927"/>
         <location filename="../EditDialog.cpp" line="1117"/>
         <source>Type: Text / Numeric; Size: %n character(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Tipe: Teks/Numerik; Ukuran: %n karakter</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="1091"/>
         <source>Type: %1 Image; Size: %2x%3 pixel(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipe: Citra %1; Ukuran: %2x%3 piksel</translation>
     </message>
     <message numerus="yes">
         <location filename="../EditDialog.cpp" line="1124"/>
         <source>Type: Valid JSON; Size: %n character(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Tipe: JSON yang Valid; Ukuran: %n karakter</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../EditDialog.cpp" line="1132"/>
         <source>Type: Binary; Size: %n byte(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Tipe: Biner; Ukuran: %n byte</numerusform>
         </translation>
     </message>
     <message>
@@ -1383,28 +1385,33 @@ Kesalahan diindikasikan dengan garis bawah cacing merah.</translation>
 Errors are indicated with a red squiggle underline.
 
 In the Evaluation mode, entered SQLite expressions are evaluated and the result applied to the cell.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mode penyunting teks memungkinkan Anda menyunting berkas polos, maupun data XML atau JSON dengan penyorotan sintaks, pemformatan otomatis, dan validasi sebelum menyimpan.
+
+Kesalahan diindikasikan dengan garis bawah cacing merah.
+
+Dalam mode Evaluasi, ekspresi SQLite yang dimasukkan dievaluasi dan hasilnya diterapkan ke sel.</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="122"/>
         <source>Unsaved data in the cell editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Data belum disimpan dalam penyunting sel</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="123"/>
         <source>The cell editor contains data not yet applied to the database.
 Do you want to apply the edited data to row=%1, column=%2?</source>
-        <translation type="unfinished"></translation>
+        <translation>Penyunting sel memuat data yang belum diterapkan ke basis data.
+Apakah Anda hendak menerapkan data yang disunting ke baris=%1, kolom=%2?</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="148"/>
         <source>Editing row=%1, column=%2</source>
-        <translation type="unfinished"></translation>
+        <translation>Menyunting baris=$1, kolom=%2</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="151"/>
         <source>No cell active.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak ada sel yang aktif.</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="477"/>
@@ -1554,17 +1561,17 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
     <message>
         <location filename="../EditTableDialog.ui" line="92"/>
         <source>On Conflict</source>
-        <translation type="unfinished"></translation>
+        <translation>Saat Konflik</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="133"/>
         <source>Strict</source>
-        <translation type="unfinished"></translation>
+        <translation>Ketat</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="143"/>
         <source>When the strict option is enabled SQLite enforces the data types of each column when updating or inserting data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ketika opsi ketat difungsikan, SQLite memaksakan tipe data dari setiap kolom ketika memperbarui atau menyisipkan data.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="164"/>
@@ -1700,7 +1707,7 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
     <message>
         <location filename="../EditTableDialog.ui" line="407"/>
         <source>Index Constraints</source>
-        <translation type="unfinished"></translation>
+        <translation>Konstrain Indeks</translation>
     </message>
     <message>
         <source>Constraints</source>
@@ -1732,17 +1739,17 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
     <message>
         <location filename="../EditTableDialog.ui" line="501"/>
         <source>Foreign Keys</source>
-        <translation type="unfinished"></translation>
+        <translation>Foreign Key</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="581"/>
         <source>References</source>
-        <translation type="unfinished"></translation>
+        <translation>Referensi</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="595"/>
         <source>Check Constraints</source>
-        <translation type="unfinished"></translation>
+        <translation>Periksa Konstrain</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="685"/>
@@ -1838,7 +1845,8 @@ Semua data yang saat ini disimpan dalam ruas ini akan hilang.</translation>
         <location filename="../EditTableDialog.cpp" line="1222"/>
         <source>Please add a field which meets the following criteria before setting the on conflict action:
  - Primary key flag set</source>
-        <translation type="unfinished"></translation>
+        <translation>Harap tambahkan suatu ruas yang memenuhi kriteria berikut sebelum menata aksi saat konflik:
+ - Flag kunci primer ditata</translation>
     </message>
 </context>
 <context>
@@ -1951,7 +1959,7 @@ Semua data yang saat ini disimpan dalam ruas ini akan hilang.</translation>
         <location filename="../ExportDataDialog.cpp" line="195"/>
         <location filename="../ExportDataDialog.cpp" line="300"/>
         <source>Error while writing the file &apos;%1&apos;: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Kesalahan saat menulis berkas &apos;%1&apos;: %2</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.cpp" line="215"/>
@@ -1976,7 +1984,7 @@ Semua data yang saat ini disimpan dalam ruas ini akan hilang.</translation>
     <message>
         <location filename="../ExportDataDialog.cpp" line="420"/>
         <source>Export finished with errors.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekspor selesai dengan kesalahan.</translation>
     </message>
 </context>
 <context>
@@ -2029,7 +2037,7 @@ Semua data yang saat ini disimpan dalam ruas ini akan hilang.</translation>
     <message>
         <location filename="../ExportSqlDialog.ui" line="148"/>
         <source>Keep original CREATE statements</source>
-        <translation type="unfinished"></translation>
+        <translation>Pertahankan pernyataan CREATE asli</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="109"/>
@@ -2729,12 +2737,12 @@ x~y	Rentang: nilai antara x dan y
     <message>
         <location filename="../ImportCsvDialog.ui" line="356"/>
         <source>Use local number conventions</source>
-        <translation type="unfinished"></translation>
+        <translation>Gunakan konvensi bilangan lokal</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="366"/>
         <source>Use decimal and thousands separators according to the system locale.</source>
-        <translation type="unfinished"></translation>
+        <translation>Gunakan pemisah desimal dan ribuan sesuai dengan lokal sistem.</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="373"/>
@@ -2805,7 +2813,7 @@ x~y	Rentang: nilai antara x dan y
     <message>
         <location filename="../ImportCsvDialog.cpp" line="636"/>
         <source>Could not prepare INSERT statement: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak bisa mempersiapkan pernyataan INSERT: %1</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.cpp" line="726"/>
@@ -3321,7 +3329,7 @@ Anda dapat menyeret pernyataan SQL dari kolom Skema dan menjatuhkan mereka ke da
     <message>
         <location filename="../MainWindow.ui" line="1715"/>
         <source>&amp;Save Project</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Simpan Proyek</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1724"/>
@@ -3331,7 +3339,7 @@ Anda dapat menyeret pernyataan SQL dari kolom Skema dan menjatuhkan mereka ke da
     <message>
         <location filename="../MainWindow.ui" line="1739"/>
         <source>Open &amp;Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Buka &amp;Proyek</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1748"/>
@@ -3510,7 +3518,7 @@ Anda dapat menyeret pernyataan SQL dari kolom Skema dan menjatuhkan mereka ke da
     <message>
         <location filename="../MainWindow.ui" line="1961"/>
         <source>Export to &amp;JSON</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekspor ke &amp;JSON</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1966"/>
@@ -3535,7 +3543,7 @@ Anda dapat menyeret pernyataan SQL dari kolom Skema dan menjatuhkan mereka ke da
     <message>
         <location filename="../MainWindow.ui" line="2014"/>
         <source>&amp;Open Database</source>
-        <translation type="unfinished"></translation>
+        <translation>Buk&amp;a Basis Data</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2031"/>
@@ -3545,13 +3553,13 @@ Anda dapat menyeret pernyataan SQL dari kolom Skema dan menjatuhkan mereka ke da
     <message>
         <location filename="../MainWindow.ui" line="2039"/>
         <source>Drag &amp;&amp; Drop SELECT Query</source>
-        <translation type="unfinished"></translation>
+        <translation>Seret &amp;&amp; Jatuhkan Query SELECT</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2042"/>
         <location filename="../MainWindow.ui" line="2045"/>
         <source>When dragging fields from the same table or a single table, drop a SELECT query into the editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Ketika menyeret ruas dari tabel yang sama atau suatu tabel tunggal, menjatuhkan suatu query SELECT ke dalam penyunting</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2053"/>
@@ -3655,47 +3663,47 @@ Anda dapat menyeret pernyataan SQL dari kolom Skema dan menjatuhkan mereka ke da
         <location filename="../MainWindow.ui" line="2263"/>
         <location filename="../MainWindow.cpp" line="477"/>
         <source>Ctrl+Shift+W</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+W</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2292"/>
         <source>Table from CSV data in Clipboard...</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabel dari data CSV dalam Papan Klip...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2295"/>
         <source>This treats the current clipboard contents as a CSV file and opens the same import wizard that is used for importing CSV data from a file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ini memperlakukan konten papan klip saat ini sebagai suatu berkas CSV dan membuka wahana pandu impor yang sama dengan yang dipakai untuk mengimpor data CSV dari suatu berkas.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2300"/>
         <source>Show &amp;Row Counts</source>
-        <translation type="unfinished"></translation>
+        <translation>Tampilkan Cacah Ba&amp;ris</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2303"/>
         <source>This shows the number of rows for each table and view in the database.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ini menampilkan cacah baris bagi setiap tabel dan view dalam basis data.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2315"/>
         <source>Save Database &amp;As...</source>
-        <translation type="unfinished"></translation>
+        <translation>Simpan Basis Data Seb&amp;agai...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2318"/>
         <source>Save the current database as a different file</source>
-        <translation type="unfinished"></translation>
+        <translation>Menyimpan basis data saat ini sebagai suatu berkas yang berbeda</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2327"/>
         <source>Refresh</source>
-        <translation type="unfinished">Segarkan</translation>
+        <translation>Segarkan</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2330"/>
         <source>Reload the database structure</source>
-        <translation type="unfinished"></translation>
+        <translation>Memuat ulang struktur basis data</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1536"/>
@@ -3717,37 +3725,37 @@ Anda dapat menyeret pernyataan SQL dari kolom Skema dan menjatuhkan mereka ke da
         <location filename="../MainWindow.ui" line="53"/>
         <source>&amp;Database Structure</source>
         <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Struktur Basis &amp;Data</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="120"/>
         <location filename="../MainWindow.ui" line="123"/>
         <source>&amp;Browse Data</source>
         <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ram&amp;ban Data</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="155"/>
         <source>Edit P&amp;ragmas</source>
         <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sunting P&amp;ragma</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="158"/>
         <source>&amp;Edit P&amp;ragmas</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Sunting Pragma</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="688"/>
         <location filename="../MainWindow.ui" line="691"/>
         <source>E&amp;xecute SQL</source>
         <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Jalan&amp;kan SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="781"/>
         <source>&amp;Recent Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Be&amp;rkas Baru-baru Ini</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="929"/>
@@ -3762,7 +3770,7 @@ Anda dapat menyeret pernyataan SQL dari kolom Skema dan menjatuhkan mereka ke da
     <message>
         <location filename="../MainWindow.ui" line="1169"/>
         <source>&amp;New Database</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Basis Data Baru...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1232"/>
@@ -3778,18 +3786,18 @@ Anda dapat menyeret pernyataan SQL dari kolom Skema dan menjatuhkan mereka ke da
     <message>
         <location filename="../MainWindow.ui" line="1271"/>
         <source>&amp;Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>Tak Ja&amp;di</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1274"/>
         <location filename="../MainWindow.ui" line="1277"/>
         <source>Undo last change to the database</source>
-        <translation type="unfinished"></translation>
+        <translation>Batalkan perubahan terakhir ke basis data</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1280"/>
         <source>This action undoes the last change performed to the database in the Database Browser or in Execute SQL. Redoing is not possible.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aksi ini membatalkan perubahan terakhir yang dilakukan ke basis data dalam Peramban Basis Data atau dalam Jalankan SQL. Menjalankan ulang tidak mungkin.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1295"/>
@@ -3834,7 +3842,7 @@ Anda dapat menyeret pernyataan SQL dari kolom Skema dan menjatuhkan mereka ke da
     <message>
         <location filename="../MainWindow.ui" line="1451"/>
         <source>Open the Modify Table wizard, where it is possible to rename an existing table. It is also possible to add or delete fields from a table, as well as modify field names and types.</source>
-        <translation type="unfinished"></translation>
+        <translation>Membuka wahana pandu Ubah Tabel, dimana dimungkinkan mengubah nama suatu tabel yang ada. Juga mungkin untuk menambah atau menghapus ruas dari suatu tabel, maupun mengubah nama dan tipe ruas.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1466"/>
@@ -3874,7 +3882,7 @@ Anda dapat menyeret pernyataan SQL dari kolom Skema dan menjatuhkan mereka ke da
     <message>
         <location filename="../MainWindow.ui" line="1584"/>
         <source>Ctrl+Shift+T</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+T</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1593"/>
@@ -4190,7 +4198,7 @@ Anda yakin?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="476"/>
         <source>Ctrl+Alt+W</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Alt+W</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="567"/>
@@ -4207,12 +4215,12 @@ Alasan: %1</translation>
     <message>
         <location filename="../MainWindow.cpp" line="688"/>
         <source>Choose a database file to save under</source>
-        <translation type="unfinished"></translation>
+        <translation>Pilih suatu berkas basis data tempat menyimpan</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="699"/>
         <source>Error while saving the database to the new file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kesalahan saat menyimpan basis data ke berkas baru.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="891"/>
@@ -4386,7 +4394,7 @@ Anda yakin ingin menyimpan basis data?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="2704"/>
         <source>DB file &apos;%1&apos; could not be opened</source>
-        <translation type="unfinished"></translation>
+        <translation>Berkas DB &apos;%1&apos; tidak dapat dibuka</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2841"/>
@@ -4396,12 +4404,12 @@ Anda yakin ingin menyimpan basis data?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="2860"/>
         <source>Table &apos;%1&apos; not found; settings ignored</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabel &apos;%1&apos; tidak ditemukan, pengaturan diabaikan</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3187"/>
         <source>-- Reference to file &quot;%1&quot; (not supported by this version) --</source>
-        <translation type="unfinished"></translation>
+        <translation>-- Referensi ke berkas &quot;%1&quot; (tidak didukung oleh versi ini) --</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3400"/>
@@ -4476,7 +4484,7 @@ Anda yakin ingin menyimpan basis data?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="332"/>
         <source>Ctrl+Alt+0</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Alt+0</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="340"/>
@@ -4833,7 +4841,7 @@ Pilih sumbu atau label sumbu untuk menyeret dan memperbesar hanya dalam orientas
     <message>
         <location filename="../PlotDock.cpp" line="107"/>
         <source>Fixed number format</source>
-        <translation type="unfinished"></translation>
+        <translation>Format bilangan tetap</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="198"/>
@@ -5366,7 +5374,7 @@ Dapat diatur ke 0 untuk menonaktifkan pelengkapan.</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="542"/>
         <source>Light style</source>
-        <translation type="unfinished"></translation>
+        <translation>Gaya terang</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="852"/>
@@ -5376,7 +5384,7 @@ Dapat diatur ke 0 untuk menonaktifkan pelengkapan.</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="885"/>
         <source>Formatted</source>
-        <translation type="unfinished"></translation>
+        <translation>Diformat</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="908"/>
@@ -5449,12 +5457,12 @@ Dapat diatur ke 0 untuk menonaktifkan pelengkapan.</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="1594"/>
         <source>Use tabs for indentation</source>
-        <translation type="unfinished"></translation>
+        <translation>Gunakan tab untuk indentasi</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1604"/>
         <source>When set, the Tab key will insert tab and space characters for indentation. Otherwise, just spaces will be used.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ketika ditata, tombol Tab akan menyisipkan karakter tab dan spasi untuk indentasi. Bila tidak, hanya spasi yang akan dipakai.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1614"/>
@@ -6061,12 +6069,12 @@ Harap periksa lagi.</translation>
     <message>
         <location filename="../RemoteDock.ui" line="240"/>
         <source>&amp;User</source>
-        <translation type="unfinished"></translation>
+        <translation>Pengg&amp;una</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="257"/>
         <source>&amp;Database</source>
-        <translation type="unfinished">Basis &amp;data</translation>
+        <translation>Basis &amp;data</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="274"/>
@@ -6584,7 +6592,7 @@ Anda yakin ingin melanjutkan?</translation>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="246"/>
         <source>Couldn&apos;t read file &quot;%1&quot;: %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tak bisa membaca berkas &quot;%1&quot;: %2.</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="276"/>
@@ -6605,17 +6613,17 @@ Anda yakin ingin melanjutkan?</translation>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="325"/>
         <source>Answer &quot;Yes to All&quot; to reload the file on any external update without further prompting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jawab &quot;Ya ke Semua&quot; untuk memuat ulang berkas saat pembaruan eksternal apa pun tanpa bertanya lebih jauh.</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="327"/>
         <source>Answer &quot;No to All&quot; to ignore any external update without further prompting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jawab &quot;Tidak ke Semua&quot; untuk mengabaikan pembaruan eksternal apa pun tanpa bertanya lebih jauh.</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="329"/>
         <source>Modifying and saving the file will restore prompting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mengubah dan menyimpan berkas akan memulihkan bertanya.</translation>
     </message>
 </context>
 <context>
@@ -6960,140 +6968,140 @@ Penggunaan fungsi ini mesti diotorisasi dari Preferensi.</translation>
     <message>
         <location filename="../SqlUiLexer.cpp" line="155"/>
         <source>(X) Return the arccosine of X. The result is in radians.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Mengembalikan arckosinus dari X. Hasil dalam radian.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="156"/>
         <source>(X) Return the hyperbolic arccosine of X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Mengembalikan arckosinus hiperbolik dari X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="157"/>
         <source>(X) Return the arcsine of X. The result is in radians.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Mengembalikan arcsinus dari X. Hasil dalam radian.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="158"/>
         <source>(X) Return the hyperbolic arcsine of X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Mengembalikan arcsinus hiperbolik dari X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="159"/>
         <source>(X) Return the arctangent of X. The result is in radians.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Mengembalikan arctangen dari X. Hasil dalam radian.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="160"/>
         <source>(X,Y) Return the arctangent of Y/X. The result is in radians. he result is placed into correct quadrant depending on the signs of X and Y.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X, Y) Mengembalikan arctangen dari Y/X. Hasil dalam radian. Hasil ditempatkan ke dalam kuadran yang benar bergantung pada tanda dari X dan Y.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="161"/>
         <source>(X) Return the hyperbolic arctangent of X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Mengembalikan arctangen hiperbolik dari X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="162"/>
         <location filename="../SqlUiLexer.cpp" line="163"/>
         <source>(X) Return the first representable integer value greater than or equal to X. For positive values of X, this routine rounds away from zero. For negative values of X, this routine rounds toward zero.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Mengembalikan nilai bilangan bulat pertama yang dapat direpresentasikan yang lebih dari atau sama dengan X. Untuk nilai X positif, rutin ini membulatkan menjauh dari nol. Untuk nilai negatif X, rutin ini membulatkan menuju nol.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="164"/>
         <source>(X) Return the cosine of X. X is in radians.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Mengembalikan kosinus dari X. X dalam radian.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="165"/>
         <source>(X) Return the hyperbolic cosine of X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Mengembalikan kosinus hiperbolik dari X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="166"/>
         <source>(X) Convert value X from radians into degrees.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Mengonversi nilai X dari radian ke derajat.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="167"/>
         <source>(X) Compute e (Euler&apos;s number, approximately 2.71828182845905) raised to the power X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Menghitung e (bilangan Euler, kurang lebih 2.71828182845905) pangkat X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="168"/>
         <source>(X) Return the first representable integer value less than or equal to X. For positive numbers, this function rounds toward zero. For negative numbers, this function rounds away from zero.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Mengembalikan nilai bilangan bulat pertama yang dapat direpresentasikan yang kurang dari atau sama dengan X. Untuk nilai X positif, rutin ini membulatkan menuju nol. Untuk nilai negatif X, rutin ini membulatkan menjauhi nol.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="169"/>
         <source>(X) Return the natural logarithm of X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Mengembalikan logaritma alami dari X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="170"/>
         <source>(B,X) Return the base-B logarithm of X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(B, X) Mengembalikan logaritma basis-B dari X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="171"/>
         <location filename="../SqlUiLexer.cpp" line="172"/>
         <source>(X) Return the base-10 logarithm for X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Mengembalikan logaritma basis-10 untuk X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="173"/>
         <source>(X) Return the logarithm base-2 for the number X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Mengembalikan logaritma basis-2 untuk bilangan X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="174"/>
         <source>(X,Y) Return the remainder after dividing X by Y.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X, Y) Mengembalikan sisa setelah X dibagi Y.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="175"/>
         <source>() Return an approximation for π.</source>
-        <translation type="unfinished"></translation>
+        <translation>() Mengembalikan suatu aproksimasi untuk π.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="176"/>
         <location filename="../SqlUiLexer.cpp" line="177"/>
         <source>(X,Y) Compute X raised to the power Y.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X,Y) Menghitung X pangkat Y.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="178"/>
         <source>(X) Convert X from degrees into radians.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Mengonversi X dari derajat ke radian.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="179"/>
         <source>(X) Return the sine of X. X is in radians.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Mengembalikan sinus X. X dalam radian.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="180"/>
         <source>(X) Return the hyperbolic sine of X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Mengembalikan sinus hiperbolik dari X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="181"/>
         <source>(X) Return the square root of X. NULL is returned if X is negative.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Mengembalikan akar kuadrat dari X. NULL dikembalikan bila X negatif.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="182"/>
         <source>(X) Return the tangent of X. X is in radians.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Mengembalikan tangen dari X. X dalam radian.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="183"/>
         <source>(X) Return the hyperbolic tangent of X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Mengembalikan tangen hiperbolik dari X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="184"/>
         <source>(X) Return the representable integer in between X and 0 (inclusive) that is furthest away from zero. Or, in other words, return the integer part of X, rounding toward zero.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Mengembalikan bilangan bulat yang dapat direpresentasikan antara X dan 0 (inklusif) yang paling jauh dari nol. Atau, dengan perkataan lain, mengembalikan bagian bilangan bulat dari X, membulatkan menuju nol.</translation>
     </message>
 </context>
 <context>
@@ -7298,44 +7306,44 @@ Tahan Shift%3 dan klik untuk melompat ke sana</translation>
     <message>
         <location filename="../TableBrowser.ui" line="676"/>
         <source>Export to &amp;JSON</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekspor ke &amp;JSON</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="679"/>
         <location filename="../TableBrowser.ui" line="682"/>
         <source>Export the filtered data to JSON</source>
-        <translation type="unfinished"></translation>
+        <translation>Mengekspor data yang difilter ke JSON</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="685"/>
         <source>This button exports the data of the browsed table as currently displayed (after filters, display formats and order column) as a JSON file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tombol ini mengekspor data dari tabel yang diramban sebagaimana saat ini ditampilkan (setelah filter, format tampilan, dan kolom pengurutan) sebagai suatu berkas JSON</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="754"/>
         <source>Copy column name</source>
-        <translation type="unfinished"></translation>
+        <translation>Salin nama kolom</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="757"/>
         <source>Copy the database table column name to your clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Menyalin nama kolom tabel basis data ke papan klip Anda</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="826"/>
         <source>New Data Browser</source>
-        <translation type="unfinished">Peramban Data Baru</translation>
+        <translation>Peramban Data Baru</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="829"/>
         <location filename="../TableBrowser.ui" line="832"/>
         <source>Add a new docked Data Browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Menambahkan sebuah Peramban Data tertambat yang baru</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="835"/>
         <source>This button adds a new docked Data Browser, which you can detach and arrange in different layouts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tombol ini menambahkan suatu Peramban Data tertambat yang baru, yang dapat Anda copot dan atur dalam tata letak yang berbeda-beda.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="211"/>
@@ -7411,7 +7419,7 @@ Tahan Shift%3 dan klik untuk melompat ke sana</translation>
     <message>
         <location filename="../TableBrowser.format.ui" line="281"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Clicking this button navigates up to the end in the table view above.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Mengklik tombol ini menavigasi sampai akhir tabel dalam tampilan di atas.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="284"/>
@@ -7756,7 +7764,7 @@ Tahan Shift%3 dan klik untuk melompat ke sana</translation>
     <message>
         <location filename="../TableBrowser.format.ui" line="717"/>
         <source>Clear All Conditional Formats</source>
-        <translation type="unfinished">Bersihkan Semua Format Bersyarat</translation>
+        <translation>Bersihkan Semua Format Bersyarat</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="868"/>
@@ -7973,17 +7981,17 @@ Tahan Shift%3 dan klik untuk melompat ke sana</translation>
     <message>
         <location filename="../TableBrowser.cpp" line="761"/>
         <source>%L1 - %L2 of &gt;= %L3</source>
-        <translation type="unfinished"></translation>
+        <translation>%L1 - %L2 dari &gt;= %L3</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="764"/>
         <source>%L1 - %L2 of %L3</source>
-        <translation type="unfinished"></translation>
+        <translation>%L1 - %L2 dari %L3</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="766"/>
         <source> (clipped at %L1 rows)</source>
-        <translation type="unfinished"></translation>
+        <translation> (dipangkas pada %L1 baris)</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1018"/>
