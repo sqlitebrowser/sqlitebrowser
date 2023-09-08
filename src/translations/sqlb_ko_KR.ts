@@ -308,7 +308,7 @@ Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot
     <message>
         <location filename="../Application.cpp" line="369"/>
         <source>Last commit hash when built: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>빌드 당시 최종 깃 해시 값: %1</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="370"/>
@@ -1814,7 +1814,7 @@ All data currently stored in this field will be lost.</source>
         <location filename="../ExportDataDialog.cpp" line="195"/>
         <location filename="../ExportDataDialog.cpp" line="300"/>
         <source>Error while writing the file &apos;%1&apos;: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; 파일을 쓰는 동안 오류가 발생했습니다: %2</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.cpp" line="215"/>
@@ -1839,7 +1839,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportDataDialog.cpp" line="420"/>
         <source>Export finished with errors.</source>
-        <translation type="unfinished"></translation>
+        <translation>내보내기가 오류와 함께 완료되었습니다.</translation>
     </message>
 </context>
 <context>
@@ -3248,53 +3248,53 @@ You can drag SQL statements from an object row and drop them into other applicat
         <location filename="../MainWindow.ui" line="53"/>
         <source>&amp;Database Structure</source>
         <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>데이터베이스 구조(&amp;D)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="120"/>
         <location filename="../MainWindow.ui" line="123"/>
         <source>&amp;Browse Data</source>
         <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>데이터 탐색 (&amp;B)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="155"/>
         <source>Edit P&amp;ragmas</source>
         <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Pragma 수정(&amp;R)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="158"/>
         <source>&amp;Edit P&amp;ragmas</source>
-        <translation type="unfinished"></translation>
+        <translation>Pragma 수정(&amp;E)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="688"/>
         <location filename="../MainWindow.ui" line="691"/>
         <source>E&amp;xecute SQL</source>
         <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>SQL 실행(&amp;E)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1169"/>
         <source>&amp;New Database</source>
-        <translation type="unfinished"></translation>
+        <translation>새 데이터베이스(&amp;N)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1271"/>
         <source>&amp;Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>실행 취소(&amp;U)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1274"/>
         <location filename="../MainWindow.ui" line="1277"/>
         <source>Undo last change to the database</source>
-        <translation type="unfinished"></translation>
+        <translation>데이터베이스에 대한 마지막 변경 사항 실행 취소합니다</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1280"/>
         <source>This action undoes the last change performed to the database in the Database Browser or in Execute SQL. Redoing is not possible.</source>
-        <translation type="unfinished"></translation>
+        <translation>이 작업은 데이터베이스 브라우저 또는 SQL 실행에서 데이터베이스에 마지막으로 수행한 변경 사항을 실행 취소합니다. 다시 실행할 수 없습니다.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1545"/>
@@ -3319,7 +3319,7 @@ You can drag SQL statements from an object row and drop them into other applicat
     <message>
         <location filename="../MainWindow.ui" line="1715"/>
         <source>&amp;Save Project</source>
-        <translation type="unfinished"></translation>
+        <translation>프로젝트 저장하기(&amp;S)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1724"/>
@@ -3329,7 +3329,7 @@ You can drag SQL statements from an object row and drop them into other applicat
     <message>
         <location filename="../MainWindow.ui" line="1739"/>
         <source>Open &amp;Project</source>
-        <translation type="unfinished"></translation>
+        <translation>프로젝트 열기(&amp;P)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1748"/>
@@ -3421,7 +3421,7 @@ You can drag SQL statements from an object row and drop them into other applicat
     <message>
         <location filename="../MainWindow.ui" line="2014"/>
         <source>&amp;Open Database</source>
-        <translation type="unfinished"></translation>
+        <translation>데이터베이스 열기(&amp;O)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2031"/>
@@ -3596,12 +3596,12 @@ You can drag SQL statements from an object row and drop them into other applicat
     <message>
         <location filename="../MainWindow.ui" line="2327"/>
         <source>Refresh</source>
-        <translation type="unfinished">새로고침</translation>
+        <translation>새로고침</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2330"/>
         <source>Reload the database structure</source>
-        <translation type="unfinished"></translation>
+        <translation>데이터베이스 구조를 다시 로드합니다</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="477"/>
@@ -4319,7 +4319,7 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="332"/>
         <source>Ctrl+Alt+0</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1390"/>
@@ -5147,7 +5147,7 @@ Can be set to 0 for disabling completion.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="885"/>
         <source>Formatted</source>
-        <translation type="unfinished"></translation>
+        <translation>서식</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1280"/>
@@ -7196,7 +7196,7 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.format.ui" line="281"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Clicking this button navigates up to the end in the table view above.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;이 버튼을 클릭하면 위의 표 보기에서 끝까지 이동합니다.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="284"/>
@@ -7364,7 +7364,7 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.format.ui" line="717"/>
         <source>Clear All Conditional Formats</source>
-        <translation type="unfinished">모든 조건부 서식 지우기</translation>
+        <translation>모든 조건부 서식 지우기</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="676"/>
@@ -7800,17 +7800,17 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.cpp" line="761"/>
         <source>%L1 - %L2 of &gt;= %L3</source>
-        <translation type="unfinished"></translation>
+        <translation>L1 - %L2의 &gt;= %L3</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="764"/>
         <source>%L1 - %L2 of %L3</source>
-        <translation type="unfinished"></translation>
+        <translation>L1 - %L2의 %L3</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="766"/>
         <source> (clipped at %L1 rows)</source>
-        <translation type="unfinished"></translation>
+        <translation> (%L1 행에서 잘림)</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1018"/>
