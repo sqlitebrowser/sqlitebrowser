@@ -12,10 +12,10 @@ permissions:
   contents: write
 
 jobs:
-  clean:
+  cleanup:
     runs-on: ubuntu-latest
     steps:
-      - name: Delete release and tag
+      - name: Delete continuous release and tag
         uses: dev-drprasad/delete-tag-and-release@v1.0
         with:
           delete_release: true
