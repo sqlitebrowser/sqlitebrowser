@@ -20,10 +20,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Install dependencies
-        run: |
-          sudo apt update
-          sudo apt install libqcustomplot-dev libqt5scintilla2-dev libqt5svg5 libsqlcipher-dev libsqlite3-dev qttools5-dev
+      - name: Install and cache dependencies
+        uses: awalsh128/cache-apt-pkgs-action@v1.3.0
+        with:
+          packages: libqcustomplot-dev libqscintilla2-qt5-dev libqt5svg5 libsqlcipher-dev libsqlite3-dev qttools5-dev
 
       - name: Configure CMake
         run: |
