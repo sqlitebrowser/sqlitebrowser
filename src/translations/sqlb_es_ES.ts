@@ -891,7 +891,7 @@ Abortando ejecución%3.</translation>
         <location filename="../sqlitedb.cpp" line="1815"/>
         <source>Copying data to new table failed. DB says:
 %1</source>
-        <translation>Copia de datos a la nueva table fallida. La base de datos dice:
+        <translation>Copia de datos a la nueva tabla fallida. La base de datos dice:
 %1</translation>
     </message>
     <message>
@@ -1275,7 +1275,7 @@ Los errores se indican con un subrayado ondulado en rojo.</translation>
         <location filename="../EditDialog.cpp" line="301"/>
         <location filename="../EditDialog.cpp" line="310"/>
         <source>Image data can&apos;t be viewed in this mode.</source>
-        <translation>Datos de imagen no se puede visualizar en este modo.</translation>
+        <translation>Datos de imagen no se pueden visualizar en este modo.</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="44"/>
@@ -1322,13 +1322,13 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
         <location filename="../EditDialog.cpp" line="369"/>
         <location filename="../EditDialog.cpp" line="378"/>
         <source>Binary data can&apos;t be viewed in this mode.</source>
-        <translation>Datos binarios no se puede visualizar en este modo.</translation>
+        <translation>Datos binarios no se pueden visualizar en este modo.</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="370"/>
         <location filename="../EditDialog.cpp" line="379"/>
         <source>Try switching to Binary mode.</source>
-        <translation>Intente cambiando al modo  «Binario».</translation>
+        <translation>Intente cambiando al modo «Binario».</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="406"/>
@@ -1471,7 +1471,7 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
     <message>
         <location filename="../EditIndexDialog.ui" line="52"/>
         <source>&amp;Unique</source>
-        <translation>&amp;Único</translation>
+        <translation>Ú&amp;nico</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="69"/>
@@ -3878,7 +3878,7 @@ Puede arrastrar sentencias SQL desde la columna Esquema y soltarlas en el editor
     <message>
         <location filename="../MainWindow.ui" line="1466"/>
         <source>Create &amp;Index...</source>
-        <translation>Crear &amp;índice...</translation>
+        <translation>Crear í&amp;ndice...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1517"/>
@@ -5292,7 +5292,7 @@ Se puede poner a 0 para desactivar el autocompletado.</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="2114"/>
         <source>Export Settings</source>
-        <translation>Exportar ajustes></translation>
+        <translation>Exportar ajustes</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="2121"/>
@@ -6030,7 +6030,7 @@ Por favor compruebe que es correcto.</translation>
     <message>
         <location filename="../RemoteDock.ui" line="86"/>
         <source>Upload</source>
-        <translation>Cargar</translation>
+        <translation>Cargar al servidor</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="106"/>
@@ -7598,7 +7598,7 @@ Mantenga pulsado %3Mayús. y haga clic para ir ahí</translation>
         <location filename="../TableBrowser.format.ui" line="460"/>
         <location filename="../TableBrowser.ui" line="708"/>
         <source>Save Table As...</source>
-        <translation>Guardar Tabla Como...</translation>
+        <translation>Guardar tabla como...</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="463"/>
