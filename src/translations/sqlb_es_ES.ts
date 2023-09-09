@@ -1359,7 +1359,7 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
     <message>
         <location filename="../EditDialog.cpp" line="1091"/>
         <source>Type: %1 Image; Size: %2x%3 pixel(s)</source>
-        <translation>Tipo: Imagen %1; Tamaño: %2×%3 pixels</translation>
+        <translation>Tipo: Imagen %1; Tamaño: %2×%3 píxeles</translation>
     </message>
     <message numerus="yes">
         <location filename="../EditDialog.cpp" line="1124"/>
