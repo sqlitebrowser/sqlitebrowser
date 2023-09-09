@@ -7315,7 +7315,7 @@ Mantenga pulsado %3Mayús. y haga clic para ir ahí</translation>
     <message>
         <location filename="../TableBrowser.ui" line="826"/>
         <source>New Data Browser</source>
-        <translation>Nuevo hoja de datos</translation>
+        <translation>Nueva hoja de datos</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="829"/>
