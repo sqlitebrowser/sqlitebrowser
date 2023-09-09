@@ -1,0 +1,15 @@
+name: Clear cache
+
+on:
+    schedule:
+        - cron: '0 0 1 * *'
+    workflow_dispatch:
+
+jobs:
+    clear_cache:
+        name: Clear cache
+        runs-on: ubuntu-latest
+        steps:
+            - run: gh cache delete -a --repo ${{ github.repository }}
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
