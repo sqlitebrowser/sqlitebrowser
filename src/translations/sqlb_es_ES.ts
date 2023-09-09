@@ -4045,7 +4045,7 @@ Puede arrastrar sentencias SQL desde la columna Esquema y soltarlas en el editor
     <message>
         <location filename="../MainWindow.cpp" line="1845"/>
         <source>Attach Database...</source>
-        <translation>Ane&amp;xar base de datos...</translation>
+        <translation>Anexar base de datos...</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1846"/>
