@@ -13,6 +13,7 @@ permissions:
 
 jobs:
   cleanup:
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Delete continuous release and tag
@@ -21,6 +22,7 @@ jobs:
           delete_release: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: continuous
+
   appimage:
     if: github.event_name != 'pull_request'
     uses: ./.github/workflows/build-appimage.yml
