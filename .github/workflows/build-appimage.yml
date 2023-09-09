@@ -1,0 +1,69 @@
+name: Build - AppImage
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: ${{ matrix.os }} - SQLCipher ${{ matrix.sqlcipher }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ubuntu-20.04]
+        sqlcipher: ["0", "1"]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install and cache dependencies
+        uses: awalsh128/cache-apt-pkgs-action@v1.3.0
+        with:
+          packages: libqcustomplot-dev libqscintilla2-qt5-dev libqt5svg5 libsqlcipher-dev libsqlite3-dev qttools5-dev
+
+      - if: matrix.sqlcipher == '0'
+        name: Build SQLite
+        run: |
+          TARBALL=$(curl -s https://sqlite.org/download.html | awk '/<!--/,/-->/ {print}' | grep 'sqlite-autoconf' | cut -d ',' -f 3)
+          SHA3=$(curl -s https://sqlite.org/download.html | awk '/<!--/,/-->/ {print}' | grep 'sqlite-autoconf' | cut -d ',' -f 5)
+          curl -LsS -o sqlite.tar.gz https://sqlite.org/${TARBALL}
+          VERIFY=$(openssl dgst -sha3-256 sqlite.tar.gz | cut -d ' ' -f 2)
+          if [ "$SHA3" != "$VERIFY" ]; then exit 1 ; fi
+          tar -xzf sqlite.tar.gz && cd sqlite-autoconf-*
+
+          CPPFLAGS="-DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_MAX_VARIABLE_NUMBER=250000 -DSQLITE_ENABLE_RTREE=1 -DSQLITE_ENABLE_GEOPOLY=1 -DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_FTS3_PARENTHESIS=1 -DSQLITE_ENABLE_FTS5=1 -DSQLITE_ENABLE_STAT4=1 -DSQLITE_ENABLE_JSON1=1 -DSQLITE_SOUNDEX=1 -DSQLITE_ENABLE_MATH_FUNCTIONS=1 -DSQLITE_MAX_ATTACHED=125 -DSQLITE_ENABLE_MEMORY_MANAGEMENT=1 -DSQLITE_ENABLE_SNAPSHOT=1" ./configure --enable-shared=no
+          make -j2 && sudo make install -j2
+
+      - name: Configure build
+        run: |
+          mkdir appbuild && mkdir appdir && cd appbuild
+          cmake -DCMAKE_INSTALL_PREFIX:PATH=../appdir/usr -Wno-dev -DFORCE_INTERNAL_QSCINTILLA=ON -Dsqlcipher=${{ matrix.sqlcipher }} ..
+
+      - name: Build
+        working-directory: ./appbuild
+        run: make install -j2
+
+      - name: Build AppImage
+        run: |
+          wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
+          chmod a+x linuxdeployqt-continuous-x86_64.AppImage
+          export VERSION=$(printf "dev-`git -C . rev-parse --short HEAD`")
+          ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -appimage
+
+      - if: matrix.sqlcipher == '1'
+        name: Rename AppImage (SQLCipher)
+        run: |
+          export FILE=$(ls DB_Browser_for_SQLite*.AppImage)
+          export FILE=${FILE/SQLite/SQLCipher}
+          mv DB_Browser_for_SQLite*.AppImage $FILE
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: DB_Browser_for_*.AppImage
+          prerelease: true
+          tag_name: continuous

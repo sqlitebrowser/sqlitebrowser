@@ -1,0 +1,93 @@
+name: Build - macOS
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: ${{ matrix.os }} - SQLCipher ${{ matrix.sqlcipher }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [macos-12]
+        sqlcipher: ["0", "1"]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Cache Homebrew and NPM
+        id: cache-homebrew-npm
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.npm
+            /usr/local/bin
+            /usr/local/Cellar
+            /usr/local/Frameworks
+            /usr/local/Homebrew
+            /usr/local/opt
+          key: ${{ runner.os }}-homebrew
+
+      - if: steps.cache-homebrew-npm.outputs.cache-hit == 'true'
+        name: Link appdmg, SQLCipher and SQLite
+        run: |
+          brew link --force sqlcipherdb4s
+          brew link --force sqlitefts5
+          npm install -g appdmg
+
+      - if: steps.cache-homebrew-npm.outputs.cache-hit != 'true'
+        name: Install dependencies
+        run: |
+          # Avoid Homebrew return non-zero exit code
+          unset HOMEBREW_NO_INSTALL_FROM_API; brew untap homebrew/core; brew untap homebrew/cask; brew update
+          brew tap sqlitebrowser/sqlite3; brew install node qt@5 sqlcipherdb4s sqlitefts5
+          npm install -g appdmg
+
+      - name: Configure build
+        run: |
+          if [ "${{ matrix.sqlcipher }}" = "1" ]; then
+            sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLCipher-dev-'$(git rev-parse --short --verify HEAD)'"/' CMakeLists.txt
+          else
+            sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLite-dev-'$(git rev-parse --short --verify HEAD)'"/' CMakeLists.txt
+          fi
+          mkdir build && cd build
+          cmake -DCMAKE_PREFIX_PATH=/usr/local/opt/qt@5 -Dsqlcipher=${{ matrix.sqlcipher }} ..
+
+      - name: Build
+        working-directory: ./build
+        run: make -j3
+
+      - name: Build extensions
+        run: |
+          clang -I /usr/local/opt/sqlitefts5/include -L /usr/local/opt/sqlitefts5/lib -fno-common -dynamiclib src/extensions/extension-formats.c
+          clang -I /usr/local/opt/sqlitefts5/include -L /usr/local/opt/sqlitefts5/lib -fno-common -dynamiclib src/extensions/extension-functions.c
+          curl -L -o src/extensions/fileio.c 'https://sqlite.org/src/raw?filename=ext/misc/fileio.c&ci=trunk'
+          curl -L -o src/extensions/test_windirect.c 'https://sqlite.org/src/raw?filename=src/test_windirent.c&ci=trunk'
+          curl -L -o src/extensions/test_windirect.h 'https://sqlite.org/src/raw?filename=src/test_windirent.h&ci=trunk'
+          clang -I /usr/local/opt/sqlitfts5/include -L /usr/local/opt/sqlitefts5/lib -fno-common -dynamiclib src/extensions/fileio.c src/extensions/test_windirect.c
+      
+      - if: github.event_name != 'pull_request'
+        name: Notarize the app
+        uses: ./.github/actions/notarize-macos
+        with:
+          APPLE_ID: ${{ secrets.MACOS_CODESIGN_APPLE_ID }}
+          APPLE_PW: ${{ secrets.MACOS_CODESIGN_APPLE_PW }}
+          DEV_ID: ${{ secrets.MACOS_CODESIGN_DEV_ID }}
+          P12: ${{ secrets.MACOS_CODESIGN_P12 }}
+          P12_PW: ${{ secrets.MACOS_CODESIGN_P12_PW }}
+          KEYCHAIN_PW: ${{ secrets.MACOS_CODESIGN_KEYCHAIN_PW }}
+          SQLCIPHER: ${{ matrix.sqlcipher }}
+          TEAM_ID: ${{ secrets.MACOS_CODESIGN_TEAM_ID }}
+
+      - if: github.event_name != 'pull_request'
+        name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: DB\ Browser\ for\ *.dmg
+          prerelease: true
+          tag_name: continuous
