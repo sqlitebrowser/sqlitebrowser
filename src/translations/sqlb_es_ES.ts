@@ -1359,7 +1359,7 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
     <message>
         <location filename="../EditDialog.cpp" line="1091"/>
         <source>Type: %1 Image; Size: %2x%3 pixel(s)</source>
-        <translation>Tipo: Imagen %1; Tamaño: %2×%3 pixel(s)</translation>
+        <translation>Tipo: Imagen %1; Tamaño: %2×%3 pixels</translation>
     </message>
     <message numerus="yes">
         <location filename="../EditDialog.cpp" line="1124"/>
@@ -1385,7 +1385,7 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
     <message>
         <location filename="../EditDialog.cpp" line="477"/>
         <source>%1 Image</source>
-        <translation>%1 Imagen</translation>
+        <translation>Imagen %1</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="581"/>
@@ -2572,7 +2572,7 @@ x~y	Rango: valores entre x e y</translation>
     <message>
         <location filename="../ImageViewer.ui" line="106"/>
         <source>Set the scaling to match the size of the viewport.</source>
-        <translation>Establecer el escalado según el tamaño del área de visión.</translation>
+        <translation>Establecer el escalado según el tamaño del área de visualización.</translation>
     </message>
     <message>
         <location filename="../ImageViewer.ui" line="126"/>
