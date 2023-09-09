@@ -8072,7 +8072,7 @@ Deje este campo vacío para usar la codificación de la base de datos.</translat
     <message>
         <location filename="../TableBrowserDock.cpp" line="99"/>
         <source>Set a new name for the data browser. Use the &apos;&amp;&amp;&apos; character to allow using the following character as a keyboard shortcut.</source>
-        <translation>Pone un nuevo nombre a la hoja de datos. Use el caracter «&amp;&amp;» para que el caracter siguiente se use como atajo de teclado.</translation>
+        <translation>Pone un nuevo nombre a la hoja de datos. Use el carácter «&amp;&amp;» para que el carácter siguiente se use como atajo de teclado.</translation>
     </message>
 </context>
 <context>
