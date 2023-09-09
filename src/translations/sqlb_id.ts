@@ -17,7 +17,7 @@
         <location filename="../AboutDialog.ui" line="90"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Pastel SVG icon set by Michael Buckley under a Creative Commons
 Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;https://codefisher.org/pastel-svg/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://codefisher.org/pastel-svg/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Peramban DB untuk SQLite perkakas visual freeware dengan sumber terbuka, dipakai untuk membuat, merancang, dan menyunting berkas-berkas basis data SQLite.&lt;/p&gt;
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Peramban DB untuk SQLite adalah perkakas visual freeware dengan sumber terbuka, dipakai untuk membuat, merancang, dan menyunting berkas-berkas basis data SQLite.&lt;/p&gt;
 &lt;p&gt;Ini dilisensikan ganda di bawah Mozilla Public License Versi 2, maupun GNU General Public License Versi 3 atau setelahnya. Anda dapat mengubah atau mendistribusikan ulang di bawah persyaratan lisensi-lisensi ini.&lt;/p&gt;&lt;p&gt;Lihat &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; dan &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; untuk rincian.&lt;/p&gt;&lt;p&gt; Untuk informasi lebih banyak tentang program ini silakan kunjungi situs web kami di: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Perangkat lunak ini memakai Qt Toolkit GPL/LGPL dari &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;Lihat &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; untuk syarat-syarat dan informasi lisensi.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Ini juga memakai set ikon Pastel SVG oleh Michael Buckley di bawah lisensi Creative Commons
 Attribution Share Alike 4.0.&lt;br/&gt;Lihat &lt;/span&gt;&lt;a href=&quot;https://codefisher.org/pastel-svg/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://codefisher.org/pastel-svg/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; untuk rincian.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -61,7 +61,7 @@ Attribution Share Alike 4.0.&lt;br/&gt;Lihat &lt;/span&gt;&lt;a href=&quot;https
     <message>
         <location filename="../AddRecordDialog.ui" line="87"/>
         <source>Values to insert. Pre-filled default values are inserted automatically unless they are changed.</source>
-        <translation>Nilai yang akan disisipkan. Nilai baku yang terprapenuhi disisipkan secara otomatis kecuali bila mereka diubah.</translation>
+        <translation>Nilai yang akan disisipkan. Nilai baku yang terpraisi disisipkan secara otomatis kecuali bila mereka diubah.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="93"/>
@@ -105,7 +105,7 @@ Attribution Share Alike 4.0.&lt;br/&gt;Lihat &lt;/span&gt;&lt;a href=&quot;https
         <location filename="../AddRecordDialog.cpp" line="258"/>
         <source>Default value:	 %1
 </source>
-        <translation>Nilai baku:   	 %1
+        <translation>Nilai baku:		 %1
 </translation>
     </message>
     <message>
@@ -353,7 +353,7 @@ Attribution Share Alike 4.0.&lt;br/&gt;Lihat &lt;/span&gt;&lt;a href=&quot;https
     <message>
         <location filename="../Application.cpp" line="244"/>
         <source>The -S/--settings option requires an argument. The option is ignored.</source>
-        <translation>Opsi -S/--settings memerlukan sebuah argumen, Opsi diabaikan.</translation>
+        <translation>Opsi -S/--settings memerlukan sebuah argumen. Opsi diabaikan.</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="247"/>
@@ -421,12 +421,12 @@ Attribution Share Alike 4.0.&lt;br/&gt;Lihat &lt;/span&gt;&lt;a href=&quot;https
     <message>
         <location filename="../CipherDialog.ui" line="110"/>
         <source>SQLCipher &amp;3 defaults</source>
-        <translation>Baku SQLCiper &amp;3</translation>
+        <translation>Baku SQLCipher &amp;3</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="117"/>
         <source>SQLCipher &amp;4 defaults</source>
-        <translation>Baku SQLCiper &amp;4</translation>
+        <translation>Baku SQLCipher &amp;4</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="124"/>
@@ -484,7 +484,7 @@ Proses enkripsi mungkin perlu beberapa waktu dan Anda mesti memiliki salinan cad
         <source>Please enter the key used to encrypt the database.
 If any of the other settings were altered for this database file you need to provide this information as well.</source>
         <translation>Harap masukkan kunci yang dipakai untuk mengenkripsi basis data.
-Bila Anda sebarang pengaturan lain diubah untuk berkas basis data ini, Anda perlu menyediakan informasi ini juga.</translation>
+Bila sebarang pengaturan lain diubah untuk berkas basis data ini, Anda perlu menyediakan informasi ini juga.</translation>
     </message>
 </context>
 <context>
@@ -634,7 +634,7 @@ Bila Anda sebarang pengaturan lain diubah untuk berkas basis data ini, Anda perl
     <message>
         <location filename="../CondFormatManager.ui" line="20"/>
         <source>This dialog allows creating and editing conditional formats. Each cell style will be selected by the first accomplished condition for that cell data. Conditional formats can be moved up and down, where those at higher rows take precedence over those at lower. Syntax for conditions is the same as for filters and an empty condition applies to all values.</source>
-        <translation>Dialog ini memungkinkan pembuatan dan penyuntingan format bersyarat. Setiap gaya sel akan dipilih berdasarkan syarat yang pertama terpenuhi untuk data sel itu. Format bersyarat dapat dipindah naik dan turun, di mana yang ada pada baris lebih tinggi lebih diutamakan dari pada yang lebih rendah. Sintaks untuk syarat sama dengan bagi filter dan suatu syarat kosong berlaku untuk semua nilai.</translation>
+        <translation>Dialog ini memungkinkan pembuatan dan penyuntingan format bersyarat. Setiap gaya sel akan dipilih berdasarkan syarat yang pertama terpenuhi untuk data sel itu. Format bersyarat dapat dipindah naik dan turun, yang ada pada baris lebih tinggi lebih diutamakan dari pada yang lebih rendah. Sintaks untuk syarat sama dengan bagi filter dan suatu syarat kosong berlaku untuk semua nilai.</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="32"/>
@@ -823,7 +823,7 @@ Bila Anda sebarang pengaturan lain diubah untuk berkas basis data ini, Anda perl
         <location filename="../sqlitedb.cpp" line="1225"/>
         <source>Error in statement #%1: %2.
 Aborting execution%3.</source>
-        <translation>Kesalahn dalam pernyataan #%1: %2.
+        <translation>Kesalahan dalam pernyataan #%1: %2.
 Menggugurkan eksekusi %3.</translation>
     </message>
     <message>
@@ -909,10 +909,7 @@ Menggugurkan eksekusi %3.</translation>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 
 </source>
-        <translatorcomment>Gagal memulihkan beberapa objek yang terkait dengan tabel ini. Ini sangat boleh jadi karena beberapa nama kolom berubah. Ini pernyataan SQL yang mungkin ingin Anda perbaiki dan eksekusi secara manual:
-
-</translatorcomment>
-        <translation>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
+        <translation>Gagal memulihkan beberapa objek yang terkait dengan tabel ini. Ini sangat boleh jadi karena beberapa nama kolom berubah. Ini pernyataan SQL yang mungkin ingin Anda perbaiki dan eksekusi secara manual:
 
 </translation>
     </message>
@@ -1106,7 +1103,7 @@ Pesan dari mesin basis data:
     <message>
         <location filename="../EditDialog.ui" line="113"/>
         <source>Auto-switch</source>
-        <translation>Saklar otomatis</translation>
+        <translation>Berpindah otomatis</translation>
     </message>
     <message>
         <source>The text editor modes let you edit plain text, as well as JSON or XML data with syntax highlighting, automatic formatting and validation before saving.
@@ -1144,7 +1141,7 @@ Kesalahan diindikasikan dengan garis bawah cacing merah.</translation>
     <message>
         <location filename="../EditDialog.ui" line="313"/>
         <source>When enabled, the auto-format feature formats the data on loading, breaking the text in lines and indenting it for maximum readability. On data saving, the auto-format feature compacts the data removing end of lines, and unnecessary whitespace.</source>
-        <translation>Ketika difungsikan, fitur format otomatis memformat data saat memuat, memecah teks dalam baris-baris dan mengindentasi untuk keterbacaan maksimal. Saat menyimpan data, fitur format otomatis memampatkan data menghapus akhir baris, dan ruang spasi yang tak perlu.</translation>
+        <translation>Ketika difungsikan, fitur format otomatis memformat data saat memuat, memecah teks dalam baris-baris, dan mengindentasi untuk keterbacaan maksimal. Saat menyimpan data, fitur format otomatis memampatkan data menghapus akhir baris, dan ruang spasi yang tak perlu.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="370"/>
@@ -1252,7 +1249,7 @@ Kesalahan diindikasikan dengan garis bawah cacing merah.</translation>
     <message>
         <location filename="../EditDialog.ui" line="277"/>
         <source>Ctrl+P</source>
-        <translation></translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="271"/>
@@ -1272,7 +1269,7 @@ Kesalahan diindikasikan dengan garis bawah cacing merah.</translation>
     <message>
         <location filename="../EditDialog.ui" line="295"/>
         <source>Ctrl+Shift+C</source>
-        <translation></translation>
+        <translation>Ctrl+Shift+C</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="515"/>
@@ -1806,12 +1803,12 @@ Apakah Anda hendak menerapkan data yang disunting ke baris=%1, kolom=%2?</transl
     <message>
         <location filename="../EditTableDialog.cpp" line="677"/>
         <source>There is at least one row with this field set to NULL. This makes it impossible to set this flag. Please change the table data first.</source>
-        <translation>Ada paling tidak satu baris dengan ruas ini diatur ke NULL. Ini menjadikan tidak mungkin menata flag ini. Harap ubah data tabel terlebih dahulu.</translation>
+        <translation>Ada paling tidak satu baris dengan ruas ini diatur ke NULL. Menjadi tidak mungkin menata flag ini. Harap ubah data tabel terlebih dahulu.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="708"/>
         <source>There is at least one row with a non-integer value in this field. This makes it impossible to set the AI flag. Please change the table data first.</source>
-        <translation>Ada paling tidak satu baris dengan nilai non integer dalam ruas ini. Ini menjadikan tidak mungkin menata flag AI. Harap ubah data tabel terlebih dahulu.</translation>
+        <translation>Ada paling tidak satu baris dengan nilai non integer dalam ruas ini. Menjadi tidak mungkin menata flag AI. Harap ubah data tabel terlebih dahulu.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="766"/>
@@ -1823,7 +1820,7 @@ Apakah Anda hendak menerapkan data yang disunting ke baris=%1, kolom=%2?</transl
     <message>
         <location filename="../EditTableDialog.cpp" line="767"/>
         <source>This makes it impossible to enable the &apos;Unique&apos; flag. Please remove the duplicate data, which will allow the &apos;Unique&apos; flag to then be enabled.</source>
-        <translation>Ini menjadikan tidak mungkin memfungsikan flag &apos;Unik&apos;. Harap hapus data duplikat, yang akan mengizinkan flag &apos;Unik&apos; untuk difungsikan.</translation>
+        <translation>Menjadi tidak mungkin memfungsikan flag &apos;Unik&apos;. Harap hapus data duplikat, yang akan mengizinkan flag &apos;Unik&apos; untuk difungsikan.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="1029"/>
@@ -1969,7 +1966,7 @@ Semua data yang saat ini disimpan dalam ruas ini akan hilang.</translation>
     <message>
         <location filename="../ExportDataDialog.cpp" line="360"/>
         <source>Please select at least 1 table.</source>
-        <translation>Harap pilihj setidaknya 1 tabel.</translation>
+        <translation>Harap pilih setidaknya 1 tabel.</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.cpp" line="386"/>
@@ -2722,7 +2719,7 @@ x~y	Rentang: nilai antara x dan y
     <message>
         <location filename="../ImportCsvDialog.ui" line="329"/>
         <source>Fail on missing values </source>
-        <translation>Gagalkan saat ada nilai yang hilang </translation>
+        <translation>Gagal saat ada nilai yang hilang </translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="339"/>
@@ -2747,7 +2744,7 @@ x~y	Rentang: nilai antara x dan y
     <message>
         <location filename="../ImportCsvDialog.ui" line="373"/>
         <source>When importing into an existing table with a primary key, unique constraints or a unique index there is a chance for a conflict. This option allows you to select a strategy for that case: By default the import is aborted and rolled back but you can also choose to ignore and not import conflicting rows or to replace the existing row in the table.</source>
-        <translation>Ketika mengimpor ke dalam suatu tabel yang telah ada dengan sebuah kunci primer, konstrain unik, atau suatu indeks unik, ada kemungkinan konflik. Opsi ini memungkinkan Adan memilih suatu strategi untuk kasus tersebut. Secara baku impor digugurkan dan di-roll back tapi Anda bisa juga memilih untuk mengabaikan dan tidak mengimpor baris-baris yang konflik atau untuk menggantikan baris yang ada dalam tabel.</translation>
+        <translation>Ketika mengimpor ke dalam suatu tabel yang telah ada dengan sebuah kunci primer, konstrain unik, atau suatu indeks unik, ada kemungkinan konflik. Opsi ini memungkinkan Anda memilih suatu strategi untuk kasus tersebut. Secara baku impor digugurkan dan di-roll back tapi Anda bisa juga memilih untuk mengabaikan dan tidak mengimpor baris-baris yang konflik atau untuk menggantikan baris yang ada dalam tabel.</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="377"/>
@@ -2881,7 +2878,7 @@ x~y	Rentang: nilai antara x dan y
     <message>
         <location filename="../MainWindow.ui" line="832"/>
         <source>&amp;Help</source>
-        <translation>&amp;Bantuan</translation>
+        <translation>B&amp;antuan</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="870"/>
@@ -3011,7 +3008,7 @@ Anda dapat menyeret pernyataan SQL dari suatu baris objek dan menjatuhkan mereka
     <message>
         <location filename="../MainWindow.ui" line="848"/>
         <source>Too&amp;ls</source>
-        <translation>Per&amp;alatan</translation>
+        <translation>Pera&amp;latan</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="951"/>
@@ -3197,12 +3194,12 @@ Anda dapat menyeret pernyataan SQL dari kolom Skema dan menjatuhkan mereka ke da
     <message>
         <location filename="../MainWindow.ui" line="1363"/>
         <source>Open a wizard that lets you import data from a comma separated text file into a database table.</source>
-        <translation>Membuka suatu wisaya yang mengizinkan Anda mengimpor data dari berkas teks dengan pemisah koma ke dalam tabel basis data.</translation>
+        <translation>Membuka suatu wahana pandu yang mengizinkan Anda mengimpor data dari berkas teks dengan pemisah koma ke dalam tabel basis data.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1366"/>
         <source>Open a wizard that lets you import data from a comma separated text file into a database table. CSV files can be created on most database and spreadsheet applications.</source>
-        <translation>Opsi ini membuka suatu wisaya yang memungkinkan Anda mengimpor data dari berkas teks dipisah koma ke dalam tabel basis data. Berkas CSV dapat dibuat pada kebanyakan aplikasi basis data dan lembar kerja.</translation>
+        <translation>Opsi ini membuka suatu wahana pandu yang memungkinkan Anda mengimpor data dari berkas teks dipisah koma ke dalam tabel basis data. Berkas CSV dapat dibuat pada kebanyakan aplikasi basis data dan lembar kerja.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1377"/>
@@ -3227,7 +3224,7 @@ Anda dapat menyeret pernyataan SQL dari kolom Skema dan menjatuhkan mereka ke da
     <message>
         <location filename="../MainWindow.ui" line="1412"/>
         <source>Open the Create Table wizard, where it is possible to define the name and fields for a new table in the database</source>
-        <translation>Membuka wisaya Buat Tabel, dimana mungkin untuk mendefinisikan nama dan ruas bagi suatu tabel baru dalam basis data</translation>
+        <translation>Membuka wahana pandu Buat Tabel, dimana mungkin untuk mendefinisikan nama dan ruas bagi suatu tabel baru dalam basis data</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1430"/>
@@ -3238,7 +3235,7 @@ Anda dapat menyeret pernyataan SQL dari kolom Skema dan menjatuhkan mereka ke da
     <message>
         <location filename="../MainWindow.ui" line="1433"/>
         <source>Open the Delete Table wizard, where you can select a database table to be dropped.</source>
-        <translation>Membuka wisaya Hapus Tabel, dimana Anda dapat memilih sebuah tabel basis data yang akan di-drop.</translation>
+        <translation>Membuka wahana pandu Hapus Tabel, dimana Anda dapat memilih sebuah tabel basis data yang akan di-drop.</translation>
     </message>
     <message>
         <source>Open the Modify Table wizard, where it is possible to rename an existing table. It is also possible to add or delete fields form a table, as well as modify field names and types.</source>
@@ -3248,7 +3245,7 @@ Anda dapat menyeret pernyataan SQL dari kolom Skema dan menjatuhkan mereka ke da
     <message>
         <location filename="../MainWindow.ui" line="1469"/>
         <source>Open the Create Index wizard, where it is possible to define a new index on an existing database table.</source>
-        <translation>Membuka wisaya Buat Indeks, dimana mungkin untuk mendefinisikan sebuah indeks baru pada tabel basis data yang ada.</translation>
+        <translation>Membuka wahana pandu Buat Indeks, dimana mungkin untuk mendefinisikan sebuah indeks baru pada tabel basis data yang ada.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1481"/>
@@ -4075,7 +4072,7 @@ Anda yakin?</translation>
         <source>Do you want to create a new database file to hold the imported data?
 If you answer no we will attempt to import the data in the SQL file to the current database.</source>
         <translation>Apakah Anda ingin membuat suatu berkas basis data baru untuk menampung data yang diimpor?
-Bila Anda menjawab &apos;tidak&apos; kami akan mencoba mengimpor data dalam berkas SQL ke basis data saat ini.</translation>
+Bila Anda menjawab tidak kami akan mencoba mengimpor data dalam berkas SQL ke basis data saat ini.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="713"/>
@@ -4836,7 +4833,7 @@ Pilih sumbu atau label sumbu untuk menyeret dan memperbesar hanya dalam orientas
     <message>
         <location filename="../PlotDock.cpp" line="101"/>
         <source>Stacked bars</source>
-        <translation>Batan bertumpuk</translation>
+        <translation>Batang bertumpuk</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="107"/>
@@ -5069,7 +5066,7 @@ Peringatan: belum semua data diambil dari tabel karena mekanisme pengambilan par
     <message>
         <location filename="../PreferencesDialog.ui" line="1195"/>
         <source>Threshold for completion and calculation on selection</source>
-        <translation>Tipe ruas baku</translation>
+        <translation>Ambang batas bagi penyelesaian dan kalkulasi saat dipilih</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1290"/>
@@ -5497,7 +5494,7 @@ Dapat diatur ke 0 untuk menonaktifkan pelengkapan.</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="1658"/>
         <source>Choose the quoting mechanism used by the application for identifiers in SQL code.</source>
-        <translation>Pilih mekanismu pengutipan yang dipakai oleh aplikasi bagi identifier dalam kode SQL.</translation>
+        <translation>Pilih mekanisme pengutipan yang dipakai oleh aplikasi bagi identifier dalam kode SQL.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1665"/>
@@ -5512,7 +5509,7 @@ Dapat diatur ke 0 untuk menonaktifkan pelengkapan.</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="1675"/>
         <source>[Square brackets] - Traditional MS SQL Server quotes</source>
-        <translation>[Kurung siku] - kutip tradisional MS SQL Server</translation>
+        <translation>[Kurung siku] - Kutip tradisional MS SQL Server</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1700"/>
@@ -5597,7 +5594,7 @@ Dapat diatur ke 0 untuk menonaktifkan pelengkapan.</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="2099"/>
         <source>Configure</source>
-        <translation>Atur Konfigurasi</translation>
+        <translation>Konfigurasikan</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="2114"/>
@@ -6041,7 +6038,7 @@ Harap periksa lagi.</translation>
     <message>
         <location filename="../RemoteDock.ui" line="139"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB Browser for SQLite. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to &amp;quot;Generate client certificate&amp;quot; (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB Browser for SQLite Preferences. Click the button to add a new certificate to DB Browser for SQLite and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dalam panel ini, basis data remote dari situs web dbhub.io dapat ditambahkan ke Peramban DB untuk SQLite. Pertama Anda perlu suatu identitas:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Log masuk ke situs web dbhub.io (gunakan kredensial GitHub Anda atau apapun yang Anda inginkan)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klik tombol untuk &amp;quot;Membuat sertifikat klien&amp;quot; (itu adalah identitas Anda). Itu Akan memberi Anda suatu berkas sertifikat (simpan itu ke disk lokal Anda).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Pergi ke tab Remote dalam Prefrensi Peramban DB untuk SQLite. Klik tombol untuk menambahkan sertifikat baru ke Peramban DB untuk SQLite dan pilih berkas sertifikat yang baru saja diunduh.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Kini panel Remote menampilkan identitas Anda dan Anda dapat menambah basis data remote.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dalam panel ini, basis data remote dari situs web dbhub.io dapat ditambahkan ke Peramban DB untuk SQLite. Pertama Anda perlu suatu identitas:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Log masuk ke situs web dbhub.io (gunakan kredensial GitHub Anda atau apa pun yang Anda inginkan)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klik tombol untuk &amp;quot;Membuat sertifikat klien&amp;quot; (itu adalah identitas Anda). Itu Akan memberi Anda suatu berkas sertifikat (simpan itu ke disk lokal Anda).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Pergi ke tab Remote dalam Preferensi Peramban DB untuk SQLite. Klik tombol untuk menambahkan sertifikat baru ke Peramban DB untuk SQLite dan pilih berkas sertifikat yang baru saja diunduh.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Kini panel Remote menampilkan identitas Anda dan Anda dapat menambah basis data remote.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="147"/>
@@ -6094,7 +6091,7 @@ Harap periksa lagi.</translation>
     <message>
         <location filename="../RemoteDock.ui" line="390"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;You are currently using a built-in, read-only identity. For uploading your database, you need to configure and use your DBHub.io account.&lt;/p&gt;&lt;p&gt;No DBHub.io account yet? &lt;a href=&quot;https://dbhub.io/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Create one now&lt;/span&gt;&lt;/a&gt; and import your certificate &lt;a href=&quot;#preferences&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;here&lt;/span&gt;&lt;/a&gt; to share your databases.&lt;/p&gt;&lt;p&gt;For online help visit &lt;a href=&quot;https://dbhub.io/about&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;here&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Anda kini sedang memakai identitas bawaan, hanya-baca. Untuk mengunggah basis data Anda, Anda perlu mengonfigurasi dan memakai akun DBHub.io milikAnda.&lt;/p&gt;&lt;p&gt;Belum punya akun DBHub.io? &lt;a href=&quot;https://dbhub.io/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Buat baru sekarang&lt;/span&gt;&lt;/a&gt; dan impor sertifikat Anda &lt;a href=&quot;#preferences&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;di sini&lt;/span&gt;&lt;/a&gt; untuk berbagi basis data Anda.&lt;/p&gt;&lt;p&gt;Untuk bantuan daring kunjungi &lt;a href=&quot;https://dbhub.io/about&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;ini&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Anda kini sedang memakai identitas bawaan, hanya-baca. Untuk mengunggah basis data Anda, Anda perlu mengonfigurasi dan memakai akun DBHub.io milik Anda.&lt;/p&gt;&lt;p&gt;Belum punya akun DBHub.io? &lt;a href=&quot;https://dbhub.io/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Buat baru sekarang&lt;/span&gt;&lt;/a&gt; dan impor sertifikat Anda &lt;a href=&quot;#preferences&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;di sini&lt;/span&gt;&lt;/a&gt; untuk berbagi basis data Anda.&lt;/p&gt;&lt;p&gt;Untuk bantuan daring kunjungi &lt;a href=&quot;https://dbhub.io/about&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;ini&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="400"/>
@@ -6168,7 +6165,7 @@ Harap periksa lagi.</translation>
     <message>
         <location filename="../RemoteDock.ui" line="525"/>
         <source>Download and open this specific commit</source>
-        <translation>Unduh dan bukan commit spesifik ini</translation>
+        <translation>Unduh dan buka commit spesifik ini</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="540"/>
@@ -6217,7 +6214,7 @@ Please enter the URL to clone from. You can generate this URL by
 clicking the &apos;Clone Database in DB4S&apos; button on the web page
 of the database.</source>
         <translation>Ini mengunduh sebuah basis data dari suatu server remote untuk
-penyuntingingan lokal. Harap masukkan URL sumber klon. Anda
+penyuntingan lokal. Harap masukkan URL sumber klon. Anda
 dapat membangkitkan URL ini dengan mengklik tombol 
 &apos;Klon Basis Data dalam DB4S&apos; pada halaman web dari basis data.</translation>
     </message>
@@ -6368,14 +6365,14 @@ Anda yakin ingin melanjutkan?</translation>
         <location filename="../RemoteNetwork.cpp" line="363"/>
         <source>Uploading remote database to
 %1</source>
-        <translation>Mengunggah basis data remote ke 
+        <translation>Mengunggah basis data remote ke
 %1</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="365"/>
         <source>Downloading remote database from
 %1</source>
-        <translation>Mengundug basis data remote dari
+        <translation>Mengunduh basis data remote dari
 %1</translation>
     </message>
     <message>
@@ -6487,7 +6484,7 @@ Anda yakin ingin melanjutkan?</translation>
     <message>
         <location filename="../SqlExecutionArea.ui" line="14"/>
         <source>Form</source>
-        <translation></translation>
+        <translation>Bentuk</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="81"/>
@@ -6502,7 +6499,7 @@ Anda yakin ingin melanjutkan?</translation>
     <message>
         <location filename="../SqlExecutionArea.ui" line="91"/>
         <source>Shift+F3</source>
-        <translation></translation>
+        <translation>Shift+F3</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="105"/>
@@ -6542,12 +6539,12 @@ Anda yakin ingin melanjutkan?</translation>
     <message>
         <location filename="../SqlExecutionArea.ui" line="144"/>
         <source>Find next match with wrapping</source>
-        <translation>Cari kecocokan selanjutnya dan teruskan dari awal setelah mencapai akhir</translation>
+        <translation>Cari kecocokan selanjutnya dan putar balik</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="151"/>
         <source>F3</source>
-        <translation></translation>
+        <translation>F3</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="158"/>
@@ -6573,17 +6570,17 @@ Anda yakin ingin melanjutkan?</translation>
     <message>
         <location filename="../SqlExecutionArea.ui" line="232"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Results of the last executed statements.&lt;/p&gt;&lt;p&gt;You may want to collapse this panel and use the &lt;span style=&quot; font-style:italic;&quot;&gt;SQL Log&lt;/span&gt; dock with &lt;span style=&quot; font-style:italic;&quot;&gt;User&lt;/span&gt; selection instead.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Hasil dari eksekusi pernyataan yang terakhir.&lt;/p&gt;&lt;p&gt;Anda mungkin ingin melipat panel ini dan memakai dok &lt;span style=&quot; font-style:italic;&quot;&gt;Log SQL&lt;/span&gt; dengan pilihan &lt;span style=&quot; font-style:italic;&quot;&gt;Pengguna&lt;/span&gt; sebagai pengganti.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Hasil dari pernyataan yang terakhir dieksekusi.&lt;/p&gt;&lt;p&gt;Anda mungkin ingin melipat panel ini dan memakai dok &lt;span style=&quot; font-style:italic;&quot;&gt;Log SQL&lt;/span&gt; dengan pilihan &lt;span style=&quot; font-style:italic;&quot;&gt;Pengguna&lt;/span&gt; sebagai pengganti.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="253"/>
         <source>Results of the last executed statements</source>
-        <translation></translation>
+        <translation>Hasil dari pernyataan yang terakhir dieksekusi</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="235"/>
         <source>This field shows the results and status codes of the last executed statements.</source>
-        <translation></translation>
+        <translation>Ruas ini menunjukkan hasil dan kode status dari pernyataan yang terakhir dieksekusi.</translation>
     </message>
     <message>
         <source>Couldn&apos;t read file: %1.</source>
