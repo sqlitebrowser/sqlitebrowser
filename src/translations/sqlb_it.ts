@@ -2846,7 +2846,7 @@ Puoi trascinare SQL da una riga oggetto e rilasciarli dentro altri applicativi o
     <message>
         <location filename="../MainWindow.ui" line="848"/>
         <source>Too&amp;ls</source>
-        <translation>&amp;Strumenti</translation>
+        <translation>S&amp;trumenti</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="870"/>
@@ -3228,7 +3228,7 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
     <message>
         <location filename="../MainWindow.ui" line="1712"/>
         <source>Sa&amp;ve Project</source>
-        <translation>Sal&amp;va Progetto</translation>
+        <translation>Sa&amp;lva Progetto</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1724"/>
@@ -3384,7 +3384,7 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
         <location filename="../MainWindow.ui" line="123"/>
         <source>&amp;Browse Data</source>
         <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation>&amp;Visualizza Dati</translation>
+        <translation>V&amp;isualizza Dati</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="155"/>
@@ -3536,7 +3536,7 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
     <message>
         <location filename="../MainWindow.ui" line="1715"/>
         <source>&amp;Save Project</source>
-        <translation>&amp;Salva Progetto</translation>
+        <translation>Sa&amp;lva Progetto</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1718"/>
