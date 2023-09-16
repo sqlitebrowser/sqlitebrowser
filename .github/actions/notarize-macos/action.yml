@@ -7,9 +7,7 @@ inputs:
     required: true
   DEV_ID:
     required: true
-  P12:
-    required: true
-  P12_PW:
+  KEYCHAIN_PATH:
     required: true
   KEYCHAIN_PW:
     required: true
@@ -23,30 +21,19 @@ runs:
   using: 'composite'
 
   steps:
-    - name: Install the Apple certificate
+    - name: Unlock keychain
       env:
-        P12: ${{ inputs.P12 }}
-        P12_PW: ${{ inputs.P12_PW }}
+        KEYCHAIN_PATH: ${{ inputs.KEYCHAIN_PATH }}
         KEYCHAIN_PW: ${{ inputs.KEYCHAIN_PW }}
       shell: bash
       run: |
-        CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
-        KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
-
-        echo -n "$P12" | base64 --decode -o $CERTIFICATE_PATH
-
-        security create-keychain -p "$KEYCHAIN_PW" $KEYCHAIN_PATH
-        security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
-        security unlock-keychain -p "$KEYCHAIN_PW" $KEYCHAIN_PATH
-
-        security import "$CERTIFICATE_PATH" -P "$P12_PW" -A -t cert -f pkcs12 -k "$KEYCHAIN_PATH"
-        security list-keychain -d user -s $KEYCHAIN_PATH
-
+        security unlock-keychain -p "$KEYCHAIN_PW" "$KEYCHAIN_PATH"
+        security list-keychain -d user -s "$KEYCHAIN_PATH"
     - name: Include the dependencies in the app bundle
       env:
         DEV_ID: ${{ inputs.DEV_ID }}
       shell: bash
-      run: find build -name "DB Browser for SQL*.app" -exec /usr/local/opt/qt@5/bin/macdeployqt {} -sign-for-notarization="$DEV_ID" \;
+      run: find build -name "DB Browser for SQL*.app" -exec /opt/homebrew/opt/db4subqt@5/bin/macdeployqt {} -sign-for-notarization="$DEV_ID" \;
 
     - name: Add the extension to the app bundle
       shell: bash
@@ -54,8 +41,8 @@ runs:
         for TARGET in $(find build -name "DB Browser for SQL*.app" | sed -e 's/ /_/g'); do
           TARGET=$(echo $TARGET | sed -e 's/_/ /g')
           mkdir "$TARGET/Contents/Extensions"
-          clang -I /usr/local/opt/sqlitefts5/include -L /usr/local/opt/sqlitefts5/lib -fno-common -dynamiclib src/extensions/extension-formats.c -o "$TARGET/Contents/Extensions/formats.dylib"
-          clang -I /usr/local/opt/sqlitefts5/include -L /usr/local/opt/sqlitefts5/lib -fno-common -dynamiclib src/extensions/extension-functions.c -o "$TARGET/Contents/Extensions/math.dylib"
+          clang -I /opt/homebrew/opt/db4subsqlitefts@5/include -L /opt/homebrew/opt/db4subsqlitefts@5/lib -fno-common -dynamiclib src/extensions/extension-formats.c -o "$TARGET/Contents/Extensions/formats.dylib"
+          clang -I /opt/homebrew/opt/db4subsqlitefts@5/include -L /opt/homebrew/opt/db4subsqlitefts@5/lib -fno-common -dynamiclib src/extensions/extension-functions.c -o "$TARGET/Contents/Extensions/math.dylib"
 
           if [ -f "$TARGET/Contents/Extensions/formats.dylib" ]; then
             install_name_tool -id "@executable_path/../Extensions/formats.dylib" "$TARGET/Contents/Extensions/formats.dylib"
@@ -69,7 +56,7 @@ runs:
           curl -L -o src/extensions/fileio.c 'https://sqlite.org/src/raw?filename=ext/misc/fileio.c&ci=trunk'
           curl -L -o src/extensions/test_windirect.c 'https://sqlite.org/src/raw?filename=src/test_windirent.c&ci=trunk'
           curl -L -o src/extensions/test_windirect.h 'https://sqlite.org/src/raw?filename=src/test_windirent.h&ci=trunk'
-          clang -I /usr/local/opt/sqlitfts5/include -L /usr/local/opt/sqlitefts5/lib -fno-common -dynamiclib src/extensions/fileio.c src/extensions/test_windirect.c -o "$TARGET/Contents/Extensions/fileio.dylib"
+          clang -I /opt/homebrew/opt/db4subsqlitefts@5/include -L /opt/homebrew/opt/db4subsqlitefts@5/lib -fno-common -dynamiclib src/extensions/fileio.c src/extensions/test_windirect.c -o "$TARGET/Contents/Extensions/fileio.dylib"
 
           if [ -f "$TARGET/Contents/Extensions/fileio.dylib" ]; then
             install_name_tool -id "@executable_path/../Extensions/fileio.dylib" "$TARGET/Contents/Extensions/fileio.dylib"
@@ -93,11 +80,11 @@ runs:
           TARGET=$(echo $TARGET | sed -e 's/_/ /g')
           mkdir "$TARGET/Contents/translations"
           for i in ar cs de en es fr it ko pl pt pt_BR ru uk zh_CN zh_TW; do
-            find /usr/local/opt/qt@5/translations -name "qt_${i}.qm" 2> /dev/null -exec cp -v {} "$TARGET/Contents/translations/" \;
-            find /usr/local/opt/qt@5/translations -name "qtbase_${i}.qm" 2> /dev/null -exec cp -v {} "$TARGET/Contents/translations/" \;
-            find /usr/local/opt/qt@5/translations -name "qtmultimedia_${i}.qm" 2> /dev/null -exec cp -v {} "$TARGET/Contents/translations/" \;
-            find /usr/local/opt/qt@5/translations -name "qtscript_${i}.qm" 2> /dev/null -exec cp -v {} "$TARGET/Contents/translations/" \;
-            find /usr/local/opt/qt@5/translations -name "qtxmlpatterns_${i}.qm" 2> /dev/null -exec cp -v {} "$TARGET/Contents/translations/" \;
+            find /opt/homebrew/opt/db4subqt@5/translations -name "qt_${i}.qm" 2> /dev/null -exec cp -v {} "$TARGET/Contents/translations/" \;
+            find /opt/homebrew/opt/db4subqt@5/translations -name "qtbase_${i}.qm" 2> /dev/null -exec cp -v {} "$TARGET/Contents/translations/" \;
+            find /opt/homebrew/opt/db4subqt@5/translations -name "qtmultimedia_${i}.qm" 2> /dev/null -exec cp -v {} "$TARGET/Contents/translations/" \;
+            find /opt/homebrew/opt/db4subqt@5/translations -name "qtscript_${i}.qm" 2> /dev/null -exec cp -v {} "$TARGET/Contents/translations/" \;
+            find /opt/homebrew/opt/db4subqt@5/translations -name "qtxmlpatterns_${i}.qm" 2> /dev/null -exec cp -v {} "$TARGET/Contents/translations/" \;
           done 
         done
 
@@ -165,8 +152,3 @@ runs:
           TARGET=$(echo $TARGET | sed -e 's/_/ /g')
           xcrun stapler staple "$TARGET"
         done
-
-    - name: Clear keychain
-      if: always()
-      shell: bash
-      run: security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
