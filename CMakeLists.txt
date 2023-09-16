@@ -31,6 +31,7 @@ OPTION(FORCE_INTERNAL_QCUSTOMPLOT "Don't use distribution's QCustomPlot even if 
 OPTION(FORCE_INTERNAL_QHEXEDIT "Don't use distribution's QHexEdit even if available" ON)
 OPTION(ALL_WARNINGS "Enable some useful warning flags" OFF)
 OPTION(sqlcipher "Build with SQLCipher library" OFF)
+OPTION(customTap "Using SQLCipher, SQLite and Qt installed through our custom Homebrew tap" OFF)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
@@ -105,20 +106,31 @@ if(MSVC)
     list(PREPEND CMAKE_PREFIX_PATH ${QT5_PATH} ${SQLITE3_PATH})
 endif()
 
-# See https://github.com/Homebrew/homebrew-core/issues/8392#issuecomment-325226494
-if(APPLE AND EXISTS /usr/local/opt/qt5)
-    # Homebrew installs Qt5 (up to at least 5.9.1) in
-    # /usr/local/qt5, ensure it can be found by CMake since
-    # it is not in the default /usr/local prefix.
-    list(APPEND CMAKE_PREFIX_PATH "/usr/local/opt/qt5")
-endif()
 
-# For M1 Mac's
-if(APPLE AND EXISTS /opt/homebrew/opt/qt5)
-    list(APPEND CMAKE_PREFIX_PATH "/opt/homebrew/opt/qt5")
-endif()
-if(APPLE AND EXISTS /opt/homebrew/opt/sqlitefts5)
-    list(PREPEND CMAKE_PREFIX_PATH "/opt/homebrew/opt/sqlitefts5")
+if(APPLE)
+    # For Intel Mac's
+    if(EXISTS /usr/local/opt/qt5)
+        list(APPEND CMAKE_PREFIX_PATH "/usr/local/opt/qt5")
+    endif()
+
+    # For Apple Silicon Mac's
+    if(EXISTS /opt/homebrew/opt/qt5)
+        list(APPEND CMAKE_PREFIX_PATH "/opt/homebrew/opt/qt5")
+    endif()
+    if(EXISTS /opt/homebrew/opt/sqlitefts5)
+        list(PREPEND CMAKE_PREFIX_PATH "/opt/homebrew/opt/sqlitefts5")
+    endif()
+
+    # For Apple Silicon Mac's and install dependencies via our Homebrew tap(sqlitebrowser/homebrew-tap)
+    if(customTap AND EXISTS /opt/homebrew/opt/)
+        list(PREPEND CMAKE_PREFIX_PATH "/opt/homebrew/opt/db4subqt@5")
+        list(PREPEND CMAKE_PREFIX_PATH "/opt/homebrew/opt/db4subsqlitefts@5")
+
+        if(sqlcipher)
+            list(APPEND SQLCIPHER_INCLUDE_DIR "/opt/homebrew/include")
+            list(APPEND SQLCIPHER_LIBRARY "/opt/homebrew/opt/db4subsqlcipher/lib/libsqlcipher.0.dylib")
+        endif()
+    endif()
 endif()
 
 find_package(Qt5 REQUIRED COMPONENTS Concurrent Gui LinguistTools Network PrintSupport Test Widgets Xml)
