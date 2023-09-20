@@ -5,6 +5,11 @@ on:
         - cron: '0 0 * * *' # Every day at midnight (UTC)
     workflow_call:
     workflow_dispatch:
+      inputs:
+        assume-triggerd-by-schedule:
+          description: 'Assume this workflow was triggered by the schedule'
+          required: false
+          type: boolean
 
 permissions:
     contents: write
@@ -18,16 +23,30 @@ jobs:
             matrix:
                 os: [macos-13-runner]
                 sqlcipher: ["0", "1"]
+        env:
+          DAILY: ${{ github.event.name == 'schedule' || github.event.inputs.assume-triggerd-by-schedule }} 
         steps:
             - name: Checkout
               uses: actions/checkout@v3
 
-            - name: Configure build
+            - if: github.event_name != 'schedule' && env.DAILY != 'true'
+              name: Configure build (Continuous)
               run: |
                 if [ "${{ matrix.sqlcipher }}" = "1" ]; then
                     sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLCipher-dev-'$(git rev-parse --short --verify HEAD)'"/' CMakeLists.txt
                 else
                     sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLite-dev-'$(git rev-parse --short --verify HEAD)'"/' CMakeLists.txt
+                fi
+                mkdir build && cd build
+                cmake -G Ninja -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DcustomTap=1 -Dsqlcipher=${{ matrix.sqlcipher }} ..
+
+            - if: github.event_name == 'schedule' || env.DAILY == 'true'
+              name: Configure build (Daily)
+              run: |
+                if [ "${{ matrix.sqlcipher }}" = "1" ]; then
+                    sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLCipher Nightly"/' CMakeLists.txt
+                else
+                    sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLite Nightly"/' CMakeLists.txt
                 fi
                 mkdir build && cd build
                 cmake -G Ninja -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DcustomTap=1 -Dsqlcipher=${{ matrix.sqlcipher }} ..
@@ -51,13 +70,14 @@ jobs:
               with:
                 APPLE_ID: ${{ secrets.MACOS_CODESIGN_APPLE_ID }}
                 APPLE_PW: ${{ secrets.MACOS_CODESIGN_APPLE_PW }}
+                DAILY: ${{ env.DAILY }}
                 DEV_ID: ${{ secrets.MACOS_CODESIGN_DEV_ID }}
                 KEYCHAIN_PATH: ${{ secrets.MACOS_CODESIGN_KEYCHAIN_PATH }}
                 KEYCHAIN_PW: ${{ secrets.MACOS_CODESIGN_KEYCHAIN_PW }}
                 SQLCIPHER: ${{ matrix.sqlcipher }}
                 TEAM_ID: ${{ secrets.MACOS_CODESIGN_TEAM_ID }}
 
-            - if: github.event_name != 'pull_request' && github.event_name != 'schedule'
+            - if: github.event_name != 'pull_request' && github.event_name != 'schedule' && env.DAILY != 'true'
               name: Release (Continuous)
               uses: softprops/action-gh-release@v1
               with:
@@ -65,4 +85,15 @@ jobs:
                 prerelease: true
                 tag_name: continuous
 
-            # TODO: - if: github.event_name == 'schedule'
+            - if: github.event_name == 'schedule' || env.DAILY == 'true'
+              name: Release (Daily)
+              run: |
+                export DATE=$(date +%Y%m%d)
+                rsync -aP *.dmg ${{ secrets.MACOS_BUILD_ARTIFACTS_UPLOAD_TARGET }}:/nightlies/macos-universal/
+                if [ "${{ matrix.sqlcipher }}" = "1" ]; then
+                  ssh -q ${{ secrets.MACOS_BUILD_ARTIFACTS_UPLOAD_TARGET }} "cd /nightlies/latest && rm -f *SQLC*-universal*dmg*"
+                  ssh -q ${{ secrets.MACOS_BUILD_ARTIFACTS_UPLOAD_TARGET }} "ln -s /nightlies/macos-universal/DB.Browser.for.SQLCipher-universal_$DATE.dmg /nightlies/latest/DB.Browser.for.SQLCipher-universal.dmg"
+                else
+                  ssh -q ${{ secrets.MACOS_BUILD_ARTIFACTS_UPLOAD_TARGET }} "cd /nightlies/latest && rm -f *SQLi*-universal*dmg*"
+                  ssh -q ${{ secrets.MACOS_BUILD_ARTIFACTS_UPLOAD_TARGET }} "ln -s /nightlies/macos-universal/DB.Browser.for.SQLite-universal_$DATE.dmg /nightlies/latest/DB.Browser.for.SQLite-universal.dmg"
+                fi

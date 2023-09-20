@@ -1,3 +1,6 @@
+# if [ "${{ inputs.DAILY }}" = "false" ]; then
+# FIXME: When triggered by a push event, the DAILY value was not set, so I temporarily set the condition like in the code above.
+
 name: Notarize the app (macOS)
 
 inputs:
@@ -5,6 +8,9 @@ inputs:
     required: true
   APPLE_PW:
     required: true
+  DAILY:
+    type: boolean
+    required: false
   DEV_ID:
     required: true
   KEYCHAIN_PATH:
@@ -89,12 +95,19 @@ runs:
         done
 
     - name: Copy the icon file to the app bundle
+      env:
+        DAILY: ${{ inputs.DAILY }}
       shell: bash
       run: |
         for TARGET in $(find build -name "DB Browser for SQL*.app" | sed -e 's/ /_/g'); do
           TARGET=$(echo $TARGET | sed -e 's/_/ /g')
-          cp installer/macos/macapp.icns "$TARGET/Contents/Resources/"
-          /usr/libexec/PlistBuddy -c "Set :CFBundleIconFile macapp.icns" "$TARGET/Contents/Info.plist"
+          if [ "${{ inputs.DAILY }}" = "" ] || [ "${{ inputs.DAILY }}" = "false" ]; then
+            cp installer/macos/macapp.icns "$TARGET/Contents/Resources/"
+            /usr/libexec/PlistBuddy -c "Set :CFBundleIconFile macapp.icns" "$TARGET/Contents/Info.plist"
+          else
+            cp installer/macos/macapp-nightly.icns "$TARGET/Contents/Resources/"
+            /usr/libexec/PlistBuddy -c "Set :CFBundleIconFile macapp-nightly.icns" "$TARGET/Contents/Info.plist"
+          fi
         done
 
     - name: Sign the manually added extensions.
@@ -114,23 +127,47 @@ runs:
       shell: bash
       run: mv build/*.app installer/macos
 
+    # TODO: I originally tried to break it into two steps to make it more readable,
+    # but Composite Actions do not support if statements for steps.
+    # For more information, see https://github.com/actions/runner/blob/main/docs/adrs/0549-composite-run-steps.md
     - name: Create the DMG
       env:
+        DAILY: ${{ inputs.DAILY }}
         DEV_ID: ${{ inputs.DEV_ID }}
       shell: bash
       run: |
+        export DATE=$(date +%Y%m%d)
+
         if [ "${{ inputs.SQLCIPHER }}" = "1" ]; then
-          sed -i "" 's/"DB Browser for SQLCipher Nightly.app"/"DB Browser for SQLCipher-dev-'$(git rev-parse --short --verify HEAD)'.app"/' installer/macos/sqlcipher-nightly.json
-          TARGET="DB Browser for SQLCipher-dev-$(git rev-parse --short --verify HEAD).dmg"
-          appdmg --quiet installer/macos/sqlcipher-nightly.json "$TARGET"
-          codesign --sign "$DEV_ID" --verbose --options=runtime --timestamp "$TARGET"
-          codesign -vvv --deep --strict --verbose=4 "$TARGET"
+          if [ "${{ inputs.DAILY }}" = "" ] || [ "${{ inputs.DAILY }}" = "false" ]; then
+            # Continuous with SQLCipher
+            sed -i "" 's/"DB Browser for SQLCipher Nightly.app"/"DB Browser for SQLCipher-dev-'$(git rev-parse --short --verify HEAD)'.app"/' installer/macos/sqlcipher-nightly.json
+            TARGET="DB.Browser.for.SQLCipher-dev-$(git rev-parse --short --verify HEAD).dmg"
+            appdmg --quiet installer/macos/sqlcipher-nightly.json "$TARGET"
+            codesign --sign "$DEV_ID" --verbose --options=runtime --timestamp "$TARGET"
+            codesign -vvv --deep --strict --verbose=4 "$TARGET"
+          else
+            # Daily with SQLCipher
+            TARGET="DB.Browser.for.SQLCipher-universal_$DATE.dmg"
+            appdmg --quiet installer/macos/sqlcipher-nightly.json "$TARGET"
+            codesign --sign "$DEV_ID" --verbose --options=runtime --timestamp "$TARGET"
+            codesign -vvv --deep --strict --verbose=4 "$TARGET"
+          fi
         else
-          sed -i "" 's/"DB Browser for SQLite Nightly.app"/"DB Browser for SQLite-dev-'$(git rev-parse --short --verify HEAD)'.app"/' installer/macos/nightly.json
-          TARGET="DB Browser for SQLite-dev-$(git rev-parse --short --verify HEAD).dmg"
-          appdmg --quiet installer/macos/nightly.json "$TARGET"
-          codesign --sign "$DEV_ID" --verbose --options=runtime --timestamp "$TARGET"
-          codesign -vvv --deep --strict --verbose=4 "$TARGET"
+          if [ "${{ inputs.DAILY }}" = "" ] || [ "${{ inputs.DAILY }}" = "false" ]; then
+            # Continuous without SQLCipher
+            sed -i "" 's/"DB Browser for SQLite Nightly.app"/"DB Browser for SQLite-dev-'$(git rev-parse --short --verify HEAD)'.app"/' installer/macos/nightly.json
+            TARGET="DB.Browser.for.SQLite-dev-$(git rev-parse --short --verify HEAD).dmg"
+            appdmg --quiet installer/macos/nightly.json "$TARGET"
+            codesign --sign "$DEV_ID" --verbose --options=runtime --timestamp "$TARGET"
+            codesign -vvv --deep --strict --verbose=4 "$TARGET"
+          else
+            # Daily without SQLCipher
+            TARGET="DB.Browser.for.SQLite-universal_$DATE.dmg"
+            appdmg --quiet installer/macos/nightly.json "$TARGET"
+            codesign --sign "$DEV_ID" --verbose --options=runtime --timestamp "$TARGET"
+            codesign -vvv --deep --strict --verbose=4 "$TARGET"
+          fi
         fi
 
     - name: Notarize the dmg
@@ -139,16 +176,8 @@ runs:
         APPLE_PW: ${{ inputs.APPLE_PW }}
         TEAM_ID: ${{ inputs.TEAM_ID }}
       shell: bash
-      run: |
-        for TARGET in $(find . -name "DB Browser for SQL*.dmg" | sed -e 's/ /_/g'); do
-          TARGET=$(echo $TARGET | sed -e 's/_/ /g')
-          xcrun notarytool submit "$TARGET" --apple-id "$APPLE_ID" --password "$APPLE_PW" --team-id "$TEAM_ID" --wait
-        done
+      run: xcrun notarytool submit *.dmg --apple-id "$APPLE_ID" --password "$APPLE_PW" --team-id "$TEAM_ID" --wait
 
     - name: Staple the notarization ticket
       shell: bash
-      run: |
-        for TARGET in $(find . -name "DB Browser for SQL*.dmg" | sed -e 's/ /_/g'); do
-          TARGET=$(echo $TARGET | sed -e 's/_/ /g')
-          xcrun stapler staple "$TARGET"
-        done
+      run: xcrun stapler staple *.dmg
