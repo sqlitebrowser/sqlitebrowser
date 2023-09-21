@@ -1,6 +1,3 @@
-# if [ "${{ inputs.DAILY }}" = "false" ]; then
-# FIXME: When triggered by a push event, the DAILY value was not set, so I temporarily set the condition like in the code above.
-
 name: Notarize the app (macOS)
 
 inputs:
@@ -101,7 +98,7 @@ runs:
       run: |
         for TARGET in $(find build -name "DB Browser for SQL*.app" | sed -e 's/ /_/g'); do
           TARGET=$(echo $TARGET | sed -e 's/_/ /g')
-          if [ "${{ inputs.DAILY }}" = "" ] || [ "${{ inputs.DAILY }}" = "false" ]; then
+          if [ "${{ inputs.DAILY }}" = "false" ]; then
             cp installer/macos/macapp.icns "$TARGET/Contents/Resources/"
             /usr/libexec/PlistBuddy -c "Set :CFBundleIconFile macapp.icns" "$TARGET/Contents/Info.plist"
           else
@@ -139,7 +136,7 @@ runs:
         export DATE=$(date +%Y%m%d)
 
         if [ "${{ inputs.SQLCIPHER }}" = "1" ]; then
-          if [ "${{ inputs.DAILY }}" = "" ] || [ "${{ inputs.DAILY }}" = "false" ]; then
+          if [ "${{ inputs.DAILY }}" = "false" ]; then
             # Continuous with SQLCipher
             sed -i "" 's/"DB Browser for SQLCipher Nightly.app"/"DB Browser for SQLCipher-dev-'$(git rev-parse --short --verify HEAD)'.app"/' installer/macos/sqlcipher-nightly.json
             TARGET="DB.Browser.for.SQLCipher-dev-$(git rev-parse --short --verify HEAD).dmg"
@@ -154,7 +151,7 @@ runs:
             codesign -vvv --deep --strict --verbose=4 "$TARGET"
           fi
         else
-          if [ "${{ inputs.DAILY }}" = "" ] || [ "${{ inputs.DAILY }}" = "false" ]; then
+          if [ "${{ inputs.DAILY }}" = "false" ]; then
             # Continuous without SQLCipher
             sed -i "" 's/"DB Browser for SQLite Nightly.app"/"DB Browser for SQLite-dev-'$(git rev-parse --short --verify HEAD)'.app"/' installer/macos/nightly.json
             TARGET="DB.Browser.for.SQLite-dev-$(git rev-parse --short --verify HEAD).dmg"

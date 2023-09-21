@@ -24,12 +24,17 @@ jobs:
                 os: [macos-13-runner]
                 sqlcipher: ["0", "1"]
         env:
-          DAILY: ${{ github.event.name == 'schedule' || github.event.inputs.assume-triggerd-by-schedule }} 
+          DAILY: false
         steps:
+            - name: Set 'DAILY' environment variable
+              run: |
+                if [ "${{ github.event_name }}" = "schedule" ] || [ "${{ github.event.inputs.assume-triggerd-by-schedule }}" == "true" ]; then
+                  echo "DAILY=true" >> $GITHUB_ENV
+                fi
             - name: Checkout
               uses: actions/checkout@v3
 
-            - if: github.event_name != 'schedule' && env.DAILY != 'true'
+            - if: env.DAILY == 'false'
               name: Configure build (Continuous)
               run: |
                 if [ "${{ matrix.sqlcipher }}" = "1" ]; then
@@ -40,7 +45,7 @@ jobs:
                 mkdir build && cd build
                 cmake -G Ninja -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DcustomTap=1 -Dsqlcipher=${{ matrix.sqlcipher }} ..
 
-            - if: github.event_name == 'schedule' || env.DAILY == 'true'
+            - if: env.DAILY == 'true'
               name: Configure build (Daily)
               run: |
                 if [ "${{ matrix.sqlcipher }}" = "1" ]; then
@@ -77,15 +82,15 @@ jobs:
                 SQLCIPHER: ${{ matrix.sqlcipher }}
                 TEAM_ID: ${{ secrets.MACOS_CODESIGN_TEAM_ID }}
 
-            - if: github.event_name != 'pull_request' && github.event_name != 'schedule' && env.DAILY != 'true'
+            - if: github.event_name != 'pull_request' && env.DAILY == 'false'
               name: Release (Continuous)
               uses: softprops/action-gh-release@v1
               with:
-                files: DB\ Browser\ for\ *.dmg
+                files: DB.Browser.for.*.dmg
                 prerelease: true
                 tag_name: continuous
 
-            - if: github.event_name == 'schedule' || env.DAILY == 'true'
+            - if: env.DAILY == 'true'
               name: Release (Daily)
               run: |
                 export DATE=$(date +%Y%m%d)
