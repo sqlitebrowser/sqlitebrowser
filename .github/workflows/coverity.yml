@@ -23,7 +23,7 @@ jobs:
       run: |
            cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DENABLE_TESTING=ON -Dsqlcipher=1 .
     - name: Build and scan
-      uses: vapier/coverity-scan-action@v0
+      uses: vapier/coverity-scan-action@v1
       with:
         project: sqlitebrowser%2Fsqlitebrowser
         token: ${{ secrets.COVERITY_TOKEN }}
