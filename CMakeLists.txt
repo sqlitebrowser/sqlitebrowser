@@ -108,27 +108,42 @@ endif()
 
 
 if(APPLE)
-    # For Intel Mac's
-    if(EXISTS /usr/local/opt/qt5)
-        list(APPEND CMAKE_PREFIX_PATH "/usr/local/opt/qt5")
-    endif()
+    macro(find_brew_pkg formula_name)
+        execute_process(
+            COMMAND brew --prefix --installed ${formula_name}
+            RESULT_VARIABLE STATUS
+            OUTPUT_VARIABLE FOUND_PATH
+            OUTPUT_STRIP_TRAILING_WHITESPACE
+            ERROR_QUIET)
+        if(STATUS EQUAL 0)
+            list(PREPEND CMAKE_PREFIX_PATH ${FOUND_PATH})
+        endif()
+    endmacro()
 
-    # For Apple Silicon Mac's
-    if(EXISTS /opt/homebrew/opt/qt5)
-        list(APPEND CMAKE_PREFIX_PATH "/opt/homebrew/opt/qt5")
-    endif()
-    if(EXISTS /opt/homebrew/opt/sqlitefts5)
-        list(PREPEND CMAKE_PREFIX_PATH "/opt/homebrew/opt/sqlitefts5")
-    endif()
+    find_brew_pkg("qt@5")
+    find_brew_pkg("sqlitefts5")
 
     # For Apple Silicon Mac's and install dependencies via our Homebrew tap(sqlitebrowser/homebrew-tap)
-    if(customTap AND EXISTS /opt/homebrew/opt/)
-        list(PREPEND CMAKE_PREFIX_PATH "/opt/homebrew/opt/db4subqt@5")
-        list(PREPEND CMAKE_PREFIX_PATH "/opt/homebrew/opt/db4subsqlitefts@5")
+    if(customTap AND CMAKE_SYSTEM_PROCESSOR MATCHES "(arm64)|(ARM64)")
+        find_brew_pkg("db4subqt@5")
+        find_brew_pkg("db4subsqlitefts@5")
 
         if(sqlcipher)
-            list(APPEND SQLCIPHER_INCLUDE_DIR "/opt/homebrew/include")
-            list(APPEND SQLCIPHER_LIBRARY "/opt/homebrew/opt/db4subsqlcipher/lib/libsqlcipher.0.dylib")
+            execute_process(
+                COMMAND brew --prefix
+                OUTPUT_VARIABLE HOMEBREW_PATH
+                OUTPUT_STRIP_TRAILING_WHITESPACE
+                ERROR_QUIET)
+            execute_process(
+                COMMAND brew --prefix --installed db4subsqlcipher
+                RESULT_VARIABLE STATUS
+                OUTPUT_VARIABLE SQLCIPHER_PKG_PATH
+                OUTPUT_STRIP_TRAILING_WHITESPACE
+                ERROR_QUIET)
+            if(STATUS EQUAL 0)
+                list(PREPEND SQLCIPHER_INCLUDE_DIR "${HOMEBREW_PATH}/include")
+                list(PREPEND SQLCIPHER_LIBRARY "${SQLCIPHER_PKG_PATH}/lib/libsqlcipher.0.dylib")
+            endif()
         endif()
     endif()
 endif()
