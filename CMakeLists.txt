@@ -108,43 +108,11 @@ endif()
 
 
 if(APPLE)
-    macro(find_brew_pkg formula_name)
-        execute_process(
-            COMMAND brew --prefix --installed ${formula_name}
-            RESULT_VARIABLE STATUS
-            OUTPUT_VARIABLE FOUND_PATH
-            OUTPUT_STRIP_TRAILING_WHITESPACE
-            ERROR_QUIET)
-        if(STATUS EQUAL 0)
-            list(PREPEND CMAKE_PREFIX_PATH ${FOUND_PATH})
-        endif()
-    endmacro()
-
-    find_brew_pkg("qt@5")
-    find_brew_pkg("sqlitefts5")
-
-    # For Apple Silicon Mac's and install dependencies via our Homebrew tap(sqlitebrowser/homebrew-tap)
-    if(customTap AND CMAKE_SYSTEM_PROCESSOR MATCHES "(arm64)|(ARM64)")
-        find_brew_pkg("db4subqt@5")
-        find_brew_pkg("db4subsqlitefts@5")
-
-        if(sqlcipher)
-            execute_process(
-                COMMAND brew --prefix
-                OUTPUT_VARIABLE HOMEBREW_PATH
-                OUTPUT_STRIP_TRAILING_WHITESPACE
-                ERROR_QUIET)
-            execute_process(
-                COMMAND brew --prefix --installed db4subsqlcipher
-                RESULT_VARIABLE STATUS
-                OUTPUT_VARIABLE SQLCIPHER_PKG_PATH
-                OUTPUT_STRIP_TRAILING_WHITESPACE
-                ERROR_QUIET)
-            if(STATUS EQUAL 0)
-                list(PREPEND SQLCIPHER_INCLUDE_DIR "${HOMEBREW_PATH}/include")
-                list(PREPEND SQLCIPHER_LIBRARY "${SQLCIPHER_PKG_PATH}/lib/libsqlcipher.0.dylib")
-            endif()
-        endif()
+    find_package(Homebrew REQUIRED)
+    if (customTap AND sqlcipher)
+        list(PREPEND CMAKE_PREFIX_PATH ${Qt5_DIR} ${SQLCipher_INCLUDE_DIR} ${SQLCipher_INCLUDE_DIR} ${SQLite_DIR})
+    else()
+        list(PREPEND CMAKE_PREFIX_PATH ${Qt5_DIR} ${SQLite_DIR})
     endif()
 endif()
 
