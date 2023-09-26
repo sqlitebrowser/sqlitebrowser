@@ -862,7 +862,7 @@ Message from database engine:
     <message>
         <location filename="../sqlitedb.cpp" line="2196"/>
         <source>could not get column information</source>
-        <translation>не могу полчить информацию о колонке</translation>
+        <translation>не могу получить информацию о колонке</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="2087"/>
@@ -984,7 +984,7 @@ Message from database engine:
     <message>
         <location filename="../EditDialog.ui" line="62"/>
         <source>This is the list of supported modes for the cell editor. Choose a mode for viewing or editing the data of the current cell.</source>
-        <translation>Это список поддерживаемых режимов. Выбирете режим для просмотра или редактирования данных текущей ячейки.</translation>
+        <translation>Это список поддерживаемых режимов. Выберите режим для просмотра или редактирования данных текущей ячейки.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="71"/>
@@ -1420,7 +1420,7 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
     <message>
         <location filename="../EditIndexDialog.ui" line="172"/>
         <source>Add a new expression column to the index. Expression columns contain SQL expression rather than column names.</source>
-        <translation>Добавить новое колоночное-выражение в индекс. Колоночное выражение может содержкать SQL выражения вместо имен колонок.</translation>
+        <translation>Добавить новое колоночное выражение в индекс. Колоночное выражение может содержать SQL выражения вместо имён колонок.</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="232"/>
@@ -1666,7 +1666,7 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
     <message>
         <location filename="../EditTableDialog.ui" line="685"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Warning: &lt;/span&gt;There is something with this table definition that our parser doesn&apos;t fully understand. Modifying and saving this table might result in problems.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Внимание: &lt;/span&gt;В описании этой таблицы есть что-то, что наш парсер не понимает. Модификация и сохрание этой таблицы может породить проблемы.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Внимание: &lt;/span&gt;В описании этой таблицы есть что-то, что наш парсер не понимает. Модификация и сохранение этой таблицы может породить проблемы.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="709"/>
@@ -1704,7 +1704,7 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
     <message>
         <location filename="../EditTableDialog.cpp" line="585"/>
         <source>This column is referenced in a foreign key in table %1 and thus its name cannot be changed.</source>
-        <translation>На данную колонку ссылкается внешний ключ в таблице %1, поэтому ее имя не может быть изменено.</translation>
+        <translation>На данную колонку ссылается внешний ключ в таблице %1, поэтому ее имя не может быть изменено.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="677"/>
@@ -1875,7 +1875,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportDataDialog.cpp" line="386"/>
         <source>Choose a directory</source>
-        <translation>Выберать каталог</translation>
+        <translation>Выберите каталог</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.cpp" line="418"/>
@@ -1943,7 +1943,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportSqlDialog.ui" line="109"/>
         <source>Keep old schema (CREATE TABLE IF NOT EXISTS)</source>
-        <translation>Проверять существоватние таблицы (CREATE TABLE IF NOT EXISTS)</translation>
+        <translation>Проверять существование таблицы (CREATE TABLE IF NOT EXISTS)</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="114"/>
@@ -2127,7 +2127,7 @@ All data currently stored in this field will be lost.</source>
         <location filename="../ExtendedTableWidget.cpp" line="799"/>
         <source>The content of the clipboard is bigger than the range selected.
 Do you want to insert it anyway?</source>
-        <translation>Содержимое буфера обмена больше чем выделенный диапозон.
+        <translation>Содержимое буфера обмена больше чем выделенный диапазон.
 Все равно вставить?</translation>
     </message>
     <message>
@@ -2927,7 +2927,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1784"/>
         <source>&amp;Set Encryption...</source>
-        <translation>Назначитть &amp;шифрование...</translation>
+        <translation>Назначить &amp;шифрование...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1814"/>
@@ -3163,7 +3163,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="2053"/>
         <source>Drag &amp;&amp; Drop Qualified Names</source>
-        <translation>Квалифицированные имена при перетакскивании</translation>
+        <translation>Квалифицированные имена при перетаскивании</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2056"/>
@@ -3241,7 +3241,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="2123"/>
         <source>Print text from current SQL editor tab</source>
-        <translation>Печать текста изтекущей вкладки редактора SQL</translation>
+        <translation>Печать текста из текущей вкладки редактора SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2129"/>
@@ -3540,7 +3540,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1256"/>
         <source>This option is used to revert the current database file to its last saved state. All changes made since the last save operation are lost.</source>
-        <translation>Эта опция используется, чтобы вернуть текущий файл базы данных в его последнее сохранённое состояние. Все изменения, сделаные с последней операции сохранения теряются.</translation>
+        <translation>Эта опция используется, чтобы вернуть текущий файл базы данных в его последнее сохранённое состояние. Все изменения, сделанные с последней операции сохранения, теряются.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1298"/>
@@ -3612,7 +3612,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1380"/>
         <source>This option lets you export a database to a .sql dump text file. SQL dump files contain all data necessary to recreate the database on most database engines, including MySQL and PostgreSQL.</source>
-        <translation>Эта опция позволяет экспортировать базу данных в текстовый файл .sql. Файлы SQL содержат все данные, необходимые для создания базы данных в большистве движков баз данных, включая MySQL и PostgreSQL.</translation>
+        <translation>Эта опция позволяет экспортировать базу данных в текстовый файл .sql. Файлы SQL содержат все данные, необходимые для создания базы данных в большинстве движков баз данных, включая MySQL и PostgreSQL.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1391"/>
@@ -3627,7 +3627,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1412"/>
         <source>Open the Create Table wizard, where it is possible to define the name and fields for a new table in the database</source>
-        <translation>Открыть мастер создания таблиц, где возможно определить имя и поля для новой таблиы в базе данных</translation>
+        <translation>Открыть мастер создания таблиц, где возможно определить имя и поля для новой таблицы в базе данных</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1433"/>
@@ -3641,7 +3641,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1469"/>
         <source>Open the Create Index wizard, where it is possible to define a new index on an existing database table.</source>
-        <translation>Открыть мастер создания интекса, в котором можно определить новый индекс для существующей таблиц базы данных.</translation>
+        <translation>Открыть мастер создания индекса, в котором можно определить новый индекс для существующей таблиц базы данных.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1481"/>
@@ -3830,7 +3830,7 @@ You can drag SQL statements from an object row and drop them into other applicat
     <message>
         <location filename="../MainWindow.ui" line="1835"/>
         <source>Copy the CREATE statement of the item to the clipboard</source>
-        <translation>Копировать CREATE выражение элемента в буффер обмена</translation>
+        <translation>Копировать CREATE выражение элемента в буфер обмена</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1569"/>
@@ -3945,7 +3945,7 @@ Reason: %1</source>
     <message>
         <location filename="../MainWindow.cpp" line="1519"/>
         <source>Choose a file to import</source>
-        <translation>Выберать файл для импорта</translation>
+        <translation>Выберите файл для импорта</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2174"/>
@@ -4404,7 +4404,7 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="2173"/>
         <source>Select SQL file to open</source>
-        <translation>Выбрать файл SQL для октрытия</translation>
+        <translation>Выбрать файл SQL для открытия</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2226"/>
@@ -4758,7 +4758,7 @@ Select the axes or axes labels to drag and zoom only in that orientation.</sourc
         <location filename="../PlotDock.cpp" line="568"/>
         <source>Load all data and redraw plot.
 Warning: not all data has been fetched from the table yet due to the partial fetch mechanism.</source>
-        <translation>Загружает все данные и перерисовыет график.
+        <translation>Загружает все данные и перерисовывает график.
 Предупреждение: не все данные были получены из таблицы из-за механизма частичной выборки.</translation>
     </message>
     <message>
@@ -5369,7 +5369,7 @@ Can be set to 0 for disabling completion.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="1648"/>
         <source>&amp;Quotes for identifiers</source>
-        <translation>Обравмление &amp;идентификаторов</translation>
+        <translation>Обрамление &amp;идентификаторов</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1658"/>
@@ -5439,7 +5439,7 @@ Can be set to 0 for disabling completion.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="1852"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;While supporting the REGEXP operator SQLite doesn&apos;t implement any regular expression&lt;br/&gt;algorithm but calls back the running application. DB Browser for SQLite implements this&lt;br/&gt;algorithm for you to let you use REGEXP out of the box. However, as there are multiple possible&lt;br/&gt;implementations of this and you might want to use another one, you&apos;re free to disable the&lt;br/&gt;application&apos;s implementation and load your own by using an extension. Requires restart of the application.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Обозреватель для SQLite позволяет использовать оператор REGEXP &apos;из коробки&apos;. Но тем &lt;br/&gt;не менее, возможны несколько различных вариантов реализаций данного оператора и вы свободны &lt;br/&gt;в выборе какую именно использовать. Можно отключить нашу реализацию и использовать другую - &lt;br/&gt;путем загрузки соответсвующего расширения. В этом случае требуется перезагрузка приложения.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Обозреватель для SQLite позволяет использовать оператор REGEXP &apos;из коробки&apos;. Но тем &lt;br/&gt;не менее, возможны несколько различных вариантов реализаций данного оператора и вы свободны &lt;br/&gt;в выборе какую именно использовать. Можно отключить нашу реализацию и использовать другую - &lt;br/&gt;путем загрузки соответствующего расширения. В этом случае требуется перезагрузка приложения.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1855"/>
@@ -5559,7 +5559,7 @@ Can be set to 0 for disabling completion.</source>
         <location filename="../PreferencesDialog.cpp" line="73"/>
         <location filename="../PreferencesDialog.cpp" line="671"/>
         <source>Choose a directory</source>
-        <translation>Выберать каталог</translation>
+        <translation>Выберите каталог</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.cpp" line="343"/>
@@ -5570,7 +5570,7 @@ Can be set to 0 for disabling completion.</source>
     <message>
         <location filename="../PreferencesDialog.cpp" line="424"/>
         <source>Select extension file</source>
-        <translation>Выберать файл расширения</translation>
+        <translation>Выберите файл расширения</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.cpp" line="425"/>
@@ -6403,7 +6403,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../SqlExecutionArea.ui" line="141"/>
         <source>Find next match [Enter, F3]</source>
-        <translation>Найти следующее совпдение [Enter, F3]</translation>
+        <translation>Найти следующее совпадение [Enter, F3]</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="144"/>
@@ -6540,7 +6540,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="85"/>
         <source>(X,Y) The instr(X,Y) function finds the first occurrence of string Y within string X and returns the number of prior characters plus 1, or 0 if Y is nowhere found within X.</source>
-        <translation>(X,Y) Функция instr(X,Y) возвращает количество символов, начиная с которого в строке X найденна подстрока Y или 0 если таковая не обнаружена.</translation>
+        <translation>(X,Y) Функция instr(X,Y) возвращает количество символов, начиная с которого в строке X найдена подстрока Y или 0 если таковая не обнаружена.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="86"/>
@@ -6565,7 +6565,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="90"/>
         <source>(X,Y) The like() function is used to implement the &quot;Y LIKE X&quot; expression.</source>
-        <translation>(X,Y) Фукнция like() эквивалент выражению &quot;Y LIKE X&quot;.</translation>
+        <translation>(X,Y) Функция like() эквивалент выражению &quot;Y LIKE X&quot;.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="91"/>
@@ -6602,7 +6602,7 @@ Use of this function must be authorized from Preferences.</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="97"/>
         <source>(X,Y,...) The multi-argument max() function returns the argument with the maximum value, or return NULL if any argument is NULL.</source>
-        <translation>(X,Y,...) Функция max() возвращает аргумент с максимальным значением, либо NULL если хотябы один аргумент равен NULL.</translation>
+        <translation>(X,Y,...) Функция max() возвращает аргумент с максимальным значением, либо NULL если хотя бы один аргумент равен NULL.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="98"/>
@@ -6627,7 +6627,7 @@ Use of this function must be authorized from Preferences.</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="102"/>
         <source>() The random() function returns a pseudo-random integer between -9223372036854775808 and +9223372036854775807.</source>
-        <translation>() Функция random() возвращает псевдо случайное целочисленное значение из диапозона от-9223372036854775808 до +9223372036854775807.</translation>
+        <translation>() Функция random() возвращает псевдо случайное целочисленное значение из диапазона от-9223372036854775808 до +9223372036854775807.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="103"/>
@@ -6687,7 +6687,7 @@ Use of this function must be authorized from Preferences.</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="114"/>
         <source>(X,Y) The trim(X,Y) function returns a string formed by removing any and all characters that appear in Y from both ends of X.</source>
-        <translation>(X,Y) Функция trim(X,Y) создает новую строку из X, путем удаления с обоих концов символов, которые присутсвуют в строке Y.</translation>
+        <translation>(X,Y) Функция trim(X,Y) создает новую строку из X, путем удаления с обоих концов символов, которые присутствуют в строке Y.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="115"/>
@@ -6702,7 +6702,7 @@ Use of this function must be authorized from Preferences.</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="117"/>
         <source>(X) The upper(X) function returns a copy of input string X in which all lower-case ASCII characters are converted to their upper-case equivalent.</source>
-        <translation>(X) Функция upper(X) возвращает копию строки X, в которой для каждого ASCII символа регистр будет перобразован из нижнего в верхний.</translation>
+        <translation>(X) Функция upper(X) возвращает копию строки X, в которой для каждого ASCII символа регистр будет преобразован из нижнего в верхний.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="118"/>
@@ -6745,18 +6745,18 @@ Use of this function must be authorized from Preferences.</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="130"/>
         <source>(X) The max() aggregate function returns the maximum value of all values in the group.</source>
-        <translation>(X) Аггрегатная функция max() возвращает максимальное значение для X.</translation>
+        <translation>(X) Агрегатная функция max() возвращает максимальное значение для X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="131"/>
         <source>(X) The min() aggregate function returns the minimum non-NULL value of all values in the group.</source>
-        <translation>(X) Аггрегатная функция min() возвращает минимальное значение для X.</translation>
+        <translation>(X) Агрегатная функция min() возвращает минимальное значение для X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="132"/>
         <location filename="../SqlUiLexer.cpp" line="133"/>
         <source>(X) The sum() and total() aggregate functions return sum of all non-NULL values in the group.</source>
-        <translation>(X) Аггрегатные функции sum() и total() возвращают сумму всех не NULL значений для X.</translation>
+        <translation>(X) Агрегатные функции sum() и total() возвращают сумму всех не NULL значений для X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="135"/>
@@ -6796,7 +6796,7 @@ Use of this function must be authorized from Preferences.</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="142"/>
         <source>(expr,offset) If the offset argument is provided, then it must be a non-negative integer. In this case the value returned is the result of evaluating expr against the row offset rows before the current row within the partition. If offset is 0, then expr is evaluated against the current row. If there is no row offset rows before the current row, NULL is returned.</source>
-        <translation>(expr, offset) Если аргумент offset укзан, то он должен быть неотрицательным целым числом. В этом случае возвращаемое значение является результатом вычисления expr в строках смещения строк до текущей строки в разделе. Если смещение равно 0, то expr вычисляется относительно текущей строки. Если перед текущей строкой нет строк смещения строк, возвращается NULL.</translation>
+        <translation>(expr, offset) Если аргумент offset указан, то он должен быть неотрицательным целым числом. В этом случае возвращаемое значение является результатом вычисления expr в строках смещения строк до текущей строки в разделе. Если смещение равно 0, то expr вычисляется относительно текущей строки. Если перед текущей строкой нет строк смещения строк, возвращается NULL.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="143"/>
@@ -7084,7 +7084,7 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.ui" line="284"/>
         <source>Find next match [Enter, F3]</source>
-        <translation type="unfinished">Найти следующее совпдение [Enter, F3]</translation>
+        <translation type="unfinished">Найти следующее совпадение [Enter, F3]</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="287"/>
@@ -7384,7 +7384,7 @@ Hold %3Shift and click to jump there</source>
         <location filename="../TableBrowser.format.ui" line="379"/>
         <location filename="../TableBrowser.ui" line="613"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button creates a new record in the database. Hold the mouse button to open a pop-up menu of different options:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt;: insert a new record with default values in the database.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Insert Values...&lt;/span&gt;: open a dialog for entering values before they are inserted in the database. This allows to enter values acomplishing the different constraints. This dialog is also open if the &lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt; option fails due to these constraints.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Эта кнопка создает новую запись в базе данных. Удерживайте кнопку мыши, чтобы открыть всплывающее меню различных параметров:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Новая Запись&lt;/span&gt;: вставляет новую запись со значениями по умолчанию.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Вставить Значения...&lt;/span&gt;: открывает диалог для ввода значений перед тем, как они будут вставленны в БД. Это позволяет вводить значения, назначая различные ограничения. Этот диалог также открывается, если &lt;span style=&quot; font-weight:600;&quot;&gt;Новая Запись&lt;/span&gt; опция не срабатывает из-за этих ограничений.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Эта кнопка создает новую запись в базе данных. Удерживайте кнопку мыши, чтобы открыть всплывающее меню различных параметров:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Новая Запись&lt;/span&gt;: вставляет новую запись со значениями по умолчанию.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Вставить Значения...&lt;/span&gt;: открывает диалог для ввода значений перед тем, как они будут вставлены в БД. Это позволяет вводить значения, назначая различные ограничения. Этот диалог также открывается, если &lt;span style=&quot; font-weight:600;&quot;&gt;Новая Запись&lt;/span&gt; опция не срабатывает из-за этих ограничений.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="388"/>
@@ -7461,7 +7461,7 @@ Hold %3Shift and click to jump there</source>
         <location filename="../TableBrowser.ui" line="693"/>
         <location filename="../TableBrowser.ui" line="696"/>
         <source>Save the current filter, sort column and display formats as a view</source>
-        <translation type="unfinished">Сохранить текущие фильтры, столбецы сортировки и форматы отображания в виде представления</translation>
+        <translation type="unfinished">Сохранить текущие фильтры, столбцы сортировки и форматы отображения в виде представления</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="451"/>
@@ -7487,7 +7487,7 @@ Hold %3Shift and click to jump there</source>
         <location filename="../TableBrowser.format.ui" line="469"/>
         <location filename="../TableBrowser.ui" line="717"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This popup menu provides the following options applying to the currently browsed and filtered table:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Export to CSV: this option exports the data of the browsed table as currently displayed (after filters, display formats and order column) to a CSV file.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Save as view: this option saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Это всплывающее меню предоставляет следующие параметры, применяемые к текущей просматриваемой и отфильтрованной таблице:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Экспортировать ввиде CSV: данные просматриваемой таблицы сохраняется так как отображается (после применения фильтров, форматов отображения и порядка колонок) в CSV файл.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Сохранить как вид: эта опция сохраняет настройки текущей отображаемой таблицы (фильтры, форматы отображения и порядок колонок) как SQL вид, который вы позже можете просматривать или использовать в SQL выражениях.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Это всплывающее меню предоставляет следующие параметры, применяемые к текущей просматриваемой и отфильтрованной таблице:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Экспортировать в виде CSV: данные просматриваемой таблицы сохраняется так как отображается (после применения фильтров, форматов отображения и порядка колонок) в CSV файл.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Сохранить как вид: эта опция сохраняет настройки текущей отображаемой таблицы (фильтры, форматы отображения и порядок колонок) как SQL вид, который вы позже можете просматривать или использовать в SQL выражениях.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="474"/>
@@ -7910,12 +7910,12 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.cpp" line="1494"/>
         <source>Please choose a new encoding for all tables.</source>
-        <translation type="unfinished">Пожалуйста выбирите новую кодировку для всех таблиц.</translation>
+        <translation type="unfinished">Пожалуйста выберите новую кодировку для всех таблиц.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1496"/>
         <source>Please choose a new encoding for this table.</source>
-        <translation type="unfinished">Пожалуйста выбирите новую кодировку для данной таблицы.</translation>
+        <translation type="unfinished">Пожалуйста выберите новую кодировку для данной таблицы.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1499"/>
