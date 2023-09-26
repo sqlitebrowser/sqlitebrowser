@@ -1,42 +1,104 @@
 name: Build - macOS
 
 on:
-  workflow_call:
-  workflow_dispatch:
+    schedule:
+        - cron: '0 0 * * *' # Every day at midnight (UTC)
+    workflow_call:
+    workflow_dispatch:
+      inputs:
+        assume-triggerd-by-schedule:
+          description: 'Assume this workflow was triggered by the schedule'
+          required: false
+          type: boolean
+
+permissions:
+    contents: write
 
 jobs:
-  build:
-    name: ${{ matrix.os }} - SQLCipher ${{ matrix.sqlcipher }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: true
-      matrix:
-        os: [macos-12]
-        sqlcipher: ["0", "1"]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+    build:
+        name: ${{ matrix.os }} - SQLCipher ${{ matrix.sqlcipher }}
+        runs-on: ${{ matrix.os }}
+        strategy:
+            fail-fast: true
+            matrix:
+                os: [macos-13-runner]
+                sqlcipher: ["0", "1"]
+        env:
+          DAILY: false
+        steps:
+            - name: Set 'DAILY' environment variable
+              run: |
+                if [ "${{ github.event_name }}" = "schedule" ] || [ "${{ github.event.inputs.assume-triggerd-by-schedule }}" == "true" ]; then
+                  echo "DAILY=true" >> $GITHUB_ENV
+                fi
+            - name: Checkout
+              uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: |
-          # Avoid Homebrew return non-zero exit code
-          unset HOMEBREW_NO_INSTALL_FROM_API; brew untap homebrew/core; brew untap homebrew/cask; brew update
-          brew tap sqlitebrowser/tap; brew install db4sqt@5 db4ssqlcipher db4ssqlitefts@5
+            - if: env.DAILY == 'false'
+              name: Configure build (Continuous)
+              run: |
+                if [ "${{ matrix.sqlcipher }}" = "1" ]; then
+                    sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLCipher-dev-'$(git rev-parse --short --verify HEAD)'"/' CMakeLists.txt
+                else
+                    sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLite-dev-'$(git rev-parse --short --verify HEAD)'"/' CMakeLists.txt
+                fi
+                mkdir build && cd build
+                cmake -G Ninja -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DcustomTap=1 -Dsqlcipher=${{ matrix.sqlcipher }} ..
 
-      - name: Configure build
-        run: |
-          mkdir build && cd build
-          cmake -DCMAKE_PREFIX_PATH=/usr/local/opt/qt@5 -Dsqlcipher=${{ matrix.sqlcipher }} ..
+            - if: env.DAILY == 'true'
+              name: Configure build (Daily)
+              run: |
+                if [ "${{ matrix.sqlcipher }}" = "1" ]; then
+                    sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLCipher Nightly"/' CMakeLists.txt
+                else
+                    sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLite Nightly"/' CMakeLists.txt
+                fi
+                mkdir build && cd build
+                cmake -G Ninja -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DcustomTap=1 -Dsqlcipher=${{ matrix.sqlcipher }} ..
 
-      - name: Build
-        working-directory: ./build
-        run: make -j3
+            - name: Build
+              working-directory: ./build
+              run: ninja
 
-      - name: Build extensions
-        run: |
-          clang -I /usr/local/opt/db4ssqlitefts@5/include -L /usr/local/opt/db4ssqlitefts@5/lib -fno-common -dynamiclib src/extensions/extension-formats.c
-          clang -I /usr/local/opt/db4ssqlitefts@5/include -L /usr/local/opt/db4ssqlitefts@5/lib -fno-common -dynamiclib src/extensions/extension-functions.c
-          curl -L -o src/extensions/fileio.c 'https://sqlite.org/src/raw?filename=ext/misc/fileio.c&ci=trunk'
-          curl -L -o src/extensions/test_windirect.c 'https://sqlite.org/src/raw?filename=src/test_windirent.c&ci=trunk'
-          curl -L -o src/extensions/test_windirect.h 'https://sqlite.org/src/raw?filename=src/test_windirent.h&ci=trunk'
-          clang -I /usr/local/opt/db4ssqlitefts@5/include -L /usr/local/opt/db4ssqlitefts@5/lib -fno-common -dynamiclib src/extensions/fileio.c src/extensions/test_windirect.c
+            - name: Build Extension
+              run: |
+                clang -I /opt/homebrew/opt/db4subsqlitefts@5/include -L /opt/homebrew/opt/db4subsqlitefts@5/lib -fno-common -dynamiclib src/extensions/extension-formats.c
+                clang -I /opt/homebrew/opt/db4subsqlitefts@5/include -L /opt/homebrew/opt/db4subsqlitefts@5/lib -fno-common -dynamiclib src/extensions/extension-functions.c
+                curl -L -o src/extensions/fileio.c 'https://sqlite.org/src/raw?filename=ext/misc/fileio.c&ci=trunk'
+                curl -L -o src/extensions/test_windirect.c 'https://sqlite.org/src/raw?filename=src/test_windirent.c&ci=trunk'
+                curl -L -o src/extensions/test_windirect.h 'https://sqlite.org/src/raw?filename=src/test_windirent.h&ci=trunk'
+                clang -I /opt/homebrew/opt/db4subsqlitefts@5/include -L /opt/homebrew/opt/db4subsqlitefts@5/lib -fno-common -dynamiclib src/extensions/fileio.c src/extensions/test_windirect.c
+
+            - if: github.event_name != 'pull_request'
+              name: Notarize the app
+              uses: ./.github/actions/notarize-macos
+              with:
+                APPLE_ID: ${{ secrets.MACOS_CODESIGN_APPLE_ID }}
+                APPLE_PW: ${{ secrets.MACOS_CODESIGN_APPLE_PW }}
+                DAILY: ${{ env.DAILY }}
+                DEV_ID: ${{ secrets.MACOS_CODESIGN_DEV_ID }}
+                KEYCHAIN_PATH: ${{ secrets.MACOS_CODESIGN_KEYCHAIN_PATH }}
+                KEYCHAIN_PW: ${{ secrets.MACOS_CODESIGN_KEYCHAIN_PW }}
+                SQLCIPHER: ${{ matrix.sqlcipher }}
+                TEAM_ID: ${{ secrets.MACOS_CODESIGN_TEAM_ID }}
+
+            - if: github.event_name != 'pull_request' && env.DAILY == 'false'
+              name: Release (Continuous)
+              uses: softprops/action-gh-release@v1
+              with:
+                files: DB.Browser.for.*.dmg
+                prerelease: true
+                tag_name: continuous
+
+            - if: env.DAILY == 'true'
+              name: Release (Daily)
+              run: |
+                export DATE=$(date +%Y%m%d)
+                rsync -aP *.dmg ${{ secrets.MACOS_BUILD_ARTIFACTS_UPLOAD_TARGET }}:/nightlies/macos-universal/
+                if [ "${{ matrix.sqlcipher }}" = "1" ]; then
+                  ssh -q ${{ secrets.MACOS_BUILD_ARTIFACTS_UPLOAD_TARGET }} "cd /nightlies/latest && rm -f *SQLC*-universal*dmg*"
+                  ssh -q ${{ secrets.MACOS_BUILD_ARTIFACTS_UPLOAD_TARGET }} "ln -s /nightlies/macos-universal/DB.Browser.for.SQLCipher-universal_$DATE.dmg /nightlies/latest/DB.Browser.for.SQLCipher-universal.dmg"
+                else
+                  ssh -q ${{ secrets.MACOS_BUILD_ARTIFACTS_UPLOAD_TARGET }} "cd /nightlies/latest && rm -f *SQLi*-universal*dmg*"
+                  ssh -q ${{ secrets.MACOS_BUILD_ARTIFACTS_UPLOAD_TARGET }} "ln -s /nightlies/macos-universal/DB.Browser.for.SQLite-universal_$DATE.dmg /nightlies/latest/DB.Browser.for.SQLite-universal.dmg"
+                fi

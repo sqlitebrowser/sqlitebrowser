@@ -28,12 +28,7 @@ jobs:
     uses: ./.github/workflows/build-appimage.yml
 
   build-macos:
-    if: vars.MACOS_RUNNER_DOWN == 'true'
     uses: ./.github/workflows/build-macos.yml
-    
-  build-macos-runner:
-    if: vars.MACOS_RUNNER_DOWN == 'false'
-    uses: ./.github/workflows/build-macos-runner.yml
     secrets: inherit
 
   build-ubuntu:
