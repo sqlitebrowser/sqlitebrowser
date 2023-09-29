@@ -1033,13 +1033,13 @@ int ExtendedTableWidget::numVisibleRows() const
         return 0;
 
     // Get the row numbers of the rows currently visible at the top and the bottom of the widget
-    int row_top = rowAt(0) == -1 ? 0 : rowAt(0);
-    int row_bottom = verticalHeader()->visualIndexAt(height()) == -1 ? model()->rowCount() : (verticalHeader()->visualIndexAt(height()) - 1);
-    if(horizontalScrollBar()->isVisible())      // Assume the scrollbar covers about one row
-        row_bottom--;
+    int row_top = rowAt(0) == -1 ? 0 : verticalHeader()->visualIndexAt(0) + 1;
+    // Adjust the height so we don't count rows visible only less than a half of the default height
+    int adjusted_height = viewport()->height() - (verticalHeader()->defaultSectionSize() / 2);
+    int row_bottom = verticalHeader()->visualIndexAt(adjusted_height) == -1 ? model()->rowCount() : (verticalHeader()->visualIndexAt(adjusted_height) + 1);
 
     // Calculate the number of visible rows
-    return row_bottom - row_top;
+    return row_bottom - row_top + 1;
 }
 
 std::unordered_set<size_t> ExtendedTableWidget::selectedCols() const
