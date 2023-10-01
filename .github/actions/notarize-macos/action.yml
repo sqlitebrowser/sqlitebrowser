@@ -36,11 +36,14 @@ runs:
       env:
         DEV_ID: ${{ inputs.DEV_ID }}
       shell: bash
-      run: find build -name "DB Browser for SQL*.app" -exec /opt/homebrew/opt/db4subqt@5/bin/macdeployqt {} -sign-for-notarization="$DEV_ID" \;
+      run: |
+        export MACOSX_DEPLOYMENT_TARGET=10.12
+        find build -name "DB Browser for SQL*.app" -exec /opt/homebrew/opt/db4subqt@5/bin/macdeployqt {} -sign-for-notarization="$DEV_ID" \;
 
     - name: Add the extension to the app bundle
       shell: bash
       run: |
+        export MACOSX_DEPLOYMENT_TARGET=10.12
         for TARGET in $(find build -name "DB Browser for SQL*.app" | sed -e 's/ /_/g'); do
           TARGET=$(echo $TARGET | sed -e 's/_/ /g')
           mkdir "$TARGET/Contents/Extensions"
