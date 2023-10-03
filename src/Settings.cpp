@@ -20,12 +20,12 @@ static bool ends_with(const std::string& str, const std::string& with)
     return str.rfind(with) == str.size() - with.size();
 }
 
-void Settings::setUserSettingsFile(const QString& userSettingsFileArg)
+void Settings::setUserSettingsFile(const QString& settings_file_path)
 {
-    userSettingsFile = userSettingsFileArg;
+    userSettingsFile = settings_file_path;
 }
 
-bool Settings::isVaildSettingsFile(const QString& userSettingsFile)
+bool Settings::isValidSettingsFile(const QString& settings_file_path)
 {
     /*
     Variable that stores whether or not the settings file requested by the user is a normal settings file
@@ -35,15 +35,17 @@ bool Settings::isVaildSettingsFile(const QString& userSettingsFile)
     bool isNormalUserSettingsFile = true;
 
     // Code that verifies that the settings file requested by the user is a normal settings file
-    if(userSettingsFile != nullptr)
+    if(settings_file_path != nullptr)
     {
         QFile *file = new QFile;
-        file->setFileName(userSettingsFile);
+        file->setFileName(settings_file_path);
 
         if(file->open(QIODevice::ReadOnly | QIODevice::Text))
         {
+            // define comparison string --> "[General]\n" --> first line of any DB4S settings file
+            QString header("[" + QString::fromStdString(szINI::SEC_GENERAL) + "]\n");
             if(file->exists() &&
-              QString::compare(QString("[%General]\n"), file->readLine(), Qt::CaseInsensitive) != 0)
+              QString::compare(header, file->readLine(), Qt::CaseInsensitive) != 0)
                 isNormalUserSettingsFile = false;
         }
 
@@ -59,7 +61,7 @@ void Settings::setSettingsObject()
     if(settings)
         return;
 
-    const bool isNormalUserSettingsFile = isVaildSettingsFile(userSettingsFile);
+    const bool isNormalUserSettingsFile = isValidSettingsFile(userSettingsFile);
 
     if(userSettingsFile == nullptr)
     {
@@ -86,25 +88,25 @@ void Settings::setSettingsObject()
     }
 }
 
-QVariant Settings::getValue(const std::string& group, const std::string& name)
+QVariant Settings::getValue(const std::string& section, const std::string& key)
 {
     // Have a look in the cache first
-    auto cacheIndex = m_hCache.find(group + name);
+    auto cacheIndex = m_hCache.find(section + key);
     if(cacheIndex != m_hCache.end())
     {
         return cacheIndex->second;
     } else {
         // Nothing found in the cache, so get the value from the settings file or get the default value if there is no value set yet
         setSettingsObject();
-        QVariant value = settings->value(QString::fromStdString(group + "/" + name), getDefaultValue(group, name));
+        QVariant value = settings->value(QString::fromStdString(section + "/" + key), getDefaultValue(section, key));
 
         // Store this value in the cache for further usage and return it afterwards
-        m_hCache.insert({group + name, value});
+        m_hCache.insert({section + key, value});
         return value;
     }
 }
 
-void Settings::setValue(const std::string& group, const std::string& name, const QVariant& value, bool save_to_disk)
+void Settings::setValue(const std::string& section, const std::string& key, const QVariant& value, bool save_to_disk)
 {
     // Sometime the value has to be saved for the current session only but get discarded when the application exits.
     // In order to achieve this this flag can be set which disables the save to disk mechanism and only leaves the save to cache part active.
@@ -112,95 +114,95 @@ void Settings::setValue(const std::string& group, const std::string& name, const
     {
         setSettingsObject();
         // Set the group and save the given value
-        settings->beginGroup(QString::fromStdString(group));
-        settings->setValue(QString::fromStdString(name), value);
+        settings->beginGroup(QString::fromStdString(section));
+        settings->setValue(QString::fromStdString(key), value);
         settings->endGroup();
     }
 
     // Also change it in the cache
-    m_hCache[group + name] = value;
+    m_hCache[section + key] = value;
 }
 
-QVariant Settings::getDefaultValue(const std::string& group, const std::string& name)
+QVariant Settings::getDefaultValue(const std::string& section, const std::string& key)
 {
     // db/defaultencoding?
-    if(group == "db" && name == "defaultencoding")
+    if(section == szINI::SEC_DATABASE && key == szINI::KEY_DEFAULT_ENCODING)
         return "UTF-8";
 
     // db/savedefaultlocation?
-    if(group == "db" && name == "savedefaultlocation")
+    if(section == szINI::SEC_DATABASE && key == szINI::KEY_SAVE_DEFAULT_LOCATION)
         return 2;
 
     // db/defaultlocation?
-    if(group == "db" && name == "defaultlocation")
+    if(section == szINI::SEC_DATABASE && key == szINI::KEY_DEFAULT_LOCATION)
         return QDir::homePath();
 
     // db/lastlocation?
-    if(group == "db" && name == "lastlocation")
-        return getValue("db", "defaultlocation");
+    if(section == szINI::SEC_DATABASE && key == szINI::KEY_LAST_LOCATION)
+        return getValue(szINI::SEC_DATABASE, szINI::KEY_DEFAULT_LOCATION);
 
     // db/hideschemalinebreaks?
-    if(group == "db" && name == "hideschemalinebreaks")
+    if(section == szINI::SEC_DATABASE && key == szINI::KEY_HIDE_SCHEMA_LINEBREAKS)
         return true;
 
     // db/foreignkeys?
-    if(group == "db" && name == "foreignkeys")
+    if(section == szINI::SEC_DATABASE && key == szINI::KEY_FOREIGN_KEYS)
         return true;
 
     // db/prefetchsize?
-    if(group == "db" && name == "prefetchsize")
+    if(section == szINI::SEC_DATABASE && key == szINI::KEY_PREFETCH_SIZE)
         return 50000U;
 
     // db/defaultsqltext?
-    if(group == "db" && name == "defaultsqltext")
+    if(section == szINI::SEC_DATABASE && key == szINI::KEY_DEFAULT_SQL_TEXT)
         return QString();
 
     // db/fontsize?
-    if(group == "db" && name == "fontsize")
+    if(section == szINI::SEC_DATABASE && key == szINI::KEY_FONTSIZE)
         return 10;
 
     // exportcsv/firstrowheader?
-    if(group == "exportcsv" && name == "firstrowheader")
+    if(section == szINI::SEC_EXPORT_CSV && key == szINI::KEY_FIRST_ROW_HEADER)
         return true;
 
     // exportcsv/separator?
-    if(group == "exportcsv" && name == "separator")
+    if(section == szINI::SEC_EXPORT_CSV && key == szINI::KEY_SEPARATOR)
         return ',';
 
     // exportcsv/quotecharacter?
-    if(group == "exportcsv" && name == "quotecharacter")
+    if(section == szINI::SEC_EXPORT_CSV && key == szINI::KEY_QUOTE_CHARACTER)
         return '"';
 
     // importcsv group?
-    if(group == "importcsv")
+    if(section == szINI::SEC_IMPORT_CSV)
     {
-        if(name == "firstrowheader")
+        if(key == szINI::KEY_FIRST_ROW_HEADER)
             return false;
-        if(name == "trimfields")
+        if(key == szINI::KEY_TRIM_FIELDS)
             return true;
-        if(name == "separatetables")
+        if(key == szINI::KEY_SEPARATE_TABLES)
             return false;
-        if(name == "separator")
+        if(key == szINI::KEY_SEPARATOR)
             return ',';
-        if(name == "quotecharacter")
+        if(key == szINI::KEY_QUOTE_CHARACTER)
             return '"';
-        if(name == "encoding")
+        if(key == szINI::KEY_ENCODING)
             return "UTF-8";
-        if(name == "localconventions")
+        if(key == szINI::KEY_LOCAL_CONVENTIONS)
             return false;
     }
 
     // exportsql group?
-    if(group == "exportsql")
+    if(section == szINI::SEC_EXPORT_SQL)
     {
-        if(name == "insertcolnames" || name == "insertmultiple" || name == "keeporiginal")
+        if(key == szINI::KEY_INSERT_COL_NAMES || key == szINI::KEY_INSERT_MULTIPLE || key == szINI::KEY_KEEP_ORIGINAL)
             return false;
-        if(name == "oldschema")
+        if(key == szINI::KEY_OLD_SCHEMA)
             return 0;
     }
 
     // newline character
-    if (group == "exportcsv" && name == "newlinecharacters")
+    if (section == szINI::SEC_EXPORT_CSV && key == szINI::KEY_NEWLINE_CHARACTERS)
 #ifdef Q_OS_WIN
         return "\r\n";
 #else
@@ -208,141 +210,141 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
 #endif
 
     // exportjson/prettyprint?
-    if(group == "exportjson" && name == "prettyprint")
+    if(section == szINI::SEC_EXPORT_JSON && key == szINI::KEY_PRETTY_PRINT)
         return true;
 
     // MainWindow/geometry?
-    if(group == "MainWindow" && name == "geometry")
+    if(section == szINI::SEC_MAIN_WNDW && key == szINI::KEY_GEOMETRY)
         return QString();
 
     // MainWindow/windowState?
-    if(group == "MainWindow" && name == "windowState")
+    if(section == szINI::SEC_MAIN_WNDW && key == szINI::KEY_WINDOW_STATE)
         return QString();
 
     // MainWindow/openTabs?
-    if(group == "MainWindow" && name == "openTabs")
+    if(section == szINI::SEC_MAIN_WNDW && key == szINI::KEY_OPEN_TABS)
         return QString();
 
     // SQLLogDock/Log?
-    if(group == "SQLLogDock" && name == "Log")
+    if(section == szINI::SEC_SQL_LOG_DOCK && key == szINI::KEY_LOG)
         return "Application";
 
     // General/recentFileList?
-    if(group == "General" && name == "recentFileList")
+    if(section == szINI::SEC_GENERAL && key == szINI::KEY_RECENT_FILE_LIST)
         return QStringList();
 
     // General/maxRecentFiles?
-    if(group == "General" && name == "maxRecentFiles")
+    if(section == szINI::SEC_GENERAL && key == szINI::KEY_MAX_RECENT_FILES)
         return 5;
 
     // General/language?
-    if(group == "General" && name == "language")
+    if(section == szINI::SEC_GENERAL && key == szINI::KEY_LANGUAGE)
         return QLocale::system().name();
 
     // General/appStyle
-    if(group == "General" && name == "appStyle")
+    if(section == szINI::SEC_GENERAL && key == szINI::KEY_APPSTYLE)
         return static_cast<int>(FollowDesktopStyle);
 
     // General/toolbarStyle
-    if(group == "General" && name == "toolbarStyle")
+    if(section == szINI::SEC_GENERAL && key == szINI::KEY_TB_STYLE_APP)
         return static_cast<int>(Qt::ToolButtonTextBesideIcon);
 
     // General/toolbarStyleStructure
-    if(group == "General" && name == "toolbarStyleStructure")
+    if(section == szINI::SEC_GENERAL && key == szINI::KEY_TB_STYLE_STRUCTURE)
         return static_cast<int>(Qt::ToolButtonTextBesideIcon);
 
     // General/toolbarStyleBrowse
-    if(group == "General" && name == "toolbarStyleBrowse")
+    if(section == szINI::SEC_GENERAL && key == szINI::KEY_TB_STYLE_BROWSE)
         return static_cast<int>(Qt::ToolButtonIconOnly);
 
     // General/toolbarStyleSql
-    if(group == "General" && name == "toolbarStyleSql")
+    if(section == szINI::SEC_GENERAL && key == szINI::KEY_TB_STYLE_SQL)
         return static_cast<int>(Qt::ToolButtonIconOnly);
 
     // General/toolbarStyleEditCell
-    if(group == "General" && name == "toolbarStyleEditCell")
+    if(section == szINI::SEC_GENERAL && key == szINI::KEY_TB_STYLE_EDIT_CELL)
         return static_cast<int>(Qt::ToolButtonIconOnly);
 
-    if(group == "General" && name == "DBFileExtensions")
+    if(section == szINI::SEC_GENERAL && key == szINI::KEY_DB_FILE_EXTS)
         return QObject::tr("SQLite database files (*.db *.sqlite *.sqlite3 *.db3)");
 
     // General/fontsize
-    if(group == "General" && name == "fontsize")
+    if(section == szINI::SEC_GENERAL && key == szINI::KEY_FONTSIZE)
         return m_defaultFontSize;
 
     // General/promptsqltabsinnewproject
-    if(group == "General" && name == "promptsqltabsinnewproject")
+    if(section == szINI::SEC_GENERAL && key == szINI::KEY_PROMPT_SQL_TABS_IN_NEWPRJ)
         return true;
 
     // checkversion group?
-    if(group == "checkversion")
+    if(section == szINI::SEC_CHCK_VERSION)
     {
-        if(name == "enabled")
+        if(key == szINI::KEY_ENABLED)
             return true;
-        if(name == "ignmajor")
+        if(key == szINI::KEY_IGNMAJOR)
             return 999;
-        if(name == "ignminor" || name == "ignpatch")
+        if(key == szINI::KEY_IGNMINOR || key == szINI::KEY_IGNPATCH)
             return 0;
     }
 
     // Data Browser/NULL Fields
-    if(group == "databrowser")
+    if(section == szINI::SEC_DATA_BROWSER)
     {
-        if(name == "font") {
+        if(key == szINI::KEY_FONT) {
             QFont font("Monospace");
             font.setStyleHint(QFont::TypeWriter);
             return QFontInfo(font).family();
         }
-        if(name == "fontsize")
+        if(key == szINI::KEY_FONTSIZE)
             return 10;
-        if(name == "symbol_limit")
+        if(key == szINI::KEY_SYMBOL_LIMIT)
             return 5000;
-        if (name == "rows_limit")
+        if(key == szINI::KEY_ROWS_LIMIT)
             return 10'000'000;
-        if(name == "complete_threshold")
+        if(key == szINI::KEY_COMPLETE_THRESHOLD)
             return 1000;
-        if(name == "image_preview")
+        if(key == szINI::KEY_IMAGE_PREVIEW)
             return false;
-        if(name == "indent_compact")
+        if(key == szINI::KEY_INDENT_COMPACT)
             return false;
-        if(name == "auto_switch_mode")
+        if(key == szINI::KEY_AUTO_SWITCH_MODE)
             return true;
-        if(name == "editor_word_wrap")
+        if(key == szINI::KEY_EDITOR_WORD_WRAP)
             return true;
-        if(name == "null_text")
+        if(key == szINI::KEY_NULL_TEXT)
             return "NULL";
-        if(name == "blob_text")
+        if(key == szINI::KEY_BLOB_TEXT)
             return "BLOB";
-        if(name == "filter_escape")
+        if(key == szINI::KEY_FILTER_ESCAPE)
             return "\\";
-        if(name == "filter_delay")
+        if(key == szINI::KEY_FILTER_DELAY)
             return 200;
-        if(ends_with(name, "colour"))
-            return getDefaultColorValue(group, name, FollowDesktopStyle);
+        if(ends_with(key, szINI::KEY_ANY_COLOUR))
+            return getDefaultColorValue(section, key, FollowDesktopStyle);
     }
 
     // syntaxhighlighter?
-    if(group == "syntaxhighlighter")
+    if(section == szINI::SEC_SYNTAX_HIGHLIGHTER)
     {
         // Bold? Only tables, functions and keywords are bold by default
-        if(ends_with(name, "bold"))
-            return name == "keyword_bold" || name == "table_bold" || name == "function_bold";
+        if(ends_with(key, szINI::KEY_ANY_BOLD))
+            return key == szINI::KEY_KEYWORD_BOLD || key == szINI::KEY_TABLE_BOLD || key == szINI::KEY_FUNC_BOLD;
 
         // Italic? Nothing by default
-        if(ends_with(name, "italic"))
+        if(ends_with(key, szINI::KEY_ANY_ITALIC))
             return false;
 
         // Underline? Nothing by default
-        if(ends_with(name, "underline"))
+        if(ends_with(key, szINI::KEY_ANY_UNDERLINE))
             return false;
 
         // Colour?
-        if(ends_with(name, "colour"))
-            return getDefaultColorValue(group, name, FollowDesktopStyle);
+        if(ends_with(key, szINI::KEY_ANY_COLOUR))
+            return getDefaultColorValue(section, key, FollowDesktopStyle);
     }
 
     // editor/font?
-    if(group == "editor" && name == "font")
+    if(section == szINI::SEC_EDITOR && key == szINI::KEY_FONT)
     {
         QFont font("Monospace");
         font.setStyleHint(QFont::TypeWriter);
@@ -350,7 +352,7 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
     }
 
     // editor/fontsize or log/fontsize?
-    if((group == "editor" || group == "log") && name == "fontsize")
+    if((section == szINI::SEC_EDITOR || section == szINI::SEC_LOG) && key == szINI::KEY_FONTSIZE)
 #ifdef Q_OS_MAC
        // Use 12 pt size as the default on macOS
         return 12;
@@ -358,97 +360,97 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
         return 9;
 #endif
 
-    if(group == "editor")
+    if(section == szINI::SEC_EDITOR)
     {
-        if(name == "tabsize")
+        if(key == szINI::KEY_TABSIZE)
             return 4;
-        if(name == "indentation_use_tabs")
+        if(key == szINI::KEY_INDENTATION_USE_TABS)
             return true;
     }
 
     // editor/wrap_lines
-    if(group == "editor" && name == "wrap_lines")
+    if(section == szINI::SEC_EDITOR && key == szINI::KEY_WRAP_LINES)
         return 0; // QsciScintilla::WrapNone
 
     // editor/identifier_quotes
-    if(group == "editor" && name == "identifier_quotes")
+    if(section == szINI::SEC_EDITOR && key == szINI::KEY_IDENTIFIER_QUOTES)
         return 0; // sqlb::DoubleQuotes
 
     // editor/auto_completion?
-    if(group == "editor" && name == "auto_completion")
+    if(section == szINI::SEC_EDITOR && key == szINI::KEY_AUTO_COMPLETION)
         return true;
 
     // editor/upper_keywords?
-    if(group == "editor" && name == "upper_keywords")
+    if(section == szINI::SEC_EDITOR && key == szINI::KEY_UPPER_KEYWORDS)
         return true;
 
     // editor/error_indicators?
-    if(group == "editor" && name == "error_indicators")
+    if(section == szINI::SEC_EDITOR && key == szINI::KEY_ERROR_INDICATORS)
         return true;
 
     // editor/horizontal_tiling?
-    if(group == "editor" && name == "horizontal_tiling")
+    if(section == szINI::SEC_EDITOR && key == szINI::KEY_HORZ_TILING)
         return false;
 
     // editor/splitter1_sizes?
-    if(group == "editor" && name == "splitter1_sizes")
+    if(section == szINI::SEC_EDITOR && key == szINI::KEY_SPLITTER1_SIZES)
         return QVariant();
 
     // editor/splitter2_sizes?
-    if(group == "editor" && name == "splitter2_sizes")
+    if(section == szINI::SEC_EDITOR && key == szINI::KEY_SPLITTER2_SIZES)
         return QVariant();
 
     // editor/close_button_on_tabs?
-    if(group == "editor" && name == "close_button_on_tabs")
+    if(section == szINI::SEC_EDITOR && key == szINI::KEY_CLOSE_BUTTON_ON_TABS)
         return true;
 
     // extensions/list?
-    if(group == "extensions" && name == "list")
+    if(section == szINI::SEC_EXTENSIONS && key == szINI::KEY_LIST)
         return QStringList();
 
     // extensions/disableregex?
-    if(group == "extension" && name == "disableregex")
+    if(section == szINI::SEC_EXTENSIONS && key == szINI::KEY_DISABLE_REGEX)
         return false;
 
     // extensions/enable_load_extension?
-    if(group == "extension" && name == "enable_load_extension")
+    if(section == szINI::SEC_EXTENSIONS && key == szINI::KEY_ENABLE_LOAD_EXTENSION)
         return false;
 
     // PlotDock/lineType or pointShape?
-    if(group == "PlotDock")
+    if(section == szINI::SEC_PLOT_DOCK)
     {
         // QCPGraph::lsLine
-        if(name == "lineType")
+        if(key == szINI::KEY_LINE_TYPE)
             return 1;
 
         // QCPScatterStyle::ssDisk
-        if(name == "pointShape")
+        if(key == szINI::KEY_POINT_SHAPE)
             return 4;
     }
 
 
     // SchemaDock Drag & drop settings
-    if(group == "SchemaDock")
+    if(section == szINI::SEC_SCHEMA_DOCK)
     {
-        if(name == "dropSelectQuery")
+        if(key == szINI::KEY_DROP_SELECT_QUERY)
             return true;
 
-        if(name == "dropQualifiedNames")
+        if(key == szINI::KEY_DROP_QUALIFIED_NAMES)
             return false;
 
-        if(name == "dropEnquotedNames")
+        if(key == szINI::KEY_DROP_ENQUOTED_NAMES)
             return true;
     }
 
     // Remote settings?
-    if(group == "remote")
+    if(section == szINI::SEC_REMOTE)
     {
         // Enable the File → Remote menu by default
-        if(name == "active")
+        if(key == szINI::KEY_ACTIVE)
             return true;
 
         // Clone directory
-        if(name == "clonedirectory")
+        if(key == szINI::KEY_CLONE_DIR)
 #if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
             return QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
 #else
@@ -457,10 +459,10 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
     }
 
     // Proxy settings
-    if(group == "proxy")
+    if(section == szINI::SEC_PROXY)
     {
         // Use system settings by default
-        if(name == "type")
+        if(key == szINI::KEY_TYPE)
             return "system";
     }
 
@@ -468,72 +470,72 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
     return QVariant();
 }
 
-QColor Settings::getDefaultColorValue(const std::string& group, const std::string& name, AppStyle style)
+QColor Settings::getDefaultColorValue(const std::string& section, const std::string& key, AppStyle style)
 {
     // Data Browser/NULL & Binary Fields
-    if(group == "databrowser")
+    if(section == szINI::SEC_DATA_BROWSER)
     {
         // The switch on style can be removed if the following issue is fixed:
         // https://github.com/ColinDuquesnoy/QDarkStyleSheet/issues/171
         switch (style) {
         case FollowDesktopStyle :
-            if(name == "null_fg_colour")
+            if(key == szINI::KEY_NULL_FG_COLOUR)
                 return QColor(Qt::lightGray).name();
-            if(name == "null_bg_colour")
+            if(key == szINI::KEY_NULL_BG_COLOUR)
                 return QPalette().color(QPalette::Active, QPalette::Base).name();
-            if(name == "reg_fg_colour")
+            if(key == szINI::KEY_REG_FG_COLOUR)
                 return QPalette().color(QPalette::Active, QPalette::Text).name();
-            if(name == "reg_bg_colour")
+            if(key == szINI::KEY_REG_BG_COLOUR)
                 return QPalette().color(QPalette::Active, QPalette::Base).name();
-            if(name == "formatted_fg_colour")
+            if(key == szINI::KEY_FMT_FG_COLOUR)
                 return QPalette().color(QPalette::Active, QPalette::Text).name();
-            if(name == "formatted_bg_colour")
+            if(key == szINI::KEY_FMT_BG_COLOUR)
                 return QPalette().color(QPalette::Active, QPalette::AlternateBase).name();
-            if(name == "bin_fg_colour")
+            if(key == szINI::KEY_BIN_FG_COLOUR)
                 return QColor(Qt::lightGray).name();
-            if(name == "bin_bg_colour")
+            if(key == szINI::KEY_BIN_BG_COLOUR)
                 return QPalette().color(QPalette::Active, QPalette::Base).name();
             break;
         case DarkStyle :
-            if(name == "null_fg_colour")
+            if(key == szINI::KEY_NULL_FG_COLOUR)
                 return QColor(0x78, 0x78, 0x78);
-            if(name == "null_bg_colour")
+            if(key == szINI::KEY_NULL_BG_COLOUR)
                 return QColor(0x19, 0x23, 0x2D);
-            if(name == "reg_fg_colour")
+            if(key == szINI::KEY_REG_FG_COLOUR)
                 return QColor(0xF0, 0xF0, 0xF0);
-            if(name == "reg_bg_colour")
+            if(key == szINI::KEY_REG_BG_COLOUR)
                 return QColor(0x19, 0x23, 0x2D);
-            if(name == "formatted_fg_colour")
+            if(key == szINI::KEY_FMT_FG_COLOUR)
                 return QColor(0xF0, 0xF0, 0xF0);
-            if(name == "formatted_bg_colour")
+            if(key == szINI::KEY_FMT_BG_COLOUR)
                 return QColor(0x19, 0x23, 0x2D);
-            if(name == "bin_fg_colour")
+            if(key == szINI::KEY_BIN_FG_COLOUR)
                 return QColor(0x78, 0x78, 0x78);
-            if(name == "bin_bg_colour")
+            if(key == szINI::KEY_BIN_BG_COLOUR)
                 return QColor(0x19, 0x23, 0x2D);
             break;
         case LightStyle :
-            if(name == "null_fg_colour" || name == "bin_fg_colour")
+            if(key == szINI::KEY_NULL_FG_COLOUR || key == szINI::KEY_BIN_FG_COLOUR)
                 return QColor(0xA5, 0xA9, 0xAC);
-            if(name == "null_bg_colour" || name == "bin_bg_colour")
+            if(key == szINI::KEY_NULL_BG_COLOUR || key == szINI::KEY_BIN_BG_COLOUR)
                 return QColor(0xFA, 0xFA, 0xFA);
-            if(name == "reg_fg_colour")
+            if(key == szINI::KEY_REG_FG_COLOUR)
                 return QColor(0x00, 0x00, 0x00);
-            if(name == "reg_bg_colour")
+            if(key == szINI::KEY_REG_BG_COLOUR)
                 return QColor(0xFA, 0xFA, 0xFA);
-            if(name == "formatted_fg_colour")
+            if(key == szINI::KEY_FMT_FG_COLOUR)
                 return QColor(0x00, 0x00, 0x00);
-            if(name == "formatted_bg_colour")
+            if(key == szINI::KEY_FMT_BG_COLOUR)
                 return QColor(0xFA, 0xFA, 0xFA);
             break;
         }
     }
 
     // syntaxhighlighter?
-    if(group == "syntaxhighlighter")
+    if(section == szINI::SEC_SYNTAX_HIGHLIGHTER)
     {
         // Colour?
-        if(ends_with(name, "colour"))
+        if(ends_with(key, szINI::KEY_ANY_COLOUR))
         {
             QColor backgroundColour;
             QColor foregroundColour;
@@ -552,49 +554,49 @@ QColor Settings::getDefaultColorValue(const std::string& group, const std::strin
                 backgroundColour = QColor(0xFA, 0xFA, 0xFA);
                 break;
             }
-            if(name == "foreground_colour")
+            if(key == szINI::KEY_FG_COLOUR)
                 return foregroundColour;
-            else if(name == "background_colour")
+            else if(key == szINI::KEY_BG_COLOUR)
                 return backgroundColour;
-            else if(name == "selected_fg_colour")
+            else if(key == szINI::KEY_SELECTED_FG_COLOUR)
                 return QPalette().color(QPalette::Active, QPalette::HighlightedText);
-            else if(name == "selected_bg_colour")
+            else if(key == szINI::KEY_SELECTED_BG_COLOUR)
                 return QPalette().color(QPalette::Active, QPalette::Highlight);
 
             // Detect and provide sensible defaults for dark themes
             if (backgroundColour.value() < foregroundColour.value()) {
-                if(name == "keyword_colour")
+                if(key == szINI::KEY_KEYWORD_COLOUR)
                     return QColor(82, 148, 226);
-                else if(name == "function_colour")
+                else if(key == szINI::KEY_FUNC_COLOUR)
                     return QColor(Qt::yellow);
-                else if(name == "table_colour")
+                else if(key == szINI::KEY_TABLE_COLOUR)
                     return QColor(Qt::cyan);
-                else if(name == "comment_colour")
+                else if(key == szINI::KEY_COMMENT_COLOUR)
                     return QColor(Qt::green);
-                else if(name == "identifier_colour")
+                else if(key == szINI::KEY_IDENTIFIER_COLOUR)
                     return QColor(221, 160, 221);
-                else if(name == "string_colour")
+                else if(key == szINI::KEY_STRING_COLOUR)
                     return QColor(Qt::lightGray);
-                else if(name == "currentline_colour")
+                else if(key == szINI::KEY_CUR_LINE_COLOUR)
                     return backgroundColour.lighter(150);
-                else if(name == "highlight_colour")
+                else if(key == szINI::KEY_HIGHLIGHT_COLOUR)
                     return QColor(79, 148, 205);
             } else {
-                if(name == "keyword_colour")
+                if(key == szINI::KEY_KEYWORD_COLOUR)
                     return QColor(Qt::darkBlue);
-                else if(name == "function_colour")
+                else if(key == szINI::KEY_FUNC_COLOUR)
                     return QColor(Qt::blue);
-                else if(name == "table_colour")
+                else if(key == szINI::KEY_TABLE_COLOUR)
                     return QColor(Qt::darkCyan);
-                else if(name == "comment_colour")
+                else if(key == szINI::KEY_COMMENT_COLOUR)
                     return QColor(Qt::darkGreen);
-                else if(name == "identifier_colour")
+                else if(key == szINI::KEY_IDENTIFIER_COLOUR)
                     return QColor(Qt::darkMagenta);
-                else if(name == "string_colour")
+                else if(key == szINI::KEY_STRING_COLOUR)
                     return QColor(Qt::red);
-                else if(name == "currentline_colour")
+                else if(key == szINI::KEY_CUR_LINE_COLOUR)
                     return QColor(236, 236, 245);
-                else if(name == "highlight_colour")
+                else if(key == szINI::KEY_HIGHLIGHT_COLOUR)
                     return QColor(Qt::cyan);
             }
         }
@@ -604,11 +606,11 @@ QColor Settings::getDefaultColorValue(const std::string& group, const std::strin
     return QColor();
 }
 
-void Settings::clearValue(const std::string& group, const std::string& name)
+void Settings::clearValue(const std::string& section, const std::string& key)
 {
     setSettingsObject();
-    settings->beginGroup(QString::fromStdString(group));
-    settings->remove(QString::fromStdString(name));
+    settings->beginGroup(QString::fromStdString(section));
+    settings->remove(QString::fromStdString(key));
     settings->endGroup();
     m_hCache.clear();
 }
@@ -641,7 +643,7 @@ void Settings::exportSettings(const QString& fileName)
 
 bool Settings::importSettings(const QString& fileName)
 {
-    if(!isVaildSettingsFile(fileName))
+    if(!isValidSettingsFile(fileName))
         return false;
 
     QSettings importSettings(fileName, QSettings::IniFormat);

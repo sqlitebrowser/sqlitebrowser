@@ -32,11 +32,11 @@ ExportDataDialog::ExportDataDialog(DBBrowserDB& db, ExportFormats format, QWidge
     }
 
     // Retrieve the saved dialog preferences
-    ui->checkHeader->setChecked(Settings::getValue("exportcsv", "firstrowheader").toBool());
-    setSeparatorChar(Settings::getValue("exportcsv", "separator").toInt());
-    setQuoteChar(Settings::getValue("exportcsv", "quotecharacter").toInt());
-    setNewLineString(Settings::getValue("exportcsv", "newlinecharacters").toString());
-    ui->checkPrettyPrint->setChecked(Settings::getValue("exportjson", "prettyprint").toBool());
+    ui->checkHeader->setChecked(Settings::getValue(szINI::SEC_EXPORT_CSV, szINI::KEY_FIRST_ROW_HEADER).toBool());
+    setSeparatorChar(Settings::getValue(szINI::SEC_EXPORT_CSV, szINI::KEY_SEPARATOR).toInt());
+    setQuoteChar(Settings::getValue(szINI::SEC_EXPORT_CSV, szINI::KEY_QUOTE_CHARACTER).toInt());
+    setNewLineString(Settings::getValue(szINI::SEC_EXPORT_CSV, szINI::KEY_NEWLINE_CHARACTERS).toString());
+    ui->checkPrettyPrint->setChecked(Settings::getValue(szINI::SEC_EXPORT_JSON, szINI::KEY_PRETTY_PRINT).toBool());
 
     // Update the visible/hidden status of the "Other" line edit fields
     showCustomCharEdits();
@@ -407,11 +407,11 @@ void ExportDataDialog::accept()
     }
 
     // Save the dialog preferences for future use
-    Settings::setValue("exportcsv", "firstrowheader", ui->checkHeader->isChecked());
-    Settings::setValue("exportjson", "prettyprint", ui->checkPrettyPrint->isChecked());
-    Settings::setValue("exportcsv", "separator", currentSeparatorChar());
-    Settings::setValue("exportcsv", "quotecharacter", currentQuoteChar());
-    Settings::setValue("exportcsv", "newlinecharacters", currentNewLineString());
+    Settings::setValue(szINI::SEC_EXPORT_CSV, szINI::KEY_FIRST_ROW_HEADER, ui->checkHeader->isChecked());
+    Settings::setValue(szINI::SEC_EXPORT_JSON, szINI::KEY_PRETTY_PRINT, ui->checkPrettyPrint->isChecked());
+    Settings::setValue(szINI::SEC_EXPORT_CSV, szINI::KEY_SEPARATOR, currentSeparatorChar());
+    Settings::setValue(szINI::SEC_EXPORT_CSV, szINI::KEY_QUOTE_CHARACTER, currentQuoteChar());
+    Settings::setValue(szINI::SEC_EXPORT_CSV, szINI::KEY_NEWLINE_CHARACTERS, currentNewLineString());
 
     // Notify the user the export has completed
     if(success) {

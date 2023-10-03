@@ -58,7 +58,7 @@ void RemoteNetwork::reloadSettings()
 {
     // Load all configured client certificates
     m_clientCertFiles.clear();
-    const auto client_certs = Settings::getValue("remote", "client_certificates").toStringList();
+    const auto client_certs = Settings::getValue(szINI::SEC_REMOTE, szINI::KEY_CLIENT_CERT).toStringList();
     for(const QString& path : client_certs)
     {
         QFile file(path);
@@ -79,7 +79,7 @@ void RemoteNetwork::reloadSettings()
 
     // Configure proxy to use
     {
-        QString type = Settings::getValue("proxy", "type").toString();
+        QString type = Settings::getValue(szINI::SEC_PROXY, szINI::KEY_TYPE).toString();
 
         QNetworkProxy proxy;
         if(type == "system")
@@ -93,9 +93,9 @@ void RemoteNetwork::reloadSettings()
             // For any other type we have to set up our own proxy configuration
 
             // Retrieve the required settings
-            QString host = Settings::getValue("proxy", "host").toString();
-            unsigned short port = static_cast<unsigned short>(Settings::getValue("proxy", "port").toUInt());
-            bool authentication = Settings::getValue("proxy", "authentication").toBool();
+            QString host = Settings::getValue(szINI::SEC_PROXY, szINI::KEY_HOST).toString();
+            unsigned short port = static_cast<unsigned short>(Settings::getValue(szINI::SEC_PROXY, szINI::KEY_PORT).toUInt());
+            bool authentication = Settings::getValue(szINI::SEC_PROXY, szINI::KEY_AUTHENTICATION).toBool();
 
             if(type == "http")
                 proxy.setType(QNetworkProxy::HttpProxy);
@@ -110,8 +110,8 @@ void RemoteNetwork::reloadSettings()
             // Only set authentication details when authentication is required
             if(authentication)
             {
-                QString user = Settings::getValue("proxy", "user").toString();
-                QString password = Settings::getValue("proxy", "password").toString();
+                QString user = Settings::getValue(szINI::SEC_PROXY, szINI::KEY_USER).toString();
+                QString password = Settings::getValue(szINI::SEC_PROXY, szINI::KEY_PASSWORD).toString();
 
                 proxy.setUser(user);
                 proxy.setPassword(password);

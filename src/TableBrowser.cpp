@@ -518,7 +518,7 @@ void TableBrowser::refresh()
                 int columns = static_cast<int>(ui->dataTable->colsInSelection().size());
                 statusMessage += tr(", %n column(s)", "", columns);
 
-                if (sel.count() < Settings::getValue("databrowser", "complete_threshold").toInt()) {
+                if (sel.count() < Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_COMPLETE_THRESHOLD).toInt()) {
                     double sum = 0;
                     double first = m_model->data(sel.first(), Qt::EditRole).toDouble();
                     double min = first;
@@ -566,7 +566,7 @@ void TableBrowser::reloadSettings()
 {
     ui->dataTable->reloadSettings();
 
-    ui->browseToolbar->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(Settings::getValue("General", "toolbarStyleBrowse").toInt()));
+    ui->browseToolbar->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(Settings::getValue(szINI::SEC_GENERAL, szINI::KEY_TB_STYLE_BROWSE).toInt()));
     m_model->reloadSettings();
 }
 
@@ -621,12 +621,12 @@ void TableBrowser::updateFilter(size_t column, const QString& value)
 
 void TableBrowser::addCondFormatFromFilter(size_t column, const QString& value)
 {
-    QFont font = QFont(Settings::getValue("databrowser", "font").toString());
-    font.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
+    QFont font = QFont(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FONT).toString());
+    font.setPointSize(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FONTSIZE).toInt());
 
     // Create automatically a new conditional format with the next serial background color according to the theme and the regular foreground
     // color and font in the settings.
-    CondFormat newCondFormat(value, QColor(Settings::getValue("databrowser", "reg_fg_colour").toString()),
+    CondFormat newCondFormat(value, QColor(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_REG_FG_COLOUR).toString()),
                              m_condFormatPalette.nextSerialColor(Palette::appHasDarkTheme()),
                              font,
                              CondFormat::AlignLeft,

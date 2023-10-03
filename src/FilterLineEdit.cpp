@@ -22,7 +22,7 @@ FilterLineEdit::FilterLineEdit(QWidget* parent, std::vector<FilterLineEdit*>* fi
     // is (re)started. As soon as the user stops typing the timer has a chance to trigger and call the
     // delayedSignalTimerTriggered() method which then stops the timer and emits the delayed signal.
     delaySignalTimer = new QTimer(this);
-    delaySignalTimer->setInterval(Settings::getValue("databrowser", "filter_delay").toInt());  // This is the milliseconds of not-typing we want to wait before triggering
+    delaySignalTimer->setInterval(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FILTER_DELAY).toInt());  // This is the milliseconds of not-typing we want to wait before triggering
     connect(this, &FilterLineEdit::textChanged, delaySignalTimer, static_cast<void (QTimer::*)()>(&QTimer::start));
     connect(delaySignalTimer, &QTimer::timeout, this, &FilterLineEdit::delayedSignalTimerTriggered);
 

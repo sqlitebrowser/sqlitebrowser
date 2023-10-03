@@ -42,16 +42,16 @@ QString FileDialog::getExistingDirectory(const FileDialogTypes dialogType, QWidg
 
 QString FileDialog::getFileDialogPath(const FileDialogTypes dialogType)
 {
-    switch(Settings::getValue("db", "savedefaultlocation").toInt())
+    switch(Settings::getValue(szINI::SEC_DATABASE, szINI::KEY_SAVE_DEFAULT_LOCATION).toInt())
     {
     case 0:     // Remember last location
     case 2: {   // Remember last location for current session only
-        QHash<QString, QVariant> lastLocations = Settings::getValue("db", "lastlocations").toHash();
+        QHash<QString, QVariant> lastLocations = Settings::getValue(szINI::SEC_DATABASE, "lastlocations").toHash();
 
         return lastLocations[QString(dialogType)].toString();
     }
     case 1:     // Always use this locations
-        return Settings::getValue("db", "defaultlocation").toString();
+        return Settings::getValue(szINI::SEC_DATABASE, szINI::KEY_DEFAULT_LOCATION).toString();
     default:
         return QString();
     }
@@ -60,17 +60,17 @@ QString FileDialog::getFileDialogPath(const FileDialogTypes dialogType)
 void FileDialog::setFileDialogPath(const FileDialogTypes dialogType, const QString& new_path)
 {
     QString dir = QFileInfo(new_path).absolutePath();
-    QHash<QString, QVariant> lastLocations = Settings::getValue("db", "lastlocations").toHash();
+    QHash<QString, QVariant> lastLocations = Settings::getValue(szINI::SEC_DATABASE, "lastlocations").toHash();
 
     lastLocations[QString(dialogType)] = dir;
 
-    switch(Settings::getValue("db", "savedefaultlocation").toInt())
+    switch(Settings::getValue(szINI::SEC_DATABASE, szINI::KEY_SAVE_DEFAULT_LOCATION).toInt())
     {
     case 0:     // Remember last location
-        Settings::setValue("db", "lastlocations", lastLocations);
+        Settings::setValue(szINI::SEC_DATABASE, "lastlocations", lastLocations);
         break;
     case 2:     // Remember last location for current session only
-        Settings::setValue("db", "lastlocations", lastLocations, false);
+        Settings::setValue(szINI::SEC_DATABASE, "lastlocations", lastLocations, false);
         break;
     case 1:     // Always use this locations
         break;  // Do nothing
@@ -79,5 +79,5 @@ void FileDialog::setFileDialogPath(const FileDialogTypes dialogType, const QStri
 
 QString FileDialog::getSqlDatabaseFileFilter()
 {
-    return Settings::getValue("General", "DBFileExtensions").toString() + ";;" + QObject::tr("All files (*)"); //Always add "All files (*)" to the available filters
+    return Settings::getValue(szINI::SEC_GENERAL, szINI::KEY_DB_FILE_EXTS).toString() + ";;" + QObject::tr("All files (*)"); //Always add "All files (*)" to the available filters
 }

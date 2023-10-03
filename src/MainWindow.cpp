@@ -103,7 +103,7 @@ void MainWindow::init()
     // Automatic update check
 #ifdef CHECKNEWVERSION
     // Check for a new version if automatic update check aren't disabled in the settings dialog
-    if(Settings::getValue("checkversion", "enabled").toBool())
+    if(Settings::getValue(szINI::SEC_CHCK_VERSION, szINI::KEY_ENABLED).toBool())
     {
         RemoteNetwork::get().fetch(QUrl("https://download.sqlitebrowser.org/currentrelease"), RemoteNetwork::RequestTypeCustom,
                                    QString(), [this](const QByteArray& reply) {
@@ -162,18 +162,18 @@ void MainWindow::init()
     editDock->setReadOnly(true);
 
     // Restore window geometry
-    restoreGeometry(Settings::getValue("MainWindow", "geometry").toByteArray());
+    restoreGeometry(Settings::getValue(szINI::SEC_MAIN_WNDW, szINI::KEY_GEOMETRY).toByteArray());
 
     // Save default and restore window state
     defaultWindowState = saveState();
-    restoreState(Settings::getValue("MainWindow", "windowState").toByteArray());
+    restoreState(Settings::getValue(szINI::SEC_MAIN_WNDW, szINI::KEY_WINDOW_STATE).toByteArray());
 
     // Save default and restore open tab order if the openTabs setting is saved.
     defaultOpenTabs = saveOpenTabs();
-    restoreOpenTabs(Settings::getValue("MainWindow", "openTabs").toString());
+    restoreOpenTabs(Settings::getValue(szINI::SEC_MAIN_WNDW, szINI::KEY_OPEN_TABS).toString());
 
     // Restore dock state settings
-    ui->comboLogSubmittedBy->setCurrentIndex(ui->comboLogSubmittedBy->findText(Settings::getValue("SQLLogDock", "Log").toString()));
+    ui->comboLogSubmittedBy->setCurrentIndex(ui->comboLogSubmittedBy->findText(Settings::getValue(szINI::SEC_SQL_LOG_DOCK, szINI::KEY_LOG).toString()));
 
     // Add keyboard shortcuts
     QShortcut* shortcutBrowseRefreshF5 = new QShortcut(QKeySequence("F5"), this);
@@ -219,7 +219,7 @@ void MainWindow::init()
     connect(shortcutFocusEditor, &QShortcut::activated, this, &MainWindow::focusSqlEditor);
 
     // Get MaxRecentFiles value from QSettings.
-    MaxRecentFiles = Settings::getValue("General", "maxRecentFiles").toInt();
+    MaxRecentFiles = Settings::getValue(szINI::SEC_GENERAL, szINI::KEY_MAX_RECENT_FILES).toInt();
     recentFileActs.resize(MaxRecentFiles);
 
     // Create the actions for the recently opened dbs list
@@ -427,9 +427,9 @@ void MainWindow::init()
     connect(ui->actionEnquoteNamesCheck, &QAction::toggled, dbStructureModel, &DbStructureModel::setDropEnquotedNames);
     connect(&db, &DBBrowserDB::databaseInUseChanged, this, &MainWindow::updateDatabaseBusyStatus);
 
-    ui->actionDropSelectQueryCheck->setChecked(Settings::getValue("SchemaDock", "dropSelectQuery").toBool());
-    ui->actionDropQualifiedCheck->setChecked(Settings::getValue("SchemaDock", "dropQualifiedNames").toBool());
-    ui->actionEnquoteNamesCheck->setChecked(Settings::getValue("SchemaDock", "dropEnquotedNames").toBool());
+    ui->actionDropSelectQueryCheck->setChecked(Settings::getValue(szINI::SEC_SCHEMA_DOCK, szINI::KEY_DROP_SELECT_QUERY).toBool());
+    ui->actionDropQualifiedCheck->setChecked(Settings::getValue(szINI::SEC_SCHEMA_DOCK, szINI::KEY_DROP_QUALIFIED_NAMES).toBool());
+    ui->actionEnquoteNamesCheck->setChecked(Settings::getValue(szINI::SEC_SCHEMA_DOCK, szINI::KEY_DROP_ENQUOTED_NAMES).toBool());
 
     connect(ui->actionSqlStop, &QAction::triggered, this, [this]() {
        if(execute_sql_worker && execute_sql_worker->isRunning())
@@ -548,7 +548,7 @@ bool MainWindow::fileOpen(const QString& fileName, bool openFromProject, bool re
                         closeSqlTab(i, true);
                 }
 
-                statusEncodingLabel->setText(db.getPragma("encoding"));
+                statusEncodingLabel->setText(db.getPragma(szINI::KEY_ENCODING));
                 statusEncryptionLabel->setVisible(db.encrypted());
                 statusReadOnlyLabel->setVisible(db.readOnly());
                 setCurrentFile(wFile);
@@ -592,7 +592,7 @@ void MainWindow::fileNew()
         db.create(fileName);
         setCurrentFile(fileName);
         addToRecentFilesMenu(fileName);
-        statusEncodingLabel->setText(db.getPragma("encoding"));
+        statusEncodingLabel->setText(db.getPragma(szINI::KEY_ENCODING));
         statusEncryptionLabel->setVisible(false);
         statusReadOnlyLabel->setVisible(false);
         refreshTableBrowsers();
@@ -609,7 +609,7 @@ void MainWindow::fileNewInMemoryDatabase(bool open_create_dialog)
     db.open(":memory:");
 
     setCurrentFile(tr("In-Memory database"));
-    statusEncodingLabel->setText(db.getPragma("encoding"));
+    statusEncodingLabel->setText(db.getPragma(szINI::KEY_ENCODING));
     statusEncryptionLabel->setVisible(false);
     statusReadOnlyLabel->setVisible(false);
     remoteDock->fileOpened(":memory:");
@@ -765,14 +765,14 @@ void MainWindow::closeEvent( QCloseEvent* event )
 {
     if(closeFiles())
     {
-        Settings::setValue("MainWindow", "geometry", saveGeometry());
-        Settings::setValue("MainWindow", "windowState", saveState());
-        Settings::setValue("MainWindow", "openTabs", saveOpenTabs());
+        Settings::setValue(szINI::SEC_MAIN_WNDW, szINI::KEY_GEOMETRY, saveGeometry());
+        Settings::setValue(szINI::SEC_MAIN_WNDW, szINI::KEY_WINDOW_STATE, saveState());
+        Settings::setValue(szINI::SEC_MAIN_WNDW, szINI::KEY_OPEN_TABS, saveOpenTabs());
 
-        Settings::setValue("SQLLogDock", "Log", ui->comboLogSubmittedBy->currentText());
-        Settings::setValue("SchemaDock", "dropSelectQuery", ui->actionDropSelectQueryCheck->isChecked());
-        Settings::setValue("SchemaDock", "dropQualifiedNames", ui->actionDropQualifiedCheck->isChecked());
-        Settings::setValue("SchemaDock", "dropEnquotedNames", ui->actionEnquoteNamesCheck->isChecked());
+        Settings::setValue(szINI::SEC_SQL_LOG_DOCK, szINI::KEY_LOG, ui->comboLogSubmittedBy->currentText());
+        Settings::setValue(szINI::SEC_SCHEMA_DOCK, szINI::KEY_DROP_SELECT_QUERY, ui->actionDropSelectQueryCheck->isChecked());
+        Settings::setValue(szINI::SEC_SCHEMA_DOCK, szINI::KEY_DROP_QUALIFIED_NAMES, ui->actionDropQualifiedCheck->isChecked());
+        Settings::setValue(szINI::SEC_SCHEMA_DOCK, szINI::KEY_DROP_ENQUOTED_NAMES, ui->actionEnquoteNamesCheck->isChecked());
 
         SqlExecutionArea::saveState();
 
@@ -1728,7 +1728,7 @@ void MainWindow::openRecentFile()
 void MainWindow::updateRecentFileActions()
 {
     // Get recent files list from settings
-    QStringList files = Settings::getValue("General", "recentFileList").toStringList();
+    QStringList files = Settings::getValue(szINI::SEC_GENERAL, szINI::KEY_RECENT_FILE_LIST).toStringList();
 
     // Check if files still exist and remove any non-existent file
     for(int i=0;i<files.size();i++)
@@ -1746,7 +1746,7 @@ void MainWindow::updateRecentFileActions()
     }
 
     // Store updated list
-    Settings::setValue("General", "recentFileList", files);
+    Settings::setValue(szINI::SEC_GENERAL, szINI::KEY_RECENT_FILE_LIST, files);
 
     int numRecentFiles = qMin(files.size(), MaxRecentFiles);
 
@@ -1807,14 +1807,14 @@ void MainWindow::addToRecentFilesMenu(const QString& filename, bool read_only)
     if(read_only)
         path = "[ro]" + path;
 
-    QStringList files = Settings::getValue("General", "recentFileList").toStringList();
+    QStringList files = Settings::getValue(szINI::SEC_GENERAL, szINI::KEY_RECENT_FILE_LIST).toStringList();
 
     files.removeAll(path);
     files.prepend(path);
     while (files.size() > MaxRecentFiles)
         files.removeLast();
 
-    Settings::setValue("General", "recentFileList", files);
+    Settings::setValue(szINI::SEC_GENERAL, szINI::KEY_RECENT_FILE_LIST, files);
 
     for(QWidget* widget : QApplication::topLevelWidgets()) {
         MainWindow *mainWin = qobject_cast<MainWindow *>(widget);
@@ -2027,7 +2027,7 @@ void MainWindow::logSql(const QString& sql, int msgtype)
 bool MainWindow::askSaveSqlTab(int index, bool& ignoreUnattachedBuffers)
 {
     SqlExecutionArea* sqlExecArea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index));
-    const bool isPromptSQLTabsInNewProject = Settings::getValue("General", "promptsqltabsinnewproject").toBool();
+    const bool isPromptSQLTabsInNewProject = Settings::getValue(szINI::SEC_GENERAL, szINI::KEY_PROMPT_SQL_TABS_IN_NEWPRJ).toBool();
 
     if(sqlExecArea->getEditor()->isModified()) {
         if(sqlExecArea->fileName().isEmpty() && !ignoreUnattachedBuffers && isPromptSQLTabsInNewProject) {
@@ -2304,7 +2304,7 @@ void MainWindow::reloadSettings()
         d->tableBrowser()->reloadSettings();
 
     // Set max recent files
-    const int newMaxRecentFiles = Settings::getValue("General", "maxRecentFiles").toInt();
+    const int newMaxRecentFiles = Settings::getValue(szINI::SEC_GENERAL, szINI::KEY_MAX_RECENT_FILES).toInt();
 
     if(MaxRecentFiles < newMaxRecentFiles) {
         // If user increase max recent files value.
@@ -2337,7 +2337,7 @@ void MainWindow::reloadSettings()
         updateRecentFileActions();
     }
 
-    Settings::AppStyle style = static_cast<Settings::AppStyle>(Settings::getValue("General", "appStyle").toInt());
+    Settings::AppStyle style = static_cast<Settings::AppStyle>(Settings::getValue(szINI::SEC_GENERAL, szINI::KEY_APPSTYLE).toInt());
 
     switch (style) {
     case Settings::FollowDesktopStyle :
@@ -2358,12 +2358,12 @@ void MainWindow::reloadSettings()
         break;
     }
 
-    ui->toolbarDB->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(Settings::getValue("General", "toolbarStyle").toInt()));
-    ui->dbToolbar->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(Settings::getValue("General", "toolbarStyleStructure").toInt()));
-    ui->toolbarSql->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(Settings::getValue("General", "toolbarStyleSql").toInt()));
+    ui->toolbarDB->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(Settings::getValue(szINI::SEC_GENERAL, szINI::KEY_TB_STYLE_APP).toInt()));
+    ui->dbToolbar->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(Settings::getValue(szINI::SEC_GENERAL, szINI::KEY_TB_STYLE_STRUCTURE).toInt()));
+    ui->toolbarSql->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(Settings::getValue(szINI::SEC_GENERAL, szINI::KEY_TB_STYLE_SQL).toInt()));
     // Other toolbars will follow Main Window ToolBar Style
-    ui->toolbarExtraDB->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(Settings::getValue("General", "toolbarStyle").toInt()));
-    ui->toolbarProject->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(Settings::getValue("General", "toolbarStyle").toInt()));
+    ui->toolbarExtraDB->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(Settings::getValue(szINI::SEC_GENERAL, szINI::KEY_TB_STYLE_APP).toInt()));
+    ui->toolbarProject->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(Settings::getValue(szINI::SEC_GENERAL, szINI::KEY_TB_STYLE_APP).toInt()));
 
     // Set prefetch sizes for lazy population of table models
     for(int i=0;i<ui->tabSqlAreas->count();++i)
@@ -2372,7 +2372,7 @@ void MainWindow::reloadSettings()
     // Prepare log font
     QFont logfont("Monospace");
     logfont.setStyleHint(QFont::TypeWriter);
-    logfont.setPointSize(Settings::getValue("log", "fontsize").toInt());
+    logfont.setPointSize(Settings::getValue(szINI::SEC_LOG, szINI::KEY_FONTSIZE).toInt());
 
     // Set font for SQL logs and edit dialog
     ui->editLogApplication->reloadSettings();
@@ -2385,7 +2385,7 @@ void MainWindow::reloadSettings()
 
     // Set font for database structure views
     QFont structure_font = ui->dbTreeWidget->font();
-    structure_font.setPointSize(Settings::getValue("db", "fontsize").toInt());
+    structure_font.setPointSize(Settings::getValue(szINI::SEC_DATABASE, szINI::KEY_FONTSIZE).toInt());
     ui->dbTreeWidget->setFont(structure_font);
     ui->treeSchemaDock->setFont(structure_font);
 
@@ -2397,7 +2397,7 @@ void MainWindow::reloadSettings()
     refreshTableBrowsers();
 
     // Hide or show the remote dock as needed
-    bool showRemoteActions = Settings::getValue("remote", "active").toBool();
+    bool showRemoteActions = Settings::getValue(szINI::SEC_REMOTE, szINI::KEY_ACTIVE).toBool();
     ui->viewMenu->actions().at(4)->setVisible(showRemoteActions);
     if(!showRemoteActions)
         ui->dockRemote->setHidden(true);
@@ -2405,9 +2405,9 @@ void MainWindow::reloadSettings()
     // Reload remote dock settings
     remoteDock->reloadSettings();
 
-    sqlb::setIdentifierQuoting(static_cast<sqlb::escapeQuoting>(Settings::getValue("editor", "identifier_quotes").toInt()));
+    sqlb::setIdentifierQuoting(static_cast<sqlb::escapeQuoting>(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_IDENTIFIER_QUOTES).toInt()));
 
-    ui->tabSqlAreas->setTabsClosable(Settings::getValue("editor", "close_button_on_tabs").toBool());
+    ui->tabSqlAreas->setTabsClosable(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_CLOSE_BUTTON_ON_TABS).toBool());
 }
 
 void MainWindow::checkNewVersion(const QString& versionstring, const QString& url)
@@ -2437,9 +2437,9 @@ void MainWindow::checkNewVersion(const QString& versionstring, const QString& ur
 
     if(newversion)
     {
-        int ignmajor = Settings::getValue("checkversion", "ignmajor").toInt();
-        int ignminor = Settings::getValue("checkversion", "ignminor").toInt();
-        int ignpatch = Settings::getValue("checkversion", "ignpatch").toInt();
+        int ignmajor = Settings::getValue(szINI::SEC_CHCK_VERSION, szINI::KEY_IGNMAJOR).toInt();
+        int ignminor = Settings::getValue(szINI::SEC_CHCK_VERSION, szINI::KEY_IGNMINOR).toInt();
+        int ignpatch = Settings::getValue(szINI::SEC_CHCK_VERSION, szINI::KEY_IGNPATCH).toInt();
 
         // check if the user doesn't care about the current update
         if(!(ignmajor == major && ignminor == minor && ignpatch == patch))
@@ -2457,9 +2457,9 @@ void MainWindow::checkNewVersion(const QString& versionstring, const QString& ur
             if(msgBox.clickedButton() == idontcarebutton)
             {
                 // save that the user don't want to get bothered about this update
-                Settings::setValue("checkversion", "ignmajor", major);
-                Settings::setValue("checkversion", "ignminor", minor);
-                Settings::setValue("checkversion", "ignpatch", patch);
+                Settings::setValue(szINI::SEC_CHCK_VERSION, szINI::KEY_IGNMAJOR, major);
+                Settings::setValue(szINI::SEC_CHCK_VERSION, szINI::KEY_IGNMINOR, minor);
+                Settings::setValue(szINI::SEC_CHCK_VERSION, szINI::KEY_IGNPATCH, patch);
             }
         }
     }
@@ -2552,7 +2552,7 @@ static void loadCondFormatMap(BrowseDataTableSettings::CondFormatMap& condFormat
                     if (xml.attributes().hasAttribute("font"))
                         font.fromString(xml.attributes().value("font").toString());
                     else
-                        Settings::getValue("databrowser", "font").toString();
+                        Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FONT).toString();
 
                     CondFormat::Alignment align;
                     if (xml.attributes().hasAttribute("align"))
@@ -2853,7 +2853,7 @@ MainWindow::LoadAttempResult MainWindow::loadProject(QString filename, bool read
                         } else if(xml.name() == "browsetable_info") {
                             // This tag is only found in old project files. In newer versions (>= 3.11) it is replaced by a new implementation.
                             // 3.12 is the last version to support loading this file format, so just show a warning here.
-                            if(!Settings::getValue("idontcare", "projectBrowseTable").toBool())
+                            if(!Settings::getValue(szINI::SEC_DONT_CARE, szINI::KEY_PROJECT_BROWSE_TABLE).toBool())
                             {
                                 QMessageBox msgBox;
                                 QPushButton* idontcarebutton = msgBox.addButton(tr("Don't show again"), QMessageBox::ActionRole);
@@ -2865,7 +2865,7 @@ MainWindow::LoadAttempResult MainWindow::loadProject(QString filename, bool read
                                                   "it completely, please use DB Browser for SQLite version 3.12 to convert it to the new file format."));
                                 msgBox.exec();
                                 if(msgBox.clickedButton() == idontcarebutton)
-                                    Settings::setValue("idontcare", "projectBrowseTable", false);
+                                    Settings::setValue(szINI::SEC_DONT_CARE, szINI::KEY_PROJECT_BROWSE_TABLE, false);
                             }
 
                             xml.skipCurrentElement();
@@ -3416,7 +3416,7 @@ void MainWindow::fileOpenReadOnly()
 void MainWindow::requestCollation(const QString& name, int eTextRep)
 {
     // Show message box
-    if(!Settings::getValue("db", "dont_ask_collation").toBool())
+    if(!Settings::getValue(szINI::SEC_DATABASE, szINI::KEY_DONT_ASK_COLLATION).toBool())
     {
         QMessageBox msgbox;
         QPushButton* button_dont_ask_again = msgbox.addButton(tr("Yes. Don't ask again"), QMessageBox::ActionRole);
@@ -3434,7 +3434,7 @@ void MainWindow::requestCollation(const QString& name, int eTextRep)
         // Cancel here if the No button was clicked
         if(msgbox.clickedButton() == button_dont_ask_again)
         {
-            Settings::setValue("db", "dont_ask_collation", false);
+            Settings::setValue(szINI::SEC_DATABASE, szINI::KEY_DONT_ASK_COLLATION, false);
         } else if(reply == QMessageBox::No) {
             return;
         }
@@ -3811,7 +3811,7 @@ void MainWindow::moveDocksTo(Qt::DockWidgetArea area)
 
 void MainWindow::clearRecentFiles()
 {
-    Settings::clearValue("General", "recentFileList");
+    Settings::clearValue(szINI::SEC_GENERAL, szINI::KEY_RECENT_FILE_LIST);
 
     for(int i=0; i < MaxRecentFiles; ++i)
         recentFileActs[i]->setVisible(false);

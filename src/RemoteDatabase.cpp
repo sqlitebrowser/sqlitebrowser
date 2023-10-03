@@ -148,7 +148,7 @@ QString RemoteDatabase::localAdd(QString filename, QString identity, const QUrl&
         sqlite3_finalize(stmt);
 
         // Return full path to the new file
-        return Settings::getValue("remote", "clonedirectory").toString() + "/" + filename;
+        return Settings::getValue(szINI::SEC_REMOTE, szINI::KEY_CLONE_DIR).toString() + "/" + filename;
     }
 
     // If we get here, the file has been checked in before. Check next if it has been updated in the meantime.
@@ -268,7 +268,7 @@ QString RemoteDatabase::localCheckFile(const QString& local_file)
     localAssureOpened();
 
     // Build the full path to where the file should be
-    QString full_path = Settings::getValue("remote", "clonedirectory").toString() + "/" + local_file;
+    QString full_path = Settings::getValue(szINI::SEC_REMOTE, szINI::KEY_CLONE_DIR).toString() + "/" + local_file;
 
     // Check if the database still exists. If so return its path, if not return an empty string to redownload it
     if(QFile::exists(full_path))
@@ -420,7 +420,7 @@ void RemoteDatabase::localDeleteFile(QString filename)
     sqlite3_finalize(stmt);
 
     // Delete the actual file on disk
-    QFile::remove(Settings::getValue("remote", "clonedirectory").toString() + "/" + filename);
+    QFile::remove(Settings::getValue(szINI::SEC_REMOTE, szINI::KEY_CLONE_DIR).toString() + "/" + filename);
 }
 
 QString RemoteDatabase::LocalFileInfo::user_name() const

@@ -72,13 +72,13 @@ ImportCsvDialog::ImportCsvDialog(const std::vector<QString>& filenames, DBBrowse
     ui->comboQuote->blockSignals(true);
     ui->comboEncoding->blockSignals(true);
 
-    ui->checkboxHeader->setChecked(Settings::getValue("importcsv", "firstrowheader").toBool());
-    ui->checkBoxTrimFields->setChecked(Settings::getValue("importcsv", "trimfields").toBool());
-    ui->checkBoxSeparateTables->setChecked(Settings::getValue("importcsv", "separatetables").toBool());
-    ui->checkLocalConventions->setChecked(Settings::getValue("importcsv", "localconventions").toBool());
-    setSeparatorChar(getSettingsChar("importcsv", "separator"));
-    setQuoteChar(getSettingsChar("importcsv", "quotecharacter"));
-    setEncoding(Settings::getValue("importcsv", "encoding").toString());
+    ui->checkboxHeader->setChecked(Settings::getValue(szINI::SEC_IMPORT_CSV, szINI::KEY_FIRST_ROW_HEADER).toBool());
+    ui->checkBoxTrimFields->setChecked(Settings::getValue(szINI::SEC_IMPORT_CSV, szINI::KEY_TRIM_FIELDS).toBool());
+    ui->checkBoxSeparateTables->setChecked(Settings::getValue(szINI::SEC_IMPORT_CSV, szINI::KEY_SEPARATE_TABLES).toBool());
+    ui->checkLocalConventions->setChecked(Settings::getValue(szINI::SEC_IMPORT_CSV, szINI::KEY_LOCAL_CONVENTIONS).toBool());
+    setSeparatorChar(getSettingsChar(szINI::SEC_IMPORT_CSV, szINI::KEY_SEPARATOR));
+    setQuoteChar(getSettingsChar(szINI::SEC_IMPORT_CSV, szINI::KEY_QUOTE_CHARACTER));
+    setEncoding(Settings::getValue(szINI::SEC_IMPORT_CSV, szINI::KEY_ENCODING).toString());
 
     ui->checkboxHeader->blockSignals(false);
     ui->checkBoxTrimFields->blockSignals(false);
@@ -183,13 +183,13 @@ private:
 void ImportCsvDialog::accept()
 {
     // Save settings
-    Settings::setValue("importcsv", "firstrowheader", ui->checkboxHeader->isChecked());
-    Settings::setValue("importcsv", "separator", currentSeparatorChar());
-    Settings::setValue("importcsv", "quotecharacter", currentQuoteChar());
-    Settings::setValue("importcsv", "trimfields", ui->checkBoxTrimFields->isChecked());
-    Settings::setValue("importcsv", "separatetables", ui->checkBoxSeparateTables->isChecked());
-    Settings::setValue("importcsv", "localconventions", ui->checkLocalConventions->isChecked());
-    Settings::setValue("importcsv", "encoding", currentEncoding());
+    Settings::setValue(szINI::SEC_IMPORT_CSV, szINI::KEY_FIRST_ROW_HEADER, ui->checkboxHeader->isChecked());
+    Settings::setValue(szINI::SEC_IMPORT_CSV, szINI::KEY_SEPARATOR, currentSeparatorChar());
+    Settings::setValue(szINI::SEC_IMPORT_CSV, szINI::KEY_QUOTE_CHARACTER, currentQuoteChar());
+    Settings::setValue(szINI::SEC_IMPORT_CSV, szINI::KEY_TRIM_FIELDS, ui->checkBoxTrimFields->isChecked());
+    Settings::setValue(szINI::SEC_IMPORT_CSV, szINI::KEY_SEPARATE_TABLES, ui->checkBoxSeparateTables->isChecked());
+    Settings::setValue(szINI::SEC_IMPORT_CSV, szINI::KEY_LOCAL_CONVENTIONS, ui->checkLocalConventions->isChecked());
+    Settings::setValue(szINI::SEC_IMPORT_CSV, szINI::KEY_ENCODING, currentEncoding());
 
     // Get all the selected files and start the import
     if (ui->filePickerBlock->isVisible())

@@ -69,7 +69,7 @@ void RemoteLocalFilesModel::refresh()
         }
 
         // Get file information
-        QFile file_info(Settings::getValue("remote", "clonedirectory").toString() + "/" + QString::fromStdString(file.file));
+        QFile file_info(Settings::getValue(szINI::SEC_REMOTE, szINI::KEY_CLONE_DIR).toString() + "/" + QString::fromStdString(file.file));
 
         // Add file to user node
         QTreeWidgetItem* file_node = new QTreeWidgetItem(user_node);

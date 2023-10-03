@@ -49,9 +49,9 @@ PlotDock::PlotDock(QWidget* parent)
     ui->treePlotColumns->setSelectionMode(QAbstractItemView::NoSelection);
 
     // Restore state
-    ui->splitterForPlot->restoreState(Settings::getValue("PlotDock", "splitterSize").toByteArray());
-    ui->comboLineType->setCurrentIndex(Settings::getValue("PlotDock", "lineType").toInt());
-    ui->comboPointShape->setCurrentIndex(Settings::getValue("PlotDock", "pointShape").toInt());
+    ui->splitterForPlot->restoreState(Settings::getValue(szINI::SEC_PLOT_DOCK, szINI::KEY_SPLITTER_SIZE).toByteArray());
+    ui->comboLineType->setCurrentIndex(Settings::getValue(szINI::SEC_PLOT_DOCK, szINI::KEY_LINE_TYPE).toInt());
+    ui->comboPointShape->setCurrentIndex(Settings::getValue(szINI::SEC_PLOT_DOCK, szINI::KEY_POINT_SHAPE).toInt());
 
     // Connect signals
     connect(ui->plotWidget, &QCustomPlot::selectionChangedByUser, this, &PlotDock::selectionChanged);
@@ -129,9 +129,9 @@ PlotDock::PlotDock(QWidget* parent)
 PlotDock::~PlotDock()
 {
     // Save state
-    Settings::setValue("PlotDock", "splitterSize", ui->splitterForPlot->saveState());
-    Settings::setValue("PlotDock", "lineType", ui->comboLineType->currentIndex());
-    Settings::setValue("PlotDock", "pointShape", ui->comboPointShape->currentIndex());
+    Settings::setValue(szINI::SEC_PLOT_DOCK, szINI::KEY_SPLITTER_SIZE, ui->splitterForPlot->saveState());
+    Settings::setValue(szINI::SEC_PLOT_DOCK, szINI::KEY_LINE_TYPE, ui->comboLineType->currentIndex());
+    Settings::setValue(szINI::SEC_PLOT_DOCK, szINI::KEY_POINT_SHAPE, ui->comboPointShape->currentIndex());
 
     // Finally, delete all widgets
     delete ui;

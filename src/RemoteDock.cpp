@@ -151,7 +151,7 @@ void RemoteDock::reloadSettings()
     ui->comboUser->addItem(tr("Select an identity to connect"), "dummy");
 
     // Load list of client certs
-    const QStringList client_certs = Settings::getValue("remote", "client_certificates").toStringList();
+    const QStringList client_certs = Settings::getValue(szINI::SEC_REMOTE, szINI::KEY_CLIENT_CERT).toStringList();
     for(const QString& file : client_certs)
     {
         const auto certs = QSslCertificate::fromPath(file);
@@ -353,7 +353,7 @@ void RemoteDock::pushSelectedLocalDatabase()
 
     // Push selected file
     const QString branch = ui->treeLocal->currentIndex().sibling(row, RemoteLocalFilesModel::ColumnBranch).data().toString();
-    pushDatabase(Settings::getValue("remote", "clonedirectory").toString() + "/" + filename, branch);
+    pushDatabase(Settings::getValue(szINI::SEC_REMOTE, szINI::KEY_CLONE_DIR).toString() + "/" + filename, branch);
 }
 
 void RemoteDock::pushDatabase(const QString& path, const QString& branch)
@@ -389,7 +389,7 @@ void RemoteDock::pushDatabase(const QString& path, const QString& branch)
     // current commit id of we are currently looking at rather than some other commit id or none at all
     // when creating a new branch.
     QString commit_id;
-    if(path.startsWith(Settings::getValue("remote", "clonedirectory").toString()))
+    if(path.startsWith(Settings::getValue(szINI::SEC_REMOTE, szINI::KEY_CLONE_DIR).toString()))
         commit_id = QString::fromStdString(remoteDatabase.localLastCommitId(remoteModel->currentClientCertificate(), url, branch.toStdString()));
 
     // Push database
@@ -456,7 +456,7 @@ void RemoteDock::openLocalFile(const QModelIndex& idx)
 
     QString file = idx.sibling(idx.row(), RemoteLocalFilesModel::ColumnFile).data().toString();
     if(!file.isEmpty())
-        emit openFile(Settings::getValue("remote", "clonedirectory").toString() + "/" + file);
+        emit openFile(Settings::getValue(szINI::SEC_REMOTE, szINI::KEY_CLONE_DIR).toString() + "/" + file);
 }
 
 void RemoteDock::fileOpened(const QString& filename)
@@ -474,7 +474,7 @@ void RemoteDock::fileOpened(const QString& filename)
         return;
 
     // Check if it is a tracked remote database file and retrieve the information we have on it
-    if(filename.startsWith(Settings::getValue("remote", "clonedirectory").toString()))
+    if(filename.startsWith(Settings::getValue(szINI::SEC_REMOTE, szINI::KEY_CLONE_DIR).toString()))
         currently_opened_file_info = remoteDatabase.localGetLocalFileInfo(filename);
 
     // Is this actually a clone of a remote database?
@@ -535,7 +535,7 @@ void RemoteDock::deleteLocalDatabase(const QModelIndex& index)
         return;
 
     QString filename = index.sibling(index.row(), RemoteLocalFilesModel::ColumnFile).data().toString();
-    QString path = Settings::getValue("remote", "clonedirectory").toString() + "/" + filename;
+    QString path = Settings::getValue(szINI::SEC_REMOTE, szINI::KEY_CLONE_DIR).toString() + "/" + filename;
 
     // Warn when trying to delete a currently opened database file
     if(mainWindow->getDb().currentFile() == path)

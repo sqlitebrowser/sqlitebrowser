@@ -44,10 +44,10 @@ SqlExecutionArea::SqlExecutionArea(DBBrowserDB& _db, QWidget* parent) :
 
     // Save to settings when sppliter is moved, but only to memory.
     connect(ui->splitter, &QSplitter::splitterMoved, this,  [this]() {
-            Settings::setValue("editor", "splitter1_sizes", ui->splitter->saveState(), /* save_to_disk */ false);
+            Settings::setValue(szINI::SEC_EDITOR, szINI::KEY_SPLITTER1_SIZES, ui->splitter->saveState(), /* save_to_disk */ false);
         });
     connect(ui->splitter_2, &QSplitter::splitterMoved, this, [this]() {
-            Settings::setValue("editor", "splitter2_sizes", ui->splitter_2->saveState(), /* save_to_disk */ false);
+            Settings::setValue(szINI::SEC_EDITOR, szINI::KEY_SPLITTER2_SIZES, ui->splitter_2->saveState(), /* save_to_disk */ false);
         });
 
     // Set collapsible the editErrors panel
@@ -144,25 +144,25 @@ void SqlExecutionArea::reloadSettings()
     ui->tableResult->reloadSettings();
 
     // Set font
-    QFont logfont(Settings::getValue("editor", "font").toString());
+    QFont logfont(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_FONT).toString());
     logfont.setStyleHint(QFont::TypeWriter);
-    logfont.setPointSize(Settings::getValue("log", "fontsize").toInt());
+    logfont.setPointSize(Settings::getValue(szINI::SEC_LOG, szINI::KEY_FONTSIZE).toInt());
     ui->editErrors->setFont(logfont);
 
     // Apply horizontal/vertical tiling option
-    if(Settings::getValue("editor", "horizontal_tiling").toBool())
+    if(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_HORZ_TILING).toBool())
         ui->splitter->setOrientation(Qt::Horizontal);
     else
         ui->splitter->setOrientation(Qt::Vertical);
 
-    ui->splitter->restoreState(Settings::getValue("editor", "splitter1_sizes").toByteArray());
-    ui->splitter_2->restoreState(Settings::getValue("editor", "splitter2_sizes").toByteArray());
+    ui->splitter->restoreState(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_SPLITTER1_SIZES).toByteArray());
+    ui->splitter_2->restoreState(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_SPLITTER2_SIZES).toByteArray());
 
     // Reload model settings
     model->reloadSettings();
 
     // Check if error indicators are enabled for the not-ok background clue
-    showErrorIndicators = Settings::getValue("editor", "error_indicators").toBool();
+    showErrorIndicators = Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_ERROR_INDICATORS).toBool();
     if (!showErrorIndicators)
         ui->editErrors->setStyleSheet("");
 
@@ -354,6 +354,6 @@ void SqlExecutionArea::fileChanged(const QString& filename)
 void SqlExecutionArea::saveState() {
 
     // Save to disk last stored splitter sizes
-    Settings::setValue("editor", "splitter1_sizes", Settings::getValue("editor", "splitter1_sizes"));
-    Settings::setValue("editor", "splitter2_sizes", Settings::getValue("editor", "splitter2_sizes"));
+    Settings::setValue(szINI::SEC_EDITOR, szINI::KEY_SPLITTER1_SIZES, Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_SPLITTER1_SIZES));
+    Settings::setValue(szINI::SEC_EDITOR, szINI::KEY_SPLITTER2_SIZES, Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_SPLITTER2_SIZES));
 }

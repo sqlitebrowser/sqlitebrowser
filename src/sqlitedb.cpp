@@ -227,11 +227,11 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
         sqlite3_collation_needed(_db, nullptr, c_callback);
 
         // Set foreign key settings as requested in the preferences
-        bool foreignkeys = Settings::getValue("db", "foreignkeys").toBool();
+        bool foreignkeys = Settings::getValue(szINI::SEC_DATABASE, szINI::KEY_FOREIGN_KEYS).toBool();
         setPragma("foreign_keys", foreignkeys ? "1" : "0");
 
         // Register REGEXP function
-        if(Settings::getValue("extensions", "disableregex").toBool() == false)
+        if(Settings::getValue(szINI::SEC_EXTENSIONS, szINI::KEY_DISABLE_REGEX).toBool() == false)
             sqlite3_create_function(_db, "REGEXP", 2, SQLITE_UTF8, nullptr, regexp, nullptr, nullptr);
 
         // Register our internal helper function for putting multiple values into a single column
@@ -263,7 +263,7 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
         // Execute default SQL
         if(!isReadOnly)
         {
-            QByteArray default_sql = Settings::getValue("db", "defaultsqltext").toByteArray();
+            QByteArray default_sql = Settings::getValue(szINI::SEC_DATABASE, szINI::KEY_DEFAULT_SQL_TEXT).toByteArray();
             if(!default_sql.isEmpty())
                 executeMultiSQL(default_sql, false, true);
         }
@@ -657,7 +657,7 @@ bool DBBrowserDB::create ( const QString & db)
         close();
 
     // read encoding from settings and open with sqlite3_open for utf8 and sqlite3_open16 for utf16
-    QString sEncoding = Settings::getValue("db", "defaultencoding").toString();
+    QString sEncoding = Settings::getValue(szINI::SEC_DATABASE, szINI::KEY_DEFAULT_ENCODING).toString();
 
     int openresult = SQLITE_OK;
 
@@ -2143,7 +2143,7 @@ bool DBBrowserDB::loadExtension(const QString& filePath)
 
     // Disable extension loading if so configured
     // (we don't want to leave the possibility of calling load_extension() from SQL without user informed permission)
-    if (!Settings::getValue("extensions", "enable_load_extension").toBool())
+    if (!Settings::getValue(szINI::SEC_EXTENSIONS, szINI::KEY_ENABLE_LOAD_EXTENSION).toBool())
         sqlite3_enable_load_extension(_db, 0);
 
     if (result == SQLITE_OK)
@@ -2162,9 +2162,9 @@ void DBBrowserDB::loadExtensionsFromSettings()
     if(!_db)
         return;
 
-    sqlite3_enable_load_extension(_db, Settings::getValue("extensions", "enable_load_extension").toBool());
+    sqlite3_enable_load_extension(_db, Settings::getValue(szINI::SEC_EXTENSIONS, szINI::KEY_ENABLE_LOAD_EXTENSION).toBool());
 
-    const QStringList list = Settings::getValue("extensions", "list").toStringList();
+    const QStringList list = Settings::getValue(szINI::SEC_EXTENSIONS, szINI::KEY_LIST).toStringList();
     for(const QString& ext : list)
     {
         if(loadExtension(ext) == false)

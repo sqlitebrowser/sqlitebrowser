@@ -36,8 +36,8 @@ void DockTextEdit::reloadSettings()
     reloadLexerSettings(xmlLexer);
 
     // Set the databrowser font for the plain text editor.
-    plainTextFont = QFont(Settings::getValue("databrowser", "font").toString());
-    plainTextFont.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
+    plainTextFont = QFont(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FONT).toString());
+    plainTextFont.setPointSize(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FONTSIZE).toInt());
     setFont(plainTextFont);
 
     setupSyntaxHighlightingFormat(jsonLexer, "comment", QsciLexerJSON::CommentLine);
@@ -54,18 +54,18 @@ void DockTextEdit::reloadSettings()
     // precedence, so it is by default white over gray. We change the
     // default to something more readable for the current line at
     // invalid JSON.
-    QColor stringColor = QColor(Settings::getValue("syntaxhighlighter", "string_colour").toString());
+    QColor stringColor = QColor(Settings::getValue(szINI::SEC_SYNTAX_HIGHLIGHTER, szINI::KEY_STRING_COLOUR).toString());
     jsonLexer->setColor(stringColor, QsciLexerJSON::Error);
     jsonLexer->setColor(stringColor, QsciLexerJSON::UnclosedString);
-    QFont errorFont(Settings::getValue("editor", "font").toString());
-    errorFont.setPointSize(Settings::getValue("editor", "fontsize").toInt());
+    QFont errorFont(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_FONT).toString());
+    errorFont.setPointSize(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_FONTSIZE).toInt());
     errorFont.setItalic(true);
     jsonLexer->setFont(errorFont, QsciLexerJSON::Error);
     jsonLexer->setFont(errorFont, QsciLexerJSON::UnclosedString);
     jsonLexer->setPaper(jsonLexer->defaultPaper(QsciLexerJSON::String), QsciLexerJSON::Error);
     jsonLexer->setPaper(jsonLexer->defaultPaper(QsciLexerJSON::String), QsciLexerJSON::UnclosedString);
 
-    xmlLexer->setColor(QColor(Settings::getValue("syntaxhighlighter", "foreground_colour").toString()));
+    xmlLexer->setColor(QColor(Settings::getValue(szINI::SEC_SYNTAX_HIGHLIGHTER, szINI::KEY_FG_COLOUR).toString()));
     setupSyntaxHighlightingFormat(xmlLexer, "comment", QsciLexerHTML::HTMLComment);
     setupSyntaxHighlightingFormat(xmlLexer, "keyword", QsciLexerHTML::Tag);
     setupSyntaxHighlightingFormat(xmlLexer, "keyword", QsciLexerHTML::XMLTagEnd);

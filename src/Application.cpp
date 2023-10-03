@@ -113,7 +113,7 @@ Application::Application(int& argc, char** argv) :
 
     // Load translations
     bool ok;
-    QString name = Settings::getValue("General", "language").toString();
+    QString name = Settings::getValue(szINI::SEC_GENERAL, szINI::KEY_LANGUAGE).toString();
 
     // First of all try to load the application translation file.
     m_translatorApp = new QTranslator(this);
@@ -125,7 +125,7 @@ Application::Application(int& argc, char** argv) :
     }
 
     if (ok == true) {
-        Settings::setValue("General", "language", name);
+        Settings::setValue(szINI::SEC_GENERAL, szINI::KEY_LANGUAGE, name);
         installTranslator(m_translatorApp);
 
         // The application translation file has been found and loaded.
@@ -145,7 +145,7 @@ Application::Application(int& argc, char** argv) :
         // Set the correct locale so that the program won't erroneously detect
         // a language change when the user toggles settings for the first time.
         // (it also prevents the program from always looking for a translation on launch)
-        Settings::setValue("General", "language", "en_US");
+        Settings::setValue(szINI::SEC_GENERAL, szINI::KEY_LANGUAGE, "en_US");
 
         // Don't install a translator for Qt texts if no translator for DB4S texts could be loaded
         m_translatorQt = nullptr;
@@ -380,7 +380,7 @@ void Application::reloadSettings()
 
     // Font settings
     QFont f = font();
-    f.setPointSize(Settings::getValue("General", "fontsize").toInt());
+    f.setPointSize(Settings::getValue(szINI::SEC_GENERAL, szINI::KEY_FONTSIZE).toInt());
     setFont(f);
 }
 

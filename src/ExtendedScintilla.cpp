@@ -111,13 +111,13 @@ void ExtendedScintilla::dropEvent(QDropEvent* e)
 
 void ExtendedScintilla::setupSyntaxHighlightingFormat(QsciLexer* lexer, const std::string& settings_name, int style)
 {
-    lexer->setColor(QColor(Settings::getValue("syntaxhighlighter", settings_name + "_colour").toString()), style);
+    lexer->setColor(QColor(Settings::getValue(szINI::SEC_SYNTAX_HIGHLIGHTER, settings_name + szINI::KEY_ANY_COLOUR).toString()), style);
 
-    QFont font(Settings::getValue("editor", "font").toString());
-    font.setPointSize(Settings::getValue("editor", "fontsize").toInt());
-    font.setBold(Settings::getValue("syntaxhighlighter", settings_name + "_bold").toBool());
-    font.setItalic(Settings::getValue("syntaxhighlighter", settings_name + "_italic").toBool());
-    font.setUnderline(Settings::getValue("syntaxhighlighter", settings_name + "_underline").toBool());
+    QFont font(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_FONT).toString());
+    font.setPointSize(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_FONTSIZE).toInt());
+    font.setBold(Settings::getValue(szINI::SEC_SYNTAX_HIGHLIGHTER, settings_name + szINI::KEY_ANY_BOLD).toBool());
+    font.setItalic(Settings::getValue(szINI::SEC_SYNTAX_HIGHLIGHTER, settings_name + szINI::KEY_ANY_ITALIC).toBool());
+    font.setUnderline(Settings::getValue(szINI::SEC_SYNTAX_HIGHLIGHTER, settings_name + szINI::KEY_ANY_UNDERLINE).toBool());
     lexer->setFont(font, style);
 }
 
@@ -133,7 +133,7 @@ void ExtendedScintilla::reloadCommonSettings()
 
     // Use desktop default colors for margins when following desktop
     // style, or the colors matching the dark style-sheet, otherwise.
-    switch (Settings::getValue("General", "appStyle").toInt()) {
+    switch (Settings::getValue(szINI::SEC_GENERAL, szINI::KEY_APPSTYLE).toInt()) {
     case Settings::FollowDesktopStyle :
         setMarginsBackgroundColor(QPalette().color(QPalette::Active, QPalette::Window));
         setMarginsForegroundColor(QPalette().color(QPalette::Active, QPalette::WindowText));
@@ -147,13 +147,13 @@ void ExtendedScintilla::reloadCommonSettings()
         setMarginsForegroundColor(QColor(0x00, 0x00, 0x00));
         break;
     }
-    setPaper(Settings::getValue("syntaxhighlighter", "background_colour").toString());
-    setColor(Settings::getValue("syntaxhighlighter", "foreground_colour").toString());
-    setMatchedBraceBackgroundColor(Settings::getValue("syntaxhighlighter", "highlight_colour").toString());
+    setPaper(Settings::getValue(szINI::SEC_SYNTAX_HIGHLIGHTER, szINI::KEY_BG_COLOUR).toString());
+    setColor(Settings::getValue(szINI::SEC_SYNTAX_HIGHLIGHTER, szINI::KEY_FG_COLOUR).toString());
+    setMatchedBraceBackgroundColor(Settings::getValue(szINI::SEC_SYNTAX_HIGHLIGHTER, szINI::KEY_HIGHLIGHT_COLOUR).toString());
 
-    setSelectionBackgroundColor(Settings::getValue("syntaxhighlighter", "selected_bg_colour").toString());
+    setSelectionBackgroundColor(Settings::getValue(szINI::SEC_SYNTAX_HIGHLIGHTER, szINI::KEY_SELECTED_BG_COLOUR).toString());
 
-    setSelectionForegroundColor(Settings::getValue("syntaxhighlighter", "selected_fg_colour").toString());
+    setSelectionForegroundColor(Settings::getValue(szINI::SEC_SYNTAX_HIGHLIGHTER, szINI::KEY_SELECTED_FG_COLOUR).toString());
 }
 
 void ExtendedScintilla::reloadKeywords()
@@ -169,12 +169,12 @@ void ExtendedScintilla::reloadSettings()
 }
 void ExtendedScintilla::reloadLexerSettings(QsciLexer *lexer)
 {
-    QColor foreground (Settings::getValue("syntaxhighlighter", "foreground_colour").toString());
-    QColor background (Settings::getValue("syntaxhighlighter", "background_colour").toString());
+    QColor foreground (Settings::getValue(szINI::SEC_SYNTAX_HIGHLIGHTER, szINI::KEY_FG_COLOUR).toString());
+    QColor background (Settings::getValue(szINI::SEC_SYNTAX_HIGHLIGHTER, szINI::KEY_BG_COLOUR).toString());
 
-    QFont defaultfont(Settings::getValue("editor", "font").toString());
+    QFont defaultfont(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_FONT).toString());
     defaultfont.setStyleHint(QFont::TypeWriter);
-    defaultfont.setPointSize(Settings::getValue("editor", "fontsize").toInt());
+    defaultfont.setPointSize(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_FONTSIZE).toInt());
 
     // Set syntax highlighting settings
     if(lexer)
@@ -199,18 +199,18 @@ void ExtendedScintilla::reloadLexerSettings(QsciLexer *lexer)
 
     // Highlight current line
     setCaretLineVisible(true);
-    setCaretLineBackgroundColor(QColor(Settings::getValue("syntaxhighlighter", "currentline_colour").toString()));
+    setCaretLineBackgroundColor(QColor(Settings::getValue(szINI::SEC_SYNTAX_HIGHLIGHTER, szINI::KEY_CUR_LINE_COLOUR).toString()));
     setCaretForegroundColor(foreground);
 
     // Set tab settings
-    setTabWidth(Settings::getValue("editor", "tabsize").toInt());
-    setIndentationsUseTabs(Settings::getValue("editor", "indentation_use_tabs").toBool());
+    setTabWidth(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_TABSIZE).toInt());
+    setIndentationsUseTabs(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_INDENTATION_USE_TABS).toBool());
 
     if(lexer)
         lexer->refreshProperties();
 
     // Check if error indicators are enabled and clear them if they just got disabled
-    showErrorIndicators = Settings::getValue("editor", "error_indicators").toBool();
+    showErrorIndicators = Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_ERROR_INDICATORS).toBool();
     if(!showErrorIndicators)
         clearErrorIndicators();
 

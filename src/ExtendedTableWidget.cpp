@@ -167,7 +167,7 @@ QWidget* ExtendedTableWidgetEditorDelegate::createEditor(QWidget* parent, const 
 
         QLineEdit* editor = new QLineEdit(parent);
         // If the row count is not greater than the complete threshold setting, set a completer of values based on current values in the column.
-        if (index.model()->rowCount() <= Settings::getValue("databrowser", "complete_threshold").toInt()) {
+        if (index.model()->rowCount() <= Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_COMPLETE_THRESHOLD).toInt()) {
             QCompleter* completer = new QCompleter(editor);
             UniqueFilterModel* completerFilter = new UniqueFilterModel(completer);
             // Provide a filter for the source model, so only unique and non-empty values are accepted.
@@ -494,8 +494,8 @@ void ExtendedTableWidget::setModel(QAbstractItemModel* item_model)
 void ExtendedTableWidget::reloadSettings()
 {
     // We only get the font here to get its metrics. The actual font for the view is set in the model
-    QFont dataBrowserFont(Settings::getValue("databrowser", "font").toString());
-    dataBrowserFont.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
+    QFont dataBrowserFont(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FONT).toString());
+    dataBrowserFont.setPointSize(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FONTSIZE).toInt());
 
     // Set new default row height depending on the font size
     QFontMetrics fontMetrics(dataBrowserFont);
@@ -871,7 +871,7 @@ void ExtendedTableWidget::useAsFilter(const QString& filterOperator, bool binary
     // When Containing filter is requested (empty operator) and the value starts with
     // an operator character, the character is escaped.
     if (filterOperator.isEmpty())
-        value.replace(QRegExp("^(<|>|=|/)"), Settings::getValue("databrowser", "filter_escape").toString() + QString("\\1"));
+        value.replace(QRegExp("^(<|>|=|/)"), Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FILTER_ESCAPE).toString() + QString("\\1"));
 
     // If binary operator, the cell data is used as first value and
     // the second value must be added by the user.

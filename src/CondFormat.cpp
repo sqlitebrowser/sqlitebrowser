@@ -125,7 +125,7 @@ std::string CondFormat::filterToSqlCondition(const QString& value, const QString
             // Keep the default LIKE operator
 
             // Set the escape character if one has been specified in the settings dialog
-            QString escape_character = Settings::getValue("databrowser", "filter_escape").toString();
+            QString escape_character = Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FILTER_ESCAPE).toString();
             if(escape_character == "'") escape_character = "''";
             if(escape_character.length())
                 escape = QString("ESCAPE '%1'").arg(escape_character);

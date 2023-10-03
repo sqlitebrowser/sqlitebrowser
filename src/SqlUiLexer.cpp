@@ -64,7 +64,7 @@ SqlUiLexer::SqlUiLexer(QObject* parent) :
 
 void SqlUiLexer::setupAutoCompletion()
 {
-    bool upperKeywords = Settings::getValue("editor", "upper_keywords").toBool();
+    bool upperKeywords = Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_UPPER_KEYWORDS).toBool();
     for(const QString& keyword : qAsConst(keywordPatterns))
     {
         if (upperKeywords)

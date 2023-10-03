@@ -55,7 +55,7 @@ SqlTextEdit::SqlTextEdit(QWidget* parent) :
 void SqlTextEdit::reloadSettings()
 {
     // Enable auto completion if it hasn't been disabled
-    if(Settings::getValue("editor", "auto_completion").toBool())
+    if(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_AUTO_COMPLETION).toBool())
     {
         setAutoCompletionThreshold(3);
         setAutoCompletionCaseSensitivity(true);
@@ -65,7 +65,7 @@ void SqlTextEdit::reloadSettings()
         setAutoCompletionThreshold(0);
     }
     // Set wrap lines
-    setWrapMode(static_cast<QsciScintilla::WrapMode>(Settings::getValue("editor", "wrap_lines").toInt()));
+    setWrapMode(static_cast<QsciScintilla::WrapMode>(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_WRAP_LINES).toInt()));
 
     ExtendedScintilla::reloadSettings();
 
@@ -78,7 +78,7 @@ void SqlTextEdit::reloadSettings()
     setupSyntaxHighlightingFormat(sqlLexer, "string", QsciLexerSQL::SingleQuotedString);
 
     // Highlight double quote strings as identifier or as literal string depending on user preference
-    switch(static_cast<sqlb::escapeQuoting>(Settings::getValue("editor", "identifier_quotes").toInt())) {
+    switch(static_cast<sqlb::escapeQuoting>(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_IDENTIFIER_QUOTES).toInt())) {
     case sqlb::DoubleQuotes:
         setupSyntaxHighlightingFormat(sqlLexer, "identifier", QsciLexerSQL::DoubleQuotedString);
         sqlLexer->setQuotedIdentifiers(false);

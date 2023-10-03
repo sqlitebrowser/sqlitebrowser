@@ -19,7 +19,7 @@ PreferencesDialog::PreferencesDialog(QWidget* parent, Tabs tab)
     : QDialog(parent),
       ui(new Ui::PreferencesDialog),
       m_proxyDialog(new ProxyDialog(this)),
-      m_dbFileExtensions(Settings::getValue("General", "DBFileExtensions").toString().split(";;"))
+      m_dbFileExtensions(Settings::getValue(szINI::SEC_GENERAL, szINI::KEY_DB_FILE_EXTS).toString().split(";;"))
 {
     ui->setupUi(this);
     ui->treeSyntaxHighlighting->setColumnHidden(0, true);
@@ -79,57 +79,57 @@ void PreferencesDialog::chooseLocation()
 
 void PreferencesDialog::loadSettings()
 {
-    ui->encodingComboBox->setCurrentIndex(ui->encodingComboBox->findText(Settings::getValue("db", "defaultencoding").toString(), Qt::MatchFixedString));
-    ui->comboDefaultLocation->setCurrentIndex(Settings::getValue("db", "savedefaultlocation").toInt());
-    ui->locationEdit->setText(QDir::toNativeSeparators(Settings::getValue("db", "defaultlocation").toString()));
-    ui->checkPromptSQLTabsInNewProject->setChecked(Settings::getValue("General", "promptsqltabsinnewproject").toBool());
-    ui->checkUpdates->setChecked(Settings::getValue("checkversion", "enabled").toBool());
+    ui->encodingComboBox->setCurrentIndex(ui->encodingComboBox->findText(Settings::getValue(szINI::SEC_DATABASE, szINI::KEY_DEFAULT_ENCODING).toString(), Qt::MatchFixedString));
+    ui->comboDefaultLocation->setCurrentIndex(Settings::getValue(szINI::SEC_DATABASE, szINI::KEY_SAVE_DEFAULT_LOCATION).toInt());
+    ui->locationEdit->setText(QDir::toNativeSeparators(Settings::getValue(szINI::SEC_DATABASE, szINI::KEY_DEFAULT_LOCATION).toString()));
+    ui->checkPromptSQLTabsInNewProject->setChecked(Settings::getValue(szINI::SEC_GENERAL, szINI::KEY_PROMPT_SQL_TABS_IN_NEWPRJ).toBool());
+    ui->checkUpdates->setChecked(Settings::getValue(szINI::SEC_CHCK_VERSION, szINI::KEY_ENABLED).toBool());
 
-    ui->checkHideSchemaLinebreaks->setChecked(Settings::getValue("db", "hideschemalinebreaks").toBool());
-    ui->foreignKeysCheckBox->setChecked(Settings::getValue("db", "foreignkeys").toBool());
-    ui->spinPrefetchSize->setValue(Settings::getValue("db", "prefetchsize").toInt());
-    ui->editDatabaseDefaultSqlText->setText(Settings::getValue("db", "defaultsqltext").toString());
+    ui->checkHideSchemaLinebreaks->setChecked(Settings::getValue(szINI::SEC_DATABASE, szINI::KEY_HIDE_SCHEMA_LINEBREAKS).toBool());
+    ui->foreignKeysCheckBox->setChecked(Settings::getValue(szINI::SEC_DATABASE, szINI::KEY_FOREIGN_KEYS).toBool());
+    ui->spinPrefetchSize->setValue(Settings::getValue(szINI::SEC_DATABASE, szINI::KEY_PREFETCH_SIZE).toInt());
+    ui->editDatabaseDefaultSqlText->setText(Settings::getValue(szINI::SEC_DATABASE, szINI::KEY_DEFAULT_SQL_TEXT).toString());
 
     ui->defaultFieldTypeComboBox->addItems(DBBrowserDB::Datatypes);
 
-    int defaultFieldTypeIndex = Settings::getValue("db", "defaultfieldtype").toInt();
+    int defaultFieldTypeIndex = Settings::getValue(szINI::SEC_DATABASE, szINI::KEY_DEFAULT_FIELD_TYPE).toInt();
     if (defaultFieldTypeIndex < DBBrowserDB::Datatypes.count())
     {
         ui->defaultFieldTypeComboBox->setCurrentIndex(defaultFieldTypeIndex);
     }
 
-    ui->spinStructureFontSize->setValue(Settings::getValue("db", "fontsize").toInt());
+    ui->spinStructureFontSize->setValue(Settings::getValue(szINI::SEC_DATABASE, szINI::KEY_FONTSIZE).toInt());
 
     // Gracefully handle the preferred Data Browser font not being available
-    int matchingFont = ui->comboDataBrowserFont->findText(Settings::getValue("databrowser", "font").toString(), Qt::MatchExactly);
+    int matchingFont = ui->comboDataBrowserFont->findText(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FONT).toString(), Qt::MatchExactly);
     if (matchingFont == -1)
-        matchingFont = ui->comboDataBrowserFont->findText(Settings::getDefaultValue("databrowser", "font").toString());
+        matchingFont = ui->comboDataBrowserFont->findText(Settings::getDefaultValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FONT).toString());
     ui->comboDataBrowserFont->setCurrentIndex(matchingFont);
 
-    ui->spinDataBrowserFontSize->setValue(Settings::getValue("databrowser", "fontsize").toInt());
-    loadColorSetting(ui->fr_null_fg, "null_fg");
-    loadColorSetting(ui->fr_null_bg, "null_bg");
-    loadColorSetting(ui->fr_bin_fg, "bin_fg");
-    loadColorSetting(ui->fr_bin_bg, "bin_bg");
-    loadColorSetting(ui->fr_reg_fg, "reg_fg");
-    loadColorSetting(ui->fr_reg_bg, "reg_bg");
-    loadColorSetting(ui->fr_formatted_fg, "formatted_fg");
-    loadColorSetting(ui->fr_formatted_bg, "formatted_bg");
+    ui->spinDataBrowserFontSize->setValue(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FONTSIZE).toInt());
+    loadColorSetting(ui->fr_null_fg, szINI::KEY_SHP_NULL_FG);
+    loadColorSetting(ui->fr_null_bg, szINI::KEY_SHP_NULL_BG);
+    loadColorSetting(ui->fr_bin_fg, szINI::KEY_SHP_BIN_FG);
+    loadColorSetting(ui->fr_bin_bg, szINI::KEY_SHP_BIN_BG);
+    loadColorSetting(ui->fr_reg_fg, szINI::KEY_SHP_REG_FG);
+    loadColorSetting(ui->fr_reg_bg, szINI::KEY_SHP_REG_BG);
+    loadColorSetting(ui->fr_formatted_fg, szINI::KEY_SHP_FMT_FG);
+    loadColorSetting(ui->fr_formatted_bg, szINI::KEY_SHP_FMT_BG);
 
-    ui->spinSymbolLimit->setValue(Settings::getValue("databrowser", "symbol_limit").toInt());
-    ui->spinCompleteThreshold->setValue(Settings::getValue("databrowser", "complete_threshold").toInt());
-    ui->checkShowImagesInline->setChecked(Settings::getValue("databrowser", "image_preview").toBool());
-    ui->txtNull->setText(Settings::getValue("databrowser", "null_text").toString());
-    ui->txtBlob->setText(Settings::getValue("databrowser", "blob_text").toString());
-    ui->editFilterEscape->setText(Settings::getValue("databrowser", "filter_escape").toString());
-    ui->spinFilterDelay->setValue(Settings::getValue("databrowser", "filter_delay").toInt());
+    ui->spinSymbolLimit->setValue(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_SYMBOL_LIMIT).toInt());
+    ui->spinCompleteThreshold->setValue(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_COMPLETE_THRESHOLD).toInt());
+    ui->checkShowImagesInline->setChecked(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_IMAGE_PREVIEW).toBool());
+    ui->txtNull->setText(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_NULL_TEXT).toString());
+    ui->txtBlob->setText(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_BLOB_TEXT).toString());
+    ui->editFilterEscape->setText(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FILTER_ESCAPE).toString());
+    ui->spinFilterDelay->setValue(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FILTER_DELAY).toInt());
 
     ui->treeSyntaxHighlighting->resizeColumnToContents(1);
 
     for(int i=0; i < ui->treeSyntaxHighlighting->topLevelItemCount(); ++i)
     {
         std::string name = ui->treeSyntaxHighlighting->topLevelItem(i)->text(0).toStdString();
-        QString colorname = Settings::getValue("syntaxhighlighter", name + "_colour").toString();
+        QString colorname = Settings::getValue(szINI::SEC_SYNTAX_HIGHLIGHTER, name + szINI::KEY_ANY_COLOUR).toString();
         QColor color = QColor(colorname);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setForeground(2, color);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setBackground(2, color);
@@ -139,14 +139,14 @@ void PreferencesDialog::loadSettings()
         if (name != "null" && name != "currentline" &&
             name != "background" && name != "foreground" && name != "highlight" &&
             name != "selected_fg" && name != "selected_bg") {
-            ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(3, Settings::getValue("syntaxhighlighter", name + "_bold").toBool() ? Qt::Checked : Qt::Unchecked);
-            ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(4, Settings::getValue("syntaxhighlighter", name + "_italic").toBool() ? Qt::Checked : Qt::Unchecked);
-            ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(5, Settings::getValue("syntaxhighlighter", name + "_underline").toBool() ? Qt::Checked : Qt::Unchecked);
+            ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(3, Settings::getValue(szINI::SEC_SYNTAX_HIGHLIGHTER, name + szINI::KEY_ANY_BOLD).toBool() ? Qt::Checked : Qt::Unchecked);
+            ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(4, Settings::getValue(szINI::SEC_SYNTAX_HIGHLIGHTER, name + szINI::KEY_ANY_ITALIC).toBool() ? Qt::Checked : Qt::Unchecked);
+            ui->treeSyntaxHighlighting->topLevelItem(i)->setCheckState(5, Settings::getValue(szINI::SEC_SYNTAX_HIGHLIGHTER, name + szINI::KEY_ANY_UNDERLINE).toBool() ? Qt::Checked : Qt::Unchecked);
         }
     }
 
     // Remote settings
-    ui->checkUseRemotes->setChecked(Settings::getValue("remote", "active").toBool());
+    ui->checkUseRemotes->setChecked(Settings::getValue(szINI::SEC_REMOTE, szINI::KEY_ACTIVE).toBool());
     {
         auto ca_certs = RemoteNetwork::get().caCertificates();
         ui->tableCaCerts->setRowCount(ca_certs.size());
@@ -176,7 +176,7 @@ void PreferencesDialog::loadSettings()
         }
     }
     {
-        const QStringList client_certs = Settings::getValue("remote", "client_certificates").toStringList();
+        const QStringList client_certs = Settings::getValue(szINI::SEC_REMOTE, szINI::KEY_CLIENT_CERT).toStringList();
         for(const QString& file : client_certs)
         {
             const auto certs = QSslCertificate::fromPath(file);
@@ -184,106 +184,106 @@ void PreferencesDialog::loadSettings()
                 addClientCertToTable(file, cert);
         }
     }
-    ui->editRemoteCloneDirectory->setText(QDir::toNativeSeparators(Settings::getValue("remote", "clonedirectory").toString()));
+    ui->editRemoteCloneDirectory->setText(QDir::toNativeSeparators(Settings::getValue(szINI::SEC_REMOTE, szINI::KEY_CLONE_DIR).toString()));
 
     // Gracefully handle the preferred Editor font not being available
-    matchingFont = ui->comboEditorFont->findText(Settings::getValue("editor", "font").toString(), Qt::MatchExactly);
+    matchingFont = ui->comboEditorFont->findText(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_FONT).toString(), Qt::MatchExactly);
     if (matchingFont == -1)
-        matchingFont = ui->comboDataBrowserFont->findText(Settings::getDefaultValue("editor", "font").toString());
+        matchingFont = ui->comboDataBrowserFont->findText(Settings::getDefaultValue(szINI::SEC_EDITOR, szINI::KEY_FONT).toString());
     ui->comboEditorFont->setCurrentIndex(matchingFont);
 
-    ui->spinEditorFontSize->setValue(Settings::getValue("editor", "fontsize").toInt());
-    ui->spinTabSize->setValue(Settings::getValue("editor", "tabsize").toInt());
-    ui->checkIndentationUseTabs->setChecked(Settings::getValue("editor", "indentation_use_tabs").toBool());
-    ui->spinLogFontSize->setValue(Settings::getValue("log", "fontsize").toInt());
-    ui->wrapComboBox->setCurrentIndex(Settings::getValue("editor", "wrap_lines").toInt());
-    ui->quoteComboBox->setCurrentIndex(Settings::getValue("editor", "identifier_quotes").toInt());
-    ui->checkAutoCompletion->setChecked(Settings::getValue("editor", "auto_completion").toBool());
-    ui->checkCompleteUpper->setEnabled(Settings::getValue("editor", "auto_completion").toBool());
-    ui->checkCompleteUpper->setChecked(Settings::getValue("editor", "upper_keywords").toBool());
-    ui->checkErrorIndicators->setChecked(Settings::getValue("editor", "error_indicators").toBool());
-    ui->checkHorizontalTiling->setChecked(Settings::getValue("editor", "horizontal_tiling").toBool());
-    ui->checkCloseButtonOnTabs->setChecked(Settings::getValue("editor", "close_button_on_tabs").toBool());
+    ui->spinEditorFontSize->setValue(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_FONTSIZE).toInt());
+    ui->spinTabSize->setValue(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_TABSIZE).toInt());
+    ui->checkIndentationUseTabs->setChecked(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_INDENTATION_USE_TABS).toBool());
+    ui->spinLogFontSize->setValue(Settings::getValue(szINI::SEC_LOG, szINI::KEY_FONTSIZE).toInt());
+    ui->wrapComboBox->setCurrentIndex(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_WRAP_LINES).toInt());
+    ui->quoteComboBox->setCurrentIndex(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_IDENTIFIER_QUOTES).toInt());
+    ui->checkAutoCompletion->setChecked(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_AUTO_COMPLETION).toBool());
+    ui->checkCompleteUpper->setEnabled(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_AUTO_COMPLETION).toBool());
+    ui->checkCompleteUpper->setChecked(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_UPPER_KEYWORDS).toBool());
+    ui->checkErrorIndicators->setChecked(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_ERROR_INDICATORS).toBool());
+    ui->checkHorizontalTiling->setChecked(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_HORZ_TILING).toBool());
+    ui->checkCloseButtonOnTabs->setChecked(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_CLOSE_BUTTON_ON_TABS).toBool());
 
-    ui->listExtensions->addItems(Settings::getValue("extensions", "list").toStringList());
-    ui->checkRegexDisabled->setChecked(Settings::getValue("extensions", "disableregex").toBool());
-    ui->checkAllowLoadExtension->setChecked(Settings::getValue("extensions", "enable_load_extension").toBool());
+    ui->listExtensions->addItems(Settings::getValue(szINI::SEC_EXTENSIONS, szINI::KEY_LIST).toStringList());
+    ui->checkRegexDisabled->setChecked(Settings::getValue(szINI::SEC_EXTENSIONS, szINI::KEY_DISABLE_REGEX).toBool());
+    ui->checkAllowLoadExtension->setChecked(Settings::getValue(szINI::SEC_EXTENSIONS, szINI::KEY_ENABLE_LOAD_EXTENSION).toBool());
     fillLanguageBox();
-    ui->appStyleCombo->setCurrentIndex(Settings::getValue("General", "appStyle").toInt());
-    ui->toolbarStyleComboMain->setCurrentIndex(Settings::getValue("General", "toolbarStyle").toInt());
-    ui->toolbarStyleComboStructure->setCurrentIndex(Settings::getValue("General", "toolbarStyleStructure").toInt());
-    ui->toolbarStyleComboBrowse->setCurrentIndex(Settings::getValue("General", "toolbarStyleBrowse").toInt());
-    ui->toolbarStyleComboSql->setCurrentIndex(Settings::getValue("General", "toolbarStyleSql").toInt());
-    ui->toolbarStyleComboEditCell->setCurrentIndex(Settings::getValue("General", "toolbarStyleEditCell").toInt());
-    ui->spinGeneralFontSize->setValue(Settings::getValue("General", "fontsize").toInt());
-    ui->spinMaxRecentFiles->setValue(Settings::getValue("General", "maxRecentFiles").toInt());
+    ui->appStyleCombo->setCurrentIndex(Settings::getValue(szINI::SEC_GENERAL, szINI::KEY_APPSTYLE).toInt());
+    ui->toolbarStyleComboMain->setCurrentIndex(Settings::getValue(szINI::SEC_GENERAL, szINI::KEY_TB_STYLE_APP).toInt());
+    ui->toolbarStyleComboStructure->setCurrentIndex(Settings::getValue(szINI::SEC_GENERAL, szINI::KEY_TB_STYLE_STRUCTURE).toInt());
+    ui->toolbarStyleComboBrowse->setCurrentIndex(Settings::getValue(szINI::SEC_GENERAL, szINI::KEY_TB_STYLE_BROWSE).toInt());
+    ui->toolbarStyleComboSql->setCurrentIndex(Settings::getValue(szINI::SEC_GENERAL, szINI::KEY_TB_STYLE_SQL).toInt());
+    ui->toolbarStyleComboEditCell->setCurrentIndex(Settings::getValue(szINI::SEC_GENERAL, szINI::KEY_TB_STYLE_EDIT_CELL).toInt());
+    ui->spinGeneralFontSize->setValue(Settings::getValue(szINI::SEC_GENERAL, szINI::KEY_FONTSIZE).toInt());
+    ui->spinMaxRecentFiles->setValue(Settings::getValue(szINI::SEC_GENERAL, szINI::KEY_MAX_RECENT_FILES).toInt());
 }
 
 void PreferencesDialog::saveSettings(bool accept)
 {
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
-    Settings::setValue("db", "defaultencoding", ui->encodingComboBox->currentText());
-    Settings::setValue("db", "defaultlocation", ui->locationEdit->text());
-    Settings::setValue("db", "savedefaultlocation", ui->comboDefaultLocation->currentIndex());
-    Settings::setValue("db", "hideschemalinebreaks", ui->checkHideSchemaLinebreaks->isChecked());
-    Settings::setValue("db", "foreignkeys", ui->foreignKeysCheckBox->isChecked());
-    Settings::setValue("db", "prefetchsize", ui->spinPrefetchSize->value());
-    Settings::setValue("db", "defaultsqltext", ui->editDatabaseDefaultSqlText->text());
-    Settings::setValue("db", "defaultfieldtype", ui->defaultFieldTypeComboBox->currentIndex());
-    Settings::setValue("db", "fontsize", ui->spinStructureFontSize->value());
+    Settings::setValue(szINI::SEC_DATABASE, szINI::KEY_DEFAULT_ENCODING, ui->encodingComboBox->currentText());
+    Settings::setValue(szINI::SEC_DATABASE, szINI::KEY_DEFAULT_LOCATION, ui->locationEdit->text());
+    Settings::setValue(szINI::SEC_DATABASE, szINI::KEY_SAVE_DEFAULT_LOCATION, ui->comboDefaultLocation->currentIndex());
+    Settings::setValue(szINI::SEC_DATABASE, szINI::KEY_HIDE_SCHEMA_LINEBREAKS, ui->checkHideSchemaLinebreaks->isChecked());
+    Settings::setValue(szINI::SEC_DATABASE, szINI::KEY_FOREIGN_KEYS, ui->foreignKeysCheckBox->isChecked());
+    Settings::setValue(szINI::SEC_DATABASE, szINI::KEY_PREFETCH_SIZE, ui->spinPrefetchSize->value());
+    Settings::setValue(szINI::SEC_DATABASE, szINI::KEY_DEFAULT_SQL_TEXT, ui->editDatabaseDefaultSqlText->text());
+    Settings::setValue(szINI::SEC_DATABASE, szINI::KEY_DEFAULT_FIELD_TYPE, ui->defaultFieldTypeComboBox->currentIndex());
+    Settings::setValue(szINI::SEC_DATABASE, szINI::KEY_FONTSIZE, ui->spinStructureFontSize->value());
 
-    Settings::setValue("checkversion", "enabled", ui->checkUpdates->isChecked());
+    Settings::setValue(szINI::SEC_CHCK_VERSION, szINI::KEY_ENABLED, ui->checkUpdates->isChecked());
 
-    Settings::setValue("databrowser", "font", ui->comboDataBrowserFont->currentText());
-    Settings::setValue("databrowser", "fontsize", ui->spinDataBrowserFontSize->value());
-    Settings::setValue("databrowser", "image_preview", ui->checkShowImagesInline->isChecked());
-    saveColorSetting(ui->fr_null_fg, "null_fg");
-    saveColorSetting(ui->fr_null_bg, "null_bg");
-    saveColorSetting(ui->fr_reg_fg, "reg_fg");
-    saveColorSetting(ui->fr_reg_bg, "reg_bg");
-    saveColorSetting(ui->fr_formatted_fg, "formatted_fg");
-    saveColorSetting(ui->fr_formatted_bg, "formatted_bg");
-    saveColorSetting(ui->fr_bin_fg, "bin_fg");
-    saveColorSetting(ui->fr_bin_bg, "bin_bg");
-    Settings::setValue("databrowser", "symbol_limit", ui->spinSymbolLimit->value());
-    Settings::setValue("databrowser", "complete_threshold", ui->spinCompleteThreshold->value());
-    Settings::setValue("databrowser", "null_text", ui->txtNull->text());
-    Settings::setValue("databrowser", "blob_text", ui->txtBlob->text());
-    Settings::setValue("databrowser", "filter_escape", ui->editFilterEscape->text());
-    Settings::setValue("databrowser", "filter_delay", ui->spinFilterDelay->value());
+    Settings::setValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FONT, ui->comboDataBrowserFont->currentText());
+    Settings::setValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FONTSIZE, ui->spinDataBrowserFontSize->value());
+    Settings::setValue(szINI::SEC_DATA_BROWSER, szINI::KEY_IMAGE_PREVIEW, ui->checkShowImagesInline->isChecked());
+    saveColorSetting(ui->fr_null_fg, szINI::KEY_SHP_NULL_FG);
+    saveColorSetting(ui->fr_null_bg, szINI::KEY_SHP_NULL_BG);
+    saveColorSetting(ui->fr_reg_fg, szINI::KEY_SHP_REG_FG);
+    saveColorSetting(ui->fr_reg_bg, szINI::KEY_SHP_REG_BG);
+    saveColorSetting(ui->fr_formatted_fg, szINI::KEY_SHP_FMT_FG);
+    saveColorSetting(ui->fr_formatted_bg, szINI::KEY_SHP_FMT_BG);
+    saveColorSetting(ui->fr_bin_fg, szINI::KEY_SHP_BIN_FG);
+    saveColorSetting(ui->fr_bin_bg, szINI::KEY_SHP_BIN_BG);
+    Settings::setValue(szINI::SEC_DATA_BROWSER, szINI::KEY_SYMBOL_LIMIT, ui->spinSymbolLimit->value());
+    Settings::setValue(szINI::SEC_DATA_BROWSER, szINI::KEY_COMPLETE_THRESHOLD, ui->spinCompleteThreshold->value());
+    Settings::setValue(szINI::SEC_DATA_BROWSER, szINI::KEY_NULL_TEXT, ui->txtNull->text());
+    Settings::setValue(szINI::SEC_DATA_BROWSER, szINI::KEY_BLOB_TEXT, ui->txtBlob->text());
+    Settings::setValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FILTER_ESCAPE, ui->editFilterEscape->text());
+    Settings::setValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FILTER_DELAY, ui->spinFilterDelay->value());
 
     for(int i=0; i < ui->treeSyntaxHighlighting->topLevelItemCount(); ++i)
     {
         std::string name = ui->treeSyntaxHighlighting->topLevelItem(i)->text(0).toStdString();
-        Settings::setValue("syntaxhighlighter", name + "_colour", ui->treeSyntaxHighlighting->topLevelItem(i)->text(2));
-        Settings::setValue("syntaxhighlighter", name + "_bold", ui->treeSyntaxHighlighting->topLevelItem(i)->checkState(3) == Qt::Checked);
-        Settings::setValue("syntaxhighlighter", name + "_italic", ui->treeSyntaxHighlighting->topLevelItem(i)->checkState(4) == Qt::Checked);
-        Settings::setValue("syntaxhighlighter", name + "_underline", ui->treeSyntaxHighlighting->topLevelItem(i)->checkState(5) == Qt::Checked);
+        Settings::setValue(szINI::SEC_SYNTAX_HIGHLIGHTER, name + szINI::KEY_ANY_COLOUR, ui->treeSyntaxHighlighting->topLevelItem(i)->text(2));
+        Settings::setValue(szINI::SEC_SYNTAX_HIGHLIGHTER, name + szINI::KEY_ANY_BOLD, ui->treeSyntaxHighlighting->topLevelItem(i)->checkState(3) == Qt::Checked);
+        Settings::setValue(szINI::SEC_SYNTAX_HIGHLIGHTER, name + szINI::KEY_ANY_ITALIC, ui->treeSyntaxHighlighting->topLevelItem(i)->checkState(4) == Qt::Checked);
+        Settings::setValue(szINI::SEC_SYNTAX_HIGHLIGHTER, name + szINI::KEY_ANY_UNDERLINE, ui->treeSyntaxHighlighting->topLevelItem(i)->checkState(5) == Qt::Checked);
     }
-    Settings::setValue("editor", "font", ui->comboEditorFont->currentText());
-    Settings::setValue("editor", "fontsize", ui->spinEditorFontSize->value());
-    Settings::setValue("editor", "tabsize", ui->spinTabSize->value());
-    Settings::setValue("editor", "indentation_use_tabs", ui->checkIndentationUseTabs->isChecked());
-    Settings::setValue("log", "fontsize", ui->spinLogFontSize->value());
-    Settings::setValue("editor", "wrap_lines", ui->wrapComboBox->currentIndex());
-    Settings::setValue("editor", "identifier_quotes", ui->quoteComboBox->currentIndex());
-    Settings::setValue("editor", "auto_completion", ui->checkAutoCompletion->isChecked());
-    Settings::setValue("editor", "upper_keywords", ui->checkCompleteUpper->isChecked());
-    Settings::setValue("editor", "error_indicators", ui->checkErrorIndicators->isChecked());
-    Settings::setValue("editor", "horizontal_tiling", ui->checkHorizontalTiling->isChecked());
-    Settings::setValue("editor", "close_button_on_tabs", ui->checkCloseButtonOnTabs->isChecked());
+    Settings::setValue(szINI::SEC_EDITOR, szINI::KEY_FONT, ui->comboEditorFont->currentText());
+    Settings::setValue(szINI::SEC_EDITOR, szINI::KEY_FONTSIZE, ui->spinEditorFontSize->value());
+    Settings::setValue(szINI::SEC_EDITOR, szINI::KEY_TABSIZE, ui->spinTabSize->value());
+    Settings::setValue(szINI::SEC_EDITOR, szINI::KEY_INDENTATION_USE_TABS, ui->checkIndentationUseTabs->isChecked());
+    Settings::setValue(szINI::SEC_LOG, szINI::KEY_FONTSIZE, ui->spinLogFontSize->value());
+    Settings::setValue(szINI::SEC_EDITOR, szINI::KEY_WRAP_LINES, ui->wrapComboBox->currentIndex());
+    Settings::setValue(szINI::SEC_EDITOR, szINI::KEY_IDENTIFIER_QUOTES, ui->quoteComboBox->currentIndex());
+    Settings::setValue(szINI::SEC_EDITOR, szINI::KEY_AUTO_COMPLETION, ui->checkAutoCompletion->isChecked());
+    Settings::setValue(szINI::SEC_EDITOR, szINI::KEY_UPPER_KEYWORDS, ui->checkCompleteUpper->isChecked());
+    Settings::setValue(szINI::SEC_EDITOR, szINI::KEY_ERROR_INDICATORS, ui->checkErrorIndicators->isChecked());
+    Settings::setValue(szINI::SEC_EDITOR, szINI::KEY_HORZ_TILING, ui->checkHorizontalTiling->isChecked());
+    Settings::setValue(szINI::SEC_EDITOR, szINI::KEY_CLOSE_BUTTON_ON_TABS, ui->checkCloseButtonOnTabs->isChecked());
 
     QStringList extList;
     for(int i=0;i<ui->listExtensions->count();++i)
         extList.append(ui->listExtensions->item(i)->text());
-    Settings::setValue("extensions", "list", extList);
-    Settings::setValue("extensions", "disableregex", ui->checkRegexDisabled->isChecked());
-    Settings::setValue("extensions", "enable_load_extension", ui->checkAllowLoadExtension->isChecked());
+    Settings::setValue(szINI::SEC_EXTENSIONS, szINI::KEY_LIST, extList);
+    Settings::setValue(szINI::SEC_EXTENSIONS, szINI::KEY_DISABLE_REGEX, ui->checkRegexDisabled->isChecked());
+    Settings::setValue(szINI::SEC_EXTENSIONS, szINI::KEY_ENABLE_LOAD_EXTENSION, ui->checkAllowLoadExtension->isChecked());
 
     // Save remote settings
-    Settings::setValue("remote", "active", ui->checkUseRemotes->isChecked());
-    QStringList old_client_certs = Settings::getValue("remote", "client_certificates").toStringList();
+    Settings::setValue(szINI::SEC_REMOTE, szINI::KEY_ACTIVE, ui->checkUseRemotes->isChecked());
+    QStringList old_client_certs = Settings::getValue(szINI::SEC_REMOTE, szINI::KEY_CLIENT_CERT).toStringList();
     QStringList new_client_certs;
     for(int i=0;i<ui->tableClientCerts->rowCount();i++)
     {
@@ -333,26 +333,26 @@ void PreferencesDialog::saveSettings(bool accept)
         // Now only the deleted client certs are still in the old list. Delete the cert files associated with them.
         QFile::remove(file);
     }
-    Settings::setValue("remote", "client_certificates", new_client_certs);
-    Settings::setValue("remote", "clonedirectory", ui->editRemoteCloneDirectory->text());
+    Settings::setValue(szINI::SEC_REMOTE, szINI::KEY_CLIENT_CERT, new_client_certs);
+    Settings::setValue(szINI::SEC_REMOTE, szINI::KEY_CLONE_DIR, ui->editRemoteCloneDirectory->text());
 
     // Warn about restarting to change language
     QVariant newLanguage = ui->languageComboBox->itemData(ui->languageComboBox->currentIndex());
-    if (newLanguage != Settings::getValue("General", "language"))
+    if (newLanguage != Settings::getValue(szINI::SEC_GENERAL, szINI::KEY_LANGUAGE))
         QMessageBox::information(this, QApplication::applicationName(),
                                  tr("The language will change after you restart the application."));
 
-    Settings::setValue("General", "language", newLanguage);
-    Settings::setValue("General", "appStyle", ui->appStyleCombo->currentIndex());
-    Settings::setValue("General", "toolbarStyle", ui->toolbarStyleComboMain->currentIndex());
-    Settings::setValue("General", "toolbarStyleStructure", ui->toolbarStyleComboStructure->currentIndex());
-    Settings::setValue("General", "toolbarStyleBrowse", ui->toolbarStyleComboBrowse->currentIndex());
-    Settings::setValue("General", "toolbarStyleSql", ui->toolbarStyleComboSql->currentIndex());
-    Settings::setValue("General", "toolbarStyleEditCell", ui->toolbarStyleComboEditCell->currentIndex());
-    Settings::setValue("General", "DBFileExtensions", m_dbFileExtensions.join(";;") );
-    Settings::setValue("General", "fontsize", ui->spinGeneralFontSize->value());
-    Settings::setValue("General", "maxRecentFiles", ui->spinMaxRecentFiles->value());
-    Settings::setValue("General", "promptsqltabsinnewproject", ui->checkPromptSQLTabsInNewProject->isChecked());
+    Settings::setValue(szINI::SEC_GENERAL, szINI::KEY_LANGUAGE, newLanguage);
+    Settings::setValue(szINI::SEC_GENERAL, szINI::KEY_APPSTYLE, ui->appStyleCombo->currentIndex());
+    Settings::setValue(szINI::SEC_GENERAL, szINI::KEY_TB_STYLE_APP, ui->toolbarStyleComboMain->currentIndex());
+    Settings::setValue(szINI::SEC_GENERAL, szINI::KEY_TB_STYLE_STRUCTURE, ui->toolbarStyleComboStructure->currentIndex());
+    Settings::setValue(szINI::SEC_GENERAL, szINI::KEY_TB_STYLE_BROWSE, ui->toolbarStyleComboBrowse->currentIndex());
+    Settings::setValue(szINI::SEC_GENERAL, szINI::KEY_TB_STYLE_SQL, ui->toolbarStyleComboSql->currentIndex());
+    Settings::setValue(szINI::SEC_GENERAL, szINI::KEY_TB_STYLE_EDIT_CELL, ui->toolbarStyleComboEditCell->currentIndex());
+    Settings::setValue(szINI::SEC_GENERAL, szINI::KEY_DB_FILE_EXTS, m_dbFileExtensions.join(";;") );
+    Settings::setValue(szINI::SEC_GENERAL, szINI::KEY_FONTSIZE, ui->spinGeneralFontSize->value());
+    Settings::setValue(szINI::SEC_GENERAL, szINI::KEY_MAX_RECENT_FILES, ui->spinMaxRecentFiles->value());
+    Settings::setValue(szINI::SEC_GENERAL, szINI::KEY_PROMPT_SQL_TABS_IN_NEWPRJ, ui->checkPromptSQLTabsInNewProject->isChecked());
 
     m_proxyDialog->saveSettings();
 
@@ -482,7 +482,7 @@ void PreferencesDialog::fillLanguageBox()
     ui->languageComboBox->model()->sort(0);
 
     // Try to select the language for the stored locale
-    int index = ui->languageComboBox->findData(Settings::getValue("General", "language"),
+    int index = ui->languageComboBox->findData(Settings::getValue(szINI::SEC_GENERAL, szINI::KEY_LANGUAGE),
                                                Qt::UserRole, Qt::MatchExactly);
 
     // If there's no translation for the current locale, default to English
@@ -507,7 +507,7 @@ void PreferencesDialog::fillLanguageBox()
 
 void PreferencesDialog::loadColorSetting(QFrame *frame, const std::string& settingName)
 {
-    QColor color = QColor(Settings::getValue("databrowser", settingName + "_colour").toString());
+    QColor color = QColor(Settings::getValue(szINI::SEC_DATA_BROWSER, settingName + szINI::KEY_ANY_COLOUR).toString());
     setColorSetting(frame, color);
 }
 
@@ -559,26 +559,26 @@ void PreferencesDialog::setColorSetting(QFrame *frame, const QColor &color)
 
 void PreferencesDialog::saveColorSetting(QFrame* frame, const std::string& settingName)
 {
-    Settings::setValue("databrowser", settingName + "_colour",
+    Settings::setValue(szINI::SEC_DATA_BROWSER, settingName + szINI::KEY_ANY_COLOUR,
         frame->palette().color(frame->backgroundRole()));
 }
 
 void PreferencesDialog::adjustColorsToStyle(int style)
 {
     Settings::AppStyle appStyle = static_cast<Settings::AppStyle>(style);
-    setColorSetting(ui->fr_null_fg, Settings::getDefaultColorValue("databrowser", "null_fg_colour", appStyle));
-    setColorSetting(ui->fr_null_bg, Settings::getDefaultColorValue("databrowser", "null_bg_colour", appStyle));
-    setColorSetting(ui->fr_bin_fg, Settings::getDefaultColorValue("databrowser", "bin_fg_colour", appStyle));
-    setColorSetting(ui->fr_bin_bg, Settings::getDefaultColorValue("databrowser", "bin_bg_colour", appStyle));
-    setColorSetting(ui->fr_reg_fg, Settings::getDefaultColorValue("databrowser", "reg_fg_colour", appStyle));
-    setColorSetting(ui->fr_reg_bg, Settings::getDefaultColorValue("databrowser", "reg_bg_colour", appStyle));
-    setColorSetting(ui->fr_formatted_fg, Settings::getDefaultColorValue("databrowser", "formatted_fg_colour", appStyle));
-    setColorSetting(ui->fr_formatted_bg, Settings::getDefaultColorValue("databrowser", "formatted_bg_colour", appStyle));
+    setColorSetting(ui->fr_null_fg, Settings::getDefaultColorValue(szINI::SEC_DATA_BROWSER, szINI::KEY_NULL_FG_COLOUR, appStyle));
+    setColorSetting(ui->fr_null_bg, Settings::getDefaultColorValue(szINI::SEC_DATA_BROWSER, szINI::KEY_NULL_BG_COLOUR, appStyle));
+    setColorSetting(ui->fr_bin_fg, Settings::getDefaultColorValue(szINI::SEC_DATA_BROWSER, szINI::KEY_BIN_FG_COLOUR, appStyle));
+    setColorSetting(ui->fr_bin_bg, Settings::getDefaultColorValue(szINI::SEC_DATA_BROWSER, szINI::KEY_BIN_BG_COLOUR, appStyle));
+    setColorSetting(ui->fr_reg_fg, Settings::getDefaultColorValue(szINI::SEC_DATA_BROWSER, szINI::KEY_REG_FG_COLOUR, appStyle));
+    setColorSetting(ui->fr_reg_bg, Settings::getDefaultColorValue(szINI::SEC_DATA_BROWSER, szINI::KEY_REG_BG_COLOUR, appStyle));
+    setColorSetting(ui->fr_formatted_fg, Settings::getDefaultColorValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FMT_FG_COLOUR, appStyle));
+    setColorSetting(ui->fr_formatted_bg, Settings::getDefaultColorValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FMT_BG_COLOUR, appStyle));
 
     for(int i=0; i < ui->treeSyntaxHighlighting->topLevelItemCount(); ++i)
     {
         std::string name = ui->treeSyntaxHighlighting->topLevelItem(i)->text(0).toStdString();
-        QColor color = Settings::getDefaultColorValue("syntaxhighlighter", name + "_colour", appStyle);
+        QColor color = Settings::getDefaultColorValue(szINI::SEC_SYNTAX_HIGHLIGHTER, name + szINI::KEY_ANY_COLOUR, appStyle);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setForeground(2, color);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setBackground(2, color);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setText(2, color.name());
@@ -734,14 +734,14 @@ void PreferencesDialog::exportSettings()
 void PreferencesDialog::importSettings()
 {
     const QString fileName = FileDialog::getOpenFileName(OpenSettingsFile, this, tr("Open Settings File"), tr("Initialization File (*.ini)"));
-    const QVariant existingLanguage = Settings::getValue("General", "language");
+    const QVariant existingLanguage = Settings::getValue(szINI::SEC_GENERAL, szINI::KEY_LANGUAGE);
 
     if(!fileName.isEmpty())
     {
         if(Settings::importSettings(fileName))
         {
             QMessageBox::information(this, QApplication::applicationName(), tr("The settings file was loaded properly."));
-            if (existingLanguage != Settings::getValue("General", "language"))
+            if (existingLanguage != Settings::getValue(szINI::SEC_GENERAL, szINI::KEY_LANGUAGE))
                 QMessageBox::information(this, QApplication::applicationName(),
                                          tr("The language will change after you restart the application."));
 

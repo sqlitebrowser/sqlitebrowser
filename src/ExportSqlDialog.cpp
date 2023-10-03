@@ -24,10 +24,10 @@ ExportSqlDialog::ExportSqlDialog(DBBrowserDB* db, QWidget* parent, const QString
     ui->setupUi(this);
 
     // Load settings
-    ui->checkColNames->setChecked(Settings::getValue("exportsql", "insertcolnames").toBool());
-    ui->checkMultiple->setChecked(Settings::getValue("exportsql", "insertmultiple").toBool());
-    ui->checkOriginal->setChecked(Settings::getValue("exportsql", "keeporiginal").toBool());
-    ui->comboOldSchema->setCurrentIndex(Settings::getValue("exportsql", "oldschema").toInt());
+    ui->checkColNames->setChecked(Settings::getValue(szINI::SEC_EXPORT_SQL, szINI::KEY_INSERT_COL_NAMES).toBool());
+    ui->checkMultiple->setChecked(Settings::getValue(szINI::SEC_EXPORT_SQL, szINI::KEY_INSERT_MULTIPLE).toBool());
+    ui->checkOriginal->setChecked(Settings::getValue(szINI::SEC_EXPORT_SQL, szINI::KEY_KEEP_ORIGINAL).toBool());
+    ui->comboOldSchema->setCurrentIndex(Settings::getValue(szINI::SEC_EXPORT_SQL, szINI::KEY_OLD_SCHEMA).toInt());
 
     // Get list of tables to export
     for(const auto& it : pdb->schemata["main"].tables)
@@ -93,10 +93,10 @@ void ExportSqlDialog::accept()
         return;
 
     // Save settings
-    Settings::setValue("exportsql", "insertcolnames", ui->checkColNames->isChecked());
-    Settings::setValue("exportsql", "insertmultiple", ui->checkMultiple->isChecked());
-    Settings::setValue("exportsql", "keeporiginal", ui->checkOriginal->isChecked());
-    Settings::setValue("exportsql", "oldschema", ui->comboOldSchema->currentIndex());
+    Settings::setValue(szINI::SEC_EXPORT_SQL, szINI::KEY_INSERT_COL_NAMES, ui->checkColNames->isChecked());
+    Settings::setValue(szINI::SEC_EXPORT_SQL, szINI::KEY_INSERT_MULTIPLE, ui->checkMultiple->isChecked());
+    Settings::setValue(szINI::SEC_EXPORT_SQL, szINI::KEY_KEEP_ORIGINAL, ui->checkOriginal->isChecked());
+    Settings::setValue(szINI::SEC_EXPORT_SQL, szINI::KEY_OLD_SCHEMA, ui->comboOldSchema->currentIndex());
 
     std::vector<std::string> tables;
     for(const QListWidgetItem* item : ui->listTables->selectedItems())

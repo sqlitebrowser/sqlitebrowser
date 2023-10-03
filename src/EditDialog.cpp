@@ -95,11 +95,11 @@ EditDialog::EditDialog(QWidget* parent)
     });
     connect(ui->actionOpenInExternal, &QAction::triggered, this, &EditDialog::openDataWithExternal);
 
-    mustIndentAndCompact = Settings::getValue("databrowser", "indent_compact").toBool();
+    mustIndentAndCompact = Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_INDENT_COMPACT).toBool();
     ui->actionIndent->setChecked(mustIndentAndCompact);
 
-    ui->buttonAutoSwitchMode->setChecked(Settings::getValue("databrowser", "auto_switch_mode").toBool());
-    ui->actionWordWrap->setChecked(Settings::getValue("databrowser", "editor_word_wrap").toBool());
+    ui->buttonAutoSwitchMode->setChecked(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_AUTO_SWITCH_MODE).toBool());
+    ui->actionWordWrap->setChecked(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_EDITOR_WORD_WRAP).toBool());
     setWordWrapping(ui->actionWordWrap->isChecked());
 
     reloadSettings();
@@ -107,9 +107,9 @@ EditDialog::EditDialog(QWidget* parent)
 
 EditDialog::~EditDialog()
 {
-    Settings::setValue("databrowser", "indent_compact",  mustIndentAndCompact);
-    Settings::setValue("databrowser", "auto_switch_mode", ui->buttonAutoSwitchMode->isChecked());
-    Settings::setValue("databrowser", "editor_word_wrap", ui->actionWordWrap->isChecked());
+    Settings::setValue(szINI::SEC_DATA_BROWSER, szINI::KEY_INDENT_COMPACT,  mustIndentAndCompact);
+    Settings::setValue(szINI::SEC_DATA_BROWSER, szINI::KEY_AUTO_SWITCH_MODE, ui->buttonAutoSwitchMode->isChecked());
+    Settings::setValue(szINI::SEC_DATA_BROWSER, szINI::KEY_EDITOR_WORD_WRAP, ui->actionWordWrap->isChecked());
     delete ui;
 }
 
@@ -368,7 +368,7 @@ void EditDialog::loadData(const QByteArray& bArrdata)
             // Disable text editing, and use a warning message as the contents
             sciEdit->setText(QString(tr("Binary data can't be viewed in this mode.") % '\n' %
                                      tr("Try switching to Binary mode.")));
-            sciEdit->setTextInMargin(Settings::getValue("databrowser", "blob_text").toString());
+            sciEdit->setTextInMargin(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_BLOB_TEXT).toString());
             sciEdit->setEnabled(false);
             break;
 
@@ -778,7 +778,7 @@ void EditDialog::setDataInBuffer(const QByteArray& bArrdata, DataSources source)
 
             if (mustIndentAndCompact && isValid) {
                 // Load indented XML into the XML editor
-                textData = xmlDoc.toString(Settings::getValue("editor", "tabsize").toInt());
+                textData = xmlDoc.toString(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_TABSIZE).toInt());
             } else {
                 // Fallback case. The data is not yet valid JSON or no auto-formatting applied.
                 textData = QString::fromUtf8(bArrdata.constData(), bArrdata.size());
@@ -1105,7 +1105,7 @@ void EditDialog::updateCellInfoAndMode(const QByteArray& bArrdata)
         ui->labelInfo->setText(tr("Type: NULL; Size: 0 bytes"));
 
         // Use margin to set the NULL text.
-        sciEdit->setTextInMargin(Settings::getValue("databrowser", "null_text").toString());
+        sciEdit->setTextInMargin(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_NULL_TEXT).toString());
         break;
     }
     case XML:
@@ -1139,17 +1139,17 @@ void EditDialog::reloadSettings()
     // Set the (SQL) editor font for hex editor, since it needs a
     // Monospace font and the databrowser font would be usually of
     // variable width.
-    QFont hexFont(Settings::getValue("editor", "font").toString());
-    hexFont.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
+    QFont hexFont(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_FONT).toString());
+    hexFont.setPointSize(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FONTSIZE).toInt());
     hexEdit->setFont(hexFont);
 
     // Set the databrowser font for the RTL text editor.
-    QFont textFont(Settings::getValue("databrowser", "font").toString());
-    textFont.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
+    QFont textFont(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FONT).toString());
+    textFont.setPointSize(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FONTSIZE).toInt());
     ui->qtEdit->setFont(textFont);
 
     ui->editCellToolbar->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>
-                                            (Settings::getValue("General", "toolbarStyleEditCell").toInt()));
+                                            (Settings::getValue(szINI::SEC_GENERAL, szINI::KEY_TB_STYLE_EDIT_CELL).toInt()));
 
     sciEdit->reloadSettings();
 }

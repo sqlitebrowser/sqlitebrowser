@@ -26,7 +26,7 @@ public:
         if (value) {
             clear();
             setStyleSheet("QLineEdit{ font-style: italic; }");
-            setPlaceholderText(Settings::getValue("databrowser", "null_text").toString());
+            setPlaceholderText(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_NULL_TEXT).toString());
             setModified(false);
         } else {
             setStyleSheet("");
@@ -88,7 +88,7 @@ public:
         NullLineEdit* lineEditor = static_cast<NullLineEdit*>(editor);
         // Set the editor in the null state (unless the user has actually written NULL)
         if (index.model()->data(index, Qt::UserRole).isNull() &&
-            index.model()->data(index, Qt::DisplayRole) == Settings::getValue("databrowser", "null_text"))
+            index.model()->data(index, Qt::DisplayRole) == Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_NULL_TEXT))
             lineEditor->setNull(true);
         else {
             QStyledItemDelegate::setEditorData(editor, index);
@@ -100,7 +100,7 @@ public:
         NullLineEdit* lineEditor = static_cast<NullLineEdit*>(editor);
         // Restore NULL text (unless the user has already modified the value)
         if (lineEditor->isNull() && !lineEditor->isModified()) {
-            model->setData(index, Settings::getValue("databrowser", "null_text"), Qt::DisplayRole);
+            model->setData(index, Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_NULL_TEXT), Qt::DisplayRole);
             model->setData(index, QVariant(), Qt::UserRole);
         } else {
             // Get isModified flag before calling setModelData
@@ -163,8 +163,8 @@ void AddRecordDialog::setDefaultsStyle(QTreeWidgetItem* item)
     QFont font;
     font.setItalic(true);
     item->setData(kValue, Qt::FontRole, font);
-    item->setData(kValue, Qt::BackgroundRole, QColor(Settings::getValue("databrowser", "null_bg_colour").toString()));
-    item->setData(kValue, Qt::ForegroundRole, QColor(Settings::getValue("databrowser", "null_fg_colour").toString()));
+    item->setData(kValue, Qt::BackgroundRole, QColor(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_NULL_BG_COLOUR).toString()));
+    item->setData(kValue, Qt::ForegroundRole, QColor(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_NULL_FG_COLOUR).toString()));
 }
 
 void AddRecordDialog::populateFields()
@@ -257,7 +257,7 @@ void AddRecordDialog::populateFields()
             tbitem->setData(kValue, Qt::DisplayRole, defaultValue);
             toolTip.append(tr("Default value:\t %1\n").arg(defaultValue));
         } else
-            tbitem->setData(kValue, Qt::DisplayRole, Settings::getValue("databrowser", "null_text"));
+            tbitem->setData(kValue, Qt::DisplayRole, Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_NULL_TEXT));
 
 
         if (!toolTip.isEmpty()) {

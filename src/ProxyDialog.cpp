@@ -15,12 +15,12 @@ ProxyDialog::ProxyDialog(QWidget *parent) :
     ui->comboType->addItem(tr("Socks v5"), "socks5");
 
     // Load current settings
-    ui->comboType->setCurrentIndex(ui->comboType->findData(Settings::getValue("proxy", "type").toString()));
-    ui->editHost->setText(Settings::getValue("proxy", "host").toString());
-    ui->spinPort->setValue(Settings::getValue("proxy", "port").toInt());
-    ui->checkAuthentication->setChecked(Settings::getValue("proxy", "authentication").toBool());
-    ui->editUser->setText(Settings::getValue("proxy", "user").toString());
-    ui->editPassword->setText(Settings::getValue("proxy", "password").toString());
+    ui->comboType->setCurrentIndex(ui->comboType->findData(Settings::getValue(szINI::SEC_PROXY, szINI::KEY_TYPE).toString()));
+    ui->editHost->setText(Settings::getValue(szINI::SEC_PROXY, szINI::KEY_HOST).toString());
+    ui->spinPort->setValue(Settings::getValue(szINI::SEC_PROXY, szINI::KEY_PORT).toInt());
+    ui->checkAuthentication->setChecked(Settings::getValue(szINI::SEC_PROXY, szINI::KEY_AUTHENTICATION).toBool());
+    ui->editUser->setText(Settings::getValue(szINI::SEC_PROXY, szINI::KEY_USER).toString());
+    ui->editPassword->setText(Settings::getValue(szINI::SEC_PROXY, szINI::KEY_PASSWORD).toString());
 }
 
 ProxyDialog::~ProxyDialog()
@@ -48,10 +48,10 @@ void ProxyDialog::authenticationRequiredChanged(bool required)
 
 void ProxyDialog::saveSettings() const
 {
-    Settings::setValue("proxy", "type", ui->comboType->currentData());
-    Settings::setValue("proxy", "host", ui->editHost->text());
-    Settings::setValue("proxy", "port", ui->spinPort->value());
-    Settings::setValue("proxy", "authentication", ui->checkAuthentication->isChecked());
-    Settings::setValue("proxy", "user", ui->editUser->text());
-    Settings::setValue("proxy", "password", ui->editPassword->text());
+    Settings::setValue(szINI::SEC_PROXY, szINI::KEY_TYPE, ui->comboType->currentData());
+    Settings::setValue(szINI::SEC_PROXY, szINI::KEY_HOST, ui->editHost->text());
+    Settings::setValue(szINI::SEC_PROXY, szINI::KEY_PORT, ui->spinPort->value());
+    Settings::setValue(szINI::SEC_PROXY, szINI::KEY_AUTHENTICATION, ui->checkAuthentication->isChecked());
+    Settings::setValue(szINI::SEC_PROXY, szINI::KEY_USER, ui->editUser->text());
+    Settings::setValue(szINI::SEC_PROXY, szINI::KEY_PASSWORD, ui->editPassword->text());
 }

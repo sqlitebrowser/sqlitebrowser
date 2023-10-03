@@ -1140,20 +1140,20 @@ QModelIndex SqliteTableModel::nextMatch(const QModelIndex& start, const std::vec
 
 void SqliteTableModel::reloadSettings()
 {
-    m_nullText = Settings::getValue("databrowser", "null_text").toString();
-    m_blobText = Settings::getValue("databrowser", "blob_text").toString();
-    m_regFgColour = QColor(Settings::getValue("databrowser", "reg_fg_colour").toString());
-    m_regBgColour = QColor(Settings::getValue("databrowser", "reg_bg_colour").toString());
-    m_formattedFgColour = QColor(Settings::getValue("databrowser", "formatted_fg_colour").toString());
-    m_formattedBgColour = QColor(Settings::getValue("databrowser", "formatted_bg_colour").toString());
-    m_nullFgColour = QColor(Settings::getValue("databrowser", "null_fg_colour").toString());
-    m_nullBgColour = QColor(Settings::getValue("databrowser", "null_bg_colour").toString());
-    m_binFgColour = QColor(Settings::getValue("databrowser", "bin_fg_colour").toString());
-    m_binBgColour = QColor(Settings::getValue("databrowser", "bin_bg_colour").toString());
-    m_font = QFont(Settings::getValue("databrowser", "font").toString());
-    m_font.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
-    m_symbolLimit = Settings::getValue("databrowser", "symbol_limit").toInt();
-    m_rowsLimit = Settings::getValue("databrowser", "rows_limit").toInt();
-    m_imagePreviewEnabled = Settings::getValue("databrowser", "image_preview").toBool();
-    m_chunkSize = static_cast<std::size_t>(Settings::getValue("db", "prefetchsize").toUInt());
+    m_nullText = Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_NULL_TEXT).toString();
+    m_blobText = Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_BLOB_TEXT).toString();
+    m_regFgColour = QColor(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_REG_FG_COLOUR).toString());
+    m_regBgColour = QColor(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_REG_BG_COLOUR).toString());
+    m_formattedFgColour = QColor(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FMT_FG_COLOUR).toString());
+    m_formattedBgColour = QColor(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FMT_BG_COLOUR).toString());
+    m_nullFgColour = QColor(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_NULL_FG_COLOUR).toString());
+    m_nullBgColour = QColor(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_NULL_BG_COLOUR).toString());
+    m_binFgColour = QColor(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_BIN_FG_COLOUR).toString());
+    m_binBgColour = QColor(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_BIN_BG_COLOUR).toString());
+    m_font = QFont(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FONT).toString());
+    m_font.setPointSize(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FONTSIZE).toInt());
+    m_symbolLimit = Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_SYMBOL_LIMIT).toInt();
+    m_rowsLimit = Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_ROWS_LIMIT).toInt();
+    m_imagePreviewEnabled = Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_IMAGE_PREVIEW).toBool();
+    m_chunkSize = static_cast<std::size_t>(Settings::getValue(szINI::SEC_DATABASE, szINI::KEY_PREFETCH_SIZE).toUInt());
 }

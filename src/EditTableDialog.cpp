@@ -979,7 +979,7 @@ void EditTableDialog::addField()
     typeBox->setEditable(!m_table.isStrict());  // Strict tables do not allow arbitrary types
     typeBox->addItems(m_table.isStrict() ? DBBrowserDB::DatatypesStrict : DBBrowserDB::Datatypes);
 
-    int defaultFieldTypeIndex = Settings::getValue("db", "defaultfieldtype").toInt();
+    int defaultFieldTypeIndex = Settings::getValue(szINI::SEC_DATABASE, szINI::KEY_DEFAULT_FIELD_TYPE).toInt();
 
     if (defaultFieldTypeIndex < DBBrowserDB::Datatypes.count())
     {

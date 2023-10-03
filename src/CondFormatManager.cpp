@@ -77,10 +77,10 @@ void CondFormatManager::addNewItem()
     if (currentWidget != nullptr)
         currentWidget->clearFocus();
 
-    QFont font = QFont(Settings::getValue("databrowser", "font").toString());
-    font.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
+    QFont font = QFont(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FONT).toString());
+    font.setPointSize(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FONTSIZE).toInt());
 
-    CondFormat newCondFormat("", QColor(Settings::getValue("databrowser", "reg_fg_colour").toString()),
+    CondFormat newCondFormat("", QColor(Settings::getValue(szINI::SEC_DATA_BROWSER, szINI::KEY_REG_FG_COLOUR).toString()),
                              m_condFormatPalette.nextSerialColor(Palette::appHasDarkTheme()),
                              font,
                              CondFormat::AlignLeft,
