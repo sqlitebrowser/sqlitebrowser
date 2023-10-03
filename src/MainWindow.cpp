@@ -1592,7 +1592,7 @@ void MainWindow::openPreferences()
     if(dialog.exec())
     {
         reloadSettings();
-        Settings::debug_cache();
+        // Settings::debug_cache();
     }
 
 }

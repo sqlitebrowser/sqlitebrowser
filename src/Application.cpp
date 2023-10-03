@@ -84,16 +84,8 @@ Application::Application(int& argc, char** argv) :
     setOrganizationName("sqlitebrowser");
     setApplicationName("DB Browser for SQLite");
 
-    // Initialize Settings Object
-    Settings::setSettingsObject();
-    Settings::debug_default();
-
     // Get 'DB4S_SETTINGS_FILE' environment variable
-    const auto env = qgetenv("DB4S_SETTINGS_FILE");
-
-    // If 'DB4S_SETTINGS_FILE' environment variable exists
-    if(!env.isEmpty())
-        Settings::setUserSettingsFile(env);
+    QString envValue(qgetenv(szINI::ENV_SET_FILE.c_str()));
 
     for(int i=1;i<arguments().size();i++)
     {
@@ -101,15 +93,17 @@ Application::Application(int& argc, char** argv) :
         {
             if(++i < arguments().size())
             {
-                if(!env.isEmpty())
+                if(!envValue.isNull() || !envValue.isEmpty())
                 {
                     qWarning() << qPrintable(tr("The user settings file location is replaced with the argument value instead of the environment variable value."));
-                    qWarning() << qPrintable(tr("Ignored environment variable(DB4S_SETTINGS_FILE) value : ") + env);
+                    qWarning() << qPrintable(tr("Ignored environment variable(DB4S_SETTINGS_FILE) value : ") + envValue);
                 }
-                Settings::setUserSettingsFile(arguments().at(i));
+                envValue = QString(arguments().at(i));
             }
         }
     }
+    // Initialize Settings Object
+    Settings::Initialize(envValue);
 
     // Set character encoding to UTF8
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
@@ -326,6 +320,8 @@ Application::Application(int& argc, char** argv) :
 
 Application::~Application()
 {
+    // Retain for debugging purposes
+    // Settings::debug_cache();
     if(m_mainWindow)
         delete m_mainWindow;
 }

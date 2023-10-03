@@ -6,6 +6,8 @@
 #include <QApplication>
 #include <QDebug>
 #include <QDir>
+#include <QFile>
+#include <QFileInfo>
 #include <QSettings>
 #include <QColor>
 #include <QStandardPaths>
@@ -210,35 +212,39 @@ std::vector<SectionKeyPair> Settings::m_hDeleted =
     // preference is using string literals, not variables or constants, for items to be removed.
 };
 
-void Settings::setSettingsObject()
+void Settings::Initialize(const QString& settings_file_path /* = QString()*/)
 {
-    // If an object has already been created, it is terminated to reduce overhead
-    if(settings)
-        return;
+    // If an object has already been created, re-initialize settings.
+    // Note: clang-Tidy warns "if statement unnecessary as delete nullptr has no effect".
+    delete settings;
 
-    const bool isNormalUserSettingsFile = isValidSettingsFile(userSettingsFile);
-
-    if(userSettingsFile == nullptr)
+    if(settings_file_path.isNull() || settings_file_path.isEmpty())
     {
+        // Initialize Settings Object - default - config data stored in application config default location for platform
         settings = new QSettings(QCoreApplication::organizationName(), QCoreApplication::organizationName());
     } else {
-        if(isNormalUserSettingsFile)
+        // Initialize Settings Object - settings file defined in environment variable or on command line.
+        if(isValidSettingsFile(settings_file_path))
         {
+            // VALID settings file
             settings = new QSettings(userSettingsFile, QSettings::IniFormat);
 
-            // Code to verify that the user does not have access to the requested settings file
+            // Problem occurred in accessing requested settings file
             if(settings->status() == QSettings::AccessError)
             {
-                qWarning() << qPrintable("The given settings file can NOT access. Please check the permission for the file.");
-                qWarning() << qPrintable("So, the -S/--settings option is ignored.");
-
-                // Since you do not have permission to the file, delete the existing assignment and assign the standard
+                qWarning() << qPrintable("File Path Given: ") << settings_file_path;
+                qWarning() << qPrintable("Cannot access given settings file. Please check the permission for the file.");
+                qWarning() << qPrintable("-S/--settings option is ignored.");
+                // bad file argument, delete existing assignment and assign standard app config default
                 delete settings;
                 settings = new QSettings(QCoreApplication::organizationName(), QCoreApplication::organizationName());
             }
         } else {
-            qWarning() << qPrintable("The given settings file is not a normal settings file. Please check again.");
-            qWarning() << qPrintable("So, the -S/--settings option is ignored.");
+            // INVALID settings file
+            qWarning() << qPrintable("File Path Given: ") << settings_file_path;
+            qWarning() << qPrintable("-S/--settings option is ignored.");
+            // bad file argument, delete existing assignment and assign standard app config default
+            delete settings;
             settings = new QSettings(QCoreApplication::organizationName(), QCoreApplication::organizationName());
         }
     }
@@ -246,11 +252,9 @@ void Settings::setSettingsObject()
     processDeletedSettings();
     processDefaultFixedFont();
     processDefaultColours();
-}
-
-void Settings::setUserSettingsFile(const QString& settings_file_path)
-{
-    userSettingsFile = settings_file_path;
+    userSettingsFile = settings->fileName();
+    qInfo() << qPrintable("Settings File: ")
+            << userSettingsFile;
 }
 
 QVariant Settings::getValue(const std::string& section, const std::string& key)
@@ -374,6 +378,7 @@ void Settings::sync()
     settings->sync();
 }
 
+// Retain for debugging purposes
 void Settings::debug_cache()
 {
     std::cout << "Cache Values" << std::endl
@@ -401,6 +406,7 @@ void Settings::debug_cache()
     std::cout << buffer.str() << std::endl;
 }
 
+// Retain for debugging purposes
 void Settings::debug_default()
 {
     std::cout << "Default Values" << std::endl
@@ -426,37 +432,48 @@ void Settings::debug_default()
     std::cout << buffer.str() << std::endl;
 }
 
+// Determine validity of settings file path argument.
+// file points to a valid settings file?
 bool Settings::isValidSettingsFile(const QString& settings_file_path)
 {
-    /*
-    Variable storing settings file path requested by the user is a normal settings file if
-    the file does not exist and is newly created. In this instance, the if statement below
-    is not executed. Therefore, the default value is set to true.
-    */
-    bool isNormalUserSettingsFile = true;
+    bool isNormalUserSettingsFile = false;
+    // default - no settings file path provided is considered "invalid"
+    if (settings_file_path.isNull() || settings_file_path.isEmpty())
+        return isNormalUserSettingsFile;
 
-    // Code that verifies that the settings file requested by the user is a normal settings file
-    if(settings_file_path != nullptr)
+    QFileInfo working_settings(settings_file_path);
+    if (!working_settings.exists() || !working_settings.isFile())
     {
-        auto *file = new QFile;
-        file->setFileName(settings_file_path);
-
-        if(file->open(QIODevice::ReadOnly | QIODevice::Text))
-        {
-            // define comparison string
-            // "[General]\n" --> first line of any DB4S settings file
-            QString header("[" + QString::fromStdString(szINI::SEC_GENERAL) + "]\n");
-            if(file->exists() &&
-               QString::compare(header, file->readLine(), Qt::CaseInsensitive) != 0)
-                isNormalUserSettingsFile = false;
-        }
-
-        file->close();
+        qWarning() << qPrintable("The given settings file can NOT BE LOCATED. Please check given file path.");
+        return isNormalUserSettingsFile;
     }
-    qDebug() << "Settings File: "
-             << settings_file_path
-             << "\nReturn: "
-             << QString(isNormalUserSettingsFile ? "True" : "False");
+    if (!working_settings.isReadable())
+    {
+        qWarning() << qPrintable("The given settings file can NOT BE ACCESSED. Please check permissions of file given.");
+        return isNormalUserSettingsFile;
+    }
+    QString canonical_path = working_settings.canonicalFilePath();
+    // Code that verifies that the settings file requested by the user is a normal settings file
+    auto *file = new QFile(canonical_path);
+    if(file->open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        // define comparison string
+        // NOTE: See QTBUG-117427 - QSettings "General" undocumented behavior
+        // "[General]\n" --> first line of any DB4S settings file
+        QString goodHeader("[" + QString::fromStdString(szINI::SEC_GENERAL) + "]\n");
+        // NOTE: Qt prefixes '%' to "General" section header - accept as valid
+        QString badHeader("[%" + QString::fromStdString(szINI::SEC_GENERAL) + "]\n");
+        // Read first line of settings file for section header string and compare
+        auto lineText = file->readLine();
+        bool bGoodHeader = QString::compare(goodHeader, lineText, Qt::CaseInsensitive) == 0;
+        bool bBadHeader = QString::compare(badHeader, lineText, Qt::CaseInsensitive) == 0;
+        isNormalUserSettingsFile = bGoodHeader || bBadHeader;
+        if (!isNormalUserSettingsFile)
+        {
+            qWarning() << qPrintable("The given settings file format appears INVALID. Please check given file.");
+        }
+    }
+    file->close();
     return isNormalUserSettingsFile;
 }
 

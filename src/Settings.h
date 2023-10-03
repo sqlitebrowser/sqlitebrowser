@@ -38,6 +38,9 @@ struct pair_compare
 namespace szINI
 {
     // Settings identification strings constants
+
+    // Environment Variable Name
+    const std::string ENV_SET_FILE = "DB4S_SETTINGS_FILE";
     // SEC_ -> INI Section
     // KEY_ -> INI Key name in Section
     // strings used in multiple places
@@ -275,9 +278,7 @@ public:
     };
 
     // Initialize QSettings object
-    static void setSettingsObject();
-
-    static void setUserSettingsFile(const QString& settings_file_path);
+    static void Initialize(const QString& settings_file_path = QString());
     static QVariant getValue(const std::string& section, const std::string& key);
     static void setValue(
             const std::string& section,
