@@ -46,8 +46,7 @@ QString FileDialog::getFileDialogPath(const FileDialogTypes dialogType)
     {
     case 0:     // Remember last location
     case 2: {   // Remember last location for current session only
-        QHash<QString, QVariant> lastLocations = Settings::getValue(szINI::SEC_DATABASE, "lastlocations").toHash();
-
+        QHash<QString, QVariant> lastLocations = Settings::getValue(szINI::SEC_DATABASE, szINI::KEY_LAST_LOCATION).toHash();
         return lastLocations[QString(dialogType)].toString();
     }
     case 1:     // Always use this locations
@@ -60,17 +59,16 @@ QString FileDialog::getFileDialogPath(const FileDialogTypes dialogType)
 void FileDialog::setFileDialogPath(const FileDialogTypes dialogType, const QString& new_path)
 {
     QString dir = QFileInfo(new_path).absolutePath();
-    QHash<QString, QVariant> lastLocations = Settings::getValue(szINI::SEC_DATABASE, "lastlocations").toHash();
-
+    QHash<QString, QVariant> lastLocations = Settings::getValue(szINI::SEC_DATABASE, szINI::KEY_LAST_LOCATION).toHash();
     lastLocations[QString(dialogType)] = dir;
 
     switch(Settings::getValue(szINI::SEC_DATABASE, szINI::KEY_SAVE_DEFAULT_LOCATION).toInt())
     {
     case 0:     // Remember last location
-        Settings::setValue(szINI::SEC_DATABASE, "lastlocations", lastLocations);
+        Settings::setValue(szINI::SEC_DATABASE, szINI::KEY_LAST_LOCATION, lastLocations);
         break;
     case 2:     // Remember last location for current session only
-        Settings::setValue(szINI::SEC_DATABASE, "lastlocations", lastLocations, false);
+        Settings::setValue(szINI::SEC_DATABASE, szINI::KEY_LAST_LOCATION, lastLocations, false);
         break;
     case 1:     // Always use this locations
         break;  // Do nothing

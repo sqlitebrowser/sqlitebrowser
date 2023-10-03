@@ -1,9 +1,7 @@
 #include "Settings.h"
 
-#include <iostream>
 #include <iomanip>
 #include <array>
-#include <map>
 #include <sstream>
 #include <QApplication>
 #include <QDebug>
@@ -193,6 +191,25 @@ std::unordered_map<SectionKeyPair, QVariant, pair_hash> Settings::m_hDefault =
     {{szINI::SEC_SYNTAX_HIGHLIGHTER, szINI::KEY_TABLE_UNDERLINE}, QVariant(false)},
 };
 
+// Deprecated section/key identities that may still exist in a user's settings file.
+// On initialization, old section/key [first pair] will be translated to new section/key[second pair].
+std::map<SectionKeyPair, SectionKeyPair, pair_compare> Settings::m_hDeprecated =
+{
+    // Add new items to this container as --> {{old section, old key}, {new section, new key}},
+    //
+    // 2023Aug - misspelling of key value persistent previously in project sources
+    {{szINI::SEC_DATABASE, "lastlocations"}, {szINI::SEC_DATABASE, szINI::KEY_LAST_LOCATION}},
+};
+
+// Section/Key identities that may still exist in user's settings file that
+// DO NOT HAVE a replacement. Each entry is a section/key pair to be removed
+// from settings file.
+std::vector<SectionKeyPair> Settings::m_hDeleted =
+{
+    // Add new items to this container as --> {{old section, old key}},
+    // preference is using string literals, not variables or constants, for items to be removed.
+};
+
 void Settings::setSettingsObject()
 {
     // If an object has already been created, it is terminated to reduce overhead
@@ -225,6 +242,8 @@ void Settings::setSettingsObject()
             settings = new QSettings(QCoreApplication::organizationName(), QCoreApplication::organizationName());
         }
     }
+    processDeprecatedSettings();
+    processDeletedSettings();
     processDefaultFixedFont();
     processDefaultColours();
 }
@@ -652,6 +671,56 @@ bool Settings::fetchDefaultValue(const std::string& section, const std::string& 
         foundData->setValue(defaultIndex->second);
     }
     return bReturn;
+}
+
+void Settings::processDeprecatedSettings()
+{
+    // Search for each item in deprecated storage in settings file.
+    // If found, remove old section/key from settings and
+    // establish new section/key (preserving associated value).
+    auto qValue = new QVariant();
+    for (const auto& search_item: m_hDeprecated)
+    {
+        const auto& old_sect_key = search_item.first;
+        const auto& new_sect_key = search_item.second;
+        if (fetchFileValue(old_sect_key.first, old_sect_key.second, qValue))
+        {
+            clearValue(old_sect_key.first, old_sect_key.second);
+            setValue(new_sect_key.first, new_sect_key.second, *qValue);
+            qValue = new QVariant();
+            qDebug() << "Replaced:"
+                     << QString::fromStdString(old_sect_key.first)
+                     << "|"
+                     << QString::fromStdString(old_sect_key.second)
+                     << "\t with "
+                     << QString::fromStdString(new_sect_key.first)
+                     << "|"
+                     << QString::fromStdString(new_sect_key.second);
+        }
+    }
+    // Action completed - storage no longer required.
+    m_hDeprecated.clear();
+}
+
+void Settings::processDeletedSettings()
+{
+    // Search for each item in deleted storage in settings file.
+    // If found, remove old section/key from settings with value.
+    auto qValue = new QVariant();
+    for (const auto& search_item: m_hDeleted)
+    {
+        if (fetchFileValue(search_item.first, search_item.second, qValue))
+        {
+            clearValue(search_item.first, search_item.second);
+            qValue = new QVariant();
+            qDebug() << "Removed:"
+                     << QString::fromStdString(search_item.first)
+                     << "|"
+                     << QString::fromStdString(search_item.second);
+        }
+    }
+    // Action completed - storage no longer required.
+    m_hDeleted.clear();
 }
 
 // Taken from Qt/QtBase/QFontComboBox source file

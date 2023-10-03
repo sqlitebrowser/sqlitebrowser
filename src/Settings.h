@@ -5,6 +5,7 @@
 #include <string>
 #include <unordered_map>
 #include <utility>
+#include <vector>
 #include <QFontDatabase>
 #include <QLocale>
 #include <QSettings>
@@ -315,6 +316,13 @@ private:
     // Search settings defaults for section/key. Return true if found and set by-reference variable to found value
     static bool fetchDefaultValue(const std::string& section, const std::string& key, QVariant* foundData);
 
+    // Search current settings file and correct/replace any deprecated
+    // settings found to preserve and persist user's intent
+    static void processDeprecatedSettings();
+
+    // Search current settings file and remove any settings found that DO NOT HAVE a replacement
+    static void processDeletedSettings();
+
     // Utility functions to obtain QFont writing system from user's locale
     static QFontDatabase::WritingSystem writingSystemFromScript(QLocale::Script script);
     static QFontDatabase::WritingSystem writingSystemFromLocale();
@@ -342,6 +350,12 @@ private:
 
     // Default Values storage
     static std::unordered_map<SectionKeyPair, QVariant, pair_hash> m_hDefault;
+
+    // Deprecated Settings Storage
+    static std::map<SectionKeyPair, SectionKeyPair, pair_compare> m_hDeprecated;
+
+    // Deleted Settings Storage
+    static std::vector<SectionKeyPair> m_hDeleted;
 };
 
 #endif
