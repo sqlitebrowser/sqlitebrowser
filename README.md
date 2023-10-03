@@ -123,6 +123,9 @@ brew install --cask db-browser-for-sqlite-nightly
 brew install --cask db-browser-for-sqlcipher-nightly
 ```
 
+It also has its own Homebrew tap the include Cask for older version.<br>
+For more information, see the following: https://github.com/sqlitebrowser/homebrew-tap
+
 ## Linux
 
 DB Browser for SQLite works well on Linux.
