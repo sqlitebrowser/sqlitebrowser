@@ -219,12 +219,6 @@
          <verstretch>120</verstretch>
         </sizepolicy>
        </property>
-       <property name="font">
-        <font>
-         <family>Monospace</family>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
        <property name="acceptDrops">
         <bool>false</bool>
        </property>

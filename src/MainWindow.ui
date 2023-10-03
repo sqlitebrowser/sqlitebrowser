@@ -998,34 +998,16 @@ You can drag SQL statements from an object row and drop them into other applicat
         <number>0</number>
        </property>
        <widget class="SqlTextEdit" name="editLogUser">
-        <property name="font">
-         <font>
-          <family>Monospace</family>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
         <property name="readOnly" stdset="0">
          <bool>true</bool>
         </property>
        </widget>
        <widget class="SqlTextEdit" name="editLogApplication">
-        <property name="font">
-         <font>
-          <family>Monospace</family>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
         <property name="readOnly" stdset="0">
          <bool>true</bool>
         </property>
        </widget>
        <widget class="ExtendedScintilla" name="editLogErrorLog">
-        <property name="font">
-         <font>
-          <family>Monospace</family>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
         <property name="readOnly">
          <bool>true</bool>
         </property>

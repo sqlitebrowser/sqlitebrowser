@@ -46,6 +46,9 @@ EditDialog::EditDialog(QWidget* parent)
 
     // Binary editor
     hexEdit = new QHexEdit(this);
+    QFont hexFont = QFont(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_FONT).toString());
+    hexFont.setPointSize(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_FONTSIZE).toInt());
+    hexEdit->setFont(hexFont);
     hexEdit->setOverwriteMode(false);
     hexEdit->setContextMenuPolicy(Qt::ActionsContextMenu);
     hexEdit->addAction(ui->actionPrint);

@@ -145,7 +145,6 @@ void SqlExecutionArea::reloadSettings()
 
     // Set font
     QFont logfont(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_FONT).toString());
-    logfont.setStyleHint(QFont::TypeWriter);
     logfont.setPointSize(Settings::getValue(szINI::SEC_LOG, szINI::KEY_FONTSIZE).toInt());
     ui->editErrors->setFont(logfont);
 

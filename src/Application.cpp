@@ -4,7 +4,6 @@
 #include <QTextCodec>
 #include <QLibraryInfo>
 #include <QLocale>
-#include <QDebug>
 #include <QAction>
 #include <QFileInfo>
 #include <QProxyStyle>
@@ -81,6 +80,14 @@ void printArgument(const QString& argument, const QString& description)
 Application::Application(int& argc, char** argv) :
     QApplication(argc, argv)
 {
+    // Set organisation and application names
+    setOrganizationName("sqlitebrowser");
+    setApplicationName("DB Browser for SQLite");
+
+    // Initialize Settings Object
+    Settings::setSettingsObject();
+    Settings::debug_default();
+
     // Get 'DB4S_SETTINGS_FILE' environment variable
     const auto env = qgetenv("DB4S_SETTINGS_FILE");
 
@@ -103,10 +110,6 @@ Application::Application(int& argc, char** argv) :
             }
         }
     }
-
-    // Set organisation and application names
-    setOrganizationName("sqlitebrowser");
-    setApplicationName("DB Browser for SQLite");
 
     // Set character encoding to UTF8
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
@@ -160,9 +163,6 @@ Application::Application(int& argc, char** argv) :
     // Work around a bug in QNetworkAccessManager which sporadically causes high pings for Wifi connections
     // See https://bugreports.qt.io/browse/QTBUG-40332
     qputenv("QT_BEARER_POLL_TIMEOUT", QByteArray::number(INT_MAX));
-
-    // Remember default font size
-    Settings::rememberDefaultFontSize(font().pointSize());
 
     // Parse command line
     QString fileToOpen;

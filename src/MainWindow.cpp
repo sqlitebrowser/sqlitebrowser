@@ -1590,7 +1590,11 @@ void MainWindow::openPreferences()
 {
     PreferencesDialog dialog(this);
     if(dialog.exec())
+    {
         reloadSettings();
+        Settings::debug_cache();
+    }
+
 }
 
 //** Db Tree Context Menu
@@ -2370,8 +2374,7 @@ void MainWindow::reloadSettings()
         qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i))->reloadSettings();
 
     // Prepare log font
-    QFont logfont("Monospace");
-    logfont.setStyleHint(QFont::TypeWriter);
+    QFont logfont(Settings::getValue(szINI::SEC_LOG, szINI::KEY_FONT).toString());
     logfont.setPointSize(Settings::getValue(szINI::SEC_LOG, szINI::KEY_FONTSIZE).toInt());
 
     // Set font for SQL logs and edit dialog

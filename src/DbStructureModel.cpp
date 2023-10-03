@@ -51,7 +51,10 @@ QVariant DbStructureModel::data(const QModelIndex& index, int role) const
         if(index.column() == ColumnName && item->parent() == browsablesRootItem)
             return QString::fromStdString(sqlb::ObjectIdentifier(item->text(ColumnSchema).toStdString(), item->text(ColumnName).toStdString()).toDisplayString());
         else
-            return Settings::getValue(szINI::SEC_DATABASE, szINI::KEY_HIDE_SCHEMA_LINEBREAKS).toBool() ? item->text(index.column()).simplified() : item->text(index.column());
+        {
+            bool bLineBrakes = Settings::getValue(szINI::SEC_DATABASE, szINI::KEY_HIDE_SCHEMA_LINEBREAKS).toBool();
+            return bLineBrakes ? item->text(index.column()).simplified() : item->text(index.column());
+        }
     case Qt::EditRole:
         return item->text(index.column());
     case Qt::ToolTipRole: {

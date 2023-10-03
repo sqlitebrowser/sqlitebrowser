@@ -167,11 +167,6 @@
       <number>0</number>
      </property>
      <widget class="QTextEdit" name="qtEdit">
-      <property name="font">
-       <font>
-        <family>Monospace</family>
-       </font>
-      </property>
       <property name="whatsThis">
        <string>This Qt editor is used for right-to-left scripts, which are not supported by the default Text editor. The presence of right-to-left characters is detected and this editor mode is automatically selected.</string>
       </property>

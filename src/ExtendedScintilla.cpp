@@ -133,7 +133,8 @@ void ExtendedScintilla::reloadCommonSettings()
 
     // Use desktop default colors for margins when following desktop
     // style, or the colors matching the dark style-sheet, otherwise.
-    switch (Settings::getValue(szINI::SEC_GENERAL, szINI::KEY_APPSTYLE).toInt()) {
+    switch (Settings::getValue(szINI::SEC_GENERAL, szINI::KEY_APPSTYLE).toInt())
+    {
     case Settings::FollowDesktopStyle :
         setMarginsBackgroundColor(QPalette().color(QPalette::Active, QPalette::Window));
         setMarginsForegroundColor(QPalette().color(QPalette::Active, QPalette::WindowText));
@@ -173,7 +174,6 @@ void ExtendedScintilla::reloadLexerSettings(QsciLexer *lexer)
     QColor background (Settings::getValue(szINI::SEC_SYNTAX_HIGHLIGHTER, szINI::KEY_BG_COLOUR).toString());
 
     QFont defaultfont(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_FONT).toString());
-    defaultfont.setStyleHint(QFont::TypeWriter);
     defaultfont.setPointSize(Settings::getValue(szINI::SEC_EDITOR, szINI::KEY_FONTSIZE).toInt());
 
     // Set syntax highlighting settings

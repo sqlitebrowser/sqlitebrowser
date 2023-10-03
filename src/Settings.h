@@ -4,8 +4,35 @@
 #include <iostream>
 #include <string>
 #include <unordered_map>
+#include <utility>
+#include <QFontDatabase>
+#include <QLocale>
 #include <QSettings>
 #include <QVariant>
+
+// ref: https://www.techiedelight.com/use-std-pair-key-std-unordered_map-cpp/
+typedef std::pair<std::string, std::string> SectionKeyPair;
+
+struct pair_hash
+{
+    template<class T1, class T2>
+    std::size_t operator()(const std::pair<T1, T2>& pair) const
+    {
+        return std::hash<T1>()(pair.first) ^ std::hash<T2>()(pair.second);
+    }
+};
+
+struct pair_compare
+{
+    template<class T1, class T2>
+    bool operator()(const std::pair<T1, T2>& lhs, const std::pair<T1, T2>& rhs) const
+    {
+        if (lhs.first == rhs.first)
+            return lhs.second < rhs.second;
+        else
+            return lhs.first < rhs.first;
+    }
+};
 
 namespace szINI
 {
@@ -246,26 +273,63 @@ public:
         LightStyle
     };
 
+    // Initialize QSettings object
+    static void setSettingsObject();
+
     static void setUserSettingsFile(const QString& settings_file_path);
     static QVariant getValue(const std::string& section, const std::string& key);
-    static void setValue(const std::string& section, const std::string& key, const QVariant& value, bool save_to_disk = true);
+    static void setValue(
+            const std::string& section,
+            const std::string& key,
+            const QVariant& value,
+            bool save_to_disk = true
+    );
     static void clearValue(const std::string& section, const std::string& key);
     static void restoreDefaults();
 
-    static void rememberDefaultFontSize(int size) { m_defaultFontSize = size; }
     static void exportSettings(const QString& fileName);
     static bool importSettings(const QString& fileName);
     static void sync();
+    static void debug_cache();
+    static void debug_default();
 
 private:
-    Settings() = delete;    // class is fully static
+    // class is fully static
+    Settings() = delete;        // NOLINT - clang-tidy wants deleted member functions to be public
 
-    // This works similar to getValue but returns the default value instead of the value set by the user
+    // Verify that the settings file identified by its path is a normal settings file
+    static bool isValidSettingsFile(const QString& settings_file_path);
+
+    // Return the stored default value instead of the value set by the user
     static QVariant getDefaultValue(const std::string& section, const std::string& key);
 
-    // This works similar to getDefaultValue but returns the default color value based on the passed application style
-    // instead of the current palette.
-    static QColor getDefaultColorValue(const std::string& section, const std::string& key, AppStyle style);
+    // Return the default color value based on the passed application style instead of the current palette.
+    static QColor getDefaultColourValue(const std::string& section, const std::string& key, AppStyle style);
+
+    // Search settings cache for section/key. Return true if found and set by-reference variable to found value
+    static bool fetchCacheValue(const std::string& section, const std::string& key, QVariant* foundData);
+
+    // Search settings file for section/key. Return true if found and set by-reference variable to found value
+    static bool fetchFileValue(const std::string& section, const std::string& key, QVariant* foundData);
+
+    // Search settings defaults for section/key. Return true if found and set by-reference variable to found value
+    static bool fetchDefaultValue(const std::string& section, const std::string& key, QVariant* foundData);
+
+    // Utility functions to obtain QFont writing system from user's locale
+    static QFontDatabase::WritingSystem writingSystemFromScript(QLocale::Script script);
+    static QFontDatabase::WritingSystem writingSystemFromLocale();
+
+    // Utility function to determine the fixed font and default value
+    static void processDefaultFixedFont();
+
+    // Utility function to establish default colour values
+    static void processDefaultColours();
+
+    // Utility function for examining setting key strings
+    static bool ends_with(const std::string& str, const std::string& with);
+
+    // Application Default Font Point Size
+    static int DEFAULT_FONT_SIZE;
 
     // User settings file path
     static QString userSettingsFile;
@@ -273,17 +337,11 @@ private:
     // QSettings object
     static QSettings* settings;
 
-    // This works verify that the settings file provided by the user is a normal settings file
-    static bool isValidSettingsFile(const QString& settings_file_path);
-
-    // This works initialize QSettings object
-    static void setSettingsObject();
-
     // Cache for storing the settings to avoid repeatedly reading the settings file all the time
-    static std::unordered_map<std::string, QVariant> m_hCache;
+    static std::unordered_map<SectionKeyPair, QVariant, pair_hash> m_hCache;
 
-    // Default UI font size
-    static int m_defaultFontSize;
+    // Default Values storage
+    static std::unordered_map<SectionKeyPair, QVariant, pair_hash> m_hDefault;
 };
 
 #endif

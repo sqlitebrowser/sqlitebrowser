@@ -566,19 +566,19 @@ void PreferencesDialog::saveColorSetting(QFrame* frame, const std::string& setti
 void PreferencesDialog::adjustColorsToStyle(int style)
 {
     Settings::AppStyle appStyle = static_cast<Settings::AppStyle>(style);
-    setColorSetting(ui->fr_null_fg, Settings::getDefaultColorValue(szINI::SEC_DATA_BROWSER, szINI::KEY_NULL_FG_COLOUR, appStyle));
-    setColorSetting(ui->fr_null_bg, Settings::getDefaultColorValue(szINI::SEC_DATA_BROWSER, szINI::KEY_NULL_BG_COLOUR, appStyle));
-    setColorSetting(ui->fr_bin_fg, Settings::getDefaultColorValue(szINI::SEC_DATA_BROWSER, szINI::KEY_BIN_FG_COLOUR, appStyle));
-    setColorSetting(ui->fr_bin_bg, Settings::getDefaultColorValue(szINI::SEC_DATA_BROWSER, szINI::KEY_BIN_BG_COLOUR, appStyle));
-    setColorSetting(ui->fr_reg_fg, Settings::getDefaultColorValue(szINI::SEC_DATA_BROWSER, szINI::KEY_REG_FG_COLOUR, appStyle));
-    setColorSetting(ui->fr_reg_bg, Settings::getDefaultColorValue(szINI::SEC_DATA_BROWSER, szINI::KEY_REG_BG_COLOUR, appStyle));
-    setColorSetting(ui->fr_formatted_fg, Settings::getDefaultColorValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FMT_FG_COLOUR, appStyle));
-    setColorSetting(ui->fr_formatted_bg, Settings::getDefaultColorValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FMT_BG_COLOUR, appStyle));
+    setColorSetting(ui->fr_null_fg, Settings::getDefaultColourValue(szINI::SEC_DATA_BROWSER, szINI::KEY_NULL_FG_COLOUR, appStyle));
+    setColorSetting(ui->fr_null_bg, Settings::getDefaultColourValue(szINI::SEC_DATA_BROWSER, szINI::KEY_NULL_BG_COLOUR, appStyle));
+    setColorSetting(ui->fr_bin_fg, Settings::getDefaultColourValue(szINI::SEC_DATA_BROWSER, szINI::KEY_BIN_FG_COLOUR, appStyle));
+    setColorSetting(ui->fr_bin_bg, Settings::getDefaultColourValue(szINI::SEC_DATA_BROWSER, szINI::KEY_BIN_BG_COLOUR, appStyle));
+    setColorSetting(ui->fr_reg_fg, Settings::getDefaultColourValue(szINI::SEC_DATA_BROWSER, szINI::KEY_REG_FG_COLOUR, appStyle));
+    setColorSetting(ui->fr_reg_bg, Settings::getDefaultColourValue(szINI::SEC_DATA_BROWSER, szINI::KEY_REG_BG_COLOUR, appStyle));
+    setColorSetting(ui->fr_formatted_fg, Settings::getDefaultColourValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FMT_FG_COLOUR, appStyle));
+    setColorSetting(ui->fr_formatted_bg, Settings::getDefaultColourValue(szINI::SEC_DATA_BROWSER, szINI::KEY_FMT_BG_COLOUR, appStyle));
 
     for(int i=0; i < ui->treeSyntaxHighlighting->topLevelItemCount(); ++i)
     {
         std::string name = ui->treeSyntaxHighlighting->topLevelItem(i)->text(0).toStdString();
-        QColor color = Settings::getDefaultColorValue(szINI::SEC_SYNTAX_HIGHLIGHTER, name + szINI::KEY_ANY_COLOUR, appStyle);
+        QColor color = Settings::getDefaultColourValue(szINI::SEC_SYNTAX_HIGHLIGHTER, name + szINI::KEY_ANY_COLOUR, appStyle);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setForeground(2, color);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setBackground(2, color);
         ui->treeSyntaxHighlighting->topLevelItem(i)->setText(2, color.name());
