@@ -17,11 +17,7 @@
         <location filename="../AboutDialog.ui" line="90"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Pastel SVG icon set by Michael Buckley under a Creative Commons
 Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;https://codefisher.org/pastel-svg/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://codefisher.org/pastel-svg/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Silk icon set by Mark James licensed under a Creative Commons Attribution 2.5 and 3.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite 是一款開放原始碼、免費的視覺工具，用於建立、設計和編輯 SQLite 資料庫檔案。&lt;/p&gt;&lt;p&gt;它在 Mozilla 公共授權版本 2 以及 GNU 通用公共授權版本 3 或更高版本下雙重授權。您可以在這些授權條款的條件下修改或重新散佈它。&lt;/p&gt;&lt;p&gt;詳情請參見 &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; 和 &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt;。&lt;/p&gt;&lt;p&gt;有關此程式的更多資訊，請造訪我們的網站：&lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;此軟體使用來自 &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; 的 GPL/LGPL Qt 工具包&lt;br/&gt;詳情請參閱 &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; 以取得授權條款和資訊。&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;它還使用了 Mark James 的 Silk 圖示集，該圖示集根據創用CC姓名標示 2.5 和 3.0 授權。&lt;br/&gt;詳情請參閱 &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;。&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite 是一個開源、免費的圖形化工具，用於建立、設計和編輯 SQLite 資料庫檔案。&lt;/p&gt;&lt;p&gt;它同時採用 Mozilla 公眾授權版本 2 和 GNU 通用公眾授權版本 3 或更新的版本。您可以在這些授權的條件下修改或重新散佈。&lt;/p&gt;&lt;p&gt;詳細資訊請參考 &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; 和 &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt;。&lt;/p&gt;&lt;p&gt;有關此程式的更多資訊，請造訪我們的網站：&lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;。&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;此軟體使用來自 &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; 的 GPL/LGPL Qt 工具包。&lt;br/&gt;詳細資訊請參考 &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;。&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;它還使用了由 Michael Buckley 製作的 Pastel SVG 圖示集，該圖示集根據創用 CC 姓名標示-相同方式分享 4.0 授權釋出。&lt;br/&gt;詳細資訊請參考 &lt;/span&gt;&lt;a href=&quot;https://codefisher.org/pastel-svg/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://codefisher.org/pastel-svg/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;。&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -29,12 +25,12 @@ Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot
     <message>
         <location filename="../AddRecordDialog.ui" line="14"/>
         <source>Add New Record</source>
-        <translation>新增紀錄</translation>
+        <translation>新增記錄</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="27"/>
         <source>Enter values for the new record considering constraints. Fields in bold are mandatory.</source>
-        <translation>輸入新紀錄的值，並考慮到條件。粗體的欄位是必填的。</translation>
+        <translation>輸入新記錄的值，並考慮到條件。粗體的欄位是必填的。</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="67"/>
@@ -64,12 +60,12 @@ Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot
     <message>
         <location filename="../AddRecordDialog.ui" line="93"/>
         <source>When you edit the values in the upper frame, the SQL query for inserting this new record is shown here. You can edit manually the query before saving.</source>
-        <translation>當您在上方框架中編輯值時，用於插入此新紀錄的 SQL 查詢將在此處顯示。您可以在儲存之前手動編輯查詢。</translation>
+        <translation>當您在上方框架中編輯值時，用於插入此新記錄的 SQL 查詢將在此處顯示。您可以在儲存之前手動編輯查詢。</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="110"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Save&lt;/span&gt; will submit the shown SQL statement to the database for inserting the new record.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Restore Defaults&lt;/span&gt; will restore the initial values in the &lt;span style=&quot; font-weight:600;&quot;&gt;Value&lt;/span&gt; column.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Cancel&lt;/span&gt; will close this dialog without executing the query.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;儲存&lt;/span&gt; 將會提交顯示的 SQL 陳述式到資料庫以插入新紀錄。&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;還原預設值&lt;/span&gt; 將會在 &lt;span style=&quot; font-weight:600;&quot;&gt;值&lt;/span&gt;欄位中還原初始值。&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;取消&lt;/span&gt; 將會關閉此對話框，並不執行查詢。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;儲存&lt;/span&gt; 將會提交顯示的 SQL 陳述式到資料庫以插入新記錄。&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;還原預設值&lt;/span&gt; 將會在 &lt;span style=&quot; font-weight:600;&quot;&gt;值&lt;/span&gt;欄位中還原初始值。&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;取消&lt;/span&gt; 將會關閉此對話框，並不執行查詢。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="239"/>
@@ -111,7 +107,7 @@ Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot
         <source>Error adding record. Message from database engine:
 
 %1</source>
-        <translation>新增紀錄時出錯。來自資料庫引擎的訊息：
+        <translation>新增記錄時出錯。來自資料庫引擎的訊息：
 
 %1</translation>
     </message>
@@ -139,214 +135,144 @@ Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot
         <translation>忽略環境變數 (DB4S_SETTINGS_FILE) 的值：</translation>
     </message>
     <message>
-        <source>Usage: %1 [options] [&lt;database&gt;|&lt;project&gt;]
-</source>
-        <translation type="vanished">用法：%1 [選項] [&lt;資料庫&gt;|&lt;專案&gt;]
-</translation>
-    </message>
-    <message>
-        <source>  -h, --help          Show command line options</source>
-        <translation type="vanished">  -h, --help          顯示命令列選項</translation>
-    </message>
-    <message>
-        <source>  -q, --quit          Exit application after running scripts</source>
-        <translation type="vanished">  -q, --quit          執行腳本後退出應用程式</translation>
-    </message>
-    <message>
-        <source>  -s, --sql &lt;file&gt;    Execute this SQL file after opening the DB</source>
-        <translation type="vanished">  -s, --sql &lt;file&gt;    開啟資料庫後執行此 SQL 檔案</translation>
-    </message>
-    <message>
-        <source>  -t, --table &lt;table&gt; Browse this table after opening the DB</source>
-        <translation type="vanished">  -t, --table &lt;table&gt; 開啟資料庫後瀏覽此資料表</translation>
-    </message>
-    <message>
-        <source>  -R, --read-only     Open database in read-only mode</source>
-        <translation type="vanished">  -R, --read-only     以唯讀模式開啟資料庫</translation>
-    </message>
-    <message>
-        <source>  -S, --settings &lt;settings_file&gt;</source>
-        <translation type="vanished">  -S, --settings &lt;settings_file&gt;</translation>
-    </message>
-    <message>
-        <source>                      Run application based on this settings file</source>
-        <translation type="vanished">                      根據此設定檔執行應用程式</translation>
-    </message>
-    <message>
-        <source>  -o, --option &lt;group&gt;/&lt;setting&gt;=&lt;value&gt;</source>
-        <translation type="vanished">  -o, --option &lt;group&gt;/&lt;setting&gt;=&lt;value&gt;</translation>
-    </message>
-    <message>
-        <source>                      Run application with this setting temporarily set to value</source>
-        <translation type="vanished">                      根據此臨時設定值執行應用程式</translation>
-    </message>
-    <message>
-        <source>  -O, --save-option &lt;group&gt;/&lt;setting&gt;=&lt;value&gt;</source>
-        <translation type="vanished">  -O, --save-option &lt;group&gt;/&lt;setting&gt;=&lt;value&gt;</translation>
-    </message>
-    <message>
-        <source>                      Run application saving this value for this setting</source>
-        <translation type="vanished">                      執行應用程式並為此設定儲存此值</translation>
-    </message>
-    <message>
-        <source>  -v, --version       Display the current version</source>
-        <translation type="vanished">  -v, --version       顯示目前的版本</translation>
-    </message>
-    <message>
-        <source>  &lt;database&gt;          Open this SQLite database</source>
-        <translation type="vanished">  &lt;database&gt;          開啟此 SQLite 資料庫</translation>
-    </message>
-    <message>
-        <source>  &lt;project&gt;           Open this project file (*.sqbpro)</source>
-        <translation type="vanished">  &lt;project&gt;           開啟此專案檔案 (*.sqbpro)</translation>
-    </message>
-    <message>
-        <source>The -s/--sql option requires an argument</source>
-        <translation type="vanished">-s/--sql 選項需要一個參數</translation>
-    </message>
-    <message>
         <location filename="../Application.cpp" line="221"/>
         <location filename="../Application.cpp" line="233"/>
         <source>The file %1 does not exist</source>
         <translation>檔案 %1 不存在</translation>
     </message>
     <message>
-        <source>The -t/--table option requires an argument</source>
-        <translation type="vanished">-t/--table 選項需要一個參數</translation>
-    </message>
-    <message>
         <location filename="../Application.cpp" line="181"/>
         <source>Usage</source>
-        <translation type="unfinished"></translation>
+        <translation>使用方式</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="182"/>
         <source>options</source>
-        <translation type="unfinished"></translation>
+        <translation>選項</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="182"/>
         <location filename="../Application.cpp" line="206"/>
         <source>database</source>
-        <translation type="unfinished"></translation>
+        <translation>資料庫</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="182"/>
         <location filename="../Application.cpp" line="208"/>
         <source>project</source>
-        <translation type="unfinished"></translation>
+        <translation>專案</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="183"/>
         <location filename="../Application.cpp" line="210"/>
         <source>csv-file</source>
-        <translation type="unfinished"></translation>
+        <translation>CSV 檔案</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="187"/>
         <source>Show command line options</source>
-        <translation type="unfinished"></translation>
+        <translation>顯示命令列選項</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="189"/>
         <source>Exit application after running scripts</source>
-        <translation type="unfinished"></translation>
+        <translation>執行指令碼後退出應用程式</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="190"/>
         <location filename="../Application.cpp" line="192"/>
         <source>file</source>
-        <translation type="unfinished"></translation>
+        <translation>檔案</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="191"/>
         <source>Execute this SQL file after opening the DB</source>
-        <translation type="unfinished"></translation>
+        <translation>開啟資料庫後執行此 SQL 檔案</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="193"/>
         <source>Import this CSV file into the passed DB or into a new DB</source>
-        <translation type="unfinished"></translation>
+        <translation>將此 CSV 檔案匯入到指定的資料庫或新資料庫</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="194"/>
         <source>table</source>
-        <translation type="unfinished"></translation>
+        <translation>資料表</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="195"/>
         <source>Browse this table, or use it as target of a data import</source>
-        <translation type="unfinished"></translation>
+        <translation>瀏覽此資料表，或將其作為資料匯入的目標</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="197"/>
         <source>Open database in read-only mode</source>
-        <translation type="unfinished"></translation>
+        <translation>以唯讀模式開啟資料庫</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="198"/>
         <source>settings_file</source>
-        <translation type="unfinished"></translation>
+        <translation>設定檔</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="199"/>
         <source>Run application based on this settings file</source>
-        <translation type="unfinished"></translation>
+        <translation>根據此設定檔執行應用程式</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="200"/>
         <location filename="../Application.cpp" line="202"/>
         <source>group</source>
-        <translation type="unfinished"></translation>
+        <translation>群組</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="200"/>
         <location filename="../Application.cpp" line="202"/>
         <source>settings</source>
-        <translation type="unfinished"></translation>
+        <translation>設定</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="200"/>
         <location filename="../Application.cpp" line="202"/>
         <source>value</source>
-        <translation type="unfinished"></translation>
+        <translation>值</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="201"/>
         <source>Run application with this setting temporarily set to value</source>
-        <translation type="unfinished"></translation>
+        <translation>暫時將此設定設為特定值並執行應用程式</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="203"/>
         <source>Run application saving this value for this setting</source>
-        <translation type="unfinished"></translation>
+        <translation>儲存此設定值並執行應用程式</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="205"/>
         <source>Display the current version</source>
-        <translation type="unfinished"></translation>
+        <translation>顯示目前版本</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="207"/>
         <source>Open this SQLite database</source>
-        <translation type="unfinished"></translation>
+        <translation>開啟此 SQLite 資料庫</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="209"/>
         <source>Open this project file (*.sqbpro)</source>
-        <translation type="unfinished"></translation>
+        <translation>開啟此專案檔案（*.sqbpro）</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="211"/>
         <source>Import this CSV file into an in-memory database</source>
-        <translation type="unfinished"></translation>
+        <translation>將此 CSV 檔案匯入到記憶體內部資料庫</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="219"/>
         <location filename="../Application.cpp" line="226"/>
         <location filename="../Application.cpp" line="231"/>
         <source>The %1 option requires an argument</source>
-        <translation type="unfinished"></translation>
+        <translation> %1 選項需要一個參數</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="244"/>
@@ -361,7 +287,7 @@ Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot
     <message>
         <location filename="../Application.cpp" line="275"/>
         <source>Invalid option/non-existant file: %1</source>
-        <translation>無效選項/不存在的檔案：%1</translation>
+        <translation>無效選項或不存在的檔案：%1</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="363"/>
@@ -371,7 +297,7 @@ Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot
     <message>
         <location filename="../Application.cpp" line="365"/>
         <source>SQLCipher Version %1 (based on SQLite %2)</source>
-        <translation>SQLCipher 版本 %1 (基於 SQLite %2)</translation>
+        <translation>SQLCipher 版本 %1（基於 SQLite %2）</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="368"/>
@@ -381,7 +307,7 @@ Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot
     <message>
         <location filename="../Application.cpp" line="369"/>
         <source>Last commit hash when built: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>建置時最後提交的雜湊：%1</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="370"/>
@@ -505,7 +431,7 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="17"/>
         <source>Default</source>
-        <translation type="unfinished">預設</translation>
+        <translation>預設</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="19"/>
@@ -570,12 +496,12 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="39"/>
         <source>SpatiaLite Geometry to SVG</source>
-        <translation type="unfinished"></translation>
+        <translation>SpatiaLite 幾何資料轉 SVG</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="141"/>
         <source>Custom display format must contain a function call applied to %1</source>
-        <translation>自訂顯示格式必須包含應用於 %1 的函式呼叫</translation>
+        <translation>自訂顯示格式必須包含套用於 %1 的函式呼叫</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="153"/>
@@ -792,13 +718,13 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../sqlitedb.cpp" line="760"/>
         <source>Cannot open destination file: &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>無法開啟目標檔案：&apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="777"/>
         <location filename="../sqlitedb.cpp" line="795"/>
         <source>Cannot backup to file: &apos;%1&apos;. Message: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>無法備份到檔案：&apos;%1&apos;。訊息：%2</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="835"/>
@@ -854,12 +780,12 @@ Aborting execution%3.</source>
         <location filename="../sqlitedb.cpp" line="1608"/>
         <location filename="../sqlitedb.cpp" line="1615"/>
         <source>A table with the name &apos;%1&apos; already exists in schema &apos;%2&apos;.</source>
-        <translation>在架構 &apos;%2&apos; 中已存在名為 &apos;%1&apos; 的資料表。</translation>
+        <translation>在結構 &apos;%2&apos; 中已存在名為 &apos;%1&apos; 的資料表。</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1624"/>
         <source>No table with name &apos;%1&apos; exists in schema &apos;%2&apos;.</source>
-        <translation>在架構 &apos;%2&apos; 中不存在名為 &apos;%1&apos; 的資料表。</translation>
+        <translation>在結構 &apos;%2&apos; 中不存在名為 &apos;%1&apos; 的資料表。</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1634"/>
@@ -971,7 +897,7 @@ Message from database engine:
     <message>
         <location filename="../DbStructureModel.cpp" line="22"/>
         <source>Schema</source>
-        <translation>架構</translation>
+        <translation>結構</translation>
     </message>
     <message>
         <location filename="../DbStructureModel.cpp" line="22"/>
@@ -1006,7 +932,7 @@ Message from database engine:
     <message>
         <location filename="../DbStructureModel.cpp" line="361"/>
         <source>Views (%1)</source>
-        <translation>視圖 (%1)</translation>
+        <translation>檢視表 (%1)</translation>
     </message>
     <message>
         <location filename="../DbStructureModel.cpp" line="365"/>
@@ -1055,7 +981,7 @@ Message from database engine:
     <message>
         <location filename="../EditDialog.ui" line="96"/>
         <source>Evaluation</source>
-        <translation type="unfinished"></translation>
+        <translation>評估</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="104"/>
@@ -1074,14 +1000,6 @@ Message from database engine:
         <translation>自動切換</translation>
     </message>
     <message>
-        <source>The text editor modes let you edit plain text, as well as JSON or XML data with syntax highlighting, automatic formatting and validation before saving.
-
-Errors are indicated with a red squiggle underline.</source>
-        <translation type="vanished">文字編輯器模式讓您可以編輯純文字，以及具有語法高亮、自動格式化和儲存前驗證的 JSON 或 XML 資料。
-
-錯誤以紅色波浪線下劃線表示。</translation>
-    </message>
-    <message>
         <location filename="../EditDialog.ui" line="176"/>
         <source>This Qt editor is used for right-to-left scripts, which are not supported by the default Text editor. The presence of right-to-left characters is detected and this editor mode is automatically selected.</source>
         <translation>這個 Qt 編輯器用於從右到左的腳本，這些腳本不被預設的文字編輯器支援。檢測到從右到左的字元時，將自動選擇此編輯器模式。</translation>
@@ -1089,12 +1007,12 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditDialog.ui" line="203"/>
         <source>Identification of the cell currently in the editor</source>
-        <translation type="unfinished"></translation>
+        <translation>目前在編輯器中的儲存格識別資訊</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="225"/>
         <source>Type and size of data currently in table</source>
-        <translation type="unfinished"></translation>
+        <translation>目前表格中的資料類型和大小</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="274"/>
@@ -1109,7 +1027,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditDialog.ui" line="313"/>
         <source>When enabled, the auto-format feature formats the data on loading, breaking the text in lines and indenting it for maximum readability. On data saving, the auto-format feature compacts the data removing end of lines, and unnecessary whitespace.</source>
-        <translation>當啟用時，自動格式化功能會在載入時格式化資料，將文字分成行並縮進以獲得最大的可讀性。在儲存資料時，自動格式化功能會壓縮資料，移除行尾和不必要的空白。</translation>
+        <translation>當啟用時，自動格式化功能會在載入時格式化資料，將文字分成行並縮排以獲得最大的可讀性。在儲存資料時，自動格式化功能會壓縮資料，移除行尾和不必要的空白。</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="370"/>
@@ -1262,39 +1180,15 @@ Errors are indicated with a red squiggle underline.</source>
         <translation>這個區域顯示存在於這個資料庫儲存格中的資料的相關資訊</translation>
     </message>
     <message>
-        <source>Type of data currently in cell</source>
-        <translation type="vanished">目前在儲存格中的資料的類型</translation>
-    </message>
-    <message>
-        <source>Size of data currently in table</source>
-        <translation type="vanished">目前在資料表中的資料的大小</translation>
-    </message>
-    <message>
         <location filename="../EditDialog.cpp" line="515"/>
         <source>Choose a filename to export data</source>
         <translation>選擇一個匯出資料的檔案名稱</translation>
     </message>
     <message>
-        <source>Type of data currently in cell: %1 Image</source>
-        <translation type="vanished">目前在儲存格中的資料類型：%1 圖片</translation>
-    </message>
-    <message>
-        <source>%1x%2 pixel(s)</source>
-        <translation type="vanished">%1x%2 像素</translation>
-    </message>
-    <message>
-        <source>Type of data currently in cell: NULL</source>
-        <translation type="vanished">目前在儲存格中的資料類型：NULL</translation>
-    </message>
-    <message>
-        <source>Type of data currently in cell: Text / Numeric</source>
-        <translation type="vanished">目前在儲存格中的資料的類型：文字 / 數值</translation>
-    </message>
-    <message>
         <location filename="../EditDialog.cpp" line="301"/>
         <location filename="../EditDialog.cpp" line="310"/>
         <source>Image data can&apos;t be viewed in this mode.</source>
-        <translation>此模式下無法查看圖片資料。</translation>
+        <translation>此模式下無法檢視圖片資料。</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="302"/>
@@ -1306,7 +1200,7 @@ Errors are indicated with a red squiggle underline.</source>
         <location filename="../EditDialog.cpp" line="369"/>
         <location filename="../EditDialog.cpp" line="378"/>
         <source>Binary data can&apos;t be viewed in this mode.</source>
-        <translation>此模式下無法查看二進位資料。</translation>
+        <translation>此模式下無法檢視二進位資料。</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="370"/>
@@ -1329,33 +1223,33 @@ Errors are indicated with a red squiggle underline.</source>
         <location filename="../EditDialog.cpp" line="925"/>
         <location filename="../EditDialog.cpp" line="1105"/>
         <source>Type: NULL; Size: 0 bytes</source>
-        <translation type="unfinished"></translation>
+        <translation>類型：NULL；大小：0 位元組</translation>
     </message>
     <message numerus="yes">
         <location filename="../EditDialog.cpp" line="927"/>
         <location filename="../EditDialog.cpp" line="1117"/>
         <source>Type: Text / Numeric; Size: %n character(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>類型：文字 / 數值；大小：%n 字元</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="1091"/>
         <source>Type: %1 Image; Size: %2x%3 pixel(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>類型：%1 圖片；大小：%2x%3 像素</translation>
     </message>
     <message numerus="yes">
         <location filename="../EditDialog.cpp" line="1124"/>
         <source>Type: Valid JSON; Size: %n character(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>類型：有效的 JSON；大小：%n 字元</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../EditDialog.cpp" line="1132"/>
         <source>Type: Binary; Size: %n byte(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>類型：二進位；大小：%n 位元組</numerusform>
         </translation>
     </message>
     <message>
@@ -1366,7 +1260,7 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditDialog.cpp" line="1300"/>
         <source>The data has been saved to a temporary file and has been opened with the default application. You can now edit the file and, when you are ready, apply the saved new data to the cell or cancel any changes.</source>
-        <translation>資料已被儲存到臨時檔案並已用預設應用程式打開。您現在可以編輯檔案，準備好後，將儲存的新資料套用到儲存格或取消任何更改。</translation>
+        <translation>資料已被儲存到臨時檔案並已用預設應用程式開啟。您現在可以編輯檔案，準備好後，將儲存的新資料套用到儲存格或取消任何更改。</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="438"/>
@@ -1380,28 +1274,31 @@ Errors are indicated with a red squiggle underline.</source>
 Errors are indicated with a red squiggle underline.
 
 In the Evaluation mode, entered SQLite expressions are evaluated and the result applied to the cell.</source>
-        <translation type="unfinished"></translation>
+        <translation>文字編輯器模式讓您可以編輯純文字，以及具有語法高亮、自動格式化和儲存前驗證的 JSON 或 XML 資料。
+
+在評估模式中，輸入的 SQLite 表達式會被評估，並將結果套用至該儲存格。</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="122"/>
         <source>Unsaved data in the cell editor</source>
-        <translation type="unfinished"></translation>
+        <translation>儲存格編輯器中有未儲存的資料</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="123"/>
         <source>The cell editor contains data not yet applied to the database.
 Do you want to apply the edited data to row=%1, column=%2?</source>
-        <translation type="unfinished"></translation>
+        <translation>儲存格編輯器內含尚未套用至資料庫的資料。
+您是否想將編輯過的資料套用到第 %1 行，第 %2 列？</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="148"/>
         <source>Editing row=%1, column=%2</source>
-        <translation type="unfinished"></translation>
+        <translation>正在編輯第 %1 行，第 %2 列</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="151"/>
         <source>No cell active.</source>
-        <translation type="unfinished"></translation>
+        <translation>沒有活動的儲存格。</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="477"/>
@@ -1417,22 +1314,6 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
         <location filename="../EditDialog.cpp" line="582"/>
         <source>The cell contains invalid %1 data. Reason: %2. Do you really want to apply it to the cell?</source>
         <translation>儲存格包含無效的 %1 資料。原因：%2。您確實要將其套用到儲存格嗎？</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n character(s)</source>
-        <translation type="vanished">
-            <numerusform>%n 個字元</numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>Type of data currently in cell: Binary</source>
-        <translation type="vanished">目前在儲存格中的資料的類型: 二進位制</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n byte(s)</source>
-        <translation type="vanished">
-            <numerusform>%n 位元組</numerusform>
-        </translation>
     </message>
 </context>
 <context>
@@ -1547,17 +1428,17 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
     <message>
         <location filename="../EditTableDialog.ui" line="92"/>
         <source>On Conflict</source>
-        <translation type="unfinished"></translation>
+        <translation>衝突時</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="133"/>
         <source>Strict</source>
-        <translation type="unfinished"></translation>
+        <translation>嚴格模式</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="143"/>
         <source>When the strict option is enabled SQLite enforces the data types of each column when updating or inserting data.</source>
-        <translation type="unfinished"></translation>
+        <translation>啟用嚴格模式後，SQLite 在更新或插入資料時會強制執行每一欄位的資料型態。</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="164"/>
@@ -1581,7 +1462,7 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
     <message>
         <location filename="../EditTableDialog.ui" line="212"/>
         <source>Move to top</source>
-        <translation>移至頂部</translation>
+        <translation>移至頂端</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="235"/>
@@ -1693,11 +1574,7 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
     <message>
         <location filename="../EditTableDialog.ui" line="407"/>
         <source>Index Constraints</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Constraints</source>
-        <translation type="vanished">條件</translation>
+        <translation>索引條件約束</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="415"/>
@@ -1725,17 +1602,17 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
     <message>
         <location filename="../EditTableDialog.ui" line="501"/>
         <source>Foreign Keys</source>
-        <translation type="unfinished"></translation>
+        <translation>外鍵</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="581"/>
         <source>References</source>
-        <translation type="unfinished"></translation>
+        <translation>參照</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="595"/>
         <source>Check Constraints</source>
-        <translation type="unfinished"></translation>
+        <translation>檢查條件約束</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="685"/>
@@ -1754,17 +1631,9 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
         <translation>新增主鍵條件</translation>
     </message>
     <message>
-        <source>Add a foreign key constraint</source>
-        <translation type="vanished">新增外鍵條件</translation>
-    </message>
-    <message>
         <location filename="../EditTableDialog.ui" line="720"/>
         <source>Add a unique constraint</source>
         <translation>新增唯一條件</translation>
-    </message>
-    <message>
-        <source>Add a check constraint</source>
-        <translation type="vanished">新增檢查條件</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="433"/>
@@ -1804,7 +1673,8 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
         <location filename="../EditTableDialog.cpp" line="1222"/>
         <source>Please add a field which meets the following criteria before setting the on conflict action:
  - Primary key flag set</source>
-        <translation type="unfinished"></translation>
+        <translation>在設定衝突時的動作之前，請新增一個符合以下條件的欄位：
+ - 已設定主鍵標記</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="585"/>
@@ -1944,7 +1814,7 @@ All data currently stored in this field will be lost.</source>
         <location filename="../ExportDataDialog.cpp" line="195"/>
         <location filename="../ExportDataDialog.cpp" line="300"/>
         <source>Error while writing the file &apos;%1&apos;: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>寫入檔案 &apos;%1&apos; 時發生錯誤：%2</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.cpp" line="215"/>
@@ -1969,7 +1839,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportDataDialog.cpp" line="420"/>
         <source>Export finished with errors.</source>
-        <translation type="unfinished"></translation>
+        <translation>匯出完成，但過程中有錯誤。</translation>
     </message>
 </context>
 <context>
@@ -2027,7 +1897,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportSqlDialog.ui" line="148"/>
         <source>Keep original CREATE statements</source>
-        <translation type="unfinished"></translation>
+        <translation>保留原始的 CREATE 陳述式</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="109"/>
@@ -2721,12 +2591,12 @@ x~y	範圍：介於 x 和 y 之間的值
     <message>
         <location filename="../ImportCsvDialog.ui" line="356"/>
         <source>Use local number conventions</source>
-        <translation type="unfinished"></translation>
+        <translation>使用本地數字格式</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="366"/>
         <source>Use decimal and thousands separators according to the system locale.</source>
-        <translation type="unfinished"></translation>
+        <translation>根據系統區域設定使用小數點和千位分隔符號。</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="373"/>
@@ -2797,7 +2667,7 @@ x~y	範圍：介於 x 和 y 之間的值
     <message>
         <location filename="../ImportCsvDialog.cpp" line="636"/>
         <source>Could not prepare INSERT statement: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>無法準備 INSERT 陳述式：%1</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.cpp" line="726"/>
@@ -2852,32 +2722,32 @@ x~y	範圍：介於 x 和 y 之間的值
         <location filename="../MainWindow.ui" line="53"/>
         <source>&amp;Database Structure</source>
         <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>&amp;資料庫結構</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="120"/>
         <location filename="../MainWindow.ui" line="123"/>
         <source>&amp;Browse Data</source>
         <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>&amp;瀏覽資料</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="155"/>
         <source>Edit P&amp;ragmas</source>
         <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>編輯 P&amp;ragmas</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="158"/>
         <source>&amp;Edit P&amp;ragmas</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;編輯 P&amp;ragmas</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="688"/>
         <location filename="../MainWindow.ui" line="691"/>
         <source>E&amp;xecute SQL</source>
         <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>執&amp;行 SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="765"/>
@@ -2892,7 +2762,7 @@ x~y	範圍：介於 x 和 y 之間的值
     <message>
         <location filename="../MainWindow.ui" line="781"/>
         <source>&amp;Recent Files</source>
-        <translation type="unfinished"></translation>
+        <translation>最近使用的檔案</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="811"/>
@@ -3005,7 +2875,7 @@ x~y	範圍：介於 x 和 y 之間的值
     <message>
         <location filename="../MainWindow.ui" line="1181"/>
         <source>Ctrl+N</source>
-        <translation></translation>
+        <translation>Ctrl+N</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1193"/>
@@ -3032,7 +2902,7 @@ x~y	範圍：介於 x 和 y 之間的值
     <message>
         <location filename="../MainWindow.ui" line="1205"/>
         <source>Ctrl+O</source>
-        <translation></translation>
+        <translation>Ctrl+O</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1220"/>
@@ -3043,7 +2913,7 @@ x~y	範圍：介於 x 和 y 之間的值
         <location filename="../MainWindow.cpp" line="190"/>
         <location filename="../MainWindow.cpp" line="3748"/>
         <source>Ctrl+W</source>
-        <translation></translation>
+        <translation>Ctrl+W</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1250"/>
@@ -3070,7 +2940,7 @@ x~y	範圍：介於 x 和 y 之間的值
     <message>
         <location filename="../MainWindow.ui" line="1307"/>
         <source>Ctrl+S</source>
-        <translation></translation>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1321"/>
@@ -3091,7 +2961,7 @@ x~y	範圍：介於 x 和 y 之間的值
     <message>
         <location filename="../MainWindow.ui" line="1338"/>
         <source>Ctrl+Q</source>
-        <translation></translation>
+        <translation>Ctrl+Q</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1349"/>
@@ -3101,7 +2971,7 @@ x~y	範圍：介於 x 和 y 之間的值
     <message>
         <location filename="../MainWindow.ui" line="1352"/>
         <source>This option lets you import data from an .sql dump text file into a new or existing database. SQL dump files can be created on most database engines, including MySQL and PostgreSQL.</source>
-        <translation>這個選項讓你從一個 .sql 轉儲文字檔中匯入資料到一個新的或現有的資料庫。SQL 轉儲檔可以在大多數資料庫引擎上建立，包括 MySQL 和 PostgreSQL。</translation>
+        <translation>這個選項讓您從一個 .sql 轉儲文字檔中匯入資料到一個新的或現有的資料庫。SQL 轉儲檔可以在大多數資料庫引擎上建立，包括 MySQL 和 PostgreSQL。</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1363"/>
@@ -3121,7 +2991,7 @@ x~y	範圍：介於 x 和 y 之間的值
     <message>
         <location filename="../MainWindow.ui" line="1380"/>
         <source>This option lets you export a database to a .sql dump text file. SQL dump files contain all data necessary to recreate the database on most database engines, including MySQL and PostgreSQL.</source>
-        <translation>這個選項讓你匯出一個資料庫導一個 .sql 轉儲文字檔案。SQL 轉儲檔包含在大多數資料庫引擎上(包括 MySQL 和 PostgreSQL)重新建立資料庫所需的所有資料。</translation>
+        <translation>這個選項讓您匯出一個資料庫導一個 .sql 轉儲文字檔案。SQL 轉儲檔包含在大多數資料庫引擎上(包括 MySQL 和 PostgreSQL)重新建立資料庫所需的所有資料。</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1391"/>
@@ -3136,21 +3006,17 @@ x~y	範圍：介於 x 和 y 之間的值
     <message>
         <location filename="../MainWindow.ui" line="1412"/>
         <source>Open the Create Table wizard, where it is possible to define the name and fields for a new table in the database</source>
-        <translation>開啟“建立資料表”引導精靈，在那裡可以定義在資料庫中的一個新資料表的名稱和欄位</translation>
+        <translation>開啟「建立資料表」引導精靈，在那裡可以定義在資料庫中的一個新資料表的名稱和欄位</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1433"/>
         <source>Open the Delete Table wizard, where you can select a database table to be dropped.</source>
-        <translation>開啟“刪除資料表”引導精靈，在那裡你可以選擇要丟棄的一個資料庫資料表。</translation>
-    </message>
-    <message>
-        <source>Open the Modify Table wizard, where it is possible to rename an existing table. It is also possible to add or delete fields form a table, as well as modify field names and types.</source>
-        <translation type="vanished">開啟“修改資料表”引導精靈，在其中可以重新命名一個現有的資料表。也可以從一個資料表中加入或刪除欄位，以及修改欄位名稱和類型。</translation>
+        <translation>開啟「刪除資料表」引導精靈，在那裡您可以選擇要丟棄的一個資料庫資料表。</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1469"/>
         <source>Open the Create Index wizard, where it is possible to define a new index on an existing database table.</source>
-        <translation>開啟“建立索引”引導精靈，在那裡可以在一個現有的資料庫資料表上定義一個新索引。</translation>
+        <translation>開啟「建立索引」引導精靈，在那裡可以在一個現有的資料庫資料表上定義一個新索引。</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1481"/>
@@ -3176,7 +3042,7 @@ x~y	範圍：介於 x 和 y 之間的值
     <message>
         <location filename="../MainWindow.ui" line="1520"/>
         <source>Shift+F1</source>
-        <translation></translation>
+        <translation>Shift+F1</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1536"/>
@@ -3186,12 +3052,7 @@ x~y	範圍：介於 x 和 y 之間的值
     <message>
         <location filename="../MainWindow.ui" line="1551"/>
         <source>Ctrl+T</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Database Structure</source>
-        <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="vanished">資料庫結構</translation>
+        <translation>Ctrl+T</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="95"/>
@@ -3200,11 +3061,6 @@ You can drag SQL statements from an object row and drop them into other applicat
 </source>
         <translation>這是已開啟資料庫的結構。
 您可以從物件列中拖曳 SQL 陳述式，並將它們拖曳到其他應用程式或另一個「DB Browser for SQLite」中。</translation>
-    </message>
-    <message>
-        <source>Browse Data</source>
-        <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="vanished">瀏覽資料</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2171"/>
@@ -3229,7 +3085,7 @@ You can drag SQL statements from an object row and drop them into other applicat
     <message>
         <location filename="../MainWindow.ui" line="2183"/>
         <source>Ctrl+/</source>
-        <translation></translation>
+        <translation>Ctrl+/</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2195"/>
@@ -3247,19 +3103,9 @@ You can drag SQL statements from an object row and drop them into other applicat
         <translation>停止目前正在執行的 SQL 腳本</translation>
     </message>
     <message>
-        <source>Edit Pragmas</source>
-        <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="vanished">編輯 Pragmas</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="265"/>
         <source>Warning: this pragma is not readable and this value has been inferred. Writing the pragma might overwrite a redefined LIKE provided by an SQLite extension.</source>
         <translation>警告：這個 pragma 是不可讀的，並且這個值已經被推斷出來。寫入 pragma 可能會覆蓋由 SQLite 擴充套件提供的已重新定義的 LIKE。</translation>
-    </message>
-    <message>
-        <source>Execute SQL</source>
-        <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="vanished">執行 SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="848"/>
@@ -3332,39 +3178,39 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1169"/>
         <source>&amp;New Database</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;新建資料庫</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1229"/>
         <source>This button closes the connection to the currently open database file</source>
-        <translation>這個按鈕關閉到目前開啟的資料庫檔案的連線</translation>
+        <translation>這個按鈕會關閉目前開啟的資料庫檔案的連線</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1232"/>
         <location filename="../MainWindow.cpp" line="476"/>
         <source>Ctrl+F4</source>
-        <translation></translation>
+        <translation>Ctrl+F4</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1247"/>
         <source>&amp;Revert Changes</source>
-        <translation>還原變更(&amp;R)</translation>
+        <translation>&amp;還原變更</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1271"/>
         <source>&amp;Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;復原</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1274"/>
         <location filename="../MainWindow.ui" line="1277"/>
         <source>Undo last change to the database</source>
-        <translation type="unfinished"></translation>
+        <translation>復原資料庫的最後一次變更</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1280"/>
         <source>This action undoes the last change performed to the database in the Database Browser or in Execute SQL. Redoing is not possible.</source>
-        <translation type="unfinished"></translation>
+        <translation>這個動作會復原在 Database Browser 或執行 SQL 中對資料庫進行的最後一次變更。無法重做。</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1295"/>
@@ -3379,7 +3225,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1451"/>
         <source>Open the Modify Table wizard, where it is possible to rename an existing table. It is also possible to add or delete fields from a table, as well as modify field names and types.</source>
-        <translation type="unfinished"></translation>
+        <translation>開啟「修改表格」精靈，在此您可以重新命名已存在的表格。您也可以新增或刪除表格中的欄位，以及修改欄位名稱和類型。</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1563"/>
@@ -3394,7 +3240,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1584"/>
         <source>Ctrl+Shift+T</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+T</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1605"/>
@@ -3414,7 +3260,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1652"/>
         <source>F1</source>
-        <translation></translation>
+        <translation>F1</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1664"/>
@@ -3439,7 +3285,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1715"/>
         <source>&amp;Save Project</source>
-        <translation type="unfinished"></translation>
+        <translation>儲存專案(&amp;S)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1736"/>
@@ -3449,7 +3295,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1739"/>
         <source>Open &amp;Project</source>
-        <translation type="unfinished"></translation>
+        <translation>開啟專案(&amp;P)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1763"/>
@@ -3480,7 +3326,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1852"/>
         <source>Table(&amp;s) to JSON...</source>
-        <translation>資料表(&amp;S)到 JSON...</translation>
+        <translation>資料表(&amp;S)轉換為 JSON...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1867"/>
@@ -3490,7 +3336,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1879"/>
         <source>Ctrl+Shift+O</source>
-        <translation></translation>
+        <translation>Ctrl+Shift+O</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1891"/>
@@ -3500,7 +3346,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1894"/>
         <source>Save the results view</source>
-        <translation>儲存結果視圖</translation>
+        <translation>儲存結果顯示</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1897"/>
@@ -3526,7 +3372,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1921"/>
         <source>Ctrl+F</source>
-        <translation></translation>
+        <translation>Ctrl+F</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1936"/>
@@ -3547,43 +3393,43 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1948"/>
         <source>Ctrl+H</source>
-        <translation></translation>
+        <translation>Ctrl+H</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1956"/>
         <source>Export to &amp;CSV</source>
-        <translation>匯出到 &amp;CSV</translation>
+        <translation>匯出為 &amp;CSV</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1961"/>
         <source>Export to &amp;JSON</source>
-        <translation type="unfinished"></translation>
+        <translation>匯出為 &amp;JSON</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1966"/>
         <source>Save as &amp;view</source>
-        <translation>儲存為視圖(&amp;V)</translation>
+        <translation>儲存為檢視表(&amp;V)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1969"/>
         <source>Save as view</source>
-        <translation>儲存為視圖</translation>
+        <translation>儲存為檢視表</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2014"/>
         <source>&amp;Open Database</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;開啟資料庫</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2039"/>
         <source>Drag &amp;&amp; Drop SELECT Query</source>
-        <translation type="unfinished"></translation>
+        <translation>拖曳 &amp;&amp; 放下 SELECT 查詢</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2042"/>
         <location filename="../MainWindow.ui" line="2045"/>
         <source>When dragging fields from the same table or a single table, drop a SELECT query into the editor</source>
-        <translation type="unfinished"></translation>
+        <translation>當從同一資料表或單一資料表拖曳欄位時，將 SELECT 查詢放入編輯器</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2249"/>
@@ -3594,56 +3440,52 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <location filename="../MainWindow.ui" line="2263"/>
         <location filename="../MainWindow.cpp" line="477"/>
         <source>Ctrl+Shift+W</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+W</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2292"/>
         <source>Table from CSV data in Clipboard...</source>
-        <translation type="unfinished"></translation>
+        <translation>從剪貼簿中的 CSV 資料建立資料表...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2295"/>
         <source>This treats the current clipboard contents as a CSV file and opens the same import wizard that is used for importing CSV data from a file.</source>
-        <translation type="unfinished"></translation>
+        <translation>將目前剪貼簿的內容視為 CSV 檔案，並開啟與從檔案匯入 CSV 資料相同的匯入精靈。</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2300"/>
         <source>Show &amp;Row Counts</source>
-        <translation type="unfinished"></translation>
+        <translation>顯示 &amp;列計數</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2303"/>
         <source>This shows the number of rows for each table and view in the database.</source>
-        <translation type="unfinished"></translation>
+        <translation>顯示資料庫中每個資料表和檢視表的列數。</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2315"/>
         <source>Save Database &amp;As...</source>
-        <translation type="unfinished"></translation>
+        <translation>另存資料庫 &amp;為...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2318"/>
         <source>Save the current database as a different file</source>
-        <translation type="unfinished"></translation>
+        <translation>將目前的資料庫另存為不同的檔案</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2327"/>
         <source>Refresh</source>
-        <translation type="unfinished">重新整理</translation>
+        <translation>重新整理</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2330"/>
         <source>Reload the database structure</source>
-        <translation type="unfinished"></translation>
+        <translation>重新載入資料庫結構</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1987"/>
         <source>Shows or hides the Project toolbar.</source>
         <translation>顯示或隱藏專案工具列。</translation>
-    </message>
-    <message>
-        <source>Recent Files</source>
-        <translation type="vanished">最近的檔案</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1545"/>
@@ -3917,7 +3759,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.cpp" line="291"/>
         <source>Ctrl+E</source>
-        <translation></translation>
+        <translation>Ctrl+E</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1637"/>
@@ -3932,13 +3774,13 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.cpp" line="276"/>
         <source>Ctrl+L</source>
-        <translation></translation>
+        <translation>Ctrl+L</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2132"/>
         <location filename="../MainWindow.ui" line="2159"/>
         <source>Ctrl+P</source>
-        <translation></translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="400"/>
@@ -3954,17 +3796,17 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1569"/>
         <source>Ctrl+Return</source>
-        <translation></translation>
+        <translation>Ctrl+Return</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="281"/>
         <source>Ctrl+D</source>
-        <translation></translation>
+        <translation>Ctrl+D</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="286"/>
         <source>Ctrl+I</source>
-        <translation></translation>
+        <translation>Ctrl+I</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="331"/>
@@ -4042,12 +3884,12 @@ Reason: %1</source>
     <message>
         <location filename="../MainWindow.cpp" line="963"/>
         <source>Error checking foreign keys after table modification. The changes will be reverted.</source>
-        <translation>修改資料表後檢查外來鍵時出現錯誤。將會還原變更。</translation>
+        <translation>修改資料表後檢查外鍵時出現錯誤。將會還原變更。</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="966"/>
         <source>This table did not pass a foreign-key check.&lt;br/&gt;You should run &apos;Tools | Foreign-Key Check&apos; and fix the reported issues.</source>
-        <translation>這個資料表未通過外來鍵檢查。&lt;br/&gt;您應該執行「工具 | 外來鍵檢查」並修正報告的問題。</translation>
+        <translation>這個資料表未通過外鍵檢查。&lt;br/&gt;您應該執行「工具 | 外鍵檢查」並修正報告的問題。</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1310"/>
@@ -4078,8 +3920,8 @@ Reason: %1</source>
         <location filename="../MainWindow.cpp" line="1531"/>
         <source>Do you want to create a new database file to hold the imported data?
 If you answer no we will attempt to import the data in the SQL file to the current database.</source>
-        <translation>您是否確認您想建立一個新的資料庫檔用來存放匯入的資料?
-如果您會到“否”的話，我們將嘗試匯入 SQL 檔中的資料到目前資料庫。</translation>
+        <translation>您是否想要建立一個新的資料庫檔案來儲存匯入的資料？
+如果您選擇「否」，我們將嘗試將 SQL 檔中的資料匯入到目前的資料庫。</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1542"/>
@@ -4099,7 +3941,7 @@ If you answer no we will attempt to import the data in the SQL file to the curre
     <message>
         <location filename="../MainWindow.cpp" line="1655"/>
         <source>Delete View</source>
-        <translation>刪除視圖</translation>
+        <translation>刪除檢視表</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1658"/>
@@ -4121,28 +3963,28 @@ If you answer no we will attempt to import the data in the SQL file to the curre
         <location filename="../MainWindow.cpp" line="1975"/>
         <source>Setting PRAGMA values will commit your current transaction.
 Are you sure?</source>
-        <translation>設定 PRAGMA 值將會提交您的目前事務。.
+        <translation>設定 PRAGMA 值將會提交您的目前交易。.
 您確認嗎?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="606"/>
         <source>In-Memory database</source>
-        <translation>記憶體資料庫</translation>
+        <translation>記憶體內部資料庫</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="198"/>
         <source>Ctrl+Tab</source>
-        <translation></translation>
+        <translation>Ctrl+Tab</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="207"/>
         <source>Ctrl+Shift+Tab</source>
-        <translation></translation>
+        <translation>Ctrl+Shift+Tab</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="218"/>
         <source>Ctrl+PgUp</source>
-        <translation></translation>
+        <translation>Ctrl+PgUp</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="235"/>
@@ -4157,7 +3999,7 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="332"/>
         <source>Ctrl+Alt+0</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Alt+0</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="340"/>
@@ -4182,22 +4024,22 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="358"/>
         <source>Dock Windows at Top</source>
-        <translation>在頂部停駐視窗</translation>
+        <translation>在頂端停駐視窗</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="476"/>
         <source>Ctrl+Alt+W</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Alt+W</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="688"/>
         <source>Choose a database file to save under</source>
-        <translation type="unfinished"></translation>
+        <translation>選擇一個資料庫檔案進行儲存</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="699"/>
         <source>Error while saving the database to the new file.</source>
-        <translation type="unfinished"></translation>
+        <translation>儲存資料庫到新檔案時發生錯誤。</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="891"/>
@@ -4209,7 +4051,7 @@ All data associated with the table will be lost.</source>
     <message>
         <location filename="../MainWindow.cpp" line="893"/>
         <source>Are you sure you want to delete the view &apos;%1&apos;?</source>
-        <translation>您是否確認您想刪除視圖「%1」?</translation>
+        <translation>您是否確認您想刪除檢視表「%1」?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="895"/>
@@ -4229,7 +4071,7 @@ All data associated with the table will be lost.</source>
     <message>
         <location filename="../MainWindow.cpp" line="910"/>
         <source>Error: could not delete the view.</source>
-        <translation>錯誤：無法刪除視圖。</translation>
+        <translation>錯誤：無法刪除檢視表。</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="912"/>
@@ -4253,12 +4095,12 @@ All data associated with the table will be lost.</source>
         <source>Editing the table requires to save all pending changes now.
 Are you sure you want to save the database?</source>
         <translation>編輯表格前必須先儲存所有尚未完成的修改。
-你確定要儲存這個資料庫嗎？</translation>
+您確定要儲存這個資料庫嗎？</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="990"/>
         <source>Edit View %1</source>
-        <translation>編輯視圖 %1</translation>
+        <translation>編輯檢視表 %1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="996"/>
@@ -4311,7 +4153,7 @@ Are you sure you want to save the database?</source>
         <location filename="../MainWindow.cpp" line="1282"/>
         <source>Setting PRAGMA values or vacuuming will commit your current transaction.
 Are you sure?</source>
-        <translation>設定 PRAGMA 值或清理將會提交您的目前事務。.
+        <translation>設定 PRAGMA 值或清理將會提交您的目前交易。.
 您確認嗎?</translation>
     </message>
     <message>
@@ -4332,7 +4174,7 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="2704"/>
         <source>DB file &apos;%1&apos; could not be opened</source>
-        <translation type="unfinished"></translation>
+        <translation>無法開啟資料庫檔案 &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2841"/>
@@ -4342,12 +4184,12 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="2860"/>
         <source>Table &apos;%1&apos; not found; settings ignored</source>
-        <translation type="unfinished"></translation>
+        <translation>找不到資料表 &apos;%1&apos;；設定已忽略</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3187"/>
         <source>-- Reference to file &quot;%1&quot; (not supported by this version) --</source>
-        <translation type="unfinished"></translation>
+        <translation>-- 指向檔案 &quot;%1&quot;（本版本不支援）--</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3203"/>
@@ -4422,7 +4264,7 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="1656"/>
         <source>Modify View</source>
-        <translation>修改視圖</translation>
+        <translation>修改檢視表</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1659"/>
@@ -4468,7 +4310,7 @@ Are you sure?</source>
         <location filename="../MainWindow.cpp" line="1849"/>
         <source>Select the action to apply to the dropped file(s). &lt;br/&gt;Note: only &apos;Import&apos; will process more than one file.</source>
         <translation>
-            <numerusform>選擇要應用於拖放的檔案的動作。 &lt;br/&gt;注意：只有 &apos;匯入&apos; 將處理多個檔案。</numerusform>
+            <numerusform>選擇要套用於拖放的檔案的動作。 &lt;br/&gt;注意：只有 &apos;匯入&apos; 將處理多個檔案。</numerusform>
         </translation>
     </message>
     <message>
@@ -4561,7 +4403,7 @@ Create a backup!</source>
     <message>
         <location filename="../MainWindow.cpp" line="3482"/>
         <source>Please specify the view name</source>
-        <translation>請指定視圖名稱</translation>
+        <translation>請指定檢視表名稱</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3486"/>
@@ -4571,12 +4413,12 @@ Create a backup!</source>
     <message>
         <location filename="../MainWindow.cpp" line="3493"/>
         <source>View successfully created.</source>
-        <translation>成功建立視圖。</translation>
+        <translation>成功建立檢視表。</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3495"/>
         <source>Error creating view: %1</source>
-        <translation>建立視圖時出現錯誤: %1</translation>
+        <translation>建立檢視表時出現錯誤: %1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3503"/>
@@ -4617,7 +4459,7 @@ Create a backup!</source>
     <message>
         <location filename="../PlotDock.ui" line="42"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This pane shows the list of columns of the currently browsed table or the just executed query. You can select the columns that you want to be used as X or Y axis for the plot pane below. The table shows detected axis type that will affect the resulting plot. For the Y axis you can only select numeric columns, but for the X axis you will be able to select:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Date/Time&lt;/span&gt;: strings with format &amp;quot;yyyy-MM-dd hh:mm:ss&amp;quot; or &amp;quot;yyyy-MM-ddThh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Date&lt;/span&gt;: strings with format &amp;quot;yyyy-MM-dd&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Time&lt;/span&gt;: strings with format &amp;quot;hh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Label&lt;/span&gt;: other string formats. Selecting this column as X axis will produce a Bars plot with the column values as labels for the bars&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Numeric&lt;/span&gt;: integer or real values&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Double-clicking the Y cells you can change the used color for that graph.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;此面板顯示目前瀏覽的表格或剛執行的查詢的資料列清單。您可以選擇您想要用作下方繪圖面板的 X 或 Y 軸的資料列。表格顯示會影響結果圖表的偵測到的座標軸類型。對於 Y 軸，您只能選擇數值列，但對於 X 軸，您將能夠選擇：&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;日期/時間&lt;/span&gt;：格式為 &amp;quot;yyyy-MM-dd hh:mm:ss&amp;quot; 或 &amp;quot;yyyy-MM-ddThh:mm:ss&amp;quot; 的字串&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;日期&lt;/span&gt;：格式為 &amp;quot;yyyy-MM-dd&amp;quot; 的字串&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;時間&lt;/span&gt;：格式為 &amp;quot;hh:mm:ss&amp;quot; 的字串&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;標籤&lt;/span&gt;：其他字串格式。選擇此列作為 X 軸將產生一個柱狀圖，列值作為柱子的標籤&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;數值&lt;/span&gt;：整數或實數值&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;雙擊 Y 儲存格，您可以更改該圖形使用的顏色。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;此面板顯示目前瀏覽的表格或剛執行的查詢的資料列清單。您可以選擇您想要用作下方繪圖面板的 X 或 Y 軸的資料列。表格顯示會影響結果圖表的偵測到的座標軸類型。對於 Y 軸，您只能選擇數值列，但對於 X 軸，您將能夠選擇：&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;日期/時間&lt;/span&gt;：格式為 &amp;quot;yyyy-MM-dd hh:mm:ss&amp;quot; 或 &amp;quot;yyyy-MM-ddThh:mm:ss&amp;quot; 的字串&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;日期&lt;/span&gt;：格式為 &amp;quot;yyyy-MM-dd&amp;quot; 的字串&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;時間&lt;/span&gt;：格式為 &amp;quot;hh:mm:ss&amp;quot; 的字串&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;標籤&lt;/span&gt;：其他字串格式。選擇此列作為 X 軸將產生一個柱狀圖，列值作為柱子的標籤&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;數值&lt;/span&gt;：整數或實數值&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;點選兩下 Y 儲存格，您可以更改該圖形使用的顏色。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="58"/>
@@ -4818,7 +4660,7 @@ Select the axes or axes labels to drag and zoom only in that orientation.</sourc
     <message>
         <location filename="../PlotDock.cpp" line="107"/>
         <source>Fixed number format</source>
-        <translation type="unfinished"></translation>
+        <translation>固定數字格式</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="198"/>
@@ -4876,7 +4718,7 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     <message>
         <location filename="../PlotDock.cpp" line="735"/>
         <source>There are curves in this plot and the selected line style can only be applied to graphs sorted by X. Either sort the table or query by X to remove curves or select one of the styles supported by curves: None or Line.</source>
-        <translation>此圖表中有曲線，且所選的線型只能應用於按 X 排序的圖形。請按 X 排序表格或查詢以移除曲線，或選擇曲線支援的其中一種樣式：無或線條。</translation>
+        <translation>此圖表中有曲線，且所選的線型只能套用於按 X 排序的圖形。請按 X 排序表格或查詢以移除曲線，或選擇曲線支援的其中一種樣式：無或線條。</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="853"/>
@@ -4976,7 +4818,7 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     <message>
         <location filename="../PreferencesDialog.ui" line="655"/>
         <source>Remove line breaks in schema &amp;view</source>
-        <translation>在綱要視圖中移除換行(&amp;V)</translation>
+        <translation>在結構檢視中移除換行(&amp;V)</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="665"/>
@@ -5171,7 +5013,7 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     <message>
         <location filename="../PreferencesDialog.ui" line="1750"/>
         <source>If enabled the SQL code editor and the result table view are shown side by side instead of one over the other.</source>
-        <translation>如果啟用，則 SQL 程式碼編輯器和結果表格視圖將並排顯示，而不是一個在另一個上面。</translation>
+        <translation>如果啟用，則 SQL 程式碼編輯器和結果表格檢視將並排顯示，而不是一個在另一個上面。</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1683"/>
@@ -5340,8 +5182,8 @@ Can be set to 0 for disabling the functionalities.</source>
         <location filename="../PreferencesDialog.ui" line="1231"/>
         <source>This is the maximum number of rows in a table for enabling the value completion based on current values in the column.
 Can be set to 0 for disabling completion.</source>
-        <translation>這是為了啟用依據目前欄位值完成數值的表格所允許的最大行數。
-可以設定為 0 以停用完成工程。</translation>
+        <translation>這是為了啟用依據目前欄位值的自動完成功能所允許的最大行數。
+設定為 0 可以停用自動完成功能。</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="840"/>
@@ -5351,7 +5193,7 @@ Can be set to 0 for disabling completion.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="542"/>
         <source>Light style</source>
-        <translation type="unfinished"></translation>
+        <translation>淺色風格</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="852"/>
@@ -5361,7 +5203,7 @@ Can be set to 0 for disabling completion.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="885"/>
         <source>Formatted</source>
-        <translation type="unfinished"></translation>
+        <translation>已格式化</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="908"/>
@@ -5434,12 +5276,12 @@ Can be set to 0 for disabling completion.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="1594"/>
         <source>Use tabs for indentation</source>
-        <translation type="unfinished"></translation>
+        <translation>使用 Tab 進行縮排</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1604"/>
         <source>When set, the Tab key will insert tab and space characters for indentation. Otherwise, just spaces will be used.</source>
-        <translation type="unfinished"></translation>
+        <translation>設定後，按下 Tab 鍵會用 Tab 和空格進行縮排；如果未設定，則只會用空格來縮排。</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1614"/>
@@ -6018,7 +5860,7 @@ Please check again.</source>
     <message>
         <location filename="../RemoteDock.ui" line="139"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB Browser for SQLite. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to &amp;quot;Generate client certificate&amp;quot; (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB Browser for SQLite Preferences. Click the button to add a new certificate to DB Browser for SQLite and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;在此面板中，可以將 dbhub.io 網站的遠端資料庫新增到 DB Browser for SQLite。首先，您需要一個身份：&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;登入 dbhub.io 網站（使用您的 GitHub 認證或任何您想要的方式）&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;點選「產生客戶端憑證」按鈕（這就是您的身份）。這將給您一個憑證檔案（將其儲存到您的本機磁碟）。&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;轉到 DB Browser for SQLite 偏好設定的遠端標籤。點選按鈕以新增新的憑證到 DB Browser for SQLite，並選擇剛剛下載的憑證檔案。&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;現在，遠端面板會顯示您的身份，並且您可以新增遠端資料庫。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;在此面板中，您可以將來自 dbhub.io 網站的遠端資料庫新增至 DB Browser for SQLite。首先，您需要一個身份識別：&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;登入 dbhub.io 網站（可使用您的 GitHub 憑證或其他您選擇的方式）&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;點選「產生客戶端憑證」按鈕（這就是您的身份識別）。這會提供您一個憑證檔案（請將其儲存至您的本機磁碟）&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;前往 DB Browser for SQLite 偏好設定中的遠端標籤。點選按鈕以將新的憑證新增至 DB Browser for SQLite，並選擇您剛下載的憑證檔案。&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;現在，遠端面板會顯示您的身份識別，您便可以新增遠端資料庫。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="147"/>
@@ -6028,7 +5870,7 @@ Please check again.</source>
     <message>
         <location filename="../RemoteDock.ui" line="173"/>
         <source>Current Database</source>
-        <translation>目前資料庫</translation>
+        <translation>目前的資料庫</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="231"/>
@@ -6036,22 +5878,14 @@ Please check again.</source>
         <translation>複製</translation>
     </message>
     <message>
-        <source>User</source>
-        <translation type="vanished">使用者</translation>
-    </message>
-    <message>
-        <source>Database</source>
-        <translation type="vanished">資料庫</translation>
-    </message>
-    <message>
         <location filename="../RemoteDock.ui" line="240"/>
         <source>&amp;User</source>
-        <translation type="unfinished"></translation>
+        <translation>使用者</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="257"/>
         <source>&amp;Database</source>
-        <translation type="unfinished">資料庫(&amp;D)</translation>
+        <translation>資料庫(&amp;D)</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="274"/>
@@ -6071,7 +5905,7 @@ Please check again.</source>
     <message>
         <location filename="../RemoteDock.ui" line="390"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;You are currently using a built-in, read-only identity. For uploading your database, you need to configure and use your DBHub.io account.&lt;/p&gt;&lt;p&gt;No DBHub.io account yet? &lt;a href=&quot;https://dbhub.io/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Create one now&lt;/span&gt;&lt;/a&gt; and import your certificate &lt;a href=&quot;#preferences&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;here&lt;/span&gt;&lt;/a&gt; to share your databases.&lt;/p&gt;&lt;p&gt;For online help visit &lt;a href=&quot;https://dbhub.io/about&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;here&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;您目前正在使用內建的唯讀身份。要上傳您的資料庫，您需要設定並使用您的 DBHub.io 帳戶。&lt;/p&gt;&lt;p&gt;還沒有 DBHub.io 帳戶嗎？ &lt;a href=&quot;https://dbhub.io/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;現在就建立一個&lt;/span&gt;&lt;/a&gt;，並將您的憑證匯入 &lt;a href=&quot;#preferences&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;此處&lt;/span&gt;&lt;/a&gt;，以分享您的資料庫。&lt;/p&gt;&lt;p&gt;如需線上幫助，請訪問 &lt;a href=&quot;https://dbhub.io/about&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;此處&lt;/span&gt;&lt;/a&gt;。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;您目前正在使用內建的唯讀身份。要上傳您的資料庫，您需要設定並使用您的 DBHub.io 帳戶。&lt;/p&gt;&lt;p&gt;還沒有 DBHub.io 帳戶嗎？ &lt;a href=&quot;https://dbhub.io/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;現在就建立一個&lt;/span&gt;&lt;/a&gt;，並將您的憑證匯入 &lt;a href=&quot;#preferences&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;此處&lt;/span&gt;&lt;/a&gt;，以分享您的資料庫。&lt;/p&gt;&lt;p&gt;如需線上支援，請造訪 &lt;a href=&quot;https://dbhub.io/about&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;此處&lt;/span&gt;&lt;/a&gt;。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="400"/>
@@ -6116,11 +5950,7 @@ Please check again.</source>
     <message>
         <location filename="../RemoteDock.ui" line="484"/>
         <source>Reload all data and update the views</source>
-        <translation>重新載入所有資料並更新視圖</translation>
-    </message>
-    <message>
-        <source>F5</source>
-        <translation type="vanished">F5</translation>
+        <translation>重新載入所有資料並更新檢視表</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="493"/>
@@ -6240,7 +6070,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>Name</source>
-        <translation type="unfinished">名稱</translation>
+        <translation>名稱</translation>
     </message>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
@@ -6265,7 +6095,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>File</source>
-        <translation type="unfinished">檔案</translation>
+        <translation>檔案</translation>
     </message>
 </context>
 <context>
@@ -6273,7 +6103,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../RemoteModel.cpp" line="109"/>
         <source>Name</source>
-        <translation type="unfinished">名稱</translation>
+        <translation>名稱</translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="109"/>
@@ -6338,7 +6168,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../RemoteNetwork.cpp" line="358"/>
         <source>Cancel</source>
-        <translation type="unfinished">取消</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="363"/>
@@ -6353,10 +6183,6 @@ Are you sure you want to proceed?</source>
 %1</source>
         <translation>正在從
 %1 下載遠端資料庫</translation>
-    </message>
-    <message>
-        <source>Error: The network is not accessible.</source>
-        <translation type="vanished">錯誤：無法存取網路。</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="444"/>
@@ -6414,7 +6240,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../RemotePushDialog.cpp" line="74"/>
         <source>Database will be private. Only you have access to it.</source>
-        <translation>資料庫將會私有。只有你有存取權限。</translation>
+        <translation>資料庫將會私有化。只有您有存取權限。</translation>
     </message>
     <message>
         <location filename="../RemotePushDialog.cpp" line="78"/>
@@ -6562,13 +6388,9 @@ Are you sure you want to proceed?</source>
         <translation>此欄位顯示最後執行的陳述式的結果和狀態碼。</translation>
     </message>
     <message>
-        <source>Couldn&apos;t read file: %1.</source>
-        <translation type="vanished">無法讀取檔案：%1。</translation>
-    </message>
-    <message>
         <location filename="../SqlExecutionArea.cpp" line="246"/>
         <source>Couldn&apos;t read file &quot;%1&quot;: %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>無法讀取檔案「%1」：%2。</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="276"/>
@@ -6584,22 +6406,22 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="323"/>
         <source>The file &quot;%1&quot; was modified by another program. Do you want to reload it?%2</source>
-        <translation>檔案 &quot;%1&quot; 已被其他程式修改。您要重新載入嗎？%2</translation>
+        <translation>檔案「%1」已被其他程式修改。您要重新載入嗎？%2</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="325"/>
         <source>Answer &quot;Yes to All&quot; to reload the file on any external update without further prompting.</source>
-        <translation type="unfinished"></translation>
+        <translation>回答「全部皆是」以在任何外部更新時無需再次提示便重新載入檔案。</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="327"/>
         <source>Answer &quot;No to All&quot; to ignore any external update without further prompting.</source>
-        <translation type="unfinished"></translation>
+        <translation>回答「全部皆否」以在任何外部更新時無需再次提示便忽略。</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="329"/>
         <source>Modifying and saving the file will restore prompting.</source>
-        <translation type="unfinished"></translation>
+        <translation>修改並儲存檔案將會恢復提示。</translation>
     </message>
 </context>
 <context>
@@ -6625,7 +6447,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="80"/>
         <source>() The changes() function returns the number of database rows that were changed or inserted or deleted by the most recently completed INSERT, DELETE, or UPDATE statement.</source>
-        <translation>() changes() 函式回傳最近完成的 INSERT、DELETE 或 UPDATE 語句所變更、插入或刪除的資料庫列數。</translation>
+        <translation>() changes() 函式回傳最近完成的 INSERT、DELETE 或 UPDATE 陳述式所變更、插入或刪除的資料庫列數。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="81"/>
@@ -6665,7 +6487,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="88"/>
         <source>() The last_insert_rowid() function returns the ROWID of the last row insert from the database connection which invoked the function.</source>
-        <translation>() last_insert_rowid() 函式回傳從調用該函式的資料庫連線插入的最後一列的 ROWID。</translation>
+        <translation>() last_insert_rowid() 函式回傳從呼叫該函式的資料庫連線插入的最後一列的 ROWID。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="89"/>
@@ -6734,7 +6556,7 @@ Use of this function must be authorized from Preferences.</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="101"/>
         <source>(X) The quote(X) function returns the text of an SQL literal which is the value of its argument suitable for inclusion into an SQL statement.</source>
-        <translation>(X) quote(X) 函式回傳一個 SQL 字面值的文字，該值適合包含到 SQL 語句中。</translation>
+        <translation>(X) quote(X) 函式回傳一個 SQL 字面值的文字，該值適合包含到 SQL 陳述式中。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="102"/>
@@ -6789,7 +6611,7 @@ Use of this function must be authorized from Preferences.</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="112"/>
         <source>() The total_changes() function returns the number of row changes caused by INSERT, UPDATE or DELETE statements since the current database connection was opened.</source>
-        <translation>() total_changes() 函式回傳自從目前的資料庫連線被開啟以來，由 INSERT、UPDATE 或 DELETE 語句所造成的資料列變更數量。</translation>
+        <translation>() total_changes() 函式回傳自從目前的資料庫連線被開啟以來，由 INSERT、UPDATE 或 DELETE 陳述式所造成的資料列變更數量。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="113"/>
@@ -6944,140 +6766,140 @@ Use of this function must be authorized from Preferences.</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="155"/>
         <source>(X) Return the arccosine of X. The result is in radians.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) 回傳 X 的反餘弦值。結果以弧度為單位。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="156"/>
         <source>(X) Return the hyperbolic arccosine of X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) 回傳 X 的雙曲反餘弦值。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="157"/>
         <source>(X) Return the arcsine of X. The result is in radians.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) 回傳 X 的反正弦值。結果以弧度為單位。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="158"/>
         <source>(X) Return the hyperbolic arcsine of X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) 回傳 X 的雙曲反正弦值。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="159"/>
         <source>(X) Return the arctangent of X. The result is in radians.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) 回傳 X 的反正切值。結果以弧度為單位。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="160"/>
         <source>(X,Y) Return the arctangent of Y/X. The result is in radians. he result is placed into correct quadrant depending on the signs of X and Y.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X,Y) 回傳 Y/X 的反正切值。結果以弧度為單位。結果會根據 X 和 Y 的符號放在正確的象限。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="161"/>
         <source>(X) Return the hyperbolic arctangent of X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) 回傳 X 的雙曲反正切值。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="162"/>
         <location filename="../SqlUiLexer.cpp" line="163"/>
         <source>(X) Return the first representable integer value greater than or equal to X. For positive values of X, this routine rounds away from zero. For negative values of X, this routine rounds toward zero.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) 回傳大於或等於 X 的第一個可表示的整數值。對於 X 的正值，此函式會遠離零進位。對於 X 的負值，此函式會朝向零進位。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="164"/>
         <source>(X) Return the cosine of X. X is in radians.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) 回傳 X 的餘弦值。X 以弧度為單位。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="165"/>
         <source>(X) Return the hyperbolic cosine of X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) 回傳 X 的雙曲餘弦值。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="166"/>
         <source>(X) Convert value X from radians into degrees.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) 將 X 從弧度轉換為度。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="167"/>
         <source>(X) Compute e (Euler&apos;s number, approximately 2.71828182845905) raised to the power X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) 計算 e（歐拉數，約為 2.71828182845905）的 X 次方。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="168"/>
         <source>(X) Return the first representable integer value less than or equal to X. For positive numbers, this function rounds toward zero. For negative numbers, this function rounds away from zero.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) 回傳小於或等於 X 的第一個可表示的整數值。對於正數，此函式會朝向零進位。對於負數，此函式會遠離零進位。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="169"/>
         <source>(X) Return the natural logarithm of X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) 回傳 X 的自然對數。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="170"/>
         <source>(B,X) Return the base-B logarithm of X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(B,X) 回傳以 B 為底的 X 的對數。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="171"/>
         <location filename="../SqlUiLexer.cpp" line="172"/>
         <source>(X) Return the base-10 logarithm for X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) 回傳以 10 為底的 X 的對數。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="173"/>
         <source>(X) Return the logarithm base-2 for the number X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) 回傳以 2 為底的 X 的對數。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="174"/>
         <source>(X,Y) Return the remainder after dividing X by Y.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X,Y) 回傳 X 除以 Y 的餘數。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="175"/>
         <source>() Return an approximation for π.</source>
-        <translation type="unfinished"></translation>
+        <translation>() 回傳 π 的近似值。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="176"/>
         <location filename="../SqlUiLexer.cpp" line="177"/>
         <source>(X,Y) Compute X raised to the power Y.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X,Y) 計算 X 的 Y 次方。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="178"/>
         <source>(X) Convert X from degrees into radians.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) 將 X 從度數轉換為弧度。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="179"/>
         <source>(X) Return the sine of X. X is in radians.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) 回傳 X 的正弦值。X 是以弧度為單位。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="180"/>
         <source>(X) Return the hyperbolic sine of X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) 回傳 X 的雙曲正弦值。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="181"/>
         <source>(X) Return the square root of X. NULL is returned if X is negative.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) 回傳 X 的平方根。如果 X 是負數，則回傳 NULL。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="182"/>
         <source>(X) Return the tangent of X. X is in radians.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) 回傳 X 的正切值。X 是以弧度為單位。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="183"/>
         <source>(X) Return the hyperbolic tangent of X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) 回傳 X 的雙曲正切值。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="184"/>
         <source>(X) Return the representable integer in between X and 0 (inclusive) that is furthest away from zero. Or, in other words, return the integer part of X, rounding toward zero.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) 回傳介於 X 和 0（包含）之間、距離零最遠的可表示整數。換句話說，回傳 X 的整數部分，四捨五入朝向零。</translation>
     </message>
 </context>
 <context>
@@ -7141,13 +6963,13 @@ Hold %3Shift and click to jump there</source>
         <location filename="../TableBrowser.format.ui" line="66"/>
         <location filename="../TableBrowser.ui" line="59"/>
         <source>Select a table to browse data</source>
-        <translation type="unfinished">選擇一個資料表以瀏覽資料</translation>
+        <translation>選擇一個資料表以瀏覽資料</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="69"/>
         <location filename="../TableBrowser.ui" line="62"/>
         <source>Use this list to select a table to be displayed in the database view</source>
-        <translation type="unfinished">使用這個清單選擇一個要顯示在資料庫視圖中的資料表</translation>
+        <translation>使用這個清單選擇一個要顯示在資料庫檢視中的資料表</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="181"/>
@@ -7159,9 +6981,9 @@ Hold %3Shift and click to jump there</source>
  - Ctrl+&quot; for duplicating the current record.
  - Ctrl+&apos; for copying the value from the cell above.
  - Standard selection and copy/paste operations.</source>
-        <translation>這是資料庫表格視圖。您可以進行以下操作：
+        <translation>這是資料庫表格檢視。您可以進行以下操作：
  - 開始編輯值。
- - 雙擊任何記錄以在儲存格編輯器視窗中編輯其內容。
+ - 點選兩下任何記錄以在儲存格編輯器視窗中編輯其內容。
  - Alt+Del 以將儲存格內容刪除為 NULL。
  - Ctrl+&quot; 以複製目前記錄。
  - Ctrl+&apos; 以從上方儲存格複製值。
@@ -7190,7 +7012,7 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.ui" line="277"/>
         <source>Shift+F3</source>
-        <translation type="unfinished">Shift+F3</translation>
+        <translation>Shift+F3</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="284"/>
@@ -7282,44 +7104,44 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.ui" line="676"/>
         <source>Export to &amp;JSON</source>
-        <translation type="unfinished"></translation>
+        <translation>匯出為 &amp;JSON</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="679"/>
         <location filename="../TableBrowser.ui" line="682"/>
         <source>Export the filtered data to JSON</source>
-        <translation type="unfinished"></translation>
+        <translation>將篩選後的資料匯出為 JSON</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="685"/>
         <source>This button exports the data of the browsed table as currently displayed (after filters, display formats and order column) as a JSON file.</source>
-        <translation type="unfinished"></translation>
+        <translation>此按鈕會將目前顯示的瀏覽表格資料（經過篩選、顯示格式和排序列）匯出為 JSON 檔案。</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="754"/>
         <source>Copy column name</source>
-        <translation type="unfinished"></translation>
+        <translation>複製欄位名稱</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="757"/>
         <source>Copy the database table column name to your clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>將資料庫表格的欄位名稱複製到剪貼簿</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="826"/>
         <source>New Data Browser</source>
-        <translation type="unfinished">新資料瀏覽器</translation>
+        <translation>新資料瀏覽器</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="829"/>
         <location filename="../TableBrowser.ui" line="832"/>
         <source>Add a new docked Data Browser</source>
-        <translation type="unfinished"></translation>
+        <translation>新增一個固定的資料瀏覽器</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="835"/>
         <source>This button adds a new docked Data Browser, which you can detach and arrange in different layouts.</source>
-        <translation type="unfinished"></translation>
+        <translation>這個按鈕可以新增一個固定的資料瀏覽器，您可以將其解除固定並在不同的配置中重新排列。</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="211"/>
@@ -7331,7 +7153,7 @@ Hold %3Shift and click to jump there</source>
         <location filename="../TableBrowser.format.ui" line="214"/>
         <location filename="../TableBrowser.ui" line="457"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates to the beginning in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;點選此按鈕將導航到上方表格視圖的開始。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;點選此按鈕會在上方的資料表中移至開始。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="217"/>
@@ -7349,7 +7171,7 @@ Hold %3Shift and click to jump there</source>
         <location filename="../TableBrowser.format.ui" line="234"/>
         <location filename="../TableBrowser.ui" line="474"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates one page of records upwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;點選此按鈕將在上方的表格視圖中向上導航一頁記錄。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;點選此按鈕會在上方的資料表中向上移動一頁記錄。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="237"/>
@@ -7373,7 +7195,7 @@ Hold %3Shift and click to jump there</source>
         <location filename="../TableBrowser.format.ui" line="261"/>
         <location filename="../TableBrowser.ui" line="498"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates one page of records downwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;點選此按鈕將上方資料表檢視向下翻一頁紀錄。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;點選此按鈕會在上方的資料表中向下移動一頁記錄。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="264"/>
@@ -7385,17 +7207,17 @@ Hold %3Shift and click to jump there</source>
         <location filename="../TableBrowser.format.ui" line="278"/>
         <location filename="../TableBrowser.ui" line="512"/>
         <source>Scroll to the end</source>
-        <translation>捲動到底端</translation>
+        <translation>捲動到末端</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="515"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates up to the end in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;點選此按鈕將跳至到上方資料表檢視的底端。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;點選此按鈕會在上方的資料表中移至末端。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="281"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Clicking this button navigates up to the end in the table view above.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>點選此按鈕會在上方的資料表檢視中移動到末端。</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="284"/>
@@ -7407,19 +7229,19 @@ Hold %3Shift and click to jump there</source>
         <location filename="../TableBrowser.format.ui" line="308"/>
         <location filename="../TableBrowser.ui" line="542"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click here to jump to the specified record&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;點選這裡跳到指定的記錄&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;點選這裡以跳轉至指定的記錄&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="311"/>
         <location filename="../TableBrowser.ui" line="545"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button is used to navigate to the record number specified in the Go to area.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;這個按鈕用於導航到在“轉到”區域中指定的記錄編號。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;這個按鈕用於移至「跳轉到」區域中指定的記錄編號。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="314"/>
         <location filename="../TableBrowser.ui" line="548"/>
         <source>Go to:</source>
-        <translation>轉到:</translation>
+        <translation>跳轉到:</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="321"/>
@@ -7431,7 +7253,7 @@ Hold %3Shift and click to jump there</source>
         <location filename="../TableBrowser.format.ui" line="324"/>
         <location filename="../TableBrowser.ui" line="558"/>
         <source>Type a record number in this area and click the Go to: button to display the record in the database view</source>
-        <translation>在這個區域中輸入一個記錄編號，並點選“轉到:”按鈕以在資料庫檢視中顯示記錄</translation>
+        <translation>在這個區域中輸入一個記錄編號，並點選「跳轉到:」按鈕以在資料庫檢視中顯示記錄</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="327"/>
@@ -7449,19 +7271,19 @@ Hold %3Shift and click to jump there</source>
         <location filename="../TableBrowser.format.ui" line="342"/>
         <location filename="../TableBrowser.ui" line="576"/>
         <source>Toggle the visibility of the rowid column</source>
-        <translation>切換 rowid 欄位的可見性</translation>
+        <translation>切換 rowid 欄位的可見度</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="350"/>
         <location filename="../TableBrowser.ui" line="584"/>
         <source>Unlock view editing</source>
-        <translation>解鎖視圖編輯</translation>
+        <translation>解鎖檢視表編輯</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="353"/>
         <location filename="../TableBrowser.ui" line="587"/>
         <source>This unlocks the current view for editing. However, you will need appropriate triggers for editing.</source>
-        <translation>這將解鎖目前的視圖以進行編輯。然而，你將需要適當的觸發器來進行編輯。</translation>
+        <translation>這將解鎖目前的檢視表以進行編輯。然而，您將需要適當的觸發器來進行編輯。</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="358"/>
@@ -7481,7 +7303,7 @@ Hold %3Shift and click to jump there</source>
         <location filename="../TableBrowser.ui" line="604"/>
         <location filename="../TableBrowser.ui" line="640"/>
         <source>New Record</source>
-        <translation>新紀錄</translation>
+        <translation>新記錄</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="373"/>
@@ -7489,26 +7311,26 @@ Hold %3Shift and click to jump there</source>
         <location filename="../TableBrowser.ui" line="607"/>
         <location filename="../TableBrowser.ui" line="610"/>
         <source>Insert a new record in the current table</source>
-        <translation>在目前的資料表中插入新紀錄</translation>
+        <translation>在目前的資料表中插入新記錄</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="379"/>
         <location filename="../TableBrowser.ui" line="613"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button creates a new record in the database. Hold the mouse button to open a pop-up menu of different options:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt;: insert a new record with default values in the database.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Insert Values...&lt;/span&gt;: open a dialog for entering values before they are inserted in the database. This allows to enter values acomplishing the different constraints. This dialog is also open if the &lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt; option fails due to these constraints.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;此按鈕在資料庫中建立新紀錄。按住滑鼠按鈕以開啟不同選項的彈出式選單：&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;新紀錄&lt;/span&gt;：在資料庫中插入具有預設值的新紀錄。&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;插入值...&lt;/span&gt;：在將值插入資料庫之前，開啟一個對話框以輸入值。這允許輸入滿足不同約束的值。如果 &lt;span style=&quot; font-weight:600;&quot;&gt;新紀錄&lt;/span&gt; 選項由於這些約束而失敗，則也會開啟此對話框。&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;此按鈕在資料庫中建立新記錄。按住滑鼠按鈕以開啟不同選項的彈出式選單：&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;新記錄&lt;/span&gt;：在資料庫中插入具有預設值的新記錄。&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;插入值...&lt;/span&gt;：在將值插入資料庫之前，開啟一個對話框以輸入值。這允許輸入滿足不同約束的值。如果 &lt;span style=&quot; font-weight:600;&quot;&gt;新記錄&lt;/span&gt; 選項由於這些約束而失敗，則也會開啟此對話框。&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="388"/>
         <location filename="../TableBrowser.ui" line="622"/>
         <location filename="../TableBrowser.cpp" line="1145"/>
         <source>Delete Record</source>
-        <translation>刪除紀錄</translation>
+        <translation>刪除記錄</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="391"/>
         <location filename="../TableBrowser.ui" line="625"/>
         <source>Delete the current record</source>
-        <translation>刪除目前的紀錄</translation>
+        <translation>刪除目前的記錄</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="394"/>
@@ -7516,7 +7338,7 @@ Hold %3Shift and click to jump there</source>
         <location filename="../TableBrowser.ui" line="628"/>
         <location filename="../TableBrowser.ui" line="631"/>
         <source>This button deletes the record or records currently selected in the table</source>
-        <translation>此按鈕刪除目前在資料表中選擇的紀錄或紀錄</translation>
+        <translation>此按鈕刪除目前在資料表中選擇的記錄或記錄</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="409"/>
@@ -7524,7 +7346,7 @@ Hold %3Shift and click to jump there</source>
         <location filename="../TableBrowser.ui" line="643"/>
         <location filename="../TableBrowser.ui" line="646"/>
         <source>Insert new record using default values in browsed table</source>
-        <translation>在瀏覽的資料表中使用預設值插入新紀錄</translation>
+        <translation>在瀏覽的資料表中使用預設值插入新記錄</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="417"/>
@@ -7538,7 +7360,7 @@ Hold %3Shift and click to jump there</source>
         <location filename="../TableBrowser.ui" line="654"/>
         <location filename="../TableBrowser.ui" line="657"/>
         <source>Open a dialog for inserting values in a new record</source>
-        <translation>開啟一個對話框以在新紀錄中插入值</translation>
+        <translation>開啟一個對話框以在新記錄中插入值</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="428"/>
@@ -7564,7 +7386,7 @@ Hold %3Shift and click to jump there</source>
         <location filename="../TableBrowser.format.ui" line="442"/>
         <location filename="../TableBrowser.ui" line="690"/>
         <source>Save as &amp;view</source>
-        <translation>另存為視圖(&amp;V)</translation>
+        <translation>另存為檢視表(&amp;V)</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="445"/>
@@ -7572,13 +7394,13 @@ Hold %3Shift and click to jump there</source>
         <location filename="../TableBrowser.ui" line="693"/>
         <location filename="../TableBrowser.ui" line="696"/>
         <source>Save the current filter, sort column and display formats as a view</source>
-        <translation>將目前的篩選、排序欄位和顯示格式另存為視圖</translation>
+        <translation>將目前的篩選、排序欄位和顯示格式另存為檢視表</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="451"/>
         <location filename="../TableBrowser.ui" line="699"/>
         <source>This button saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.</source>
-        <translation>此按鈕將瀏覽的資料表的目前設定（篩選、顯示格式和排序欄位）另存為 SQL 視圖，您稍後可以瀏覽或在 SQL 語句中使用。</translation>
+        <translation>此按鈕將瀏覽的資料表的目前設定（篩選、顯示格式和排序欄位）另存為 SQL 檢視表，您稍後可以瀏覽或在 SQL 陳述式中使用。</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="460"/>
@@ -7598,7 +7420,7 @@ Hold %3Shift and click to jump there</source>
         <location filename="../TableBrowser.format.ui" line="469"/>
         <location filename="../TableBrowser.ui" line="717"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This popup menu provides the following options applying to the currently browsed and filtered table:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Export to CSV: this option exports the data of the browsed table as currently displayed (after filters, display formats and order column) to a CSV file.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Save as view: this option saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;此彈出式選單提供以下適用於目前瀏覽和篩選的資料表的選項：&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;匯出至 CSV：此選項將瀏覽的資料表的資料匯出為 CSV 檔，其內容為目前顯示的內容（篩選、顯示格式和排序欄位之後）。&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;另存為視圖：此選項將瀏覽的資料表的目前設定（篩選、顯示格式和排序欄位）另存為 SQL 視圖，您稍後可以瀏覽或在 SQL 語句中使用。&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;此彈出式選單提供以下適用於目前瀏覽和篩選的資料表的選項：&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;匯出至 CSV：此選項將瀏覽的資料表的資料匯出為 CSV 檔，其內容為目前顯示的內容（篩選、顯示格式和排序欄位之後）。&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;另存為檢視表：此選項將瀏覽的資料表的目前設定（篩選、顯示格式和排序欄位）另存為 SQL 檢視表，您稍後可以瀏覽或在 SQL 陳述式中使用。&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="474"/>
@@ -7740,7 +7562,7 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.format.ui" line="717"/>
         <source>Clear All Conditional Formats</source>
-        <translation type="unfinished">清除所有條件格式</translation>
+        <translation>清除所有條件格式</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="868"/>
@@ -7750,7 +7572,7 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.ui" line="871"/>
         <source>Open the find tool bar which allows you to search for values in the table view below.</source>
-        <translation>開啟尋找工具列，讓您可以在下方的資料表視圖中搜尋數值。</translation>
+        <translation>開啟尋找工具列，讓您可以在下方的資料表檢視表中搜尋數值。</translation>
     </message>
     <message>
         <location filename="../TableBrowser.format.ui" line="594"/>
@@ -7928,66 +7750,58 @@ Hold %3Shift and click to jump there</source>
         <location filename="../TableBrowser.cpp" line="519"/>
         <source>, %n column(s)</source>
         <translation>
-            <numerusform>，%n 欄</numerusform>
+            <numerusform>，%n 欄位</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="532"/>
         <source>. Sum: %1; Average: %2; Min: %3; Max: %4</source>
-        <translation>. 總和：%1；平均：%2；最小：%3；最大：%4</translation>
+        <translation>. 總計：%1；平均：%2；最小值：%3；最大值：%4</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="675"/>
         <source>Conditional formats for &quot;%1&quot;</source>
-        <translation>&quot;%1&quot; 的條件格式</translation>
+        <translation>&quot;%1&quot; 的條件式格式</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="758"/>
         <source>determining row count...</source>
-        <translation>正在確定列數...</translation>
-    </message>
-    <message>
-        <source>%1 - %2 of &gt;= %3</source>
-        <translation type="vanished">%1 - %2 / &gt;= %3</translation>
-    </message>
-    <message>
-        <source>%1 - %2 of %3</source>
-        <translation type="vanished">%1 - %2 / %3</translation>
+        <translation>正在計算列數...</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="761"/>
         <source>%L1 - %L2 of &gt;= %L3</source>
-        <translation type="unfinished"></translation>
+        <translation>%L1 - %L2 / 總數 &gt;= %L3</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="764"/>
         <source>%L1 - %L2 of %L3</source>
-        <translation type="unfinished"></translation>
+        <translation>%L1 - %L2 / 總數 %L3</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="766"/>
         <source> (clipped at %L1 rows)</source>
-        <translation type="unfinished"></translation>
+        <translation>（在 %L1 列處截斷）</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1018"/>
         <source>Please enter a pseudo-primary key in order to enable editing on this view. This should be the name of a unique column in the view.</source>
-        <translation>請輸入一個偽主鍵以啟用此視圖的編輯。這應該是視圖中一個唯一欄位的名稱。</translation>
+        <translation>請輸入一個偽主鍵以啟用此檢視表的編輯功能。這應該是檢視表中一個唯一欄位的名稱。</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1143"/>
         <source>Delete Records</source>
-        <translation>刪除紀錄</translation>
+        <translation>刪除記錄</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1281"/>
         <source>Duplicate records</source>
-        <translation>複製紀錄</translation>
+        <translation>複製記錄</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1281"/>
         <source>Duplicate record</source>
-        <translation>複製紀錄</translation>
+        <translation>複製記錄</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1285"/>
@@ -8003,17 +7817,13 @@ Hold %3Shift and click to jump there</source>
         <location filename="../TableBrowser.cpp" line="1368"/>
         <source>Error deleting record:
 %1</source>
-        <translation>刪除紀錄時出現錯誤：
+        <translation>刪除記錄時出現錯誤：
 %1</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1373"/>
         <source>Please select a record first</source>
-        <translation>請先選擇一筆紀錄</translation>
-    </message>
-    <message>
-        <source>There is no filter set for this table. View will not be created.</source>
-        <translation type="vanished">此資料表未設定篩選。將不會建立視圖。</translation>
+        <translation>請先選擇一筆記錄</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1494"/>
