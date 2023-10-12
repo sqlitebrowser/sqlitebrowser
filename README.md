@@ -13,6 +13,39 @@
 
 ![DB Browser for SQLite Screenshot](https://github.com/sqlitebrowser/sqlitebrowser/raw/master/images/sqlitebrowser.png "DB Browser for SQLite Screenshot")
 
+## Table of Contents
+- [DB Browser for SQLite](#db-browser-for-sqlite)
+  - [Table of Contents](#table-of-contents)
+  - [What it is](#what-it-is)
+  - [What it is not](#what-it-is-not)
+  - [Wiki](#wiki)
+  - [Continuous, Nightly builds](#continuous-nightly-builds)
+  - [Windows](#windows)
+  - [macOS](#macos)
+      - [Stable release](#stable-release)
+      - [Continuous, Nightly builds](#continuous-nightly-builds-1)
+  - [Linux](#linux)
+    - [Arch Linux](#arch-linux)
+    - [Debian](#debian)
+    - [Fedora](#fedora)
+    - [openSUSE](#opensuse)
+    - [Ubuntu and Derivatives](#ubuntu-and-derivatives)
+      - [Stable release](#stable-release-1)
+      - [Nightly builds](#nightly-builds)
+    - [Other Linux](#other-linux)
+  - [FreeBSD](#freebsd)
+  - [Snap packages](#snap-packages)
+      - [Snap Nightlies](#snap-nightlies)
+      - [Snap Stable](#snap-stable)
+  - [Compiling](#compiling)
+  - [X (Known as Twitter)](#x-known-as-twitter)
+  - [Website](#website)
+  - [Old project page](#old-project-page)
+  - [Releases](#releases)
+  - [History](#history)
+  - [Contributors](#contributors)
+  - [License](#license)
+
 ## What it is
 
 _DB Browser for SQLite_ (DB4S) is a high quality, visual, open source tool to
