@@ -37,7 +37,6 @@ jobs:
             - if: env.DAILY == 'false'
               name: Configure build (Continuous)
               run: |
-                export MACOSX_DEPLOYMENT_TARGET=10.12
                 if [ "${{ matrix.sqlcipher }}" = "1" ]; then
                     sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLCipher-dev-'$(git rev-parse --short --verify HEAD)'"/' CMakeLists.txt
                 else
@@ -49,7 +48,6 @@ jobs:
             - if: env.DAILY == 'true'
               name: Configure build (Daily)
               run: |
-                export MACOSX_DEPLOYMENT_TARGET=10.12
                 if [ "${{ matrix.sqlcipher }}" = "1" ]; then
                     sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLCipher Nightly"/' CMakeLists.txt
                 else
