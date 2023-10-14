@@ -248,7 +248,7 @@ Done.
 
 ## Build with SQLCipher support
 
-When built with SQLCipher support,<br>DB Browser for SQLite will allow you to open
+When built with SQLCipher support, DB Browser for SQLite will allow you to open
 and edit databases encrypted using SQLCipher as well as standard SQLite3
 databases.
 
@@ -260,7 +260,7 @@ sqlcipher'). On Windows unfortunately it's a bit more difficult: You'll have
 to download and compile the code as described on the
 [SQLCipher website](https://www.zetetic.net/sqlcipher/) before you can proceed.
 
-If SQLCipher is installed,<br>simply follow the standard instructions for your
+If SQLCipher is installed, simply follow the standard instructions for your
 platform but enable the 'sqlcipher' build option by replacing any calls to
 cmake like this:
 ```
