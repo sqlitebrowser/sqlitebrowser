@@ -109,7 +109,7 @@ sudo make install
 >**Note** - Use `cmake -DFORCE_INTERNAL_QSCINTILLA=ON -Dsqlcipher=1 -Wno-dev ..`<br>
 >if you're using Debian and meet errors during compiling.
 
-This should complete without errors, giving you a binary file called `sqlitebrowser`. Done. :)
+This should complete without errors, giving you an executable file called `sqlitebrowser`. Done. :)
 
 > Also, we have a CI workflow for Ubuntu, you can check it out [here](https://github.com/sqlitebrowser/sqlitebrowser/blob/master/.github/workflows/build-ubuntu.yml)
 
