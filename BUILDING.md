@@ -11,9 +11,10 @@ Without these or with older versions you won't be able to compile DB Browser for
 SQLite any more.<br>This applies to all platforms. However, most likely you won't
 have to worry about these as most systems meet these requirements today.
 
-If you have any chance, please use Qt 5.7 or any later version.<br>Even though Qt
+If you can, please use Qt 5.15.9 or any later version.<br>Even though Qt
 5.5 and 5.6 are supported by us, there might be glitches and minor problems
-when using them.
+when using them.<br>
+Also, it is not possible to build universal binary for macOS using Qt versions lower than 5.15.9.
 
 The wiki has information that is a bit more detailed or less common, but may be useful: https://github.com/sqlitebrowser/sqlitebrowser/wiki
 
