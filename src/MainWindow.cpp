@@ -1852,7 +1852,11 @@ void MainWindow::dropEvent(QDropEvent *event)
         QString action = QInputDialog::getItem(this,
                                    qApp->applicationName(),
                                    tr("Select the action to apply to the dropped file(s). <br/>"
-                                      "Note: only 'Import' will process more than one file.", "", urls.count()),
+                                      "Note: only 'Import' will process more than one file.",
+                                      "Note for translation: Although there is no %n in the original, "
+                                      "you can use the numerus-form to adjust 'files(s)' and remove the note when n = 1. "
+                                      "Including %n in the translation will also work.",
+                                      urls.count()),
                                    {open, attach, import},
                                    0,
                                    false,
