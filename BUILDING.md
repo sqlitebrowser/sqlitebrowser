@@ -163,7 +163,7 @@ mv DB\ Browser\ for\ SQLite.app /Applications
 
 > If you want to build universal binary, change the `cmake` command to<br>
 > `cmake -DcustomTap=1 -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" ..`<br>
-> Of course, this requires you to have an ARM64 Mac and an installation of formula starting with `db4sub`.
+> Of course, this requires you to have an Apple Silicon Mac and an installation of formula starting with `db4sub`.
 
 An icon for "DB Browser for SQLite" should now be in your main macOS Applications list, ready to launch.
 
