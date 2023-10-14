@@ -157,7 +157,7 @@ void SqlUiLexer::setupAutoCompletion()
             {"asin", tr("(X) Return the arcsine of X. The result is in radians.")},
             {"asinh", tr("(X) Return the hyperbolic arcsine of X.")},
             {"atan", tr("(X) Return the arctangent of X. The result is in radians.")},
-            {"atan2", tr("(X,Y) Return the arctangent of Y/X. The result is in radians. he result is placed into correct quadrant depending on the signs of X and Y.")},
+            {"atan2", tr("(X,Y) Return the arctangent of Y/X. The result is in radians. The result is placed into correct quadrant depending on the signs of X and Y.")},
             {"atanh", tr("(X) Return the hyperbolic arctangent of X.")},
             {"ceil", tr("(X) Return the first representable integer value greater than or equal to X. For positive values of X, this routine rounds away from zero. For negative values of X, this routine rounds toward zero.")},
             {"ceiling", tr("(X) Return the first representable integer value greater than or equal to X. For positive values of X, this routine rounds away from zero. For negative values of X, this routine rounds toward zero.")},
