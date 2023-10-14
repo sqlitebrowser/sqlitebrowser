@@ -132,7 +132,7 @@ Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot
     </message>
     <message>
         <location filename="../Application.cpp" line="100"/>
-        <source>Ignored environment variable(DB4S_SETTINGS_FILE) value : </source>
+        <source>Ignored environment variable (DB4S_SETTINGS_FILE) value: </source>
         <translation>무시되는 환경변수(DB4S_SETTINGS_FILE) 값 : </translation>
     </message>
     <message>
@@ -3265,7 +3265,7 @@ You can drag SQL statements from an object row and drop them into other applicat
     </message>
     <message>
         <location filename="../MainWindow.ui" line="158"/>
-        <source>&amp;Edit P&amp;ragmas</source>
+        <source>Edit P&amp;ragmas</source>
         <translation>Pragma 수정(&amp;E)</translation>
     </message>
     <message>
@@ -6809,7 +6809,7 @@ Use of this function must be authorized from Preferences.</source>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="160"/>
-        <source>(X,Y) Return the arctangent of Y/X. The result is in radians. he result is placed into correct quadrant depending on the signs of X and Y.</source>
+        <source>(X,Y) Return the arctangent of Y/X. The result is in radians. The result is placed into correct quadrant depending on the signs of X and Y.</source>
         <translation>(X,Y) Y/X의 아크탄젠트를 반환합니다. 결과는 라디안입니다. 그 결과는 X와 Y의 부호에 따라 올바른 사분면에 배치됩니다.</translation>
     </message>
     <message>

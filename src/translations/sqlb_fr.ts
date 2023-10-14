@@ -140,7 +140,7 @@ Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot
     </message>
     <message>
         <location filename="../Application.cpp" line="100"/>
-        <source>Ignored environment variable(DB4S_SETTINGS_FILE) value : </source>
+        <source>Ignored environment variable (DB4S_SETTINGS_FILE) value: </source>
         <translation>Valeur ignorée de la variable d&apos;environnement (DB4S_SETTINGS_FILE) : </translation>
     </message>
     <message>
@@ -3330,7 +3330,7 @@ x~y	Fourchette : valeurs entre x et y
     </message>
     <message>
         <location filename="../MainWindow.ui" line="158"/>
-        <source>&amp;Edit P&amp;ragmas</source>
+        <source>Edit P&amp;ragmas</source>
         <translation>&amp;Éditer les P&amp;ragmas</translation>
     </message>
     <message>
@@ -6991,7 +6991,7 @@ L&apos;utilisation de cette fonction doit être autorisée à partir des Préfé
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="160"/>
-        <source>(X,Y) Return the arctangent of Y/X. The result is in radians. he result is placed into correct quadrant depending on the signs of X and Y.</source>
+        <source>(X,Y) Return the arctangent of Y/X. The result is in radians. The result is placed into correct quadrant depending on the signs of X and Y.</source>
         <translation>(X,Y) Renvoie l&apos;arctangente de Y/X. Le résultat est en radians. Le résultat est placé dans le bon quadrant en fonction des signes de X et Y.</translation>
     </message>
     <message>

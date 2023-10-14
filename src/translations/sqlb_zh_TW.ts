@@ -131,7 +131,7 @@ Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot
     </message>
     <message>
         <location filename="../Application.cpp" line="100"/>
-        <source>Ignored environment variable(DB4S_SETTINGS_FILE) value : </source>
+        <source>Ignored environment variable (DB4S_SETTINGS_FILE) value: </source>
         <translation>忽略環境變數 (DB4S_SETTINGS_FILE) 的值：</translation>
     </message>
     <message>
@@ -2739,7 +2739,7 @@ x~y	範圍：介於 x 和 y 之間的值
     </message>
     <message>
         <location filename="../MainWindow.ui" line="158"/>
-        <source>&amp;Edit P&amp;ragmas</source>
+        <source>Edit P&amp;ragmas</source>
         <translation>&amp;編輯 P&amp;ragmas</translation>
     </message>
     <message>
@@ -6790,7 +6790,7 @@ Use of this function must be authorized from Preferences.</source>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="160"/>
-        <source>(X,Y) Return the arctangent of Y/X. The result is in radians. he result is placed into correct quadrant depending on the signs of X and Y.</source>
+        <source>(X,Y) Return the arctangent of Y/X. The result is in radians. The result is placed into correct quadrant depending on the signs of X and Y.</source>
         <translation>(X,Y) 回傳 Y/X 的反正切值。結果以弧度為單位。結果會根據 X 和 Y 的符號放在正確的象限。</translation>
     </message>
     <message>

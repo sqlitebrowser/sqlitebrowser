@@ -135,7 +135,7 @@ Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot
     </message>
     <message>
         <location filename="../Application.cpp" line="100"/>
-        <source>Ignored environment variable(DB4S_SETTINGS_FILE) value : </source>
+        <source>Ignored environment variable (DB4S_SETTINGS_FILE) value: </source>
         <translation>環境変数(DB4S_SETTINGS_FILE)の値は無視されます : </translation>
     </message>
     <message>
@@ -3442,7 +3442,7 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
     </message>
     <message>
         <location filename="../MainWindow.ui" line="158"/>
-        <source>&amp;Edit P&amp;ragmas</source>
+        <source>Edit P&amp;ragmas</source>
         <translation>プラグマ編集(&amp;E&amp;R)</translation>
     </message>
     <message>
@@ -6969,7 +6969,7 @@ Use of this function must be authorized from Preferences.</source>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="160"/>
-        <source>(X,Y) Return the arctangent of Y/X. The result is in radians. he result is placed into correct quadrant depending on the signs of X and Y.</source>
+        <source>(X,Y) Return the arctangent of Y/X. The result is in radians. The result is placed into correct quadrant depending on the signs of X and Y.</source>
         <translation>(X,Y) Y/Xの逆正接(arctan)を返します。 結果はラジアン単位です。結果はXとYの符号により正しい象限に配置されます。</translation>
     </message>
     <message>

@@ -136,7 +136,7 @@ Attribution Share Alike 4.0.&lt;br/&gt;Per dettagli visita il sito: &lt;/span&gt
     </message>
     <message>
         <location filename="../Application.cpp" line="100"/>
-        <source>Ignored environment variable(DB4S_SETTINGS_FILE) value : </source>
+        <source>Ignored environment variable (DB4S_SETTINGS_FILE) value: </source>
         <translation>Ignorato valore variabile d&apos;ambiente(DB4S_SETTINGS_FILE) : </translation>
     </message>
     <message>
@@ -3394,7 +3394,7 @@ Puoi trascinare statement SQL dalla colonna Schema e rilasciarli dentro l&apos;e
     </message>
     <message>
         <location filename="../MainWindow.ui" line="158"/>
-        <source>&amp;Edit P&amp;ragmas</source>
+        <source>Edit P&amp;ragmas</source>
         <translation>Modifica P&amp;ragmas</translation>
     </message>
     <message>
@@ -6915,7 +6915,7 @@ L&apos;utilizzo di questa funzione dev&apos;essere permesso tramite le Preferenz
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="160"/>
-        <source>(X,Y) Return the arctangent of Y/X. The result is in radians. he result is placed into correct quadrant depending on the signs of X and Y.</source>
+        <source>(X,Y) Return the arctangent of Y/X. The result is in radians. The result is placed into correct quadrant depending on the signs of X and Y.</source>
         <translation>(X,Y) Restituisce l&apos;arcotangente di Y/X. Il risultato è in radianti. Il risultato è posizionato nel quadrante corretto a seconda dei segni di X e Y.</translation>
     </message>
     <message>

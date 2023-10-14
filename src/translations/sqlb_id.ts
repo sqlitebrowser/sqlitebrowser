@@ -137,7 +137,7 @@ Attribution Share Alike 4.0.&lt;br/&gt;Lihat &lt;/span&gt;&lt;a href=&quot;https
     </message>
     <message>
         <location filename="../Application.cpp" line="100"/>
-        <source>Ignored environment variable(DB4S_SETTINGS_FILE) value : </source>
+        <source>Ignored environment variable (DB4S_SETTINGS_FILE) value: </source>
         <translation>Nilai variabel lingkungan (DB4S_SETTINGS_FILE) yang diabaikan: </translation>
     </message>
     <message>
@@ -3739,7 +3739,7 @@ Anda dapat menyeret pernyataan SQL dari kolom Skema dan menjatuhkan mereka ke da
     </message>
     <message>
         <location filename="../MainWindow.ui" line="158"/>
-        <source>&amp;Edit P&amp;ragmas</source>
+        <source>Edit P&amp;ragmas</source>
         <translation>&amp;Sunting Pragma</translation>
     </message>
     <message>
@@ -6989,7 +6989,7 @@ Penggunaan fungsi ini mesti diotorisasi dari Preferensi.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="160"/>
-        <source>(X,Y) Return the arctangent of Y/X. The result is in radians. he result is placed into correct quadrant depending on the signs of X and Y.</source>
+        <source>(X,Y) Return the arctangent of Y/X. The result is in radians. The result is placed into correct quadrant depending on the signs of X and Y.</source>
         <translation>(X, Y) Mengembalikan arctangen dari Y/X. Hasil dalam radian. Hasil ditempatkan ke dalam kuadran yang benar bergantung pada tanda dari X dan Y.</translation>
     </message>
     <message>

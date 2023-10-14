@@ -140,7 +140,7 @@ Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot
     </message>
     <message>
         <location filename="../Application.cpp" line="100"/>
-        <source>Ignored environment variable(DB4S_SETTINGS_FILE) value : </source>
+        <source>Ignored environment variable (DB4S_SETTINGS_FILE) value: </source>
         <translation>Wert der Umgebungsvariable (DB4S_SETTINGS_FILE) ignoriert: </translation>
     </message>
     <message>
@@ -2872,7 +2872,7 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     </message>
     <message>
         <location filename="../MainWindow.ui" line="158"/>
-        <source>&amp;Edit P&amp;ragmas</source>
+        <source>Edit P&amp;ragmas</source>
         <translation>P&amp;ragmas bearbeiten</translation>
     </message>
     <message>
@@ -6922,7 +6922,7 @@ Die Verwendung dieser Funktion muss in den Einstellungen authorisiert werden.</t
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="160"/>
-        <source>(X,Y) Return the arctangent of Y/X. The result is in radians. he result is placed into correct quadrant depending on the signs of X and Y.</source>
+        <source>(X,Y) Return the arctangent of Y/X. The result is in radians. The result is placed into correct quadrant depending on the signs of X and Y.</source>
         <translation>(X,Y) Den Arkustangens von Y/X ermitteln. Das Ergebnis ist im Bogenmaß. Das Ergebnis wird abhängig von den Vorzeichen von X und Y im korrekten Quadranten platziert.</translation>
     </message>
     <message>
