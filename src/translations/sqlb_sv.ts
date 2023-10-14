@@ -4016,13 +4016,6 @@ Are you sure?</source>
         <source>Import CSV file(s)...</source>
         <translation type="unfinished"></translation>
     </message>
-    <message numerus="yes">
-        <source>Select the action to apply to the dropped file(s). &lt;br/&gt;Note: only &apos;Import&apos; will process more than one file.</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
     <message>
         <source>Do you want to save the changes made to SQL tabs in a new project file?</source>
         <translation type="unfinished"></translation>
@@ -4156,10 +4149,6 @@ Skapa en backup!</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edit P&amp;ragmas</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>E&amp;xecute SQL</source>
         <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
         <translation type="unfinished"></translation>
@@ -4231,6 +4220,14 @@ Skapa en backup!</translation>
     <message>
         <source>-- Reference to file &quot;%1&quot; (not supported by this version) --</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Select the action to apply to the dropped file(s). &lt;br/&gt;Note: only &apos;Import&apos; will process more than one file.</source>
+        <comment>Note for translation: Although there is no %n in the original, you can use the numerus-form to adjust &apos;files(s)&apos; and remove the note when n = 1. Including %n in the translation will also work.</comment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -4546,7 +4543,7 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     </message>
     <message>
         <source>Settings name</source>
-        <translation>Inställningsnamn</translation>
+        <translation type="vanished">Inställningsnamn</translation>
     </message>
     <message>
         <source>Extensions(*.so *.dll);;All files(*)</source>
@@ -4866,23 +4863,11 @@ Can be set to 0 for disabling completion.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>selected_bg</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Selection background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>selected_fg</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Selection foreground</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>highlight</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6848,11 +6833,7 @@ Leave the field empty for using the database encoding.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Clicking this button navigates up to the end in the table view above.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Klicka på denna knapp för att navigera upp till slutet av tabellvyn ovan.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Clear All Conditional Formats</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Klicka på denna knapp för att navigera upp till slutet av tabellvyn ovan.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Copy column name</source>
