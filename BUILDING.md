@@ -8,7 +8,7 @@ Please note that all versions after 3.12.1 will require:
 * Qt 5.15.9 later
 
 Without these or with older versions you won't be able to compile DB Browser for
-SQLite anymore.<br>This applies to all platforms. However, most likely you won't
+SQLite any more.<br>This applies to all platforms. However, most likely you won't
 have to worry about these as most systems meet these requirements today.
 
 If you have any chance, please use Qt 5.7 or any later version.<br>Even though Qt
