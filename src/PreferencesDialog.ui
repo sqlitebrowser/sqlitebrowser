@@ -1323,7 +1323,7 @@ Can be set to 0 for disabling completion.</string>
          </property>
          <column>
           <property name="text">
-           <string>Settings name</string>
+           <string notr="true">Settings name</string>
           </property>
          </column>
          <column>
@@ -1485,7 +1485,7 @@ Can be set to 0 for disabling completion.</string>
          </item>
          <item>
           <property name="text">
-           <string>selected_bg</string>
+           <string notr="true">selected_bg</string>
           </property>
           <property name="text">
            <string>Selection background</string>
@@ -1493,7 +1493,7 @@ Can be set to 0 for disabling completion.</string>
          </item>
          <item>
           <property name="text">
-           <string>selected_fg</string>
+           <string notr="true">selected_fg</string>
           </property>
           <property name="text">
            <string>Selection foreground</string>
@@ -1501,7 +1501,7 @@ Can be set to 0 for disabling completion.</string>
          </item>
          <item>
           <property name="text">
-           <string>highlight</string>
+           <string notr="true">highlight</string>
           </property>
           <property name="text">
            <string>Highlight</string>

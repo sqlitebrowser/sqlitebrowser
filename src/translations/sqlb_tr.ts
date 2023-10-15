@@ -135,7 +135,7 @@ Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot
     </message>
     <message>
         <location filename="../Application.cpp" line="100"/>
-        <source>Ignored environment variable(DB4S_SETTINGS_FILE) value : </source>
+        <source>Ignored environment variable (DB4S_SETTINGS_FILE) value: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2922,7 +2922,7 @@ x~y	Aralık: değerler x ve y arasında
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="190"/>
-        <location filename="../MainWindow.cpp" line="3748"/>
+        <location filename="../MainWindow.cpp" line="3774"/>
         <source>Ctrl+W</source>
         <translation></translation>
     </message>
@@ -3021,7 +3021,7 @@ x~y	Aralık: değerler x ve y arasında
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1430"/>
-        <location filename="../MainWindow.cpp" line="1664"/>
+        <location filename="../MainWindow.cpp" line="1669"/>
         <source>Delete Table</source>
         <translation>Tabloyu Sil</translation>
     </message>
@@ -3476,13 +3476,9 @@ SQL deyimlerini Şema sütunundan sürükleyip SQL editörüne veya diğer uygul
     </message>
     <message>
         <location filename="../MainWindow.ui" line="155"/>
+        <location filename="../MainWindow.ui" line="158"/>
         <source>Edit P&amp;ragmas</source>
         <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainWindow.ui" line="158"/>
-        <source>&amp;Edit P&amp;ragmas</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3925,19 +3921,19 @@ SQL deyimlerini Şema sütunundan sürükleyip SQL editörüne veya diğer uygul
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="511"/>
-        <location filename="../MainWindow.cpp" line="3227"/>
+        <location filename="../MainWindow.cpp" line="3253"/>
         <source>Choose a database file</source>
         <translation>Veritabanı dosyasını seçiniz</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="581"/>
-        <location filename="../MainWindow.cpp" line="1538"/>
-        <location filename="../MainWindow.cpp" line="3053"/>
+        <location filename="../MainWindow.cpp" line="586"/>
+        <location filename="../MainWindow.cpp" line="1543"/>
+        <location filename="../MainWindow.cpp" line="3079"/>
         <source>Choose a filename to save under</source>
         <translation>Kaydetmek için dosya ismi seçiniz</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1472"/>
+        <location filename="../MainWindow.cpp" line="1477"/>
         <source>Error while saving the database file. This means that not all changes to the database were saved. You need to resolve the following error first.
 
 %1</source>
@@ -3946,158 +3942,157 @@ SQL deyimlerini Şema sütunundan sürükleyip SQL editörüne veya diğer uygul
 %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1481"/>
+        <location filename="../MainWindow.cpp" line="1486"/>
         <source>Are you sure you want to undo all changes made to the database file &apos;%1&apos; since the last save?</source>
         <translation>Son kayıttan itibaren &apos;%1&apos; dosyasına yaptığınız değişiklikleri geri almak istediğinize emin misiniz?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1519"/>
+        <location filename="../MainWindow.cpp" line="1524"/>
         <source>Choose a file to import</source>
         <translation>İçe aktarmak için dosya seçiniz</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1757"/>
+        <location filename="../MainWindow.cpp" line="1762"/>
         <source>&amp;%1 %2%3</source>
         <translation>&amp;%1 %2%3</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1757"/>
+        <location filename="../MainWindow.cpp" line="1762"/>
         <source> (read only)</source>
         <translation> (salt okunur)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1844"/>
+        <location filename="../MainWindow.cpp" line="1849"/>
         <source>Open Database or Project</source>
         <translation>Veritabanı veya Proje Açın</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1845"/>
+        <location filename="../MainWindow.cpp" line="1850"/>
         <source>Attach Database...</source>
         <translation>Veritabanı Ekle...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1846"/>
+        <location filename="../MainWindow.cpp" line="1851"/>
         <source>Import CSV file(s)...</source>
         <translation>CSV dosyalarını içe aktarın...</translation>
     </message>
     <message numerus="yes">
-        <location filename="../MainWindow.cpp" line="1849"/>
         <source>Select the action to apply to the dropped file(s). &lt;br/&gt;Note: only &apos;Import&apos; will process more than one file.</source>
-        <translation>
+        <translation type="vanished">
             <numerusform>Bırakılan dosyalara uygulanacak eylemi seçin. &lt;br/&gt;Not: yalnızca &apos;İçe Aktar&apos; birden fazla dosyayı işleyecektir.</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2032"/>
+        <location filename="../MainWindow.cpp" line="2041"/>
         <source>Do you want to save the changes made to SQL tabs in the project file &apos;%1&apos;?</source>
         <translation>SQL sekmelerinde yapılan değişiklikleri &apos;%1&apos;  proje dosyasına kaydetmek istiyor musunuz?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2174"/>
+        <location filename="../MainWindow.cpp" line="2200"/>
         <source>Text files(*.sql *.txt);;All files(*)</source>
         <translation>Metin dosyaları(*.sql *.txt);;Tüm dosyalar(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1531"/>
+        <location filename="../MainWindow.cpp" line="1536"/>
         <source>Do you want to create a new database file to hold the imported data?
 If you answer no we will attempt to import the data in the SQL file to the current database.</source>
         <translation>İçeri aktarılan verileri tutmak için yeni bir veritabanı dosyası oluşturmak istiyor musunuz?
 Eğer cevabınız hayır ise biz SQL dosyasındaki verileri geçerli veritabanına aktarmaya başlayacağız.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="713"/>
+        <location filename="../MainWindow.cpp" line="718"/>
         <source>You are still executing SQL statements. Closing the database now will stop their execution, possibly leaving the database in an inconsistent state. Are you sure you want to close the database?</source>
         <translation>Şu anda SQL sorgularını yürütüyorsunuz. Veritabanının şimdi kapatılması, muhtemelen veritabanını tutarsız bir durumda bırakarak yürütmeyi durduracaktır. Veritabanını kapatmak istediğinizden emin misiniz?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="808"/>
+        <location filename="../MainWindow.cpp" line="813"/>
         <source>Do you want to save the changes made to the project file &apos;%1&apos;?</source>
         <translation>&apos;%1&apos; proje dosyasında yapılan değişiklikleri kaydetmek istiyor musunuz?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1542"/>
+        <location filename="../MainWindow.cpp" line="1547"/>
         <source>File %1 already exists. Please choose a different name.</source>
         <translation>%1 dosyası zaten mevcut. Lütfen farklı bir isim seçiniz.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1569"/>
+        <location filename="../MainWindow.cpp" line="1574"/>
         <source>Error importing data: %1</source>
         <translation>Dosya içeri aktarılırken hata oluştu: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1573"/>
+        <location filename="../MainWindow.cpp" line="1578"/>
         <source>Import completed.</source>
         <translation>İçeri aktarma tamamlandı.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1655"/>
+        <location filename="../MainWindow.cpp" line="1660"/>
         <source>Delete View</source>
         <translation>Görünümü Sil</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1656"/>
+        <location filename="../MainWindow.cpp" line="1661"/>
         <source>Modify View</source>
         <translation>Görünümü Düzenle</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1658"/>
+        <location filename="../MainWindow.cpp" line="1663"/>
         <source>Delete Trigger</source>
         <translation>Tetikleyiciyi Sil</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1659"/>
+        <location filename="../MainWindow.cpp" line="1664"/>
         <source>Modify Trigger</source>
         <translation>Tetikleyiciyi Düzenle</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1661"/>
+        <location filename="../MainWindow.cpp" line="1666"/>
         <source>Delete Index</source>
         <translation>İndeksi Sil</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1662"/>
+        <location filename="../MainWindow.cpp" line="1667"/>
         <source>Modify Index</source>
         <translation>Index&apos;i Düzenle</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1665"/>
+        <location filename="../MainWindow.cpp" line="1670"/>
         <source>Modify Table</source>
         <translation>Tabloyu Düzenle</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2031"/>
+        <location filename="../MainWindow.cpp" line="2040"/>
         <source>Do you want to save the changes made to SQL tabs in a new project file?</source>
         <translation>SQL sekmelerinde yapılan değişiklikleri yeni bir proje dosyasına kaydetmek istiyor musunuz?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2052"/>
+        <location filename="../MainWindow.cpp" line="2061"/>
         <source>Do you want to save the changes made to the SQL file %1?</source>
         <translation>%1 SQL dosyasında yapılan değişiklikleri kaydetmek istiyor musunuz?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2330"/>
+        <location filename="../MainWindow.cpp" line="2356"/>
         <source>Could not find resource file: %1</source>
         <translation>Kaynak dosya bulunamadı: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2659"/>
+        <location filename="../MainWindow.cpp" line="2685"/>
         <source>Choose a project file to open</source>
         <translation>Açmak için bir proje dosyası seçin</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3069"/>
+        <location filename="../MainWindow.cpp" line="3095"/>
         <source>Could not open project file for writing.
 Reason: %1</source>
         <translation>Proje dosyası yazmaya açılamadı.
 Nedeni: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3627"/>
+        <location filename="../MainWindow.cpp" line="3653"/>
         <source>Busy (%1)</source>
         <translation>Meşgul (%1)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1975"/>
+        <location filename="../MainWindow.cpp" line="1984"/>
         <source>Setting PRAGMA values will commit your current transaction.
 Are you sure?</source>
         <translation>PRAGMA değerlerini ayarlamak geçerli işleminizi yürütmeye alacaktır.
@@ -4174,219 +4169,227 @@ Bunu yapmak istediğinize emin misiniz?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="567"/>
+        <location filename="../MainWindow.cpp" line="573"/>
         <source>Could not open database file.
 Reason: %1</source>
         <translation>Veritabanı dosyası açılamadı.
 Nedeni: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="606"/>
+        <location filename="../MainWindow.cpp" line="611"/>
         <source>In-Memory database</source>
         <translation>Bellek İçi Veritabanı</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="688"/>
+        <location filename="../MainWindow.cpp" line="693"/>
         <source>Choose a database file to save under</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="699"/>
+        <location filename="../MainWindow.cpp" line="704"/>
         <source>Error while saving the database to the new file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="891"/>
+        <location filename="../MainWindow.cpp" line="896"/>
         <source>Are you sure you want to delete the table &apos;%1&apos;?
 All data associated with the table will be lost.</source>
         <translation>&apos;%1&apos; tablosunu silmek istediğinizden emin misiniz?
 Tabloyla ilişkili tüm veriler kaybedilecektir.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="893"/>
+        <location filename="../MainWindow.cpp" line="898"/>
         <source>Are you sure you want to delete the view &apos;%1&apos;?</source>
         <translation>&apos;%1&apos; görünümünü silmek istediğinizden emin misiniz?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="895"/>
+        <location filename="../MainWindow.cpp" line="900"/>
         <source>Are you sure you want to delete the trigger &apos;%1&apos;?</source>
         <translation>&apos;%1&apos; tetikleyicisini silmek istediğinizden emin misiniz?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="897"/>
+        <location filename="../MainWindow.cpp" line="902"/>
         <source>Are you sure you want to delete the index &apos;%1&apos;?</source>
         <translation>&apos;%1&apos; indexsini silmek istediğinizden emin misiniz?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="908"/>
+        <location filename="../MainWindow.cpp" line="913"/>
         <source>Error: could not delete the table.</source>
         <translation>Hata: tablo silinemedi.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="910"/>
+        <location filename="../MainWindow.cpp" line="915"/>
         <source>Error: could not delete the view.</source>
         <translation>Hata: görünüm silinemedi.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="912"/>
+        <location filename="../MainWindow.cpp" line="917"/>
         <source>Error: could not delete the trigger.</source>
         <translation>Hata: tetikleyici silinemedi.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="914"/>
+        <location filename="../MainWindow.cpp" line="919"/>
         <source>Error: could not delete the index.</source>
         <translation>Hata: index silinemedi.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="916"/>
+        <location filename="../MainWindow.cpp" line="921"/>
         <source>Message from database engine:
 %1</source>
         <translation>Veritabanı motorundan mesaj:
 %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="944"/>
+        <location filename="../MainWindow.cpp" line="949"/>
         <source>Editing the table requires to save all pending changes now.
 Are you sure you want to save the database?</source>
         <translation>Tabloyu düzenlemek için bekleyen tüm değişikliklerin şimdi kaydedilmesi gerekir.
 Veritabanını kaydetmek istediğinizden emin misiniz?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="990"/>
+        <location filename="../MainWindow.cpp" line="995"/>
         <source>Edit View %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="996"/>
+        <location filename="../MainWindow.cpp" line="1001"/>
         <source>Edit Trigger %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1102"/>
+        <location filename="../MainWindow.cpp" line="1107"/>
         <source>You are already executing SQL statements. Do you want to stop them in order to execute the current statements instead? Note that this might leave the database in an inconsistent state.</source>
         <translation>Şu anda zaten yürütülen SQL sorguları var. Bunun yerine, şimdiki sorguları çalıştırmak için şu anda yürütülen sorguyu durdurmak istiyor musunuz? Bunun veritabanını tutarsız bir durumda bırakabileceğini unutmayın.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1151"/>
+        <location filename="../MainWindow.cpp" line="1156"/>
         <source>-- EXECUTING SELECTION IN &apos;%1&apos;
 --</source>
         <translation>-- SEÇİM &apos;%1&apos; İÇERİSİNDE YÜRÜTÜLÜYOR
 --</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1172"/>
+        <location filename="../MainWindow.cpp" line="1177"/>
         <source>-- EXECUTING LINE IN &apos;%1&apos;
 --</source>
         <translation>-- SATIR &apos;%1&apos; İÇERİSİNDE YÜRÜTÜLÜYOR
 --</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1180"/>
+        <location filename="../MainWindow.cpp" line="1185"/>
         <source>-- EXECUTING ALL IN &apos;%1&apos;
 --</source>
         <translation>-- TÜMÜ &apos;%1&apos; İÇERİSİNDE YÜRÜTÜLÜYOR
 --</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1215"/>
-        <location filename="../MainWindow.cpp" line="1219"/>
+        <location filename="../MainWindow.cpp" line="1220"/>
+        <location filename="../MainWindow.cpp" line="1224"/>
         <source>At line %1:</source>
         <translation>%1. satırda:</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1215"/>
+        <location filename="../MainWindow.cpp" line="1220"/>
         <source>Result: %1</source>
         <translation>Sonuç: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1219"/>
+        <location filename="../MainWindow.cpp" line="1224"/>
         <source>Result: %2</source>
         <translation>Sonuç: %2</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1282"/>
+        <location filename="../MainWindow.cpp" line="1287"/>
         <source>Setting PRAGMA values or vacuuming will commit your current transaction.
 Are you sure?</source>
         <translation>PRAGMA değerlerini ayarlamak veya vakumlamak mevcut işleminizi kaydeder.
 Emin misiniz?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1716"/>
+        <location filename="../MainWindow.cpp" line="1721"/>
         <source>Opened &apos;%1&apos; in read-only mode from recent file list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1718"/>
+        <location filename="../MainWindow.cpp" line="1723"/>
         <source>Opened &apos;%1&apos; from recent file list</source>
         <translation type="unfinished"></translation>
     </message>
+    <message numerus="yes">
+        <location filename="../MainWindow.cpp" line="1854"/>
+        <source>Select the action to apply to the dropped file(s). &lt;br/&gt;Note: only &apos;Import&apos; will process more than one file.</source>
+        <comment>Note for translation: Although there is no %n in the original, you can use the numerus-form to adjust &apos;files(s)&apos; and remove the note when n = 1. Including %n in the translation will also work.</comment>
+        <translation type="unfinished">
+            <numerusform>Bırakılan dosyalara uygulanacak eylemi seçin. &lt;br/&gt;Not: yalnızca &apos;İçe Aktar&apos; birden fazla dosyayı işleyecektir.</numerusform>
+        </translation>
+    </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2075"/>
+        <location filename="../MainWindow.cpp" line="2084"/>
         <source>The statements in the tab &apos;%1&apos; are still executing. Closing the tab will stop the execution. This might leave the database in an inconsistent state. Are you sure you want to close the tab?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2704"/>
+        <location filename="../MainWindow.cpp" line="2730"/>
         <source>DB file &apos;%1&apos; could not be opened</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2841"/>
+        <location filename="../MainWindow.cpp" line="2867"/>
         <source>This project file is using an old file format because it was created using DB Browser for SQLite version 3.10 or lower. Loading this file format is no longer fully supported. If you want to load it completely, please use DB Browser for SQLite version 3.12 to convert it to the new file format.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2860"/>
+        <location filename="../MainWindow.cpp" line="2886"/>
         <source>Table &apos;%1&apos; not found; settings ignored</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3187"/>
+        <location filename="../MainWindow.cpp" line="3213"/>
         <source>-- Reference to file &quot;%1&quot; (not supported by this version) --</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3400"/>
+        <location filename="../MainWindow.cpp" line="3426"/>
         <source>Yes. Don&apos;t ask again</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3505"/>
+        <location filename="../MainWindow.cpp" line="3531"/>
         <source>This action will open a new SQL tab with the following statements for you to edit and run:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3711"/>
+        <location filename="../MainWindow.cpp" line="3737"/>
         <source>Rename Tab</source>
         <translation>Sekmeyi Yeniden Adlandır</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3717"/>
+        <location filename="../MainWindow.cpp" line="3743"/>
         <source>Duplicate Tab</source>
         <translation>Sekmeyi Klonla</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3747"/>
+        <location filename="../MainWindow.cpp" line="3773"/>
         <source>Close Tab</source>
         <translation>Sekmeyi Kapat</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3766"/>
+        <location filename="../MainWindow.cpp" line="3792"/>
         <source>Opening &apos;%1&apos;...</source>
         <translation>&apos;%1&apos; açılıyor...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3768"/>
+        <location filename="../MainWindow.cpp" line="3794"/>
         <source>There was an error opening &apos;%1&apos;...</source>
         <translation>&apos;%1&apos; açılırken hata oluştu...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3771"/>
+        <location filename="../MainWindow.cpp" line="3797"/>
         <source>Value is not a valid URL or filename: %1</source>
         <translation>Geçersiz bir URL veya dosya adı: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1276"/>
+        <location filename="../MainWindow.cpp" line="1281"/>
         <source>%1 rows returned in %2ms</source>
         <translation>%2ms içerisinde %1 tane satır döndürüldü</translation>
     </message>
@@ -4396,68 +4399,68 @@ Emin misiniz?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1390"/>
+        <location filename="../MainWindow.cpp" line="1395"/>
         <source>Choose text files</source>
         <translation>Metin dosyaları seçin</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1571"/>
+        <location filename="../MainWindow.cpp" line="1576"/>
         <source>Import completed. Some foreign key constraints are violated. Please fix them before saving.</source>
         <translation>İçe aktarma tamamlandı. Bazı yabancı anahtar kısıtları ihlal edildi. Lütfen kaydetmeden önce bunları çözün.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2173"/>
+        <location filename="../MainWindow.cpp" line="2199"/>
         <source>Select SQL file to open</source>
         <translation>Açmak için SQL dosyasını seçiniz</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2226"/>
+        <location filename="../MainWindow.cpp" line="2252"/>
         <source>Select file name</source>
         <translation>Dosya ismi seçiniz</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2263"/>
+        <location filename="../MainWindow.cpp" line="2289"/>
         <source>Select extension file</source>
         <translation>Eklenti dosyasını seçiniz</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2270"/>
+        <location filename="../MainWindow.cpp" line="2296"/>
         <source>Extension successfully loaded.</source>
         <translation>Eklenti başarıyla yüklendi.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2272"/>
+        <location filename="../MainWindow.cpp" line="2298"/>
         <source>Error loading extension: %1</source>
         <translation>Eklenti yüklenirken hata oluştu: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2426"/>
-        <location filename="../MainWindow.cpp" line="2837"/>
+        <location filename="../MainWindow.cpp" line="2452"/>
+        <location filename="../MainWindow.cpp" line="2863"/>
         <source>Don&apos;t show again</source>
         <translation>Bir daha gös&apos;terme</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2429"/>
+        <location filename="../MainWindow.cpp" line="2455"/>
         <source>New version available.</source>
         <translation>Yeni sürüm  mevcut.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2430"/>
+        <location filename="../MainWindow.cpp" line="2456"/>
         <source>A new DB Browser for SQLite version is available (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Please download at &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</source>
         <translation>Yeni bir SQLite DB Browser sürümü mevcut (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Lütfen buradan indiriniz: &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3203"/>
+        <location filename="../MainWindow.cpp" line="3229"/>
         <source>Project saved to file &apos;%1&apos;</source>
         <translation>Proje &apos;%1&apos; dosyasına kaydedildi</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3404"/>
+        <location filename="../MainWindow.cpp" line="3430"/>
         <source>Collation needed! Proceed?</source>
         <translation>Harmanlama gerekli! Devam edilsin mi?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3405"/>
+        <location filename="../MainWindow.cpp" line="3431"/>
         <source>A table in this database requires a special collation function &apos;%1&apos; that this application can&apos;t provide without further knowledge.
 If you choose to proceed, be aware bad things can happen to your database.
 Create a backup!</source>
@@ -4466,67 +4469,67 @@ Daha fazla bilgi olmadan program bunu sağlayamaz. Eğer bu şekilde devam edece
 Bir yedek oluşturun!</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3422"/>
+        <location filename="../MainWindow.cpp" line="3448"/>
         <source>creating collation</source>
         <translation>harmanlama oluşturuluyor</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3430"/>
+        <location filename="../MainWindow.cpp" line="3456"/>
         <source>Set a new name for the SQL tab. Use the &apos;&amp;&amp;&apos; character to allow using the following character as a keyboard shortcut.</source>
         <translation>SQL sekmesi için yeni bir ad belirleyin. Aşağıdaki karakteri klavye kısayolu olarak kullanmak için &apos;&amp;&amp;&apos; karakterini kullanın.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3482"/>
+        <location filename="../MainWindow.cpp" line="3508"/>
         <source>Please specify the view name</source>
         <translation>Lütfen görünüm ismini belirtin</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3486"/>
+        <location filename="../MainWindow.cpp" line="3512"/>
         <source>There is already an object with that name. Please choose a different name.</source>
         <translation>Bu isme sahip obje zaten mevcut. Lütfen farklı bir isim seçiniz.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3493"/>
+        <location filename="../MainWindow.cpp" line="3519"/>
         <source>View successfully created.</source>
         <translation>Görünüm başarıyla oluşturuldu.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3495"/>
+        <location filename="../MainWindow.cpp" line="3521"/>
         <source>Error creating view: %1</source>
         <translation>Görünüm oluşturma hatası: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3503"/>
+        <location filename="../MainWindow.cpp" line="3529"/>
         <source>This action will open a new SQL tab for running:</source>
         <translation>Bu işlem çalıştırmak için yeni bir SQL sekmesi açar:</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3509"/>
+        <location filename="../MainWindow.cpp" line="3535"/>
         <source>Press Help for opening the corresponding SQLite reference page.</source>
         <translation>İlgili SQLite referans sayfasını açmak için Yardım&apos;a basın.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2660"/>
+        <location filename="../MainWindow.cpp" line="2686"/>
         <source>DB Browser for SQLite project file (*.sqbpro)</source>
         <translation>SQLite DB Browser proje dosyası (*.sqbpro)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="963"/>
+        <location filename="../MainWindow.cpp" line="968"/>
         <source>Error checking foreign keys after table modification. The changes will be reverted.</source>
         <translation>Tablo değişikliğinden sonra yabancı anahtarlar kontrol edilirken hata oluştu. Değişiklikler geri alınacak.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="966"/>
+        <location filename="../MainWindow.cpp" line="971"/>
         <source>This table did not pass a foreign-key check.&lt;br/&gt;You should run &apos;Tools | Foreign-Key Check&apos; and fix the reported issues.</source>
         <translation>Bu tablo birincil anahtar kontrolünden geçmedi.&lt;br/&gt;&apos;Araçlar | Birinci Anahat Kontrolü&apos; komutunu çalıştırın ve raporlanan sorunları düzeltin.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1310"/>
+        <location filename="../MainWindow.cpp" line="1315"/>
         <source>Execution finished with errors.</source>
         <translation>Yürütme hatalarla tamamlandı.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1312"/>
+        <location filename="../MainWindow.cpp" line="1317"/>
         <source>Execution finished without errors.</source>
         <translation>Yürütme hatasız tamamlandı.</translation>
     </message>
@@ -5170,28 +5173,13 @@ Can be set to 0 for disabling completion.</source>
 Tamamlamayı devre dışı bırakmak için 0 olarak ayarlanabilir.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1488"/>
-        <source>selected_bg</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../PreferencesDialog.ui" line="1491"/>
         <source>Selection background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1496"/>
-        <source>selected_fg</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../PreferencesDialog.ui" line="1499"/>
         <source>Selection foreground</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../PreferencesDialog.ui" line="1504"/>
-        <source>highlight</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5298,9 +5286,8 @@ Tamamlamayı devre dışı bırakmak için 0 olarak ayarlanabilir.</translation>
         <translation>&amp;SQL</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1326"/>
         <source>Settings name</source>
-        <translation>Ayarlar ismi</translation>
+        <translation type="vanished">Ayarlar ismi</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1331"/>
@@ -6365,7 +6352,7 @@ Are you sure you want to proceed?</source>
         <translation>sorgu başarıyla yürütüldü. %1ms%2  sürdü</translation>
     </message>
     <message>
-        <location filename="../RunSql.cpp" line="311"/>
+        <location filename="../RunSql.cpp" line="319"/>
         <source>executing query</source>
         <translation>sorgu yürütülüyor</translation>
     </message>
@@ -6892,7 +6879,7 @@ Bu işlevin kullanımına Tercihler&apos;den izin verilmelidir.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="160"/>
-        <source>(X,Y) Return the arctangent of Y/X. The result is in radians. he result is placed into correct quadrant depending on the signs of X and Y.</source>
+        <source>(X,Y) Return the arctangent of Y/X. The result is in radians. The result is placed into correct quadrant depending on the signs of X and Y.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7049,31 +7036,26 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
 <context>
     <name>TableBrowser</name>
     <message>
-        <location filename="../TableBrowser.format.ui" line="14"/>
         <location filename="../TableBrowser.ui" line="14"/>
         <source>Browse Data</source>
         <translation>Veriyi Görüntüle</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="53"/>
         <location filename="../TableBrowser.ui" line="43"/>
         <source>&amp;Table:</source>
         <translation>&amp;Tablo:</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="66"/>
         <location filename="../TableBrowser.ui" line="59"/>
         <source>Select a table to browse data</source>
         <translation>Verileri görüntülemek için tablo seçiniz</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="69"/>
         <location filename="../TableBrowser.ui" line="62"/>
         <source>Use this list to select a table to be displayed in the database view</source>
         <translation>Veritabanı görünümünde gösterilecek tabloyu seçmek için bu listeyi kullanın</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="181"/>
         <location filename="../TableBrowser.ui" line="178"/>
         <source>This is the database table view. You can do the following actions:
  - Start writing for editing inline the value.
@@ -7245,67 +7227,56 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="211"/>
         <location filename="../TableBrowser.ui" line="454"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll to the beginning&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Başa sürükle&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="214"/>
         <location filename="../TableBrowser.ui" line="457"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates to the beginning in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bu butona basıldığında üstteki tablo görünümünün başlangıcına kaydırılır.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="217"/>
         <location filename="../TableBrowser.ui" line="460"/>
         <source>|&lt;</source>
         <translation>|&lt;</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="231"/>
         <location filename="../TableBrowser.ui" line="471"/>
         <source>Scroll one page upwards</source>
         <translation>Bir sayfa yukarı kaydır</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="234"/>
         <location filename="../TableBrowser.ui" line="474"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates one page of records upwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bu butona tıklamak, yukarıdaki tablo görünümünde kayıt sayfasını yukarı doğru kaydırır.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="237"/>
         <location filename="../TableBrowser.ui" line="477"/>
         <source>&lt;</source>
         <translation>&lt;</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="248"/>
         <location filename="../TableBrowser.ui" line="488"/>
         <source>0 - 0 of 0</source>
         <translation>0 - 0 / 0</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="258"/>
         <location filename="../TableBrowser.ui" line="495"/>
         <source>Scroll one page downwards</source>
         <translation>Bir sayfa aşağı kaydır</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="261"/>
         <location filename="../TableBrowser.ui" line="498"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates one page of records downwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bu butona tıklamak, yukarıdaki tablo görünümünde kayıt sayfasını aşağıya doğru kaydırır.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="264"/>
         <location filename="../TableBrowser.ui" line="501"/>
         <source>&gt;</source>
         <translation>&gt;</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="278"/>
         <location filename="../TableBrowser.ui" line="512"/>
         <source>Scroll to the end</source>
         <translation>Sona sürükle</translation>
@@ -7316,354 +7287,285 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="281"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Clicking this button navigates up to the end in the table view above.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../TableBrowser.format.ui" line="284"/>
         <location filename="../TableBrowser.ui" line="518"/>
         <source>&gt;|</source>
         <translation>&gt;|</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="308"/>
         <location filename="../TableBrowser.ui" line="542"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click here to jump to the specified record&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;İstediğiniz kayda atlamak için buraya tıklayın&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="311"/>
         <location filename="../TableBrowser.ui" line="545"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button is used to navigate to the record number specified in the Go to area.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bu buton belirtilen kayıt numarasına gitmek için kullanılır.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="314"/>
         <location filename="../TableBrowser.ui" line="548"/>
         <source>Go to:</source>
         <translation>Bu kayda gidin:</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="321"/>
         <location filename="../TableBrowser.ui" line="555"/>
         <source>Enter record number to browse</source>
         <translation>Görüntülemek için kayıt numarasını giriniz</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="324"/>
         <location filename="../TableBrowser.ui" line="558"/>
         <source>Type a record number in this area and click the Go to: button to display the record in the database view</source>
         <translation>Bu alana veritabanı görünümünde görüntülemek istediğiniz kayıt numarasını giriniz ve Bu kayda gidin butonuna tıklayınız</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="327"/>
         <location filename="../TableBrowser.ui" line="561"/>
         <source>1</source>
         <translation>1</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="339"/>
         <location filename="../TableBrowser.ui" line="573"/>
         <source>Show rowid column</source>
         <translation>rowid sütununu göster</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="342"/>
         <location filename="../TableBrowser.ui" line="576"/>
         <source>Toggle the visibility of the rowid column</source>
         <translation>Rowid sütununun görünürlüğünü ayarla</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="350"/>
         <location filename="../TableBrowser.ui" line="584"/>
         <source>Unlock view editing</source>
         <translation>Görünüm düzenlemenin kilidini aç</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="353"/>
         <location filename="../TableBrowser.ui" line="587"/>
         <source>This unlocks the current view for editing. However, you will need appropriate triggers for editing.</source>
         <translation>Bu, geçerli görünümün düzenleme için kilidini açar. Ancak, düzenleme için uygun tetikleyicilere ihtiyacınız olacaktır.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="358"/>
         <location filename="../TableBrowser.ui" line="592"/>
         <source>Edit display format</source>
         <translation>Görüntüleme formatını düzenle</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="361"/>
         <location filename="../TableBrowser.ui" line="595"/>
         <source>Edit the display format of the data in this column</source>
         <translation>Bu sütundaki verilerin görüntüleme biçimini düzenleyin</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="370"/>
-        <location filename="../TableBrowser.format.ui" line="406"/>
         <location filename="../TableBrowser.ui" line="604"/>
         <location filename="../TableBrowser.ui" line="640"/>
         <source>New Record</source>
         <translation>Yeni Kayıt</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="373"/>
-        <location filename="../TableBrowser.format.ui" line="376"/>
         <location filename="../TableBrowser.ui" line="607"/>
         <location filename="../TableBrowser.ui" line="610"/>
         <source>Insert a new record in the current table</source>
         <translation>Geçerli tabloya yeni bir kayıt ekle</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="379"/>
         <location filename="../TableBrowser.ui" line="613"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button creates a new record in the database. Hold the mouse button to open a pop-up menu of different options:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt;: insert a new record with default values in the database.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Insert Values...&lt;/span&gt;: open a dialog for entering values before they are inserted in the database. This allows to enter values acomplishing the different constraints. This dialog is also open if the &lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt; option fails due to these constraints.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; Bu düğme veritabanında yeni bir kayıt oluşturur. Farklı seçeneklerin olduğu açılır menüsüyü görüntülemek için fare düğmesini basılı tutun: &lt;/p&gt; &lt;ul&gt; &lt;li&gt; &lt;span style=&quot; font-weight:600;&quot;&gt;Yeni Kayıt&lt;/span&gt;: veritabanına varsayılan değerleri olan yeni bir kayıt ekler. &lt;/li&gt; &lt;li&gt; &lt;span style=&quot; font-weight:600;&quot;&gt;Değerler Ekleyin...&lt;/span&gt;: veritabanına eklenmeden önce değerleri girmek için bir iletişim kutusu açın. Bu, farklı kısıtlamaları karşılayan değerlerin girilmesine izin verir. Bu iletişim kutusu, bu kısıtlamalar nedeniyle &lt;span style=&quot; font-weight:600;&quot;&gt;Yeni Kayıt&lt;/span&gt; seçeneği başarısız olursa da açılır. &lt;/li&gt; &lt;/ul&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="388"/>
         <location filename="../TableBrowser.ui" line="622"/>
-        <location filename="../TableBrowser.cpp" line="1145"/>
+        <location filename="../TableBrowser.cpp" line="1144"/>
         <source>Delete Record</source>
         <translation>Kaydı Sil</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="391"/>
         <location filename="../TableBrowser.ui" line="625"/>
         <source>Delete the current record</source>
         <translation>Geçerli kaydı sil</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="394"/>
-        <location filename="../TableBrowser.format.ui" line="397"/>
         <location filename="../TableBrowser.ui" line="628"/>
         <location filename="../TableBrowser.ui" line="631"/>
         <source>This button deletes the record or records currently selected in the table</source>
         <translation>Bu buton tabloda seçili olan kaydı veya kayıtları siler</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="409"/>
-        <location filename="../TableBrowser.format.ui" line="412"/>
         <location filename="../TableBrowser.ui" line="643"/>
         <location filename="../TableBrowser.ui" line="646"/>
         <source>Insert new record using default values in browsed table</source>
         <translation>Görüntülenen tablosundaki varsayılan değerleri kullanarak yeni kayıt ekle</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="417"/>
         <location filename="../TableBrowser.ui" line="651"/>
         <source>Insert Values...</source>
         <translation>Değerler Ekle...</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="420"/>
-        <location filename="../TableBrowser.format.ui" line="423"/>
         <location filename="../TableBrowser.ui" line="654"/>
         <location filename="../TableBrowser.ui" line="657"/>
         <source>Open a dialog for inserting values in a new record</source>
         <translation>Yeni bir kayda değer eklemek için bir iletişim kutusu açın</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="428"/>
         <location filename="../TableBrowser.ui" line="662"/>
         <source>Export to &amp;CSV</source>
         <translation>&amp;CSV dosyası olarak dışa aktar</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="431"/>
-        <location filename="../TableBrowser.format.ui" line="434"/>
         <location filename="../TableBrowser.ui" line="665"/>
         <location filename="../TableBrowser.ui" line="668"/>
         <source>Export the filtered data to CSV</source>
         <translation>Filtrelenmiş veriyi CSV olarak dışa aktar</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="437"/>
         <location filename="../TableBrowser.ui" line="671"/>
         <source>This button exports the data of the browsed table as currently displayed (after filters, display formats and order column) as a CSV file.</source>
         <translation>Bu buton, görüntülenen tablonun verilerini şu anda görüntülendiği şekliyle (filtrelerden, görüntüleme biçimlerinden ve sütunların sıralamasına kadar) bir CSV dosyası olarak dışa aktarır.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="442"/>
         <location filename="../TableBrowser.ui" line="690"/>
         <source>Save as &amp;view</source>
         <translation>&amp;Görünüm olarak kaydet</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="445"/>
-        <location filename="../TableBrowser.format.ui" line="448"/>
         <location filename="../TableBrowser.ui" line="693"/>
         <location filename="../TableBrowser.ui" line="696"/>
         <source>Save the current filter, sort column and display formats as a view</source>
         <translation>Geçerli filtreyi, sütunu ve görüntüleme biçimlerini bir görünüm olarak kaydedin</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="451"/>
         <location filename="../TableBrowser.ui" line="699"/>
         <source>This button saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.</source>
         <translation>Bu buton, görüntülenen tablonun geçerli ayarlarını (filtreler, görüntü formatları ve sütunların sırasına kadar) daha sonra göz atabileceğiniz veya SQL ifadelerinde kullanabileceğiniz bir SQL görünümü olarak kaydeder.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="460"/>
         <location filename="../TableBrowser.ui" line="708"/>
         <source>Save Table As...</source>
         <translation>Tabloyu Farklı Kaydet...</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="463"/>
-        <location filename="../TableBrowser.format.ui" line="466"/>
         <location filename="../TableBrowser.ui" line="711"/>
         <location filename="../TableBrowser.ui" line="714"/>
         <source>Save the table as currently displayed</source>
         <translation>Tabloyu şu anda gösterilen şekilde kaydet</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="469"/>
         <location filename="../TableBrowser.ui" line="717"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This popup menu provides the following options applying to the currently browsed and filtered table:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Export to CSV: this option exports the data of the browsed table as currently displayed (after filters, display formats and order column) to a CSV file.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Save as view: this option saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; Bu açılır menü, o anda görüntülenen ve filtrelenen tablo için geçerli olan aşağıdaki seçenekleri sunar: &lt;/p&gt; &lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot; &gt; &lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot; &gt; CSV olarak Dışa Aktar: Bu seçenek, görüntülenen tablonun verilerini şu anda görüntülendiği şekliyle (filtrelerden, görüntüleme biçimlerinden ve sipariş sütunun sıralamasına kadar) bir CSV dosyasına aktarır. &lt;/li&gt; &lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot; &gt; Görünüm olarak kaydet: Bu seçenek, göz atılan tablonun geçerli ayarlarını (filtreler, görüntü formatları ve sipariş sütun sıralamasına kadar) daha sonra göz atabileceğiniz veya SQL ifadelerinde kullanabileceğiniz bir SQL görünümü olarak kaydeder. &lt;/li&gt; &lt;/ul&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="474"/>
         <location filename="../TableBrowser.ui" line="722"/>
         <source>Hide column(s)</source>
         <translation>Sütunları gizle</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="477"/>
         <location filename="../TableBrowser.ui" line="725"/>
         <source>Hide selected column(s)</source>
         <translation>Seçilen sütunları gizle</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="482"/>
         <location filename="../TableBrowser.ui" line="730"/>
         <source>Show all columns</source>
         <translation>Tüm sütunları göster</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="485"/>
         <location filename="../TableBrowser.ui" line="733"/>
         <source>Show all columns that were hidden</source>
         <translation>Gizlenen tüm sütunları göster</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="490"/>
         <location filename="../TableBrowser.ui" line="738"/>
-        <location filename="../TableBrowser.cpp" line="1498"/>
+        <location filename="../TableBrowser.cpp" line="1497"/>
         <source>Set encoding</source>
         <translation>Kodlama seç</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="493"/>
         <location filename="../TableBrowser.ui" line="741"/>
         <source>Change the encoding of the text in the table cells</source>
         <translation>Tablo hücrelerindeki metnin kodlamasını değiştirme</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="498"/>
         <location filename="../TableBrowser.ui" line="746"/>
         <source>Set encoding for all tables</source>
         <translation>Tüm tablolar için kodlama seç</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="501"/>
         <location filename="../TableBrowser.ui" line="749"/>
         <source>Change the default encoding assumed for all tables in the database</source>
         <translation>Veritabanındaki tüm tablolar için varsayılan kodlamayı değiştirme</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="510"/>
         <location filename="../TableBrowser.ui" line="766"/>
         <source>Clear Filters</source>
         <translation>Filtreleri Temizle</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="513"/>
         <location filename="../TableBrowser.ui" line="769"/>
         <source>Clear all filters</source>
         <translation>Tüm filtreleri temizle</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="516"/>
-        <location filename="../TableBrowser.format.ui" line="519"/>
         <location filename="../TableBrowser.ui" line="772"/>
         <location filename="../TableBrowser.ui" line="775"/>
         <source>This button clears all the filters set in the header input fields for the currently browsed table.</source>
         <translation>Bu buton, o anda görüntülenen tablonun başlık giriş alanlarında ayarlanan tüm filtreleri temizler.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="528"/>
         <location filename="../TableBrowser.ui" line="784"/>
         <source>Clear Sorting</source>
         <translation>Sıralamayı Temizle</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="531"/>
         <location filename="../TableBrowser.ui" line="787"/>
         <source>Reset the order of rows to the default</source>
         <translation>Satırların sırasını varsayılana sıfırla</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="534"/>
-        <location filename="../TableBrowser.format.ui" line="537"/>
         <location filename="../TableBrowser.ui" line="790"/>
         <location filename="../TableBrowser.ui" line="793"/>
         <source>This button clears the sorting columns specified for the currently browsed table and returns to the default order.</source>
         <translation>Bu buton, o anda görüntülenen tablo için belirtilen sıralama sütunlarını temizler ve varsayılan sıraya geri döner.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="546"/>
         <location filename="../TableBrowser.ui" line="802"/>
         <source>Print</source>
         <translation>Yazdır</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="549"/>
         <location filename="../TableBrowser.ui" line="805"/>
         <source>Print currently browsed table data</source>
         <translation>Şu anda görüntülenen tablo verilerini yazdır</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="555"/>
         <location filename="../TableBrowser.ui" line="811"/>
         <source>Print currently browsed table data. Print selection if more than one cell is selected.</source>
         <translation>Şu anda görüntülenen tablo verilerini yazdırın. Birden fazla hücre seçilirse seçimi yazdırın.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="558"/>
         <location filename="../TableBrowser.ui" line="814"/>
         <source>Ctrl+P</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="570"/>
         <location filename="../TableBrowser.ui" line="844"/>
         <source>Refresh</source>
         <translation>Yenile</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="573"/>
         <location filename="../TableBrowser.ui" line="847"/>
         <source>Refresh the data in the selected table</source>
         <translation>Seçilen tablodaki verileri yenile</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="576"/>
         <location filename="../TableBrowser.ui" line="850"/>
         <source>This button refreshes the data in the currently selected table.</source>
         <translation>Bu buton, seçilen tablodaki verileri yeniler.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="579"/>
         <location filename="../TableBrowser.ui" line="853"/>
         <source>F5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="717"/>
         <source>Clear All Conditional Formats</source>
-        <translation type="unfinished">Tüm Koşullu Biçimleri Temizle</translation>
+        <translation type="obsolete">Tüm Koşullu Biçimleri Temizle</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="868"/>
@@ -7686,76 +7588,58 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="594"/>
-        <location filename="../TableBrowser.format.ui" line="597"/>
         <location filename="../TableBrowser.ui" line="883"/>
         <location filename="../TableBrowser.ui" line="886"/>
         <source>Bold</source>
         <translation>Kalın</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="600"/>
         <location filename="../TableBrowser.ui" line="889"/>
         <source>Ctrl+B</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="612"/>
-        <location filename="../TableBrowser.format.ui" line="615"/>
         <location filename="../TableBrowser.ui" line="901"/>
         <location filename="../TableBrowser.ui" line="904"/>
         <source>Italic</source>
         <translation>İtalik</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="627"/>
-        <location filename="../TableBrowser.format.ui" line="630"/>
         <location filename="../TableBrowser.ui" line="916"/>
         <location filename="../TableBrowser.ui" line="919"/>
         <source>Underline</source>
         <translation>Altı çizili</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="633"/>
         <location filename="../TableBrowser.ui" line="922"/>
         <source>Ctrl+U</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="645"/>
-        <location filename="../TableBrowser.format.ui" line="648"/>
         <location filename="../TableBrowser.ui" line="934"/>
         <location filename="../TableBrowser.ui" line="937"/>
         <source>Align Right</source>
         <translation>Sağa Hizala</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="660"/>
-        <location filename="../TableBrowser.format.ui" line="663"/>
         <location filename="../TableBrowser.ui" line="949"/>
         <location filename="../TableBrowser.ui" line="952"/>
         <source>Align Left</source>
         <translation>Sola Hizala</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="675"/>
-        <location filename="../TableBrowser.format.ui" line="678"/>
         <location filename="../TableBrowser.ui" line="964"/>
         <location filename="../TableBrowser.ui" line="967"/>
         <source>Center Horizontally</source>
         <translation>Yatayda Ortala</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="690"/>
-        <location filename="../TableBrowser.format.ui" line="693"/>
         <location filename="../TableBrowser.ui" line="979"/>
         <location filename="../TableBrowser.ui" line="982"/>
         <source>Justify</source>
         <translation>İki yana yasla</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="702"/>
-        <location filename="../TableBrowser.format.ui" line="705"/>
         <location filename="../TableBrowser.ui" line="991"/>
         <location filename="../TableBrowser.ui" line="994"/>
         <source>Edit Conditional Formats...</source>
@@ -7767,7 +7651,6 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
         <translation>Geçerli sütun için koşullu biçimlendirmeyi düzenle</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="714"/>
         <location filename="../TableBrowser.ui" line="1006"/>
         <source>Clear Format</source>
         <translation>Biçimlendirmeleri Temizle</translation>
@@ -7784,16 +7667,12 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
         <translation>Seçilen hücrelerdeki tüm hücre biçimlendirmelerini ve seçilen sütunlardaki tüm koşullu biçimleri temizle</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="726"/>
-        <location filename="../TableBrowser.format.ui" line="729"/>
         <location filename="../TableBrowser.ui" line="1024"/>
         <location filename="../TableBrowser.ui" line="1027"/>
         <source>Font Color</source>
         <translation>Yazı Rengi</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.format.ui" line="738"/>
-        <location filename="../TableBrowser.format.ui" line="741"/>
         <location filename="../TableBrowser.ui" line="1036"/>
         <location filename="../TableBrowser.ui" line="1039"/>
         <source>Background Color</source>
@@ -7860,12 +7739,12 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
         <translation>. Toplam: %1; Ortalama: %2; Min: %3; Maks: %4</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="675"/>
+        <location filename="../TableBrowser.cpp" line="674"/>
         <source>Conditional formats for &quot;%1&quot;</source>
         <translation>&quot;%1&quot; için koşullu biçimlendirme</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="758"/>
+        <location filename="../TableBrowser.cpp" line="757"/>
         <source>determining row count...</source>
         <translation>satır sayısı belirleniyor...</translation>
     </message>
@@ -7878,59 +7757,59 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
         <translation type="vanished">%1 - %2 / %3</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="761"/>
+        <location filename="../TableBrowser.cpp" line="760"/>
         <source>%L1 - %L2 of &gt;= %L3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="764"/>
+        <location filename="../TableBrowser.cpp" line="763"/>
         <source>%L1 - %L2 of %L3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="766"/>
+        <location filename="../TableBrowser.cpp" line="765"/>
         <source> (clipped at %L1 rows)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1018"/>
+        <location filename="../TableBrowser.cpp" line="1017"/>
         <source>Please enter a pseudo-primary key in order to enable editing on this view. This should be the name of a unique column in the view.</source>
         <translation>Bu görünümde düzenlemeyi etkinleştirmek için lütfen sözde birincil anahtar girin. Bu, görünümdeki benzersiz bir sütunun adı olmalıdır.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1143"/>
+        <location filename="../TableBrowser.cpp" line="1142"/>
         <source>Delete Records</source>
         <translation>Kayıtları Sil</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1281"/>
+        <location filename="../TableBrowser.cpp" line="1280"/>
         <source>Duplicate records</source>
         <translation>Yinelenen kayıtlar</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1281"/>
+        <location filename="../TableBrowser.cpp" line="1280"/>
         <source>Duplicate record</source>
         <translation>Yinelenen kayıt</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1285"/>
+        <location filename="../TableBrowser.cpp" line="1284"/>
         <source>Ctrl+&quot;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1304"/>
+        <location filename="../TableBrowser.cpp" line="1303"/>
         <source>Adjust rows to contents</source>
         <translation>Satırları içeriklere göre ayarlama</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1368"/>
+        <location filename="../TableBrowser.cpp" line="1367"/>
         <source>Error deleting record:
 %1</source>
         <translation>Kayıt silme hatası:
 %1</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1373"/>
+        <location filename="../TableBrowser.cpp" line="1372"/>
         <source>Please select a record first</source>
         <translation>Lütfen öncelikle kaydı seçiniz</translation>
     </message>
@@ -7939,29 +7818,29 @@ Buraya atlamak için %3Shift&apos;e basılı tutun ve tıklayın</translation>
         <translation type="vanished">Bu tablo için ayarlanmış filtre yok. Görünüm oluşturulmaz.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1494"/>
+        <location filename="../TableBrowser.cpp" line="1493"/>
         <source>Please choose a new encoding for all tables.</source>
         <translation>Lütfen tüm tablolar için yeni bir kodlama seçin.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1496"/>
+        <location filename="../TableBrowser.cpp" line="1495"/>
         <source>Please choose a new encoding for this table.</source>
         <translation>Lütfen bu tablo için yeni bir kodlama seçin.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1499"/>
+        <location filename="../TableBrowser.cpp" line="1498"/>
         <source>%1
 Leave the field empty for using the database encoding.</source>
         <translation>%1
 Veritabanı kodlamasını kullanmak için alanı boş bırakın.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1511"/>
+        <location filename="../TableBrowser.cpp" line="1510"/>
         <source>This encoding is either not valid or not supported.</source>
         <translation>Bu kodlama geçerli değil veya desteklenmiyor.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1691"/>
+        <location filename="../TableBrowser.cpp" line="1690"/>
         <source>%1 replacement(s) made.</source>
         <translation>%1 değişimi yapıldı.</translation>
     </message>
