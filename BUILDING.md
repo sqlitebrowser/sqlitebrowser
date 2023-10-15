@@ -168,6 +168,9 @@ mv DB\ Browser\ for\ SQLite.app /Applications
 An icon for "DB Browser for SQLite" should now be in your main macOS Applications list, ready to launch.
 
 #### Add the extension to the app bundle (Optional)
+
+> **Note**: The following lines look a bit complicated, but are all commands that you need to run.
+
 ```bash
 /opt/homebrew/opt/db4sqtub@5/bin/macdeployqt DB\ Browser\ for\ SQLite.app
 mkdir build/DB\ Browser\ for\ SQLite.app/Contents/Extensions
