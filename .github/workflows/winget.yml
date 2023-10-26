@@ -7,7 +7,7 @@ jobs:
     # Action can only be run on windows
     runs-on: windows-latest
     steps:
-      - uses: vedantmgoyal2009/winget-releaser@v1
+      - uses: vedantmgoyal2009/winget-releaser@v2
         with:
           identifier: DBBrowserForSQLite.DBBrowserForSQLite
           installers-regex: '\.msi$' # Only .msi files

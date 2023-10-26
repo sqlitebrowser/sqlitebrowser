@@ -43,6 +43,13 @@ public:
     DBBrowserDB& getDb() { return db; }
 
 private:
+    enum LoadAttempResult
+    {
+        Success,
+        NotValidFormat,
+        Aborted
+    };
+
     struct PragmaValues
     {
         int autovacuum;
@@ -210,7 +217,7 @@ private slots:
     void openLinkSqlCipherFaq() const;
     void openLinkWebsite() const;
     void openLinkDonatePatreon() const;
-    bool loadProject(QString filename = QString(), bool readOnly = false);
+    LoadAttempResult loadProject(QString filename = QString(), bool readOnly = false);
     void saveProject();
     void saveProjectAs();
     void fileAttach(const QString& fileName = QString());

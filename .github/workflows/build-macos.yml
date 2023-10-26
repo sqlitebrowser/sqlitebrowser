@@ -32,7 +32,7 @@ jobs:
                   echo "DAILY=true" >> $GITHUB_ENV
                 fi
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - if: env.DAILY == 'false'
               name: Configure build (Continuous)
@@ -43,7 +43,7 @@ jobs:
                     sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLite-dev-'$(git rev-parse --short --verify HEAD)'"/' CMakeLists.txt
                 fi
                 mkdir build && cd build
-                cmake -G Ninja -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DcustomTap=1 -Dsqlcipher=${{ matrix.sqlcipher }} ..
+                cmake -G Ninja -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DcustomTap=1 -DENABLE_TESTING=ON -Dsqlcipher=${{ matrix.sqlcipher }} ..
 
             - if: env.DAILY == 'true'
               name: Configure build (Daily)
@@ -54,11 +54,15 @@ jobs:
                     sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLite Nightly"/' CMakeLists.txt
                 fi
                 mkdir build && cd build
-                cmake -G Ninja -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DcustomTap=1 -Dsqlcipher=${{ matrix.sqlcipher }} ..
+                cmake -G Ninja -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DcustomTap=1 -DENABLE_TESTING=ON -Dsqlcipher=${{ matrix.sqlcipher }} ..
 
             - name: Build
               working-directory: ./build
               run: ninja
+
+            - name: Tests
+              working-directory: ./build
+              run: ninja test
 
             - name: Build Extension
               run: |
