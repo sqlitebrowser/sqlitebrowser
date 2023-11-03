@@ -26,11 +26,17 @@ jobs:
         env:
           DAILY: false
         steps:
+            - name: Update dependency packages
+              run: |
+                brew update
+                brew upgrade db4subopenssl@3-x86_64 db4subopenssl@3 db4subqt@5 db4subsqlcipher-x86_64 db4subsqlcipher db4subsqlitefts@5
+              
             - name: Set 'DAILY' environment variable
               run: |
                 if [ "${{ github.event_name }}" = "schedule" ] || [ "${{ github.event.inputs.assume-triggerd-by-schedule }}" == "true" ]; then
                   echo "DAILY=true" >> $GITHUB_ENV
                 fi
+                
             - name: Checkout
               uses: actions/checkout@v4
 
