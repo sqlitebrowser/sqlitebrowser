@@ -1171,8 +1171,12 @@ void MainWindow::executeQuery()
             execute_to_position = editor->positionFromLineIndex(execute_to_line, execute_to_index);
 
             QByteArray firstPartEntireSQL = sqlWidget->getSql().toUtf8().left(execute_from_position);
-            if(firstPartEntireSQL.lastIndexOf(';') != -1)
+            if(firstPartEntireSQL.lastIndexOf(';') != -1) {
                 execute_from_position -= firstPartEntireSQL.length() - firstPartEntireSQL.lastIndexOf(';') - 1;
+            } else {
+                // No semicolon before the current line, execute from the first line.
+                execute_from_position = editor->positionFromLineIndex(0, 0);
+            }
 
             db.logSQL(tr("-- EXECUTING LINE IN '%1'\n--").arg(tabName), kLogMsg_User);
         } break;
