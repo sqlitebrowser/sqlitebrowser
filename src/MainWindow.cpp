@@ -213,11 +213,6 @@ void MainWindow::init()
         focusSqlEditor();
     });
 
-    // This is the counterpart of Ctrl+PgDown in SQL editor, which focus out of the editor.
-    // This one sets the focus again in the editor.
-    QShortcut* shortcutFocusEditor = new QShortcut(QKeySequence(tr("Ctrl+PgUp")), ui->tabSqlAreas, nullptr, nullptr, Qt::WidgetWithChildrenShortcut);
-    connect(shortcutFocusEditor, &QShortcut::activated, this, &MainWindow::focusSqlEditor);
-
     // Get MaxRecentFiles value from QSettings.
     MaxRecentFiles = Settings::getValue("General", "maxRecentFiles").toInt();
     recentFileActs.resize(MaxRecentFiles);
