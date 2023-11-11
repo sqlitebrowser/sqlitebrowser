@@ -2349,7 +2349,7 @@ void MainWindow::reloadSettings()
         break;
     case Settings::DarkStyle :
     case Settings::LightStyle :
-        QFile f(style == Settings::DarkStyle ? ":qdarkstyle/dark/style.qss" : ":qdarkstyle/light/style.qss");
+        QFile f(style == Settings::DarkStyle ? ":qdarkstyle/dark/darkstyle.qss" : ":qdarkstyle/light/lightstyle.qss");
         if (!f.exists()) {
             QMessageBox::warning(this, qApp->applicationName(),
                                tr("Could not find resource file: %1").arg(f.fileName()));
