@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.15)
 project(sqlitebrowser
-    VERSION 3.12.99
+    VERSION 3.13.0
     DESCRIPTION "GUI editor for SQLite databases"
 )
 
