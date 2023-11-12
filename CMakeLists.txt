@@ -49,7 +49,7 @@ endif()
 
 # Determine the git commit hash
 execute_process(
-    COMMAND git rev-parse --short --verify HEAD
+    COMMAND git -C ${CMAKE_CURRENT_SOURCE_DIR} rev-parse --short --verify HEAD
     OUTPUT_VARIABLE GIT_COMMIT_HASH
     OUTPUT_STRIP_TRAILING_WHITESPACE
     ERROR_QUIET
