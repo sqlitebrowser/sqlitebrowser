@@ -21,9 +21,10 @@
   - [Wiki](#wiki)
   - [Continuous, Nightly builds](#continuous-nightly-builds)
   - [Windows](#windows)
+      - [Continuous, Nightly builds](#continuous-nightly-builds-1)
   - [macOS](#macos)
       - [Stable release](#stable-release)
-      - [Continuous, Nightly builds](#continuous-nightly-builds-1)
+      - [Continuous, Nightly builds](#continuous-nightly-builds-2)
   - [Linux](#linux)
     - [Arch Linux](#arch-linux)
     - [Debian](#debian)
@@ -83,11 +84,10 @@ https://github.com/sqlitebrowser/sqlitebrowser/wiki.
 
 ## Continuous, Nightly builds
 
-Download continuous builds for AppImage and macOS here:
+Download continuous builds for AppImage, macOS and Windows here:
 
 * https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/continuous
 > Note: A continuous build is generated when a new commit is added to the `master` branch.<br>
-> Builds for Windows are not currently available. but there are plans to add them in 2023.
 
 Download nightly builds for Windows and macOS here:
 
@@ -111,9 +111,14 @@ Or use winget:
 winget install -e --id DBBrowserForSQLite.DBBrowserForSQLite
 ```
 
-**Note:** If for some reason the standard Windows release does not work
-(e.g. gives an error), try a [nightly build](https://github.com/sqlitebrowser/sqlitebrowser?tab=readme-ov-file#nightly-builds). Nightly builds often fix bugs
-reported after the last release. :D
+#### Continuous, Nightly builds
+
+Continuous builds are available here:
+
+* https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/continuous
+
+Nightly builds are available here:
+* https://nightlies.sqlitebrowser.org/latest
 
 ## macOS
 

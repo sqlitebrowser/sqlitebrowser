@@ -249,6 +249,8 @@ If you additionally want an NSIS installer:
 
 Done.
 
+> Also, we have a CI workflow for Windows, you can check it out [here](https://github.com/sqlitebrowser/sqlitebrowser/blob/master/.github/workflows/build-windows.yml)
+
 ## Build with SQLCipher support
 
 When built with SQLCipher support, DB Browser for SQLite will allow you to open
