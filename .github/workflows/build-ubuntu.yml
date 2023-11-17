@@ -1,18 +1,17 @@
 name: Build - Ubuntu
 
 on:
+  release:
+    types: [created]
   workflow_call:
   workflow_dispatch:
-
-permissions:
-  contents: write
 
 jobs:
   build:
     name: ${{ matrix.os }} - SQLCipher ${{ matrix.sqlcipher }}
     runs-on: ${{ matrix.os }}
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         os: [ubuntu-20.04]
         sqlcipher: ["0", "1"]

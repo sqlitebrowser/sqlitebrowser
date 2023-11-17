@@ -21,22 +21,18 @@ inputs:
     required: true
 
 runs:
-  using: 'composite'
+  using: "composite"
 
   steps:
     - name: Unlock keychain
-      env:
-        KEYCHAIN_PATH: ${{ inputs.KEYCHAIN_PATH }}
-        KEYCHAIN_PW: ${{ inputs.KEYCHAIN_PW }}
       shell: bash
       run: |
-        security unlock-keychain -p "$KEYCHAIN_PW" "$KEYCHAIN_PATH"
-        security list-keychain -d user -s "$KEYCHAIN_PATH"
+        security unlock-keychain -p "${{ inputs.KEYCHAIN_PW }}" "${{ inputs.KEYCHAIN_PATH}}"
+        security list-keychain -d user -s "${{ inputs.KEYCHAIN_PATH }}"
+
     - name: Include the dependencies in the app bundle
-      env:
-        DEV_ID: ${{ inputs.DEV_ID }}
       shell: bash
-      run: find build -name "DB Browser for SQL*.app" -exec /opt/homebrew/opt/db4subqt@5/bin/macdeployqt {} -sign-for-notarization="$DEV_ID" \;
+      run: find build -name "DB Browser for SQL*.app" -exec /opt/homebrew/opt/db4subqt@5/bin/macdeployqt {} -sign-for-notarization="${{ inputs.DEV_ID }}" \;
 
     - name: Add the extension to the app bundle
       shell: bash
@@ -92,8 +88,6 @@ runs:
         done
 
     - name: Copy the icon file to the app bundle
-      env:
-        DAILY: ${{ inputs.DAILY }}
       shell: bash
       run: |
         for TARGET in $(find build -name "DB Browser for SQL*.app" | sed -e 's/ /_/g'); do
@@ -108,16 +102,14 @@ runs:
         done
 
     - name: Sign the manually added extensions.
-      env:
-        DEV_ID: ${{ inputs.DEV_ID }}
       shell: bash
       run: |
         for TARGET in $(find build -name "DB Browser for SQL*.app" | sed -e 's/ /_/g'); do
           TARGET=$(echo $TARGET | sed -e 's/_/ /g')
-          codesign --sign "$DEV_ID" --deep --force --options=runtime --strict --timestamp "$TARGET/Contents/Extensions/fileio.dylib"
-          codesign --sign "$DEV_ID" --deep --force --options=runtime --strict --timestamp "$TARGET/Contents/Extensions/formats.dylib"
-          codesign --sign "$DEV_ID" --deep --force --options=runtime --strict --timestamp "$TARGET/Contents/Extensions/math.dylib"
-          codesign --sign "$DEV_ID" --deep --force --options=runtime --strict --timestamp "$TARGET"
+          codesign --sign "${{ inputs.DEV_ID }}" --deep --force --options=runtime --strict --timestamp "$TARGET/Contents/Extensions/fileio.dylib"
+          codesign --sign "${{ inputs.DEV_ID }}" --deep --force --options=runtime --strict --timestamp "$TARGET/Contents/Extensions/formats.dylib"
+          codesign --sign "${{ inputs.DEV_ID }}" --deep --force --options=runtime --strict --timestamp "$TARGET/Contents/Extensions/math.dylib"
+          codesign --sign "${{ inputs.DEV_ID }}" --deep --force --options=runtime --strict --timestamp "$TARGET"
         done
 
     - name: Move app bundle to installer folder for DMG creation
@@ -128,9 +120,6 @@ runs:
     # but Composite Actions do not support if statements for steps.
     # For more information, see https://github.com/actions/runner/blob/main/docs/adrs/0549-composite-run-steps.md
     - name: Create the DMG
-      env:
-        DAILY: ${{ inputs.DAILY }}
-        DEV_ID: ${{ inputs.DEV_ID }}
       shell: bash
       run: |
         export DATE=$(date +%Y%m%d)
@@ -141,13 +130,13 @@ runs:
             sed -i "" 's/"DB Browser for SQLCipher Nightly.app"/"DB Browser for SQLCipher-dev-'$(git rev-parse --short --verify HEAD)'.app"/' installer/macos/sqlcipher-nightly.json
             TARGET="DB.Browser.for.SQLCipher-dev-$(git rev-parse --short --verify HEAD).dmg"
             appdmg --quiet installer/macos/sqlcipher-nightly.json "$TARGET"
-            codesign --sign "$DEV_ID" --verbose --options=runtime --timestamp "$TARGET"
+            codesign --sign "${{ inputs.DEV_ID }}" --verbose --options=runtime --timestamp "$TARGET"
             codesign -vvv --deep --strict --verbose=4 "$TARGET"
           else
             # Daily with SQLCipher
             TARGET="DB.Browser.for.SQLCipher-universal_$DATE.dmg"
             appdmg --quiet installer/macos/sqlcipher-nightly.json "$TARGET"
-            codesign --sign "$DEV_ID" --verbose --options=runtime --timestamp "$TARGET"
+            codesign --sign "${{ inputs.DEV_ID }}" --verbose --options=runtime --timestamp "$TARGET"
             codesign -vvv --deep --strict --verbose=4 "$TARGET"
           fi
         else
@@ -156,24 +145,20 @@ runs:
             sed -i "" 's/"DB Browser for SQLite Nightly.app"/"DB Browser for SQLite-dev-'$(git rev-parse --short --verify HEAD)'.app"/' installer/macos/nightly.json
             TARGET="DB.Browser.for.SQLite-dev-$(git rev-parse --short --verify HEAD).dmg"
             appdmg --quiet installer/macos/nightly.json "$TARGET"
-            codesign --sign "$DEV_ID" --verbose --options=runtime --timestamp "$TARGET"
+            codesign --sign "${{ inputs.DEV_ID }}" --verbose --options=runtime --timestamp "$TARGET"
             codesign -vvv --deep --strict --verbose=4 "$TARGET"
           else
             # Daily without SQLCipher
             TARGET="DB.Browser.for.SQLite-universal_$DATE.dmg"
             appdmg --quiet installer/macos/nightly.json "$TARGET"
-            codesign --sign "$DEV_ID" --verbose --options=runtime --timestamp "$TARGET"
+            codesign --sign "${{ inputs.DEV_ID }}" --verbose --options=runtime --timestamp "$TARGET"
             codesign -vvv --deep --strict --verbose=4 "$TARGET"
           fi
         fi
 
     - name: Notarize the dmg
-      env:
-        APPLE_ID: ${{ inputs.APPLE_ID }}
-        APPLE_PW: ${{ inputs.APPLE_PW }}
-        TEAM_ID: ${{ inputs.TEAM_ID }}
       shell: bash
-      run: xcrun notarytool submit *.dmg --apple-id "$APPLE_ID" --password "$APPLE_PW" --team-id "$TEAM_ID" --wait
+      run: xcrun notarytool submit *.dmg --apple-id "${{ inputs.APPLE_ID }}" --password "${{ inputs.APPLE_PW }}" --team-id "${{ inputs.TEAM_ID }}" --wait
 
     - name: Staple the notarization ticket
       shell: bash

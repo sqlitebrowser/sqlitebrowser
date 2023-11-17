@@ -2,28 +2,15 @@ name: CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-  release:
-    types: [ created ]
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  cleanup:
-    if: github.event_name != 'pull_request'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Delete continuous release and tag
-        uses: dev-drprasad/delete-tag-and-release@v1.0
-        with:
-          delete_release: true
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          tag_name: continuous
-
-  appimage:
+  build-appimage:
     if: github.event_name != 'pull_request'
     uses: ./.github/workflows/build-appimage.yml
 
@@ -33,4 +20,10 @@ jobs:
 
   build-ubuntu:
     uses: ./.github/workflows/build-ubuntu.yml
+    secrets: inherit
+
+  release:
+    if: github.event_name != 'pull_request'
+    needs: [build-appimage, build-macos]
+    uses: ./.github/workflows/release.yml
     secrets: inherit

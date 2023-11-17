@@ -1,0 +1,36 @@
+name: Release
+
+on:
+    workflow_call:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete 'continuous' release and tag
+        uses: dev-drprasad/delete-tag-and-release@v1.0
+        with:
+          delete_release: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tag_name: continuous
+
+      - run: mkdir target
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
+          path: target
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: target/*
+          prerelease: true
+          tag_name: continuous
+
+      - name: Clear artifacts
+        if: always()
+        uses: geekyeggo/delete-artifact@v2
+        with:
+          name: build-artifacts
