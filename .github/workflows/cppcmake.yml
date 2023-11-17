@@ -22,8 +22,12 @@ jobs:
     uses: ./.github/workflows/build-ubuntu.yml
     secrets: inherit
 
+  build-windows:
+    uses: ./.github/workflows/build-windows.yml
+    secrets: inherit
+
   release:
     if: github.event_name != 'pull_request'
-    needs: [build-appimage, build-macos]
+    needs: [build-appimage, build-macos, build-windows]
     uses: ./.github/workflows/release.yml
     secrets: inherit

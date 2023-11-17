@@ -1,0 +1,22 @@
+diff --git a/installer/windows/translations.wxs b/installer/windows/translations.wxs
+index f842e05b..0743a202 100644
+--- a/installer/windows/translations.wxs
++++ b/installer/windows/translations.wxs
+@@ -97,7 +97,7 @@
+                 <Component><File Source="$(var.QtPath)\translations\qtxmlpatterns_pl.qm" /></Component>
+ 
+                 <!-- Brazilian Portuguese -->
+-                <Component><File Source="$(var.QtPath)\translations\qt_pt_BR.qm" /></Component>
++                <Component><File Source="$(var.QtPath)\translations\qt_pt.qm" /></Component>
+ 
+                 <!-- Russian -->
+                 <Component><File Source="$(var.QtPath)\translations\qt_ru.qm" /></Component>
+@@ -197,7 +197,7 @@
+             <ComponentRef Id="qtxmlpatterns_pl.qm" />
+ 
+             <!-- Brazilian Portuguese -->
+-            <ComponentRef Id="qt_pt_BR.qm" />
++            <ComponentRef Id="qt_pt.qm" />
+ 
+             <!-- Russian -->
+             <ComponentRef Id="qt_ru.qm" />
