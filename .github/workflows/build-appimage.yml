@@ -51,15 +51,18 @@ jobs:
           export VERSION=$(printf "dev-`git -C . rev-parse --short HEAD`")
           ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -appimage
 
+      - name: Rename AppImage for consistency
+        run: for i in DB_Browser_for_SQLite*; do mv "$i" "${i//_/.}"; done
+
       - if: matrix.sqlcipher == '1'
         name: Rename AppImage (SQLCipher)
         run: |
-          export FILE=$(ls DB_Browser_for_SQLite*.AppImage)
+          export FILE=$(ls DB.Browser.for.SQLite*.AppImage)
           export FILE=${FILE/SQLite/SQLCipher}
-          mv DB_Browser_for_SQLite*.AppImage $FILE
+          mv DB.Browser.for.SQLite*.AppImage $FILE
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           name: build-artifacts
-          path: DB_Browser_for_*.AppImage
+          path: DB.Browser.for.*.AppImage
