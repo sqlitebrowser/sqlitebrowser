@@ -66,3 +66,4 @@ jobs:
         with:
           name: build-artifacts
           path: DB.Browser.for.*.AppImage
+          retention-days: 1

@@ -95,6 +95,7 @@ jobs:
         with:
           name: build-artifacts
           path: DB.Browser.for.*.dmg
+          retention-days: 1
 
       - if: env.DAILY == 'true'
         name: Release (Daily)

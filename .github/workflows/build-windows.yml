@@ -164,3 +164,4 @@ jobs:
         with:
           name: build-artifacts
           path: DB.Browser.for.SQLite-dev-*.zip
+          retention-days: 1
