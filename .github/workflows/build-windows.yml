@@ -84,6 +84,7 @@ jobs:
           cl /MD extension-formats.c -link -dll -def:extension-formats.def -out:formats.dll
           cl /MD extension-functions.c -link -dll -def:extension-functions.def -out:math.dll
           # FIXME: Disable building the 'fileio' extension for now (#3488)
+          # If this issue is resolved, be sure to delete the related patch for WiX
           # curl -L -o fileio.c "https://sqlite.org/src/raw?filename=ext/misc/fileio.c&ci=trunk"
           # curl -L -o test_windirent.c "https://sqlite.org/src/raw?filename=src/test_windirent.c&ci=trunk"
           # curl -L -o test_windirent.h "https://sqlite.org/src/raw?filename=src/test_windirent.h&ci=trunk"
@@ -102,7 +103,7 @@ jobs:
           mkdir sqlcipher
           copy sqlite3.h sqlcipher
 
-      - name: Patch CMakeLists.txt and WXI Variables
+      - name: Patch CMakeLists.txt and WiX Toolset Variables
         run: |
           git apply .github\patch\CMakeLists.txt.patch
           git apply .github\patch\product.wxs.patch
@@ -136,7 +137,7 @@ jobs:
           devenv /Build Release sqlitebrowser.sln /Project ALL_BUILD
           mv "Release\DB Browser for SQLite.exe" "Release\DB Browser for SQLCipher.exe"
 
-      - name: Package
+      - name: Create MSI
         env:
           ExePath: ${{ github.workspace }}
           OpenSSLPath: C:\dev\OpenSSL-${{ matrix.arch }}
@@ -145,11 +146,21 @@ jobs:
         run: |
           cd installer/windows
           ./build.cmd "${{ matrix.arch }}".ToLower()
-          # FIXME:
-          dir
+
+      - name: Install MSI and create ZIP
+        run: |
+          $ARCH="${{ matrix.arch }}".ToLower()
+          $FILENAME_FORMAT="DB.Browser.for.SQLite-dev-$(git rev-parse --short HEAD)-$ARCH.zip"
+          Start-Process msiexec.exe -ArgumentList "/a $(dir installer\windows\DB.Browser.for.SQLite-*.msi) /q TARGETDIR=$PWD\target\" -Wait
+          if ("${{ matrix.arch }}" -eq "Win32") {
+            move target\System\* "target\DB Browser for SQLite\"
+          } else {
+            move target\System64\* "target\DB Browser for SQLite\"
+          }
+          Compress-Archive -Path "target\DB Browser for SQLite\*" -DestinationPath $FILENAME_FORMAT
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           name: build-artifacts
-          path: installer\windows\DB.Browser.for.SQLite-*.msi
+          path: DB.Browser.for.SQLite-dev-*.zip
