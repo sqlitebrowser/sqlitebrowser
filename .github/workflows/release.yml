@@ -22,6 +22,12 @@ jobs:
           name: build-artifacts
           path: target
 
+      - name: Unarchive Windows's build artifacts
+        run: for f in target/*.zip; do unzip -d target/ "$f"; done
+      
+      - name: Remove archived Windows's build artifacts
+        run: rm target/build-artifacts-*.zip
+
       - name: Release
         uses: softprops/action-gh-release@v1
         with:

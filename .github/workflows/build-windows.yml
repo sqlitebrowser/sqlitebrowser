@@ -146,8 +146,10 @@ jobs:
         run: |
           cd installer/windows
           ./build.cmd "${{ matrix.arch }}".ToLower()
+          $ARCH="${{ matrix.arch }}".ToLower()
+          mv DB.Browser.for.SQLite-*.msi "DB.Browser.for.SQLite-dev-$(git rev-parse --short HEAD)-$ARCH.msi"
 
-      - name: Install MSI and create ZIP
+      - name: Create ZIP
         run: |
           $ARCH="${{ matrix.arch }}".ToLower()
           $FILENAME_FORMAT="DB.Browser.for.SQLite-dev-$(git rev-parse --short HEAD)-$ARCH.zip"
@@ -159,9 +161,16 @@ jobs:
           }
           Compress-Archive -Path "target\DB Browser for SQLite\*" -DestinationPath $FILENAME_FORMAT
 
+      - name: Prepare artifacts
+        run: |
+          mkdir build-artifacts
+          move installer\windows\DB.Browser.for.SQLite-dev-*.msi build-artifacts\
+          move DB.Browser.for.SQLite-dev-*.zip build-artifacts\
+          Compress-Archive -Path build-artifacts\* -DestinationPath build-artifacts-${{ matrix.arch }}.zip
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           name: build-artifacts
-          path: DB.Browser.for.SQLite-dev-*.zip
+          path: build-artifacts-${{ matrix.arch }}.zip
           retention-days: 1
