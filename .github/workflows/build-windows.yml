@@ -147,13 +147,7 @@ jobs:
           cd installer/windows
           ./build.cmd "${{ matrix.arch }}".ToLower()
 
-      - name: Rename MSI
-        run: |
-          cd installer/windows
-          $ARCH="${{ matrix.arch }}".ToLower()
-          mv DB.Browser.for.SQLite-*.msi "DB.Browser.for.SQLite-dev-$(git rev-parse --short HEAD)-$ARCH.msi"
-
-      - name: Install MSI and Create ZIP
+      - name: Install MSI and create ZIP
         run: |
           $ARCH="${{ matrix.arch }}".ToLower()
           $FILENAME_FORMAT="DB.Browser.for.SQLite-dev-$(git rev-parse --short HEAD)-$ARCH.zip"
@@ -169,7 +163,5 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: build-artifacts
-          path: |
-            installer/windows/DB.Browser.for.SQLite-*.msi
-            DB.Browser.for.SQLite-dev-*.zip
+          path: DB.Browser.for.SQLite-dev-*.zip
           retention-days: 1
