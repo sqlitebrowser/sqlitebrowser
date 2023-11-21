@@ -1,8 +1,6 @@
           name:                   sqlitebrowser  # the name of the snap
-          # version:              3.10.1  # the version of the snap
-          version:                master
-          version-script:         printf "`cat currentrelease | head -n 1 `-`git rev-list master --count`-` git -C . rev-parse --short HEAD`"
-
+          adopt-info:             sqlitebrowser
+          base:                   core20
           summary:                DB Browser for SQLite  # 79 char long summary
           description:            |
             SQLite Database Browser is a visual tool used to create, design and edit database files compatible with SQLite. Its interface is based on Qt, and is meant to be used for users and developers that want to create databases, edit and search data using a familiar spreadsheet-like interface, without the need to learn complicated SQL commands. Controls and wizards are available for users to:
@@ -18,17 +16,17 @@
             * Examine a log of all SQL commands issued by the application
             SQLite Database Browser is not a visual shell for the sqlite command line tool. It does not require familiarity with SQL commands.
           confinement:            strict  # use "strict" to enforce system access only via declared interfaces
-
           grade:                  stable
           icon:                   images/logo.svg
           type:                   app
           apps:
             sqlitebrowser:
-              command:            desktop-launch $SNAP/bin/sqlitebrowser
-              desktop:            share/applications/sqlitebrowser.desktop
+              command-chain: 
+                    - bin/desktop-launch
+              command: usr/local/bin/sqlitebrowser
+              desktop: usr/local/share/applications/sqlitebrowser.desktop
               environment:
-                DISABLE_WAYLAND:  1
-                TMPDIR:           $XDG_RUNTIME_DIR
+                TMPDIR: $XDG_RUNTIME_DIR
                 XLOCALEDIR: '$SNAP/usr/share/X11/locale'
                 LOCPATH: '$SNAP/usr/lib/locale'
                 GTK_PATH: $SNAP/lib/gtk-2.0
@@ -60,13 +58,18 @@
               - cmake
               - libsqlcipher-dev
               - libqcustomplot-dev
-              - libqt5scintilla2-dev
+              - libqscintilla2-qt5-dev
               - git
+          
           parts:
               sqlitebrowser:
                   plugin:         cmake
-                  configflags:    ["-DUSE_QT5=True", "-Dsqlcipher=1", "-Wno-dev","-DSQLITE_ENABLE_JSON1=1"]
-                  source:         .
+                  cmake-parameters:    ["-DUSE_QT5=True", "-Dsqlcipher=1", "-Wno-dev","-DSQLITE_ENABLE_JSON1=1"]
+                  source: .
+                  override-pull: |
+                      snapcraftctl pull
+                      VERSION=$(printf "`cat currentrelease | head -n 1 `-`git rev-list master --count`-` git -C . rev-parse --short HEAD`")
+                      snapcraftctl set-version $VERSION     
               desktop-qt5:
                 build-packages:
                 - qtbase5-dev
@@ -89,7 +92,6 @@
                 - libqt5gui5
                 - libgdk-pixbuf2.0-0
                 - libqt5svg5
-                - appmenu-qt5
                 - libglib2.0-bin
                 - libgtk-3-bin
                 - unity-gtk3-module
@@ -99,7 +101,8 @@
                 - ibus-gtk3
                 - libibus-1.0-5
               dump:
-                  plugin:         dump
+                  plugin: dump
+                  source: .
                   after:
                   - desktop-qt5
                   - sqlitebrowser
@@ -115,6 +118,10 @@
                   - libgail-3-dev
                   - libgail-dev
                   - qtwayland5
+                  - libqscintilla2-qt5-15
+                  - libqt5printsupport5
+                  - libqt5xml5
+                  - libsqlcipher0
                   filesets:
                       wanted:
                       - bin/*
