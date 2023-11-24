@@ -12,7 +12,18 @@ on:
         required: false
 
 jobs:
+  # Homebrew can't run more than one process at a time,
+  # so it finished Homebrew first and then does the build job.
+  pre:
+    name: Update dependency packages
+    runs-on: macos-13-runner
+    steps:
+      - name: Update dependency packages
+        run: |
+          brew update
+          brew upgrade db4subopenssl@3-x86_64 db4subopenssl@3 db4subqt@5 db4subsqlcipher-x86_64 db4subsqlcipher db4subsqlitefts@5
   build:
+    needs: pre
     name: ${{ matrix.os }} - SQLCipher ${{ matrix.sqlcipher }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -23,11 +34,6 @@ jobs:
     env:
       DAILY: false
     steps:
-      - name: Update dependency packages
-        run: |
-          brew update
-          brew upgrade db4subopenssl@3-x86_64 db4subopenssl@3 db4subqt@5 db4subsqlcipher-x86_64 db4subsqlcipher db4subsqlitefts@5
-
       - name: Set 'DAILY' environment variable
         run: |
           if [ "${{ github.event_name }}" = "schedule" ] || [ "${{ github.event.inputs.assume-triggerd-by-schedule }}" = "true" ]; then
