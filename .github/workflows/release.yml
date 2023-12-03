@@ -27,7 +27,7 @@ jobs:
           name: build-artifacts
           path: target
 
-      - name: Unarchive Windows's build artifacts
+      - name: Unarchive Windows's buildㅍ artifacts
         run: for f in target/*.zip; do unzip -d target/ "$f"; done
       
       - name: Remove archived Windows's build artifacts
@@ -58,15 +58,30 @@ jobs:
           name: build-artifacts
           path: target
 
+      - name: Unarchive Windows's buildㅍ artifacts
+        run: for f in target/*.zip; do unzip -d target/ "$f"; done
+      
+      - name: Remove archived Windows's build artifacts
+        run: rm target/build-artifacts-*.zip
+
       - name: Release
+        working-directory: target
         run: |
-          cd target
           export DATE=$(date +%Y%m%d)
           rsync -aP *.dmg ${{ secrets.BUILD_ARTIFACTS_UPLOAD_TARGET }}:/nightlies/macos-universal/
-          ssh -q ${{ secrets.BUILD_ARTIFACTS_UPLOAD_TARGET }} "cd /nightlies/latest && rm -f *SQLC*-universal*dmg*"
+          ssh -q ${{ secrets.BUILD_ARTIFACTS_UPLOAD_TARGET }} "cd /nightlies/latest && rm -f *.dmg"
           ssh -q ${{ secrets.BUILD_ARTIFACTS_UPLOAD_TARGET }} "ln -s /nightlies/macos-universal/DB.Browser.for.SQLCipher-universal_$DATE.dmg /nightlies/latest/DB.Browser.for.SQLCipher-universal.dmg"
-          ssh -q ${{ secrets.BUILD_ARTIFACTS_UPLOAD_TARGET }} "cd /nightlies/latest && rm -f *SQLi*-universal*dmg*"
           ssh -q ${{ secrets.BUILD_ARTIFACTS_UPLOAD_TARGET }} "ln -s /nightlies/macos-universal/DB.Browser.for.SQLite-universal_$DATE.dmg /nightlies/latest/DB.Browser.for.SQLite-universal.dmg"
+
+          # export DATE=$(date +%Y-%m-%d)
+          # rsync -aP *win32* ${{ secrets.BUILD_ARTIFACTS_UPLOAD_TARGET }}:/nightlies/win32/
+          # rsync -aP *win64* ${{ secrets.BUILD_ARTIFACTS_UPLOAD_TARGET }}:/nightlies/win64/
+          # ssh -q ${{ secrets.BUILD_ARTIFACTS_UPLOAD_TARGET }} "cd /nightlies/latest && rm -f *.msi"
+          # ssh -q ${{ secrets.BUILD_ARTIFACTS_UPLOAD_TARGET }} "cd /nightlies/latest && rm -f *.zip"
+          # ssh -q ${{ secrets.BUILD_ARTIFACTS_UPLOAD_TARGET }} "ln -s /nightlies/win32/DB.Browser.for.SQLite-$DATE-win32.msi /nightlies/latest/DB.Browser.for.SQLite-win32.msi"
+          # ssh -q ${{ secrets.BUILD_ARTIFACTS_UPLOAD_TARGET }} "ln -s /nightlies/win32/DB.Browser.for.SQLite-$DATE-win32.zip /nightlies/latest/DB.Browser.for.SQLite-win32.zip"
+          # ssh -q ${{ secrets.BUILD_ARTIFACTS_UPLOAD_TARGET }} "ln -s /nightlies/win64/DB.Browser.for.SQLite-$DATE-win64.msi /nightlies/latest/DB.Browser.for.SQLite-win64.msi"
+          # ssh -q ${{ secrets.BUILD_ARTIFACTS_UPLOAD_TARGET }} "ln -s /nightlies/win64/DB.Browser.for.SQLite-$DATE-win64.zip /nightlies/latest/DB.Browser.for.SQLite-win64.zip"
 
       - name: Clear artifacts
         if: always()
