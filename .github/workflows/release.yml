@@ -2,9 +2,14 @@ name: Release
 
 on:
     workflow_call:
+      inputs:
+        NIGHTLY:
+          default: false
+          type: boolean
 
 jobs:
   release:
+    if: inputs.NIGHTLY == false
     runs-on: ubuntu-latest
     steps:
       - name: Delete 'continuous' release and tag
@@ -34,6 +39,34 @@ jobs:
           files: target/*
           prerelease: true
           tag_name: continuous
+
+      - name: Clear artifacts
+        if: always()
+        uses: geekyeggo/delete-artifact@v2
+        with:
+          name: build-artifacts
+
+  release-nightly:
+    if: inputs.NIGHTLY
+    runs-on: macos-13-runner
+    steps:
+      - run: mkdir target
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
+          path: target
+
+      - name: Release
+        run: |
+          cd target
+          export DATE=$(date +%Y%m%d)
+          rsync -aP *.dmg ${{ secrets.BUILD_ARTIFACTS_UPLOAD_TARGET }}:/nightlies/macos-universal/
+          ssh -q ${{ secrets.BUILD_ARTIFACTS_UPLOAD_TARGET }} "cd /nightlies/latest && rm -f *SQLC*-universal*dmg*"
+          ssh -q ${{ secrets.BUILD_ARTIFACTS_UPLOAD_TARGET }} "ln -s /nightlies/macos-universal/DB.Browser.for.SQLCipher-universal_$DATE.dmg /nightlies/latest/DB.Browser.for.SQLCipher-universal.dmg"
+          ssh -q ${{ secrets.BUILD_ARTIFACTS_UPLOAD_TARGET }} "cd /nightlies/latest && rm -f *SQLi*-universal*dmg*"
+          ssh -q ${{ secrets.BUILD_ARTIFACTS_UPLOAD_TARGET }} "ln -s /nightlies/macos-universal/DB.Browser.for.SQLite-universal_$DATE.dmg /nightlies/latest/DB.Browser.for.SQLite-universal.dmg"
 
       - name: Clear artifacts
         if: always()

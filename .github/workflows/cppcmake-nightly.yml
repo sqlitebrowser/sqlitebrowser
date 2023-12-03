@@ -1,0 +1,20 @@
+name: CI (Nightly)
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Every day at midnight UTC
+  workflow_dispatch:
+
+jobs:
+  build-macos:
+    uses: ./.github/workflows/build-macos.yml
+    secrets: inherit
+    with:
+      NIGHTLY: true
+
+  release:
+    needs: [build-macos]
+    uses: ./.github/workflows/release.yml
+    secrets: inherit
+    with:
+      NIGHTLY: true

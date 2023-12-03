@@ -2,7 +2,6 @@ name: Build - AppImage
 
 on:
   workflow_call:
-  workflow_dispatch:
 
 jobs:
   build:
@@ -22,7 +21,7 @@ jobs:
         with:
           packages: libqcustomplot-dev libqscintilla2-qt5-dev libqt5svg5 libsqlcipher-dev libsqlite3-dev qttools5-dev
 
-      - if: matrix.sqlcipher == '0'
+      - if: matrix.sqlcipher == 0
         name: Build SQLite
         run: |
           TARBALL=$(curl -s https://sqlite.org/download.html | awk '/<!--/,/-->/ {print}' | grep 'sqlite-autoconf' | cut -d ',' -f 3)
@@ -51,15 +50,14 @@ jobs:
           export VERSION=$(printf "dev-`git -C . rev-parse --short HEAD`")
           ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -appimage
 
-      - name: Rename AppImage for consistency
-        run: for i in DB_Browser_for_SQLite*; do mv "$i" "${i//_/.}"; done
-
-      - if: matrix.sqlcipher == '1'
-        name: Rename AppImage (SQLCipher)
+      - name: Rename a file for consistency
         run: |
-          export FILE=$(ls DB.Browser.for.SQLite*.AppImage)
-          export FILE=${FILE/SQLite/SQLCipher}
-          mv DB.Browser.for.SQLite*.AppImage $FILE
+          for i in DB_Browser_for_SQLite*; do mv "$i" "${i//_/.}"; done
+          if [ "${{ matrix.sqlcipher }}" = "0" ]; then
+            export FILE=$(ls DB.Browser.for.SQLite*.AppImage)
+            export FILE=${FILE/SQLite/SQLCipher}
+            mv DB.Browser.for.SQLite*.AppImage $FILE
+          fi
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3

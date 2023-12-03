@@ -5,17 +5,15 @@ inputs:
     required: true
   APPLE_PW:
     required: true
-  DAILY:
-    type: boolean
-    required: false
   DEV_ID:
     required: true
   KEYCHAIN_PATH:
     required: true
   KEYCHAIN_PW:
     required: true
+  NIGHTLY:
+    required:  true
   SQLCIPHER:
-    type: boolean
     required: true
   TEAM_ID:
     required: true
@@ -92,7 +90,7 @@ runs:
       run: |
         for TARGET in $(find build -name "DB Browser for SQL*.app" | sed -e 's/ /_/g'); do
           TARGET=$(echo $TARGET | sed -e 's/_/ /g')
-          if [ "${{ inputs.DAILY }}" = "false" ]; then
+          if [ "${{ inputs.NIGHTLY }}" = "false" ]; then
             cp installer/macos/macapp.icns "$TARGET/Contents/Resources/"
             /usr/libexec/PlistBuddy -c "Set :CFBundleIconFile macapp.icns" "$TARGET/Contents/Info.plist"
           else
@@ -125,36 +123,29 @@ runs:
         export DATE=$(date +%Y%m%d)
 
         if [ "${{ inputs.SQLCIPHER }}" = "1" ]; then
-          if [ "${{ inputs.DAILY }}" = "false" ]; then
+          if [ "${{ inputs.NIGHTLY }}" = "false" ]; then
             # Continuous with SQLCipher
             sed -i "" 's/"DB Browser for SQLCipher Nightly.app"/"DB Browser for SQLCipher-dev-'$(git rev-parse --short --verify HEAD)'.app"/' installer/macos/sqlcipher-nightly.json
             TARGET="DB.Browser.for.SQLCipher-dev-$(git rev-parse --short --verify HEAD).dmg"
-            appdmg --quiet installer/macos/sqlcipher-nightly.json "$TARGET"
-            codesign --sign "${{ inputs.DEV_ID }}" --verbose --options=runtime --timestamp "$TARGET"
-            codesign -vvv --deep --strict --verbose=4 "$TARGET"
           else
-            # Daily with SQLCipher
+            # Nightly with SQLCipher
             TARGET="DB.Browser.for.SQLCipher-universal_$DATE.dmg"
-            appdmg --quiet installer/macos/sqlcipher-nightly.json "$TARGET"
-            codesign --sign "${{ inputs.DEV_ID }}" --verbose --options=runtime --timestamp "$TARGET"
-            codesign -vvv --deep --strict --verbose=4 "$TARGET"
           fi
+          appdmg --quiet installer/macos/sqlcipher-nightly.json "$TARGET"
         else
-          if [ "${{ inputs.DAILY }}" = "false" ]; then
+          if [ "${{ inputs.NIGHTLY }}" = "false" ]; then
             # Continuous without SQLCipher
             sed -i "" 's/"DB Browser for SQLite Nightly.app"/"DB Browser for SQLite-dev-'$(git rev-parse --short --verify HEAD)'.app"/' installer/macos/nightly.json
             TARGET="DB.Browser.for.SQLite-dev-$(git rev-parse --short --verify HEAD).dmg"
-            appdmg --quiet installer/macos/nightly.json "$TARGET"
-            codesign --sign "${{ inputs.DEV_ID }}" --verbose --options=runtime --timestamp "$TARGET"
-            codesign -vvv --deep --strict --verbose=4 "$TARGET"
           else
-            # Daily without SQLCipher
+            # Nightly without SQLCipher
             TARGET="DB.Browser.for.SQLite-universal_$DATE.dmg"
-            appdmg --quiet installer/macos/nightly.json "$TARGET"
-            codesign --sign "${{ inputs.DEV_ID }}" --verbose --options=runtime --timestamp "$TARGET"
-            codesign -vvv --deep --strict --verbose=4 "$TARGET"
           fi
+          appdmg --quiet installer/macos/nightly.json "$TARGET"
         fi
+
+        codesign --sign "${{ inputs.DEV_ID }}" --verbose --options=runtime --timestamp "$TARGET"
+        codesign -vvv --deep --strict --verbose=4 "$TARGET"
 
     - name: Notarize the dmg
       shell: bash

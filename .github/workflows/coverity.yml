@@ -15,13 +15,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install qttools5-dev libqt5scintilla2-dev libqcustomplot-dev libsqlite3-dev libqt5svg5 libsqlcipher-dev qt5-default
+
       - name: Configure cmake
         run: |
           cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DENABLE_TESTING=ON -Dsqlcipher=1 .
+
       - name: Build and scan
         uses: vapier/coverity-scan-action@v1
         with:

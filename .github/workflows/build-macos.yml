@@ -1,29 +1,14 @@
 name: Build - macOS
 
 on:
-  schedule:
-    - cron: "0 0 * * *" # Every day at midnight (UTC)
   workflow_call:
-  workflow_dispatch:
     inputs:
-      assume-triggerd-by-schedule:
-        default: 'false'
-        description: "Assume this workflow was triggered by the schedule"
-        required: false
+      NIGHTLY:
+        default: false
+        type: boolean
 
 jobs:
-  # Homebrew can't run more than one process at a time,
-  # so it finished Homebrew first and then does the build job.
-  pre:
-    name: Update dependency packages
-    runs-on: macos-13-runner
-    steps:
-      - name: Update dependency packages
-        run: |
-          brew update
-          brew upgrade db4subopenssl@3-x86_64 db4subopenssl@3 db4subqt@5 db4subsqlcipher-x86_64 db4subsqlcipher db4subsqlitefts@5
   build:
-    needs: pre
     name: ${{ matrix.os }} - SQLCipher ${{ matrix.sqlcipher }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -31,37 +16,26 @@ jobs:
       matrix:
         os: [macos-13-runner]
         sqlcipher: ["0", "1"]
-    env:
-      DAILY: false
     steps:
-      - name: Set 'DAILY' environment variable
-        run: |
-          if [ "${{ github.event_name }}" = "schedule" ] || [ "${{ github.event.inputs.assume-triggerd-by-schedule }}" = "true" ]; then
-            echo "DAILY=true" >> $GITHUB_ENV
-          fi
-
       - name: Checkout
         uses: actions/checkout@v4
 
-      - if: env.DAILY == 'false'
-        name: Configure build (Continuous)
+      - name: Configure build
         run: |
-          if [ "${{ matrix.sqlcipher }}" = "1" ]; then
-              sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLCipher-dev-'$(git rev-parse --short --verify HEAD)'"/' CMakeLists.txt
+          if [ "${{ inputs.NIGHTLY }}" = "true" ]; then
+            if [ "${{ matrix.sqlcipher }}" = "1" ]; then
+                sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLCipher Nightly"/' CMakeLists.txt
+            else
+                sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLite Nightly"/' CMakeLists.txt
+            fi
           else
-              sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLite-dev-'$(git rev-parse --short --verify HEAD)'"/' CMakeLists.txt
+            if [ "${{ matrix.sqlcipher }}" = "1" ]; then
+                sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLCipher-dev-'$(git rev-parse --short --verify HEAD)'"/' CMakeLists.txt
+            else
+                sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLite-dev-'$(git rev-parse --short --verify HEAD)'"/' CMakeLists.txt
+            fi
           fi
-          mkdir build && cd build
-          cmake -G Ninja -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DcustomTap=1 -DENABLE_TESTING=ON -Dsqlcipher=${{ matrix.sqlcipher }} ..
 
-      - if: env.DAILY == 'true'
-        name: Configure build (Daily)
-        run: |
-          if [ "${{ matrix.sqlcipher }}" = "1" ]; then
-              sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLCipher Nightly"/' CMakeLists.txt
-          else
-              sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLite Nightly"/' CMakeLists.txt
-          fi
           mkdir build && cd build
           cmake -G Ninja -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DcustomTap=1 -DENABLE_TESTING=ON -Dsqlcipher=${{ matrix.sqlcipher }} ..
 
@@ -88,30 +62,17 @@ jobs:
         with:
           APPLE_ID: ${{ secrets.MACOS_CODESIGN_APPLE_ID }}
           APPLE_PW: ${{ secrets.MACOS_CODESIGN_APPLE_PW }}
-          DAILY: ${{ env.DAILY }}
           DEV_ID: ${{ secrets.MACOS_CODESIGN_DEV_ID }}
           KEYCHAIN_PATH: ${{ secrets.MACOS_CODESIGN_KEYCHAIN_PATH }}
           KEYCHAIN_PW: ${{ secrets.MACOS_CODESIGN_KEYCHAIN_PW }}
+          NIGHTLY: ${{ inputs.NIGHTLY }}
           SQLCIPHER: ${{ matrix.sqlcipher }}
           TEAM_ID: ${{ secrets.MACOS_CODESIGN_TEAM_ID }}
 
-      - if: github.event_name != 'pull_request' && env.DAILY == 'false'
-        name: Upload artifacts (Continuous)
+      - if: github.event_name != 'pull_request'
+        name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           name: build-artifacts
           path: DB.Browser.for.*.dmg
           retention-days: 1
-
-      - if: env.DAILY == 'true'
-        name: Release (Daily)
-        run: |
-          export DATE=$(date +%Y%m%d)
-          rsync -aP *.dmg ${{ secrets.MACOS_BUILD_ARTIFACTS_UPLOAD_TARGET }}:/nightlies/macos-universal/
-          if [ "${{ matrix.sqlcipher }}" = "1" ]; then
-            ssh -q ${{ secrets.MACOS_BUILD_ARTIFACTS_UPLOAD_TARGET }} "cd /nightlies/latest && rm -f *SQLC*-universal*dmg*"
-            ssh -q ${{ secrets.MACOS_BUILD_ARTIFACTS_UPLOAD_TARGET }} "ln -s /nightlies/macos-universal/DB.Browser.for.SQLCipher-universal_$DATE.dmg /nightlies/latest/DB.Browser.for.SQLCipher-universal.dmg"
-          else
-            ssh -q ${{ secrets.MACOS_BUILD_ARTIFACTS_UPLOAD_TARGET }} "cd /nightlies/latest && rm -f *SQLi*-universal*dmg*"
-            ssh -q ${{ secrets.MACOS_BUILD_ARTIFACTS_UPLOAD_TARGET }} "ln -s /nightlies/macos-universal/DB.Browser.for.SQLite-universal_$DATE.dmg /nightlies/latest/DB.Browser.for.SQLite-universal.dmg"
-          fi

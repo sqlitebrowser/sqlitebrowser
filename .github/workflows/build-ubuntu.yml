@@ -4,7 +4,6 @@ on:
   release:
     types: [created]
   workflow_call:
-  workflow_dispatch:
 
 jobs:
   build:
@@ -38,7 +37,8 @@ jobs:
       - name: Run tests
         run: ctest -V -C Release --test-dir build
 
-      - name: Package
+      - if: github.event_name == 'release'
+        name: Package
         run: |
           cmake --build build --config Release -j --target package
           cmake -E remove_directory package/_CPack_Packages
