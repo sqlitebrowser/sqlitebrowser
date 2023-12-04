@@ -118,7 +118,9 @@ jobs:
           ./build.cmd "${{ matrix.arch }}".ToLower()
 
           $ARCH="${{ matrix.arch }}".ToLower()
-          $DATE=$(Get-Date -Format "yyyy-MM-dd")
+          $UTIME=(Get-Date).ToUniversalTime()
+          $DFORMAT="yyyy-MM-dd"
+          $DATE=$UTIME.ToString($DFORMAT)
 
           if ("${{ inputs.NIGHTLY }}" -eq "true") {
             mv DB.Browser.for.SQLite-*.msi "DB.Browser.for.SQLite-$DATE-$ARCH.msi"
@@ -129,7 +131,9 @@ jobs:
       - name: Create ZIP
         run: |
           $ARCH="${{ matrix.arch }}".ToLower()
-          $DATE=$(Get-Date -Format "yyyy-MM-dd")
+          $UTIME=(Get-Date).ToUniversalTime()
+          $DFORMAT="yyyy-MM-dd"
+          $DATE=$UTIME.ToString($DFORMAT)
 
           if ("${{ inputs.NIGHTLY }}" -eq "true") {
             $FILENAME_FORMAT="DB.Browser.for.SQLite-$DATE-$ARCH.zip"
