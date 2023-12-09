@@ -48,13 +48,7 @@ jobs:
         run: ninja test
 
       - name: Build Extension
-        run: |
-          clang -I /opt/homebrew/opt/db4subsqlitefts@5/include -L /opt/homebrew/opt/db4subsqlitefts@5/lib -fno-common -dynamiclib src/extensions/extension-formats.c
-          clang -I /opt/homebrew/opt/db4subsqlitefts@5/include -L /opt/homebrew/opt/db4subsqlitefts@5/lib -fno-common -dynamiclib src/extensions/extension-functions.c
-          curl -L -o src/extensions/fileio.c 'https://sqlite.org/src/raw?filename=ext/misc/fileio.c&ci=trunk'
-          curl -L -o src/extensions/test_windirect.c 'https://sqlite.org/src/raw?filename=src/test_windirent.c&ci=trunk'
-          curl -L -o src/extensions/test_windirect.h 'https://sqlite.org/src/raw?filename=src/test_windirent.h&ci=trunk'
-          clang -I /opt/homebrew/opt/db4subsqlitefts@5/include -L /opt/homebrew/opt/db4subsqlitefts@5/lib -fno-common -dynamiclib src/extensions/fileio.c src/extensions/test_windirect.c
+        run: clang -I /opt/homebrew/opt/db4subsqlitefts@5/include -L /opt/homebrew/opt/db4subsqlitefts@5/lib -fno-common -dynamiclib src/extensions/extension-formats.c
 
       - if: github.event_name != 'pull_request'
         name: Notarize the app
@@ -63,6 +57,7 @@ jobs:
           APPLE_ID: ${{ secrets.MACOS_CODESIGN_APPLE_ID }}
           APPLE_PW: ${{ secrets.MACOS_CODESIGN_APPLE_PW }}
           DEV_ID: ${{ secrets.MACOS_CODESIGN_DEV_ID }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           KEYCHAIN_PATH: ${{ secrets.MACOS_CODESIGN_KEYCHAIN_PATH }}
           KEYCHAIN_PW: ${{ secrets.MACOS_CODESIGN_KEYCHAIN_PW }}
           NIGHTLY: ${{ inputs.NIGHTLY }}
