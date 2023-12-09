@@ -7,6 +7,8 @@ inputs:
     required: true
   DEV_ID:
     required: true
+  GH_TOKEN:
+    required: true
   KEYCHAIN_PATH:
     required: true
   KEYCHAIN_PW:
@@ -32,32 +34,26 @@ runs:
       shell: bash
       run: find build -name "DB Browser for SQL*.app" -exec /opt/homebrew/opt/db4subqt@5/bin/macdeployqt {} -sign-for-notarization="${{ inputs.DEV_ID }}" \;
 
-    - name: Add the extension to the app bundle
+    - name: Add the 'nalgeon/sqlean' extension to the app bundle
       shell: bash
       run: |
+        gh auth login --with-token <<< "${{ inputs.GH_TOKEN }}"
+        gh release download --pattern "sqlean-macos-arm64.zip" --repo "nalgeon/sqlean"
+        unzip sqlean-macos-arm64.zip
         for TARGET in $(find build -name "DB Browser for SQL*.app" | sed -e 's/ /_/g'); do
           TARGET=$(echo $TARGET | sed -e 's/_/ /g')
           mkdir "$TARGET/Contents/Extensions"
-          clang -I /opt/homebrew/opt/db4subsqlitefts@5/include -L /opt/homebrew/opt/db4subsqlitefts@5/lib -fno-common -dynamiclib src/extensions/extension-formats.c -o "$TARGET/Contents/Extensions/formats.dylib"
-          clang -I /opt/homebrew/opt/db4subsqlitefts@5/include -L /opt/homebrew/opt/db4subsqlitefts@5/lib -fno-common -dynamiclib src/extensions/extension-functions.c -o "$TARGET/Contents/Extensions/math.dylib"
 
+          clang -I /opt/homebrew/opt/db4subsqlitefts@5/include -L /opt/homebrew/opt/db4subsqlitefts@5/lib -fno-common -dynamiclib src/extensions/extension-formats.c -o "$TARGET/Contents/Extensions/formats.dylib"
           if [ -f "$TARGET/Contents/Extensions/formats.dylib" ]; then
             install_name_tool -id "@executable_path/../Extensions/formats.dylib" "$TARGET/Contents/Extensions/formats.dylib"
             ln -s formats.dylib "$TARGET/Contents/Extensions/formats.dylib.dylib"
           fi
-          if [ -f "$TARGET/Contents/Extensions/math.dylib" ]; then
-            install_name_tool -id "@executable_path/../Extensions/math.dylib" "$TARGET/Contents/Extensions/math.dylib"
-            ln -s math.dylib "$TARGET/Contents/Extensions/math.dylib.dylib"
-          fi
 
-          curl -L -o src/extensions/fileio.c 'https://sqlite.org/src/raw?filename=ext/misc/fileio.c&ci=trunk'
-          curl -L -o src/extensions/test_windirect.c 'https://sqlite.org/src/raw?filename=src/test_windirent.c&ci=trunk'
-          curl -L -o src/extensions/test_windirect.h 'https://sqlite.org/src/raw?filename=src/test_windirent.h&ci=trunk'
-          clang -I /opt/homebrew/opt/db4subsqlitefts@5/include -L /opt/homebrew/opt/db4subsqlitefts@5/lib -fno-common -dynamiclib src/extensions/fileio.c src/extensions/test_windirect.c -o "$TARGET/Contents/Extensions/fileio.dylib"
-
-          if [ -f "$TARGET/Contents/Extensions/fileio.dylib" ]; then
-            install_name_tool -id "@executable_path/../Extensions/fileio.dylib" "$TARGET/Contents/Extensions/fileio.dylib"
-            ln -s fileio.dylib "$TARGET/Contents/Extensions/fileio.dylib.dylib"
+          cp sqlean.dylib "$TARGET/Contents/Extensions/"
+          if [ -f "$TARGET/Contents/Extensions/sqlean.dylib" ]; then
+            install_name_tool -id "@executable_path/../Extensions/sqlean.dylib" "$TARGET/Contents/Extensions/sqlean.dylib"
+            ln -s sqlean.dylib "$TARGET/Contents/Extensions/sqlean.dylib.dylib"
           fi
         done
 
@@ -67,6 +63,7 @@ runs:
         for TARGET in $(find build -name "DB Browser for SQL*.app" | sed -e 's/ /_/g'); do
           TARGET=$(echo $TARGET | sed -e 's/_/ /g')
           cp LICENSE "$TARGET/Contents/Resources/"
+          cp LICENSE-EXTENSIONS "$TARGET/Contents/Resources/"
           cp LICENSE-PLUGINS "$TARGET/Contents/Resources/"
         done
 
@@ -104,9 +101,8 @@ runs:
       run: |
         for TARGET in $(find build -name "DB Browser for SQL*.app" | sed -e 's/ /_/g'); do
           TARGET=$(echo $TARGET | sed -e 's/_/ /g')
-          codesign --sign "${{ inputs.DEV_ID }}" --deep --force --options=runtime --strict --timestamp "$TARGET/Contents/Extensions/fileio.dylib"
           codesign --sign "${{ inputs.DEV_ID }}" --deep --force --options=runtime --strict --timestamp "$TARGET/Contents/Extensions/formats.dylib"
-          codesign --sign "${{ inputs.DEV_ID }}" --deep --force --options=runtime --strict --timestamp "$TARGET/Contents/Extensions/math.dylib"
+          codesign --sign "${{ inputs.DEV_ID }}" --deep --force --options=runtime --strict --timestamp "$TARGET/Contents/Extensions/sqlean.dylib"
           codesign --sign "${{ inputs.DEV_ID }}" --deep --force --options=runtime --strict --timestamp "$TARGET"
         done
 
