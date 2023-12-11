@@ -20,6 +20,5 @@ mv /nightlies/win64/DB*${YEARMONTH}* /nightlies/win64/${YEARMONTH}/
 
 # Fix ownership and SELinux context's
 chown -Rh nightlies: /nightlies/macos-universal/${YEARMONTH} /nightlies/win32/${YEARMONTH} /nightlies/win64/${YEARMONTH}
-restorecon -RFv /nightlies/macos-universal/${YEARMONTH} /nightlies/win32/${YEARMONTH} /nightlies/win64/${YEARMONTH}
 
 echo Nightlies moved for $YEARMONTH
