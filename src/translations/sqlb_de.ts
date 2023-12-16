@@ -2881,7 +2881,7 @@ Sie können SQL-Statements aus einer Objektzeile fassen und in anderen Anwendung
     <message>
         <location filename="../MainWindow.ui" line="781"/>
         <source>&amp;Recent Files</source>
-        <translation>&amp;Kürzliche Dateien</translation>
+        <translation>&amp;Zuletzt geöffnete Dateien</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1169"/>
@@ -3703,7 +3703,7 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     <message>
         <location filename="../MainWindow.ui" line="1536"/>
         <source>&amp;Recently opened</source>
-        <translation>&amp;Kürzlich geöffnet</translation>
+        <translation>&amp;Zuletzt geöffnet</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1551"/>
@@ -5256,7 +5256,7 @@ Warnung: es wurden aufgrund der partiellen Abrufmechanismus noch nicht alle Date
     <message>
         <location filename="../PreferencesDialog.ui" line="576"/>
         <source>Max Recent Files</source>
-        <translation>Maximale Anzahl kürzlicher Dateien</translation>
+        <translation>Maximale Anzahl zuletzt geöffneter Dateien</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="596"/>
