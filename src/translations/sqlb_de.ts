@@ -2779,7 +2779,7 @@ x~y	Bereich: Werte zwischen x und y
     <message>
         <location filename="../MainWindow.ui" line="712"/>
         <source>toolBar1</source>
-        <translation>Toolbar1</translation>
+        <translation>Werkzeugleiste1</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1847"/>
@@ -3688,12 +3688,12 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     <message>
         <location filename="../MainWindow.ui" line="1502"/>
         <source>&amp;DB Toolbar</source>
-        <translation>&amp;DB Toolbar</translation>
+        <translation>&amp;DB Werkzeugleiste</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1505"/>
         <source>Shows or hides the Database toolbar.</source>
-        <translation>Zeigt oder versteckt die Datenbank-Toolbar.</translation>
+        <translation>Zeigt oder versteckt die Datenbank-Werkzeugleiste.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1520"/>
@@ -3738,7 +3738,7 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     <message>
         <location filename="../MainWindow.ui" line="870"/>
         <source>DB Toolbar</source>
-        <translation>DB Toolbar</translation>
+        <translation>DB Werkzeugleiste</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="899"/>
@@ -7611,7 +7611,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="871"/>
         <source>Open the find tool bar which allows you to search for values in the table view below.</source>
-        <translation>Die Such-Toolbar öffnen, welche das Suchen nach Werten in der Tabellenansicht unten erlaubt.</translation>
+        <translation>Die Such-Werkzeugleiste öffnen, welche das Suchen nach Werten in der Tabellenansicht unten erlaubt.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="883"/>
@@ -7707,18 +7707,18 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="1051"/>
         <source>Toggle Format Toolbar</source>
-        <translation>Formatierungs-Toolbar umschalten</translation>
+        <translation>Formatierungs-Werkzeugleiste umschalten</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1054"/>
         <source>Show/hide format toolbar</source>
-        <translation>Formatierungs-Toolbar anzeigen/verstecken</translation>
+        <translation>Formatierungs-Werkzeugleiste anzeigen/verstecken</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1057"/>
         <location filename="../TableBrowser.ui" line="1060"/>
         <source>This button shows or hides the formatting toolbar of the Data Browser</source>
-        <translation>Dieser Button zeigt oder versteckt die Formatierungs-Toolbar im Datenbrowser</translation>
+        <translation>Dieser Button zeigt oder versteckt die Formatierungs-Werkzeugleiste im Datenbrowser</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1065"/>
