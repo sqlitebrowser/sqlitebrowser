@@ -3417,8 +3417,8 @@ You can drag multiple object names from the Name column and drop them into the S
 You can drag SQL statements from the Schema column and drop them into the SQL editor or into other applications.
 </source>
         <translation>Dies ist die Struktur der geöffneten Datenbank.
-Sie können mehrere Objektnamen aus der Namensspalte nehmen und in den SQL-Editor ziehen und Sie können die Eigenschaften der abgelegten Namen über das Kontextmenü anpassen. Dies kann Sie bei der Erstellung von SQL-Statements unterstützen.
-Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor oder in anderen Anwendungen ablegen.
+Sie können mehrere Objektnamen aus der Namensspalte nehmen und in den SQL-Editor ziehen und Sie können die Eigenschaften der abgelegten Namen über das Kontextmenü anpassen. Dies kann Sie bei der Erstellung von SQL-Anweisungen unterstützen.
+Sie können SQL-Anweisungen aus der Schemaspalte nehmen und in den SQL-Editor oder in anderen Anwendungen ablegen.
 </translation>
     </message>
     <message>
