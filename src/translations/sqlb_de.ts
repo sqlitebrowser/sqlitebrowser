@@ -34,7 +34,7 @@ Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot
     <message>
         <location filename="../AddRecordDialog.ui" line="27"/>
         <source>Enter values for the new record considering constraints. Fields in bold are mandatory.</source>
-        <translation>Geben Sie Werte für die neue Zeile unter Beachtung der Constraints ein. Fette Felder sind Pflichtfelder.</translation>
+        <translation>Geben Sie Werte für die neue Zeile unter Beachtung der Beschränkungen ein. Fette Felder sind Pflichtfelder.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="67"/>
@@ -82,14 +82,14 @@ Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot
         <location filename="../AddRecordDialog.cpp" line="242"/>
         <source>Unique constraint
 </source>
-        <translation>Unique-Constraint
+        <translation>Unique-Beschränkungen
 </translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="245"/>
         <source>Check constraint:	 %1
 </source>
-        <translation>Prüfungsconstraint:	 %1
+        <translation>Prüfungsbeschränkung:	 %1
 </translation>
     </message>
     <message>
@@ -1656,17 +1656,17 @@ Sollen die bearbeiteten Daten auf Zeile=%1, Spalte=%2 angewendet werden?</transl
     </message>
     <message>
         <source>Constraints</source>
-        <translation type="vanished">Constraints</translation>
+        <translation type="vanished">Beschränkungen</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="415"/>
         <source>Add constraint</source>
-        <translation>Constraint hinzufügen</translation>
+        <translation>Beschränkung hinzufügen</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="438"/>
         <source>Remove constraint</source>
-        <translation>Constraint entfernen</translation>
+        <translation>Beschränkung entfernen</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="477"/>
@@ -1694,7 +1694,7 @@ Sollen die bearbeiteten Daten auf Zeile=%1, Spalte=%2 angewendet werden?</transl
     <message>
         <location filename="../EditTableDialog.ui" line="595"/>
         <source>Check Constraints</source>
-        <translation>CHECK-Beschränkungen</translation>
+        <translation>Check-Beschränkungen</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="685"/>
@@ -1710,20 +1710,20 @@ Sollen die bearbeiteten Daten auf Zeile=%1, Spalte=%2 angewendet werden?</transl
     <message>
         <location filename="../EditTableDialog.ui" line="712"/>
         <source>Add a primary key constraint</source>
-        <translation>Ein Constraint für den Primärschlüssel hinzufügen</translation>
+        <translation>Eine Beschränkung für den Primärschlüssel hinzufügen</translation>
     </message>
     <message>
         <source>Add a foreign key constraint</source>
-        <translation type="vanished">Ein Constraint für den Fremdschlüssel hinzufügen</translation>
+        <translation type="vanished">Eine Beschränkung für den Fremdschlüssel hinzufügen</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="720"/>
         <source>Add a unique constraint</source>
-        <translation>Ein Unique-Constraint hinzufügen</translation>
+        <translation>Eine Unique-Beschränkung hinzufügen</translation>
     </message>
     <message>
         <source>Add a check constraint</source>
-        <translation type="vanished">Ein Prüfungs-Constraint hinzufügen</translation>
+        <translation type="vanished">Eine Prüfungs-Beschränkung hinzufügen</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="433"/>
@@ -2181,7 +2181,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="1242"/>
         <source>Cannot set selection to NULL. Column %1 has a NOT NULL constraint.</source>
-        <translation>Auswahl kann nicht auf NULL gesetzt. Die Spalte %1 hat ein NOT NULL Constraint.</translation>
+        <translation>Auswahl kann nicht auf NULL gesetzt. Die Spalte %1 hat eine NOT NULL Beschränkung.</translation>
     </message>
 </context>
 <context>
@@ -2690,7 +2690,7 @@ x~y	Bereich: Werte zwischen x und y
     <message>
         <location filename="../ImportCsvDialog.ui" line="373"/>
         <source>When importing into an existing table with a primary key, unique constraints or a unique index there is a chance for a conflict. This option allows you to select a strategy for that case: By default the import is aborted and rolled back but you can also choose to ignore and not import conflicting rows or to replace the existing row in the table.</source>
-        <translation>Beim Import von Daten in eine existierende Tabelle mit einem Primärschlüssel, Unique-Constraints oder einem eindeutigen Index besteht die Möglichkeit von Konflikten. Diese Option erlaubt die Auswahl einer Strategie für diesen Fall: Standardmäßig wird der Import abgebrochen und zurückgerollt, aber es besteht auch die Option des Ignorierens und somit Nicht-Importierens in Konflikt stehender Zeilen oder des Ersetzens existierender Zeilen der Tabelle.</translation>
+        <translation>Beim Import von Daten in eine existierende Tabelle mit einem Primärschlüssel, Unique-Beschränkungen oder einem eindeutigen Index besteht die Möglichkeit von Konflikten. Diese Option erlaubt die Auswahl einer Strategie für diesen Fall: Standardmäßig wird der Import abgebrochen und zurückgerollt, aber es besteht auch die Option des Ignorierens und somit Nicht-Importierens in Konflikt stehender Zeilen oder des Ersetzens existierender Zeilen der Tabelle.</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="377"/>
@@ -4363,7 +4363,7 @@ Sind Sie sich sicher?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="1576"/>
         <source>Import completed. Some foreign key constraints are violated. Please fix them before saving.</source>
-        <translation>Import vollständig. Ein paar Fremdschlüssel wurden verletzt. Bitten beheben Sie diese vor dem Speichern.</translation>
+        <translation>Import vollständig. Ein paar Fremdschlüssel Beschränkungen wurden verletzt. Bitten beheben Sie diese vor dem Speichern.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1661"/>
@@ -7402,7 +7402,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="613"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button creates a new record in the database. Hold the mouse button to open a pop-up menu of different options:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt;: insert a new record with default values in the database.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Insert Values...&lt;/span&gt;: open a dialog for entering values before they are inserted in the database. This allows to enter values acomplishing the different constraints. This dialog is also open if the &lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt; option fails due to these constraints.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dieser Button erstellt eine neue Zeile in der Datenbank. Halten sie die Maustaste gedrückt, um ein Popup-Menü mit verschiedenen Optionen zu öffnen:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Neuer Eintrag&lt;/span&gt;: eine neue Zeile mit Standardwerten in die Datenbank einfügen.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Werte einfügen...&lt;/span&gt;: einen Dialog zur Eingabe von Werten öffnen, bevor diese in die Datenbank eingefügt werden. Dies erlaubt die Eingabe von Werten, die den Constraints Genüge tun. Dieser Dialog wird auch geöffnet, falls die &lt;span style=&quot; font-weight:600;&quot;&gt;Neuer Eintrag&lt;/span&gt;-Option aufgrund dieser Constraints fehlschlägt.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dieser Button erstellt eine neue Zeile in der Datenbank. Halten sie die Maustaste gedrückt, um ein Popup-Menü mit verschiedenen Optionen zu öffnen:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Neuer Eintrag&lt;/span&gt;: eine neue Zeile mit Standardwerten in die Datenbank einfügen.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Werte einfügen...&lt;/span&gt;: einen Dialog zur Eingabe von Werten öffnen, bevor diese in die Datenbank eingefügt werden. Dies erlaubt die Eingabe von Werten, die den Beschränkungen Genüge tun. Dieser Dialog wird auch geöffnet, falls die &lt;span style=&quot; font-weight:600;&quot;&gt;Neuer Eintrag&lt;/span&gt;-Option aufgrund dieser Beschränkungen fehlschlägt.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="622"/>
