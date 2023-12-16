@@ -6607,7 +6607,7 @@ Soll wirklich fortgefahren werden?</translation>
     <message>
         <location filename="../SqlUiLexer.cpp" line="88"/>
         <source>() The last_insert_rowid() function returns the ROWID of the last row insert from the database connection which invoked the function.</source>
-        <translation>() Die last_insert_rowid()-Funktion gibt die ROWID der letzte Zeile zurück, die von der diese Funktion aufrufenden Datenbankverbindung eingefügt wurde.</translation>
+        <translation>() Die last_insert_rowid()-Funktion gibt die ROWID der letzte Zeile zurück, die von der Datenbankverbindung eingefügt wurde und die dann die Funktion aufrief.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="89"/>
