@@ -66,8 +66,8 @@ jobs:
 
       - if: github.event_name != 'pull_request'
         name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: build-artifacts
+          name: build-artifacts-${{ matrix.os }}-${{ matrix.sqlcipher }}
           path: DB.Browser.for.*.dmg
           retention-days: 1

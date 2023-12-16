@@ -156,8 +156,8 @@ jobs:
           Compress-Archive -Path build-artifacts\* -DestinationPath build-artifacts-${{ matrix.arch }}.zip
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: build-artifacts
+          name: build-artifacts-${{ matrix.os }}-${{ matrix.arch }}
           path: build-artifacts-${{ matrix.arch }}.zip
           retention-days: 1

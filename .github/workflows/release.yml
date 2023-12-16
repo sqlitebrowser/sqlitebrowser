@@ -43,7 +43,7 @@ jobs:
         if: always()
         uses: geekyeggo/delete-artifact@v2
         with:
-          name: build-artifacts
+          name: build-artifacts*
 
   release-nightly:
     if: inputs.NIGHTLY
@@ -85,4 +85,4 @@ jobs:
         if: always()
         uses: geekyeggo/delete-artifact@v2
         with:
-          name: build-artifacts
+          name: build-artifacts*
