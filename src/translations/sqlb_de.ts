@@ -1987,7 +1987,7 @@ Alle aktuell in diesem Feld gespeicherten Daten gehen verloren.</translation>
     <message>
         <location filename="../ExportSqlDialog.ui" line="148"/>
         <source>Keep original CREATE statements</source>
-        <translation>Originale CREATE-Statements behalten</translation>
+        <translation>Originale CREATE-Anweisungen behalten</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="109"/>
@@ -3481,12 +3481,12 @@ Sie können SQL-Statements aus der Schemaspalte nehmen und in den SQL-Editor ode
     <message>
         <location filename="../MainWindow.ui" line="1832"/>
         <source>Copy Create statement</source>
-        <translation>Create-Statement kopieren</translation>
+        <translation>Create-Anweisung kopieren</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1835"/>
         <source>Copy the CREATE statement of the item to the clipboard</source>
-        <translation>CREATE-Statement des Elements in die Zwischenablage kopieren</translation>
+        <translation>CREATE-Anweisung des Elements in die Zwischenablage kopieren</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="946"/>
@@ -4086,7 +4086,7 @@ Bei der Antwort NEIN werden die Daten in die SQL-Datei der aktuellen Datenbank i
     <message>
         <location filename="../MainWindow.cpp" line="718"/>
         <source>You are still executing SQL statements. Closing the database now will stop their execution, possibly leaving the database in an inconsistent state. Are you sure you want to close the database?</source>
-        <translation>Es werden aktuell SQL-Statements ausgeführt. Das Schließen der Datenbank wird deren Ausführung stoppen, was die Datenbank möglicherweise in einem inkonsistenten Zustand belässt. Soll die Datenbank wirklich geschlossen werden?</translation>
+        <translation>Es werden aktuell SQL-Anweisungen ausgeführt. Das Schließen der Datenbank wird deren Ausführung stoppen, was die Datenbank möglicherweise in einem inkonsistenten Zustand belässt. Soll die Datenbank wirklich geschlossen werden?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="813"/>
