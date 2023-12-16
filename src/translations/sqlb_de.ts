@@ -7759,8 +7759,8 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
         <location filename="../TableBrowser.cpp" line="517"/>
         <source>%n row(s)</source>
         <translation>
-            <numerusform>%n row</numerusform>
-            <numerusform>%n rows</numerusform>
+            <numerusform>%n Zeile</numerusform>
+            <numerusform>%n Zeilen</numerusform>
         </translation>
     </message>
     <message numerus="yes">
