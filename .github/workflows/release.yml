@@ -26,9 +26,11 @@ jobs:
         with:
           path: target
 
+      - run: find target -type f -exec mv {} target \;
+
       - name: Unarchive Windows's build artifacts
         run: for f in target/*.zip; do unzip -d target/ "$f"; done
-      
+
       - name: Remove archived Windows's build artifacts
         run: rm target/build-artifacts-*.zip
 
@@ -56,9 +58,11 @@ jobs:
         with:
           path: target
 
-      - name: Unarchive Windows's buildㅍ artifacts
+      - run: find target -type f -exec mv {} target \;
+
+      - name: Unarchive Windows's build artifacts
         run: for f in target/*.zip; do unzip -d target/ "$f"; done
-      
+
       - name: Remove archived Windows's build artifacts
         run: rm target/build-artifacts-*.zip
 
