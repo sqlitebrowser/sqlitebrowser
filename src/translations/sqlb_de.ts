@@ -2037,7 +2037,7 @@ Alle aktuell in diesem Feld gespeicherten Daten gehen verloren.</translation>
         <location filename="../ExtendedScintilla.cpp" line="78"/>
         <location filename="../ExtendedScintilla.cpp" line="299"/>
         <source>Ctrl+P</source>
-        <translation>Strg+P</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="289"/>
