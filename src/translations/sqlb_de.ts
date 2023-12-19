@@ -7622,7 +7622,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="889"/>
         <source>Ctrl+B</source>
-        <translation>Strg+B</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="901"/>
