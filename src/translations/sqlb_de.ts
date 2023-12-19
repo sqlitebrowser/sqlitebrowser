@@ -2155,7 +2155,7 @@ Alle aktuell in diesem Feld gespeicherten Daten gehen verloren.</translation>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="324"/>
         <source>Alt+Del</source>
-        <translation>Alt+Entf</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="327"/>
