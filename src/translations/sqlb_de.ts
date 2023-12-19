@@ -2026,7 +2026,7 @@ Alle aktuell in diesem Feld gespeicherten Daten gehen verloren.</translation>
         <location filename="../ExtendedScintilla.cpp" line="63"/>
         <location filename="../ExtendedScintilla.cpp" line="295"/>
         <source>Ctrl+H</source>
-        <translation>Strg+H</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="65"/>
