@@ -7753,7 +7753,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.cpp" line="113"/>
         <source>Ctrl+R</source>
-        <translation>Strg+R</translation>
+        <translation></translation>
     </message>
     <message numerus="yes">
         <location filename="../TableBrowser.cpp" line="517"/>
