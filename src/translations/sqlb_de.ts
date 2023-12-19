@@ -7728,7 +7728,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="1068"/>
         <source>Ctrl+Space</source>
-        <translation>Strg+Leertaste</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1083"/>
