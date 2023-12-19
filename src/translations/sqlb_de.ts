@@ -7832,7 +7832,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.cpp" line="1284"/>
         <source>Ctrl+&quot;</source>
-        <translation>Strg+&quot;</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1303"/>
