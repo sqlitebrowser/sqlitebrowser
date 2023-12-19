@@ -1165,7 +1165,7 @@ Fehler werden mittels eine roten Wellenlinie angezeigt.</translation>
     <message>
         <location filename="../EditDialog.ui" line="295"/>
         <source>Ctrl+Shift+C</source>
-        <translation>Strg+Umschalt+C</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="352"/>
