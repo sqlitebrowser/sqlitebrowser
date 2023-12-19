@@ -1145,7 +1145,7 @@ Fehler werden mittels eine roten Wellenlinie angezeigt.</translation>
     <message>
         <location filename="../EditDialog.ui" line="277"/>
         <source>Ctrl+P</source>
-        <translation>Strg+P</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="271"/>
