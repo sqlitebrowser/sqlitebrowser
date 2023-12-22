@@ -3703,7 +3703,7 @@ Sie können SQL-Anweisungen aus der Schemaspalte nehmen und in den SQL-Editor od
     <message>
         <location filename="../MainWindow.ui" line="1536"/>
         <source>&amp;Recently opened</source>
-        <translation>&amp;Zuletzt geöffnet</translation>
+        <translation>&amp;Kürzlich geöffnet</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1551"/>
