@@ -3891,7 +3891,7 @@ Sie können SQL-Anweisungen aus der Schemaspalte nehmen und in den SQL-Editor od
         <location filename="../MainWindow.ui" line="2132"/>
         <location filename="../MainWindow.ui" line="2159"/>
         <source>Ctrl+P</source>
-        <translation>Strg+P</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="400"/>
