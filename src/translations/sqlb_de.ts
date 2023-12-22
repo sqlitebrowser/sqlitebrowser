@@ -3481,7 +3481,7 @@ Sie können SQL-Anweisungen aus der Schemaspalte nehmen und in den SQL-Editor od
     <message>
         <location filename="../MainWindow.ui" line="1832"/>
         <source>Copy Create statement</source>
-        <translation>Create-Anweisung kopieren</translation>
+        <translation>CREATE-Anweisung kopieren</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1835"/>
