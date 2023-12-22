@@ -3101,7 +3101,7 @@ Sie können SQL-Anweisungen aus einer Objektzeile fassen und in anderen Anwendun
     <message>
         <location filename="../MainWindow.ui" line="1966"/>
         <source>Save as &amp;view</source>
-        <translation>Als &amp;Ansicht speichern</translation>
+        <translation>Als &amp;View speichern</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1969"/>
