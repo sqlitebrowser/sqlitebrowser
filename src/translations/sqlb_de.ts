@@ -4046,7 +4046,7 @@ Bei der Antwort NEIN werden die Daten in die SQL-Datei der aktuellen Datenbank i
     <message>
         <location filename="../MainWindow.cpp" line="218"/>
         <source>Ctrl+PgUp</source>
-        <translation>Strg+BildAuf</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="235"/>
