@@ -7127,7 +7127,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="277"/>
         <source>Shift+F3</source>
-        <translation>Umschalt+F3</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="284"/>
