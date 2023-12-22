@@ -3065,7 +3065,7 @@ Sie können SQL-Anweisungen aus einer Objektzeile fassen und in anderen Anwendun
     <message>
         <location filename="../MainWindow.ui" line="1921"/>
         <source>Ctrl+F</source>
-        <translation>Strg+F</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1936"/>
