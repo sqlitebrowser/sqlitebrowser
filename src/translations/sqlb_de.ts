@@ -3133,7 +3133,7 @@ Sie können SQL-Anweisungen aus einer Objektzeile fassen und in anderen Anwendun
         <location filename="../MainWindow.ui" line="2263"/>
         <location filename="../MainWindow.cpp" line="477"/>
         <source>Ctrl+Shift+W</source>
-        <translation>Strg+Umschalt+W</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2292"/>
