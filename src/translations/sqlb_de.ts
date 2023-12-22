@@ -7457,7 +7457,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="690"/>
         <source>Save as &amp;view</source>
-        <translation>Als &amp;Ansicht speichern</translation>
+        <translation>Als &amp;View speichern</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="693"/>
