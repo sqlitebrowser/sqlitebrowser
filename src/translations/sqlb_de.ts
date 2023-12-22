@@ -3565,7 +3565,7 @@ Sie können SQL-Anweisungen aus der Schemaspalte nehmen und in den SQL-Editor od
         <location filename="../MainWindow.cpp" line="190"/>
         <location filename="../MainWindow.cpp" line="3774"/>
         <source>Ctrl+W</source>
-        <translation>Strg+W</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1250"/>
