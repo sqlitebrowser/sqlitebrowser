@@ -6554,7 +6554,7 @@ Soll wirklich fortgefahren werden?</translation>
     <message>
         <location filename="../sqltextedit.cpp" line="48"/>
         <source>Ctrl+PgDown</source>
-        <translation>Strg+BildAb</translation>
+        <translation></translation>
     </message>
 </context>
 <context>
