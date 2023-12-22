@@ -1714,7 +1714,7 @@ Sollen die bearbeiteten Daten auf Zeile=%1, Spalte=%2 angewendet werden?</transl
     </message>
     <message>
         <source>Add a foreign key constraint</source>
-        <translation type="vanished">Eine Beschränkung für den Fremdschlüssel hinzufügen</translation>
+        <translation type="vanished">Ein Constraint für den Fremdschlüssel hinzufügen</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="720"/>
