@@ -4066,7 +4066,7 @@ Bei der Antwort NEIN werden die Daten in die SQL-Datei der aktuellen Datenbank i
     <message>
         <location filename="../MainWindow.cpp" line="341"/>
         <source>Shift+Alt+0</source>
-        <translation>Umschalt+Alt+0</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="350"/>
