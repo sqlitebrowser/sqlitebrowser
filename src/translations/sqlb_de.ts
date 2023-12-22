@@ -4565,7 +4565,7 @@ Erstellen Sie ein Backup!</translation>
     <message>
         <location filename="../AddRecordDialog.cpp" line="46"/>
         <source>Alt+Del</source>
-        <translation>Alt+Entf</translation>
+        <translation></translation>
     </message>
 </context>
 <context>
