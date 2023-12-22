@@ -4338,7 +4338,7 @@ Sind Sie sich sicher?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="332"/>
         <source>Ctrl+Alt+0</source>
-        <translation>Strg+Alt+0</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="476"/>
