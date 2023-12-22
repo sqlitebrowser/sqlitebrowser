@@ -6549,7 +6549,7 @@ Soll wirklich fortgefahren werden?</translation>
     <message>
         <location filename="../sqltextedit.cpp" line="45"/>
         <source>Ctrl+/</source>
-        <translation>Strg+/</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../sqltextedit.cpp" line="48"/>
