@@ -1694,7 +1694,7 @@ Sollen die bearbeiteten Daten auf Zeile=%1, Spalte=%2 angewendet werden?</transl
     <message>
         <location filename="../EditTableDialog.ui" line="595"/>
         <source>Check Constraints</source>
-        <translation>Check-Beschränkungen</translation>
+        <translation>CHECK-Beschränkungen</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="685"/>
