@@ -3698,7 +3698,7 @@ Sie können SQL-Anweisungen aus der Schemaspalte nehmen und in den SQL-Editor od
     <message>
         <location filename="../MainWindow.ui" line="1520"/>
         <source>Shift+F1</source>
-        <translation>Umschalt+F1</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1536"/>
