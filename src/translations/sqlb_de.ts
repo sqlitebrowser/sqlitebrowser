@@ -3549,7 +3549,7 @@ Sie können SQL-Anweisungen aus der Schemaspalte nehmen und in den SQL-Editor od
     <message>
         <location filename="../MainWindow.ui" line="1205"/>
         <source>Ctrl+O</source>
-        <translation>Strg+0</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1220"/>
