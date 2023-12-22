@@ -3044,7 +3044,7 @@ Sie können SQL-Anweisungen aus einer Objektzeile fassen und in anderen Anwendun
     <message>
         <location filename="../MainWindow.ui" line="1897"/>
         <source>This button lets you save the results of the last executed query</source>
-        <translation>Dieser Button erlaubt Ihnen das Speichern der Ergebnisse der zuletzt ausgeführten Abfragen</translation>
+        <translation>Dieser Button erlaubt Ihnen das Speichern der Ergebnisse der zuletzt ausgeführten Abfrage</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1909"/>
