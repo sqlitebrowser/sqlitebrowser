@@ -1656,7 +1656,7 @@ Sollen die bearbeiteten Daten auf Zeile=%1, Spalte=%2 angewendet werden?</transl
     </message>
     <message>
         <source>Constraints</source>
-        <translation type="vanished">Beschränkungen</translation>
+        <translation type="vanished">Constraints</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="415"/>
