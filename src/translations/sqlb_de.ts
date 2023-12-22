@@ -2892,7 +2892,7 @@ Sie können SQL-Anweisungen aus einer Objektzeile fassen und in anderen Anwendun
         <location filename="../MainWindow.ui" line="1232"/>
         <location filename="../MainWindow.cpp" line="476"/>
         <source>Ctrl+F4</source>
-        <translation>Strg+F4</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1271"/>
