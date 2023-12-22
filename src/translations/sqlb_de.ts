@@ -6676,7 +6676,7 @@ Die Verwendung dieser Funktion muss in den Einstellungen authorisiert werden.</t
     <message>
         <location filename="../SqlUiLexer.cpp" line="101"/>
         <source>(X) The quote(X) function returns the text of an SQL literal which is the value of its argument suitable for inclusion into an SQL statement.</source>
-        <translation>(X) Die quote(X)-Funktion gibt den Text eines SQL-Literals zurück, wobei der Wert des Arguments zum Einfügen in eine SQL-Anweisungen geeignet ist.</translation>
+        <translation>(X) Die quote(X)-Funktion gibt den Text eines SQL-Literals zurück, wobei der Wert des Arguments zum Einfügen in eine SQL-Anweisung geeignet ist.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="102"/>
