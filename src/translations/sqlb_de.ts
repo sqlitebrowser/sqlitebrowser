@@ -2534,7 +2534,7 @@ x~y	Bereich: Werte zwischen x und y
     <message>
         <location filename="../ImageViewer.ui" line="132"/>
         <source>Ctrl+P</source>
-        <translation>Strg+P</translation>
+        <translation></translation>
     </message>
 </context>
 <context>
