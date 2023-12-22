@@ -4036,7 +4036,7 @@ Bei der Antwort NEIN werden die Daten in die SQL-Datei der aktuellen Datenbank i
     <message>
         <location filename="../MainWindow.cpp" line="198"/>
         <source>Ctrl+Tab</source>
-        <translation>Strg+Tab</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="207"/>
