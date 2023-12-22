@@ -2933,7 +2933,7 @@ Sie können SQL-Anweisungen aus einer Objektzeile fassen und in anderen Anwendun
     <message>
         <location filename="../MainWindow.ui" line="1584"/>
         <source>Ctrl+Shift+T</source>
-        <translation>Strg+Umschalt+T</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1605"/>
