@@ -2881,7 +2881,7 @@ Sie können SQL-Anweisungen aus einer Objektzeile fassen und in anderen Anwendun
     <message>
         <location filename="../MainWindow.ui" line="781"/>
         <source>&amp;Recent Files</source>
-        <translation>&amp;Zuletzt geöffnete Dateien</translation>
+        <translation>&amp;Kürzliche Dateien</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1169"/>
