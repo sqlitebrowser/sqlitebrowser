@@ -4343,7 +4343,7 @@ Sind Sie sich sicher?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="476"/>
         <source>Ctrl+Alt+W</source>
-        <translation>Strg+Alt+W</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="693"/>
