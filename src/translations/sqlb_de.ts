@@ -6567,7 +6567,7 @@ Soll wirklich fortgefahren werden?</translation>
     <message>
         <location filename="../SqlUiLexer.cpp" line="80"/>
         <source>() The changes() function returns the number of database rows that were changed or inserted or deleted by the most recently completed INSERT, DELETE, or UPDATE statement.</source>
-        <translation>() Die changes()-Funktion gibt die Anzahl der Datenbankzeilen zurück, die mit der zuletzt abgeschlossenen INSERT-, DELETE- oder UPDATE-Anweisung geändert, einfügt oder gelöscht worden sind.</translation>
+        <translation>() Die changes()-Funktion gibt die Anzahl der Datenbankzeilen zurück, die mit der zuletzt abgeschlossenen INSERT-, DELETE- oder UPDATE-Anweisung geändert, eingefügt oder gelöscht worden sind.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="81"/>
