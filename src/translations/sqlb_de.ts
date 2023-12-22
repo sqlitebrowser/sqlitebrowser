@@ -6731,7 +6731,7 @@ Die Verwendung dieser Funktion muss in den Einstellungen authorisiert werden.</t
     <message>
         <location filename="../SqlUiLexer.cpp" line="112"/>
         <source>() The total_changes() function returns the number of row changes caused by INSERT, UPDATE or DELETE statements since the current database connection was opened.</source>
-        <translation>() Die changes()-Funktion gibt die Anzahl der geänderten Datenbankzeilen zurück, die seit dem Öffnen der aktuellen Datenbankverbindung mit INSERT-, DELETE- oder UPDATE-Anweisung geändert, einfügt oder gelöscht worden sind.</translation>
+        <translation>() Die changes()-Funktion gibt die Anzahl der geänderten Datenbankzeilen zurück, die seit dem Öffnen der aktuellen Datenbankverbindung mit INSERT-, DELETE- oder UPDATE-Anweisung geändert, eingefügt oder gelöscht worden sind.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="113"/>
