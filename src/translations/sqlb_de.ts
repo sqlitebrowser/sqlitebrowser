@@ -4363,7 +4363,7 @@ Sind Sie sich sicher?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="1576"/>
         <source>Import completed. Some foreign key constraints are violated. Please fix them before saving.</source>
-        <translation>Import vollständig. Ein paar Fremdschlüssel Beschränkungen wurden verletzt. Bitten beheben Sie diese vor dem Speichern.</translation>
+        <translation>Import vollständig. Ein paar Fremdschlüssel-Beschränkungen wurden verletzt. Bitten beheben Sie diese vor dem Speichern.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1661"/>
