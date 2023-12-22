@@ -3708,7 +3708,7 @@ Sie können SQL-Anweisungen aus der Schemaspalte nehmen und in den SQL-Editor od
     <message>
         <location filename="../MainWindow.ui" line="1551"/>
         <source>Ctrl+T</source>
-        <translation>Strg+T</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Database Structure</source>
