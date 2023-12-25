@@ -43,9 +43,10 @@ jobs:
 
       - name: Clear artifacts
         if: always()
-        uses: geekyeggo/delete-artifact@v2
+        uses: geekyeggo/delete-artifact@v4
         with:
           name: build-artifacts*
+          token: ${{ secrets.GITHUB_TOKEN }}
 
   release-nightly:
     if: inputs.NIGHTLY
@@ -87,6 +88,7 @@ jobs:
 
       - name: Clear artifacts
         if: always()
-        uses: geekyeggo/delete-artifact@v2
+        uses: geekyeggo/delete-artifact@v4
         with:
           name: build-artifacts*
+          token: ${{ secrets.GITHUB_TOKEN }}
