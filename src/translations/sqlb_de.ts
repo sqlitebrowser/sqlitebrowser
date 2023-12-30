@@ -6850,7 +6850,7 @@ Die Verwendung dieser Funktion muss in den Einstellungen autorisiert werden.</tr
     <message>
         <location filename="../SqlUiLexer.cpp" line="142"/>
         <source>(expr,offset) If the offset argument is provided, then it must be a non-negative integer. In this case the value returned is the result of evaluating expr against the row offset rows before the current row within the partition. If offset is 0, then expr is evaluated against the current row. If there is no row offset rows before the current row, NULL is returned.</source>
-        <translation>(expr,offset) Wenn das Argument offset angegeben ist, dann muss dieses ein nicht negativer Integerwert sein. In diesem Fall ist der Rückgabewert das Ergebnis der Evaluation von expr gegen die Zeile, die innerhalb der Partition offset Zeilen weiter oben liegt. Wenn offset 0 ist, wird expr gegen die aktuelle Zeile evaluiert. Wenn vor der aktuellen Zeile nicht genügend Zeilen vorhanden sind, wird NULL zurückgegeben.</translation>
+        <translation>(expr,offset) Wenn das Argument offset angegeben ist, dann muss dieses ein nichtnegativer Integerwert sein. In diesem Fall ist der Rückgabewert das Ergebnis der Evaluation von expr gegen die Zeile, die innerhalb der Partition offset Zeilen weiter oben liegt. Wenn offset 0 ist, wird expr gegen die aktuelle Zeile evaluiert. Wenn vor der aktuellen Zeile nicht genügend Zeilen vorhanden sind, wird NULL zurückgegeben.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="143"/>
@@ -6866,7 +6866,7 @@ Die Verwendung dieser Funktion muss in den Einstellungen autorisiert werden.</tr
     <message>
         <location filename="../SqlUiLexer.cpp" line="145"/>
         <source>(expr,offset) If the offset argument is provided, then it must be a non-negative integer. In this case the value returned is the result of evaluating expr against the row offset rows after the current row within the partition. If offset is 0, then expr is evaluated against the current row. If there is no row offset rows after the current row, NULL is returned.</source>
-        <translation>(expr,offset) Wenn das Argument offset angegeben ist, dann muss dieses ein nicht negativer Integerwert sein. In diesem Fall ist der Rückgabewert das Ergebnis der Evaluation von expr gegen die Zeile, die innerhalb der Partition offset Zeilen weiter unten liegt. Wenn offset 0 ist, wird expr gegen die aktuelle Zeile evaluiert. Wenn nach der aktuellen Zeile nicht genügend Zeilen vorhanden sind, wird NULL zurückgegeben.</translation>
+        <translation>(expr,offset) Wenn das Argument offset angegeben ist, dann muss dieses ein nichtnegativer Integerwert sein. In diesem Fall ist der Rückgabewert das Ergebnis der Evaluation von expr gegen die Zeile, die innerhalb der Partition offset Zeilen weiter unten liegt. Wenn offset 0 ist, wird expr gegen die aktuelle Zeile evaluiert. Wenn nach der aktuellen Zeile nicht genügend Zeilen vorhanden sind, wird NULL zurückgegeben.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="147"/>
