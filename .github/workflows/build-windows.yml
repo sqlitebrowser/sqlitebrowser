@@ -28,8 +28,8 @@ jobs:
       - name: Clear SQLite and temp files
         continue-on-error: true
         run: |
-          rm -r C:\temp\${{ matrix.arch }}\*
-          rm -r C:\dev\SQLite-${{ matrix.arch }}
+          rm -r C:\temp\${{ matrix.arch }}\* -Force
+          rm -r C:\dev\SQLite-${{ matrix.arch }} -Force
 
       - name: Install SQLite
         run: |
