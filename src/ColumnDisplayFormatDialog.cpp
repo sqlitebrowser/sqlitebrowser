@@ -29,6 +29,8 @@ ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(DBBrowserDB& db, const sqlb
     ui->comboDisplayFormat->addItem(tr("Julian day to date"), "julian");
     ui->comboDisplayFormat->addItem(tr("Unix epoch to date"), "epoch");
     ui->comboDisplayFormat->addItem(tr("Unix epoch to local time"), "epochLocalTime");
+    ui->comboDisplayFormat->addItem(tr("WebKit / Chromium epoch to date"), "webkitEpoch");
+    ui->comboDisplayFormat->addItem(tr("WebKit / Chromium epoch to local time"), "webkitEpochLocalTime");
     ui->comboDisplayFormat->addItem(tr("Windows DATE to date"), "winDate");
     ui->comboDisplayFormat->addItem(tr("Date as dd/mm/yyyy"), "ddmmyyyyDate");
     ui->comboDisplayFormat->insertSeparator(ui->comboDisplayFormat->count());
@@ -57,6 +59,8 @@ ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(DBBrowserDB& db, const sqlb
     formatFunctions["julian"] = "datetime(" + e_column_name + ")";
     formatFunctions["epoch"] = "datetime(" + e_column_name + ", 'unixepoch')";
     formatFunctions["epochLocalTime"] = "datetime(" + e_column_name + ", 'unixepoch', 'localtime')";
+    formatFunctions["webkitEpoch"] = "datetime(" + e_column_name + " / 1e6 - 11644473600, 'unixepoch')";
+    formatFunctions["webkitEpochLocalTime"] = "datetime(" + e_column_name + " / 1e6 - 11644473600, 'unixepoch', 'localtime')";
     formatFunctions["winDate"] = "datetime('1899-12-30', " + e_column_name + " || ' days')";
     formatFunctions["ddmmyyyyDate"] = "strftime('%d/%m/%Y', " + e_column_name + ")";
     formatFunctions["lower"] = "lower(" + e_column_name + ")";
