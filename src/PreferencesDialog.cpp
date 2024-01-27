@@ -42,6 +42,13 @@ PreferencesDialog::PreferencesDialog(QWidget* parent, Tabs tab)
     ui->checkUpdates->setVisible(false);
 #endif
 
+#ifdef Q_OS_MACX
+    listUpBuiltinExtension();
+#else
+    ui->labeBuiltinExtensions->setVisible(false);
+    ui->listBuiltinExtensions->setVisible(false);
+#endif
+
     loadSettings();
 
     connect(ui->appStyleCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(adjustColorsToStyle(int)));
@@ -206,6 +213,13 @@ void PreferencesDialog::loadSettings()
     ui->checkCloseButtonOnTabs->setChecked(Settings::getValue("editor", "close_button_on_tabs").toBool());
 
     ui->listExtensions->addItems(Settings::getValue("extensions", "list").toStringList());
+#ifdef Q_OS_MACX
+    for (int i=0;i<ui->listBuiltinExtensions->count();++i)
+    {
+        QListWidgetItem* item = ui->listBuiltinExtensions->item(i);
+        item->setCheckState(Settings::getValue("extensions", "builtin").toMap().value(item->text()).toBool() ? Qt::Checked : Qt::Unchecked);
+    }
+#endif
     ui->checkRegexDisabled->setChecked(Settings::getValue("extensions", "disableregex").toBool());
     ui->checkAllowLoadExtension->setChecked(Settings::getValue("extensions", "enable_load_extension").toBool());
     fillLanguageBox();
@@ -280,6 +294,13 @@ void PreferencesDialog::saveSettings(bool accept)
     Settings::setValue("extensions", "list", extList);
     Settings::setValue("extensions", "disableregex", ui->checkRegexDisabled->isChecked());
     Settings::setValue("extensions", "enable_load_extension", ui->checkAllowLoadExtension->isChecked());
+
+#ifdef Q_OS_MACX
+    QVariantMap builtinExtList;
+    for (int i=0;i<ui->listBuiltinExtensions->count();++i)
+        builtinExtList.insert(ui->listBuiltinExtensions->item(i)->text(), ui->listBuiltinExtensions->item(i)->checkState());
+    Settings::setValue("extensions", "builtin", QVariant::fromValue(builtinExtList));
+#endif
 
     // Save remote settings
     Settings::setValue("remote", "active", ui->checkUseRemotes->isChecked());
@@ -432,6 +453,19 @@ void PreferencesDialog::removeExtension()
 {
     if(ui->listExtensions->currentIndex().isValid())
         ui->listExtensions->takeItem(ui->listExtensions->currentIndex().row());
+}
+
+void PreferencesDialog::listUpBuiltinExtension()
+{
+    const QDir dir(qApp->applicationDirPath() + "/../Extensions/");
+    QStringList files = dir.entryList(QStringList() << "*.dylib", QDir::Files);
+    for (const QString& file: files) {
+        QListWidgetItem* item = new QListWidgetItem(file, ui->listBuiltinExtensions);
+        item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
+        // The check status is redetermined after the 'loadSettings()' function call.
+        item->setCheckState(Qt::Unchecked);
+        ui->listBuiltinExtensions->addItem(item);
+    }
 }
 
 void PreferencesDialog::fillLanguageBox()
