@@ -45,7 +45,7 @@ PreferencesDialog::PreferencesDialog(QWidget* parent, Tabs tab)
 #ifdef Q_OS_MACX
     listUpBuiltinExtension();
 #else
-    ui->labeBuiltinExtensions->setVisible(false);
+    ui->labelBuiltinExtensions->setVisible(false);
     ui->listBuiltinExtensions->setVisible(false);
 #endif
 

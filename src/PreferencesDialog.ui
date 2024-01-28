@@ -1847,7 +1847,7 @@ Can be set to 0 for disabling completion.</string>
         </layout>
        </item>
        <item>
-        <widget class="QLabel" name="labeBuiltinExtensions">
+        <widget class="QLabel" name="labelBuiltinExtensions">
          <property name="text">
           <string>Select built-in extensions to load for every database:</string>
          </property>
