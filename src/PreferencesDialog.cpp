@@ -43,7 +43,7 @@ PreferencesDialog::PreferencesDialog(QWidget* parent, Tabs tab)
 #endif
 
 #ifdef Q_OS_MACX
-    listUpBuiltinExtension();
+    createBuiltinExtensionList();
 #else
     ui->labelBuiltinExtensions->setVisible(false);
     ui->listBuiltinExtensions->setVisible(false);
@@ -455,7 +455,7 @@ void PreferencesDialog::removeExtension()
         ui->listExtensions->takeItem(ui->listExtensions->currentIndex().row());
 }
 
-void PreferencesDialog::listUpBuiltinExtension()
+void PreferencesDialog::createBuiltinExtensionList()
 {
     const QDir dir(qApp->applicationDirPath() + "/../Extensions/");
     QStringList files = dir.entryList(QStringList() << "*.dylib", QDir::Files);

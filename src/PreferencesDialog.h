@@ -39,7 +39,7 @@ private slots:
     void chooseLocation();
     void showColourDialog(QTreeWidgetItem* item, int column);
     void addExtension();
-    void listUpBuiltinExtension();
+    void createBuiltinExtensionList();
     void removeExtension();
     void activateRemoteTab(bool active);
     void addClientCertificate();
