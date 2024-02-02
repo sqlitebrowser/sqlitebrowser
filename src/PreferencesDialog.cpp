@@ -460,7 +460,8 @@ void PreferencesDialog::createBuiltinExtensionList()
     const QDir dir(qApp->applicationDirPath() + "/../Extensions/");
     QStringList files = dir.entryList(QStringList() << "*.dylib", QDir::Files);
     for (const QString& file: files) {
-        QListWidgetItem* item = new QListWidgetItem(file, ui->listBuiltinExtensions);
+        QString absoluteFilePath = dir.absoluteFilePath(file);
+        QListWidgetItem* item = new QListWidgetItem(absoluteFilePath, ui->listBuiltinExtensions);
         item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
         // The check status is redetermined after the 'loadSettings()' function call.
         item->setCheckState(Qt::Unchecked);
