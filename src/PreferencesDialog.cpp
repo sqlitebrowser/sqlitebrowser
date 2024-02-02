@@ -14,6 +14,7 @@
 #include <QKeyEvent>
 #include <QStandardPaths>
 #include <QStyledItemDelegate>
+#include <QSysInfo>
 
 PreferencesDialog::PreferencesDialog(QWidget* parent, Tabs tab)
     : QDialog(parent),
@@ -42,12 +43,7 @@ PreferencesDialog::PreferencesDialog(QWidget* parent, Tabs tab)
     ui->checkUpdates->setVisible(false);
 #endif
 
-#ifdef Q_OS_MACX
     createBuiltinExtensionList();
-#else
-    ui->labelBuiltinExtensions->setVisible(false);
-    ui->listBuiltinExtensions->setVisible(false);
-#endif
 
     loadSettings();
 
@@ -213,13 +209,11 @@ void PreferencesDialog::loadSettings()
     ui->checkCloseButtonOnTabs->setChecked(Settings::getValue("editor", "close_button_on_tabs").toBool());
 
     ui->listExtensions->addItems(Settings::getValue("extensions", "list").toStringList());
-#ifdef Q_OS_MACX
     for (int i=0;i<ui->listBuiltinExtensions->count();++i)
     {
         QListWidgetItem* item = ui->listBuiltinExtensions->item(i);
         item->setCheckState(Settings::getValue("extensions", "builtin").toMap().value(item->text()).toBool() ? Qt::Checked : Qt::Unchecked);
     }
-#endif
     ui->checkRegexDisabled->setChecked(Settings::getValue("extensions", "disableregex").toBool());
     ui->checkAllowLoadExtension->setChecked(Settings::getValue("extensions", "enable_load_extension").toBool());
     fillLanguageBox();
@@ -295,12 +289,10 @@ void PreferencesDialog::saveSettings(bool accept)
     Settings::setValue("extensions", "disableregex", ui->checkRegexDisabled->isChecked());
     Settings::setValue("extensions", "enable_load_extension", ui->checkAllowLoadExtension->isChecked());
 
-#ifdef Q_OS_MACX
     QVariantMap builtinExtList;
     for (int i=0;i<ui->listBuiltinExtensions->count();++i)
         builtinExtList.insert(ui->listBuiltinExtensions->item(i)->text(), ui->listBuiltinExtensions->item(i)->checkState());
     Settings::setValue("extensions", "builtin", QVariant::fromValue(builtinExtList));
-#endif
 
     // Save remote settings
     Settings::setValue("remote", "active", ui->checkUseRemotes->isChecked());
@@ -457,13 +449,38 @@ void PreferencesDialog::removeExtension()
 
 void PreferencesDialog::createBuiltinExtensionList()
 {
-    const QDir dir(qApp->applicationDirPath() + "/../Extensions/");
-    QStringList files = dir.entryList(QStringList() << "*.dylib", QDir::Files);
+    QDir dir;
+    QStringList files;
+
+    // If we upgrade Qt framework version to 6.x at some point, use 'macos' instead of 'osx.'
+    // For further information, see the https://doc.qt.io/qt-6/qsysinfo.html
+    if (QSysInfo::productType() == "osx") {
+        dir.setPath(qApp->applicationDirPath() + "/../Extensions/");
+        files = dir.entryList(QStringList() << "*.dylib", QDir::Files);
+    }
+    else if (QSysInfo::productType() == "windows") {
+        dir.setPath(qApp->applicationDirPath() + "/extensions/");
+        files = dir.entryList(QStringList() << "*.dll", QDir::Files);
+    }
+    else {
+        if (QSysInfo::currentCpuArchitecture() == "arm")
+            dir.setPath("/usr/lib/aarch-linux-gnu/");
+        else if (QSysInfo::currentCpuArchitecture() == "arm64")
+            dir.setPath("/usr/lib/aarch64-linux-gnu/");
+        else if (QSysInfo::currentCpuArchitecture() == "i386")
+            dir.setPath("/usr/lib/i386-linux-gnu/");
+        else if (QSysInfo::currentCpuArchitecture() == "x86_64")
+            dir.setPath("/usr/lib/x86_64-linux-gnu/");
+        else
+            dir.setPath("/usr/lib/");
+        files = dir.entryList(QStringList() << "*.so*", QDir::Files);
+    }
+    
     for (const QString& file: files) {
         QString absoluteFilePath = dir.absoluteFilePath(file);
         QListWidgetItem* item = new QListWidgetItem(absoluteFilePath, ui->listBuiltinExtensions);
         item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
-        // The check status is redetermined after the 'loadSettings()' function call.
+        // The check state is redetermined after the 'loadSettings()' function call.
         item->setCheckState(Qt::Unchecked);
         ui->listBuiltinExtensions->addItem(item);
     }
