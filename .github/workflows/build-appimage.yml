@@ -50,10 +50,10 @@ jobs:
           export VERSION=$(printf "dev-`git -C . rev-parse --short HEAD`")
           ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -appimage
 
-      - name: Rename a file for consistency
+      - name: Rename a file
         run: |
           for i in DB_Browser_for_SQLite*; do mv "$i" "${i//_/.}"; done
-          if [ "${{ matrix.sqlcipher }}" = "0" ]; then
+          if [ "${{ matrix.sqlcipher }}" = "1" ]; then
             export FILE=$(ls DB.Browser.for.SQLite*.AppImage)
             export FILE=${FILE/SQLite/SQLCipher}
             mv DB.Browser.for.SQLite*.AppImage $FILE
