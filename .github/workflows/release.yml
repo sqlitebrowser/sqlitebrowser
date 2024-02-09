@@ -41,13 +41,6 @@ jobs:
           prerelease: true
           tag_name: continuous
 
-      - name: Clear artifacts
-        if: always()
-        uses: geekyeggo/delete-artifact@v4
-        with:
-          name: build-artifacts*
-          token: ${{ secrets.GITHUB_TOKEN }}
-
   release-nightly:
     if: inputs.NIGHTLY
     runs-on: macos-13-runner
@@ -86,9 +79,3 @@ jobs:
           ssh -q ${{ secrets.BUILD_ARTIFACTS_UPLOAD_TARGET }} "ln -s /nightlies/win64/DB.Browser.for.SQLite-$DATE-win64.msi /nightlies/latest/DB.Browser.for.SQLite-win64.msi"
           ssh -q ${{ secrets.BUILD_ARTIFACTS_UPLOAD_TARGET }} "ln -s /nightlies/win64/DB.Browser.for.SQLite-$DATE-win64.zip /nightlies/latest/DB.Browser.for.SQLite-win64.zip"
 
-      - name: Clear artifacts
-        if: always()
-        uses: geekyeggo/delete-artifact@v4
-        with:
-          name: build-artifacts*
-          token: ${{ secrets.GITHUB_TOKEN }}
