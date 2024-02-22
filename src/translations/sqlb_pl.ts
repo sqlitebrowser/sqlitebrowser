@@ -15,13 +15,13 @@
     </message>
     <message>
         <location filename="../AboutDialog.ui" line="90"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Pastel SVG icon set by Michael Buckley under a Creative Commons
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;https://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Pastel SVG icon set by Michael Buckley under a Creative Commons
 Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;https://codefisher.org/pastel-svg/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://codefisher.org/pastel-svg/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Przeglądarka SQLite jest darmowym otwartym oprogramowaniem przeznaczonym do graficznej edycji i tworzenia plików bazy danych SQLite.&lt;/p&gt;&lt;p&gt;Program podlega podwójnej licencji użytkowania: Publiczna licencja Mozilli Wersja 2 jak również Powszechna Licencja Publiczna GNU wersja 3 i późniejsza. Możesz zmieniać i rozpowszechniać program pod warunkami zawartymi w tych licencjach.&lt;/p&gt;&lt;p&gt;Zobacz &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; i &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; dla szczegółów.&lt;/p&gt;&lt;p&gt;Odwiedź naszą stronę internetową aby zapoznać się ze szczegółami na temat działania tego programu: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;To oprogramowanie używa GPL/LGPL Qt Toolkit z: &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;Zobacz &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; na temat licencji i użytkowania.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Używa także zestawu ikon SVG o nazwie Pastel stworzonego przez Michael&apos;a Buckley&apos;a na licencji Creative Commons Attribution Share Alike 4.0.&lt;br/&gt;Po więcej szczegółów zajrzyj na &lt;/span&gt;&lt;a href=&quot;https://codefisher.org/pastel-svg/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://codefisher.org/pastel-svg/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Przeglądarka SQLite jest darmowym otwartym oprogramowaniem przeznaczonym do graficznej edycji i tworzenia plików bazy danych SQLite.&lt;/p&gt;&lt;p&gt;Program podlega podwójnej licencji użytkowania: Publiczna licencja Mozilli Wersja 2 jak również Powszechna Licencja Publiczna GNU wersja 3 i późniejsza. Możesz zmieniać i rozpowszechniać program pod warunkami zawartymi w tych licencjach.&lt;/p&gt;&lt;p&gt;Zobacz &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; i &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; dla szczegółów.&lt;/p&gt;&lt;p&gt;Odwiedź naszą stronę internetową aby zapoznać się ze szczegółami na temat działania tego programu: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;https://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;To oprogramowanie używa GPL/LGPL Qt Toolkit z: &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;Zobacz &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; na temat licencji i użytkowania.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Używa także zestawu ikon SVG o nazwie Pastel stworzonego przez Michael&apos;a Buckley&apos;a na licencji Creative Commons Attribution Share Alike 4.0.&lt;br/&gt;Po więcej szczegółów zajrzyj na &lt;/span&gt;&lt;a href=&quot;https://codefisher.org/pastel-svg/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://codefisher.org/pastel-svg/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Silk icon set by Mark James licensed under a Creative Commons Attribution 2.5 and 3.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Przeglądarka SQLite jest darmowym otwartym oprogramowaniem przeznaczonym do graficznej edycji i tworzenia plików bazy danych SQLite.&lt;/p&gt;&lt;p&gt;Program podlega podwójnej licencji użytkowania: Publiczna licencja Mozilli Wersja 2 jak również Powszechna Licencja Publiczna GNU wersja 3 i późniejsza. Możesz zmieniać i rozpowszechniać program pod warunkami zawartymi w tych licencjach.&lt;/p&gt;&lt;p&gt;Zobacz &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; i &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; dla szczegółów.&lt;/p&gt;&lt;p&gt;Odwiedź naszą stronę internetową aby zapoznać się ze szczegółami na temat działania tego programu: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;To oprogramowanie używa GPL/LGPL Qt Toolkit z: &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;Zobacz &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; na temat licencji i użytkowania.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Używany również jest zestaw ikon Silk stworzony przez Mark James pod licencją Creative Commons Attribution 2.5 i 3.0.&lt;br/&gt;Zobacz &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; po więcej szczegółów.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;https://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Silk icon set by Mark James licensed under a Creative Commons Attribution 2.5 and 3.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Przeglądarka SQLite jest darmowym otwartym oprogramowaniem przeznaczonym do graficznej edycji i tworzenia plików bazy danych SQLite.&lt;/p&gt;&lt;p&gt;Program podlega podwójnej licencji użytkowania: Publiczna licencja Mozilli Wersja 2 jak również Powszechna Licencja Publiczna GNU wersja 3 i późniejsza. Możesz zmieniać i rozpowszechniać program pod warunkami zawartymi w tych licencjach.&lt;/p&gt;&lt;p&gt;Zobacz &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; i &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; dla szczegółów.&lt;/p&gt;&lt;p&gt;Odwiedź naszą stronę internetową aby zapoznać się ze szczegółami na temat działania tego programu: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;https://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;To oprogramowanie używa GPL/LGPL Qt Toolkit z: &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;Zobacz &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; na temat licencji i użytkowania.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Używany również jest zestaw ikon Silk stworzony przez Mark James pod licencją Creative Commons Attribution 2.5 i 3.0.&lt;br/&gt;Zobacz &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; po więcej szczegółów.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -895,7 +895,7 @@ Przerywam wykonywanie%3.</translation>
         <location filename="../sqlitedb.cpp" line="1815"/>
         <source>Copying data to new table failed. DB says:
 %1</source>
-        <translation>Nie można skopiować nowej tabeli. BD zwraca: 
+        <translation>Nie można skopiować nowej tabeli. BD zwraca:
 %1</translation>
     </message>
     <message>
@@ -2218,7 +2218,7 @@ Wszystkie dane przechowywane w tym polu zostaną utracone.</translation>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="1164"/>
         <source>&lt;p&gt;Not all data has been loaded. &lt;b&gt;Do you want to load all data before selecting all the rows?&lt;/b&gt;&lt;p&gt;&lt;p&gt;Answering &lt;b&gt;No&lt;/b&gt; means that no more data will be loaded and the selection will not be performed.&lt;br/&gt;Answering &lt;b&gt;Yes&lt;/b&gt; might take some time while the data is loaded but the selection will be complete.&lt;/p&gt;Warning: Loading all the data might require a great amount of memory for big tables.</source>
-        <translation>&lt;p&gt;Nie wczytano wszystkich danych. &lt;b&gt;Czu chcesz wczytać wszystkie dane przez zaznaczeniem wszystkich wierszy?&lt;/b&gt;&lt;p&gt;&lt;p&gt;Odpowiedź &lt;b&gt;Nie&lt;/b&gt; oznacza, że nie 
+        <translation>&lt;p&gt;Nie wczytano wszystkich danych. &lt;b&gt;Czu chcesz wczytać wszystkie dane przez zaznaczeniem wszystkich wierszy?&lt;/b&gt;&lt;p&gt;&lt;p&gt;Odpowiedź &lt;b&gt;Nie&lt;/b&gt; oznacza, że nie
 zostanie wczytanych więcej danych i nie zostanie nic zaznaczone.&lt;br/&gt;Odpowiedź &lt;b&gt;Tak&lt;/b&gt; oznacza, że trochę czasu może być potrzebne na wczytanie danych za to zaznaczenie będzie pełne.&lt;/p&gt;Uwaga: Wczytanie wszystkich danych może wymagać dużej ilości pamięci dla dużych tabel.</translation>
     </message>
     <message>
@@ -2488,7 +2488,7 @@ x~y	Zakres: wartości pomiędzy x oraz y
     <message>
         <location filename="../FindReplaceDialog.ui" line="139"/>
         <source>Find the next occurrence from the cursor position and in the direction set by &quot;Search backwards&quot;</source>
-        <translation>Szukaj kolejnego wystąpienia od położenia wskaźnika i w stronę określoną poprzez 
+        <translation>Szukaj kolejnego wystąpienia od położenia wskaźnika i w stronę określoną poprzez
 &quot;Wyszukiwanie wstecz&quot;</translation>
     </message>
     <message>
@@ -3327,7 +3327,7 @@ Można przeciągać polecenia SQL z kolumny schematu i upuszczać je w edytorze 
     <message>
         <location filename="../MainWindow.ui" line="1366"/>
         <source>Open a wizard that lets you import data from a comma separated text file into a database table. CSV files can be created on most database and spreadsheet applications.</source>
-        <translation>Otwiera okno pomocnika do importowania danych z pliku CSV do tabeli bazy danych. 
+        <translation>Otwiera okno pomocnika do importowania danych z pliku CSV do tabeli bazy danych.
 Plik CSV można stworzyć na podstawie większości baz danych i aplikacji arkuszy kalkulacyjnych.</translation>
     </message>
     <message>
@@ -3393,7 +3393,7 @@ Plik CSV można stworzyć na podstawie większości baz danych i aplikacji arkus
     </message>
     <message>
         <source>Open the Modify Table wizard, where it is possible to rename an existing table. It is also possible to add or delete fields form a table, as well as modify field names and types.</source>
-        <translation type="vanished">Otwiera pomocnika do Zmiany Tabeli, gdzie można przemianować istniejącą tabelą. 
+        <translation type="vanished">Otwiera pomocnika do Zmiany Tabeli, gdzie można przemianować istniejącą tabelą.
 Można także dodawać i usuwać pola z tabli, a także zmieniać nazwy oraz rodzaje pól.</translation>
     </message>
     <message>
@@ -3678,7 +3678,7 @@ Można także dodawać i usuwać pola z tabli, a także zmieniać nazwy oraz rod
     <message>
         <location filename="../MainWindow.ui" line="1451"/>
         <source>Open the Modify Table wizard, where it is possible to rename an existing table. It is also possible to add or delete fields from a table, as well as modify field names and types.</source>
-        <translation>Otwiera pomocnika Zmiany Tabeli, gdzie można zmienić nazwę istniejącej tabeli. 
+        <translation>Otwiera pomocnika Zmiany Tabeli, gdzie można zmienić nazwę istniejącej tabeli.
 Można także dodawać i usuwać pola z tabeli, a także zmieniać nazwy oraz rodzaje pól.</translation>
     </message>
     <message>
@@ -4055,7 +4055,7 @@ Powód: %1</translation>
         <location filename="../MainWindow.cpp" line="1287"/>
         <source>Setting PRAGMA values or vacuuming will commit your current transaction.
 Are you sure?</source>
-        <translation>Ustawianie wartości PRAGMA lub odkurzanie spowoduje wdrożenie twoich zmian 
+        <translation>Ustawianie wartości PRAGMA lub odkurzanie spowoduje wdrożenie twoich zmian
 z bieżącej transakcji.
 Czy na pewno?</translation>
     </message>
@@ -4490,7 +4490,7 @@ Jeśli nie, to dane zostaną zaimportowane do pliku bieżącej bazy danych.</tra
         <location filename="../MainWindow.cpp" line="1984"/>
         <source>Setting PRAGMA values will commit your current transaction.
 Are you sure?</source>
-        <translation>Ustawianie wartości PRAGMA spowoduje wdrożenie twoich zmian 
+        <translation>Ustawianie wartości PRAGMA spowoduje wdrożenie twoich zmian
 z bieżącej transakcji.
 Czy na pewno?</translation>
     </message>
@@ -5088,7 +5088,7 @@ Uwaga: jeszcze nie wczytano wszystkich danych z tabeli ze względu na mechanizm 
     <message>
         <location filename="../PreferencesDialog.ui" line="513"/>
         <source>When this value is changed, all the other color preferences are also set to matching colors.</source>
-        <translation>Po zmianie tej wartości, wszystkie inne ustawienia barw zostaną także ustawione na 
+        <translation>Po zmianie tej wartości, wszystkie inne ustawienia barw zostaną także ustawione na
 pasujące barwy.</translation>
     </message>
     <message>
@@ -6781,7 +6781,7 @@ Aby użyć tej funkcji, należy wyrazić zgodę w Ustawieniach.</translation>
     <message>
         <location filename="../SqlUiLexer.cpp" line="101"/>
         <source>(X) The quote(X) function returns the text of an SQL literal which is the value of its argument suitable for inclusion into an SQL statement.</source>
-        <translation>(X) Funkcja quote(X) zwraca dosłowny tekst SQL, który jest wartością jego argumentów 
+        <translation>(X) Funkcja quote(X) zwraca dosłowny tekst SQL, który jest wartością jego argumentów
 gotową do wstawienia w polecenie SQL.</translation>
     </message>
     <message>
@@ -6941,8 +6941,8 @@ gotową do wstawienia w polecenie SQL.</translation>
     <message>
         <location filename="../SqlUiLexer.cpp" line="139"/>
         <source>() The cumulative distribution. Calculated as row-number/partition-rows, where row-number is the value returned by row_number() for the last peer in the group and partition-rows the number of rows in the partition.</source>
-        <translation>() Rozkład nagromadzony. Obliczany jako numer-wiersza/wiersze-partycji, gdzie 
-numer-wiersza jest wartością zwracaną przez row_number() dla ostatniego 
+        <translation>() Rozkład nagromadzony. Obliczany jako numer-wiersza/wiersze-partycji, gdzie
+numer-wiersza jest wartością zwracaną przez row_number() dla ostatniego
 elementu w grupie, a wiersze-partycji to liczba wierszy w partycji.</translation>
     </message>
     <message>
