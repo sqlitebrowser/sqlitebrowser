@@ -69,7 +69,7 @@ Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot
     <message>
         <location filename="../AddRecordDialog.ui" line="110"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Save&lt;/span&gt; will submit the shown SQL statement to the database for inserting the new record.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Restore Defaults&lt;/span&gt; will restore the initial values in the &lt;span style=&quot; font-weight:600;&quot;&gt;Value&lt;/span&gt; column.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Cancel&lt;/span&gt; will close this dialog without executing the query.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Speichern&lt;/span&gt; wird die dargestellte SQL-Anweisung zum Einfügen des neuen Eintrags an die Datenbank übermitteln.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Voreinstellungen&lt;/span&gt; wird die ursprünglichen Werte der &lt;span style=&quot; font-weight:600;&quot;&gt;Wert&lt;/span&gt;-Spalte wiederherstellen.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Abbrechen&lt;/span&gt; schließt diesen Dialog, ohne die Abfrage auszuführen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Speichern&lt;/span&gt; wird die dargestellte SQL-Anweisung zum Einfügen des neuen Eintrags an die Datenbank übermitteln.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Voreinstellungen&lt;/span&gt; wird die ursprünglichen Werte der Spalte &lt;span style=&quot; font-weight:600;&quot;&gt;Wert&lt;/span&gt; wiederherstellen.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Abbrechen&lt;/span&gt; schließt diesen Dialog, ohne die Abfrage auszuführen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="239"/>
@@ -153,7 +153,7 @@ Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot
     </message>
     <message>
         <source>The -s/--sql option requires an argument</source>
-        <translation type="vanished">Die -s/--sql Option benötigt ein Argument</translation>
+        <translation type="vanished">Die Option -s/--sql benötigt ein Argument</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="221"/>
@@ -163,7 +163,7 @@ Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot
     </message>
     <message>
         <source>The -t/--table option requires an argument</source>
-        <translation type="vanished">Die -t/--table Option benötigt ein Argument</translation>
+        <translation type="vanished">Die Option -t/--table benötigt ein Argument</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="181"/>
@@ -578,7 +578,7 @@ Wenn weitere Einstellungen für diese Datenbankdatei vorgenommen worden sind, m�
     <message>
         <location filename="../CondFormatManager.ui" line="20"/>
         <source>This dialog allows creating and editing conditional formats. Each cell style will be selected by the first accomplished condition for that cell data. Conditional formats can be moved up and down, where those at higher rows take precedence over those at lower. Syntax for conditions is the same as for filters and an empty condition applies to all values.</source>
-        <translation>Dieser Dialog erlaubt das Erstellen und Bearbeiten bedingter Formatierungen. Jeder Zellenstil wird anhand der ersten erfüllten Bedingung für diese Zelldaten ausgewählt. Bedingte Formatierungen können nach oben und unten bewegt werden, wobei jene weiter oben Vorrang vor jenen weiter unten haben. Der Syntax für Bedingungen ist der gleiche wie bei Filtern und eine leere Bedingung trifft auf alle Werte zu.</translation>
+        <translation>Dieser Dialog erlaubt das Erstellen und Bearbeiten bedingter Formatierungen. Jeder Zellenstil wird anhand der ersten erfüllten Bedingung für diese Zelldaten ausgewählt. Bedingte Formatierungen können nach oben und unten bewegt werden, wobei jene weiter oben Vorrang vor jenen weiter unten haben. Die Syntax für Bedingungen ist die gleiche wie bei Filtern und eine leere Bedingung trifft auf alle Werte zu.</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="32"/>
@@ -1023,7 +1023,7 @@ Meldung von Datenbank:
         <source>The text editor modes let you edit plain text, as well as JSON or XML data with syntax highlighting, automatic formatting and validation before saving.
 
 Errors are indicated with a red squiggle underline.</source>
-        <translation type="vanished">Der Text-Editor-Modus erlaubt das Bearbeiten von Reintext sowie JSON- oder XML-Daten mit Syntaxhervorhebung, automatischer Formatierung und Validierung vor dem Speichern.
+        <translation type="vanished">Der Texteditor-Modus erlaubt das Bearbeiten von Reintext sowie JSON- oder XML-Daten mit Syntaxhervorhebung, automatischer Formatierung und Validierung vor dem Speichern.
 
 Fehler werden mittels eine roten Wellenlinie angezeigt.</translation>
     </message>
@@ -1081,7 +1081,7 @@ Fehler werden mittels eine roten Wellenlinie angezeigt.</translation>
     <message>
         <location filename="../EditDialog.ui" line="391"/>
         <source>The value is interpreted as a file or URL and opened in the default application or web browser.</source>
-        <translation>Der Wert wird als Datei oder URL interpretiert und mit der Standardanwendung oder dem Web-Browser geöffnet.</translation>
+        <translation>Der Wert wird als Datei oder URL interpretiert und mit der Standardanwendung oder dem Webbrowser geöffnet.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="400"/>
@@ -1491,7 +1491,7 @@ Sollen die bearbeiteten Daten auf Zeile=%1, Spalte=%2 angewendet werden?</transl
     <message>
         <location filename="../EditTableDialog.ui" line="85"/>
         <source>Make this a &apos;WITHOUT rowid&apos; table. Setting this flag requires a field of type INTEGER with the primary key flag set and the auto increment flag unset.</source>
-        <translation>Als &apos;WITHOUT rowid&apos;-Tabelle markieren. Das Setzen dieses Flags erfordert ein Feld vom Typ INTEGER mit gesetzten Primärschlüssel-Flag und nicht gesetztem Autoinkrement-Flag.</translation>
+        <translation>Als Tabelle &apos;WITHOUT rowid&apos; markieren. Das Setzen dieses Flags erfordert ein Feld vom Typ INTEGER mit gesetzten Primärschlüssel-Flag und nicht gesetztem Autoinkrement-Flag.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="75"/>
@@ -4517,7 +4517,7 @@ Erstellen Sie ein Backup!</translation>
     <message>
         <location filename="../MainWindow.cpp" line="3456"/>
         <source>Set a new name for the SQL tab. Use the &apos;&amp;&amp;&apos; character to allow using the following character as a keyboard shortcut.</source>
-        <translation>Vergeben Sie einen Namen für den SQL-Tab. Verwenden Sie das &apos;&amp;&amp;&apos;-Zeichen, um das folgende Zeichen als Tastaturkürzel zu verwenden.</translation>
+        <translation>Vergeben Sie einen Namen für den SQL-Tab. Verwenden Sie das Zeichen &apos;&amp;&amp;&apos;, um das folgende Zeichen als Tastaturkürzel zu verwenden.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3508"/>
@@ -5191,7 +5191,7 @@ Warnung: es wurden aufgrund der partiellen Abrufmechanismus noch nicht alle Date
     <message>
         <location filename="../PreferencesDialog.ui" line="375"/>
         <source>DB file extensions</source>
-        <translation>DB-Datei-Erweiterungen</translation>
+        <translation>DB-Dateierweiterungen</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="385"/>
@@ -5494,7 +5494,7 @@ Kann auf 0 gesetzt werden, um die Vervollständigung zu deaktivieren.</translati
     <message>
         <location filename="../PreferencesDialog.ui" line="1862"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite provides an SQL function for loading extensions from a shared library file. Activate this if you want to use the &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt; function from SQL code.&lt;/p&gt;&lt;p&gt;For security reasons, extension loading is turned off by default and must be enabled through this setting. You can always load extensions through the GUI, even though this option is disabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite bietet eine SQL-Funktion an, um Erweiterungen aus einer Shared-Library-Datei zu laden. Aktivieren Sie dies, wenn Sie die &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt;-Funktion aus SQL-Code heraus benutzen möchten.&lt;/p&gt;&lt;p&gt;Aus Sicherheitsgründen ist das Laden von Erweiterungen standardmäßig deaktiviert und muss durch diese Einstellung aktiviert werden. Sie können alternativ immer die gewünschten Erweiterungen über die GUI laden, auch wenn diese Option deaktiviert ist.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite bietet eine SQL-Funktion an, um Erweiterungen aus einer Shared-Library-Datei zu laden. Aktivieren Sie dies, wenn Sie die Funktion &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt; aus SQL-Code heraus benutzen möchten.&lt;/p&gt;&lt;p&gt;Aus Sicherheitsgründen ist das Laden von Erweiterungen standardmäßig deaktiviert und muss durch diese Einstellung aktiviert werden. Sie können alternativ immer die gewünschten Erweiterungen über die GUI laden, auch wenn diese Option deaktiviert ist.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1865"/>
@@ -6136,7 +6136,7 @@ clicking the &apos;Clone Database in DB4S&apos; button on the web page
 of the database.</source>
         <translation>Dies lädt eine Datenbank zur lokalen Bearbeitung von einem entfernten Server herunter.
 Bitte die URL zum Klonen eingeben. Die URL kann durch
-Klicken des &apos;Clone Database in DB4S&apos;-Buttons auf der Webseite
+Klicken des Buttons &apos;Clone Database in DB4S&apos; auf der Webseite
 der Datenbank generiert werden.</translation>
     </message>
     <message>
@@ -6491,7 +6491,7 @@ Soll wirklich fortgefahren werden?</translation>
     <message>
         <location filename="../SqlExecutionArea.ui" line="232"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Results of the last executed statements.&lt;/p&gt;&lt;p&gt;You may want to collapse this panel and use the &lt;span style=&quot; font-style:italic;&quot;&gt;SQL Log&lt;/span&gt; dock with &lt;span style=&quot; font-style:italic;&quot;&gt;User&lt;/span&gt; selection instead.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ergebnisse der zuletzt ausgeführten Anweisungen.&lt;/p&gt;&lt;p&gt;Dieses Panel kann zusammengeklappt und stattdessen der &lt;span style=&quot; font-style:italic;&quot;&gt;SQL-Protokoll&lt;/span&gt;-Dock mit der Auswahl &lt;span style=&quot; font-style:italic;&quot;&gt;Benutzer&lt;/span&gt; verwendet werden.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ergebnisse der zuletzt ausgeführten Anweisungen.&lt;/p&gt;&lt;p&gt;Dieses Panel kann zusammengeklappt und stattdessen der Dock &lt;span style=&quot; font-style:italic;&quot;&gt;SQL-Protokoll&lt;/span&gt; mit der Auswahl &lt;span style=&quot; font-style:italic;&quot;&gt;Benutzer&lt;/span&gt; verwendet werden.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="253"/>
@@ -6562,86 +6562,86 @@ Soll wirklich fortgefahren werden?</translation>
     <message>
         <location filename="../SqlUiLexer.cpp" line="79"/>
         <source>(X) The abs(X) function returns the absolute value of the numeric argument X.</source>
-        <translation>(X) Die abs(X)-Funktion gibt einen absoluten Wert des numerischen Arguments X zurück.</translation>
+        <translation>(X) Die Funktion abs(X) gibt einen absoluten Wert des numerischen Arguments X zurück.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="80"/>
         <source>() The changes() function returns the number of database rows that were changed or inserted or deleted by the most recently completed INSERT, DELETE, or UPDATE statement.</source>
-        <translation>() Die changes()-Funktion gibt die Anzahl der Datenbankzeilen zurück, die mit der zuletzt abgeschlossenen INSERT-, DELETE- oder UPDATE-Anweisung geändert, eingefügt oder gelöscht worden sind.</translation>
+        <translation>() Die Funktion changes() gibt die Anzahl der Datenbankzeilen zurück, die mit der zuletzt abgeschlossenen INSERT-, DELETE- oder UPDATE-Anweisung geändert, eingefügt oder gelöscht worden sind.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="81"/>
         <source>(X1,X2,...) The char(X1,X2,...,XN) function returns a string composed of characters having the unicode code point values of integers X1 through XN, respectively. </source>
-        <translation>(X1,X2,...) Die char(X1,X2,...,XN)-Funktion gibt eine Zeichenkette zurück, die aus den Zeichen der Unicode-Werte der Ganzzahlen X1 bis XN zusammengesetzt ist. </translation>
+        <translation>(X1,X2,...) Die Funktion char(X1,X2,...,XN) gibt eine Zeichenkette zurück, die aus den Zeichen der Unicode-Werte der Ganzzahlen X1 bis XN zusammengesetzt ist. </translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="82"/>
         <source>(X,Y,...) The coalesce() function returns a copy of its first non-NULL argument, or NULL if all arguments are NULL</source>
-        <translation>(X,Y,...) Die coalesce()-Funktion gibt eine Kopie des ersten Nicht-NULL-Arguments zurück, oder NULL wenn alle Argumente NULL sind</translation>
+        <translation>(X,Y,...) Die Funktion coalesce() gibt eine Kopie des ersten Nicht-NULL-Arguments zurück, oder NULL wenn alle Argumente NULL sind</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="83"/>
         <source>(X,Y) The glob(X,Y) function is equivalent to the expression &quot;Y GLOB X&quot;.</source>
-        <translation>(X,Y) Die glob(X,Y)-Funktion ist äquivalent zum Ausdruck &quot;Y GLOB X&quot;.</translation>
+        <translation>(X,Y) Die Funktion glob(X,Y) ist äquivalent zum Ausdruck &quot;Y GLOB X&quot;.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="84"/>
         <source>(X,Y) The ifnull() function returns a copy of its first non-NULL argument, or NULL if both arguments are NULL.</source>
-        <translation>(X,Y) Die ifnull()-Funktion gibt eine Kopie des ersten Nicht-NULL-Arguments zurück, oder NULL, wenn beide Argumente NULL sind.</translation>
+        <translation>(X,Y) Die Funktion ifnull() gibt eine Kopie des ersten Nicht-NULL-Arguments zurück, oder NULL, wenn beide Argumente NULL sind.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="85"/>
         <source>(X,Y) The instr(X,Y) function finds the first occurrence of string Y within string X and returns the number of prior characters plus 1, or 0 if Y is nowhere found within X.</source>
-        <translation>(X,Y) Die instr(X,Y)-Funktion sucht das erste Auftreten von Zeichenkette Y innerhalb der Zeichenkette X und gibt die Anzahl vorhergehender Charakter plus 1 zurück, oder 0, wenn Y in X nicht gefunden werden konnte.</translation>
+        <translation>(X,Y) Die Funktion instr(X,Y) sucht das erste Auftreten von Zeichenkette Y innerhalb der Zeichenkette X und gibt die Anzahl vorhergehender Charakter plus 1 zurück, oder 0, wenn Y in X nicht gefunden werden konnte.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="86"/>
         <source>(X) The hex() function interprets its argument as a BLOB and returns a string which is the upper-case hexadecimal rendering of the content of that blob.</source>
-        <translation>(X) Die hex()-Funktion interpretiert ihr Argument als BLOB und gibt eine Zeichenkette zurück, die die Hexadezimaldarstellung des Blob-Inhaltes in Großbuchstaben enthält.</translation>
+        <translation>(X) Die Funktion hex() interpretiert ihr Argument als BLOB und gibt eine Zeichenkette zurück, die die Hexadezimaldarstellung des Blob-Inhaltes in Großbuchstaben enthält.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="87"/>
         <source>(X,Y,Z) The iif(X,Y,Z) function returns the value Y if X is true, and Z otherwise.</source>
-        <translation>(X,Y,Z) Die iif(X,Y,Z)-Funktion gibt den Wert Y zurück, wenn X true ist, ansonsten Z.</translation>
+        <translation>(X,Y,Z) Die Funktion iif(X,Y,Z) gibt den Wert Y zurück, wenn X true ist, ansonsten Z.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="88"/>
         <source>() The last_insert_rowid() function returns the ROWID of the last row insert from the database connection which invoked the function.</source>
-        <translation>() Die last_insert_rowid()-Funktion gibt die ROWID der letzte Zeile zurück, die von der Datenbankverbindung eingefügt wurde und die dann die Funktion aufrief.</translation>
+        <translation>() Die Funktion last_insert_rowid() gibt die ROWID der letzte Zeile zurück, die von der Datenbankverbindung eingefügt wurde und die dann die Funktion aufrief.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="89"/>
         <source>(X) For a string value X, the length(X) function returns the number of characters (not bytes) in X prior to the first NUL character.</source>
-        <translation>(X) Für eine Zeichenkette X gibt die length(X)-Funktion die Anzahl der Zeichen (keine Bytes) von X zurück, die sich for dem ersten NUL-Zeichen befinden.</translation>
+        <translation>(X) Für eine Zeichenkette X gibt die Funktion length(X) die Anzahl der Zeichen (nicht Bytes) von X zurück, die sich vor dem ersten NUL-Zeichen befinden.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="90"/>
         <source>(X,Y) The like() function is used to implement the &quot;Y LIKE X&quot; expression.</source>
-        <translation>(X,Y) Die like()-Funktion wird als Implementierung des &quot;Y LIKE X&quot;-Ausdrucks verwendet.</translation>
+        <translation>(X,Y) Die Funktion like() wird als Implementierung des Ausdrucks &quot;Y LIKE X&quot; verwendet.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="91"/>
         <source>(X,Y,Z) The like() function is used to implement the &quot;Y LIKE X ESCAPE Z&quot; expression.</source>
-        <translation>(X,Y,Z) Die like()-Funktion wird als Implementierung des &quot;Y LIKE X ESCAPE Z&quot;-Ausdrucks verwendet.</translation>
+        <translation>(X,Y,Z) Die Funktion like() wird als Implementierung des Ausdrucks &quot;Y LIKE X ESCAPE Z&quot; verwendet.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="92"/>
         <source>(X) The load_extension(X) function loads SQLite extensions out of the shared library file named X.
 Use of this function must be authorized from Preferences.</source>
-        <translation>(X) Die load_extension(X)-Funktion lädt SQLite-Erweiterungen aus der Shared-Library-Datei namens X.
+        <translation>(X) Die Funktion load_extension(X) lädt SQLite-Erweiterungen aus der Shared-Library-Datei namens X.
 Die Verwendung dieser Funktion muss in den Einstellungen autorisiert werden.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="93"/>
         <source>(X,Y) The load_extension(X) function loads SQLite extensions out of the shared library file named X using the entry point Y.
 Use of this function must be authorized from Preferences.</source>
-        <translation>(X,Y) Die load_extension(X,Y)-Funktion lädt SQLite-Erweiterungen aus der Shared-Library-Datei namens X unter Verwendung des Eintrittspunktes Y.
+        <translation>(X,Y) Die Funktion load_extension(X,Y) lädt SQLite-Erweiterungen aus der Shared-Library-Datei namens X unter Verwendung des Eintrittspunktes Y.
 Die Verwendung dieser Funktion muss in den Einstellungen autorisiert werden.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="94"/>
         <source>(X) The lower(X) function returns a copy of string X with all ASCII characters converted to lower case.</source>
-        <translation>(X) Die lower(X)-Funktion gibt eine Kopie der Zeichenkette X mit allen ASCII-Zeichen in Kleinschreibung zurück.</translation>
+        <translation>(X) Die Funktion lower(X) gibt eine Kopie der Zeichenkette X mit allen ASCII-Zeichen in Kleinschreibung zurück.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="95"/>
@@ -6651,57 +6651,57 @@ Die Verwendung dieser Funktion muss in den Einstellungen autorisiert werden.</tr
     <message>
         <location filename="../SqlUiLexer.cpp" line="96"/>
         <source>(X,Y) The ltrim(X,Y) function returns a string formed by removing any and all characters that appear in Y from the left side of X.</source>
-        <translation>(X,Y) Die ltrim(X,Y)-Funktion gibt eine Zeichenkette zurück, die durch Entfernen aller Zeichen innerhalb von Y aus der linken Seite von X gebildet wird.</translation>
+        <translation>(X,Y) Die Funktion ltrim(X,Y) gibt eine Zeichenkette zurück, die durch Entfernen aller Zeichen innerhalb von Y aus der linken Seite von X gebildet wird.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="97"/>
         <source>(X,Y,...) The multi-argument max() function returns the argument with the maximum value, or return NULL if any argument is NULL.</source>
-        <translation>(X,Y,...) Die max()-Funktion mit mehreren Argumenten gibt das Argument mit dem größten Wert zurück, oder NULL, wenn ein Argument NULL ist.</translation>
+        <translation>(X,Y,...) Die Funktion max() mit mehreren Argumenten gibt das Argument mit dem größten Wert zurück, oder NULL, wenn ein Argument NULL ist.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="98"/>
         <source>(X,Y,...) The multi-argument min() function returns the argument with the minimum value.</source>
-        <translation>(X,Y,...) Die max()-Funktion mit mehreren Argumenten gibt das Argument mit dem kleinsten Wert zurück.</translation>
+        <translation>(X,Y,...) Die Funktion max() mit mehreren Argumenten gibt das Argument mit dem kleinsten Wert zurück.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="99"/>
         <source>(X,Y) The nullif(X,Y) function returns its first argument if the arguments are different and NULL if the arguments are the same.</source>
-        <translation>(X,Y) Die nullif(X,Y)-FUnktion gibt ihr erstes Argument zurück, wenn die Argumente verschieden sind und NULL, wenn die Argumente gleich sind.</translation>
+        <translation>(X,Y) Die Funktion nullif(X,Y) gibt ihr erstes Argument zurück, wenn die Argumente verschieden sind und NULL, wenn die Argumente gleich sind.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="100"/>
         <source>(FORMAT,...) The printf(FORMAT,...) SQL function works like the sqlite3_mprintf() C-language function and the printf() function from the standard C library.</source>
-        <translation>(FORMAT,...) Die printf(FORMAT,...) SQL-Funktion arbeitet wie die sqlite3_mprintf() C-Funktion und die printf()-Funktion aus der C-Standardbibliothek.</translation>
+        <translation>(FORMAT,...) Die printf(FORMAT,...) SQL-Funktion arbeitet wie die C-Funktion sqlite3_mprintf() und die Funktion printf() aus der C-Standardbibliothek.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="101"/>
         <source>(X) The quote(X) function returns the text of an SQL literal which is the value of its argument suitable for inclusion into an SQL statement.</source>
-        <translation>(X) Die quote(X)-Funktion gibt den Text eines SQL-Literals zurück, wobei der Wert des Arguments zum Einfügen in eine SQL-Anweisung geeignet ist.</translation>
+        <translation>(X) Die Funktion quote(X) gibt den Text eines SQL-Literals zurück, wobei der Wert des Arguments zum Einfügen in eine SQL-Anweisung geeignet ist.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="102"/>
         <source>() The random() function returns a pseudo-random integer between -9223372036854775808 and +9223372036854775807.</source>
-        <translation>() Die random()-Funktion gibt eine pseudozufällige Ganzzahl zwischen -9223372036854775808 und +9223372036854775807 zurück.</translation>
+        <translation>() Die Funktion random() gibt eine pseudozufällige Ganzzahl zwischen -9223372036854775808 und +9223372036854775807 zurück.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="103"/>
         <source>(N) The randomblob(N) function return an N-byte blob containing pseudo-random bytes.</source>
-        <translation>(N) Die randomblob(N)-Funktion gibt einen N-Byte Blob aus pseudozufälligen Bytes zurück.</translation>
+        <translation>(N) Die Funktion randomblob(N) gibt einen N-Byte Blob aus pseudozufälligen Bytes zurück.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="104"/>
         <source>(X,Y,Z) The replace(X,Y,Z) function returns a string formed by substituting string Z for every occurrence of string Y in string X.</source>
-        <translation>(X,Y,Z) Die replace(X,Y,Z)-Funktion gibt einen String zurück, der durch Ersetzen der Zeichenkette Z bei jedem Auftreten von Zeichenkette Y in Zeichenkette X gebildet wird.</translation>
+        <translation>(X,Y,Z) Die Funktion replace(X,Y,Z) gibt einen String zurück, der durch Ersetzen der Zeichenkette Z bei jedem Auftreten von Zeichenkette Y in Zeichenkette X gebildet wird.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="105"/>
         <source>(X) The round(X) function returns a floating-point value X rounded to zero digits to the right of the decimal point.</source>
-        <translation>(X) Die round(X)-Funktion gibt einen Gleitkommawert X auf null Nachkommastellen gerundet zurück.</translation>
+        <translation>(X) Die Funktion round(X) gibt einen Gleitkommawert X auf null Nachkommastellen gerundet zurück.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="106"/>
         <source>(X,Y) The round(X,Y) function returns a floating-point value X rounded to Y digits to the right of the decimal point.</source>
-        <translation>(X,Y) Die round(X,Y)-Funktion gibt eine Gleitkommazahl X auf Y Nachkommastellen gerundet zurück.</translation>
+        <translation>(X,Y) Die Funktion round(X,Y) gibt eine Gleitkommazahl X auf Y Nachkommastellen gerundet zurück.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="107"/>
@@ -6711,12 +6711,12 @@ Die Verwendung dieser Funktion muss in den Einstellungen autorisiert werden.</tr
     <message>
         <location filename="../SqlUiLexer.cpp" line="108"/>
         <source>(X,Y) The rtrim(X,Y) function returns a string formed by removing any and all characters that appear in Y from the right side of X.</source>
-        <translation>(X,Y) Die rtrim(X,Y)-Funktion gibt eine Zeichenkette zurück, die durch Entfernen aller Zeichen innerhalb von Y aus der rechten Seite von X gebildet wird.</translation>
+        <translation>(X,Y) Die Funktion rtrim(X,Y) gibt eine Zeichenkette zurück, die durch Entfernen aller Zeichen innerhalb von Y aus der rechten Seite von X gebildet wird.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="109"/>
         <source>(X) The soundex(X) function returns a string that is the soundex encoding of the string X.</source>
-        <translation>(X) Die soundex(X)-Funktion gibt eine Zeichenkette zurück, die aus der Soundex-Codierung von Zeichenkette X besteht.</translation>
+        <translation>(X) Die Funktion soundex(X) gibt eine Zeichenkette zurück, die aus der Soundex-Codierung von Zeichenkette X besteht.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="110"/>
@@ -6726,12 +6726,12 @@ Die Verwendung dieser Funktion muss in den Einstellungen autorisiert werden.</tr
     <message>
         <location filename="../SqlUiLexer.cpp" line="111"/>
         <source>(X,Y,Z) The substr(X,Y,Z) function returns a substring of input string X that begins with the Y-th character and which is Z characters long.</source>
-        <translation>(X,Y,Z) Die substr(X,Y)-Funktion gibt einen Teil der Zeichenkette X zurück, die mit dem Y-ten Zeichen beginnt und Z Zeichen lang ist.</translation>
+        <translation>(X,Y,Z) Die Funktion substr(X,Y) gibt einen Teil der Zeichenkette X zurück, die mit dem Y-ten Zeichen beginnt und Z Zeichen lang ist.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="112"/>
         <source>() The total_changes() function returns the number of row changes caused by INSERT, UPDATE or DELETE statements since the current database connection was opened.</source>
-        <translation>() Die changes()-Funktion gibt die Anzahl der geänderten Datenbankzeilen zurück, die seit dem Öffnen der aktuellen Datenbankverbindung mit INSERT-, DELETE- oder UPDATE-Anweisung geändert, eingefügt oder gelöscht worden sind.</translation>
+        <translation>() Die Funktion changes() gibt die Anzahl der geänderten Datenbankzeilen zurück, die seit dem Öffnen der aktuellen Datenbankverbindung mit INSERT-, DELETE- oder UPDATE-Anweisung geändert, eingefügt oder gelöscht worden sind.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="113"/>
@@ -6741,27 +6741,27 @@ Die Verwendung dieser Funktion muss in den Einstellungen autorisiert werden.</tr
     <message>
         <location filename="../SqlUiLexer.cpp" line="114"/>
         <source>(X,Y) The trim(X,Y) function returns a string formed by removing any and all characters that appear in Y from both ends of X.</source>
-        <translation>(X,Y) Die ltrim(X,Y)-Funktion gibt eine Zeichenkette zurück, die durch Entfernen aller Zeichen innerhalb von Y aus der von beiden Seiten von X gebildet wird.</translation>
+        <translation>(X,Y) Die Funktion ltrim(X,Y) gibt eine Zeichenkette zurück, die durch Entfernen aller Zeichen innerhalb von Y aus der von beiden Seiten von X gebildet wird.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="115"/>
         <source>(X) The typeof(X) function returns a string that indicates the datatype of the expression X.</source>
-        <translation>(X) Die typeof(X)-Funktion gibt einen String zurück, der den Datentyp des Ausdruckes X angibt.</translation>
+        <translation>(X) Die Funktion typeof(X) gibt einen String zurück, der den Datentyp des Ausdrucks X angibt.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="116"/>
         <source>(X) The unicode(X) function returns the numeric unicode code point corresponding to the first character of the string X.</source>
-        <translation>(X) Die unicode(X)-Funktion gibt einen numerischen Unicode-Wert zurück, der dem ersten Zeichen der Zeichenkette X entspricht.</translation>
+        <translation>(X) Die Funktion unicode(X) gibt einen numerischen Unicode-Wert zurück, der dem ersten Zeichen der Zeichenkette X entspricht.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="117"/>
         <source>(X) The upper(X) function returns a copy of input string X in which all lower-case ASCII characters are converted to their upper-case equivalent.</source>
-        <translation>(X) Die lower(X)-Funktion gibt eine Kopie der Zeichenkette X mit allen ASCII-Zeichen in Großschreibung zurück.</translation>
+        <translation>(X) Die Funktion lower(X) gibt eine Kopie der Zeichenkette X mit allen ASCII-Zeichen in Großschreibung zurück.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="118"/>
         <source>(N) The zeroblob(N) function returns a BLOB consisting of N bytes of 0x00.</source>
-        <translation>(N) Die zeroblob(N)-Funktion gibt einen BLOB aus N Bytes mit 0x00 zurück.</translation>
+        <translation>(N) Die Funktion zeroblob(N) gibt einen BLOB aus N Bytes mit 0x00 zurück.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="120"/>
@@ -6779,53 +6779,53 @@ Die Verwendung dieser Funktion muss in den Einstellungen autorisiert werden.</tr
     <message>
         <location filename="../SqlUiLexer.cpp" line="126"/>
         <source>(X) The avg() function returns the average value of all non-NULL X within a group.</source>
-        <translation>(X) Die avg()-Funktion gibt den Durchschnittswert alle Nicht-NULL-X in einer Gruppe zurück.</translation>
+        <translation>(X) Die Funktion avg() gibt den Durchschnittswert alle Nicht-NULL-X in einer Gruppe zurück.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="127"/>
         <source>(X) The count(X) function returns a count of the number of times that X is not NULL in a group.</source>
-        <translation>(X) Die count(X)-Funktion gibt die Anzahl der Nicht-NULL-Elemente von X in einer Gruppe zurück.</translation>
+        <translation>(X) Die Funktion count(X) gibt die Anzahl der Nicht-NULL-Elemente von X in einer Gruppe zurück.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="128"/>
         <source>(X) The group_concat() function returns a string which is the concatenation of all non-NULL values of X.</source>
-        <translation>(X) Die group_conact()-Funktion gibt eine Zeichenkette zurück, die eine Verkettung aller Nicht-NULL-Werte von X ist.</translation>
+        <translation>(X) Die Funktion group_conact() gibt eine Zeichenkette zurück, die eine Verkettung aller Nicht-NULL-Werte von X ist.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="129"/>
         <source>(X,Y) The group_concat() function returns a string which is the concatenation of all non-NULL values of X. If parameter Y is present then it is used as the separator between instances of X.</source>
-        <translation>(X,Y) Die group_conact()-Funktion gibt eine Zeichenkette zurück, die eine Verkettung aller Nicht-NULL-Werte von X ist. Wenn der Parameter Y aktiv ist, wird dieser als Trennzeichen zwischen Instanzen von X behandelt.</translation>
+        <translation>(X,Y) Die Funktion group_conact() gibt eine Zeichenkette zurück, die eine Verkettung aller Nicht-NULL-Werte von X ist. Wenn der Parameter Y aktiv ist, wird dieser als Trennzeichen zwischen Instanzen von X behandelt.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="130"/>
         <source>(X) The max() aggregate function returns the maximum value of all values in the group.</source>
-        <translation>(X) Die max()-Sammelfunktion gibt den Maximalwert aller Werte in der Gruppe zurück.</translation>
+        <translation>(X) Die Sammelfunktion max() gibt den Maximalwert aller Werte in der Gruppe zurück.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="131"/>
         <source>(X) The min() aggregate function returns the minimum non-NULL value of all values in the group.</source>
-        <translation>(X) Die min()-Sammelfunktion gibt den Minimalwert aller Nicht-NULL-Werte in der Gruppe zurück.</translation>
+        <translation>(X) Die Sammelfunktion min() gibt den Minimalwert aller Nicht-NULL-Werte in der Gruppe zurück.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="132"/>
         <location filename="../SqlUiLexer.cpp" line="133"/>
         <source>(X) The sum() and total() aggregate functions return sum of all non-NULL values in the group.</source>
-        <translation>(X) Die sum()- und total()-Sammelfunktionen geben die Summe aller Nicht-NULL-Werte in der Gruppe zurück.</translation>
+        <translation>(X) Die Sammelfunktionen sum() und total() geben die Summe aller Nicht-NULL-Werte in der Gruppe zurück.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="135"/>
         <source>() The number of the row within the current partition. Rows are numbered starting from 1 in the order defined by the ORDER BY clause in the window definition, or in arbitrary order otherwise.</source>
-        <translation>() Die Anzahl der Zeilen in der aktuellen Partition. Zeilen werden beginnend bei 1 in der durch den Befehl ORDER-BY in der Fensterdefinition nummeriert, ansonsten in willkürlicher Reihenfolge.</translation>
+        <translation>() Die Anzahl der Zeilen in der aktuellen Partition. Zeilen werden beginnend bei 1 in der durch den Befehl ORDER BY in der Fensterdefinition nummeriert, ansonsten in willkürlicher Reihenfolge.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="136"/>
         <source>() The row_number() of the first peer in each group - the rank of the current row with gaps. If there is no ORDER BY clause, then all rows are considered peers and this function always returns 1.</source>
-        <translation>() Die row_number() des ersten Peer in jeder Gruppe - der Rang der aktuellen Zeile mit Lücken. Wenn es keinen Befehl ORDER-BY gibt, dann werden alle Zeilen als Peers angesehen und diese Funktion gibt immer 1 zurück.</translation>
+        <translation>() Die row_number() des ersten Peer in jeder Gruppe - der Rang der aktuellen Zeile mit Lücken. Wenn es keinen Befehl ORDER BY gibt, dann werden alle Zeilen als Peers angesehen und diese Funktion gibt immer 1 zurück.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="137"/>
         <source>() The number of the current row&apos;s peer group within its partition - the rank of the current row without gaps. Partitions are numbered starting from 1 in the order defined by the ORDER BY clause in the window definition. If there is no ORDER BY clause, then all rows are considered peers and this function always returns 1. </source>
-        <translation>() Die Nummer der Peer-Gruppe der aktuellen Zeile in der Partition - der Rang der aktuellen Reihe ohne Lücken. Partitionen werden mit 1 startend nummeriert in der Reihenfolge, wie sie durch den Befehl ORDER-BY in der Fensterdefinition festgelegt ist. Wenn es keinen Befehl ORDER-BY gibt, werden alle Zeilen als Peers angesehen und diese Funktion gibt immer 1 zurück. </translation>
+        <translation>() Die Nummer der Peer-Gruppe der aktuellen Zeile in der Partition - der Rang der aktuellen Reihe ohne Lücken. Partitionen werden mit 1 startend nummeriert in der Reihenfolge, wie sie durch den Befehl ORDER BY in der Fensterdefinition festgelegt ist. Wenn es keinen Befehl ORDER BY gibt, werden alle Zeilen als Peers angesehen und diese Funktion gibt immer 1 zurück. </translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="138"/>
@@ -6840,7 +6840,7 @@ Die Verwendung dieser Funktion muss in den Einstellungen autorisiert werden.</tr
     <message>
         <location filename="../SqlUiLexer.cpp" line="140"/>
         <source>(N) Argument N is handled as an integer. This function divides the partition into N groups as evenly as possible and assigns an integer between 1 and N to each group, in the order defined by the ORDER BY clause, or in arbitrary order otherwise. If necessary, larger groups occur first. This function returns the integer value assigned to the group that the current row is a part of.</source>
-        <translation>(N) Das Argument N wird als Integer behandelt. Diese Funktion teilt die Partition in N Gruppen so gleichmäßig wie möglich auf und weist jeder Gruppe einen Integer zwischen 1 und N zu, in der Reihenfolge, die durch den Befehl ORDER-BY definiert ist, ansonsten in beliebiger Reihenfolge. Wenn notwendig, tauchen größere Gruppen als erstes auf. Diese Funktion gibt einen Integerwert zurück, der der Gruppe zugewiesen ist, zu der die aktuelle Zeile gehört.</translation>
+        <translation>(N) Das Argument N wird als Integer behandelt. Diese Funktion teilt die Partition in N Gruppen so gleichmäßig wie möglich auf und weist jeder Gruppe einen Integer zwischen 1 und N zu, in der Reihenfolge, die durch den Befehl ORDER BY definiert ist, ansonsten in beliebiger Reihenfolge. Wenn notwendig, tauchen größere Gruppen als erstes auf. Diese Funktion gibt einen Integerwert zurück, der der Gruppe zugewiesen ist, zu der die aktuelle Zeile gehört.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="141"/>
@@ -6881,7 +6881,7 @@ Die Verwendung dieser Funktion muss in den Einstellungen autorisiert werden.</tr
     <message>
         <location filename="../SqlUiLexer.cpp" line="149"/>
         <source>(expr,N) This built-in window function calculates the window frame for each row in the same way as an aggregate window function. It returns the value of expr evaluated against the row N of the window frame. Rows are numbered within the window frame starting from 1 in the order defined by the ORDER BY clause if one is present, or in arbitrary order otherwise. If there is no Nth row in the partition, then NULL is returned.</source>
-        <translation>(expr,N) Diese eingebaute Fensterfunktion berechnet den Fensterrahmen für jede Zeile auf die gleiche Art wie ein aggregierte Fensterfunktion. Sie gibt den Wert von expr evaluiert gegen die N-te Zeile im Fensterrahmen zurück. Die Zeilen werden beginnend bei 1 in der durch den Befehl ORDER-BY definierten Reihenfolge nummeriert, falls dieser vorhanden ist, ansonsten in beliebiger Reihenfolge. Wenn es keine N-te Zeile in der Partition gibt, dann wird NULL zurückgegeben.</translation>
+        <translation>(expr,N) Diese eingebaute Fensterfunktion berechnet den Fensterrahmen für jede Zeile auf die gleiche Art wie ein aggregierte Fensterfunktion. Sie gibt den Wert von expr evaluiert gegen die N-te Zeile im Fensterrahmen zurück. Die Zeilen werden beginnend bei 1 in der durch den Befehl ORDER BY definierten Reihenfolge nummeriert, falls dieser vorhanden ist, ansonsten in beliebiger Reihenfolge. Wenn es keine N-te Zeile in der Partition gibt, dann wird NULL zurückgegeben.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="155"/>
@@ -7335,7 +7335,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="545"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button is used to navigate to the record number specified in the Go to area.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;/head&gt;&lt;body&gt;&lt;p&gt;Dieser Button kann zum Navigieren zu einer im &quot;Springe zu&quot;-Bereich festgelegten Zeile verwendet werden.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;/head&gt;&lt;body&gt;&lt;p&gt;Dieser Button kann zum Navigieren zu einer im Bereich &quot;Springe zu&quot; festgelegten Zeile verwendet werden.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="548"/>
@@ -7350,7 +7350,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.ui" line="558"/>
         <source>Type a record number in this area and click the Go to: button to display the record in the database view</source>
-        <translation>Geben Sie eine Zeilennummer in diesem Bereich ein und klicken Sie auf den &quot;Springe zu:&quot;-Button, um die Zeile in der Datenbankansicht anzuzeigen</translation>
+        <translation>Geben Sie eine Zeilennummer in diesem Bereich ein und klicken Sie auf den Button &quot;Springe zu:&quot;, um die Zeile in der Datenbankansicht anzuzeigen</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="561"/>
@@ -7779,7 +7779,7 @@ Halten Sie %3Umschalt und klicken Sie, um hierher zu springen</translation>
     <message>
         <location filename="../TableBrowser.cpp" line="674"/>
         <source>Conditional formats for &quot;%1&quot;</source>
-        <translation>Bedingte Formatierung for &quot;%1&quot;</translation>
+        <translation>Bedingte Formatierung für &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="757"/>
