@@ -223,7 +223,6 @@ target_sources(${PROJECT_NAME}
     src/FileExtensionManager.h
     src/CondFormatManager.h
     src/CipherSettings.h
-    src/DotenvFormat.h
     src/Palette.h
     src/CondFormat.h
     src/RunSql.h
@@ -284,7 +283,6 @@ target_sources(${PROJECT_NAME}
     src/CondFormatManager.cpp
     src/Data.cpp
     src/CipherSettings.cpp
-    src/DotenvFormat.cpp
     src/Palette.cpp
     src/CondFormat.cpp
     src/RunSql.cpp
