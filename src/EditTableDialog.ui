@@ -82,7 +82,7 @@
          <item row="1" column="1">
           <widget class="QCheckBox" name="checkWithoutRowid">
            <property name="toolTip">
-            <string>Make this a 'WITHOUT rowid' table. Setting this flag requires a field of type INTEGER with the primary key flag set and the auto increment flag unset.</string>
+            <string>Make this a 'WITHOUT ROWID' table. Setting this flag requires specifying a PRIMARY KEY (which can be of any type, and can be composite), and forbids the AUTOINCREMENT flag.</string>
            </property>
           </widget>
          </item>
