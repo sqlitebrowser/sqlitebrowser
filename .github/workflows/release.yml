@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Delete 'continuous' release and tag
-        uses: dev-drprasad/delete-tag-and-release@v1.0
+        uses: dev-drprasad/delete-tag-and-release@v1.1
         with:
           delete_release: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
