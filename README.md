@@ -112,6 +112,11 @@ Or use winget:
 winget install -e --id DBBrowserForSQLite.DBBrowserForSQLite
 ```
 
+Or use scoop:
+```
+scoop install sqlitebrowser
+```
+
 #### Continuous, Nightly builds
 
 Continuous builds are available here:
