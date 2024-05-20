@@ -21,7 +21,7 @@ Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;https://www.gnu.org/licenses/gpl.html&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;https://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;https://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;https://doc.qt.io/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://doc.qt.io/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Silk icon set by Mark James licensed under a Creative Commons Attribution 2.5 and 3.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;https://github.com/markjames/famfamfam-silk-icons&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://github.com/markjames/famfamfam-silk-icons&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser pour SQLite est un logiciel libre, open-source utilisé pour créer, concevoir et modifier des Bases de Données SQLite.&lt;/p&gt;&lt;p&gt;Ce programme vous est proposé sous une double licence : Mozilla Public License Version 2 et GNU General Public License Version 3 ou suivante. Vous pouvez le modifier ou le redistribuer en respectant les conditions de ces licences.&lt;/p&gt;&lt;p&gt;Voir : &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;https://www.gnu.org/licenses/gpl.html&lt;/a&gt; et &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; pour plus de détails&lt;/p&gt;&lt;p&gt;Pour plus d&apos;information concernant ce programme, visitez notre site Internet : &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;https://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Ce logiciel utilise le GPL/LGPL Qt Toolkit fourni par &lt;/span&gt;&lt;a href=&quot;https://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;Voir : &lt;/span&gt;&lt;a href=&quot;https://doc.qt.io/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://doc.qt.io/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;  pour les conditions de licence et toute autre information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Il utilise le jeu d&amp;apos;icones Silk créé par Mark James disponible selon la licence Creative Commons Attribution 2.5 and 3.0.&lt;br/&gt;Voir &lt;/span&gt;&lt;a href=&quot;https://github.com/markjames/famfamfam-silk-icons&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://github.com/markjames/famfamfam-silk-icons&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; pour plus de details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser pour SQLite est un logiciel libre, open-source utilisé pour créer, concevoir et modifier des Bases de Données SQLite.&lt;/p&gt;&lt;p&gt;Ce programme vous est proposé sous une double licence : Mozilla Public License Version 2 et GNU General Public License Version 3 ou suivante. Vous pouvez le modifier ou le redistribuer en respectant les conditions de ces licences.&lt;/p&gt;&lt;p&gt;Voir : &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;https://www.gnu.org/licenses/gpl.html&lt;/a&gt; et &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; pour plus de détails&lt;/p&gt;&lt;p&gt;Pour plus d&apos;information concernant ce programme, visitez notre site Internet : &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;https://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Ce logiciel utilise le GPL/LGPL Qt Toolkit fourni par &lt;/span&gt;&lt;a href=&quot;https://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;Voir : &lt;/span&gt;&lt;a href=&quot;https://doc.qt.io/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://doc.qt.io/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;  pour les conditions de licence et toute autre information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Il utilise le jeu d&amp;apos;icones Silk créé par Mark James disponible selon la licence Creative Commons Attribution 2.5 and 3.0.&lt;br/&gt;Voir &lt;/span&gt;&lt;a href=&quot;https://github.com/markjames/famfamfam-silk-icons&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://github.com/markjames/famfamfam-silk-icons&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; pour plus de détails.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -69,7 +69,7 @@ Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot
     <message>
         <location filename="../AddRecordDialog.ui" line="110"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Save&lt;/span&gt; will submit the shown SQL statement to the database for inserting the new record.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Restore Defaults&lt;/span&gt; will restore the initial values in the &lt;span style=&quot; font-weight:600;&quot;&gt;Value&lt;/span&gt; column.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Cancel&lt;/span&gt; will close this dialog without executing the query.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Enregistrer&lt;/span&gt; soumettra l&apos;instruction SQL affichée à la base de données pour créer le nouvel enregistrement..&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Restaurer les valeurs par défaut&lt;/span&gt; restaurera les valeurs par défaut dans la &lt;span style=&quot; font-weight:600;&quot;&gt;colonne&lt;/span&gt; Valeur.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Annuler&lt;/span&gt; fermera cette boîte de dialogue sans exécuter la requête.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Enregistrer&lt;/span&gt; soumettra l&apos;instruction SQL affichée à la base de données pour créer le nouvel enregistrement.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Restaurer les valeurs par défaut&lt;/span&gt; restaurera les valeurs par défaut dans la &lt;span style=&quot; font-weight:600;&quot;&gt;colonne&lt;/span&gt; Valeur.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Annuler&lt;/span&gt; fermera cette boîte de dialogue sans exécuter la requête.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="239"/>
@@ -159,7 +159,7 @@ Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot
     </message>
     <message>
         <source>  -s, --sql &lt;file&gt;    Execute this SQL file after opening the DB</source>
-        <translation type="vanished">  -s, --sql &lt;fichier&gt;    Execute ce fichier SQL après avoir ouvert la BDD</translation>
+        <translation type="vanished">  -s, --sql &lt;fichier&gt;    Exécute ce fichier SQL après avoir ouvert la BDD</translation>
     </message>
     <message>
         <source>  -t, --table &lt;table&gt; Browse this table after opening the DB</source>
@@ -453,13 +453,13 @@ Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot
         <location filename="../CipherDialog.ui" line="66"/>
         <source>Passphrase</source>
         <translatorcomment>The button size is not large enought to handle the whole &quot;french text&quot;, if #Passphrase must be translate</translatorcomment>
-        <translation>Phrase Secrète</translation>
+        <translation>Phrase secrète</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="71"/>
         <source>Raw key</source>
         <translatorcomment>Same comment as for Passphrase</translatorcomment>
-        <translation>Clé de Chiffrement</translation>
+        <translation>Clé de chiffrement</translation>
     </message>
     <message>
         <location filename="../CipherDialog.cpp" line="35"/>
@@ -469,7 +469,7 @@ Leave the password fields empty to disable the encryption.
 The encryption process might take some time and you should have a backup copy of your database! Unsaved changes are applied before modifying the encryption.</source>
         <translation>Veuillez définir une clé pour chiffrer la base de données.
 Notez que si vous modifiez les autres paramètres, optionnels, vous devrez les ressaisir chaque fois que vous ouvrirez la base de données.
-Laisser les champs Mot de passe à blanc pour désactiver le chiffrement.
+Laisser les champs Mot de passe vides pour désactiver le chiffrement.
 Le processus de chiffrement peut prendre un certain temps. Vous devriez avoir une copie de sauvegarde de votre base de données !
 Les modifications non enregistrées seront appliquées avant la modification du chiffrement.</translation>
     </message>
@@ -591,7 +591,7 @@ Il sera appliqué à chaque valeur avant son affichage.</translation>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="23"/>
         <source>Octal number</source>
-        <translation>Nombre en Octal</translation>
+        <translation>Nombre octal</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="24"/>
@@ -674,7 +674,7 @@ Il sera appliqué à chaque valeur avant son affichage.</translation>
     <message>
         <location filename="../CondFormatManager.ui" line="158"/>
         <source>Foreground</source>
-        <translation>Avant Plan</translation>
+        <translation>Avant-plan</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="161"/>
@@ -684,12 +684,12 @@ Il sera appliqué à chaque valeur avant son affichage.</translation>
     <message>
         <location filename="../CondFormatManager.ui" line="166"/>
         <source>Background</source>
-        <translation>Arrière plan</translation>
+        <translation>Arrière-plan</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="169"/>
         <source>Background color</source>
-        <translation>Couleur d&apos;arrière plan</translation>
+        <translation>Couleur d&apos;arrière-plan</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="174"/>
@@ -1155,7 +1155,7 @@ Les erreurs sont signalées par un trait de soulignement rouge.</translation>
     <message>
         <location filename="../EditDialog.ui" line="307"/>
         <source>Autoformat</source>
-        <translation>Format Automatique</translation>
+        <translation>Format automatique</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="322"/>
@@ -1509,7 +1509,7 @@ Voulez-vous appliquer les données modifiées à la ligne=%1, colonne=%2 ?</tran
     <message>
         <location filename="../EditIndexDialog.ui" line="232"/>
         <source>Index column</source>
-        <translation>Colonne d&apos;Index</translation>
+        <translation>Colonne d&apos;index</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.cpp" line="266"/>
@@ -1864,7 +1864,7 @@ Toutes les données contenues dans ce champ seront perdues.</translation>
     <message>
         <location filename="../ExportDataDialog.ui" line="57"/>
         <source>Colu&amp;mn names in first line</source>
-        <translation>Nom des &amp;Col. en 1ère ligne</translation>
+        <translation>Nom des &amp;col. en 1ère ligne</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="77"/>
@@ -1931,7 +1931,8 @@ Toutes les données contenues dans ce champ seront perdues.</translation>
     <message>
         <location filename="../ExportDataDialog.ui" line="288"/>
         <source>Pretty print</source>
-        <translation>Formatter</translation>
+        <translatorcomment>"Indenter" is more clear to me than the previous "Formater"</translatorcomment>
+        <translation>Indenter</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.cpp" line="202"/>
@@ -1984,7 +1985,7 @@ Toutes les données contenues dans ce champ seront perdues.</translation>
     <message>
         <location filename="../ExportDataDialog.cpp" line="420"/>
         <source>Export finished with errors.</source>
-        <translation>L&apos;export s&apos;est terminée avec des erreurs.</translation>
+        <translation>L&apos;export s&apos;est terminé avec des erreurs.</translation>
     </message>
 </context>
 <context>
@@ -2186,7 +2187,7 @@ Toutes les données contenues dans ce champ seront perdues.</translation>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="287"/>
         <source>Copy with Headers</source>
-        <translation>Copier avec les Entêtes</translation>
+        <translation>Copier avec les entêtes</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="288"/>
@@ -2206,7 +2207,7 @@ Toutes les données contenues dans ce champ seront perdues.</translation>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="293"/>
         <source>Use in Filter Expression</source>
-        <translation>Utiliser dans l&apos;expression du Filtre</translation>
+        <translation>Utiliser dans l&apos;expression du filtre</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="324"/>
@@ -2312,8 +2313,8 @@ Les opérateurs suivants sont également pris en charge :
 %	Joker (métacaractère)
 &gt;	Supérieur à
 &lt;	Inférieur à
-&gt;=	Supérieur ou Égal à
-&lt;=	Inférieur ou Égal à
+&gt;=	Supérieur ou égal à
+&lt;=	Inférieur ou égal à
 =	Égal à : correspondance exacte
 &lt;&gt;	Différent de: correspondance inverse exacte
 x~y	Fourchette : valeurs entre x et y
@@ -2322,17 +2323,17 @@ x~y	Fourchette : valeurs entre x et y
     <message>
         <location filename="../FilterLineEdit.cpp" line="202"/>
         <source>Clear All Conditional Formats</source>
-        <translation>Effacer tous les Formats Conditionnels</translation>
+        <translation>Effacer tous les formats conditionnels</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="207"/>
         <source>Use for Conditional Format</source>
-        <translation>Utilisé pour le Format Conditionnel</translation>
+        <translation>Utiliser pour le format conditionnel</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="212"/>
         <source>Edit Conditional Formats...</source>
-        <translation>Éditer un Format Conditionnel...</translation>
+        <translation>Éditer un format conditionnel...</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="132"/>
@@ -2357,12 +2358,12 @@ x~y	Fourchette : valeurs entre x et y
     <message>
         <location filename="../FilterLineEdit.cpp" line="149"/>
         <source>Is empty</source>
-        <translation>Est Vide</translation>
+        <translation>Est vide</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="154"/>
         <source>Is not empty</source>
-        <translation>Est non Vide</translation>
+        <translation>Est non vide</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="159"/>
@@ -2441,12 +2442,12 @@ x~y	Fourchette : valeurs entre x et y
     <message>
         <location filename="../FindReplaceDialog.ui" line="86"/>
         <source>When enabled, the search continues from the other end when it reaches one end of the page</source>
-        <translation>Lorsque la Recherche circulaire est activée, la recherche recommence au début une fois atteinte la fin de la page</translation>
+        <translation>Lorsque la Recherche circulaire est activée, la recherche recommence au début une fois la fin de la page atteinte</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="89"/>
         <source>&amp;Wrap around</source>
-        <translation>Recherche &amp;Circulaire</translation>
+        <translation>Recherche &amp;circulaire</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="96"/>
@@ -2507,7 +2508,7 @@ x~y	Fourchette : valeurs entre x et y
     <message>
         <location filename="../FindReplaceDialog.ui" line="162"/>
         <source>F&amp;ind All</source>
-        <translation>Rechercher &amp;Tout</translation>
+        <translation>Rechercher &amp;tout</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="169"/>
@@ -2517,7 +2518,7 @@ x~y	Fourchette : valeurs entre x et y
     <message>
         <location filename="../FindReplaceDialog.ui" line="172"/>
         <source>Replace &amp;All</source>
-        <translation>Remplacer To&amp;ut</translation>
+        <translation>Remplacer to&amp;ut</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.cpp" line="86"/>
@@ -2611,7 +2612,7 @@ x~y	Fourchette : valeurs entre x et y
     <message>
         <location filename="../ImportCsvDialog.ui" line="38"/>
         <source>&amp;Column names in first line</source>
-        <translation>Nom des &amp;Col. en 1ère ligne</translation>
+        <translation>Nom des &amp;col. en 1ère ligne</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="55"/>
@@ -2791,7 +2792,7 @@ x~y	Fourchette : valeurs entre x et y
     <message>
         <location filename="../ImportCsvDialog.cpp" line="518"/>
         <source>There is already a table named &apos;%1&apos; and an import into an existing table is only possible if the number of columns match.</source>
-        <translation>Il existe déjà une table nommée&apos;%1&apos; et une importation dans une table existante n&apos;est possible que si le nombre de colonnes correspond.</translation>
+        <translation>Il existe déjà une table nommée &apos;%1&apos; et une importation dans une table existante n&apos;est possible que si le nombre de colonnes correspond.</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.cpp" line="526"/>
@@ -2826,7 +2827,7 @@ x~y	Fourchette : valeurs entre x et y
     <message>
         <location filename="../ImportCsvDialog.cpp" line="740"/>
         <source>Importing the file &apos;%1&apos; took %2ms. Of this %3ms were spent in the row function.</source>
-        <translation>L&apos;importation du fichier&apos;%1&apos; a pris %2ms. %3ms ont été dépensés dans la fonction enregistrement.</translation>
+        <translation>L&apos;importation du fichier&apos;%1&apos; a pris %2 ms. %3 ms ont été utilisés par la fonction enregistrement.</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.cpp" line="724"/>
@@ -3015,7 +3016,7 @@ x~y	Fourchette : valeurs entre x et y
     <message>
         <location filename="../MainWindow.ui" line="1280"/>
         <source>This action undoes the last change performed to the database in the Database Browser or in Execute SQL. Redoing is not possible.</source>
-        <translation>Cette action annule la dernière modification apportée à la base de données dans le navigateur de bases de données ou dans Execute SQL. Il n&apos;est pas possible d&apos;annuler à nouveau.</translation>
+        <translation>Cette action annule la dernière modification apportée à la base de données dans le navigateur de bases de données ou dans l'onglet Exécuter le SQL. Il n&apos;est pas possible d&apos;annuler à nouveau.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1295"/>
@@ -3046,7 +3047,7 @@ x~y	Fourchette : valeurs entre x et y
     <message>
         <location filename="../MainWindow.ui" line="1563"/>
         <source>Execute all/selected SQL</source>
-        <translation>Exécuter Tout ou seulement le SQL sélectionné</translation>
+        <translation>Exécuter tout ou seulement le SQL sélectionné</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1566"/>
@@ -3091,7 +3092,7 @@ x~y	Fourchette : valeurs entre x et y
     <message>
         <location filename="../MainWindow.ui" line="1700"/>
         <source>&amp;Donate on Patreon...</source>
-        <translation>Effectuer une &amp;donation sur Patreon...</translation>
+        <translation>Faire une &amp;donation sur Patreon...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1715"/>
@@ -3132,7 +3133,7 @@ x~y	Fourchette : valeurs entre x et y
     <message>
         <location filename="../MainWindow.ui" line="1844"/>
         <source>SQLCipher &amp;FAQ</source>
-        <translation>&amp;Faq SQLCipher</translation>
+        <translation>&amp;FAQ SQLCipher</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1852"/>
@@ -3142,7 +3143,7 @@ x~y	Fourchette : valeurs entre x et y
     <message>
         <location filename="../MainWindow.ui" line="1867"/>
         <source>Open Data&amp;base Read Only...</source>
-        <translation>Ouvrir la base de données en &amp;Lecture seule...</translation>
+        <translation>Ouvrir une base de données en &amp;lecture seule...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1879"/>
@@ -3286,7 +3287,7 @@ x~y	Fourchette : valeurs entre x et y
     <message>
         <location filename="../MainWindow.ui" line="2327"/>
         <source>Refresh</source>
-        <translation>Rafraichir</translation>
+        <translation>Rafraîchir</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2330"/>
@@ -3313,7 +3314,7 @@ x~y	Fourchette : valeurs entre x et y
         <location filename="../MainWindow.ui" line="53"/>
         <source>&amp;Database Structure</source>
         <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation>Structure de la Base de &amp;Données</translation>
+        <translation>Structure de la base de &amp;données</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="120"/>
@@ -3334,7 +3335,7 @@ x~y	Fourchette : valeurs entre x et y
         <location filename="../MainWindow.ui" line="691"/>
         <source>E&amp;xecute SQL</source>
         <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation>É&amp;xécuter le SQL</translation>
+        <translation>E&amp;xécuter le SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="781"/>
@@ -3354,7 +3355,7 @@ x~y	Fourchette : valeurs entre x et y
     <message>
         <location filename="../MainWindow.ui" line="2031"/>
         <source>New In-&amp;Memory Database</source>
-        <translation>Nouvelle base de données en &amp;Mémoire</translation>
+        <translation>Nouvelle base de données en &amp;mémoire</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2053"/>
@@ -3386,7 +3387,7 @@ x~y	Fourchette : valeurs entre x et y
     <message>
         <location filename="../MainWindow.ui" line="2081"/>
         <source>Runs the integrity_check pragma over the opened database and returns the results in the Execute SQL tab. This pragma does an integrity check of the entire database.</source>
-        <translation>Exécute le pragma integrity_check sur la base de données ouverte et retourne les résultats dans l&apos;onglet Exécuter SQL. Ce pragma effectue un contrôle d&apos;intégrité de l&apos;ensemble de la base de données.</translation>
+        <translation>Exécute le pragma integrity_check sur la base de données ouverte et retourne les résultats dans l&apos;onglet Exécuter le SQL. Ce pragma effectue un contrôle d&apos;intégrité de l&apos;ensemble de la base de données.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2086"/>
@@ -3545,12 +3546,12 @@ x~y	Fourchette : valeurs entre x et y
     <message>
         <location filename="../MainWindow.ui" line="1363"/>
         <source>Open a wizard that lets you import data from a comma separated text file into a database table.</source>
-        <translation>Ouvrir un Assistant vous permettant d&apos;importer des données dans une table de la base de données à partir d&apos;un fichier texte séparé par des virgules (csv).</translation>
+        <translation>Ouvrir un assistant vous permettant d&apos;importer des données dans une table de la base de données à partir d&apos;un fichier texte séparé par des virgules (csv).</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1366"/>
         <source>Open a wizard that lets you import data from a comma separated text file into a database table. CSV files can be created on most database and spreadsheet applications.</source>
-        <translation>Ouvre un Assistant vous permettant d&apos;importer des données dans une table de la base de données à partir d&apos;un fichier texte séparé par des virgules (csv). Les fichiers CSV peuvent être créés par la plupart des outils de gestion de base de données et les tableurs.</translation>
+        <translation>Ouvre un assistant vous permettant d&apos;importer des données dans une table de la base de données à partir d&apos;un fichier texte séparé par des virgules (csv). Les fichiers CSV peuvent être créés par la plupart des outils de gestion de base de données et les tableurs.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1377"/>
@@ -3680,7 +3681,7 @@ Vous pouvez faire glisser les instructions SQL de la colonne Schéma et les dép
     <message>
         <location filename="../MainWindow.ui" line="1318"/>
         <source>Compact &amp;Database...</source>
-        <translation>Compacter la Base de &amp;Données...</translation>
+        <translation>Compacter la base de &amp;données...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1528"/>
@@ -3831,7 +3832,7 @@ Vous pouvez faire glisser les instructions SQL d&apos;une ligne d&apos;objet et 
     <message>
         <location filename="../MainWindow.ui" line="1374"/>
         <source>&amp;Database to SQL file...</source>
-        <translation>Base de &amp;Données vers un fichier SQL...</translation>
+        <translation>Base de &amp;données vers un fichier SQL...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1388"/>
@@ -3841,7 +3842,7 @@ Vous pouvez faire glisser les instructions SQL d&apos;une ligne d&apos;objet et 
     <message>
         <location filename="../MainWindow.ui" line="1466"/>
         <source>Create &amp;Index...</source>
-        <translation>Créer un &amp;Index...</translation>
+        <translation>Créer un &amp;index...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1517"/>
@@ -3873,7 +3874,7 @@ Vous pouvez faire glisser les instructions SQL d&apos;une ligne d&apos;objet et 
     <message>
         <location filename="../MainWindow.ui" line="1605"/>
         <source>&amp;Load Extension...</source>
-        <translation>Charger l&apos;&amp;Extension...</translation>
+        <translation>Charger l&apos;&amp;extension...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1617"/>
@@ -3925,7 +3926,7 @@ Vous pouvez faire glisser les instructions SQL d&apos;une ligne d&apos;objet et 
     <message>
         <location filename="../MainWindow.ui" line="1870"/>
         <source>Open an existing database file in read only mode</source>
-        <translation>Ouvrir une base de données existante en mode Lecture seule</translation>
+        <translation>Ouvrir une base de données existante en lecture seule</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="291"/>
@@ -4033,7 +4034,7 @@ Motif : %1</translation>
         <source>Error while saving the database file. This means that not all changes to the database were saved. You need to resolve the following error first.
 
 %1</source>
-        <translation>Erreur lors de l&apos;enregistrement de la base de données. Cela sous-entend qu&apos;aucun changement n&apos;a été sauvegardé. Vous devez corriger au préalable l&apos;erreur suivante :
+        <translation>Erreur lors de l&apos;enregistrement de la base de données. Les changements n&apos;ont pas tous été sauvegardés. Vous devez corriger au préalable l&apos;erreur suivante :
 
 %1</translation>
     </message>
@@ -4085,7 +4086,7 @@ Motif : %1</translation>
     <message>
         <location filename="../MainWindow.cpp" line="2200"/>
         <source>Text files(*.sql *.txt);;All files(*)</source>
-        <translation>Fichiers Texte (*.sql *.txt);;Tous les fichiers(*)</translation>
+        <translation>Fichiers texte (*.sql *.txt);;Tous les fichiers(*)</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1536"/>
@@ -4107,7 +4108,7 @@ Si vous répondez non, nous essaierons d&apos;importer les données du fichier S
     <message>
         <location filename="../MainWindow.cpp" line="218"/>
         <source>Ctrl+PgUp</source>
-        <translation>Ctrl+ Page Haut</translation>
+        <translation>Ctrl+Page Haut</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="235"/>
@@ -4132,17 +4133,17 @@ Si vous répondez non, nous essaierons d&apos;importer les données du fichier S
     <message>
         <location filename="../MainWindow.cpp" line="350"/>
         <source>Dock Windows at Bottom</source>
-        <translation>Ancrer les fenêtres en Bas</translation>
+        <translation>Ancrer les fenêtres en bas</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="354"/>
         <source>Dock Windows at Left Side</source>
-        <translation>Ancrer les fenêtres à Gauche</translation>
+        <translation>Ancrer les fenêtres à gauche</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="358"/>
         <source>Dock Windows at Top</source>
-        <translation>Ancrer les fenêtres en Haut</translation>
+        <translation>Ancrer les fenêtres en haut</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="718"/>
@@ -4277,21 +4278,21 @@ Are you sure you want to save the database?</source>
         <location filename="../MainWindow.cpp" line="1156"/>
         <source>-- EXECUTING SELECTION IN &apos;%1&apos;
 --</source>
-        <translation>-- EXECUTION DE LA SELECTION DANS &apos;%1&apos;
+        <translation>-- EXÉCUTION DE LA SELECTION DANS &apos;%1&apos;
 --</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1177"/>
         <source>-- EXECUTING LINE IN &apos;%1&apos;
 --</source>
-        <translation>-- EXECUTION DE LA LIGNE DANS &apos;%1&apos;
+        <translation>-- EXÉCUTION DE LA LIGNE DANS &apos;%1&apos;
 --</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1185"/>
         <source>-- EXECUTING ALL IN &apos;%1&apos;
 --</source>
-        <translation>-- EXECUTER TOUT DANS &apos;%1&apos;
+        <translation>-- EXÉCUTER TOUT DANS &apos;%1&apos;
 --</translation>
     </message>
     <message>
@@ -4507,7 +4508,7 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="2296"/>
         <source>Extension successfully loaded.</source>
-        <translation>l&apos;extension a été chargée avec succès.</translation>
+        <translation>L&apos;extension a été chargée avec succès.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2298"/>
@@ -4517,7 +4518,7 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="2356"/>
         <source>Could not find resource file: %1</source>
-        <translation>Le fichier de ressources : %1 ne peut être ouvert</translation>
+        <translation>Le fichier de ressources %1 ne peut être ouvert</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2452"/>
@@ -4640,7 +4641,7 @@ Faites une sauvegarde !</translation>
     <message>
         <location filename="../PlotDock.ui" line="42"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This pane shows the list of columns of the currently browsed table or the just executed query. You can select the columns that you want to be used as X or Y axis for the plot pane below. The table shows detected axis type that will affect the resulting plot. For the Y axis you can only select numeric columns, but for the X axis you will be able to select:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Date/Time&lt;/span&gt;: strings with format &amp;quot;yyyy-MM-dd hh:mm:ss&amp;quot; or &amp;quot;yyyy-MM-ddThh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Date&lt;/span&gt;: strings with format &amp;quot;yyyy-MM-dd&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Time&lt;/span&gt;: strings with format &amp;quot;hh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Label&lt;/span&gt;: other string formats. Selecting this column as X axis will produce a Bars plot with the column values as labels for the bars&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Numeric&lt;/span&gt;: integer or real values&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Double-clicking the Y cells you can change the used color for that graph.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ce volet affiche la liste des colonnes de la table actuellement parcourue ou de la requête qui vient d&apos;être exécutée. Vous pouvez sélectionner les colonnes que vous voulez utiliser comme axe X ou Y pour le volet de tracé ci-dessous. Le tableau montre le type d&apos;axe détecté qui affectera le tracé résultant. Pour l&apos;axe Y, vous ne pouvez sélectionner que des colonnes numériques, mais pour l&apos;axe X, vous pourrez sélectionner :&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Date/Heure&lt;/span&gt; : chaînes au format &amp;quot;aaaa-MM-jj hh:mm:ss&amp;quot; ou &amp;quot;aaaa-MM-jjThh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Date&lt;/span&gt; : chaînes au format &amp;quot;aaaa-MM-jj&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Heures&lt;/span&gt; : chaînes au format &amp;quot;hh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Label&lt;/span&gt; : autres formats de chaînes. Sélectionner cette colonne comme axe X produira un diagramme en barres avec les valeurs de la colonne comme étiquettes pour les barres&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Numerique&lt;/span&gt; : Nombres entiers ou Réels&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Avec Double-clic sur une cellule Y, vous pouvez changer le couleur utilisée dans le graphique.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ce volet affiche la liste des colonnes de la table actuellement parcourue ou de la requête qui vient d&apos;être exécutée. Vous pouvez sélectionner les colonnes que vous voulez utiliser comme axe X ou Y pour le volet de tracé ci-dessous. Le tableau montre le type d&apos;axe détecté qui affectera le tracé résultant. Pour l&apos;axe Y, vous ne pouvez sélectionner que des colonnes numériques, mais pour l&apos;axe X, vous pourrez sélectionner :&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Date/Heure&lt;/span&gt; : chaînes au format &amp;quot;aaaa-MM-jj hh:mm:ss&amp;quot; ou &amp;quot;aaaa-MM-jjThh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Date&lt;/span&gt; : chaînes au format &amp;quot;aaaa-MM-jj&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Heures&lt;/span&gt; : chaînes au format &amp;quot;hh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Label&lt;/span&gt; : autres formats de chaînes. Sélectionner cette colonne comme axe X produira un diagramme en barres avec les valeurs de la colonne comme étiquettes pour les barres&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Numerique&lt;/span&gt; : Nombres entiers ou Réels&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;En double-cliquant sur une cellule Y, vous pouvez changer la couleur utilisée dans le graphique.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="58"/>
@@ -4703,12 +4704,12 @@ Sélectionnez les axes ou les étiquettes d&apos;axes à faire glisser et à zoo
     <message>
         <location filename="../PlotDock.ui" line="157"/>
         <source>StepLeft</source>
-        <translation>À Gauche</translation>
+        <translation>À gauche</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="162"/>
         <source>StepRight</source>
-        <translation>À Droite</translation>
+        <translation>À droite</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="167"/>
@@ -4773,7 +4774,7 @@ Sélectionnez les axes ou les étiquettes d&apos;axes à faire glisser et à zoo
     <message>
         <location filename="../PlotDock.ui" line="256"/>
         <source>CrossSquare</source>
-        <translation>Carré et croix</translation>
+        <translation>Carré et Croix</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="261"/>
@@ -5095,7 +5096,7 @@ de la base de données</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="1280"/>
         <source>Set the waiting time before a new filter value is applied. Can be set to 0 for disabling waiting.</source>
-        <translation>Défini le temps d&apos;attente avant qu&apos;une nouvelle valeur de filtre est appliquée. Peut être renseigné à 0 pour supprimer le temps d&apos;attente.</translation>
+        <translation>Définit le temps d&apos;attente avant qu&apos;une nouvelle valeur de filtre est appliquée. Peut être renseigné à 0 pour supprimer le temps d&apos;attente.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1313"/>
@@ -5134,7 +5135,7 @@ de la base de données</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="1359"/>
         <source>Keyword</source>
-        <translation>Mot Clé</translation>
+        <translation>Mot clé</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1379"/>
@@ -5319,7 +5320,7 @@ de la base de données</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="576"/>
         <source>Max Recent Files</source>
-        <translation>Fichiers récents Max</translation>
+        <translation>Nb. max. fichiers récents</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="596"/>
@@ -5384,7 +5385,7 @@ Peut être mis à 0 pour désactiver la complétion.</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="885"/>
         <source>Formatted</source>
-        <translation>Formatté</translation>
+        <translation>Formaté</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="908"/>
@@ -5417,7 +5418,7 @@ Peut être mis à 0 pour désactiver la complétion.</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="1483"/>
         <source>Foreground</source>
-        <translation>Avant Plan</translation>
+        <translation>Avant-plan</translation>
     </message>
     <message>
         <source>selected_bg</source>
@@ -5426,7 +5427,7 @@ Peut être mis à 0 pour désactiver la complétion.</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="1491"/>
         <source>Selection background</source>
-        <translation>Sélection de l&apos;arrière plan</translation>
+        <translation>Sélection de l&apos;arrière-plan</translation>
     </message>
     <message>
         <source>selected_fg</source>
@@ -5435,7 +5436,7 @@ Peut être mis à 0 pour désactiver la complétion.</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="1499"/>
         <source>Selection foreground</source>
-        <translation>Sélection de l&apos;avant plan</translation>
+        <translation>Sélection de l&apos;avant-plan</translation>
     </message>
     <message>
         <source>highlight</source>
@@ -5519,12 +5520,12 @@ Peut être mis à 0 pour désactiver la complétion.</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="1710"/>
         <source>When set, the SQL keywords are completed in UPPER CASE letters.</source>
-        <translation>Quand cette case est cochée, les mots clé SQL sont transformés en MAJUSCULES.</translation>
+        <translation>Si cette case est cochée, les mots clé SQL sont transformés en MAJUSCULES.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1730"/>
         <source>When set, the SQL code lines that caused errors during the last execution are highlighted and the results frame indicates the error in the background</source>
-        <translation>Lorsque cette option est activée, les lignes de code SQL qui ont causé des erreurs lors de la dernière exécution sont mises en surbrillance et le cadre des résultats indique l&apos;erreur en arrière-plan</translation>
+        <translation>Si cette option est activée, les lignes de code SQL qui ont causé des erreurs lors de la dernière exécution sont mises en surbrillance et le cadre des résultats indique l&apos;erreur en arrière-plan</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1760"/>
@@ -5559,12 +5560,12 @@ Peut être mis à 0 pour désactiver la complétion.</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="1852"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;While supporting the REGEXP operator SQLite doesn&apos;t implement any regular expression&lt;br/&gt;algorithm but calls back the running application. DB Browser for SQLite implements this&lt;br/&gt;algorithm for you to let you use REGEXP out of the box. However, as there are multiple possible&lt;br/&gt;implementations of this and you might want to use another one, you&apos;re free to disable the&lt;br/&gt;application&apos;s implementation and load your own by using an extension. Requires restart of the application.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bien que SQLite supporte l&apos;opérateur REGEXP, aucun algorithme&lt;br&gt;d&apos;expression régulière est implémenté, mais il rappelle l&apos;application en cours d&apos;exécution. DB Browser pour SQLite implémente&lt;br/&gt;cet algorithme pour vous permettre d&apos;utiliser REGEXP. Cependant, comme il existe plusieurs implémentations possibles&lt;br/&gt;et que vous souhaitez peut-être utiliser autre chose, vous êtes libre de désactiver cette implémentation dans l&apos;application&lt;br/&gt;pour utiliser la votre en utilisant une extension. Cela nécessite le redémarrage de l&apos;application.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bien que SQLite supporte l&apos;opérateur REGEXP, aucun algorithme&lt;br&gt;d&apos;expression régulière n'est implémenté : l&apos;application doit fournir le sien. DB Browser pour SQLite implémente&lt;br/&gt;cet algorithme pour vous permettre d&apos;utiliser REGEXP. Cependant, comme il existe plusieurs implémentations possibles&lt;br/&gt;et que vous souhaitez peut-être utiliser autre chose, vous êtes libre de désactiver cette implémentation dans l&apos;application&lt;br/&gt;pour utiliser la vôtre en utilisant une extension. Cela nécessite le redémarrage de l&apos;application.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1855"/>
         <source>Disable Regular Expression extension</source>
-        <translation>Désactiver l&apos;extention &quot;Expression Régulière&quot;</translation>
+        <translation>Désactiver l&apos;extension &quot;Expression Régulière&quot;</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1862"/>
@@ -5764,7 +5765,7 @@ Veuillez vérifier à nouveau.</translation>
     <message>
         <location filename="../ProxyDialog.ui" line="22"/>
         <source>Pro&amp;xy Type</source>
-        <translation>Type de Pro&amp;xy</translation>
+        <translation>Type de pro&amp;xy</translation>
     </message>
     <message>
         <location filename="../ProxyDialog.ui" line="35"/>
@@ -5784,12 +5785,12 @@ Veuillez vérifier à nouveau.</translation>
     <message>
         <location filename="../ProxyDialog.ui" line="81"/>
         <source>&amp;User Name</source>
-        <translation>Nom &amp;Utilisateur</translation>
+        <translation>Nom d&apos;&amp;utilisateur</translation>
     </message>
     <message>
         <location filename="../ProxyDialog.ui" line="94"/>
         <source>Password</source>
-        <translation>Mot de Passe</translation>
+        <translation>Mot de passe</translation>
     </message>
     <message>
         <location filename="../ProxyDialog.cpp" line="12"/>
@@ -5894,7 +5895,7 @@ Veuillez vérifier à nouveau.</translation>
     <message>
         <location filename="../FileDialog.h" line="27"/>
         <source>Text Files (*.txt)</source>
-        <translation>Fichiers Texte (*.txt)</translation>
+        <translation>Fichiers texte (*.txt)</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="31"/>
@@ -5914,7 +5915,7 @@ Veuillez vérifier à nouveau.</translation>
     <message>
         <location filename="../FileDialog.h" line="35"/>
         <source>Concordance DAT files (*.dat)</source>
-        <translation>Fichiers de Concordance (*.dat)</translation>
+        <translation>Fichiers de concordance (*.dat)</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="38"/>
@@ -5929,7 +5930,7 @@ Veuillez vérifier à nouveau.</translation>
     <message>
         <location filename="../FileDialog.h" line="46"/>
         <source>Binary Files (*.bin *.dat)</source>
-        <translation>Fichiers Binaires (*.bin *.dat)</translation>
+        <translation>Fichiers binaires (*.bin *.dat)</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="50"/>
@@ -5939,7 +5940,7 @@ Veuillez vérifier à nouveau.</translation>
     <message>
         <location filename="../FileDialog.h" line="54"/>
         <source>Hex Dump Files (*.dat *.bin)</source>
-        <translation>Fichiers Dump hexadécimal (*.dat *.bin)</translation>
+        <translation>Fichiers de dump hexadécimal (*.dat *.bin)</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="57"/>
@@ -6013,7 +6014,7 @@ Veuillez vérifier à nouveau.</translation>
     <message>
         <location filename="../RemoteDock.ui" line="14"/>
         <source>Remote</source>
-        <translation>Serveur Distant</translation>
+        <translation>Serveur distant</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="147"/>
@@ -6043,7 +6044,7 @@ Veuillez vérifier à nouveau.</translation>
     <message>
         <location filename="../RemoteDock.ui" line="139"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB Browser for SQLite. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to &amp;quot;Generate client certificate&amp;quot; (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB Browser for SQLite Preferences. Click the button to add a new certificate to DB Browser for SQLite and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dans ce volet, les bases de données distantes du site Web dbhub.io peuvent être ajoutées à DB Browser pour SQLite. Il faut d&apos;abord vous identifier :&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Connectez-vous sur le site dbhub.io (utilisez vos identifiants GitHub ou ce que vous voulez)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Cliquez sur le bouton &amp;quot;Generate client certificate&amp;quot; (c&apos;est votre identité). Cela vous fournira un fichier de certificat (enregistrez-le sur votre disque local).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Allez dans l&apos;onglet Serveur Distant des Préférences DB Browser pour SQLite . Cliquez sur le bouton pour ajouter un nouveau certificat à DB Browser pour SQLite et choisissez le fichier de certificat que vous venez de télécharger.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Maintenant, le panneau Serveur distant affiche votre identité et vous pouvez ajouter des bases de données distantes..&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dans ce volet, les bases de données distantes du site Web dbhub.io peuvent être ajoutées à DB Browser pour SQLite. Il faut d&apos;abord vous identifier :&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Connectez-vous sur le site dbhub.io (utilisez vos identifiants GitHub ou ce que vous voulez)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Cliquez sur le bouton &amp;quot;Generate client certificate&amp;quot; (c&apos;est votre identité). Cela vous fournira un fichier de certificat (enregistrez-le sur votre disque local).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Allez dans l&apos;onglet Serveur distant des Préférences DB Browser pour SQLite. Cliquez sur le bouton pour ajouter un nouveau certificat à DB Browser pour SQLite et choisissez le fichier de certificat que vous venez de télécharger.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Maintenant, le panneau Serveur distant affiche votre identité et vous pouvez ajouter des bases de données distantes..&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="173"/>
@@ -6106,12 +6107,12 @@ Veuillez vérifier à nouveau.</translation>
     <message>
         <location filename="../RemoteDock.ui" line="472"/>
         <source>Use this to download a remote database for local editing using a URL as provided on the web page of the database.</source>
-        <translation>Utilisez ceci pour télécharger une base de données distante pour l&apos;édiiter localement en utilisant une URL telle que fournie sur la page web de la base de données.</translation>
+        <translation>Utilisez ceci pour télécharger une base de données distante pour l&apos;éditer localement en utilisant une URL telle que fournie sur la page web de la base de données.</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="481"/>
         <source>Refresh</source>
-        <translation>Rafraichir</translation>
+        <translation>Rafraîchir</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="484"/>
@@ -6190,7 +6191,7 @@ Veuillez vérifier à nouveau.</translation>
     <message>
         <location filename="../RemoteDock.ui" line="257"/>
         <source>&amp;Database</source>
-        <translation>Base de &amp;Données</translation>
+        <translation>Base de &amp;données</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="400"/>
@@ -6214,7 +6215,7 @@ Please enter the URL to clone from. You can generate this URL by
 clicking the &apos;Clone Database in DB4S&apos; button on the web page
 of the database.</source>
         <translation>Cela télécharge une base de données à partir d&apos;un serveur distant pour l&apos;éditer localement.
-Veuillez entrer l&apos;URL à partir de laquelle vous souhaitez la cloner. Vous pouvez générer cette URL en
+Veuillez entrer l&apos;URL à partir de laquelle vous souhaitez la cloner. Vous pouvez générer cette URL
 en cliquant sur le bouton &quot;Cloner la base de données dans DB4S&quot; sur la page web
 de la base de données.</translation>
     </message>
@@ -6226,12 +6227,12 @@ de la base de données.</translation>
     <message>
         <location filename="../RemoteDock.cpp" line="236"/>
         <source>Invalid URL: No branch name specified.</source>
-        <translation>URL Invalide : Nom de branche non spécifié.</translation>
+        <translation>URL invalide : Nom de branche non spécifié.</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="241"/>
         <source>Invalid URL: No commit ID specified.</source>
-        <translation>URL Invalide : Commit ID non spécifié.</translation>
+        <translation>URL invalide : Commit ID non spécifié.</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="289"/>
@@ -6426,7 +6427,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../RemotePushDialog.ui" line="129"/>
         <source>Username</source>
-        <translation>Nom utilisateur</translation>
+        <translation>Nom d&apos;utilisateur</translation>
     </message>
     <message>
         <location filename="../RemotePushDialog.cpp" line="72"/>
@@ -6566,7 +6567,7 @@ Are you sure you want to proceed?</source>
         <location filename="../SqlExecutionArea.ui" line="184"/>
         <location filename="../SqlExecutionArea.ui" line="187"/>
         <source>Close Find Bar</source>
-        <translation>Fremer la barre de recherche</translation>
+        <translation>Fermer la barre de recherche</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="232"/>
@@ -6635,7 +6636,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../sqltextedit.cpp" line="48"/>
         <source>Ctrl+PgDown</source>
-        <translation>Ctrl+ Page Bas</translation>
+        <translation>Ctrl+Page Bas</translation>
     </message>
 </context>
 <context>
@@ -6663,22 +6664,22 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="83"/>
         <source>(X,Y) The glob(X,Y) function is equivalent to the expression &quot;Y GLOB X&quot;.</source>
-        <translation>(X, Y) La fonction glob (X, Y) est équivalente à l&apos;expression « Y GLOB X ».</translation>
+        <translation>(X, Y) La fonction glob(X, Y) est équivalente à l&apos;expression « Y GLOB X ».</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="84"/>
         <source>(X,Y) The ifnull() function returns a copy of its first non-NULL argument, or NULL if both arguments are NULL.</source>
-        <translation>(X, Y) La fonction ifnull () renvoie une copie de son premier argument non-NULL, ou NULL si les deux arguments sont NULL.</translation>
+        <translation>(X, Y) La fonction ifnull() renvoie une copie de son premier argument non-NULL, ou NULL si les deux arguments sont NULL.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="85"/>
         <source>(X,Y) The instr(X,Y) function finds the first occurrence of string Y within string X and returns the number of prior characters plus 1, or 0 if Y is nowhere found within X.</source>
-        <translation>(X, Y) La fonction instr (X, Y) trouve la première occurrence de la chaîne Y dans la chaîne X. Elle renvoie le nombre de caractères précédents plus 1 ou 0 si Y n&apos;est pas dans X.</translation>
+        <translation>(X, Y) La fonction instr(X, Y) trouve la première occurrence de la chaîne Y dans la chaîne X. Elle renvoie le nombre de caractères précédents plus 1 ou 0 si Y n&apos;est pas dans X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="86"/>
         <source>(X) The hex() function interprets its argument as a BLOB and returns a string which is the upper-case hexadecimal rendering of the content of that blob.</source>
-        <translation>(X) La fonction hex () interprète son argument comme un BLOB et renvoie une chaîne qui est le rendu hexadécimal en majuscules du contenu de ce blob.</translation>
+        <translation>(X) La fonction hex() interprète son argument comme un BLOB et renvoie une chaîne qui est le rendu hexadécimal en majuscules du contenu de ce blob.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="87"/>
@@ -6757,12 +6758,12 @@ L&apos;utilisation de cette fonction doit être autorisée à partir des Préfé
     <message>
         <location filename="../SqlUiLexer.cpp" line="101"/>
         <source>(X) The quote(X) function returns the text of an SQL literal which is the value of its argument suitable for inclusion into an SQL statement.</source>
-        <translation>(X) La fonction quote(X) renvoie le texte d’un litéral SQL qui est la valeur appropriée de l’argument pour son inclusion dans une requête SQL.</translation>
+        <translation>(X) La fonction quote(X) renvoie le texte d&apos;un litéral SQL qui est la valeur appropriée de l&apos;argument pour son inclusion dans une requête SQL.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="102"/>
         <source>() The random() function returns a pseudo-random integer between -9223372036854775808 and +9223372036854775807.</source>
-        <translation>() La fonction random() renvoie un nombre entier pseudo-aléatoire entre -9223372036854775808 et + 9223372036854775807.</translation>
+        <translation>() La fonction random() renvoie un nombre entier pseudo-aléatoire entre -9223372036854775808 et +9223372036854775807.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="103"/>
@@ -6827,7 +6828,7 @@ L&apos;utilisation de cette fonction doit être autorisée à partir des Préfé
     <message>
         <location filename="../SqlUiLexer.cpp" line="115"/>
         <source>(X) The typeof(X) function returns a string that indicates the datatype of the expression X.</source>
-        <translation>(X) La fonction typeof(X) renvoie une chaîne qui indique le type de données de l’expression X.</translation>
+        <translation>(X) La fonction typeof(X) renvoie une chaîne qui indique le type de données de l&apos;expression X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="116"/>
@@ -6837,7 +6838,7 @@ L&apos;utilisation de cette fonction doit être autorisée à partir des Préfé
     <message>
         <location filename="../SqlUiLexer.cpp" line="117"/>
         <source>(X) The upper(X) function returns a copy of input string X in which all lower-case ASCII characters are converted to their upper-case equivalent.</source>
-        <translation>(X) La fonction upper(X) renvoie une copie de la chaîne X dans laquel tous les caractères ASCII en minuscules sont convertis en leurs équivalents en majuscules.</translation>
+        <translation>(X) La fonction upper(X) renvoie une copie de la chaîne X dans laquelle tous les caractères ASCII en minuscules sont convertis en leurs équivalents en majuscules.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="118"/>
@@ -6860,12 +6861,12 @@ L&apos;utilisation de cette fonction doit être autorisée à partir des Préfé
     <message>
         <location filename="../SqlUiLexer.cpp" line="126"/>
         <source>(X) The avg() function returns the average value of all non-NULL X within a group.</source>
-        <translation>(X) La fonction avg() renvoie la valeur moyenne de tous les X non-NULL dans d’un groupe.</translation>
+        <translation>(X) La fonction avg() renvoie la valeur moyenne de tous les X non-NULL dans d&apos;un groupe.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="127"/>
         <source>(X) The count(X) function returns a count of the number of times that X is not NULL in a group.</source>
-        <translation>(X) La fonction count(X) renvoie le nombre de fois où X n’est pas NULL dans un groupe.</translation>
+        <translation>(X) La fonction count(X) renvoie le nombre de fois où X n&apos;est pas NULL dans un groupe.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="128"/>
@@ -6880,12 +6881,12 @@ L&apos;utilisation de cette fonction doit être autorisée à partir des Préfé
     <message>
         <location filename="../SqlUiLexer.cpp" line="130"/>
         <source>(X) The max() aggregate function returns the maximum value of all values in the group.</source>
-        <translation>(X) La fonction d’agrégat max() renvoie la valeur maximale de toutes les valeurs du groupe.</translation>
+        <translation>(X) La fonction d&apos;agrégat max() renvoie la valeur maximale de toutes les valeurs du groupe.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="131"/>
         <source>(X) The min() aggregate function returns the minimum non-NULL value of all values in the group.</source>
-        <translation>(X) La fonction d’agrégation min() renvoie la valeur non-NULL minimale de toutes les valeurs du groupe.</translation>
+        <translation>(X) La fonction d&apos;agrégation min() renvoie la valeur non-NULL minimale de toutes les valeurs du groupe.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="132"/>
@@ -6896,7 +6897,7 @@ L&apos;utilisation de cette fonction doit être autorisée à partir des Préfé
     <message>
         <location filename="../SqlUiLexer.cpp" line="135"/>
         <source>() The number of the row within the current partition. Rows are numbered starting from 1 in the order defined by the ORDER BY clause in the window definition, or in arbitrary order otherwise.</source>
-        <translation>() Le numéro del&apos;enregistrement dans la partition courante. Les lignes sont numérotées à partir de 1 dans l&apos;ordre défini par la clause ORDER BY dans la définition de la fenêtre, ou, sinon, dans un ordre arbitraire.</translation>
+        <translation>() Le numéro de l&apos;enregistrement dans la partition courante. Les lignes sont numérotées à partir de 1 dans l&apos;ordre défini par la clause ORDER BY dans la définition de la fenêtre, ou, sinon, dans un ordre arbitraire.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="136"/>
@@ -6962,7 +6963,7 @@ L&apos;utilisation de cette fonction doit être autorisée à partir des Préfé
     <message>
         <location filename="../SqlUiLexer.cpp" line="149"/>
         <source>(expr,N) This built-in window function calculates the window frame for each row in the same way as an aggregate window function. It returns the value of expr evaluated against the row N of the window frame. Rows are numbered within the window frame starting from 1 in the order defined by the ORDER BY clause if one is present, or in arbitrary order otherwise. If there is no Nth row in the partition, then NULL is returned.</source>
-        <translation>(expr,N) Cette fonction de fenêtrage intégrée calcule le cadre de la fenêtre pour chaque rangée de la même manière qu&apos;une fonction de fenêtrage agrégée. Elle retourne la valeur de expr évaluée par rapport à la ligne N du cadre de la fenêtre. Les rangées sont numérotées à l&apos;intérieur du cadre de la fenêtre à partir de 1 dans l&apos;ordre défini par la clause ORDER BY si elle est présente, ou dans un ordre arbitraire sinon. S&apos;il n&apos;y a pas de Nième ligne dans la partition, alors NULL est retourné.</translation>
+        <translation>(expr,N) Cette fonction de fenêtrage intégrée calcule le cadre de la fenêtre pour chaque rangée de la même manière qu&apos;une fonction de fenêtrage agrégée. Elle retourne la valeur de expr évaluée par rapport à la ligne N du cadre de la fenêtre. Les rangées sont numérotées à l&apos;intérieur du cadre de la fenêtre à partir de 1 dans l&apos;ordre défini par la clause ORDER BY si elle est présente, ou dans un ordre arbitraire sinon. S&apos;il n&apos;y a pas de n-ième ligne dans la partition, alors NULL est retourné.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="155"/>
@@ -7472,7 +7473,7 @@ Appuyez simultanément sur %3+Maj et cliquez pour arriver ici</translation>
         <location filename="../TableBrowser.ui" line="604"/>
         <location filename="../TableBrowser.ui" line="640"/>
         <source>New Record</source>
-        <translation>Nouvel Enregistrement</translation>
+        <translation>Nouvel enregistrement</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="607"/>
@@ -7483,7 +7484,7 @@ Appuyez simultanément sur %3+Maj et cliquez pour arriver ici</translation>
     <message>
         <location filename="../TableBrowser.ui" line="613"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button creates a new record in the database. Hold the mouse button to open a pop-up menu of different options:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt;: insert a new record with default values in the database.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Insert Values...&lt;/span&gt;: open a dialog for entering values before they are inserted in the database. This allows to enter values acomplishing the different constraints. This dialog is also open if the &lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt; option fails due to these constraints.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ce bouton crée un nouvel enregistrement dans la base de données. Maintenez le bouton de la souris enfoncé pour ouvrir un menu contextuel de différentes options :&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Nouvel Enregistrement&lt;/span&gt; : Insère un nouvel enregistrement avec les valeurs par défaut dans la base de données.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Insérer des valeurs...&lt;/span&gt; : ouvre une boite de dialogue pour saisir des valeurs avant leur insertion dans la base de données. Ceci permet de saisir des valeurs correspondant aux différentes contraintes. Cette boîte de dialogue est également ouverte si l&apos;option &lt;span style=&quot; font-weight:600;&quot;&gt;Nouvel Enregistrement &lt;/span&gt; est en erreur à cause de ces contraintes.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ce bouton crée un nouvel enregistrement dans la base de données. Maintenez le bouton de la souris enfoncé pour ouvrir un menu contextuel de différentes options :&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Nouvel enregistrement&lt;/span&gt; : Insère un nouvel enregistrement avec les valeurs par défaut dans la base de données.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Insérer des valeurs...&lt;/span&gt; : ouvre une boite de dialogue pour saisir des valeurs avant leur insertion dans la base de données. Ceci permet de saisir des valeurs correspondant aux différentes contraintes. Cette boîte de dialogue est également ouverte si l&apos;option &lt;span style=&quot; font-weight:600;&quot;&gt;Nouvel enregistrement &lt;/span&gt; est en erreur à cause de ces contraintes.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="622"/>
@@ -7648,12 +7649,12 @@ Appuyez simultanément sur %3+Maj et cliquez pour arriver ici</translation>
     <message>
         <location filename="../TableBrowser.ui" line="805"/>
         <source>Print currently browsed table data</source>
-        <translation>Imprimer le données de la table actuellement parcourues</translation>
+        <translation>Imprimer les données de la table actuelle</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="811"/>
         <source>Print currently browsed table data. Print selection if more than one cell is selected.</source>
-        <translation>Imprimer le données de la table actuellement parcourues. Imprime la sélection si plus d&apos;une cellule est sélectionnée.</translation>
+        <translation>Imprime les données de la table actuelle. Imprime la sélection si plus d&apos;une cellule est sélectionnée.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="814"/>
@@ -7663,7 +7664,7 @@ Appuyez simultanément sur %3+Maj et cliquez pour arriver ici</translation>
     <message>
         <location filename="../TableBrowser.ui" line="844"/>
         <source>Refresh</source>
-        <translation>Rafraichir</translation>
+        <translation>Rafraîchir</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="847"/>
@@ -7682,7 +7683,7 @@ Appuyez simultanément sur %3+Maj et cliquez pour arriver ici</translation>
     </message>
     <message>
         <source>Clear All Conditional Formats</source>
-        <translation type="vanished">Effacer tous les Formats Conditionnels</translation>
+        <translation type="vanished">Effacer tous les formats conditionnels</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="868"/>
@@ -7736,19 +7737,19 @@ Appuyez simultanément sur %3+Maj et cliquez pour arriver ici</translation>
         <location filename="../TableBrowser.ui" line="934"/>
         <location filename="../TableBrowser.ui" line="937"/>
         <source>Align Right</source>
-        <translation>Aligrer à Droite</translation>
+        <translation>Aligner à droite</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="949"/>
         <location filename="../TableBrowser.ui" line="952"/>
         <source>Align Left</source>
-        <translation>Aligner à Gauche</translation>
+        <translation>Aligner à gauche</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="964"/>
         <location filename="../TableBrowser.ui" line="967"/>
         <source>Center Horizontally</source>
-        <translation>Centrer Horizontalement</translation>
+        <translation>Centrer horizontalement</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="979"/>
@@ -7770,12 +7771,12 @@ Appuyez simultanément sur %3+Maj et cliquez pour arriver ici</translation>
     <message>
         <location filename="../TableBrowser.ui" line="1006"/>
         <source>Clear Format</source>
-        <translation>Effacer les Formats</translation>
+        <translation>Effacer les formats</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1009"/>
         <source>Clear All Formats</source>
-        <translation>Effacer tous les Formats</translation>
+        <translation>Effacer tous les formats</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1012"/>
@@ -7787,13 +7788,13 @@ Appuyez simultanément sur %3+Maj et cliquez pour arriver ici</translation>
         <location filename="../TableBrowser.ui" line="1024"/>
         <location filename="../TableBrowser.ui" line="1027"/>
         <source>Font Color</source>
-        <translation>Couleur de Police</translation>
+        <translation>Couleur de police</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1036"/>
         <location filename="../TableBrowser.ui" line="1039"/>
         <source>Background Color</source>
-        <translation>Couleur d&apos;arrière plan</translation>
+        <translation>Couleur d&apos;arrière-plan</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1051"/>
