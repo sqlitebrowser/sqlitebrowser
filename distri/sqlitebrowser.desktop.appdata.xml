@@ -3,6 +3,7 @@
   <id>sqlitebrowser.desktop</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>MPL-2.0 and GPL-3.0+</project_license>
+  <developer_name>DB Browser for SQLite developers</developer_name>
   <name>DB Browser for SQLite</name>
   <summary>DB Browser for SQLite is a light GUI editor for SQLite databases</summary>
   <description>
