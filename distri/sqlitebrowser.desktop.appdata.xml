@@ -49,4 +49,5 @@
     <release version="3.12.2" date="2021-05-17" />
     <release version="3.12.1" date="2020-11-09" />
   </releases>
+  <launchable type="desktop-id">sqlitebrowser.desktop</launchable>
 </component>
