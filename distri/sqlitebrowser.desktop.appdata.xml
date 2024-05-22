@@ -5,7 +5,7 @@
   <project_license>MPL-2.0 and GPL-3.0+</project_license>
   <developer_name>DB Browser for SQLite developers</developer_name>
   <name>DB Browser for SQLite</name>
-  <summary>DB Browser for SQLite is a light GUI editor for SQLite databases</summary>
+  <summary>light GUI editor for SQLite databases</summary>
   <description>
     <p>DB Browser for SQLite is a high quality, visual, open source tool to create, design, and edit database files compatible with SQLite.</p>
     <p>It is for users and developers wanting to create databases, search, and edit data. It uses a familiar spreadsheet-like interface, and you don't need to learn complicated SQL commands.</p>
