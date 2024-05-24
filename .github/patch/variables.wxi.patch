@@ -8,7 +8,7 @@ index fbedf0c3..368888ef 100644
  
 -    <?define VCRedistPath="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Redist\MSVC\14.16.27012\MergeModules" ?>
 -    <?define VCRedistFile="Microsoft_VC141_CRT_$(sys.BUILDARCH).msm" ?>
-+    <?define VCRedistPath="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Redist\MSVC\14.29.30133\MergeModules" ?>
++    <?define VCRedistPath="C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Redist\MSVC\14.29.30133\MergeModules" ?>
 +    <?define VCRedistFile="Microsoft_VC142_CRT_$(sys.BUILDARCH).msm" ?>
  
      <!--
@@ -32,7 +32,7 @@ index fbedf0c3..368888ef 100644
 -        <?define SQLiteExePath="C:\builds\release-sqlite-win32\Release" ?>
 -        <?define SQLCipherExePath="C:\builds\release-sqlcipher-win32\Release" ?>
 -    <?endif?>
-+    <?define QtPath="$(env.Qt5Path)" ?>
++    <?define QtPath="$(env.Qt5_Dir)" ?>
 +    <?define SQLitePath="$(env.SQLitePath)" ?>
 +    <?define SQLCipherPath="$(env.SQLCipherPath)" ?>
 +    <?define OpenSSLPath="$(env.OpenSSLPath)" ?>
