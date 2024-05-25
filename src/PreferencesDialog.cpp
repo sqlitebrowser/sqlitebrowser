@@ -473,7 +473,15 @@ void PreferencesDialog::createBuiltinExtensionList()
             dir.setPath("/usr/lib/x86_64-linux-gnu/");
         else
             dir.setPath("/usr/lib/");
-        files = dir.entryList(QStringList() << "*.so*", QDir::Files);
+
+        // There is no single naming convention for SQLite extension libraries,
+        // but this gives good results, at least on Debian based systems.
+        // The patterns have to exclude "libsqlite3.so", which is the SQLite3
+        // library, not an extension.
+        files = dir.entryList(QStringList()
+                              << "libsqlite3[!.]*.so"
+                              << "mod_*.so"
+                              << "lib?*sqlite*.so", QDir::Files);
     }
     
     for (const QString& file: files) {
