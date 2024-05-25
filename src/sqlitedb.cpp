@@ -2167,6 +2167,16 @@ void DBBrowserDB::loadExtensionsFromSettings()
         if(loadExtension(ext) == false)
             QMessageBox::warning(nullptr, QApplication::applicationName(), tr("Error loading extension: %1").arg(lastError()));
     }
+
+    const QVariantMap builtinList = Settings::getValue("extensions", "builtin").toMap();
+    for(const QString& ext : builtinList.keys())
+    {
+        if(builtinList.value(ext).toBool())
+        {
+            if(loadExtension(ext) == false)
+                QMessageBox::warning(nullptr, QApplication::applicationName(), tr("Error loading built-in extension: %1").arg(lastError()));
+        }
+    }
 }
 
 std::vector<std::pair<std::string, std::string>> DBBrowserDB::queryColumnInformation(const std::string& schema_name, const std::string& object_name) const
