@@ -77,6 +77,9 @@ MainWindow::MainWindow(QWidget* parent)
 
     activateFields(false);
     updateRecentFileActions();
+
+    if (Settings::getValue("General", "autoLoadLastDBFileAtStartup").toBool())
+        recentFileActs[0]->trigger();
 }
 
 MainWindow::~MainWindow()
@@ -227,8 +230,12 @@ void MainWindow::init()
         ui->fileRecentFiles->insertAction(ui->fileExitAction, recentFileActs[i]);
 
     recentSeparatorAct = ui->fileRecentFiles->insertSeparator(ui->fileExitAction);
+    optionToAutoLoadLastDBFileAtStartup = ui->fileRecentFiles->addAction(tr("Automatically load the last opened DB file at startup"));
+    optionToAutoLoadLastDBFileAtStartup->setCheckable(true);
+    optionToAutoLoadLastDBFileAtStartup->setChecked(Settings::getValue("General", "autoLoadLastDBFileAtStartup").toBool());
     clearRecentFilesAction = ui->fileRecentFiles->addAction(tr("Clear List"));
     ui->fileRecentFiles->insertAction(ui->fileExitAction, clearRecentFilesAction);
+    connect(optionToAutoLoadLastDBFileAtStartup, &QAction::triggered, this, &MainWindow::toggleAutoLoadLastDBFileAtStartupOption);
     connect(clearRecentFilesAction, &QAction::triggered, this, &MainWindow::clearRecentFiles);
 
     // Create popup menus
@@ -3957,4 +3964,10 @@ void MainWindow::newRowCountsTab()
     sql.chop(7);    // Remove the last "\nUNION " at the end
 
     runSqlNewTab(sql, ui->actionRowCounts->text());
+}
+
+void MainWindow::toggleAutoLoadLastDBFileAtStartupOption()
+{
+    optionToAutoLoadLastDBFileAtStartup->isChecked() ? Settings::setValue("General", "autoLoadLastDBFileAtStartup", true)
+                                                     : Settings::setValue("General", "autoLoadLastDBFileAtStartup", false);
 }

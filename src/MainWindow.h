@@ -96,6 +96,7 @@ private:
     static int MaxRecentFiles;
     QVector<QAction*> recentFileActs;
     QAction* clearRecentFilesAction;
+    QAction* optionToAutoLoadLastDBFileAtStartup;
     QAction* recentSeparatorAct;
 
     /**
@@ -127,6 +128,7 @@ private:
 
     void updateRecentFileActions();
     void clearRecentFiles();
+    void toggleAutoLoadLastDBFileAtStartupOption();
     void setCurrentFile(const QString& fileName);
     void addToRecentFilesMenu(const QString& filename, bool read_only = false);
     void activateFields(bool enable = true);
