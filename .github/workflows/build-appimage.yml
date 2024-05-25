@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install and cache dependencies
-        uses: awalsh128/cache-apt-pkgs-action@v1.3.1
+        uses: awalsh128/cache-apt-pkgs-action@v1.4.2
         with:
           packages: libqcustomplot-dev libqscintilla2-qt5-dev libqt5svg5 libsqlcipher-dev libsqlite3-dev qttools5-dev
 
@@ -50,10 +50,10 @@ jobs:
           export VERSION=$(printf "dev-`git -C . rev-parse --short HEAD`")
           ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -appimage
 
-      - name: Rename a file for consistency
+      - name: Rename a file
         run: |
           for i in DB_Browser_for_SQLite*; do mv "$i" "${i//_/.}"; done
-          if [ "${{ matrix.sqlcipher }}" = "0" ]; then
+          if [ "${{ matrix.sqlcipher }}" = "1" ]; then
             export FILE=$(ls DB.Browser.for.SQLite*.AppImage)
             export FILE=${FILE/SQLite/SQLCipher}
             mv DB.Browser.for.SQLite*.AppImage $FILE

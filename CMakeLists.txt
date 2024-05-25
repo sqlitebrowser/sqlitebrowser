@@ -223,7 +223,6 @@ target_sources(${PROJECT_NAME}
     src/FileExtensionManager.h
     src/CondFormatManager.h
     src/CipherSettings.h
-    src/DotenvFormat.h
     src/Palette.h
     src/CondFormat.h
     src/RunSql.h
@@ -284,7 +283,6 @@ target_sources(${PROJECT_NAME}
     src/CondFormatManager.cpp
     src/Data.cpp
     src/CipherSettings.cpp
-    src/DotenvFormat.cpp
     src/Palette.cpp
     src/CondFormat.cpp
     src/RunSql.cpp
@@ -364,6 +362,7 @@ set(SQLB_TSS
     "${CMAKE_SOURCE_DIR}/src/translations/sqlb_nl.ts"
     "${CMAKE_SOURCE_DIR}/src/translations/sqlb_sv.ts"
     "${CMAKE_SOURCE_DIR}/src/translations/sqlb_id.ts"
+    "${CMAKE_SOURCE_DIR}/src/translations/sqlb_ro.ts"
 )
 
 # Windows image format plugin files

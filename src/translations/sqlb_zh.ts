@@ -15,13 +15,13 @@
     </message>
     <message>
         <location filename="../AboutDialog.ui" line="90"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Pastel SVG icon set by Michael Buckley under a Creative Commons
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;https://www.gnu.org/licenses/gpl.html&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;https://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;https://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;https://doc.qt.io/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://doc.qt.io/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Pastel SVG icon set by Michael Buckley under a Creative Commons
 Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;https://codefisher.org/pastel-svg/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://codefisher.org/pastel-svg/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite 是一个开源、免费的可视化工具，用于创建、设计和编辑 SQLite 数据库文件。&lt;/p&gt;&lt;p&gt;它的授权遵循 Mozilla 公共许可证第二版，以及 GNU 通用公共许可证第三版或更新版。你可以在遵循这些许可证的前提下对其修改或再分发。&lt;/p&gt;&lt;p&gt;细则详见 &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;https://www.gnu.org/licenses/gpl.html&lt;/a&gt; 和 &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt;。&lt;/p&gt;&lt;p&gt;有关此程序的更多信息，请访问我们的网站: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;https://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;本软件使用了 &lt;/span&gt;&lt;a href=&quot;https://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://qt-project.org/&lt;/span&gt;&lt;/a&gt; &lt;span style=&quot; font-size:small;&quot;&gt;的 GPL/LGPL Qt Toolkit。&lt;br/&gt;许可条款和其他信息详见 &lt;/span&gt;&lt;a href=&quot;https://doc.qt.io/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://doc.qt.io/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;。&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;它也使用了 Michael Buckley 的 Pastel SVG 图标集，按知识共享-署名的 4.0 版许可证。&lt;br/&gt;详见 &lt;/span&gt;&lt;a href=&quot;https://codefisher.org/pastel-svg/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://codefisher.org/pastel-svg/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;。&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Silk icon set by Mark James licensed under a Creative Commons Attribution 2.5 and 3.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite 是一个开源、免费的可视化工具，用于创建、设计和编辑 SQLite 数据库文件。&lt;/p&gt;&lt;p&gt;它的授权遵循 Mozilla 公共许可证第二版，以及 GNU 通用公共许可证第三版或更新版。你可以在遵循这些许可证的前提下对其修改或再分发。&lt;/p&gt;&lt;p&gt;细则详见 &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; 和 &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt;。&lt;/p&gt;&lt;p&gt;有关此程序的更多信息，请访问我们的网站: &lt;a href=&quot;http://sqlitebrowser.org&quot;&gt;http://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;本软件使用了 &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/&lt;/span&gt;&lt;/a&gt; &lt;span style=&quot; font-size:small;&quot;&gt;的 GPL/LGPL Qt Toolkit。&lt;br/&gt;许可条款和其他信息详见 &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/doc/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;。&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;它也使用了 Mark James 的 Silk 图标集，按知识共享-署名的 2.5 和 3.0 版许可证。&lt;br/&gt;详见 &lt;/span&gt;&lt;a href=&quot;http://www.famfamfam.com/lab/icons/silk/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;http://www.famfamfam.com/lab/icons/silk/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;。&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;https://www.gnu.org/licenses/gpl.html&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;https://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;https://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;https://doc.qt.io/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://doc.qt.io/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Silk icon set by Mark James licensed under a Creative Commons Attribution 2.5 and 3.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;https://github.com/markjames/famfamfam-silk-icons&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://github.com/markjames/famfamfam-silk-icons&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite 是一个开源、免费的可视化工具，用于创建、设计和编辑 SQLite 数据库文件。&lt;/p&gt;&lt;p&gt;它的授权遵循 Mozilla 公共许可证第二版，以及 GNU 通用公共许可证第三版或更新版。你可以在遵循这些许可证的前提下对其修改或再分发。&lt;/p&gt;&lt;p&gt;细则详见 &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;https://www.gnu.org/licenses/gpl.html&lt;/a&gt; 和 &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt;。&lt;/p&gt;&lt;p&gt;有关此程序的更多信息，请访问我们的网站: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;https://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;本软件使用了 &lt;/span&gt;&lt;a href=&quot;https://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://qt-project.org/&lt;/span&gt;&lt;/a&gt; &lt;span style=&quot; font-size:small;&quot;&gt;的 GPL/LGPL Qt Toolkit。&lt;br/&gt;许可条款和其他信息详见 &lt;/span&gt;&lt;a href=&quot;https://doc.qt.io/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://doc.qt.io/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;。&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;它也使用了 Mark James 的 Silk 图标集，按知识共享-署名的 2.5 和 3.0 版许可证。&lt;br/&gt;详见 &lt;/span&gt;&lt;a href=&quot;https://github.com/markjames/famfamfam-silk-icons&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://github.com/markjames/famfamfam-silk-icons&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;。&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -222,136 +222,136 @@ Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot
     <message>
         <location filename="../Application.cpp" line="181"/>
         <source>Usage</source>
-        <translation type="unfinished"></translation>
+        <translation>用法</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="182"/>
         <source>options</source>
-        <translation type="unfinished"></translation>
+        <translation>选项</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="182"/>
         <location filename="../Application.cpp" line="206"/>
         <source>database</source>
-        <translation type="unfinished"></translation>
+        <translation>数据库</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="182"/>
         <location filename="../Application.cpp" line="208"/>
         <source>project</source>
-        <translation type="unfinished"></translation>
+        <translation>项目</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="183"/>
         <location filename="../Application.cpp" line="210"/>
         <source>csv-file</source>
-        <translation type="unfinished"></translation>
+        <translation>csv文件</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="187"/>
         <source>Show command line options</source>
-        <translation type="unfinished"></translation>
+        <translation>显示命令行选项</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="189"/>
         <source>Exit application after running scripts</source>
-        <translation type="unfinished"></translation>
+        <translation>脚本运行完毕后退出</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="190"/>
         <location filename="../Application.cpp" line="192"/>
         <source>file</source>
-        <translation type="unfinished"></translation>
+        <translation>文件</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="191"/>
         <source>Execute this SQL file after opening the DB</source>
-        <translation type="unfinished"></translation>
+        <translation>打开数据库后执行该 SQL 文件</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="193"/>
         <source>Import this CSV file into the passed DB or into a new DB</source>
-        <translation type="unfinished"></translation>
+        <translation>将该 CSV 文件导入传递过来的数据库或者新数据库</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="194"/>
         <source>table</source>
-        <translation type="unfinished"></translation>
+        <translation>表</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="195"/>
         <source>Browse this table, or use it as target of a data import</source>
-        <translation type="unfinished"></translation>
+        <translation>浏览该表，或用它作为数据导入目标</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="197"/>
         <source>Open database in read-only mode</source>
-        <translation type="unfinished"></translation>
+        <translation>用只读模式打开数据库</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="198"/>
         <source>settings_file</source>
-        <translation type="unfinished"></translation>
+        <translation>设置文件</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="199"/>
         <source>Run application based on this settings file</source>
-        <translation type="unfinished"></translation>
+        <translation>基于该设置文件运行程序</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="200"/>
         <location filename="../Application.cpp" line="202"/>
         <source>group</source>
-        <translation type="unfinished"></translation>
+        <translation>组</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="200"/>
         <location filename="../Application.cpp" line="202"/>
         <source>settings</source>
-        <translation type="unfinished"></translation>
+        <translation>设置</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="200"/>
         <location filename="../Application.cpp" line="202"/>
         <source>value</source>
-        <translation type="unfinished"></translation>
+        <translation>值</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="201"/>
         <source>Run application with this setting temporarily set to value</source>
-        <translation type="unfinished"></translation>
+        <translation>临时设定该值并运行程序</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="203"/>
         <source>Run application saving this value for this setting</source>
-        <translation type="unfinished"></translation>
+        <translation>保存该设置值并运行程序</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="205"/>
         <source>Display the current version</source>
-        <translation type="unfinished"></translation>
+        <translation>显示当前版本</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="207"/>
         <source>Open this SQLite database</source>
-        <translation type="unfinished"></translation>
+        <translation>打开该 SQLite 数据库</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="209"/>
         <source>Open this project file (*.sqbpro)</source>
-        <translation type="unfinished"></translation>
+        <translation>打开该项目文件 (*.sqbpro)</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="211"/>
         <source>Import this CSV file into an in-memory database</source>
-        <translation type="unfinished"></translation>
+        <translation>导入该 CSV 文件到一个内存数据库</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="219"/>
         <location filename="../Application.cpp" line="226"/>
         <location filename="../Application.cpp" line="231"/>
         <source>The %1 option requires an argument</source>
-        <translation type="unfinished"></translation>
+        <translation>选项 %1 需要一个参数</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="244"/>
@@ -381,7 +381,7 @@ Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot
     <message>
         <location filename="../Application.cpp" line="369"/>
         <source>Last commit hash when built: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>构建时的最新提交: %1</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="370"/>
@@ -570,7 +570,7 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="39"/>
         <source>SpatiaLite Geometry to SVG</source>
-        <translation type="unfinished"></translation>
+        <translation>SpatiaLite Geometry 到 SVG</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="141"/>
@@ -790,13 +790,13 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../sqlitedb.cpp" line="760"/>
         <source>Cannot open destination file: &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>无法打开目标文件: &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="777"/>
         <location filename="../sqlitedb.cpp" line="795"/>
         <source>Cannot backup to file: &apos;%1&apos;. Message: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>无法备份到文件: &apos;%1&apos;。消息: %2</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="835"/>
@@ -1081,7 +1081,7 @@ Message from database engine:
     <message>
         <location filename="../EditDialog.ui" line="96"/>
         <source>Evaluation</source>
-        <translation type="unfinished"></translation>
+        <translation>求值</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="104"/>
@@ -1113,12 +1113,12 @@ Errors are indicated with a red squiggle underline.</source>
     <message>
         <location filename="../EditDialog.ui" line="203"/>
         <source>Identification of the cell currently in the editor</source>
-        <translation type="unfinished"></translation>
+        <translation>目前在编辑器中展示的单元格的识别结果</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="225"/>
         <source>Type and size of data currently in table</source>
-        <translation type="unfinished"></translation>
+        <translation>表中当前数据的类型和大小</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="274"/>
@@ -1313,33 +1313,33 @@ Errors are indicated with a red squiggle underline.</source>
         <location filename="../EditDialog.cpp" line="925"/>
         <location filename="../EditDialog.cpp" line="1105"/>
         <source>Type: NULL; Size: 0 bytes</source>
-        <translation type="unfinished"></translation>
+        <translation>类型: NULL; 大小: 0 字节</translation>
     </message>
     <message numerus="yes">
         <location filename="../EditDialog.cpp" line="927"/>
         <location filename="../EditDialog.cpp" line="1117"/>
         <source>Type: Text / Numeric; Size: %n character(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>类型: 文本 / 数字; 大小: %n 个字符</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="1091"/>
         <source>Type: %1 Image; Size: %2x%3 pixel(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>类型: %1 图像; 大小: %2x%3 像素</translation>
     </message>
     <message numerus="yes">
         <location filename="../EditDialog.cpp" line="1124"/>
         <source>Type: Valid JSON; Size: %n character(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>类型: 有效的 JSON; 大小: %n 个字符</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../EditDialog.cpp" line="1132"/>
         <source>Type: Binary; Size: %n byte(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>类型: 二进制; 大小: %n 字节</numerusform>
         </translation>
     </message>
     <message>
@@ -1375,28 +1375,33 @@ Errors are indicated with a red squiggle underline.</source>
 Errors are indicated with a red squiggle underline.
 
 In the Evaluation mode, entered SQLite expressions are evaluated and the result applied to the cell.</source>
-        <translation type="unfinished"></translation>
+        <translation>文本编辑器允许您编辑文本，并支持 JSON 或 XML 数据的语法高亮，保存前自动格式化和验证。
+
+错误会标记红色波浪下划线。
+
+求值模式下会计算输入的 SQLite 表达式，计算结果应用于单元格。</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="122"/>
         <source>Unsaved data in the cell editor</source>
-        <translation type="unfinished"></translation>
+        <translation>单元格编辑器中的未保存数据</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="123"/>
         <source>The cell editor contains data not yet applied to the database.
 Do you want to apply the edited data to row=%1, column=%2?</source>
-        <translation type="unfinished"></translation>
+        <translation>单元格编辑器包含的数据尚未应用到数据库。
+是否将编辑后的数据应用到 行=%1 : 列=%2?</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="148"/>
         <source>Editing row=%1, column=%2</source>
-        <translation type="unfinished"></translation>
+        <translation>编辑 行=%1 : 列=%2</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="151"/>
         <source>No cell active.</source>
-        <translation type="unfinished"></translation>
+        <translation>未选中单元格。</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="477"/>
@@ -1551,17 +1556,17 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
     <message>
         <location filename="../EditTableDialog.ui" line="92"/>
         <source>On Conflict</source>
-        <translation type="unfinished"></translation>
+        <translation>冲突时</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="133"/>
         <source>Strict</source>
-        <translation type="unfinished"></translation>
+        <translation>严格</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="143"/>
         <source>When the strict option is enabled SQLite enforces the data types of each column when updating or inserting data.</source>
-        <translation type="unfinished"></translation>
+        <translation>启用严格选项后，SQLite 更新或插入数据时会严格执行每个列的数据类型。</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="172"/>
@@ -1692,7 +1697,7 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
     <message>
         <location filename="../EditTableDialog.ui" line="407"/>
         <source>Index Constraints</source>
-        <translation type="unfinished"></translation>
+        <translation>索引约束</translation>
     </message>
     <message>
         <source>Constraints</source>
@@ -1724,17 +1729,17 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
     <message>
         <location filename="../EditTableDialog.ui" line="501"/>
         <source>Foreign Keys</source>
-        <translation type="unfinished"></translation>
+        <translation>外键</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="581"/>
         <source>References</source>
-        <translation type="unfinished"></translation>
+        <translation>引用</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="595"/>
         <source>Check Constraints</source>
-        <translation type="unfinished"></translation>
+        <translation>检查约束</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="685"/>
@@ -1829,7 +1834,8 @@ All data currently stored in this field will be lost.</source>
         <location filename="../EditTableDialog.cpp" line="1222"/>
         <source>Please add a field which meets the following criteria before setting the on conflict action:
  - Primary key flag set</source>
-        <translation type="unfinished"></translation>
+        <translation>设定冲突操作前，请添加满足下列条件的字段：
+ - 设定“主键”标志</translation>
     </message>
 </context>
 <context>
@@ -1942,7 +1948,7 @@ All data currently stored in this field will be lost.</source>
         <location filename="../ExportDataDialog.cpp" line="195"/>
         <location filename="../ExportDataDialog.cpp" line="300"/>
         <source>Error while writing the file &apos;%1&apos;: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>写入文件 &apos;%1&apos; 出错：%2</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.cpp" line="215"/>
@@ -1967,7 +1973,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportDataDialog.cpp" line="420"/>
         <source>Export finished with errors.</source>
-        <translation type="unfinished"></translation>
+        <translation>导出完成，但有错误。</translation>
     </message>
 </context>
 <context>
@@ -2025,7 +2031,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportSqlDialog.ui" line="148"/>
         <source>Keep original CREATE statements</source>
-        <translation type="unfinished"></translation>
+        <translation>保留原始 CREATE 语句</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="109"/>
@@ -2719,12 +2725,12 @@ x~y	范围: 值在 x 和 y 之间
     <message>
         <location filename="../ImportCsvDialog.ui" line="356"/>
         <source>Use local number conventions</source>
-        <translation type="unfinished"></translation>
+        <translation>使用本地数字习俗</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="366"/>
         <source>Use decimal and thousands separators according to the system locale.</source>
-        <translation type="unfinished"></translation>
+        <translation>使用系统区域设置中定义的小数点和千位分隔符。</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="373"/>
@@ -2795,7 +2801,7 @@ x~y	范围: 值在 x 和 y 之间
     <message>
         <location filename="../ImportCsvDialog.cpp" line="636"/>
         <source>Could not prepare INSERT statement: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>无法准备 INSERT 语句: %1</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.cpp" line="726"/>
@@ -3373,7 +3379,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1169"/>
         <source>&amp;New Database</source>
-        <translation type="unfinished"></translation>
+        <translation>新建数据库(&amp;N)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1229"/>
@@ -3394,18 +3400,18 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1271"/>
         <source>&amp;Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>撤销(&amp;U)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1274"/>
         <location filename="../MainWindow.ui" line="1277"/>
         <source>Undo last change to the database</source>
-        <translation type="unfinished"></translation>
+        <translation>撤销对数据库的最后更改</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1280"/>
         <source>This action undoes the last change performed to the database in the Database Browser or in Execute SQL. Redoing is not possible.</source>
-        <translation type="unfinished"></translation>
+        <translation>此操作将撤销上一次在数据库浏览器或 SQL 执行中对数据库所执行的更改。不能撤销（重做）本次撤销。</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1295"/>
@@ -3415,7 +3421,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1451"/>
         <source>Open the Modify Table wizard, where it is possible to rename an existing table. It is also possible to add or delete fields from a table, as well as modify field names and types.</source>
-        <translation type="unfinished"></translation>
+        <translation>打开修改表向导，可以在里面重命名现有表，添加或删除字段，修改字段名称和类型。</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1545"/>
@@ -3435,7 +3441,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1584"/>
         <source>Ctrl+Shift+T</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+T</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1620"/>
@@ -3450,7 +3456,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1715"/>
         <source>&amp;Save Project</source>
-        <translation type="unfinished"></translation>
+        <translation>保存项目(&amp;S)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1724"/>
@@ -3460,7 +3466,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1739"/>
         <source>Open &amp;Project</source>
-        <translation type="unfinished"></translation>
+        <translation>打开项目(&amp;P)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1748"/>
@@ -3542,7 +3548,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1961"/>
         <source>Export to &amp;JSON</source>
-        <translation type="unfinished"></translation>
+        <translation>导出到 &amp;JSON</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1966"/>
@@ -3557,18 +3563,18 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="2014"/>
         <source>&amp;Open Database</source>
-        <translation type="unfinished"></translation>
+        <translation>打开数据库(&amp;O)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2039"/>
         <source>Drag &amp;&amp; Drop SELECT Query</source>
-        <translation type="unfinished"></translation>
+        <translation>拖放 SELECT 查询(&amp;&amp;)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2042"/>
         <location filename="../MainWindow.ui" line="2045"/>
         <source>When dragging fields from the same table or a single table, drop a SELECT query into the editor</source>
-        <translation type="unfinished"></translation>
+        <translation>在同一个或单个表中拖拽字段，释放时将一条 SELECT 查询插入编辑器</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2249"/>
@@ -3590,47 +3596,47 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <location filename="../MainWindow.ui" line="2263"/>
         <location filename="../MainWindow.cpp" line="477"/>
         <source>Ctrl+Shift+W</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+W</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2292"/>
         <source>Table from CSV data in Clipboard...</source>
-        <translation type="unfinished"></translation>
+        <translation>剪贴板中 CSV 的数据制表...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2295"/>
         <source>This treats the current clipboard contents as a CSV file and opens the same import wizard that is used for importing CSV data from a file.</source>
-        <translation type="unfinished"></translation>
+        <translation>这会将剪贴板内容视作 CSV 文件，打开从文件导入 CSV 数据的向导来处理它。</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2300"/>
         <source>Show &amp;Row Counts</source>
-        <translation type="unfinished"></translation>
+        <translation>显示行数(&amp;R)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2303"/>
         <source>This shows the number of rows for each table and view in the database.</source>
-        <translation type="unfinished"></translation>
+        <translation>显示数据库中每个表和视图的行数。</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2315"/>
         <source>Save Database &amp;As...</source>
-        <translation type="unfinished"></translation>
+        <translation>另存为数据库(&amp;A)...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2318"/>
         <source>Save the current database as a different file</source>
-        <translation type="unfinished"></translation>
+        <translation>将当前数据库保存到另一个文件</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2327"/>
         <source>Refresh</source>
-        <translation type="unfinished">刷新</translation>
+        <translation>刷新</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2330"/>
         <source>Reload the database structure</source>
-        <translation type="unfinished"></translation>
+        <translation>重新载入数据库结构</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="477"/>
@@ -3659,33 +3665,33 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <location filename="../MainWindow.ui" line="53"/>
         <source>&amp;Database Structure</source>
         <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>数据库结构(&amp;D)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="120"/>
         <location filename="../MainWindow.ui" line="123"/>
         <source>&amp;Browse Data</source>
         <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>浏览数据(&amp;B)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="155"/>
         <location filename="../MainWindow.ui" line="158"/>
         <source>Edit P&amp;ragmas</source>
         <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>编辑杂注(&amp;R)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="688"/>
         <location filename="../MainWindow.ui" line="691"/>
         <source>E&amp;xecute SQL</source>
         <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>执行 SQL(&amp;X)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="781"/>
         <source>&amp;Recent Files</source>
-        <translation type="unfinished"></translation>
+        <translation>最近的文件(&amp;R)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2002"/>
@@ -4348,22 +4354,22 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="332"/>
         <source>Ctrl+Alt+0</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Alt+0</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="476"/>
         <source>Ctrl+Alt+W</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Alt+W</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="693"/>
         <source>Choose a database file to save under</source>
-        <translation type="unfinished"></translation>
+        <translation>选择数据库文件保存位置</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="704"/>
         <source>Error while saving the database to the new file.</source>
-        <translation type="unfinished"></translation>
+        <translation>保存数据库到新文件时出错。</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="896"/>
@@ -4476,8 +4482,8 @@ Are you sure you want to save the database?</source>
         <location filename="../MainWindow.cpp" line="1854"/>
         <source>Select the action to apply to the dropped file(s). &lt;br/&gt;Note: only &apos;Import&apos; will process more than one file.</source>
         <comment>Note for translation: Although there is no %n in the original, you can use the numerus-form to adjust &apos;files(s)&apos; and remove the note when n = 1. Including %n in the translation will also work.</comment>
-        <translation type="unfinished">
-            <numerusform>选择拖放文件所要应用的操作。&lt;br/&gt;注意：只有“导入”会处理多个文件。</numerusform>
+        <translation>
+            <numerusform>选择拖放一些文件所要应用的操作。&lt;br/&gt;注意：只有“导入”会处理多个文件。</numerusform>
         </translation>
     </message>
     <message>
@@ -4524,17 +4530,17 @@ Are you sure you want to save the database?</source>
     <message>
         <location filename="../MainWindow.cpp" line="2730"/>
         <source>DB file &apos;%1&apos; could not be opened</source>
-        <translation type="unfinished"></translation>
+        <translation>无法打开数据库文件 &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2886"/>
         <source>Table &apos;%1&apos; not found; settings ignored</source>
-        <translation type="unfinished"></translation>
+        <translation>找不到表 &apos;%1&apos;; 设置已忽略</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3213"/>
         <source>-- Reference to file &quot;%1&quot; (not supported by this version) --</source>
-        <translation type="unfinished"></translation>
+        <translation>-- 引用文件 &quot;%1&quot; (此版本暂不支持) --</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3229"/>
@@ -4820,7 +4826,7 @@ Select the axes or axes labels to drag and zoom only in that orientation.</sourc
     <message>
         <location filename="../PlotDock.cpp" line="107"/>
         <source>Fixed number format</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">固定数字格式</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="198"/>
@@ -5351,7 +5357,7 @@ Can be set to 0 for disabling completion.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="542"/>
         <source>Light style</source>
-        <translation type="unfinished"></translation>
+        <translation>亮色</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="852"/>
@@ -5361,7 +5367,7 @@ Can be set to 0 for disabling completion.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="885"/>
         <source>Formatted</source>
-        <translation type="unfinished"></translation>
+        <translation>格式化后</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="908"/>
@@ -5432,12 +5438,12 @@ Can be set to 0 for disabling completion.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="1594"/>
         <source>Use tabs for indentation</source>
-        <translation type="unfinished"></translation>
+        <translation>使用制表符缩进</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1604"/>
         <source>When set, the Tab key will insert tab and space characters for indentation. Otherwise, just spaces will be used.</source>
-        <translation type="unfinished"></translation>
+        <translation>启用后，Tab 键将插入制表符和空格字符用于缩进。不启用则只使用空格。</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1614"/>
@@ -6162,12 +6168,12 @@ Please check again.</source>
     <message>
         <location filename="../RemoteDock.ui" line="240"/>
         <source>&amp;User</source>
-        <translation type="unfinished"></translation>
+        <translation>用户(&amp;U)</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="257"/>
         <source>&amp;Database</source>
-        <translation type="unfinished">数据库(&amp;D)</translation>
+        <translation>数据库(&amp;D)</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="400"/>
@@ -6564,7 +6570,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="246"/>
         <source>Couldn&apos;t read file &quot;%1&quot;: %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>无法读取文件“%1”：%2。</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="276"/>
@@ -6585,17 +6591,17 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="325"/>
         <source>Answer &quot;Yes to All&quot; to reload the file on any external update without further prompting.</source>
-        <translation type="unfinished"></translation>
+        <translation>选择“全是”将自动重新加载有外部更新的文件，无进一步提示。</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="327"/>
         <source>Answer &quot;No to All&quot; to ignore any external update without further prompting.</source>
-        <translation type="unfinished"></translation>
+        <translation>选择“全否”将忽略文件的外部更新，无进一步提示。</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="329"/>
         <source>Modifying and saving the file will restore prompting.</source>
-        <translation type="unfinished"></translation>
+        <translation>修改并保存文件将重新开启提示。</translation>
     </message>
 </context>
 <context>
@@ -6899,12 +6905,12 @@ Use of this function must be authorized from Preferences.</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="141"/>
         <source>(expr) Returns the result of evaluating expression expr against the previous row in the partition. Or, if there is no previous row (because the current row is the first), NULL.</source>
-        <translation>(表达式) 返回对分区中上一行的表达式评估结果。如果当前行是第一行，返回 NULL。</translation>
+        <translation>(表达式) 返回对分区中上一行的表达式求值结果。如果当前行是第一行，返回 NULL。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="142"/>
         <source>(expr,offset) If the offset argument is provided, then it must be a non-negative integer. In this case the value returned is the result of evaluating expr against the row offset rows before the current row within the partition. If offset is 0, then expr is evaluated against the current row. If there is no row offset rows before the current row, NULL is returned.</source>
-        <translation>(表达式,偏移) 如果提供偏移参数，它须是非负数整数。此时返回针对分区中当前行减去行偏移所对应的行来评估表达式的结果。如果偏移为0，则评估当前行。如果当前行之前没有对应偏移的行，返回 NULL。</translation>
+        <translation>(表达式,偏移) 如果提供偏移参数，它须是非负数整数。此时返回针对分区中当前行减去行偏移所对应的行来求值表达式的结果。如果偏移为0，则求值当前行。如果当前行之前没有对应偏移的行，返回 NULL。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="143"/>
@@ -6915,12 +6921,12 @@ Use of this function must be authorized from Preferences.</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="144"/>
         <source>(expr) Returns the result of evaluating expression expr against the next row in the partition. Or, if there is no next row (because the current row is the last), NULL.</source>
-        <translation>(表达式) 返回对分区中下一行的表达式评估结果。如果没有下一行，返回 NULL。</translation>
+        <translation>(表达式) 返回对分区中下一行的表达式求值结果。如果没有下一行，返回 NULL。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="145"/>
         <source>(expr,offset) If the offset argument is provided, then it must be a non-negative integer. In this case the value returned is the result of evaluating expr against the row offset rows after the current row within the partition. If offset is 0, then expr is evaluated against the current row. If there is no row offset rows after the current row, NULL is returned.</source>
-        <translation>(表达式,偏移) 如果提供偏移参数，它须是非负数整数。此时返回针对分区中当前行加上行偏移所对应的行来评估表达式的结果。如果偏移为0，则评估当前行。如果当前行之前没有对应偏移的行，返回 NULL。</translation>
+        <translation>(表达式,偏移) 如果提供偏移参数，它须是非负数整数。此时返回针对分区中当前行加上行偏移所对应的行来求值表达式的结果。如果偏移为0，则求值当前行。如果当前行之前没有对应偏移的行，返回 NULL。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="147"/>
@@ -6940,17 +6946,17 @@ Use of this function must be authorized from Preferences.</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="155"/>
         <source>(X) Return the arccosine of X. The result is in radians.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) 返回 X 的反余弦。结果以弧度为单位。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="156"/>
         <source>(X) Return the hyperbolic arccosine of X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) 返回 X 的反双曲余弦。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="157"/>
         <source>(X) Return the arcsine of X. The result is in radians.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) 返回 X 的反正弦。结果以弧度为单位。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="158"/>
@@ -6981,7 +6987,7 @@ Use of this function must be authorized from Preferences.</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="164"/>
         <source>(X) Return the cosine of X. X is in radians.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) 返回 X 的余弦。X 的单位是弧度。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="165"/>
@@ -7027,28 +7033,28 @@ Use of this function must be authorized from Preferences.</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="174"/>
         <source>(X,Y) Return the remainder after dividing X by Y.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X,Y) 返回 X 除以 Y 后的余数。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="175"/>
         <source>() Return an approximation for π.</source>
-        <translation type="unfinished"></translation>
+        <translation>() 返回 π 的近似值。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="176"/>
         <location filename="../SqlUiLexer.cpp" line="177"/>
         <source>(X,Y) Compute X raised to the power Y.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X,Y) 计算 X 的 Y 次方。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="178"/>
         <source>(X) Convert X from degrees into radians.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) 将 X 从角度转换为弧度。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="179"/>
         <source>(X) Return the sine of X. X is in radians.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) 返回 X 的正弦值。X 的单位是弧度。</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="180"/>
@@ -7273,44 +7279,44 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.ui" line="676"/>
         <source>Export to &amp;JSON</source>
-        <translation type="unfinished"></translation>
+        <translation>导出到 &amp;JSON</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="679"/>
         <location filename="../TableBrowser.ui" line="682"/>
         <source>Export the filtered data to JSON</source>
-        <translation type="unfinished"></translation>
+        <translation>导出过滤后数据到 JSON</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="685"/>
         <source>This button exports the data of the browsed table as currently displayed (after filters, display formats and order column) as a JSON file.</source>
-        <translation type="unfinished"></translation>
+        <translation>此按钮是将当前被显示、被浏览的表的数据导出到一个 JSON 文件。数据经过滤器、显示格式和列顺序顺利。</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="754"/>
         <source>Copy column name</source>
-        <translation type="unfinished"></translation>
+        <translation>复制列名</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="757"/>
         <source>Copy the database table column name to your clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>复制数据库表的列名到你的剪贴板</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="826"/>
         <source>New Data Browser</source>
-        <translation type="unfinished">新建数据浏览器</translation>
+        <translation>新建数据浏览器</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="829"/>
         <location filename="../TableBrowser.ui" line="832"/>
         <source>Add a new docked Data Browser</source>
-        <translation type="unfinished"></translation>
+        <translation>新增一个数据浏览器标签页</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="835"/>
         <source>This button adds a new docked Data Browser, which you can detach and arrange in different layouts.</source>
-        <translation type="unfinished"></translation>
+        <translation>此按钮会添加一个新的数据浏览器标签页，您可以将其分离并置入其他布局。</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="454"/>
@@ -7848,17 +7854,17 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.cpp" line="760"/>
         <source>%L1 - %L2 of &gt;= %L3</source>
-        <translation type="unfinished"></translation>
+        <translation>%L1 - %L2 / 至少 %L3</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="763"/>
         <source>%L1 - %L2 of %L3</source>
-        <translation type="unfinished"></translation>
+        <translation>%L1 - %L2 / %L3</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="765"/>
         <source> (clipped at %L1 rows)</source>
-        <translation type="unfinished"></translation>
+        <translation> (%L1 行的一部分)</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1017"/>
