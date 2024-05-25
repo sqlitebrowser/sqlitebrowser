@@ -463,17 +463,26 @@ void PreferencesDialog::createBuiltinExtensionList()
         files = dir.entryList(QStringList() << "*.dll", QDir::Files);
     }
     else {
-        if (QSysInfo::currentCpuArchitecture() == "arm")
-            dir.setPath("/usr/lib/aarch-linux-gnu/");
-        else if (QSysInfo::currentCpuArchitecture() == "arm64")
-            dir.setPath("/usr/lib/aarch64-linux-gnu/");
-        else if (QSysInfo::currentCpuArchitecture() == "i386")
-            dir.setPath("/usr/lib/i386-linux-gnu/");
-        else if (QSysInfo::currentCpuArchitecture() == "x86_64")
-            dir.setPath("/usr/lib/x86_64-linux-gnu/");
-        else
-            dir.setPath("/usr/lib/");
-
+        const QString productType (QSysInfo::productType());
+        const QString cpuArchitecture (QSysInfo::currentCpuArchitecture());
+        if (productType == "fedora" || productType == "redhat") {
+            if (cpuArchitecture.contains("64"))
+                dir.setPath("/usr/lib64/");
+            else
+                dir.setPath("/usr/lib/");
+        } else {
+            if (cpuArchitecture == "arm") {
+                dir.setPath("/usr/lib/aarch-linux-gnu/");
+            } else if (cpuArchitecture == "arm64") {
+                dir.setPath("/usr/lib/aarch64-linux-gnu/");
+            } else if (cpuArchitecture == "i386") {
+                dir.setPath("/usr/lib/i386-linux-gnu/");
+            } else if (cpuArchitecture == "x86_64") {
+                dir.setPath("/usr/lib/x86_64-linux-gnu/");
+            } else {
+                dir.setPath("/usr/lib/");
+            }
+        }
         // There is no single naming convention for SQLite extension libraries,
         // but this gives good results, at least on Debian based systems.
         // The patterns have to exclude "libsqlite3.so", which is the SQLite3
