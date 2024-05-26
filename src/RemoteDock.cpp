@@ -7,7 +7,7 @@
 #include <QUrl>
 #include <QUrlQuery>
 
-#include <json.hpp>
+#include <nlohmann/json.hpp>
 
 #include "RemoteDock.h"
 #include "ui_RemoteDock.h"

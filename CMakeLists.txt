@@ -26,6 +26,7 @@ include(GNUInstallDirs)
 
 OPTION(BUILD_STABLE_VERSION "Don't build the stable version by default" OFF) # Choose between building a stable version or nightly (the default), depending on whether '-DBUILD_STABLE_VERSION=1' is passed on the command line or not.
 OPTION(ENABLE_TESTING "Enable the unit tests" OFF)
+OPTION(FORCE_INTERNAL_JSON "Don't use the distribution's JSON library even if there is one" ON)
 OPTION(FORCE_INTERNAL_QSCINTILLA "Don't use the distribution's QScintilla library even if there is one" OFF)
 OPTION(FORCE_INTERNAL_QCUSTOMPLOT "Don't use distribution's QCustomPlot even if available" ON)
 OPTION(FORCE_INTERNAL_QHEXEDIT "Don't use distribution's QHexEdit even if available" ON)
@@ -135,6 +136,9 @@ endif()
 
 find_package(Qt5 REQUIRED COMPONENTS Concurrent Gui LinguistTools Network PrintSupport Test Widgets Xml)
 
+if(NOT FORCE_INTERNAL_JSON)
+    find_package(nlohmann_json)
+endif()
 if(NOT FORCE_INTERNAL_QSCINTILLA)
     find_package(QScintilla 2.14.1)
 endif()
@@ -145,8 +149,9 @@ if(NOT FORCE_INTERNAL_QHEXEDIT)
     find_package(QHexEdit)
 endif()
 
-target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/libs/json)
-
+if (NOT NLOHMANN_JSON_FOUND)
+    add_subdirectory(libs/json)
+endif()
 if(NOT QSCINTILLA_FOUND)
     add_subdirectory(libs/qscintilla/src)
 endif()
@@ -490,6 +495,7 @@ target_link_libraries(${PROJECT_NAME}
 )
 
 target_link_libraries(${PROJECT_NAME}
+    nlohmann_json::nlohmann_json
     QHexEdit::QHexEdit
     QCustomPlot::QCustomPlot
     QScintilla::QScintilla

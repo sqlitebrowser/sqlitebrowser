@@ -4,7 +4,7 @@
 #include <QAbstractItemModel>
 #include <QUrl>
 
-#include <json.hpp>
+#include <nlohmann/json.hpp>
 
 // List of fields stored in the JSON data
 enum RemoteModelColumns

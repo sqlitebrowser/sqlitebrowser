@@ -1,7 +1,8 @@
-cmake_minimum_required(VERSION 2.8.12.2)
+cmake_minimum_required(VERSION 3.15)
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
+add_library(nlohmann_json INTERFACE)
+add_library(nlohmann_json::nlohmann_json ALIAS nlohmann_json)
 
-set(JSON11_HDR
-    json.hpp
-)
+set(NLOHMANN_JSON_INCLUDE_BUILD_DIR ./single_include)
+
+target_include_directories(nlohmann_json INTERFACE ./single_include)
