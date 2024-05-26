@@ -1,4 +1,651 @@
+2023-06-07  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* NEWS, Python/project.py:
+	Rolled back the explicit setting of the minimum GLIBC version now
+	that we have changed the build platform.
+	[4ea73206e689] [2.14.1] <2.14-maint>
+
+2023-05-22  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* NEWS, qt/InputMethod.cpp, qt/qscintilla.pro:
+	Fixed a pointer truncation in the handling of input method queries.
+	[e3a47ebe8c93] <2.14-maint>
+
+2023-05-14  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* NEWS, Python/project.py:
+	Fixed the manylinux wheel tag when building on Ubuntu 22.04.
+	[77c97572f18c] <2.14-maint>
+
+2023-04-27  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* .hgtags:
+	Added tag 2.14.0 for changeset b748338e45bb
+	[670c1fb1beeb]
+
+2023-04-24  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* NEWS, qt/qsciscintilla.cpp:
+	Fixed a regression in QSciScintilla::text().
+	[b748338e45bb] [2.14.0]
+
+2023-04-20  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* qt/qsciscintilla.cpp:
+	Use SCI_ADDTEXT rather than SCI_SETTEXT to set the text so tht
+	embedded zero bytes can be loaded.
+	[774bcbca48b9]
+
+	* NEWS, qt/InputMethod.cpp, qt/SciAccessibility.cpp,
+	qt/SciAccessibility.h, qt/qscilexer.cpp, qt/qscilexer.h,
+	qt/qsciscintilla.cpp, qt/qsciscintillabase.cpp,
+	qt/qsciscintillabase.h:
+	Refactored the conversions from bytes to a QString to allow for
+	embedded zero bytes and to remove duplicated code.
+	[c8eb0d943c07]
+
+2023-03-31  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* NEWS, qt/qscintilla_cs.ts, qt/qscintilla_de.qm, qt/qscintilla_de.ts,
+	qt/qscintilla_es.ts, qt/qscintilla_fr.ts, qt/qscintilla_pt_br.ts:
+	Fixed the .ts files.
+	[5d000fe9301e]
+
+2023-03-28  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/sip/qscilexerasm.sip, Python/sip/qscilexermasm.sip,
+	Python/sip/qscilexernasm.sip, Python/sip/qscimodcommon.sip,
+	Python/sip/qsciscintillabase.sip:
+	Implemented the Python wrappers for the assembler lexers.
+	[0030fcf7a208]
+
+	* qt/qscintilla_cs.ts, qt/qscintilla_de.ts, qt/qscintilla_es.ts,
+	qt/qscintilla_fr.ts, qt/qscintilla_pt_br.ts:
+	Updated the translation source files.
+	[0fb2491bb039]
+
+	* qt/qscilexer.cpp, qt/qscilexer.h, qt/qscilexerasm.cpp,
+	qt/qscilexerasm.h, qt/qsciscintillabase.h:
+	Completed the implementation of the assember lexers. Note we choose
+	not to support explicit fold points.
+	[629503d9342b]
+
+	* NEWS, qt/qsciscintilla.cpp, qt/qsciscintilla.h,
+	qt/qsciscintillabase.cpp, qt/qsciscintillabase.h:
+	Removed a Qt4 compatibility macro.
+	[4b23653f3e5c]
+
+	* qt/qscilexerasm.cpp, qt/qscilexerasm.h:
+	Added the support for compact and multi-line comment folding to
+	QsciLexerAsm.
+	[708bed0e9e2d]
+
+2023-03-27  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* NEWS, qt/qscilexerasm.cpp, qt/qscilexerasm.h,
+	qt/qscilexerintelhex.cpp, qt/qscilexermasm.cpp, qt/qscilexermasm.h,
+	qt/qscilexernasm.cpp, qt/qscilexernasm.h, qt/qscilexertekhex.cpp,
+	qt/qscintilla.pro:
+	Initial implementation of the QsciLexerAsm, QsciLexerMASM and
+	QsciLexerNASM classes.
+	[f216dfe8a7a9]
+
+2023-03-26  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/sip/qscilexerintelhex.sip, Python/sip/qscilexersrec.sip,
+	Python/sip/qscilexertekhex.sip, Python/sip/qscimodcommon.sip,
+	Python/sip/qsciscintillabase.sip:
+	Completed the new Python wrappers.
+	[9acd96c733d2]
+
+	* Python/sip/qscilexerhex.sip, Python/sip/qscilexerintelhex.sip,
+	Python/sip/qscilexersrec.sip, Python/sip/qscilexertekhex.sip:
+	Added the Python bindings for the new lexer classes.
+	[7882938747c0]
+
+	* qt/qscintilla_cs.ts, qt/qscintilla_de.ts, qt/qscintilla_es.ts,
+	qt/qscintilla_fr.ts, qt/qscintilla_pt_br.ts:
+	Updated the translation source files.
+	[ee55692ee907]
+
+	* NEWS, qt/qscilexerhex.cpp, qt/qscilexerhex.h,
+	qt/qscilexerintelhex.cpp, qt/qscilexerintelhex.h,
+	qt/qscilexersrec.cpp, qt/qscilexersrec.h, qt/qscilexertekhex.cpp,
+	qt/qscilexertekhex.h, qt/qscintilla.pro:
+	Added the QsciLexerHex, QsciLexerIntelHex, QsciLexerSRec and
+	QsciLexerTekHex classes.
+	[5e1cb8b52206]
+
+	* Merged the 2.13-maint branch.
+	[a9480b2f6bdb]
+
+2023-03-02  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* NEWS, lexlib/LexAccessor.h:
+	Disabled an assert() in the lexer library as the following code
+	handles the case anyway. The real bug is probably in the HTML lexer
+	triggered when the HTML has embedded DTD.
+	[6452e3b634b6] <2.13-maint>
+
+2023-01-15  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* .hgtags:
+	Added tag 2.13.4 for changeset b2c87a81f0c3
+	[d2bc1ac10aa3] <2.13-maint>
+
+2022-12-06  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* NEWS, src/EditView.cxx:
+	Fixed horizontally scrolled text overwriting margins when EOLs are
+	visible.
+	[b2c87a81f0c3] [2.13.4] <2.13-maint>
+
+2022-06-17  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* NEWS, qsci/api/python/Python-3.11.api:
+	Added the .api file for Python v3.11.
+	[96eca4a41bcb] <2.13-maint>
+
+2022-05-24  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* NEWS, lib/gen_python3_api.py, lib/gen_python_api.py,
+	qsci/api/python/Python-3.10.api, qsci/api/python/Python-3.8.api,
+	qsci/api/python/Python-3.9.api:
+	Added the .api file for Python v3.10. Removed the script that
+	generates .api files for Python v2. Updated the .api file for Python
+	v3.8 and v3.9 removing non-stdlib stuff.
+	[048961f449ea] <2.13-maint>
+
+2022-05-13  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* .hgtags:
+	Added tag 2.13.3 for changeset 5b8465ba3664
+	[f37eea15e210] <2.13-maint>
+
+2022-04-25  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* NEWS, qt/InputMethod.cpp:
+	Updates to the input method code to fix a problem with KDE on
+	Wayland.
+	[5b8465ba3664] [2.13.3] <2.13-maint>
+
+2022-03-15  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* .hgtags:
+	Added tag 2.13.2 for changeset bb61ba6bf385
+	[6cdbcd2c2dad] <2.13-maint>
+
+	* NEWS, Python/project.py:
+	Fixed building from an sdist for iOS.
+	[bb61ba6bf385] [2.13.2] <2.13-maint>
+
+2021-10-14  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* .hgtags:
+	Added tag 2.13.1 for changeset 0763a2d7a8c2
+	[90c834cc462d] <2.13-maint>
+
+2021-10-12  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* NEWS, designer/designer.pro, example/application.pro,
+	lib/README.doc, qt/qscintilla.pro:
+	Updated the .pro files and docs to cover multiple architecture
+	builds on macOS.
+	[0763a2d7a8c2] [2.13.1] <2.13-maint>
+
+2021-09-08  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* NEWS, qt/qscintilla.pro, qt/qsciscintilla.cpp:
+	Fixed the target used by findNext() after a call to replace().
+	[6d59f97850d7] <2.13-maint>
+
+2021-06-26  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* .hgtags:
+	Added tag 2.13.0 for changeset 84da33178802
+	[95ec8d681eae]
+
+2021-06-13  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* NEWS, Python/sip/qsciscintillabase.sip:
+	Fixed the Python bindings of SendScintilla() so that a negative
+	value can be passed as the wParam argument (specifically
+	SC_CURSORNORMAL).
+	[84da33178802] [2.13.0]
+
+2021-06-03  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* NEWS, Python/sip/qsciprinter.sip, qt/qscintilla.pro,
+	qt/qsciprinter.cpp, qt/qsciprinter.h:
+	Added the new QsciPrinter::printRange() overload. The library
+	version number is now v15.1.0.
+	[4b18dcfe67c4]
+
+	* Merged the 2.12-maint branch.
+	[a33fcd321f79]
+
+2021-05-20  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* qt/PlatQt.cpp:
+	Fixed the handling of explicit Qt font weights for Qt6.
+	[1dbb97147333] <2.12-maint>
+
+2021-05-06  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* qt/qscintilla.pro:
+	Bumped the version number of the shared library.
+	[7b3f97fa852f] <2.12-maint>
+
+	* NEWS, qt/ListBoxQt.cpp:
+	Improved the appearence of the auto-completion popup.
+	[6d05cdc2c9c9] <2.12-maint>
+
+2021-03-04  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* .hgtags:
+	Added tag 2.12.1 for changeset c1e9b5f091d6
+	[0e8a95ee3197] <2.12-maint>
+
+	* NEWS:
+	Released as v2.12.1.
+	[c1e9b5f091d6] [2.12.1] <2.12-maint>
+
+	* rb-product.toml:
+	Fixed the PyQt dependencies.
+	[c7af7dfff891] <2.12-maint>
+
+2021-03-02  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* NEWS:
+	Updated the NEWS file.
+	[811ff4c9ffb2] <2.12-maint>
+
+2021-02-27  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/pyproject-qt5.toml, Python/pyproject-qt6.toml:
+	Fixed the project dependencies.
+	[f84410807305] <2.12-maint>
+
+	* rb-product, rb-product.toml:
+	Updated the product file.
+	[266fa5c4525a] <2.12-maint>
+
+2021-02-22  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* .hgtags:
+	Added tag 2.12.0 for changeset 1cfa1f74a2a6
+	[a3df8b831652]
+
+	* NEWS:
+	Released as v2.12.0.
+	[1cfa1f74a2a6] [2.12.0]
+
+	* NEWS:
+	Updated the NEWS file.
+	[15c838b76bbb]
+
+2021-02-21  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/project.py:
+	Fixed project.py so that it will use an embedded QScintilla library
+	when being built from an sdist.
+	[71cc17f4adb2]
+
+	* qt/qscintilla.pro:
+	Added missing .h files from qscintilla.pro.
+	[c932fdd83a5e]
+
+2021-02-19  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/pyproject-qt5.toml:
+	Reverted the name of the Qt5 Python bindings PyPI project because a
+	new name would cause significant problems.
+	[c318f3bd3474]
+
+2021-02-18  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/pyproject-qt5.toml, Python/pyproject-qt6.toml,
+	Python/sip/qsciscintillabase.sip:
+	Fixed the Python bindings for PyQt6.
+	[e48e4f400215]
+
+	* lib/README.doc:
+	Re-ordered the section in the main page of the docs.
+	[35fd189ea5da]
+
+2021-02-17  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/project.py, Python/pyproject-qt5.toml, Python/pyproject-
+	qt6.toml, Python/pyproject.toml, Python/sip/qscimod5.sip,
+	Python/sip/qscimod6.sip, Python/sip/qscimodcommon.sip,
+	lib/README.doc, qt/features/qscintilla2.prf,
+	qt/features_staticlib/qscintilla2.prf:
+	Update the building of the Python bindings from a full source
+	package.
+	[124c17880e06]
+
+2021-02-15  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* lib/README.doc, lib/qscintilla.dxy:
+	Some documentation fixes.
+	[81cc3ac8a8df]
+
+	* qt/PlatQt.cpp:
+	Fixed a regression in building against Qt5.
+	[4e87186ec216]
+
+	* qt/InputMethod.cpp, qt/MacPasteboardMime.cpp, qt/PlatQt.cpp,
+	qt/SciAccessibility.cpp, qt/qsciapis.cpp, qt/qscicommandset.cpp,
+	qt/qsciglobal.h, qt/qscilexer.cpp, qt/qscimacro.cpp,
+	qt/qscintilla.pro, qt/qsciprinter.cpp, qt/qsciprinter.h,
+	qt/qsciscintilla.cpp, qt/qsciscintillabase.cpp:
+	Initial port to Qt6.
+	[b88e78ec2ca3]
+
+2021-02-14  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/configure-old.py, Python/configure.py, Python/pyproject.toml,
+	Python/sip/qscimod4.sip, designer-Qt4Qt5/designer.pro, designer-
+	Qt4Qt5/qscintillaplugin.cpp, designer-Qt4Qt5/qscintillaplugin.h,
+	designer/designer.pro, designer/qscintillaplugin.cpp,
+	designer/qscintillaplugin.h, example-Qt4Qt5/application.pro,
+	example-Qt4Qt5/application.qrc, example-Qt4Qt5/images/copy.png,
+	example-Qt4Qt5/images/cut.png, example-Qt4Qt5/images/new.png,
+	example-Qt4Qt5/images/open.png, example-Qt4Qt5/images/paste.png,
+	example-Qt4Qt5/images/save.png, example-Qt4Qt5/main.cpp, example-
+	Qt4Qt5/mainwindow.cpp, example-Qt4Qt5/mainwindow.h,
+	example/application.pro, example/application.qrc,
+	example/images/copy.png, example/images/cut.png,
+	example/images/new.png, example/images/open.png,
+	example/images/paste.png, example/images/save.png, example/main.cpp,
+	example/mainwindow.cpp, example/mainwindow.h, lib/README.doc,
+	lib/ed.py, lib/pyproject.toml, qt/InputMethod.cpp, qt/ListBoxQt.cpp,
+	qt/MacPasteboardMime.cpp, qt/PlatQt.cpp, qt/SciClasses.cpp,
+	qt/ScintillaQt.cpp, qt/qsciglobal.h, qt/qscintilla.pro,
+	qt/qsciscintillabase.cpp, qt/qsciscintillabase.h:
+	Removed support for Qt4.
+	[dad7e9b4d62e]
+
+	* Merged the 2.11-maint branch.
+	[8c1814ec889a]
+
+2020-11-23  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* .hgtags:
+	Added tag 2.11.6 for changeset c262a7a02f6d
+	[a12ce93c13bf] <2.11-maint>
+
+	* NEWS:
+	Released as v2.11.6.
+	[c262a7a02f6d] [2.11.6] <2.11-maint>
+
+	* NEWS:
+	Updated the NEWS file.
+	[0f32bcb43dd3] <2.11-maint>
+
+2020-10-22  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* qt/features/qscintilla2.prf, qt/features_staticlib/qscintilla2.prf,
+	qt/qscintilla.pro:
+	Fixes for building for iOS with recent versions of Qt.
+	[aea84882d372] <2.11-maint>
+
+2020-10-20  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/project.py:
+	Added the --qsci-translations-dir option to sip-wheel.
+	[df77754750b3] <2.11-maint>
+
+2020-10-19  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* qsci/api/python/Python-3.9.api:
+	Added the .api file for Python v3.9.
+	[bff51b8043e2] <2.11-maint>
+
+	* .hgignore:
+	Updated .hgignore for the current build naming convention.
+	[b659680b3f24] <2.11-maint>
+
+2020-10-11  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* qt/qsciscintilla.cpp:
+	Fixed the display of non-latin1 call tips.
+	[f9fa57df2fbb] <2.11-maint>
+
+2020-09-17  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/project.py, lib/pyproject.toml:
+	Require PyQt-builder v1.6 as we no longer specify the sip module and
+	ABI.
+	[0e989cce12ea] <2.11-maint>
+
+2020-08-22  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/project.py:
+	Set the name of the sip module explicitly.
+	[a6b6fd548cf3] <2.11-maint>
+
+2020-06-30  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* example-Qt4Qt5/main.cpp, example-Qt4Qt5/mainwindow.cpp, example-
+	Qt4Qt5/mainwindow.h:
+	Updated the copyright notices on the example.
+	[8937c1d51479] <2.11-maint>
+
+2020-06-09  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* .hgtags:
+	Added tag 2.11.5 for changeset 36bf61975fe2
+	[7e336947e75e] <2.11-maint>
+
+	* NEWS:
+	Released as v2.11.5.
+	[36bf61975fe2] [2.11.5] <2.11-maint>
+
+	* NEWS, Python/sip/qsciabstractapis.sip, Python/sip/qsciapis.sip:
+	Fixed the Python signatures of the QsciAbstractAPIs and QsciAPIs
+	ctors.
+	[80aeec9058bf] <2.11-maint>
+
+2020-05-09  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/project.py, lib/pyproject.toml:
+	The minimum ABI version is 12.8 which requires SIP v5.3.
+	[c0e8e2e7e485] <2.11-maint>
+
+2020-04-11  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* lib/pyproject.toml:
+	We know that The Python binding swill be able to use SIP v6.
+	[4f1f5381fb69] <2.11-maint>
+
+2020-04-10  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* NEWS:
+	Updated the NEWS file.
+	[2ef898e42a1e] <2.11-maint>
+
+	* Python/project.py, lib/pyproject.toml:
+	Include the bundled .api files in wheels.
+	[ded23cd63255] <2.11-maint>
+
+2020-02-08  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* lib/pyproject.toml:
+	Fixed METADATA for commercial wheels.
+	[efc053939949] <2.11-maint>
+
+2019-12-18  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* .hgtags:
+	Added tag 2.11.4 for changeset b9eb589b0dab
+	[3f3722aac2ad] <2.11-maint>
+
+	* NEWS:
+	Released as v2.11.4.
+	[b9eb589b0dab] [2.11.4] <2.11-maint>
+
+	* lib/pyproject.toml:
+	Fixed requires-dist for commercial wheels.
+	[53c08faf43ff] <2.11-maint>
+
+2019-11-02  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* .hgtags:
+	Added tag 2.11.3 for changeset 989462577f67
+	[3f6d7cf0fc4b] <2.11-maint>
+
+	* NEWS:
+	Released as v2.11.3.
+	[989462577f67] [2.11.3] <2.11-maint>
+
+	* NEWS:
+	Updated the NEWS file.
+	[2075344b2124] <2.11-maint>
+
+2019-10-03  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* lib/pyproject.toml:
+	Fixed the name of PEP 566.
+	[e435d3af1587] <2.11-maint>
+
+	* lib/pyproject.toml:
+	Requires PyQt-builder v1.
+	[9502a2b46a2b] <2.11-maint>
+
+2019-10-01  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* lib/pyproject.toml:
+	Fixed the name of the PyQt-builder project.
+	[efe96da72b1f] <2.11-maint>
+
+2019-09-23  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/project.py:
+	Fixes for changes in the sip v5 API.
+	[a79acd2cdd94] <2.11-maint>
+
+2019-09-14  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* lib/pyproject.toml:
+	Added the requires-dist meta-data.
+	[941784a50fad] <2.11-maint>
+
+2019-09-07  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* NEWS:
+	Updated the NEWS file.
+	[6c83ad469a4e] <2.11-maint>
+
+	* lib/pyproject.toml:
+	Temporarily set the version of PyQt-builder required to be v0.1.
+	[734461946ff0] <2.11-maint>
+
+2019-09-06  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/project.py:
+	Fixes for relative path options.
+	[e7bc21d4cb25] <2.11-maint>
+
+2019-09-05  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/project.py:
+	Added the options to build the bindings from a locally installed
+	copy of the library.
+	[54094e26d201] <2.11-maint>
+
+2019-09-04  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* Python/configure-old.py, Python/configure.py, Python/project.py,
+	designer-Qt4Qt5/designer.pro, example-Qt4Qt5/application.pro,
+	qt/qscintilla.pro:
+	Removed the code to change the install_name on macOS.
+	[c88922cb4dee] <2.11-maint>
+
+	* Python/configure.py, qt/qscintilla.pro:
+	Fixed the install_name of the .dylib on macOS so that it is relative
+	to @rpath.
+	[010c78f5da88] <2.11-maint>
+
+	* Python/config-tests/cfgtest_Qsci.cpp:
+	Fixed the configuration test.
+	[c00c4195e8fc] <2.11-maint>
+
+	* METADATA.in, Python/README, Python/config-tests/cfgtest_Qsci.cpp,
+	Python/configure-old.py, Python/configure.py, Python/project.py,
+	lib/README, lib/pyproject.toml, qt/qscintilla.pro:
+	Added support for sip-build.
+	[20e39552153c] <2.11-maint>
+
+2019-08-30  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* METADATA.in, lib/README:
+	Updated the meta-data description.
+	[7681c13103f2] <2.11-maint>
+
+2019-08-21  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* METADATA.in:
+	Updated the link to the docs for PyPI.
+	[ab14aecc07de] <2.11-maint>
+
+2019-07-04  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* qt/qscilexercss.cpp:
+	Fixed the styling of CSS comments.
+	[9b2dd132b868] <2.11-maint>
+
+2019-06-25  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* .hgtags:
+	Added tag 2.11.2 for changeset 9a9bab556970
+	[e39e215312b4] <2.11-maint>
+
+	* NEWS:
+	Released as v2.11.2.
+	[9a9bab556970] [2.11.2] <2.11-maint>
+
+	* qsci/api/python/Python-3.8.api:
+	Added the .api file for Python v3.8.
+	[4bc9c6baa011] <2.11-maint>
+
+	* NEWS:
+	Updated the NEWS file.
+	[38685401d592] <2.11-maint>
+
+2019-05-31  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* qt/PlatQt.cpp:
+	Fixes to allow compilation with WASM.
+	[71be3fd818c8] <2.11-maint>
+
+2019-05-15  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* qt/ScintillaQt.cpp, qt/ScintillaQt.h, qt/qsciscintillabase.cpp,
+	qt/qsciscintillabase.h:
+	Fixed selection-related issues on macOS (and probably Windows)
+	triggered by the use of additional selections.
+	[47aaec2fa37c] <2.11-maint>
+
+2019-05-09  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* NEWS, Python/sip/qsciscintilla.sip, qt/qsciscintilla.cpp,
+	qt/qsciscintilla.h:
+	QsciScintilla::findMatchingBrace() is now part of the public API.
+	[b1973ad12f82] <2.11-maint>
+
+2019-03-13  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* NEWS, qt/qsciscintilla.cpp:
+	QsciScintilla::clear() now clears the undo history to be consistent
+	with Qt and setText().
+	[b013bbaed4a5] <2.11-maint>
+
 2019-02-12  Phil Thompson  <phil@riverbankcomputing.com>
+
+	* .hgtags:
+	Added tag 2.11.1 for changeset bebf741baff8
+	[c09e91f304b8] <2.11-maint>
 
 	* NEWS:
 	Released as v2.11.1.
