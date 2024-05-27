@@ -159,7 +159,7 @@ if(NOT QHexEdit_FOUND)
     add_subdirectory(libs/qhexedit)
 endif()
 if(NOT QCustomPlot_FOUND)
-    add_subdirectory(libs/qcustomplot-source)
+    add_subdirectory(libs/qcustomplot)
 endif()
 
 if(ENABLE_TESTING)
