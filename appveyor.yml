@@ -2,14 +2,13 @@ image: Visual Studio 2019
 
 branches:
   only:
-    - master
     - ^v.*
 
-version: '3.12.99.${build}'
+version: '3.13.99.${build}'
 
 environment:
   ARTIFACT_CONFIGURATION_SLUG: initial
-  SIGNPATH_SIGNING_POLICY_SLUG: test-signing
+  SIGNPATH_SIGNING_POLICY_SLUG: release-signing
 
   matrix:
     - job_name: x86
