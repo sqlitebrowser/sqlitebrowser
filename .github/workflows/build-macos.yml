@@ -20,6 +20,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Uninstall Mono, which is included by default in GitHub-hosted macOS runners,
+      # as it interferes with referencing our own compiled SQLite libraries.
+      - name: Uninstall Mono
+        run: |
+          sudo rm -rfv /Library/Frameworks/Mono.framework
+          sudo pkgutil --forget com.xamarin.mono-MDK.pkg
+          sudo rm /etc/paths.d/mono-commands
+
       - name: Install dependencies
         run: |
           brew update
