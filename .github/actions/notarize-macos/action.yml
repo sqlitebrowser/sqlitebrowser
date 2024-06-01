@@ -1,0 +1,152 @@
+name: Notarize the app (macOS)
+
+inputs:
+  APPLE_ID:
+    required: true
+  APPLE_PW:
+    required: true
+  DEV_ID:
+    required: true
+  GH_TOKEN:
+    required: true
+  KEYCHAIN_PATH:
+    required: true
+  KEYCHAIN_PW:
+    required: true
+  NIGHTLY:
+    required:  true
+  SQLCIPHER:
+    required: true
+  TEAM_ID:
+    required: true
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: Unlock keychain
+      shell: bash
+      run: |
+        security unlock-keychain -p "${{ inputs.KEYCHAIN_PW }}" "${{ inputs.KEYCHAIN_PATH}}"
+        security list-keychain -d user -s "${{ inputs.KEYCHAIN_PATH }}"
+
+    - name: Include the dependencies in the app bundle
+      shell: bash
+      run: find build -name "DB Browser for SQL*.app" -exec /opt/homebrew/opt/db4subqt@5/bin/macdeployqt {} -sign-for-notarization="${{ inputs.DEV_ID }}" \;
+
+    - name: Add the 'nalgeon/sqlean' extension to the app bundle
+      shell: bash
+      run: |
+        gh auth login --with-token <<< "${{ inputs.GH_TOKEN }}"
+        gh release download --pattern "sqlean-macos-arm64.zip" --repo "nalgeon/sqlean"
+        unzip sqlean-macos-arm64.zip
+        for TARGET in $(find build -name "DB Browser for SQL*.app" | sed -e 's/ /_/g'); do
+          TARGET=$(echo $TARGET | sed -e 's/_/ /g')
+          mkdir "$TARGET/Contents/Extensions"
+
+          clang -I /opt/homebrew/opt/db4subsqlitefts@5/include -L /opt/homebrew/opt/db4subsqlitefts@5/lib -fno-common -dynamiclib src/extensions/extension-formats.c -o "$TARGET/Contents/Extensions/formats.dylib"
+          if [ -f "$TARGET/Contents/Extensions/formats.dylib" ]; then
+            install_name_tool -id "@executable_path/../Extensions/formats.dylib" "$TARGET/Contents/Extensions/formats.dylib"
+            ln -s formats.dylib "$TARGET/Contents/Extensions/formats.dylib.dylib"
+          fi
+
+          cp sqlean.dylib "$TARGET/Contents/Extensions/"
+          if [ -f "$TARGET/Contents/Extensions/sqlean.dylib" ]; then
+            install_name_tool -id "@executable_path/../Extensions/sqlean.dylib" "$TARGET/Contents/Extensions/sqlean.dylib"
+            ln -s sqlean.dylib "$TARGET/Contents/Extensions/sqlean.dylib.dylib"
+          fi
+        done
+
+    - name: Copy the license file to the app bundle
+      shell: bash
+      run: |
+        for TARGET in $(find build -name "DB Browser for SQL*.app" | sed -e 's/ /_/g'); do
+          TARGET=$(echo $TARGET | sed -e 's/_/ /g')
+          cp LICENSE "$TARGET/Contents/Resources/"
+          cp LICENSE-EXTENSIONS "$TARGET/Contents/Resources/"
+          cp LICENSE-PLUGINS "$TARGET/Contents/Resources/"
+        done
+
+    - name: Copy the translation files to the app bundle
+      shell: bash
+      run: |
+        for TARGET in $(find build -name "DB Browser for SQL*.app" | sed -e 's/ /_/g'); do
+          TARGET=$(echo $TARGET | sed -e 's/_/ /g')
+          mkdir "$TARGET/Contents/translations"
+          for i in ar cs de en es fr it ko pl pt pt_BR ru uk zh_CN zh_TW; do
+            find /opt/homebrew/opt/db4subqt@5/translations -name "qt_${i}.qm" 2> /dev/null -exec cp -v {} "$TARGET/Contents/translations/" \;
+            find /opt/homebrew/opt/db4subqt@5/translations -name "qtbase_${i}.qm" 2> /dev/null -exec cp -v {} "$TARGET/Contents/translations/" \;
+            find /opt/homebrew/opt/db4subqt@5/translations -name "qtmultimedia_${i}.qm" 2> /dev/null -exec cp -v {} "$TARGET/Contents/translations/" \;
+            find /opt/homebrew/opt/db4subqt@5/translations -name "qtscript_${i}.qm" 2> /dev/null -exec cp -v {} "$TARGET/Contents/translations/" \;
+            find /opt/homebrew/opt/db4subqt@5/translations -name "qtxmlpatterns_${i}.qm" 2> /dev/null -exec cp -v {} "$TARGET/Contents/translations/" \;
+          done 
+        done
+
+    - name: Copy the icon file to the app bundle
+      shell: bash
+      run: |
+        for TARGET in $(find build -name "DB Browser for SQL*.app" | sed -e 's/ /_/g'); do
+          TARGET=$(echo $TARGET | sed -e 's/_/ /g')
+          if [ "${{ inputs.NIGHTLY }}" = "false" ]; then
+            cp installer/macos/macapp.icns "$TARGET/Contents/Resources/"
+            /usr/libexec/PlistBuddy -c "Set :CFBundleIconFile macapp.icns" "$TARGET/Contents/Info.plist"
+          else
+            cp installer/macos/macapp-nightly.icns "$TARGET/Contents/Resources/"
+            /usr/libexec/PlistBuddy -c "Set :CFBundleIconFile macapp-nightly.icns" "$TARGET/Contents/Info.plist"
+          fi
+        done
+
+    - name: Sign the manually added extensions.
+      shell: bash
+      run: |
+        for TARGET in $(find build -name "DB Browser for SQL*.app" | sed -e 's/ /_/g'); do
+          TARGET=$(echo $TARGET | sed -e 's/_/ /g')
+          codesign --sign "${{ inputs.DEV_ID }}" --deep --force --options=runtime --strict --timestamp "$TARGET/Contents/Extensions/formats.dylib"
+          codesign --sign "${{ inputs.DEV_ID }}" --deep --force --options=runtime --strict --timestamp "$TARGET/Contents/Extensions/sqlean.dylib"
+          codesign --sign "${{ inputs.DEV_ID }}" --deep --force --options=runtime --strict --timestamp "$TARGET"
+        done
+
+    - name: Move app bundle to installer folder for DMG creation
+      shell: bash
+      run: mv build/*.app installer/macos
+
+    # TODO: I originally tried to break it into two steps to make it more readable,
+    # but Composite Actions do not support if statements for steps.
+    # For more information, see https://github.com/actions/runner/blob/main/docs/adrs/0549-composite-run-steps.md
+    - name: Create the DMG
+      shell: bash
+      run: |
+        export DATE=$(date +%Y%m%d)
+
+        if [ "${{ inputs.SQLCIPHER }}" = "1" ]; then
+          if [ "${{ inputs.NIGHTLY }}" = "false" ]; then
+            # Continuous with SQLCipher
+            sed -i "" 's/"DB Browser for SQLCipher Nightly.app"/"DB Browser for SQLCipher-dev-'$(git rev-parse --short --verify HEAD)'.app"/' installer/macos/sqlcipher-nightly.json
+            TARGET="DB.Browser.for.SQLCipher-dev-$(git rev-parse --short --verify HEAD).dmg"
+          else
+            # Nightly with SQLCipher
+            TARGET="DB.Browser.for.SQLCipher-universal_$DATE.dmg"
+          fi
+          appdmg --quiet installer/macos/sqlcipher-nightly.json "$TARGET"
+        else
+          if [ "${{ inputs.NIGHTLY }}" = "false" ]; then
+            # Continuous without SQLCipher
+            sed -i "" 's/"DB Browser for SQLite Nightly.app"/"DB Browser for SQLite-dev-'$(git rev-parse --short --verify HEAD)'.app"/' installer/macos/nightly.json
+            TARGET="DB.Browser.for.SQLite-dev-$(git rev-parse --short --verify HEAD).dmg"
+          else
+            # Nightly without SQLCipher
+            TARGET="DB.Browser.for.SQLite-universal_$DATE.dmg"
+          fi
+          appdmg --quiet installer/macos/nightly.json "$TARGET"
+        fi
+
+        codesign --sign "${{ inputs.DEV_ID }}" --verbose --options=runtime --timestamp "$TARGET"
+        codesign -vvv --deep --strict --verbose=4 "$TARGET"
+
+    - name: Notarize the dmg
+      shell: bash
+      run: xcrun notarytool submit *.dmg --apple-id "${{ inputs.APPLE_ID }}" --password "${{ inputs.APPLE_PW }}" --team-id "${{ inputs.TEAM_ID }}" --wait
+
+    - name: Staple the notarization ticket
+      shell: bash
+      run: xcrun stapler staple *.dmg

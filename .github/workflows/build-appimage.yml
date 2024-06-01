@@ -16,10 +16,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: |
-          sudo apt update
-          sudo apt install libqcustomplot-dev libqscintilla2-qt5-dev libqt5svg5 libsqlcipher-dev libsqlite3-dev qttools5-dev
+      - name: Install and cache dependencies
+        uses: awalsh128/cache-apt-pkgs-action@v1.4.2
+        with:
+          packages: libqcustomplot-dev libqscintilla2-qt5-dev libqt5svg5 libsqlcipher-dev libsqlite3-dev qttools5-dev
 
       - if: matrix.sqlcipher == 0
         name: Build SQLite
@@ -37,7 +37,7 @@ jobs:
       - name: Configure build
         run: |
           mkdir appbuild && mkdir appdir && cd appbuild
-          cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=../appdir/usr -Wno-dev -DFORCE_INTERNAL_QSCINTILLA=ON -Dsqlcipher=${{ matrix.sqlcipher }} ..
+          cmake -DCMAKE_INSTALL_PREFIX:PATH=../appdir/usr -Wno-dev -DFORCE_INTERNAL_QSCINTILLA=ON -Dsqlcipher=${{ matrix.sqlcipher }} ..
 
       - name: Build
         working-directory: ./appbuild

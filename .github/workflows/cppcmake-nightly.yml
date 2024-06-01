@@ -1,4 +1,4 @@
-name: Build and Deploy Nightly Builds
+name: CI (Nightly)
 
 on:
   schedule:
