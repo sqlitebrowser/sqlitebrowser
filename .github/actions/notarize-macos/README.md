@@ -1,1 +1,0 @@
-A workflow for notarizing macOS build artifacts during a CI workflow run.

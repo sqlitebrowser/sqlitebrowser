@@ -14,11 +14,18 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-13-runner]
+        os: [macos-14]
         sqlcipher: ["0", "1"]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          brew update
+          brew tap sqlitebrowser/tap
+          brew install db4subqt@5 db4subsqlcipher db4subsqlitefts@5 ninja
+          npm install -g appdmg
 
       - name: Configure build
         run: |
@@ -37,7 +44,7 @@ jobs:
           fi
 
           mkdir build && cd build
-          cmake -G Ninja -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DcustomTap=1 -DENABLE_TESTING=ON -Dsqlcipher=${{ matrix.sqlcipher }} ..
+          cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DcustomTap=1 -DENABLE_TESTING=ON -Dsqlcipher=${{ matrix.sqlcipher }} ..
 
       - name: Build
         working-directory: ./build
@@ -50,19 +57,25 @@ jobs:
       - name: Build Extension
         run: clang -I /opt/homebrew/opt/db4subsqlitefts@5/include -L /opt/homebrew/opt/db4subsqlitefts@5/lib -fno-common -dynamiclib src/extensions/extension-formats.c
 
-      - if: github.event_name != 'pull_request'
-        name: Notarize the app
-        uses: ./.github/actions/notarize-macos
-        with:
+      - name: Notarization
+        id: notarization
+        run: chmod +x ./installer/macos/notarize.sh && ./installer/macos/notarize.sh
+        env:
           APPLE_ID: ${{ secrets.MACOS_CODESIGN_APPLE_ID }}
           APPLE_PW: ${{ secrets.MACOS_CODESIGN_APPLE_PW }}
           DEV_ID: ${{ secrets.MACOS_CODESIGN_DEV_ID }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          KEYCHAIN_PATH: ${{ secrets.MACOS_CODESIGN_KEYCHAIN_PATH }}
           KEYCHAIN_PW: ${{ secrets.MACOS_CODESIGN_KEYCHAIN_PW }}
+          P12: ${{ secrets.MACOS_CODESIGN_P12 }}
+          P12_PW: ${{ secrets.MACOS_CODESIGN_P12_PW }}
           NIGHTLY: ${{ inputs.NIGHTLY }}
           SQLCIPHER: ${{ matrix.sqlcipher }}
           TEAM_ID: ${{ secrets.MACOS_CODESIGN_TEAM_ID }}
+
+      - if: steps.notarization.conclusion != 'skipped'
+        name: Clear Keychain
+        run: security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
+        continue-on-error: true
 
       - if: github.event_name != 'pull_request'
         name: Upload artifacts
@@ -70,4 +83,3 @@ jobs:
         with:
           name: build-artifacts-${{ matrix.os }}-${{ matrix.sqlcipher }}
           path: DB.Browser.for.*.dmg
-          retention-days: 1
