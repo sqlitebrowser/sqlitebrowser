@@ -1,5 +1,5 @@
 diff --git a/installer/windows/variables.wxi b/installer/windows/variables.wxi
-index fbedf0c3..368888ef 100644
+index fbedf0c3..34a65831 100644
 --- a/installer/windows/variables.wxi
 +++ b/installer/windows/variables.wxi
 @@ -40,8 +40,8 @@
@@ -13,7 +13,7 @@ index fbedf0c3..368888ef 100644
  
      <!--
      =================================================== Build System ===================================================
-@@ -49,20 +49,11 @@
+@@ -49,20 +49,12 @@
      Paths for the various libraries the application needs to compile. Change these to match the build machine.
      -->
  
@@ -36,6 +36,7 @@ index fbedf0c3..368888ef 100644
 +    <?define SQLitePath="$(env.SQLitePath)" ?>
 +    <?define SQLCipherPath="$(env.SQLCipherPath)" ?>
 +    <?define OpenSSLPath="$(env.OpenSSLPath)" ?>
++    <?define SqleanPath="$(env.SqleanPath)" ?>
 +    <?define SQLiteExePath="$(env.ExePath)\release-sqlite\Release" ?>
 +    <?define SQLCipherExePath="$(env.ExePath)\release-sqlcipher\Release" ?>
  
