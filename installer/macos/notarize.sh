@@ -39,9 +39,7 @@ done
 # Copy the license file to the app bundle
 for TARGET in $(find build -name "DB Browser for SQL*.app" | sed -e 's/ /_/g'); do
     TARGET=$(echo $TARGET | sed -e 's/_/ /g')
-    cp LICENSE "$TARGET/Contents/Resources/"
-    cp LICENSE-EXTENSIONS "$TARGET/Contents/Resources/"
-    cp LICENSE-PLUGINS "$TARGET/Contents/Resources/"
+    cp LICENSE* "$TARGET/Contents/Resources/"
 done
 
 # Copy the translation files to the app bundle

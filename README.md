@@ -364,13 +364,7 @@ View the list by going to the [__Contributors__ tab](https://github.com/sqlitebr
 
 ## License
 
-DB Browser for SQLite is bi-licensed under the Mozilla Public License
-Version 2, as well as the GNU General Public License Version 3 or later.
-
-Modification or redistribution is permitted under the conditions of these licenses.
-
-Check `LICENSE-EXTENSIONS` for other rights regarding included SQLite extensions in macOS builds.
-Check `LICENSE-PLUGINS` for other rights regarding included third-party resources.
+See the [LICENSE](LICENSE) file for licensing information.
 
   [gitter-img]: https://badges.gitter.im/sqlitebrowser/sqlitebrowser.svg
   [gitter]: https://gitter.im/sqlitebrowser/sqlitebrowser
