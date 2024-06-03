@@ -52,28 +52,15 @@ jobs:
           cache-key-prefix: "cache"
           version: ${{ env.QT_VERSION }}
 
-      - name: Install MSYS2 and 'mingw-w64-i686-toolchain'
-        if: matrix.os == 'windows-2019' && matrix.arch == 'Win32'
-        uses: msys2/setup-msys2@v2
-        with:
-            cache: true
-            install: mingw-w64-i686-toolchain
-            update: true
-
-      - name: Build 'nalgeon/sqlean' for x86
-        if: matrix.os == 'windows-2019' && matrix.arch == 'Win32'
-        shell: bash
+      - name: Download 'nalgeon/sqlean'
         run: |
-          git clone https://github.com/nalgeon/sqlean && cd sqlean
-          make prepare-dist && make download-sqlite && make download-external
-          $RUNNER_TEMP/msys64/msys2_shell.cmd -defterm -no-start -mingw32 -lc "mingw32-make compile-windows"
-          mv -v dist/sqlean.dll ./
-
-      - name: Download 'nalgeon/sqlean' for x86_64
-        if: matrix.os == 'windows-2019' && matrix.arch == 'Win64'
-        run: |
-          gh release download --pattern "sqlean-win-x64.zip" --repo "nalgeon/sqlean"
-          Expand-Archive -Path sqlean-win-x64.zip -DestinationPath .\sqlean
+          if ("${{ matrix.arch }}" -eq "Win32") {
+            gh release download --pattern "sqlean-win-x86.zip" --repo "nalgeon/sqlean"
+            Expand-Archive -Path sqlean-win-x86.zip -DestinationPath .\sqlean
+          } else {
+            gh release download --pattern "sqlean-win-x64.zip" --repo "nalgeon/sqlean"
+            Expand-Archive -Path sqlean-win-x64.zip -DestinationPath .\sqlean
+          }
 
       - name: Setup MSVC
         uses: ilammy/msvc-dev-cmd@v1
