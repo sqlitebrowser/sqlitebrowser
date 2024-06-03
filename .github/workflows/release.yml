@@ -28,13 +28,16 @@ jobs:
         with:
           path: target
 
-      - run: find target -type f -exec mv {} target \;
+      - name: Remove unsigned Windows build
+        run: rm -rfv target/*unsigned*
+
+      - run: find target -type f -exec mv -v {} target \;
 
       - name: Unarchive Windows's build artifacts
         run: for f in target/*.zip; do unzip -d target/ "$f"; done
 
       - name: Remove archived Windows's build artifacts
-        run: rm target/build-artifacts-*.zip
+        run: rm -v target/build-artifacts-*.zip
 
       - name: Release
         uses: softprops/action-gh-release@v2
@@ -42,5 +45,5 @@ jobs:
           files: target/*
           prerelease: true
           tag_name: ${{ env.tag_name }}
-      
+
       # For reference: Uploading nightly builds to the nightly server is processed on the nightly server side.

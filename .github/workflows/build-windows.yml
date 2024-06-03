@@ -161,6 +161,25 @@ jobs:
             mv DB.Browser.for.SQLite-*.msi "DB.Browser.for.SQLite-dev-$(git rev-parse --short HEAD)-$ARCH.msi"
           }
 
+      - name: Upload artifacts for code signing with SignPath
+        id: unsigned-artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts-${{ matrix.os}}-${{ matrix.arch }}-unsigned
+          path: installer\windows\DB.Browser.for.SQLite-*.msi
+
+      # Change the signing-policy-slug when you release an RC, RTM or stable release.
+      - name: Code signing with SignPath
+        uses: signpath/github-action-submit-signing-request@v0.4
+        with:
+          api-token: '${{ secrets.SIGNPATH_API_TOKEN }}'
+          github-artifact-id: '${{ steps.unsigned-artifacts.outputs.artifact-id }}'
+          organization-id: '${{ secrets.SIGNPATH_ORGANIZATION_ID }}'
+          output-artifact-directory: .\installer\windows
+          project-slug: 'sqlitebrowser'
+          signing-policy-slug: 'test-signing'
+          wait-for-completion: true
+
       - name: Create ZIP
         run: |
           $ARCH="${{ matrix.arch }}".ToLower()
