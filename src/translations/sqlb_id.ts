@@ -1403,7 +1403,7 @@ Apakah Anda hendak menerapkan data yang disunting ke baris=%1, kolom=%2?</transl
     <message>
         <location filename="../EditDialog.cpp" line="148"/>
         <source>Editing row=%1, column=%2</source>
-        <translation>Menyunting baris=$1, kolom=%2</translation>
+        <translation>Menyunting baris=%1, kolom=%2</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="151"/>
@@ -3763,7 +3763,7 @@ Anda dapat menyeret pernyataan SQL dari kolom Skema dan menjatuhkan mereka ke da
     <message>
         <location filename="../MainWindow.ui" line="1169"/>
         <source>&amp;New Database</source>
-        <translation>&amp;Basis Data Baru...</translation>
+        <translation>&amp;Basis Data Baru</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1232"/>
@@ -4507,8 +4507,8 @@ Anda yakin ingin menyimpan basis data?</translation>
         <location filename="../MainWindow.cpp" line="1854"/>
         <source>Select the action to apply to the dropped file(s). &lt;br/&gt;Note: only &apos;Import&apos; will process more than one file.</source>
         <comment>Note for translation: Although there is no %n in the original, you can use the numerus-form to adjust &apos;files(s)&apos; and remove the note when n = 1. Including %n in the translation will also work.</comment>
-        <translation type="unfinished">
-            <numerusform>Pilih aksi yang akan diterapkan ke berkas yang dijatuhkan. &lt;br/&gt;Catatan: hanya &apos;Impor&apos; yang akan memroses lebih dari satu berkas.</numerusform>
+        <translation>
+            <numerusform>Pilih aksi yang akan diterapkan ke berkas yang dijatuhkan. &lt;br/&gt;Catatan: hanya &apos;Impor&apos; yang akan memroses lebih dari %n berkas.</numerusform>
         </translation>
     </message>
     <message>
@@ -7308,7 +7308,7 @@ Tahan Shift%3 dan klik untuk melompat ke sana</translation>
     <message>
         <location filename="../TableBrowser.ui" line="685"/>
         <source>This button exports the data of the browsed table as currently displayed (after filters, display formats and order column) as a JSON file.</source>
-        <translation>Tombol ini mengekspor data dari tabel yang diramban sebagaimana saat ini ditampilkan (setelah filter, format tampilan, dan kolom pengurutan) sebagai suatu berkas JSON</translation>
+        <translation>Tombol ini mengekspor data dari tabel yang diramban sebagaimana saat ini ditampilkan (setelah filter, format tampilan, dan kolom pengurutan) sebagai suatu berkas JSON.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="754"/>
