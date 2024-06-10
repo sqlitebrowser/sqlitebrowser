@@ -4,36 +4,15 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/span&gt;&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://sqlitebrowser.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;https://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;https://doc.qt.io/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://doc.qt.io/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Silk icon set by Mark James licensed under a Creative Commons Attribution 2.5 and 3.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;https://github.com/markjames/famfamfam-silk-icons&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/markjames/famfamfam-silk-icons&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser för SQLite är ett opensource- och gratis visuellt verktyg för att skapa, designa och redigera SQLite-databasfiler.&lt;/p&gt;&lt;p&gt;Det är bi-licenserat under  Mozilla Public License Version 2 och GNU General Public License Version 3 eller senare. Du kan modifiera eller återdistrubiera det enl. förbehåll i dessa licenser.&lt;/p&gt;&lt;p&gt;Se &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/a&gt; och &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/span&gt;&lt;/a&gt; för detaljer.&lt;/p&gt;&lt;p&gt;Besök vår webbplats för mer information om detta program, på: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://sqlitebrowser.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Denna programvara använder GPL/LGPL Qt Toolkit från &lt;/span&gt;&lt;a href=&quot;https://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;Se &lt;/span&gt;&lt;a href=&quot;https://doc.qt.io/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://doc.qt.io/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; för licensvillkor och information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Det använder också ikonbilder som benämns Silk icon set av Mark James som licensierats under Creative Commons Attribution 2.5- och 3.0-licens.&lt;br/&gt;Se &lt;/span&gt;&lt;a href=&quot;https://github.com/markjames/famfamfam-silk-icons&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/markjames/famfamfam-silk-icons&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; för detaijer.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>About DB Browser for SQLite</source>
         <translation>Om DB Browser för SQLite</translation>
-    </message>
-    <message>
-        <source>Version </source>
-        <translation type="vanished">Version </translation>
-    </message>
-    <message>
-        <source>Qt Version </source>
-        <translation type="vanished">Qt Version </translation>
     </message>
     <message>
         <source>Version</source>
         <translation>Version</translation>
     </message>
     <message>
-        <source>SQLite Version </source>
-        <translation type="vanished">SQLite Version </translation>
-    </message>
-    <message>
-        <source>SQLCipher Version </source>
-        <translation type="vanished">SQLCipher Version </translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;https://www.gnu.org/licenses/gpl.html&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;https://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;https://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;https://doc.qt.io/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://doc.qt.io/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Pastel SVG icon set by Michael Buckley under a Creative Commons
-Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;https://codefisher.org/pastel-svg/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://codefisher.org/pastel-svg/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/span&gt;&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://sqlitebrowser.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;https://doc.qt.io/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;We use the nalgeon/sqlean library for SQLite extensions support.&lt;br/&gt;This library is licensed under the MIT license, see the following for more information:&lt;br/&gt;&lt;/span&gt;&lt;a href=&quot;https://github.com/nalgeon/sqlean&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/nalgeon/sqlean&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Pastel SVG icon set by Michael Buckley under a Creative Commons Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;https://codefisher.org/pastel-svg/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://codefisher.org/pastel-svg/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -114,30 +93,8 @@ Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot
 <context>
     <name>Application</name>
     <message>
-        <source>The -s/--sql option requires an argument</source>
-        <translation type="vanished">Parameter -s/--sql behöver ett argument</translation>
-    </message>
-    <message>
         <source>Invalid option/non-existant file: %1</source>
         <translation>Felaktig parameter/icke existerande fil: %1</translation>
-    </message>
-    <message>
-        <source>  -h, --help		Show command line options</source>
-        <translation type="vanished">  -h, --help		Visa hjälp för kommandorad</translation>
-    </message>
-    <message>
-        <source>  [file]		Open this SQLite database</source>
-        <translation type="vanished">  [file]		Öppna denna SQLite-databas</translation>
-    </message>
-    <message>
-        <source>Usage: %1 [options] [db]
-</source>
-        <translation type="vanished">Använda: %1 [val] [db]
-</translation>
-    </message>
-    <message>
-        <source>  -q, --quit		Exit application after running scripts</source>
-        <translation type="vanished">  -q, --quit		Avsluta programmet efter skript har körts</translation>
     </message>
     <message>
         <source>Possible command line arguments:</source>
@@ -303,10 +260,6 @@ The encryption process might take some time and you should have a backup copy of
 Notera att om du ändrar någon annan valbar inställning så behöver du åter igen ange dem igen varje gång du öppnar databasen.
 Lämna fältet för lösenord tomt för att avaktivera kryptering.
 Krypteringsprocessen behvöer lite tid och se till att ha en backupkopia av din databas! Osparade förändringar appliceras innan modifiering av krypteringen sker.</translation>
-    </message>
-    <message>
-        <source>Page &amp;size</source>
-        <translation type="vanished">Sid&amp;storlek</translation>
     </message>
     <message>
         <source>&amp;Password</source>
@@ -475,6 +428,14 @@ Om någon annan inställning ändrades för denna databas behöver du ange och j
         <source>SpatiaLite Geometry to SVG</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>WebKit / Chromium epoch to date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WebKit / Chromium epoch to local time</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CondFormatManager</name>
@@ -572,63 +533,10 @@ Om någon annan inställning ändrades för denna databas behöver du ange och j
     </message>
 </context>
 <context>
-    <name>CreateIndexDialog</name>
-    <message>
-        <source>&amp;Name</source>
-        <translation type="vanished">&amp;Namn</translation>
-    </message>
-    <message>
-        <source>Order</source>
-        <translation type="vanished">Ordning</translation>
-    </message>
-    <message>
-        <source>Create New Index</source>
-        <translation type="vanished">Skapa nytt index</translation>
-    </message>
-    <message>
-        <source>&amp;Table</source>
-        <translation type="vanished">&amp;Tabell</translation>
-    </message>
-    <message>
-        <source>Column</source>
-        <translation type="vanished">Kolumn</translation>
-    </message>
-    <message>
-        <source>Use in Index</source>
-        <translation type="vanished">Använd i index</translation>
-    </message>
-    <message>
-        <source>&amp;Columns</source>
-        <translation type="vanished">&amp;Kolumner</translation>
-    </message>
-    <message>
-        <source>Creating the index failed:
-%1</source>
-        <translation type="vanished">Misslyckades att skapa index:
-%1</translation>
-    </message>
-    <message>
-        <source>&amp;Unique</source>
-        <translation type="vanished">&amp;Unik</translation>
-    </message>
-</context>
-<context>
     <name>DBBrowserDB</name>
     <message>
         <source>Action cancelled.</source>
         <translation>Aktivitet avbruten.</translation>
-    </message>
-    <message>
-        <source>could not get list of db objects: %1, %2</source>
-        <translation type="vanished">kunde inte ta emot lista med db-objekt: %1, %2</translation>
-    </message>
-    <message>
-        <source>renameColumn: creating savepoint failed. DB says: %1</source>
-        <translation type="vanished">döpOmKolumn: misslyckades att skapa återställningspunk. DB säger: %1</translation>
-    </message>
-    <message>
-        <source>renameColumn: cannot find table %1.</source>
-        <translation type="vanished">döpOmKolumn: kan inte hitta tabell %1.</translation>
     </message>
     <message>
         <source>Please specify the database name under which you want to access the attached database</source>
@@ -639,26 +547,12 @@ Om någon annan inställning ändrades för denna databas behöver du ange och j
         <translation>Avbryt</translation>
     </message>
     <message>
-        <source>renameColumn: copying data to new table failed. DB says:
-%1</source>
-        <translation type="vanished">döpOmKolumn: misslyckades att kopiera data till ny tabell. DB säger:
-%1</translation>
-    </message>
-    <message>
         <source>File not found.</source>
         <translation>Hittar inte fil.</translation>
     </message>
     <message>
-        <source>renameColumn: cannot find column %1.</source>
-        <translation type="vanished">döpOmKolumn: kan inte hitta kolumn %1.</translation>
-    </message>
-    <message>
         <source>Error setting pragma %1 to %2: %3</source>
         <translation>Kunde inte sätta pragma %1 till %2: %3</translation>
-    </message>
-    <message>
-        <source>unknown object type %1</source>
-        <translation type="vanished">okänd objekttyp %1</translation>
     </message>
     <message>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
@@ -669,52 +563,12 @@ Om någon annan inställning ändrades för denna databas behöver du ange och j
 </translation>
     </message>
     <message>
-        <source>renameColumn: deleting old table failed. DB says: %1</source>
-        <translation type="vanished">döpOmKolumn: misslyckades att ta bort gammal tabell. DB säger: %1</translation>
-    </message>
-    <message>
-        <source>could not get types</source>
-        <translation type="vanished">kunde inte få typer</translation>
-    </message>
-    <message>
-        <source>renameColumn: releasing savepoint failed. DB says: %1</source>
-        <translation type="vanished">döpOmKolumn: misslyckades att släppa återställningspunt. DB säger: %1</translation>
-    </message>
-    <message>
-        <source>could not execute pragma command: %1, %2</source>
-        <translation type="vanished">kunde inte köra kommando för pragma: %1, %2</translation>
-    </message>
-    <message>
-        <source>... &lt;string can not be logged, contains binary data&gt; ...</source>
-        <translation type="vanished">... &lt;sträng kan inte loggas, innehåller binärdata&gt; ...</translation>
-    </message>
-    <message>
-        <source>didn&apos;t receive any output from pragma %1</source>
-        <translation type="vanished">mottog inte något utdata från pragma %1</translation>
-    </message>
-    <message>
         <source>Exporting database to SQL file...</source>
         <translation>Exporterar databas till SQL-fil...</translation>
     </message>
     <message>
-        <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.Message from database engine:
-%3</source>
-        <translation type="vanished">Kunde inte döpa om tabell &apos;%1&apos; till &apos;%2&apos;. Meddelande från databasmotor:
-%3</translation>
-    </message>
-    <message>
         <source>Do you want to save the changes made to the database file %1?</source>
         <translation>Vill du spara ändringarna som gjorts i databasfilen %1?</translation>
-    </message>
-    <message>
-        <source>renameColumn: creating new table failed. DB says: %1</source>
-        <translation type="vanished">döpOmKolumn: misslyckades skapa ny tabell. DB säger: %1</translation>
-    </message>
-    <message>
-        <source>Error in statement #%1: %2.
-Aborting execution.</source>
-        <translation type="vanished">Fel i uttyck #%1: %2.
-Avbryter.</translation>
     </message>
     <message>
         <source>Executing SQL...</source>
@@ -837,6 +691,10 @@ Message from database engine:
         <source>could not get column information</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Error loading built-in extension: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DbStructureModel</name>
@@ -900,86 +758,20 @@ Message from database engine:
         <translation>Välj ett filnamn att exportera data till</translation>
     </message>
     <message>
-        <source>Size of data currently in table</source>
-        <translation type="vanished">Storlek på data i tabell</translation>
-    </message>
-    <message>
-        <source>Text files(*.txt);;All files(*)</source>
-        <translation type="vanished">Textfiler(*.txt);;Alla filer(*)</translation>
-    </message>
-    <message>
         <source>Erases the contents of the cell</source>
         <translation>Tar bort innehållet från cellen</translation>
-    </message>
-    <message>
-        <source>Opens a file dialog used to import text to this database cell.</source>
-        <translation type="vanished">Öppnar en fildialog för att importera text till databascellen.</translation>
     </message>
     <message>
         <source>Binary</source>
         <translation>Binär</translation>
     </message>
     <message>
-        <source>Type of data currently in cell: Binary</source>
-        <translation type="vanished">Typ av data i cell: Binär</translation>
-    </message>
-    <message>
         <source>Edit database cell</source>
         <translation>Redigera databascell</translation>
     </message>
     <message>
-        <source>Type of data currently in cell</source>
-        <translation type="vanished">Typ av data i cell</translation>
-    </message>
-    <message>
-        <source>Export text</source>
-        <translation type="vanished">Exportera text</translation>
-    </message>
-    <message>
-        <source>Import text</source>
-        <translation type="vanished">Importera text</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n char(s)</source>
-        <translation type="vanished">
-            <numerusform>%n tecken</numerusform>
-            <numerusform>%n tecken</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>%n byte(s)</source>
-        <translation type="vanished">
-            <numerusform>%n byte</numerusform>
-            <numerusform>%n byte</numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>&amp;Export</source>
-        <translation type="vanished">&amp;Export</translation>
-    </message>
-    <message>
-        <source>&amp;Import</source>
-        <translation type="vanished">&amp;Import</translation>
-    </message>
-    <message>
         <source>This area displays information about the data present in this database cell</source>
         <translation>Detta område visar information om data som finns i denna databascell</translation>
-    </message>
-    <message>
-        <source>Text files(*.txt);;Image files(%1);;All files(*)</source>
-        <translation type="vanished">Textfiler(*.txt);;Bildfiler(%1);;Alla filer(*)</translation>
-    </message>
-    <message>
-        <source>Opens a file dialog used to export the contents of this database cell to a text file.</source>
-        <translation type="vanished">Öppnar en fildialog för att exportera innehållet av denna databascell till en textfil.</translation>
-    </message>
-    <message>
-        <source>Type of data currently in cell: Text / Numeric</source>
-        <translation type="vanished">Typ av data i cellen: Text / Numerisk</translation>
-    </message>
-    <message>
-        <source>Choose a file</source>
-        <translation type="vanished">Välj en fil</translation>
     </message>
     <message>
         <source>Mode:</source>
@@ -1351,10 +1143,6 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
 %1</translation>
     </message>
     <message>
-        <source>Remove field</source>
-        <translation type="vanished">Ta bort fält</translation>
-    </message>
-    <message>
         <source>Check constraint</source>
         <translation>Kontrollera förbehåll</translation>
     </message>
@@ -1363,20 +1151,12 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
         <translation>Fält</translation>
     </message>
     <message>
-        <source>This makes it impossible to set this flag. Please change the table data first.</source>
-        <translation type="vanished">Kan inte setta denna markering. Ändra data i tabell först.</translation>
-    </message>
-    <message>
         <source>Unique</source>
         <translation>Unik</translation>
     </message>
     <message>
         <source>Not null</source>
         <translation>Inte tom</translation>
-    </message>
-    <message>
-        <source>Add field</source>
-        <translation type="vanished">Lägg till fält</translation>
     </message>
     <message>
         <source>There is at least one row with this field set to NULL. This makes it impossible to set this flag. Please change the table data first.</source>
@@ -1401,10 +1181,6 @@ All sparad data i fältet försvinner.</translation>
  - Autouppräkning är avmarkerad</translation>
     </message>
     <message>
-        <source>Primary key</source>
-        <translation type="vanished">Primärnyckel</translation>
-    </message>
-    <message>
         <source>There is at least one row with a non-integer value in this field. This makes it impossible to set the AI flag. Please change the table data first.</source>
         <translation>Det finns åtminstone en rad med icke-heltalsvärde för detta fält. Det gör att det är omöjligt att markera AU. Ändra data i tabellen först.</translation>
     </message>
@@ -1413,24 +1189,12 @@ All sparad data i fältet försvinner.</translation>
         <translation>Förvald</translation>
     </message>
     <message>
-        <source>Make this a &apos;WITHOUT rowid&apos; table. Setting this flag requires a field of type INTEGER with the primary key flag set and the auto increment flag unset.</source>
-        <translation>Gör denna tabell &apos;UTAN radid&apos;. För att markera valet behövs ett fält av typen HELTAL markerad med primärnyckel och autouppräkning avmarkerad.</translation>
-    </message>
-    <message>
         <source>Advanced</source>
         <translation>Avancerad</translation>
     </message>
     <message>
-        <source>Move field up</source>
-        <translation type="vanished">Flytta upp fält</translation>
-    </message>
-    <message>
         <source>Default value</source>
         <translation>Förvalt värde</translation>
-    </message>
-    <message>
-        <source>Move field down</source>
-        <translation type="vanished">Flytta ner fält</translation>
     </message>
     <message>
         <source>Edit table definition</source>
@@ -1570,76 +1334,9 @@ All sparad data i fältet försvinner.</translation>
  - Primary key flag set</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>ExportCsvDialog</name>
     <message>
-        <source>&quot;</source>
-        <translation type="vanished">&quot;</translation>
-    </message>
-    <message>
-        <source>&apos;</source>
-        <translation type="vanished">&apos;</translation>
-    </message>
-    <message>
-        <source>,</source>
-        <translation type="vanished">,</translation>
-    </message>
-    <message>
-        <source>;</source>
-        <translation type="vanished">;</translation>
-    </message>
-    <message>
-        <source>|</source>
-        <translation type="vanished">|</translation>
-    </message>
-    <message>
-        <source>Export completed.</source>
-        <translation type="vanished">Export slutförd.</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="vanished">Annat</translation>
-    </message>
-    <message>
-        <source>Choose a filename to export data</source>
-        <translation type="vanished">Välj ett filnamn att exportera data till</translation>
-    </message>
-    <message>
-        <source>Could not open output file: %1</source>
-        <translation type="vanished">Kunde inte öppna fil för utdata: %1</translation>
-    </message>
-    <message>
-        <source>Export data as CSV</source>
-        <translation type="vanished">Exportera data som CSV</translation>
-    </message>
-    <message>
-        <source>&amp;Column names in first line</source>
-        <translation type="vanished">&amp;Kolumnnamn på första raden</translation>
-    </message>
-    <message>
-        <source>Field &amp;separator</source>
-        <translation type="vanished">Fält&amp;separator</translation>
-    </message>
-    <message>
-        <source>&amp;Table(s)</source>
-        <translation type="vanished">&amp;Tabell(er)</translation>
-    </message>
-    <message>
-        <source>Please select at least 1 table.</source>
-        <translation type="vanished">Välj minst 1 tabell.</translation>
-    </message>
-    <message>
-        <source>Choose a directory</source>
-        <translation type="vanished">Välj en katalog</translation>
-    </message>
-    <message>
-        <source>&amp;Quote character</source>
-        <translation type="vanished">&amp;Citattecken</translation>
-    </message>
-    <message>
-        <source>Text files(*.csv *.txt)</source>
-        <translation type="vanished">Textfiler(*.csv *.txt)</translation>
+        <source>Make this a &apos;WITHOUT ROWID&apos; table. Setting this flag requires specifying a PRIMARY KEY (which can be of any type, and can be composite), and forbids the AUTOINCREMENT flag.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1776,16 +1473,8 @@ All sparad data i fältet försvinner.</translation>
         <translation>Exportera SQL...</translation>
     </message>
     <message>
-        <source>Please select at least 1 table.</source>
-        <translation type="vanished">Välj minst 1 tabell.</translation>
-    </message>
-    <message>
         <source>Choose a filename to export</source>
         <translation>Välj ett filnamn att exportera</translation>
-    </message>
-    <message>
-        <source>Text files(*.sql *.txt)</source>
-        <translation type="vanished">Textfiler(*.sql *.txt)</translation>
     </message>
     <message>
         <source>Tab&amp;le(s)</source>
@@ -2272,20 +1961,8 @@ x~y	Range: values between x and y
         <translation></translation>
     </message>
     <message>
-        <source>Inserting data...</source>
-        <translation type="vanished">Infogar data...</translation>
-    </message>
-    <message>
         <source>ISO-8859-1</source>
         <translation></translation>
-    </message>
-    <message>
-        <source>&amp;Table name</source>
-        <translation type="vanished">&amp;Tabellnamn</translation>
-    </message>
-    <message>
-        <source>Missing field for record %1</source>
-        <translation type="vanished">Saknar fält för post %1</translation>
     </message>
     <message>
         <source>Creating restore point failed: %1</source>
@@ -2304,10 +1981,6 @@ x~y	Range: values between x and y
         <translation>Misslyckades att skapa tabellen: %1</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Avbryt</translation>
-    </message>
-    <message>
         <source>&amp;Encoding</source>
         <translation>&amp;Teckenkodning</translation>
     </message>
@@ -2322,14 +1995,6 @@ x~y	Range: values between x and y
     <message>
         <source>Trim fields?</source>
         <translation>Beskär fält?</translation>
-    </message>
-    <message>
-        <source>There is already a table of that name. Do you want to import the data into it?</source>
-        <translation type="vanished">Det finns redan en tabell med det namnet. Vill du importera datat till det?</translation>
-    </message>
-    <message>
-        <source>There is already a table of that name and an import into an existing table is only possible if the number of columns match.</source>
-        <translation type="vanished">Det finns redan en tabell med det namnet och import i en existerande tabell är bara möjligt om antal kolumner stämmer.</translation>
     </message>
     <message>
         <source>&amp;Quote character</source>
@@ -2451,30 +2116,6 @@ x~y	Range: values between x and y
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Off</source>
-        <translation type="vanished">Av</translation>
-    </message>
-    <message>
-        <source>Disc</source>
-        <translation type="vanished">Skiva</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="vanished">Fil</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Rad</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">Ingen</translation>
-    </message>
-    <message>
-        <source>Star</source>
-        <translation type="vanished">Stjärna</translation>
-    </message>
-    <message>
         <source>User</source>
         <translation>Användare</translation>
     </message>
@@ -2499,28 +2140,12 @@ x~y	Range: values between x and y
         <translation>&amp;Vy</translation>
     </message>
     <message>
-        <source>Impulse</source>
-        <translation type="vanished">Impuls</translation>
-    </message>
-    <message>
         <source>E&amp;xit</source>
         <translation>A&amp;vsluta</translation>
     </message>
     <message>
-        <source>Cross</source>
-        <translation type="vanished">Kors</translation>
-    </message>
-    <message>
-        <source>Peace</source>
-        <translation type="vanished">Fred</translation>
-    </message>
-    <message>
         <source>Open the preferences window.</source>
         <translation>Öppna fönster för egenskaper.</translation>
-    </message>
-    <message>
-        <source>Invalid file format.</source>
-        <translation type="vanished">Felaktigt filformat.</translation>
     </message>
     <message>
         <source>Export a database to a .sql dump text file.</source>
@@ -2535,28 +2160,12 @@ x~y	Range: values between x and y
         <translation>&amp;Nyligen öppnad</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll to the beginning&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rulla till början&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Ctrl+Return</source>
         <translation>Ctrl+Retur</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll 100 records downwards&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rulla100 poster nedåt&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_fullfsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Full FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_fullfsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Full FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Load a working session from a file</source>
         <translation>Ladda en fungerande session från en fil</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_locking_mode&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Locking Mode&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_locking_mode&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Låsläge&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&amp;New Database...</source>
@@ -2575,40 +2184,8 @@ x~y	Range: values between x and y
         <translation>Exportera en databastabell som en kommaseparerad textfil, redo at importeras i en annan databas eller program för kalkylark.</translation>
     </message>
     <message>
-        <source>Enter record number to browse</source>
-        <translation type="vanished">Ange post nummer att visa</translation>
-    </message>
-    <message>
-        <source>PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;All Files(*)</source>
-        <translation type="vanished">PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;Alla Filer(*)</translation>
-    </message>
-    <message>
-        <source>This button creates a new, empty record in the database</source>
-        <translation type="vanished">Denna knapp skapar en ny tom post i databasen</translation>
-    </message>
-    <message>
-        <source>Refresh the data in the selected table.</source>
-        <translation type="vanished">Återskapa datat i vald tabell.</translation>
-    </message>
-    <message>
         <source>&amp;Clear</source>
         <translation>&amp;Rensa</translation>
-    </message>
-    <message>
-        <source>&amp;Attach Database</source>
-        <translation type="vanished">&amp;Anslut databas</translation>
-    </message>
-    <message>
-        <source>Point shape:</source>
-        <translation type="vanished">Punktform:</translation>
-    </message>
-    <message>
-        <source>Import completed</source>
-        <translation type="vanished">Import slutförd</translation>
-    </message>
-    <message>
-        <source>0 - 0 of 0</source>
-        <translation type="vanished">0 - 0 av 0</translation>
     </message>
     <message>
         <source>Export table as comma separated values file</source>
@@ -2621,18 +2198,6 @@ x~y	Range: values between x and y
     <message>
         <source>This option lets you import data from an .sql dump text file into a new or existing database. SQL dump files can be created on most database engines, including MySQL and PostgreSQL.</source>
         <translation>Detta val låter dig importera data från en .sql-dump textfil till en ny eller existerande databas. SQL-dumpfiler kan skapas med de flesta databasmotererna, inklusive MySQL och PostgreSQL.</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_foreign_keys&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Foreign Keys&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_foreign_keys&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Främmande nyckel&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_mode&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Journal Mode&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_mode&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Journalläge&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Open SQL file</source>
-        <translation type="vanished">Öppna SQL-fil</translation>
     </message>
     <message>
         <source>Save the current session to a file</source>
@@ -2650,28 +2215,6 @@ Are you sure?</source>
     <message>
         <source>Delete Table</source>
         <translation>Ta bort tabell</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_automatic_index&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Automatic Index&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_automatic_index&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Automatiskt index&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Error deleting record:
-%1</source>
-        <translation type="vanished">Fel när post skulle tas bort:
-%1</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_auto_vacuum&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Auto Vacuum&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_auto_vacuum&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Automatisk tömning&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>StepCenter</source>
-        <translation type="vanished">Stegcentrum</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">Cirkel</translation>
     </message>
     <message>
         <source>Ctrl+D</source>
@@ -2718,32 +2261,8 @@ Are you sure?</source>
         <translation></translation>
     </message>
     <message>
-        <source>Delete</source>
-        <translation type="vanished">Ta bort</translation>
-    </message>
-    <message>
-        <source>Scroll 100 records upwards</source>
-        <translation type="vanished">Rulla 100 poster uppåt</translation>
-    </message>
-    <message>
-        <source>Use this list to select a table to be displayed in the database view</source>
-        <translation type="vanished">Använd denna lista för att välja en tabell at visa i databasvyn</translation>
-    </message>
-    <message>
-        <source>Go to:</source>
-        <translation type="vanished">Gå till:</translation>
-    </message>
-    <message>
         <source>A new DB Browser for SQLite version is available (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Please download at &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</source>
         <translation>En ny version av DB Browser för SQLite är tillgänglig (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Ladda ner den från &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</translation>
-    </message>
-    <message>
-        <source>Memory</source>
-        <translation type="vanished">Minne</translation>
-    </message>
-    <message>
-        <source>Normal</source>
-        <translation type="vanished">Normal</translation>
     </message>
     <message>
         <source>Choose a database file</source>
@@ -2754,32 +2273,8 @@ Are you sure?</source>
         <translation>Importera data från en .sql-dump textfil till en ny eller existerande databas.</translation>
     </message>
     <message>
-        <source>New Record</source>
-        <translation type="vanished">Ny post</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_secure_delete&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Secure Delete&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_secure_delete&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Säker borttagning&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>DB Schema</source>
-        <translation type="vanished">DB Schema</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates 100 records upwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Klicka ovanstående knapp för att gå 100 poster uppåt i tabellvyn ovan.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Revert database to last saved state</source>
         <translation>Återställ databasen till senaste sparade läget</translation>
-    </message>
-    <message>
-        <source>Table:</source>
-        <translation type="vanished">Tabell:</translation>
-    </message>
-    <message>
-        <source>Square</source>
-        <translation type="vanished">Fyrkant</translation>
     </message>
     <message>
         <source>Shows or hides the Database toolbar.</source>
@@ -2790,54 +2285,20 @@ Are you sure?</source>
         <translation>Minska storleken på databasfilen genom att ta bort onödigt tomrum som upptas av bortagna poster</translation>
     </message>
     <message>
-        <source>Select a table to browse data</source>
-        <translation type="vanished">Välj en tabell för att visa data</translation>
-    </message>
-    <message>
         <source>This option is used to create a new database file.</source>
         <translation>Detta val används för att skapa en ny databasfil.</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_checkpoint_fullfsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Checkpoint Full FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_checkpoint_fullfsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Kontrollpunkt full FSYNC&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>toolBar1</source>
         <translation>Verktygsrad1</translation>
     </message>
     <message>
-        <source>Delete the current record</source>
-        <translation type="vanished">Ta bort nuvarande post</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_wal_autocheckpoint&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;WAL Auto Checkpoint&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_wal_autocheckpoint&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;WAL Autokontrollpunkt&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Persist</source>
-        <translation type="vanished">Vidhåll</translation>
-    </message>
-    <message>
         <source>Don&apos;t show again</source>
         <translation>Visa inte igen</translation>
     </message>
     <message>
-        <source>Error: could not delete the %1. Message from database engine:
-%2</source>
-        <translation type="vanished">Fel: Kunde inte ta bort %1. Meddelande från databasmotorn:
-%2</translation>
-    </message>
-    <message>
-        <source>Line type:</source>
-        <translation type="vanished">Radtyp:</translation>
-    </message>
-    <message>
         <source>Delete Trigger</source>
         <translation>Ta bort utlösare</translation>
-    </message>
-    <message>
-        <source>PlusCircle</source>
-        <translation type="vanished">Pluscirkel</translation>
     </message>
     <message>
         <source>Text files(*.sql *.txt);;All files(*)</source>
@@ -2856,14 +2317,6 @@ Are you sure?</source>
         <translation>Visa ett filnamn att spara under</translation>
     </message>
     <message>
-        <source>CrossCircle</source>
-        <translation type="vanished">Korscirkel</translation>
-    </message>
-    <message>
-        <source>Extensions(*.so *.dll);;All files(*)</source>
-        <translation type="vanished">Tillägg(*.so *.dll);;Alla filer(*)</translation>
-    </message>
-    <message>
         <source>Open the Create Index wizard, where it is possible to define a new index on an existing database table.</source>
         <translation>Öppna guiden för att skapa index, där finns möjlighet att definiera ett nytt index för en existerande databastabell.</translation>
     </message>
@@ -2872,54 +2325,8 @@ Are you sure?</source>
         <translation>Skapa en ny databasfil</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_temp_store&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Temp Store&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_temp_store&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Temporärplats&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Error adding record:
-</source>
-        <translation type="vanished">Fel när post skulle läggas till:
-</translation>
-    </message>
-    <message>
-        <source>Scroll to the end</source>
-        <translation type="vanished">Rulla till slutet</translation>
-    </message>
-    <message>
-        <source>Save current plot...</source>
-        <translation type="vanished">Spara nuvarande plan...</translation>
-    </message>
-    <message>
-        <source>PlusSquare</source>
-        <translation type="vanished">Plusfyrkant</translation>
-    </message>
-    <message>
-        <source>Type a record number in this area and click the Go to: button to display the record in the database view</source>
-        <translation type="vanished">Ange ett nummer för post i detta fält och klicka på kanppen Gå till: för att visa posten i databasvyn</translation>
-    </message>
-    <message>
-        <source>Text files(*.csv *.txt);;All files(*)</source>
-        <translation type="vanished">Textfiler(*.csv *.txt);;Alla filer(*)</translation>
-    </message>
-    <message>
-        <source>CrossSquare</source>
-        <translation type="vanished">Korsfyrkant</translation>
-    </message>
-    <message>
         <source>&amp;Open Database...</source>
         <translation>&amp;Öppna databas...</translation>
-    </message>
-    <message>
-        <source>Clear all filters</source>
-        <translation type="vanished">Rensa alla filter</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click here to jump to the specified record&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Klick här för att hoppa till angiven post&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Triangle</source>
-        <translation type="vanished">Triangel</translation>
     </message>
     <message>
         <source>Open the Delete Table wizard, where you can select a database table to be dropped.</source>
@@ -2930,32 +2337,12 @@ Are you sure?</source>
         <translation>Välj fil med tillägg</translation>
     </message>
     <message>
-        <source>Open the Modify Table wizard, where it is possible to rename an existing table. It is also possible to add or delete fields form a table, as well as modify field names and types.</source>
-        <translation type="vanished">Öppna guide för att ändra tabell, där det är möjligt att ändra namn på en existerande tabell. Det är också möjligt att lägga till eller ta bort fält i tabell, likväl ändra namn och typer på fält.</translation>
-    </message>
-    <message>
-        <source>This is the database view. You can double-click any record to edit its contents in the cell editor window.</source>
-        <translation type="vanished">Detta är databasvyn. Du kan dubbelklicka på vilken post som helst för att redigera dess innehåll i redigeringsrutan.</translation>
-    </message>
-    <message>
-        <source>&amp;About...</source>
-        <translation type="vanished">&amp;Om...</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Clicking this button navigates up to the end in the table view above.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Klicka på denna knapp för att navigera upp till slutet av tabellvyn ovan.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>DB Browser for SQLite project file (*.sqbpro)</source>
         <translation>DB Browser för SQLite projektfil (*.sqbpro)</translation>
     </message>
     <message>
         <source>Are you sure you want to undo all changes made to the database file &apos;%1&apos; since the last save?</source>
         <translation>Är du säker på att du vill ångra alla ändringar som gjorts i databasfilen &apos;%1&apos; sedan den sparades senaste?</translation>
-    </message>
-    <message>
-        <source>Truncate</source>
-        <translation type="vanished">Trunkera</translation>
     </message>
     <message>
         <source>Select file name</source>
@@ -2966,16 +2353,8 @@ Are you sure?</source>
         <translation>Öppna guiden för att skapa tabell, där det är möjligt att ange filnamn och fält för en ny tabell i databasen</translation>
     </message>
     <message>
-        <source>This button deletes the record currently selected in the database</source>
-        <translation type="vanished">Denna knapp tar bort vald post i databasen</translation>
-    </message>
-    <message>
         <source>Export a database table as a comma separated text file.</source>
         <translation>Exportera en databastabell som en kommaseparerad textfil.</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates 100 records downwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Klicka på denna knapp för att navigera 100 poster nedåt i tabellvyn ovan.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Export as CSV file</source>
@@ -2990,68 +2369,24 @@ Are you sure?</source>
         <translation>Öppna en existerande databasfil</translation>
     </message>
     <message>
-        <source>Exclusive</source>
-        <translation type="vanished">Exklusiv</translation>
-    </message>
-    <message>
         <source>Delete View</source>
         <translation>Ta bort vy</translation>
-    </message>
-    <message>
-        <source>Web&amp;site...</source>
-        <translation type="vanished">Webb&amp;sida...</translation>
-    </message>
-    <message>
-        <source>Columns</source>
-        <translation type="vanished">Kolumner</translation>
     </message>
     <message>
         <source>Open a wizard that lets you import data from a comma separated text file into a database table. CSV files can be created on most database and spreadsheet applications.</source>
         <translation>Öppna en guide för att importera data från en kommaseparerad textfil in i en databastabell. CSV-filer kan skapas med de flesta databaser och kalkylprogram.</translation>
     </message>
     <message>
-        <source>Choose a axis color</source>
-        <translation type="vanished">Välj en färg på axel</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation type="vanished">Förvald</translation>
-    </message>
-    <message>
-        <source>StepLeft</source>
-        <translation type="vanished">Vänstersteg</translation>
-    </message>
-    <message>
         <source>&amp;Export</source>
         <translation>&amp;Exportera</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button is used to navigate to the record number specified in the Go to area.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Denna knapp används för att navigera till posten med angivet nummer i ytan för Gå till.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Diamond</source>
-        <translation type="vanished">Diamant</translation>
     </message>
     <message>
         <source>&amp;Import</source>
         <translation>&amp;Importera</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_size_limit&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Journal Size Limit&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_journal_size_limit&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Journalstorleksbegränsning&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>File %1 already exists. Please choose a different name.</source>
         <translation>Filen %1 finns redan. Välj ett annat namn.</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_recursive_triggers&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Recursive Triggers&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_recursive_triggers&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Rekursiv utlösare&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_max_page_count&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Max Page Count&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_max_page_count&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Max antal sidor&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>DB Toolbar</source>
@@ -3062,38 +2397,16 @@ Are you sure?</source>
         <translation>&amp;DB Verktygsrad</translation>
     </message>
     <message>
-        <source>Are you sure you want to delete the %1 &apos;%2&apos;?
-All data associated with the %1 will be lost.</source>
-        <translation type="vanished">Är du säker på att du vill ta bort %1 &apos;%2&apos;?
-All data associerad med %1 försvinner.</translation>
-    </message>
-    <message>
-        <source>Choose a file to open</source>
-        <translation type="vanished">Välj en fil att öppna</translation>
-    </message>
-    <message>
         <source>Save SQL file as</source>
         <translation>Spara SQL-fil som</translation>
-    </message>
-    <message>
-        <source>Please select a record first</source>
-        <translation type="vanished">Välj en post först</translation>
     </message>
     <message>
         <source>&amp;Close Database</source>
         <translation>&amp;Stäng databas</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates to the beginning in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Klicka på denna knapp för att navigera till början av tabellen ovan.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>This option is used to save changes to the database file.</source>
         <translation>Detta val används för att spara förändringar till databasfilen.</translation>
-    </message>
-    <message>
-        <source>Open &amp;tab</source>
-        <translation type="vanished">Öppna &amp;tabb</translation>
     </message>
     <message>
         <source>&amp;Preferences...</source>
@@ -3104,36 +2417,12 @@ All data associerad med %1 försvinner.</translation>
         <translation>Skriv ändringar till databasfilen</translation>
     </message>
     <message>
-        <source>StepRight</source>
-        <translation type="vanished">Högersteg</translation>
-    </message>
-    <message>
         <source>Database encoding</source>
         <translation>Databasteckenkodning</translation>
     </message>
     <message>
-        <source>%1 - %2 of %3</source>
-        <translation type="vanished">%1 - %2 av %3</translation>
-    </message>
-    <message>
         <source>Save SQL file</source>
         <translation>Spara SQL-fil</translation>
-    </message>
-    <message>
-        <source>Incremental</source>
-        <translation type="vanished">Inkrementell</translation>
-    </message>
-    <message>
-        <source>There is no database opened.</source>
-        <translation type="vanished">Ingen databas är öppnad.</translation>
-    </message>
-    <message>
-        <source>Choose a text file</source>
-        <translation type="vanished">Välj en textfil</translation>
-    </message>
-    <message>
-        <source>Error executing query: %1</source>
-        <translation type="vanished">Utför sökningen: %1</translation>
     </message>
     <message>
         <source>Compact the database file, removing space wasted by deleted records.</source>
@@ -3152,10 +2441,6 @@ All data associerad med %1 försvinner.</translation>
         <translation>Utför nuvarande rad</translation>
     </message>
     <message>
-        <source>TriangleInverted</source>
-        <translation type="vanished">InverteradTriangel</translation>
-    </message>
-    <message>
         <source>&amp;Browse Table</source>
         <translation>&amp;Visa tabell</translation>
     </message>
@@ -3168,68 +2453,24 @@ All data associerad med %1 försvinner.</translation>
         <translation>Ny version tillgänglig.</translation>
     </message>
     <message>
-        <source>&amp;Wiki...</source>
-        <translation type="vanished">&amp;Wiki...</translation>
-    </message>
-    <message>
         <source>&amp;Execute SQL</source>
         <translation>&amp;Utför SQL</translation>
-    </message>
-    <message>
-        <source>There is no database opened. Please open or create a new database file.</source>
-        <translation type="vanished">Ingen databas är öppnad. Öppna eller skapa en ny databasfil.</translation>
     </message>
     <message>
         <source>This option is used to open an existing database file.</source>
         <translation>Detta val används för att öppna en existerande databasfil.</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save current plot...&lt;/p&gt;&lt;p&gt;File format chosen by extension (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Spara nuvarande plan...&lt;/p&gt;&lt;p&gt;Filformat valt utifrån filändelse (png, jpg, pdf, bmp)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Error loading extension: %1</source>
         <translation>Fel när tillägg skulle laddas: %1</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_ignore_check_constraints&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Ignore Check Constraints&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_ignore_check_constraints&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Ignorera kontroll förbehåll&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Execute SQL [F5, Ctrl+Return]</source>
-        <translation type="vanished">Utför SQL [F5, Ctrl+Retur]</translation>
     </message>
     <message>
         <source>This option lets you export a database to a .sql dump text file. SQL dump files contain all data necessary to recreate the database on most database engines, including MySQL and PostgreSQL.</source>
         <translation>Valet låter dig exportera en databas till en .sql-dump textfil. SQL-dump textfiler innehåller all data som behövs för att återskapa databasen med de flesta databasmotorer, inklusive MySQL och PostgreSQL.</translation>
     </message>
     <message>
-        <source>Insert a new record in the current table</source>
-        <translation type="vanished">Infoga en ny post i nuvarande tabell</translation>
-    </message>
-    <message>
-        <source>Bug &amp;report...</source>
-        <translation type="vanished">Del&amp;rapport...</translation>
-    </message>
-    <message>
         <source>Shift+F1</source>
         <translation>Skift+F1</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Synchronous&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Synkront&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_page_size&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Page Size&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_page_size&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Sidstorlek&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Delete Record</source>
-        <translation type="vanished">Ta bort post</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_schema_version&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;User Version&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_schema_version&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Användarversion&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Application</source>
@@ -3240,10 +2481,6 @@ All data associerad med %1 försvinner.</translation>
 If you answer no we will attempt to import the data in the SQL file to the current database.</source>
         <translation>Vill du skapa en ny databas med det importerade datat?
 Försöker importera datat i SQL-filen i nuvarande databas om du svarar nej.</translation>
-    </message>
-    <message>
-        <source>This button refreshes the data in the currently selected table.</source>
-        <translation type="vanished">Denna knapp uppdaterar datat i vald tabell.</translation>
     </message>
     <message>
         <source>This is the structure of the opened database.
@@ -3763,10 +3000,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ctrl+PgUp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Clear List</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4229,6 +3462,10 @@ Skapa en backup!</translation>
             <numerusform></numerusform>
         </translation>
     </message>
+    <message>
+        <source>Automatically load the last opened DB file at startup</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NullLineEdit</name>
@@ -4470,10 +3707,6 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation>Fet</translation>
     </message>
     <message>
-        <source>&amp;Text</source>
-        <translation type="vanished">&amp;Text</translation>
-    </message>
-    <message>
         <source>SQL &amp;editor font size</source>
         <translation>SQL &amp;redigera fontstorlek</translation>
     </message>
@@ -4538,18 +3771,6 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation>Sträng</translation>
     </message>
     <message>
-        <source>NULL fields</source>
-        <translation type="vanished">TOMT fält</translation>
-    </message>
-    <message>
-        <source>Settings name</source>
-        <translation type="vanished">Inställningsnamn</translation>
-    </message>
-    <message>
-        <source>Extensions(*.so *.dll);;All files(*)</source>
-        <translation type="vanished">Tillägg(*.so *.dll);;Alla filer(*)</translation>
-    </message>
-    <message>
         <source>&amp;Database</source>
         <translation>&amp;Databas</translation>
     </message>
@@ -4598,16 +3819,8 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <translation>Välj tillägg att ladda in för varje databas:</translation>
     </message>
     <message>
-        <source>currentline</source>
-        <translation type="vanished">nuvaranderad</translation>
-    </message>
-    <message>
         <source>enabled</source>
         <translation>aktiverad</translation>
-    </message>
-    <message>
-        <source>function</source>
-        <translation type="vanished">funktion</translation>
     </message>
     <message>
         <source>Function</source>
@@ -4628,10 +3841,6 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     <message>
         <source>Add extension</source>
         <translation>Lägg till tillägg</translation>
-    </message>
-    <message>
-        <source>SQL &amp;log font size</source>
-        <translation type="vanished">Fontstorlek SQL-&amp;log</translation>
     </message>
     <message>
         <source>&amp;General</source>
@@ -5105,6 +4314,10 @@ Please check again.</source>
         <source>When set, the Tab key will insert tab and space characters for indentation. Otherwise, just spaces will be used.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Select built-in extensions to load for every database:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProxyDialog</name>
@@ -5169,24 +4382,8 @@ Please check again.</source>
         <translation>Avbryt</translation>
     </message>
     <message>
-        <source>Collation needed! Proceed?</source>
-        <translation type="vanished">Sortering behövs! Fortsätt?</translation>
-    </message>
-    <message>
         <source>Error importing data</source>
         <translation>Fel vid import av data</translation>
-    </message>
-    <message>
-        <source>Decoding CSV file...</source>
-        <translation type="vanished">Avkodar CSV-fil...</translation>
-    </message>
-    <message>
-        <source>A table in this database requires a special collation function &apos;%1&apos; that this application can&apos;t provide without further knowledge.
-If you choose to proceed, be aware bad things can happen to your database.
-Create a backup!</source>
-        <translation type="vanished">En tabell i databasen behöver en speciell sorteringsfunktion &apos;%1&apos; som detta program inte tillhandahåller utan ytterligare kunskap.
-Skadliga skare kan inträffa med din databas om du väljer att fortsätta.
-Skapa en backup!</translation>
     </message>
     <message>
         <source>Left</source>
@@ -5278,6 +4475,1338 @@ Skapa en backup!</translation>
     </message>
     <message>
         <source>SQLite database files (*.db *.sqlite *.sqlite3 *.db3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QsciCommand</name>
+    <message>
+        <source>Move down one line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend selection down one line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend rectangular selection down one line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scroll view down one line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move up one line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend selection up one line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend rectangular selection up one line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scroll view up one line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scroll to start of document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scroll to end of document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scroll vertically to centre current line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move down one paragraph</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend selection down one paragraph</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move up one paragraph</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend selection up one paragraph</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move left one character</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend selection left one character</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend rectangular selection left one character</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move right one character</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend selection right one character</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend rectangular selection right one character</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move left one word</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend selection left one word</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move right one word</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend selection right one word</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move to end of previous word</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend selection to end of previous word</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move to end of next word</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend selection to end of next word</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move left one word part</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend selection left one word part</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move right one word part</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend selection right one word part</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move to start of document line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend selection to start of document line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend rectangular selection to start of document line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move to start of display line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend selection to start of display line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move to start of display or document line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend selection to start of display or document line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move to first visible character in document line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend selection to first visible character in document line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend rectangular selection to first visible character in document line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move to first visible character of display in document line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend selection to first visible character in display or document line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move to end of document line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend selection to end of document line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend rectangular selection to end of document line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move to end of display line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend selection to end of display line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move to end of display or document line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend selection to end of display or document line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move to start of document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend selection to start of document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move to end of document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend selection to end of document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move up one page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend selection up one page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend rectangular selection up one page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move down one page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend selection down one page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extend rectangular selection down one page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stuttered move up one page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stuttered extend selection up one page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stuttered move down one page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stuttered extend selection down one page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete current character</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete previous character</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete previous character if not at start of line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete word to left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete word to right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete right to end of next word</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete line to left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete line to right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete current line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cut current line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy current line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transpose current and previous lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duplicate the current line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move selected lines up one line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move selected lines down one line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duplicate selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert selection to lower case</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert selection to upper case</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cut selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paste</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle insert/overtype</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Insert newline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Formfeed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Indent one level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>De-indent one level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Avbryt</translation>
+    </message>
+    <message>
+        <source>Undo last command</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Redo last command</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zoom in</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zoom out</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QsciLexerCPP</name>
+    <message>
+        <source>Default</source>
+        <translation type="unfinished">Förvald</translation>
+    </message>
+    <message>
+        <source>Inactive default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>C comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inactive C comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>C++ comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inactive C++ comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JavaDoc style C comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inactive JavaDoc style C comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inactive number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keyword</source>
+        <translation type="unfinished">Nyckelord</translation>
+    </message>
+    <message>
+        <source>Inactive keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Double-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inactive double-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Single-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inactive single-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IDL UUID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inactive IDL UUID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pre-processor block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inactive pre-processor block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Operator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inactive operator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identifier</source>
+        <translation type="unfinished">Identifierare</translation>
+    </message>
+    <message>
+        <source>Inactive identifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unclosed string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inactive unclosed string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>C# verbatim string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inactive C# verbatim string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JavaScript regular expression</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inactive JavaScript regular expression</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JavaDoc style C++ comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inactive JavaDoc style C++ comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Secondary keywords and identifiers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inactive secondary keywords and identifiers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JavaDoc keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inactive JavaDoc keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JavaDoc keyword error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inactive JavaDoc keyword error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Global classes and typedefs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inactive global classes and typedefs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>C++ raw string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inactive C++ raw string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vala triple-quoted verbatim string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inactive Vala triple-quoted verbatim string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pike hash-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inactive Pike hash-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pre-processor C comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inactive pre-processor C comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JavaDoc style pre-processor comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inactive JavaDoc style pre-processor comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User-defined literal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inactive user-defined literal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Task marker</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inactive task marker</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Escape sequence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inactive escape sequence</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QsciLexerHTML</name>
+    <message>
+        <source>HTML default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tag</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown tag</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attribute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown attribute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HTML number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HTML double-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HTML single-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other text in a tag</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HTML comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End of a tag</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start of an XML fragment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End of an XML fragment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Script tag</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start of an ASP fragment with @</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start of an ASP fragment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CDATA</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start of a PHP fragment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unquoted HTML value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ASP X-Code comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SGML default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SGML command</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>First parameter of an SGML command</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SGML double-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SGML single-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SGML error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SGML special entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SGML comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>First parameter comment of an SGML command</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SGML block default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start of a JavaScript fragment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JavaScript default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JavaScript comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JavaScript line comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JavaDoc style JavaScript comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JavaScript number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JavaScript word</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JavaScript keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JavaScript double-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JavaScript single-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JavaScript symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JavaScript unclosed string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JavaScript regular expression</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start of an ASP JavaScript fragment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ASP JavaScript default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ASP JavaScript comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ASP JavaScript line comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JavaDoc style ASP JavaScript comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ASP JavaScript number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ASP JavaScript word</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ASP JavaScript keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ASP JavaScript double-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ASP JavaScript single-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ASP JavaScript symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ASP JavaScript unclosed string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ASP JavaScript regular expression</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start of a VBScript fragment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VBScript default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VBScript comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VBScript number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VBScript keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VBScript string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VBScript identifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VBScript unclosed string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start of an ASP VBScript fragment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ASP VBScript default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ASP VBScript comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ASP VBScript number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ASP VBScript keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ASP VBScript string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ASP VBScript identifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ASP VBScript unclosed string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start of a Python fragment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Python default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Python comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Python number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Python double-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Python single-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Python keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Python triple double-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Python triple single-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Python class name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Python function or method name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Python operator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Python identifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start of an ASP Python fragment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ASP Python default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ASP Python comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ASP Python number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ASP Python double-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ASP Python single-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ASP Python keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ASP Python triple double-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ASP Python triple single-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ASP Python class name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ASP Python function or method name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ASP Python operator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ASP Python identifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PHP default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PHP double-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PHP single-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PHP keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PHP number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PHP variable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PHP comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PHP line comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PHP double-quoted variable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PHP operator</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QsciLexerJSON</name>
+    <message>
+        <source>Default</source>
+        <translation type="unfinished">Förvald</translation>
+    </message>
+    <message>
+        <source>Number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>String</source>
+        <translation type="unfinished">Sträng</translation>
+    </message>
+    <message>
+        <source>Unclosed string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Property</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Escape sequence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Block comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Operator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IRI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JSON-LD compact IRI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JSON keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JSON-LD keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parsing error</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QsciLexerJavaScript</name>
+    <message>
+        <source>Regular expression</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QsciLexerPython</name>
+    <message>
+        <source>Default</source>
+        <translation type="unfinished">Förvald</translation>
+    </message>
+    <message>
+        <source>Comment</source>
+        <translation type="unfinished">Kommentar</translation>
+    </message>
+    <message>
+        <source>Number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Double-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Single-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keyword</source>
+        <translation type="unfinished">Nyckelord</translation>
+    </message>
+    <message>
+        <source>Triple single-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Triple double-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Class name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Function or method name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Operator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identifier</source>
+        <translation type="unfinished">Identifierare</translation>
+    </message>
+    <message>
+        <source>Comment block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unclosed string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Highlighted identifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Decorator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Double-quoted f-string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Single-quoted f-string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Triple single-quoted f-string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Triple double-quoted f-string</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QsciLexerSQL</name>
+    <message>
+        <source>Default</source>
+        <translation type="unfinished">Förvald</translation>
+    </message>
+    <message>
+        <source>Comment</source>
+        <translation type="unfinished">Kommentar</translation>
+    </message>
+    <message>
+        <source>Comment line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JavaDoc style comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keyword</source>
+        <translation type="unfinished">Nyckelord</translation>
+    </message>
+    <message>
+        <source>Double-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Single-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SQL*Plus keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SQL*Plus prompt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Operator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identifier</source>
+        <translation type="unfinished">Identifierare</translation>
+    </message>
+    <message>
+        <source>SQL*Plus comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source># comment line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JavaDoc keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JavaDoc keyword error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User defined 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User defined 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User defined 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User defined 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quoted identifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quoted operator</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QsciScintilla</name>
+    <message>
+        <source>&amp;Undo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Redo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cu&amp;t</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Paste</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished">Ta bort</translation>
+    </message>
+    <message>
+        <source>Select All</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5696,36 +6225,8 @@ Are you sure you want to proceed?</source>
         <translation>Formulär</translation>
     </message>
     <message>
-        <source>Error creating view: %1</source>
-        <translation type="vanished">Misslyckades skapa vy: %1</translation>
-    </message>
-    <message>
-        <source>There is already an object with that name. Please choose a different name.</source>
-        <translation type="vanished">Det finns redan ett objekt med det namnet. Ange ett annat namn.</translation>
-    </message>
-    <message>
-        <source>Please specify the view name</source>
-        <translation type="vanished">Ange namn på vy</translation>
-    </message>
-    <message>
-        <source>View successfully created.</source>
-        <translation type="vanished">Vy skapades.</translation>
-    </message>
-    <message>
-        <source>Export to &amp;CSV</source>
-        <translation type="vanished">Exportera till &amp;CSV</translation>
-    </message>
-    <message>
         <source>Results of the last executed statements</source>
         <translation>Resultat av senast utförda uttrycket</translation>
-    </message>
-    <message>
-        <source>Save as &amp;view</source>
-        <translation type="vanished">Spara som &amp;vy</translation>
-    </message>
-    <message>
-        <source>Save as view</source>
-        <translation type="vanished">Spara som vy</translation>
     </message>
     <message>
         <source>This field shows the results and status codes of the last executed statements.</source>
@@ -5827,15 +6328,19 @@ Are you sure you want to proceed?</source>
         <source>Couldn&apos;t read file &quot;%1&quot;: %2.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Ctrl+PgUp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+PgDown</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SqlTextEdit</name>
     <message>
         <source>Ctrl+/</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ctrl+PgDown</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5946,20 +6451,12 @@ Are you sure you want to proceed?</source>
         <translation>(X) Funktionen length(X) returnerar antalet tecken (inte byte) som strängen X innehåller före det första tom-tecknet (NUL).</translation>
     </message>
     <message>
-        <source>(X,Y) The load_extension(X) function loads SQLite extensions out of the shared library file named X using the entry point Y.</source>
-        <translation type="vanished">(X,Y) Funktionen load_extension(X) laddar in tillägg för SQLite från det delade biblioteket med namnet X genom att anropa Y.</translation>
-    </message>
-    <message>
         <source>(X) rtrim(X) removes spaces from the right side of X.</source>
         <translation>(X) rtrim(X) tar bort mellanslag från höger sida av X.</translation>
     </message>
     <message>
         <source>(X,Y) The glob(X,Y) function is equivalent to the expression &quot;Y GLOB X&quot;.</source>
         <translation>(X,Y) Funktionen glob(X,Y) motsvarar uttrycket &quot;Y GLOB X&quot;.</translation>
-    </message>
-    <message>
-        <source>(X) The load_extension(X) function loads SQLite extensions out of the shared library file named X.</source>
-        <translation type="vanished">(X) Funktionen load_extension(X) laddar tillägget för SQLite från det delade biblioteket med namet X.</translation>
     </message>
     <message>
         <source>(X) The soundex(X) function returns a string that is the soundex encoding of the string X.</source>
@@ -6773,10 +7270,6 @@ Hold %3Shift and click to jump there</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1 - %2 of %3</source>
-        <translation type="obsolete">%1 - %2 av %3</translation>
-    </message>
-    <message>
         <source>Please enter a pseudo-primary key in order to enable editing on this view. This should be the name of a unique column in the view.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6832,10 +7325,6 @@ Leave the field empty for using the database encoding.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Clicking this button navigates up to the end in the table view above.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Klicka på denna knapp för att navigera upp till slutet av tabellvyn ovan.&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Copy column name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6888,15 +7377,22 @@ Leave the field empty for using the database encoding.</source>
     </message>
 </context>
 <context>
+    <name>UndoStack</name>
+    <message>
+        <source>Inserting %1 bytes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete %1 chars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Overwrite %1 chars</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>VacuumDialog</name>
-    <message>
-        <source>Please select the objects to compact:</source>
-        <translation type="vanished">Ange objekt att komprimera:</translation>
-    </message>
-    <message>
-        <source>Warning: Compacting the database will commit all changes you made.</source>
-        <translation type="vanished">Varning: Komprimering av databasen kommer utföra alla ändringar du gjort.</translation>
-    </message>
     <message>
         <source>Compact Database</source>
         <translation>Komprimera databas</translation>

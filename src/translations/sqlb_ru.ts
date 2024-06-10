@@ -15,13 +15,8 @@
     </message>
     <message>
         <location filename="../AboutDialog.ui" line="90"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;https://www.gnu.org/licenses/gpl.html&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;https://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;https://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;https://doc.qt.io/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://doc.qt.io/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Pastel SVG icon set by Michael Buckley under a Creative Commons
-Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;https://codefisher.org/pastel-svg/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://codefisher.org/pastel-svg/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/span&gt;&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://sqlitebrowser.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;https://doc.qt.io/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;We use the nalgeon/sqlean library for SQLite extensions support.&lt;br/&gt;This library is licensed under the MIT license, see the following for more information:&lt;br/&gt;&lt;/span&gt;&lt;a href=&quot;https://github.com/nalgeon/sqlean&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/nalgeon/sqlean&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Pastel SVG icon set by Michael Buckley under a Creative Commons Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;https://codefisher.org/pastel-svg/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://codefisher.org/pastel-svg/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;https://www.gnu.org/licenses/gpl.html&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;https://sqlitebrowser.org&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;https://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;https://doc.qt.io/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://doc.qt.io/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Silk icon set by Mark James licensed under a Creative Commons Attribution 2.5 and 3.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;https://github.com/markjames/famfamfam-silk-icons&quot;&gt;&lt;span style=&quot; font-size:small;&quot;&gt;https://github.com/markjames/famfamfam-silk-icons&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Обозреватель для SQLite - это бесплатная программа, с открытым исходным кодом, предназначенная для создания и редактирования баз данных SQLite.&lt;/p&gt;&lt;p&gt;Программа лицензирована по двум лицензиям: Mozilla Public License Version 2 и GNU General Public License Version 3 or later. Можно изменять или распространять её на условиях этих лицензий.&lt;/p&gt;&lt;p&gt;Лицензии можно просмотреть по ссылкам &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/a&gt; и &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;Дополнительную информацию о программе можно узнать на веб-сайте:&lt;br/&gt;&lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://sqlitebrowser.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Это программное обеспечение использует GPL/LGPL Qt Toolkit &lt;/span&gt;&lt;a href=&quot;https://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;Условия лицензии на Qt Toolkit &lt;/span&gt;&lt;a href=&quot;https://doc.qt.io/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://doc.qt.io/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Эта программа также использует набор иконок Silk от Марка Джеймса (Mark James), лицензированный под лицензией Creative Commons Attribution 2.5 and 3.0.&lt;br/&gt;Подробная информация по адресу &lt;/span&gt;&lt;a href=&quot;https://github.com/markjames/famfamfam-silk-icons&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/markjames/famfamfam-silk-icons&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -483,39 +478,49 @@ If any of the other settings were altered for this database file you need to pro
         <translation>Unix-время</translation>
     </message>
     <message>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="32"/>
+        <source>WebKit / Chromium epoch to date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="33"/>
+        <source>WebKit / Chromium epoch to local time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="35"/>
         <source>Date as dd/mm/yyyy</source>
         <translation>Дата в формате дд/мм/гггг</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="35"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="37"/>
         <source>Lower case</source>
         <translation>Нижний регистр</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="38"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="40"/>
         <source>Binary GUID to text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="39"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="41"/>
         <source>SpatiaLite Geometry to SVG</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="141"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="145"/>
         <source>Custom display format must contain a function call applied to %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="153"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="157"/>
         <source>Error in custom display format. Message from database engine:
 
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="155"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="159"/>
         <source>Custom display format must return only one column but it returned %1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -535,17 +540,17 @@ If any of the other settings were altered for this database file you need to pro
         <translation>Unix-дата</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="36"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="38"/>
         <source>Upper case</source>
         <translation>Верхний регистр</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="32"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="34"/>
         <source>Windows DATE to date</source>
         <translation>Windows дата</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="41"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="43"/>
         <source>Custom</source>
         <translation>Мой формат</translation>
     </message>
@@ -672,176 +677,176 @@ If any of the other settings were altered for this database file you need to pro
 <context>
     <name>DBBrowserDB</name>
     <message>
-        <location filename="../sqlitedb.cpp" line="323"/>
+        <location filename="../sqlitedb.cpp" line="322"/>
         <source>Please specify the database name under which you want to access the attached database</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="399"/>
+        <location filename="../sqlitedb.cpp" line="398"/>
         <source>Invalid file format</source>
         <translation>Ошибочный формат файла</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="719"/>
+        <location filename="../sqlitedb.cpp" line="716"/>
         <source>Do you want to save the changes made to the database file %1?</source>
         <translation>Сохранить сделанные изменения в файле базы данных %1?</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="883"/>
+        <location filename="../sqlitedb.cpp" line="880"/>
         <source>Exporting database to SQL file...</source>
         <translation>Экспорт базы данных в файл SQL...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="884"/>
-        <location filename="../sqlitedb.cpp" line="1116"/>
+        <location filename="../sqlitedb.cpp" line="881"/>
+        <location filename="../sqlitedb.cpp" line="1113"/>
         <source>Cancel</source>
         <translation>Отменить</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1115"/>
+        <location filename="../sqlitedb.cpp" line="1112"/>
         <source>Executing SQL...</source>
         <translation>Выполнить код SQL...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1142"/>
+        <location filename="../sqlitedb.cpp" line="1139"/>
         <source>Action cancelled.</source>
         <translation>Действие отменено.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="714"/>
+        <location filename="../sqlitedb.cpp" line="711"/>
         <source>Do you really want to close this temporary database? All data will be lost.</source>
         <translation>Вы действительно хотите закрыть эту временную БД? Все данные будут потеряны.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="735"/>
+        <location filename="../sqlitedb.cpp" line="732"/>
         <source>Database didn&apos;t close correctly, probably still busy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="760"/>
+        <location filename="../sqlitedb.cpp" line="757"/>
         <source>Cannot open destination file: &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="777"/>
-        <location filename="../sqlitedb.cpp" line="795"/>
+        <location filename="../sqlitedb.cpp" line="774"/>
+        <location filename="../sqlitedb.cpp" line="792"/>
         <source>Cannot backup to file: &apos;%1&apos;. Message: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="835"/>
+        <location filename="../sqlitedb.cpp" line="832"/>
         <source>The database is currently busy: </source>
         <translation>БД занята: </translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="836"/>
+        <location filename="../sqlitedb.cpp" line="833"/>
         <source>Do you want to abort that other operation?</source>
         <translation>Вы хотите отменить эту операцию?</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1074"/>
-        <location filename="../sqlitedb.cpp" line="1106"/>
+        <location filename="../sqlitedb.cpp" line="1071"/>
+        <location filename="../sqlitedb.cpp" line="1103"/>
         <source>No database file opened</source>
         <translation>Файл БД не открыт</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1212"/>
-        <location filename="../sqlitedb.cpp" line="1225"/>
+        <location filename="../sqlitedb.cpp" line="1209"/>
+        <location filename="../sqlitedb.cpp" line="1222"/>
         <source>Error in statement #%1: %2.
 Aborting execution%3.</source>
         <translation>Ошибка в выражении #%1: %2.
 Прерываем выполнение%3.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1215"/>
-        <location filename="../sqlitedb.cpp" line="1228"/>
+        <location filename="../sqlitedb.cpp" line="1212"/>
+        <location filename="../sqlitedb.cpp" line="1225"/>
         <source> and rolling back</source>
         <translation> и отменяем</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1274"/>
+        <location filename="../sqlitedb.cpp" line="1271"/>
         <source>didn&apos;t receive any output from %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1280"/>
+        <location filename="../sqlitedb.cpp" line="1277"/>
         <source>could not execute command: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1458"/>
+        <location filename="../sqlitedb.cpp" line="1455"/>
         <source>Cannot delete this object</source>
         <translation>Не удается удалить этот объект</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1501"/>
+        <location filename="../sqlitedb.cpp" line="1498"/>
         <source>Cannot set data on this object</source>
         <translation>Невозможно назначить данные для этого объекта</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1608"/>
-        <location filename="../sqlitedb.cpp" line="1615"/>
+        <location filename="../sqlitedb.cpp" line="1605"/>
+        <location filename="../sqlitedb.cpp" line="1612"/>
         <source>A table with the name &apos;%1&apos; already exists in schema &apos;%2&apos;.</source>
         <translation>Таблица с именем &apos;%1&apos; уже существует в схеме &apos;%2&apos;.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1624"/>
+        <location filename="../sqlitedb.cpp" line="1621"/>
         <source>No table with name &apos;%1&apos; exists in schema &apos;%2&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1634"/>
-        <location filename="../sqlitedb.cpp" line="1655"/>
+        <location filename="../sqlitedb.cpp" line="1631"/>
+        <location filename="../sqlitedb.cpp" line="1652"/>
         <source>Cannot find column %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1668"/>
+        <location filename="../sqlitedb.cpp" line="1665"/>
         <source>Creating savepoint failed. DB says: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1731"/>
+        <location filename="../sqlitedb.cpp" line="1728"/>
         <source>Renaming the column failed. DB says:
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1759"/>
-        <location filename="../sqlitedb.cpp" line="1921"/>
+        <location filename="../sqlitedb.cpp" line="1756"/>
+        <location filename="../sqlitedb.cpp" line="1918"/>
         <source>Releasing savepoint failed. DB says: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1778"/>
+        <location filename="../sqlitedb.cpp" line="1775"/>
         <source>Creating new table failed. DB says: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1815"/>
+        <location filename="../sqlitedb.cpp" line="1812"/>
         <source>Copying data to new table failed. DB says:
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1887"/>
+        <location filename="../sqlitedb.cpp" line="1884"/>
         <source>Deleting old table failed. DB says: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1957"/>
+        <location filename="../sqlitedb.cpp" line="1954"/>
         <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.
 Message from database engine:
 %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="2053"/>
+        <location filename="../sqlitedb.cpp" line="2050"/>
         <source>could not get list of db objects: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1912"/>
+        <location filename="../sqlitedb.cpp" line="1909"/>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 
 </source>
@@ -850,27 +855,32 @@ Message from database engine:
 </translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="2059"/>
+        <location filename="../sqlitedb.cpp" line="2056"/>
         <source>could not get list of databases: %1</source>
         <translation>не могу получить список БД: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="2171"/>
+        <location filename="../sqlitedb.cpp" line="2168"/>
         <source>Error loading extension: %1</source>
         <translation>Ошибка загрузки расширения: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="2196"/>
+        <location filename="../sqlitedb.cpp" line="2177"/>
+        <source>Error loading built-in extension: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sqlitedb.cpp" line="2203"/>
         <source>could not get column information</source>
         <translation>не могу получить информацию о колонке</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="2087"/>
+        <location filename="../sqlitedb.cpp" line="2084"/>
         <source>Error setting pragma %1 to %2: %3</source>
         <translation>Ошибка установки прагмы %1 в %2: %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="2133"/>
+        <location filename="../sqlitedb.cpp" line="2130"/>
         <source>File not found.</source>
         <translation>Файл не найден.</translation>
     </message>
@@ -1148,14 +1158,6 @@ Message from database engine:
         <translation>Эта область отображает информацию о данных, находящихся в этой ячейке базы данных</translation>
     </message>
     <message>
-        <source>Type of data currently in cell</source>
-        <translation type="vanished">Тип данных в ячейке</translation>
-    </message>
-    <message>
-        <source>Size of data currently in table</source>
-        <translation type="vanished">Размер данных в таблице</translation>
-    </message>
-    <message>
         <location filename="../EditDialog.ui" line="268"/>
         <source>Print...</source>
         <translation>Печать...</translation>
@@ -1189,22 +1191,6 @@ Message from database engine:
         <location filename="../EditDialog.cpp" line="515"/>
         <source>Choose a filename to export data</source>
         <translation>Выбрать имя файла для экспорта данных</translation>
-    </message>
-    <message>
-        <source>Type of data currently in cell: %1 Image</source>
-        <translation type="vanished">Тип данных в ячейке: %1 Изображение</translation>
-    </message>
-    <message>
-        <source>%1x%2 pixel(s)</source>
-        <translation type="vanished">%1x%2 пикселей</translation>
-    </message>
-    <message>
-        <source>Type of data currently in cell: NULL</source>
-        <translation type="vanished">Тип данных в ячейке: NULL</translation>
-    </message>
-    <message>
-        <source>Type of data currently in cell: Text / Numeric</source>
-        <translation type="vanished">Тип данных в ячейке: Текст / Числовое</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="301"/>
@@ -1340,30 +1326,6 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
         <source>The cell contains invalid %1 data. Reason: %2. Do you really want to apply it to the cell?</source>
         <translation>Ячейка содержит ошибочные %1 данные. Причина: %2. Вы действительно хотите применить их?</translation>
     </message>
-    <message numerus="yes">
-        <source>%n character(s)</source>
-        <translation type="vanished">
-            <numerusform>%n символ</numerusform>
-            <numerusform>%n символа</numerusform>
-            <numerusform>%n символов</numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>Type of data currently in cell: Valid JSON</source>
-        <translation type="vanished">Тип данных в ячейке: JSON</translation>
-    </message>
-    <message>
-        <source>Type of data currently in cell: Binary</source>
-        <translation type="vanished">Тип данных в ячейке: Двоичные данные</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n byte(s)</source>
-        <translation type="vanished">
-            <numerusform>%n байт</numerusform>
-            <numerusform>%n байта</numerusform>
-            <numerusform>%n байтов</numerusform>
-        </translation>
-    </message>
 </context>
 <context>
     <name>EditIndexDialog</name>
@@ -1460,11 +1422,6 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
         <translation>Дополнительно</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.ui" line="85"/>
-        <source>Make this a &apos;WITHOUT rowid&apos; table. Setting this flag requires a field of type INTEGER with the primary key flag set and the auto increment flag unset.</source>
-        <translation>Чтобы создать таблицу &apos;без rowid&apos;, нужно чтобы в ней был INTEGER первичный ключ с отключенным автоинкрементом.</translation>
-    </message>
-    <message>
         <location filename="../EditTableDialog.ui" line="75"/>
         <source>Without Rowid</source>
         <translation>Без rowid</translation>
@@ -1472,6 +1429,11 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
     <message>
         <location filename="../EditTableDialog.ui" line="62"/>
         <source>Database sche&amp;ma</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EditTableDialog.ui" line="85"/>
+        <source>Make this a &apos;WITHOUT ROWID&apos; table. Setting this flag requires specifying a PRIMARY KEY (which can be of any type, and can be composite), and forbids the AUTOINCREMENT flag.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2793,7 +2755,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1232"/>
-        <location filename="../MainWindow.cpp" line="476"/>
+        <location filename="../MainWindow.cpp" line="478"/>
         <source>Ctrl+F4</source>
         <translation></translation>
     </message>
@@ -3043,7 +3005,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2263"/>
-        <location filename="../MainWindow.cpp" line="477"/>
+        <location filename="../MainWindow.cpp" line="479"/>
         <source>Ctrl+Shift+W</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3311,7 +3273,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="477"/>
+        <location filename="../MainWindow.cpp" line="479"/>
         <source>Ctrl+Shift+F4</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3522,8 +3484,8 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation>Эта кнопка закрывает соединение с текущим файлом БД</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="190"/>
-        <location filename="../MainWindow.cpp" line="3774"/>
+        <location filename="../MainWindow.cpp" line="193"/>
+        <location filename="../MainWindow.cpp" line="3780"/>
         <source>Ctrl+W</source>
         <translation></translation>
     </message>
@@ -3631,10 +3593,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation>Открыть мастер удаления таблицы, где можно выбрать таблицу базы данных для удаления.</translation>
     </message>
     <message>
-        <source>Open the Modify Table wizard, where it is possible to rename an existing table. It is also possible to add or delete fields form a table, as well as modify field names and types.</source>
-        <translation type="vanished">Открыть мастер изменения таблицы, где возможно переименовать существующую таблиц. Можно добавить или удалить поля таблицы, так же изменять имена полей и типы.</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="1469"/>
         <source>Open the Create Index wizard, where it is possible to define a new index on an existing database table.</source>
         <translation>Открыть мастер создания индекса, в котором можно определить новый индекс для существующей таблиц базы данных.</translation>
@@ -3676,11 +3634,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation></translation>
     </message>
     <message>
-        <source>Database Structure</source>
-        <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="vanished">Структура БД</translation>
-    </message>
-    <message>
         <location filename="../MainWindow.ui" line="95"/>
         <source>This is the structure of the opened database.
 You can drag SQL statements from an object row and drop them into other applications or into another instance of &apos;DB Browser for SQLite&apos;.
@@ -3688,21 +3641,6 @@ You can drag SQL statements from an object row and drop them into other applicat
         <translation>Это структура открытой БД.
 Вы можете перетаскивать операторы SQL из строки &quot;объект&quot; и переносить их в другие приложения или в другой экземпляр &quot;Обозреватель для SQLite&quot;.
 </translation>
-    </message>
-    <message>
-        <source>Browse Data</source>
-        <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="vanished">Данные</translation>
-    </message>
-    <message>
-        <source>Edit Pragmas</source>
-        <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="vanished">Прагмы</translation>
-    </message>
-    <message>
-        <source>Execute SQL</source>
-        <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="vanished">SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="899"/>
@@ -3787,7 +3725,7 @@ You can drag SQL statements from an object row and drop them into other applicat
         <translation>Сохранить файл SQL</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="291"/>
+        <location filename="../MainWindow.cpp" line="293"/>
         <source>Ctrl+E</source>
         <translation></translation>
     </message>
@@ -3834,7 +3772,7 @@ You can drag SQL statements from an object row and drop them into other applicat
         <translation></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="276"/>
+        <location filename="../MainWindow.cpp" line="278"/>
         <source>Ctrl+L</source>
         <translation></translation>
     </message>
@@ -3845,87 +3783,87 @@ You can drag SQL statements from an object row and drop them into other applicat
         <translation></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="281"/>
+        <location filename="../MainWindow.cpp" line="283"/>
         <source>Ctrl+D</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="286"/>
+        <location filename="../MainWindow.cpp" line="288"/>
         <source>Ctrl+I</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="331"/>
+        <location filename="../MainWindow.cpp" line="333"/>
         <source>Reset Window Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="372"/>
+        <location filename="../MainWindow.cpp" line="374"/>
         <source>The database is currenctly busy.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="378"/>
+        <location filename="../MainWindow.cpp" line="380"/>
         <source>Click here to interrupt the currently running query.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="386"/>
+        <location filename="../MainWindow.cpp" line="388"/>
         <source>Encrypted</source>
         <translation>Зашифровано</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="393"/>
+        <location filename="../MainWindow.cpp" line="395"/>
         <source>Read only</source>
         <translation>Только для чтения</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="394"/>
+        <location filename="../MainWindow.cpp" line="396"/>
         <source>Database file is read only. Editing the database is disabled.</source>
         <translation>База данных только для чтения. Редактирование запрещено.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="400"/>
+        <location filename="../MainWindow.cpp" line="402"/>
         <source>Database encoding</source>
         <translation>Кодировка базы данных</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="387"/>
+        <location filename="../MainWindow.cpp" line="389"/>
         <source>Database is encrypted using SQLCipher</source>
         <translation>База данных зашифрована с использованием SQLCipher</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="511"/>
-        <location filename="../MainWindow.cpp" line="3253"/>
+        <location filename="../MainWindow.cpp" line="513"/>
+        <location filename="../MainWindow.cpp" line="3259"/>
         <source>Choose a database file</source>
         <translation>Выбрать файл базы данных</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="573"/>
+        <location filename="../MainWindow.cpp" line="575"/>
         <source>Could not open database file.
 Reason: %1</source>
         <translation>Не удалось открыть файл базы данных.
 Причина:%1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="586"/>
-        <location filename="../MainWindow.cpp" line="1543"/>
-        <location filename="../MainWindow.cpp" line="3079"/>
+        <location filename="../MainWindow.cpp" line="588"/>
+        <location filename="../MainWindow.cpp" line="1549"/>
+        <location filename="../MainWindow.cpp" line="3085"/>
         <source>Choose a filename to save under</source>
         <translation>Выбрать имя, под которым сохранить данные</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2456"/>
+        <location filename="../MainWindow.cpp" line="2462"/>
         <source>A new DB Browser for SQLite version is available (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Please download at &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</source>
         <translation>Вышла новая версия Обозревателя для SQLite (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Она доступна для скачивания по адресу &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2686"/>
+        <location filename="../MainWindow.cpp" line="2692"/>
         <source>DB Browser for SQLite project file (*.sqbpro)</source>
         <translation>Файл проекта Обозревателя для SQLite (*.sqbpro)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1477"/>
+        <location filename="../MainWindow.cpp" line="1483"/>
         <source>Error while saving the database file. This means that not all changes to the database were saved. You need to resolve the following error first.
 
 %1</source>
@@ -3934,382 +3872,382 @@ Reason: %1</source>
 %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1486"/>
+        <location filename="../MainWindow.cpp" line="1492"/>
         <source>Are you sure you want to undo all changes made to the database file &apos;%1&apos; since the last save?</source>
         <translation>Отменить все изменения, сделанные в файле базы данных &apos;%1&apos; после последнего сохранения?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1524"/>
+        <location filename="../MainWindow.cpp" line="1530"/>
         <source>Choose a file to import</source>
         <translation>Выберите файл для импорта</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2200"/>
+        <location filename="../MainWindow.cpp" line="2206"/>
         <source>Text files(*.sql *.txt);;All files(*)</source>
         <translation>Текстовые файлы(*.sql *.txt);;Все файлы(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1536"/>
+        <location filename="../MainWindow.cpp" line="1542"/>
         <source>Do you want to create a new database file to hold the imported data?
 If you answer no we will attempt to import the data in the SQL file to the current database.</source>
         <translation>Создать новый файл базы данных, чтобы сохранить импортированные данные?
 Если ответить Нет, будет выполнена попытка импортировать данные файла SQL в текущую базу данных.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="198"/>
+        <location filename="../MainWindow.cpp" line="201"/>
         <source>Ctrl+Tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="207"/>
+        <location filename="../MainWindow.cpp" line="210"/>
         <source>Ctrl+Shift+Tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="218"/>
-        <source>Ctrl+PgUp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainWindow.cpp" line="235"/>
+        <location filename="../MainWindow.cpp" line="236"/>
         <source>Clear List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="328"/>
+        <location filename="../MainWindow.cpp" line="330"/>
         <source>Window Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="332"/>
+        <location filename="../MainWindow.cpp" line="334"/>
         <source>Ctrl+Alt+0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="340"/>
+        <location filename="../MainWindow.cpp" line="342"/>
         <source>Simplify Window Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="341"/>
+        <location filename="../MainWindow.cpp" line="343"/>
         <source>Shift+Alt+0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="350"/>
+        <location filename="../MainWindow.cpp" line="352"/>
         <source>Dock Windows at Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="354"/>
+        <location filename="../MainWindow.cpp" line="356"/>
         <source>Dock Windows at Left Side</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="358"/>
+        <location filename="../MainWindow.cpp" line="360"/>
         <source>Dock Windows at Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="476"/>
+        <location filename="../MainWindow.cpp" line="478"/>
         <source>Ctrl+Alt+W</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="693"/>
+        <location filename="../MainWindow.cpp" line="695"/>
         <source>Choose a database file to save under</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="704"/>
+        <location filename="../MainWindow.cpp" line="706"/>
         <source>Error while saving the database to the new file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="718"/>
+        <location filename="../MainWindow.cpp" line="720"/>
         <source>You are still executing SQL statements. Closing the database now will stop their execution, possibly leaving the database in an inconsistent state. Are you sure you want to close the database?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="813"/>
+        <location filename="../MainWindow.cpp" line="815"/>
         <source>Do you want to save the changes made to the project file &apos;%1&apos;?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="995"/>
+        <location filename="../MainWindow.cpp" line="997"/>
         <source>Edit View %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1001"/>
+        <location filename="../MainWindow.cpp" line="1003"/>
         <source>Edit Trigger %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1547"/>
+        <location filename="../MainWindow.cpp" line="1553"/>
         <source>File %1 already exists. Please choose a different name.</source>
         <translation>Файл %1 уже существует. Выберите другое имя.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1574"/>
+        <location filename="../MainWindow.cpp" line="1580"/>
         <source>Error importing data: %1</source>
         <translation>Ошибка импортирования данных: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1578"/>
+        <location filename="../MainWindow.cpp" line="1584"/>
         <source>Import completed.</source>
         <translation>Импорт завершён.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1660"/>
+        <location filename="../MainWindow.cpp" line="1666"/>
         <source>Delete View</source>
         <translation>Удалить представление</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1661"/>
+        <location filename="../MainWindow.cpp" line="1667"/>
         <source>Modify View</source>
         <translation>Модифицировать представление</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1663"/>
+        <location filename="../MainWindow.cpp" line="1669"/>
         <source>Delete Trigger</source>
         <translation>Удалить триггер</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1664"/>
+        <location filename="../MainWindow.cpp" line="1670"/>
         <source>Modify Trigger</source>
         <translation>Модифицировать триггер</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1666"/>
+        <location filename="../MainWindow.cpp" line="1672"/>
         <source>Delete Index</source>
         <translation>Удалить индекс</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1721"/>
+        <location filename="../MainWindow.cpp" line="1727"/>
         <source>Opened &apos;%1&apos; in read-only mode from recent file list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1723"/>
+        <location filename="../MainWindow.cpp" line="1729"/>
         <source>Opened &apos;%1&apos; from recent file list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1762"/>
+        <location filename="../MainWindow.cpp" line="1768"/>
         <source>&amp;%1 %2%3</source>
         <translation type="unfinished">&amp;%1 %2%3</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1762"/>
+        <location filename="../MainWindow.cpp" line="1768"/>
         <source> (read only)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1849"/>
+        <location filename="../MainWindow.cpp" line="1855"/>
         <source>Open Database or Project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1850"/>
+        <location filename="../MainWindow.cpp" line="1856"/>
         <source>Attach Database...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1851"/>
+        <location filename="../MainWindow.cpp" line="1857"/>
         <source>Import CSV file(s)...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2040"/>
+        <location filename="../MainWindow.cpp" line="2046"/>
         <source>Do you want to save the changes made to SQL tabs in a new project file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2061"/>
+        <location filename="../MainWindow.cpp" line="2067"/>
         <source>Do you want to save the changes made to the SQL file %1?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2356"/>
+        <location filename="../MainWindow.cpp" line="2362"/>
         <source>Could not find resource file: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2685"/>
+        <location filename="../MainWindow.cpp" line="2691"/>
         <source>Choose a project file to open</source>
         <translation>Выберите файл проекта для открытия</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2730"/>
+        <location filename="../MainWindow.cpp" line="2736"/>
         <source>DB file &apos;%1&apos; could not be opened</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2886"/>
+        <location filename="../MainWindow.cpp" line="2892"/>
         <source>Table &apos;%1&apos; not found; settings ignored</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3095"/>
+        <location filename="../MainWindow.cpp" line="3101"/>
         <source>Could not open project file for writing.
 Reason: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3213"/>
+        <location filename="../MainWindow.cpp" line="3219"/>
         <source>-- Reference to file &quot;%1&quot; (not supported by this version) --</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3653"/>
+        <location filename="../MainWindow.cpp" line="3659"/>
         <source>Busy (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="968"/>
+        <location filename="../MainWindow.cpp" line="970"/>
         <source>Error checking foreign keys after table modification. The changes will be reverted.</source>
         <translation>Ошибка проверки внешних ключей после изменения таблицы. Изменения будут отменены.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="971"/>
+        <location filename="../MainWindow.cpp" line="973"/>
         <source>This table did not pass a foreign-key check.&lt;br/&gt;You should run &apos;Tools | Foreign-Key Check&apos; and fix the reported issues.</source>
         <translation>Эта таблица не прошла проверку внешнего ключа. &lt;br/&gt; Вы должны запустить &quot;Инструменты | Проверка внешнего ключа&quot;и исправить сообщенные проблемы.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1315"/>
+        <location filename="../MainWindow.cpp" line="1321"/>
         <source>Execution finished with errors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1317"/>
+        <location filename="../MainWindow.cpp" line="1323"/>
         <source>Execution finished without errors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1430"/>
-        <location filename="../MainWindow.cpp" line="1669"/>
+        <location filename="../MainWindow.cpp" line="1675"/>
         <source>Delete Table</source>
         <translation>Удалить таблицу</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1984"/>
+        <location filename="../MainWindow.cpp" line="1990"/>
         <source>Setting PRAGMA values will commit your current transaction.
 Are you sure?</source>
         <translation>Установка значений PRAGMA завершит текущую транзакцию. Установить значения?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="611"/>
+        <location filename="../MainWindow.cpp" line="613"/>
         <source>In-Memory database</source>
         <translation>БД в памяти</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="896"/>
+        <location filename="../MainWindow.cpp" line="233"/>
+        <source>Automatically load the last opened DB file at startup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="898"/>
         <source>Are you sure you want to delete the table &apos;%1&apos;?
 All data associated with the table will be lost.</source>
         <translation>Вы действительно хотите удалить таблицу &apos;%1&apos;?
 Все данные, связанные с таблицей, будут потеряны.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="898"/>
+        <location filename="../MainWindow.cpp" line="900"/>
         <source>Are you sure you want to delete the view &apos;%1&apos;?</source>
         <translation>Вы действительно хотите удалить представление &apos;%1&apos;?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="900"/>
+        <location filename="../MainWindow.cpp" line="902"/>
         <source>Are you sure you want to delete the trigger &apos;%1&apos;?</source>
         <translation>Вы действительно хотите удалить триггер &apos;%1&apos;?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="902"/>
+        <location filename="../MainWindow.cpp" line="904"/>
         <source>Are you sure you want to delete the index &apos;%1&apos;?</source>
         <translation>Вы действительно хотите удалить индекс &apos;%1&apos;?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="913"/>
+        <location filename="../MainWindow.cpp" line="915"/>
         <source>Error: could not delete the table.</source>
         <translation>Ошибка: не удалось удалить таблицу.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="915"/>
+        <location filename="../MainWindow.cpp" line="917"/>
         <source>Error: could not delete the view.</source>
         <translation>Ошибка: не удалось удалить представление.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="917"/>
+        <location filename="../MainWindow.cpp" line="919"/>
         <source>Error: could not delete the trigger.</source>
         <translation>Ошибка: не удалось удалить триггер.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="919"/>
+        <location filename="../MainWindow.cpp" line="921"/>
         <source>Error: could not delete the index.</source>
         <translation>Ошибка: не удалось удалить индекс.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="921"/>
+        <location filename="../MainWindow.cpp" line="923"/>
         <source>Message from database engine:
 %1</source>
         <translation>Сообщение от СУБД:
 %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="949"/>
+        <location filename="../MainWindow.cpp" line="951"/>
         <source>Editing the table requires to save all pending changes now.
 Are you sure you want to save the database?</source>
         <translation>Для редактирования таблицы необходимо сохранить все ожидающие изменения сейчас.
 Вы действительно хотите сохранить БД?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1107"/>
+        <location filename="../MainWindow.cpp" line="1109"/>
         <source>You are already executing SQL statements. Do you want to stop them in order to execute the current statements instead? Note that this might leave the database in an inconsistent state.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1156"/>
+        <location filename="../MainWindow.cpp" line="1158"/>
         <source>-- EXECUTING SELECTION IN &apos;%1&apos;
 --</source>
         <translation>-- ВЫПОЛНЕНИЕ ВЫБОРКИ В &apos;%1&apos;
 --</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1177"/>
+        <location filename="../MainWindow.cpp" line="1183"/>
         <source>-- EXECUTING LINE IN &apos;%1&apos;
 --</source>
         <translation>-- ВЫПОЛНЕНИЕ СТРОКИ В &apos;%1&apos;
 --</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1185"/>
+        <location filename="../MainWindow.cpp" line="1191"/>
         <source>-- EXECUTING ALL IN &apos;%1&apos;
 --</source>
         <translation>-- ВЫПОЛНЕНИЕ ВСЕ В &apos;%1&apos;
 --</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1220"/>
-        <location filename="../MainWindow.cpp" line="1224"/>
+        <location filename="../MainWindow.cpp" line="1226"/>
+        <location filename="../MainWindow.cpp" line="1230"/>
         <source>At line %1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1220"/>
+        <location filename="../MainWindow.cpp" line="1226"/>
         <source>Result: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1224"/>
+        <location filename="../MainWindow.cpp" line="1230"/>
         <source>Result: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1287"/>
+        <location filename="../MainWindow.cpp" line="1293"/>
         <source>Setting PRAGMA values or vacuuming will commit your current transaction.
 Are you sure?</source>
         <translation>Установка значений PRAGMA или вакуумирования приведет к фиксации текущей транзакции.
 Уверены ли вы?</translation>
     </message>
     <message numerus="yes">
-        <location filename="../MainWindow.cpp" line="1854"/>
+        <location filename="../MainWindow.cpp" line="1860"/>
         <source>Select the action to apply to the dropped file(s). &lt;br/&gt;Note: only &apos;Import&apos; will process more than one file.</source>
         <comment>Note for translation: Although there is no %n in the original, you can use the numerus-form to adjust &apos;files(s)&apos; and remove the note when n = 1. Including %n in the translation will also work.</comment>
         <translation type="unfinished">
@@ -4319,133 +4257,133 @@ Are you sure?</source>
         </translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2084"/>
+        <location filename="../MainWindow.cpp" line="2090"/>
         <source>The statements in the tab &apos;%1&apos; are still executing. Closing the tab will stop the execution. This might leave the database in an inconsistent state. Are you sure you want to close the tab?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2867"/>
+        <location filename="../MainWindow.cpp" line="2873"/>
         <source>This project file is using an old file format because it was created using DB Browser for SQLite version 3.10 or lower. Loading this file format is no longer fully supported. If you want to load it completely, please use DB Browser for SQLite version 3.12 to convert it to the new file format.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3426"/>
+        <location filename="../MainWindow.cpp" line="3432"/>
         <source>Yes. Don&apos;t ask again</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3531"/>
+        <location filename="../MainWindow.cpp" line="3537"/>
         <source>This action will open a new SQL tab with the following statements for you to edit and run:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3737"/>
+        <location filename="../MainWindow.cpp" line="3743"/>
         <source>Rename Tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3743"/>
+        <location filename="../MainWindow.cpp" line="3749"/>
         <source>Duplicate Tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3773"/>
+        <location filename="../MainWindow.cpp" line="3779"/>
         <source>Close Tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3792"/>
+        <location filename="../MainWindow.cpp" line="3798"/>
         <source>Opening &apos;%1&apos;...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3794"/>
+        <location filename="../MainWindow.cpp" line="3800"/>
         <source>There was an error opening &apos;%1&apos;...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3797"/>
+        <location filename="../MainWindow.cpp" line="3803"/>
         <source>Value is not a valid URL or filename: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1281"/>
+        <location filename="../MainWindow.cpp" line="1287"/>
         <source>%1 rows returned in %2ms</source>
         <translation>%1 строк возвращено за %2мс</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1395"/>
+        <location filename="../MainWindow.cpp" line="1401"/>
         <source>Choose text files</source>
         <translation>Выберите текстовые файлы</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1576"/>
+        <location filename="../MainWindow.cpp" line="1582"/>
         <source>Import completed. Some foreign key constraints are violated. Please fix them before saving.</source>
         <translation>Импорт завершен. Нарушены некоторые ограничения внешних ключей. Пожалуйста, исправьте их перед сохранением.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1667"/>
+        <location filename="../MainWindow.cpp" line="1673"/>
         <source>Modify Index</source>
         <translation>Модифицировать Индекс</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1670"/>
+        <location filename="../MainWindow.cpp" line="1676"/>
         <source>Modify Table</source>
         <translation>Модифицировать Таблицу</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2041"/>
+        <location filename="../MainWindow.cpp" line="2047"/>
         <source>Do you want to save the changes made to SQL tabs in the project file &apos;%1&apos;?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2199"/>
+        <location filename="../MainWindow.cpp" line="2205"/>
         <source>Select SQL file to open</source>
         <translation>Выбрать файл SQL для открытия</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2252"/>
+        <location filename="../MainWindow.cpp" line="2258"/>
         <source>Select file name</source>
         <translation>Выбрать имя файла</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2289"/>
+        <location filename="../MainWindow.cpp" line="2295"/>
         <source>Select extension file</source>
         <translation>Выбрать расширение файла</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2296"/>
+        <location filename="../MainWindow.cpp" line="2302"/>
         <source>Extension successfully loaded.</source>
         <translation>Расширение успешно загружено.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2298"/>
+        <location filename="../MainWindow.cpp" line="2304"/>
         <source>Error loading extension: %1</source>
         <translation>Ошибка загрузки расширения: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2452"/>
-        <location filename="../MainWindow.cpp" line="2863"/>
+        <location filename="../MainWindow.cpp" line="2458"/>
+        <location filename="../MainWindow.cpp" line="2869"/>
         <source>Don&apos;t show again</source>
         <translation>Не показывать снова</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2455"/>
+        <location filename="../MainWindow.cpp" line="2461"/>
         <source>New version available.</source>
         <translation>Доступна новая версия.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3229"/>
+        <location filename="../MainWindow.cpp" line="3235"/>
         <source>Project saved to file &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3430"/>
+        <location filename="../MainWindow.cpp" line="3436"/>
         <source>Collation needed! Proceed?</source>
         <translation>Нужно выполнить сопоставление! Продолжить?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3431"/>
+        <location filename="../MainWindow.cpp" line="3437"/>
         <source>A table in this database requires a special collation function &apos;%1&apos; that this application can&apos;t provide without further knowledge.
 If you choose to proceed, be aware bad things can happen to your database.
 Create a backup!</source>
@@ -4454,42 +4392,42 @@ Create a backup!</source>
 Создайте резервную копию!</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3448"/>
+        <location filename="../MainWindow.cpp" line="3454"/>
         <source>creating collation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3456"/>
+        <location filename="../MainWindow.cpp" line="3462"/>
         <source>Set a new name for the SQL tab. Use the &apos;&amp;&amp;&apos; character to allow using the following character as a keyboard shortcut.</source>
         <translation>Задайте новое имя для вкладки SQL. Используйте символ &apos;&amp;&amp;&apos;, чтобы разрешить использование следующего символа в качестве сочетания клавиш.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3508"/>
+        <location filename="../MainWindow.cpp" line="3514"/>
         <source>Please specify the view name</source>
         <translation>Укажите имя представления</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3512"/>
+        <location filename="../MainWindow.cpp" line="3518"/>
         <source>There is already an object with that name. Please choose a different name.</source>
         <translation>Объект с указанным именем уже существует. Выберите другое имя.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3519"/>
+        <location filename="../MainWindow.cpp" line="3525"/>
         <source>View successfully created.</source>
         <translation>Представление успешно создано.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3521"/>
+        <location filename="../MainWindow.cpp" line="3527"/>
         <source>Error creating view: %1</source>
         <translation>Ошибка создания представления: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3529"/>
+        <location filename="../MainWindow.cpp" line="3535"/>
         <source>This action will open a new SQL tab for running:</source>
         <translation>Это действие откроет новую вкладку SQL для запуска:</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3535"/>
+        <location filename="../MainWindow.cpp" line="3541"/>
         <source>Press Help for opening the corresponding SQLite reference page.</source>
         <translation>Нажмите &quot;Справка&quot; для открытия соответствующей справочной страницы SQLite.</translation>
     </message>
@@ -4834,8 +4772,8 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="85"/>
-        <location filename="../PreferencesDialog.ui" line="1957"/>
-        <location filename="../PreferencesDialog.ui" line="2080"/>
+        <location filename="../PreferencesDialog.ui" line="1971"/>
+        <location filename="../PreferencesDialog.ui" line="2094"/>
         <source>...</source>
         <translation>...</translation>
     </message>
@@ -4978,10 +4916,6 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <location filename="../PreferencesDialog.ui" line="1313"/>
         <source>&amp;SQL</source>
         <translation>Р&amp;едактор SQL</translation>
-    </message>
-    <message>
-        <source>Settings name</source>
-        <translation type="vanished">Имя настроек</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1331"/>
@@ -5419,196 +5353,201 @@ Can be set to 0 for disabling completion.</source>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1852"/>
+        <source>Select built-in extensions to load for every database:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../PreferencesDialog.ui" line="1866"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;While supporting the REGEXP operator SQLite doesn&apos;t implement any regular expression&lt;br/&gt;algorithm but calls back the running application. DB Browser for SQLite implements this&lt;br/&gt;algorithm for you to let you use REGEXP out of the box. However, as there are multiple possible&lt;br/&gt;implementations of this and you might want to use another one, you&apos;re free to disable the&lt;br/&gt;application&apos;s implementation and load your own by using an extension. Requires restart of the application.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Обозреватель для SQLite позволяет использовать оператор REGEXP &apos;из коробки&apos;. Но тем &lt;br/&gt;не менее, возможны несколько различных вариантов реализаций данного оператора и вы свободны &lt;br/&gt;в выборе какую именно использовать. Можно отключить нашу реализацию и использовать другую - &lt;br/&gt;путем загрузки соответствующего расширения. В этом случае требуется перезагрузка приложения.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1855"/>
+        <location filename="../PreferencesDialog.ui" line="1869"/>
         <source>Disable Regular Expression extension</source>
         <translation>Отключить расширение Регулярных Выражений</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1862"/>
+        <location filename="../PreferencesDialog.ui" line="1876"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite provides an SQL function for loading extensions from a shared library file. Activate this if you want to use the &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt; function from SQL code.&lt;/p&gt;&lt;p&gt;For security reasons, extension loading is turned off by default and must be enabled through this setting. You can always load extensions through the GUI, even though this option is disabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1865"/>
+        <location filename="../PreferencesDialog.ui" line="1879"/>
         <source>Allow loading extensions from SQL code</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1873"/>
+        <location filename="../PreferencesDialog.ui" line="1887"/>
         <source>Remote</source>
         <translation>Удаленный сервер</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1984"/>
+        <location filename="../PreferencesDialog.ui" line="1998"/>
         <source>CA certificates</source>
         <translation>СА сертификаты</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="2089"/>
+        <location filename="../PreferencesDialog.ui" line="2103"/>
         <source>Proxy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="2099"/>
+        <location filename="../PreferencesDialog.ui" line="2113"/>
         <source>Configure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="2114"/>
+        <location filename="../PreferencesDialog.ui" line="2128"/>
         <source>Export Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="2121"/>
+        <location filename="../PreferencesDialog.ui" line="2135"/>
         <source>Import Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1913"/>
-        <location filename="../PreferencesDialog.ui" line="2009"/>
+        <location filename="../PreferencesDialog.ui" line="1927"/>
+        <location filename="../PreferencesDialog.ui" line="2023"/>
         <source>Subject CN</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="2012"/>
+        <location filename="../PreferencesDialog.ui" line="2026"/>
         <source>Common Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="2017"/>
+        <location filename="../PreferencesDialog.ui" line="2031"/>
         <source>Subject O</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="2020"/>
+        <location filename="../PreferencesDialog.ui" line="2034"/>
         <source>Organization</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1929"/>
-        <location filename="../PreferencesDialog.ui" line="2025"/>
+        <location filename="../PreferencesDialog.ui" line="1943"/>
+        <location filename="../PreferencesDialog.ui" line="2039"/>
         <source>Valid from</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1934"/>
-        <location filename="../PreferencesDialog.ui" line="2030"/>
+        <location filename="../PreferencesDialog.ui" line="1948"/>
+        <location filename="../PreferencesDialog.ui" line="2044"/>
         <source>Valid to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1939"/>
-        <location filename="../PreferencesDialog.ui" line="2035"/>
+        <location filename="../PreferencesDialog.ui" line="1953"/>
+        <location filename="../PreferencesDialog.ui" line="2049"/>
         <source>Serial number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1883"/>
+        <location filename="../PreferencesDialog.ui" line="1897"/>
         <source>Your certificates</source>
         <translation>Ваши сертификаты</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1908"/>
+        <location filename="../PreferencesDialog.ui" line="1922"/>
         <source>File</source>
         <translation>Файл</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1916"/>
+        <location filename="../PreferencesDialog.ui" line="1930"/>
         <source>Subject Common Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1921"/>
+        <location filename="../PreferencesDialog.ui" line="1935"/>
         <source>Issuer CN</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="1924"/>
+        <location filename="../PreferencesDialog.ui" line="1938"/>
         <source>Issuer Common Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.ui" line="2049"/>
+        <location filename="../PreferencesDialog.ui" line="2063"/>
         <source>Clone databases into</source>
         <translation>Путь для клонируемых БД</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="73"/>
-        <location filename="../PreferencesDialog.cpp" line="671"/>
+        <location filename="../PreferencesDialog.cpp" line="76"/>
+        <location filename="../PreferencesDialog.cpp" line="740"/>
         <source>Choose a directory</source>
         <translation>Выберите каталог</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="343"/>
-        <location filename="../PreferencesDialog.cpp" line="746"/>
+        <location filename="../PreferencesDialog.cpp" line="356"/>
+        <location filename="../PreferencesDialog.cpp" line="815"/>
         <source>The language will change after you restart the application.</source>
         <translation>Язык будет применен после перезапуска приложения.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="424"/>
+        <location filename="../PreferencesDialog.cpp" line="437"/>
         <source>Select extension file</source>
         <translation>Выберите файл расширения</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="425"/>
+        <location filename="../PreferencesDialog.cpp" line="438"/>
         <source>Extensions(*.so *.dylib *.dll);;All files(*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="597"/>
+        <location filename="../PreferencesDialog.cpp" line="666"/>
         <source>Import certificate file</source>
         <translation>Импорт файла сертификата</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="605"/>
+        <location filename="../PreferencesDialog.cpp" line="674"/>
         <source>No certificates found in this file.</source>
         <translation>В данном файле не найден сертификат.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="622"/>
+        <location filename="../PreferencesDialog.cpp" line="691"/>
         <source>Are you sure you want do remove this certificate? All certificate data will be deleted from the application settings!</source>
         <translation>Вы действительно хотите удалить этот сертификат? Все данные сертификата будут удалены из настроек приложения!</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="708"/>
+        <location filename="../PreferencesDialog.cpp" line="777"/>
         <source>Are you sure you want to clear all the saved settings?
 All your preferences will be lost and default values will be used.</source>
         <translation>Вы действительно хотите удалить все сохраненные настройки?
 Все ваши предпочтения будут потеряны, и будут использоваться значения по умолчанию.</translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="726"/>
+        <location filename="../PreferencesDialog.cpp" line="795"/>
         <source>Save Settings File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="726"/>
-        <location filename="../PreferencesDialog.cpp" line="736"/>
+        <location filename="../PreferencesDialog.cpp" line="795"/>
+        <location filename="../PreferencesDialog.cpp" line="805"/>
         <source>Initialization File (*.ini)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="730"/>
+        <location filename="../PreferencesDialog.cpp" line="799"/>
         <source>The settings file has been saved in location :
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="736"/>
+        <location filename="../PreferencesDialog.cpp" line="805"/>
         <source>Open Settings File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="743"/>
+        <location filename="../PreferencesDialog.cpp" line="812"/>
         <source>The settings file was loaded properly.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../PreferencesDialog.cpp" line="750"/>
+        <location filename="../PreferencesDialog.cpp" line="819"/>
         <source>The selected settings file is not a normal settings file.
 Please check again.</source>
         <translation type="unfinished"></translation>
@@ -5812,6 +5751,1665 @@ Please check again.</source>
     </message>
 </context>
 <context>
+    <name>QsciCommand</name>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="59"/>
+        <source>Move down one line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="69"/>
+        <source>Extend selection down one line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="79"/>
+        <source>Extend rectangular selection down one line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="86"/>
+        <source>Scroll view down one line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="96"/>
+        <source>Move up one line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="106"/>
+        <source>Extend selection up one line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="116"/>
+        <source>Extend rectangular selection up one line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="123"/>
+        <source>Scroll view up one line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="133"/>
+        <source>Scroll to start of document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="143"/>
+        <source>Scroll to end of document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="153"/>
+        <source>Scroll vertically to centre current line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="160"/>
+        <source>Move down one paragraph</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="166"/>
+        <source>Extend selection down one paragraph</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="173"/>
+        <source>Move up one paragraph</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="179"/>
+        <source>Extend selection up one paragraph</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="190"/>
+        <source>Move left one character</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="200"/>
+        <source>Extend selection left one character</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="211"/>
+        <source>Extend rectangular selection left one character</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="222"/>
+        <source>Move right one character</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="232"/>
+        <source>Extend selection right one character</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="243"/>
+        <source>Extend rectangular selection right one character</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="254"/>
+        <source>Move left one word</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="264"/>
+        <source>Extend selection left one word</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="274"/>
+        <source>Move right one word</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="280"/>
+        <source>Extend selection right one word</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="286"/>
+        <source>Move to end of previous word</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="292"/>
+        <source>Extend selection to end of previous word</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="303"/>
+        <source>Move to end of next word</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="313"/>
+        <source>Extend selection to end of next word</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="320"/>
+        <source>Move left one word part</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="326"/>
+        <source>Extend selection left one word part</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="333"/>
+        <source>Move right one word part</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="339"/>
+        <source>Extend selection right one word part</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="350"/>
+        <source>Move to start of document line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="360"/>
+        <source>Extend selection to start of document line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="371"/>
+        <source>Extend rectangular selection to start of document line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="382"/>
+        <source>Move to start of display line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="392"/>
+        <source>Extend selection to start of display line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="399"/>
+        <source>Move to start of display or document line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="406"/>
+        <source>Extend selection to start of display or document line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="417"/>
+        <source>Move to first visible character in document line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="428"/>
+        <source>Extend selection to first visible character in document line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="439"/>
+        <source>Extend rectangular selection to first visible character in document line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="446"/>
+        <source>Move to first visible character of display in document line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="453"/>
+        <source>Extend selection to first visible character in display or document line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="464"/>
+        <source>Move to end of document line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="474"/>
+        <source>Extend selection to end of document line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="485"/>
+        <source>Extend rectangular selection to end of document line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="496"/>
+        <source>Move to end of display line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="506"/>
+        <source>Extend selection to end of display line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="513"/>
+        <source>Move to end of display or document line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="520"/>
+        <source>Extend selection to end of display or document line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="531"/>
+        <source>Move to start of document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="541"/>
+        <source>Extend selection to start of document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="552"/>
+        <source>Move to end of document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="562"/>
+        <source>Extend selection to end of document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="569"/>
+        <source>Move up one page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="575"/>
+        <source>Extend selection up one page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="581"/>
+        <source>Extend rectangular selection up one page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="592"/>
+        <source>Move down one page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="602"/>
+        <source>Extend selection down one page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="612"/>
+        <source>Extend rectangular selection down one page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="619"/>
+        <source>Stuttered move up one page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="625"/>
+        <source>Stuttered extend selection up one page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="632"/>
+        <source>Stuttered move down one page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="638"/>
+        <source>Stuttered extend selection down one page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="649"/>
+        <source>Delete current character</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="659"/>
+        <source>Delete previous character</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="665"/>
+        <source>Delete previous character if not at start of line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="672"/>
+        <source>Delete word to left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="678"/>
+        <source>Delete word to right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="688"/>
+        <source>Delete right to end of next word</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="695"/>
+        <source>Delete line to left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="705"/>
+        <source>Delete line to right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="711"/>
+        <source>Delete current line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="717"/>
+        <source>Cut current line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="723"/>
+        <source>Copy current line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="729"/>
+        <source>Transpose current and previous lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="736"/>
+        <source>Duplicate the current line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="742"/>
+        <source>Select all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="748"/>
+        <source>Move selected lines up one line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="754"/>
+        <source>Move selected lines down one line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="761"/>
+        <source>Duplicate selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="767"/>
+        <source>Convert selection to lower case</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="773"/>
+        <source>Convert selection to upper case</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="779"/>
+        <source>Cut selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="785"/>
+        <source>Copy selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="791"/>
+        <source>Paste</source>
+        <translation type="unfinished">Вставить</translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="797"/>
+        <source>Toggle insert/overtype</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="803"/>
+        <source>Insert newline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="809"/>
+        <source>Formfeed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="815"/>
+        <source>Indent one level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="821"/>
+        <source>De-indent one level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="827"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Отменить</translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="833"/>
+        <source>Undo last command</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="843"/>
+        <source>Redo last command</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="849"/>
+        <source>Zoom in</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="855"/>
+        <source>Zoom out</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QsciLexerCPP</name>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="364"/>
+        <source>Default</source>
+        <translation type="unfinished">По умолчанию</translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="367"/>
+        <source>Inactive default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="370"/>
+        <source>C comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="373"/>
+        <source>Inactive C comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="376"/>
+        <source>C++ comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="379"/>
+        <source>Inactive C++ comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="382"/>
+        <source>JavaDoc style C comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="385"/>
+        <source>Inactive JavaDoc style C comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="388"/>
+        <source>Number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="391"/>
+        <source>Inactive number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="394"/>
+        <source>Keyword</source>
+        <translation type="unfinished">Ключевое слово</translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="397"/>
+        <source>Inactive keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="400"/>
+        <source>Double-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="403"/>
+        <source>Inactive double-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="406"/>
+        <source>Single-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="409"/>
+        <source>Inactive single-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="412"/>
+        <source>IDL UUID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="415"/>
+        <source>Inactive IDL UUID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="418"/>
+        <source>Pre-processor block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="421"/>
+        <source>Inactive pre-processor block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="424"/>
+        <source>Operator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="427"/>
+        <source>Inactive operator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="430"/>
+        <source>Identifier</source>
+        <translation type="unfinished">Идентификатор</translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="433"/>
+        <source>Inactive identifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="436"/>
+        <source>Unclosed string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="439"/>
+        <source>Inactive unclosed string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="442"/>
+        <source>C# verbatim string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="445"/>
+        <source>Inactive C# verbatim string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="448"/>
+        <source>JavaScript regular expression</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="451"/>
+        <source>Inactive JavaScript regular expression</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="454"/>
+        <source>JavaDoc style C++ comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="457"/>
+        <source>Inactive JavaDoc style C++ comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="460"/>
+        <source>Secondary keywords and identifiers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="463"/>
+        <source>Inactive secondary keywords and identifiers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="466"/>
+        <source>JavaDoc keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="469"/>
+        <source>Inactive JavaDoc keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="472"/>
+        <source>JavaDoc keyword error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="475"/>
+        <source>Inactive JavaDoc keyword error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="478"/>
+        <source>Global classes and typedefs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="481"/>
+        <source>Inactive global classes and typedefs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="484"/>
+        <source>C++ raw string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="487"/>
+        <source>Inactive C++ raw string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="490"/>
+        <source>Vala triple-quoted verbatim string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="493"/>
+        <source>Inactive Vala triple-quoted verbatim string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="496"/>
+        <source>Pike hash-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="499"/>
+        <source>Inactive Pike hash-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="502"/>
+        <source>Pre-processor C comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="505"/>
+        <source>Inactive pre-processor C comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="508"/>
+        <source>JavaDoc style pre-processor comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="511"/>
+        <source>Inactive JavaDoc style pre-processor comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="514"/>
+        <source>User-defined literal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="517"/>
+        <source>Inactive user-defined literal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="520"/>
+        <source>Task marker</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="523"/>
+        <source>Inactive task marker</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="526"/>
+        <source>Escape sequence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="529"/>
+        <source>Inactive escape sequence</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QsciLexerHTML</name>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="563"/>
+        <source>HTML default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="566"/>
+        <source>Tag</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="569"/>
+        <source>Unknown tag</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="572"/>
+        <source>Attribute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="575"/>
+        <source>Unknown attribute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="578"/>
+        <source>HTML number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="581"/>
+        <source>HTML double-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="584"/>
+        <source>HTML single-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="587"/>
+        <source>Other text in a tag</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="590"/>
+        <source>HTML comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="593"/>
+        <source>Entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="596"/>
+        <source>End of a tag</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="599"/>
+        <source>Start of an XML fragment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="602"/>
+        <source>End of an XML fragment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="605"/>
+        <source>Script tag</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="608"/>
+        <source>Start of an ASP fragment with @</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="611"/>
+        <source>Start of an ASP fragment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="614"/>
+        <source>CDATA</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="617"/>
+        <source>Start of a PHP fragment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="620"/>
+        <source>Unquoted HTML value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="623"/>
+        <source>ASP X-Code comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="626"/>
+        <source>SGML default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="629"/>
+        <source>SGML command</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="632"/>
+        <source>First parameter of an SGML command</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="635"/>
+        <source>SGML double-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="638"/>
+        <source>SGML single-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="641"/>
+        <source>SGML error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="644"/>
+        <source>SGML special entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="647"/>
+        <source>SGML comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="650"/>
+        <source>First parameter comment of an SGML command</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="653"/>
+        <source>SGML block default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="656"/>
+        <source>Start of a JavaScript fragment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="659"/>
+        <source>JavaScript default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="662"/>
+        <source>JavaScript comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="665"/>
+        <source>JavaScript line comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="668"/>
+        <source>JavaDoc style JavaScript comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="671"/>
+        <source>JavaScript number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="674"/>
+        <source>JavaScript word</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="677"/>
+        <source>JavaScript keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="680"/>
+        <source>JavaScript double-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="683"/>
+        <source>JavaScript single-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="686"/>
+        <source>JavaScript symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="689"/>
+        <source>JavaScript unclosed string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="692"/>
+        <source>JavaScript regular expression</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="695"/>
+        <source>Start of an ASP JavaScript fragment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="698"/>
+        <source>ASP JavaScript default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="701"/>
+        <source>ASP JavaScript comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="704"/>
+        <source>ASP JavaScript line comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="707"/>
+        <source>JavaDoc style ASP JavaScript comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="710"/>
+        <source>ASP JavaScript number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="713"/>
+        <source>ASP JavaScript word</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="716"/>
+        <source>ASP JavaScript keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="719"/>
+        <source>ASP JavaScript double-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="722"/>
+        <source>ASP JavaScript single-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="725"/>
+        <source>ASP JavaScript symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="728"/>
+        <source>ASP JavaScript unclosed string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="731"/>
+        <source>ASP JavaScript regular expression</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="734"/>
+        <source>Start of a VBScript fragment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="737"/>
+        <source>VBScript default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="740"/>
+        <source>VBScript comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="743"/>
+        <source>VBScript number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="746"/>
+        <source>VBScript keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="749"/>
+        <source>VBScript string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="752"/>
+        <source>VBScript identifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="755"/>
+        <source>VBScript unclosed string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="758"/>
+        <source>Start of an ASP VBScript fragment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="761"/>
+        <source>ASP VBScript default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="764"/>
+        <source>ASP VBScript comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="767"/>
+        <source>ASP VBScript number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="770"/>
+        <source>ASP VBScript keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="773"/>
+        <source>ASP VBScript string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="776"/>
+        <source>ASP VBScript identifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="779"/>
+        <source>ASP VBScript unclosed string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="782"/>
+        <source>Start of a Python fragment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="785"/>
+        <source>Python default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="788"/>
+        <source>Python comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="791"/>
+        <source>Python number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="794"/>
+        <source>Python double-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="797"/>
+        <source>Python single-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="800"/>
+        <source>Python keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="803"/>
+        <source>Python triple double-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="806"/>
+        <source>Python triple single-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="809"/>
+        <source>Python class name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="812"/>
+        <source>Python function or method name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="815"/>
+        <source>Python operator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="818"/>
+        <source>Python identifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="821"/>
+        <source>Start of an ASP Python fragment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="824"/>
+        <source>ASP Python default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="827"/>
+        <source>ASP Python comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="830"/>
+        <source>ASP Python number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="833"/>
+        <source>ASP Python double-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="836"/>
+        <source>ASP Python single-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="839"/>
+        <source>ASP Python keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="842"/>
+        <source>ASP Python triple double-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="845"/>
+        <source>ASP Python triple single-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="848"/>
+        <source>ASP Python class name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="851"/>
+        <source>ASP Python function or method name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="854"/>
+        <source>ASP Python operator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="857"/>
+        <source>ASP Python identifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="860"/>
+        <source>PHP default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="863"/>
+        <source>PHP double-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="866"/>
+        <source>PHP single-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="869"/>
+        <source>PHP keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="872"/>
+        <source>PHP number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="875"/>
+        <source>PHP variable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="878"/>
+        <source>PHP comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="881"/>
+        <source>PHP line comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="884"/>
+        <source>PHP double-quoted variable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="887"/>
+        <source>PHP operator</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QsciLexerJSON</name>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="160"/>
+        <source>Default</source>
+        <translation type="unfinished">По умолчанию</translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="163"/>
+        <source>Number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="166"/>
+        <source>String</source>
+        <translation type="unfinished">Строка</translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="169"/>
+        <source>Unclosed string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="172"/>
+        <source>Property</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="175"/>
+        <source>Escape sequence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="178"/>
+        <source>Line comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="181"/>
+        <source>Block comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="184"/>
+        <source>Operator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="187"/>
+        <source>IRI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="190"/>
+        <source>JSON-LD compact IRI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="193"/>
+        <source>JSON keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="196"/>
+        <source>JSON-LD keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="199"/>
+        <source>Parsing error</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QsciLexerJavaScript</name>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjavascript.cpp" line="107"/>
+        <source>Regular expression</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QsciLexerPython</name>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="238"/>
+        <source>Default</source>
+        <translation type="unfinished">По умолчанию</translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="241"/>
+        <source>Comment</source>
+        <translation type="unfinished">Комментарий</translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="244"/>
+        <source>Number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="247"/>
+        <source>Double-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="250"/>
+        <source>Single-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="253"/>
+        <source>Keyword</source>
+        <translation type="unfinished">Ключевое слово</translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="256"/>
+        <source>Triple single-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="259"/>
+        <source>Triple double-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="262"/>
+        <source>Class name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="265"/>
+        <source>Function or method name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="268"/>
+        <source>Operator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="271"/>
+        <source>Identifier</source>
+        <translation type="unfinished">Идентификатор</translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="274"/>
+        <source>Comment block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="277"/>
+        <source>Unclosed string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="280"/>
+        <source>Highlighted identifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="283"/>
+        <source>Decorator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="286"/>
+        <source>Double-quoted f-string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="289"/>
+        <source>Single-quoted f-string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="292"/>
+        <source>Triple single-quoted f-string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="295"/>
+        <source>Triple double-quoted f-string</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QsciLexerSQL</name>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="266"/>
+        <source>Default</source>
+        <translation type="unfinished">По умолчанию</translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="269"/>
+        <source>Comment</source>
+        <translation type="unfinished">Комментарий</translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="272"/>
+        <source>Comment line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="275"/>
+        <source>JavaDoc style comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="278"/>
+        <source>Number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="281"/>
+        <source>Keyword</source>
+        <translation type="unfinished">Ключевое слово</translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="284"/>
+        <source>Double-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="287"/>
+        <source>Single-quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="290"/>
+        <source>SQL*Plus keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="293"/>
+        <source>SQL*Plus prompt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="296"/>
+        <source>Operator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="299"/>
+        <source>Identifier</source>
+        <translation type="unfinished">Идентификатор</translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="302"/>
+        <source>SQL*Plus comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="305"/>
+        <source># comment line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="308"/>
+        <source>JavaDoc keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="311"/>
+        <source>JavaDoc keyword error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="314"/>
+        <source>User defined 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="317"/>
+        <source>User defined 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="320"/>
+        <source>User defined 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="323"/>
+        <source>User defined 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="326"/>
+        <source>Quoted identifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="329"/>
+        <source>Quoted operator</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QsciScintilla</name>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qsciscintilla.cpp" line="4479"/>
+        <source>&amp;Undo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qsciscintilla.cpp" line="4483"/>
+        <source>&amp;Redo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qsciscintilla.cpp" line="4489"/>
+        <source>Cu&amp;t</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qsciscintilla.cpp" line="4494"/>
+        <source>&amp;Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qsciscintilla.cpp" line="4500"/>
+        <source>&amp;Paste</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qsciscintilla.cpp" line="4504"/>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qscintilla/Qt4Qt5/qsciscintilla.cpp" line="4511"/>
+        <source>Select All</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RemoteCommitsModel</name>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="13"/>
@@ -5912,14 +7510,6 @@ Please check again.</source>
         <location filename="../RemoteDock.ui" line="231"/>
         <source>Clone</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>User</source>
-        <translation type="obsolete">Пользователем</translation>
-    </message>
-    <message>
-        <source>Database</source>
-        <translation type="obsolete">База данных</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="274"/>
@@ -6226,10 +7816,6 @@ Are you sure you want to proceed?</source>
 %1</translation>
     </message>
     <message>
-        <source>Error: The network is not accessible.</source>
-        <translation type="obsolete">Ошибка: сеть недоступна.</translation>
-    </message>
-    <message>
         <location filename="../RemoteNetwork.cpp" line="444"/>
         <source>Error: Cannot open the file for sending.</source>
         <translation type="unfinished">Ошибка: не удается открыть файл для отправки.</translation>
@@ -6433,42 +8019,48 @@ Are you sure you want to proceed?</source>
         <translation>Это поле показывает результаты и коды статусов последних выполненных операторов.</translation>
     </message>
     <message>
-        <source>Couldn&apos;t read file: %1.</source>
-        <translation type="obsolete">Не удалось прочитать файл:%1.</translation>
+        <location filename="../SqlExecutionArea.cpp" line="37"/>
+        <source>Ctrl+PgUp</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../SqlExecutionArea.cpp" line="246"/>
+        <location filename="../SqlExecutionArea.cpp" line="42"/>
+        <source>Ctrl+PgDown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../SqlExecutionArea.cpp" line="256"/>
         <source>Couldn&apos;t read file &quot;%1&quot;: %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../SqlExecutionArea.cpp" line="276"/>
-        <location filename="../SqlExecutionArea.cpp" line="294"/>
+        <location filename="../SqlExecutionArea.cpp" line="286"/>
+        <location filename="../SqlExecutionArea.cpp" line="304"/>
         <source>Couldn&apos;t save file: %1.</source>
         <translation type="unfinished">Не удалось сохранить файл:%1.</translation>
     </message>
     <message>
-        <location filename="../SqlExecutionArea.cpp" line="317"/>
+        <location filename="../SqlExecutionArea.cpp" line="327"/>
         <source>Your changes will be lost when reloading it!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../SqlExecutionArea.cpp" line="323"/>
+        <location filename="../SqlExecutionArea.cpp" line="333"/>
         <source>The file &quot;%1&quot; was modified by another program. Do you want to reload it?%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../SqlExecutionArea.cpp" line="325"/>
+        <location filename="../SqlExecutionArea.cpp" line="335"/>
         <source>Answer &quot;Yes to All&quot; to reload the file on any external update without further prompting.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../SqlExecutionArea.cpp" line="327"/>
+        <location filename="../SqlExecutionArea.cpp" line="337"/>
         <source>Answer &quot;No to All&quot; to ignore any external update without further prompting.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../SqlExecutionArea.cpp" line="329"/>
+        <location filename="../SqlExecutionArea.cpp" line="339"/>
         <source>Modifying and saving the file will restore prompting.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6479,11 +8071,6 @@ Are you sure you want to proceed?</source>
         <location filename="../sqltextedit.cpp" line="45"/>
         <source>Ctrl+/</source>
         <translation></translation>
-    </message>
-    <message>
-        <location filename="../sqltextedit.cpp" line="48"/>
-        <source>Ctrl+PgDown</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7709,14 +9296,6 @@ Hold %3Shift and click to jump there</source>
         <translation type="unfinished">определяем количество строк...</translation>
     </message>
     <message>
-        <source>%1 - %2 of &gt;= %3</source>
-        <translation type="obsolete">%1 - %2 из &gt;= %3</translation>
-    </message>
-    <message>
-        <source>%1 - %2 of %3</source>
-        <translation type="obsolete">%1 - %2 из %3</translation>
-    </message>
-    <message>
         <location filename="../TableBrowser.cpp" line="760"/>
         <source>%L1 - %L2 of &gt;= %L3</source>
         <translation type="unfinished"></translation>
@@ -7773,10 +9352,6 @@ Hold %3Shift and click to jump there</source>
         <translation type="unfinished">Сначала выберите запись</translation>
     </message>
     <message>
-        <source>There is no filter set for this table. View will not be created.</source>
-        <translation type="obsolete">Для этой таблицы не установлен фильтр. Представление не будет создано.</translation>
-    </message>
-    <message>
         <location filename="../TableBrowser.cpp" line="1493"/>
         <source>Please choose a new encoding for all tables.</source>
         <translation type="unfinished">Пожалуйста выберите новую кодировку для всех таблиц.</translation>
@@ -7824,6 +9399,24 @@ Leave the field empty for using the database encoding.</source>
     <message>
         <location filename="../TableBrowserDock.cpp" line="99"/>
         <source>Set a new name for the data browser. Use the &apos;&amp;&amp;&apos; character to allow using the following character as a keyboard shortcut.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UndoStack</name>
+    <message>
+        <location filename="../../libs/qhexedit/src/commands.cpp" line="112"/>
+        <source>Inserting %1 bytes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qhexedit/src/commands.cpp" line="134"/>
+        <source>Delete %1 chars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libs/qhexedit/src/commands.cpp" line="159"/>
+        <source>Overwrite %1 chars</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
