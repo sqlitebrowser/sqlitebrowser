@@ -5780,1660 +5780,1333 @@ Si prega di ricontrollare.</translation>
 <context>
     <name>QsciCommand</name>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="59"/>
         <source>Move down one line</source>
-        <translation>Sposta in basso di una riga</translation>
+        <translation type="vanished">Sposta in basso di una riga</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="69"/>
         <source>Extend selection down one line</source>
-        <translation>Estendi la selezione in basso di una riga</translation>
+        <translation type="vanished">Estendi la selezione in basso di una riga</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="79"/>
         <source>Extend rectangular selection down one line</source>
-        <translation>Estendi la selezione rettangolare in basso di una riga</translation>
+        <translation type="vanished">Estendi la selezione rettangolare in basso di una riga</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="86"/>
         <source>Scroll view down one line</source>
-        <translation>Scorri la vista in basso di una riga</translation>
+        <translation type="vanished">Scorri la vista in basso di una riga</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="96"/>
         <source>Move up one line</source>
-        <translation>Muovi in alto di una riga</translation>
+        <translation type="vanished">Muovi in alto di una riga</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="106"/>
         <source>Extend selection up one line</source>
-        <translation>Estendi la selezione in alto di una riga</translation>
+        <translation type="vanished">Estendi la selezione in alto di una riga</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="116"/>
         <source>Extend rectangular selection up one line</source>
-        <translation>Estendi la selezione rettangolare in alto di una riga</translation>
+        <translation type="vanished">Estendi la selezione rettangolare in alto di una riga</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="123"/>
         <source>Scroll view up one line</source>
-        <translation>Scorri la vista in alto di una riga</translation>
+        <translation type="vanished">Scorri la vista in alto di una riga</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="133"/>
         <source>Scroll to start of document</source>
-        <translation>Scorri all&apos;inizio del documento</translation>
+        <translation type="vanished">Scorri all&apos;inizio del documento</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="143"/>
         <source>Scroll to end of document</source>
-        <translation>Scorri alla fine del documento</translation>
+        <translation type="vanished">Scorri alla fine del documento</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="153"/>
         <source>Scroll vertically to centre current line</source>
-        <translation>Scorri verticalmente per centrare la riga corrente</translation>
+        <translation type="vanished">Scorri verticalmente per centrare la riga corrente</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="160"/>
         <source>Move down one paragraph</source>
-        <translation>Muovi in basso di un paragrafo</translation>
+        <translation type="vanished">Muovi in basso di un paragrafo</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="166"/>
         <source>Extend selection down one paragraph</source>
-        <translation>Estendi la selezione in basso di un paragrafo</translation>
+        <translation type="vanished">Estendi la selezione in basso di un paragrafo</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="173"/>
         <source>Move up one paragraph</source>
-        <translation>Muovi in alto di un paragrafo</translation>
+        <translation type="vanished">Muovi in alto di un paragrafo</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="179"/>
         <source>Extend selection up one paragraph</source>
-        <translation>Estendi la selezione in alto di un paragrafo</translation>
+        <translation type="vanished">Estendi la selezione in alto di un paragrafo</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="190"/>
         <source>Move left one character</source>
-        <translation>Muovi a sinistra di un carattere</translation>
+        <translation type="vanished">Muovi a sinistra di un carattere</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="200"/>
         <source>Extend selection left one character</source>
-        <translation>Estendi la selezione a sinistra di un carattere</translation>
+        <translation type="vanished">Estendi la selezione a sinistra di un carattere</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="211"/>
         <source>Extend rectangular selection left one character</source>
-        <translation>Estendi la selezione rettangolare a sinistra di un carattere</translation>
+        <translation type="vanished">Estendi la selezione rettangolare a sinistra di un carattere</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="222"/>
         <source>Move right one character</source>
-        <translation>Muovi a destra di un carattere</translation>
+        <translation type="vanished">Muovi a destra di un carattere</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="232"/>
         <source>Extend selection right one character</source>
-        <translation>Estendi la selezione a destra di un carattere</translation>
+        <translation type="vanished">Estendi la selezione a destra di un carattere</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="243"/>
         <source>Extend rectangular selection right one character</source>
-        <translation>Estendi la selezione rettangolare a destra di un carattere</translation>
+        <translation type="vanished">Estendi la selezione rettangolare a destra di un carattere</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="254"/>
         <source>Move left one word</source>
-        <translation>Muovi a sinistra di una parola</translation>
+        <translation type="vanished">Muovi a sinistra di una parola</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="264"/>
         <source>Extend selection left one word</source>
-        <translation>Estendi la selezione a sinistra di una parola</translation>
+        <translation type="vanished">Estendi la selezione a sinistra di una parola</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="274"/>
         <source>Move right one word</source>
-        <translation>Muovi a destra di una parola</translation>
+        <translation type="vanished">Muovi a destra di una parola</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="280"/>
         <source>Extend selection right one word</source>
-        <translation>Estendi la selezione a destra di una parola</translation>
+        <translation type="vanished">Estendi la selezione a destra di una parola</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="286"/>
         <source>Move to end of previous word</source>
-        <translation>Muovi alla fine della parola precedente</translation>
+        <translation type="vanished">Muovi alla fine della parola precedente</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="292"/>
         <source>Extend selection to end of previous word</source>
-        <translation>Estendi la selezione alla fine della parola precedente</translation>
+        <translation type="vanished">Estendi la selezione alla fine della parola precedente</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="303"/>
         <source>Move to end of next word</source>
-        <translation>Muovi alla fine della prossima parola</translation>
+        <translation type="vanished">Muovi alla fine della prossima parola</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="313"/>
         <source>Extend selection to end of next word</source>
-        <translation>Estendi la selezione alla fine della prossima parola</translation>
+        <translation type="vanished">Estendi la selezione alla fine della prossima parola</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="320"/>
         <source>Move left one word part</source>
-        <translation>Muovi a sinistra di una parte di parola</translation>
+        <translation type="vanished">Muovi a sinistra di una parte di parola</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="326"/>
         <source>Extend selection left one word part</source>
-        <translation>Estendi la selezione a sinistra di una parte di parola</translation>
+        <translation type="vanished">Estendi la selezione a sinistra di una parte di parola</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="333"/>
         <source>Move right one word part</source>
-        <translation>Muovi a destra di una parte di parola</translation>
+        <translation type="vanished">Muovi a destra di una parte di parola</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="339"/>
         <source>Extend selection right one word part</source>
-        <translation>Estendi la selezione a destra di una parte di parola</translation>
+        <translation type="vanished">Estendi la selezione a destra di una parte di parola</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="350"/>
         <source>Move to start of document line</source>
-        <translation>Muovi all&apos;inizio della riga</translation>
+        <translation type="vanished">Muovi all&apos;inizio della riga</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="360"/>
         <source>Extend selection to start of document line</source>
-        <translation>Estendi la selezione all&apos;inizio della riga</translation>
+        <translation type="vanished">Estendi la selezione all&apos;inizio della riga</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="371"/>
         <source>Extend rectangular selection to start of document line</source>
-        <translation>Estendi la selezione rettangolare all&apos;inizio della riga</translation>
+        <translation type="vanished">Estendi la selezione rettangolare all&apos;inizio della riga</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="382"/>
         <source>Move to start of display line</source>
-        <translation>Muovi all&apos;inizio della riga mostrata</translation>
+        <translation type="vanished">Muovi all&apos;inizio della riga mostrata</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="392"/>
         <source>Extend selection to start of display line</source>
-        <translation>Estendi la selezione all&apos;inizio della riga mostrata</translation>
+        <translation type="vanished">Estendi la selezione all&apos;inizio della riga mostrata</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="399"/>
         <source>Move to start of display or document line</source>
-        <translation>Muovi all&apos;inizio della riga mostrata o del documento</translation>
+        <translation type="vanished">Muovi all&apos;inizio della riga mostrata o del documento</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="406"/>
         <source>Extend selection to start of display or document line</source>
-        <translation>Estendi la selezione all&apos;inizio della riga mostrata o del documento</translation>
+        <translation type="vanished">Estendi la selezione all&apos;inizio della riga mostrata o del documento</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="417"/>
         <source>Move to first visible character in document line</source>
-        <translation>Muovi al primo carattere visibile nella riga</translation>
+        <translation type="vanished">Muovi al primo carattere visibile nella riga</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="428"/>
         <source>Extend selection to first visible character in document line</source>
-        <translation>Estendi la selezione al primo carattere visibile della riga</translation>
+        <translation type="vanished">Estendi la selezione al primo carattere visibile della riga</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="439"/>
         <source>Extend rectangular selection to first visible character in document line</source>
-        <translation>Estendi la selezione rettangolare al primo carattere visibile nella riga</translation>
+        <translation type="vanished">Estendi la selezione rettangolare al primo carattere visibile nella riga</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="446"/>
         <source>Move to first visible character of display in document line</source>
-        <translation>Muovi al primo carattere visibile nella riga mostrata</translation>
+        <translation type="vanished">Muovi al primo carattere visibile nella riga mostrata</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="453"/>
         <source>Extend selection to first visible character in display or document line</source>
-        <translation>Estendi la selezione al primo carattere visibile nella riga mostrata</translation>
+        <translation type="vanished">Estendi la selezione al primo carattere visibile nella riga mostrata</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="464"/>
         <source>Move to end of document line</source>
-        <translation>Muovi alla fine della riga</translation>
+        <translation type="vanished">Muovi alla fine della riga</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="474"/>
         <source>Extend selection to end of document line</source>
-        <translation>Estendi la selezione alla fine della riga</translation>
+        <translation type="vanished">Estendi la selezione alla fine della riga</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="485"/>
         <source>Extend rectangular selection to end of document line</source>
-        <translation>Estendi la selezione rettangolare alla fine della riga</translation>
+        <translation type="vanished">Estendi la selezione rettangolare alla fine della riga</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="496"/>
         <source>Move to end of display line</source>
-        <translation>Muovi alla fine della riga mostrata</translation>
+        <translation type="vanished">Muovi alla fine della riga mostrata</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="506"/>
         <source>Extend selection to end of display line</source>
-        <translation>Estendi la selezione alla fine della riga mostrata</translation>
+        <translation type="vanished">Estendi la selezione alla fine della riga mostrata</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="513"/>
         <source>Move to end of display or document line</source>
-        <translation>Muovi alla fine della riga mostrata o del documento</translation>
+        <translation type="vanished">Muovi alla fine della riga mostrata o del documento</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="520"/>
         <source>Extend selection to end of display or document line</source>
-        <translation>Estendi la selezione alla fine della riga mostrata o del documento</translation>
+        <translation type="vanished">Estendi la selezione alla fine della riga mostrata o del documento</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="531"/>
         <source>Move to start of document</source>
-        <translation>Muovi all&apos;inizio del documento</translation>
+        <translation type="vanished">Muovi all&apos;inizio del documento</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="541"/>
         <source>Extend selection to start of document</source>
-        <translation>Estendi la selezione all&apos;inizio del documento</translation>
+        <translation type="vanished">Estendi la selezione all&apos;inizio del documento</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="552"/>
         <source>Move to end of document</source>
-        <translation>Muovi alla fine del documento</translation>
+        <translation type="vanished">Muovi alla fine del documento</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="562"/>
         <source>Extend selection to end of document</source>
-        <translation>Estendi la selezione alla fine del documento</translation>
+        <translation type="vanished">Estendi la selezione alla fine del documento</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="569"/>
         <source>Move up one page</source>
-        <translation>Muovi su di una pagina</translation>
+        <translation type="vanished">Muovi su di una pagina</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="575"/>
         <source>Extend selection up one page</source>
-        <translation>Estendi la selezione in su di una pagina</translation>
+        <translation type="vanished">Estendi la selezione in su di una pagina</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="581"/>
         <source>Extend rectangular selection up one page</source>
-        <translation>Estendi la selezione rettangolare in su di una pagina</translation>
+        <translation type="vanished">Estendi la selezione rettangolare in su di una pagina</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="592"/>
         <source>Move down one page</source>
-        <translation>Muovi in basso di una pagina</translation>
+        <translation type="vanished">Muovi in basso di una pagina</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="602"/>
         <source>Extend selection down one page</source>
-        <translation>Estendi la selezione in basso di una pagina</translation>
+        <translation type="vanished">Estendi la selezione in basso di una pagina</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="612"/>
         <source>Extend rectangular selection down one page</source>
-        <translation>Estendi la selezione rettangolare in basso di una pagina</translation>
+        <translation type="vanished">Estendi la selezione rettangolare in basso di una pagina</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="619"/>
         <source>Stuttered move up one page</source>
-        <translation>Muovi in alto a scatti di una pagina</translation>
+        <translation type="vanished">Muovi in alto a scatti di una pagina</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="625"/>
         <source>Stuttered extend selection up one page</source>
-        <translation>Estendi la selezione in alto a scatti di una pagina</translation>
+        <translation type="vanished">Estendi la selezione in alto a scatti di una pagina</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="632"/>
         <source>Stuttered move down one page</source>
-        <translation>Muovi in basso a scatti di una pagina</translation>
+        <translation type="vanished">Muovi in basso a scatti di una pagina</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="638"/>
         <source>Stuttered extend selection down one page</source>
-        <translation>Estendi la selezione in basso a scatti di una pagina</translation>
+        <translation type="vanished">Estendi la selezione in basso a scatti di una pagina</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="649"/>
         <source>Delete current character</source>
-        <translation>Elimina il carattere corrente</translation>
+        <translation type="vanished">Elimina il carattere corrente</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="659"/>
         <source>Delete previous character</source>
-        <translation>Elimina il carattere precedente</translation>
+        <translation type="vanished">Elimina il carattere precedente</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="665"/>
         <source>Delete previous character if not at start of line</source>
-        <translation>Elimina il carattere precedente se non corrisponde all&apos;inizio di riga</translation>
+        <translation type="vanished">Elimina il carattere precedente se non corrisponde all&apos;inizio di riga</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="672"/>
         <source>Delete word to left</source>
-        <translation>Elimina la parola a sinistra</translation>
+        <translation type="vanished">Elimina la parola a sinistra</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="678"/>
         <source>Delete word to right</source>
-        <translation>Elimina la parola a destra</translation>
+        <translation type="vanished">Elimina la parola a destra</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="688"/>
         <source>Delete right to end of next word</source>
-        <translation>Elimina da destra alla fine della prossima parola</translation>
+        <translation type="vanished">Elimina da destra alla fine della prossima parola</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="695"/>
         <source>Delete line to left</source>
-        <translation>Elimina la riga a sinsitra</translation>
+        <translation type="vanished">Elimina la riga a sinsitra</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="705"/>
         <source>Delete line to right</source>
-        <translation>Elimina la riga a destra</translation>
+        <translation type="vanished">Elimina la riga a destra</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="711"/>
         <source>Delete current line</source>
-        <translation>Elimina la riga corrente</translation>
+        <translation type="vanished">Elimina la riga corrente</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="717"/>
         <source>Cut current line</source>
-        <translation>Taglia la riga corrente</translation>
+        <translation type="vanished">Taglia la riga corrente</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="723"/>
         <source>Copy current line</source>
-        <translation>Copia la riga corrente</translation>
+        <translation type="vanished">Copia la riga corrente</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="729"/>
         <source>Transpose current and previous lines</source>
-        <translation>Trasponi la riga corrente e quella precedente</translation>
+        <translation type="vanished">Trasponi la riga corrente e quella precedente</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="736"/>
         <source>Duplicate the current line</source>
-        <translation>Duplica la riga corrente</translation>
+        <translation type="vanished">Duplica la riga corrente</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="742"/>
         <source>Select all</source>
-        <translation>Seleziona tutto</translation>
+        <translation type="vanished">Seleziona tutto</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="748"/>
         <source>Move selected lines up one line</source>
-        <translation>Muovi le righe selezionate in alto di una riga</translation>
+        <translation type="vanished">Muovi le righe selezionate in alto di una riga</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="754"/>
         <source>Move selected lines down one line</source>
-        <translation>Muovi le righe selezionate in basso di una riga</translation>
+        <translation type="vanished">Muovi le righe selezionate in basso di una riga</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="761"/>
         <source>Duplicate selection</source>
-        <translation>Duplica la selezione</translation>
+        <translation type="vanished">Duplica la selezione</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="767"/>
         <source>Convert selection to lower case</source>
-        <translation>Converti la selezione in minuscolo</translation>
+        <translation type="vanished">Converti la selezione in minuscolo</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="773"/>
         <source>Convert selection to upper case</source>
-        <translation>Converti la selezione in maiuscolo</translation>
+        <translation type="vanished">Converti la selezione in maiuscolo</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="779"/>
         <source>Cut selection</source>
-        <translation>Taglia la selezione</translation>
+        <translation type="vanished">Taglia la selezione</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="785"/>
         <source>Copy selection</source>
-        <translation>Copia la selezione</translation>
+        <translation type="vanished">Copia la selezione</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="791"/>
         <source>Paste</source>
-        <translation>Incolla</translation>
+        <translation type="vanished">Incolla</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="797"/>
         <source>Toggle insert/overtype</source>
-        <translation>Alterna inserisci/sovrascrivi</translation>
+        <translation type="vanished">Alterna inserisci/sovrascrivi</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="803"/>
         <source>Insert newline</source>
-        <translation>Inserisci una nuova riga</translation>
+        <translation type="vanished">Inserisci una nuova riga</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="809"/>
         <source>Formfeed</source>
-        <translation>Separatore di pagina</translation>
+        <translation type="vanished">Separatore di pagina</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="815"/>
         <source>Indent one level</source>
-        <translation>Indenta di un livello</translation>
+        <translation type="vanished">Indenta di un livello</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="821"/>
         <source>De-indent one level</source>
-        <translation>Rimuovi l&apos;indentazione di un livello</translation>
+        <translation type="vanished">Rimuovi l&apos;indentazione di un livello</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="827"/>
         <source>Cancel</source>
-        <translation>Annulla</translation>
+        <translation type="vanished">Annulla</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="833"/>
         <source>Undo last command</source>
-        <translation>Annulla l&apos;ultimo comando</translation>
+        <translation type="vanished">Annulla l&apos;ultimo comando</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="843"/>
         <source>Redo last command</source>
-        <translation>Ripristina l&apos;ultimo comando</translation>
+        <translation type="vanished">Ripristina l&apos;ultimo comando</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="849"/>
         <source>Zoom in</source>
-        <translation>Ingrandisci</translation>
+        <translation type="vanished">Ingrandisci</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="855"/>
         <source>Zoom out</source>
-        <translation>Rimpicciolisci</translation>
+        <translation type="vanished">Rimpicciolisci</translation>
     </message>
 </context>
 <context>
     <name>QsciLexerCPP</name>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="364"/>
         <source>Default</source>
-        <translation>Default</translation>
+        <translation type="vanished">Default</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="367"/>
         <source>Inactive default</source>
-        <translation>Default inattivo</translation>
+        <translation type="vanished">Default inattivo</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="370"/>
         <source>C comment</source>
-        <translation>Commento C</translation>
+        <translation type="vanished">Commento C</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="373"/>
         <source>Inactive C comment</source>
-        <translation>Commento C inattivo</translation>
+        <translation type="vanished">Commento C inattivo</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="376"/>
         <source>C++ comment</source>
-        <translation>Commento C++</translation>
+        <translation type="vanished">Commento C++</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="379"/>
         <source>Inactive C++ comment</source>
-        <translation>Commento C++ inattivo</translation>
+        <translation type="vanished">Commento C++ inattivo</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="382"/>
         <source>JavaDoc style C comment</source>
-        <translation>Commento JavaDoc in stile C</translation>
+        <translation type="vanished">Commento JavaDoc in stile C</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="385"/>
         <source>Inactive JavaDoc style C comment</source>
-        <translation>Commento JavaDoc in stile C inattivo</translation>
+        <translation type="vanished">Commento JavaDoc in stile C inattivo</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="388"/>
         <source>Number</source>
-        <translation>Numero</translation>
+        <translation type="vanished">Numero</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="391"/>
         <source>Inactive number</source>
-        <translation>Numero inattivo</translation>
+        <translation type="vanished">Numero inattivo</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="394"/>
         <source>Keyword</source>
-        <translation>Parola chiave</translation>
+        <translation type="vanished">Parola chiave</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="397"/>
         <source>Inactive keyword</source>
-        <translation>Parola chiave inattiva</translation>
+        <translation type="vanished">Parola chiave inattiva</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="400"/>
         <source>Double-quoted string</source>
-        <translation>Stringa tra virgolette</translation>
+        <translation type="vanished">Stringa tra virgolette</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="403"/>
         <source>Inactive double-quoted string</source>
-        <translation>Stringa tra virgolette inattiva</translation>
+        <translation type="vanished">Stringa tra virgolette inattiva</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="406"/>
         <source>Single-quoted string</source>
-        <translation>Stringa tra singoli apici</translation>
+        <translation type="vanished">Stringa tra singoli apici</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="409"/>
         <source>Inactive single-quoted string</source>
-        <translation>Stringa tra singoli apici inattiva</translation>
+        <translation type="vanished">Stringa tra singoli apici inattiva</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="412"/>
         <source>IDL UUID</source>
-        <translation>IDL UUID</translation>
+        <translation type="vanished">IDL UUID</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="415"/>
         <source>Inactive IDL UUID</source>
-        <translation>IDL UUID inattivo</translation>
+        <translation type="vanished">IDL UUID inattivo</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="418"/>
         <source>Pre-processor block</source>
-        <translation>Blocco di pre-processore</translation>
+        <translation type="vanished">Blocco di pre-processore</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="421"/>
         <source>Inactive pre-processor block</source>
-        <translation>Blocco di pre-processore inattivo</translation>
+        <translation type="vanished">Blocco di pre-processore inattivo</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="424"/>
         <source>Operator</source>
-        <translation>Operatore</translation>
+        <translation type="vanished">Operatore</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="427"/>
         <source>Inactive operator</source>
-        <translation>Operatore inattivo</translation>
+        <translation type="vanished">Operatore inattivo</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="430"/>
         <source>Identifier</source>
-        <translation>Identificatore</translation>
+        <translation type="vanished">Identificatore</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="433"/>
         <source>Inactive identifier</source>
-        <translation>Identificatore inattivo</translation>
+        <translation type="vanished">Identificatore inattivo</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="436"/>
         <source>Unclosed string</source>
-        <translation>Stringa non terminata</translation>
+        <translation type="vanished">Stringa non terminata</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="439"/>
         <source>Inactive unclosed string</source>
-        <translation>Stringa non terminata inattiva</translation>
+        <translation type="vanished">Stringa non terminata inattiva</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="442"/>
         <source>C# verbatim string</source>
-        <translation>Stringa verbatim in C#</translation>
+        <translation type="vanished">Stringa verbatim in C#</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="445"/>
         <source>Inactive C# verbatim string</source>
-        <translation>Stringa verbatim in C# inattiva</translation>
+        <translation type="vanished">Stringa verbatim in C# inattiva</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="448"/>
         <source>JavaScript regular expression</source>
-        <translation>Espressione regolare JavaScript</translation>
+        <translation type="vanished">Espressione regolare JavaScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="451"/>
         <source>Inactive JavaScript regular expression</source>
-        <translation>Espressione regolare JavaScript inattiva</translation>
+        <translation type="vanished">Espressione regolare JavaScript inattiva</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="454"/>
         <source>JavaDoc style C++ comment</source>
-        <translation>Commmento JavaDoc in stile C++</translation>
+        <translation type="vanished">Commmento JavaDoc in stile C++</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="457"/>
         <source>Inactive JavaDoc style C++ comment</source>
-        <translation>Commento JavaDoc in stile C++ inattivo</translation>
+        <translation type="vanished">Commento JavaDoc in stile C++ inattivo</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="460"/>
         <source>Secondary keywords and identifiers</source>
-        <translation>Parole chiave e identificatori secondari</translation>
+        <translation type="vanished">Parole chiave e identificatori secondari</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="463"/>
         <source>Inactive secondary keywords and identifiers</source>
-        <translation>Parole chiave e identificatori secondari inattivi</translation>
+        <translation type="vanished">Parole chiave e identificatori secondari inattivi</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="466"/>
         <source>JavaDoc keyword</source>
-        <translation>Parola chiave JavaDoc</translation>
+        <translation type="vanished">Parola chiave JavaDoc</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="469"/>
         <source>Inactive JavaDoc keyword</source>
-        <translation>Parola chiave JavaDoc inattiva</translation>
+        <translation type="vanished">Parola chiave JavaDoc inattiva</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="472"/>
         <source>JavaDoc keyword error</source>
-        <translation>Parola chiave JavaDoc errata</translation>
+        <translation type="vanished">Parola chiave JavaDoc errata</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="475"/>
         <source>Inactive JavaDoc keyword error</source>
-        <translation>Parola chiava JavaDoc errata inattiva</translation>
+        <translation type="vanished">Parola chiava JavaDoc errata inattiva</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="478"/>
         <source>Global classes and typedefs</source>
-        <translation>Classi globali e typedefs</translation>
+        <translation type="vanished">Classi globali e typedefs</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="481"/>
         <source>Inactive global classes and typedefs</source>
-        <translation>Classi globali e typedefs inattive</translation>
+        <translation type="vanished">Classi globali e typedefs inattive</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="484"/>
         <source>C++ raw string</source>
-        <translation>Stringa grezza C++</translation>
+        <translation type="vanished">Stringa grezza C++</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="487"/>
         <source>Inactive C++ raw string</source>
-        <translation>Stringa grezza C++ inattiva</translation>
+        <translation type="vanished">Stringa grezza C++ inattiva</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="490"/>
         <source>Vala triple-quoted verbatim string</source>
-        <translation>Stringa Vala tri-apicata verbatim</translation>
+        <translation type="vanished">Stringa Vala tri-apicata verbatim</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="493"/>
         <source>Inactive Vala triple-quoted verbatim string</source>
-        <translation>Stringa Vala tri-apicata verbatim inattiva</translation>
+        <translation type="vanished">Stringa Vala tri-apicata verbatim inattiva</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="496"/>
         <source>Pike hash-quoted string</source>
-        <translation>Stringa Pike tra hash</translation>
+        <translation type="vanished">Stringa Pike tra hash</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="499"/>
         <source>Inactive Pike hash-quoted string</source>
-        <translation>Stringa Pike tra hash inattiva</translation>
+        <translation type="vanished">Stringa Pike tra hash inattiva</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="502"/>
         <source>Pre-processor C comment</source>
-        <translation>Commento di pre-processore C</translation>
+        <translation type="vanished">Commento di pre-processore C</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="505"/>
         <source>Inactive pre-processor C comment</source>
-        <translation>Commento di pre-processore C inattivo</translation>
+        <translation type="vanished">Commento di pre-processore C inattivo</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="508"/>
         <source>JavaDoc style pre-processor comment</source>
-        <translation>Commento di pre-processore in stile JavaDoc</translation>
+        <translation type="vanished">Commento di pre-processore in stile JavaDoc</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="511"/>
         <source>Inactive JavaDoc style pre-processor comment</source>
-        <translation>Commento di pre-processore in stile JavaDoc inattivo</translation>
+        <translation type="vanished">Commento di pre-processore in stile JavaDoc inattivo</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="514"/>
         <source>User-defined literal</source>
-        <translation>Letterale definito dall&apos;utente</translation>
+        <translation type="vanished">Letterale definito dall&apos;utente</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="517"/>
         <source>Inactive user-defined literal</source>
-        <translation>Letterale definito dall&apos;utente inattivo</translation>
+        <translation type="vanished">Letterale definito dall&apos;utente inattivo</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="520"/>
         <source>Task marker</source>
-        <translation>Segno di Task</translation>
+        <translation type="vanished">Segno di Task</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="523"/>
         <source>Inactive task marker</source>
-        <translation>Segno di Task inattivo</translation>
+        <translation type="vanished">Segno di Task inattivo</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="526"/>
         <source>Escape sequence</source>
-        <translation>Sequenza di escape</translation>
+        <translation type="vanished">Sequenza di escape</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="529"/>
         <source>Inactive escape sequence</source>
-        <translation>Sequenza di escape inattiva</translation>
+        <translation type="vanished">Sequenza di escape inattiva</translation>
     </message>
 </context>
 <context>
     <name>QsciLexerHTML</name>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="563"/>
         <source>HTML default</source>
-        <translation>Default HTML</translation>
+        <translation type="vanished">Default HTML</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="566"/>
         <source>Tag</source>
-        <translation>Tag</translation>
+        <translation type="vanished">Tag</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="569"/>
         <source>Unknown tag</source>
-        <translation>Tag sconosciuto</translation>
+        <translation type="vanished">Tag sconosciuto</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="572"/>
         <source>Attribute</source>
-        <translation>Attributo</translation>
+        <translation type="vanished">Attributo</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="575"/>
         <source>Unknown attribute</source>
-        <translation>Attributo sconosciuto</translation>
+        <translation type="vanished">Attributo sconosciuto</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="578"/>
         <source>HTML number</source>
-        <translation>Numero HTML</translation>
+        <translation type="vanished">Numero HTML</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="581"/>
         <source>HTML double-quoted string</source>
-        <translation>Stringa tra virgolette in HTML</translation>
+        <translation type="vanished">Stringa tra virgolette in HTML</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="584"/>
         <source>HTML single-quoted string</source>
-        <translation>Stringa tra apici in HTML</translation>
+        <translation type="vanished">Stringa tra apici in HTML</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="587"/>
         <source>Other text in a tag</source>
-        <translation>Altro test in un tag</translation>
+        <translation type="vanished">Altro test in un tag</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="590"/>
         <source>HTML comment</source>
-        <translation>Commento HTML</translation>
+        <translation type="vanished">Commento HTML</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="593"/>
         <source>Entity</source>
-        <translation>Entità</translation>
+        <translation type="vanished">Entità</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="596"/>
         <source>End of a tag</source>
-        <translation>Fine di un tag</translation>
+        <translation type="vanished">Fine di un tag</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="599"/>
         <source>Start of an XML fragment</source>
-        <translation>Inizio di un frammento XML</translation>
+        <translation type="vanished">Inizio di un frammento XML</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="602"/>
         <source>End of an XML fragment</source>
-        <translation>Fine di un frammento XML</translation>
+        <translation type="vanished">Fine di un frammento XML</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="605"/>
         <source>Script tag</source>
-        <translation>Tag di script</translation>
+        <translation type="vanished">Tag di script</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="608"/>
         <source>Start of an ASP fragment with @</source>
-        <translation>Inizio di un frammento ASP con @</translation>
+        <translation type="vanished">Inizio di un frammento ASP con @</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="611"/>
         <source>Start of an ASP fragment</source>
-        <translation>Inizio di un frammento ASP</translation>
+        <translation type="vanished">Inizio di un frammento ASP</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="614"/>
         <source>CDATA</source>
-        <translation>CDATA</translation>
+        <translation type="vanished">CDATA</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="617"/>
         <source>Start of a PHP fragment</source>
-        <translation>Inizio di un frammento PHP</translation>
+        <translation type="vanished">Inizio di un frammento PHP</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="620"/>
         <source>Unquoted HTML value</source>
-        <translation>Valore HTML senza apici</translation>
+        <translation type="vanished">Valore HTML senza apici</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="623"/>
         <source>ASP X-Code comment</source>
-        <translation>Commento di codice ASP X</translation>
+        <translation type="vanished">Commento di codice ASP X</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="626"/>
         <source>SGML default</source>
-        <translation>Default SGML</translation>
+        <translation type="vanished">Default SGML</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="629"/>
         <source>SGML command</source>
-        <translation>Comando SGML</translation>
+        <translation type="vanished">Comando SGML</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="632"/>
         <source>First parameter of an SGML command</source>
-        <translation>Primo parametro di un comando SGML</translation>
+        <translation type="vanished">Primo parametro di un comando SGML</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="635"/>
         <source>SGML double-quoted string</source>
-        <translation>Stringa tra virgolette SGML</translation>
+        <translation type="vanished">Stringa tra virgolette SGML</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="638"/>
         <source>SGML single-quoted string</source>
-        <translation>Stringa tra apici SGML</translation>
+        <translation type="vanished">Stringa tra apici SGML</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="641"/>
         <source>SGML error</source>
-        <translation>Errore SGML</translation>
+        <translation type="vanished">Errore SGML</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="644"/>
         <source>SGML special entity</source>
-        <translation>Entità speciale SGML</translation>
+        <translation type="vanished">Entità speciale SGML</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="647"/>
         <source>SGML comment</source>
-        <translation>Commento SGML</translation>
+        <translation type="vanished">Commento SGML</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="650"/>
         <source>First parameter comment of an SGML command</source>
-        <translation>Primo parametro di un comando SGML</translation>
+        <translation type="vanished">Primo parametro di un comando SGML</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="653"/>
         <source>SGML block default</source>
-        <translation>Blocco di default SGML</translation>
+        <translation type="vanished">Blocco di default SGML</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="656"/>
         <source>Start of a JavaScript fragment</source>
-        <translation>Inizio di un frammento JavaScript</translation>
+        <translation type="vanished">Inizio di un frammento JavaScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="659"/>
         <source>JavaScript default</source>
-        <translation>Default JavaScript</translation>
+        <translation type="vanished">Default JavaScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="662"/>
         <source>JavaScript comment</source>
-        <translation>Commento JavaScript</translation>
+        <translation type="vanished">Commento JavaScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="665"/>
         <source>JavaScript line comment</source>
-        <translation>Commento di riga JavaScript</translation>
+        <translation type="vanished">Commento di riga JavaScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="668"/>
         <source>JavaDoc style JavaScript comment</source>
-        <translation>Commento JavaScript in stile JavaDoc</translation>
+        <translation type="vanished">Commento JavaScript in stile JavaDoc</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="671"/>
         <source>JavaScript number</source>
-        <translation>Numero JavaScript</translation>
+        <translation type="vanished">Numero JavaScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="674"/>
         <source>JavaScript word</source>
-        <translation>Parola JavaScript</translation>
+        <translation type="vanished">Parola JavaScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="677"/>
         <source>JavaScript keyword</source>
-        <translation>Parola chiave JavaScript</translation>
+        <translation type="vanished">Parola chiave JavaScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="680"/>
         <source>JavaScript double-quoted string</source>
-        <translation>Stringa tra virgolette JavaScript</translation>
+        <translation type="vanished">Stringa tra virgolette JavaScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="683"/>
         <source>JavaScript single-quoted string</source>
-        <translation>Stringa tra apici JavaScript</translation>
+        <translation type="vanished">Stringa tra apici JavaScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="686"/>
         <source>JavaScript symbol</source>
-        <translation>Simbolo JavaScript</translation>
+        <translation type="vanished">Simbolo JavaScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="689"/>
         <source>JavaScript unclosed string</source>
-        <translation>Stringa non delimitata JavaScript</translation>
+        <translation type="vanished">Stringa non delimitata JavaScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="692"/>
         <source>JavaScript regular expression</source>
-        <translation>Espressione regolare JavaScript</translation>
+        <translation type="vanished">Espressione regolare JavaScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="695"/>
         <source>Start of an ASP JavaScript fragment</source>
-        <translation>Inizio di un frammento ASP in JavaScript</translation>
+        <translation type="vanished">Inizio di un frammento ASP in JavaScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="698"/>
         <source>ASP JavaScript default</source>
-        <translation>Default ASP JavaScript</translation>
+        <translation type="vanished">Default ASP JavaScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="701"/>
         <source>ASP JavaScript comment</source>
-        <translation>Commento ASP JavaScript</translation>
+        <translation type="vanished">Commento ASP JavaScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="704"/>
         <source>ASP JavaScript line comment</source>
-        <translation>Line di commento ASP JavaScript</translation>
+        <translation type="vanished">Line di commento ASP JavaScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="707"/>
         <source>JavaDoc style ASP JavaScript comment</source>
-        <translation>Commento ASP JavaScript in stile JavaDoc</translation>
+        <translation type="vanished">Commento ASP JavaScript in stile JavaDoc</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="710"/>
         <source>ASP JavaScript number</source>
-        <translation>Numero ASP JavaScript</translation>
+        <translation type="vanished">Numero ASP JavaScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="713"/>
         <source>ASP JavaScript word</source>
-        <translation>Parola ASP JavaScript</translation>
+        <translation type="vanished">Parola ASP JavaScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="716"/>
         <source>ASP JavaScript keyword</source>
-        <translation>Parola chiave ASP JavaScript</translation>
+        <translation type="vanished">Parola chiave ASP JavaScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="719"/>
         <source>ASP JavaScript double-quoted string</source>
-        <translation>Stringa ASP JavaScript tra virgolette</translation>
+        <translation type="vanished">Stringa ASP JavaScript tra virgolette</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="722"/>
         <source>ASP JavaScript single-quoted string</source>
-        <translation>Stringa ASP JavaScript tra apici</translation>
+        <translation type="vanished">Stringa ASP JavaScript tra apici</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="725"/>
         <source>ASP JavaScript symbol</source>
-        <translation>Simbolo ASP JavaScript</translation>
+        <translation type="vanished">Simbolo ASP JavaScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="728"/>
         <source>ASP JavaScript unclosed string</source>
-        <translation>Stringa non delimitata ASP JavaScript</translation>
+        <translation type="vanished">Stringa non delimitata ASP JavaScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="731"/>
         <source>ASP JavaScript regular expression</source>
-        <translation>Espressione regolare ASP JavaScript</translation>
+        <translation type="vanished">Espressione regolare ASP JavaScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="734"/>
         <source>Start of a VBScript fragment</source>
-        <translation>Inizio di un frammento VBScript</translation>
+        <translation type="vanished">Inizio di un frammento VBScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="737"/>
         <source>VBScript default</source>
-        <translation>Default VBScript</translation>
+        <translation type="vanished">Default VBScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="740"/>
         <source>VBScript comment</source>
-        <translation>Commento VBScript</translation>
+        <translation type="vanished">Commento VBScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="743"/>
         <source>VBScript number</source>
-        <translation>Numero VBScript</translation>
+        <translation type="vanished">Numero VBScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="746"/>
         <source>VBScript keyword</source>
-        <translation>Parola chiave VBScript</translation>
+        <translation type="vanished">Parola chiave VBScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="749"/>
         <source>VBScript string</source>
-        <translation>Stringa VBScript</translation>
+        <translation type="vanished">Stringa VBScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="752"/>
         <source>VBScript identifier</source>
-        <translation>Identificatore VBScript</translation>
+        <translation type="vanished">Identificatore VBScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="755"/>
         <source>VBScript unclosed string</source>
-        <translation>Stringa non delimitata VBScript</translation>
+        <translation type="vanished">Stringa non delimitata VBScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="758"/>
         <source>Start of an ASP VBScript fragment</source>
-        <translation>Inizio di un frammento ASP VBScript</translation>
+        <translation type="vanished">Inizio di un frammento ASP VBScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="761"/>
         <source>ASP VBScript default</source>
-        <translation>Default ASP VBScript</translation>
+        <translation type="vanished">Default ASP VBScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="764"/>
         <source>ASP VBScript comment</source>
-        <translation>Commento ASP VBScript</translation>
+        <translation type="vanished">Commento ASP VBScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="767"/>
         <source>ASP VBScript number</source>
-        <translation>Numero ASP VBScript</translation>
+        <translation type="vanished">Numero ASP VBScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="770"/>
         <source>ASP VBScript keyword</source>
-        <translation>Parola chiave ASP VBScript</translation>
+        <translation type="vanished">Parola chiave ASP VBScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="773"/>
         <source>ASP VBScript string</source>
-        <translation>Stringa ASP VBScript</translation>
+        <translation type="vanished">Stringa ASP VBScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="776"/>
         <source>ASP VBScript identifier</source>
-        <translation>Identificatore ASP VBScript</translation>
+        <translation type="vanished">Identificatore ASP VBScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="779"/>
         <source>ASP VBScript unclosed string</source>
-        <translation>Stringa non delimitata ASP VBScript</translation>
+        <translation type="vanished">Stringa non delimitata ASP VBScript</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="782"/>
         <source>Start of a Python fragment</source>
-        <translation>Inizio di un frammento Python</translation>
+        <translation type="vanished">Inizio di un frammento Python</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="785"/>
         <source>Python default</source>
-        <translation>Default Python</translation>
+        <translation type="vanished">Default Python</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="788"/>
         <source>Python comment</source>
-        <translation>Commento Python</translation>
+        <translation type="vanished">Commento Python</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="791"/>
         <source>Python number</source>
-        <translation>Numero Python</translation>
+        <translation type="vanished">Numero Python</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="794"/>
         <source>Python double-quoted string</source>
-        <translation>Stringa tra virgolette Python</translation>
+        <translation type="vanished">Stringa tra virgolette Python</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="797"/>
         <source>Python single-quoted string</source>
-        <translation>Stringa tra apici Python</translation>
+        <translation type="vanished">Stringa tra apici Python</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="800"/>
         <source>Python keyword</source>
-        <translation>Parola chiave Python</translation>
+        <translation type="vanished">Parola chiave Python</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="803"/>
         <source>Python triple double-quoted string</source>
-        <translation>Stringa tra tripilci virgolette Python</translation>
+        <translation type="vanished">Stringa tra tripilci virgolette Python</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="806"/>
         <source>Python triple single-quoted string</source>
-        <translation>Stringa tra triplici apici Python</translation>
+        <translation type="vanished">Stringa tra triplici apici Python</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="809"/>
         <source>Python class name</source>
-        <translation>Nome di classe Python</translation>
+        <translation type="vanished">Nome di classe Python</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="812"/>
         <source>Python function or method name</source>
-        <translation>Funzione o nome di metodo Python</translation>
+        <translation type="vanished">Funzione o nome di metodo Python</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="815"/>
         <source>Python operator</source>
-        <translation>Operatore Python</translation>
+        <translation type="vanished">Operatore Python</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="818"/>
         <source>Python identifier</source>
-        <translation>Identificatore Python</translation>
+        <translation type="vanished">Identificatore Python</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="821"/>
         <source>Start of an ASP Python fragment</source>
-        <translation>Inizio di un frammento ASP Python</translation>
+        <translation type="vanished">Inizio di un frammento ASP Python</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="824"/>
         <source>ASP Python default</source>
-        <translation>Default ASP Python</translation>
+        <translation type="vanished">Default ASP Python</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="827"/>
         <source>ASP Python comment</source>
-        <translation>Commento ASP Python</translation>
+        <translation type="vanished">Commento ASP Python</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="830"/>
         <source>ASP Python number</source>
-        <translation>Numero ASP Python</translation>
+        <translation type="vanished">Numero ASP Python</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="833"/>
         <source>ASP Python double-quoted string</source>
-        <translation>Stringa tra virgolette ASP Python</translation>
+        <translation type="vanished">Stringa tra virgolette ASP Python</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="836"/>
         <source>ASP Python single-quoted string</source>
-        <translation>Stringa tra apici ASP Python</translation>
+        <translation type="vanished">Stringa tra apici ASP Python</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="839"/>
         <source>ASP Python keyword</source>
-        <translation>Parola chiave ASP Python</translation>
+        <translation type="vanished">Parola chiave ASP Python</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="842"/>
         <source>ASP Python triple double-quoted string</source>
-        <translation>Stringa tra triplici virgolette ASP Python</translation>
+        <translation type="vanished">Stringa tra triplici virgolette ASP Python</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="845"/>
         <source>ASP Python triple single-quoted string</source>
-        <translation>Stringa tra triplici apici ASP Python</translation>
+        <translation type="vanished">Stringa tra triplici apici ASP Python</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="848"/>
         <source>ASP Python class name</source>
-        <translation>Nome di classe ASP Python</translation>
+        <translation type="vanished">Nome di classe ASP Python</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="851"/>
         <source>ASP Python function or method name</source>
-        <translation>Nome di funzione o metodo ASP Python</translation>
+        <translation type="vanished">Nome di funzione o metodo ASP Python</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="854"/>
         <source>ASP Python operator</source>
-        <translation>Operatore ASP Python</translation>
+        <translation type="vanished">Operatore ASP Python</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="857"/>
         <source>ASP Python identifier</source>
-        <translation>Identificatore ASP Python</translation>
+        <translation type="vanished">Identificatore ASP Python</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="860"/>
         <source>PHP default</source>
-        <translation>Default PHP</translation>
+        <translation type="vanished">Default PHP</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="863"/>
         <source>PHP double-quoted string</source>
-        <translation>Stringa tra virgolette PHP</translation>
+        <translation type="vanished">Stringa tra virgolette PHP</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="866"/>
         <source>PHP single-quoted string</source>
-        <translation>Stringa tra apici PHP</translation>
+        <translation type="vanished">Stringa tra apici PHP</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="869"/>
         <source>PHP keyword</source>
-        <translation>Parola chiave PHP</translation>
+        <translation type="vanished">Parola chiave PHP</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="872"/>
         <source>PHP number</source>
-        <translation>Numero PHP</translation>
+        <translation type="vanished">Numero PHP</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="875"/>
         <source>PHP variable</source>
-        <translation>Variabile PHP</translation>
+        <translation type="vanished">Variabile PHP</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="878"/>
         <source>PHP comment</source>
-        <translation>Commento PHP</translation>
+        <translation type="vanished">Commento PHP</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="881"/>
         <source>PHP line comment</source>
-        <translation>Commento di linea PHP</translation>
+        <translation type="vanished">Commento di linea PHP</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="884"/>
         <source>PHP double-quoted variable</source>
-        <translation>Variabile tra virgolette PHP</translation>
+        <translation type="vanished">Variabile tra virgolette PHP</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="887"/>
         <source>PHP operator</source>
-        <translation>Operatore PHP</translation>
+        <translation type="vanished">Operatore PHP</translation>
     </message>
 </context>
 <context>
     <name>QsciLexerJSON</name>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="160"/>
         <source>Default</source>
-        <translation>Default</translation>
+        <translation type="vanished">Default</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="163"/>
         <source>Number</source>
-        <translation>Numero</translation>
+        <translation type="vanished">Numero</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="166"/>
         <source>String</source>
-        <translation>Stringa</translation>
+        <translation type="vanished">Stringa</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="169"/>
         <source>Unclosed string</source>
-        <translation>Stringa non delimitata</translation>
+        <translation type="vanished">Stringa non delimitata</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="172"/>
         <source>Property</source>
-        <translation>Proprietà</translation>
+        <translation type="vanished">Proprietà</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="175"/>
         <source>Escape sequence</source>
-        <translation>Sequenza di escape</translation>
+        <translation type="vanished">Sequenza di escape</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="178"/>
         <source>Line comment</source>
-        <translation>Commento di linea</translation>
+        <translation type="vanished">Commento di linea</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="181"/>
         <source>Block comment</source>
-        <translation>Commento in blocco</translation>
+        <translation type="vanished">Commento in blocco</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="184"/>
         <source>Operator</source>
-        <translation>Operatore</translation>
+        <translation type="vanished">Operatore</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="187"/>
         <source>IRI</source>
-        <translation>IRI</translation>
+        <translation type="vanished">IRI</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="190"/>
         <source>JSON-LD compact IRI</source>
-        <translation>JSON-LD IRI compatto</translation>
+        <translation type="vanished">JSON-LD IRI compatto</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="193"/>
         <source>JSON keyword</source>
-        <translation>Parola chiave JSON</translation>
+        <translation type="vanished">Parola chiave JSON</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="196"/>
         <source>JSON-LD keyword</source>
-        <translation>Parola chiave JSON-LD</translation>
+        <translation type="vanished">Parola chiave JSON-LD</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="199"/>
         <source>Parsing error</source>
-        <translation>Errore di analisi</translation>
+        <translation type="vanished">Errore di analisi</translation>
     </message>
 </context>
 <context>
     <name>QsciLexerJavaScript</name>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjavascript.cpp" line="107"/>
         <source>Regular expression</source>
-        <translation>Espressione regolare</translation>
+        <translation type="vanished">Espressione regolare</translation>
     </message>
 </context>
 <context>
     <name>QsciLexerPython</name>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="238"/>
         <source>Default</source>
-        <translation>Default</translation>
+        <translation type="vanished">Default</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="241"/>
         <source>Comment</source>
-        <translation>Commento</translation>
+        <translation type="vanished">Commento</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="244"/>
         <source>Number</source>
-        <translation>Numero</translation>
+        <translation type="vanished">Numero</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="247"/>
         <source>Double-quoted string</source>
-        <translation>Stringa tra virgolette</translation>
+        <translation type="vanished">Stringa tra virgolette</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="250"/>
         <source>Single-quoted string</source>
-        <translation>Stringa tra apici</translation>
+        <translation type="vanished">Stringa tra apici</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="253"/>
         <source>Keyword</source>
-        <translation>Parola chiave</translation>
+        <translation type="vanished">Parola chiave</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="256"/>
         <source>Triple single-quoted string</source>
-        <translation>Stringa tra triplici apici</translation>
+        <translation type="vanished">Stringa tra triplici apici</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="259"/>
         <source>Triple double-quoted string</source>
-        <translation>Stringa tra triplici virgolette</translation>
+        <translation type="vanished">Stringa tra triplici virgolette</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="262"/>
         <source>Class name</source>
-        <translation>Nome di classe</translation>
+        <translation type="vanished">Nome di classe</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="265"/>
         <source>Function or method name</source>
-        <translation>Nome di funzione o metodo</translation>
+        <translation type="vanished">Nome di funzione o metodo</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="268"/>
         <source>Operator</source>
-        <translation>Operatore</translation>
+        <translation type="vanished">Operatore</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="271"/>
         <source>Identifier</source>
-        <translation>Identificatore</translation>
+        <translation type="vanished">Identificatore</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="274"/>
         <source>Comment block</source>
-        <translation>Commento in blocco</translation>
+        <translation type="vanished">Commento in blocco</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="277"/>
         <source>Unclosed string</source>
-        <translation>Stringa non delimitata</translation>
+        <translation type="vanished">Stringa non delimitata</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="280"/>
         <source>Highlighted identifier</source>
-        <translation>Identificatore evidenziato</translation>
+        <translation type="vanished">Identificatore evidenziato</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="283"/>
         <source>Decorator</source>
-        <translation>Decoratore</translation>
+        <translation type="vanished">Decoratore</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="286"/>
         <source>Double-quoted f-string</source>
-        <translation>Stringa-f tra virgolette</translation>
+        <translation type="vanished">Stringa-f tra virgolette</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="289"/>
         <source>Single-quoted f-string</source>
-        <translation>Stringa-f tra singoli apici</translation>
+        <translation type="vanished">Stringa-f tra singoli apici</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="292"/>
         <source>Triple single-quoted f-string</source>
-        <translation>Stringa-f tra triplici apici</translation>
+        <translation type="vanished">Stringa-f tra triplici apici</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="295"/>
         <source>Triple double-quoted f-string</source>
-        <translation>Stringa-f tra triplici virgolette</translation>
+        <translation type="vanished">Stringa-f tra triplici virgolette</translation>
     </message>
 </context>
 <context>
     <name>QsciLexerSQL</name>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="266"/>
         <source>Default</source>
-        <translation>Default</translation>
+        <translation type="vanished">Default</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="269"/>
         <source>Comment</source>
-        <translation>Commento</translation>
+        <translation type="vanished">Commento</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="272"/>
         <source>Comment line</source>
-        <translation>Commento di linea</translation>
+        <translation type="vanished">Commento di linea</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="275"/>
         <source>JavaDoc style comment</source>
-        <translation>Commento in stile JavaDoc</translation>
+        <translation type="vanished">Commento in stile JavaDoc</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="278"/>
         <source>Number</source>
-        <translation>Numero</translation>
+        <translation type="vanished">Numero</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="281"/>
         <source>Keyword</source>
-        <translation>Parola chiave</translation>
+        <translation type="vanished">Parola chiave</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="284"/>
         <source>Double-quoted string</source>
-        <translation>Stringa tra virgolette</translation>
+        <translation type="vanished">Stringa tra virgolette</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="287"/>
         <source>Single-quoted string</source>
-        <translation>Stringa tra apici</translation>
+        <translation type="vanished">Stringa tra apici</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="290"/>
         <source>SQL*Plus keyword</source>
-        <translation>Parola chiave SQL*Plus</translation>
+        <translation type="vanished">Parola chiave SQL*Plus</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="293"/>
         <source>SQL*Plus prompt</source>
-        <translation>Richiesta SQL*Plus</translation>
+        <translation type="vanished">Richiesta SQL*Plus</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="296"/>
         <source>Operator</source>
-        <translation>Operatore</translation>
+        <translation type="vanished">Operatore</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="299"/>
         <source>Identifier</source>
-        <translation>Identificatore</translation>
+        <translation type="vanished">Identificatore</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="302"/>
         <source>SQL*Plus comment</source>
-        <translation>Commento SQL*Plus</translation>
+        <translation type="vanished">Commento SQL*Plus</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="305"/>
         <source># comment line</source>
-        <translation># commento di linea</translation>
+        <translation type="vanished"># commento di linea</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="308"/>
         <source>JavaDoc keyword</source>
-        <translation>Parola chiave JavaDoc</translation>
+        <translation type="vanished">Parola chiave JavaDoc</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="311"/>
         <source>JavaDoc keyword error</source>
-        <translation>Errore parola chiave JavaDoc</translation>
+        <translation type="vanished">Errore parola chiave JavaDoc</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="314"/>
         <source>User defined 1</source>
-        <translation>Definito dall&apos;utente 1</translation>
+        <translation type="vanished">Definito dall&apos;utente 1</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="317"/>
         <source>User defined 2</source>
-        <translation>Definito dall&apos;utente 2</translation>
+        <translation type="vanished">Definito dall&apos;utente 2</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="320"/>
         <source>User defined 3</source>
-        <translation>Definito dall&apos;utente 3</translation>
+        <translation type="vanished">Definito dall&apos;utente 3</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="323"/>
         <source>User defined 4</source>
-        <translation>Definito dall&apos;utente 4</translation>
+        <translation type="vanished">Definito dall&apos;utente 4</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="326"/>
         <source>Quoted identifier</source>
-        <translation>Identificatore di citazione</translation>
+        <translation type="vanished">Identificatore di citazione</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="329"/>
         <source>Quoted operator</source>
-        <translation>Operatore di citazione</translation>
+        <translation type="vanished">Operatore di citazione</translation>
     </message>
 </context>
 <context>
     <name>QsciScintilla</name>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qsciscintilla.cpp" line="4479"/>
         <source>&amp;Undo</source>
-        <translation>A&amp;nnulla</translation>
+        <translation type="vanished">A&amp;nnulla</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qsciscintilla.cpp" line="4483"/>
         <source>&amp;Redo</source>
-        <translation>&amp;Ripristina</translation>
+        <translation type="vanished">&amp;Ripristina</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qsciscintilla.cpp" line="4489"/>
         <source>Cu&amp;t</source>
-        <translation>&amp;Taglia</translation>
+        <translation type="vanished">&amp;Taglia</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qsciscintilla.cpp" line="4494"/>
         <source>&amp;Copy</source>
-        <translation>&amp;Copia</translation>
+        <translation type="vanished">&amp;Copia</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qsciscintilla.cpp" line="4500"/>
         <source>&amp;Paste</source>
-        <translation>&amp;Incolla</translation>
+        <translation type="vanished">&amp;Incolla</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qsciscintilla.cpp" line="4504"/>
         <source>Delete</source>
-        <translation>Elimina</translation>
+        <translation type="vanished">Elimina</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qsciscintilla.cpp" line="4511"/>
         <source>Select All</source>
-        <translation>Seleziona tutto</translation>
+        <translation type="vanished">Seleziona tutto</translation>
     </message>
 </context>
 <context>
@@ -7644,1663 +7317,12 @@ Si prega di ricontrollare.</translation>
         <translation>Carica Database</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="428"/>
-        <source>Extend selection to first visible character in document line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="439"/>
-        <source>Extend rectangular selection to first visible character in document line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="446"/>
-        <source>Move to first visible character of display in document line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="453"/>
-        <source>Extend selection to first visible character in display or document line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="464"/>
-        <source>Move to end of document line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="474"/>
-        <source>Extend selection to end of document line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="485"/>
-        <source>Extend rectangular selection to end of document line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="496"/>
-        <source>Move to end of display line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="506"/>
-        <source>Extend selection to end of display line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="513"/>
-        <source>Move to end of display or document line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="520"/>
-        <source>Extend selection to end of display or document line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="531"/>
-        <source>Move to start of document</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="541"/>
-        <source>Extend selection to start of document</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="552"/>
-        <source>Move to end of document</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="562"/>
-        <source>Extend selection to end of document</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="569"/>
-        <source>Move up one page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="575"/>
-        <source>Extend selection up one page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="581"/>
-        <source>Extend rectangular selection up one page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="592"/>
-        <source>Move down one page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="602"/>
-        <source>Extend selection down one page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="612"/>
-        <source>Extend rectangular selection down one page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="619"/>
-        <source>Stuttered move up one page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="625"/>
-        <source>Stuttered extend selection up one page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="632"/>
-        <source>Stuttered move down one page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="638"/>
-        <source>Stuttered extend selection down one page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="649"/>
-        <source>Delete current character</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="659"/>
-        <source>Delete previous character</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="665"/>
-        <source>Delete previous character if not at start of line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="672"/>
-        <source>Delete word to left</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="678"/>
-        <source>Delete word to right</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="688"/>
-        <source>Delete right to end of next word</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="695"/>
-        <source>Delete line to left</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="705"/>
-        <source>Delete line to right</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="711"/>
-        <source>Delete current line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="717"/>
-        <source>Cut current line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="723"/>
-        <source>Copy current line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="729"/>
-        <source>Transpose current and previous lines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="736"/>
-        <source>Duplicate the current line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="742"/>
-        <source>Select all</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="748"/>
-        <source>Move selected lines up one line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="754"/>
-        <source>Move selected lines down one line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="761"/>
-        <source>Duplicate selection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="767"/>
-        <source>Convert selection to lower case</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="773"/>
-        <source>Convert selection to upper case</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="779"/>
-        <source>Cut selection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="785"/>
-        <source>Copy selection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="791"/>
         <source>Paste</source>
-        <translation type="unfinished">Incolla</translation>
+        <translation type="obsolete">Incolla</translation>
     </message>
     <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="797"/>
-        <source>Toggle insert/overtype</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="803"/>
-        <source>Insert newline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="809"/>
-        <source>Formfeed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="815"/>
-        <source>Indent one level</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="821"/>
-        <source>De-indent one level</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="827"/>
         <source>Cancel</source>
-        <translation type="unfinished">Annulla</translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="833"/>
-        <source>Undo last command</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="843"/>
-        <source>Redo last command</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="849"/>
-        <source>Zoom in</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscicommandset.cpp" line="855"/>
-        <source>Zoom out</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QsciLexerCPP</name>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="364"/>
-        <source>Default</source>
-        <translation type="unfinished">Default</translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="367"/>
-        <source>Inactive default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="370"/>
-        <source>C comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="373"/>
-        <source>Inactive C comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="376"/>
-        <source>C++ comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="379"/>
-        <source>Inactive C++ comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="382"/>
-        <source>JavaDoc style C comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="385"/>
-        <source>Inactive JavaDoc style C comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="388"/>
-        <source>Number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="391"/>
-        <source>Inactive number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="394"/>
-        <source>Keyword</source>
-        <translation type="unfinished">Parola chiave</translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="397"/>
-        <source>Inactive keyword</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="400"/>
-        <source>Double-quoted string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="403"/>
-        <source>Inactive double-quoted string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="406"/>
-        <source>Single-quoted string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="409"/>
-        <source>Inactive single-quoted string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="412"/>
-        <source>IDL UUID</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="415"/>
-        <source>Inactive IDL UUID</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="418"/>
-        <source>Pre-processor block</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="421"/>
-        <source>Inactive pre-processor block</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="424"/>
-        <source>Operator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="427"/>
-        <source>Inactive operator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="430"/>
-        <source>Identifier</source>
-        <translation type="unfinished">Identificatore</translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="433"/>
-        <source>Inactive identifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="436"/>
-        <source>Unclosed string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="439"/>
-        <source>Inactive unclosed string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="442"/>
-        <source>C# verbatim string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="445"/>
-        <source>Inactive C# verbatim string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="448"/>
-        <source>JavaScript regular expression</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="451"/>
-        <source>Inactive JavaScript regular expression</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="454"/>
-        <source>JavaDoc style C++ comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="457"/>
-        <source>Inactive JavaDoc style C++ comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="460"/>
-        <source>Secondary keywords and identifiers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="463"/>
-        <source>Inactive secondary keywords and identifiers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="466"/>
-        <source>JavaDoc keyword</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="469"/>
-        <source>Inactive JavaDoc keyword</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="472"/>
-        <source>JavaDoc keyword error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="475"/>
-        <source>Inactive JavaDoc keyword error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="478"/>
-        <source>Global classes and typedefs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="481"/>
-        <source>Inactive global classes and typedefs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="484"/>
-        <source>C++ raw string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="487"/>
-        <source>Inactive C++ raw string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="490"/>
-        <source>Vala triple-quoted verbatim string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="493"/>
-        <source>Inactive Vala triple-quoted verbatim string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="496"/>
-        <source>Pike hash-quoted string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="499"/>
-        <source>Inactive Pike hash-quoted string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="502"/>
-        <source>Pre-processor C comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="505"/>
-        <source>Inactive pre-processor C comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="508"/>
-        <source>JavaDoc style pre-processor comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="511"/>
-        <source>Inactive JavaDoc style pre-processor comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="514"/>
-        <source>User-defined literal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="517"/>
-        <source>Inactive user-defined literal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="520"/>
-        <source>Task marker</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="523"/>
-        <source>Inactive task marker</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="526"/>
-        <source>Escape sequence</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexercpp.cpp" line="529"/>
-        <source>Inactive escape sequence</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QsciLexerHTML</name>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="563"/>
-        <source>HTML default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="566"/>
-        <source>Tag</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="569"/>
-        <source>Unknown tag</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="572"/>
-        <source>Attribute</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="575"/>
-        <source>Unknown attribute</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="578"/>
-        <source>HTML number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="581"/>
-        <source>HTML double-quoted string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="584"/>
-        <source>HTML single-quoted string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="587"/>
-        <source>Other text in a tag</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="590"/>
-        <source>HTML comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="593"/>
-        <source>Entity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="596"/>
-        <source>End of a tag</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="599"/>
-        <source>Start of an XML fragment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="602"/>
-        <source>End of an XML fragment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="605"/>
-        <source>Script tag</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="608"/>
-        <source>Start of an ASP fragment with @</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="611"/>
-        <source>Start of an ASP fragment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="614"/>
-        <source>CDATA</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="617"/>
-        <source>Start of a PHP fragment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="620"/>
-        <source>Unquoted HTML value</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="623"/>
-        <source>ASP X-Code comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="626"/>
-        <source>SGML default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="629"/>
-        <source>SGML command</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="632"/>
-        <source>First parameter of an SGML command</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="635"/>
-        <source>SGML double-quoted string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="638"/>
-        <source>SGML single-quoted string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="641"/>
-        <source>SGML error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="644"/>
-        <source>SGML special entity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="647"/>
-        <source>SGML comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="650"/>
-        <source>First parameter comment of an SGML command</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="653"/>
-        <source>SGML block default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="656"/>
-        <source>Start of a JavaScript fragment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="659"/>
-        <source>JavaScript default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="662"/>
-        <source>JavaScript comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="665"/>
-        <source>JavaScript line comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="668"/>
-        <source>JavaDoc style JavaScript comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="671"/>
-        <source>JavaScript number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="674"/>
-        <source>JavaScript word</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="677"/>
-        <source>JavaScript keyword</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="680"/>
-        <source>JavaScript double-quoted string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="683"/>
-        <source>JavaScript single-quoted string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="686"/>
-        <source>JavaScript symbol</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="689"/>
-        <source>JavaScript unclosed string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="692"/>
-        <source>JavaScript regular expression</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="695"/>
-        <source>Start of an ASP JavaScript fragment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="698"/>
-        <source>ASP JavaScript default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="701"/>
-        <source>ASP JavaScript comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="704"/>
-        <source>ASP JavaScript line comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="707"/>
-        <source>JavaDoc style ASP JavaScript comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="710"/>
-        <source>ASP JavaScript number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="713"/>
-        <source>ASP JavaScript word</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="716"/>
-        <source>ASP JavaScript keyword</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="719"/>
-        <source>ASP JavaScript double-quoted string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="722"/>
-        <source>ASP JavaScript single-quoted string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="725"/>
-        <source>ASP JavaScript symbol</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="728"/>
-        <source>ASP JavaScript unclosed string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="731"/>
-        <source>ASP JavaScript regular expression</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="734"/>
-        <source>Start of a VBScript fragment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="737"/>
-        <source>VBScript default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="740"/>
-        <source>VBScript comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="743"/>
-        <source>VBScript number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="746"/>
-        <source>VBScript keyword</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="749"/>
-        <source>VBScript string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="752"/>
-        <source>VBScript identifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="755"/>
-        <source>VBScript unclosed string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="758"/>
-        <source>Start of an ASP VBScript fragment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="761"/>
-        <source>ASP VBScript default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="764"/>
-        <source>ASP VBScript comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="767"/>
-        <source>ASP VBScript number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="770"/>
-        <source>ASP VBScript keyword</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="773"/>
-        <source>ASP VBScript string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="776"/>
-        <source>ASP VBScript identifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="779"/>
-        <source>ASP VBScript unclosed string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="782"/>
-        <source>Start of a Python fragment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="785"/>
-        <source>Python default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="788"/>
-        <source>Python comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="791"/>
-        <source>Python number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="794"/>
-        <source>Python double-quoted string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="797"/>
-        <source>Python single-quoted string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="800"/>
-        <source>Python keyword</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="803"/>
-        <source>Python triple double-quoted string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="806"/>
-        <source>Python triple single-quoted string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="809"/>
-        <source>Python class name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="812"/>
-        <source>Python function or method name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="815"/>
-        <source>Python operator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="818"/>
-        <source>Python identifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="821"/>
-        <source>Start of an ASP Python fragment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="824"/>
-        <source>ASP Python default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="827"/>
-        <source>ASP Python comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="830"/>
-        <source>ASP Python number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="833"/>
-        <source>ASP Python double-quoted string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="836"/>
-        <source>ASP Python single-quoted string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="839"/>
-        <source>ASP Python keyword</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="842"/>
-        <source>ASP Python triple double-quoted string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="845"/>
-        <source>ASP Python triple single-quoted string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="848"/>
-        <source>ASP Python class name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="851"/>
-        <source>ASP Python function or method name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="854"/>
-        <source>ASP Python operator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="857"/>
-        <source>ASP Python identifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="860"/>
-        <source>PHP default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="863"/>
-        <source>PHP double-quoted string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="866"/>
-        <source>PHP single-quoted string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="869"/>
-        <source>PHP keyword</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="872"/>
-        <source>PHP number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="875"/>
-        <source>PHP variable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="878"/>
-        <source>PHP comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="881"/>
-        <source>PHP line comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="884"/>
-        <source>PHP double-quoted variable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerhtml.cpp" line="887"/>
-        <source>PHP operator</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QsciLexerJSON</name>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="160"/>
-        <source>Default</source>
-        <translation type="unfinished">Default</translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="163"/>
-        <source>Number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="166"/>
-        <source>String</source>
-        <translation type="unfinished">Stringa</translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="169"/>
-        <source>Unclosed string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="172"/>
-        <source>Property</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="175"/>
-        <source>Escape sequence</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="178"/>
-        <source>Line comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="181"/>
-        <source>Block comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="184"/>
-        <source>Operator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="187"/>
-        <source>IRI</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="190"/>
-        <source>JSON-LD compact IRI</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="193"/>
-        <source>JSON keyword</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="196"/>
-        <source>JSON-LD keyword</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjson.cpp" line="199"/>
-        <source>Parsing error</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QsciLexerJavaScript</name>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerjavascript.cpp" line="107"/>
-        <source>Regular expression</source>
-        <translation type="unfinished">Espressione regolare</translation>
-    </message>
-</context>
-<context>
-    <name>QsciLexerPython</name>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="238"/>
-        <source>Default</source>
-        <translation type="unfinished">Default</translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="241"/>
-        <source>Comment</source>
-        <translation type="unfinished">Commento</translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="244"/>
-        <source>Number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="247"/>
-        <source>Double-quoted string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="250"/>
-        <source>Single-quoted string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="253"/>
-        <source>Keyword</source>
-        <translation type="unfinished">Parola chiave</translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="256"/>
-        <source>Triple single-quoted string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="259"/>
-        <source>Triple double-quoted string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="262"/>
-        <source>Class name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="265"/>
-        <source>Function or method name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="268"/>
-        <source>Operator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="271"/>
-        <source>Identifier</source>
-        <translation type="unfinished">Identificatore</translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="274"/>
-        <source>Comment block</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="277"/>
-        <source>Unclosed string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="280"/>
-        <source>Highlighted identifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="283"/>
-        <source>Decorator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="286"/>
-        <source>Double-quoted f-string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="289"/>
-        <source>Single-quoted f-string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="292"/>
-        <source>Triple single-quoted f-string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexerpython.cpp" line="295"/>
-        <source>Triple double-quoted f-string</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QsciLexerSQL</name>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="266"/>
-        <source>Default</source>
-        <translation type="unfinished">Default</translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="269"/>
-        <source>Comment</source>
-        <translation type="unfinished">Commento</translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="272"/>
-        <source>Comment line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="275"/>
-        <source>JavaDoc style comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="278"/>
-        <source>Number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="281"/>
-        <source>Keyword</source>
-        <translation type="unfinished">Parola chiave</translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="284"/>
-        <source>Double-quoted string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="287"/>
-        <source>Single-quoted string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="290"/>
-        <source>SQL*Plus keyword</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="293"/>
-        <source>SQL*Plus prompt</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="296"/>
-        <source>Operator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="299"/>
-        <source>Identifier</source>
-        <translation type="unfinished">Identificatore</translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="302"/>
-        <source>SQL*Plus comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="305"/>
-        <source># comment line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="308"/>
-        <source>JavaDoc keyword</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="311"/>
-        <source>JavaDoc keyword error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="314"/>
-        <source>User defined 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="317"/>
-        <source>User defined 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="320"/>
-        <source>User defined 3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="323"/>
-        <source>User defined 4</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="326"/>
-        <source>Quoted identifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qscilexersql.cpp" line="329"/>
-        <source>Quoted operator</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QsciScintilla</name>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qsciscintilla.cpp" line="4479"/>
-        <source>&amp;Undo</source>
-        <translation type="unfinished">A&amp;nnulla</translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qsciscintilla.cpp" line="4483"/>
-        <source>&amp;Redo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qsciscintilla.cpp" line="4489"/>
-        <source>Cu&amp;t</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qsciscintilla.cpp" line="4494"/>
-        <source>&amp;Copy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qsciscintilla.cpp" line="4500"/>
-        <source>&amp;Paste</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qsciscintilla.cpp" line="4504"/>
-        <source>Delete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../libs/qscintilla/Qt4Qt5/qsciscintilla.cpp" line="4511"/>
-        <source>Select All</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RemoteCommitsModel</name>
-    <message>
-        <location filename="../RemoteCommitsModel.cpp" line="13"/>
-        <source>Commit ID</source>
-        <translation>ID Commit</translation>
-    </message>
-    <message>
-        <location filename="../RemoteCommitsModel.cpp" line="13"/>
-        <source>Message</source>
-        <translation>Messaggio</translation>
-    </message>
-    <message>
-        <location filename="../RemoteCommitsModel.cpp" line="13"/>
-        <source>Date</source>
-        <translation>Data</translation>
-    </message>
-    <message>
-        <location filename="../RemoteCommitsModel.cpp" line="13"/>
-        <source>Author</source>
-        <translation>Autore</translation>
-    </message>
-    <message>
-        <location filename="../RemoteCommitsModel.cpp" line="13"/>
-        <source>Size</source>
-        <translation>Dimensione</translation>
-    </message>
-    <message>
-        <location filename="../RemoteCommitsModel.cpp" line="65"/>
-        <source>Authored and committed by %1</source>
-        <translation>Creato e inviato da %1</translation>
-    </message>
-    <message>
-        <location filename="../RemoteCommitsModel.cpp" line="67"/>
-        <source>Authored by %1, committed by %2</source>
-        <translation>Creato da %1, inviato da %2</translation>
-    </message>
-</context>
-<context>
-    <name>RemoteDatabase</name>
-    <message>
-        <location filename="../RemoteDatabase.cpp" line="56"/>
-        <source>Error opening local databases list.
-%1</source>
-        <translation>Errore nell&apos;apertura della lista di database locale.
-%1</translation>
-    </message>
-    <message>
-        <location filename="../RemoteDatabase.cpp" line="74"/>
-        <source>Error creating local databases list.
-%1</source>
-        <translation>Errore nella creazione della lista di database locale.
-%1</translation>
-    </message>
-</context>
-<context>
-    <name>RemoteDock</name>
-    <message>
-        <location filename="../RemoteDock.ui" line="14"/>
-        <source>Remote</source>
-        <translation>Remoto</translation>
-    </message>
-    <message>
-        <location filename="../RemoteDock.ui" line="53"/>
-        <source>Identity</source>
-        <translation>Identità</translation>
-    </message>
-    <message>
-        <location filename="../RemoteDock.ui" line="83"/>
-        <source>Push currently opened database to server</source>
-        <translation>Invia il database corrente al server</translation>
-    </message>
-    <message>
-        <location filename="../RemoteDock.ui" line="86"/>
-        <source>Upload</source>
-        <translation>Carica</translation>
-    </message>
-    <message>
-        <location filename="../RemoteDock.ui" line="106"/>
-        <source>DBHub.io</source>
-        <translation>DBHub.io</translation>
-    </message>
-    <message>
-        <location filename="../RemoteDock.ui" line="139"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB Browser for SQLite. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to &amp;quot;Generate client certificate&amp;quot; (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB Browser for SQLite Preferences. Click the button to add a new certificate to DB Browser for SQLite and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In questo pannello, si possono aggiungere database dal sito web dbhub.io a DB Browser for SQLite. Prima hai bisogno di un&apos;identità:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Collegati al sito web dbhub.io (usa le tue credenziali GitHub o quello che preferisci)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Clicca il pulsante per &amp;quot;Generare certificato client&amp;quot; (è la tua identità). Che ti fornirà un file di certificato (salvalo sul tuo disco locale).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Vai alla scheda &quot;Remoto&quot; nelle preferenze di DB Browser for SQLite. Clicca il pulsante per aggiungere un nuovo certificato a DB Browser for SQLite e seleziona il file di certificato appena scaricato.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Ora il pannello &quot;Remoto&quot; mostra la tua identità e tu puoi aggiungere database remoti.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../RemoteDock.ui" line="147"/>
-        <source>Local</source>
-        <translation>Locale</translation>
-    </message>
-    <message>
-        <location filename="../RemoteDock.ui" line="173"/>
-        <source>Current Database</source>
-        <translation>Database Corrente</translation>
-    </message>
-    <message>
-        <location filename="../RemoteDock.ui" line="231"/>
-        <source>Clone</source>
-        <translation>Clona</translation>
-    </message>
-    <message>
-        <location filename="../RemoteDock.ui" line="274"/>
-        <source>Branch</source>
-        <translation>Ramo</translation>
-    </message>
-    <message>
-        <location filename="../RemoteDock.ui" line="294"/>
-        <source>Commits</source>
-        <translation>Commits</translation>
-    </message>
-    <message>
-        <location filename="../RemoteDock.ui" line="314"/>
-        <source>Commits for</source>
-        <translation>Commits per</translation>
-    </message>
-    <message>
-        <location filename="../RemoteDock.ui" line="445"/>
-        <source>Delete Database</source>
-        <translation>Elimina Database</translation>
-    </message>
-    <message>
-        <location filename="../RemoteDock.ui" line="448"/>
-        <source>Delete the local clone of this database</source>
-        <translation>Elimina la copia locale di questo database</translation>
-    </message>
-    <message>
-        <location filename="../RemoteDock.ui" line="457"/>
-        <source>Open in Web Browser</source>
-        <translation>Apri nel Browser Web</translation>
-    </message>
-    <message>
-        <location filename="../RemoteDock.ui" line="460"/>
-        <source>Open the web page for the current database in your browser</source>
-        <translation>Apre una pagina web per il database corrente nel tuo browser</translation>
-    </message>
-    <message>
-        <location filename="../RemoteDock.ui" line="469"/>
-        <source>Clone from Link</source>
-        <translation>Clona da Collegamento</translation>
-    </message>
-    <message>
-        <location filename="../RemoteDock.ui" line="472"/>
-        <source>Use this to download a remote database for local editing using a URL as provided on the web page of the database.</source>
-        <translation>Usa questo per scaricare un database remoto per modificarlo localmente utilizzando una URL fornita dalla pagina web del database.</translation>
-    </message>
-    <message>
-        <location filename="../RemoteDock.ui" line="481"/>
-        <source>Refresh</source>
-        <translation>Aggiorna</translation>
-    </message>
-    <message>
-        <location filename="../RemoteDock.ui" line="484"/>
-        <source>Reload all data and update the views</source>
-        <translation>Ricarica tutti i dati e aggiornal le viste</translation>
-    </message>
-    <message>
-        <location filename="../RemoteDock.ui" line="493"/>
-        <source>Clone Database</source>
-        <translation>Clona Database</translation>
-    </message>
-    <message>
-        <location filename="../RemoteDock.ui" line="508"/>
-        <source>Open Database</source>
-        <translation>Apri Database</translation>
-    </message>
-    <message>
-        <location filename="../RemoteDock.ui" line="511"/>
-        <source>Open the local copy of this database</source>
-        <translation>Apre una copia locale di questo database</translation>
-    </message>
-    <message>
-        <location filename="../RemoteDock.ui" line="522"/>
-        <source>Check out Commit</source>
-        <translation>Passare a Commit</translation>
-    </message>
-    <message>
-        <location filename="../RemoteDock.ui" line="525"/>
-        <source>Download and open this specific commit</source>
-        <translation>Scarica ed apre questo commit specifico</translation>
-    </message>
-    <message>
-        <location filename="../RemoteDock.ui" line="540"/>
-        <source>Check out Latest Commit</source>
-        <translation>Passare all&apos;ultimo Commit</translation>
-    </message>
-    <message>
-        <location filename="../RemoteDock.ui" line="543"/>
-        <source>Check out the latest commit of the current branch</source>
-        <translation>Passa all&apos;ultimo comit del ramo corrente</translation>
-    </message>
-    <message>
-        <location filename="../RemoteDock.ui" line="548"/>
-        <source>Save Revision to File</source>
-        <translation>Salva revisione su File</translation>
-    </message>
-    <message>
-        <location filename="../RemoteDock.ui" line="551"/>
-        <source>Saves the selected revision of the database to another file</source>
-        <translation>Salva la revisione selezionata del database in un altro file</translation>
-    </message>
-    <message>
-        <location filename="../RemoteDock.ui" line="560"/>
-        <source>Upload Database</source>
-        <translation>Carica Database</translation>
+        <translation type="obsolete">Annulla</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="563"/>
@@ -11094,19 +9116,16 @@ Lasciare il campo vuoto per utilizzare la codifica del database.</translation>
 <context>
     <name>UndoStack</name>
     <message>
-        <location filename="../../libs/qhexedit/src/commands.cpp" line="112"/>
         <source>Inserting %1 bytes</source>
-        <translation>Inserisco %1 bytes</translation>
+        <translation type="vanished">Inserisco %1 bytes</translation>
     </message>
     <message>
-        <location filename="../../libs/qhexedit/src/commands.cpp" line="134"/>
         <source>Delete %1 chars</source>
-        <translation>Elimino %1 caratteri</translation>
+        <translation type="vanished">Elimino %1 caratteri</translation>
     </message>
     <message>
-        <location filename="../../libs/qhexedit/src/commands.cpp" line="159"/>
         <source>Overwrite %1 chars</source>
-        <translation>Sovrascrivo %1 caratteri</translation>
+        <translation type="vanished">Sovrascrivo %1 caratteri</translation>
     </message>
 </context>
 <context>
