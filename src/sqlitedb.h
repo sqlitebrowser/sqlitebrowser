@@ -132,6 +132,7 @@ public:
     // Set a non-unique savepoint for the general undoing mechanism (undoing only last write).
     bool setUndoSavepoint() { return setSavepoint("UNDOPOINT", /* unique */ false); };
     bool revertToUndoSavepoint() { return revertToSavepoint("UNDOPOINT"); };
+    bool releaseUndoSavepoint() { return releaseSavepoint("UNDOPOINT"); };
 
     bool dump(const QString& filename, const std::vector<std::string>& tablesToDump,
               bool insertColNames, bool insertNew, bool keepOriginal, bool exportSchema, bool exportData, bool keepOldSchema) const;

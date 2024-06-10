@@ -1,7 +1,6 @@
 
 <RCC warning="WARNING! File created programmatically. All changes made in this file will be lost!">
   <qresource prefix="qss_icons/dark">
-    <file>rc/.keep</file>
     <file>rc/arrow_down.png</file>
     <file>rc/arrow_down@2x.png</file>
     <file>rc/arrow_down_disabled.png</file>
@@ -212,6 +211,6 @@
     <file>rc/window_undock_pressed@2x.png</file>
   </qresource>
   <qresource prefix="qdarkstyle/dark">
-      <file>style.qss</file>
+      <file>darkstyle.qss</file>
   </qresource>
 </RCC>

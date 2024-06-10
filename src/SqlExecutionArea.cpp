@@ -34,6 +34,16 @@ SqlExecutionArea::SqlExecutionArea(DBBrowserDB& _db, QWidget* parent) :
     QShortcut* shortcutHideFind = new QShortcut(QKeySequence("ESC"), ui->findLineEdit);
     connect(shortcutHideFind, &QShortcut::activated, this, &SqlExecutionArea::hideFindFrame);
 
+    QShortcut* shortcutFocusEditor = new QShortcut(QKeySequence(tr("Ctrl+PgUp")), this, nullptr, nullptr, Qt::WidgetWithChildrenShortcut);
+    connect(shortcutFocusEditor, &QShortcut::activated, this, [this]() {
+        ui->editEditor->setFocus();
+    });
+
+    QShortcut* shortcutFocusResults = new QShortcut(QKeySequence(tr("Ctrl+PgDown")), this, nullptr, nullptr, Qt::WidgetWithChildrenShortcut);
+    connect(shortcutFocusResults, &QShortcut::activated, this, [this]() {
+        ui->tableResult->setFocus();
+    });
+
     connect(ui->findLineEdit, &QLineEdit::textChanged, this, &SqlExecutionArea::findLineEdit_textChanged);
     connect(ui->previousToolButton, &QToolButton::clicked, this, &SqlExecutionArea::findPrevious);
     connect(ui->nextToolButton, &QToolButton::clicked, this, &SqlExecutionArea::findNext);

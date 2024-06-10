@@ -1,0 +1,26 @@
+name: Build and Deploy Nightly Builds
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Every day at midnight UTC
+  workflow_dispatch:
+
+jobs:
+  build-macos:
+    uses: ./.github/workflows/build-macos.yml
+    secrets: inherit
+    with:
+      NIGHTLY: true
+
+  build-windows:
+    uses: ./.github/workflows/build-windows.yml
+    secrets: inherit
+    with:
+      NIGHTLY: true
+
+  release:
+    needs: [build-macos, build-windows]
+    uses: ./.github/workflows/release.yml
+    secrets: inherit
+    with:
+      NIGHTLY: true

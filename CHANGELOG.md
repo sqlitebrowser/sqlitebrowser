@@ -8,13 +8,16 @@ The format is based on
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased - nightly] - 2023-05-05
+## [Unreleased - nightly] - 2023-11-11
 
 _Add bullet points to the subheadings below as you commit changes. <br>
 When a new version is released, incorporate the changes <br>
 into that version's description, and create a new <br>
 "[Unreleased - nightly] - yyyy-mm-dd" <br>
 entry at the head of this file._
+
+## [3.13.0] - 2023-11-11
+See "Highlights on user-visible changes" on https://github.com/sqlitebrowser/sqlitebrowser/releases
 
 ### Added
 - dbhub: Add text to upload button (7c6ef2ae)

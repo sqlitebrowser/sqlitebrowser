@@ -99,6 +99,7 @@ void FilterTableHeader::adjustPositions()
 
 void FilterTableHeader::inputChanged(const QString& new_value)
 {
+    adjustPositions();
     // Just get the column number and the new value and send them to anybody interested in filter changes
     emit filterChanged(sender()->property("column").toUInt(), new_value);
 }

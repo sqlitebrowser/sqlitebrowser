@@ -97,7 +97,7 @@ Application::Application(int& argc, char** argv) :
                 if(!env.isEmpty())
                 {
                     qWarning() << qPrintable(tr("The user settings file location is replaced with the argument value instead of the environment variable value."));
-                    qWarning() << qPrintable(tr("Ignored environment variable(DB4S_SETTINGS_FILE) value : ") + env);
+                    qWarning() << qPrintable(tr("Ignored environment variable (DB4S_SETTINGS_FILE) value: ") + env);
                 }
                 Settings::setUserSettingsFile(arguments().at(i));
             }

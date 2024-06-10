@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.15)
 project(sqlitebrowser
-    VERSION 3.12.99
+    VERSION 3.13.99
     DESCRIPTION "GUI editor for SQLite databases"
 )
 
@@ -31,6 +31,7 @@ OPTION(FORCE_INTERNAL_QCUSTOMPLOT "Don't use distribution's QCustomPlot even if 
 OPTION(FORCE_INTERNAL_QHEXEDIT "Don't use distribution's QHexEdit even if available" ON)
 OPTION(ALL_WARNINGS "Enable some useful warning flags" OFF)
 OPTION(sqlcipher "Build with SQLCipher library" OFF)
+OPTION(customTap "Using SQLCipher, SQLite and Qt installed through our custom Homebrew tap" OFF)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
@@ -48,7 +49,7 @@ endif()
 
 # Determine the git commit hash
 execute_process(
-    COMMAND git rev-parse --short --verify HEAD
+    COMMAND git -C ${CMAKE_CURRENT_SOURCE_DIR} rev-parse --short --verify HEAD
     OUTPUT_VARIABLE GIT_COMMIT_HASH
     OUTPUT_STRIP_TRAILING_WHITESPACE
     ERROR_QUIET
@@ -105,20 +106,31 @@ if(MSVC)
     list(PREPEND CMAKE_PREFIX_PATH ${QT5_PATH} ${SQLITE3_PATH})
 endif()
 
-# See https://github.com/Homebrew/homebrew-core/issues/8392#issuecomment-325226494
-if(APPLE AND EXISTS /usr/local/opt/qt5)
-    # Homebrew installs Qt5 (up to at least 5.9.1) in
-    # /usr/local/qt5, ensure it can be found by CMake since
-    # it is not in the default /usr/local prefix.
-    list(APPEND CMAKE_PREFIX_PATH "/usr/local/opt/qt5")
-endif()
 
-# For M1 Mac's
-if(APPLE AND EXISTS /opt/homebrew/opt/qt5)
-    list(APPEND CMAKE_PREFIX_PATH "/opt/homebrew/opt/qt5")
-endif()
-if(APPLE AND EXISTS /opt/homebrew/opt/sqlitefts5)
-    list(PREPEND CMAKE_PREFIX_PATH "/opt/homebrew/opt/sqlitefts5")
+if(APPLE)
+    # For Intel Mac's
+    if(EXISTS /usr/local/opt/qt5)
+        list(APPEND CMAKE_PREFIX_PATH "/usr/local/opt/qt5")
+    endif()
+
+    # For Apple Silicon Mac's
+    if(EXISTS /opt/homebrew/opt/qt5)
+        list(APPEND CMAKE_PREFIX_PATH "/opt/homebrew/opt/qt5")
+    endif()
+    if(EXISTS /opt/homebrew/opt/sqlitefts5)
+        list(PREPEND CMAKE_PREFIX_PATH "/opt/homebrew/opt/sqlitefts5")
+    endif()
+
+    # For Apple Silicon Mac's and install dependencies via our Homebrew tap(sqlitebrowser/homebrew-tap)
+    if(customTap AND EXISTS /opt/homebrew/opt/)
+        list(PREPEND CMAKE_PREFIX_PATH "/opt/homebrew/opt/db4subqt@5")
+        list(PREPEND CMAKE_PREFIX_PATH "/opt/homebrew/opt/db4subsqlitefts@5")
+
+        if(sqlcipher)
+            list(APPEND SQLCIPHER_INCLUDE_DIR "/opt/homebrew/include")
+            list(APPEND SQLCIPHER_LIBRARY "/opt/homebrew/opt/db4subsqlcipher/lib/libsqlcipher.0.dylib")
+        endif()
+    endif()
 endif()
 
 find_package(Qt5 REQUIRED COMPONENTS Concurrent Gui LinguistTools Network PrintSupport Test Widgets Xml)
@@ -211,7 +223,6 @@ target_sources(${PROJECT_NAME}
     src/FileExtensionManager.h
     src/CondFormatManager.h
     src/CipherSettings.h
-    src/DotenvFormat.h
     src/Palette.h
     src/CondFormat.h
     src/RunSql.h
@@ -272,7 +283,6 @@ target_sources(${PROJECT_NAME}
     src/CondFormatManager.cpp
     src/Data.cpp
     src/CipherSettings.cpp
-    src/DotenvFormat.cpp
     src/Palette.cpp
     src/CondFormat.cpp
     src/RunSql.cpp
@@ -352,6 +362,7 @@ set(SQLB_TSS
     "${CMAKE_SOURCE_DIR}/src/translations/sqlb_nl.ts"
     "${CMAKE_SOURCE_DIR}/src/translations/sqlb_sv.ts"
     "${CMAKE_SOURCE_DIR}/src/translations/sqlb_id.ts"
+    "${CMAKE_SOURCE_DIR}/src/translations/sqlb_ro.ts"
 )
 
 # Windows image format plugin files
@@ -620,6 +631,8 @@ if(WIN32 AND MSVC)
 endif()
 
 if(APPLE)
+    set(CMAKE_OSX_DEPLOYMENT_TARGET 10.15)
+    set(ENV{MACOSX_DEPLOYMENT_TARGET} 10.15)
     set_target_properties(${PROJECT_NAME} PROPERTIES
         BUNDLE True
         OUTPUT_NAME "DB Browser for SQLite"

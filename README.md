@@ -1,16 +1,52 @@
 # DB Browser for SQLite
 
-[![Wiki][wiki-img]][wiki]
-[![C/C++ CI][ghaction-img]][ghaction]
 [![Join the chat at https://gitter.im/sqlitebrowser/sqlitebrowser][gitter-img]][gitter]
+[![Wiki][wiki-img]][wiki]
+[![Patreon][patreon-img]][patreon]<br>
+[![C/C++ CI][ghaction-img]][ghaction]
+[![AppVeyor CI][appveyor-img]][appveyor]
+[![Qt][qt-img]][qt]<br>
+[![CodeQL](https://github.com/sqlitebrowser/sqlitebrowser/actions/workflows/codeql.yml/badge.svg)](https://github.com/sqlitebrowser/sqlitebrowser/actions/workflows/codeql.yml)
+[![Coverity][coverity-img]][coverity]<br>
 [![Download][download-img]][download]
-[![Qt][qt-img]][qt]
-[![Coverity][coverity-img]][coverity]
-[![Patreon][patreon-img]][patreon]
-[![sqlitebrowser](https://snapcraft.io/sqlitebrowser/badge.svg)](https://snapcraft.io/sqlitebrowser)
-[![sqlitebrowser](https://snapcraft.io/sqlitebrowser/trending.svg?name=0)](https://snapcraft.io/sqlitebrowser)
+[![snapcraft](https://snapcraft.io/sqlitebrowser/badge.svg)](https://snapcraft.io/sqlitebrowser)
+[![snapcraft](https://snapcraft.io/sqlitebrowser/trending.svg?name=0)](https://snapcraft.io/sqlitebrowser)
 
 ![DB Browser for SQLite Screenshot](https://github.com/sqlitebrowser/sqlitebrowser/raw/master/images/sqlitebrowser.png "DB Browser for SQLite Screenshot")
+
+## Table of Contents
+- [DB Browser for SQLite](#db-browser-for-sqlite)
+  - [Table of Contents](#table-of-contents)
+  - [What it is](#what-it-is)
+  - [What it is not](#what-it-is-not)
+  - [Wiki](#wiki)
+  - [Continuous, Nightly builds](#continuous-nightly-builds)
+  - [Windows](#windows)
+      - [Continuous, Nightly builds](#continuous-nightly-builds-1)
+  - [macOS](#macos)
+      - [Stable release](#stable-release)
+      - [Continuous, Nightly builds](#continuous-nightly-builds-2)
+  - [Linux](#linux)
+    - [Arch Linux](#arch-linux)
+    - [Debian](#debian)
+    - [Fedora](#fedora)
+    - [openSUSE](#opensuse)
+    - [Ubuntu and Derivatives](#ubuntu-and-derivatives)
+      - [Stable release](#stable-release-1)
+      - [Nightly builds](#nightly-builds)
+    - [Other Linux](#other-linux)
+  - [FreeBSD](#freebsd)
+  - [Snap packages](#snap-packages)
+      - [Snap Nightlies](#snap-nightlies)
+      - [Snap Stable](#snap-stable)
+  - [Compiling](#compiling)
+  - [X (Known as Twitter)](#x-known-as-twitter)
+  - [Website](#website)
+  - [Old project page](#old-project-page)
+  - [Releases](#releases)
+  - [History](#history)
+  - [Contributors](#contributors)
+  - [License](#license)
 
 ## What it is
 
@@ -42,43 +78,17 @@ do not make sense in a database context or are so complex to implement that they
 replacement for your favorite spreadsheet application. We are a small team with limited time after all. Thanks
 for your understanding :)
 
-----
-## Table of Contents
-- [Wiki](#wiki)
-- [Nightly builds](#nightly-builds)
-- [Windows](#windows)
-- [macOS](#macos)
-    - [Stable release](#stable-release)
-    - [Nightly builds](#nightly-builds-1)
-- [Linux](#linux)
-    - [Arch Linux](#arch-linux)
-    - [Fedora](#fedora)
-    - [openSUSE](#opensuse)
-    - [Debian](#debian)
-    - [Ubuntu and Derivatives](#ubuntu-and-derivatives)
-        - [Stable release](#stable-release-1)
-        - [Nightly builds](#nightly-builds-2)
-    - [Other Linux](#other-linux)
-- [FreeBSD](#freebsd)
-- [Snap packages](#snap-packages)
-    - [Snap Nightlies](#snap-nightlies)
-    - [Snap Stable](#snap-stable)
-- [Compiling](#compiling)
-- [Twitter](#twitter)
-- [Website](#website)
-- [Old project page](#old-project-page)
-- [Releases](#releases)
-- [History](#history)
-- [Contributors](#contributors)
-- [License](#license)
-----
-
 ## Wiki
 
 For user and developer documentation, check out our Wiki at:
 https://github.com/sqlitebrowser/sqlitebrowser/wiki.
 
-## Nightly builds
+## Continuous, Nightly builds
+
+Download continuous builds for AppImage, macOS and Windows here:
+
+* https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/continuous
+> Note: A continuous build is generated when a new commit is added to the `master` branch.<br>
 
 Download nightly builds for Windows and macOS here:
 
@@ -90,31 +100,39 @@ Download Windows releases here:
 
 * https://sqlitebrowser.org/dl/#windows
 
+Or use Chocolatey:
+
+```
+choco install sqlitebrowser
+```
+
 Or use winget:
 
 ```
 winget install -e --id DBBrowserForSQLite.DBBrowserForSQLite
 ```
 
-Or use chocolatey:
-
+Or use scoop:
 ```
-choco install sqlitebrowser
+scoop install sqlitebrowser
 ```
 
-**Note:** If for some reason the standard Windows release does not work
-(e.g. gives an error), try a nightly build.  Nightly builds often fix bugs
-reported after the last release. :D
+#### Continuous, Nightly builds
+
+Continuous builds are available here:
+
+* https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/continuous
+
+Nightly builds are available here:
+* https://nightlies.sqlitebrowser.org/latest
 
 ## macOS
 
-#### Stable release
-
 DB Browser for SQLite works well on macOS.
 
-* macOS 10.12 (Sierra) - 10.15 (Catalina) are tested and known to work.
+* macOS 10.15 (Catalina) - 14.0 (Sonoma) are tested and known to work.
 
-macOS 10.13 is needed for the latest release (v3.12.2), but v3.12.0 will work on macOS 10.12 (thanks to @Kadigan for pointing this out).
+#### Stable release
 
 Download macOS releases here:
 
@@ -126,17 +144,29 @@ The latest macOS binary can be installed via [Homebrew Cask](https://caskroom.gi
 brew install --cask db-browser-for-sqlite
 ```
 
-#### Nightly builds
+#### Continuous, Nightly builds
+
+Continuous builds are available here:
+
+* https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/continuous
 
 Nightly builds are available here:
 * https://nightlies.sqlitebrowser.org/latest
 
 and also you can be installed via [Homebrew Cask](https://caskroom.github.io/ "Homebrew Cask"):
 
-    $ brew tap homebrew/cask-versions
-    $ brew install --cask db-browser-for-sqlite-nightly
+```
+brew tap homebrew/cask-versions
 
-You can download a continuous build from [GitHub Release](https://github.com/sqlitebrowser/sqlitebrowser/releases) whenever a new commit is added to the source tree.
+# for the version without SQLCipher support
+brew install --cask db-browser-for-sqlite-nightly
+
+# for the version with SQLCipher support
+brew install --cask db-browser-for-sqlcipher-nightly
+```
+
+It also has its own Homebrew tap the include Cask for older version.<br>
+For more information, see the following: https://github.com/sqlitebrowser/homebrew-tap
 
 ## Linux
 
@@ -150,19 +180,10 @@ Install with the following command:
 
     sudo pacman -S sqlitebrowser
 
-### Fedora
-
-Install for Fedora (i386 and x86_64) by issuing the following command:
-
-    $ sudo dnf install sqlitebrowser
-    
-### openSUSE
-
-    $ sudo zypper install sqlitebrowser
-
 ### Debian
 
-Debian focuses more on stability rather than newest features. Therefore packages will typically contain an older (but well tested) version, compared to the latest release.
+Debian focuses more on stability rather than newest features.<br>
+Therefore packages will typically contain an older (but well tested) version, compared to the latest release.
 
 Update the cache using:
 
@@ -172,6 +193,15 @@ Install the package using:
 
     sudo apt-get install sqlitebrowser
 
+### Fedora
+
+Install for Fedora (i386 and x86_64) by issuing the following command:
+
+    sudo dnf install sqlitebrowser
+    
+### openSUSE
+
+    sudo zypper install sqlitebrowser
 
 ### Ubuntu and Derivatives
 
@@ -221,14 +251,14 @@ On others, compile DB4S using the instructions in [BUILDING.md](BUILDING.md).
 ## FreeBSD
 
 DB Browser for SQLite works well on FreeBSD, and there is a port for it (thanks
-to [lbartoletti](https://github.com/lbartoletti) :smile:).  DB4S can be installed
+to [lbartoletti](https://github.com/lbartoletti) :smile:).<br>DB4S can be installed
 using either this command:
 
-    # make -C /usr/ports/databases/sqlitebrowser install
+    make -C /usr/ports/databases/sqlitebrowser install
 
 or this command:
 
-    # pkg install sqlitebrowser
+    pkg install sqlitebrowser
 
 ## Snap packages
 
@@ -248,9 +278,9 @@ or this command:
 Instructions for compiling on Windows, macOS, Linux, and FreeBSD are
 in [BUILDING](BUILDING.md).
 
-## Twitter
+## X (Known as Twitter)
 
-Follow us on Twitter: https://twitter.com/sqlitebrowser
+Follow us on X: https://x.com/sqlitebrowser
 
 ## Website
 
@@ -334,12 +364,7 @@ View the list by going to the [__Contributors__ tab](https://github.com/sqlitebr
 
 ## License
 
-DB Browser for SQLite is bi-licensed under the Mozilla Public License
-Version 2, as well as the GNU General Public License Version 3 or later.
-
-Modification or redistribution is permitted under the conditions of these licenses.
-
-Check `LICENSE-PLUGINS` for other rights regarding included third-party resources.
+See the [LICENSE](LICENSE) file for licensing information.
 
   [gitter-img]: https://badges.gitter.im/sqlitebrowser/sqlitebrowser.svg
   [gitter]: https://gitter.im/sqlitebrowser/sqlitebrowser
@@ -364,3 +389,6 @@ Check `LICENSE-PLUGINS` for other rights regarding included third-party resource
 
   [ghaction-img]: https://github.com/sqlitebrowser/sqlitebrowser/actions/workflows/cppcmake.yml/badge.svg
   [ghaction]: https://github.com/sqlitebrowser/sqlitebrowser/actions/workflows/cppcmake.yml
+
+  [appveyor-img]: https://ci.appveyor.com/api/projects/status/github/sqlitebrowser/sqlitebrowser?svg=true
+  [appveyor]: https://github.com/sqlitebrowser/sqlitebrowser/blob/master/appveyor.yml

@@ -252,14 +252,22 @@ bool RunSql::executeNextStatement()
     lk.lock();
     releaseDbAccess();
 
-    // Revert to save point now if it wasn't needed. We need to do this here because there are some rare cases where the next statement might
+    // Release savepoints now if they weren't needed. We need to do this here because there are some rare cases where the next statement might
     // be affected by what is only a temporary and unnecessary savepoint. For example in this case:
     // ATTACH 'xxx' AS 'db2'
     // SELECT * FROM db2.xy;    -- Savepoint created here
     // DETACH db2;              -- Savepoint makes this statement fail
+    //
+    // Note that a revert would also work for most cases, but we have to take into account that there are SELECT queries running functions
+    // which might have side effects. In those cases, it is better to err in the safe side by releasing the savepoint and immediately
+    // saving that side effect, than preventing the user to use those functions in our application.
+    // Examples of those queries can be found in the Spatialite extension:
+    // SELECT InitSpatialMetaData()
+    // SELECT RenameTable('main','Table1','Table2')
     if(!modified && !was_dirty && savepoint_created)
     {
-        db.revertToSavepoint();
+        db.releaseSavepoint();
+        db.releaseUndoSavepoint();
         savepoint_created = false;
     }
 

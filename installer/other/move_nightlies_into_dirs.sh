@@ -9,19 +9,16 @@ YEARMONTH=`date -d "last month 13:00" '+%Y-%m'`
 YEARMONTHOSX=`date -d "last month 13:00" '+%Y%m'`
 
 # Create appropriate new subfolders
-mkdir /nightlies/macos-intel/${YEARMONTH}
-mkdir /nightlies/macos-arm64/${YEARMONTH}
+mkdir /nightlies/macos-universal/${YEARMONTH}
 mkdir /nightlies/win32/${YEARMONTH}
 mkdir /nightlies/win64/${YEARMONTH}
 
 # Move builds
-mv /nightlies/macos-intel/DB*${YEARMONTHOSX}* /nightlies/macos-intel/night*${YEARMONTHOSX}* /nightlies/macos-intel/${YEARMONTH}/
-mv /nightlies/macos-arm64/DB*${YEARMONTHOSX}* /nightlies/macos-arm64/night*${YEARMONTHOSX}* /nightlies/macos-arm64/${YEARMONTH}/
+mv /nightlies/macos-universal/DB*${YEARMONTHOSX}* /nightlies/macos-universal/night*${YEARMONTHOSX}* /nightlies/macos-universal/${YEARMONTH}/
 mv /nightlies/win32/DB*${YEARMONTH}* /nightlies/win32/${YEARMONTH}/
 mv /nightlies/win64/DB*${YEARMONTH}* /nightlies/win64/${YEARMONTH}/
 
 # Fix ownership and SELinux context's
-chown -Rh nightlies: /nightlies/macos-intel/${YEARMONTH} /nightlies/macos-arm64/${YEARMONTH} /nightlies/win32/${YEARMONTH} /nightlies/win64/${YEARMONTH}
-restorecon -RFv /nightlies/macos-intel/${YEARMONTH} /nightlies/macos-arm64/${YEARMONTH} /nightlies/win32/${YEARMONTH} /nightlies/win64/${YEARMONTH}
+chown -Rh nightlies: /nightlies/macos-universal/${YEARMONTH} /nightlies/win32/${YEARMONTH} /nightlies/win64/${YEARMONTH}
 
 echo Nightlies moved for $YEARMONTH

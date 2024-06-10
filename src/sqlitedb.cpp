@@ -3,7 +3,6 @@
 #include "sqlitetablemodel.h"
 #include "CipherDialog.h"
 #include "CipherSettings.h"
-#include "DotenvFormat.h"
 #include "Settings.h"
 #include "Data.h"
 
@@ -457,13 +456,11 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
                 QString databaseFileName(databaseFileInfo.fileName());
 
                 QString dotenvFilePath = databaseDirectoryPath + "/.env";
-                static const QSettings::Format dotenvFormat = QSettings::registerFormat("env", &DotenvFormat::readEnvFile, nullptr);
-                QSettings dotenv(dotenvFilePath, dotenvFormat);
+                QSettings dotenv(dotenvFilePath, QSettings::IniFormat);
 
                 QVariant passwordValue = dotenv.value(databaseFileName);
 
                 foundDotenvPassword = !passwordValue.isNull();
-
                 isDotenvChecked = true;
 
                 if (foundDotenvPassword)
@@ -2169,6 +2166,16 @@ void DBBrowserDB::loadExtensionsFromSettings()
     {
         if(loadExtension(ext) == false)
             QMessageBox::warning(nullptr, QApplication::applicationName(), tr("Error loading extension: %1").arg(lastError()));
+    }
+
+    const QVariantMap builtinList = Settings::getValue("extensions", "builtin").toMap();
+    for(const QString& ext : builtinList.keys())
+    {
+        if(builtinList.value(ext).toBool())
+        {
+            if(loadExtension(ext) == false)
+                QMessageBox::warning(nullptr, QApplication::applicationName(), tr("Error loading built-in extension: %1").arg(lastError()));
+        }
     }
 }
 

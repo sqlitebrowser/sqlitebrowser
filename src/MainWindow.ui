@@ -155,7 +155,7 @@ You can drag SQL statements from an object row and drop them into other applicat
         <string extracomment="This has to be equal to the tab title in all the main tabs">Edit P&amp;ragmas</string>
        </property>
        <attribute name="title">
-        <string>&amp;Edit P&amp;ragmas</string>
+        <string>Edit P&amp;ragmas</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <property name="spacing">

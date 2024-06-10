@@ -77,6 +77,9 @@ MainWindow::MainWindow(QWidget* parent)
 
     activateFields(false);
     updateRecentFileActions();
+
+    if (Settings::getValue("General", "autoLoadLastDBFileAtStartup").toBool())
+        recentFileActs[0]->trigger();
 }
 
 MainWindow::~MainWindow()
@@ -213,11 +216,6 @@ void MainWindow::init()
         focusSqlEditor();
     });
 
-    // This is the counterpart of Ctrl+PgDown in SQL editor, which focus out of the editor.
-    // This one sets the focus again in the editor.
-    QShortcut* shortcutFocusEditor = new QShortcut(QKeySequence(tr("Ctrl+PgUp")), ui->tabSqlAreas, nullptr, nullptr, Qt::WidgetWithChildrenShortcut);
-    connect(shortcutFocusEditor, &QShortcut::activated, this, &MainWindow::focusSqlEditor);
-
     // Get MaxRecentFiles value from QSettings.
     MaxRecentFiles = Settings::getValue("General", "maxRecentFiles").toInt();
     recentFileActs.resize(MaxRecentFiles);
@@ -232,8 +230,12 @@ void MainWindow::init()
         ui->fileRecentFiles->insertAction(ui->fileExitAction, recentFileActs[i]);
 
     recentSeparatorAct = ui->fileRecentFiles->insertSeparator(ui->fileExitAction);
+    optionToAutoLoadLastDBFileAtStartup = ui->fileRecentFiles->addAction(tr("Automatically load the last opened DB file at startup"));
+    optionToAutoLoadLastDBFileAtStartup->setCheckable(true);
+    optionToAutoLoadLastDBFileAtStartup->setChecked(Settings::getValue("General", "autoLoadLastDBFileAtStartup").toBool());
     clearRecentFilesAction = ui->fileRecentFiles->addAction(tr("Clear List"));
     ui->fileRecentFiles->insertAction(ui->fileExitAction, clearRecentFilesAction);
+    connect(optionToAutoLoadLastDBFileAtStartup, &QAction::triggered, this, &MainWindow::toggleAutoLoadLastDBFileAtStartupOption);
     connect(clearRecentFilesAction, &QAction::triggered, this, &MainWindow::clearRecentFiles);
 
     // Create popup menus
@@ -519,10 +521,16 @@ bool MainWindow::fileOpen(const QString& fileName, bool openFromProject, bool re
     {
         // Try opening it as a project file first. If confirmed, this will include closing current
         // database and project files.
-        if(loadProject(wFile, readOnly))
-        {
-            retval = true;
-        } else if(isTextOnlyFile(wFile)) {
+        switch (loadProject(wFile, readOnly)) {
+        case Success:
+            return true;
+        case Aborted:
+            return false;
+        case NotValidFormat:
+            // It's not a project. Continue trying to open the file as CSV or DB.
+            break;
+        }
+        if(isTextOnlyFile(wFile)) {
             // If it's a text file, cannot be an SQLite/SQLCipher database,
             // so try to import it as CSV.
             importCSVfiles({wFile});
@@ -565,11 +573,10 @@ bool MainWindow::fileOpen(const QString& fileName, bool openFromProject, bool re
                 retval = true;
             } else {
                 QMessageBox::warning(this, qApp->applicationName(), tr("Could not open database file.\nReason: %1").arg(db.lastError()));
-                return false;
+                retval = false;
             }
         }
     }
-
     return retval;
 }
 
@@ -1166,8 +1173,12 @@ void MainWindow::executeQuery()
             execute_to_position = editor->positionFromLineIndex(execute_to_line, execute_to_index);
 
             QByteArray firstPartEntireSQL = sqlWidget->getSql().toUtf8().left(execute_from_position);
-            if(firstPartEntireSQL.lastIndexOf(';') != -1)
+            if(firstPartEntireSQL.lastIndexOf(';') != -1) {
                 execute_from_position -= firstPartEntireSQL.length() - firstPartEntireSQL.lastIndexOf(';') - 1;
+            } else {
+                // No semicolon before the current line, execute from the first line.
+                execute_from_position = editor->positionFromLineIndex(0, 0);
+            }
 
             db.logSQL(tr("-- EXECUTING LINE IN '%1'\n--").arg(tabName), kLogMsg_User);
         } break;
@@ -1847,7 +1858,11 @@ void MainWindow::dropEvent(QDropEvent *event)
         QString action = QInputDialog::getItem(this,
                                    qApp->applicationName(),
                                    tr("Select the action to apply to the dropped file(s). <br/>"
-                                      "Note: only 'Import' will process more than one file.", "", urls.count()),
+                                      "Note: only 'Import' will process more than one file.",
+                                      "Note for translation: Although there is no %n in the original, "
+                                      "you can use the numerus-form to adjust 'files(s)' and remove the note when n = 1. "
+                                      "Including %n in the translation will also work.",
+                                      urls.count()),
                                    {open, attach, import},
                                    0,
                                    false,
@@ -2341,7 +2356,7 @@ void MainWindow::reloadSettings()
         break;
     case Settings::DarkStyle :
     case Settings::LightStyle :
-        QFile f(style == Settings::DarkStyle ? ":qdarkstyle/dark/style.qss" : ":qdarkstyle/light/style.qss");
+        QFile f(style == Settings::DarkStyle ? ":qdarkstyle/dark/darkstyle.qss" : ":qdarkstyle/light/lightstyle.qss");
         if (!f.exists()) {
             QMessageBox::warning(this, qApp->applicationName(),
                                tr("Could not find resource file: %1").arg(f.fileName()));
@@ -2665,7 +2680,7 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, sqlb:
         }
     }
 }
-bool MainWindow::loadProject(QString filename, bool readOnly)
+MainWindow::LoadAttempResult MainWindow::loadProject(QString filename, bool readOnly)
 {
     // Show the open file dialog when no filename was passed as parameter
     if(filename.isEmpty())
@@ -2686,12 +2701,12 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
         xml.readNext();     // token == QXmlStreamReader::StartDocument
         xml.readNext();     // name == sqlb_project
         if(xml.name() != "sqlb_project")
-            return false;
+            return NotValidFormat;
 
         // We are going to open a new project, so close the possible current one before opening another.
         // Stop the opening process here if the user pressed the cancel button in there.
         if(!closeFiles())
-            return false;
+            return Aborted;
 
         addToRecentFilesMenu(filename, readOnly);
         currentProjectFilename = filename;
@@ -2930,10 +2945,10 @@ bool MainWindow::loadProject(QString filename, bool readOnly)
 
         isProjectModified = false;
 
-        return !xml.hasError();
+        return !xml.hasError()? Success : Aborted;
     } else {
         // No project was opened
-        return false;
+        return Aborted;
     }
 }
 
@@ -3949,4 +3964,10 @@ void MainWindow::newRowCountsTab()
     sql.chop(7);    // Remove the last "\nUNION " at the end
 
     runSqlNewTab(sql, ui->actionRowCounts->text());
+}
+
+void MainWindow::toggleAutoLoadLastDBFileAtStartupOption()
+{
+    optionToAutoLoadLastDBFileAtStartup->isChecked() ? Settings::setValue("General", "autoLoadLastDBFileAtStartup", true)
+                                                     : Settings::setValue("General", "autoLoadLastDBFileAtStartup", false);
 }

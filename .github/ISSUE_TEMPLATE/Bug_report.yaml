@@ -37,11 +37,12 @@ body:
       label: DB4S Version
       description: What version of DB Browser for SQLite are you running?
       options:
+        - 3.13.0-rc1
         - 3.12.2
         - 3.12.1
         - 3.12.0
         - 3.11.x
-        - 3.12.99 (nightly)
+        - 3.13.99 (nightly)
         - Other
     validations:
       required: true

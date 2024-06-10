@@ -3,8 +3,9 @@
   <id>sqlitebrowser.desktop</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>MPL-2.0 and GPL-3.0+</project_license>
+  <developer_name>DB Browser for SQLite developers</developer_name>
   <name>DB Browser for SQLite</name>
-  <summary>DB Browser for SQLite is a light GUI editor for SQLite databases</summary>
+  <summary>light GUI editor for SQLite databases</summary>
   <description>
     <p>DB Browser for SQLite is a high quality, visual, open source tool to create, design, and edit database files compatible with SQLite.</p>
     <p>It is for users and developers wanting to create databases, search, and edit data. It uses a familiar spreadsheet-like interface, and you don't need to learn complicated SQL commands.</p>
@@ -44,7 +45,9 @@
   <url type="homepage">https://sqlitebrowser.org/</url>
   <url type="bugtracker">https://github.com/sqlitebrowser/sqlitebrowser/issues</url>
   <releases>
+    <release version="3.13.0-rc1" date="2023-11-11" />
     <release version="3.12.2" date="2021-05-17" />
     <release version="3.12.1" date="2020-11-09" />
   </releases>
+  <launchable type="desktop-id">sqlitebrowser.desktop</launchable>
 </component>

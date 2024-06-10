@@ -43,6 +43,13 @@ public:
     DBBrowserDB& getDb() { return db; }
 
 private:
+    enum LoadAttempResult
+    {
+        Success,
+        NotValidFormat,
+        Aborted
+    };
+
     struct PragmaValues
     {
         int autovacuum;
@@ -89,6 +96,7 @@ private:
     static int MaxRecentFiles;
     QVector<QAction*> recentFileActs;
     QAction* clearRecentFilesAction;
+    QAction* optionToAutoLoadLastDBFileAtStartup;
     QAction* recentSeparatorAct;
 
     /**
@@ -120,6 +128,7 @@ private:
 
     void updateRecentFileActions();
     void clearRecentFiles();
+    void toggleAutoLoadLastDBFileAtStartupOption();
     void setCurrentFile(const QString& fileName);
     void addToRecentFilesMenu(const QString& filename, bool read_only = false);
     void activateFields(bool enable = true);
@@ -210,7 +219,7 @@ private slots:
     void openLinkSqlCipherFaq() const;
     void openLinkWebsite() const;
     void openLinkDonatePatreon() const;
-    bool loadProject(QString filename = QString(), bool readOnly = false);
+    LoadAttempResult loadProject(QString filename = QString(), bool readOnly = false);
     void saveProject();
     void saveProjectAs();
     void fileAttach(const QString& fileName = QString());
