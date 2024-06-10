@@ -2,10 +2,6 @@ name: Build - macOS
 
 on:
   workflow_call:
-    inputs:
-      NIGHTLY:
-        default: false
-        type: boolean
 
 jobs:
   build:
@@ -37,18 +33,10 @@ jobs:
 
       - name: Configure build
         run: |
-          if [ "${{ inputs.NIGHTLY }}" = "true" ]; then
-            if [ "${{ matrix.sqlcipher }}" = "1" ]; then
-                sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLCipher Nightly"/' CMakeLists.txt
-            else
-                sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLite Nightly"/' CMakeLists.txt
-            fi
+          if [ "${{ matrix.sqlcipher }}" = "1" ]; then
+              sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLCipher-v3.13.0-rc2"/' CMakeLists.txt
           else
-            if [ "${{ matrix.sqlcipher }}" = "1" ]; then
-                sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLCipher-dev-'$(git rev-parse --short --verify HEAD)'"/' CMakeLists.txt
-            else
-                sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLite-dev-'$(git rev-parse --short --verify HEAD)'"/' CMakeLists.txt
-            fi
+              sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLite-v3.13.0-rc2"/' CMakeLists.txt
           fi
 
           mkdir build && cd build
@@ -76,7 +64,6 @@ jobs:
           KEYCHAIN_PW: ${{ secrets.MACOS_CODESIGN_KEYCHAIN_PW }}
           P12: ${{ secrets.MACOS_CODESIGN_P12 }}
           P12_PW: ${{ secrets.MACOS_CODESIGN_P12_PW }}
-          NIGHTLY: ${{ inputs.NIGHTLY }}
           SQLCIPHER: ${{ matrix.sqlcipher }}
           TEAM_ID: ${{ secrets.MACOS_CODESIGN_TEAM_ID }}
 

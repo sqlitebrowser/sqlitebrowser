@@ -2,10 +2,6 @@ name: Build - Windows
 
 on:
   workflow_call:
-    inputs:
-      NIGHTLY:
-        default: false
-        type: boolean
 
 jobs:
   build:
@@ -89,12 +85,6 @@ jobs:
           cd C:\dev\SQLite-${{ matrix.arch}}\
           cl /MD extension-formats.c -link -dll -def:extension-formats.def -out:formats.dll
           cl /MD extension-functions.c -link -dll -def:extension-functions.def -out:math.dll
-          # FIXME: Disable building the 'fileio' extension for now (#3488)
-          # If this issue is resolved, be sure to delete the related patch for WiX
-          # curl -L -o fileio.c "https://sqlite.org/src/raw?filename=ext/misc/fileio.c&ci=trunk"
-          # curl -L -o test_windirent.c "https://sqlite.org/src/raw?filename=src/test_windirent.c&ci=trunk"
-          # curl -L -o test_windirent.h "https://sqlite.org/src/raw?filename=src/test_windirent.h&ci=trunk"
-          # cl /MD fileio.c test_windirent.c -link sqlite3.lib -dll -out:fileio.dll
 
       - name: Install SQLCipher
         run: |
@@ -153,11 +143,7 @@ jobs:
           ./build.cmd "${{ matrix.arch }}".ToLower()
           $ARCH="${{ matrix.arch }}".ToLower()
           $DATE=$(Get-Date -Format "yyyy-MM-dd")
-          if ("${{ inputs.NIGHTLY }}" -eq "true") {
-            mv DB.Browser.for.SQLite-*.msi "DB.Browser.for.SQLite-$DATE-$ARCH.msi"
-          } else {
-            mv DB.Browser.for.SQLite-*.msi "DB.Browser.for.SQLite-dev-$(git rev-parse --short HEAD)-$ARCH.msi"
-          }
+          mv DB.Browser.for.SQLite-*.msi "DB.Browser.for.SQLite-v3.13.0-rc2-$ARCH.msi"
 
       - name: Upload artifacts for code signing with SignPath
         id: unsigned-artifacts
@@ -182,11 +168,7 @@ jobs:
         run: |
           $ARCH="${{ matrix.arch }}".ToLower()
           $DATE=$(Get-Date -Format "yyyy-MM-dd")
-          if ("${{ inputs.NIGHTLY }}" -eq "true") {
-            $FILENAME_FORMAT="DB.Browser.for.SQLite-$DATE-$ARCH.zip"
-          } else {
-            $FILENAME_FORMAT="DB.Browser.for.SQLite-dev-$(git rev-parse --short HEAD)-$ARCH.zip"
-          }
+          $FILENAME_FORMAT="DB.Browser.for.SQLite-v3.13.0-rc2-$ARCH.zip"
           Start-Process msiexec.exe -ArgumentList "/a $(dir installer\windows\DB.Browser.for.SQLite-*.msi) /q TARGETDIR=$PWD\target\" -Wait
           if ("${{ matrix.arch }}" -eq "Win32") {
             move target\System\* "target\DB Browser for SQLite\"

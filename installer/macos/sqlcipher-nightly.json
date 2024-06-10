@@ -1,5 +1,5 @@
 {
-  "title": "Install DB4S Nightly build",
+  "title": "Install DB4S",
   "icon": "macapp-nightly.icns",
   "icon-size": 128,
   "background": "background.png",
@@ -20,4 +20,3 @@
     { "x": 90, "y": 530, "type": "position", "path": ".Trashes" }
   ]
 }
-

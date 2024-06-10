@@ -2,13 +2,9 @@ name: Release
 
 on:
     workflow_call:
-      inputs:
-        NIGHTLY:
-          default: false
-          type: boolean
 
 env:
-  tag_name: ${{ inputs.NIGHTLY == true && 'nightly' || 'continuous' }}
+  tag_name: "v3.13.0-rc2"
 
 jobs:
   release:
@@ -45,5 +41,3 @@ jobs:
           files: target/*
           prerelease: true
           tag_name: ${{ env.tag_name }}
-
-      # For reference: Uploading nightly builds to the nightly server is processed on the nightly server side.

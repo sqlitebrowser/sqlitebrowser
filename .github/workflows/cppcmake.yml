@@ -1,9 +1,6 @@
-name: CI
+name: Build v3.13.0-rc2
 
 on:
-  push:
-    branches: [master]
-  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -11,15 +8,10 @@ permissions:
 
 jobs:
   build-appimage:
-    if: github.event_name != 'pull_request'
     uses: ./.github/workflows/build-appimage.yml
 
   build-macos:
     uses: ./.github/workflows/build-macos.yml
-    secrets: inherit
-
-  build-ubuntu:
-    uses: ./.github/workflows/build-ubuntu.yml
     secrets: inherit
 
   build-windows:
@@ -27,7 +19,6 @@ jobs:
     secrets: inherit
 
   release:
-    if: github.event_name != 'pull_request'
     needs: [build-appimage, build-macos, build-windows]
     uses: ./.github/workflows/release.yml
     secrets: inherit
