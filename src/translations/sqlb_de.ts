@@ -16,7 +16,7 @@
     <message>
         <location filename="../AboutDialog.ui" line="90"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/span&gt;&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://sqlitebrowser.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;https://doc.qt.io/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;We use the nalgeon/sqlean library for SQLite extensions support.&lt;br/&gt;This library is licensed under the MIT license, see the following for more information:&lt;br/&gt;&lt;/span&gt;&lt;a href=&quot;https://github.com/nalgeon/sqlean&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/nalgeon/sqlean&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Pastel SVG icon set by Michael Buckley under a Creative Commons Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;https://codefisher.org/pastel-svg/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://codefisher.org/pastel-svg/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB-Browser für SQLite ist eine freie Open-Source-Anwendung mit GUI zum Erstellen, Entwerfen und Bearbeiten von SQLite-Datenbanken.&lt;/p&gt;&lt;p&gt;Die Anwendung ist sowohl unter der Mozilla Public License Version 2 als auch der GNU General Public License Version 3 or later verfügbar. Modifikationen oder Weitergabe sind unter Beachtung der Bedingungen dieser Lizenzen möglich.&lt;/p&gt;&lt;p&gt;Siehe &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/a&gt; und &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/span&gt;&lt;/a&gt; für Details.&lt;/p&gt;&lt;p&gt;Weitere Informationen über diese Anwendung gibt es auf unserer Webseite: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://sqlitebrowser.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Diese Software verwendet das Qt-Toolkit unter der GPL/LGPL Qt Toolkit, welches unter &lt;/span&gt;&lt;a href=&quot;http://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://qt-project.org/&lt;/span&gt;&lt;/a&gt; verfügbar ist. &lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;Zugehörige Lizenzbedingungen und Informationen gibt es unter &lt;/span&gt;&lt;a href=&quot;https://doc.qt.io/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://qt-project.org/doc/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Wir verwenden die nalgeon/sqlean-Bibliothek für die Unterstützung von SQLite-Erweiterungen.&lt;br/&gt;Diese Bibliothek ist unter der MIT license verfügbar; mehr Informationen gibt es unter:&lt;br/&gt;&lt;/span&gt;&lt;a href=&quot;https://github.com/nalgeon/sqlean&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/nalgeon/sqlean&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Zudem wird das Pastel SVG Iconset von Michael Buckley verwendet, das unter der Creative Commons Attribution Share Alike 4.0 Lizenz steht.&lt;br/&gt;Siehe &lt;/span&gt;&lt;a href=&quot;https://codefisher.org/pastel-svg/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://codefisher.org/pastel-svg/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; für weitere Details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -480,12 +480,12 @@ Wenn weitere Einstellungen für diese Datenbankdatei vorgenommen worden sind, m�
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="32"/>
         <source>WebKit / Chromium epoch to date</source>
-        <translation type="unfinished"></translation>
+        <translation>WebKit-/Chromium-Epoche zu Datum</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="33"/>
         <source>WebKit / Chromium epoch to local time</source>
-        <translation type="unfinished"></translation>
+        <translation>WebKit-/Chromium-Epoche zu lokaler Zeit</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="35"/>
@@ -873,7 +873,7 @@ Meldung von Datenbank:
     <message>
         <location filename="../sqlitedb.cpp" line="2177"/>
         <source>Error loading built-in extension: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Laden der eingebauten Erweiterung: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="2203"/>
@@ -1446,7 +1446,7 @@ Sollen die bearbeiteten Daten auf Zeile=%1, Spalte=%2 angewendet werden?</transl
     <message>
         <location filename="../EditTableDialog.ui" line="85"/>
         <source>Make this a &apos;WITHOUT ROWID&apos; table. Setting this flag requires specifying a PRIMARY KEY (which can be of any type, and can be composite), and forbids the AUTOINCREMENT flag.</source>
-        <translation type="unfinished"></translation>
+        <translation>Diese Tabelle zu &quot;WITHOUT ROWID&quot; umwandeln. Das Setzen dieses Flags erfordert die Angabe eines Primärschlüssels (welcher jeglichen Typ haben und auch zusammengesetzt sein darf), schließt aber das AUTOINCREMENT-Flag aus.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="92"/>
@@ -4043,7 +4043,7 @@ Sind Sie sicher?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="233"/>
         <source>Automatically load the last opened DB file at startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Beim Starten automatisch die zuletzt geöffnete Datenbank öffnen</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="898"/>
@@ -5377,7 +5377,7 @@ Kann auf 0 gesetzt werden, um die Vervollständigung zu deaktivieren.</translati
     <message>
         <location filename="../PreferencesDialog.ui" line="1852"/>
         <source>Select built-in extensions to load for every database:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bei jeder Datenbank zu ladende eingebaute Erweiterungen auswählen:</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1866"/>
@@ -6485,12 +6485,12 @@ Soll wirklich fortgefahren werden?</translation>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="37"/>
         <source>Ctrl+PgUp</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="42"/>
         <source>Ctrl+PgDown</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="256"/>
