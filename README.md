@@ -39,6 +39,7 @@
   - [Snap packages](#snap-packages)
       - [Snap Nightlies](#snap-nightlies)
       - [Snap Stable](#snap-stable)
+  - [Nix Package](#nix-packages)
   - [Compiling](#compiling)
   - [X (Known as Twitter)](#x-known-as-twitter)
   - [Website](#website)
@@ -272,6 +273,22 @@ or this command:
 
      snap install sqlitebrowser
 
+## Nix Packages
+
+`sqlitebrowser` is packaged and available in nixpkgs.
+It can be used with the experimental flakes and nix-command features with:
+
+    nix profile install nixpkgs#sqlitebrowser
+
+Or with the `nix-env` or `nix-shell` commands:
+
+    nix-shell -p sqlitebrowser
+
+### Flox
+
+`sqlitebrowser` can be installed into a Flox environment with.
+
+    flox install sqlitebrowser
 
 ## Compiling
 
