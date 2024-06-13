@@ -40,6 +40,7 @@
       - [Snap Nightlies](#snap-nightlies)
       - [Snap Stable](#snap-stable)
   - [Nix Package](#nix-packages)
+  	- [Flox](#flox)
   - [Compiling](#compiling)
   - [X (Known as Twitter)](#x-known-as-twitter)
   - [Website](#website)
