@@ -631,8 +631,6 @@ if(WIN32 AND MSVC)
 endif()
 
 if(APPLE)
-    set(CMAKE_OSX_DEPLOYMENT_TARGET 10.15)
-    set(ENV{MACOSX_DEPLOYMENT_TARGET} 10.15)
     set_target_properties(${PROJECT_NAME} PROPERTIES
         BUNDLE True
         OUTPUT_NAME "DB Browser for SQLite"
