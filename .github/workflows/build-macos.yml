@@ -16,6 +16,8 @@ jobs:
       matrix:
         os: [macos-14]
         sqlcipher: ["0", "1"]
+    env:
+      MACOSX_DEPLOYMENT_TARGET: 10.13
     steps:
       - name: Checkout
         uses: actions/checkout@v4
