@@ -65,7 +65,8 @@ jobs:
       - name: Build Extension
         run: clang -I /opt/homebrew/opt/db4subsqlitefts@5/include -L /opt/homebrew/opt/db4subsqlitefts@5/lib -fno-common -dynamiclib src/extensions/extension-formats.c
 
-      - name: Notarization
+      - if: github.event_name != 'pull_request'
+        name: Notarization
         id: notarization
         run: chmod +x ./installer/macos/notarize.sh && ./installer/macos/notarize.sh
         env:

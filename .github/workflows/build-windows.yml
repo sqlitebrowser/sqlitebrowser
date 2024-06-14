@@ -141,7 +141,8 @@ jobs:
           devenv /Build Release sqlitebrowser.sln /Project ALL_BUILD
           mv "Release\DB Browser for SQLite.exe" "Release\DB Browser for SQLCipher.exe"
 
-      - name: Create MSI
+      - if: github.event_name != 'pull_request'
+        name: Create MSI
         env:
           ExePath: ${{ github.workspace }}
           OpenSSLPath: C:\dev\OpenSSL-${{ matrix.arch }}
@@ -159,7 +160,8 @@ jobs:
             mv DB.Browser.for.SQLite-*.msi "DB.Browser.for.SQLite-dev-$(git rev-parse --short HEAD)-$ARCH.msi"
           }
 
-      - name: Upload artifacts for code signing with SignPath
+      - if: github.event_name != 'pull_request'
+        name: Upload artifacts for code signing with SignPath
         id: unsigned-artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -167,7 +169,8 @@ jobs:
           path: installer\windows\DB.Browser.for.SQLite-*.msi
 
       # Change the signing-policy-slug when you release an RC, RTM or stable release.
-      - name: Code signing with SignPath
+      - if: github.event_name != 'pull_request'
+        name: Code signing with SignPath
         uses: signpath/github-action-submit-signing-request@v0.4
         with:
           api-token: '${{ secrets.SIGNPATH_API_TOKEN }}'
@@ -178,7 +181,8 @@ jobs:
           signing-policy-slug: 'test-signing'
           wait-for-completion: true
 
-      - name: Create ZIP
+      - if: github.event_name != 'pull_request'
+        name: Create ZIP
         run: |
           $ARCH="${{ matrix.arch }}".ToLower()
           $DATE=$(Get-Date -Format "yyyy-MM-dd")
@@ -195,14 +199,16 @@ jobs:
           }
           Compress-Archive -Path "target\DB Browser for SQLite\*" -DestinationPath $FILENAME_FORMAT
 
-      - name: Prepare artifacts
+      - if: github.event_name != 'pull_request'
+        name: Prepare artifacts
         run: |
           mkdir build-artifacts
           move installer\windows\DB.Browser.for.SQLite-*.msi build-artifacts\
           move DB.Browser.for.SQLite-*.zip build-artifacts\
           Compress-Archive -Path build-artifacts\* -DestinationPath build-artifacts-${{ matrix.arch }}.zip
 
-      - name: Upload artifacts
+      - if: github.event_name != 'pull_request'
+        name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: build-artifacts-${{ matrix.os }}-${{ matrix.arch }}
