@@ -3401,6 +3401,7 @@ void MainWindow::fileDetachTreeViewSelected(QTreeView* treeView)
     if (db.detach(attached_as))
     {
         isProjectModified = true;
+        refresh();
     }
 }
 
