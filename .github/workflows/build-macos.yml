@@ -34,7 +34,9 @@ jobs:
         run: |
           brew update
           brew tap sqlitebrowser/tap
-          brew install db4subqt@5 db4subsqlcipher db4subsqlitefts@5 ninja
+          brew unlink openssl@3
+          brew install sqlb-openssl@3
+          brew install sqlb-qt@5 sqlb-sqlcipher sqlb-sqlite ninja
           npm install -g appdmg
 
       - name: Configure build
@@ -65,7 +67,7 @@ jobs:
         run: ninja test
 
       - name: Build Extension
-        run: clang -I /opt/homebrew/opt/db4subsqlitefts@5/include -L /opt/homebrew/opt/db4subsqlitefts@5/lib -fno-common -dynamiclib src/extensions/extension-formats.c
+        run: clang -I /opt/homebrew/opt/sqlb-sqlite/include -L /opt/homebrew/opt/sqlb-sqlite/lib -fno-common -dynamiclib src/extensions/extension-formats.c
 
       - if: github.event_name != 'pull_request'
         name: Notarization
