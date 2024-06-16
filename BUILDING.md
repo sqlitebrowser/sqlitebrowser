@@ -27,7 +27,6 @@ The wiki has information that is a bit more detailed or less common, but may be 
     - [OpenSUSE](#opensuse)
   - [macOS](#macos)
     - [Build an `.app` bundle](#build-an-app-bundle)
-    - [Add the extension to the app bundle (Optional)](#add-the-extension-to-the-app-bundle-optional)
   - [Windows](#windows)
     - [Compiling on Windows with MSVC](#compiling-on-windows-with-msvc)
     - [Cross compiling for Windows](#cross-compiling-for-windows)
@@ -138,11 +137,9 @@ It requires SQLite and at least Qt 5.15.9 to be installed first. These are the
 ```bash
 brew tap sqlitebrowser/tap
 # If you are using Apple Silicon Mac
-brew install db4subqt@5 db4subsqlcipher db4subsqlitefts@5
-# If you are using Intel Mac
-brew install db4sqt@5 db4ssqlcipher db4ssqlitefts@5
+brew install sqlb-qt@5 sqlb-sqlcipher sqlb-sqlite
 ```
-> You can don't need SQLCipher support, you can skip `db4ssqlcipher` and `db4ssqlitefts@5`.
+> You can don't need SQLCipher support, you can skip `sqlb-sqlcipher`.
 
 Then it's just a matter of getting the source:
 
@@ -163,38 +160,9 @@ mv DB\ Browser\ for\ SQLite.app /Applications
 
 > If you want to build universal binary, change the `cmake` command to<br>
 > `cmake -DcustomTap=1 -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" ..`<br>
-> Of course, this requires you to have an Apple Silicon Mac and an installation of formula starting with `db4sub`.
+> Of course, this requires you to have an Apple Silicon Mac.
 
 An icon for "DB Browser for SQLite" should now be in your main macOS Applications list, ready to launch.
-
-#### Add the extension to the app bundle (Optional)
-
-> **Note**: The following lines look a bit complicated, but are all commands that you need to run.
-
-```bash
-/opt/homebrew/opt/db4sqtub@5/bin/macdeployqt DB\ Browser\ for\ SQLite.app
-mkdir build/DB\ Browser\ for\ SQLite.app/Contents/Extensions
-clang -I /opt/homebrew/opt/db4ssqliteftsub@5/include -L /opt/homebrew/opt/db4ssqliteftsub@5/lib -fno-common -dynamiclib src/extensions/extension-formats.c -o formats-arm64.dylib
-arch -x86_64 clang -I /opt/homebrew/opt/db4ssqliteftsub@5/include -L /opt/homebrew/opt/db4ssqliteftsub@5/lib -fno-common -dynamiclib src/extensions/extension-formats.c -o formats-x86_64.dylib
-lipo -create -output build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/formats.dylib formats-arm64.dylib formats-x86_64.dylib
-install_name_tool -id "@executable_path/../Extensions/formats.dylib" build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/formats.dylib
-ln -s formats.dylib build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/formats.dylib.dylib
-
-clang -I /opt/homebrew/opt/db4ssqliteftsub@5/include -L /opt/homebrew/opt/db4ssqliteftsub@5/lib -fno-common -dynamiclib src/extensions/extension-functions.c -o math-arm64.dylib
-arch -x86_64 clang -I /opt/homebrew/opt/db4ssqliteftsub@5/include -L /opt/homebrew/opt/db4ssqliteftsub@5/lib -fno-common -dynamiclib src/extensions/extension-functions.c -o math-x86_64.dylib
-lipo -create -output build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/math.dylib math-arm64.dylib math-x86_64.dylib
-install_name_tool -id "@executable_path/../Extensions/math.dylib" build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/math.dylib
-ln -s math.dylib build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/math.dylib.dylib
-
-curl -L -o src/extensions/fileio.c 'https://sqlite.org/src/raw?filename=ext/misc/fileio.c&ci=trunk'
-curl -L -o src/extensions/test_windirent.c 'https://sqlite.org/src/raw?filename=src/test_windirent.c&ci=trunk'
-curl -L -o src/extensions/test_windirent.h 'https://sqlite.org/src/raw?filename=src/test_windirent.h&ci=trunk'
-clang -I /opt/homebrew/opt/db4ssqliteftsub@5/include -L /opt/homebrew/opt/db4ssqliteftsub@5/lib -fno-common -dynamiclib src/extensions/fileio.c src/extensions/test_windirent.c -o fileio-arm64.dylib
-arch -x86_64 clang -I /opt/homebrew/opt/db4ssqliteftsub@5/include -L /opt/homebrew/opt/db4ssqliteftsub@5/lib -fno-common -dynamiclib src/extensions/fileio.c src/extensions/test_windirent.c -o fileio-x86_64.dylib
-lipo -create -output build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/fileio.dylib fileio-arm64.dylib fileio-x86_64.dylib
-install_name_tool -id "@executable_path/../Extensions/fileio.dylib" build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/fileio.dylib
-ln -s fileio.dylib build/DB\ Browser\ for\ SQLite.app/Contents/Extensions/fileio.dylib.dylib
-```
 
 > Also, we have a CI workflow for macOS, you can check it out [here](https://github.com/sqlitebrowser/sqlitebrowser/blob/master/.github/workflows/build-macos.yml)
 

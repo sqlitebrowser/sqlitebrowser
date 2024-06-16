@@ -10,7 +10,7 @@ security import $CERTIFICATE_PATH -P "$P12_PW" -A -t cert -f pkcs12 -k $KEYCHAIN
 security list-keychain -d user -s $KEYCHAIN_PATH
 
 # Run macdeployqt
-find build -name "DB Browser for SQL*.app" -exec $(brew --prefix db4subqt@5)/bin/macdeployqt {} -sign-for-notarization=$DEV_ID \;
+find build -name "DB Browser for SQL*.app" -exec $(brew --prefix sqlb-qt@5)/bin/macdeployqt {} -sign-for-notarization=$DEV_ID \;
 
 # Add the 'formats' and 'nalgeon/sqlean' extensions to the app bundle
 gh auth login --with-token <<< "$GH_TOKEN"
@@ -23,7 +23,7 @@ for TARGET in $(find build -name "DB Browser for SQL*.app" | sed -e 's/ /_/g'); 
     TARGET=$(echo $TARGET | sed -e 's/_/ /g')
     mkdir "$TARGET/Contents/Extensions"
 
-    clang -I /opt/homebrew/opt/db4subsqlitefts@5/include -L /opt/homebrew/opt/db4subsqlitefts@5/lib -fno-common -dynamiclib src/extensions/extension-formats.c -o "$TARGET/Contents/Extensions/formats.dylib"
+    clang -I /opt/homebrew/opt/sqlb-sqlite/include -L /opt/homebrew/opt/sqlb-sqlite/lib -fno-common -dynamiclib src/extensions/extension-formats.c -o "$TARGET/Contents/Extensions/formats.dylib"
     if [ -f "$TARGET/Contents/Extensions/formats.dylib" ]; then
         install_name_tool -id "@executable_path/../Extensions/formats.dylib" "$TARGET/Contents/Extensions/formats.dylib"
         ln -s formats.dylib "$TARGET/Contents/Extensions/formats.dylib.dylib"
@@ -47,11 +47,11 @@ for TARGET in $(find build -name "DB Browser for SQL*.app" | sed -e 's/ /_/g'); 
     TARGET=$(echo $TARGET | sed -e 's/_/ /g')
     mkdir "$TARGET/Contents/translations"
     for i in ar cs de en es fr it ko pl pt pt_BR ru uk zh_CN zh_TW; do
-    find $(brew --prefix db4subqt@5)/translations -name "qt_${i}.qm" 2> /dev/null -exec cp {} "$TARGET/Contents/translations/" \;
-    find $(brew --prefix db4subqt@5)/translations -name "qtbase_${i}.qm" 2> /dev/null -exec cp {} "$TARGET/Contents/translations/" \;
-    find $(brew --prefix db4subqt@5)/translations -name "qtmultimedia_${i}.qm" 2> /dev/null -exec cp {} "$TARGET/Contents/translations/" \;
-    find $(brew --prefix db4subqt@5)/translations -name "qtscript_${i}.qm" 2> /dev/null -exec cp {} "$TARGET/Contents/translations/" \;
-    find $(brew --prefix db4subqt@5)/translations -name "qtxmlpatterns_${i}.qm" 2> /dev/null -exec cp {} "$TARGET/Contents/translations/" \;
+    find $(brew --prefix sqlb-qt@5)/translations -name "qt_${i}.qm" 2> /dev/null -exec cp {} "$TARGET/Contents/translations/" \;
+    find $(brew --prefix sqlb-qt@5)/translations -name "qtbase_${i}.qm" 2> /dev/null -exec cp {} "$TARGET/Contents/translations/" \;
+    find $(brew --prefix sqlb-qt@5)/translations -name "qtmultimedia_${i}.qm" 2> /dev/null -exec cp {} "$TARGET/Contents/translations/" \;
+    find $(brew --prefix sqlb-qt@5)/translations -name "qtscript_${i}.qm" 2> /dev/null -exec cp {} "$TARGET/Contents/translations/" \;
+    find $(brew --prefix sqlb-qt@5)/translations -name "qtxmlpatterns_${i}.qm" 2> /dev/null -exec cp {} "$TARGET/Contents/translations/" \;
     done 
 done
 
