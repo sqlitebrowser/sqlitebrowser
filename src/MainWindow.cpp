@@ -30,6 +30,7 @@
 
 #include <chrono>
 #include <QFile>
+#include <QSaveFile>
 #include <QTextStream>
 #include <QWhatsThis>
 #include <QMessageBox>
@@ -3094,7 +3095,7 @@ void MainWindow::saveProject(const QString& currentFilename)
         if(!filename.endsWith(FILE_EXT_SQLPRJ_DEFAULT, Qt::CaseInsensitive))
             filename.append(FILE_EXT_SQLPRJ_DEFAULT);
 
-        QFile file(filename);
+        QSaveFile file(filename);
         bool opened = file.open(QFile::WriteOnly | QFile::Text);
         if(!opened) {
             QMessageBox::warning(this, qApp->applicationName(),
@@ -3227,7 +3228,7 @@ void MainWindow::saveProject(const QString& currentFilename)
 
         xml.writeEndElement();
         xml.writeEndDocument();
-        file.close();
+        file.commit();
 
         addToRecentFilesMenu(filename);
         setCurrentFile(db.currentFile());
