@@ -38,9 +38,9 @@ jobs:
       - name: Configure build
         run: |
           if [ "${{ matrix.sqlcipher }}" = "1" ]; then
-              sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLCipher-v3.13.0-rc2"/' CMakeLists.txt
+              sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLCipher-v3.13.0-rc3"/' CMakeLists.txt
           else
-              sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLite-v3.13.0-rc2"/' CMakeLists.txt
+              sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLite-v3.13.0-rc3"/' CMakeLists.txt
           fi
 
           mkdir build && cd build

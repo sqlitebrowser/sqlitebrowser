@@ -4,7 +4,7 @@ on:
     workflow_call:
 
 env:
-  tag_name: "v3.13.0-rc2"
+  tag_name: "v3.13.0-rc3"
 
 jobs:
   release:
