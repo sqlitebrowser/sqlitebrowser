@@ -230,7 +230,7 @@ public:
 
     const sqlb::TablePtr getTableByName(const sqlb::ObjectIdentifier& name) const
     {
-        if(schemata.empty() || name.schema().empty())
+        if(schemata.empty() || name.schema().empty() || !schemata.count(name.schema()))
             return sqlb::TablePtr{};
         const auto& schema = schemata.at(name.schema());
         if(schema.tables.count(name.name()))
