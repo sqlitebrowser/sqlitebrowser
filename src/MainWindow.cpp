@@ -799,11 +799,12 @@ bool MainWindow::closeFiles()
 
     bool projectClosed = closeProject();
 
-    // Now all tabs can be closed at once without asking user.
-    // Close tabs in reverse order (so indexes are not changed in the process).
-    for(int i=ui->tabSqlAreas->count()-1; i>=0; i--)
-        closeSqlTab(i, /* force */ true, /* askSaving */ false);
-
+    if (projectClosed) {
+        // Now all tabs can be closed at once without asking user.
+        // Close tabs in reverse order (so indexes are not changed in the process).
+        for(int i=ui->tabSqlAreas->count()-1; i>=0; i--)
+            closeSqlTab(i, /* force */ true, /* askSaving */ false);
+    }
     return projectClosed;
 }
 
