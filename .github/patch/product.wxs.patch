@@ -1,5 +1,5 @@
 diff --git a/installer/windows/product.wxs b/installer/windows/product.wxs
-index c040591a..23a9b40a 100644
+index c040591a..12c3aee8 100644
 --- a/installer/windows/product.wxs
 +++ b/installer/windows/product.wxs
 @@ -63,7 +63,8 @@
@@ -12,7 +12,17 @@ index c040591a..23a9b40a 100644
                      </Directory>
                      <Directory Id="imageformats" Name="imageformats">
                          <Component><File Source="$(var.QtPath)\plugins\imageformats\qgif.dll" /></Component>
-@@ -149,8 +150,11 @@
+@@ -84,6 +85,9 @@
+                     </Directory>
+                     <Directory Id="licenses" Name="licenses">
+                         <Component><File Source="..\..\LICENSE" /></Component>
++                        <Component><File Source="..\..\LICENSE-GPL-3.0" /></Component>
++                        <Component><File Source="..\..\LICENSE-MIT" /></Component>
++                        <Component><File Source="..\..\LICENSE-MPL-2.0" /></Component>
+                         <Component><File Source="..\..\LICENSE-PLUGINS" /></Component>
+                     </Directory>
+                     <Component><File Source="$(var.QtPath)\bin\Qt5Concurrent.dll" /></Component>
+@@ -149,8 +153,11 @@
                  <Feature Id="FormatsExtension" Title="Formats" Description="Provide additional field display formats." AllowAdvertise="no">
                      <ComponentRef Id="formats.dll" />
                  </Feature>
@@ -25,3 +35,13 @@ index c040591a..23a9b40a 100644
                  </Feature>
              </Feature>
  
+@@ -186,6 +193,9 @@
+             <ComponentRef Id="windowsprintersupport.dll" />
+             <!-- Licenses -->
+             <ComponentRef Id="LICENSE" />
++            <ComponentRef Id="LICENSE_GPL_3.0" />
++            <ComponentRef Id="LICENSE_MIT" />
++            <ComponentRef Id="LICENSE_MPL_2.0" />
+             <ComponentRef Id="LICENSE_PLUGINS" />
+             <!-- Qt -->
+             <ComponentRef Id="Qt5Concurrent.dll" />
