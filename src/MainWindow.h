@@ -175,7 +175,8 @@ private slots:
     void changeTreeSelection();
     void fileNew();
     void fileNewInMemoryDatabase(bool open_create_dialog = true);
-    void refreshTableBrowsers();
+    // Refresh visible table browsers. When all is true, refresh all browsers.
+    void refreshTableBrowsers(bool all = false);
     bool fileClose();
     bool fileSaveAs();
     void createTable();

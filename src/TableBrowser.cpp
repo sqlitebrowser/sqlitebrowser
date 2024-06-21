@@ -536,6 +536,15 @@ void TableBrowser::refresh()
         });
     }
 
+    // Delete settings of no-longer existent tables
+    for (auto it = m_settings.cbegin(); it != m_settings.cend(); ) {
+        if (!db->getTableByName(it->first)) {
+            it = m_settings.erase(it);
+        } else {
+            ++it;
+        }
+    }
+
     // Retrieve the stored data for this table if there is any. If there are no settings for this table,
     // this will insert and return a settings object with default values.
     const sqlb::ObjectIdentifier tablename = currentlyBrowsedTableName();
@@ -551,9 +560,9 @@ void TableBrowser::refresh()
     emit currentTableChanged(tablename);
 
     // Build query and apply settings
-   applyModelSettings(storedData, buildQuery(storedData, tablename));
-   applyViewportSettings(storedData, tablename);
-   emit updatePlot(ui->dataTable, m_model, &m_settings[tablename], true);
+    applyModelSettings(storedData, buildQuery(storedData, tablename));
+    applyViewportSettings(storedData, tablename);
+    emit updatePlot(ui->dataTable, m_model, &m_settings[tablename], true);
 }
 
 void TableBrowser::clearFilters()
