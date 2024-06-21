@@ -670,14 +670,14 @@ void MainWindow::populateStructure(const std::vector<sqlb::ObjectIdentifier>& ol
     ui->treeSchemaDock->resizeColumnToContents(DbStructureModel::ColumnName);
 }
 
-void MainWindow::refreshTableBrowsers()
+void MainWindow::refreshTableBrowsers(bool all)
 {
     QApplication::setOverrideCursor(Qt::WaitCursor);
     for(const auto& d : allTableBrowserDocks())
     {
         // When in the Browse Data tab update all docks. Otherwise just update the floating ones because they might
         // be visible even when another tab is active.
-        if(ui->mainTab->currentWidget() == ui->browser || d->isFloating())
+        if(all || ui->mainTab->currentWidget() == ui->browser || d->isFloating())
         {
             TableBrowser* t = d->tableBrowser();
             if(t)
@@ -3400,6 +3400,8 @@ void MainWindow::fileDetachTreeViewSelected(QTreeView* treeView)
     std::string attached_as = treeView->model()->data(treeView->currentIndex().sibling(treeView->currentIndex().row(), DbStructureModel::ColumnSchema), Qt::EditRole).toString().toStdString();
     if (db.detach(attached_as))
     {
+        db.updateSchema();
+        refreshTableBrowsers(/* all */ true);
         isProjectModified = true;
         refresh();
     }
