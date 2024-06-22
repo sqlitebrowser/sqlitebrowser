@@ -12,7 +12,7 @@ ProxyDialog::ProxyDialog(QWidget *parent) :
     ui->comboType->addItem(tr("None"), "none");
     ui->comboType->addItem(tr("System settings"), "system");
     ui->comboType->addItem(tr("HTTP"), "http");
-    ui->comboType->addItem(tr("Socks v5"), "socks5");
+    ui->comboType->addItem(tr("SOCKS5"), "socks5");
 
     // Load current settings
     ui->comboType->setCurrentIndex(ui->comboType->findData(Settings::getValue("proxy", "type").toString()));
