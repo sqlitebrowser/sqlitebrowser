@@ -285,7 +285,7 @@
     </message>
     <message>
         <location filename="../Application.cpp" line="275"/>
-        <source>Invalid option/non-existant file: %1</source>
+        <source>Invalid option/non-existent file: %1</source>
         <translation>Opsi tidak valid/berkas tidak ada: %1</translation>
     </message>
     <message>
@@ -4026,7 +4026,7 @@ Anda yakin?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="374"/>
-        <source>The database is currenctly busy.</source>
+        <source>The database is currently busy.</source>
         <translation>Basis data saat ini sibuk.</translation>
     </message>
     <message>
@@ -4320,8 +4320,8 @@ Anda yakin ingin menyimpan basis data?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="343"/>
-        <source>Shift+Alt+0</source>
-        <translation>Shift+Alt+0</translation>
+        <source>Alt+Shift+0</source>
+        <translation>Alt+Shift+0</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="352"/>
@@ -5632,8 +5632,8 @@ Harap periksa lagi.</translation>
     </message>
     <message>
         <location filename="../ProxyDialog.cpp" line="15"/>
-        <source>Socks v5</source>
-        <translation>Socks v5</translation>
+        <source>SOCKS5</source>
+        <translation>SOCKS5</translation>
     </message>
 </context>
 <context>
@@ -7377,7 +7377,7 @@ Tahan Shift%3 dan klik untuk melompat ke sana</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="613"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button creates a new record in the database. Hold the mouse button to open a pop-up menu of different options:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt;: insert a new record with default values in the database.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Insert Values...&lt;/span&gt;: open a dialog for entering values before they are inserted in the database. This allows to enter values acomplishing the different constraints. This dialog is also open if the &lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt; option fails due to these constraints.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button creates a new record in the database. Hold the mouse button to open a pop-up menu of different options:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt;: insert a new record with default values in the database.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Insert Values...&lt;/span&gt;: open a dialog for entering values before they are inserted in the database. This allows to enter values accomplishing the different constraints. This dialog is also open if the &lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt; option fails due to these constraints.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tombol ini membuat sebuah record baru dalam basis data. Tahan tombol tetikus untuk membuka sebuah menu pop-up dengan opsi-opsi berbeda:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Record Baru&lt;/span&gt;: menyisipkan sebuah record baru dengan nilai-nilai baku dalam basis data.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Sisipkan Nilai...&lt;/span&gt;: membuka suatu dialog untuk memasukkan nilai-nilai sebelum mereka disisipkan dalam basis data. Ini memungkinkan memasukkan nilai-nilai yang memenuhi konstrain lain. Dialog ini juga dibuka bila opsi &lt;span style=&quot; font-weight:600;&quot;&gt;Record Baru&lt;/span&gt; gagal karena konstrain ini.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -7459,8 +7459,8 @@ Tahan Shift%3 dan klik untuk melompat ke sana</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="717"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This popup menu provides the following options applying to the currently browsed and filtered table:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Export to CSV: this option exports the data of the browsed table as currently displayed (after filters, display formats and order column) to a CSV file.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Save as view: this option saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Menu popup ini menyediakan opsi-opsi berikut yang diterapkan ke tabel yang saat ini diramban dan disaring:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Ekspor ke CSV: opsi ini mengekspor data dari tabel yang diramban sebagaimana saat ini ditampilkan (setelah penyaring, format tampilan, dan urutan kolom) ke sebuah berkas CSV.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Simpan sebagai view: opsi ini menyimpan pengaturan saat ini dari tabel yang diramban (penyaring, format tampilan, dan urutan kolom) sebagai sebuah view SQL yang nanti akan dapat Anda ramban atau pakai dalam pernyataan SQL.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This pop-up menu provides the following options applying to the currently browsed and filtered table:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Export to CSV: this option exports the data of the browsed table as currently displayed (after filters, display formats and order column) to a CSV file.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Save as view: this option saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Menu pop-up ini menyediakan opsi-opsi berikut yang diterapkan ke tabel yang saat ini diramban dan disaring:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Ekspor ke CSV: opsi ini mengekspor data dari tabel yang diramban sebagaimana saat ini ditampilkan (setelah penyaring, format tampilan, dan urutan kolom) ke sebuah berkas CSV.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Simpan sebagai view: opsi ini menyimpan pengaturan saat ini dari tabel yang diramban (penyaring, format tampilan, dan urutan kolom) sebagai sebuah view SQL yang nanti akan dapat Anda ramban atau pakai dalam pernyataan SQL.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="722"/>

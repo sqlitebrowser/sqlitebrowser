@@ -287,7 +287,7 @@
     </message>
     <message>
         <location filename="../Application.cpp" line="275"/>
-        <source>Invalid option/non-existant file: %1</source>
+        <source>Invalid option/non-existent file: %1</source>
         <translation>Opțiune invalidă/fișier inexistent: %1</translation>
     </message>
     <message>
@@ -3885,8 +3885,8 @@ Puteți să glisați instrucțiunile SQL din coloana Schemă și să le plasați
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="343"/>
-        <source>Shift+Alt+0</source>
-        <translation>Shift+Alt+0</translation>
+        <source>Alt+Shift+0</source>
+        <translation>Alt+Shift+0</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="352"/>
@@ -3905,8 +3905,7 @@ Puteți să glisați instrucțiunile SQL din coloana Schemă și să le plasați
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="374"/>
-        <source>The database is currenctly busy.</source>
-        <translatorcomment>misspelling &apos;currenctly&apos; -&gt; &apos;currently&apos;</translatorcomment>
+        <source>The database is currently busy.</source>
         <translation>Baza de date este momentan ocupată.</translation>
     </message>
     <message>
@@ -5670,8 +5669,8 @@ Vă rugăm să verificați din nou.</translation>
     </message>
     <message>
         <location filename="../ProxyDialog.cpp" line="15"/>
-        <source>Socks v5</source>
-        <translation>Socks v5</translation>
+        <source>SOCKS5</source>
+        <translation>SOCKS5</translation>
     </message>
 </context>
 <context>
@@ -7382,8 +7381,7 @@ Hold %3Shift and click to jump there</source>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="613"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button creates a new record in the database. Hold the mouse button to open a pop-up menu of different options:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt;: insert a new record with default values in the database.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Insert Values...&lt;/span&gt;: open a dialog for entering values before they are inserted in the database. This allows to enter values acomplishing the different constraints. This dialog is also open if the &lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt; option fails due to these constraints.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translatorcomment>misspelling &apos;acomplishing&apos; -&gt; &apos;accomplishing&apos;</translatorcomment>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button creates a new record in the database. Hold the mouse button to open a pop-up menu of different options:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt;: insert a new record with default values in the database.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Insert Values...&lt;/span&gt;: open a dialog for entering values before they are inserted in the database. This allows to enter values accomplishing the different constraints. This dialog is also open if the &lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt; option fails due to these constraints.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Acest buton creează o înregistrare nouă în baza de date. Țineți apăsat butonul mouse-ului pentru a deschide un meniu pop-up cu diferite opțiuni:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Înregistrare Nouă&lt;/span&gt;: inserează o înregistrare nouă cu valori implicite în baza de date.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Inserare Valori...&lt;/span&gt;: deschide un dialog pentru introducerea valorilor înainte ca acestea să fie inserate în baza de date. Asta permite introducerea valorilor care îndeplinesc diferitele constrângeri. Acest dialog este, de asemenea, deschis dacă opțiunea &lt;span style=&quot; font-weight:600;&quot;&gt;Înregistrare Nouă&lt;/span&gt; nu reușește din cauza acestor constrângeri.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -7481,7 +7479,7 @@ Hold %3Shift and click to jump there</source>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="717"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This popup menu provides the following options applying to the currently browsed and filtered table:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Export to CSV: this option exports the data of the browsed table as currently displayed (after filters, display formats and order column) to a CSV file.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Save as view: this option saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This pop-up menu provides the following options applying to the currently browsed and filtered table:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Export to CSV: this option exports the data of the browsed table as currently displayed (after filters, display formats and order column) to a CSV file.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Save as view: this option saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Acest meniu pop-up oferă următoarele opțiuni care se aplică tabelului navigat și filtrat în prezent:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Exportă în CSV: această opțiune exportă datele din tabelul navigat, așa cum este afișate în prezent (după filtre, formate de afișare și coloană de ordine) într-un fișier CSV.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Salvează ca vedere: această opțiune salvează setarea curentă a tabelului navigat (filtre, formate de afișare și coloană de ordine) ca vedere SQL pe care o puteți răsfoi ulterior sau utiliza în instrucțiuni SQL.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>

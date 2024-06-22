@@ -341,7 +341,7 @@ void MainWindow::init()
             ui->viewProjectToolbarAction->setChecked(!ui->toolbarProject->isHidden());
         });
     QAction* simplifyLayoutAction = layoutMenu->addAction(tr("Simplify Window Layout"));
-    simplifyLayoutAction->setShortcut(QKeySequence(tr("Shift+Alt+0")));
+    simplifyLayoutAction->setShortcut(QKeySequence(tr("Alt+Shift+0")));
     connect(simplifyLayoutAction, &QAction::triggered, this, [=]() {
             ui->viewMenu->findChild<QAction *>(ui->pragmas->accessibleName())->activate(QAction::Trigger);
             ui->dockLog->hide();
@@ -372,7 +372,7 @@ void MainWindow::init()
     statusBusyLabel = new QLabel(ui->statusbar);
     statusBusyLabel->setEnabled(false);
     statusBusyLabel->setVisible(false);
-    statusBusyLabel->setToolTip(tr("The database is currenctly busy."));
+    statusBusyLabel->setToolTip(tr("The database is currently busy."));
     ui->statusbar->addPermanentWidget(statusBusyLabel);
 
     statusStopButton = new QToolButton(ui->statusbar);

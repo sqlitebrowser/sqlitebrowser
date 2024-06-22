@@ -285,7 +285,7 @@
     </message>
     <message>
         <location filename="../Application.cpp" line="275"/>
-        <source>Invalid option/non-existant file: %1</source>
+        <source>Invalid option/non-existent file: %1</source>
         <translation>Option invalide ou fichier %1 inexistant</translation>
     </message>
     <message>
@@ -3845,7 +3845,7 @@ Vous pouvez faire glisser les instructions SQL d&apos;une ligne d&apos;objet et 
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="374"/>
-        <source>The database is currenctly busy.</source>
+        <source>The database is currently busy.</source>
         <translation>La base de données est actuellement occupée.</translation>
     </message>
     <message>
@@ -3980,7 +3980,7 @@ Si vous répondez non, nous essaierons d&apos;importer les données du fichier S
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="343"/>
-        <source>Shift+Alt+0</source>
+        <source>Alt+Shift+0</source>
         <translation>Maj+Alt+0</translation>
     </message>
     <message>
@@ -5649,8 +5649,8 @@ Veuillez vérifier à nouveau.</translation>
     </message>
     <message>
         <location filename="../ProxyDialog.cpp" line="15"/>
-        <source>Socks v5</source>
-        <translation>Socks v5</translation>
+        <source>SOCKS5</source>
+        <translation>SOCKS5</translation>
     </message>
 </context>
 <context>
@@ -7397,7 +7397,7 @@ Appuyez simultanément sur %3+Maj et cliquez pour arriver ici</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="613"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button creates a new record in the database. Hold the mouse button to open a pop-up menu of different options:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt;: insert a new record with default values in the database.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Insert Values...&lt;/span&gt;: open a dialog for entering values before they are inserted in the database. This allows to enter values acomplishing the different constraints. This dialog is also open if the &lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt; option fails due to these constraints.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button creates a new record in the database. Hold the mouse button to open a pop-up menu of different options:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt;: insert a new record with default values in the database.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Insert Values...&lt;/span&gt;: open a dialog for entering values before they are inserted in the database. This allows to enter values accomplishing the different constraints. This dialog is also open if the &lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt; option fails due to these constraints.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ce bouton crée un nouvel enregistrement dans la base de données. Maintenez le bouton de la souris enfoncé pour ouvrir un menu contextuel de différentes options :&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Nouvel enregistrement&lt;/span&gt; : Insère un nouvel enregistrement avec les valeurs par défaut dans la base de données.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Insérer des valeurs...&lt;/span&gt; : ouvre une boite de dialogue pour saisir des valeurs avant leur insertion dans la base de données. Ceci permet de saisir des valeurs correspondant aux différentes contraintes. Cette boîte de dialogue est également ouverte si l&apos;option &lt;span style=&quot; font-weight:600;&quot;&gt;Nouvel enregistrement &lt;/span&gt; est en erreur à cause de ces contraintes.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -7479,7 +7479,7 @@ Appuyez simultanément sur %3+Maj et cliquez pour arriver ici</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="717"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This popup menu provides the following options applying to the currently browsed and filtered table:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Export to CSV: this option exports the data of the browsed table as currently displayed (after filters, display formats and order column) to a CSV file.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Save as view: this option saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This pop-up menu provides the following options applying to the currently browsed and filtered table:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Export to CSV: this option exports the data of the browsed table as currently displayed (after filters, display formats and order column) to a CSV file.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Save as view: this option saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ce menu déroulant fournit les options suivantes s&apos;appliquant à la table actuellement parcourue et filtrée:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Exporter au format CSV : cette option exporte les données de la table parcourue telles qu&apos;elles sont actuellement affichées (après filtres, formats d&apos;affichage et colonne d&apos;ordre) vers un fichier CSV.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Enregistrer comme vue : cette option permet d&apos;enregistrer les paramètres actuels de la table parcourue (filtres, formats d&apos;affichage et colonne d&apos;ordre) dans une vue SQL que vous pourrez ensuite parcourir ou utiliser dans les instructions SQL.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>

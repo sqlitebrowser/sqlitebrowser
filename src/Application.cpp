@@ -272,7 +272,7 @@ Application::Application(int& argc, char** argv) :
             if(QFile::exists(arguments().at(i)))
                 fileToOpen = arguments().at(i);
             else
-                qWarning() << qPrintable(tr("Invalid option/non-existant file: %1").arg(arguments().at(i)));
+                qWarning() << qPrintable(tr("Invalid option/non-existent file: %1").arg(arguments().at(i)));
         }
     }
 

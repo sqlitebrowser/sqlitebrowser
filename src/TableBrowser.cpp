@@ -1332,7 +1332,7 @@ void TableBrowser::addRecord()
         selectTableLine(row);
     } else {
         // Error inserting empty row.
-        // User has to provide values acomplishing the constraints. Open Add Record Dialog.
+        // User has to provide values accomplishing the constraints. Open Add Record Dialog.
         insertValues();
     }
     updateRecordsetLabel();
