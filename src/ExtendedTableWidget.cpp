@@ -590,6 +590,7 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
     const QString rowSepText = "\n";
 #endif
 
+    int firstColumn = *colsInIndexes.begin();
     QString sqlInsertStatement;
     // Table headers
     if (withHeaders || inSQL) {
@@ -597,7 +598,6 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
             sqlInsertStatement = QString("INSERT INTO %1 (").arg(QString::fromStdString(m->currentTableName().toString()));
         else
             htmlResult.append("<tr><th>");
-        int firstColumn = *colsInIndexes.begin();
 
         for(int col : colsInIndexes) {
             QByteArray headerText = model()->headerData(col, Qt::Horizontal, Qt::EditRole).toByteArray();
@@ -628,7 +628,7 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
     // to support non-rectangular selections.
     for(const int row : rowsInIndexes) {
 
-        // Beggining of row
+        // Beginning of row
         if (inSQL)
             result.append(sqlInsertStatement);
         else
@@ -637,8 +637,9 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
         for(const int column : colsInIndexes) {
 
             const QModelIndex index = indices.first().sibling(row, column);
+            const bool isContained = indices.contains(index);
 
-            if (index.column() != *colsInIndexes.begin()) {
+            if (column != firstColumn) {
                 // Add text separators
                 if (inSQL)
                     result.append(", ");
@@ -646,7 +647,7 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
                     result.append(fieldSepText);
             }
 
-            if(indices.contains(index)) {
+            if(isContained) {
                 QFont font;
                 font.fromString(index.data(Qt::FontRole).toString());
 
@@ -666,7 +667,7 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
                 htmlResult.append("<td>");
             }
             QImage img;
-            const QVariant bArrdata = indices.contains(index) ? index.data(Qt::EditRole) : QVariant();
+            const QVariant bArrdata = isContained ? index.data(Qt::EditRole) : QVariant();
 
             if (bArrdata.isNull()) {
                 // NULL data: NULL in SQL, empty in HTML or text.
@@ -708,11 +709,10 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
 
         // End of row
         if (inSQL)
-            result.append(QString(");%1").arg(rowSepText));
-        else {
-            result.append(rowSepText);
+            result.append(");");
+        else
             htmlResult.append("</tr>");
-        }
+        result.append(rowSepText);
     }
 
     if (!inSQL) {
