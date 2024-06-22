@@ -506,9 +506,10 @@ void ExtendedTableWidget::reloadSettings()
 
 void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMimeData* mimeData, const bool withHeaders, const bool inSQL)
 {
+    QApplication::setOverrideCursor(Qt::WaitCursor);
     QModelIndexList indices = fromIndices;
 
-    // Remove all indices from hidden columns, because if we don't we might copy data from hidden columns as well which is very
+    // Remove all indices from hidden columns, because if we don't, we might copy data from hidden columns as well which is very
     // unintuitive; especially copying the rowid column when selecting all columns of a table is a problem because pasting the data
     // won't work as expected.
     QMutableListIterator<QModelIndex> it(indices);
@@ -558,11 +559,13 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
     }
     m_buffer.push_back(lst);
 
-    QString sqlResult;
+    // TSV text or SQL
     QString result;
-    QString htmlResult = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">";
-    htmlResult.append("<html><head><meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">");
-    htmlResult.append("<title></title>");
+
+    // HTML text
+    QString htmlResult = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">"
+        "<html><head><meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">"
+        "<title></title>";
 
     // The generator-stamp is later used to know whether the data in the system clipboard is still ours.
     // In that case we will give precedence to our internal copy buffer.
@@ -580,8 +583,6 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
         rowsInIndexes.insert(idx.row());
     }
 
-    int currentRow = indices.first().row();
-
     const QString fieldSepText = "\t";
 #ifdef Q_OS_WIN
     const QString rowSepText = "\r\n";
@@ -589,121 +590,137 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
     const QString rowSepText = "\n";
 #endif
 
-    QString sqlInsertStatement = QString("INSERT INTO %1 (").arg(QString::fromStdString(m->currentTableName().toString()));
+    QString sqlInsertStatement;
     // Table headers
     if (withHeaders || inSQL) {
-        htmlResult.append("<tr><th>");
+        if (inSQL)
+            sqlInsertStatement = QString("INSERT INTO %1 (").arg(QString::fromStdString(m->currentTableName().toString()));
+        else
+            htmlResult.append("<tr><th>");
         int firstColumn = *colsInIndexes.begin();
 
         for(int col : colsInIndexes) {
             QByteArray headerText = model()->headerData(col, Qt::Horizontal, Qt::EditRole).toByteArray();
             if (col != firstColumn) {
-                result.append(fieldSepText);
-                htmlResult.append("</th><th>");
-                sqlInsertStatement.append(", ");
+                if (inSQL)
+                    sqlInsertStatement.append(", ");
+                else {
+                    result.append(fieldSepText);
+                    htmlResult.append("</th><th>");
+                }
             }
-
-            result.append(headerText);
-            htmlResult.append(headerText);
-            sqlInsertStatement.append(sqlb::escapeIdentifier(headerText));
+            if (inSQL)
+                sqlInsertStatement.append(sqlb::escapeIdentifier(headerText));
+            else {
+                result.append(headerText);
+                htmlResult.append(headerText);
+            }
         }
-        result.append(rowSepText);
-        htmlResult.append("</th></tr>");
-        sqlInsertStatement.append(") VALUES (");
+        if (inSQL)
+            sqlInsertStatement.append(") VALUES (");
+        else {
+            result.append(rowSepText);
+            htmlResult.append("</th></tr>");
+        }
     }
 
     // Iterate over rows x cols checking if the index actually exists when needed, in order
     // to support non-rectangular selections.
     for(const int row : rowsInIndexes) {
+
+        // Beggining of row
+        if (inSQL)
+            result.append(sqlInsertStatement);
+        else
+            htmlResult.append("<tr>");
+
         for(const int column : colsInIndexes) {
 
             const QModelIndex index = indices.first().sibling(row, column);
-            QString style;
+
+            if (index.column() != *colsInIndexes.begin()) {
+                // Add text separators
+                if (inSQL)
+                    result.append(", ");
+                else
+                    result.append(fieldSepText);
+            }
+
             if(indices.contains(index)) {
                 QFont font;
                 font.fromString(index.data(Qt::FontRole).toString());
-                const QString fontStyle(font.italic() ? "italic" : "normal");
-                const QString fontWeigth(font.bold() ? "bold" : "normal");
-                const QString fontDecoration(font.underline() ? " text-decoration: underline;" : "");
-                const QColor bgColor(index.data(Qt::BackgroundRole).toString());
-                const QColor fgColor(index.data(Qt::ForegroundRole).toString());
+
                 const Qt::Alignment align(index.data(Qt::TextAlignmentRole).toInt());
                 const QString textAlign(CondFormat::alignmentTexts().at(CondFormat::fromCombinedAlignment(align)).toLower());
-                style = QString("style=\"font-family: '%1'; font-size: %2pt; font-style: %3; font-weight: %4;%5 "
-                                "background-color: %6; color: %7; text-align: %8\"").arg(
-                                    font.family().toHtmlEscaped(),
-                                    QString::number(font.pointSize()),
-                                    fontStyle,
-                                    fontWeigth,
-                                    fontDecoration,
-                                    bgColor.name(),
-                                    fgColor.name(),
-                                    textAlign);
-            }
-
-            // Separators. For first cell, only opening table row tags must be added for the HTML and nothing for the text version.
-            if (index.row() == *rowsInIndexes.begin() && index.column() == *colsInIndexes.begin()) {
-                htmlResult.append(QString("<tr><td %1>").arg(style));
-                sqlResult.append(sqlInsertStatement);
-            } else if (index.row() != currentRow) {
-                result.append(rowSepText);
-                htmlResult.append(QString("</td></tr><tr><td %1>").arg(style));
-                sqlResult.append(");" + rowSepText + sqlInsertStatement);
+                htmlResult.append(QString("<td style=\"font-family:'%1';font-size:%2pt;font-style:%3;font-weight: %4;%5 "
+                                "background-color:%6;color:%7;text-align:%8\">").arg(
+                                    font.family().toHtmlEscaped(), // font-family
+                                    QString::number(font.pointSize()), // font-size
+                                    font.italic() ? "italic" : "normal", // font-style,
+                                    font.bold() ? "bold" : "normal", // font-weigth,
+                                    font.underline() ? " text-decoration: underline;" : "", // text-decoration,
+                                    index.data(Qt::BackgroundRole).toString(), // background-color
+                                    index.data(Qt::ForegroundRole).toString(), // color
+                                    textAlign));
             } else {
-                result.append(fieldSepText);
-                htmlResult.append(QString("</td><td %1>").arg(style));
-                sqlResult.append(", ");
+                htmlResult.append("<td>");
             }
-
-            currentRow = index.row();
-
             QImage img;
-            QVariant bArrdata = indices.contains(index) ? index.data(Qt::EditRole) : QVariant();
+            const QVariant bArrdata = indices.contains(index) ? index.data(Qt::EditRole) : QVariant();
 
-            // Table cell data: image? Store it as an embedded image in HTML
-            if (!inSQL && img.loadFromData(bArrdata.toByteArray()))
-            {
+            if (bArrdata.isNull()) {
+                // NULL data: NULL in SQL, empty in HTML or text.
+                if (inSQL) result.append("NULL");
+            } else if(!m->isBinary(index)) {
+                // Text data
+                QByteArray text = bArrdata.toByteArray();
+
+                if (inSQL)
+                    result.append(sqlb::escapeString(text));
+                else {
+                    result.append(text);
+                    // Table cell data: text
+                    if (text.contains('\n') || text.contains('\t'))
+                        htmlResult.append(QString("<pre>%1</pre>").arg(QString(text).toHtmlEscaped()));
+                    else
+                        htmlResult.append(QString(text).toHtmlEscaped());
+                }
+            } else if (inSQL) {
+                // Table cell data: binary in SQL. Save as BLOB literal.
+                result.append(QString("X'%1'").arg(QString(bArrdata.toByteArray().toHex())));
+            } else if (img.loadFromData(bArrdata.toByteArray())) {
+                // Table cell data: image. Store it as an embedded image in HTML
                 QByteArray ba;
                 QBuffer buffer(&ba);
                 buffer.open(QIODevice::WriteOnly);
                 img.save(&buffer, "PNG");
                 buffer.close();
 
-                QString imageBase64 = ba.toBase64();
-                htmlResult.append("<img src=\"data:image/png;base64,");
-                htmlResult.append(imageBase64);
-                result.append(QString());
-                htmlResult.append("\" alt=\"Image\">");
-            } else {
-                if (bArrdata.isNull()) {
-                    sqlResult.append("NULL");
-                } else if(!m->isBinary(index)) {
-                    QByteArray text = bArrdata.toByteArray();
-
-                    // Table cell data: text
-                    if (text.contains('\n') || text.contains('\t'))
-                        htmlResult.append("<pre>" + QString(text).toHtmlEscaped() + "</pre>");
-                    else
-                        htmlResult.append(QString(text).toHtmlEscaped());
-
-                    result.append(text);
-                    sqlResult.append(sqlb::escapeString(text));
-                } else
-                    // Table cell data: binary. Save as BLOB literal in SQL
-                    sqlResult.append( "X'" + bArrdata.toByteArray().toHex() + "'" );
+                htmlResult.append(QString("<img src=\"data:image/png;base64,%1\" alt=\"Image\">")
+                                  .arg(QString(ba.toBase64())));
+                result.append(index.data(Qt::DisplayRole).toByteArray());
             }
+
+            // End of column
+            // Add HTML cell terminator
+            htmlResult.append("</td>");
+        }
+
+        // End of row
+        if (inSQL)
+            result.append(QString(");%1").arg(rowSepText));
+        else {
+            result.append(rowSepText);
+            htmlResult.append("</tr>");
         }
     }
 
-    sqlResult.append(");");
-
-    if ( inSQL )
-    {
-        mimeData->setText(sqlResult);
-    } else {
-        mimeData->setHtml(htmlResult + "</td></tr></table></body></html>");
-        mimeData->setText(result);
+    if (!inSQL) {
+        htmlResult.append("</table></body></html>");
+        mimeData->setHtml(htmlResult);
     }
+    mimeData->setText(result);
+    QApplication::restoreOverrideCursor();
 }
 
 void ExtendedTableWidget::copy(const bool withHeaders, const bool inSQL )
