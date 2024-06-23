@@ -26,6 +26,7 @@
 #include <QComboBox>
 #include <QPainter>
 #include <QShortcut>
+#include <QProgressDialog>
 
 #include <limits>
 
@@ -506,7 +507,6 @@ void ExtendedTableWidget::reloadSettings()
 
 void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMimeData* mimeData, const bool withHeaders, const bool inSQL)
 {
-    QApplication::setOverrideCursor(Qt::WaitCursor);
     QModelIndexList indices = fromIndices;
 
     // Remove all indices from hidden columns, because if we don't, we might copy data from hidden columns as well which is very
@@ -624,6 +624,11 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
         }
     }
 
+    QProgressDialog progress(this);
+    progress.setWindowModality(Qt::ApplicationModal);
+    progress.setRange(*rowsInIndexes.begin(), *rowsInIndexes.end());
+    progress.setMinimumDuration(2000);
+
     // Iterate over rows x cols checking if the index actually exists when needed, in order
     // to support non-rectangular selections.
     for(const int row : rowsInIndexes) {
@@ -713,6 +718,12 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
         else
             htmlResult.append("</tr>");
         result.append(rowSepText);
+
+        progress.setValue(row);
+        // Abort the operation if the user pressed ESC key or Cancel button
+        if (progress.wasCanceled()) {
+            return;
+        }
     }
 
     if (!inSQL) {
@@ -720,7 +731,6 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
         mimeData->setHtml(htmlResult);
     }
     mimeData->setText(result);
-    QApplication::restoreOverrideCursor();
 }
 
 void ExtendedTableWidget::copy(const bool withHeaders, const bool inSQL )
