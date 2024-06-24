@@ -879,6 +879,9 @@ bool DBBrowserDB::dump(const QString& filePath,
 
         QProgressDialog progress(tr("Exporting database to SQL file..."),
                                  tr("Cancel"), 0, static_cast<int>(numRecordsTotal));
+        // Disable context help button on Windows
+        progress.setWindowFlags(progress.windowFlags()
+                                & ~Qt::WindowContextHelpButtonHint);
         progress.setWindowModality(Qt::ApplicationModal);
         progress.show();
         qApp->processEvents();
@@ -1112,6 +1115,9 @@ bool DBBrowserDB::executeMultiSQL(QByteArray query, bool dirty, bool log)
     QProgressDialog progress(tr("Executing SQL..."),
                              tr("Cancel"), 0, 100);
     progress.setWindowModality(Qt::ApplicationModal);
+    // Disable context help button on Windows
+    progress.setWindowFlags(progress.windowFlags()
+                            & ~Qt::WindowContextHelpButtonHint);
     progress.show();
 
     // Execute the statement by looping until SQLite stops giving back a tail string

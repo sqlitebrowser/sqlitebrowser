@@ -626,6 +626,9 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
 
     QProgressDialog progress(this);
     progress.setWindowModality(Qt::ApplicationModal);
+    // Disable context help button on Windows
+    progress.setWindowFlags(progress.windowFlags()
+                            & ~Qt::WindowContextHelpButtonHint);
     progress.setRange(*rowsInIndexes.begin(), *rowsInIndexes.end());
     progress.setMinimumDuration(2000);
 

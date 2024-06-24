@@ -151,6 +151,9 @@ public:
           totalFileSize(filesize)
     {
         m_pProgressDlg->setWindowModality(Qt::ApplicationModal);
+        // Disable context help button on Windows
+        m_pProgressDlg->setWindowFlags(m_pProgressDlg->windowFlags()
+                                      & ~Qt::WindowContextHelpButtonHint);
     }
 
     CSVImportProgress(const CSVImportProgress&) = delete;

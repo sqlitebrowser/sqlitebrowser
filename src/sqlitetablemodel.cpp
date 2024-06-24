@@ -997,6 +997,9 @@ bool SqliteTableModel::completeCache () const
     progress.setCancelButton(cancelButton);
 
     progress.setWindowModality(Qt::ApplicationModal);
+    // Disable context help button on Windows
+    progress.setWindowFlags(progress.windowFlags()
+                            & ~Qt::WindowContextHelpButtonHint);
     progress.show();
 
     waitUntilIdle();

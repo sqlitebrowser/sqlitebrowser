@@ -354,6 +354,9 @@ void RemoteNetwork::prepareProgressDialog(QNetworkReply* reply, bool upload, con
     if(!m_progress)
         m_progress = new QProgressDialog();
     m_progress->reset();
+    // Disable context help button on Windows
+    m_progress->setWindowFlags(m_progress->windowFlags()
+                            & ~Qt::WindowContextHelpButtonHint);
     m_progress->setWindowModality(Qt::NonModal);
     m_progress->setCancelButtonText(tr("Cancel"));
 
