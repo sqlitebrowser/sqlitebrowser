@@ -147,6 +147,10 @@ void ExtendedScintilla::reloadCommonSettings()
         setMarginsForegroundColor(QColor(0x00, 0x00, 0x00));
         break;
     }
+    // Reuse color of current line background in fold margin.
+    QColor currentLineColor (Settings::getValue("syntaxhighlighter", "currentline_colour").toString());
+    setFoldMarginColors(currentLineColor, currentLineColor);
+
     setPaper(Settings::getValue("syntaxhighlighter", "background_colour").toString());
     setColor(Settings::getValue("syntaxhighlighter", "foreground_colour").toString());
     setMatchedBraceBackgroundColor(Settings::getValue("syntaxhighlighter", "highlight_colour").toString());
