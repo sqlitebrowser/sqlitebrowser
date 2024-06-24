@@ -3281,6 +3281,9 @@ void MainWindow::editEncryption()
         // process might take some time.
         QProgressDialog progress(this);
         progress.setCancelButton(nullptr);
+        // Disable context help button on Windows
+        progress.setWindowFlags(progress.windowFlags()
+                                & ~Qt::WindowContextHelpButtonHint);
         progress.setWindowModality(Qt::ApplicationModal);
         progress.show();
         qApp->processEvents();
