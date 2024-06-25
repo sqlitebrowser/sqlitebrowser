@@ -1,7 +1,7 @@
 # Security Policy
 
 ## Reporting a Vulnerability
-We take security bugs in SQLitebrowser and related project seriously.  
+We take security bugs in DB Browser for SQLite and related projects seriously.  
 We appreciate your efforts to responsibly disclose your findings, and will make every effort to acknowledge your contributions.
 
 We kindly ask that you consider reporting a security vulnerability by doing one of the following:
