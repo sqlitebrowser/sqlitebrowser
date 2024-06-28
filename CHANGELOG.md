@@ -18,7 +18,8 @@ See the [commit history](https://github.com/sqlitebrowser/sqlitebrowser/commits/
 - **General**
 	- Update to SQLite version 3.46.0
 	- Integration with [dbhub.io](https://dbhub.io)
-	- macOS ARM version 
+	- macOS ARM version
+   	- Sign Windows builds with [SignPath.io](https://SignPath.io)
 
 - **Appearance and GUI Enhancements**
 	- Add .NET DateTime.Ticks to date display format 
