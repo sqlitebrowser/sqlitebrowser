@@ -74,18 +74,8 @@ done
 mv build/*.app installer/macos
 
 # Create the DMG
-export DATE=$(date +%Y%m%d)
-
-if [ "$SQLCIPHER" = "1" ]; then
-    sed -i "" 's/"DB Browser for SQLCipher Nightly.app"/"DB Browser for SQLCipher-v3.13.0-rc3.app"/' installer/macos/sqlcipher-nightly.json
-    TARGET="DB.Browser.for.SQLCipher-v3.13.0-rc3.dmg"
-    appdmg --quiet installer/macos/sqlcipher-nightly.json "$TARGET"
-else
-    # Continuous without SQLCipher
-    sed -i "" 's/"DB Browser for SQLite Nightly.app"/"DB Browser for SQLite-v3.13.0-rc3.app"/' installer/macos/nightly.json
-    TARGET="DB.Browser.for.SQLite-v3.13.0-rc3.dmg"
-    appdmg --quiet installer/macos/nightly.json "$TARGET"
-fi
+TARGET="DB.Browser.for.SQLite-v3.13.0.dmg"
+appdmg --quiet installer/macos/nightly.json "$TARGET"
 
 codesign --sign "$DEV_ID" --verbose --options=runtime --timestamp "$TARGET"
 codesign -vvv --deep --strict --verbose=4 "$TARGET"

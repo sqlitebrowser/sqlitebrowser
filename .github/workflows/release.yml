@@ -4,7 +4,7 @@ on:
     workflow_call:
 
 env:
-  tag_name: "v3.13.0-rc3"
+  tag_name: "v3.13.0"
 
 jobs:
   release:
@@ -24,6 +24,11 @@ jobs:
         with:
           path: target
 
+      - name: Clear artifacts
+        uses: geekyeggo/delete-artifact@v5
+        with:
+          name: build-artifacts-*
+
       - name: Remove unsigned Windows build
         run: rm -rfv target/*unsigned*
 
@@ -39,5 +44,6 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: target/*
+          draft: true
           prerelease: true
           tag_name: ${{ env.tag_name }}

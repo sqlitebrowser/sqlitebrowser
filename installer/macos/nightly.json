@@ -1,6 +1,6 @@
 {
   "title": "Install DB4S",
-  "icon": "macapp-nightly.icns",
+  "icon": "macapp.icns",
   "icon-size": 128,
   "background": "background.png",
   "format": "ULFO",
@@ -11,7 +11,7 @@
   	}
   },
   "contents": [
-    { "x": 90, "y": 180, "type": "file", "path": "DB Browser for SQLite Nightly.app" },
+    { "x": 90, "y": 180, "type": "file", "path": "DB Browser for SQLite.app" },
     { "x": 395, "y": 180, "type": "link", "path": "/Applications" },
 
     { "x": 90, "y": 380, "type": "position", "path": ".background" },
