@@ -17,8 +17,9 @@ jobs:
 
       - name: Install dependencies
         run: |
+          sudo add-apt-repository universe
           sudo apt update
-          sudo apt install libqcustomplot-dev libqscintilla2-qt5-dev libqt5svg5 libsqlcipher-dev libsqlite3-dev qttools5-dev
+          sudo apt install libfuse2t64 libqcustomplot-dev libqscintilla2-qt5-dev libqt5svg5 libsqlcipher-dev libsqlite3-dev qttools5-dev
 
       - name: Configure build
         run: |
