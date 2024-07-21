@@ -4,7 +4,6 @@
 [![Wiki][wiki-img]][wiki]
 [![Patreon][patreon-img]][patreon]<br>
 [![C/C++ CI][ghaction-img]][ghaction]
-[![AppVeyor CI][appveyor-img]][appveyor]
 [![Qt][qt-img]][qt]<br>
 [![CodeQL](https://github.com/sqlitebrowser/sqlitebrowser/actions/workflows/codeql.yml/badge.svg)](https://github.com/sqlitebrowser/sqlitebrowser/actions/workflows/codeql.yml)
 [![Coverity][coverity-img]][coverity]<br>
@@ -407,6 +406,3 @@ See the [LICENSE](LICENSE) file for licensing information.
 
   [ghaction-img]: https://github.com/sqlitebrowser/sqlitebrowser/actions/workflows/cppcmake.yml/badge.svg
   [ghaction]: https://github.com/sqlitebrowser/sqlitebrowser/actions/workflows/cppcmake.yml
-
-  [appveyor-img]: https://ci.appveyor.com/api/projects/status/github/sqlitebrowser/sqlitebrowser?svg=true
-  [appveyor]: https://github.com/sqlitebrowser/sqlitebrowser/blob/master/appveyor.yml
