@@ -38,8 +38,8 @@
   - [Snap packages](#snap-packages)
       - [Snap Nightlies](#snap-nightlies)
       - [Snap Stable](#snap-stable)
-  - [Nix Package](#nix-packages)
-  	- [Flox](#flox)
+  - [Nix Packages](#nix-packages)
+    - [Flox](#flox)
   - [Compiling](#compiling)
   - [X (Known as Twitter)](#x-known-as-twitter)
   - [Website](#website)
@@ -309,6 +309,7 @@ Follow us on X: https://x.com/sqlitebrowser
 
 ## Releases
 
+* [Version 3.13.0 released](https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/v3.13.0) - 2024-07-23
 * [Version 3.12.2 released](https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/v3.12.2) - 2021-05-18
 * [Version 3.12.1 released](https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/v3.12.1) - 2020-11-09
 * [Version 3.12.0 released](https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/v3.12.0) - 2020-06-16
