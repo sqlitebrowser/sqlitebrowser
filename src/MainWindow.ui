@@ -194,7 +194,7 @@ You can drag SQL statements from an object row and drop them into other applicat
             <item row="0" column="0">
              <widget class="QLabel" name="labelPragmaAutoVacuum">
               <property name="text">
-               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Auto Vacuum &lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_auto_vacuum&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Auto Vacuum &lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_auto_vacuum&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="openExternalLinks">
                <bool>true</bool>
@@ -229,7 +229,7 @@ You can drag SQL statements from an object row and drop them into other applicat
             <item row="1" column="0">
              <widget class="QLabel" name="labelPragmaAutomaticIndex">
               <property name="text">
-               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Automatic Index &lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_automatic_index&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Automatic Index &lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_automatic_index&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="openExternalLinks">
                <bool>true</bool>

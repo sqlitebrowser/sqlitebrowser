@@ -20,6 +20,8 @@ and this project adheres to
 ### Fixed
 
 - _none_
+#### etc.
+- Replace `http` with `https` in the `AboutDialog` and `MainWindow`.
 
 ### Removed
 
