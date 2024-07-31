@@ -94,6 +94,7 @@ UndoStack::UndoStack(Chunks * chunks, QObject * parent)
 {
     _chunks = chunks;
     _parent = parent;
+    this->setUndoLimit(1000);
 }
 
 void UndoStack::insert(qint64 pos, char c)

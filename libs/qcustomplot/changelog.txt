@@ -1,0 +1,629 @@
+#### Version 2.1.1 released on 06.11.22 ####
+
+Added features:
+  - Qt6.4 Compatibility
+
+Bugfixes:
+  - dynamically changing device pixel ratios (e.g. when moving between different DPI screens) is handled properly
+  - bugfix Colormap autoscaling: recalculateDataBounds() if (0, 0) data point is NaN.
+  - minor bugfix in getMantissa for certain values due to rounding errors
+  - Graphs with line style lsImpulse properly ignore NaN data points
+  - fixed issue where QCP wasn't greyed out together with the rest of the UI on embedded systems when a modal dialog is shown
+        (QCustomPlot no longer has the Qt::WA_OpaquePaintEvent attribute enabled by default)
+
+Other:
+  - in QCPAxisPainterPrivate::getTickLabelData, don't use fixed 'e', but locale aware character of parent plot locale
+  - Axis rescaling now ignores +/- Inf in data values
+  - slight performance improvements of QCPColorMap colorization and fills.
+
+#### Version 2.1.0 released on 29.03.21 ####
+
+Added features:
+  - Compatibility up to Qt 6.0
+  - Tech Preview: Radial Plots (see setupPolarPlotDemo in examples project)
+  - QCPAxisTickerDateTime can now be configured with a QTimeZone for adjusting the label display to arbitrary time zones
+  - QCPColorGradient (and thus also QCPColorMap) now has explicit configurable NaN handling (see QCPColorGradient::setNanHandling)
+  - added timing/benchmarking method QCustomPlot::replotTime(bool average) which returns the milliseconds per replot
+  - QCustomPlot::plottableAt has an optional output parameter dataIndex, providing the index of the data point at the probed position
+  - QCustomPlot::plottableAt<T> template method allows limiting the search to the specified QCPAbstractPlottable subclass T
+  - QCustomPlot::itemAt<T> template method allows limiting the search to the specified QCPAbstractItem subclass T
+  - Added Interaction flag QCP::iSelectPlottablesBeyondAxisRect, allows selection of data points very close to (and beyond of) the axes
+  - QCPAxisTickerDateTime::dateTimeToKey(QDate &) now also takes a TimeSpec to specify the interpretation of the start-of-day
+  - QCPAxisTickerLog now switches to linear ticks if zoomed in beyond where logarithmic ticks are reasonable
+  - Added QCustomPlot::afterLayout signal, for user code that crucially depends on layout sizes/positions, right before the draw step during a replot
+  
+Bugfixes:
+  - Fixed bug where QCPLayer::replot wouldn't issue full replot even though invalidated buffers existed
+  - Fixed QCPCurve bug causing rendering artifacts when using keys/values smaller than about 1e-12 in some constellations
+  - Fixed getValueRange when used with explicit keyRange, now doesn't use key range expanded by one point to each side anymore
+  - Fixed bug of QCPAxis tick label font size change only propagating to the layout after second call to replot
+  - Fixed bug of QCPTextElement not respecting the configured text alignment flag (setTextFlags)
+  - Various documentation typos and improvements
+  
+Other:
+  - QCP Now requires C++11. However, Qt4.6 compatibility is maintained in the QCP 2.x release series
+  - QCPColorScale is now initialized with gpCold gradient preset, which prevents color maps turning black when linking them to a default-created color scale without explicitly setting a gradient
+  - QCPLegend::clearItems is now faster in case of many legend items (>1000)
+  - Modernized expressions and thereby avoided some warnings (e.g. nullptr and casts)
+  - Switched to foreach (Qt macro) where possible (in preparation for switch to range-based for (C++11), soonest at next major release)
+  - Work around Qt bug, drawing lines with pen width 1 as slow as with pen widths > 1 (polyfill instead of line algorithm, also on Normal-DPI), by using pen width 0 in such cases.
+  - Added QCP::Interaction flag iNone=0x000 to allow explicitly specifying no interaction (Avoids QFlags::zero, which was deprecated in Qt5.14)
+  - QCP is now compatible with defines QT_USE_QSTRINGBUILDER, QT_USE_FAST_CONCATENATION (Qt<4.8), QT_USE_FAST_OPERATOR_PLUS (Qt<4.8)
+
+#### Version 2.0.1 released on 25.06.18 ####
+
+Bugfixes:
+  - Default filling order of QCPLayoutGrid is now foColumnsFirst instead of foRowsFirst, as intended and consistent with QCP1.
+    Note that this also changes the indexing order of e.g. QCustomPlot::axisRect(int index), compared with 2.0.0. You can change
+    the filling and thus indexing order yourself by calling QCPLayoutGrid::setFillOrder.
+  - fixed bug in QCPColorMap, when using alpha in the gradient color stops. Used to draw falsely black data points when the associated data value is exactly
+    on the first or last color stop.
+  - QCPDataSelection::enforceType(stDataRange) would erroneously add an empty data range to the selection, if the selection was already empty.
+    This in turn would cause isEmpty() to erroneously return false.
+  - fixed hypothetical crash when selectTest is called on a QCPItemCurve which has all of its points at the same position
+    
+Other:
+  - Various documentation improvements and clarifications
+  - Prevent conflict with windows.h min/max macros if user forgets to define NOMINMAX
+  - compiling QCP shared libraries with static Qt is now easier
+  - added defines QCUSTOMPLOT_VERSION and QCUSTOMPLOT_VERSION_STR (the same way Qt does) to provide the used QCP version number
+  - added missing Q_DECL_OVERRIDE declarations, thus preventing warnings some compiler settings
+  - QCPAxisTicker and subclasses are no longer copyable by value, as intended
+  - QCPBarsGroup constructor is now explicit, as intended
+  - Qt 5.11 compatibility
+
+#### Version 2.0.0 released on 04.09.17 ####
+
+Added major features:
+  - Axis tick and tick label generation was completely refactored and is now handled in the QCPAxisTicker class (also see QCPAxis::setTicker). Available ticker subclasses for special uses cases:
+    QCPAxisTicker, QCPAxisTickerFixed, QCPAxisTickerLog, QCPAxisTickerPi, QCPAxisTickerTime, QCPAxisTickerDateTime, QCPAxisTickerText
+  - Data container is now based on QCPDataContainer template for unified data interface and significantly improved memory footprint and better performance for common use-cases, especially data adding/removing.
+  - New data selection mechanism allows selection of single data points and data ranges for plottables. See special documentation page "data selection mechanism".
+  - Rubber band/selection rect for data point selection and axis zooming is now available, see documentation of QCustomPlot::setSelectionRectMode and QCPSelectionRect. For this purpose, the new default
+    layer "overlay" was introduced, which is now the top layer, and holds the QCustomPlot's QCPSelectionRect instance.
+  - Data sharing between plottables of the same type (see setData methods taking a QSharedPointer)
+  - OpenGL hardware acceleration is now available across all Qt versions (including Qt4) in a unified, simple interface, with QCustomPlot::setOpenGl (experimental)
+  - QCPStatisticalBox can now display a series of statistical boxes instead of only a single one
+  - New QCPErrorBars plottable allows attaching error bars to any one-dimensional plottable (QCPGraph has thus lost its own error-bar capability)
+  - QCPColorMap now supports transparency via alpha in its color gradient stops, and via a dedicated cell-wise alpha map (see QCPColorMapData::setAlpha)
+  - Layers may now be individually replotted (QCPLayer::replot), if the mode (QCPLayer::setMode) is set to lmBuffered. Mutually adjacent lmLogical layers share a single paint buffer to save resources.
+    By default, the new topmost "overlay" layer which contains the selection rect is an lmBuffered layer. Updating the selection rect is thus very fast, independent of the plot contents.
+  - QCPLayerable (and thus practically all objects in QCP) now have virtual methods to receive mouse press/move/release/doubleclick/wheel events. Before, only QCPLayoutElement provided them.
+    this makes it much easier to subclass e.g. items and plottables to provide custom mouse interactions that were cumbersome and awkward with the simpler signal-based interface
+  
+Added minor features:
+  - High-DPI support for Qt versions 5.0 and up, using device pixel ratio detected by Qt (can be changed manually via QCustomPlot::setBufferDevicePixelRatio).
+  - QCPGraph and QCPCurve can now be configured to only display every n'th scatter symbol, see ::setScatterSkip() method
+  - QCPFinancial allows to define bar width in absolute pixels and axis rect ratio, instead of only in plot key coordinates (see QCPFinancial::setWidthType)
+  - Range dragging/zooming can now be configured to affect more than one axis per orientation (see new overloads of QCPAxisRect::setRangeDragAxes/setRangeZoomAxes)
+  - Added QCPTextElement (replaces QCPPlotTitle) for general texts in layouts. Provides clicked and doubleClicked signals, as replacement for the removed QCustomPlot::titleClicked/titleDoubleClicked
+  - Export functions (QCustomPlot::savePng etc.) now support specifying the resolution that will be written to the image file header. This improves operability with other tools which respect metadata.
+  - Replots can now be queued to the next event loop iteration with replot(QCP::rpQueuedReplot). This way you can successively ask for a replot at multiple code locations without causing redundant replots
+  - QCPAxisRect::zoom(...) allows to zoom to a specific rectangular region given in pixel coordinates, either affecting all axes or a specified subset of axes.
+  - QCPRange::bounded returns a bounded range, trying to preserve its size. Works with rangeChanged signal to limit the allowed range (see rangeChanged doc)
+  - Plottable rescaleValueAxis method (and getValueRange) now take parameter inKeyRange, which allows rescaling of the value axis only with respect to data in the currently visible key range
+  - plottableClick and plottableDoubleClick signals now carry the clicked data point index as second parameter
+  - Added QCPAxis::scaleRange overload without "center" argument, which scales around the current axis range center
+  - Added QCPRange::expand/expanded overloads which take only one double parameter
+  - Plottables addToLegend/removeFromLegend methods now have overloads that take any QCPLegend, to make working with non-default legends easier (legends that are not QCustomPlot::legend)
+  - Added QCPStatisticalBox::setWhiskerAntialiased to allow controlling antialiasing state of whiskers independently of quartile box/median line
+  - The virtual method QCPLayoutElement::layoutChanged() now allows subclasses to react on a move of the layout element between logical positions in the parent layout, or between layouts
+  - QCPMarginGroup::commonMargin is now virtual, to facilitate subclassing of QCPMarginGroup
+  - QCPGraph::getPreparedData is now virtual, and thus allows subclasses to easily generate own plotted data, e.g. on-the-fly.
+  - Added QCPRange qDebug stream operator
+  - QCPLayoutGrid (and thus QCPLegend) can now wrap rows or columns at specified row/column counts, see setFillOrder, setWrap and the new addElement overload which doesn't have row/column index
+Added minor features after beta:
+  - QCPGraph fill now renders separate fill segments when there are gaps in the graph data (created by inserting NaN values)
+  - fractional device pixel ratios are now used, if Qt version >= 5.6
+  - Axes may now be dragged/zoomed individually by starting the drag/zoom on top of the axis (previously, this required additional code)
+  - Manual minimum and maximum layout element sizes (setMinimumSize/setMaximumSize) can now affect the inner or the outer rect, see QCPLayoutElement::setSizeConstraintRect
+    
+Bugfixes [Also backported to 1.3.2]:
+  - Fixed possible crash when having a QCPGraph with scatters only and a non-transparent main/fill brush of the graph
+  - Fixed QCPItemPixmap not updating internally cached scaled pixmap if new pixmap set with same scaled dimensions
+  - When using log axis scale and zooming out as far as possible (~1e-280..1e280), axis doesn't end up in (via mouse) unrecoverable range with strange axis ticks anymore
+  - Axis tick label algorithm for beautifully typeset powers now checks whether "e" in tick label is actually part of a number before converting the exponent to superscript
+  - Fixed QCustomPlot::moveLayer performing incorrect move and possible crash in certain situations
+  - Fixed possible crash on QCustomPlot destruction due to wrong QObject-hierarchy. Only occurs if a QCPAxisRect is removed from the normal QCustomPlot destruction hierarchy by taking it out of its layout
+  - Fixed possible freeze when data values become infinity after coord-to-pixel transformation (e.g. maximally zoomed out log axis), and line style is not solid (e.g. dashed) or phFastPolylines is disabled
+  - Fixed a few missing enums in meta type system, by unifying usage of Q_ENUMS, Q_FLAGS and Q_DECLARE_METATYPE
+Bugfixes [Not in 1.3.2]:
+  - Fixed QCPItemLine/QCPItemStraightLine not being selectable when defining coords are many orders of magnitude (>1e8) larger than currently viewed range
+  - Fixed/worked around crash due to bug in QPainter::drawPixmap with very large negative x/y pixel coordinates, when drawing sparse pixmap scatters
+  - Fixed possible (but unlikely) int overflow in adaptive sampling algorithm, that could cause plot artifacts when using extremely sparse data (with respect to current key axis range).
+  - Fixed QCPBarsGroup bug which caused stPlotCoords spacing to be wrong with vertical key axes
+  - A QCPBars axis rescale in the main window constructor (i.e. without well-defined plot size) now falls back to a datapoint-tight rescaling instead of doing nothing (because bar width can't be determined)
+  - Improved QCPBars stacking when using bars with very large keys and key separation at limit of double precision
+Bugfixes after beta:
+  - fixed QCPCurve vertex optimization algorithm not handling log axes correctly
+  - upon removing the inner most axis, the offset of the new inner most axis (previously second axis) is now set to the value of the removed axis, instead of leaving a gap
+  - QCPColorMap now has a default gradient (gpCold) again, instead of an empty and thus black gradient
+  - doc: black QCPColorMap/QCPColorGradient documentation images fixed
+  - scatter styles ssDiamond, ssTriangle and ssTriangleInverted now get proper filling with the specified brush
+  - fixed click signals of plottable/axes/etc. not being emitted properly
+  - fixed uninitialized scatterSkip on QCPCurve, leading to irregular default appearance of scatter skips
+  - fixed device pixel ratio not being implemented correctly in cached tick labels
+  - QCPLayoutElement::setMaximum/setMinimum now is with respect to the inner rect as intended (and documented), instead of the outer rect (and this can now be changed via setSizeConstraintRect)
+  - fixed dllimport issue on template classes when compiling as shared library with MSVC
+
+
+Summary of backward incompatible changes:
+  Plottable related:
+  - Removed QCustomPlot::addPlottable, not needed anymore as plottables now automatically register in their constructor
+  - Removed QCustomPlot::addItem, not needed anymore as items now automatically register in their constructor
+  - QCPAbstractPlottable::addToLegend/removeFromLegend are not virtual anymore. If your plottable requires a custom legend item, add it to the legend manually.
+  - setData/addData method overloads of plottables have changed to facilitate data sharing and new data container (see documentation)
+  - plottableClick and plottableDoubleClick signals now carry the clicked data point index as second parameter, and the QMouseEvent parameter has moved to third.
+    Check all your usages of those signals, because Qt's connect method only reports problems during runtime!
+  - setSelectable now not only limits what can be selected by the user, but limits also any programmatic selection changes via setSelected.
+  - enum QCPAbstractPlottable::SignDomain has changed namespace to QCP::SignDomain
+  Axis related:
+  - Removed QCPAxis::setAutoTicks, setAutoTickCount, setAutoTickLabels, setAutoTickStep, setAutoSubTicks, setTickLabelType, setDateTimeFormat, setDateTimeSpec,
+    setTickStep, setTickVector, setTickVectorLabels, setSubTickCount in favor of new QCPAxisTicker-based interface
+  - Added QCPAxis::setSubTicks to enable/disable subticks (manually controlling the subtick count needs subclassing of QCPAxisTicker, e.g. QCPAxisTickerText and QCPAxisTickerLog provide setSubTickCount)
+  Item related:
+  - Renamed QCPAbstractItem::rectSelectTest to rectDistance, to prevent confusion with new QCPAbstractPlottable1D::selectTestRect
+  - Renamed QCPItemAnchor::pixelPoint to QCPItemAnchor::pixelPosition (also affects subclass QCPItemPosition)
+  General:
+  - Renamed QCustomPlot::RefreshPriority enums (parameter of the replot() method): rpImmediate to rpImmediateRefresh, rpQueued to rpQueuedRefresh, rpHint to rpRefreshHint
+  - Renamed QCustomPlot::PlottingHint enum phForceRepaint to phImmediateRefresh
+  - Removed QCPPlotTitle layout element (See new QCPTextElement for almost drop-in replacement)
+  - Removed signals QCustomPlot::titleClicked/titleDoubleClicked, replaced by QCPTextElement signals clicked/doubleClicked.
+  - QCustomPlot::savePdf has changed parameters from (fileName, bool noCosmeticPen, width, height,...) to (fileName, width, height, QCP::ExportPen exportPen,...)
+  - Virtual methods QCPLayoutElement::mouseMoveEvent/mouseReleaseEvent (which are now introduced already in the superclass QCPLayerable) have gained an additional parameter const QPointF &startPos.
+    If you have reimplemented these methods, make sure to update your function signatures, otherwise your reimplementations will likely be ignored by the compiler without warning
+  - Creating a new QCPColorGradient without supplying a preset parameter in the constructor now creates an empty gradient, instead of loading the gpCold preset
+  
+Other:
+  - Replaced usage of Qt's QVector2D with own QCPVector2D which uses double precision and offers some convenience functions
+  - Extended relative range to which QCPItemLine/QCPItemStraightLine can be zoomed before vanishing from ~1e9 to ~1e16
+  - Removed QCPItemStraightLine::distToStraightLine (replaced by QCPVector2D::distanceToStraightLine)
+  - Removed QCPAbstractPlottable::distSqrToLine and QCPAbstractItem::distSqrToLine (replaced by QCPVector2D::distanceSquaredToLine)
+  - Qt5.5 compatibility (If you use PDF export, test your outputs, as output dimensions might change when switching Qt versions -- QCP does not try to emulate previous Qt version behaviour here)
+  - QCP now includes <QtPrintSupport/QtPrintSupport> instead of just <QtPrintSupport> because some users had problems with the latter. Please report if you now experience issues due to the new include.
+  - QCPGraph can now use a brush (filled polygon under the graph data) without having a graph line (line style lsNone)
+  - QCPFinancial is now two-colored (setTwoColored(true)) by default, and has green/red as default two-colored brushes and pens
+  - Plottable pixelsToCoords/coordsToPixels methods are now public, and offer transformations from pixel to plot coordinates and vice versa, using the plottable's axes
+  - Plottable getKeyRange/getValueRange methods are now public
+  - QCPBarsGroup now always places the QCPBars that was added to the group first towards lower keys, independent of axis orientation or direction (the ordering used to flip with axis orientation)
+  - Default focus policy for QCustomPlot is now Qt::ClickFocus, instead of Qt::NoFocus.
+  - tweaked QCPLegend and QCPAbstractLegendItem margins: The items have by default zero own margins, and QCPLegend row- and column spacing was increased to compensate. Legend was made slightly denser by default.
+  - Used doxygen version is now 1.8.12, and documentation/postprocessing-scripts were adapted accordingly. Expect minor issues and some warnings when using older doxygen.
+Other after beta:
+  - Integrated OpenGL support (QCustomPlot::setOpenGl) is experimental for now, due the strong dependency on the system/graphics driver of the current implementation
+  - fixed some plot title font sizes in the example projects that were too small due to switch to QCPTextElement
+  - added missing override specifiers on reimplemented virtual methods
+  - changed to more intuitive defaults for QCPSelectionDecorator scatter style (now doesn't define an own scatter pen by default)
+    
+#### Version 1.3.2 released on 22.12.15 ####
+
+  Bugfixes [Backported from 2.0.0 branch]:
+    - Fixed possible crash when having a QCPGraph with scatters only and a non-transparent main/fill brush of the graph
+    - Fixed QCPItemPixmap not updating internally cached scaled pixmap if new pixmap set with same scaled dimensions
+    - When using log axis scale and zooming out as far as possible (~1e-280..1e280), axis doesn't end up in (via mouse) unrecoverable range with strange axis ticks anymore
+    - Axis tick label algorithm for beautifully typeset powers now checks whether "e" in tick label is actually part of a number before converting the exponent to superscript
+    - Fixed QCustomPlot::moveLayer performing incorrect move and possible crash in certain situations
+    - Fixed possible crash on QCustomPlot destruction due to wrong QObject-hierarchy. Only occurs if a QCPAxisRect is removed from the normal QCustomPlot destruction hierarchy by taking it out of its layout
+    - Fixed possible freeze when data values become infinity after coord-to-pixel transformation (e.g. maximally zoomed out log axis), and line style is not solid (e.g. dashed) or phFastPolylines is disabled
+    
+  Other [Backported from 2.0.0 branch]:
+    - A few documentation fixes/improvements
+    - Qt5.5 compatibility (If you use PDF export, test your outputs, as output dimensions might change when switching Qt versions -- QCP does not try to emulate previous Qt version behaviour here)
+    - QCP now includes <QtPrintSupport/QtPrintSupport> instead of just <QtPrintSupport> because some users had problems with the latter. Please report if you now experience issues due to the new include.
+
+#### Version 1.3.1 released on 25.04.15 ####
+
+  Bugfixes:
+    - Fixed bug that prevented automatic axis rescaling when some graphs/curves had only NaN data points
+    - Improved QCPItemBracket selection boundaries, especially bsCurly and bsCalligraphic
+    - Fixed bug of axis rect and colorscale background shifted downward by one logical pixel (visible in scaled png and pdf export)
+    - Replot upon mouse release is now only performed if a selection change has actually happened (improves responsivity on particularly complex plots)
+    - Fixed bug that allowed scatter-only graphs to be selected by clicking the non-existent line between scatters
+    - Fixed crash when trying to select a scatter-only QCPGraph whose only points in the visible key range are at identical key coordinates and vertically off-screen, with adaptive sampling enabled
+    - Fixed pdf export of QCPColorMap with enabled interpolation (didn't appear interpolated in pdf)
+    - Reduced QCPColorMap jitter of internal cell boundaries for small sized maps when viewed with high zoom, by applying oversampling factors dependant on map size
+    - Fixed bug of QCPColorMap::fill() not causing the buffered internal image map to be updated, and thus the change didn't become visible immediately
+    - Axis labels with size set in pixels (setPixelSize) instead of points now correctly calculate the exponent's font size if beautifully typeset powers are enabled
+    - Fixed QCPColorMap appearing at the wrong position for logarithmic axes and color map spanning larger ranges
+    
+  Other:
+    - Pdf export used to embed entire QCPColorMaps, potentially leading to large files. Now only the visible portion of the map is embedded in the pdf
+    - Many documentation fixes and extensions, style modernization
+    - Reduced documentation file size (and thus full package size) by automatically reducing image palettes during package build
+    - Fixed MSVC warning message (at warning level 4) due to temporary QLists in some foreach statements
+
+#### Version 1.3.0 released on 27.12.14 ####
+
+  Added features:
+    - New plottable class QCPFinancial allows display of candlestick/ohlc data
+    - New class QCPBarsGroup allows horizontal grouping of multiple QCPBars plottables
+    - Added QCPBars feature allowing non-zero base values (see property QCPBars::setBaseValue)
+    - Added QCPBars width type, for more flexible bar widths (see property QCPBars::setWidthType)
+    - New QCPCurve optimization algorithm, fixes bug which caused line flicker at deep zoom into curve segment
+    - Item positions can now have different position types and anchors for their x and y coordinates (QCPItemPosition::setTypeX/Y, setParentAnchorX/Y)
+    - QCPGraph and QCPCurve can now display gaps in their lines, when inserting quiet NaNs as values (std::numeric_limits<double>::quiet_NaN())
+    - QCPAxis now supports placing the tick labels inside the axis rect, for particularly space saving plots (QCPAxis::setTickLabelSide)
+  Added features after beta:
+    - Made code compatible with QT_NO_CAST_FROM_ASCII, QT_NO_CAST_TO_ASCII
+    - Added compatibility with QT_NO_KEYWORDS after sending code files through a simple reg-ex script
+    - Added possibility to inject own QCPAxis(-subclasses) via second, optional QCPAxisRect::addAxis parameter
+    - Added parameter to QCPItemPixmap::setScaled to specify transformation mode
+  
+  Bugfixes:
+    - Fixed bug in QCPCurve rendering of very zoomed-in curves (via new optimization algorithm)
+    - Fixed conflict with MSVC-specific keyword "interface" in text-document-integration example
+    - Fixed QCPScatterStyle bug ignoring the specified pen in the custom scatter shape constructor
+    - Fixed bug (possible crash) during QCustomPlot teardown, when a QCPLegend that has no parent layout (i.e. was removed from layout manually) gets deleted
+  Bugfixes after beta:
+    - Fixed bug of QCPColorMap/QCPColorGradient colors being off by one color sampling step (only noticeable in special cases)
+    - Fixed bug of QCPGraph adaptive sampling on vertical key axis, causing staggered look
+    - Fixed low (float) precision in QCPCurve optimization algorithm, by not using QVector2D anymore
+  
+  Other:
+    - Qt 5.3 and Qt 5.4 compatibility
+
+#### Version 1.2.1 released on 07.04.14 ####
+
+  Bugfixes:
+    - Fixed regression which garbled date-time tick labels on axes, if setTickLabelType is ltDateTime and setNumberFormat contains the "b" option
+
+#### Version 1.2.0 released on 14.03.14 ####
+
+  Added features:
+    - Adaptive Sampling for QCPGraph greatly improves performance for high data densities (see QCPGraph::setAdaptiveSampling)
+    - QCPColorMap plottable with QCPColorScale layout element allows plotting of 2D color maps
+    - QCustomPlot::savePdf now has additional optional parameters pdfCreator and pdfTitle to set according PDF metadata fields
+    - QCustomPlot::replot now allows specifying whether the widget update is immediate (repaint) or queued (update)
+    - QCPRange operators +, -, *, / with double operand for range shifting and scaling, and ==, != for range comparison
+    - Layers now have a visibility property (QCPLayer::setVisible)
+    - static functions QCPAxis::opposite and QCPAxis::orientation now offer more convenience when handling axis types
+    - added notification signals for selectability change (selectableChanged) on all objects that have a selected/selectable property
+    - added notification signal for QCPAxis scaleType property
+    - added notification signal QCPLayerable::layerChanged
+  
+  Bugfixes:
+    - Fixed assert halt, when QCPAxis auto tick labels not disabled but nevertheless a custom non-number tick label ending in "e" given
+    - Fixed painting glitches when QCustomPlot resized inside a QMdiArea or under certain conditions inside a QLayout
+    - If changing QCPAxis::scaleType and thus causing range sanitizing and a range modification, rangeChanged wouldn't be emitted
+    - Fixed documentation bug that caused indentation to be lost in code examples
+  Bugfixes after beta:
+    - Fixed bug that caused crash if clicked-on legend item is removed in mousePressEvent.
+    - On some systems, font size defaults to -1, which used to cause a debug output in QCPAxisPainterPrivate::TickLabelDataQCP. Now it's checked before setting values based on the default font size.
+    - When using multiple axes on one side, setting one to invisible didn't properly compress the freed space.
+    - Fixed bug that allowed selection of plottables when clicking in the bottom or top margin of a QCPAxisRect (outside the inner rect)
+    
+  Other:
+    - In method QCPAbstractPlottable::getKeyRange/getValueRange, renamed parameter "validRange" to "foundRange", to better reflect its meaning (and contrast it from QCPRange::validRange)
+    - QCPAxis low-level axis painting methods exported to QCPAxisPainterPrivate
+
+#### Version 1.1.1 released on 09.12.13 ####
+
+  Bugfixes:
+    - Fixed bug causing legends blocking input events from reaching underlying axis rect even if legend is invisible
+    - Added missing Q_PROPERTY for QCPAxis::setDateTimeSpec
+    - Fixed behaviour of QCPAxisRect::setupFullAxesBox (now transfers more properties from bottom/left to top/right axes and sets visibility of bottom/left axes to true)
+    - Made sure PDF export doesn't default to grayscale output on some systems
+  
+  Other:
+    - Plotting hint QCP::phForceRepaint is now enabled on all systems (and not only on windows) by default
+    - Documentation improvements
+
+#### Version 1.1.0 released on 04.11.13 ####
+
+  Added features:
+    - Added QCPRange::expand and QCPRange::expanded
+    - Added QCPAxis::rescale to rescale axis to all associated plottables
+    - Added QCPAxis::setDateTimeSpec/dateTimeSpec to allow axis labels either in UTC or local time
+    - QCPAxis now additionally emits a rangeChanged signal overload that provides the old range as second parameter
+    
+  Bugfixes:
+    - Fixed QCustomPlot::rescaleAxes not rescaling properly if first plottable has an empty range
+    - QCPGraph::rescaleAxes/rescaleKeyAxis/rescaleValueAxis are no longer virtual (never were in base class, was a mistake)
+    - Fixed bugs in QCPAxis::items and QCPAxisRect::items not properly returning associated items and potentially stalling
+    
+  Other:
+    - Internal change from QWeakPointer to QPointer, thus got rid of deprecated Qt functionality
+    - Qt5.1 and Qt5.2 (beta1) compatibility
+    - Release packages now extract to single subdirectory and don't place multiple files in current working directory
+
+#### Version 1.0.1 released on 05.09.13 ####
+
+  Bugfixes:
+    - using define flag QCUSTOMPLOT_CHECK_DATA caused debug output when data was correct, instead of invalid (fixed QCP::isInvalidData)
+    - documentation images are now properly shown when viewed with Qt Assistant
+    - fixed various documentation mistakes
+    
+  Other:
+    - Adapted documentation style sheet to better match Qt5 documentation
+
+#### Version 1.0.0 released on 01.08.13 ####
+
+  Quick Summary:
+    - Layout system for multiple axis rects in one plot
+    - Multiple axes per side
+    - Qt5 compatibility
+    - More flexible and consistent scatter configuration with QCPScatterStyle
+    - Various interface cleanups/refactoring
+    - Pixmap-cached axis labels for improved replot performance
+
+  Changes that break backward compatibility:
+    - QCustomPlot::axisRect() changed meaning due to the extensive changes to how axes and axis rects are handled
+      it now returns a pointer to a QCPAxisRect and takes an integer index as parameter.
+    - QCPAxis constructor changed to now take QCPAxisRect* as parent
+    - setAutoMargin, setMarginLeft/Right/Top/Bottom removed due to the axis rect changes (see QCPAxisRect::setMargins/setAutoMargins)
+    - setAxisRect removed due to the axis rect changes
+    - setAxisBackground(-Scaled/-ScaledMode) now moved to QCPAxisRect as setBackground(-Scaled/ScaledMode) (access via QCustomPlot::axisRects())
+    - QCPLegend now is a QCPLayoutElement
+    - QCPAbstractPlottable::drawLegendIcon parameter "rect" changed from QRect to QRectF
+    - QCPAbstractLegendItem::draw second parameter removed (position/size now handled via QCPLayoutElement base class)
+    - removed QCPLegend::setMargin/setMarginLeft/Right/Top/Bottom (now inherits the capability from QCPLayoutElement::setMargins)
+    - removed QCPLegend::setMinimumSize (now inherits the capability from QCPLayoutElement::setMinimumSize)
+    - removed enum QCPLegend::PositionStyle, QCPLegend::positionStyle/setPositionStyle/position/setPosition (replaced by capabilities of QCPLayoutInset)
+    - QCPLegend transformed to work with new layout system (almost everything changed)
+    - removed entire title interface: QCustomPlot::setTitle/setTitleFont/setTitleColor/setTitleSelected/setTitleSelectedFont/setTitleSelectedColor and
+      the QCustomPlot::iSelectTitle interaction flag (all functionality is now given by the layout element "QCPPlotTitle" which can be added to the plot layout)
+    - selectTest functions now take two additional parameters: bool onlySelectable and QVariant *details=0
+    - selectTest functions now ignores visibility of objects and (if parameter onlySelectable is true) does not anymore ignore selectability of the object
+    - moved QCustomPlot::Interaction/Interactions to QCP namespace as QCP::Interaction/Interactions
+    - moved QCustomPlot::setupFullAxesBox() to QCPAxisRect::setupFullAxesBox. Now also accepts parameter to decide whether to connect opposite axis ranges
+    - moved range dragging/zooming interface from QCustomPlot to QCPAxisRect (setRangeDrag, setRangeZoom, setRangeDragAxes, setRangeZoomAxes,...)
+    - rangeDrag/Zoom is now set to Qt::Horizontal|Qt::Vertical instead of 0 by default, on the other hand, iRangeDrag/Zoom is unset in interactions by
+      default (this makes enabling dragging/zooming easier by just adding the interaction flags)
+    - QCPScatterStyle takes over everything related to handling scatters in all plottables
+    - removed setScatterPen/Size on QCPGraph and QCPCurve, removed setOutlierPen/Size on QCPStatisticalBox (now handled via QCPScatterStyle)
+    - modified setScatterStyle on QCPGraph and QCPCurve, and setOutlierStyle on QCPStatisticalBox, to take QCPScatterStyle
+    - axis grid and subgrid are now reachable via the QCPGrid *QCPAxis::grid() method. (e.g. instead of xAxis->setGrid(true), write xAxis->grid()->setVisible(true))
+
+  Added features:
+    - Axis tick labels are now pixmap-cached, thus increasing replot performance (in usual setups by about 24%). See plotting hint phCacheLabels which is set by default
+    - Advanced layout system, including the classes QCPLayoutElement, QCPLayout, QCPLayoutGrid, QCPLayoutInset, QCPAxisRect
+    - QCustomPlot::axisRects() returns all the axis rects in the QCustomPlot.
+    - QCustomPlot::plotLayout() returns the top level layout (initially a QCPLayoutGrid with one QCPAxisRect inside)
+    - QCPAxis now may have an offset to the axis rect (setOffset)
+    - Multiple axes per QCPAxisRect side are now supported (see QCPAxisRect::addAxis)
+    - QCustomPlot::toPixmap renders the plot into a pixmap and returns it
+    - When setting tick label rotation to +90 or -90 degrees on a vertical axis, the labels are now centered vertically on the tick height
+      (This allows space saving vertical tick labels by having the text direction parallel to the axis)
+    - Substantially increased replot performance when using very large manual tick vectors (> 10000 ticks) via QCPAxis::setTickVector
+    - QCPAxis and QCPAxisRect now allow easy access to all plottables(), graphs() and items() that are associated with them
+    - Added QCustomPlot::hasItem method for consistency with plottable interface, hasPlottable
+    - Added QCPAxisRect::setMinimumMargins as replacement for hardcoded minimum axis margin (15 px) when auto margin is enabled
+    - Added Flags type QCPAxis::AxisTypes (from QCPAxis::AxisType), used in QCPAxisRect interface
+    - Automatic margin calculation can now be enabled/disabled on a per-side basis, see QCPAxisRect::setAutoMargins
+    - QCPAxisRect margins of multiple axis rects can be coupled via QCPMarginGroup
+    - Added new default layers "background" and "legend" (QCPAxisRect draws its background on the "background" layer, QCPLegend is on the "legend" layer by default)
+    - Custom scatter style via QCP::ssCustom and respective setCustomScatter functions that take a QPainterPath
+    - Filled scatters via QCPScatterStyle::setBrush
+  Added features after beta:
+    - Added QCustomPlot::toPainter method, to allow rendering with existing painter
+    - QCPItemEllipse now provides a center anchor
+
+  Bugfixes:
+    - Fixed compile error on ARM
+    - Wrong legend icons were displayed if using pixmaps for scatters that are smaller than the legend icon rect
+    - Fixed clipping inaccuracy for rotated tick labels (were hidden too early, because the non-rotated bounding box was used)
+    - Fixed bug that caused wrong clipping of axis ticks and subticks when the ticks were given manually by QCPAxis::setTickVector
+    - Fixed Qt5 crash when dragging graph out of view (iterator out of bounds in QCPGraph::getVisibleDataBounds)
+    - Fixed QCPItemText not scaling properly when using scaled raster export
+  Bugfixes after beta:
+    - Fixed bug that clipped the rightmost pixel column of tick labels when caching activated (only visible on windows for superscript exponents)
+    - Restored compatibility to Qt4.6
+    - Restored support for -no-RTTI compilation
+    - Empty manual tick labels are handled more gracefully (no QPainter qDebug messages anymore)
+    - Fixed type ambiguity in QCPLineEnding::draw causing compile error on ARM
+    - Fixed bug of grid layouts not propagating the minimum size from their child elements to the parent layout correctly
+    - Fixed bug of child elements (e.g. axis rects) of inset layouts not properly receiving mouse events
+
+  Other:
+    - Opened up non-amalgamated project structure to public via git repository
+
+#### Version released on 09.06.12 ####
+
+  Quick Summary:
+    - Items (arrows, text,...)
+    - Layers (easier control over rendering order)
+    - New antialiasing system (Each objects controls own antialiasing with setAntialiased)
+    - Performance Improvements
+    - improved pixel-precise drawing
+    - easier shared library creation/usage
+
+  Changes that (might) break backward compatibility:
+    - enum QCPGraph::ScatterSymbol was moved to QCP namespace (now QCP::ScatterSymbol).
+      This replace should fix your code: "QCPGraph::ss" -> "QCP::ss"
+    - enum QCustomPlot::AntialiasedElement and flag QCustomPlot::AntialiasedElements was moved to QCP namespace
+      This replace should fix your code: "QCustomPlot::ae" -> "QCP::ae"
+    - the meaning of QCustomPlot::setAntialiasedElements has changed slightly: It is now an override to force elements to be antialiased. If you want to force
+      elements to not be drawn antialiased, use the new setNotAntialiasedElements. If an element is mentioned in neither of those functions, it now controls
+      its antialiasing itself via its "setAntialiased" function(s). (e.g. QCPAxis::setAntialiased(bool), QCPAbstractPlottable::setAntialiased(bool),
+      QCPAbstractPlottable::setAntialiasedScatters(bool), etc.)
+    - QCPAxis::setTickVector and QCPAxis::setTickVectorLabels no longer take a pointer but a const reference of the respective QVector as parameter.
+      (handing over a pointer didn't give any noticeable performance benefits but was inconsistent with the rest of the interface)
+    - Equally QCPAxis::tickVector and QCPAxis::tickVectorLabels don't return by pointer but by value now
+    - QCustomPlot::savePngScaled was removed, its purpose is now included as optional parameter "scale" of savePng.
+    - If you have derived from QCPAbstractPlottable: all selectTest functions now consistently take the argument "const QPointF &pos" which is the test point in pixel coordinates.
+      (the argument there was "double key, double value" in plot coordinates, before).
+    - QCPAbstractPlottable, QCPAxis and QCPLegend now inherit from QCPLayerable
+    - If you have derived from QCPAbstractPlottable: the draw method signature has changed from "draw (..) const" to "draw (..)", i.e. the method
+      is not const anymore. This allows the draw function of your plottable to perform buffering/caching operations, if necessary.
+
+  Added features:
+    - Item system: QCPAbstractItem, QCPItemAnchor, QCPItemPosition, QCPLineEnding. Allows placing of lines, arrows, text, pixmaps etc.
+      - New Items: QCPItemStraightLine, QCPItemLine, QCPItemCurve, QCPItemEllipse, QCPItemRect, QCPItemPixmap, QCPItemText, QCPItemBracket, QCPItemTracer
+      - QCustomPlot::addItem/itemCount/item/removeItem/selectedItems
+      - signals QCustomPlot::itemClicked/itemDoubleClicked
+      - the QCustomPlot interactions property now includes iSelectItems (for selection of QCPAbstractItem)
+      - QCPLineEnding. Represents the different styles a line/curve can end (e.g. different arrows, circle, square, bar, etc.), see e.g. QCPItemCurve::setHead
+    - Layer system: QCPLayerable, QCPLayer. Allows more sophisticated control over drawing order and a kind of grouping.
+      - QCPAbstractPlottable, QCPAbstractItem, QCPAxis, QCPGrid, QCPLegend are layerables and derive from QCPLayerable
+      - QCustomPlot::addLayer/moveLayer/removeLayer/setCurrentLayer/layer/currentLayer/layerCount
+      - Initially there are three layers: "grid", "main", and "axes". The "main" layer is initially empty and set as current layer, so new plottables/items are put there.
+    - QCustomPlot::viewport now makes the previously inaccessible viewport rect read-only-accessible (needed that for item-interface)
+    - PNG export now allows transparent background by calling QCustomPlot::setColor(Qt::transparent) before savePng
+    - QCPStatisticalBox outlier symbols may now be all scatter symbols, not only hardcoded circles.
+    - perfect precision of scatter symbol/error bar drawing and clipping in both antialiased and non-antialiased mode, by introducing QCPPainter
+      that works around some QPainter bugs/inconveniences. Further, more complex symbols like ssCrossSquare used to look crooked, now they look good.
+    - new antialiasing control system: Each drawing element now has its own "setAntialiased" function to control whether it is drawn antialiased.
+      - QCustomPlot::setAntialiasedElements and QCustomPlot::setNotAntialiasedElements can be used to override the individual settings.
+      - Subclasses of QCPAbstractPlottable can now use the convenience functions like applyFillAntialiasingHint or applyScattersAntialiasingHint to
+        easily make their drawing code comply with the overall antialiasing system.
+    - QCustomPlot::setNoAntialiasingOnDrag allows greatly improved performance and responsiveness by temporarily disabling all antialiasing while
+      the user is dragging axis ranges
+    - QCPGraph can now show scatter symbols at data points and hide its line (see QCPGraph::setScatterStyle, setScatterSize, setScatterPixmap, setLineStyle)
+    - Grid drawing code was sourced out from QCPAxis to QCPGrid. QCPGrid is mainly an internal class and every QCPAxis owns one. The grid interface still
+      works through QCPAxis and hasn't changed. The separation allows the grid to be drawn on a different layer as the axes, such that e.g. a graph can
+      be above the grid but below the axes.
+    - QCustomPlot::hasPlottable(plottable), returns whether the QCustomPlot contains the plottable
+    - QCustomPlot::setPlottingHint/setPlottingHints, plotting hints control details about the plotting quality/speed
+    - export to jpg and bmp added (QCustomPlot::saveJpg/saveBmp), as well as control over compression quality for png and jpg
+    - multi-select-modifier may now be specified with QCustomPlot::setMultiSelectModifier and is not fixed to Ctrl anymore
+
+  Bugfixes:
+    - fixed QCustomPlot ignores replot after it had size (0,0) even if size becomes valid again
+    - on Windows, a repaint used to be delayed during dragging/zooming of a complex plot, until the drag operation was done.
+      This was fixed, i.e. repaints are forced after a replot() call. See QCP::phForceRepaint and setPlottingHints.
+    - when using the raster paintengine and exporting to scaled PNG, pen widths are now scaled correctly (QPainter bug workaround via QCPPainter)
+    - PDF export now respects QCustomPlot background color (QCustomPlot::setColor), also Qt::transparent
+    - fixed a bug on QCPBars and QCPStatisticalBox where auto-rescaling of axis would fail when all data is very small (< 1e-11)
+    - fixed mouse event propagation bug that prevented range dragging from working on KDE (GNU/Linux)
+    - fixed a compiler warning on 64-bit systems due to pointer cast to int instead of quintptr in a qDebug output
+
+  Other:
+    - Added support for easier shared library creation (including examples for compiling and using QCustomPlot as shared library)
+    - QCustomPlot now has the Qt::WA_OpaquePaintEvent widget attribute (gives slightly improved performance).
+    - QCP::aeGraphs (enum QCP::AntialiasedElement, previously QCustomPlot::aeGraphs) has been marked deprecated since version 02.02.12 and
+      was now removed. Use QCP::aePlottables instead.
+    - optional performance-quality-tradeoff for solid graph lines (see QCustomPlot::setPlottingHints).
+    - marked data classes and QCPRange as Q_MOVABLE_TYPE
+    - replaced usage of own macro FUNCNAME with Qt macro Q_FUNC_INFO
+    - QCustomPlot now returns a minimum size hint of 50*50
+
+#### Version released on 31.03.12 ####
+
+  Changes that (might) break backward compatibility:
+  - QCPAbstractLegendItem now inherits from QObject
+  - mousePress, mouseMove and mouseRelease signals are now emitted before and not after any QCustomPlot processing (range dragging, selecting, etc.)
+
+  Added features:
+  - Interaction system: now allows selecting of objects like plottables, axes, legend and plot title, see QCustomPlot::setInteractions documentation
+  - Interaction system for plottables:
+    - setSelectable, setSelected, setSelectedPen, setSelectedBrush, selectTest on QCPAbstractPlottable and all derived plottables
+    - setSelectionTolerance on QCustomPlot
+    - selectedPlottables and selectedGraphs on QCustomPlot (returns the list of currently selected plottables/graphs)
+  - Interaction system for axes:
+    - setSelectable, setSelected, setSelectedBasePen, setSelectedTickPen, setSelectedSubTickPen, setSelectedLabelFont, setSelectedTickLabelFont,
+      setSelectedLabelColor, setSelectedTickLabelColor, selectTest on QCPAxis
+    - selectedAxes on QCustomPlot (returns a list of the axes that currently have selected parts)
+  - Interaction system for legend:
+    - setSelectable, setSelected, setSelectedBorderPen, setSelectedIconBorderPen, setSelectedBrush, setSelectedFont, setSelectedTextColor, selectedItems on QCPLegend
+    - setSelectedFont, setSelectedTextColor, setSelectable, setSelected on QCPAbstractLegendItem
+    - selectedLegends on QCustomPlot
+  - Interaction system for title:
+    - setSelectedTitleFont, setSelectedTitleColor, setTitleSelected on QCustomPlot
+  - new signals in accordance with the interaction system:
+    - selectionChangedByUser on QCustomPlot
+    - selectionChanged on QCPAbstractPlottable
+    - selectionChanged on QCPAxis
+    - selectionChanged on QCPLegend and QCPAbstractLegendItem
+    - plottableClick, legendClick, axisClick, titleClick, plottableDoubleClick, legendDoubleClick, axisDoubleClick, titleDoubleClick on QCustomPlot
+  - QCustomPlot::deselectAll (deselects everything, i.e. axes and plottables)
+  - QCPAbstractPlottable::pixelsToCoords (inverse function to the already existing coordsToPixels function)
+  - QCPRange::contains(double value)
+  - QCPAxis::setLabelColor and setTickLabelColor
+  - QCustomPlot::setTitleColor
+  - QCustomPlot now emits beforeReplot and afterReplot signals. Note that it is safe to make two customPlots mutually call eachothers replot functions
+    in one of these slots, it will not cause an infinite loop. (usefull for synchronizing axes ranges between two customPlots, because setRange alone doesn't replot)
+  - If the Qt version is 4.7 or greater, the tick label strings in date-time-mode now support sub-second accuracy (e.g. with format like "hh:mm:ss.zzz").
+
+  Bugfixes:
+  - tick labels/margins should no longer oscillate by one pixel when dragging range or replotting repeatedly while changing e.g. data. This
+    was caused by a bug in Qt's QFontMetrics::boundingRect function when the font has an integer point size (probably some rounding problem).
+    The fix hence consists of creating a temporary font (only for bounding-box calculation) which is 0.05pt larger and thus avoiding the
+    jittering rounding outcome.
+  - tick label, axis label and plot title colors used to be undefined. This was fixed by providing explicit color properties.
+    
+  Other:
+  - fixed some glitches in the documentation
+  - QCustomPlot::replot and QCustomPlot::rescaleAxes are now slots
+
+#### Version released on 02.02.12 ####
+
+  Changes that break backward compatibility:
+  - renamed all secondary classes from QCustomPlot[...] to QCP[...]:
+    QCustomPlotAxis -> QCPAxis
+    QCustomPlotGraph -> QCPGraph
+    QCustomPlotRange -> QCPRange
+    QCustomPlotData -> QCPData
+    QCustomPlotDataMap -> QCPDataMap
+    QCustomPlotLegend -> QCPLegend
+    QCustomPlotDataMapIterator -> QCPDataMapIterator
+    QCustomPlotDataMutableMapIterator -> QCPDataMutableMapIterator
+    A simple search and replace on all code files should make your code run again, e.g. consider the regex "QCustomPlot(?=[AGRDL])" -> "QCP".
+    Make sure not to just replace "QCustomPlot" with "QCP" because the main class QCustomPlot hasn't changed to QCP.
+    This change was necessary because class names became unhandy, pardon my bad naming decision in the beginning.
+  - QCPAxis::tickLength() and QCPAxis::subTickLength() now each split into two functions for inward and outward ticks (tickLengthIn/tickLengthOut).
+  - QCPLegend now uses QCPAbstractLegendItem to carry item data (before, the legend was passed QCPGraphs directly)
+  - QCustomPlot::addGraph() now doesn't return the index of the created graph anymore, but a pointer to the created QCPGraph.
+  - QCustomPlot::setAutoAddGraphToLegend is replaced by setAutoAddPlottableToLegend
+
+  Added features:
+  - Reversed axis range with QCPAxis::setRangeReversed(bool)
+  - Tick labels are now only drawn if not clipped by the viewport (widget border) on the sides (e.g. left and right on a horizontal axis).
+  - Zerolines. Like grid lines only with a separate pen (QCPAxis::setZeroLinePen), at tick position zero.
+  - Outward ticks. QCPAxis::setTickLength/setSubTickLength now accepts two arguments for inward and outward tick length. This doesn't break
+    backward compatibility because the second argument (outward) has default value zero and thereby a call with one argument hasn't changed its meaning.
+  - QCPGraph now inherits from QCPAbstractPlottable
+  - QCustomPlot::addPlottable/plottable/removePlottable/clearPlottables added to interface with the new QCPAbstractPlottable-based system. The simpler interface
+    which only acts on QCPGraphs (addGraph, graph, removeGraph, etc.) was adapted internally and is kept for backward compatibility and ease of use.
+  - QCPLegend items for plottables (e.g. graphs) can automatically wrap their texts to fit the widths, see QCPLegend::setMinimumSize and QCPPlottableLegendItem::setTextWrap.
+  - QCustomPlot::rescaleAxes. Adapts axis ranges to show all plottables/graphs, by calling QCPAbstractPlottable::rescaleAxes on all plottables in the plot.
+  - QCPCurve. For plotting of parametric curves.
+  - QCPBars. For plotting of bar charts.
+  - QCPStatisticalBox. For statistical box plots.
+
+  Bugfixes:
+  - Fixed QCustomPlot::removeGraph(int) not being able to remove graph index 0
+  - made QCustomPlot::replot() abort painting when painter initialization fails (e.g. because width/height of QCustomPlot is zero)
+  - The distance of the axis label from the axis ignored the tick label padding, this could have caused overlapping axis labels and tick labels
+  - fixed memory leak in QCustomPlot (dtor didn't delete legend)
+  - fixed bug that prevented QCPAxis::setRangeLower/Upper from setting the value to exactly 0.
+
+  Other:
+  - Changed default error bar handle size (QCustomPlotGraph::setErrorBarSize) from 4 to 6.
+  - Removed QCustomPlotDataFetcher. Was deprecated and not used class.
+  - Extended documentation, especially class descriptions.
+
+#### Version released on 15.01.12 ####
+
+  Changes that (might) break backward compatibility:
+  - QCustomPlotGraph now inherits from QObject
+  
+  Added features:
+  - Added axis background pixmap (QCustomPlot::setAxisBackground, setAxisBackgroundScaled, setAxisBackgroundScaledMode)
+  - Added width and height parameter on PDF export function QCustomPlot::savePdf(). This now allows PDF export to
+    have arbitrary dimensions, independent of the current geometry of the QCustomPlot.
+  - Added overload of QCustomPlot::removeGraph that takes QCustomPlotGraph* as parameter, instead the index of the graph
+  - Added all enums to the Qt meta system via Q_ENUMS(). The enums can now be transformed
+    to QString values easily with the Qt meta system, which makes saving state e.g. as XML
+    significantly nicer.
+  - added typedef QMapIterator<double,QCustomPlotData> QCustomPlotDataMapIterator
+    and typedef QMutableMapIterator<double,QCustomPlotData> QCustomPlotDataMutableMapIterator
+    for improved information hiding, when using iterators outside QCustomPlot code
+  
+  Bugfixes:
+  - Fixed savePngScaled. Axis/label drawing functions used to reset the painter transform
+    and thereby break savePngScaled. Now they buffer the current transform and restore it afterwards.
+  - Fixed some glitches in the doxygen comments (affects documentation only)
+  
+  Other:
+  - Changed the default tickLabelPadding of top axis from 3 to 6 pixels. Looks better.
+  - Changed the default QCustomPlot::setAntialiasedElements setting: Graph fills are now antialiased
+    by default. That's a bit slower, but makes fill borders look better.
+
+#### Version released on 19.11.11 ####
+
+  Changes that break backward compatibility:
+  - QCustomPlotAxis: tickFont and setTickFont renamed to tickLabelFont and setTickLabelFont (for naming consistency)
+
+  Other:
+  - QCustomPlotAxis: Added rotated tick labels, see setTickLabelRotation
+    
