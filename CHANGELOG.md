@@ -121,6 +121,7 @@ See "Highlights on user-visible changes" on https://github.com/sqlitebrowser/sql
 - Fix error messages in Execute SQL tab (c0adfe43)
 - Fix altering tables with generated as columns (39e9eb0e)
 
+<<<<<<< HEAD
 
 ### Changed
 - Show a useful icon in SQL tabs (#2153) (81b9b5a1)
@@ -269,6 +270,13 @@ See "Highlights on user-visible changes" on https://github.com/sqlitebrowser/sql
 - Plot: show x and y values on a tooltip when hovering over the plot (ce176be2)
 - Export: use QSaveFile to get better error check on full partition (496d39db)
 - appimage: Update to SQLite 3.41.1 (9426509ac8a8422d8b164c2acfb6a849ea37e306)
+||||||| parent of 9832a52d (Replace `http` with `https` in the `AboutDialog` and `MainWindow`)
+- _none_
+=======
+- _none_
+#### etc.
+- Replace `http` with `https` in the `AboutDialog` and `MainWindow`.
+>>>>>>> 9832a52d (Replace `http` with `https` in the `AboutDialog` and `MainWindow`)
 
 ### Removed
 - 
