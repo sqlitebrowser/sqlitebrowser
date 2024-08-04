@@ -684,9 +684,20 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
                 // Text data
                 QByteArray text = bArrdata.toByteArray();
 
-                if (inSQL)
-                    result.append(sqlb::escapeString(text));
-                else {
+                if (inSQL) {
+                    // Escape string only if it isn't a number.
+                    switch(bArrdata.type()) {
+                    case QVariant::Double:
+                    case QVariant::Int:
+                    case QVariant::LongLong:
+                    case QVariant::UInt:
+                    case QVariant::ULongLong:
+                        result.append(text);
+                        break;
+                    default:
+                        result.append(sqlb::escapeString(text));
+                    }
+                } else {
                     result.append(text);
                     // Table cell data: text
                     if (text.contains('\n') || text.contains('\t'))
