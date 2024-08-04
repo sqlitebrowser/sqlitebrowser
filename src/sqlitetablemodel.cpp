@@ -361,9 +361,18 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
             }
         }
     } else if(role == Qt::EditRole) {
-        if(!row_available)
+        if(!row_available || data.isNull())
             return QVariant();
-        return decode(data);
+        QVariant decodedData = decode(data);
+        // For the edit role, return the data according to its column type if possible.
+        if(m_vDataTypes.at(column) == SQLITE_INTEGER &&
+           decodedData.canConvert(QMetaType::LongLong)) {
+            decodedData.convert(QMetaType::LongLong);
+        } else if(m_vDataTypes.at(column) == SQLITE_FLOAT &&
+                  decodedData.canConvert(QMetaType::Double)) {
+            decodedData.convert(QMetaType::Double);
+        }
+        return decodedData;
     } else if(role == Qt::FontRole) {
         QFont font = m_font;
         if(!row_available || data.isNull() || isBinary(data))
