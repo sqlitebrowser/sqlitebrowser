@@ -7743,7 +7743,7 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.cpp" line="763"/>
         <source>%L1 - %L2 of %L3</source>
-        <translation>L1 - %L2의 %L3</translation>
+        <translation>%L1 - %L2의 %L3</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="765"/>
