@@ -211,17 +211,17 @@ You can drag SQL statements from an object row and drop them into other applicat
              <widget class="QComboBox" name="comboboxPragmaAutoVacuum">
               <item>
                <property name="text">
-                <string>None</string>
+                <string notr="true">None</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Full</string>
+                <string notr="true">Full</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Incremental</string>
+                <string notr="true">Incremental</string>
                </property>
               </item>
              </widget>
@@ -366,32 +366,32 @@ You can drag SQL statements from an object row and drop them into other applicat
              <widget class="QComboBox" name="comboboxPragmaJournalMode">
               <item>
                <property name="text">
-                <string>Delete</string>
+                <string notr="true">Delete</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Truncate</string>
+                <string notr="true">Truncate</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Persist</string>
+                <string notr="true">Persist</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Memory</string>
+                <string notr="true">Memory</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>WAL</string>
+                <string notr="true">WAL</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Off</string>
+                <string notr="true">Off</string>
                </property>
               </item>
              </widget>
@@ -436,12 +436,12 @@ You can drag SQL statements from an object row and drop them into other applicat
              <widget class="QComboBox" name="comboboxPragmaLockingMode">
               <item>
                <property name="text">
-                <string>Normal</string>
+                <string notr="true">Normal</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Exclusive</string>
+                <string notr="true">Exclusive</string>
                </property>
               </item>
              </widget>
@@ -580,17 +580,17 @@ You can drag SQL statements from an object row and drop them into other applicat
              <widget class="QComboBox" name="comboboxPragmaSynchronous">
               <item>
                <property name="text">
-                <string>Off</string>
+                <string notr="true">Off</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Normal</string>
+                <string notr="true">Normal</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Full</string>
+                <string notr="true">Full</string>
                </property>
               </item>
              </widget>
@@ -612,17 +612,17 @@ You can drag SQL statements from an object row and drop them into other applicat
              <widget class="QComboBox" name="comboboxPragmaTempStore">
               <item>
                <property name="text">
-                <string>Default</string>
+                <string notr="true">Default</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>File</string>
+                <string notr="true">File</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Memory</string>
+                <string notr="true">Memory</string>
                </property>
               </item>
              </widget>
