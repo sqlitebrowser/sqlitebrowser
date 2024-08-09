@@ -1,5 +1,6 @@
 #include <QMessageBox>
 #include <QDesktopServices>
+#include <QUrl>
 
 #include "ColumnDisplayFormatDialog.h"
 #include "ui_ColumnDisplayFormatDialog.h"

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>712</width>
-    <height>299</height>
+    <height>322</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -246,7 +246,7 @@
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Help|QDialogButtonBox::Ok</set>
      </property>
     </widget>
    </item>
@@ -392,6 +392,22 @@
     <hint type="destinationlabel">
      <x>590</x>
      <y>99</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>helpRequested()</signal>
+   <receiver>CipherDialog</receiver>
+   <slot>help()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>355</x>
+     <y>300</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>355</x>
+     <y>160</y>
     </hint>
    </hints>
   </connection>
