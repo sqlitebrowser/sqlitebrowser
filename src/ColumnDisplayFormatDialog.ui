@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>624</width>
-    <height>205</height>
+    <width>677</width>
+    <height>217</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -42,7 +42,7 @@
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Help|QDialogButtonBox::Ok</set>
      </property>
     </widget>
    </item>
@@ -123,6 +123,22 @@
     <hint type="destinationlabel">
      <x>244</x>
      <y>4</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>helpRequested()</signal>
+   <receiver>ColumnDisplayFormatDialog</receiver>
+   <slot>help()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>338</x>
+     <y>195</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>108</y>
     </hint>
    </hints>
   </connection>
