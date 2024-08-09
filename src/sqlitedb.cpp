@@ -25,6 +25,9 @@
 #include <cstring>
 #include <functional>
 
+const QStringList DBBrowserDB::journalModeValues = {"DELETE", "TRUNCATE", "PERSIST", "MEMORY", "WAL", "OFF"};
+const QStringList DBBrowserDB::lockingModeValues = {"NORMAL", "EXCLUSIVE"};
+
 QStringList DBBrowserDB::Datatypes = {"INTEGER", "TEXT", "BLOB", "REAL", "NUMERIC"};
 QStringList DBBrowserDB::DatatypesStrict = {"INT", "INTEGER", "TEXT", "BLOB", "REAL", "ANY"};
 

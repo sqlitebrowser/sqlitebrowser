@@ -3466,6 +3466,150 @@ Skapa en backup!</translation>
         <source>Automatically load the last opened DB file at startup</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Temp Store</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Secure Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Case Sensitive Like</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Journal Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Journal Size Limit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recursive Triggers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Page Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Foreign Keys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto Vacuum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max Page Count</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Checkpoint Full FSYNC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatic Index</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ignore Check Constraints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Full FSYNC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WAL Auto Checkpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Synchronous</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Locking Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <comment>pragma</comment>
+        <translation type="unfinished">Ta bort</translation>
+    </message>
+    <message>
+        <source>Truncate</source>
+        <comment>pragma</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Persist</source>
+        <comment>pragma</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Memory</source>
+        <comment>pragma</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WAL</source>
+        <comment>pragma</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <comment>pragma</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Normal</source>
+        <comment>pragma</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exclusive</source>
+        <comment>pragma</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Normal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Full</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation type="unfinished">Förvald</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation type="unfinished">Fil</translation>
+    </message>
+    <message>
+        <source>Memory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished">Ingen</translation>
+    </message>
+    <message>
+        <source>Incremental</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NullLineEdit</name>
