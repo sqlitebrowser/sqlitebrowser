@@ -272,6 +272,12 @@ public:
     bool setPragma(const std::string& pragma, const QString& value, QString& originalvalue);
     bool setPragma(const std::string& pragma, int value, int& originalvalue);
 
+    // These are the two pragmas in SQLite which require values passed as text.
+    // Values follow the order of the SQLite documentation.
+    // Use these values for setPragma().
+    static const QStringList journalModeValues;
+    static const QStringList lockingModeValues;
+
     bool loadExtension(const QString& filename);
     void loadExtensionsFromSettings();
 

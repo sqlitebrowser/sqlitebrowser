@@ -199,46 +199,14 @@ You can drag SQL statements from an object row and drop them into other applicat
            <layout class="QGridLayout" name="gridLayout">
             <item row="30" column="0">
              <widget class="QLabel" name="labelPragmaTempStore">
+              <property name="toolTip">
+               <string notr="true">PRAGMA temp_store</string>
+              </property>
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Auto Vacuum &lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_auto_vacuum&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string>Temp Store</string>
               </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
-              </property>
-              <property name="textInteractionFlags">
-               <set>Qt::LinksAccessibleByMouse</set>
-              </property>
-              <property name="buddy">
-               <cstring>comboboxPragmaAutoVacuum</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QComboBox" name="comboboxPragmaAutoVacuum">
-              <item>
-               <property name="text">
-                <string notr="true">None</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">Full</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">Incremental</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="labelPragmaAutomaticIndex">
-              <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Automatic Index &lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_automatic_index&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
               <property name="buddy">
                <cstring>comboboxPragmaTempStore</cstring>
@@ -247,14 +215,14 @@ You can drag SQL statements from an object row and drop them into other applicat
             </item>
             <item row="26" column="0">
              <widget class="QLabel" name="labelPragmaSecureDelete">
+              <property name="toolTip">
+               <string notr="true">PRAGMA secure_delete</string>
+              </property>
               <property name="text">
                <string>Secure Delete</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
               </property>
               <property name="buddy">
                <cstring>checkboxPragmaSecureDelete</cstring>
@@ -272,6 +240,10 @@ You can drag SQL statements from an object row and drop them into other applicat
               <property name="text">
                <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_wal_autocheckpoint&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_wal_autocheckpoint</string>
+              </property>
+
               <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
@@ -285,14 +257,14 @@ You can drag SQL statements from an object row and drop them into other applicat
             </item>
             <item row="4" column="0">
              <widget class="QLabel" name="labelPragmaCaseSensitiveLike">
+              <property name="toolTip">
+               <string notr="true">PRAGMA case_sensitive_like</string>
+              </property>
               <property name="text">
                <string>Case Sensitive Like</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
               </property>
               <property name="buddy">
                <cstring>checkboxPragmaCaseSensitiveLike</cstring>
@@ -310,6 +282,10 @@ You can drag SQL statements from an object row and drop them into other applicat
               <property name="text">
                <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_journal_mode&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_journal_mode</string>
+              </property>
+
               <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
@@ -332,6 +308,10 @@ You can drag SQL statements from an object row and drop them into other applicat
               <property name="text">
                <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_secure_delete&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_secure_delete</string>
+              </property>
+
               <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
@@ -354,6 +334,10 @@ You can drag SQL statements from an object row and drop them into other applicat
               <property name="text">
                <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_synchronous</string>
+              </property>
+
               <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
@@ -367,14 +351,14 @@ You can drag SQL statements from an object row and drop them into other applicat
             </item>
             <item row="14" column="0">
              <widget class="QLabel" name="labelPragmaJournalMode">
+              <property name="toolTip">
+               <string notr="true">PRAGMA journal_mode</string>
+              </property>
               <property name="text">
                <string>Journal Mode</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
               </property>
               <property name="buddy">
                <cstring>comboboxPragmaJournalMode</cstring>
@@ -383,14 +367,14 @@ You can drag SQL statements from an object row and drop them into other applicat
             </item>
             <item row="16" column="0">
              <widget class="QLabel" name="labelJournalSizeLimit">
+              <property name="toolTip">
+               <string notr="true">PRAGMA journal_size_limit</string>
+              </property>
               <property name="text">
                <string>Journal Size Limit</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
               </property>
               <property name="buddy">
                <cstring>spinPragmaJournalSizeLimit</cstring>
@@ -399,14 +383,14 @@ You can drag SQL statements from an object row and drop them into other applicat
             </item>
             <item row="24" column="0">
              <widget class="QLabel" name="labelPragmaRecursiveTriggers">
+              <property name="toolTip">
+               <string notr="true">PRAGMA recursive_triggers</string>
+              </property>
               <property name="text">
                <string>Recursive Triggers</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
               </property>
               <property name="buddy">
                <cstring>checkboxPragmaRecursiveTriggers</cstring>
@@ -417,32 +401,32 @@ You can drag SQL statements from an object row and drop them into other applicat
              <widget class="QComboBox" name="comboboxPragmaJournalMode">
               <item>
                <property name="text">
-                <string notr="true">Delete</string>
+                <string>Delete</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string notr="true">Truncate</string>
+                <string>Truncate</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string notr="true">Persist</string>
+                <string>Persist</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string notr="true">Memory</string>
+                <string>Memory</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string notr="true">WAL</string>
+                <string>WAL</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string notr="true">Off</string>
+                <string>Off</string>
                </property>
               </item>
              </widget>
@@ -458,6 +442,10 @@ You can drag SQL statements from an object row and drop them into other applicat
               <property name="text">
                <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_fullfsync&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_fullfsync</string>
+              </property>
+
               <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
@@ -480,6 +468,10 @@ You can drag SQL statements from an object row and drop them into other applicat
               <property name="text">
                <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_journal_size_limit&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_journal_size_limit</string>
+              </property>
+
               <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
@@ -493,14 +485,14 @@ You can drag SQL statements from an object row and drop them into other applicat
             </item>
             <item row="22" column="0">
              <widget class="QLabel" name="labelPragmaPageSize">
+              <property name="toolTip">
+               <string notr="true">PRAGMA page_size</string>
+              </property>
               <property name="text">
                <string>Page Size</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
               </property>
               <property name="buddy">
                <cstring>comboPragmaPageSize</cstring>
@@ -518,6 +510,10 @@ You can drag SQL statements from an object row and drop them into other applicat
               <property name="text">
                <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_case_sensitive_like&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_case_sensitive_like</string>
+              </property>
+
               <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
@@ -538,14 +534,14 @@ You can drag SQL statements from an object row and drop them into other applicat
             </item>
             <item row="8" column="0">
              <widget class="QLabel" name="labelPragmaForeignKeys">
+              <property name="toolTip">
+               <string notr="true">PRAGMA foreign_keys</string>
+              </property>
               <property name="text">
                <string>Foreign Keys</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
               </property>
               <property name="buddy">
                <cstring>checkboxPragmaForeignKeys</cstring>
@@ -605,6 +601,10 @@ You can drag SQL statements from an object row and drop them into other applicat
               <property name="text">
                <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_ignore_check_constraints&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_ignore_check_constraints</string>
+              </property>
+
               <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
@@ -627,6 +627,10 @@ You can drag SQL statements from an object row and drop them into other applicat
               <property name="text">
                <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_automatic_index&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_automatic_index</string>
+              </property>
+
               <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
@@ -656,6 +660,10 @@ You can drag SQL statements from an object row and drop them into other applicat
               <property name="text">
                <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_page_size&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_page_size</string>
+              </property>
+
               <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
@@ -678,6 +686,10 @@ You can drag SQL statements from an object row and drop them into other applicat
               <property name="text">
                <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_auto_vacuum&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_auto_vacuum</string>
+              </property>
+
               <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
@@ -703,6 +715,10 @@ You can drag SQL statements from an object row and drop them into other applicat
               <property name="text">
                <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_recursive_triggers&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_recursive_triggers</string>
+              </property>
+
               <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
@@ -725,6 +741,10 @@ You can drag SQL statements from an object row and drop them into other applicat
               <property name="text">
                <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_temp_store&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_temp_store</string>
+              </property>
+
               <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
@@ -747,6 +767,10 @@ You can drag SQL statements from an object row and drop them into other applicat
               <property name="text">
                <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_checkpoint_fullfsync&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_checkpoint_fullfsync</string>
+              </property>
+
               <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
@@ -760,17 +784,14 @@ You can drag SQL statements from an object row and drop them into other applicat
             </item>
             <item row="0" column="0">
              <widget class="QLabel" name="labelPragmaAutoVacuum">
+              <property name="toolTip">
+               <string notr="true">PRAGMA auto_vacuum</string>
+              </property>
               <property name="text">
                <string>Auto Vacuum</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
-              </property>
-              <property name="textInteractionFlags">
-               <set>Qt::LinksAccessibleByMouse</set>
               </property>
               <property name="buddy">
                <cstring>comboboxPragmaAutoVacuum</cstring>
@@ -786,14 +807,14 @@ You can drag SQL statements from an object row and drop them into other applicat
             </item>
             <item row="20" column="0">
              <widget class="QLabel" name="labelPragmaMaxPageCount">
+              <property name="toolTip">
+               <string notr="true">PRAGMA max_page_count</string>
+              </property>
               <property name="text">
                <string>Max Page Count</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
               </property>
               <property name="buddy">
                <cstring>spinPragmaMaxPageCount</cstring>
@@ -811,6 +832,10 @@ You can drag SQL statements from an object row and drop them into other applicat
               <property name="text">
                <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_locking_mode&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_locking_mode</string>
+              </property>
+
               <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
@@ -826,26 +851,26 @@ You can drag SQL statements from an object row and drop them into other applicat
              <widget class="QComboBox" name="comboboxPragmaLockingMode">
               <item>
                <property name="text">
-                <string notr="true">Normal</string>
+                <string>Normal</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string notr="true">Exclusive</string>
+                <string>Exclusive</string>
                </property>
               </item>
              </widget>
             </item>
             <item row="6" column="0">
              <widget class="QLabel" name="labelPragmaCheckpointFullFsync">
+              <property name="toolTip">
+               <string notr="true">PRAGMA checkpoint_fullfsync</string>
+              </property>
               <property name="text">
                <string>Checkpoint Full FSYNC</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
               </property>
               <property name="buddy">
                <cstring>checkboxPragmaCheckpointFullFsync</cstring>
@@ -863,6 +888,10 @@ You can drag SQL statements from an object row and drop them into other applicat
               <property name="text">
                <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_foreign_keys&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_foreign_keys</string>
+              </property>
+
               <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
@@ -878,17 +907,17 @@ You can drag SQL statements from an object row and drop them into other applicat
              <widget class="QComboBox" name="comboboxPragmaSynchronous">
               <item>
                <property name="text">
-                <string notr="true">Off</string>
+                <string>Off</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string notr="true">Normal</string>
+                <string>Normal</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string notr="true">Full</string>
+                <string>Full</string>
                </property>
               </item>
              </widget>
@@ -897,31 +926,31 @@ You can drag SQL statements from an object row and drop them into other applicat
              <widget class="QComboBox" name="comboboxPragmaTempStore">
               <item>
                <property name="text">
-                <string notr="true">Default</string>
+                <string>Default</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string notr="true">File</string>
+                <string>File</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string notr="true">Memory</string>
+                <string>Memory</string>
                </property>
               </item>
              </widget>
             </item>
             <item row="2" column="0">
              <widget class="QLabel" name="labelPragmaAutomaticIndex">
+              <property name="toolTip">
+               <string notr="true">PRAGMA automatic_index</string>
+              </property>
               <property name="text">
                <string>Automatic Index</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
               </property>
               <property name="buddy">
                <cstring>checkboxPragmaAutomaticIndex</cstring>
@@ -946,6 +975,10 @@ You can drag SQL statements from an object row and drop them into other applicat
               <property name="text">
                <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_user_version&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_user_version</string>
+              </property>
+
               <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
@@ -968,6 +1001,10 @@ You can drag SQL statements from an object row and drop them into other applicat
               <property name="text">
                <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_max_page_count&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_max_page_count</string>
+              </property>
+
               <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
@@ -981,14 +1018,14 @@ You can drag SQL statements from an object row and drop them into other applicat
             </item>
             <item row="12" column="0">
              <widget class="QLabel" name="labelPragmaIgnoreCheckConstraints">
+              <property name="toolTip">
+               <string notr="true">PRAGMA ignore_check_constraints</string>
+              </property>
               <property name="text">
                <string>Ignore Check Constraints</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
               </property>
               <property name="buddy">
                <cstring>checkboxPragmaIgnoreCheckConstraints</cstring>
@@ -997,14 +1034,14 @@ You can drag SQL statements from an object row and drop them into other applicat
             </item>
             <item row="10" column="0">
              <widget class="QLabel" name="labelPragmaFullFsync">
+              <property name="toolTip">
+               <string notr="true">PRAGMA fullfsync</string>
+              </property>
               <property name="text">
                <string>Full FSYNC</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
               </property>
               <property name="buddy">
                <cstring>checkboxPragmaFullFsync</cstring>
@@ -1013,14 +1050,14 @@ You can drag SQL statements from an object row and drop them into other applicat
             </item>
             <item row="34" column="0">
              <widget class="QLabel" name="labelPragmaWalAutoCheckpoint">
+              <property name="toolTip">
+               <string notr="true">PRAGMA wal_autocheckpoint</string>
+              </property>
               <property name="text">
                <string>WAL Auto Checkpoint</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
               </property>
               <property name="buddy">
                <cstring>spinPragmaWalAutoCheckpoint</cstring>
@@ -1039,14 +1076,14 @@ You can drag SQL statements from an object row and drop them into other applicat
             </item>
             <item row="32" column="0">
              <widget class="QLabel" name="labelPragmaUserVersion">
+              <property name="toolTip">
+               <string notr="true">PRAGMA user_version</string>
+              </property>
               <property name="text">
                <string>User Version</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
               </property>
               <property name="buddy">
                <cstring>spinPragmaUserVersion</cstring>
@@ -1099,14 +1136,14 @@ You can drag SQL statements from an object row and drop them into other applicat
             </item>
             <item row="28" column="0">
              <widget class="QLabel" name="labelPragmaSynchronous">
+              <property name="toolTip">
+               <string notr="true">PRAGMA synchronous</string>
+              </property>
               <property name="text">
                <string>Synchronous</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
               </property>
               <property name="buddy">
                <cstring>comboboxPragmaSynchronous</cstring>
@@ -1133,31 +1170,31 @@ You can drag SQL statements from an object row and drop them into other applicat
               </property>
               <item>
                <property name="text">
-                <string notr="true">None</string>
+                <string>None</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string notr="true">Full</string>
+                <string>Full</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string notr="true">Incremental</string>
+                <string>Incremental</string>
                </property>
               </item>
              </widget>
             </item>
             <item row="18" column="0">
              <widget class="QLabel" name="labelPragmaLockingMode">
+              <property name="toolTip">
+               <string notr="true">PRAGMA locking_mode</string>
+              </property>
               <property name="text">
                <string>Locking Mode</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
               </property>
               <property name="buddy">
                <cstring>comboboxPragmaLockingMode</cstring>

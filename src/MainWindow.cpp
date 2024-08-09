@@ -1971,9 +1971,9 @@ void MainWindow::updatePragmaUi()
     ui->checkboxPragmaForeignKeys->setChecked(pragmaValues.foreign_keys);
     ui->checkboxPragmaFullFsync->setChecked(pragmaValues.fullfsync);
     ui->checkboxPragmaIgnoreCheckConstraints->setChecked(pragmaValues.ignore_check_constraints);
-    ui->comboboxPragmaJournalMode->setCurrentIndex(ui->comboboxPragmaJournalMode->findText(pragmaValues.journal_mode, Qt::MatchFixedString));
+    ui->comboboxPragmaJournalMode->setCurrentIndex(DBBrowserDB::journalModeValues.indexOf(pragmaValues.journal_mode));
     ui->spinPragmaJournalSizeLimit->setValue(pragmaValues.journal_size_limit);
-    ui->comboboxPragmaLockingMode->setCurrentIndex(ui->comboboxPragmaLockingMode->findText(pragmaValues.locking_mode, Qt::MatchFixedString));
+    ui->comboboxPragmaLockingMode->setCurrentIndex(DBBrowserDB::lockingModeValues.indexOf(pragmaValues.locking_mode));
     ui->spinPragmaMaxPageCount->setValue(pragmaValues.max_page_count);
     ui->comboPragmaPageSize->setCurrentIndex(ui->comboPragmaPageSize->findText(QString::number(pragmaValues.page_size), Qt::MatchFixedString));
     ui->checkboxPragmaRecursiveTriggers->setChecked(pragmaValues.recursive_triggers);
@@ -2001,9 +2001,15 @@ void MainWindow::savePragmas()
     db.setPragma("foreign_keys", ui->checkboxPragmaForeignKeys->isChecked(), pragmaValues.foreign_keys);
     db.setPragma("fullfsync", ui->checkboxPragmaFullFsync->isChecked(), pragmaValues.fullfsync);
     db.setPragma("ignore_check_constraints", ui->checkboxPragmaIgnoreCheckConstraints->isChecked(), pragmaValues.ignore_check_constraints);
-    db.setPragma("journal_mode", ui->comboboxPragmaJournalMode->currentText().toUpper(), pragmaValues.journal_mode);
+
+    // Since we allow translation of UI combobox text and journal_mode and locking_mode pragmas
+    // need text values, we get the text value according to index.
+    // For this to work, order in journalModeValues and combo-box have to follow the order
+    // determined by SQLite documentation.
+    db.setPragma("journal_mode", DBBrowserDB::journalModeValues.at(ui->comboboxPragmaJournalMode->currentIndex()), pragmaValues.journal_mode);
     db.setPragma("journal_size_limit", ui->spinPragmaJournalSizeLimit->value(), pragmaValues.journal_size_limit);
-    db.setPragma("locking_mode", ui->comboboxPragmaLockingMode->currentText().toUpper(), pragmaValues.locking_mode);
+    db.setPragma("locking_mode", DBBrowserDB::lockingModeValues.at(ui->comboboxPragmaLockingMode->currentIndex()), pragmaValues.locking_mode);
+
     db.setPragma("max_page_count", ui->spinPragmaMaxPageCount->value(), pragmaValues.max_page_count);
     db.setPragma("page_size", ui->comboPragmaPageSize->currentText().toInt(), pragmaValues.page_size);
     db.setPragma("recursive_triggers", ui->checkboxPragmaRecursiveTriggers->isChecked(), pragmaValues.recursive_triggers);
