@@ -32,6 +32,7 @@ private slots:
     void updateSqlCode();
     void accept() override;
     void setCustom(bool modified);
+    void help();
 
 private:
     Ui::ColumnDisplayFormatDialog* ui;
