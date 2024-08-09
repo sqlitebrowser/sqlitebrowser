@@ -4,6 +4,8 @@
 
 #include <QPushButton>
 #include <QRegularExpressionValidator>
+#include <QDesktopServices>
+#include <QUrl>
 
 #include <QtCore/qmath.h>
 
@@ -148,4 +150,8 @@ void CipherDialog::toggleEncryptionSettings()
         ui->comboKdfAlgorithm->setEnabled(true);
         ui->plaintextHeaderSize->setEnabled(true);
     }
+}
+
+void CipherDialog::help() {
+    QDesktopServices::openUrl(QUrl("https://github.com/sqlitebrowser/sqlitebrowser/wiki/Encrypted-Databases"));
 }

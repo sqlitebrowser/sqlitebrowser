@@ -5,6 +5,8 @@
 #include <QKeyEvent>
 #include <QMenu>
 #include <QWhatsThis>
+#include <QDesktopServices>
+#include <QUrl>
 
 FilterLineEdit::FilterLineEdit(QWidget* parent, std::vector<FilterLineEdit*>* filters, size_t columnnum) :
     QLineEdit(parent),
@@ -133,6 +135,7 @@ void FilterLineEdit::showContextMenu(const QPoint &pos)
 
     QAction* whatsThisAction = new QAction(QIcon(":/icons/whatis"), tr("What's This?"), editContextMenu);
     connect(whatsThisAction, &QAction::triggered, this, [&]() {
+            QDesktopServices::openUrl(QUrl("https://github.com/sqlitebrowser/sqlitebrowser/wiki/Using-the-Filters"));
             QWhatsThis::showText(pos, whatsThis(), this);
         });
 

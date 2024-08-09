@@ -9,6 +9,8 @@
 
 #include <QPrinter>
 #include <QPrintPreviewDialog>
+#include <QDesktopServices>
+#include <QUrl>
 #if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
 #include <QRandomGenerator>
 #endif
@@ -90,6 +92,12 @@ PlotDock::PlotDock(QWidget* parent)
     m_contextMenu->addAction(printAction);
     connect(printAction, &QAction::triggered, this, [&]() {
        openPrintDialog();
+    });
+
+    QAction* helpAction = new QAction(QIcon(":/icons/whatis"), tr("Help"), m_contextMenu);
+    m_contextMenu->addAction(helpAction);
+    connect(helpAction, &QAction::triggered, this, [&]() {
+        QDesktopServices::openUrl(QUrl("https://github.com/sqlitebrowser/sqlitebrowser/wiki/Plot-Dock"));
     });
 
     QAction* showLegendAction = new QAction(tr("Show legend"), m_contextMenu);

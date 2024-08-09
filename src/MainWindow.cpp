@@ -51,6 +51,7 @@
 #include <QPushButton>
 #include <QTemporaryFile>
 #include <QToolButton>
+#include <QUrl>
 
 #ifdef Q_OS_MACX //Needed only on macOS
     #include <QOpenGLWidget>

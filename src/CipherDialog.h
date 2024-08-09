@@ -31,6 +31,7 @@ private:
 private slots:
     void checkInputFields();
     void toggleEncryptionSettings();
+    void help();
 };
 
 #endif
