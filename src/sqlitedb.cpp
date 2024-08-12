@@ -1517,7 +1517,6 @@ bool DBBrowserDB::updateRecord(const sqlb::ObjectIdentifier& table, const std::s
         sql += "sqlb_make_single_value(" + sqlb::joinStringVector(sqlb::escapeIdentifier(pks), ",") + ")=" + sqlb::escapeString(rowid.toStdString());
 
     setSavepoint();
-    logSQL(QString::fromStdString(sql), kLogMsg_App);
 
     // If we get a NULL QByteArray we insert a NULL value, and for that
     // we can pass NULL to sqlite3_bind_text() so that it behaves like sqlite3_bind_null()
@@ -1543,8 +1542,11 @@ bool DBBrowserDB::updateRecord(const sqlb::ObjectIdentifier& table, const std::s
                 success = -1;
         }
     }
-    if(success == 1 && sqlite3_step(stmt) != SQLITE_DONE)
-        success = -1;
+    if(success == 1) {
+        logSQL(QString::fromUtf8(sqlite3_expanded_sql(stmt)), kLogMsg_App);
+        if(sqlite3_step(stmt) != SQLITE_DONE)
+            success = -1;
+    }
     if(success != 0 && sqlite3_finalize(stmt) != SQLITE_OK)
         success = -1;
 
