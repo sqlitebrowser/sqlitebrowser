@@ -171,7 +171,7 @@ jobs:
       # Change the signing-policy-slug when you release an RC, RTM or stable release.
       - if: github.event_name != 'pull_request'
         name: Code signing with SignPath
-        uses: signpath/github-action-submit-signing-request@v0.4
+        uses: signpath/github-action-submit-signing-request@v1
         with:
           api-token: '${{ secrets.SIGNPATH_API_TOKEN }}'
           github-artifact-id: '${{ steps.unsigned-artifacts.outputs.artifact-id }}'
