@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.12.2)
+cmake_minimum_required(VERSION 3.5)
 
 # Disable AUTOMOC because it cannot be made to work with QScintilla
 set(CMAKE_AUTOMOC OFF)
