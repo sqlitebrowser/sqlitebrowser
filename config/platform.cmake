@@ -1,9 +1,9 @@
 set(ADDITIONAL_PLATFORM_FILES)
 if(WIN32)
-    include(platform_win.cmake)
+    include(${CMAKE_CURRENT_LIST_DIR}/platform_win.cmake)
     add_definitions(-DCHECKNEWVERSION)
 elseif(APPLE)
-    include(platform_apple.cmake)
+    include(${CMAKE_CURRENT_LIST_DIR}/platform_apple.cmake)
     add_definitions(-DCHECKNEWVERSION)
 endif()
 
