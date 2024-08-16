@@ -277,9 +277,6 @@ target_sources(${PROJECT_NAME}
     # Styles
     src/qdarkstyle/dark/darkstyle.qrc
     src/qdarkstyle/light/lightstyle.qrc
-
-    # Platform dependant files (e.g. winapp.rc)
-    ${ADDITIONAL_PLATFORM_FILES}
 )
 
 target_link_libraries(${PROJECT_NAME}

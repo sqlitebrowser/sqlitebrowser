@@ -38,7 +38,7 @@ if(MSVC)
     set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_DEFINITIONS_RELWITHDEBINFO "_CONSOLE")
 
     list(PREPEND CMAKE_PREFIX_PATH ${QT5_PATH} ${SQLITE3_PATH})
-    list(APPEND ADDITIONAL_PLATFORM_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/winapp.rc")
+    target_sources(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src/winapp.rc")
 elseif(MINGW)
     # resource compilation for MinGW
     add_custom_command(OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/sqlbicon.o"
@@ -47,5 +47,5 @@ elseif(MINGW)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-subsystem,windows")
     set(WIN32_STATIC_LINK -Wl,-Bstatic -lssl -lcrypto -lws2_32)
     set(ADDITIONAL_LIBS lzma)
-    list(APPEND ADDITIONAL_PLATFORM_FILES "${CMAKE_CURRENT_BINARY_DIR}/sqlbicon.o")
+    target_sources(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/sqlbicon.o")
 endif()

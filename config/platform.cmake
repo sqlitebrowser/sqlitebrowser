@@ -1,4 +1,3 @@
-set(ADDITIONAL_PLATFORM_FILES)
 if(WIN32)
     include(${CMAKE_CURRENT_LIST_DIR}/platform_win.cmake)
     add_definitions(-DCHECKNEWVERSION)
