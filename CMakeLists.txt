@@ -282,6 +282,8 @@ target_link_libraries(${PROJECT_NAME}
     ${LIBSQLITE_NAME}
 )
 
+include(config/install.cmake)
+
 if(ENABLE_TESTING)
     enable_testing()
     add_subdirectory(src/tests)
