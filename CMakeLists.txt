@@ -85,10 +85,6 @@ else()
     set(LIBSQLITE_NAME SQLite::SQLite3)
 endif()
 
-if(ENABLE_TESTING)
-    enable_testing()
-endif()
-
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/version.h.in
     ${CMAKE_CURRENT_BINARY_DIR}/version.h
 )
@@ -285,3 +281,30 @@ target_link_libraries(${PROJECT_NAME}
     QHexEdit::QHexEdit QCustomPlot::QCustomPlot QScintilla::QScintilla
     ${LIBSQLITE_NAME}
 )
+
+if(ENABLE_TESTING)
+    enable_testing()
+    add_subdirectory(src/tests)
+endif()
+
+# CPack configuration
+set(CPACK_STRIP_FILES ON)
+set(CPACK_DEBIAN_PACKAGE_PRIORITY optional)
+set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
+set(CPACK_DEBIAN_PACKAGE_GENERATE_SHLIBS ON)
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Tristan Stenner <dbbrowser@nicht.dienstli.ch>")
+set(CPACK_ARCHIVE_COMPONENT_INSTALL ON)
+if(APPLE)
+    set(CPACK_DEFAULT_GEN TBZ2)
+elseif(WIN32)
+    set(CPACK_DEFAULT_GEN ZIP)
+    set(CPACK_NSIS_MODIFY_PATH ON)
+    set(CPACK_WIX_CMAKE_PACKAGE_REGISTRY ON)
+    set(CPACK_WIX_UPGRADE_GUID "78c885a7-e9c8-4ded-9b62-9abe47466950")
+elseif(UNIX)
+    set(CPACK_DEFAULT_GEN DEB)
+    set(CPACK_SET_DESTDIR 1)
+    set(CPACK_INSTALL_PREFIX "/usr")
+endif()
+set(CPACK_GENERATOR ${CPACK_DEFAULT_GEN} CACHE STRING "CPack pkg type(s) to generate")
+include(CPack)
