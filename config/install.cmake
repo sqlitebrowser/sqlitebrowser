@@ -24,17 +24,26 @@ if(UNIX)
     )
 endif()
 
-
 if(WIN32)
     install(TARGETS ${PROJECT_NAME}
         RUNTIME DESTINATION "."
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     )
 
+    if(sqlcipher)
+        set(DLL_NAME "sqlcipher.dll")
+    else()
+        set(DLL_NAME "sqlite3.dll")
+    endif()
+
+    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+        set(SSL_SUFIX "-x64")
+    endif()
+
     install(FILES
-        "$<TARGET_FILE_DIR:${LIBSQLITE_NAME}>/../bin/sqlite3.dll"
-        "$<TARGET_FILE_DIR:OpenSSL::SSL>/../bin/libcrypto-1_1-x64.dll"
-        "$<TARGET_FILE_DIR:OpenSSL::SSL>/../bin/libssl-1_1-x64.dll"
+        "$<TARGET_FILE_DIR:${LIBSQLITE_NAME}>/../bin/${DLL_NAME}"
+        "$<TARGET_FILE_DIR:OpenSSL::SSL>/../bin/libcrypto-1_1${SSL_SUFIX}.dll"
+        "$<TARGET_FILE_DIR:OpenSSL::SSL>/../bin/libssl-1_1${SSL_SUFIX}.dll"
         DESTINATION "."
     )
 
