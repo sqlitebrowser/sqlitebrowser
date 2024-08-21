@@ -31,19 +31,24 @@ if(WIN32)
     )
 
     if(sqlcipher)
-        set(DLL_NAME "sqlcipher.dll")
+        find_file(DLL_NAME sqlcipher.dll PATH_SUFFIXES bin ../bin ../../bin)
     else()
-        set(DLL_NAME "sqlite3.dll")
+        find_file(DLL_NAME sqlite3.dll PATH_SUFFIXES bin ../bin ../../bin)
     endif()
 
-    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-        set(SSL_SUFIX "-x64")
-    endif()
+    find_file(DLL_CRYPTO
+        NAMES libcrypto-1_1-x64.dll libcrypto-1_1.dll
+        PATH_SUFFIXES bin ../bin ../../bin
+    )
+    find_file(DLL_SSL
+        NAMES libssl-1_1-x64.dll libssl-1_1.dll
+        PATH_SUFFIXES bin ../bin ../../bin
+    )
 
     install(FILES
-        "$<TARGET_FILE_DIR:${LIBSQLITE_NAME}>/../bin/${DLL_NAME}"
-        "$<TARGET_FILE_DIR:OpenSSL::SSL>/../bin/libcrypto-1_1${SSL_SUFIX}.dll"
-        "$<TARGET_FILE_DIR:OpenSSL::SSL>/../bin/libssl-1_1${SSL_SUFIX}.dll"
+        ${DLL_NAME}
+        ${DLL_CRYPTO}
+        ${DLL_SSL}
         DESTINATION "."
     )
 
@@ -64,7 +69,7 @@ if(WIN32)
                 --no-system-d3d-compiler
                 --no-angle
                 --no-opengl-sw
-                \"${CMAKE_INSTALL_PREFIX}\"
+                \"${CMAKE_INSTALL_PREFIX}/$<TARGET_FILE_NAME:${PROJECT_NAME}>\"
             )"
         )
     endif()
