@@ -1,5 +1,10 @@
-set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "DB Browser for SQLite")
-find_package(OpenSSL 1.1.0 REQUIRED)
+if(sqlcipher)
+    set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "DB Browser for SQLCipher")
+else()
+    set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "DB Browser for SQLite")
+endif()
+
+find_package(OpenSSL 1.1.1 REQUIRED)
 if(MSVC)
     if(CMAKE_SIZEOF_VOID_P EQUAL 8)
         set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS,5.02 /ENTRY:mainCRTStartup")
