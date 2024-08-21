@@ -6,7 +6,7 @@
     <message>
         <location filename="../AboutDialog.ui" line="14"/>
         <source>About DB Browser for SQLite</source>
-        <translation>À propos de DB-Browser pour SQLite</translation>
+        <translation>À propos de DB Browser for SQLite</translation>
     </message>
     <message>
         <location filename="../AboutDialog.ui" line="29"/>
@@ -16,7 +16,7 @@
     <message>
         <location filename="../AboutDialog.ui" line="90"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/span&gt;&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://sqlitebrowser.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;https://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;https://doc.qt.io/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://doc.qt.io/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;We use the nalgeon/sqlean library for SQLite extensions support.&lt;br/&gt;This library is licensed under the MIT license, see the following for more information:&lt;br/&gt;&lt;/span&gt;&lt;a href=&quot;https://github.com/nalgeon/sqlean&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/nalgeon/sqlean&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Pastel SVG icon set by Michael Buckley under a Creative Commons Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;https://codefisher.org/pastel-svg/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://codefisher.org/pastel-svg/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite est une interface graphique libre et open source utilisée pour créer, concevoir et éditer des fichiers de base de données SQLite.&lt;/p&gt;&lt;p&gt;Il est placé sous la double licence Mozilla Public License Version 2 ainsi que GNU General Public License Version 3 ou ultérieure. Vous pouvez le modifier ou le redistribuer en respectant les conditions de ces licences.&lt;/p&gt;&lt;p&gt;Voir &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/a&gt; et &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/span&gt;&lt;/a&gt; pour les détails.&lt;/p&gt;&lt;p&gt;Pour plus d&apos;informations sur ce programme, veuillez consulter notre site Internet &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://sqlitebrowser.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Ce logiciel utilise le GPL/LGPL Qt Toolkit fourni par &lt;/span&gt;&lt;a href=&quot;https://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;.&lt;br/&gt; Voir &lt;/span&gt;&lt;a href=&quot;https://doc.qt.io/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://doc.qt.io/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; pour les conditions de licence et toute autre information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Nous utilisons la bibliothèque nalgeon/sqlean pour la reconnaissance des extensions SQLite.&lt;br/&gt;Cette bibliothèque est sous la licence MIT. Pour davantage d&apos;informations voir &lt;br/&gt;&lt;/span&gt;&lt;a href=&quot;https://github.com/nalgeon/sqlean&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/nalgeon/sqlean&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Il utilise aussi le jeu d&apos;icones Pastel SVG de Michael Buckley sous la licence Creative Commons Attribution Share Alike 4.0.&lt;br/&gt;Voir &lt;/span&gt;&lt;a href=&quot;https://codefisher.org/pastel-svg/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://codefisher.org/pastel-svg/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; pour les détails.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -54,7 +54,7 @@
     <message>
         <location filename="../AddRecordDialog.ui" line="87"/>
         <source>Values to insert. Pre-filled default values are inserted automatically unless they are changed.</source>
-        <translation>Valeurs à insérer. Les valeurs par défaut pré-remplies sont insérées automatiquement à moins qu&apos;elles ne soient modifiées.</translation>
+        <translation>Valeurs à insérer. Les valeurs par défaut pré-remplies sont insérées automatiquement à moins qu&apos;elles soient modifiées.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="93"/>
@@ -301,7 +301,7 @@
     <message>
         <location filename="../Application.cpp" line="368"/>
         <source>DB Browser for SQLite Version %1.</source>
-        <translation>DB Browser pour SQLite Version %1.</translation>
+        <translation>DB Browser for SQLite Version %1.</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="369"/>
@@ -440,7 +440,7 @@ Il sera appliqué à chaque valeur avant son affichage.</translation>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="19"/>
         <source>Decimal number</source>
-        <translation>Nombre décimal</translation>
+        <translation>Nombre entier (tronqué)</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="20"/>
@@ -460,57 +460,57 @@ Il sera appliqué à chaque valeur avant son affichage.</translation>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="26"/>
         <source>Apple NSDate to date</source>
-        <translation>Apple NSDate vers date</translation>
+        <translation>NSDate Apple vers date &amp; heure</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="27"/>
         <source>Java epoch (milliseconds) to date</source>
-        <translation>Java epoch (milliseconds) en date</translation>
+        <translation>Époque Java vers date et heure (milliseconde)</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="28"/>
         <source>.NET DateTime.Ticks to date</source>
-        <translation>.NET DateTime.Ticks en date</translation>
+        <translation>DateTime.Ticks .NET vers date &amp; heure</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="29"/>
         <source>Julian day to date</source>
-        <translation>Date julienne vers Date</translation>
+        <translation>Jour julien vers date &amp; heure</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="31"/>
         <source>Unix epoch to local time</source>
-        <translation>Heure Unix epoch vers heure locale</translation>
+        <translation>Époque Unix vers date &amp; heure locales</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="32"/>
         <source>WebKit / Chromium epoch to date</source>
-        <translation type="unfinished"></translation>
+        <translation>Époque WebKit/Chromium vers date &amp; heure</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="33"/>
         <source>WebKit / Chromium epoch to local time</source>
-        <translation type="unfinished"></translation>
+        <translation>Époque WebKit/Chromium vers date &amp; heure locales</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="35"/>
         <source>Date as dd/mm/yyyy</source>
-        <translation>Date au format DD/MM/AAAA</translation>
+        <translation>Date au format JJ/MM/AAAA</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="37"/>
         <source>Lower case</source>
-        <translation>Minuscule</translation>
+        <translation>Minuscules</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="40"/>
         <source>Binary GUID to text</source>
-        <translation>GUID binaire en texte</translation>
+        <translation>GUID binaire vers texte</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="41"/>
         <source>SpatiaLite Geometry to SVG</source>
-        <translation>SpatiaLite Geometry vers SVG</translation>
+        <translation>Geometrie SpatiaLite vers SVG</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="145"/>
@@ -539,22 +539,22 @@ Il sera appliqué à chaque valeur avant son affichage.</translation>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="24"/>
         <source>Round number</source>
-        <translation>Nombre arrondi</translation>
+        <translation>Nombre arrondi (entier le plus proche)</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="30"/>
         <source>Unix epoch to date</source>
-        <translation>Date Unix epoch en Date</translation>
+        <translation>Époque Unix vers date &amp; heure</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="38"/>
         <source>Upper case</source>
-        <translation>Majuscule</translation>
+        <translation>Majuscules</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="34"/>
         <source>Windows DATE to date</source>
-        <translation>Date Windows en Date</translation>
+        <translation>DATE Windows vers date &amp; heure</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="43"/>
@@ -727,7 +727,7 @@ Il sera appliqué à chaque valeur avant son affichage.</translation>
     <message>
         <location filename="../sqlitedb.cpp" line="732"/>
         <source>Database didn&apos;t close correctly, probably still busy</source>
-        <translation>La base de données ne s&apos;est pas fermée correctement; Elle est probablement encore occupée</translation>
+        <translation>La base de données ne s&apos;est pas fermée correctement ; elle est probablement encore occupée</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="757"/>
@@ -878,7 +878,7 @@ Message du moteur de base de données :
     <message>
         <location filename="../sqlitedb.cpp" line="2183"/>
         <source>Error loading built-in extension: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur lors du chargement de l&apos;extension intégrée %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="2209"/>
@@ -1455,17 +1455,17 @@ Voulez-vous appliquer les données modifiées à la ligne=%1, colonne=%2 ?</tran
     <message>
         <location filename="../EditTableDialog.ui" line="85"/>
         <source>Make this a &apos;WITHOUT ROWID&apos; table. Setting this flag requires specifying a PRIMARY KEY (which can be of any type, and can be composite), and forbids the AUTOINCREMENT flag.</source>
-        <translation type="unfinished"></translation>
+        <translation>Rendre cette table &quot;WITHOUT ROWID&quot;. Activer ce paramètre requiert de spécifier une PRIMARY KEY (qui peut être de type quelconque, voire composite) et interdit le paramètre AUTOINCREMENT.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="92"/>
         <source>On Conflict</source>
-        <translation>Sur le conflit</translation>
+        <translation>Sur conflit</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="133"/>
         <source>Strict</source>
-        <translation>Stricte</translation>
+        <translation>Strict</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="143"/>
@@ -1644,7 +1644,7 @@ Voulez-vous appliquer les données modifiées à la ligne=%1, colonne=%2 ?</tran
     <message>
         <location filename="../EditTableDialog.ui" line="685"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Warning: &lt;/span&gt;There is something with this table definition that our parser doesn&apos;t fully understand. Modifying and saving this table might result in problems.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Attention : &lt;/span&gt;Il y a quelque chose dans la définition de cette table que notre analyseur syntaxique n&apos;a pas complètement compris. La modification et l&apos;enregistrement de cette table peuvent créer des problèmes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Attention&amp;nbsp;: &lt;/span&gt;Il y a quelque chose dans la définition de cette table que notre analyseur syntaxique n&apos;a pas complètement compris. La modification et l&apos;enregistrement de cette table peuvent créer des problèmes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="709"/>
@@ -2752,7 +2752,7 @@ x~y	Fourchette : valeurs entre x et y
     <message>
         <location filename="../MainWindow.ui" line="14"/>
         <source>DB Browser for SQLite</source>
-        <translation>DB Browser pour SQLite</translation>
+        <translation>DB Browser for SQLite</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1223"/>
@@ -3189,7 +3189,7 @@ x~y	Fourchette : valeurs entre x et y
     <message>
         <location filename="../MainWindow.ui" line="2186"/>
         <source>This button lets you save all the settings associated to the open DB to a DB Browser for SQLite project file</source>
-        <translation>Ce bouton vous permet d&apos;enregistrer tous les paramètres associés à la base de données ouverte dans un fichier de projet DB Browser pour SQLite</translation>
+        <translation>Ce bouton vous permet d&apos;enregistrer tous les paramètres associés à la base de données ouverte dans un fichier de projet DB Browser for SQLite</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="50"/>
@@ -3215,56 +3215,58 @@ x~y	Fourchette : valeurs entre x et y
     <message>
         <location filename="../MainWindow.ui" line="206"/>
         <source>Temp Store</source>
-        <translation type="unfinished"></translation>
+        <translation>Stockage temporaire</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="222"/>
         <source>Secure Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Suppression sécurisée</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="260"/>
         <source>Case Sensitive Like</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Uppercase LIKE (SQL language)</translatorcomment>
+        <translation>LIKE sensble à la casse</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="342"/>
         <source>Journal Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Mode de journal</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="358"/>
         <source>Journal Size Limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Taille limite du journal</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="374"/>
         <source>Recursive Triggers</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Uppercase TRIGGER (SQL language)</translatorcomment>
+        <translation>TRIGGERs récursifs</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="388"/>
         <source>Delete</source>
         <comment>pragma</comment>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="393"/>
         <source>Truncate</source>
         <comment>pragma</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tronquer</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="398"/>
         <source>Persist</source>
         <comment>pragma</comment>
-        <translation type="unfinished"></translation>
+        <translation>Persister</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="403"/>
         <source>Memory</source>
         <comment>pragma</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mémoire</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="408"/>
@@ -3276,120 +3278,123 @@ x~y	Fourchette : valeurs entre x et y
         <location filename="../MainWindow.ui" line="413"/>
         <source>Off</source>
         <comment>pragma</comment>
-        <translation type="unfinished"></translation>
+        <translation>Désactivé</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="468"/>
         <source>Page Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Taille de page</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="513"/>
         <source>Foreign Keys</source>
-        <translation type="unfinished">Clés étrangères</translation>
+        <translation>Clés étrangères</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="735"/>
         <source>Auto Vacuum</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Uppercase VACUUM (SQL language)</translatorcomment>
+        <translation>VACUUM automatique</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="758"/>
         <source>Max Page Count</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre maximum de pages</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="794"/>
         <source>Normal</source>
         <comment>pragma</comment>
-        <translation type="unfinished"></translation>
+        <translation>Normal</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="799"/>
         <source>Exclusive</source>
         <comment>pragma</comment>
-        <translation type="unfinished"></translation>
+        <translation>Exclusif</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="810"/>
         <source>Checkpoint Full FSYNC</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Uppercase FULLSYNC (SQL language)</translatorcomment>
+        <translation>Checkpoint avec FULLFSYNC</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="846"/>
         <source>Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Désactivé</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="851"/>
         <source>Normal</source>
-        <translation type="unfinished"></translation>
+        <translation>Normal</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="856"/>
         <location filename="../MainWindow.ui" line="1106"/>
         <source>Full</source>
-        <translation type="unfinished"></translation>
+        <translation>Complète</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="865"/>
         <source>Default</source>
-        <translation type="unfinished">Défaut</translation>
+        <translation>Par défaut</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="870"/>
         <source>File</source>
-        <translation type="unfinished">Fichier</translation>
+        <translation>Fichier</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="875"/>
         <source>Memory</source>
-        <translation type="unfinished"></translation>
+        <translation>Mémoire</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="886"/>
         <source>Automatic Index</source>
-        <translation type="unfinished"></translation>
+        <translation>Index automatique</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="953"/>
         <source>Ignore Check Constraints</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignorer les contraintes CHECK</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="969"/>
         <source>Full FSYNC</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Uppercase FULLFSYNC (SQL language)</translatorcomment>
+        <translation>Utiliser FULLFSYNC</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="985"/>
         <source>WAL Auto Checkpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Pages du WAL avant checkpoint automatique</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1011"/>
         <source>User Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Version utilisateur</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1071"/>
         <source>Synchronous</source>
-        <translation type="unfinished"></translation>
+        <translation>Synchronisation</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1101"/>
         <source>None</source>
-        <translation type="unfinished">Aucun</translation>
+        <translation>Aucun</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1111"/>
         <source>Incremental</source>
-        <translation type="unfinished"></translation>
+        <translation>Incrémental</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1122"/>
         <source>Locking Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Mode de verrouillage</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1150"/>
@@ -3411,7 +3416,7 @@ x~y	Fourchette : valeurs entre x et y
     <message>
         <location filename="../MainWindow.ui" line="2210"/>
         <source>This button lets you open a DB Browser for SQLite project file</source>
-        <translation>Ce bouton vous permet d&apos;ouvrir un fichier de projet DB Browser pour SQLite</translation>
+        <translation>Ce bouton vous permet d&apos;ouvrir un fichier de projet DB Browser for SQLite</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2493"/>
@@ -3773,7 +3778,7 @@ Vous pouvez faire glisser les instructions SQL de la colonne Schéma et les dép
 You can drag SQL statements from an object row and drop them into other applications or into another instance of &apos;DB Browser for SQLite&apos;.
 </source>
         <translation>Ceci est la structure de la base de données ouverte.
-Vous pouvez faire glisser les instructions SQL d&apos;une ligne d&apos;objet et les déposer dans d&apos;autres applications ou dans une autre instance de &apos;DB Browser pour SQLite&apos;.
+Vous pouvez faire glisser les instructions SQL d&apos;une ligne d&apos;objet et les déposer dans d&apos;autres applications ou dans une autre instance de &apos;DB Browser for SQLite&apos;.
 </translation>
     </message>
     <message>
@@ -4083,12 +4088,12 @@ Motif : %1</translation>
     <message>
         <location filename="../MainWindow.cpp" line="2464"/>
         <source>A new DB Browser for SQLite version is available (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Please download at &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</source>
-        <translation>Une nouvelle version de DB Browser pour SQLite est disponible (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Vous pouvez la télécharger sur &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</translation>
+        <translation>Une nouvelle version de DB Browser for SQLite est disponible (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Vous pouvez la télécharger sur &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2694"/>
         <source>DB Browser for SQLite project file (*.sqbpro)</source>
-        <translation>Fichier de projet DB Browser pour SQLite (*.sqbpro)</translation>
+        <translation>Fichier de projet DB Browser for SQLite (*.sqbpro)</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="972"/>
@@ -4238,7 +4243,7 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="234"/>
         <source>Automatically load the last opened DB file at startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Au démarrage, rouvrir la dernière base de données utilisée</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="900"/>
@@ -4671,7 +4676,7 @@ Faites une sauvegarde !</translation>
     <message>
         <location filename="../PlotDock.ui" line="42"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This pane shows the list of columns of the currently browsed table or the just executed query. You can select the columns that you want to be used as X or Y axis for the plot pane below. The table shows detected axis type that will affect the resulting plot. For the Y axis you can only select numeric columns, but for the X axis you will be able to select:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Date/Time&lt;/span&gt;: strings with format &amp;quot;yyyy-MM-dd hh:mm:ss&amp;quot; or &amp;quot;yyyy-MM-ddThh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Date&lt;/span&gt;: strings with format &amp;quot;yyyy-MM-dd&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Time&lt;/span&gt;: strings with format &amp;quot;hh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Label&lt;/span&gt;: other string formats. Selecting this column as X axis will produce a Bars plot with the column values as labels for the bars&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Numeric&lt;/span&gt;: integer or real values&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Double-clicking the Y cells you can change the used color for that graph.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ce volet affiche la liste des colonnes de la table actuellement parcourue ou de la requête qui vient d&apos;être exécutée. Vous pouvez sélectionner les colonnes que vous voulez utiliser comme axe X ou Y pour le volet de tracé ci-dessous. Le tableau montre le type d&apos;axe détecté qui affectera le tracé résultant. Pour l&apos;axe Y, vous ne pouvez sélectionner que des colonnes numériques, mais pour l&apos;axe X, vous pourrez sélectionner :&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Date/Heure&lt;/span&gt; : chaînes au format &amp;quot;aaaa-MM-jj hh:mm:ss&amp;quot; ou &amp;quot;aaaa-MM-jjThh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Date&lt;/span&gt; : chaînes au format &amp;quot;aaaa-MM-jj&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Heures&lt;/span&gt; : chaînes au format &amp;quot;hh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Label&lt;/span&gt; : autres formats de chaînes. Sélectionner cette colonne comme axe X produira un diagramme en barres avec les valeurs de la colonne comme étiquettes pour les barres&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Numerique&lt;/span&gt; : Nombres entiers ou Réels&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;En double-cliquant sur une cellule Y, vous pouvez changer la couleur utilisée dans le graphique.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ce volet affiche la liste des colonnes de la table actuellement parcourue ou de la requête qui vient d&apos;être exécutée. Vous pouvez sélectionner les colonnes que vous voulez utiliser comme axe X ou Y pour le volet de tracé ci-dessous. Le tableau montre le type d&apos;axe détecté qui affectera le tracé résultant. Pour l&apos;axe Y, vous ne pouvez sélectionner que des colonnes numériques, mais pour l&apos;axe X, vous pourrez sélectionner&amp;nbsp;:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Date/Heure&lt;/span&gt;&amp;nbsp;: chaînes au format &amp;quot;aaaa-MM-jj hh:mm:ss&amp;quot; ou &amp;quot;aaaa-MM-jjThh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Date&lt;/span&gt;&amp;nbsp;: chaînes au format &amp;quot;aaaa-MM-jj&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Heures&lt;/span&gt;&amp;nbsp;: chaînes au format &amp;quot;hh:mm:ss&amp;quot;&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Label&lt;/span&gt;&amp;nbsp;: autres formats de chaînes. Sélectionner cette colonne comme axe X produira un diagramme en barres avec les valeurs de la colonne comme étiquettes pour les barres&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Numerique&lt;/span&gt;&amp;nbsp;: Nombres entiers ou Réels&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;En double-cliquant sur une cellule Y, vous pouvez changer la couleur utilisée dans le graphique.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="58"/>
@@ -5186,7 +5191,7 @@ de la base de données</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="1447"/>
         <source>String</source>
-        <translation>Chaîne de caractère</translation>
+        <translation>Chaîne de caractères</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1467"/>
@@ -5559,7 +5564,7 @@ Peut être mis à 0 pour désactiver la complétion.</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="1789"/>
         <source>Select extensions to load for every database:</source>
-        <translation>Sélectionner une extension à charger pour toutes les bases de données :</translation>
+        <translation>Sélectionner les extensions à charger pour toutes les bases de données :</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1813"/>
@@ -5574,12 +5579,12 @@ Peut être mis à 0 pour désactiver la complétion.</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="1852"/>
         <source>Select built-in extensions to load for every database:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner les extensions intégrées à charger pour toutes les bases de données :</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1866"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;While supporting the REGEXP operator SQLite doesn&apos;t implement any regular expression&lt;br/&gt;algorithm but calls back the running application. DB Browser for SQLite implements this&lt;br/&gt;algorithm for you to let you use REGEXP out of the box. However, as there are multiple possible&lt;br/&gt;implementations of this and you might want to use another one, you&apos;re free to disable the&lt;br/&gt;application&apos;s implementation and load your own by using an extension. Requires restart of the application.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bien que SQLite supporte l&apos;opérateur REGEXP, aucun algorithme&lt;br&gt;d&apos;expression régulière n&apos;est implémenté : l&apos;application doit fournir le sien. DB Browser pour SQLite implémente&lt;br/&gt;cet algorithme pour vous permettre d&apos;utiliser REGEXP. Cependant, comme il existe plusieurs implémentations possibles&lt;br/&gt;et que vous souhaitez peut-être utiliser autre chose, vous êtes libre de désactiver cette implémentation dans l&apos;application&lt;br/&gt;pour utiliser la vôtre en utilisant une extension. Cela nécessite le redémarrage de l&apos;application.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bien que SQLite supporte l&apos;opérateur REGEXP, aucun algorithme&lt;br&gt;d&apos;expression régulière n&apos;est implémenté : l&apos;application doit fournir le sien. DB Browser for SQLite implémente&lt;br/&gt;cet algorithme pour vous permettre d&apos;utiliser REGEXP. Cependant, comme il existe plusieurs implémentations possibles&lt;br/&gt;et que vous souhaitez peut-être utiliser autre chose, vous êtes libre de désactiver cette implémentation dans l&apos;application&lt;br/&gt;pour utiliser la vôtre en utilisant une extension. Cela nécessite le redémarrage de l&apos;application.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1869"/>
@@ -5899,7 +5904,7 @@ Veuillez vérifier à nouveau.</translation>
     <message>
         <location filename="../FileDialog.h" line="16"/>
         <source>DB Browser for SQLite Project Files (*.sqbpro)</source>
-        <translation>Fichiers projet DB Browser pour SQLite (*.sqbpro)</translation>
+        <translation>Fichiers projet DB Browser for SQLite (*.sqbpro)</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="20"/>
@@ -6156,7 +6161,7 @@ Veuillez vérifier à nouveau.</translation>
     <message>
         <location filename="../RemoteDock.ui" line="139"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB Browser for SQLite. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to &amp;quot;Generate client certificate&amp;quot; (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB Browser for SQLite Preferences. Click the button to add a new certificate to DB Browser for SQLite and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dans ce volet, les bases de données distantes du site Web dbhub.io peuvent être ajoutées à DB Browser pour SQLite. Il faut d&apos;abord vous identifier :&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Connectez-vous sur le site dbhub.io (utilisez vos identifiants GitHub ou ce que vous voulez)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Cliquez sur le bouton &amp;quot;Generate client certificate&amp;quot; (c&apos;est votre identité). Cela vous fournira un fichier de certificat (enregistrez-le sur votre disque local).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Allez dans l&apos;onglet Serveur distant des Préférences DB Browser pour SQLite. Cliquez sur le bouton pour ajouter un nouveau certificat à DB Browser pour SQLite et choisissez le fichier de certificat que vous venez de télécharger.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Maintenant, le panneau Serveur distant affiche votre identité et vous pouvez ajouter des bases de données distantes..&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dans ce volet, les bases de données distantes du site Web dbhub.io peuvent être ajoutées à DB Browser for SQLite. Il faut d&apos;abord vous identifier&amp;nbsp;:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Connectez-vous sur le site dbhub.io (utilisez vos identifiants GitHub ou ce que vous voulez)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Cliquez sur le bouton &amp;quot;Generate client certificate&amp;quot; (c&apos;est votre identité). Cela vous fournira un fichier de certificat (enregistrez-le sur votre disque local).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Allez dans l&apos;onglet Serveur distant des Préférences DB Browser for SQLite. Cliquez sur le bouton pour ajouter un nouveau certificat à DB Browser for SQLite et choisissez le fichier de certificat que vous venez de télécharger.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Maintenant, le panneau Serveur distant affiche votre identité et vous pouvez ajouter des bases de données distantes..&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="173"/>
@@ -6281,7 +6286,7 @@ Veuillez vérifier à nouveau.</translation>
     <message>
         <location filename="../RemoteDock.ui" line="390"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;You are currently using a built-in, read-only identity. For uploading your database, you need to configure and use your DBHub.io account.&lt;/p&gt;&lt;p&gt;No DBHub.io account yet? &lt;a href=&quot;https://dbhub.io/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Create one now&lt;/span&gt;&lt;/a&gt; and import your certificate &lt;a href=&quot;#preferences&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;here&lt;/span&gt;&lt;/a&gt; to share your databases.&lt;/p&gt;&lt;p&gt;For online help visit &lt;a href=&quot;https://dbhub.io/about&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;here&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Vous utilisez actuellement une identité intégrée, en lecture seule. Pour télécharger votre base de données, vous devez configurer et utiliser votre compte DBHub.io. &lt;/p&gt;&lt;p&gt;Vous n&apos;avez pas encore de compte DBHub.io ? &lt;a href=&quot;https://dbhub.io/&quot;&gt;&lt;span style=&quot; text-decoration : underline ; color:#007af4 ;&quot;&gt;Créez-en un maintenant&lt;/span&gt;&lt;/a&gt; et importez votre certificat &lt;a href=&quot;#preferences&quot;&gt;&lt;span style=&quot; text-decoration : underline ; color:#007af4 ;&quot;&gt;ici&lt;/span&gt;&lt;/a&gt; pour partager vos bases de données.&lt;/p&gt;&lt;p&gt;Pour l&apos;aide en ligne, visitez &lt;a href=&quot;https://dbhub.io/about&quot;&gt;&lt;span style=&quot; text-decoration : underline ; color:#007af4 ;&quot;&gt;ici&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Vous utilisez actuellement une identité intégrée, en lecture seule. Pour télécharger votre base de données, vous devez configurer et utiliser votre compte DBHub.io. &lt;/p&gt;&lt;p&gt;Vous n&apos;avez pas encore de compte DBHub.io&amp;nbsp;? &lt;a href=&quot;https://dbhub.io/&quot;&gt;&lt;span style=&quot; text-decoration : underline ; color:#007af4 ;&quot;&gt;Créez-en un maintenant&lt;/span&gt;&lt;/a&gt; et importez votre certificat &lt;a href=&quot;#preferences&quot;&gt;&lt;span style=&quot; text-decoration : underline ; color:#007af4 ;&quot;&gt;ici&lt;/span&gt;&lt;/a&gt; pour partager vos bases de données.&lt;/p&gt;&lt;p&gt;Pour l&apos;aide en ligne, visitez &lt;a href=&quot;https://dbhub.io/about&quot;&gt;&lt;span style=&quot; text-decoration : underline ; color:#007af4 ;&quot;&gt;ici&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="240"/>
@@ -6683,12 +6688,12 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="37"/>
         <source>Ctrl+PgUp</source>
-        <translation type="unfinished">Ctrl+Page Haut</translation>
+        <translation>Ctrl+Page Haut</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="42"/>
         <source>Ctrl+PgDown</source>
-        <translation type="unfinished">Ctrl+Page Bas</translation>
+        <translation>Ctrl+Page Bas</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="256"/>
@@ -7577,7 +7582,7 @@ Appuyez simultanément sur %3+Maj et cliquez pour arriver ici</translation>
     <message>
         <location filename="../TableBrowser.ui" line="613"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button creates a new record in the database. Hold the mouse button to open a pop-up menu of different options:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt;: insert a new record with default values in the database.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Insert Values...&lt;/span&gt;: open a dialog for entering values before they are inserted in the database. This allows to enter values accomplishing the different constraints. This dialog is also open if the &lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt; option fails due to these constraints.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ce bouton crée un nouvel enregistrement dans la base de données. Maintenez le bouton de la souris enfoncé pour ouvrir un menu contextuel de différentes options :&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Nouvel enregistrement&lt;/span&gt; : Insère un nouvel enregistrement avec les valeurs par défaut dans la base de données.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Insérer des valeurs...&lt;/span&gt; : ouvre une boite de dialogue pour saisir des valeurs avant leur insertion dans la base de données. Ceci permet de saisir des valeurs correspondant aux différentes contraintes. Cette boîte de dialogue est également ouverte si l&apos;option &lt;span style=&quot; font-weight:600;&quot;&gt;Nouvel enregistrement &lt;/span&gt; est en erreur à cause de ces contraintes.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ce bouton crée un nouvel enregistrement dans la base de données. Maintenez le bouton de la souris enfoncé pour ouvrir un menu contextuel de différentes options&amp;nbsp;:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Nouvel enregistrement&lt;/span&gt;&amp;nbsp;: Insère un nouvel enregistrement avec les valeurs par défaut dans la base de données.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Insérer des valeurs...&lt;/span&gt;&amp;nbsp;: ouvre une boite de dialogue pour saisir des valeurs avant leur insertion dans la base de données. Ceci permet de saisir des valeurs correspondant aux différentes contraintes. Cette boîte de dialogue est également ouverte si l&apos;option &lt;span style=&quot; font-weight:600;&quot;&gt;Nouvel enregistrement &lt;/span&gt; est en erreur à cause de ces contraintes.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="622"/>
@@ -7659,7 +7664,7 @@ Appuyez simultanément sur %3+Maj et cliquez pour arriver ici</translation>
     <message>
         <location filename="../TableBrowser.ui" line="717"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This pop-up menu provides the following options applying to the currently browsed and filtered table:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Export to CSV: this option exports the data of the browsed table as currently displayed (after filters, display formats and order column) to a CSV file.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Save as view: this option saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ce menu déroulant fournit les options suivantes s&apos;appliquant à la table actuellement parcourue et filtrée:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Exporter au format CSV : cette option exporte les données de la table parcourue telles qu&apos;elles sont actuellement affichées (après filtres, formats d&apos;affichage et colonne d&apos;ordre) vers un fichier CSV.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Enregistrer comme vue : cette option permet d&apos;enregistrer les paramètres actuels de la table parcourue (filtres, formats d&apos;affichage et colonne d&apos;ordre) dans une vue SQL que vous pourrez ensuite parcourir ou utiliser dans les instructions SQL.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ce menu déroulant fournit les options suivantes s&apos;appliquant à la table actuellement parcourue et filtrée:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Exporter au format CSV&amp;nbsp;: cette option exporte les données de la table parcourue telles qu&apos;elles sont actuellement affichées (après filtres, formats d&apos;affichage et colonne d&apos;ordre) vers un fichier CSV.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Enregistrer comme vue&amp;nbsp;: cette option permet d&apos;enregistrer les paramètres actuels de la table parcourue (filtres, formats d&apos;affichage et colonne d&apos;ordre) dans une vue SQL que vous pourrez ensuite parcourir ou utiliser dans les instructions SQL.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="722"/>
@@ -8080,7 +8085,7 @@ Laissez le champ vide pour utiliser l&apos;encodage de la base de données.</tra
     <message>
         <location filename="../VacuumDialog.ui" line="39"/>
         <source>Please select the databases to co&amp;mpact:</source>
-        <translation>Veuillez saisir le nom de la base de données à co&amp;mpacter :</translation>
+        <translation>Veuillez sélectionner les bases de données à co&amp;mpacter :</translation>
     </message>
 </context>
 </TS>
