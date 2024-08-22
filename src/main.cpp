@@ -29,6 +29,7 @@ void boxMessageOutput(QtMsgType, const QMessageLogContext &, const QString &msg)
 
 int main( int argc, char ** argv )
 {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
 #if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
@@ -36,6 +37,7 @@ int main( int argc, char ** argv )
 #endif
 #endif
     QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
+#endif
 #ifdef Q_OS_WIN
     // In Windows, there is no output to terminal for a graphical application, so we install
     // the output to message box, until the main window is shown or the application exits.
