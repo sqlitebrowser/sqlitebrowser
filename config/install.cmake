@@ -36,14 +36,23 @@ if(WIN32)
         find_file(DLL_NAME sqlite3.dll PATH_SUFFIXES bin ../bin ../../bin)
     endif()
 
-    find_file(DLL_CRYPTO
-        NAMES libcrypto-1_1-x64.dll libcrypto-1_1.dll
-        PATH_SUFFIXES bin ../bin ../../bin
+    string(REGEX MATCH "^([0-9]+)\.([0-9]+)" SSL_OUT "${OPENSSL_VERSION}")
+    set(DLL_CRYPTO_NAMES
+        "libcrypto-${CMAKE_MATCH_1}_${CMAKE_MATCH_2}-x64.dll"
+        "libcrypto-${CMAKE_MATCH_1}-x64.dll"
+        "libcrypto-${CMAKE_MATCH_1}_${CMAKE_MATCH_2}.dll"
+        "libcrypto-${CMAKE_MATCH_1}.dll"
     )
-    find_file(DLL_SSL
-        NAMES libssl-1_1-x64.dll libssl-1_1.dll
-        PATH_SUFFIXES bin ../bin ../../bin
+
+    set(DLL_SSL_NAMES
+        "libssl-${CMAKE_MATCH_1}_${CMAKE_MATCH_2}-x64.dll"
+        "libssl-${CMAKE_MATCH_1}-x64.dll"
+        "libssl-${CMAKE_MATCH_1}_${CMAKE_MATCH_2}.dll"
+        "libssl-${CMAKE_MATCH_1}.dll"
     )
+
+    find_file(DLL_CRYPTO NAMES ${DLL_CRYPTO_NAMES} PATH_SUFFIXES bin ../bin ../../bin)
+    find_file(DLL_SSL NAMES ${DLL_SSL_NAMES} PATH_SUFFIXES bin ../bin ../../bin)
 
     install(FILES
         ${DLL_NAME}
