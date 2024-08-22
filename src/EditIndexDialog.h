@@ -25,7 +25,7 @@ private slots:
     void accept() override;
     void reject() override;
 
-    void tableChanged(const QString& new_table, bool initialLoad = false);
+    void tableChanged(int table_name_idx);
     void checkInput();
     void addToIndex(const QModelIndex& idx = QModelIndex());
     void removeFromIndex(const QModelIndex& idx = QModelIndex());
@@ -44,6 +44,7 @@ private:
     void updateColumnLists();
     void updateSqlText();
     void moveCurrentColumn(bool down);
+    void tableChanged(const QString& new_table, bool initialLoad);
 };
 
 #endif

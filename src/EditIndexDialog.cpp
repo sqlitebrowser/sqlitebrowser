@@ -89,6 +89,10 @@ EditIndexDialog::~EditIndexDialog()
     delete ui;
 }
 
+void EditIndexDialog::tableChanged(int table_name_idx) {
+    tableChanged(ui->comboTableName->itemText(table_name_idx), false);
+}
+
 void EditIndexDialog::tableChanged(const QString& new_table, bool initialLoad)
 {
     // Set the table name and clear all index columns
