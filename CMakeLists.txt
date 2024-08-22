@@ -10,20 +10,21 @@ include(GNUInstallDirs)
 
 include(config/options.cmake)
 
-if("${QT_MAJOR}" STREQUAL "Qt5")
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+add_executable(${PROJECT_NAME})
+
+
+if(QT_MAJOR STREQUAL "Qt5")
     set(CMAKE_CXX_STANDARD 14)
-elseif("${QT_MAJOR}" STREQUAL "Qt6")
+elseif(QT_MAJOR STREQUAL "Qt6")
     set(CMAKE_CXX_STANDARD 17)
-    message(FATAL_ERROR "Qt6 is not supported yet")
 else()
     message(FATAL_ERROR "Uknown Qt Version: ${QT_MAJOR}")
 endif()
 
 set(CMAKE_CXX_STANDARD_REQUIRED True)
-
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOUIC ON)
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" "${CMAKE_MODULE_PATH}")
 
@@ -31,7 +32,6 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release")
 endif()
 
-add_executable(${PROJECT_NAME})
 set_target_properties(${PROJECT_NAME} PROPERTIES
     WIN32_EXECUTABLE ON
     MACOSX_BUNDLE ON
@@ -68,6 +68,13 @@ set(QT_LIBS
     ${QT_MAJOR}::Concurrent
     ${QT_MAJOR}::Xml
 )
+if(QT_MAJOR STREQUAL "Qt6")
+    find_package(Qt6 REQUIRED COMPONENTS Core5Compat)
+    list(APPEND QT_LIBS Qt6::Core5Compat)
+    set_target_properties(${PROJECT_NAME} PROPERTIES
+        AUTOUIC_OPTIONS "--connections=string"
+    )
+endif()
 
 target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ${CMAKE_CURRENT_LIST_DIR}/libs/json)
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR} src)
