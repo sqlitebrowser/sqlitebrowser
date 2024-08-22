@@ -95,12 +95,14 @@ std::string CondFormat::filterToSqlCondition(const QString& value, const QString
                 numeric = true;
                 val = "''";
             } else {
-                value.midRef(2).toFloat(&numeric);
+                // TODO: check midRef
+                value.mid(2).toFloat(&numeric);
                 op = value.left(2);
                 val = value.mid(2);
             }
         } else if(value.at(0) == '>' || value.at(0) == '<') {
-            value.midRef(1).toFloat(&numeric);
+            // TODO: check midRef
+            value.mid(1).toFloat(&numeric);
             op = value.at(0);
             val = value.mid(1);
         } else if(value.at(0) == '=') {
