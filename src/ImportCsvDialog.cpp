@@ -399,9 +399,12 @@ CSVParser::ParserResult ImportCsvDialog::parseCSV(const QString &fileName, std::
     // Only show progress dialog if we parse all rows. The assumption here is that if a row count limit has been set, it won't be a very high one.
     if(count == 0)
         csv.setCSVProgress(new CSVImportProgress(file.size()));
-
     QTextStream tstream(&file);
+    // textstream.setCodec(QTextCodec::codecForName("UTF-8"));
+    // is no longer needed in Qt6 since QTextStream defaults to utf-8.
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     tstream.setCodec(currentEncoding().toUtf8());
+#endif
 
     return csv.parse(rowFunction, tstream, count);
 }
