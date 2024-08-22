@@ -33,8 +33,8 @@ ExportDataDialog::ExportDataDialog(DBBrowserDB& db, ExportFormats format, QWidge
 
     // Retrieve the saved dialog preferences
     ui->checkHeader->setChecked(Settings::getValue("exportcsv", "firstrowheader").toBool());
-    setSeparatorChar(Settings::getValue("exportcsv", "separator").toInt());
-    setQuoteChar(Settings::getValue("exportcsv", "quotecharacter").toInt());
+    setSeparatorChar(QChar(Settings::getValue("exportcsv", "separator").toInt()));
+    setQuoteChar(QChar(Settings::getValue("exportcsv", "quotecharacter").toInt()));
     setNewLineString(Settings::getValue("exportcsv", "newlinecharacters").toString());
     ui->checkPrettyPrint->setChecked(Settings::getValue("exportjson", "prettyprint").toBool());
 

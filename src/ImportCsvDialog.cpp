@@ -886,7 +886,7 @@ char32_t ImportCsvDialog::toUtf8(const QString& s) const
     QByteArray ba = s.toUtf8();
 
     char32_t result = 0;
-    for(int i=std::min(ba.size()-1,3);i>=0;i--)
+    for(QByteArray::size_type i=std::min(ba.size()-1,QByteArray::size_type(3));i>=0;i--)
         result = (result << 8) + static_cast<unsigned char>(ba.at(i));
 
     return result;
