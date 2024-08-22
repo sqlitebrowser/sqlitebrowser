@@ -1778,8 +1778,8 @@ void MainWindow::updateRecentFileActions()
         if(i < 9)
         {
             recentFileActs[i]->setShortcuts({
-                                                QKeySequence(static_cast<int>(Qt::CTRL + (Qt::Key_1+static_cast<unsigned int>(i)))),
-                                                QKeySequence(static_cast<int>(Qt::CTRL + Qt::SHIFT + (Qt::Key_1+static_cast<unsigned int>(i))))
+                                                QKeySequence(Qt::CTRL | (Qt::Key_1 + i)),
+                                                QKeySequence(Qt::CTRL | Qt::SHIFT | (Qt::Key_1 + i))
                                             });
         }
     }
