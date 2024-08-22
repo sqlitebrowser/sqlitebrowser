@@ -9,7 +9,6 @@
 #include <QFileInfo>
 #include <QProxyStyle>
 #include <QStyleOption>
-#include <QDesktopWidget>
 #include <QScreen>
 
 #include "Application.h"
