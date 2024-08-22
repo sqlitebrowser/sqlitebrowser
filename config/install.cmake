@@ -71,12 +71,16 @@ if(WIN32)
         DESTINATION licenses
     )
 
+    if(QT_MAJOR STREQUAL "Qt5")
+        set(OPT_ANGLE "--no-angle")
+    endif()
+
     find_file(QT_DEPLOY windeployqt.exe HINTS ${${QT_MAJOR}_DIR}/../../../bin)
     if(NOT ${QT_DEPLOY} STREQUAL "QT_DEPLOY-NOTFOUND")
         install (CODE
             "execute_process(COMMAND_ECHO STDOUT COMMAND ${QT_DEPLOY}
                 --no-system-d3d-compiler
-                --no-angle
+                ${OPT_ANGLE}
                 --no-opengl-sw
                 \"${CMAKE_INSTALL_PREFIX}/$<TARGET_FILE_NAME:${PROJECT_NAME}>\"
             )"

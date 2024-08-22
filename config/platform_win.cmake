@@ -4,7 +4,12 @@ else()
     set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "DB Browser for SQLite")
 endif()
 
-find_package(OpenSSL 1.1.1 REQUIRED)
+if(QT_MAJOR STREQUAL "Qt5")
+    find_package(OpenSSL 1.1.1 REQUIRED)
+else()
+    find_package(OpenSSL 3.0.0 REQUIRED)
+endif()
+
 if(MSVC)
     if(CMAKE_SIZEOF_VOID_P EQUAL 8)
         set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS,5.02 /ENTRY:mainCRTStartup")
