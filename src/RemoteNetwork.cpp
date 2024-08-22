@@ -385,7 +385,9 @@ void RemoteNetwork::fetch(const QUrl& url, RequestType type, const QString& clie
     QNetworkRequest request;
     request.setUrl(url);
     request.setRawHeader("User-Agent", QString("%1 %2").arg(qApp->organizationName(), APP_VERSION).toUtf8());
-#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    request.setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::NoLessSafeRedirectPolicy);
+#elif QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
     request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
 #endif
 
