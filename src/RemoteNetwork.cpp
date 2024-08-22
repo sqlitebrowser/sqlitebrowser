@@ -13,6 +13,7 @@
 #include <QTimeZone>
 #include <QtNetwork/QNetworkProxy>
 #include <json.hpp>
+#include <QRegExp>
 
 #include <iterator>
 

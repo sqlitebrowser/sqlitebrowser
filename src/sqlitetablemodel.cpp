@@ -1045,7 +1045,7 @@ QModelIndex SqliteTableModel::nextMatch(const QModelIndex& start, const std::vec
 {
     // Extract flags
     bool whole_cell = !(flags & Qt::MatchContains);
-    bool regex = flags & Qt::MatchRegExp;
+    bool regex = flags & Qt::MatchRegularExpression;
     Qt::CaseSensitivity case_sensitive = ((flags & Qt::MatchCaseSensitive) ? Qt::CaseSensitive : Qt::CaseInsensitive);
     bool wrap = flags & Qt::MatchWrap;
     int increment = (reverse ? -1 : 1);

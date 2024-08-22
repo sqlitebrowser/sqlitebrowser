@@ -226,9 +226,9 @@ void removeCommentsFromQuery(QString& query)
 
     if (oldSize != query.size()) {
         // Remove multiple line breaks that might have been created by deleting comments till the end of the line but not including the line break
-        query.replace(QRegExp("\\n+"), "\n");
+        query.replace(QRegularExpression("\\n+"), "\n");
 
         // Also remove any remaining whitespace at the end of each line
-        query.replace(QRegExp("[ \t]+\n"), "\n");
+        query.replace(QRegularExpression("[ \t]+\n"), "\n");
     }
 }
