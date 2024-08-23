@@ -6,6 +6,10 @@ elseif(APPLE)
     add_definitions(-DCHECKNEWVERSION)
 endif()
 
+if(NOT WIN32)
+    set(LPTHREAD pthread)
+endif()
+
 # add extra library path for MacOS and FreeBSD
 set(EXTRAPATH APPLE OR ${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD")
 if(EXTRAPATH)

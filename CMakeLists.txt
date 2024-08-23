@@ -288,6 +288,7 @@ target_link_libraries(${PROJECT_NAME}
     ${QT_LIBS}
     QHexEdit::QHexEdit QCustomPlot::QCustomPlot QScintilla::QScintilla
     ${LIBSQLITE_NAME}
+    ${LPTHREAD}
 )
 
 include(config/install.cmake)
