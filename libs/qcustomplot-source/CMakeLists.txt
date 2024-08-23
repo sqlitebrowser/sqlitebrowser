@@ -3,8 +3,6 @@ cmake_minimum_required(VERSION 3.16)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(QT_MAJOR Qt5 CACHE STRING "Major QT version")
-
 find_package(${QT_MAJOR} REQUIRED COMPONENTS Widgets PrintSupport)
 
 set(QCUSTOMPLOT_SRC
