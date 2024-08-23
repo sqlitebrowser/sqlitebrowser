@@ -7,6 +7,7 @@
 #include <QRegExp>
 #include <QTextCodec>
 #include <QFile>
+#include <QRegularExpression>
 
 #include <algorithm>
 
