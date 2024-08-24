@@ -13,7 +13,7 @@
 #include <QTimeZone>
 #include <QtNetwork/QNetworkProxy>
 #include <json.hpp>
-#include <QRegExp>
+#include <QRegularExpression>
 
 #include <iterator>
 
@@ -169,10 +169,10 @@ void RemoteNetwork::gotReply(QNetworkReply* reply)
             // Get last modified date as provided by the server
             QDateTime last_modified;
             QString content_disposition = reply->rawHeader("Content-Disposition");
-            QRegExp regex("^.*modification-date=\"(.+)\";.*$");
-            regex.setMinimal(true); // Set to non-greedy matching
-            if(regex.indexIn(content_disposition) != -1)
-                last_modified = QDateTime::fromString(regex.cap(1), Qt::ISODate);
+            const static QRegularExpression regex("^.*modification-date=\"(.+)\";.*$", QRegularExpression::InvertedGreedinessOption);
+            const QRegularExpressionMatch match = regex.match(content_disposition);
+            if(match.hasMatch())
+                last_modified = QDateTime::fromString(match.captured(1), Qt::ISODate);
 
             // Extract all other information from reply and send it to slots
             emit fetchFinished(reply->url().fileName(),
