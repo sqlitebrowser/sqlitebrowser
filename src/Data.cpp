@@ -4,7 +4,6 @@
 #include <QDateTime>
 #include <QImageReader>
 #include <QLocale>
-#include <QRegExp>
 #include <QTextCodec>
 #include <QFile>
 #include <QRegularExpression>
