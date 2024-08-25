@@ -80,8 +80,12 @@ MainWindow::MainWindow(QWidget* parent)
     activateFields(false);
     updateRecentFileActions();
 
+    // FIXME: this should be done in a ordered way, waiting for the necessary
+    // initializations to have been done. Just removing the timer will
+    // make the autocompletion fail for tables and columns.
+    // See issue #3706
     if (Settings::getValue("General", "autoLoadLastDBFileAtStartup").toBool())
-        recentFileActs[0]->trigger();
+        QTimer::singleShot(1000, recentFileActs[0], SLOT(trigger()));
 }
 
 MainWindow::~MainWindow()
