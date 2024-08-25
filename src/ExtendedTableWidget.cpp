@@ -28,8 +28,6 @@
 #include <QShortcut>
 #include <QProgressDialog>
 
-#include <QRegExp>
-
 #include <limits>
 
 using BufferRow = std::vector<QByteArray>;
@@ -48,55 +46,60 @@ std::vector<BufferRow> parseClipboard(QString clipboard)
     // there are two reasons for favoring this way: 1) Spreadsheet applications seem to add an extra line break and they are
     // probably the main source for pasted data, 2) Having to manually delete on extra field seems to be less problematic than
     // having one extra field deleted without any warning.
-    if(clipboard.endsWith("\n"))
+
+    if (clipboard.endsWith("\n"))
         clipboard.chop(1);
-    if(clipboard.endsWith("\r"))
+    if (clipboard.endsWith("\r"))
         clipboard.chop(1);
 
     // Make sure there is some data in the clipboard
     std::vector<BufferRow> result;
-    if(clipboard.isEmpty())
+    if (clipboard.isEmpty())
         return result;
 
     result.push_back(BufferRow());
 
-    QRegExp re("(\"(?:[^\t\"]+|\"\"[^\"]*\"\")*)\"|(\t|\r?\n)");
+    const static QRegularExpression re("(\"(?:[^\t\"]+|\"\"[^\"]*\"\")*)\"|(\t|\r?\n)", QRegularExpression::DotMatchesEverythingOption);
     int offset = 0;
     int whitespace_offset = 0;
 
+    const auto nomalize_text = [](QString &&text) {
+        const static QRegularExpression re_between_quotes(QRegularExpression::anchoredPattern("\".*\""));
+        if (re_between_quotes.match(text).hasMatch()) {
+            text = text.mid(1, text.length() - 2);
+        }
+        text.replace("\"\"", "\"")  // replace double quote with a single quote
+            .replace(char(0x01), '\t') // libreoffice converts "tab" in the text with "SOH(0x01)", convert it back
+            ;
+        return text.toUtf8();
+    };
+
     while (offset >= 0) {
-        QString text;
-        int pos = re.indexIn(clipboard, offset);
+        const QRegularExpressionMatch match = re.match(clipboard, offset);
+        const int pos = match.capturedStart(0);
         if (pos < 0) {
             // insert everything that left
-            text = clipboard.mid(whitespace_offset);
-            if(QRegExp("\".*\"").exactMatch(text))
-                text = text.mid(1, text.length() - 2);
-            text.replace("\"\"", "\"");
-            result.back().push_back(text.toUtf8());
+            result.back().push_back(nomalize_text(clipboard.mid(whitespace_offset)));
             break;
         }
 
-        if (re.pos(2) < 0) {
-            offset = pos + re.cap(1).length() + 1;
+        if (match.capturedStart(2) < 0) {
+            offset = pos + match.capturedLength(1) + 1;
             continue;
         }
 
-        QString ws = re.cap(2);
         // if two whitespaces in row - that's an empty cell
         if (!(pos - whitespace_offset)) {
             result.back().push_back(QByteArray());
         } else {
-            text = clipboard.mid(whitespace_offset, pos - whitespace_offset);
-            if(QRegExp("\".*\"").exactMatch(text))
-                text = text.mid(1, text.length() - 2);
-            text.replace("\"\"", "\"");
-            result.back().push_back(text.toUtf8());
+            result.back().push_back(nomalize_text(clipboard.mid(whitespace_offset, pos - whitespace_offset)));
         }
 
-        if (ws.endsWith("\n"))
+        const QString ws = match.captured(2);
+        if (ws.endsWith("\n")) {
             // create new row
             result.push_back(BufferRow());
+        }
 
         whitespace_offset = offset = pos + ws.length();
     }
