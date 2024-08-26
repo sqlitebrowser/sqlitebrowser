@@ -2,7 +2,7 @@
 #include <QUrlQuery>
 #include <QRegExpValidator>
 
-#include <json.hpp>
+#include <nlohmann/json.hpp>
 
 #include "RemotePushDialog.h"
 #include "ui_RemotePushDialog.h"

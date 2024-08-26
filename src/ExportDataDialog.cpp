@@ -11,7 +11,7 @@
 #include <QTextStream>
 #include <QMessageBox>
 #include <QTextCodec>
-#include <json.hpp>
+#include <nlohmann/json.hpp>
 
 using json = nlohmann::json;
 
