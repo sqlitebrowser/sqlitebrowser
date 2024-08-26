@@ -1580,7 +1580,12 @@ void TableBrowser::jumpToRow(const sqlb::ObjectIdentifier& table, std::string co
 static QString replaceInValue(QString value, const QString& find, const QString& replace, Qt::MatchFlags flags)
 {
     // Helper function which replaces a string in another string by a third string. It uses regular expressions if told so.
-    if(flags.testFlag(Qt::MatchRegExp))
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
+    auto match_flag = Qt::MatchRegExp;
+#else
+    auto match_flag = Qt::MatchRegularExpression;
+#endif
+    if(flags.testFlag(match_flag))
     {
         QRegularExpression reg_exp(find, (flags.testFlag(Qt::MatchCaseSensitive) ? QRegularExpression::NoPatternOption : QRegularExpression::CaseInsensitiveOption));
         if(!flags.testFlag(Qt::MatchContains))
@@ -1625,8 +1630,13 @@ void TableBrowser::find(const QString& expr, bool forward, bool include_first, R
     else
         flags |= Qt::MatchContains;
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
+    auto match_flag = Qt::MatchRegExp;
+#else
+    auto match_flag = Qt::MatchRegularExpression;
+#endif
     if(ui->checkFindRegEx->isChecked())
-        flags |= Qt::MatchRegExp;
+        flags |= match_flag;
 
     // Prepare list of columns to search in. We only search in non-hidden rows
     std::vector<int> column_list;

@@ -3,7 +3,7 @@
 
 #include <QDialog>
 
-class QRegExpValidator;
+class QRegularExpressionValidator;
 
 namespace Ui {
 class RemotePushDialog;
@@ -34,8 +34,8 @@ private:
     QString m_clientCert;
 
     // Validators
-    QRegExpValidator* m_nameValidator;
-    QRegExpValidator* m_branchValidator;
+    QRegularExpressionValidator* m_nameValidator;
+    QRegularExpressionValidator* m_branchValidator;
 
 protected slots:
     void checkInput();

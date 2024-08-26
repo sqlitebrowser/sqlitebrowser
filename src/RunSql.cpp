@@ -6,6 +6,7 @@
 #include <chrono>
 #include <QApplication>
 #include <QMessageBox>
+#include <QRegularExpression>
 
 RunSql::RunSql(DBBrowserDB& _db, QString query, int execute_from_position, int _execute_to_position, bool _interrupt_after_statements) :
     db(_db),
@@ -30,8 +31,8 @@ RunSql::RunSql(DBBrowserDB& _db, QString query, int execute_from_position, int _
     // All replacements in the query should be made by the same amount of characters, so the positions in the file
     // for error indicators and line and column logs are not displaced.
     // Whitespace and comments are discarded by SQLite, so it is better to just let it ignore them.
-    query = query.replace(QRegExp("^(\\s*)BEGIN TRANSACTION;", Qt::CaseInsensitive), "\\1                  ");
-    query = query.replace(QRegExp("COMMIT;(\\s*)$", Qt::CaseInsensitive), "       \\1");
+    query = query.replace(QRegularExpression("^(\\s*)BEGIN TRANSACTION;", QRegularExpression::CaseInsensitiveOption), "\\1                  ");
+    query = query.replace(QRegularExpression("COMMIT;(\\s*)$", QRegularExpression::CaseInsensitiveOption), "       \\1");
 
     // Convert query to byte array which we will use from now on, starting from the determined start position and
     // until the end of the SQL code. By doing so we go further than the determined end position because in Line

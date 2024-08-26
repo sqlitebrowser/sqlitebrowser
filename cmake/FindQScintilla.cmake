@@ -45,21 +45,39 @@
 # When using pkg-config, paths may contain odd slash placement. Each
 # include directory is pre-processed here. Resultant list variable
 # then used for search hinting. Depends on successful find_package(Qt5).
-set(Qt5QScintillaHintDirs)
-if(UNIX)
-    foreach(item ${Qt5Widgets_INCLUDE_DIRS})
-        # remove slash at end of line
-        STRING(REGEX REPLACE "\\/$" "" item ${item})
-        # replace double slashes is single slashes
-        STRING(REGEX REPLACE "\\/\\/" "/" item ${item})
-        list(APPEND Qt5QScintillaHintDirs "${item}/Qsci")
-    endforeach()
+if(QT_MAJOR STREQUAL "Qt6")
+    set(Qt6QScintillaHintDirs)
+    if(UNIX)
+        foreach(item ${Qt6Widgets_INCLUDE_DIRS})
+            # remove slash at end of line
+            STRING(REGEX REPLACE "\\/$" "" item ${item})
+            # replace double slashes is single slashes
+            STRING(REGEX REPLACE "\\/\\/" "/" item ${item})
+            list(APPEND Qt6QScintillaHintDirs "${item}/Qsci")
+        endforeach()
+    endif()
+    find_path ( QSCINTILLA_INCLUDE_DIR qsciscintilla.h
+      HINTS /usr/local/include/Qt6/Qsci
+            /usr/local/opt/qscintilla2/include/Qt6/Qsci
+            ${Qt6QScintillaHintDirs}
+    )
+else()
+    set(Qt5QScintillaHintDirs)
+    if(UNIX)
+        foreach(item ${Qt5Widgets_INCLUDE_DIRS})
+            # remove slash at end of line
+            STRING(REGEX REPLACE "\\/$" "" item ${item})
+            # replace double slashes is single slashes
+            STRING(REGEX REPLACE "\\/\\/" "/" item ${item})
+            list(APPEND Qt5QScintillaHintDirs "${item}/Qsci")
+        endforeach()
+    endif()
+    find_path ( QSCINTILLA_INCLUDE_DIR qsciscintilla.h
+      HINTS /usr/local/include/Qsci
+            /usr/local/opt/qscintilla2/include/Qsci
+            ${Qt5QScintillaHintDirs}
+    )
 endif()
-find_path ( QSCINTILLA_INCLUDE_DIR qsciscintilla.h
-  HINTS /usr/local/include/Qsci
-        /usr/local/opt/qscintilla2/include/Qsci
-        ${Qt5QScintillaHintDirs}
-)
 
 set ( QSCINTILLA_INCLUDE_DIRS ${QSCINTILLA_INCLUDE_DIR} )
 
@@ -91,10 +109,17 @@ if ( QScintilla_FIND_VERSION AND QSCINTILLA_VERSION_STRING )
   endif ()
 endif ()
 
-find_library ( QSCINTILLA_LIBRARY
-  NAMES qscintilla2 qscintilla2_qt5
-  HINTS /usr/local/lib /usr/local/opt/qscintilla2/lib
-)
+if(QT_MAJOR STREQUAL "Qt6")
+    find_library ( QSCINTILLA_LIBRARY
+      NAMES qscintilla2_qt6
+      HINTS /usr/local/lib /usr/local/opt/qscintilla2/lib
+    )
+else()
+    find_library ( QSCINTILLA_LIBRARY
+      NAMES qscintilla2 qscintilla2_qt5
+      HINTS /usr/local/lib /usr/local/opt/qscintilla2/lib
+    )
+endif()
 
 set ( QSCINTILLA_LIBRARIES ${QSCINTILLA_LIBRARY} )
 

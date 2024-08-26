@@ -1,4 +1,5 @@
 #include <QDebug>
+#include <QRegularExpression>
 
 #include "RowLoader.h"
 #include "sqlite.h"
@@ -220,8 +221,9 @@ void RowLoader::process (Task & t)
         // that lazy population is disabled for more queries than necessary. We should fix this once
         // we have a parser for SELECT statements but until then it is better to disable lazy population
         // for more statements than required instead of failing to run some statements entirely.
-        if(queryTemp.contains(QRegExp("LIMIT\\s+.+\\s*((,|\\b(OFFSET)\\b)\\s*.+\\s*)?$", Qt::CaseInsensitive)) ||
-                queryTemp.contains(QRegExp("\\s(UNION)|(INTERSECT)|(EXCEPT)\\s", Qt::CaseInsensitive)))
+
+        if(queryTemp.contains(QRegularExpression("LIMIT\\s+.+\\s*((,|\\b(OFFSET)\\b)\\s*.+\\s*)?$", QRegularExpression::CaseInsensitiveOption)) ||
+                queryTemp.contains(QRegularExpression("\\s(UNION)|(INTERSECT)|(EXCEPT)\\s", QRegularExpression::CaseInsensitiveOption)))
             sLimitQuery = queryTemp;
         else
             sLimitQuery = queryTemp + QString(" LIMIT %1 OFFSET %2;").arg(t.row_end-t.row_begin).arg(t.row_begin);

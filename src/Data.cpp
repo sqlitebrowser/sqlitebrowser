@@ -4,9 +4,9 @@
 #include <QDateTime>
 #include <QImageReader>
 #include <QLocale>
-#include <QRegExp>
 #include <QTextCodec>
 #include <QFile>
+#include <QRegularExpression>
 
 #include <algorithm>
 
@@ -28,7 +28,7 @@ bool isTextOnly(QByteArray data, const QString& encoding, bool quickTest)
     }
 
     // Truncate to the first few bytes for quick testing
-    int testSize = quickTest? std::min(512, data.size()) : data.size();
+    QByteArray::size_type testSize = quickTest? std::min(QByteArray::size_type(512), data.size()) : data.size();
 
     // If the quick test has been requested and we have to truncate the string, we have to use
     // an approach where truncated multibyte characters are not interpreted as invalid characters.
@@ -218,7 +218,7 @@ void removeCommentsFromQuery(QString& query)
 
             // If this is the closing quote character, switch back to normal state
             if((query.at(i) == quote) && (i == 0 || query.at(i-1) != '\\'))
-                quote = 0;
+                quote = QChar(0);
         }
     }
 
@@ -226,9 +226,9 @@ void removeCommentsFromQuery(QString& query)
 
     if (oldSize != query.size()) {
         // Remove multiple line breaks that might have been created by deleting comments till the end of the line but not including the line break
-        query.replace(QRegExp("\\n+"), "\n");
+        query.replace(QRegularExpression("\\n+"), "\n");
 
         // Also remove any remaining whitespace at the end of each line
-        query.replace(QRegExp("[ \t]+\n"), "\n");
+        query.replace(QRegularExpression("[ \t]+\n"), "\n");
     }
 }

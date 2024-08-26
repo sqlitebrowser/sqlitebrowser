@@ -1,3 +1,21 @@
+#### Version 2.1.1 released on 06.11.22 ####
+
+Added features:
+  - Qt6.4 Compatibility
+
+Bugfixes:
+  - dynamically changing device pixel ratios (e.g. when moving between different DPI screens) is handled properly
+  - bugfix Colormap autoscaling: recalculateDataBounds() if (0, 0) data point is NaN.
+  - minor bugfix in getMantissa for certain values due to rounding errors
+  - Graphs with line style lsImpulse properly ignore NaN data points
+  - fixed issue where QCP wasn't greyed out together with the rest of the UI on embedded systems when a modal dialog is shown
+        (QCustomPlot no longer has the Qt::WA_OpaquePaintEvent attribute enabled by default)
+
+Other:
+  - in QCPAxisPainterPrivate::getTickLabelData, don't use fixed 'e', but locale aware character of parent plot locale
+  - Axis rescaling now ignores +/- Inf in data values
+  - slight performance improvements of QCPColorMap colorization and fills.
+
 #### Version 2.1.0 released on 29.03.21 ####
 
 Added features:

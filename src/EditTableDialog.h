@@ -102,8 +102,8 @@ private slots:
     void moveBottom();
     void setWithoutRowid(bool without_rowid);
     void setStrict(bool strict);
-    void changeSchema(const QString& schema);
-    void setOnConflict(const QString& on_conflict);
+    void changeSchema(int schema_idx);
+    void setOnConflict(int on_conflict_idx);
     void addIndexConstraint(bool primary_key);
     void removeIndexConstraint();
     void addForeignKey();

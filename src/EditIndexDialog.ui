@@ -368,9 +368,9 @@
   </connection>
   <connection>
    <sender>comboTableName</sender>
-   <signal>currentIndexChanged(QString)</signal>
+   <signal>currentIndexChanged(int)</signal>
    <receiver>EditIndexDialog</receiver>
-   <slot>tableChanged(QString)</slot>
+   <slot>tableChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>145</x>
@@ -560,7 +560,7 @@
   </connection>
  </connections>
  <slots>
-  <slot>tableChanged(QString)</slot>
+  <slot>tableChanged(int)</slot>
   <slot>checkInput()</slot>
   <slot>addToIndex()</slot>
   <slot>addToIndex(QModelIndex)</slot>

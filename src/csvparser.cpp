@@ -1,5 +1,6 @@
 #include "csvparser.h"
 
+#include <QString>
 #include <QTextStream>
 
 CSVParser::CSVParser(bool trimfields, char32_t fieldseparator, char32_t quotechar)

@@ -43,20 +43,20 @@ jobs:
         run: |
           if [ "${{ inputs.NIGHTLY }}" = "true" ]; then
             if [ "${{ matrix.sqlcipher }}" = "1" ]; then
-                sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLCipher Nightly"/' CMakeLists.txt
+                sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLCipher Nightly"/' config/platform_apple.cmake
             else
-                sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLite Nightly"/' CMakeLists.txt
+                sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLite Nightly"/' config/platform_apple.cmake
             fi
           else
             if [ "${{ matrix.sqlcipher }}" = "1" ]; then
-                sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLCipher-dev-'$(git rev-parse --short --verify HEAD)'"/' CMakeLists.txt
+                sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLCipher-dev-'$(git rev-parse --short --verify HEAD)'"/' config/platform_apple.cmake
             else
-                sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLite-dev-'$(git rev-parse --short --verify HEAD)'"/' CMakeLists.txt
+                sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLite-dev-'$(git rev-parse --short --verify HEAD)'"/' config/platform_apple.cmake
             fi
           fi
 
           mkdir build && cd build
-          cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DcustomTap=1 -DENABLE_TESTING=ON -Dsqlcipher=${{ matrix.sqlcipher }} ..
+          cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=14 -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DcustomTap=1 -DENABLE_TESTING=ON -Dsqlcipher=${{ matrix.sqlcipher }} ..
 
       - name: Build
         working-directory: ./build

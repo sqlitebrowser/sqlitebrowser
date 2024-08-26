@@ -930,9 +930,9 @@
   </connection>
   <connection>
    <sender>comboSchema</sender>
-   <signal>currentIndexChanged(QString)</signal>
+   <signal>currentIndexChanged(int)</signal>
    <receiver>EditTableDialog</receiver>
-   <slot>changeSchema(QString)</slot>
+   <slot>changeSchema(int)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>482</x>
@@ -994,9 +994,9 @@
   </connection>
   <connection>
    <sender>comboOnConflict</sender>
-   <signal>currentIndexChanged(QString)</signal>
+   <signal>currentIndexChanged(int)</signal>
    <receiver>EditTableDialog</receiver>
-   <slot>setOnConflict(QString)</slot>
+   <slot>setOnConflict(int)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>516</x>
@@ -1099,11 +1099,11 @@
   <slot>moveUp()</slot>
   <slot>moveDown()</slot>
   <slot>setWithoutRowid(bool)</slot>
-  <slot>changeSchema(QString)</slot>
+  <slot>changeSchema(int)</slot>
   <slot>removeIndexConstraint()</slot>
   <slot>moveTop()</slot>
   <slot>moveBottom()</slot>
-  <slot>setOnConflict(QString)</slot>
+  <slot>setOnConflict(int)</slot>
   <slot>setStrict(bool)</slot>
   <slot>addForeignKey()</slot>
   <slot>removeForeignKey()</slot>

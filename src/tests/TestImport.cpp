@@ -34,7 +34,10 @@ void TestImport::csvImport()
     QVERIFY(file.open());
     {
         QTextStream out(&file);
+// Qt6 QTextStream defaults to utf-8.
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         out.setCodec(encoding.toUtf8());
+#endif
         out << csv;
     }
     file.flush();
@@ -42,7 +45,10 @@ void TestImport::csvImport()
     CSVParser csvparser(true, separator, quote);
     file.seek(0);
     QTextStream tstream(&file);
+// Qt6 QTextStream defaults to utf-8.
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     tstream.setCodec(encoding.toUtf8());
+#endif
 
     std::vector<std::vector<QByteArray>> parsedCsv;
     int parsedCsvColumns = 0;

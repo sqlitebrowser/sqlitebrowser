@@ -1139,7 +1139,7 @@
  <connections>
   <connection>
    <sender>comboBrowseTable</sender>
-   <signal>activated(QString)</signal>
+   <signal>activated(int)</signal>
    <receiver>TableBrowser</receiver>
    <slot>refresh()</slot>
    <hints>

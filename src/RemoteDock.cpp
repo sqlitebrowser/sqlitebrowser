@@ -369,7 +369,7 @@ void RemoteDock::pushDatabase(const QString& path, const QString& branch)
     // The default suggestion for a database name is the local file name. If it is a remote file (like when it initially was fetched using DB4S),
     // the extra bit of information at the end of the name gets removed first.
     QString name = QFileInfo(path).fileName();
-    name = name.remove(QRegExp("_[0-9]+.remotedb$"));
+    name = name.remove(QRegularExpression("_[0-9]+.remotedb$"));
 
     // Show the user a dialog for setting all the commit details
     QString host = RemoteNetwork::get().getInfoFromClientCert(remoteModel->currentClientCertificate(), RemoteNetwork::CertInfoServer);

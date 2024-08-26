@@ -1206,14 +1206,15 @@ void EditTableDialog::setStrict(bool strict)
     updateSqlText();
 }
 
-void EditTableDialog::changeSchema(const QString& /*schema*/)
+void EditTableDialog::changeSchema(int /*schema_idx*/)
 {
     // Update the SQL preview
     updateSqlText();
 }
 
-void EditTableDialog::setOnConflict(const QString& on_conflict)
+void EditTableDialog::setOnConflict(int on_conflict_idx)
 {
+    const QString &on_conflict = ui->comboOnConflict->itemText(on_conflict_idx);
     if(m_table.primaryKey())
     {
         m_table.primaryKey()->setConflictAction(on_conflict.toStdString());
