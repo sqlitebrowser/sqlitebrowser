@@ -32,6 +32,9 @@ jobs:
             choco install openssl --version=${{ env.OPENSSL_VERSION}}
           }
 
+      - name: Install Ninja (Windows)
+        run: choco install -y --no-progress ninja
+
       # When building SQLCipher, if we specify a path to OpenSSL and
       # there are spaces in the path, an error will occur, so to
       # avoid this, create the symlink.
@@ -107,9 +110,8 @@ jobs:
           mkdir sqlcipher
           copy sqlite3.h sqlcipher
 
-      - name: Patch CMakeLists.txt and WiX Toolset Variables
+      - name: Patch WiX Toolset Variables
         run: |
-          git apply .github\patch\CMakeLists.txt.patch
           git apply .github\patch\product.wxs.patch
           git apply .github\patch\translations.wxs.patch
           git apply .github\patch\variables.wxi.patch
@@ -118,28 +120,29 @@ jobs:
         run: |
           mkdir release-sqlite && cd release-sqlite
           if ("${{ matrix.arch }}" -eq "Win32") {
-            cmake -G "Visual Studio 16 2019" -A "Win32" -DCMAKE_BUILD_TYPE=Release ..\
+            cmake -G"Ninja Multi-Config" -DCMAKE_PREFIX_PATH="C:/dev/SQLite-Win32;C:/dev/OpenSSL-Win32" ..\
           } else {
-            cmake -G "Visual Studio 16 2019" ..\
+            cmake -G"Ninja Multi-Config" -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="C:/dev/SQLite-Win64;C:/dev/OpenSSL-Win64" ..\
           }
 
       - name: Build (SQLite)
-        run: cd release-sqlite && devenv /Build Release sqlitebrowser.sln /Project ALL_BUILD
+        run: |
+          cd release-sqlite
+          cmake --build . --config Release
 
       - name: Configure build (SQLCipher)
         run: |
           mkdir release-sqlcipher && cd release-sqlcipher
           if ("${{ matrix.arch }}" -eq "Win32") {
-            cmake -G "Visual Studio 16 2019" -DCMAKE_BUILD_TYPE=Release -Dsqlcipher=1 -A "Win32" ..\
+            cmake -G"Ninja Multi-Config" -Dsqlcipher=1 -DCMAKE_PREFIX_PATH="C:/dev/SQLCipher-Win32;C:/dev/OpenSSL-Win32" ..\
           } else {
-            cmake -G "Visual Studio 16 2019" -DCMAKE_BUILD_TYPE=Release -Dsqlcipher=1 ..\
+            cmake -G"Ninja Multi-Config" -Dsqlcipher=1 -DCMAKE_PREFIX_PATH="C:/dev/SQLCipher-Win64;C:/dev/OpenSSL-Win64" ..\
           }
 
       - name: Build (SQLCipher)
         run: |
           cd release-sqlcipher
-          devenv /Build Release sqlitebrowser.sln /Project ALL_BUILD
-          mv "Release\DB Browser for SQLite.exe" "Release\DB Browser for SQLCipher.exe"
+          cmake --build . --config Release
 
       - if: github.event_name != 'pull_request'
         name: Create MSI
