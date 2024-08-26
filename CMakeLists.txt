@@ -58,6 +58,8 @@ if(NOT BUILD_STABLE_VERSION)
     target_compile_definitions(${PROJECT_NAME} PRIVATE BUILD_VERSION=${BUILD_VERSION})
 endif()
 
+include(config/platform.cmake)
+
 find_package(${QT_MAJOR} REQUIRED COMPONENTS Concurrent Gui LinguistTools Network PrintSupport Test Widgets Xml)
 set(QT_LIBS
     ${QT_MAJOR}::Gui
@@ -80,7 +82,6 @@ target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ${CMAKE_CURRENT_LIST_D
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR} src)
 
 include(config/3dparty.cmake)
-include(config/platform.cmake)
 
 # SQLCipher option
 if(sqlcipher)
