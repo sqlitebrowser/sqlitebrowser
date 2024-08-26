@@ -25,9 +25,6 @@ else()
 endif()
 
 set(CMAKE_CXX_STANDARD_REQUIRED True)
-if(APPLE)
-    set(CXX_EXTENSIONS OFF)
-endif()
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" "${CMAKE_MODULE_PATH}")
 
