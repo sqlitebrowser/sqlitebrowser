@@ -82,7 +82,7 @@ if(WIN32)
                 --no-system-d3d-compiler
                 ${OPT_ANGLE}
                 --no-opengl-sw
-                \"${CMAKE_INSTALL_PREFIX}/$<TARGET_FILE_NAME:${PROJECT_NAME}>\"
+                \"\${CMAKE_INSTALL_PREFIX}/$<TARGET_FILE_NAME:${PROJECT_NAME}>\"
             )"
         )
     endif()
