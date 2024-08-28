@@ -96,7 +96,8 @@ MainWindow::MainWindow(QWidget* parent)
         populateStructure(old_tables);
     };
 
-    if (Settings::getValue("General", "autoLoadLastDBFileAtStartup").toBool()) {
+    if (!Settings::getValue("tmp", "fileWillBeOpenedFromCLI").toBool() &&
+        Settings::getValue("General", "autoLoadLastDBFileAtStartup").toBool()) {
         recentFileActs[0]->trigger();
         update_structure();
         if (ui->mainTab->currentWidget() == ui->browser)
