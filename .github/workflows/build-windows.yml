@@ -122,7 +122,7 @@ jobs:
           if ("${{ matrix.arch }}" -eq "Win32") {
             cmake -G"Ninja Multi-Config" -DCMAKE_PREFIX_PATH="C:/dev/SQLite-Win32;C:/dev/OpenSSL-Win32" ..\
           } else {
-            cmake -G"Ninja Multi-Config" -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="C:/dev/SQLite-Win64;C:/dev/OpenSSL-Win64" ..\
+            cmake -G"Ninja Multi-Config" -DCMAKE_PREFIX_PATH="C:/dev/SQLite-Win64;C:/dev/OpenSSL-Win64" ..\
           }
 
       - name: Build (SQLite)
