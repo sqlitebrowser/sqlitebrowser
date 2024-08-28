@@ -98,6 +98,8 @@ MainWindow::MainWindow(QWidget* parent)
     if (Settings::getValue("General", "autoLoadLastDBFileAtStartup").toBool()) {
         recentFileActs[0]->trigger();
         update_structure();
+        if (ui->mainTab->currentWidget() == ui->browser)
+            refreshTableBrowsers();
     }
 
     connect(&db, &DBBrowserDB::structureUpdated, this, [update_structure = std::move(update_structure)]() {
