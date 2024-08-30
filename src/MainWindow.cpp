@@ -78,6 +78,7 @@ MainWindow::MainWindow(QWidget* parent)
 
     activateFields(false);
     updateRecentFileActions();
+    QApplication::processEvents();
 
     auto update_structure = [this] {
         const auto docks = allTableBrowserDocks();
