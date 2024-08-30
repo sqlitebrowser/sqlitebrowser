@@ -195,7 +195,12 @@ void SqlUiLexer::setupAutoCompletion()
         listFunctions.append(keyword.first);
     }
 
-    autocompleteApi->prepare();
+    // Push the QsciAPIs::prepare method call to the
+    // execution queue, callers should receive
+    // callbacks in order.
+    QMetaObject::invokeMethod(this, [this] {
+        autocompleteApi->prepare();
+    }, Qt::QueuedConnection);
 }
 
 void SqlUiLexer::setTableNames(const QualifiedTablesMap& tables)

@@ -79,35 +79,11 @@ MainWindow::MainWindow(QWidget* parent)
 
     activateFields(false);
     updateRecentFileActions();
-    QApplication::processEvents();
-
-    auto update_structure = [this] {
-        const auto docks = allTableBrowserDocks();
-        std::vector<sqlb::ObjectIdentifier> old_tables;
-        old_tables.reserve(docks.size());
-        for(const auto &dock: docks) {
-            old_tables.push_back(dock->tableBrowser()->currentlyBrowsedTableName());
-        }
-
-        dbStructureModel->reloadData();
-        // Process all waiting events before we call populateStructure,
-        // giving the Application a chance to attach all Widgets.
-        // See #3706
-        QApplication::processEvents();
-        populateStructure(old_tables);
-    };
 
     if (!Settings::getValue("tmp", "fileWillBeOpenedFromCLI").toBool() &&
         Settings::getValue("General", "autoLoadLastDBFileAtStartup").toBool()) {
         recentFileActs[0]->trigger();
-        update_structure();
-        if (ui->mainTab->currentWidget() == ui->browser)
-            refreshTableBrowsers();
     }
-
-    connect(&db, &DBBrowserDB::structureUpdated, this, [update_structure = std::move(update_structure)]() {
-        update_structure();
-    });
 }
 
 MainWindow::~MainWindow()
@@ -160,6 +136,15 @@ void MainWindow::init()
 
     // Set up DB structure tab
     dbStructureModel = new DbStructureModel(db, this);
+    connect(&db, &DBBrowserDB::structureUpdated, this, [this]() {
+        std::vector<sqlb::ObjectIdentifier> old_tables;
+        for(const auto& d : allTableBrowserDocks())
+            old_tables.push_back(d->tableBrowser()->currentlyBrowsedTableName());
+
+        dbStructureModel->reloadData();
+
+        populateStructure(old_tables);
+    });
     ui->dbTreeWidget->setModel(dbStructureModel);
     ui->dbTreeWidget->setColumnWidth(DbStructureModel::ColumnName, 300);
     ui->dbTreeWidget->setColumnHidden(DbStructureModel::ColumnObjectType, true);
