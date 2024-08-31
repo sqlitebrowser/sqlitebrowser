@@ -563,6 +563,9 @@ bool MainWindow::fileOpen(const QString& fileName, bool openFromProject, bool re
                     // When a new DB file has been open while a project is open, set the project modified.
                     if(!currentProjectFilename.isEmpty())
                         isProjectModified = true;
+                } else {
+                    // loadProject will init the rest
+                    return true;
                 }
                 if(ui->tabSqlAreas->count() == 0)
                     openSqlTab(true);
@@ -2723,6 +2726,8 @@ MainWindow::LoadAttempResult MainWindow::loadProject(QString filename, bool read
         addToRecentFilesMenu(filename, readOnly);
         currentProjectFilename = filename;
 
+        int projectRestoreIdx = -1;
+        QString projectRestoreTabs;
         while(!xml.atEnd() && !xml.hasError())
         {
             // Read next token
@@ -2775,15 +2780,13 @@ MainWindow::LoadAttempResult MainWindow::loadProject(QString filename, bool read
                     while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != QT_UNICODE_LITERAL("window"))
                     {
                         if(xml.name() == QT_UNICODE_LITERAL("main_tabs")) {
-                            // Currently open tabs
-                            restoreOpenTabs(xml.attributes().value("open").toString());
-                            // Currently selected open tab
-                            ui->mainTab->setCurrentIndex(xml.attributes().value("current").toString().toInt());
+                            projectRestoreTabs = xml.attributes().value("open").toString();
+                            projectRestoreIdx = xml.attributes().value("current").toString().toInt();
                             xml.skipCurrentElement();
                         } else if(xml.name() == QT_UNICODE_LITERAL("current_tab")) {
                             // Currently selected tab (3.11 or older format, first restore default open tabs)
-                            restoreOpenTabs(defaultOpenTabs);
-                            ui->mainTab->setCurrentIndex(xml.attributes().value("id").toString().toInt());
+                            projectRestoreTabs = defaultOpenTabs;
+                            projectRestoreIdx = xml.attributes().value("id").toString().toInt();
                             xml.skipCurrentElement();
                         }
                     }
@@ -2913,7 +2916,6 @@ MainWindow::LoadAttempResult MainWindow::loadProject(QString filename, bool read
                         } else {
                             xml.skipCurrentElement();
                         }
-
                     }
                 } else if(xml.name() == QT_UNICODE_LITERAL("tab_sql")) {
                     // Close all open tabs first
@@ -2951,12 +2953,20 @@ MainWindow::LoadAttempResult MainWindow::loadProject(QString filename, bool read
 
         file.close();
 
-        if(ui->mainTab->currentWidget() == ui->browser) {
-            refreshTableBrowsers();     // Refresh view
+        if (projectRestoreIdx != -1 && !projectRestoreTabs.isEmpty()) {
+            ui->mainTab->blockSignals(true);
+            restoreOpenTabs(projectRestoreTabs);
+            ui->mainTab->blockSignals(false);
+            ui->mainTab->setCurrentIndex(projectRestoreIdx);
         }
 
-        isProjectModified = false;
-
+        // This is done because on consecutive reloads,
+        // we have events in queue which will activate
+        // &TableBrowser::projectModified,
+        // append ourselves after those events
+        QMetaObject::invokeMethod(this, [this] {
+            isProjectModified = false;
+        }, Qt::QueuedConnection);
         return !xml.hasError()? Success : Aborted;
     } else {
         // No project was opened
