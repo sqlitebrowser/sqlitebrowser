@@ -74,7 +74,7 @@ done
 mv build/*.app installer/macos
 
 # Create the DMG
-TARGET="DB.Browser.for.SQLite-v3.13.0.dmg"
+TARGET="DB.Browser.for.SQLite-v3.13.1-rc1.dmg"
 appdmg --quiet installer/macos/nightly.json "$TARGET"
 
 codesign --sign "$DEV_ID" --verbose --options=runtime --timestamp "$TARGET"
