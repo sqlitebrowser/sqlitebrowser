@@ -1242,9 +1242,11 @@ void MainWindow::executeQuery()
     // Get the statement(s) to execute. When in selection mode crop the query string at exactly the end of the selection to make sure SQLite has
     // no chance to execute any further.
     QString sql = sqlWidget->getSql();
-    if(mode == Selection)
-        sql = sql.toUtf8().left(execute_to_position);   // We have to convert to a QByteArray here because QScintilla gives us the position in bytes, not in characters.
-
+    if(mode == Selection) {
+        // We have to convert to a QByteArray here because QScintilla gives us the position in bytes, not in characters.
+        // We also have to replace the characters before execute_from_position by spaces, so that they count as bytes and not multibyte characters.
+        sql = sql.toUtf8().replace(0, execute_from_position, QString(" ").repeated(execute_from_position).toUtf8()).left(execute_to_position);
+    }
     // Prepare the SQL worker to run the query. We set the context of each signal-slot connection to the current SQL execution area.
     // This means that if the tab is closed all these signals are automatically disconnected so the lambdas won't be called for a not
     // existing execution area.
