@@ -744,6 +744,10 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
         htmlResult.append("</table></body></html>");
         mimeData->setHtml(htmlResult);
     }
+    // Single cells should only contain the value, not an ending row separator.
+    if (indices.size() == 1) {
+        result.resize(result.size() - rowSepText.size());
+    }
     mimeData->setText(result);
 }
 
