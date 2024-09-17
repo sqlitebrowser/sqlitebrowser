@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+	width="16" height="16" version="1.1">
+	<title>World Link</title>
+	<desc>World Globe Link</desc>
+	<g id="icon" transform="translate(8,8)">
+		<defs>
+			<linearGradient id="backing" x1="0%" y1="0%" x2="100%" y2="100%">
+				<stop offset="0%" stop-color="#6ec461" />
+				<stop offset="100%" stop-color="#327a2f" />
+			</linearGradient>
+			<linearGradient id="in-border" x1="0%" y1="0%" x2="100%" y2="100%">
+				<stop offset="0%" stop-color="#e2f3c0" />
+				<stop offset="100%" stop-color="#bcdaa0" />
+			</linearGradient>
+			<radialGradient id="gloss" cx="50%" cy="30%" r="50%">
+				<stop offset="0%" stop-color="#fff" stop-opacity="0.6" />
+				<stop offset="100%" stop-color="#fff" stop-opacity="0.0" />
+			</radialGradient>
+			<linearGradient id="amer-fill" x1="0%" y1="0%" x2="100%" y2="100%">
+				<stop offset="0%" stop-color="#6ddb77" />
+				<stop offset="100%" stop-color="#80c079" />
+			</linearGradient>
+			<linearGradient id="sand" x1="0%" y1="0%" x2="100%" y2="100%">
+				<stop offset="0%" stop-color="#f5db82" />
+				<stop offset="100%" stop-color="#f4df90" />
+			</linearGradient>
+			<mask id="Mask">
+				<rect width="16" height="16" x="-8" y="-8" fill="#000" />
+				<circle r="6.4" fill="#fff" />
+			</mask>
+			<mask id="Masksand">
+				<rect width="16" height="16" x="-8" y="-8" fill="#000" />
+				<circle r="3" cx="-7" cy="1.5" fill="#fff" filter="url(#Gaussian_Blur05)" />
+			</mask>
+			<filter id="Gaussian_Blur">
+				<feGaussianBlur in="SourceGraphic" stdDeviation="1" />
+			</filter>
+			<filter id="Gaussian_Blur025">
+				<feGaussianBlur in="SourceGraphic" stdDeviation="0.25" />
+			</filter>
+			<filter id="Gaussian_Blur05">
+				<feGaussianBlur in="SourceGraphic" stdDeviation="0.5" />
+			</filter>
+			<path id="amer"
+				d="M-2,6 c1,-2 0,-3 -1,-3 c-3,0 0,-3 0,-3 c2,-2 2,-3 1,-4 c-1,-1 -1,0 -2,-1 h-3 v14 M0,10 v1 h1" />
+			<path id="afra"
+				d="M4.5,5 c-0.5,-1 -0.5,-2 -1,-2.5 c-3,0 -4,-4 1.5,-4 c2,0 2,-1.5 0,-1.5 c-0.5,0 -3.5,0 -3.5,2 c0,0.5 -1,-0.5 0,-1.75 c1,-0.5 3,-3 2,-3 h4 v10 M-12,0 h-1 v1 " />
+		</defs>
+		<circle r="8" fill="url(#backing)" />
+		<circle r="7" fill="url(#in-border)" />
+		<g id="map" mask="url(#Mask)">
+			<circle r="7" fill="#5eb0d3" />
+			<use xlink:href="#amer" fill="#206aa2" filter="url(#Gaussian_Blur)" />
+			<use xlink:href="#amer" fill="#8adcbf" filter="url(#Gaussian_Blur025)" />
+			<use xlink:href="#amer" fill="url(#amer-fill)" />
+			<use xlink:href="#afra" fill="#206aa2" filter="url(#Gaussian_Blur)" />
+			<use xlink:href="#afra" fill="#8adcbf" filter="url(#Gaussian_Blur025)" />
+			<use xlink:href="#afra" fill="url(#amer-fill)" />
+			<rect width="16" height="16" x="-8" y="-8" fill="url(#gloss)" />
+		</g>
+		<g id="link-icon" transform="translate(1.5,4)">
+			<defs>
+				<linearGradient id="link-border" x1="0%" y1="0%" x2="100%"
+					y2="0%">
+					<stop offset="0%" stop-color="#858585" />
+					<stop offset="100%" stop-color="#4a4a4a" />
+				</linearGradient>
+				<linearGradient id="link-inner" x1="0%" y1="0%" x2="100%" y2="0%">
+					<stop offset="0%" stop-color="#dddddd" />
+					<stop offset="100%" stop-color="#aeaeae" />
+				</linearGradient>
+				<radialGradient id="link-center-link" cx="50%" cy="0%" r="70%">
+					<stop offset="0%" stop-color="#929292" />
+					<stop offset="100%" stop-color="#414141" />
+				</radialGradient>
+				<radialGradient id="link-center-link-center" cx="50%" cy="50%"
+					r="70%">
+					<stop offset="0%" stop-color="#cecece" />
+					<stop offset="100%" stop-color="#bdbdbd" />
+				</radialGradient>
+			</defs>
+			<g id="link">
+				<path fill="url(#link-border)"
+					d="M-1.5,-3 l-1.5,0 a3.5,3.5 0 0,0 0,7 l1.5,0 a1.5,1.5 0 0,0 0,-3 h-2 a0.5,0.5 0 0,1 0,-1 h2 a1.5,1.5 0 0,0 0,-3   Z" />
+				<path fill="url(#link-inner)"
+					d="M-1.5,-2 l-1.5,0 a2.5,2.5 0 0,0 0,5 l1.5,0 a0.5,0.5 0 0,0 0,-1 l-1.5,0 a1.5,1.5 0 0,1 0,-3 l1.5,0 a0.5,0.5 0 0,0 0,-1 Z" />
+			</g>
+			<use xlink:href="#link" transform="rotate(180) translate(0,-1)" />
+			<rect width="6" height="3" x="-3.25" y="-1" fill="url(#link-center-link)" />
+			<rect width="4" height="1" x="-2.25" y="-0" fill="url(#link-center-link-center)" />
+		</g>
+	</g>
+</svg>
