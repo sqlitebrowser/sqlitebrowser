@@ -50,7 +50,7 @@
         <file alias="find">page_find.svg</file>
         <file alias="field">page_green.svg</file>
         <file alias="field_key">page_key.svg</file>
-        <file alias="browser_open">page_link.svg</file>
+        <file alias="browser_open">world_link.svg</file>
         <file alias="background_color">page_white_color.svg</file>
         <file alias="paste">page_paste.svg</file>
         <file alias="save_sql">page_save.svg</file>
