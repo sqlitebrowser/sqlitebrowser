@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-20.04]
+        os: [ubuntu-24.04]
         sqlcipher: ["0", "1"]
     steps:
       - name: Checkout
@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install libqcustomplot-dev libqscintilla2-qt5-dev libqt5svg5 libsqlcipher-dev libsqlite3-dev qttools5-dev
+          sudo apt install libfuse2t64 libqcustomplot-dev libqscintilla2-qt5-dev libqt5svg5 libsqlcipher-dev libsqlite3-dev qttools5-dev
 
       - if: matrix.sqlcipher == 0
         name: Build SQLite
@@ -45,10 +45,11 @@ jobs:
 
       - name: Build AppImage
         run: |
-          wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
-          chmod a+x linuxdeployqt-continuous-x86_64.AppImage
+          wget -c -nv "https://github.com/linuxdeploy/linuxdeploy/releases/download/1-alpha-20240109-1/linuxdeploy-x86_64.AppImage"
+          wget -c -nv "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/1-alpha-20240109-1/linuxdeploy-plugin-qt-x86_64.AppImage"
+          chmod a+x linuxdeploy-x86_64.AppImage linuxdeploy-plugin-qt-x86_64.AppImage
           export VERSION=$(printf "dev-`git -C . rev-parse --short HEAD`")
-          ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -appimage
+          ./linuxdeploy-x86_64.AppImage --appdir=appdir --desktop-file=appdir/usr/share/applications/sqlitebrowser.desktop --plugin qt --output appimage
 
       - name: Rename a file
         run: |
