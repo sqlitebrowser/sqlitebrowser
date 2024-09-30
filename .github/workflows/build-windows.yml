@@ -143,7 +143,7 @@ jobs:
           cd installer/windows
           ./build.cmd "${{ matrix.arch }}".ToLower()
           $ARCH="${{ matrix.arch }}".ToLower()
-          mv DB.Browser.for.SQLite-*.msi "DB.Browser.for.SQLite-v3.13.1-rc1-$ARCH.msi"
+          mv DB.Browser.for.SQLite-*.msi "DB.Browser.for.SQLite-v3.13.1-rc2-$ARCH.msi"
 
       - if: github.event_name != 'pull_request'
         name: Upload artifacts for code signing with SignPath
@@ -170,7 +170,7 @@ jobs:
         name: Create ZIP
         run: |
           $ARCH="${{ matrix.arch }}".ToLower()
-          $FILENAME_FORMAT="DB.Browser.for.SQLite-v3.13.1-rc1-$ARCH.zip"
+          $FILENAME_FORMAT="DB.Browser.for.SQLite-v3.13.1-rc2-$ARCH.zip"
           Start-Process msiexec.exe -ArgumentList "/a $(dir installer\windows\DB.Browser.for.SQLite-*.msi) /q TARGETDIR=$PWD\target\" -Wait
           if ("${{ matrix.arch }}" -eq "Win32") {
             move target\System\* "target\DB Browser for SQLite\"
