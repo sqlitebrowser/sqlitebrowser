@@ -289,32 +289,32 @@
         <translation>Opsi tidak valid/berkas tidak ada: %1</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="363"/>
+        <location filename="../Application.cpp" line="366"/>
         <source>SQLite Version </source>
         <translation>Versi SQLite </translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="365"/>
+        <location filename="../Application.cpp" line="368"/>
         <source>SQLCipher Version %1 (based on SQLite %2)</source>
         <translation>SQLCipher Versi %1 (berbasis SQLite %2)</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="368"/>
+        <location filename="../Application.cpp" line="371"/>
         <source>DB Browser for SQLite Version %1.</source>
         <translation>Peramban DB untuk SQLite Versi %1.</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="369"/>
+        <location filename="../Application.cpp" line="372"/>
         <source>Last commit hash when built: %1</source>
         <translation>Hash commit terakhir ketika dibangun: %1</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="370"/>
+        <location filename="../Application.cpp" line="373"/>
         <source>Built for %1, running on %2</source>
         <translation>Dibangun untuk %1, dijalankan pada %2</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="371"/>
+        <location filename="../Application.cpp" line="374"/>
         <source>Qt Version %1</source>
         <translation>Qt Versi %1</translation>
     </message>
@@ -392,7 +392,7 @@
         <translation>Kunci mentah</translation>
     </message>
     <message>
-        <location filename="../CipherDialog.cpp" line="35"/>
+        <location filename="../CipherDialog.cpp" line="37"/>
         <source>Please set a key to encrypt the database.
 Note that if you change any of the other, optional, settings you&apos;ll need to re-enter them as well every time you open the database file.
 Leave the password fields empty to disable the encryption.
@@ -403,7 +403,7 @@ Biarkan ruas kata sandi kosong untuk menonaktifkan enkripsi.
 Proses enkripsi mungkin perlu beberapa waktu dan Anda mesti memiliki salinan cadangan dari basis data Anda! Perubahan yang belum tersimpan diterapkan sebelum mengubah enkripsi.</translation>
     </message>
     <message>
-        <location filename="../CipherDialog.cpp" line="40"/>
+        <location filename="../CipherDialog.cpp" line="42"/>
         <source>Please enter the key used to encrypt the database.
 If any of the other settings were altered for this database file you need to provide this information as well.</source>
         <translation>Harap masukkan kunci yang dipakai untuk mengenkripsi basis data.
@@ -428,92 +428,92 @@ Bila sebarang pengaturan lain diubah untuk berkas basis data ini, Anda perlu men
         <translation>Pilih suatu format tampilan bagi kolom &apos;%1&apos; yang diterapkan ke setiap nilai sebelum menunjukkannya.</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="17"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="19"/>
         <source>Default</source>
         <translation>Baku</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="19"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="21"/>
         <source>Decimal number</source>
         <translation>Bilangan desimal</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="20"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="22"/>
         <source>Exponent notation</source>
         <translation>Notasi eksponensial</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="21"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="23"/>
         <source>Hex blob</source>
         <translation>Blob heksa</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="22"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="24"/>
         <source>Hex number</source>
         <translation>Bilangan heksa</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="26"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="28"/>
         <source>Apple NSDate to date</source>
         <translation>NSDate Apple ke tanggal</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="27"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="29"/>
         <source>Java epoch (milliseconds) to date</source>
         <translation>Epos Java (milidetik) ke tanggal</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="28"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="30"/>
         <source>.NET DateTime.Ticks to date</source>
         <translation>DateTime.Ticks .NET ke tanggal</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="29"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="31"/>
         <source>Julian day to date</source>
         <translation>Hari Julian ke tanggal</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="31"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="33"/>
         <source>Unix epoch to local time</source>
         <translation>Epos Unix ke waktu lokal</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="32"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="34"/>
         <source>WebKit / Chromium epoch to date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="33"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="35"/>
         <source>WebKit / Chromium epoch to local time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="35"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="37"/>
         <source>Date as dd/mm/yyyy</source>
         <translation>Tanggal sebagai dd/mm/yyyy</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="37"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="39"/>
         <source>Lower case</source>
         <translation>Huruf kecil</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="40"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="42"/>
         <source>Binary GUID to text</source>
         <translation>GUID biner ke teks</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="41"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="43"/>
         <source>SpatiaLite Geometry to SVG</source>
         <translation>SpatiaLite Geometry ke SVG</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="145"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="147"/>
         <source>Custom display format must contain a function call applied to %1</source>
         <translation>Format tampilan ubahan mesti memuat suatu pemanggilan fungsi yang diterapkan ke %1</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="157"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="159"/>
         <source>Error in custom display format. Message from database engine:
 
 %1</source>
@@ -522,37 +522,37 @@ Bila sebarang pengaturan lain diubah untuk berkas basis data ini, Anda perlu men
 %1</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="159"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="161"/>
         <source>Custom display format must return only one column but it returned %1.</source>
         <translation>Format tampilan ubahan mesti mengembalikan hanya satu kolom tapi itu mengembalikan %1.</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="23"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="25"/>
         <source>Octal number</source>
         <translation>Bilangan oktal</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="24"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="26"/>
         <source>Round number</source>
         <translation>Bilangan bulat</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="30"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="32"/>
         <source>Unix epoch to date</source>
         <translation>Epos Unix ke tanggal</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="38"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="40"/>
         <source>Upper case</source>
         <translation>Huruf besar</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="34"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="36"/>
         <source>Windows DATE to date</source>
         <translation>DATE Windows ke tanggal</translation>
     </message>
     <message>
-        <location filename="../ColumnDisplayFormatDialog.cpp" line="43"/>
+        <location filename="../ColumnDisplayFormatDialog.cpp" line="45"/>
         <source>Custom</source>
         <translation>Ubahan</translation>
     </message>
@@ -679,166 +679,166 @@ Bila sebarang pengaturan lain diubah untuk berkas basis data ini, Anda perlu men
 <context>
     <name>DBBrowserDB</name>
     <message>
-        <location filename="../sqlitedb.cpp" line="322"/>
+        <location filename="../sqlitedb.cpp" line="325"/>
         <source>Please specify the database name under which you want to access the attached database</source>
         <translation>Harap nyatakan nama basis data yang akan dipakai untuk mengakses basis data yang dicantol</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="398"/>
+        <location filename="../sqlitedb.cpp" line="401"/>
         <source>Invalid file format</source>
         <translation>Format berkas tidak valid</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="711"/>
+        <location filename="../sqlitedb.cpp" line="714"/>
         <source>Do you really want to close this temporary database? All data will be lost.</source>
         <translation>Anda yakin hendak menutup basis data temporer ini? Semua data akan hilang.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="716"/>
+        <location filename="../sqlitedb.cpp" line="719"/>
         <source>Do you want to save the changes made to the database file %1?</source>
         <translation>Apakah Anda ingin menyimpan perubahan yang dibuat ke berkas basis data %1?</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="732"/>
+        <location filename="../sqlitedb.cpp" line="735"/>
         <source>Database didn&apos;t close correctly, probably still busy</source>
         <translation>Basis data tidak ditutup secara benar, mungkin masih sibuk</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="757"/>
+        <location filename="../sqlitedb.cpp" line="760"/>
         <source>Cannot open destination file: &apos;%1&apos;</source>
         <translation>Tidak bisa membuka berkas tujuan: &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="774"/>
-        <location filename="../sqlitedb.cpp" line="792"/>
+        <location filename="../sqlitedb.cpp" line="777"/>
+        <location filename="../sqlitedb.cpp" line="795"/>
         <source>Cannot backup to file: &apos;%1&apos;. Message: %2</source>
         <translation>Tidak bisa mencadangkan ke berkas: &apos;%1&apos;. Pesan %2</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="832"/>
+        <location filename="../sqlitedb.cpp" line="835"/>
         <source>The database is currently busy: </source>
         <translation>Basis data saat ini sibuk: </translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="833"/>
+        <location filename="../sqlitedb.cpp" line="836"/>
         <source>Do you want to abort that other operation?</source>
         <translation>Apakah Anda ingin menggugurkan operasi lain itu?</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="880"/>
+        <location filename="../sqlitedb.cpp" line="883"/>
         <source>Exporting database to SQL file...</source>
         <translation>Mengekspor basis data ke berkas SQL...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="881"/>
-        <location filename="../sqlitedb.cpp" line="1116"/>
+        <location filename="../sqlitedb.cpp" line="884"/>
+        <location filename="../sqlitedb.cpp" line="1119"/>
         <source>Cancel</source>
         <translation>Batal</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1074"/>
-        <location filename="../sqlitedb.cpp" line="1106"/>
+        <location filename="../sqlitedb.cpp" line="1077"/>
+        <location filename="../sqlitedb.cpp" line="1109"/>
         <source>No database file opened</source>
         <translation>Tidak ada berkas basis data yang dibuka</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1115"/>
+        <location filename="../sqlitedb.cpp" line="1118"/>
         <source>Executing SQL...</source>
         <translation>Mengeksekusi SQL...</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1145"/>
+        <location filename="../sqlitedb.cpp" line="1148"/>
         <source>Action cancelled.</source>
         <translation>Aksi dibatalkan.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1215"/>
-        <location filename="../sqlitedb.cpp" line="1228"/>
+        <location filename="../sqlitedb.cpp" line="1218"/>
+        <location filename="../sqlitedb.cpp" line="1231"/>
         <source>Error in statement #%1: %2.
 Aborting execution%3.</source>
         <translation>Kesalahan dalam pernyataan #%1: %2.
 Menggugurkan eksekusi %3.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1218"/>
-        <location filename="../sqlitedb.cpp" line="1231"/>
+        <location filename="../sqlitedb.cpp" line="1221"/>
+        <location filename="../sqlitedb.cpp" line="1234"/>
         <source> and rolling back</source>
         <translation> dan me-roll back</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1277"/>
+        <location filename="../sqlitedb.cpp" line="1280"/>
         <source>didn&apos;t receive any output from %1</source>
         <translation>tak menerima keluaran apa pun dari %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1283"/>
+        <location filename="../sqlitedb.cpp" line="1286"/>
         <source>could not execute command: %1</source>
         <translation>tidak bisa mengeksekusi perintah: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1461"/>
+        <location filename="../sqlitedb.cpp" line="1464"/>
         <source>Cannot delete this object</source>
         <translation>Tidak bisa menghapus objek ini</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1504"/>
+        <location filename="../sqlitedb.cpp" line="1507"/>
         <source>Cannot set data on this object</source>
         <translation>Tidak bisa menata data pada objek ini</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1611"/>
-        <location filename="../sqlitedb.cpp" line="1618"/>
+        <location filename="../sqlitedb.cpp" line="1616"/>
+        <location filename="../sqlitedb.cpp" line="1623"/>
         <source>A table with the name &apos;%1&apos; already exists in schema &apos;%2&apos;.</source>
         <translation>Sebuah tabel dengan nama &apos;%1&apos; sudah ada dalam skema &apos;%2&apos;.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1627"/>
+        <location filename="../sqlitedb.cpp" line="1632"/>
         <source>No table with name &apos;%1&apos; exists in schema &apos;%2&apos;.</source>
         <translation>Tidak ada tabel dengan nama &apos;%1&apos; ada dalam skema &apos;%2&apos;.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1637"/>
-        <location filename="../sqlitedb.cpp" line="1658"/>
+        <location filename="../sqlitedb.cpp" line="1642"/>
+        <location filename="../sqlitedb.cpp" line="1663"/>
         <source>Cannot find column %1.</source>
         <translation>Tidak bisa temukan kolom %1.</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1671"/>
+        <location filename="../sqlitedb.cpp" line="1676"/>
         <source>Creating savepoint failed. DB says: %1</source>
         <translation>Gagal membuat savepoint. Pesan DB: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1734"/>
+        <location filename="../sqlitedb.cpp" line="1739"/>
         <source>Renaming the column failed. DB says:
 %1</source>
         <translation>Gagal mengubah nama kolom. Pesan DB:
 %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1762"/>
-        <location filename="../sqlitedb.cpp" line="1924"/>
+        <location filename="../sqlitedb.cpp" line="1767"/>
+        <location filename="../sqlitedb.cpp" line="1929"/>
         <source>Releasing savepoint failed. DB says: %1</source>
         <translation>Gagal melepas savepoint. Pesan DB: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1781"/>
+        <location filename="../sqlitedb.cpp" line="1786"/>
         <source>Creating new table failed. DB says: %1</source>
         <translation>Gagal membuat tabel baru. Pesan DB: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1818"/>
+        <location filename="../sqlitedb.cpp" line="1823"/>
         <source>Copying data to new table failed. DB says:
 %1</source>
         <translation>Gagal menyalin data ke tabel baru. Pesan DB:
 %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1890"/>
+        <location filename="../sqlitedb.cpp" line="1895"/>
         <source>Deleting old table failed. DB says: %1</source>
         <translation>Gagal menghapus tabel lama. Pesan DB: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1915"/>
+        <location filename="../sqlitedb.cpp" line="1920"/>
         <source>Restoring some of the objects associated with this table failed. This is most likely because some column names changed. Here&apos;s the SQL statement which you might want to fix and execute manually:
 
 </source>
@@ -847,27 +847,27 @@ Menggugurkan eksekusi %3.</translation>
 </translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="2062"/>
+        <location filename="../sqlitedb.cpp" line="2067"/>
         <source>could not get list of databases: %1</source>
         <translation>tidak bisa memperoleh daftar basis data: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="2174"/>
+        <location filename="../sqlitedb.cpp" line="2179"/>
         <source>Error loading extension: %1</source>
         <translation>Kesalahan saat memuat ekstensi: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="2183"/>
+        <location filename="../sqlitedb.cpp" line="2188"/>
         <source>Error loading built-in extension: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="2209"/>
+        <location filename="../sqlitedb.cpp" line="2214"/>
         <source>could not get column information</source>
         <translation>tidak bisa memperoleh informasi kolom</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="1960"/>
+        <location filename="../sqlitedb.cpp" line="1965"/>
         <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.
 Message from database engine:
 %3</source>
@@ -876,17 +876,17 @@ Pesan dari mesin basis data:
 %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="2056"/>
+        <location filename="../sqlitedb.cpp" line="2061"/>
         <source>could not get list of db objects: %1</source>
         <translation>tidak bisa memperoleh daftar obyek db: %1</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="2090"/>
+        <location filename="../sqlitedb.cpp" line="2095"/>
         <source>Error setting pragma %1 to %2: %3</source>
         <translation>Kesalahan saat mengatur pragma %1 ke %2: %3</translation>
     </message>
     <message>
-        <location filename="../sqlitedb.cpp" line="2136"/>
+        <location filename="../sqlitedb.cpp" line="2141"/>
         <source>File not found.</source>
         <translation>Berkas tidak ditemukan.</translation>
     </message>
@@ -2094,19 +2094,19 @@ Semua data yang saat ini disimpan dalam ruas ini akan hilang.</translation>
         <translation>Ctrl+Alt+C</translation>
     </message>
     <message>
-        <location filename="../ExtendedTableWidget.cpp" line="840"/>
+        <location filename="../ExtendedTableWidget.cpp" line="844"/>
         <source>The content of the clipboard is bigger than the range selected.
 Do you want to insert it anyway?</source>
         <translation>Konten papan klip lebih besar daripada rentang yang dipilih.
 Tetap disisipkan?</translation>
     </message>
     <message>
-        <location filename="../ExtendedTableWidget.cpp" line="1205"/>
+        <location filename="../ExtendedTableWidget.cpp" line="1209"/>
         <source>&lt;p&gt;Not all data has been loaded. &lt;b&gt;Do you want to load all data before selecting all the rows?&lt;/b&gt;&lt;p&gt;&lt;p&gt;Answering &lt;b&gt;No&lt;/b&gt; means that no more data will be loaded and the selection will not be performed.&lt;br/&gt;Answering &lt;b&gt;Yes&lt;/b&gt; might take some time while the data is loaded but the selection will be complete.&lt;/p&gt;Warning: Loading all the data might require a great amount of memory for big tables.</source>
         <translation>&lt;p&gt;Belum semua data dimuat. &lt;b&gt;Apakah Anda ingin memuat semua data sebelum memilih semua baris?&lt;/b&gt;&lt;p&gt;&lt;p&gt;Menjawab &lt;b&gt;Tidak&lt;/b&gt; berarti tidak ada lagi data yang akan dimuat dan pemilihan tidak akan dilaksanakan.&lt;br/&gt;Menjawab &lt;b&gt;Ya&lt;/b&gt; mungkin akan makan waktu ketika data dimuat tapi pemilihan akan lengkap.&lt;/p&gt;Peringatan: Memuat semua data mungkin memerlukan sejumlah besar memori untuk tabel-tabel besar.</translation>
     </message>
     <message>
-        <location filename="../ExtendedTableWidget.cpp" line="1283"/>
+        <location filename="../ExtendedTableWidget.cpp" line="1287"/>
         <source>Cannot set selection to NULL. Column %1 has a NOT NULL constraint.</source>
         <translatorcomment>Tidak bisa menata pilihan ke NULL. Kolom %1 memiliki konstrain NOT NULL.</translatorcomment>
         <translation>Cannot set selection to NULL. Column %1 has a NOT NULL constraint.</translation>
@@ -2159,12 +2159,12 @@ Tetap disisipkan?</translation>
 <context>
     <name>FilterLineEdit</name>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="15"/>
+        <location filename="../FilterLineEdit.cpp" line="17"/>
         <source>Filter</source>
         <translation>Filter</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="29"/>
+        <location filename="../FilterLineEdit.cpp" line="31"/>
         <source>These input fields allow you to perform quick filters in the currently selected table.
 By default, the rows containing the input text are filtered out.
 The following operators are also supported:
@@ -2191,92 +2191,92 @@ x~y	Rentang: nilai antara x dan y
 /regexp/	Nilai yang cocok dengan ekspresi reguler</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="202"/>
+        <location filename="../FilterLineEdit.cpp" line="205"/>
         <source>Clear All Conditional Formats</source>
         <translation>Bersihkan Semua Format Bersyarat</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="207"/>
+        <location filename="../FilterLineEdit.cpp" line="210"/>
         <source>Use for Conditional Format</source>
         <translation>Gunakan untuk Format Bersyarat</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="212"/>
+        <location filename="../FilterLineEdit.cpp" line="215"/>
         <source>Edit Conditional Formats...</source>
         <translation>Sunting Format Bersyarat...</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="132"/>
+        <location filename="../FilterLineEdit.cpp" line="134"/>
         <source>Set Filter Expression</source>
         <translation>Atur Ekspresi Filter</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="134"/>
+        <location filename="../FilterLineEdit.cpp" line="136"/>
         <source>What&apos;s This?</source>
         <translation>Apa Ini?</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="139"/>
+        <location filename="../FilterLineEdit.cpp" line="142"/>
         <source>Is NULL</source>
         <translation>NULL</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="144"/>
+        <location filename="../FilterLineEdit.cpp" line="147"/>
         <source>Is not NULL</source>
         <translation>Bukan NULL</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="149"/>
+        <location filename="../FilterLineEdit.cpp" line="152"/>
         <source>Is empty</source>
         <translation>Kosong</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="154"/>
+        <location filename="../FilterLineEdit.cpp" line="157"/>
         <source>Is not empty</source>
         <translation>Tidak kosong</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="159"/>
+        <location filename="../FilterLineEdit.cpp" line="162"/>
         <source>Not containing...</source>
         <translation>Tidak memuat...</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="163"/>
+        <location filename="../FilterLineEdit.cpp" line="166"/>
         <source>Equal to...</source>
         <translation>Sama dengan...</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="167"/>
+        <location filename="../FilterLineEdit.cpp" line="170"/>
         <source>Not equal to...</source>
         <translation>Tidak sama dengan...</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="171"/>
+        <location filename="../FilterLineEdit.cpp" line="174"/>
         <source>Greater than...</source>
         <translation>Lebih dari...</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="175"/>
+        <location filename="../FilterLineEdit.cpp" line="178"/>
         <source>Less than...</source>
         <translation>Kurang dari...</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="179"/>
+        <location filename="../FilterLineEdit.cpp" line="182"/>
         <source>Greater or equal...</source>
         <translation>Lebih dari atau sama dengan...</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="183"/>
+        <location filename="../FilterLineEdit.cpp" line="186"/>
         <source>Less or equal...</source>
         <translation>Kurang dari atau sama dengan...</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="187"/>
+        <location filename="../FilterLineEdit.cpp" line="190"/>
         <source>In range...</source>
         <translation>Dalam rentang...</translation>
     </message>
     <message>
-        <location filename="../FilterLineEdit.cpp" line="192"/>
+        <location filename="../FilterLineEdit.cpp" line="195"/>
         <source>Regular expression...</source>
         <translation>Ekspresi reguler...</translation>
     </message>
@@ -2710,98 +2710,98 @@ x~y	Rentang: nilai antara x dan y
         <translation>Peramban DB untuk SQLite</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1174"/>
+        <location filename="../MainWindow.ui" line="1246"/>
         <source>toolBar1</source>
         <translation>bilahAlat1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2309"/>
+        <location filename="../MainWindow.ui" line="2381"/>
         <source>Opens the SQLCipher FAQ in a browser window</source>
         <translation>Membuka FAQ SQL Cipher dalam sebuah jendela peramban</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2317"/>
+        <location filename="../MainWindow.ui" line="2389"/>
         <source>Export one or more table(s) to a JSON file</source>
         <translation>Ekspor satu tabel atau lebih ke berkas JSON</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1223"/>
+        <location filename="../MainWindow.ui" line="1295"/>
         <source>&amp;File</source>
         <translation>&amp;Berkas</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1227"/>
+        <location filename="../MainWindow.ui" line="1299"/>
         <source>&amp;Import</source>
         <translation>&amp;Impor</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1235"/>
+        <location filename="../MainWindow.ui" line="1307"/>
         <source>&amp;Export</source>
         <translation>&amp;Ekspor</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1273"/>
+        <location filename="../MainWindow.ui" line="1345"/>
         <source>&amp;Edit</source>
         <translation>&amp;Sunting</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1285"/>
+        <location filename="../MainWindow.ui" line="1357"/>
         <source>&amp;View</source>
         <translation>&amp;Tilik</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1294"/>
+        <location filename="../MainWindow.ui" line="1366"/>
         <source>&amp;Help</source>
         <translation>B&amp;antuan</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1332"/>
+        <location filename="../MainWindow.ui" line="1404"/>
         <source>DB Toolbar</source>
         <translation>Bilah Alat DB</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1352"/>
+        <location filename="../MainWindow.ui" line="1424"/>
         <source>Edit Database &amp;Cell</source>
         <translation>&amp;Sunting Sel Basis Data</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1513"/>
+        <location filename="../MainWindow.ui" line="1585"/>
         <source>DB Sche&amp;ma</source>
         <translation>Ske&amp;ma DB</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1577"/>
+        <location filename="../MainWindow.ui" line="1649"/>
         <source>&amp;Remote</source>
         <translation>&amp;Remote</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2079"/>
-        <location filename="../MainWindow.ui" line="2085"/>
+        <location filename="../MainWindow.ui" line="2151"/>
+        <location filename="../MainWindow.ui" line="2157"/>
         <source>Execute current line</source>
         <translation>Eksekusi baris kini</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2088"/>
+        <location filename="../MainWindow.ui" line="2160"/>
         <source>This button executes the SQL statement present in the current editor line</source>
         <translation>Tombol ini mengeksekusi pernyataan SQL yang ada dalam baris penyunting saat ini</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2091"/>
+        <location filename="../MainWindow.ui" line="2163"/>
         <source>Shift+F5</source>
         <translation>Shift+F5</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2174"/>
+        <location filename="../MainWindow.ui" line="2246"/>
         <source>Sa&amp;ve Project</source>
         <translation>Simpan Pro&amp;yek</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2332"/>
+        <location filename="../MainWindow.ui" line="2404"/>
         <source>Open an existing database file in read only mode</source>
         <translation>Buka berkas basis data yang ada dalam mode hanya baca</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1408"/>
+        <location filename="../MainWindow.ui" line="1480"/>
         <source>User</source>
         <translation>Pengguna</translation>
     </message>
@@ -2815,82 +2815,82 @@ Anda dapat menyeret pernyataan SQL dari suatu baris objek dan menjatuhkan mereka
 </translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2633"/>
+        <location filename="../MainWindow.ui" line="2705"/>
         <source>Un/comment block of SQL code</source>
         <translation>Jadikan komentar/bukan komentar blok kode SQL</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2636"/>
+        <location filename="../MainWindow.ui" line="2708"/>
         <source>Un/comment block</source>
         <translation>Jadikan komentar/bukan komentar blok</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2639"/>
+        <location filename="../MainWindow.ui" line="2711"/>
         <source>Comment or uncomment current line or selected block of code</source>
         <translation>Jadikan komentar/bukan komentar baris saat ini atau blok kode yang dipilih</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2642"/>
+        <location filename="../MainWindow.ui" line="2714"/>
         <source>Comment or uncomment the selected lines or the current line, when there is no selection. All the block is toggled according to the first line.</source>
         <translation>Jadikan komentar/bukan komentar baris yang dipilih atau baris saat ini, bila tidak ada yang dipilih. Seluruh blok dijungkitkan menurut baris pertama.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2645"/>
+        <location filename="../MainWindow.ui" line="2717"/>
         <source>Ctrl+/</source>
         <translation>Ctrl+/</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2657"/>
+        <location filename="../MainWindow.ui" line="2729"/>
         <source>Stop SQL execution</source>
         <translation>Hentikan eksekusi SQL</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2660"/>
+        <location filename="../MainWindow.ui" line="2732"/>
         <source>Stop execution</source>
         <translation>Hentikan eksekusi</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2663"/>
+        <location filename="../MainWindow.ui" line="2735"/>
         <source>Stop the currently running SQL script</source>
         <translation>Hentikan skrip SQL yang saat ini sedang berjalan</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1084"/>
+        <location filename="../MainWindow.ui" line="1156"/>
         <source>Warning: this pragma is not readable and this value has been inferred. Writing the pragma might overwrite a redefined LIKE provided by an SQLite extension.</source>
         <translation>Peringatan: pragma ini tidak dapat dibaca dan nilai ini telah disimpulkan. Menulis pragma mungkin menimpa suatu LIKE yang didefinisikan ulang yang disediakan oleh sebuah ekstensi SQLite.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1310"/>
+        <location filename="../MainWindow.ui" line="1382"/>
         <source>Too&amp;ls</source>
         <translation>Pera&amp;latan</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1413"/>
+        <location filename="../MainWindow.ui" line="1485"/>
         <source>Application</source>
         <translation>Aplikasi</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1418"/>
+        <location filename="../MainWindow.ui" line="1490"/>
         <source>Error Log</source>
         <translation>Log Kesalahan</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1445"/>
+        <location filename="../MainWindow.ui" line="1517"/>
         <source>This button clears the contents of the SQL logs</source>
         <translation>Tombol ini membersihkan isi log SQL</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1448"/>
+        <location filename="../MainWindow.ui" line="1520"/>
         <source>&amp;Clear</source>
         <translation>&amp;Bersihkan</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1457"/>
+        <location filename="../MainWindow.ui" line="1529"/>
         <source>This panel lets you examine a log of all SQL commands issued by the application or by yourself</source>
         <translation>Panel ini memungkinkan Anda memeriksa log dari semua perintah SQL yang diberikan oleh aplikasi atau oleh Anda sendiri</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1538"/>
+        <location filename="../MainWindow.ui" line="1610"/>
         <source>This is the structure of the opened database.
 You can drag multiple object names from the Name column and drop them into the SQL editor and you can adjust the properties of the dropped names using the context menu. This would help you in composing SQL statements.
 You can drag SQL statements from the Schema column and drop them into the SQL editor or into other applications.
@@ -2901,366 +2901,366 @@ Anda dapat menyeret pernyataan SQL dari kolom Skema dan menjatuhkan mereka ke da
 </translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1586"/>
-        <location filename="../MainWindow.ui" line="2446"/>
+        <location filename="../MainWindow.ui" line="1658"/>
+        <location filename="../MainWindow.ui" line="2518"/>
         <source>Project Toolbar</source>
         <translation>Bilah Alat Proyek</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1605"/>
+        <location filename="../MainWindow.ui" line="1677"/>
         <source>Extra DB toolbar</source>
         <translation>Bilah alat DB ekstra</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1608"/>
-        <location filename="../MainWindow.ui" line="1685"/>
-        <location filename="../MainWindow.ui" line="1688"/>
+        <location filename="../MainWindow.ui" line="1680"/>
+        <location filename="../MainWindow.ui" line="1757"/>
+        <location filename="../MainWindow.ui" line="1760"/>
         <source>Close the current database file</source>
         <translation>Tutup berkas basis data saat ini</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1628"/>
+        <location filename="../MainWindow.ui" line="1700"/>
         <source>&amp;New Database...</source>
         <translation>&amp;Basis Data Baru...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1634"/>
-        <location filename="../MainWindow.ui" line="1637"/>
+        <location filename="../MainWindow.ui" line="1706"/>
+        <location filename="../MainWindow.ui" line="1709"/>
         <source>Create a new database file</source>
         <translation>Buat suatu berkas basis data baru</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1640"/>
+        <location filename="../MainWindow.ui" line="1712"/>
         <source>This option is used to create a new database file.</source>
         <translation>Opsi ini dipakai untuk membuat sebuah berkas basis data baru.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1643"/>
+        <location filename="../MainWindow.ui" line="1715"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1655"/>
-        <location filename="../MainWindow.ui" line="2473"/>
+        <location filename="../MainWindow.ui" line="1727"/>
+        <location filename="../MainWindow.ui" line="2545"/>
         <source>&amp;Open Database...</source>
         <translation>Buk&amp;a Basis Data...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1658"/>
-        <location filename="../MainWindow.ui" line="1661"/>
-        <location filename="../MainWindow.ui" line="2335"/>
-        <location filename="../MainWindow.ui" line="2479"/>
-        <location filename="../MainWindow.ui" line="2482"/>
+        <location filename="../MainWindow.ui" line="1730"/>
+        <location filename="../MainWindow.ui" line="1733"/>
+        <location filename="../MainWindow.ui" line="2407"/>
+        <location filename="../MainWindow.ui" line="2551"/>
+        <location filename="../MainWindow.ui" line="2554"/>
         <source>Open an existing database file</source>
         <translation>Buka sebuah berkas basis data yang ada</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1664"/>
-        <location filename="../MainWindow.ui" line="2338"/>
-        <location filename="../MainWindow.ui" line="2485"/>
+        <location filename="../MainWindow.ui" line="1736"/>
+        <location filename="../MainWindow.ui" line="2410"/>
+        <location filename="../MainWindow.ui" line="2557"/>
         <source>This option is used to open an existing database file.</source>
         <translation>Opsi ini dipakai untuk membuka sebuah berkas basis data yang ada.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1667"/>
+        <location filename="../MainWindow.ui" line="1739"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1682"/>
+        <location filename="../MainWindow.ui" line="1754"/>
         <source>&amp;Close Database</source>
         <translation>&amp;Tutup Basis Data</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1691"/>
+        <location filename="../MainWindow.ui" line="1763"/>
         <source>This button closes the connection to the currently open database file</source>
         <translation>Tombol ini menutup koneksi ke berkas basis data yang saat ini terbuka</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="194"/>
-        <location filename="../MainWindow.cpp" line="3787"/>
+        <location filename="../MainWindow.cpp" line="196"/>
+        <location filename="../MainWindow.cpp" line="3807"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1712"/>
-        <location filename="../MainWindow.ui" line="1715"/>
+        <location filename="../MainWindow.ui" line="1784"/>
+        <location filename="../MainWindow.ui" line="1787"/>
         <source>Revert database to last saved state</source>
         <translation>Pulihkan basis data ke keadaan tersimpan terakhir</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1718"/>
+        <location filename="../MainWindow.ui" line="1790"/>
         <source>This option is used to revert the current database file to its last saved state. All changes made since the last save operation are lost.</source>
         <translation>Opsi ini dipakai untuk memulihkan berkas basis data saat ini ke keadaan tersimpan terakhir. Semua perubahan yang dibuat sejak operasi simpan terakhir hilang.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1760"/>
-        <location filename="../MainWindow.ui" line="1763"/>
+        <location filename="../MainWindow.ui" line="1832"/>
+        <location filename="../MainWindow.ui" line="1835"/>
         <source>Write changes to the database file</source>
         <translation>Tulis perubahan ke berkas basis data</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1766"/>
+        <location filename="../MainWindow.ui" line="1838"/>
         <source>This option is used to save changes to the database file.</source>
         <translation>Opsi ini dipakai untuk menyimpan perubahan ke berkas basis data.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1769"/>
+        <location filename="../MainWindow.ui" line="1841"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1780"/>
+        <location filename="../MainWindow.ui" line="1852"/>
         <source>Compact &amp;Database...</source>
         <translation>Mampatkan Basis &amp;Data...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1783"/>
+        <location filename="../MainWindow.ui" line="1855"/>
         <source>Compact the database file, removing space wasted by deleted records</source>
         <translation>Memampatkan berkas basis data, menghapus ruang yang terbuang oleh record yang dihapus</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1786"/>
-        <location filename="../MainWindow.ui" line="1789"/>
+        <location filename="../MainWindow.ui" line="1858"/>
+        <location filename="../MainWindow.ui" line="1861"/>
         <source>Compact the database file, removing space wasted by deleted records.</source>
         <translation>Memampatkan berkas basis data, menghapus ruang yang terbuang oleh record yang dihapus.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1797"/>
+        <location filename="../MainWindow.ui" line="1869"/>
         <source>E&amp;xit</source>
         <translation>&amp;Keluar</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1800"/>
+        <location filename="../MainWindow.ui" line="1872"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1811"/>
+        <location filename="../MainWindow.ui" line="1883"/>
         <source>Import data from an .sql dump text file into a new or existing database.</source>
         <translation>Impor data dari sebuah berkas teks dump sql ke dalam basis data baru atau yang ada.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1814"/>
+        <location filename="../MainWindow.ui" line="1886"/>
         <source>This option lets you import data from an .sql dump text file into a new or existing database. SQL dump files can be created on most database engines, including MySQL and PostgreSQL.</source>
         <translation>Opsi ini memungkinkan Anda mengimpor data dari berkas teks curah .sql ke dalam basis data baru atau yang ada. Berkas curah SQL dapat dibuat pada kebanyakan mesin basis data, termasuk MySQL dan PostgreSQL.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1825"/>
+        <location filename="../MainWindow.ui" line="1897"/>
         <source>Open a wizard that lets you import data from a comma separated text file into a database table.</source>
         <translation>Membuka suatu wahana pandu yang mengizinkan Anda mengimpor data dari berkas teks dengan pemisah koma ke dalam tabel basis data.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1828"/>
+        <location filename="../MainWindow.ui" line="1900"/>
         <source>Open a wizard that lets you import data from a comma separated text file into a database table. CSV files can be created on most database and spreadsheet applications.</source>
         <translation>Opsi ini membuka suatu wahana pandu yang memungkinkan Anda mengimpor data dari berkas teks dipisah koma ke dalam tabel basis data. Berkas CSV dapat dibuat pada kebanyakan aplikasi basis data dan lembar kerja.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1839"/>
+        <location filename="../MainWindow.ui" line="1911"/>
         <source>Export a database to a .sql dump text file.</source>
         <translation>Ekspor suatu basis data ke sebuah berkas teks curah .sql.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1842"/>
+        <location filename="../MainWindow.ui" line="1914"/>
         <source>This option lets you export a database to a .sql dump text file. SQL dump files contain all data necessary to recreate the database on most database engines, including MySQL and PostgreSQL.</source>
         <translation>Opsi ini memungkinkan Anda mengekspor sebuah basis data ke suatu berkas teks curah .sql. Berkas curah SQL memuat semua data yang diperlukan untuk mencipta ulang basis data pada kebanyakan mesin basis data, termasuk MySQL dan PostgreSQL.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1853"/>
+        <location filename="../MainWindow.ui" line="1925"/>
         <source>Export a database table as a comma separated text file.</source>
         <translation>Ekspor suatu tabel basis data sebagai sebuah berkas teks yang dipisah koma.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1856"/>
+        <location filename="../MainWindow.ui" line="1928"/>
         <source>Export a database table as a comma separated text file, ready to be imported into other database or spreadsheet applications.</source>
         <translation>Ekspor suatu tabel basis data sebagai berkas teks yang dipisah koma, siap untuk diimpor ke dalam aplikasi lembar kerja atau basis data lain.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1874"/>
+        <location filename="../MainWindow.ui" line="1946"/>
         <source>Open the Create Table wizard, where it is possible to define the name and fields for a new table in the database</source>
         <translation>Membuka wahana pandu Buat Tabel, dimana mungkin untuk mendefinisikan nama dan ruas bagi suatu tabel baru dalam basis data</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1892"/>
-        <location filename="../MainWindow.cpp" line="1677"/>
+        <location filename="../MainWindow.ui" line="1964"/>
+        <location filename="../MainWindow.cpp" line="1683"/>
         <source>Delete Table</source>
         <translation>Hapus Tabel</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1895"/>
+        <location filename="../MainWindow.ui" line="1967"/>
         <source>Open the Delete Table wizard, where you can select a database table to be dropped.</source>
         <translation>Membuka wahana pandu Hapus Tabel, dimana Anda dapat memilih sebuah tabel basis data yang akan di-drop.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1931"/>
+        <location filename="../MainWindow.ui" line="2003"/>
         <source>Open the Create Index wizard, where it is possible to define a new index on an existing database table.</source>
         <translation>Membuka wahana pandu Buat Indeks, dimana mungkin untuk mendefinisikan sebuah indeks baru pada tabel basis data yang ada.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1943"/>
+        <location filename="../MainWindow.ui" line="2015"/>
         <source>&amp;Preferences...</source>
         <translation>&amp;Preferensi...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1946"/>
-        <location filename="../MainWindow.ui" line="1949"/>
+        <location filename="../MainWindow.ui" line="2018"/>
+        <location filename="../MainWindow.ui" line="2021"/>
         <source>Open the preferences window.</source>
         <translation>Buka jendela preferensi.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1964"/>
+        <location filename="../MainWindow.ui" line="2036"/>
         <source>&amp;DB Toolbar</source>
         <translation>Bilah Alat &amp;DB</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1967"/>
+        <location filename="../MainWindow.ui" line="2039"/>
         <source>Shows or hides the Database toolbar.</source>
         <translation>Menampilkan atau menyembunyikan bilah alat Basis Data.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1982"/>
+        <location filename="../MainWindow.ui" line="2054"/>
         <source>Shift+F1</source>
         <translation>Shift+F1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2007"/>
+        <location filename="../MainWindow.ui" line="2079"/>
         <source>New &amp;tab</source>
         <translation>&amp;Tab baru</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2040"/>
+        <location filename="../MainWindow.ui" line="2112"/>
         <source>Open SQL file(s)</source>
         <translation>Buka berkas SQL</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2043"/>
+        <location filename="../MainWindow.ui" line="2115"/>
         <source>This button opens files containing SQL statements and loads them in new editor tabs</source>
         <translation>Tombol ini membuka berkas yang memuat pernyataan SQL dan memuat mereka dalam tab penyunting baru</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2082"/>
+        <location filename="../MainWindow.ui" line="2154"/>
         <source>Execute line</source>
         <translation>Eksekusi baris</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2111"/>
+        <location filename="../MainWindow.ui" line="2183"/>
         <source>&amp;Wiki</source>
         <translation>&amp;Wiki</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2114"/>
+        <location filename="../MainWindow.ui" line="2186"/>
         <source>F1</source>
         <translation>F1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2126"/>
+        <location filename="../MainWindow.ui" line="2198"/>
         <source>Bug &amp;Report...</source>
         <translation>Lapo&amp;ran Bug...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2138"/>
+        <location filename="../MainWindow.ui" line="2210"/>
         <source>Feature Re&amp;quest...</source>
         <translation>Per&amp;mintaan Fitur...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2150"/>
+        <location filename="../MainWindow.ui" line="2222"/>
         <source>Web&amp;site</source>
         <translation>&amp;Situs Web</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2162"/>
+        <location filename="../MainWindow.ui" line="2234"/>
         <source>&amp;Donate on Patreon...</source>
         <translation>&amp;Donasi di Patreon...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2177"/>
+        <location filename="../MainWindow.ui" line="2249"/>
         <source>&amp;Save Project</source>
         <translation>&amp;Simpan Proyek</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2186"/>
+        <location filename="../MainWindow.ui" line="2258"/>
         <source>This button lets you save all the settings associated to the open DB to a DB Browser for SQLite project file</source>
         <translation>Tombol ini memungkinkan Anda menyimpan semua pengaturan terkait DB yang terbuka ke suatu berkas proyek Peramban DB untuk SQLite</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2201"/>
+        <location filename="../MainWindow.ui" line="2273"/>
         <source>Open &amp;Project</source>
         <translation>Buka &amp;Proyek</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2210"/>
+        <location filename="../MainWindow.ui" line="2282"/>
         <source>This button lets you open a DB Browser for SQLite project file</source>
         <translation>Tombol ini memungkinkan Anda membuka suatu berkas proyek Peramban DB untuk SQLite</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2341"/>
+        <location filename="../MainWindow.ui" line="2413"/>
         <source>Ctrl+Shift+O</source>
         <translation>Ctrl+Shift+O</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2672"/>
+        <location filename="../MainWindow.ui" line="2744"/>
         <source>&amp;Save Project As...</source>
         <translation>&amp;Simpan Proyek Sebagai...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2675"/>
-        <location filename="../MainWindow.ui" line="2678"/>
-        <location filename="../MainWindow.ui" line="2681"/>
+        <location filename="../MainWindow.ui" line="2747"/>
+        <location filename="../MainWindow.ui" line="2750"/>
+        <location filename="../MainWindow.ui" line="2753"/>
         <source>Save the project in a file selected in a dialog</source>
         <translation>Simpan proyek dalam suatu berkas yang dipilih dalam sebuah dialog</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2690"/>
+        <location filename="../MainWindow.ui" line="2762"/>
         <source>Save A&amp;ll</source>
         <translation>Simpan Se&amp;mua</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2693"/>
-        <location filename="../MainWindow.ui" line="2696"/>
-        <location filename="../MainWindow.ui" line="2699"/>
+        <location filename="../MainWindow.ui" line="2765"/>
+        <location filename="../MainWindow.ui" line="2768"/>
+        <location filename="../MainWindow.ui" line="2771"/>
         <source>Save DB file, project file and opened SQL files</source>
         <translation>Simpan berkas DB, berkas proyek, dan berkas SQL yang dibuka</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2702"/>
+        <location filename="../MainWindow.ui" line="2774"/>
         <source>Ctrl+Shift+S</source>
         <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2711"/>
+        <location filename="../MainWindow.ui" line="2783"/>
         <source>Browse Table</source>
         <translation>Ramban Tabel</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2716"/>
+        <location filename="../MainWindow.ui" line="2788"/>
         <source>Close Pro&amp;ject</source>
         <translation>Tutup Pro&amp;yek</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2719"/>
-        <location filename="../MainWindow.ui" line="2722"/>
+        <location filename="../MainWindow.ui" line="2791"/>
+        <location filename="../MainWindow.ui" line="2794"/>
         <source>Close project and database files and return to the initial state</source>
         <translation>Tutup berkas basis data dan proyek, dan kembali ke keadaan awal</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="480"/>
+        <location filename="../MainWindow.cpp" line="482"/>
         <source>Ctrl+Shift+F4</source>
         <translation>Ctrl+Shift+F4</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2734"/>
-        <location filename="../MainWindow.ui" line="2746"/>
+        <location filename="../MainWindow.ui" line="2806"/>
+        <location filename="../MainWindow.ui" line="2818"/>
         <source>Detach Database</source>
         <translation>Lepas Cantolan Basis Data</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2737"/>
-        <location filename="../MainWindow.ui" line="2749"/>
+        <location filename="../MainWindow.ui" line="2809"/>
+        <location filename="../MainWindow.ui" line="2821"/>
         <source>Detach database file attached to the current database connection</source>
         <translation>Lepas cantolan berkas basis data yang tercantol ke koneksi basis data saat ini</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2225"/>
+        <location filename="../MainWindow.ui" line="2297"/>
         <source>&amp;Attach Database...</source>
         <translation>C&amp;antol Basis Data...</translation>
     </message>
@@ -3275,469 +3275,449 @@ Anda dapat menyeret pernyataan SQL dari kolom Skema dan menjatuhkan mereka ke da
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="260"/>
+        <location filename="../MainWindow.ui" line="264"/>
         <source>Case Sensitive Like</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="342"/>
+        <location filename="../MainWindow.ui" line="358"/>
         <source>Journal Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="358"/>
+        <location filename="../MainWindow.ui" line="374"/>
         <source>Journal Size Limit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="374"/>
+        <location filename="../MainWindow.ui" line="390"/>
         <source>Recursive Triggers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="388"/>
-        <source>Delete</source>
-        <comment>pragma</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainWindow.ui" line="393"/>
-        <source>Truncate</source>
-        <comment>pragma</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainWindow.ui" line="398"/>
-        <source>Persist</source>
-        <comment>pragma</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainWindow.ui" line="403"/>
-        <source>Memory</source>
-        <comment>pragma</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainWindow.ui" line="408"/>
-        <source>WAL</source>
-        <comment>pragma</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainWindow.ui" line="413"/>
-        <source>Off</source>
-        <comment>pragma</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainWindow.ui" line="468"/>
+        <location filename="../MainWindow.ui" line="492"/>
         <source>Page Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="513"/>
+        <location filename="../MainWindow.ui" line="541"/>
         <source>Foreign Keys</source>
         <translation type="unfinished">Foreign Key</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="735"/>
+        <location filename="../MainWindow.ui" line="791"/>
         <source>Auto Vacuum</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="758"/>
+        <location filename="../MainWindow.ui" line="814"/>
         <source>Max Page Count</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="794"/>
-        <source>Normal</source>
-        <comment>pragma</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainWindow.ui" line="799"/>
-        <source>Exclusive</source>
-        <comment>pragma</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainWindow.ui" line="810"/>
+        <location filename="../MainWindow.ui" line="870"/>
         <source>Checkpoint Full FSYNC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="846"/>
+        <location filename="../MainWindow.ui" line="429"/>
+        <location filename="../MainWindow.ui" line="910"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="851"/>
+        <location filename="../MainWindow.ui" line="854"/>
+        <location filename="../MainWindow.ui" line="915"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="856"/>
-        <location filename="../MainWindow.ui" line="1106"/>
+        <location filename="../MainWindow.ui" line="920"/>
+        <location filename="../MainWindow.ui" line="1178"/>
         <source>Full</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="865"/>
+        <location filename="../MainWindow.ui" line="929"/>
         <source>Default</source>
         <translation type="unfinished">Baku</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="870"/>
+        <location filename="../MainWindow.ui" line="934"/>
         <source>File</source>
         <translation type="unfinished">Berkas</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="875"/>
+        <location filename="../MainWindow.ui" line="419"/>
+        <location filename="../MainWindow.ui" line="939"/>
         <source>Memory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="886"/>
+        <location filename="../MainWindow.ui" line="404"/>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="409"/>
+        <source>Truncate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="414"/>
+        <source>Persist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="424"/>
+        <source>WAL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="859"/>
+        <source>Exclusive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.ui" line="950"/>
         <source>Automatic Index</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="953"/>
+        <location filename="../MainWindow.ui" line="1025"/>
         <source>Ignore Check Constraints</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="969"/>
+        <location filename="../MainWindow.ui" line="1041"/>
         <source>Full FSYNC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="985"/>
+        <location filename="../MainWindow.ui" line="1057"/>
         <source>WAL Auto Checkpoint</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1011"/>
+        <location filename="../MainWindow.ui" line="1083"/>
         <source>User Version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1071"/>
+        <location filename="../MainWindow.ui" line="1143"/>
         <source>Synchronous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1101"/>
+        <location filename="../MainWindow.ui" line="1173"/>
         <source>None</source>
         <translation type="unfinished">Nihil</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1111"/>
+        <location filename="../MainWindow.ui" line="1183"/>
         <source>Incremental</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1122"/>
+        <location filename="../MainWindow.ui" line="1194"/>
         <source>Locking Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2228"/>
-        <location filename="../MainWindow.ui" line="2231"/>
+        <location filename="../MainWindow.ui" line="2300"/>
+        <location filename="../MainWindow.ui" line="2303"/>
         <source>Add another database file to the current database connection</source>
         <translation>Tambahkan berkas basis data lain ke koneksi basis data saat ini</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2234"/>
+        <location filename="../MainWindow.ui" line="2306"/>
         <source>This button lets you add another database file to the current database connection</source>
         <translation>Tombol ini memungkinkan Anda menambah berkas basis data lain ke koneksi basis data saat ini</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2246"/>
+        <location filename="../MainWindow.ui" line="2318"/>
         <source>&amp;Set Encryption...</source>
         <translation>Atur Enkrip&amp;si...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2306"/>
+        <location filename="../MainWindow.ui" line="2378"/>
         <source>SQLCipher &amp;FAQ</source>
         <translation>&amp;FAQ SQLCipher</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2314"/>
+        <location filename="../MainWindow.ui" line="2386"/>
         <source>Table(&amp;s) to JSON...</source>
         <translation>Tabel ke J&amp;SON...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2329"/>
+        <location filename="../MainWindow.ui" line="2401"/>
         <source>Open Data&amp;base Read Only...</source>
         <translation>&amp;Buka Basis Data Hanya-Baca...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2353"/>
+        <location filename="../MainWindow.ui" line="2425"/>
         <source>Save results</source>
         <translation>Simpan hasil</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2356"/>
+        <location filename="../MainWindow.ui" line="2428"/>
         <source>Save the results view</source>
         <translation>Simpan view hasil</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2359"/>
+        <location filename="../MainWindow.ui" line="2431"/>
         <source>This button lets you save the results of the last executed query</source>
         <translation>Tombol ini memungkinkan Anda menyimpan hasil dari query yang terakhir dieksekusi</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2371"/>
-        <location filename="../MainWindow.ui" line="2377"/>
+        <location filename="../MainWindow.ui" line="2443"/>
+        <location filename="../MainWindow.ui" line="2449"/>
         <source>Find text in SQL editor</source>
         <translation>Cari teks dalam penyunting SQL</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2374"/>
+        <location filename="../MainWindow.ui" line="2446"/>
         <source>Find</source>
         <translation>Cari</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2380"/>
+        <location filename="../MainWindow.ui" line="2452"/>
         <source>This button opens the search bar of the editor</source>
         <translation>Tombol ini membuka bilah pencarian dari penyunting</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2383"/>
+        <location filename="../MainWindow.ui" line="2455"/>
         <source>Ctrl+F</source>
         <translation>Ctrl+F</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2398"/>
-        <location filename="../MainWindow.ui" line="2404"/>
+        <location filename="../MainWindow.ui" line="2470"/>
+        <location filename="../MainWindow.ui" line="2476"/>
         <source>Find or replace text in SQL editor</source>
         <translation>Cari atau ganti teks dalam penyunting SQL</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2401"/>
+        <location filename="../MainWindow.ui" line="2473"/>
         <source>Find or replace</source>
         <translation>Cari atau ganti</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2407"/>
+        <location filename="../MainWindow.ui" line="2479"/>
         <source>This button opens the find/replace dialog for the current editor tab</source>
         <translation>Tombol ini membuka dialog cari/ganti untuk tab penyunting saat ini</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2410"/>
+        <location filename="../MainWindow.ui" line="2482"/>
         <source>Ctrl+H</source>
         <translation>Ctrl+H</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2418"/>
+        <location filename="../MainWindow.ui" line="2490"/>
         <source>Export to &amp;CSV</source>
         <translation>Ekspor ke &amp;CSV</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2423"/>
+        <location filename="../MainWindow.ui" line="2495"/>
         <source>Export to &amp;JSON</source>
         <translation>Ekspor ke &amp;JSON</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2428"/>
+        <location filename="../MainWindow.ui" line="2500"/>
         <source>Save as &amp;view</source>
         <translation>Simpan sebagai &amp;view</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2431"/>
+        <location filename="../MainWindow.ui" line="2503"/>
         <source>Save as view</source>
         <translation>Simpan sebagai view</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2449"/>
+        <location filename="../MainWindow.ui" line="2521"/>
         <source>Shows or hides the Project toolbar.</source>
         <translation>Menampilkan atau menyembunyikan bilah alat Proyek.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2464"/>
+        <location filename="../MainWindow.ui" line="2536"/>
         <source>Extra DB Toolbar</source>
         <translation>Bila Alat DB Ekstra</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2476"/>
+        <location filename="../MainWindow.ui" line="2548"/>
         <source>&amp;Open Database</source>
         <translation>Buk&amp;a Basis Data</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2493"/>
+        <location filename="../MainWindow.ui" line="2565"/>
         <source>New In-&amp;Memory Database</source>
         <translation>Basis Data Dalam &amp;Memori Baru</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2501"/>
+        <location filename="../MainWindow.ui" line="2573"/>
         <source>Drag &amp;&amp; Drop SELECT Query</source>
         <translation>Seret &amp;&amp; Jatuhkan Query SELECT</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2504"/>
-        <location filename="../MainWindow.ui" line="2507"/>
+        <location filename="../MainWindow.ui" line="2576"/>
+        <location filename="../MainWindow.ui" line="2579"/>
         <source>When dragging fields from the same table or a single table, drop a SELECT query into the editor</source>
         <translation>Ketika menyeret ruas dari tabel yang sama atau suatu tabel tunggal, menjatuhkan suatu query SELECT ke dalam penyunting</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2515"/>
+        <location filename="../MainWindow.ui" line="2587"/>
         <source>Drag &amp;&amp; Drop Qualified Names</source>
         <translation>Seret &amp;&amp; Jatuhkan Qualified Name</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2518"/>
-        <location filename="../MainWindow.ui" line="2521"/>
+        <location filename="../MainWindow.ui" line="2590"/>
+        <location filename="../MainWindow.ui" line="2593"/>
         <source>Use qualified names (e.g. &quot;Table&quot;.&quot;Field&quot;) when dragging the objects and dropping them into the editor </source>
         <translation>Pakai qualified name (mis. &quot;Table&quot;.&quot;Field&quot;) ketika menyeret objek dan menjatuhkan mereka ke dalam penyunting </translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2529"/>
+        <location filename="../MainWindow.ui" line="2601"/>
         <source>Drag &amp;&amp; Drop Enquoted Names</source>
         <translation>Seret &amp;&amp; Jatuhkan Nama Berkutip</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2532"/>
-        <location filename="../MainWindow.ui" line="2535"/>
+        <location filename="../MainWindow.ui" line="2604"/>
+        <location filename="../MainWindow.ui" line="2607"/>
         <source>Use escaped identifiers (e.g. &quot;Table1&quot;) when dragging the objects and dropping them into the editor </source>
         <translation>Pakai identifier berkutip (mis. &quot;Table1&quot;) ketika menyeret objek dan menjatuhkan mereka ke dalam penyunting </translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2540"/>
+        <location filename="../MainWindow.ui" line="2612"/>
         <source>&amp;Integrity Check</source>
         <translation>Pemeriksaan &amp;Integritas</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2543"/>
+        <location filename="../MainWindow.ui" line="2615"/>
         <source>Runs the integrity_check pragma over the opened database and returns the results in the Execute SQL tab. This pragma does an integrity check of the entire database.</source>
         <translation>Menjalankan pragma integrity_check atas basis data yang terbuka dan mengembalikan hasil dalam tab Jalankan SQL. Pragma ini melakukan pemeriksaan integritas dari seluruh basis data.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2548"/>
+        <location filename="../MainWindow.ui" line="2620"/>
         <source>&amp;Foreign-Key Check</source>
         <translation>Pemeriksaan &amp;Foreign-Key</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2551"/>
+        <location filename="../MainWindow.ui" line="2623"/>
         <source>Runs the foreign_key_check pragma over the opened database and returns the results in the Execute SQL tab</source>
         <translation>Menjalankan pragma foreign_key_check atas basis data yang terbuka dan mengembalikan hasil dalam tab Jalankan SQL</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2556"/>
+        <location filename="../MainWindow.ui" line="2628"/>
         <source>&amp;Quick Integrity Check</source>
         <translation>Pemeri&amp;ksaan Cepat Integritas</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2559"/>
+        <location filename="../MainWindow.ui" line="2631"/>
         <source>Run a quick integrity check over the open DB</source>
         <translation>Menjalankan pemeriksaan cepat atas integritas pada DB yang terbuka</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2562"/>
+        <location filename="../MainWindow.ui" line="2634"/>
         <source>Runs the quick_check pragma over the opened database and returns the results in the Execute SQL tab. This command does most of the checking of PRAGMA integrity_check but runs much faster.</source>
         <translation>Menjalankan pragma quick_check atas basis data yang terbuka dan mengembalikan hasil dalam tab Jalankan SQL. Perintah ini melakukan hampir seluruh pemeriksaan dari PRAGMA integrity_check tapi berjalan jauh lebih cepat.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2567"/>
+        <location filename="../MainWindow.ui" line="2639"/>
         <source>&amp;Optimize</source>
         <translation>&amp;Optimasikan</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2570"/>
+        <location filename="../MainWindow.ui" line="2642"/>
         <source>Attempt to optimize the database</source>
         <translation>Mencoba mengoptimasi basis data</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2573"/>
+        <location filename="../MainWindow.ui" line="2645"/>
         <source>Runs the optimize pragma over the opened database. This pragma might perform optimizations that will improve the performance of future queries.</source>
         <translation>Menjalankan pragma optimasi atas basis data yang dibuka. Pragma ini mungkin melakukan optimasi yang akan memperbaiki kinerja dari query di masa mendatang.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2582"/>
-        <location filename="../MainWindow.ui" line="2609"/>
+        <location filename="../MainWindow.ui" line="2654"/>
+        <location filename="../MainWindow.ui" line="2681"/>
         <source>Print</source>
         <translation>Cetak</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2585"/>
+        <location filename="../MainWindow.ui" line="2657"/>
         <source>Print text from current SQL editor tab</source>
         <translation>Cetak teks dari tab penyunting SQL saat ini</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2591"/>
+        <location filename="../MainWindow.ui" line="2663"/>
         <source>Open a dialog for printing the text in the current SQL editor tab</source>
         <translation>Membuka suatu dialog untuk mencetak teks dalam tab penyunting SQL saat ini</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2612"/>
+        <location filename="../MainWindow.ui" line="2684"/>
         <source>Print the structure of the opened database</source>
         <translation>Cetak struktur dari basis data yang dibuka</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2618"/>
+        <location filename="../MainWindow.ui" line="2690"/>
         <source>Open a dialog for printing the structure of the opened database</source>
         <translation>Membuka suatu dialog untuk mencetak struktur dari basis data yang dibuka</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2725"/>
-        <location filename="../MainWindow.cpp" line="480"/>
+        <location filename="../MainWindow.ui" line="2797"/>
+        <location filename="../MainWindow.cpp" line="482"/>
         <source>Ctrl+Shift+W</source>
         <translation>Ctrl+Shift+W</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2754"/>
+        <location filename="../MainWindow.ui" line="2826"/>
         <source>Table from CSV data in Clipboard...</source>
         <translation>Tabel dari data CSV dalam Papan Klip...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2757"/>
+        <location filename="../MainWindow.ui" line="2829"/>
         <source>This treats the current clipboard contents as a CSV file and opens the same import wizard that is used for importing CSV data from a file.</source>
         <translation>Ini memperlakukan konten papan klip saat ini sebagai suatu berkas CSV dan membuka wahana pandu impor yang sama dengan yang dipakai untuk mengimpor data CSV dari suatu berkas.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2762"/>
+        <location filename="../MainWindow.ui" line="2834"/>
         <source>Show &amp;Row Counts</source>
         <translation>Tampilkan Cacah Ba&amp;ris</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2765"/>
+        <location filename="../MainWindow.ui" line="2837"/>
         <source>This shows the number of rows for each table and view in the database.</source>
         <translation>Ini menampilkan cacah baris bagi setiap tabel dan view dalam basis data.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2777"/>
+        <location filename="../MainWindow.ui" line="2849"/>
         <source>Save Database &amp;As...</source>
         <translation>Simpan Basis Data Seb&amp;agai...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2780"/>
+        <location filename="../MainWindow.ui" line="2852"/>
         <source>Save the current database as a different file</source>
         <translation>Menyimpan basis data saat ini sebagai suatu berkas yang berbeda</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2789"/>
+        <location filename="../MainWindow.ui" line="2861"/>
         <source>Refresh</source>
         <translation>Segarkan</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2792"/>
+        <location filename="../MainWindow.ui" line="2864"/>
         <source>Reload the database structure</source>
         <translation>Memuat ulang struktur basis data</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1998"/>
+        <location filename="../MainWindow.ui" line="2070"/>
         <source>&amp;Recently opened</source>
         <translation>Ba&amp;ru-baru ini dibuka</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2013"/>
+        <location filename="../MainWindow.ui" line="2085"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+T</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1361"/>
+        <location filename="../MainWindow.ui" line="1433"/>
         <source>SQL &amp;Log</source>
         <translation>&amp;Log SQL</translation>
     </message>
@@ -3763,308 +3743,308 @@ Anda dapat menyeret pernyataan SQL dari kolom Skema dan menjatuhkan mereka ke da
         <translation>Sunting P&amp;ragma</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1150"/>
-        <location filename="../MainWindow.ui" line="1153"/>
+        <location filename="../MainWindow.ui" line="1222"/>
+        <location filename="../MainWindow.ui" line="1225"/>
         <source>E&amp;xecute SQL</source>
         <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
         <translation>Jalan&amp;kan SQL</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1243"/>
+        <location filename="../MainWindow.ui" line="1315"/>
         <source>&amp;Recent Files</source>
         <translation>Be&amp;rkas Baru-baru Ini</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1391"/>
+        <location filename="../MainWindow.ui" line="1463"/>
         <source>Show S&amp;QL submitted by</source>
         <translation>Tampilkan S&amp;QL yang dikirim oleh</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1502"/>
+        <location filename="../MainWindow.ui" line="1574"/>
         <source>&amp;Plot</source>
         <translation>&amp;Plot</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1631"/>
+        <location filename="../MainWindow.ui" line="1703"/>
         <source>&amp;New Database</source>
         <translation>&amp;Basis Data Baru</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1694"/>
-        <location filename="../MainWindow.cpp" line="479"/>
+        <location filename="../MainWindow.ui" line="1766"/>
+        <location filename="../MainWindow.cpp" line="481"/>
         <source>Ctrl+F4</source>
         <translation>Ctrl+F4</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1709"/>
+        <location filename="../MainWindow.ui" line="1781"/>
         <source>&amp;Revert Changes</source>
         <translation>Balikkan Pe&amp;rubahan</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1733"/>
+        <location filename="../MainWindow.ui" line="1805"/>
         <source>&amp;Undo</source>
         <translation>Tak Ja&amp;di</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1736"/>
-        <location filename="../MainWindow.ui" line="1739"/>
+        <location filename="../MainWindow.ui" line="1808"/>
+        <location filename="../MainWindow.ui" line="1811"/>
         <source>Undo last change to the database</source>
         <translation>Batalkan perubahan terakhir ke basis data</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1742"/>
+        <location filename="../MainWindow.ui" line="1814"/>
         <source>This action undoes the last change performed to the database in the Database Browser or in Execute SQL. Redoing is not possible.</source>
         <translation>Aksi ini membatalkan perubahan terakhir yang dilakukan ke basis data dalam Peramban Basis Data atau dalam Jalankan SQL. Menjalankan ulang tidak mungkin.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1757"/>
+        <location filename="../MainWindow.ui" line="1829"/>
         <source>&amp;Write Changes</source>
         <translation>&amp;Tulis Perubahan</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1808"/>
+        <location filename="../MainWindow.ui" line="1880"/>
         <source>&amp;Database from SQL file...</source>
         <translation>Basis &amp;data dari berkas SQL...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1822"/>
+        <location filename="../MainWindow.ui" line="1894"/>
         <source>&amp;Table from CSV file...</source>
         <translation>&amp;Tabel dari berkas CSV...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1836"/>
+        <location filename="../MainWindow.ui" line="1908"/>
         <source>&amp;Database to SQL file...</source>
         <translation>Basis &amp;data ke berkas SQL...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1850"/>
+        <location filename="../MainWindow.ui" line="1922"/>
         <source>&amp;Table(s) as CSV file...</source>
         <translation>&amp;Tabel sebagai berkas CSV...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1871"/>
+        <location filename="../MainWindow.ui" line="1943"/>
         <source>&amp;Create Table...</source>
         <translation>&amp;Buat Tabel...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1889"/>
+        <location filename="../MainWindow.ui" line="1961"/>
         <source>&amp;Delete Table...</source>
         <translation>&amp;Hapus Tabel...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1910"/>
+        <location filename="../MainWindow.ui" line="1982"/>
         <source>&amp;Modify Table...</source>
         <translation>&amp;Ubah Tabel...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1913"/>
+        <location filename="../MainWindow.ui" line="1985"/>
         <source>Open the Modify Table wizard, where it is possible to rename an existing table. It is also possible to add or delete fields from a table, as well as modify field names and types.</source>
         <translation>Membuka wahana pandu Ubah Tabel, dimana dimungkinkan mengubah nama suatu tabel yang ada. Juga mungkin untuk menambah atau menghapus ruas dari suatu tabel, maupun mengubah nama dan tipe ruas.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1928"/>
+        <location filename="../MainWindow.ui" line="2000"/>
         <source>Create &amp;Index...</source>
         <translation>Buat &amp;Indeks...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1979"/>
+        <location filename="../MainWindow.ui" line="2051"/>
         <source>W&amp;hat&apos;s This?</source>
         <translation>Apa &amp;Ini?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="1990"/>
+        <location filename="../MainWindow.ui" line="2062"/>
         <source>&amp;About</source>
         <translation>Perih&amp;al</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2010"/>
+        <location filename="../MainWindow.ui" line="2082"/>
         <source>This button opens a new tab for the SQL editor</source>
         <translation>Tombol ini membuka suatu tab baru bagi penyunting SQL</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2022"/>
+        <location filename="../MainWindow.ui" line="2094"/>
         <source>&amp;Execute SQL</source>
         <translation>&amp;Eksekusi SQL</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2025"/>
+        <location filename="../MainWindow.ui" line="2097"/>
         <source>Execute all/selected SQL</source>
         <translation>Eksekusi semua/SQL yang dipilih</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2028"/>
+        <location filename="../MainWindow.ui" line="2100"/>
         <source>This button executes the currently selected SQL statements. If no text is selected, all SQL statements are executed.</source>
         <translation>Tombol ini mengeksekusi pernyataan SQL yang saat ini dipilih. Bila tidak ada teks yang dipilih, semua pernyataan dieksekusi.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2046"/>
+        <location filename="../MainWindow.ui" line="2118"/>
         <source>Ctrl+Shift+T</source>
         <translation>Ctrl+Shift+T</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2055"/>
-        <location filename="../MainWindow.ui" line="2270"/>
-        <location filename="../MainWindow.ui" line="2273"/>
+        <location filename="../MainWindow.ui" line="2127"/>
+        <location filename="../MainWindow.ui" line="2342"/>
+        <location filename="../MainWindow.ui" line="2345"/>
         <source>Save SQL file</source>
         <translation>Simpan berkas SQL</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2067"/>
+        <location filename="../MainWindow.ui" line="2139"/>
         <source>&amp;Load Extension...</source>
         <translation>&amp;Muat Ekstensi...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="294"/>
+        <location filename="../MainWindow.cpp" line="296"/>
         <source>Ctrl+E</source>
         <translation>Ctrl+E</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2099"/>
+        <location filename="../MainWindow.ui" line="2171"/>
         <source>Export as CSV file</source>
         <translation>Ekspor sebagai berkas CSV</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2102"/>
+        <location filename="../MainWindow.ui" line="2174"/>
         <source>Export table as comma separated values file</source>
         <translation>Ekspor tabel sebagai berkas nilai yang dipisah koma</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2180"/>
-        <location filename="../MainWindow.ui" line="2183"/>
+        <location filename="../MainWindow.ui" line="2252"/>
+        <location filename="../MainWindow.ui" line="2255"/>
         <source>Save the current session to a file</source>
         <translation>Simpan sesi saat ini ke suatu berkas</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2198"/>
+        <location filename="../MainWindow.ui" line="2270"/>
         <source>Open &amp;Project...</source>
         <translation>Buka &amp;Proyek...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2204"/>
-        <location filename="../MainWindow.ui" line="2207"/>
+        <location filename="../MainWindow.ui" line="2276"/>
+        <location filename="../MainWindow.ui" line="2279"/>
         <source>Load a working session from a file</source>
         <translation>Muat suatu sesi kerja dari sebuah berkas</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2258"/>
-        <location filename="../MainWindow.ui" line="2261"/>
+        <location filename="../MainWindow.ui" line="2330"/>
+        <location filename="../MainWindow.ui" line="2333"/>
         <source>Save SQL file as</source>
         <translation>Simpan berkas SQL sebagai</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2276"/>
+        <location filename="../MainWindow.ui" line="2348"/>
         <source>This button saves the content of the current SQL editor tab to a file</source>
         <translation>Tombol ini menyimpan isi dari tab penyunting SQL saat ini ke sebuah berkas</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2285"/>
+        <location filename="../MainWindow.ui" line="2357"/>
         <source>&amp;Browse Table</source>
         <translation>Ram&amp;ban Tabel</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2294"/>
+        <location filename="../MainWindow.ui" line="2366"/>
         <source>Copy Create statement</source>
         <translation>Salin pernyataan Create</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2297"/>
+        <location filename="../MainWindow.ui" line="2369"/>
         <source>Copy the CREATE statement of the item to the clipboard</source>
         <translation>Salin pernyataan CREATE dari butir ke papan klip</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2031"/>
+        <location filename="../MainWindow.ui" line="2103"/>
         <source>Ctrl+Return</source>
         <translation>Ctrl+Return</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="279"/>
+        <location filename="../MainWindow.cpp" line="281"/>
         <source>Ctrl+L</source>
         <translation>Ctrl+L</translation>
     </message>
     <message>
-        <location filename="../MainWindow.ui" line="2594"/>
-        <location filename="../MainWindow.ui" line="2621"/>
+        <location filename="../MainWindow.ui" line="2666"/>
+        <location filename="../MainWindow.ui" line="2693"/>
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="284"/>
+        <location filename="../MainWindow.cpp" line="286"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="289"/>
+        <location filename="../MainWindow.cpp" line="291"/>
         <source>Ctrl+I</source>
         <translation>Ctrl+I</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="389"/>
+        <location filename="../MainWindow.cpp" line="391"/>
         <source>Encrypted</source>
         <translation>Terenkripsi</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="396"/>
+        <location filename="../MainWindow.cpp" line="398"/>
         <source>Read only</source>
         <translation>Hanya baca</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="397"/>
+        <location filename="../MainWindow.cpp" line="399"/>
         <source>Database file is read only. Editing the database is disabled.</source>
         <translation>Berkas basis data hanya baca. Menyunting basis data dinonaktifkan.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="403"/>
+        <location filename="../MainWindow.cpp" line="405"/>
         <source>Database encoding</source>
         <translation>Pengkodean basis data</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="390"/>
+        <location filename="../MainWindow.cpp" line="392"/>
         <source>Database is encrypted using SQLCipher</source>
         <translation>Basis data terenkripsi memakai SQLCipher</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="514"/>
-        <location filename="../MainWindow.cpp" line="3261"/>
+        <location filename="../MainWindow.cpp" line="516"/>
+        <location filename="../MainWindow.cpp" line="3280"/>
         <source>Choose a database file</source>
         <translation>Pilh suatu berkas basis data</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="589"/>
-        <location filename="../MainWindow.cpp" line="1551"/>
-        <location filename="../MainWindow.cpp" line="3087"/>
+        <location filename="../MainWindow.cpp" line="594"/>
+        <location filename="../MainWindow.cpp" line="1557"/>
+        <location filename="../MainWindow.cpp" line="3106"/>
         <source>Choose a filename to save under</source>
         <translation>Pilih suatu nama berkas untuk tempat menyimpan</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="972"/>
+        <location filename="../MainWindow.cpp" line="976"/>
         <source>Error checking foreign keys after table modification. The changes will be reverted.</source>
         <translation>Kesalahan saat memeriksa foreign key setelah modifikasi tabel. Perubahan akan dibalikkan.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="975"/>
+        <location filename="../MainWindow.cpp" line="979"/>
         <source>This table did not pass a foreign-key check.&lt;br/&gt;You should run &apos;Tools | Foreign-Key Check&apos; and fix the reported issues.</source>
         <translation>Tabel ini tidak lolos pemeriksaan foreign key.&lt;br/&gt;Anda mesti menjalankan &apos;Alat | Pemeriksaan Foreign Key&apos; dan memperbaiki masalah-masalah yang dilaporkan.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1228"/>
         <location filename="../MainWindow.cpp" line="1232"/>
+        <location filename="../MainWindow.cpp" line="1236"/>
         <source>At line %1:</source>
         <translation>Pada baris %1:</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1232"/>
+        <location filename="../MainWindow.cpp" line="1236"/>
         <source>Result: %2</source>
         <translation>Hasil: %2</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1295"/>
+        <location filename="../MainWindow.cpp" line="1301"/>
         <source>Setting PRAGMA values or vacuuming will commit your current transaction.
 Are you sure?</source>
         <translation>Menata nilai PRAGMA atau mem-vacuum akan meng-commit transaksi Anda saat ini.
 Anda yakin?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1485"/>
+        <location filename="../MainWindow.cpp" line="1491"/>
         <source>Error while saving the database file. This means that not all changes to the database were saved. You need to resolve the following error first.
 
 %1</source>
@@ -4073,452 +4053,452 @@ Anda yakin?</translation>
 %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1494"/>
+        <location filename="../MainWindow.cpp" line="1500"/>
         <source>Are you sure you want to undo all changes made to the database file &apos;%1&apos; since the last save?</source>
         <translation>Anda yakin ingin membatalkan semua perubahan yang dibuat ke berkas basis data &apos;%1&apos; sejak penyimpanan terakhir?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1532"/>
+        <location filename="../MainWindow.cpp" line="1538"/>
         <source>Choose a file to import</source>
         <translation>Pilih suatu berkas yang akan diimpor</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2208"/>
+        <location filename="../MainWindow.cpp" line="2220"/>
         <source>Text files(*.sql *.txt);;All files(*)</source>
         <translation>Berkas teks(*.sql *.txt);;Semua berkas(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1544"/>
+        <location filename="../MainWindow.cpp" line="1550"/>
         <source>Do you want to create a new database file to hold the imported data?
 If you answer no we will attempt to import the data in the SQL file to the current database.</source>
         <translation>Apakah Anda ingin membuat suatu berkas basis data baru untuk menampung data yang diimpor?
 Bila Anda menjawab tidak kami akan mencoba mengimpor data dalam berkas SQL ke basis data saat ini.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="234"/>
+        <location filename="../MainWindow.cpp" line="236"/>
         <source>Automatically load the last opened DB file at startup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="721"/>
+        <location filename="../MainWindow.cpp" line="726"/>
         <source>You are still executing SQL statements. Closing the database now will stop their execution, possibly leaving the database in an inconsistent state. Are you sure you want to close the database?</source>
         <translation>Anda masih mengeksekusi pernyataan SQL. Menutup basis data sekarang akan menghentikan eksekusi mereka, kemungkinkan meninggalkan basis data dalam keadaan tidak konsisten. Anda yakin hendak menutup basis data?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="817"/>
+        <location filename="../MainWindow.cpp" line="821"/>
         <source>Do you want to save the changes made to the project file &apos;%1&apos;?</source>
         <translation>Apakah Anda ingin menyimpan perubahan yang dibuat ke berkas proyek &apos;%1&apos;?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1555"/>
+        <location filename="../MainWindow.cpp" line="1561"/>
         <source>File %1 already exists. Please choose a different name.</source>
         <translation>Berkas %1 sudah ada. Harap pilih nama lain.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1582"/>
+        <location filename="../MainWindow.cpp" line="1588"/>
         <source>Error importing data: %1</source>
         <translation>Kesalahan saat mengimpor data: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1586"/>
+        <location filename="../MainWindow.cpp" line="1592"/>
         <source>Import completed.</source>
         <translation>Impor selesai.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1668"/>
+        <location filename="../MainWindow.cpp" line="1674"/>
         <source>Delete View</source>
         <translation>Hapus View</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1669"/>
+        <location filename="../MainWindow.cpp" line="1675"/>
         <source>Modify View</source>
         <translation>Ubah View</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1671"/>
+        <location filename="../MainWindow.cpp" line="1677"/>
         <source>Delete Trigger</source>
         <translation>Hapus Trigger</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1672"/>
+        <location filename="../MainWindow.cpp" line="1678"/>
         <source>Modify Trigger</source>
         <translation>Ubah Trigger</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1674"/>
+        <location filename="../MainWindow.cpp" line="1680"/>
         <source>Delete Index</source>
         <translation>Hapus Indeks</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1675"/>
+        <location filename="../MainWindow.cpp" line="1681"/>
         <source>Modify Index</source>
         <translation>Ubah Indeks</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1678"/>
+        <location filename="../MainWindow.cpp" line="1684"/>
         <source>Modify Table</source>
         <translation>Ubah Tabel</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2048"/>
+        <location filename="../MainWindow.cpp" line="2060"/>
         <source>Do you want to save the changes made to SQL tabs in a new project file?</source>
         <translation>Apakah Anda ingin menyimpan perubahan yang dibuat ke tab SQL dalam suatu berkas proyek baru?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2069"/>
+        <location filename="../MainWindow.cpp" line="2081"/>
         <source>Do you want to save the changes made to the SQL file %1?</source>
         <translation>Apakah Anda ingin menyimpan perubahan yang dibuat ke berkas SQL %1?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2364"/>
+        <location filename="../MainWindow.cpp" line="2376"/>
         <source>Could not find resource file: %1</source>
         <translation>Tidak bisa menemukan berkas sumber daya: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2693"/>
+        <location filename="../MainWindow.cpp" line="2705"/>
         <source>Choose a project file to open</source>
         <translation>Pilih sebuah berkas proyek untuk dibuka</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3103"/>
+        <location filename="../MainWindow.cpp" line="3122"/>
         <source>Could not open project file for writing.
 Reason: %1</source>
         <translation>Tidak bisa membuka berkas proyek untuk ditulisi.
 Alasan: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3666"/>
+        <location filename="../MainWindow.cpp" line="3686"/>
         <source>Busy (%1)</source>
         <translation>Sibuk (%1)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1992"/>
+        <location filename="../MainWindow.cpp" line="1998"/>
         <source>Setting PRAGMA values will commit your current transaction.
 Are you sure?</source>
         <translation>Menata nilai PRAGMA akan meng-commit transaksi Anda saat ini.
 Anda yakin?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="334"/>
+        <location filename="../MainWindow.cpp" line="336"/>
         <source>Reset Window Layout</source>
         <translation>Reset Tata Letak Jendela</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="375"/>
+        <location filename="../MainWindow.cpp" line="377"/>
         <source>The database is currently busy.</source>
         <translation>Basis data saat ini sibuk.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="381"/>
+        <location filename="../MainWindow.cpp" line="383"/>
         <source>Click here to interrupt the currently running query.</source>
         <translation>Klik di sini untuk mengiterupsi query yang sedang berjalan.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="479"/>
+        <location filename="../MainWindow.cpp" line="481"/>
         <source>Ctrl+Alt+W</source>
         <translation>Ctrl+Alt+W</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="576"/>
+        <location filename="../MainWindow.cpp" line="581"/>
         <source>Could not open database file.
 Reason: %1</source>
         <translation>Tidak bisa membuka berkas basis data.
 Alasan: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="614"/>
+        <location filename="../MainWindow.cpp" line="619"/>
         <source>In-Memory database</source>
         <translation>Basis data dalam memori</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="696"/>
+        <location filename="../MainWindow.cpp" line="701"/>
         <source>Choose a database file to save under</source>
         <translation>Pilih suatu berkas basis data tempat menyimpan</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="707"/>
+        <location filename="../MainWindow.cpp" line="712"/>
         <source>Error while saving the database to the new file.</source>
         <translation>Kesalahan saat menyimpan basis data ke berkas baru.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="900"/>
+        <location filename="../MainWindow.cpp" line="904"/>
         <source>Are you sure you want to delete the table &apos;%1&apos;?
 All data associated with the table will be lost.</source>
         <translation>Anda yakin ingin menghapus tabel &apos;%1&apos;?
 Semua data terkait dengan tabel akan hilang.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="902"/>
+        <location filename="../MainWindow.cpp" line="906"/>
         <source>Are you sure you want to delete the view &apos;%1&apos;?</source>
         <translation>Anda yakin ingin menghapus view &apos;%1&apos;?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="904"/>
+        <location filename="../MainWindow.cpp" line="908"/>
         <source>Are you sure you want to delete the trigger &apos;%1&apos;?</source>
         <translation>Anda yakin ingin menghapus trigger &apos;%1&apos;?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="906"/>
+        <location filename="../MainWindow.cpp" line="910"/>
         <source>Are you sure you want to delete the index &apos;%1&apos;?</source>
         <translation>Anda yakin ingin menghapus indeks &apos;%1&apos;?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="917"/>
+        <location filename="../MainWindow.cpp" line="921"/>
         <source>Error: could not delete the table.</source>
         <translation>Kesalahan: tidak bisa menghapus tabel.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="919"/>
+        <location filename="../MainWindow.cpp" line="923"/>
         <source>Error: could not delete the view.</source>
         <translation>Kesalahan: tidak bisa menghapus view.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="921"/>
+        <location filename="../MainWindow.cpp" line="925"/>
         <source>Error: could not delete the trigger.</source>
         <translation>Kesalahan: tidak bisa menghapus trigger.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="923"/>
+        <location filename="../MainWindow.cpp" line="927"/>
         <source>Error: could not delete the index.</source>
         <translation>Kesalahan: tidak bisa menghapus indeks.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="925"/>
+        <location filename="../MainWindow.cpp" line="929"/>
         <source>Message from database engine:
 %1</source>
         <translation>Pesan dari mesin basis data:
 %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="953"/>
+        <location filename="../MainWindow.cpp" line="957"/>
         <source>Editing the table requires to save all pending changes now.
 Are you sure you want to save the database?</source>
         <translation>Menyunting tabel memerlukan menyimpan semua perubahan tertunda sekarang.
 Anda yakin ingin menyimpan basis data?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="999"/>
+        <location filename="../MainWindow.cpp" line="1003"/>
         <source>Edit View %1</source>
         <translation>Sunting View %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1005"/>
+        <location filename="../MainWindow.cpp" line="1009"/>
         <source>Edit Trigger %1</source>
         <translation>Sunting Trigger %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1111"/>
+        <location filename="../MainWindow.cpp" line="1115"/>
         <source>You are already executing SQL statements. Do you want to stop them in order to execute the current statements instead? Note that this might leave the database in an inconsistent state.</source>
         <translation>Anda telah sedang mengeksekusi pernyataan SQL. Apakah Anda ingin menghentikan mereka untuk mengeksekusi pernyataan saat ini sebagai pengganti? Perhatikan bahwa ini mungkin meninggalkan basis data dalam keadaan yang tidak konsisten.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1160"/>
+        <location filename="../MainWindow.cpp" line="1164"/>
         <source>-- EXECUTING SELECTION IN &apos;%1&apos;
 --</source>
         <translation>-- MENGEKSEKUSI PILIHAN DALAM &apos;%1&apos;
 --</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1185"/>
+        <location filename="../MainWindow.cpp" line="1189"/>
         <source>-- EXECUTING LINE IN &apos;%1&apos;
 --</source>
         <translation>-- MENGEKSEKUSI BARIS DALAM &apos;%1&apos;
 --</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1193"/>
+        <location filename="../MainWindow.cpp" line="1197"/>
         <source>-- EXECUTING ALL IN &apos;%1&apos;
 --</source>
         <translation>-- MENGEKSEKUSI SEMUA DALAM &apos;%1&apos;
 --</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1228"/>
+        <location filename="../MainWindow.cpp" line="1232"/>
         <source>Result: %1</source>
         <translation>Hasil: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1289"/>
+        <location filename="../MainWindow.cpp" line="1295"/>
         <source>%1 rows returned in %2ms</source>
         <translation>%1 baris dikembalikan dalam %2 ms</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1403"/>
+        <location filename="../MainWindow.cpp" line="1409"/>
         <source>Choose text files</source>
         <translation>Pilih berkas teks</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1584"/>
+        <location filename="../MainWindow.cpp" line="1590"/>
         <source>Import completed. Some foreign key constraints are violated. Please fix them before saving.</source>
         <translation>Impor selesai. Beberapa konstrain foreign key dilanggar. Harap perbaiki mereka sebelum menyimpan.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1729"/>
+        <location filename="../MainWindow.cpp" line="1735"/>
         <source>Opened &apos;%1&apos; in read-only mode from recent file list</source>
         <translation>Membuka &apos;%1&apos; dalam mode hanya baca dari daftar berkas terkini</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1731"/>
+        <location filename="../MainWindow.cpp" line="1737"/>
         <source>Opened &apos;%1&apos; from recent file list</source>
         <translation>Membuka &apos;%1&apos; dari daftar berkas terkini</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1770"/>
+        <location filename="../MainWindow.cpp" line="1776"/>
         <source>&amp;%1 %2%3</source>
         <translation>&amp;%1 %2%3</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1770"/>
+        <location filename="../MainWindow.cpp" line="1776"/>
         <source> (read only)</source>
         <translation> (hanya baca)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1857"/>
+        <location filename="../MainWindow.cpp" line="1863"/>
         <source>Open Database or Project</source>
         <translation>Buka Basis Data atau Proyek</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1858"/>
+        <location filename="../MainWindow.cpp" line="1864"/>
         <source>Attach Database...</source>
         <translation>Cantol Basis Data...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1859"/>
+        <location filename="../MainWindow.cpp" line="1865"/>
         <source>Import CSV file(s)...</source>
         <translation>Impor berkas CSV...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2049"/>
+        <location filename="../MainWindow.cpp" line="2061"/>
         <source>Do you want to save the changes made to SQL tabs in the project file &apos;%1&apos;?</source>
         <translation>Apakah Anda ingin menyimpan perubahan yang dibuat ke tab SQL dalam berkas proyek &apos;%1&apos;?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2092"/>
+        <location filename="../MainWindow.cpp" line="2104"/>
         <source>The statements in the tab &apos;%1&apos; are still executing. Closing the tab will stop the execution. This might leave the database in an inconsistent state. Are you sure you want to close the tab?</source>
         <translation>Pernyataan dalam tab &apos;%1&apos; masih sedang dieksekusi. Menutup tab akan menghentikan eksekusi. Ini mungkin membuat basis data dalam keadaan tidak konsisten. Anda yakin ingin menutup tab?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2207"/>
+        <location filename="../MainWindow.cpp" line="2219"/>
         <source>Select SQL file to open</source>
         <translation>Pilih berkas SQL yang akan dibuka</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2738"/>
+        <location filename="../MainWindow.cpp" line="2752"/>
         <source>DB file &apos;%1&apos; could not be opened</source>
         <translation>Berkas DB &apos;%1&apos; tidak dapat dibuka</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2875"/>
+        <location filename="../MainWindow.cpp" line="2887"/>
         <source>This project file is using an old file format because it was created using DB Browser for SQLite version 3.10 or lower. Loading this file format is no longer fully supported. If you want to load it completely, please use DB Browser for SQLite version 3.12 to convert it to the new file format.</source>
         <translation>Berkas proyek ini memakai format berkas lama karena itu dibuat memakai Peramban DB untuk SQLite versi 3.10 atau sebelumnya. Memuat format berkas ini tidak lagi didukung sepenuhnya. Bila Anda ingin memuatnya secara lengkap, harap gunakan Peramban DB untuk SQLite versi 3.12 untuk mengubahnya ke format berkas baru.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2894"/>
+        <location filename="../MainWindow.cpp" line="2906"/>
         <source>Table &apos;%1&apos; not found; settings ignored</source>
         <translation>Tabel &apos;%1&apos; tidak ditemukan, pengaturan diabaikan</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3221"/>
+        <location filename="../MainWindow.cpp" line="3240"/>
         <source>-- Reference to file &quot;%1&quot; (not supported by this version) --</source>
         <translation>-- Referensi ke berkas &quot;%1&quot; (tidak didukung oleh versi ini) --</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3439"/>
+        <location filename="../MainWindow.cpp" line="3459"/>
         <source>Yes. Don&apos;t ask again</source>
         <translation>Ya. Jangan tanyakan lagi</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3544"/>
+        <location filename="../MainWindow.cpp" line="3564"/>
         <source>This action will open a new SQL tab with the following statements for you to edit and run:</source>
         <translation>Aksi ini akan membuka sebuah tab SQL baru dengan pernyataan berikut untuk Anda sunting dan jalankan:</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3750"/>
+        <location filename="../MainWindow.cpp" line="3770"/>
         <source>Rename Tab</source>
         <translation>Ubah Nama Tab</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3756"/>
+        <location filename="../MainWindow.cpp" line="3776"/>
         <source>Duplicate Tab</source>
         <translation>Duplikatkan Tab</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3786"/>
+        <location filename="../MainWindow.cpp" line="3806"/>
         <source>Close Tab</source>
         <translation>Tutup Tab</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3805"/>
+        <location filename="../MainWindow.cpp" line="3825"/>
         <source>Opening &apos;%1&apos;...</source>
         <translation>Membuka &apos;%1&apos;...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3807"/>
+        <location filename="../MainWindow.cpp" line="3827"/>
         <source>There was an error opening &apos;%1&apos;...</source>
         <translation>Ada kesalahan saat membuka &apos;%1&apos;...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3810"/>
+        <location filename="../MainWindow.cpp" line="3830"/>
         <source>Value is not a valid URL or filename: %1</source>
         <translation>Nilai bukanlah URL atau nama berkas yang valid: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2260"/>
+        <location filename="../MainWindow.cpp" line="2272"/>
         <source>Select file name</source>
         <translation>Pilih nama berkas</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="202"/>
+        <location filename="../MainWindow.cpp" line="204"/>
         <source>Ctrl+Tab</source>
         <translation>Ctrl+Tab</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="211"/>
+        <location filename="../MainWindow.cpp" line="213"/>
         <source>Ctrl+Shift+Tab</source>
         <translation>Ctrl+Shift+Tab</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="237"/>
+        <location filename="../MainWindow.cpp" line="239"/>
         <source>Clear List</source>
         <translation>Bersihkan Daftar</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="331"/>
+        <location filename="../MainWindow.cpp" line="333"/>
         <source>Window Layout</source>
         <translation>Tata Letak Jendela</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="335"/>
+        <location filename="../MainWindow.cpp" line="337"/>
         <source>Ctrl+Alt+0</source>
         <translation>Ctrl+Alt+0</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="343"/>
+        <location filename="../MainWindow.cpp" line="345"/>
         <source>Simplify Window Layout</source>
         <translation>Sederhanakan Tata Letak Jendela</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="344"/>
+        <location filename="../MainWindow.cpp" line="346"/>
         <source>Alt+Shift+0</source>
         <translation>Alt+Shift+0</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="353"/>
+        <location filename="../MainWindow.cpp" line="355"/>
         <source>Dock Windows at Bottom</source>
         <translation>Tambatkan Jendela ke Bawah</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="357"/>
+        <location filename="../MainWindow.cpp" line="359"/>
         <source>Dock Windows at Left Side</source>
         <translation>Tambatkan Jendela ke Sisi Kiri</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="361"/>
+        <location filename="../MainWindow.cpp" line="363"/>
         <source>Dock Windows at Top</source>
         <translation>Tambatkan Jendela ke Atas</translation>
     </message>
     <message numerus="yes">
-        <location filename="../MainWindow.cpp" line="1862"/>
+        <location filename="../MainWindow.cpp" line="1868"/>
         <source>Select the action to apply to the dropped file(s). &lt;br/&gt;Note: only &apos;Import&apos; will process more than one file.</source>
         <comment>Note for translation: Although there is no %n in the original, you can use the numerus-form to adjust &apos;files(s)&apos; and remove the note when n = 1. Including %n in the translation will also work.</comment>
         <translation>
@@ -4526,48 +4506,48 @@ Anda yakin ingin menyimpan basis data?</translation>
         </translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2297"/>
+        <location filename="../MainWindow.cpp" line="2309"/>
         <source>Select extension file</source>
         <translation>Pilih berkas ekstensi</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2304"/>
+        <location filename="../MainWindow.cpp" line="2316"/>
         <source>Extension successfully loaded.</source>
         <translation>Ekstensi sukses dimuat.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2306"/>
+        <location filename="../MainWindow.cpp" line="2318"/>
         <source>Error loading extension: %1</source>
         <translation>Kesalahan saat memuat ekstensi: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2460"/>
-        <location filename="../MainWindow.cpp" line="2871"/>
+        <location filename="../MainWindow.cpp" line="2472"/>
+        <location filename="../MainWindow.cpp" line="2883"/>
         <source>Don&apos;t show again</source>
         <translation>Jangan tampilkan lagi</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2463"/>
+        <location filename="../MainWindow.cpp" line="2475"/>
         <source>New version available.</source>
         <translation>Tersedia versi baru.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2464"/>
+        <location filename="../MainWindow.cpp" line="2476"/>
         <source>A new DB Browser for SQLite version is available (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Please download at &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</source>
         <translation>Tersedia sebuah versi baru Peramban DB bagi SQLite (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Harap unduh di &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3237"/>
+        <location filename="../MainWindow.cpp" line="3256"/>
         <source>Project saved to file &apos;%1&apos;</source>
         <translation>Proyek disimpan ke berkas &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3443"/>
+        <location filename="../MainWindow.cpp" line="3463"/>
         <source>Collation needed! Proceed?</source>
         <translation>Perlu kolasi! Lanjutkan?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3444"/>
+        <location filename="../MainWindow.cpp" line="3464"/>
         <source>A table in this database requires a special collation function &apos;%1&apos; that this application can&apos;t provide without further knowledge.
 If you choose to proceed, be aware bad things can happen to your database.
 Create a backup!</source>
@@ -4576,57 +4556,57 @@ Bila Anda memilih melanjutkan, sadari bahwa hal-hal buruk dapat terjadi ke basis
 Buat suatu cadangan!</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3461"/>
+        <location filename="../MainWindow.cpp" line="3481"/>
         <source>creating collation</source>
         <translation>membuat kolasi</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3469"/>
+        <location filename="../MainWindow.cpp" line="3489"/>
         <source>Set a new name for the SQL tab. Use the &apos;&amp;&amp;&apos; character to allow using the following character as a keyboard shortcut.</source>
         <translation>Menata sebuah nama baru bagi tab SQL. Gunakan karakter &apos;&amp;&amp;&apos; untuk mengizinkan memakai karakter berikut sebagai suatu pintasan papan ketik.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3521"/>
+        <location filename="../MainWindow.cpp" line="3541"/>
         <source>Please specify the view name</source>
         <translation>Harap tentukan nama view</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3525"/>
+        <location filename="../MainWindow.cpp" line="3545"/>
         <source>There is already an object with that name. Please choose a different name.</source>
         <translation>Sudah ada objek dengan nama itu. Harap pilih nama lain.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3532"/>
+        <location filename="../MainWindow.cpp" line="3552"/>
         <source>View successfully created.</source>
         <translation>View sukses dibuat.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3534"/>
+        <location filename="../MainWindow.cpp" line="3554"/>
         <source>Error creating view: %1</source>
         <translation>Kesalahan saat membuat view: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3542"/>
+        <location filename="../MainWindow.cpp" line="3562"/>
         <source>This action will open a new SQL tab for running:</source>
         <translation>Aksi ini akan membuka sebuah tab SQL baru untuk menjalankan:</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3548"/>
+        <location filename="../MainWindow.cpp" line="3568"/>
         <source>Press Help for opening the corresponding SQLite reference page.</source>
         <translation>Tekan Bantuan untuk membuka halaman referensi SQLite yang terkait.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2694"/>
+        <location filename="../MainWindow.cpp" line="2706"/>
         <source>DB Browser for SQLite project file (*.sqbpro)</source>
         <translation>Berkas proyek Peramban DB bagi SQLite (*.sqbpro)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1323"/>
+        <location filename="../MainWindow.cpp" line="1329"/>
         <source>Execution finished with errors.</source>
         <translation>Eksekusi selesai dengan kesalahan.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1325"/>
+        <location filename="../MainWindow.cpp" line="1331"/>
         <source>Execution finished without errors.</source>
         <translation>Eksekusi selesai tanpa kesalahan.</translation>
     </message>
@@ -4821,102 +4801,107 @@ Pilih sumbu atau label sumbu untuk menyeret dan memperbesar hanya dalam orientas
     </message>
     <message>
         <location filename="../PlotDock.ui" line="326"/>
-        <location filename="../PlotDock.cpp" line="573"/>
+        <location filename="../PlotDock.cpp" line="581"/>
         <source>Load all data and redraw plot</source>
         <translation>Muat semua data dan gambar ulang plot</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="252"/>
-        <location filename="../PlotDock.cpp" line="530"/>
-        <location filename="../PlotDock.cpp" line="545"/>
+        <location filename="../PlotDock.cpp" line="260"/>
+        <location filename="../PlotDock.cpp" line="538"/>
+        <location filename="../PlotDock.cpp" line="553"/>
         <source>Row #</source>
         <translation>Baris #</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="81"/>
+        <location filename="../PlotDock.cpp" line="83"/>
         <source>Copy</source>
         <translation>Salin</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="88"/>
+        <location filename="../PlotDock.cpp" line="90"/>
         <source>Print...</source>
         <translation>Cetak...</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="95"/>
+        <location filename="../PlotDock.cpp" line="97"/>
+        <source>Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../PlotDock.cpp" line="103"/>
         <source>Show legend</source>
         <translation>Tampilkan legenda</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="101"/>
+        <location filename="../PlotDock.cpp" line="109"/>
         <source>Stacked bars</source>
         <translation>Batang bertumpuk</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="107"/>
+        <location filename="../PlotDock.cpp" line="115"/>
         <source>Fixed number format</source>
         <translation>Format bilangan tetap</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="198"/>
+        <location filename="../PlotDock.cpp" line="206"/>
         <source>Date/Time</source>
         <translation>Tanggal/Waktu</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="201"/>
+        <location filename="../PlotDock.cpp" line="209"/>
         <source>Date</source>
         <translation>Tanggal</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="204"/>
+        <location filename="../PlotDock.cpp" line="212"/>
         <source>Time</source>
         <translation>Waktu</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="207"/>
-        <location filename="../PlotDock.cpp" line="254"/>
+        <location filename="../PlotDock.cpp" line="215"/>
+        <location filename="../PlotDock.cpp" line="262"/>
         <source>Numeric</source>
         <translation>Numerik</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="210"/>
+        <location filename="../PlotDock.cpp" line="218"/>
         <source>Label</source>
         <translation>Label</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="214"/>
+        <location filename="../PlotDock.cpp" line="222"/>
         <source>Invalid</source>
         <translation>Tidak valid</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="568"/>
+        <location filename="../PlotDock.cpp" line="576"/>
         <source>Load all data and redraw plot.
 Warning: not all data has been fetched from the table yet due to the partial fetch mechanism.</source>
         <translation>Muat semua data dan gambar ulang plot.
 Peringatan: belum semua data diambil dari tabel karena mekanisme pengambilan parsial.</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="663"/>
+        <location filename="../PlotDock.cpp" line="671"/>
         <source>Choose an axis color</source>
         <translation>Pilih suatu warna sumbu</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="698"/>
+        <location filename="../PlotDock.cpp" line="706"/>
         <source>Choose a filename to save under</source>
         <translation>Pilih suatu nama berkas untuk tempat menyimpan</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="699"/>
+        <location filename="../PlotDock.cpp" line="707"/>
         <source>PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;All Files(*)</source>
         <translation>PNG(*.png);;JPG(*.jpg);;PDF(*.pdf);;BMP(*.bmp);;Semua Berkas(*)</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="735"/>
+        <location filename="../PlotDock.cpp" line="743"/>
         <source>There are curves in this plot and the selected line style can only be applied to graphs sorted by X. Either sort the table or query by X to remove curves or select one of the styles supported by curves: None or Line.</source>
         <translation>Ada kurva dalam plot ini dan gaya garis yang dipilih hanya bisa diterapkan ke grafik yang diurut berdasarkan X. Urutkan tabel atau query berdasarkan X untuk menghapus kurva atau pilih satu dari gaya yang didukung oleh kurva: Nihil atau Garis.</translation>
     </message>
     <message>
-        <location filename="../PlotDock.cpp" line="853"/>
+        <location filename="../PlotDock.cpp" line="861"/>
         <source>Loading all remaining data for this table took %1ms.</source>
         <translation>Memuat semua sisa data dari tabel ini makan waktu %1 ms.</translation>
     </message>
