@@ -2802,181 +2802,181 @@ Sie können SQL-Anweisungen aus einer Objektzeile fassen und in anderen Anwendun
     <message>
         <location filename="../MainWindow.ui" line="206"/>
         <source>Temp Store</source>
-        <translation type="unfinished"></translation>
+        <translation>Temporärer Speicher</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="222"/>
         <source>Secure Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Sicheres Löschen</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="260"/>
         <source>Case Sensitive Like</source>
-        <translation type="unfinished"></translation>
+        <translation>Case-Sensitives LIKE</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="342"/>
         <source>Journal Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Journal-Modus</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="358"/>
         <source>Journal Size Limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Begrenzung der Journalgröße</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="374"/>
         <source>Recursive Triggers</source>
-        <translation type="unfinished"></translation>
+        <translation>Rekursive Trigger</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="388"/>
         <source>Delete</source>
         <comment>pragma</comment>
-        <translation type="unfinished"></translation>
+        <translation>Löschen (DELETE)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="393"/>
         <source>Truncate</source>
         <comment>pragma</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kürzen (TRUNCATE)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="398"/>
         <source>Persist</source>
         <comment>pragma</comment>
-        <translation type="unfinished"></translation>
+        <translation>Behalten (PERSIST)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="403"/>
         <source>Memory</source>
         <comment>pragma</comment>
-        <translation type="unfinished"></translation>
+        <translation>RAM (MEMORY)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="408"/>
         <source>WAL</source>
         <comment>pragma</comment>
-        <translation type="unfinished"></translation>
+        <translation>WAL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="413"/>
         <source>Off</source>
         <comment>pragma</comment>
-        <translation type="unfinished"></translation>
+        <translation>Deaktiviert</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="468"/>
         <source>Page Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Seitengröße</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="513"/>
         <source>Foreign Keys</source>
-        <translation type="unfinished">Fremdschlüssel</translation>
+        <translation>Fremdschlüssel</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="735"/>
         <source>Auto Vacuum</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto-Vakuum</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="758"/>
         <source>Max Page Count</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximale Seitenzahl</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="794"/>
         <source>Normal</source>
         <comment>pragma</comment>
-        <translation type="unfinished"></translation>
+        <translation>Normal</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="799"/>
         <source>Exclusive</source>
         <comment>pragma</comment>
-        <translation type="unfinished"></translation>
+        <translation>Exklusiv</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="810"/>
         <source>Checkpoint Full FSYNC</source>
-        <translation type="unfinished"></translation>
+        <translation>Full FSYNC für Checkpoints</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="846"/>
         <source>Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Inaktiv</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="851"/>
         <source>Normal</source>
-        <translation type="unfinished"></translation>
+        <translation>Normal</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="856"/>
         <location filename="../MainWindow.ui" line="1106"/>
         <source>Full</source>
-        <translation type="unfinished"></translation>
+        <translation>Vollständig</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="865"/>
         <source>Default</source>
-        <translation type="unfinished">Voreinstellung</translation>
+        <translation>Voreinstellung</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="870"/>
         <source>File</source>
-        <translation type="unfinished">Datei</translation>
+        <translation>Datei</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="875"/>
         <source>Memory</source>
-        <translation type="unfinished"></translation>
+        <translation>RAM</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="886"/>
         <source>Automatic Index</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatische Indizierung</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="953"/>
         <source>Ignore Check Constraints</source>
-        <translation type="unfinished"></translation>
+        <translation>CHECK-Beschränkungen ignorieren</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="969"/>
         <source>Full FSYNC</source>
-        <translation type="unfinished"></translation>
+        <translation>Full FSYNC</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="985"/>
         <source>WAL Auto Checkpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatische WAL-Checkpoints</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1011"/>
         <source>User Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Benutzerspezifische Version</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1071"/>
         <source>Synchronous</source>
-        <translation type="unfinished"></translation>
+        <translation>Synchronität</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1101"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Inaktiv</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1111"/>
         <source>Incremental</source>
-        <translation type="unfinished"></translation>
+        <translation>Inkrementell</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1122"/>
         <source>Locking Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Sperrmodus</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1150"/>
