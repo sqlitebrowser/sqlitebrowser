@@ -3541,42 +3541,7 @@ Skapa en backup!</translation>
     <message>
         <source>Delete</source>
         <comment>pragma</comment>
-        <translation type="unfinished">Ta bort</translation>
-    </message>
-    <message>
-        <source>Truncate</source>
-        <comment>pragma</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Persist</source>
-        <comment>pragma</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Memory</source>
-        <comment>pragma</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>WAL</source>
-        <comment>pragma</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Off</source>
-        <comment>pragma</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Normal</source>
-        <comment>pragma</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Exclusive</source>
-        <comment>pragma</comment>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Ta bort</translation>
     </message>
     <message>
         <source>Off</source>
@@ -3608,6 +3573,26 @@ Skapa en backup!</translation>
     </message>
     <message>
         <source>Incremental</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished">Ta bort</translation>
+    </message>
+    <message>
+        <source>Truncate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Persist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WAL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exclusive</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3833,6 +3818,10 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     </message>
     <message>
         <source>Loading all remaining data for this table took %1ms.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
