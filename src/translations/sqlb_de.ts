@@ -119,202 +119,202 @@
 <context>
     <name>Application</name>
     <message>
-        <location filename="../Application.cpp" line="185"/>
+        <location filename="../Application.cpp" line="184"/>
         <source>Possible command line arguments:</source>
         <translation>Mögliche Kommandozeilen-Argumente:</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="247"/>
+        <location filename="../Application.cpp" line="246"/>
         <source>The -o/--option and -O/--save-option options require an argument in the form group/setting=value</source>
         <translation>Die Optionen -o/--option und -O/--save-option benötigen ein Argument der Form Gruppe/Einstellung=Wert</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="99"/>
+        <location filename="../Application.cpp" line="98"/>
         <source>The user settings file location is replaced with the argument value instead of the environment variable value.</source>
         <translation>Der Dateipfad der Benutzereinstellungen wird mit dem übergebenen Argument statt der Umgebungsvariable ersetzt.</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="100"/>
+        <location filename="../Application.cpp" line="99"/>
         <source>Ignored environment variable (DB4S_SETTINGS_FILE) value: </source>
         <translation>Wert der Umgebungsvariable (DB4S_SETTINGS_FILE) ignoriert: </translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="221"/>
-        <location filename="../Application.cpp" line="233"/>
+        <location filename="../Application.cpp" line="220"/>
+        <location filename="../Application.cpp" line="232"/>
         <source>The file %1 does not exist</source>
         <translation>Die Datei %1 existiert nicht</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="181"/>
+        <location filename="../Application.cpp" line="180"/>
         <source>Usage</source>
         <translation>Verwendung</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="182"/>
+        <location filename="../Application.cpp" line="181"/>
         <source>options</source>
         <translation>Optionen</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="182"/>
-        <location filename="../Application.cpp" line="206"/>
+        <location filename="../Application.cpp" line="181"/>
+        <location filename="../Application.cpp" line="205"/>
         <source>database</source>
         <translation>Datenbank</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="182"/>
-        <location filename="../Application.cpp" line="208"/>
+        <location filename="../Application.cpp" line="181"/>
+        <location filename="../Application.cpp" line="207"/>
         <source>project</source>
         <translation>Projekt</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="183"/>
-        <location filename="../Application.cpp" line="210"/>
+        <location filename="../Application.cpp" line="182"/>
+        <location filename="../Application.cpp" line="209"/>
         <source>csv-file</source>
         <translation>CSV-Datei</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="187"/>
+        <location filename="../Application.cpp" line="186"/>
         <source>Show command line options</source>
         <translation>Terminaloptionen anzeigen</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="189"/>
+        <location filename="../Application.cpp" line="188"/>
         <source>Exit application after running scripts</source>
         <translation>Anwendung nach der Ausführung der Skripte beenden</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="190"/>
-        <location filename="../Application.cpp" line="192"/>
+        <location filename="../Application.cpp" line="189"/>
+        <location filename="../Application.cpp" line="191"/>
         <source>file</source>
         <translation>Datei</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="191"/>
+        <location filename="../Application.cpp" line="190"/>
         <source>Execute this SQL file after opening the DB</source>
         <translation>Nach dem Öffnen der Datenbank diese SQL-Datei ausführen</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="193"/>
+        <location filename="../Application.cpp" line="192"/>
         <source>Import this CSV file into the passed DB or into a new DB</source>
         <translation>Diese CSV-Datei in die übergebene oder in eine neue Datenbank importieren</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="194"/>
+        <location filename="../Application.cpp" line="193"/>
         <source>table</source>
         <translation>Tabelle</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="195"/>
+        <location filename="../Application.cpp" line="194"/>
         <source>Browse this table, or use it as target of a data import</source>
         <translation>Diese Tabelle durchsuchen oder als Ziel für einen Datenimport verwenden</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="197"/>
+        <location filename="../Application.cpp" line="196"/>
         <source>Open database in read-only mode</source>
         <translation>Datenbank nur für den Lesezugriff öffnen</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="198"/>
+        <location filename="../Application.cpp" line="197"/>
         <source>settings_file</source>
         <translation>datei_mit_einstellungen</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="199"/>
+        <location filename="../Application.cpp" line="198"/>
         <source>Run application based on this settings file</source>
         <translation>Anwendung mit dieser Einstellungsdatei ausführen</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="200"/>
-        <location filename="../Application.cpp" line="202"/>
+        <location filename="../Application.cpp" line="199"/>
+        <location filename="../Application.cpp" line="201"/>
         <source>group</source>
         <translation>Gruppe</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="200"/>
-        <location filename="../Application.cpp" line="202"/>
+        <location filename="../Application.cpp" line="199"/>
+        <location filename="../Application.cpp" line="201"/>
         <source>settings</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="200"/>
-        <location filename="../Application.cpp" line="202"/>
+        <location filename="../Application.cpp" line="199"/>
+        <location filename="../Application.cpp" line="201"/>
         <source>value</source>
         <translation>Wert</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="201"/>
+        <location filename="../Application.cpp" line="200"/>
         <source>Run application with this setting temporarily set to value</source>
         <translation>Anwendung mit dem temporär angepassten Einstellungswert ausführen</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="203"/>
+        <location filename="../Application.cpp" line="202"/>
         <source>Run application saving this value for this setting</source>
         <translation>Anwendung mit dem angepassten Einstellungswert ausführen und die Einstellung dauerhaft speichern</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="205"/>
+        <location filename="../Application.cpp" line="204"/>
         <source>Display the current version</source>
         <translation>Die aktuelle Version anzeigen</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="207"/>
+        <location filename="../Application.cpp" line="206"/>
         <source>Open this SQLite database</source>
         <translation>Diese SQLite-Datenbank öffnen</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="209"/>
+        <location filename="../Application.cpp" line="208"/>
         <source>Open this project file (*.sqbpro)</source>
         <translation>Diese Projektdatei öffnen (*.sqbpro)</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="211"/>
+        <location filename="../Application.cpp" line="210"/>
         <source>Import this CSV file into an in-memory database</source>
         <translation>Diese CSV-Datei in eine In-Memory-Datenbank importieren</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="219"/>
-        <location filename="../Application.cpp" line="226"/>
-        <location filename="../Application.cpp" line="231"/>
+        <location filename="../Application.cpp" line="218"/>
+        <location filename="../Application.cpp" line="225"/>
+        <location filename="../Application.cpp" line="230"/>
         <source>The %1 option requires an argument</source>
         <translation>Die Option %1 benötigt ein Argument</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="244"/>
+        <location filename="../Application.cpp" line="243"/>
         <source>The -S/--settings option requires an argument. The option is ignored.</source>
         <translation>Die Option -S/--settings benötigt ein Argument. Diese Option wird ignoriert.</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="366"/>
+        <location filename="../Application.cpp" line="365"/>
         <source>SQLite Version </source>
         <translation>SQLite-Version </translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="368"/>
+        <location filename="../Application.cpp" line="367"/>
         <source>SQLCipher Version %1 (based on SQLite %2)</source>
         <translation>SQLCipher Version %1 (basierend auf SQLite %2)</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="371"/>
+        <location filename="../Application.cpp" line="370"/>
         <source>DB Browser for SQLite Version %1.</source>
         <translation>DB-Browser für SQLite Version %1.</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="372"/>
+        <location filename="../Application.cpp" line="371"/>
         <source>Last commit hash when built: %1</source>
         <translation>Letzter Commit-Hash des Builds: %1</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="373"/>
+        <location filename="../Application.cpp" line="372"/>
         <source>Built for %1, running on %2</source>
         <translation>Erstellt für %1, laufend unter %2</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="374"/>
+        <location filename="../Application.cpp" line="373"/>
         <source>Qt Version %1</source>
         <translation>Qt Version %1</translation>
     </message>
     <message>
-        <location filename="../Application.cpp" line="275"/>
+        <location filename="../Application.cpp" line="274"/>
         <source>Invalid option/non-existent file: %1</source>
         <translation>Ungültige Option/nicht vorhandene Datei: %1</translation>
     </message>
@@ -1398,13 +1398,13 @@ Sollen die bearbeiteten Daten auf Zeile=%1, Spalte=%2 angewendet werden?</transl
         <translation>Indexspalte</translation>
     </message>
     <message>
-        <location filename="../EditIndexDialog.cpp" line="266"/>
+        <location filename="../EditIndexDialog.cpp" line="270"/>
         <source>Deleting the old index failed:
 %1</source>
         <translation>Löschen des alten Index fehlgeschlagen: %1</translation>
     </message>
     <message>
-        <location filename="../EditIndexDialog.cpp" line="275"/>
+        <location filename="../EditIndexDialog.cpp" line="279"/>
         <source>Creating the index failed:
 %1</source>
         <translation>Erstellen des Index fehlgeschlagen:
@@ -1667,7 +1667,7 @@ Sollen die bearbeiteten Daten auf Zeile=%1, Spalte=%2 angewendet werden?</transl
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="296"/>
-        <location filename="../EditTableDialog.cpp" line="1261"/>
+        <location filename="../EditTableDialog.cpp" line="1262"/>
         <source>There can only be one primary key for each table. Please modify the existing primary key instead.</source>
         <translation>Es kann nur einen Primärschlüssel für jede Tabelle geben. Bitte stattdessen den existierenden Primärschlüssel bearbeiten.</translation>
     </message>
@@ -1715,7 +1715,7 @@ Alle aktuell in diesem Feld gespeicherten Daten gehen verloren.</translation>
  - Autoinkrement deaktiviert</translation>
     </message>
     <message>
-        <location filename="../EditTableDialog.cpp" line="1222"/>
+        <location filename="../EditTableDialog.cpp" line="1223"/>
         <source>Please add a field which meets the following criteria before setting the on conflict action:
  - Primary key flag set</source>
         <translation>Bitte vor dem Setzen der Konfliktaktion ein Feld hinzufügen, das den folgenden Bedingungen genügt:
@@ -1986,128 +1986,128 @@ Alle aktuell in diesem Feld gespeicherten Daten gehen verloren.</translation>
 <context>
     <name>ExtendedTableWidget</name>
     <message>
-        <location filename="../ExtendedTableWidget.cpp" line="273"/>
+        <location filename="../ExtendedTableWidget.cpp" line="278"/>
         <source>Use as Exact Filter</source>
         <translation>Als exakten Filter verwenden</translation>
     </message>
     <message>
-        <location filename="../ExtendedTableWidget.cpp" line="274"/>
+        <location filename="../ExtendedTableWidget.cpp" line="279"/>
         <source>Containing</source>
         <translation>Enthält</translation>
     </message>
     <message>
-        <location filename="../ExtendedTableWidget.cpp" line="275"/>
+        <location filename="../ExtendedTableWidget.cpp" line="280"/>
         <source>Not containing</source>
         <translation>Enthält nicht</translation>
     </message>
     <message>
-        <location filename="../ExtendedTableWidget.cpp" line="276"/>
+        <location filename="../ExtendedTableWidget.cpp" line="281"/>
         <source>Not equal to</source>
         <translation>Ungleich zu</translation>
     </message>
     <message>
-        <location filename="../ExtendedTableWidget.cpp" line="277"/>
+        <location filename="../ExtendedTableWidget.cpp" line="282"/>
         <source>Greater than</source>
         <translation>Größer als</translation>
     </message>
     <message>
-        <location filename="../ExtendedTableWidget.cpp" line="278"/>
+        <location filename="../ExtendedTableWidget.cpp" line="283"/>
         <source>Less than</source>
         <translation>Kleiner als</translation>
     </message>
     <message>
-        <location filename="../ExtendedTableWidget.cpp" line="279"/>
+        <location filename="../ExtendedTableWidget.cpp" line="284"/>
         <source>Greater or equal</source>
         <translation>Größer oder gleich</translation>
     </message>
     <message>
-        <location filename="../ExtendedTableWidget.cpp" line="280"/>
+        <location filename="../ExtendedTableWidget.cpp" line="285"/>
         <source>Less or equal</source>
         <translation>Kleiner oder gleich</translation>
     </message>
     <message>
-        <location filename="../ExtendedTableWidget.cpp" line="281"/>
+        <location filename="../ExtendedTableWidget.cpp" line="286"/>
         <source>Between this and...</source>
         <translation>Zwischen diesem und...</translation>
     </message>
     <message>
-        <location filename="../ExtendedTableWidget.cpp" line="282"/>
+        <location filename="../ExtendedTableWidget.cpp" line="287"/>
         <source>Regular expression</source>
         <translation>Regulärer Ausdruck</translation>
     </message>
     <message>
-        <location filename="../ExtendedTableWidget.cpp" line="283"/>
+        <location filename="../ExtendedTableWidget.cpp" line="288"/>
         <source>Edit Conditional Formats...</source>
         <translation>Bedingte Formatierungen bearbeiten...</translation>
     </message>
     <message>
-        <location filename="../ExtendedTableWidget.cpp" line="285"/>
+        <location filename="../ExtendedTableWidget.cpp" line="290"/>
         <source>Set to NULL</source>
         <translation>Auf NULL setzen</translation>
     </message>
     <message>
-        <location filename="../ExtendedTableWidget.cpp" line="286"/>
+        <location filename="../ExtendedTableWidget.cpp" line="291"/>
         <source>Cut</source>
         <translation>Ausschneiden</translation>
     </message>
     <message>
-        <location filename="../ExtendedTableWidget.cpp" line="287"/>
+        <location filename="../ExtendedTableWidget.cpp" line="292"/>
         <source>Copy</source>
         <translation>Kopieren</translation>
     </message>
     <message>
-        <location filename="../ExtendedTableWidget.cpp" line="288"/>
+        <location filename="../ExtendedTableWidget.cpp" line="293"/>
         <source>Copy with Headers</source>
         <translation>Mit Headern kopieren</translation>
     </message>
     <message>
-        <location filename="../ExtendedTableWidget.cpp" line="289"/>
+        <location filename="../ExtendedTableWidget.cpp" line="294"/>
         <source>Copy as SQL</source>
         <translation>Als SQL kopieren</translation>
     </message>
     <message>
-        <location filename="../ExtendedTableWidget.cpp" line="290"/>
+        <location filename="../ExtendedTableWidget.cpp" line="295"/>
         <source>Paste</source>
         <translation>Einfügen</translation>
     </message>
     <message>
-        <location filename="../ExtendedTableWidget.cpp" line="291"/>
+        <location filename="../ExtendedTableWidget.cpp" line="296"/>
         <source>Print...</source>
         <translation>Drucken...</translation>
     </message>
     <message>
-        <location filename="../ExtendedTableWidget.cpp" line="294"/>
+        <location filename="../ExtendedTableWidget.cpp" line="299"/>
         <source>Use in Filter Expression</source>
         <translation>Im Filterausdruck verwenden</translation>
     </message>
     <message>
-        <location filename="../ExtendedTableWidget.cpp" line="325"/>
+        <location filename="../ExtendedTableWidget.cpp" line="330"/>
         <source>Alt+Del</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ExtendedTableWidget.cpp" line="328"/>
+        <location filename="../ExtendedTableWidget.cpp" line="333"/>
         <source>Ctrl+Shift+C</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ExtendedTableWidget.cpp" line="329"/>
+        <location filename="../ExtendedTableWidget.cpp" line="334"/>
         <source>Ctrl+Alt+C</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ExtendedTableWidget.cpp" line="844"/>
+        <location filename="../ExtendedTableWidget.cpp" line="849"/>
         <source>The content of the clipboard is bigger than the range selected.
 Do you want to insert it anyway?</source>
         <translation>Der Inhalt der Zwischenablage ist größer als der ausgewählte Bereich. Soll er dennoch eingefügt werden?</translation>
     </message>
     <message>
-        <location filename="../ExtendedTableWidget.cpp" line="1209"/>
+        <location filename="../ExtendedTableWidget.cpp" line="1214"/>
         <source>&lt;p&gt;Not all data has been loaded. &lt;b&gt;Do you want to load all data before selecting all the rows?&lt;/b&gt;&lt;p&gt;&lt;p&gt;Answering &lt;b&gt;No&lt;/b&gt; means that no more data will be loaded and the selection will not be performed.&lt;br/&gt;Answering &lt;b&gt;Yes&lt;/b&gt; might take some time while the data is loaded but the selection will be complete.&lt;/p&gt;Warning: Loading all the data might require a great amount of memory for big tables.</source>
         <translation>&lt;p&gt;Es wurden nicht alle Daten geladen. &lt;b&gt;Sollen vor dem Auswählen aller Zeilen alle Daten geladen werden?&lt;/b&gt;&lt;p&gt;&lt;p&gt;Das Antworten von &lt;b&gt;Nein&lt;/b&gt; wird keine weiteren Daten laden und die Auswahl nicht durchführen.&lt;/br&gt;Das Antworten von &lt;b&gt;Ja&lt;/b&gt; benötigt möglicherweise einige Zeit, während die Daten geladen werden, aber die Auswahl wird vollständig sein.&lt;/p&gt;Warnung: Das Laden aller Daten benötigt bei großen Tabellen möglicherweise eine große Menge an Speicher.</translation>
     </message>
     <message>
-        <location filename="../ExtendedTableWidget.cpp" line="1287"/>
+        <location filename="../ExtendedTableWidget.cpp" line="1292"/>
         <source>Cannot set selection to NULL. Column %1 has a NOT NULL constraint.</source>
         <translation>Auswahl kann nicht auf NULL gesetzt. Die Spalte %1 hat eine NOT NULL Beschränkung.</translation>
     </message>
@@ -2499,7 +2499,7 @@ x~y	Bereich: Werte zwischen x und y
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="78"/>
-        <location filename="../ImportCsvDialog.cpp" line="825"/>
+        <location filename="../ImportCsvDialog.cpp" line="828"/>
         <source>Tab</source>
         <translation>Tab</translation>
     </message>
@@ -2657,47 +2657,47 @@ x~y	Bereich: Werte zwischen x und y
         <translation>Alle auswählen</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="521"/>
+        <location filename="../ImportCsvDialog.cpp" line="524"/>
         <source>There is already a table named &apos;%1&apos; and an import into an existing table is only possible if the number of columns match.</source>
         <translation>Es gibt bereits eine Tabelle namens &apos;%1&apos; und ein Import in eine existierende Tabelle ist nur bei übereinstimmender Spaltenanzahl möglich.</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="529"/>
+        <location filename="../ImportCsvDialog.cpp" line="532"/>
         <source>There is already a table named &apos;%1&apos;. Do you want to import the data into it?</source>
         <translation>Es gibt bereits eine Tabelle namens &apos;%1&apos;. Möchten Sie die Daten in diese importieren?</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="563"/>
+        <location filename="../ImportCsvDialog.cpp" line="566"/>
         <source>Creating restore point failed: %1</source>
         <translation>Erstellung des Wiederherstellungspunktes fehlgeschlagen: %1</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="576"/>
+        <location filename="../ImportCsvDialog.cpp" line="579"/>
         <source>Creating the table failed: %1</source>
         <translation>Erstellung der Tabelle fehlgeschlagen: %1</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="636"/>
+        <location filename="../ImportCsvDialog.cpp" line="639"/>
         <source>importing CSV</source>
         <translation>importierte CSV</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="639"/>
+        <location filename="../ImportCsvDialog.cpp" line="642"/>
         <source>Could not prepare INSERT statement: %1</source>
         <translation>INSERT-Anweisung konnte nicht vorbereitet werden: %1</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="729"/>
+        <location filename="../ImportCsvDialog.cpp" line="732"/>
         <source>Unexpected end of file. Please make sure that you have configured the correct quote characters and the file is not malformed.</source>
         <translation>Unerwartetes Dateiende. Bitte sicherstellen, dass die korrekten Anführungszeichen gesetzt sind und die Datei wohlgeformt ist.</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="743"/>
+        <location filename="../ImportCsvDialog.cpp" line="746"/>
         <source>Importing the file &apos;%1&apos; took %2ms. Of this %3ms were spent in the row function.</source>
         <translation>Import der Datei &apos;%1&apos; benötigte %2 ms. Davon wurden %3 ms in der Zeilenfunktion verbracht.</translation>
     </message>
     <message>
-        <location filename="../ImportCsvDialog.cpp" line="727"/>
+        <location filename="../ImportCsvDialog.cpp" line="730"/>
         <source>Inserting row failed: %1</source>
         <translation>Einfügen der Zeile fehlgeschlagen: %1</translation>
     </message>
@@ -2802,161 +2802,201 @@ Sie können SQL-Anweisungen aus einer Objektzeile fassen und in anderen Anwendun
     <message>
         <location filename="../MainWindow.ui" line="206"/>
         <source>Temp Store</source>
-        <translation type="unfinished"></translation>
+        <translation>Temporärer Speicher</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="222"/>
         <source>Secure Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Sicheres Löschen</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="264"/>
         <source>Case Sensitive Like</source>
-        <translation type="unfinished"></translation>
+        <translation>Case-Sensitives LIKE</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="358"/>
         <source>Journal Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Journal-Modus</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="374"/>
         <source>Journal Size Limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Begrenzung der Journalgröße</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="390"/>
         <source>Recursive Triggers</source>
-        <translation type="unfinished"></translation>
+        <translation>Rekursive Trigger</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <comment>pragma</comment>
+        <translation type="vanished">Löschen (DELETE)</translation>
+    </message>
+    <message>
+        <source>Truncate</source>
+        <comment>pragma</comment>
+        <translation type="vanished">Kürzen (TRUNCATE)</translation>
+    </message>
+    <message>
+        <source>Persist</source>
+        <comment>pragma</comment>
+        <translation type="vanished">Behalten (PERSIST)</translation>
+    </message>
+    <message>
+        <source>Memory</source>
+        <comment>pragma</comment>
+        <translation type="vanished">RAM (MEMORY)</translation>
+    </message>
+    <message>
+        <source>WAL</source>
+        <comment>pragma</comment>
+        <translation type="vanished">WAL</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <comment>pragma</comment>
+        <translation type="vanished">Deaktiviert</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="492"/>
         <source>Page Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Seitengröße</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="541"/>
         <source>Foreign Keys</source>
-        <translation type="unfinished">Fremdschlüssel</translation>
+        <translation>Fremdschlüssel</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="791"/>
         <source>Auto Vacuum</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto-Vakuum</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="814"/>
         <source>Max Page Count</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximale Seitenzahl</translation>
+    </message>
+    <message>
+        <source>Normal</source>
+        <comment>pragma</comment>
+        <translation type="vanished">Normal</translation>
+    </message>
+    <message>
+        <source>Exclusive</source>
+        <comment>pragma</comment>
+        <translation type="vanished">Exklusiv</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="870"/>
         <source>Checkpoint Full FSYNC</source>
-        <translation type="unfinished"></translation>
+        <translation>Full FSYNC für Checkpoints</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="429"/>
         <location filename="../MainWindow.ui" line="910"/>
         <source>Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Inaktiv</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="854"/>
         <location filename="../MainWindow.ui" line="915"/>
         <source>Normal</source>
-        <translation type="unfinished"></translation>
+        <translation>Normal</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="920"/>
         <location filename="../MainWindow.ui" line="1178"/>
         <source>Full</source>
-        <translation type="unfinished"></translation>
+        <translation>Vollständig</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="929"/>
         <source>Default</source>
-        <translation type="unfinished">Voreinstellung</translation>
+        <translation>Voreinstellung</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="934"/>
         <source>File</source>
-        <translation type="unfinished">Datei</translation>
+        <translation>Datei</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="419"/>
         <location filename="../MainWindow.ui" line="939"/>
         <source>Memory</source>
-        <translation type="unfinished"></translation>
+        <translation>RAM</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="404"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Löschen (DELETE)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="409"/>
         <source>Truncate</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kürzen (TRUNCATE)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="414"/>
         <source>Persist</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Behalten (PERSIST)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="424"/>
         <source>WAL</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">WAL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="859"/>
         <source>Exclusive</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Exklusiv</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="950"/>
         <source>Automatic Index</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatische Indizierung</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1025"/>
         <source>Ignore Check Constraints</source>
-        <translation type="unfinished"></translation>
+        <translation>CHECK-Beschränkungen ignorieren</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1041"/>
         <source>Full FSYNC</source>
-        <translation type="unfinished"></translation>
+        <translation>Full FSYNC</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1057"/>
         <source>WAL Auto Checkpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatische WAL-Checkpoints</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1083"/>
         <source>User Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Benutzerspezifische Version</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1143"/>
         <source>Synchronous</source>
-        <translation type="unfinished"></translation>
+        <translation>Synchronität</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1173"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Inaktiv</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1183"/>
         <source>Incremental</source>
-        <translation type="unfinished"></translation>
+        <translation>Inkrementell</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1194"/>
         <source>Locking Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Sperrmodus</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1222"/>
@@ -2977,7 +3017,7 @@ Sie können SQL-Anweisungen aus einer Objektzeile fassen und in anderen Anwendun
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1766"/>
-        <location filename="../MainWindow.cpp" line="481"/>
+        <location filename="../MainWindow.cpp" line="482"/>
         <source>Ctrl+F4</source>
         <translation></translation>
     </message>
@@ -3218,7 +3258,7 @@ Sie können SQL-Anweisungen aus einer Objektzeile fassen und in anderen Anwendun
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2797"/>
-        <location filename="../MainWindow.cpp" line="482"/>
+        <location filename="../MainWindow.cpp" line="483"/>
         <source>Ctrl+Shift+W</source>
         <translation></translation>
     </message>
@@ -3426,7 +3466,7 @@ Sie können SQL-Anweisungen aus einer Objektzeile fassen und in anderen Anwendun
         <translation>Projekt und Datenbankdateien schließen und zum initialen Zustand zurückkehren</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="482"/>
+        <location filename="../MainWindow.cpp" line="483"/>
         <source>Ctrl+Shift+F4</source>
         <translation></translation>
     </message>
@@ -3644,8 +3684,8 @@ Sie können SQL-Anweisungen aus der Schemaspalte nehmen und in den SQL-Editor od
         <translation>Dieser Button schließt die Verbindung zu der aktuell geöffneten Datenbankdatei</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="196"/>
-        <location filename="../MainWindow.cpp" line="3807"/>
+        <location filename="../MainWindow.cpp" line="197"/>
+        <location filename="../MainWindow.cpp" line="3809"/>
         <source>Ctrl+W</source>
         <translation></translation>
     </message>
@@ -3931,7 +3971,7 @@ Sie können SQL-Anweisungen aus der Schemaspalte nehmen und in den SQL-Editor od
         <translation>SQL-Datei speichern</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="296"/>
+        <location filename="../MainWindow.cpp" line="297"/>
         <source>Ctrl+E</source>
         <translation></translation>
     </message>
@@ -3946,7 +3986,7 @@ Sie können SQL-Anweisungen aus der Schemaspalte nehmen und in den SQL-Editor od
         <translation>Tabelle als kommaseparierte Wertedatei exportieren</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="281"/>
+        <location filename="../MainWindow.cpp" line="282"/>
         <source>Ctrl+L</source>
         <translation></translation>
     </message>
@@ -3957,13 +3997,13 @@ Sie können SQL-Anweisungen aus der Schemaspalte nehmen und in den SQL-Editor od
         <translation></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="405"/>
+        <location filename="../MainWindow.cpp" line="406"/>
         <source>Database encoding</source>
         <translation>Datenbank-Codierung</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="516"/>
-        <location filename="../MainWindow.cpp" line="3280"/>
+        <location filename="../MainWindow.cpp" line="517"/>
+        <location filename="../MainWindow.cpp" line="3283"/>
         <source>Choose a database file</source>
         <translation>Eine Datenbankdatei auswählen</translation>
     </message>
@@ -3973,65 +4013,65 @@ Sie können SQL-Anweisungen aus der Schemaspalte nehmen und in den SQL-Editor od
         <translation></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="286"/>
+        <location filename="../MainWindow.cpp" line="287"/>
         <source>Ctrl+D</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="291"/>
+        <location filename="../MainWindow.cpp" line="292"/>
         <source>Ctrl+I</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="336"/>
+        <location filename="../MainWindow.cpp" line="337"/>
         <source>Reset Window Layout</source>
         <translation>Fensteranordnung zurücksetzen</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="377"/>
+        <location filename="../MainWindow.cpp" line="378"/>
         <source>The database is currently busy.</source>
         <translation>Die Datenbank ist aktuell beschäftigt.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="383"/>
+        <location filename="../MainWindow.cpp" line="384"/>
         <source>Click here to interrupt the currently running query.</source>
         <translation>Hier klicken, um die aktuell laufende Abfrage zu unterbrechen.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="391"/>
+        <location filename="../MainWindow.cpp" line="392"/>
         <source>Encrypted</source>
         <translation>Verschlüsselt</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="392"/>
+        <location filename="../MainWindow.cpp" line="393"/>
         <source>Database is encrypted using SQLCipher</source>
         <translation>Datenbank ist mittels SQLCipher verschlüsselt</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="398"/>
+        <location filename="../MainWindow.cpp" line="399"/>
         <source>Read only</source>
         <translation>Nur lesen</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="399"/>
+        <location filename="../MainWindow.cpp" line="400"/>
         <source>Database file is read only. Editing the database is disabled.</source>
         <translation>Zugriff auf Datenbank nur lesend. Bearbeiten der Datenbank ist deaktiviert.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="581"/>
+        <location filename="../MainWindow.cpp" line="582"/>
         <source>Could not open database file.
 Reason: %1</source>
         <translation>Datenbankdatei konnte nicht geöffnet werden. Grund: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="594"/>
-        <location filename="../MainWindow.cpp" line="1557"/>
-        <location filename="../MainWindow.cpp" line="3106"/>
+        <location filename="../MainWindow.cpp" line="595"/>
+        <location filename="../MainWindow.cpp" line="1559"/>
+        <location filename="../MainWindow.cpp" line="3109"/>
         <source>Choose a filename to save under</source>
         <translation>Dateinamen zum Speichern auswählen</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1491"/>
+        <location filename="../MainWindow.cpp" line="1493"/>
         <source>Error while saving the database file. This means that not all changes to the database were saved. You need to resolve the following error first.
 
 %1</source>
@@ -4040,297 +4080,297 @@ Reason: %1</source>
 %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2061"/>
+        <location filename="../MainWindow.cpp" line="2063"/>
         <source>Do you want to save the changes made to SQL tabs in the project file &apos;%1&apos;?</source>
         <translation>Sollen die in den SQL-Tabs getätigten Änderungen in der Projektdatei &apos;%1&apos; gespeichert werden?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2476"/>
+        <location filename="../MainWindow.cpp" line="2478"/>
         <source>A new DB Browser for SQLite version is available (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Please download at &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</source>
         <translation>Eine neue Version des DB-Browsers für SQLite ist verfügbar (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Bitte laden Sie diese von &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt; herunter.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2706"/>
+        <location filename="../MainWindow.cpp" line="2709"/>
         <source>DB Browser for SQLite project file (*.sqbpro)</source>
         <translation>DB-Browser für SQLite-Projektdatei (*.sqbpro)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="976"/>
+        <location filename="../MainWindow.cpp" line="978"/>
         <source>Error checking foreign keys after table modification. The changes will be reverted.</source>
         <translation>Fehler beim Prüfen von Fremdschlüsseln nach der Änderung an der Tabelle. Die Änderungen werden rückgängig gemacht.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="979"/>
+        <location filename="../MainWindow.cpp" line="981"/>
         <source>This table did not pass a foreign-key check.&lt;br/&gt;You should run &apos;Tools | Foreign-Key Check&apos; and fix the reported issues.</source>
         <translation>Diese Tabelle hat die Fremdschlüssel-Prüfung nicht bestanden.&lt;br/&gt;Sie sollten &apos;Werkzeuge | Fremdschlüssel-Prüfung&apos; ausführen und die gemeldeten Probleme beheben.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1329"/>
+        <location filename="../MainWindow.cpp" line="1331"/>
         <source>Execution finished with errors.</source>
         <translation>Ausführung wurde mit Fehlern beendet.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1331"/>
+        <location filename="../MainWindow.cpp" line="1333"/>
         <source>Execution finished without errors.</source>
         <translation>Ausführung wurde ohne Fehler beendet.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1500"/>
+        <location filename="../MainWindow.cpp" line="1502"/>
         <source>Are you sure you want to undo all changes made to the database file &apos;%1&apos; since the last save?</source>
         <translation>Sollen wirklich alle Änderungen an der Datenbankdatei &apos;%1&apos; seit dem letzten Speichern rückgängig gemacht werden?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1538"/>
+        <location filename="../MainWindow.cpp" line="1540"/>
         <source>Choose a file to import</source>
         <translation>Datei für Import auswählen</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2220"/>
+        <location filename="../MainWindow.cpp" line="2222"/>
         <source>Text files(*.sql *.txt);;All files(*)</source>
         <translation>Textdateien(*.sql *.txt);;Alle Dateien(*)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1550"/>
+        <location filename="../MainWindow.cpp" line="1552"/>
         <source>Do you want to create a new database file to hold the imported data?
 If you answer no we will attempt to import the data in the SQL file to the current database.</source>
         <translation>Soll für die importierten Daten eine neue Datenbank erstellt werden?
 Bei der Antwort NEIN werden die Daten in die SQL-Datei der aktuellen Datenbank importiert.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="204"/>
+        <location filename="../MainWindow.cpp" line="205"/>
         <source>Ctrl+Tab</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="213"/>
+        <location filename="../MainWindow.cpp" line="214"/>
         <source>Ctrl+Shift+Tab</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="239"/>
+        <location filename="../MainWindow.cpp" line="240"/>
         <source>Clear List</source>
         <translation>Liste leeren</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="333"/>
+        <location filename="../MainWindow.cpp" line="334"/>
         <source>Window Layout</source>
         <translation>Fensterlayout</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="345"/>
+        <location filename="../MainWindow.cpp" line="346"/>
         <source>Simplify Window Layout</source>
         <translation>Fensterlayout vereinfachen</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="346"/>
+        <location filename="../MainWindow.cpp" line="347"/>
         <source>Alt+Shift+0</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="355"/>
+        <location filename="../MainWindow.cpp" line="356"/>
         <source>Dock Windows at Bottom</source>
         <translation>Fenster unten anheften</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="359"/>
+        <location filename="../MainWindow.cpp" line="360"/>
         <source>Dock Windows at Left Side</source>
         <translation>Fenster links anheften</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="363"/>
+        <location filename="../MainWindow.cpp" line="364"/>
         <source>Dock Windows at Top</source>
         <translation>Fenster oben anheften</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="726"/>
+        <location filename="../MainWindow.cpp" line="727"/>
         <source>You are still executing SQL statements. Closing the database now will stop their execution, possibly leaving the database in an inconsistent state. Are you sure you want to close the database?</source>
         <translation>Es werden aktuell SQL-Anweisungen ausgeführt. Das Schließen der Datenbank wird deren Ausführung stoppen, was die Datenbank möglicherweise in einem inkonsistenten Zustand belässt. Soll die Datenbank wirklich geschlossen werden?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="821"/>
+        <location filename="../MainWindow.cpp" line="823"/>
         <source>Do you want to save the changes made to the project file &apos;%1&apos;?</source>
         <translation>Sollen die an der Projektdatei &apos;%1&apos; getätigten Änderungen gespeichert werden?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1561"/>
+        <location filename="../MainWindow.cpp" line="1563"/>
         <source>File %1 already exists. Please choose a different name.</source>
         <translation>Datei %1 existiert bereits. Bitte einen anderen Namen auswählen.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1588"/>
+        <location filename="../MainWindow.cpp" line="1590"/>
         <source>Error importing data: %1</source>
         <translation>Fehler beim Datenimport: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1592"/>
+        <location filename="../MainWindow.cpp" line="1594"/>
         <source>Import completed.</source>
         <translation>Import abgeschlossen.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1674"/>
+        <location filename="../MainWindow.cpp" line="1676"/>
         <source>Delete View</source>
         <translation>Ansicht löschen</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1677"/>
+        <location filename="../MainWindow.cpp" line="1679"/>
         <source>Delete Trigger</source>
         <translation>Trigger löschen</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1680"/>
+        <location filename="../MainWindow.cpp" line="1682"/>
         <source>Delete Index</source>
         <translation>Index löschen</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1964"/>
-        <location filename="../MainWindow.cpp" line="1683"/>
+        <location filename="../MainWindow.cpp" line="1685"/>
         <source>Delete Table</source>
         <translation>Tabelle löschen</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1998"/>
+        <location filename="../MainWindow.cpp" line="2000"/>
         <source>Setting PRAGMA values will commit your current transaction.
 Are you sure?</source>
         <translation>Das Setzen von PRAGMA-Werten übermittelt den aktuellen Vorgang.
 Sind Sie sicher?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="619"/>
+        <location filename="../MainWindow.cpp" line="620"/>
         <source>In-Memory database</source>
         <translation>In-Memory-Datenbank</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="236"/>
+        <location filename="../MainWindow.cpp" line="237"/>
         <source>Automatically load the last opened DB file at startup</source>
         <translation>Beim Starten automatisch die zuletzt geöffnete Datenbank öffnen</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="904"/>
+        <location filename="../MainWindow.cpp" line="906"/>
         <source>Are you sure you want to delete the table &apos;%1&apos;?
 All data associated with the table will be lost.</source>
         <translation>Möchten Sie die Tabelle &apos;%1&apos; wirklich löschen?
 Alle mit dieser Tabelle verbundenen Daten gehen verloren.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="906"/>
+        <location filename="../MainWindow.cpp" line="908"/>
         <source>Are you sure you want to delete the view &apos;%1&apos;?</source>
         <translation>Möchten Sie die Ansicht &apos;%1&apos; wirklich löschen?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="908"/>
+        <location filename="../MainWindow.cpp" line="910"/>
         <source>Are you sure you want to delete the trigger &apos;%1&apos;?</source>
         <translation>Möchten Sie den Trigger &apos;%1&apos; wirklich löschen?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="910"/>
+        <location filename="../MainWindow.cpp" line="912"/>
         <source>Are you sure you want to delete the index &apos;%1&apos;?</source>
         <translation>Möchten Sie den Index &apos;%1&apos; wirklich löschen?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="921"/>
+        <location filename="../MainWindow.cpp" line="923"/>
         <source>Error: could not delete the table.</source>
         <translation>Fehler: Tabelle konnte nicht gelöscht werden.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="923"/>
+        <location filename="../MainWindow.cpp" line="925"/>
         <source>Error: could not delete the view.</source>
         <translation>Fehler: Ansicht konnte nicht gelöscht werden.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="925"/>
+        <location filename="../MainWindow.cpp" line="927"/>
         <source>Error: could not delete the trigger.</source>
         <translation>Fehler: Trigger konnte nicht gelöscht werden.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="927"/>
+        <location filename="../MainWindow.cpp" line="929"/>
         <source>Error: could not delete the index.</source>
         <translation>Fehler: Index konnte nicht gelöscht werden.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="929"/>
+        <location filename="../MainWindow.cpp" line="931"/>
         <source>Message from database engine:
 %1</source>
         <translation>Nachricht von Datenbank-Engine:
 %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="957"/>
+        <location filename="../MainWindow.cpp" line="959"/>
         <source>Editing the table requires to save all pending changes now.
 Are you sure you want to save the database?</source>
         <translation>Das Bearbeiten der Tabelle setzt das Speichern aller ausstehenden Änderungen voraus.
 Möchten Sie die Datenbank wirklich speichern?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1003"/>
+        <location filename="../MainWindow.cpp" line="1005"/>
         <source>Edit View %1</source>
         <translation>Ansicht %1 bearbeiten</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1009"/>
+        <location filename="../MainWindow.cpp" line="1011"/>
         <source>Edit Trigger %1</source>
         <translation>Trigger %1 bearbeiten</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1115"/>
+        <location filename="../MainWindow.cpp" line="1117"/>
         <source>You are already executing SQL statements. Do you want to stop them in order to execute the current statements instead? Note that this might leave the database in an inconsistent state.</source>
         <translation>Es werden bereits SQL-Anweisungen ausgeführt. Sollen diese gestoppt werden, um stattdessen die aktuellen Anweisungen auszuführen? Dies führt möglicherweise zu einem inkonsistenten Zustand der Datenbank.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1164"/>
+        <location filename="../MainWindow.cpp" line="1166"/>
         <source>-- EXECUTING SELECTION IN &apos;%1&apos;
 --</source>
         <translation>-- FÜHRE AUSWAHL IN &apos;%1&apos; AUS
 --</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1189"/>
+        <location filename="../MainWindow.cpp" line="1191"/>
         <source>-- EXECUTING LINE IN &apos;%1&apos;
 --</source>
         <translation>-- FÜHRE ZEILE IN &apos;%1&apos; AUS
 --</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1197"/>
+        <location filename="../MainWindow.cpp" line="1199"/>
         <source>-- EXECUTING ALL IN &apos;%1&apos;
 --</source>
         <translation>-- FÜHRE ALLES IN &apos;%1&apos; AUS
 --</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1232"/>
-        <location filename="../MainWindow.cpp" line="1236"/>
+        <location filename="../MainWindow.cpp" line="1234"/>
+        <location filename="../MainWindow.cpp" line="1238"/>
         <source>At line %1:</source>
         <translation>In Zeile %1:</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1232"/>
+        <location filename="../MainWindow.cpp" line="1234"/>
         <source>Result: %1</source>
         <translation>Ergebnis: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1236"/>
+        <location filename="../MainWindow.cpp" line="1238"/>
         <source>Result: %2</source>
         <translation>Ergebnis: %2</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1301"/>
+        <location filename="../MainWindow.cpp" line="1303"/>
         <source>Setting PRAGMA values or vacuuming will commit your current transaction.
 Are you sure?</source>
         <translation>Das Setzen von PRAGMA-Werten oder das Komprimieren wird Ihre aktuelle Transaktion übermitteln.
 Sind Sie sich sicher?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1735"/>
+        <location filename="../MainWindow.cpp" line="1737"/>
         <source>Opened &apos;%1&apos; in read-only mode from recent file list</source>
         <translation>&apos;%1&apos; aus der Liste zuletzt geöffneter Dateien im Lesemodus geöffnet</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1737"/>
+        <location filename="../MainWindow.cpp" line="1739"/>
         <source>Opened &apos;%1&apos; from recent file list</source>
         <translation>&apos;%1&apos; aus der Liste zuletzt geöffneter Dateien geöffnet</translation>
     </message>
     <message numerus="yes">
-        <location filename="../MainWindow.cpp" line="1868"/>
+        <location filename="../MainWindow.cpp" line="1870"/>
         <source>Select the action to apply to the dropped file(s). &lt;br/&gt;Note: only &apos;Import&apos; will process more than one file.</source>
         <comment>Note for translation: Although there is no %n in the original, you can use the numerus-form to adjust &apos;files(s)&apos; and remove the note when n = 1. Including %n in the translation will also work.</comment>
         <translation>
@@ -4339,225 +4379,225 @@ Sind Sie sich sicher?</translation>
         </translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2104"/>
+        <location filename="../MainWindow.cpp" line="2106"/>
         <source>The statements in the tab &apos;%1&apos; are still executing. Closing the tab will stop the execution. This might leave the database in an inconsistent state. Are you sure you want to close the tab?</source>
         <translation>Die Anweisungen im Tab &apos;%1&apos; werden noch ausgeführt. Das Schließen des Tabs stoppt die Ausführung. Dies hinterlässt die Datenbank möglicherweise in einem inkonsistenten Zustand. Soll der Tab wirklich geschlossen werden?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2887"/>
+        <location filename="../MainWindow.cpp" line="2890"/>
         <source>This project file is using an old file format because it was created using DB Browser for SQLite version 3.10 or lower. Loading this file format is no longer fully supported. If you want to load it completely, please use DB Browser for SQLite version 3.12 to convert it to the new file format.</source>
         <translation>Diese Projektdatei verwendet ein altes Dateiformat, da es mit DB-Browser für SQLite Version 3.10 oder älter erstellt wurde. Das Laden dieser Dateien wird nicht mehr vollständig unterstützt. Um es komplett zu laden, bitte DB-Browser für SQLite Version 3.12 verwenden und in das neue Format konvertieren.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3256"/>
+        <location filename="../MainWindow.cpp" line="3259"/>
         <source>Project saved to file &apos;%1&apos;</source>
         <translation>Projekt in Datei &apos;%1&apos; gespeichert</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3459"/>
+        <location filename="../MainWindow.cpp" line="3461"/>
         <source>Yes. Don&apos;t ask again</source>
         <translation>Ja. Nicht erneut fragen</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3564"/>
+        <location filename="../MainWindow.cpp" line="3566"/>
         <source>This action will open a new SQL tab with the following statements for you to edit and run:</source>
         <translation>Diese Aktion öffnet einen neuen SQL-Tab mit den folgenden Anweisungen zum Bearbeiten und Ausführen:</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3770"/>
+        <location filename="../MainWindow.cpp" line="3772"/>
         <source>Rename Tab</source>
         <translation>Tab umbenennen</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3776"/>
+        <location filename="../MainWindow.cpp" line="3778"/>
         <source>Duplicate Tab</source>
         <translation>Tab duplizieren</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3806"/>
+        <location filename="../MainWindow.cpp" line="3808"/>
         <source>Close Tab</source>
         <translation>Tab schließen</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3825"/>
+        <location filename="../MainWindow.cpp" line="3827"/>
         <source>Opening &apos;%1&apos;...</source>
         <translation>&apos;%1&apos; öffnen...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3827"/>
+        <location filename="../MainWindow.cpp" line="3829"/>
         <source>There was an error opening &apos;%1&apos;...</source>
         <translation>Fehler beim Öffnen von &apos;%1&apos;...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3830"/>
+        <location filename="../MainWindow.cpp" line="3832"/>
         <source>Value is not a valid URL or filename: %1</source>
         <translation>Wert ist keine gültige URL bzw. kein gültiger Dateiname: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1295"/>
+        <location filename="../MainWindow.cpp" line="1297"/>
         <source>%1 rows returned in %2ms</source>
         <translation>%1 Zeilen in %2 ms zurückgegeben</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="337"/>
+        <location filename="../MainWindow.cpp" line="338"/>
         <source>Ctrl+Alt+0</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="481"/>
+        <location filename="../MainWindow.cpp" line="482"/>
         <source>Ctrl+Alt+W</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="701"/>
+        <location filename="../MainWindow.cpp" line="702"/>
         <source>Choose a database file to save under</source>
         <translation>Datenbankdatei zum Speichern auswählen</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="712"/>
+        <location filename="../MainWindow.cpp" line="713"/>
         <source>Error while saving the database to the new file.</source>
         <translation>Fehler beim Speichern der Datenbank in einer neuen Datei.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1409"/>
+        <location filename="../MainWindow.cpp" line="1411"/>
         <source>Choose text files</source>
         <translation>Textdateien auswählen</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1590"/>
+        <location filename="../MainWindow.cpp" line="1592"/>
         <source>Import completed. Some foreign key constraints are violated. Please fix them before saving.</source>
         <translation>Import vollständig. Ein paar Fremdschlüssel-Beschränkungen wurden verletzt. Bitte beheben Sie diese vor dem Speichern.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1675"/>
+        <location filename="../MainWindow.cpp" line="1677"/>
         <source>Modify View</source>
         <translation>Ansicht verändern</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1678"/>
+        <location filename="../MainWindow.cpp" line="1680"/>
         <source>Modify Trigger</source>
         <translation>Trigger verändern</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1681"/>
+        <location filename="../MainWindow.cpp" line="1683"/>
         <source>Modify Index</source>
         <translation>Index verändern</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1684"/>
+        <location filename="../MainWindow.cpp" line="1686"/>
         <source>Modify Table</source>
         <translation>Tabelle verändern</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1776"/>
+        <location filename="../MainWindow.cpp" line="1778"/>
         <source>&amp;%1 %2%3</source>
         <translation>&amp;%1 %2%3</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1776"/>
+        <location filename="../MainWindow.cpp" line="1778"/>
         <source> (read only)</source>
         <translation> (nur lesend)</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1863"/>
+        <location filename="../MainWindow.cpp" line="1865"/>
         <source>Open Database or Project</source>
         <translation>Datenbank oder Projekt öffnen</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1864"/>
+        <location filename="../MainWindow.cpp" line="1866"/>
         <source>Attach Database...</source>
         <translation>Datenbank anhängen...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="1865"/>
+        <location filename="../MainWindow.cpp" line="1867"/>
         <source>Import CSV file(s)...</source>
         <translation>CSV-Datei(en) importieren...</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2060"/>
+        <location filename="../MainWindow.cpp" line="2062"/>
         <source>Do you want to save the changes made to SQL tabs in a new project file?</source>
         <translation>Sollen die an den SQL-Tabs getätigten Änderungen in einer neuen Projektdatei gespeichert werden?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2081"/>
+        <location filename="../MainWindow.cpp" line="2083"/>
         <source>Do you want to save the changes made to the SQL file %1?</source>
         <translation>Sollen die getätigten Änderungen in der SQL-Datei %1 gespeichert werden?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2219"/>
+        <location filename="../MainWindow.cpp" line="2221"/>
         <source>Select SQL file to open</source>
         <translation>SQL-Datei zum Öffnen auswählen</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2272"/>
+        <location filename="../MainWindow.cpp" line="2274"/>
         <source>Select file name</source>
         <translation>Dateinamen auswählen</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2309"/>
+        <location filename="../MainWindow.cpp" line="2311"/>
         <source>Select extension file</source>
         <translation>Erweiterungsdatei auswählen</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2316"/>
+        <location filename="../MainWindow.cpp" line="2318"/>
         <source>Extension successfully loaded.</source>
         <translation>Erweiterung erfolgreich geladen.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2318"/>
+        <location filename="../MainWindow.cpp" line="2320"/>
         <source>Error loading extension: %1</source>
         <translation>Fehler beim Laden der Erweiterung: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2376"/>
+        <location filename="../MainWindow.cpp" line="2378"/>
         <source>Could not find resource file: %1</source>
         <translation>Ressourcen-Datei konnte nicht gefunden werden: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2472"/>
-        <location filename="../MainWindow.cpp" line="2883"/>
+        <location filename="../MainWindow.cpp" line="2474"/>
+        <location filename="../MainWindow.cpp" line="2886"/>
         <source>Don&apos;t show again</source>
         <translation>Nicht wieder anzeigen</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2475"/>
+        <location filename="../MainWindow.cpp" line="2477"/>
         <source>New version available.</source>
         <translation>Neue Version verfügbar.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2705"/>
+        <location filename="../MainWindow.cpp" line="2708"/>
         <source>Choose a project file to open</source>
         <translation>Wählen Sie die zu öffnende Projektdatei</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2752"/>
+        <location filename="../MainWindow.cpp" line="2755"/>
         <source>DB file &apos;%1&apos; could not be opened</source>
         <translation>Datenbankdatei &apos;%1&apos; konnte nicht geöffnet werden</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="2906"/>
+        <location filename="../MainWindow.cpp" line="2909"/>
         <source>Table &apos;%1&apos; not found; settings ignored</source>
         <translation>Tabelle &apos;%1&apos; nicht gefunden; Einstellungen werden ignoriert</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3122"/>
+        <location filename="../MainWindow.cpp" line="3125"/>
         <source>Could not open project file for writing.
 Reason: %1</source>
         <translation>Projekt-Datei konnte nicht schreibend geöffnet werden.
 Grund: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3240"/>
+        <location filename="../MainWindow.cpp" line="3243"/>
         <source>-- Reference to file &quot;%1&quot; (not supported by this version) --</source>
         <translation>-- Referenz zu Datei &quot;%1&quot; (von dieser Version nicht unterstützt) --</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3463"/>
+        <location filename="../MainWindow.cpp" line="3465"/>
         <source>Collation needed! Proceed?</source>
         <translation>Kollation notwendig! Fortführen?</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3464"/>
+        <location filename="../MainWindow.cpp" line="3466"/>
         <source>A table in this database requires a special collation function &apos;%1&apos; that this application can&apos;t provide without further knowledge.
 If you choose to proceed, be aware bad things can happen to your database.
 Create a backup!</source>
@@ -4566,47 +4606,47 @@ Wenn Sie fortfahren, sollten Sie im Hinterkopf behalten, dass mit Ihrer Datenban
 Erstellen Sie ein Backup!</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3481"/>
+        <location filename="../MainWindow.cpp" line="3483"/>
         <source>creating collation</source>
         <translation>erstelle Kollation</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3489"/>
+        <location filename="../MainWindow.cpp" line="3491"/>
         <source>Set a new name for the SQL tab. Use the &apos;&amp;&amp;&apos; character to allow using the following character as a keyboard shortcut.</source>
         <translation>Vergeben Sie einen Namen für den SQL-Tab. Verwenden Sie das Zeichen &apos;&amp;&amp;&apos;, um das folgende Zeichen als Tastaturkürzel zu verwenden.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3541"/>
+        <location filename="../MainWindow.cpp" line="3543"/>
         <source>Please specify the view name</source>
         <translation>Geben Sie bitte einen Namen für Ansicht an</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3545"/>
+        <location filename="../MainWindow.cpp" line="3547"/>
         <source>There is already an object with that name. Please choose a different name.</source>
         <translation>Es gibt bereits ein Objekt mit diesem Namen. Bitte wählen Sie einen anderen aus.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3552"/>
+        <location filename="../MainWindow.cpp" line="3554"/>
         <source>View successfully created.</source>
         <translation>Ansicht erfolgreich erstellt.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3554"/>
+        <location filename="../MainWindow.cpp" line="3556"/>
         <source>Error creating view: %1</source>
         <translation>Fehler beim Erstellen der Ansicht: %1</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3562"/>
+        <location filename="../MainWindow.cpp" line="3564"/>
         <source>This action will open a new SQL tab for running:</source>
         <translation>Diese Aktion öffnet einen neuen SQL-Tab zur Ausführung:</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3568"/>
+        <location filename="../MainWindow.cpp" line="3570"/>
         <source>Press Help for opening the corresponding SQLite reference page.</source>
         <translation>Drücken Sie auf &apos;Hilfe&apos;, um die entsprechende SQLite-Referenzseite zu öffnen.</translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="3686"/>
+        <location filename="../MainWindow.cpp" line="3688"/>
         <source>Busy (%1)</source>
         <translation>Beschäftigt (%1)</translation>
     </message>
@@ -6403,48 +6443,48 @@ Soll wirklich fortgefahren werden?</translation>
 <context>
     <name>RemoteNetwork</name>
     <message>
-        <location filename="../RemoteNetwork.cpp" line="209"/>
+        <location filename="../RemoteNetwork.cpp" line="210"/>
         <source>Choose a location to save the file</source>
         <translation>Ort zum Speichern der Datei wählen</translation>
     </message>
     <message>
-        <location filename="../RemoteNetwork.cpp" line="243"/>
+        <location filename="../RemoteNetwork.cpp" line="244"/>
         <source>Error opening remote file at %1.
 %2</source>
         <translation>Fehler beim Öffnen der entfernten Datei unter %1.
 %2</translation>
     </message>
     <message>
-        <location filename="../RemoteNetwork.cpp" line="322"/>
+        <location filename="../RemoteNetwork.cpp" line="323"/>
         <source>Error: Invalid client certificate specified.</source>
         <translation>Fehler: Ungültiges Benutzerzertifikat angegeben.</translation>
     </message>
     <message>
-        <location filename="../RemoteNetwork.cpp" line="334"/>
+        <location filename="../RemoteNetwork.cpp" line="335"/>
         <source>Please enter the passphrase for this client certificate in order to authenticate.</source>
         <translation>Bitte die Passphrase für dieses Benutzerzertifikat eingeben, um die Authentifizierung durchzuführen.</translation>
     </message>
     <message>
-        <location filename="../RemoteNetwork.cpp" line="361"/>
+        <location filename="../RemoteNetwork.cpp" line="362"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <location filename="../RemoteNetwork.cpp" line="366"/>
+        <location filename="../RemoteNetwork.cpp" line="367"/>
         <source>Uploading remote database to
 %1</source>
         <translation>Entfernte Datenbank wird hochgeladen zu
 %1</translation>
     </message>
     <message>
-        <location filename="../RemoteNetwork.cpp" line="368"/>
+        <location filename="../RemoteNetwork.cpp" line="369"/>
         <source>Downloading remote database from
 %1</source>
         <translation>Entfernte Datenbank wird heruntergeladen von
 %1</translation>
     </message>
     <message>
-        <location filename="../RemoteNetwork.cpp" line="447"/>
+        <location filename="../RemoteNetwork.cpp" line="450"/>
         <source>Error: Cannot open the file for sending.</source>
         <translation>Fehler: Öffnen der Datei zum Senden nicht möglich.</translation>
     </message>
@@ -6492,17 +6532,17 @@ Soll wirklich fortgefahren werden?</translation>
         <translation>Benutzername</translation>
     </message>
     <message>
-        <location filename="../RemotePushDialog.cpp" line="72"/>
+        <location filename="../RemotePushDialog.cpp" line="73"/>
         <source>Database will be public. Everyone has read access to it.</source>
         <translation>Datenbank wird öffentlich sein. Jeder hat Lesezugriff darauf.</translation>
     </message>
     <message>
-        <location filename="../RemotePushDialog.cpp" line="74"/>
+        <location filename="../RemotePushDialog.cpp" line="75"/>
         <source>Database will be private. Only you have access to it.</source>
         <translation>Datenbank wird privat sein. Nur Sie haben Zugriff darauf.</translation>
     </message>
     <message>
-        <location filename="../RemotePushDialog.cpp" line="78"/>
+        <location filename="../RemotePushDialog.cpp" line="79"/>
         <source>Use with care. This can cause remote commits to be deleted.</source>
         <translation>Verwenden Sie dies mit Vorsicht. Dadurch können entfernte Commits gelöscht werden.</translation>
     </message>
@@ -6510,22 +6550,22 @@ Soll wirklich fortgefahren werden?</translation>
 <context>
     <name>RunSql</name>
     <message>
-        <location filename="../RunSql.cpp" line="138"/>
+        <location filename="../RunSql.cpp" line="139"/>
         <source>Execution aborted by user</source>
         <translation>Ausführung durch Benutzer abgebrochen</translation>
     </message>
     <message>
-        <location filename="../RunSql.cpp" line="219"/>
+        <location filename="../RunSql.cpp" line="220"/>
         <source>, %1 rows affected</source>
         <translation>, %1 Zeilen betroffen</translation>
     </message>
     <message>
-        <location filename="../RunSql.cpp" line="233"/>
+        <location filename="../RunSql.cpp" line="234"/>
         <source>query executed successfully. Took %1ms%2</source>
         <translation>Abfrage erfolgreich ausgeführt. Benötigte %1 ms %2</translation>
     </message>
     <message>
-        <location filename="../RunSql.cpp" line="319"/>
+        <location filename="../RunSql.cpp" line="320"/>
         <source>executing query</source>
         <translation>führe Abfrage aus</translation>
     </message>
@@ -6696,7 +6736,7 @@ Soll wirklich fortgefahren werden?</translation>
 <context>
     <name>SqlTextEdit</name>
     <message>
-        <location filename="../sqltextedit.cpp" line="45"/>
+        <location filename="../sqltextedit.cpp" line="53"/>
         <source>Ctrl+/</source>
         <translation></translation>
     </message>
@@ -8002,7 +8042,7 @@ Lassen Sie das Feld leer, um die Datenbank-Codierung zu verwenden.</translation>
         <translation>Diese Codierung ist entweder nicht gültig oder nicht unterstützt.</translation>
     </message>
     <message>
-        <location filename="../TableBrowser.cpp" line="1699"/>
+        <location filename="../TableBrowser.cpp" line="1709"/>
         <source>%1 replacement(s) made.</source>
         <translation>%1 Ersetzung(en) durchgeführt.</translation>
     </message>
