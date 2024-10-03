@@ -231,13 +231,13 @@
             <Property Id="SHORTCUT_SQLITE_DESKTOP" Secure="yes">
                 <RegistrySearch Id="RS_SC_SL_DT" Root="HKLM" Key="Software\$(var.Name)" Name="SQLiteDesktopShortcut" Type="raw" />
             </Property>
-            <Property Id="SHORTCUT_SQLITE_PROGRAMMENU" Secure="yes">
+            <Property Id="SHORTCUT_SQLITE_PROGRAMMENU" Secure="yes" Value="true">
                 <RegistrySearch Id="RS_SC_SL_PM" Root="HKLM" Key="Software\$(var.Name)" Name="SQLiteProgramMenuShortcut" Type="raw" />
             </Property>
             <Property Id="SHORTCUT_SQLCIPHER_DESKTOP" Secure="yes">
                 <RegistrySearch Id="RS_SC_SC_DT" Root="HKLM" Key="Software\$(var.Name)" Name="SQLCipherDesktopShortcut" Type="raw" />
             </Property>
-            <Property Id="SHORTCUT_SQLCIPHER_PROGRAMMENU" Secure="yes">
+            <Property Id="SHORTCUT_SQLCIPHER_PROGRAMMENU" Secure="yes" Value="true">
                 <RegistrySearch Id="RS_SC_SC_PM" Root="HKLM" Key="Software\$(var.Name)" Name="SQLCipherProgramMenuShortcut" Type="raw" />
             </Property>
 
