@@ -2859,27 +2859,27 @@ x~y	Rango: valores entre x e y</translation>
     <message>
         <location filename="../MainWindow.ui" line="404"/>
         <source>Delete</source>
-        <translation type="unfinished">Borrar</translation>
+        <translation>Borrar</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="409"/>
         <source>Truncate</source>
-        <translation type="unfinished">Truncar</translation>
+        <translation>Truncar</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="414"/>
         <source>Persist</source>
-        <translation type="unfinished">Persistir</translation>
+        <translation>Persistir</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="424"/>
         <source>WAL</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="859"/>
         <source>Exclusive</source>
-        <translation type="unfinished">Exclusivo</translation>
+        <translation>Exclusivo</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="950"/>
@@ -2914,7 +2914,7 @@ x~y	Rango: valores entre x e y</translation>
     <message>
         <location filename="../MainWindow.ui" line="1173"/>
         <source>None</source>
-        <translation>Ninguno</translation>
+        <translation>Ninguna</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1183"/>
@@ -4863,7 +4863,7 @@ Seleccione los ejes o sus etiquetas para arrastrar y aumentar/disminuir solo en 
     <message>
         <location filename="../PlotDock.cpp" line="97"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayuda</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="103"/>
