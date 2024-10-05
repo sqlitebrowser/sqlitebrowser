@@ -3304,181 +3304,181 @@ SQL文をスキーマカラムからSQLエディターや他のアプリケー�
     <message>
         <location filename="../MainWindow.ui" line="206"/>
         <source>Temp Store</source>
-        <translation type="unfinished"></translation>
+        <translation>一時保管</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="222"/>
         <source>Secure Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>セキュアな削除</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="260"/>
         <source>Case Sensitive Like</source>
-        <translation type="unfinished"></translation>
+        <translation>大文字小文字を区別したLike</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="342"/>
         <source>Journal Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>ジャーナルモード</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="358"/>
         <source>Journal Size Limit</source>
-        <translation type="unfinished"></translation>
+        <translation>ジャーナルサイズ上限</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="374"/>
         <source>Recursive Triggers</source>
-        <translation type="unfinished"></translation>
+        <translation>再帰トリガー</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="388"/>
         <source>Delete</source>
         <comment>pragma</comment>
-        <translation type="unfinished"></translation>
+        <translation>削除</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="393"/>
         <source>Truncate</source>
         <comment>pragma</comment>
-        <translation type="unfinished"></translation>
+        <translation>切り捨て</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="398"/>
         <source>Persist</source>
         <comment>pragma</comment>
-        <translation type="unfinished"></translation>
+        <translation>保持</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="403"/>
         <source>Memory</source>
         <comment>pragma</comment>
-        <translation type="unfinished"></translation>
+        <translation>メモリー</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="408"/>
         <source>WAL</source>
         <comment>pragma</comment>
-        <translation type="unfinished"></translation>
+        <translation>WAL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="413"/>
         <source>Off</source>
         <comment>pragma</comment>
-        <translation type="unfinished"></translation>
+        <translation>オフ</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="468"/>
         <source>Page Size</source>
-        <translation type="unfinished"></translation>
+        <translation>ページサイズ</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="513"/>
         <source>Foreign Keys</source>
-        <translation type="unfinished">外部キー</translation>
+        <translation>外部キー</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="735"/>
         <source>Auto Vacuum</source>
-        <translation type="unfinished"></translation>
+        <translation>自動開放</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="758"/>
         <source>Max Page Count</source>
-        <translation type="unfinished"></translation>
+        <translation>最大ページ数</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="794"/>
         <source>Normal</source>
         <comment>pragma</comment>
-        <translation type="unfinished"></translation>
+        <translation>通常</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="799"/>
         <source>Exclusive</source>
         <comment>pragma</comment>
-        <translation type="unfinished"></translation>
+        <translation>排他</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="810"/>
         <source>Checkpoint Full FSYNC</source>
-        <translation type="unfinished"></translation>
+        <translation>チェックポイントで完全な FSYNC を行う</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="846"/>
         <source>Off</source>
-        <translation type="unfinished"></translation>
+        <translation>オフ</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="851"/>
         <source>Normal</source>
-        <translation type="unfinished"></translation>
+        <translation>通常</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="856"/>
         <location filename="../MainWindow.ui" line="1106"/>
         <source>Full</source>
-        <translation type="unfinished"></translation>
+        <translation>完全</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="865"/>
         <source>Default</source>
-        <translation type="unfinished">デフォルト</translation>
+        <translation>デフォルト</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="870"/>
         <source>File</source>
-        <translation type="unfinished">ファイル</translation>
+        <translation>ファイル</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="875"/>
         <source>Memory</source>
-        <translation type="unfinished"></translation>
+        <translation>メモリー</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="886"/>
         <source>Automatic Index</source>
-        <translation type="unfinished"></translation>
+        <translation>自動的なインデックス</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="953"/>
         <source>Ignore Check Constraints</source>
-        <translation type="unfinished"></translation>
+        <translation>チェック制約を無視</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="969"/>
         <source>Full FSYNC</source>
-        <translation type="unfinished"></translation>
+        <translation>完全な FSYNC</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="985"/>
         <source>WAL Auto Checkpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>WAL の自動チェックポイント</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1011"/>
         <source>User Version</source>
-        <translation type="unfinished"></translation>
+        <translation>ユーザーバージョン</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1071"/>
         <source>Synchronous</source>
-        <translation type="unfinished"></translation>
+        <translation>同期</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1101"/>
         <source>None</source>
-        <translation type="unfinished">なし</translation>
+        <translation>なし</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1111"/>
         <source>Incremental</source>
-        <translation type="unfinished"></translation>
+        <translation>インクリメンタル</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1122"/>
         <source>Locking Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>ロックモード</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1150"/>
