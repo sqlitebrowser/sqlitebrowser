@@ -185,6 +185,9 @@ QWidget* ExtendedTableWidgetEditorDelegate::createEditor(QWidget* parent, const 
             completer->setCompletionMode(QCompleter::PopupCompletion);
             completer->setCaseSensitivity(Qt::CaseInsensitive);
             editor->setCompleter(completer);
+
+            CompleterTabKeyPressedEventFilter* completerTabHandleFilter = new CompleterTabKeyPressedEventFilter(completer);
+            completer->popup()->installEventFilter(completerTabHandleFilter);
         }
         // Set the maximum length to the highest possible value instead of the default 32768.
         editor->setMaxLength(std::numeric_limits<int>::max());
