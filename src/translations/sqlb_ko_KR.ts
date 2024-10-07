@@ -3261,161 +3261,189 @@ You can drag SQL statements from an object row and drop them into other applicat
     <message>
         <location filename="../MainWindow.ui" line="206"/>
         <source>Temp Store</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="222"/>
         <source>Secure Delete</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>I didn&apos;t translate it because I think it&apos;s better for users to understand it without it. If you disagree, please open a discussion.</translatorcomment>
+        <translation>Secure Delete</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="264"/>
         <source>Case Sensitive Like</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>I didn&apos;t translate it because I think it&apos;s better for users to understand it without it. If you disagree, please open a discussion.</translatorcomment>
+        <translation>Case Sensitive Like</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="358"/>
         <source>Journal Mode</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>I didn&apos;t translate it because I think it&apos;s better for users to understand it without it. If you disagree, please open a discussion.</translatorcomment>
+        <translation>Journal Mode</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="374"/>
         <source>Journal Size Limit</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>I didn&apos;t translate it because I think it&apos;s better for users to understand it without it. If you disagree, please open a discussion.</translatorcomment>
+        <translation>Journal Size Limit</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="390"/>
         <source>Recursive Triggers</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>I didn&apos;t translate it because I think it&apos;s better for users to understand it without it. If you disagree, please open a discussion.</translatorcomment>
+        <translation>Resursive Triggers</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="492"/>
         <source>Page Size</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>I didn&apos;t translate it because I think it&apos;s better for users to understand it without it. If you disagree, please open a discussion.</translatorcomment>
+        <translation>Page Size</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="541"/>
         <source>Foreign Keys</source>
-        <translation type="unfinished">외래 키 제약</translation>
+        <translatorcomment>I didn&apos;t translate it because I think it&apos;s better for users to understand it without it. If you disagree, please open a discussion.</translatorcomment>
+        <translation>Foreign Keys</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="791"/>
         <source>Auto Vacuum</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>I didn&apos;t translate it because I think it&apos;s better for users to understand it without it. If you disagree, please open a discussion.</translatorcomment>
+        <translation>Auto Vaccum</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="814"/>
         <source>Max Page Count</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>I didn&apos;t translate it because I think it&apos;s better for users to understand it without it. If you disagree, please open a discussion.</translatorcomment>
+        <translation>Max Page Count</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="870"/>
         <source>Checkpoint Full FSYNC</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>I didn&apos;t translate it because I think it&apos;s better for users to understand it without it. If you disagree, please open a discussion.</translatorcomment>
+        <translation>Checkpoint FULL FSYNC</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="429"/>
         <location filename="../MainWindow.ui" line="910"/>
         <source>Off</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="854"/>
         <location filename="../MainWindow.ui" line="915"/>
         <source>Normal</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>I didn&apos;t translate it because I think it&apos;s better for users to understand it without it. If you disagree, please open a discussion.</translatorcomment>
+        <translation>Normal</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="920"/>
         <location filename="../MainWindow.ui" line="1178"/>
         <source>Full</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>I didn&apos;t translate it because I think it&apos;s better for users to understand it without it. If you disagree, please open a discussion.</translatorcomment>
+        <translation>Full</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="929"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>I didn&apos;t translate it because I think it&apos;s better for users to understand it without it. If you disagree, please open a discussion.</translatorcomment>
+        <translation>기본값</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="934"/>
         <source>File</source>
-        <translation type="unfinished">파일</translation>
+        <translatorcomment>I didn&apos;t translate it because I think it&apos;s better for users to understand it without it. If you disagree, please open a discussion.</translatorcomment>
+        <translation>File</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="419"/>
         <location filename="../MainWindow.ui" line="939"/>
         <source>Memory</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>I didn&apos;t translate it because I think it&apos;s better for users to understand it without it. If you disagree, please open a discussion.</translatorcomment>
+        <translation>Memory</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="404"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>I didn&apos;t translate it because I think it&apos;s better for users to understand it without it. If you disagree, please open a discussion.</translatorcomment>
+        <translation>Delete</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="409"/>
         <source>Truncate</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>I didn&apos;t translate it because I think it&apos;s better for users to understand it without it. If you disagree, please open a discussion.</translatorcomment>
+        <translation>Truncate</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="414"/>
         <source>Persist</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>I didn&apos;t translate it because I think it&apos;s better for users to understand it without it. If you disagree, please open a discussion.</translatorcomment>
+        <translation>Persist</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="424"/>
         <source>WAL</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>I didn&apos;t translate it because I think it&apos;s better for users to understand it without it. If you disagree, please open a discussion.</translatorcomment>
+        <translation>WAL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="859"/>
         <source>Exclusive</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>I didn&apos;t translate it because I think it&apos;s better for users to understand it without it. If you disagree, please open a discussion.</translatorcomment>
+        <translation>Exclusive</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="950"/>
         <source>Automatic Index</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>I didn&apos;t translate it because I think it&apos;s better for users to understand it without it. If you disagree, please open a discussion.</translatorcomment>
+        <translation>Automatic Index</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1025"/>
         <source>Ignore Check Constraints</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>I didn&apos;t translate it because I think it&apos;s better for users to understand it without it. If you disagree, please open a discussion.</translatorcomment>
+        <translation>Ignore Check Constraints</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1041"/>
         <source>Full FSYNC</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>I didn&apos;t translate it because I think it&apos;s better for users to understand it without it. If you disagree, please open a discussion.</translatorcomment>
+        <translation>Full FSYNC</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1057"/>
         <source>WAL Auto Checkpoint</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>I didn&apos;t translate it because I think it&apos;s better for users to understand it without it. If you disagree, please open a discussion.</translatorcomment>
+        <translation>WAL Auto Checkpoint</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1083"/>
         <source>User Version</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>I didn&apos;t translate it because I think it&apos;s better for users to understand it without it. If you disagree, please open a discussion.</translatorcomment>
+        <translation>User Version</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1143"/>
         <source>Synchronous</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>I didn&apos;t translate it because I think it&apos;s better for users to understand it without it. If you disagree, please open a discussion.</translatorcomment>
+        <translation>Synchronous</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1173"/>
         <source>None</source>
-        <translation type="unfinished">사용하지 않음</translation>
+        <translation>사용하지 않음</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1183"/>
         <source>Incremental</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>I didn&apos;t translate it because I think it&apos;s better for users to understand it without it. If you disagree, please open a discussion.</translatorcomment>
+        <translation>Incremental</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1194"/>
         <source>Locking Mode</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>I didn&apos;t translate it because I think it&apos;s better for users to understand it without it. If you disagree, please open a discussion.</translatorcomment>
+        <translation>Locking Mode</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1222"/>
@@ -4821,7 +4849,7 @@ Select the axes or axes labels to drag and zoom only in that orientation.</sourc
     <message>
         <location filename="../PlotDock.cpp" line="97"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>도움말</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="103"/>
