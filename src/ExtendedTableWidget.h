@@ -1,6 +1,10 @@
 #ifndef EXTENDEDTABLEWIDGET_H
 #define EXTENDEDTABLEWIDGET_H
 
+#include <QApplication>
+#include <QCompleter>
+#include <QEvent>
+#include <QKeyEvent>
 #include <QTableView>
 #include <QStyledItemDelegate>
 #include <QSortFilterProxyModel>
@@ -28,6 +32,35 @@ public:
     bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
  private:
     std::unordered_set<std::string> m_uniqueValues;
+};
+
+// Handler for pressing the tab key when the autocomplete popup is open, closing the popup and moving the cursor to the next item.
+class CompleterTabKeyPressedEventFilter : public QObject
+{
+    Q_OBJECT
+
+public:
+    CompleterTabKeyPressedEventFilter(QObject* parent = nullptr) : QObject(parent) {}
+
+protected:
+    bool eventFilter(QObject* obj, QEvent* event) override {
+        if (event->type() == QEvent::KeyPress) {
+            QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
+            if (keyEvent->key() == Qt::Key_Tab) {
+                QCompleter* completer = qobject_cast<QCompleter*>(this->parent());
+                if (completer) {
+                    completer->popup()->hide();
+                    QWidget* editor = completer->widget();
+                    if (editor) {
+                        QKeyEvent tabEvent(QEvent::KeyPress, Qt::Key_Tab, Qt::NoModifier);
+                        QApplication::sendEvent(editor, &tabEvent);
+                    }
+                }
+                return true;
+            }
+        }
+        return QObject::eventFilter(obj, event);
+    }
 };
 
 // We use this class to provide editor widgets for the ExtendedTableWidget. It's used for every cell in the table view.
