@@ -16,7 +16,7 @@
     <message>
         <location filename="../AboutDialog.ui" line="90"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/span&gt;&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://sqlitebrowser.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;https://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;https://doc.qt.io/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://doc.qt.io/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;We use the nalgeon/sqlean library for SQLite extensions support.&lt;br/&gt;This library is licensed under the MIT license, see the following for more information:&lt;br/&gt;&lt;/span&gt;&lt;a href=&quot;https://github.com/nalgeon/sqlean&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/nalgeon/sqlean&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Pastel SVG icon set by Michael Buckley under a Creative Commons Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;https://codefisher.org/pastel-svg/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://codefisher.org/pastel-svg/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Peramban DB untuk SQLite adalah alat visual sumber terbuka dan perangkat lunak bebas yang digunakan untuk membuat, mendesain, dan mengedit berkas basis data SQLite.&lt;/p&gt;&lt;p&gt;Alat ini memiliki dua lisensi yaitu Lisensi Publik Mozilla Versi 2, dan Lisensi Publik Umum GNU Versi 3 atau yang lebih baru. Anda dapat memodifikasi atau mendistribusikannya kembali berdasarkan ketentuan lisensi ini.&lt;/p&gt;&lt;p&gt;Lihat &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/a&gt; dan &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/span&gt;&lt;/a&gt; untuk detailnya.&lt;/p&gt;&lt;p&gt;Untuk informasi lebih lanjut tentang program ini, silakan kunjungi situs web kami di: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; warna:#0000ff;&quot;&gt;https://sqlitebrowser.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Perangkat lunak ini menggunakan GPL/LGPL Qt Toolkit dari &lt;/span&gt;&lt;a href=&quot;https://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; warna:#0000ff;&quot;&gt;https://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;Lihat &lt;/span&gt;&lt;a href=&quot;https://doc.qt.io/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://doc.qt.io/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; untuk ketentuan dan informasi lisensi.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Kami menggunakan pustaka nalgeon/sqlean untuk dukungan ekstensi SQLite.&lt;br/&gt;Pustaka ini dilisensikan di bawah lisensi MIT, lihat berikut ini untuk informasi lebih lanjut:&lt;br/&gt;&lt;/span&gt;&lt;a href=&quot;https://github.com/nalgeon/sqlean&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/nalgeon/sqlean&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Ini juga menggunakan set ikon SVG Pastel yang dibuat oleh Michael Buckley di bawah lisensi Creative Commons Attribution Share Alike 4.0.&lt;br/&gt;Lihat &lt;/span&gt;&lt;a href=&quot;https://codefisher.org/pastel-svg/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://codefisher.org/pastel-svg/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; untuk detailnya.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -480,12 +480,12 @@ Bila sebarang pengaturan lain diubah untuk berkas basis data ini, Anda perlu men
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="34"/>
         <source>WebKit / Chromium epoch to date</source>
-        <translation type="unfinished"></translation>
+        <translation>Epos Webkit / Chromium ke tanggal</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="35"/>
         <source>WebKit / Chromium epoch to local time</source>
-        <translation type="unfinished"></translation>
+        <translation>Epos Webkit / Chromium ke waktu lokal</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="37"/>
@@ -859,7 +859,7 @@ Menggugurkan eksekusi %3.</translation>
     <message>
         <location filename="../sqlitedb.cpp" line="2188"/>
         <source>Error loading built-in extension: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kesalahan saat memuat ekstens bawaani: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="2214"/>
@@ -1439,7 +1439,7 @@ Apakah Anda hendak menerapkan data yang disunting ke baris=%1, kolom=%2?</transl
     <message>
         <location filename="../EditTableDialog.ui" line="85"/>
         <source>Make this a &apos;WITHOUT ROWID&apos; table. Setting this flag requires specifying a PRIMARY KEY (which can be of any type, and can be composite), and forbids the AUTOINCREMENT flag.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jadikan ini suatu tabel &apos;WITHOUT ROWID&apos;. Menetapkan flag ini memerlukan penentuan PRIMARY KEY (yang dapat berupa jenis apa pun, dan dapat berupa komposit), dan melarang flag AUTOINCREMENT.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="92"/>
@@ -3267,161 +3267,161 @@ Anda dapat menyeret pernyataan SQL dari kolom Skema dan menjatuhkan mereka ke da
     <message>
         <location filename="../MainWindow.ui" line="206"/>
         <source>Temp Store</source>
-        <translation type="unfinished"></translation>
+        <translation>Penyimpanan Sementara</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="222"/>
         <source>Secure Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Penghapusan Aman</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="264"/>
         <source>Case Sensitive Like</source>
-        <translation type="unfinished"></translation>
+        <translation>Like Peka Huruf Besar Kecil</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="358"/>
         <source>Journal Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Mode Jurnal</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="374"/>
         <source>Journal Size Limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Batas Ukuran Jurnal</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="390"/>
         <source>Recursive Triggers</source>
-        <translation type="unfinished"></translation>
+        <translation>Trigger Rekursif</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="492"/>
         <source>Page Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukuran Halaman</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="541"/>
         <source>Foreign Keys</source>
-        <translation type="unfinished">Foreign Key</translation>
+        <translation>Foreign Key</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="791"/>
         <source>Auto Vacuum</source>
-        <translation type="unfinished"></translation>
+        <translation>Vacuum Otomatis</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="814"/>
         <source>Max Page Count</source>
-        <translation type="unfinished"></translation>
+        <translation>Cacah Halaman Maks</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="870"/>
         <source>Checkpoint Full FSYNC</source>
-        <translation type="unfinished"></translation>
+        <translation>FSYNC Penuh Checkpoint</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="429"/>
         <location filename="../MainWindow.ui" line="910"/>
         <source>Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Mati</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="854"/>
         <location filename="../MainWindow.ui" line="915"/>
         <source>Normal</source>
-        <translation type="unfinished"></translation>
+        <translation>Normal</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="920"/>
         <location filename="../MainWindow.ui" line="1178"/>
         <source>Full</source>
-        <translation type="unfinished"></translation>
+        <translation>Penuh</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="929"/>
         <source>Default</source>
-        <translation type="unfinished">Baku</translation>
+        <translation>Baku</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="934"/>
         <source>File</source>
-        <translation type="unfinished">Berkas</translation>
+        <translation>Berkas</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="419"/>
         <location filename="../MainWindow.ui" line="939"/>
         <source>Memory</source>
-        <translation type="unfinished"></translation>
+        <translation>Memori</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="404"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Hapus</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="409"/>
         <source>Truncate</source>
-        <translation type="unfinished"></translation>
+        <translation>Truncate</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="414"/>
         <source>Persist</source>
-        <translation type="unfinished"></translation>
+        <translation>Persist</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="424"/>
         <source>WAL</source>
-        <translation type="unfinished"></translation>
+        <translation>WAL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="859"/>
         <source>Exclusive</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksklusif</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="950"/>
         <source>Automatic Index</source>
-        <translation type="unfinished"></translation>
+        <translation>Indeks Otomatis</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1025"/>
         <source>Ignore Check Constraints</source>
-        <translation type="unfinished"></translation>
+        <translation>Abaikan Periksa Konstrain</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1041"/>
         <source>Full FSYNC</source>
-        <translation type="unfinished"></translation>
+        <translation>FSYNC Penuh</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1057"/>
         <source>WAL Auto Checkpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Checkpoint Otomatis WAL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1083"/>
         <source>User Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Versi Pengguna</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1143"/>
         <source>Synchronous</source>
-        <translation type="unfinished"></translation>
+        <translation>Sinkron</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1173"/>
         <source>None</source>
-        <translation type="unfinished">Nihil</translation>
+        <translation>Nihil</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1183"/>
         <source>Incremental</source>
-        <translation type="unfinished"></translation>
+        <translation>Inkremental</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1194"/>
         <source>Locking Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Mode Penguncian</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2300"/>
@@ -4077,7 +4077,7 @@ Bila Anda menjawab tidak kami akan mencoba mengimpor data dalam berkas SQL ke ba
     <message>
         <location filename="../MainWindow.cpp" line="237"/>
         <source>Automatically load the last opened DB file at startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Secara otomatis muat berkas DB yang terakhir dibuka saat awal mula</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="727"/>
@@ -4825,7 +4825,7 @@ Pilih sumbu atau label sumbu untuk menyeret dan memperbesar hanya dalam orientas
     <message>
         <location filename="../PlotDock.cpp" line="97"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Bantuan</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="103"/>
@@ -5541,7 +5541,7 @@ Dapat diatur ke 0 untuk menonaktifkan pelengkapan.</translation>
     <message>
         <location filename="../PreferencesDialog.ui" line="1852"/>
         <source>Select built-in extensions to load for every database:</source>
-        <translation type="unfinished"></translation>
+        <translation>Pilih ekstensi bawaan yang akan dimuat untuk setiap basis data:</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1866"/>
@@ -6649,12 +6649,12 @@ Anda yakin ingin melanjutkan?</translation>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="37"/>
         <source>Ctrl+PgUp</source>
-        <translation type="unfinished">Ctrl+PgUp</translation>
+        <translation>Ctrl+PgUp</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="42"/>
         <source>Ctrl+PgDown</source>
-        <translation type="unfinished">Ctrl+PgDown</translation>
+        <translation>Ctrl+PgDown</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="256"/>
