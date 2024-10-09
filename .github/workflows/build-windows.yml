@@ -48,7 +48,7 @@ jobs:
           }
 
       - name: Install Qt
-        uses: jurplel/install-qt-action@v3
+        uses: jurplel/install-qt-action@v4
         with:
           arch: ${{ matrix.arch == 'Win32' && 'win32_msvc2019' || matrix.arch == 'Win64' && 'win64_msvc2019_64'}}
           cache: true
