@@ -6644,7 +6644,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="42"/>
         <source>Ctrl+PgDown</source>
-        <translation>Ctrl+PgDown</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="256"/>
