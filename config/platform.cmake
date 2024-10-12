@@ -10,7 +10,7 @@ if(NOT WIN32)
     list(APPEND PLATFORM_LIBS pthread)
 endif()
 
-if(UNIX)
+if(UNIX AND NOT ${CMAKE_SYSTEM_NAME} MATCHES "OpenBSD")
     list(APPEND PLATFORM_LIBS dl)
 endif()
 
