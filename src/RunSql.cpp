@@ -132,8 +132,11 @@ bool RunSql::executeNextStatement()
                 emit confirmSaveBeforePragmaOrVacuum();
                 if(!queries_left_to_execute.isEmpty())
                 {
+                    releaseDbAccess();
                     // Commit all changes
                     db.releaseAllSavepoints();
+                    savepoint_created = false;
+                    acquireDbAccess();
                 } else {
                     // Abort
                     emit statementErrored(tr("Execution aborted by user"), execute_current_position, execute_current_position + (query_type == PragmaStatement ? 5 : 6));
