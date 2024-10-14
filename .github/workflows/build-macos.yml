@@ -36,7 +36,7 @@ jobs:
 
       - name: Configure build
         run: |
-          sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLite-v3.13.1-rc2"/' CMakeLists.txt
+          sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLite-v3.13.1"/' CMakeLists.txt
           mkdir build && cd build
           cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DcustomTap=1 -DENABLE_TESTING=ON -Dsqlcipher=1 ..
 

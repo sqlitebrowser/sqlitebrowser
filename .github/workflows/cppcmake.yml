@@ -1,4 +1,4 @@
-name: Build v3.13.1-rc2
+name: Build v3.13.1
 
 on:
   workflow_dispatch:

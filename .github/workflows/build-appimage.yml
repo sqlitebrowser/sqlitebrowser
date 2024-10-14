@@ -34,7 +34,7 @@ jobs:
           wget -c -nv "https://github.com/linuxdeploy/linuxdeploy/releases/download/1-alpha-20240109-1/linuxdeploy-x86_64.AppImage"
           wget -c -nv "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/1-alpha-20240109-1/linuxdeploy-plugin-qt-x86_64.AppImage"
           chmod a+x linuxdeploy-x86_64.AppImage linuxdeploy-plugin-qt-x86_64.AppImage
-          export VERSION=v3.13.1-rc2
+          export VERSION=v3.13.1
           ./linuxdeploy-x86_64.AppImage --appdir=appdir --desktop-file=appdir/usr/share/applications/sqlitebrowser.desktop --plugin qt --output appimage
 
       - name: Rename a file
