@@ -136,6 +136,7 @@ bool RunSql::executeNextStatement()
                 } else {
                     // Abort
                     emit statementErrored(tr("Execution aborted by user"), execute_current_position, execute_current_position + (query_type == PragmaStatement ? 5 : 6));
+                    releaseDbAccess();
                     return false;
                 }
             }
