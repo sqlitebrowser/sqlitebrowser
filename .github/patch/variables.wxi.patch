@@ -32,7 +32,7 @@ index fbedf0c3..34a65831 100644
 -        <?define SQLiteExePath="C:\builds\release-sqlite-win32\Release" ?>
 -        <?define SQLCipherExePath="C:\builds\release-sqlcipher-win32\Release" ?>
 -    <?endif?>
-+    <?define QtPath="$(env.Qt5_Dir)" ?>
++    <?define QtPath="$(env.QT_ROOT_DIR)" ?>
 +    <?define SQLitePath="$(env.SQLitePath)" ?>
 +    <?define SQLCipherPath="$(env.SQLCipherPath)" ?>
 +    <?define OpenSSLPath="$(env.OpenSSLPath)" ?>
