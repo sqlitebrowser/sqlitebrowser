@@ -1304,7 +1304,20 @@ void EditTableDialog::removeForeignKey()
 
 void EditTableDialog::addCheckConstraint()
 {
-    m_table.addConstraint(std::make_shared<sqlb::CheckConstraint>());
+    std::string check_name;
+    // Find an unused name for the check by starting with 'Checkx' where x is the number of checks + 1.
+    // If this name happens to exist already, increase x by one until we find an unused name.
+    {
+        int check_number = ui->tableCheckConstraints->rowCount() + 1;
+        do
+        {
+            check_name = "Check" + std::to_string(check_number);
+            check_number++;
+        } while(!ui->tableCheckConstraints->findItems(QString::fromStdString(check_name), Qt::MatchExactly).isEmpty());
+    }
+    auto constraint = std::make_shared<sqlb::CheckConstraint>();
+    constraint->setName(check_name);
+    m_table.addConstraint(constraint);
 
     // Update SQL and view
     populateCheckConstraints();
@@ -1319,7 +1332,7 @@ void EditTableDialog::removeCheckConstraint()
 
     // Find and remove the selected check constraint
     int row = ui->tableCheckConstraints->currentRow();
-    auto check = ui->tableCheckConstraints->item(row, kConstraintType)->data(Qt::UserRole).value<std::shared_ptr<sqlb::CheckConstraint>>();
+    auto check = ui->tableCheckConstraints->item(row, kCheckConstraintCheck)->data(Qt::UserRole).value<std::shared_ptr<sqlb::CheckConstraint>>();
     m_table.removeConstraint(check);
     ui->tableCheckConstraints->removeRow(row);
 
