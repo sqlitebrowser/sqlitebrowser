@@ -602,6 +602,10 @@
             <property name="text">
              <string>Add</string>
             </property>
+            <property name="icon">
+             <iconset resource="icons/icons.qrc">
+              <normaloff>:/icons/field_add</normaloff>:/icons/field_add</iconset>
+            </property>
             <property name="popupMode">
              <enum>QToolButton::InstantPopup</enum>
             </property>
@@ -620,6 +624,10 @@
             </property>
             <property name="text">
              <string>Remove</string>
+            </property>
+            <property name="icon">
+             <iconset resource="icons/icons.qrc">
+              <normaloff>:/icons/field_delete</normaloff>:/icons/field_delete</iconset>
             </property>
             <property name="toolButtonStyle">
              <enum>Qt::ToolButtonTextBesideIcon</enum>
