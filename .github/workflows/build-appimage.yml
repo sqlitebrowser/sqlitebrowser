@@ -1,7 +1,12 @@
+# KEEP THE RUNNER OS AS LOW AS POSSIBLE.
+# If built on the latest OS, it may not run on previous OS versions.
+# Related: https://docs.appimage.org/reference/best-practices.html#binaries-compiled-on-old-enough-base-system
+
 name: Build - AppImage
 
 on:
   workflow_call:
+  workflow_dispatch:
 
 jobs:
   build:
@@ -10,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04]
+        os: [ubuntu-20.04]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -18,7 +23,14 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install libfuse2t64 libqcustomplot-dev libqscintilla2-qt5-dev libqt5svg5 libsqlcipher-dev libsqlite3-dev qttools5-dev
+          sudo apt install libqcustomplot-dev libqscintilla2-qt5-dev libqt5svg5 qttools5-dev
+
+      - name: Build SQLCipher
+        run: |
+          sudo apt install libssl-dev tcl
+          git clone https://github.com/sqlcipher/sqlcipher && cd sqlcipher && git checkout v4.6.1
+          ./configure --enable-tempstore=yes --with-crypto-lib=openssl --enable-load-extension --disable-tcl CFLAGS="-DSQLCIPHER_CRYPTO_OPENSSL -DSQLITE_ENABLE_COLUMN_METADATA -DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_PARENTHESIS -DSQLITE_ENABLE_FTS5 -DSQLITE_ENABLE_GEOPOLY -DSQLITE_ENABLE_JSON1 -DSQLITE_ENABLE_MEMORY_MANAGEMENT=1 -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_SNAPSHOT=1 -DSQLITE_ENABLE_STAT4 -DSQLITE_HAS_CODEC -DSQLITE_SOUNDEX"
+          make -j2 && sudo make install -j2
 
       - name: Configure build
         run: |
@@ -35,11 +47,12 @@ jobs:
           wget -c -nv "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/1-alpha-20240109-1/linuxdeploy-plugin-qt-x86_64.AppImage"
           chmod a+x linuxdeploy-x86_64.AppImage linuxdeploy-plugin-qt-x86_64.AppImage
           export VERSION=v3.13.1
-          ./linuxdeploy-x86_64.AppImage --appdir=appdir --desktop-file=appdir/usr/share/applications/sqlitebrowser.desktop --plugin qt --output appimage
+          LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib" ./linuxdeploy-x86_64.AppImage --appdir=appdir --desktop-file=appdir/usr/share/applications/sqlitebrowser.desktop --plugin qt --output appimage
 
       - name: Rename a file
         run: |
           for i in DB_Browser_for_SQLite*; do mv "$i" "${i//_/.}"; done
+          mv DB.Browser.for.SQLite-v3.13.1-x86.64.AppImage DB.Browser.for.SQLite-v3.13.1-x86.64-v2.AppImage
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
