@@ -336,7 +336,7 @@ void MainWindow::init()
     ui->viewMenu->addMenu(layoutMenu);
 
     QAction* resetLayoutAction = layoutMenu->addAction(tr("Reset Window Layout"));
-    resetLayoutAction->setShortcut(QKeySequence(tr("Ctrl+Alt+0")));
+    resetLayoutAction->setShortcut(QKeySequence(tr("Ctrl+0")));
     connect(resetLayoutAction, &QAction::triggered, this, [=]() {
             restoreState(defaultWindowState);
             restoreOpenTabs(defaultOpenTabs);
@@ -480,7 +480,7 @@ void MainWindow::init()
 
     // Since in some keyboards pressing F keys is cumbersome, add an alternate shortcut and document
     // it in the toolbar.
-    ui->fileCloseAction->setShortcuts({QKeySequence(tr("Ctrl+F4")), QKeySequence(tr("Ctrl+Alt+W"))});
+    ui->fileCloseAction->setShortcuts({QKeySequence(tr("Ctrl+F4")), QKeySequence(tr("Alt+Shift+W"))});
     ui->actionCloseProject->setShortcuts({QKeySequence(tr("Ctrl+Shift+W")), QKeySequence(tr("Ctrl+Shift+F4"))});
     addShortcutsTooltip(ui->fileCloseAction);
 

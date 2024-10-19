@@ -4162,8 +4162,8 @@ Are you sure?</source>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="338"/>
-        <source>Ctrl+Alt+0</source>
-        <translation>Ctrl+Alt+0</translation>
+        <source>Ctrl+0</source>
+        <translation>Ctrl+0</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="346"/>
@@ -4192,8 +4192,8 @@ Are you sure?</source>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="482"/>
-        <source>Ctrl+Alt+W</source>
-        <translation>Ctrl+Alt+W</translation>
+        <source>Alt+Shift+W</source>
+        <translation>Alt+Shift+W</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="702"/>

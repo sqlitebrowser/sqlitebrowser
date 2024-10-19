@@ -3928,7 +3928,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="338"/>
-        <source>Ctrl+Alt+0</source>
+        <source>Ctrl+0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3968,7 +3968,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="482"/>
-        <source>Ctrl+Alt+W</source>
+        <source>Alt+Shift+W</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

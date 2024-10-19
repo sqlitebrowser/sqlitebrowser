@@ -4003,7 +4003,7 @@ Je kunt SQL-instructies vanuit de Schema-kolom naar de SQL-bewerker of naar ande
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="338"/>
-        <source>Ctrl+Alt+0</source>
+        <source>Ctrl+0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4068,7 +4068,7 @@ Je kunt SQL-instructies vanuit de Schema-kolom naar de SQL-bewerker of naar ande
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="482"/>
-        <source>Ctrl+Alt+W</source>
+        <source>Alt+Shift+W</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -4440,12 +4440,12 @@ Sind Sie sich sicher?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="338"/>
-        <source>Ctrl+Alt+0</source>
+        <source>Ctrl+0</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="482"/>
-        <source>Ctrl+Alt+W</source>
+        <source>Alt+Shift+W</source>
         <translation></translation>
     </message>
     <message>

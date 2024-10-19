@@ -3052,7 +3052,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ctrl+Alt+W</source>
+        <source>Alt+Shift+W</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3439,7 +3439,7 @@ Skapa en backup!</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ctrl+Alt+0</source>
+        <source>Ctrl+0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
