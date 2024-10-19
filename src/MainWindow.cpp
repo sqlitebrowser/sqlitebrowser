@@ -3930,7 +3930,7 @@ TableBrowserDock* MainWindow::newTableBrowserTab(const sqlb::ObjectIdentifier& t
         auto& settings = d->tableBrowser()->settings(d->tableBrowser()->currentlyBrowsedTableName());
         plotDock->updatePlot(d->tableBrowser()->model(), &settings, true, false);
     });
-    connect(d->tableBrowser(), &TableBrowser::prepareForFilter, editDock, &EditDialog::promptSaveData);
+    connect(d->tableBrowser(), &TableBrowser::prepareForFilter, editDock, &EditDialog::promptSaveData, Qt::QueuedConnection);
 
     // Restore titlebar for any other widget
     for(auto dock : allTableBrowserDocks())
