@@ -130,13 +130,14 @@ bool RunSql::executeNextStatement()
                 // Ask user, then check if we should abort execution or continue with it. We depend on a BlockingQueueConnection here which makes sure to
                 // block this worker thread until the slot function in the main thread is completed and could tell us about its decision.
                 emit confirmSaveBeforePragmaOrVacuum();
-                if(!queries_left_to_execute.isEmpty())
+                // We know user's answer because stopExecution will set execution_to_position to 0
+                if(execute_to_position > 0)
                 {
                     releaseDbAccess();
                     // Commit all changes
                     db.releaseAllSavepoints();
-                    savepoint_created = false;
                     acquireDbAccess();
+                    savepoint_created = false;
                 } else {
                     // Abort
                     emit statementErrored(tr("Execution aborted by user"), execute_current_position, execute_current_position + (query_type == PragmaStatement ? 5 : 6));
@@ -191,7 +192,7 @@ bool RunSql::executeNextStatement()
         {
             // If we get here, the SQL statement returns some sort of data. So hand it over to the model for display. Don't set the modified flag
             // because statements that display data don't change data as well, except if the statement are one of INSERT/UPDATE/DELETE that could
-            // return datas with the RETURNING keyword.
+            // return data with the RETURNING keyword.
 
             releaseDbAccess();
 
@@ -296,6 +297,9 @@ bool RunSql::executeNextStatement()
 
 void RunSql::stopExecution()
 {
+    execute_current_position = 0;
+    execute_to_position = 0;
+    may_continue_with_execution = false;
     queries_left_to_execute.clear();
 }
 
