@@ -175,75 +175,64 @@ You can drag SQL statements from an object row and drop them into other applicat
         </property>
         <item>
          <widget class="QScrollArea" name="scrollareaPragmas">
-          <property name="widgetResizable">
-           <bool>true</bool>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
           <widget class="QWidget" name="scrollAreaWidgetContents">
-           <property name="geometry">
-            <rect>
-             <x>153</x>
-             <y>0</y>
-             <width>329</width>
-             <height>510</height>
-            </rect>
-           </property>
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
            <layout class="QGridLayout" name="gridLayout">
-            <item row="30" column="0">
-             <widget class="QLabel" name="labelPragmaTempStore">
+            <property name="sizeConstraint">
+             <enum>QLayout::SetMinAndMaxSize</enum>
+            </property>
+            <item row="42" column="0">
+             <widget class="QLabel" name="labelPragmaWalAutoCheckpoint">
               <property name="toolTip">
-               <string notr="true">PRAGMA temp_store</string>
+               <string notr="true">PRAGMA wal_autocheckpoint</string>
               </property>
               <property name="text">
-               <string>Temp Store</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               <string>WAL Auto Checkpoint</string>
               </property>
               <property name="buddy">
-               <cstring>comboboxPragmaTempStore</cstring>
+               <cstring>spinPragmaWalAutoCheckpoint</cstring>
               </property>
              </widget>
             </item>
-            <item row="26" column="0">
-             <widget class="QLabel" name="labelPragmaSecureDelete">
+            <item row="36" column="0">
+             <widget class="QLabel" name="labelPragmaRecursiveTriggers">
               <property name="toolTip">
-               <string notr="true">PRAGMA secure_delete</string>
+               <string notr="true">PRAGMA recursive_triggers</string>
               </property>
               <property name="text">
-               <string>Secure Delete</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               <string>Recursive Triggers</string>
               </property>
               <property name="buddy">
-               <cstring>checkboxPragmaSecureDelete</cstring>
+               <cstring>checkboxPragmaRecursiveTriggers</cstring>
               </property>
              </widget>
             </item>
-            <item row="34" column="1">
-             <widget class="QLabel" name="labelPragmaWalAutoCheckpoint_2">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+            <item row="0" column="0">
+             <widget class="QLabel" name="labelPragmaAutoVacuum">
+              <property name="toolTip">
+               <string notr="true">PRAGMA auto_vacuum</string>
               </property>
               <property name="text">
-               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_wal_autocheckpoint&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string>Auto Vacuum</string>
               </property>
+              <property name="buddy">
+               <cstring>comboboxPragmaAutoVacuum</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="1">
+             <widget class="QLabel" name="labelPragmaCheckpointFullFsync_2">
               <property name="statusTip">
-               <string notr="true">https://www.sqlite.org/pragma.html#pragma_wal_autocheckpoint</string>
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_checkpoint_fullfsync</string>
               </property>
-
+              <property name="text">
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_checkpoint_fullfsync&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
@@ -251,41 +240,64 @@ You can drag SQL statements from an object row and drop them into other applicat
                <bool>true</bool>
               </property>
               <property name="buddy">
-               <cstring>spinPragmaWalAutoCheckpoint</cstring>
+               <cstring>checkboxPragmaCheckpointFullFsync</cstring>
               </property>
              </widget>
             </item>
-            <item row="4" column="0">
-             <widget class="QLabel" name="labelPragmaCaseSensitiveLike">
+            <item row="12" column="2">
+             <widget class="QCheckBox" name="checkboxPragmaIgnoreCheckConstraints">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="37" column="2">
+             <widget class="QCheckBox" name="checkboxPragmaSecureDelete">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="34" column="0">
+             <widget class="QLabel" name="labelPragmaMaxPageCount">
               <property name="toolTip">
-               <string notr="true">PRAGMA case_sensitive_like</string>
+               <string notr="true">PRAGMA max_page_count</string>
               </property>
               <property name="text">
-               <string>Case Sensitive Like</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               <string>Max Page Count</string>
               </property>
               <property name="buddy">
-               <cstring>checkboxPragmaCaseSensitiveLike</cstring>
+               <cstring>spinPragmaMaxPageCount</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="41" column="1">
+             <widget class="QLabel" name="labelPragmaUserVersion_2">
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_user_version</string>
+              </property>
+              <property name="text">
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_user_version&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="openExternalLinks">
+               <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>spinPragmaUserVersion</cstring>
               </property>
              </widget>
             </item>
             <item row="14" column="1">
              <widget class="QLabel" name="labelPragmaJournalMode_2">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_journal_mode</string>
               </property>
               <property name="text">
                <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_journal_mode&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
-              <property name="statusTip">
-               <string notr="true">https://www.sqlite.org/pragma.html#pragma_journal_mode</string>
-              </property>
-
               <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
@@ -297,47 +309,24 @@ You can drag SQL statements from an object row and drop them into other applicat
               </property>
              </widget>
             </item>
-            <item row="26" column="1">
-             <widget class="QLabel" name="labelPragmaSecureDelete_2">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+            <item row="4" column="2">
+             <widget class="QCheckBox" name="checkboxPragmaCaseSensitiveLike">
+              <property name="toolTip">
+               <string>Warning: this pragma is not readable and this value has been inferred. Writing the pragma might overwrite a redefined LIKE provided by an SQLite extension.</string>
               </property>
               <property name="text">
-               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_secure_delete&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-              </property>
-              <property name="statusTip">
-               <string notr="true">https://www.sqlite.org/pragma.html#pragma_secure_delete</string>
-              </property>
-
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
-              </property>
-              <property name="buddy">
-               <cstring>checkboxPragmaSecureDelete</cstring>
+               <string/>
               </property>
              </widget>
             </item>
-            <item row="28" column="1">
+            <item row="38" column="1">
              <widget class="QLabel" name="labelPragmaSynchronous_2">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_synchronous</string>
               </property>
               <property name="text">
                <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
-              <property name="statusTip">
-               <string notr="true">https://www.sqlite.org/pragma.html#pragma_synchronous</string>
-              </property>
-
               <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
@@ -349,51 +338,168 @@ You can drag SQL statements from an object row and drop them into other applicat
               </property>
              </widget>
             </item>
-            <item row="14" column="0">
-             <widget class="QLabel" name="labelPragmaJournalMode">
-              <property name="toolTip">
-               <string notr="true">PRAGMA journal_mode</string>
-              </property>
-              <property name="text">
-               <string>Journal Mode</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="buddy">
-               <cstring>comboboxPragmaJournalMode</cstring>
+            <item row="42" column="2">
+             <widget class="QSpinBox" name="spinPragmaWalAutoCheckpoint">
+              <property name="maximum">
+               <number>10000</number>
               </property>
              </widget>
             </item>
-            <item row="16" column="0">
-             <widget class="QLabel" name="labelJournalSizeLimit">
+            <item row="33" column="0">
+             <widget class="QLabel" name="labelPragmaLockingMode">
               <property name="toolTip">
-               <string notr="true">PRAGMA journal_size_limit</string>
+               <string notr="true">PRAGMA locking_mode</string>
               </property>
               <property name="text">
-               <string>Journal Size Limit</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               <string>Locking Mode</string>
               </property>
               <property name="buddy">
-               <cstring>spinPragmaJournalSizeLimit</cstring>
+               <cstring>comboboxPragmaLockingMode</cstring>
               </property>
              </widget>
             </item>
-            <item row="24" column="0">
-             <widget class="QLabel" name="labelPragmaRecursiveTriggers">
-              <property name="toolTip">
-               <string notr="true">PRAGMA recursive_triggers</string>
+            <item row="4" column="1">
+             <widget class="QLabel" name="labelPragmaCaseSensitiveLike_2">
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_case_sensitive_like</string>
               </property>
               <property name="text">
-               <string>Recursive Triggers</string>
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_case_sensitive_like&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="openExternalLinks">
+               <bool>true</bool>
               </property>
               <property name="buddy">
-               <cstring>checkboxPragmaRecursiveTriggers</cstring>
+               <cstring>checkboxPragmaCaseSensitiveLike</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QComboBox" name="comboboxPragmaAutoVacuum">
+              <item>
+               <property name="text">
+                <string>None</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Full</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Incremental</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLabel" name="labelPragmaAutoVacuum_2">
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_auto_vacuum</string>
+              </property>
+              <property name="text">
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_auto_vacuum&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="openExternalLinks">
+               <bool>true</bool>
+              </property>
+              <property name="textInteractionFlags">
+               <set>Qt::LinksAccessibleByMouse</set>
+              </property>
+              <property name="buddy">
+               <cstring>comboboxPragmaAutoVacuum</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="12" column="1">
+             <widget class="QLabel" name="labelPragmaIgnoreCheckConstraints_2">
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_ignore_check_constraints</string>
+              </property>
+              <property name="text">
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_ignore_check_constraints&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="openExternalLinks">
+               <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>checkboxPragmaIgnoreCheckConstraints</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="41" column="2">
+             <widget class="QSpinBox" name="spinPragmaUserVersion">
+              <property name="maximum">
+               <number>2147483647</number>
+              </property>
+             </widget>
+            </item>
+            <item row="38" column="0">
+             <widget class="QLabel" name="labelPragmaSynchronous">
+              <property name="toolTip">
+               <string notr="true">PRAGMA synchronous</string>
+              </property>
+              <property name="text">
+               <string>Synchronous</string>
+              </property>
+              <property name="buddy">
+               <cstring>comboboxPragmaSynchronous</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="34" column="2">
+             <widget class="QSpinBox" name="spinPragmaMaxPageCount">
+              <property name="maximum">
+               <number>2000000000</number>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="0">
+             <widget class="QLabel" name="labelPragmaCheckpointFullFsync">
+              <property name="toolTip">
+               <string notr="true">PRAGMA checkpoint_fullfsync</string>
+              </property>
+              <property name="text">
+               <string>Checkpoint Full FSYNC</string>
+              </property>
+              <property name="buddy">
+               <cstring>checkboxPragmaCheckpointFullFsync</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="2">
+             <widget class="QCheckBox" name="checkboxPragmaAutomaticIndex">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="10" column="1">
+             <widget class="QLabel" name="labelPragmaFullFsync_2">
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_fullfsync</string>
+              </property>
+              <property name="text">
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_fullfsync&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="openExternalLinks">
+               <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>checkboxPragmaFullFsync</cstring>
               </property>
              </widget>
             </item>
@@ -431,479 +537,27 @@ You can drag SQL statements from an object row and drop them into other applicat
               </item>
              </widget>
             </item>
-            <item row="10" column="1">
-             <widget class="QLabel" name="labelPragmaFullFsync_2">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_fullfsync&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-              </property>
-              <property name="statusTip">
-               <string notr="true">https://www.sqlite.org/pragma.html#pragma_fullfsync</string>
-              </property>
-
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
-              </property>
-              <property name="buddy">
-               <cstring>checkboxPragmaFullFsync</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="16" column="1">
-             <widget class="QLabel" name="labelJournalSizeLimit_2">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_journal_size_limit&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-              </property>
-              <property name="statusTip">
-               <string notr="true">https://www.sqlite.org/pragma.html#pragma_journal_size_limit</string>
-              </property>
-
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
-              </property>
-              <property name="buddy">
-               <cstring>spinPragmaJournalSizeLimit</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="22" column="0">
-             <widget class="QLabel" name="labelPragmaPageSize">
-              <property name="toolTip">
-               <string notr="true">PRAGMA page_size</string>
-              </property>
-              <property name="text">
-               <string>Page Size</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="buddy">
-               <cstring>comboPragmaPageSize</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="1">
-             <widget class="QLabel" name="labelPragmaCaseSensitiveLike_2">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_case_sensitive_like&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-              </property>
-              <property name="statusTip">
-               <string notr="true">https://www.sqlite.org/pragma.html#pragma_case_sensitive_like</string>
-              </property>
-
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
-              </property>
-              <property name="buddy">
-               <cstring>checkboxPragmaCaseSensitiveLike</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="26" column="2">
-             <widget class="QCheckBox" name="checkboxPragmaSecureDelete">
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item row="8" column="0">
-             <widget class="QLabel" name="labelPragmaForeignKeys">
-              <property name="toolTip">
-               <string notr="true">PRAGMA foreign_keys</string>
-              </property>
-              <property name="text">
-               <string>Foreign Keys</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="buddy">
-               <cstring>checkboxPragmaForeignKeys</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="12" column="2">
-             <widget class="QCheckBox" name="checkboxPragmaIgnoreCheckConstraints">
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item row="6" column="2">
-             <widget class="QCheckBox" name="checkboxPragmaCheckpointFullFsync">
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item row="10" column="2">
-             <widget class="QCheckBox" name="checkboxPragmaFullFsync">
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item row="24" column="2">
+            <item row="36" column="2">
              <widget class="QCheckBox" name="checkboxPragmaRecursiveTriggers">
               <property name="text">
                <string/>
               </property>
              </widget>
             </item>
-            <item row="32" column="2">
-             <widget class="QSpinBox" name="spinPragmaUserVersion">
-              <property name="maximum">
-               <number>2147483647</number>
-              </property>
-             </widget>
-            </item>
-            <item row="8" column="2">
-             <widget class="QCheckBox" name="checkboxPragmaForeignKeys">
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item row="12" column="1">
-             <widget class="QLabel" name="labelPragmaIgnoreCheckConstraints_2">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_ignore_check_constraints&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-              </property>
-              <property name="statusTip">
-               <string notr="true">https://www.sqlite.org/pragma.html#pragma_ignore_check_constraints</string>
-              </property>
-
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
-              </property>
-              <property name="buddy">
-               <cstring>checkboxPragmaIgnoreCheckConstraints</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QLabel" name="labelPragmaAutomaticIndex_2">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_automatic_index&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-              </property>
-              <property name="statusTip">
-               <string notr="true">https://www.sqlite.org/pragma.html#pragma_automatic_index</string>
-              </property>
-
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
-              </property>
-              <property name="buddy">
-               <cstring>checkboxPragmaAutomaticIndex</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="2">
-             <widget class="QCheckBox" name="checkboxPragmaAutomaticIndex">
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item row="22" column="1">
-             <widget class="QLabel" name="labelPragmaPageSize_2">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_page_size&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-              </property>
-              <property name="statusTip">
-               <string notr="true">https://www.sqlite.org/pragma.html#pragma_page_size</string>
-              </property>
-
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
-              </property>
-              <property name="buddy">
-               <cstring>comboPragmaPageSize</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QLabel" name="labelPragmaAutoVacuum_2">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_auto_vacuum&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-              </property>
-              <property name="statusTip">
-               <string notr="true">https://www.sqlite.org/pragma.html#pragma_auto_vacuum</string>
-              </property>
-
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
-              </property>
-              <property name="textInteractionFlags">
-               <set>Qt::LinksAccessibleByMouse</set>
-              </property>
-              <property name="buddy">
-               <cstring>comboboxPragmaAutoVacuum</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="24" column="1">
-             <widget class="QLabel" name="labelPragmaRecursiveTriggers_2">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_recursive_triggers&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-              </property>
-              <property name="statusTip">
-               <string notr="true">https://www.sqlite.org/pragma.html#pragma_recursive_triggers</string>
-              </property>
-
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
-              </property>
-              <property name="buddy">
-               <cstring>checkboxPragmaRecursiveTriggers</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="30" column="1">
-             <widget class="QLabel" name="labelPragmaTempStore_2">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_temp_store&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-              </property>
-              <property name="statusTip">
-               <string notr="true">https://www.sqlite.org/pragma.html#pragma_temp_store</string>
-              </property>
-
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
-              </property>
-              <property name="buddy">
-               <cstring>comboboxPragmaTempStore</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="6" column="1">
-             <widget class="QLabel" name="labelPragmaCheckpointFullFsync_2">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_checkpoint_fullfsync&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-              </property>
-              <property name="statusTip">
-               <string notr="true">https://www.sqlite.org/pragma.html#pragma_checkpoint_fullfsync</string>
-              </property>
-
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
-              </property>
-              <property name="buddy">
-               <cstring>checkboxPragmaCheckpointFullFsync</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0">
-             <widget class="QLabel" name="labelPragmaAutoVacuum">
+            <item row="4" column="0" rowspan="2">
+             <widget class="QLabel" name="labelPragmaCaseSensitiveLike">
               <property name="toolTip">
-               <string notr="true">PRAGMA auto_vacuum</string>
+               <string notr="true">PRAGMA case_sensitive_like</string>
               </property>
               <property name="text">
-               <string>Auto Vacuum</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               <string>Case Sensitive Like</string>
               </property>
               <property name="buddy">
-               <cstring>comboboxPragmaAutoVacuum</cstring>
+               <cstring>checkboxPragmaCaseSensitiveLike</cstring>
               </property>
              </widget>
             </item>
-            <item row="34" column="2">
-             <widget class="QSpinBox" name="spinPragmaWalAutoCheckpoint">
-              <property name="maximum">
-               <number>10000</number>
-              </property>
-             </widget>
-            </item>
-            <item row="20" column="0">
-             <widget class="QLabel" name="labelPragmaMaxPageCount">
-              <property name="toolTip">
-               <string notr="true">PRAGMA max_page_count</string>
-              </property>
-              <property name="text">
-               <string>Max Page Count</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="buddy">
-               <cstring>spinPragmaMaxPageCount</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="18" column="1">
-             <widget class="QLabel" name="labelPragmaLockingMode_2">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_locking_mode&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-              </property>
-              <property name="statusTip">
-               <string notr="true">https://www.sqlite.org/pragma.html#pragma_locking_mode</string>
-              </property>
-
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
-              </property>
-              <property name="buddy">
-               <cstring>comboboxPragmaLockingMode</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="18" column="2">
-             <widget class="QComboBox" name="comboboxPragmaLockingMode">
-              <item>
-               <property name="text">
-                <string>Normal</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Exclusive</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item row="6" column="0">
-             <widget class="QLabel" name="labelPragmaCheckpointFullFsync">
-              <property name="toolTip">
-               <string notr="true">PRAGMA checkpoint_fullfsync</string>
-              </property>
-              <property name="text">
-               <string>Checkpoint Full FSYNC</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="buddy">
-               <cstring>checkboxPragmaCheckpointFullFsync</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="8" column="1">
-             <widget class="QLabel" name="labelPragmaForeignKeys_2">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_foreign_keys&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-              </property>
-              <property name="statusTip">
-               <string notr="true">https://www.sqlite.org/pragma.html#pragma_foreign_keys</string>
-              </property>
-
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
-              </property>
-              <property name="buddy">
-               <cstring>checkboxPragmaForeignKeys</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="28" column="2">
+            <item row="38" column="2">
              <widget class="QComboBox" name="comboboxPragmaSynchronous">
               <item>
                <property name="text">
@@ -922,175 +576,14 @@ You can drag SQL statements from an object row and drop them into other applicat
               </item>
              </widget>
             </item>
-            <item row="30" column="2">
-             <widget class="QComboBox" name="comboboxPragmaTempStore">
-              <item>
-               <property name="text">
-                <string>Default</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>File</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Memory</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="labelPragmaAutomaticIndex">
-              <property name="toolTip">
-               <string notr="true">PRAGMA automatic_index</string>
-              </property>
+            <item row="8" column="2">
+             <widget class="QCheckBox" name="checkboxPragmaForeignKeys">
               <property name="text">
-               <string>Automatic Index</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="buddy">
-               <cstring>checkboxPragmaAutomaticIndex</cstring>
+               <string/>
               </property>
              </widget>
             </item>
-            <item row="20" column="2">
-             <widget class="QSpinBox" name="spinPragmaMaxPageCount">
-              <property name="maximum">
-               <number>2000000000</number>
-              </property>
-             </widget>
-            </item>
-            <item row="32" column="1">
-             <widget class="QLabel" name="labelPragmaUserVersion_2">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_user_version&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-              </property>
-              <property name="statusTip">
-               <string notr="true">https://www.sqlite.org/pragma.html#pragma_user_version</string>
-              </property>
-
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
-              </property>
-              <property name="buddy">
-               <cstring>spinPragmaUserVersion</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="20" column="1">
-             <widget class="QLabel" name="labelPragmaMaxPageCount_2">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_max_page_count&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-              </property>
-              <property name="statusTip">
-               <string notr="true">https://www.sqlite.org/pragma.html#pragma_max_page_count</string>
-              </property>
-
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
-              </property>
-              <property name="buddy">
-               <cstring>spinPragmaMaxPageCount</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="12" column="0">
-             <widget class="QLabel" name="labelPragmaIgnoreCheckConstraints">
-              <property name="toolTip">
-               <string notr="true">PRAGMA ignore_check_constraints</string>
-              </property>
-              <property name="text">
-               <string>Ignore Check Constraints</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="buddy">
-               <cstring>checkboxPragmaIgnoreCheckConstraints</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="10" column="0">
-             <widget class="QLabel" name="labelPragmaFullFsync">
-              <property name="toolTip">
-               <string notr="true">PRAGMA fullfsync</string>
-              </property>
-              <property name="text">
-               <string>Full FSYNC</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="buddy">
-               <cstring>checkboxPragmaFullFsync</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="34" column="0">
-             <widget class="QLabel" name="labelPragmaWalAutoCheckpoint">
-              <property name="toolTip">
-               <string notr="true">PRAGMA wal_autocheckpoint</string>
-              </property>
-              <property name="text">
-               <string>WAL Auto Checkpoint</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="buddy">
-               <cstring>spinPragmaWalAutoCheckpoint</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="16" column="2">
-             <widget class="QSpinBox" name="spinPragmaJournalSizeLimit">
-              <property name="minimum">
-               <number>-1</number>
-              </property>
-              <property name="maximum">
-               <number>100000</number>
-              </property>
-             </widget>
-            </item>
-            <item row="32" column="0">
-             <widget class="QLabel" name="labelPragmaUserVersion">
-              <property name="toolTip">
-               <string notr="true">PRAGMA user_version</string>
-              </property>
-              <property name="text">
-               <string>User Version</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="buddy">
-               <cstring>spinPragmaUserVersion</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="22" column="2">
+            <item row="35" column="2">
              <widget class="QComboBox" name="comboPragmaPageSize">
               <item>
                <property name="text">
@@ -1134,70 +627,412 @@ You can drag SQL statements from an object row and drop them into other applicat
               </item>
              </widget>
             </item>
-            <item row="28" column="0">
-             <widget class="QLabel" name="labelPragmaSynchronous">
+            <item row="39" column="0">
+             <widget class="QLabel" name="labelPragmaTempStore">
               <property name="toolTip">
-               <string notr="true">PRAGMA synchronous</string>
+               <string notr="true">PRAGMA temp_store</string>
               </property>
               <property name="text">
-               <string>Synchronous</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               <string>Temp Store</string>
               </property>
               <property name="buddy">
-               <cstring>comboboxPragmaSynchronous</cstring>
+               <cstring>comboboxPragmaTempStore</cstring>
               </property>
              </widget>
             </item>
-            <item row="4" column="2">
-             <widget class="QCheckBox" name="checkboxPragmaCaseSensitiveLike">
+            <item row="41" column="0">
+             <widget class="QLabel" name="labelPragmaUserVersion">
               <property name="toolTip">
-               <string>Warning: this pragma is not readable and this value has been inferred. Writing the pragma might overwrite a redefined LIKE provided by an SQLite extension.</string>
+               <string notr="true">PRAGMA user_version</string>
               </property>
+              <property name="text">
+               <string>User Version</string>
+              </property>
+              <property name="buddy">
+               <cstring>spinPragmaUserVersion</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="37" column="0">
+             <widget class="QLabel" name="labelPragmaSecureDelete">
+              <property name="toolTip">
+               <string notr="true">PRAGMA secure_delete</string>
+              </property>
+              <property name="text">
+               <string>Secure Delete</string>
+              </property>
+              <property name="buddy">
+               <cstring>checkboxPragmaSecureDelete</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="8" column="0">
+             <widget class="QLabel" name="labelPragmaForeignKeys">
+              <property name="toolTip">
+               <string notr="true">PRAGMA foreign_keys</string>
+              </property>
+              <property name="text">
+               <string>Foreign Keys</string>
+              </property>
+              <property name="buddy">
+               <cstring>checkboxPragmaForeignKeys</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="39" column="1">
+             <widget class="QLabel" name="labelPragmaTempStore_2">
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_temp_store</string>
+              </property>
+              <property name="text">
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_temp_store&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="openExternalLinks">
+               <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>comboboxPragmaTempStore</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="39" column="2">
+             <widget class="QComboBox" name="comboboxPragmaTempStore">
+              <item>
+               <property name="text">
+                <string>Default</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>File</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Memory</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="42" column="1">
+             <widget class="QLabel" name="labelPragmaWalAutoCheckpoint_2">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_wal_autocheckpoint</string>
+              </property>
+              <property name="text">
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_wal_autocheckpoint&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="openExternalLinks">
+               <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>spinPragmaWalAutoCheckpoint</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="35" column="0">
+             <widget class="QLabel" name="labelPragmaPageSize">
+              <property name="toolTip">
+               <string notr="true">PRAGMA page_size</string>
+              </property>
+              <property name="text">
+               <string>Page Size</string>
+              </property>
+              <property name="buddy">
+               <cstring>comboPragmaPageSize</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="2">
+             <widget class="QCheckBox" name="checkboxPragmaCheckpointFullFsync">
               <property name="text">
                <string/>
               </property>
              </widget>
             </item>
-            <item row="0" column="2">
-             <widget class="QComboBox" name="comboboxPragmaAutoVacuum">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+            <item row="2" column="1">
+             <widget class="QLabel" name="labelPragmaAutomaticIndex_2">
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_automatic_index</string>
               </property>
+              <property name="text">
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_automatic_index&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="openExternalLinks">
+               <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>checkboxPragmaAutomaticIndex</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="10" column="2">
+             <widget class="QCheckBox" name="checkboxPragmaFullFsync">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="34" column="1">
+             <widget class="QLabel" name="labelPragmaMaxPageCount_2">
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_max_page_count</string>
+              </property>
+              <property name="text">
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_max_page_count&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="openExternalLinks">
+               <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>spinPragmaMaxPageCount</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="33" column="2">
+             <widget class="QComboBox" name="comboboxPragmaLockingMode">
               <item>
                <property name="text">
-                <string>None</string>
+                <string>Normal</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Full</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Incremental</string>
+                <string>Exclusive</string>
                </property>
               </item>
              </widget>
             </item>
-            <item row="18" column="0">
-             <widget class="QLabel" name="labelPragmaLockingMode">
-              <property name="toolTip">
-               <string notr="true">PRAGMA locking_mode</string>
+            <item row="8" column="1">
+             <widget class="QLabel" name="labelPragmaForeignKeys_2">
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_foreign_keys</string>
               </property>
               <property name="text">
-               <string>Locking Mode</string>
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_foreign_keys&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="openExternalLinks">
+               <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>checkboxPragmaForeignKeys</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="10" column="0">
+             <widget class="QLabel" name="labelPragmaFullFsync">
+              <property name="toolTip">
+               <string notr="true">PRAGMA fullfsync</string>
+              </property>
+              <property name="text">
+               <string>Full FSYNC</string>
+              </property>
+              <property name="buddy">
+               <cstring>checkboxPragmaFullFsync</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="35" column="1">
+             <widget class="QLabel" name="labelPragmaPageSize_2">
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_page_size</string>
+              </property>
+              <property name="text">
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_page_size&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="openExternalLinks">
+               <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>comboPragmaPageSize</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="43" column="3">
+             <spacer name="verticalSpacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="37" column="1">
+             <widget class="QLabel" name="labelPragmaSecureDelete_2">
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_secure_delete</string>
+              </property>
+              <property name="text">
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_secure_delete&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="openExternalLinks">
+               <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>checkboxPragmaSecureDelete</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="12" column="0">
+             <widget class="QLabel" name="labelPragmaIgnoreCheckConstraints">
+              <property name="toolTip">
+               <string notr="true">PRAGMA ignore_check_constraints</string>
+              </property>
+              <property name="text">
+               <string>Ignore Check Constraints</string>
+              </property>
+              <property name="buddy">
+               <cstring>checkboxPragmaIgnoreCheckConstraints</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="14" column="0">
+             <widget class="QLabel" name="labelPragmaJournalMode">
+              <property name="toolTip">
+               <string notr="true">PRAGMA journal_mode</string>
+              </property>
+              <property name="text">
+               <string>Journal Mode</string>
+              </property>
+              <property name="buddy">
+               <cstring>comboboxPragmaJournalMode</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="33" column="1">
+             <widget class="QLabel" name="labelPragmaLockingMode_2">
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_locking_mode</string>
+              </property>
+              <property name="text">
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_locking_mode&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="openExternalLinks">
+               <bool>true</bool>
               </property>
               <property name="buddy">
                <cstring>comboboxPragmaLockingMode</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="3">
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="36" column="1">
+             <widget class="QLabel" name="labelPragmaRecursiveTriggers_2">
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_recursive_triggers</string>
+              </property>
+              <property name="text">
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_recursive_triggers&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="openExternalLinks">
+               <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>checkboxPragmaRecursiveTriggers</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="labelPragmaAutomaticIndex">
+              <property name="toolTip">
+               <string notr="true">PRAGMA automatic_index</string>
+              </property>
+              <property name="text">
+               <string>Automatic Index</string>
+              </property>
+              <property name="buddy">
+               <cstring>checkboxPragmaAutomaticIndex</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="15" column="0">
+             <widget class="QLabel" name="labelJournalSizeLimit">
+              <property name="toolTip">
+               <string notr="true">PRAGMA journal_size_limit</string>
+              </property>
+              <property name="text">
+               <string>Journal Size Limit</string>
+              </property>
+              <property name="buddy">
+               <cstring>spinPragmaJournalSizeLimit</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="15" column="1">
+             <widget class="QLabel" name="labelJournalSizeLimit_2">
+              <property name="statusTip">
+               <string notr="true">https://www.sqlite.org/pragma.html#pragma_journal_size_limit</string>
+              </property>
+              <property name="text">
+               <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.sqlite.org/pragma.html#pragma_journal_size_limit&quot;&gt;&lt;img src=&quot;:/icons/whatis&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="openExternalLinks">
+               <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>spinPragmaJournalSizeLimit</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="15" column="2">
+             <widget class="QSpinBox" name="spinPragmaJournalSizeLimit">
+              <property name="minimum">
+               <number>-1</number>
+              </property>
+              <property name="maximum">
+               <number>100000</number>
               </property>
              </widget>
             </item>
@@ -2885,7 +2720,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
   <tabstop>comboLogSubmittedBy</tabstop>
   <tabstop>buttonLogClear</tabstop>
   <tabstop>treeSchemaDock</tabstop>
-  <tabstop>scrollareaPragmas</tabstop>
   <tabstop>comboboxPragmaAutoVacuum</tabstop>
   <tabstop>checkboxPragmaAutomaticIndex</tabstop>
   <tabstop>checkboxPragmaCaseSensitiveLike</tabstop>
@@ -2894,16 +2728,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
   <tabstop>checkboxPragmaFullFsync</tabstop>
   <tabstop>checkboxPragmaIgnoreCheckConstraints</tabstop>
   <tabstop>comboboxPragmaJournalMode</tabstop>
-  <tabstop>spinPragmaJournalSizeLimit</tabstop>
-  <tabstop>comboboxPragmaLockingMode</tabstop>
-  <tabstop>spinPragmaMaxPageCount</tabstop>
-  <tabstop>comboPragmaPageSize</tabstop>
-  <tabstop>checkboxPragmaSecureDelete</tabstop>
-  <tabstop>checkboxPragmaRecursiveTriggers</tabstop>
-  <tabstop>comboboxPragmaSynchronous</tabstop>
-  <tabstop>comboboxPragmaTempStore</tabstop>
-  <tabstop>spinPragmaUserVersion</tabstop>
-  <tabstop>spinPragmaWalAutoCheckpoint</tabstop>
   <tabstop>tabSqlAreas</tabstop>
  </tabstops>
  <resources>
