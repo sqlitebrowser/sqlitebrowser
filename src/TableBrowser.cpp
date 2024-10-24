@@ -381,7 +381,7 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
         }
     });
 
-    QShortcut* shortcutActionGlobalFilter = new QShortcut(QKeySequence("Ctrl+Alt+F"), this, nullptr, nullptr, Qt::WidgetWithChildrenShortcut);
+    QShortcut* shortcutActionGlobalFilter = new QShortcut(QKeySequence("F3"), this, nullptr, nullptr, Qt::WidgetWithChildrenShortcut);
     connect(shortcutActionGlobalFilter, &QShortcut::activated, this, [this](){
         ui->editGlobalFilter->setFocus();
     });
