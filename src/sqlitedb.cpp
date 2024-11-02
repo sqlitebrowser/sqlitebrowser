@@ -196,8 +196,43 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
     if(tryEncryptionSettings(db, &isEncrypted, &cipherSettings) == false)
         return false;
 
+    // Open database file header to determine encoding
+    QFile file(db);
+    if(!file.open(QIODevice::ReadOnly))
+    {
+        lastErrorMessage = tr("Cannot open database file: %1").arg(file.errorString());
+        return false;
+    }
+
+    QByteArray header = file.read(100);
+    file.close();
+
+    const char* encodingBytes = header.constData() + 56;
+    // The variable 'encoding' will have one of the following values:
+    // 1: UTF-8, 2: UTF-16LE, 3: UTF-16BE
+    quint32 encoding = ((quint8)encodingBytes[0] << 24) |
+                   ((quint8)encodingBytes[1] << 16) |
+                   ((quint8)encodingBytes[2] << 8) |
+                   ((quint8)encodingBytes[3]);
+
     // Open database file
-    if(sqlite3_open_v2(db.toUtf8(), &_db, readOnly ? SQLITE_OPEN_READONLY : SQLITE_OPEN_READWRITE, nullptr) != SQLITE_OK)
+    int status=0;
+    if(encoding == 1)
+    {
+        status = sqlite3_open_v2(
+                db.toUtf8(),
+                &_db,
+                readOnly ? SQLITE_OPEN_READONLY : SQLITE_OPEN_READWRITE,
+                nullptr);
+    }
+    else
+    {
+        status = sqlite3_open16(db.constData(), &_db);
+        if (status == SQLITE_OK && readOnly)
+            sqlite3_exec(_db, "PRAGMA query_only = TRUE;", nullptr, nullptr, nullptr);
+    }
+
+    if (status != SQLITE_OK)
     {
         lastErrorMessage = QString::fromUtf8(sqlite3_errmsg(_db));
         return false;
