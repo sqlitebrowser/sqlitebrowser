@@ -209,7 +209,7 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
 
     const char* encodingBytes = header.constData() + 56;
     // The variable 'encoding' will have one of the following values:
-    // 1: UTF-8, 2: UTF-16LE, 3: UTF-16BE
+    // SQLITE_UTF8, SQLITE_UTF16LE, SQLITE_UTF16BE (https://www.sqlite.org/fileformat.html#text_encoding)
     quint32 encoding = ((quint8)encodingBytes[0] << 24) |
                    ((quint8)encodingBytes[1] << 16) |
                    ((quint8)encodingBytes[2] << 8) |
@@ -217,7 +217,7 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
 
     // Open database file
     int status=0;
-    if(encoding == 1)
+    if(encoding == SQLITE_UTF8)
     {
         status = sqlite3_open_v2(
                 db.toUtf8(),
