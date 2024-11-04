@@ -214,6 +214,7 @@ private slots:
     void saveSqlResultsAsView();
     void loadExtension();
     void checkNewVersion(const bool automatic);
+    void compareVersionAndShowDialog(const QString& versionstring, const QString& url, const bool automatic);
     void openLinkWiki() const;
     void openLinkBugReport() const;
     void openLinkFeatureRequest() const;
