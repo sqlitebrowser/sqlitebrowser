@@ -2428,14 +2428,6 @@ void MainWindow::reloadSettings()
 
 void MainWindow::checkNewVersion(const bool automatic)
 {
-    // If the user tried to manually check for updates, clear the version value for which the user chose to ignore the notification
-    if (!automatic)
-    {
-        Settings::clearValue("checkversion", "ignmajor");
-        Settings::clearValue("checkversion", "ignminor");
-        Settings::clearValue("checkversion", "ignpatch");
-    }
-
     RemoteNetwork::get().fetch(QUrl("https://download.sqlitebrowser.org/currentrelease"), RemoteNetwork::RequestTypeCustom,
                                    QString(), [this, automatic](const QByteArray& reply) {
         QList<QByteArray> info = reply.split('\n');
@@ -2469,15 +2461,16 @@ void MainWindow::checkNewVersion(const bool automatic)
 
             if(newversion)
             {
-                int ignmajor = Settings::getValue("checkversion", "ignmajor").toInt();
-                int ignminor = Settings::getValue("checkversion", "ignminor").toInt();
-                int ignpatch = Settings::getValue("checkversion", "ignpatch").toInt();
+                int ignmajor = (automatic) ? Settings::getValue("checkversion", "ignmajor").toInt() : 0;
+                int ignminor = (automatic) ? Settings::getValue("checkversion", "ignminor").toInt() : 0;
+                int ignpatch = (automatic) ? Settings::getValue("checkversion", "ignpatch").toInt() : 0;
 
                 // check if the user doesn't care about the current update
                 if(!(ignmajor == major && ignminor == minor && ignpatch == patch))
                 {
                     QMessageBox msgBox;
-                    QPushButton *idontcarebutton = msgBox.addButton(tr("Don't show again"), QMessageBox::ActionRole);
+                    // WARN: Please note that if the user attempts to manually check for updates, the value of this variable may be nullptr.
+                    QPushButton *idontcarebutton = (automatic) ? msgBox.addButton(tr("Don't show again"), QMessageBox::ActionRole) : nullptr;
                     msgBox.addButton(QMessageBox::Ok);
                     msgBox.setTextFormat(Qt::RichText);
                     msgBox.setWindowTitle(tr("New version available."));
