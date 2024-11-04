@@ -1211,6 +1211,7 @@ You can drag SQL statements from an object row and drop them into other applicat
     <addaction name="actionDonatePatreon"/>
     <addaction name="separator"/>
     <addaction name="helpAboutAction"/>
+    <addaction name="actionCheck_for_Updates"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
@@ -2697,6 +2698,11 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
    </property>
    <property name="toolTip">
     <string>Reload the database structure</string>
+   </property>
+  </action>
+  <action name="actionCheck_for_Updates">
+   <property name="text">
+    <string>Check for Updates...</string>
    </property>
   </action>
  </widget>
@@ -4302,6 +4308,22 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionCheck_for_Updates</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkNewVersion(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileOpen()</slot>
@@ -4371,5 +4393,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
   <slot>openLinkSqlCipherFaq()</slot>
   <slot>openLinkWebsite()</slot>
   <slot>openLinkDonatePatreon()</slot>
+  <slot>checkNewVersion(bool)</slot>
  </slots>
 </ui>

@@ -112,18 +112,7 @@ void MainWindow::init()
 #ifdef CHECKNEWVERSION
     // Check for a new version if automatic update check aren't disabled in the settings dialog
     if(Settings::getValue("checkversion", "enabled").toBool())
-    {
-        RemoteNetwork::get().fetch(QUrl("https://download.sqlitebrowser.org/currentrelease"), RemoteNetwork::RequestTypeCustom,
-                                   QString(), [this](const QByteArray& reply) {
-            QList<QByteArray> info = reply.split('\n');
-            if(info.size() >= 2)
-            {
-                QString version = info.at(0).trimmed();
-                QString url = info.at(1).trimmed();
-                checkNewVersion(version, url);
-            }
-        }, false, true);
-    }
+        checkNewVersion(true);
 #endif
 
     // create facade objects to dbTreeWidgets
@@ -2437,9 +2426,24 @@ void MainWindow::reloadSettings()
     ui->tabSqlAreas->setTabsClosable(Settings::getValue("editor", "close_button_on_tabs").toBool());
 }
 
-void MainWindow::checkNewVersion(const QString& versionstring, const QString& url)
+void MainWindow::checkNewVersion(const bool automatic)
 {
-    // versionstring contains a major.minor.patch version string
+        RemoteNetwork::get().fetch(QUrl("https://download.sqlitebrowser.org/currentrelease"), RemoteNetwork::RequestTypeCustom,
+                                   QString(), [this, automatic](const QByteArray& reply) {
+            QList<QByteArray> info = reply.split('\n');
+            if(info.size() >= 2)
+            {
+                QString version = info.at(0).trimmed();
+                QString url = info.at(1).trimmed();
+                compareVersionAndShowDialog(version, url, automatic);
+
+            }
+        }, false, true);
+}
+
+void MainWindow::compareVersionAndShowDialog(const QString& versionstring, const QString& url, const bool automatic)
+{
+    // versionString contains a major.minor.patch version string
     QStringList versiontokens = versionstring.split(".");
     if(versiontokens.size() < 3)
         return;
@@ -2464,20 +2468,21 @@ void MainWindow::checkNewVersion(const QString& versionstring, const QString& ur
 
     if(newversion)
     {
-        int ignmajor = Settings::getValue("checkversion", "ignmajor").toInt();
-        int ignminor = Settings::getValue("checkversion", "ignminor").toInt();
-        int ignpatch = Settings::getValue("checkversion", "ignpatch").toInt();
+        int ignmajor = (automatic) ? Settings::getValue("checkversion", "ignmajor").toInt() : 0;
+        int ignminor = (automatic) ? Settings::getValue("checkversion", "ignminor").toInt() : 0;
+        int ignpatch = (automatic) ? Settings::getValue("checkversion", "ignpatch").toInt() : 0;
 
         // check if the user doesn't care about the current update
         if(!(ignmajor == major && ignminor == minor && ignpatch == patch))
         {
             QMessageBox msgBox;
-            QPushButton *idontcarebutton = msgBox.addButton(tr("Don't show again"), QMessageBox::ActionRole);
+            // WARN: Please note that if the user attempts to manually check for updates, the value of this variable may be nullptr.
+            QPushButton *idontcarebutton = (automatic) ? msgBox.addButton(tr("Don't show again"), QMessageBox::ActionRole) : nullptr;
             msgBox.addButton(QMessageBox::Ok);
             msgBox.setTextFormat(Qt::RichText);
             msgBox.setWindowTitle(tr("New version available."));
             msgBox.setText(tr("A new DB Browser for SQLite version is available (%1.%2.%3).<br/><br/>"
-                              "Please download at <a href='%4'>%4</a>.").arg(major).arg(minor).arg(patch).
+                            "Please download at <a href='%4'>%4</a>.").arg(major).arg(minor).arg(patch).
                                 arg(url));
             msgBox.exec();
 
@@ -2489,6 +2494,11 @@ void MainWindow::checkNewVersion(const QString& versionstring, const QString& ur
                 Settings::setValue("checkversion", "ignpatch", patch);
             }
         }
+    }
+    else
+    {
+        if(!automatic)
+            QMessageBox::information(this, QApplication::applicationName(), tr("You are using the latest version."));
     }
 }
 
