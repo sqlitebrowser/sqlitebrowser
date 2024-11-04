@@ -213,7 +213,7 @@ private slots:
     void saveSqlResultsAsJson();
     void saveSqlResultsAsView();
     void loadExtension();
-    void checkNewVersion(const bool silent);
+    void checkNewVersion(const bool automatic);
     void openLinkWiki() const;
     void openLinkBugReport() const;
     void openLinkFeatureRequest() const;

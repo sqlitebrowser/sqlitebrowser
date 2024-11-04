@@ -2426,10 +2426,10 @@ void MainWindow::reloadSettings()
     ui->tabSqlAreas->setTabsClosable(Settings::getValue("editor", "close_button_on_tabs").toBool());
 }
 
-void MainWindow::checkNewVersion(const bool silent)
+void MainWindow::checkNewVersion(const bool automatic)
 {
     // If the user tried to manually check for updates, clear the version value for which the user chose to ignore the notification
-    if (!silent)
+    if (!automatic)
     {
         Settings::clearValue("checkversion", "ignmajor");
         Settings::clearValue("checkversion", "ignminor");
@@ -2437,7 +2437,7 @@ void MainWindow::checkNewVersion(const bool silent)
     }
 
     RemoteNetwork::get().fetch(QUrl("https://download.sqlitebrowser.org/currentrelease"), RemoteNetwork::RequestTypeCustom,
-                                   QString(), [this, silent](const QByteArray& reply) {
+                                   QString(), [this, automatic](const QByteArray& reply) {
         QList<QByteArray> info = reply.split('\n');
         if(info.size() >= 2)
         {
@@ -2497,7 +2497,7 @@ void MainWindow::checkNewVersion(const bool silent)
             }
             else
             {
-                if(!silent)
+                if(!automatic)
                     QMessageBox::information(this, QApplication::applicationName(), tr("You are using the latest version."));
             }
         }
