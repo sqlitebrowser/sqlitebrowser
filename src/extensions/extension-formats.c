@@ -814,33 +814,42 @@ void freeResult(void *ptr)
   return;
 }
 
-static void plistFunc(sqlite3_context *context, int argc, sqlite3_value **argv){
-  int resultLength;
-  int errorCode = 0;
-  char *result = NULL;
-  assert(argc==1);
-  switch(sqlite3_value_type(argv[0])){
-    case SQLITE_TEXT:
-    case SQLITE_BLOB: {
-      const unsigned char *data = sqlite3_value_text(argv[0]);
-      const int dataLength = sqlite3_value_bytes(argv[0]);
-      errorCode = parsePlist(&result, (const char *)data, dataLength);
-      if (errorCode == ERROR_NONE) {
-        resultLength = strlen(result);
+static void plistFunc(sqlite3_context *context, int argc, sqlite3_value **argv) {
+    int errorCode = 0;
+    char *result = NULL;
+    assert(argc==1);
+    
+    if (sqlite3_value_type(argv[0]) == SQLITE_NULL) {
+        sqlite3_result_null(context);
+        return;
+    }
+
+    const unsigned char *rawData = sqlite3_value_blob(argv[0]);
+    const int dataLength = sqlite3_value_bytes(argv[0]);
+    
+    // Check for valid plist header
+    if (!rawData || dataLength < 8 || memcmp(rawData, "bplist00", 8) != 0) {
+        // Not a plist, return original value
+        if (sqlite3_value_type(argv[0]) == SQLITE_TEXT) {
+            sqlite3_result_text(context, (const char *)rawData, dataLength, NULL);
+        } else {
+            sqlite3_result_blob(context, rawData, dataLength, NULL);
+        }
+        return;
+    }
+
+    errorCode = parsePlist(&result, (const char *)rawData, dataLength);
+    if (errorCode == ERROR_NONE) {
+        int resultLength = strlen(result);
         sqlite3_result_text(context, result, resultLength, &freeResult);
-      } else {
-        if (sqlite3_value_type(argv[0]) == SQLITE_TEXT)
-          sqlite3_result_text(context, (const char *)data, dataLength, NULL);
-        else
-          sqlite3_result_blob(context, data, dataLength, NULL);
-      }
-      break;
+    } else {
+        // On error, return original value
+        if (sqlite3_value_type(argv[0]) == SQLITE_TEXT) {
+            sqlite3_result_text(context, (const char *)rawData, dataLength, NULL);
+        } else {
+            sqlite3_result_blob(context, rawData, dataLength, NULL);
+        }
     }
-    default: {
-      sqlite3_result_null(context);
-      break;
-    }
-  }
 }
 
 static void encodeBase64Func(sqlite3_context *context, int argc, sqlite3_value **argv) {
@@ -1249,28 +1258,36 @@ static void plistToJsonFunc(sqlite3_context *context, int argc, sqlite3_value **
     int errorCode = 0;
     char *result = NULL;
     assert(argc==1);
-    switch(sqlite3_value_type(argv[0])) {
-        case SQLITE_TEXT:
-        case SQLITE_BLOB: {
-            // Use separate variables for raw and cast data
-            const unsigned char *rawData = sqlite3_value_text(argv[0]);
-            const int dataLength = sqlite3_value_bytes(argv[0]);
-            
-            errorCode = parsePlistToJson(&result, (const char *)rawData, dataLength);
-            if (errorCode == ERROR_NONE) {
-                int resultLength = strlen(result);
-                sqlite3_result_text(context, result, resultLength, &freeResult);
-            } else {
-                if (sqlite3_value_type(argv[0]) == SQLITE_TEXT)
-                    sqlite3_result_text(context, (const char *)rawData, dataLength, NULL);
-                else
-                    sqlite3_result_blob(context, rawData, dataLength, NULL);
-            }
-            break;
+    
+    if (sqlite3_value_type(argv[0]) == SQLITE_NULL) {
+        sqlite3_result_null(context);
+        return;
+    }
+
+    const unsigned char *rawData = sqlite3_value_blob(argv[0]);
+    const int dataLength = sqlite3_value_bytes(argv[0]);
+    
+    // Check for valid plist header
+    if (!rawData || dataLength < 8 || memcmp(rawData, "bplist00", 8) != 0) {
+        // Not a plist, return original value
+        if (sqlite3_value_type(argv[0]) == SQLITE_TEXT) {
+            sqlite3_result_text(context, (const char *)rawData, dataLength, NULL);
+        } else {
+            sqlite3_result_blob(context, rawData, dataLength, NULL);
         }
-        default: {
-            sqlite3_result_null(context);
-            break;
+        return;
+    }
+
+    errorCode = parsePlistToJson(&result, (const char *)rawData, dataLength);
+    if (errorCode == ERROR_NONE) {
+        int resultLength = strlen(result);
+        sqlite3_result_text(context, result, resultLength, &freeResult);
+    } else {
+        // On error, return original value
+        if (sqlite3_value_type(argv[0]) == SQLITE_TEXT) {
+            sqlite3_result_text(context, (const char *)rawData, dataLength, NULL);
+        } else {
+            sqlite3_result_blob(context, rawData, dataLength, NULL);
         }
     }
 }
@@ -1625,100 +1642,48 @@ int parsePlistDeserializedToJson(char **result, const char *data, int dataLength
 static void plistDeserializedToJsonFunc(sqlite3_context *context, int argc, sqlite3_value **argv) {
     int errorCode = 0;
     char *result = NULL;
-    OBJECT *obj = NULL;
-    OBJECT *converted = NULL;
-    CONFIG cfg = {0};
-    
     assert(argc==1);
     
     if (sqlite3_value_type(argv[0]) == SQLITE_NULL) {
         sqlite3_result_null(context);
         return;
     }
+
+    const unsigned char *rawData = sqlite3_value_blob(argv[0]);
+    const int dataLength = sqlite3_value_bytes(argv[0]);
     
-    switch(sqlite3_value_type(argv[0])) {
-        case SQLITE_TEXT:
-        case SQLITE_BLOB: {
-            // Explicitly cast to avoid pointer sign warnings
-            const unsigned char *rawData = sqlite3_value_text(argv[0]);
-            const char *data = (const char *)rawData;
-            const int dataLength = sqlite3_value_bytes(argv[0]);
-            
-            if (!data || dataLength < 8 || memcmp(data, "bplist00", 8) != 0) {
-                sqlite3_result_null(context);
-                return;
-            }
-            
-            cfg.buffer = (unsigned char *)data;
-            cfg.bufferLength = dataLength;
-            
-            errorCode = readHeader(&cfg);
-            if (errorCode == ERROR_NONE) {
-                errorCode = readTrailer(&cfg);
-            }
-            
-            if (errorCode == ERROR_NONE) {
-                long offset = cfg.offsetTable[cfg.rootObjectReference];
-                errorCode = readObject(&cfg, offset, &obj);
-                
-                if (errorCode == ERROR_NONE && obj) {
-                    if (isNSKeyedArchiver(obj)) {
-                        converted = convertNSKeyedArchiver(obj);
-                        if (converted) {
-                            releaseObject(obj);
-                            obj = converted;
-                            converted = NULL;
-                        }
-                    }
-                    
-                    if (obj) {
-                        result = malloc(1024);
-                        if (result) {
-                            cfg.outputBuffer = (unsigned char *)result;
-                            cfg.outputBufferLength = 1024;
-                            cfg.outputBufferIn = 0;
-                            
-                            displayObjectAsJson(&cfg, obj, 0);
-                            
-                            result = (char *)cfg.outputBuffer;
-                        } else {
-                            errorCode = ERROR_INSUFFICIENT_MEMORY;
-                        }
-                    }
-                }
-            }
-            
-            if (converted) releaseObject(converted);
-            if (obj) releaseObject(obj);
-            if (cfg.offsetTable) free(cfg.offsetTable);
-            
-            if (errorCode == ERROR_NONE && result) {
-                sqlite3_result_text(context, result, -1, free);
-            } else {
-                if (result) free(result);
-                if (errorCode == ERROR_NONE) {
-                    // Only pass through original data if no error occurred
-                    sqlite3_result_text(context, (const char *)rawData, dataLength, NULL);
-                } else {
-                    sqlite3_result_null(context);
-                }
-            }
-            break;
+    // Check for valid plist header
+    if (!rawData || dataLength < 8 || memcmp(rawData, "bplist00", 8) != 0) {
+        // Not a plist, return original value
+        if (sqlite3_value_type(argv[0]) == SQLITE_TEXT) {
+            sqlite3_result_text(context, (const char *)rawData, dataLength, NULL);
+        } else {
+            sqlite3_result_blob(context, rawData, dataLength, NULL);
         }
-        default: {
-            sqlite3_result_null(context);
-            break;
+        return;
+    }
+
+    errorCode = parsePlistDeserializedToJson(&result, (const char *)rawData, dataLength);
+    if (errorCode == ERROR_NONE) {
+        int resultLength = strlen(result);
+        sqlite3_result_text(context, result, resultLength, &freeResult);
+    } else {
+        // On error, return original value
+        if (sqlite3_value_type(argv[0]) == SQLITE_TEXT) {
+            sqlite3_result_text(context, (const char *)rawData, dataLength, NULL);
+        } else {
+            sqlite3_result_blob(context, rawData, dataLength, NULL);
         }
     }
 }
 
 static void load_formats_builtin(sqlite3_context *context, int argc, sqlite3_value **argv) {
-    // Return format: "Display Name|internal_name|format_sql"
-    const char *result = "Plist as JSON|plistjson|plistToJson(%1)\n"
-                        "Plist as JSON (Deserialized)|plistdesjson|plistDeserializedToJson(%1)\n"
-                        "Plist as XML|plistxml|plist(%1)\n"
-                        "Base64 Decode|base64|unBase64(%1)\n"
-                        "Base64 Encode|base64|toBase64(%1)";
+    // Return format: "Display Name|internal_name|function_name"
+    const char *result = "Plist as JSON|plistjson|plistToJson\n"
+                        "Plist as JSON (Deserialized)|plistdesjson|plistDeserializedToJson\n"
+                        "Plist as XML|plistxml|plist\n"
+                        "Base64 Decode|base64|unBase64\n"
+                        "Base64 Encode|base64|toBase64";
     sqlite3_result_text(context, result, -1, SQLITE_TRANSIENT);
 }
 
