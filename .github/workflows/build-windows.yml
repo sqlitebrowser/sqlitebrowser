@@ -72,15 +72,11 @@ jobs:
 
       - name: Install SQLite
         run: |
-          $htmlContent = Invoke-WebRequest -Uri "https://sqlite.org/download.html" | Select-Object -ExpandProperty Content
-          $regex = [regex]::new('PRODUCT,(\d+\.\d+\.\d+),(\d+/sqlite-amalgamation-\d+\.zip),\d+,(.+)')
-          $match = $regex.Match($htmlContent)
-          $relativeUrl = $match.Groups[2].Value
-          $downloadLink = "https://sqlite.org/$relativeUrl"
-          Invoke-WebRequest -Uri $downloadLink -OutFile 'sqlite.zip'
-          Expand-Archive -Path sqlite.zip -DestinationPath C:\dev\
-          Move-Item -Path C:\dev\sqlite-amalgamation-* C:\dev\SQLite-${{ matrix.arch }}
+          cd C:\dev
+          git clone https://github.com/sqlite/sqlite
+          Move-Item -Path C:\dev\sqlite C:\dev\SQLite-${{ matrix.arch }}
           cd C:\dev\SQLite-${{ matrix.arch }}
+          nmake /f Makefile.msc sqlite3.c
           cl sqlite3.c -DSQLITE_ENABLE_FTS5 -DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_PARENTHESIS -DSQLITE_ENABLE_STAT4 -DSQLITE_SOUNDEX -DSQLITE_ENABLE_JSON1 -DSQLITE_ENABLE_GEOPOLY -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_MATH_FUNCTIONS -DSQLITE_MAX_ATTACHED=125 -DSQLITE_API="__declspec(dllexport)" -link -dll -out:sqlite3.dll
 
       - name: Install SQLite Extensions

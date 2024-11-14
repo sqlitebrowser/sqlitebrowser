@@ -15,7 +15,7 @@ if(QT_MAJOR STREQUAL "Qt5")
     # For Apple Silicon Mac's and install dependencies via our Homebrew tap(sqlitebrowser/homebrew-tap)
     if(customTap AND EXISTS /opt/homebrew/opt/)
         list(PREPEND CMAKE_PREFIX_PATH "/opt/homebrew/opt/sqlb-qt@5")
-        list(PREPEND CMAKE_PREFIX_PATH "/opt/homebrew/opt/sqlb-sqlite")
+        list(PREPEND CMAKE_PREFIX_PATH "/Users/runner/sqlite-prefix")
 
         if(sqlcipher)
             list(APPEND SQLCIPHER_INCLUDE_DIR "/opt/homebrew/include")
