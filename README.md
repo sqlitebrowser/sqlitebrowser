@@ -267,7 +267,7 @@ or this command:
 
 #### Snap Nightlies
 
-     snap install sqlitebrowser --devmode
+     snap install sqlitebrowser --edge
 
 #### Snap Stable
 
