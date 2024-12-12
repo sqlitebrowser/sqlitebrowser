@@ -2415,6 +2415,34 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>When dragging fields from the same table or a single table, drop a SELECT query into the editor</string>
    </property>
   </action>
+  <action name="actionDropNamesCheck">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Drag &amp;&amp; Drop Names</string>
+   </property>
+   <property name="statusTip">
+    <string>When dragging fields or tables, drop just the names into the editor</string>
+   </property>
+   <property name="whatsThis">
+    <string>When dragging fields or tables, drop just the names into the editor</string>
+   </property>
+  </action>
+  <action name="actionDropInsertCheck">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Drag &amp;&amp; Drop INSERT Statement</string>
+   </property>
+   <property name="statusTip">
+    <string>When dragging fields from the same table or a single table, drop an INSERT statement into the editor</string>
+   </property>
+   <property name="whatsThis">
+    <string>When dragging fields from the same table or a single table, drop an INSERT statement into the editor</string>
+   </property>
+  </action>
   <action name="actionDropQualifiedCheck">
    <property name="checkable">
     <bool>true</bool>

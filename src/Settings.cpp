@@ -433,6 +433,9 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
         if(name == "dropSelectQuery")
             return true;
 
+        if(name == "dropInsert")
+            return false;
+
         if(name == "dropQualifiedNames")
             return false;
 

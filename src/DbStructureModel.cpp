@@ -8,6 +8,7 @@
 #include <QMimeData>
 #include <QMessageBox>
 #include <QApplication>
+#include <QClipboard>
 
 DbStructureModel::DbStructureModel(DBBrowserDB& db, QObject* parent)
     : QAbstractItemModel(parent),
@@ -15,7 +16,8 @@ DbStructureModel::DbStructureModel(DBBrowserDB& db, QObject* parent)
       browsablesRootItem(nullptr),
       m_dropQualifiedNames(false),
       m_dropEnquotedNames(false),
-      m_dropSelectQuery(true)
+      m_dropSelectQuery(true),
+      m_dropInsert(false)
 {
     // Create root item and use its columns to store the header strings
     QStringList header;
@@ -210,7 +212,7 @@ QStringList DbStructureModel::mimeTypes() const
 QMimeData* DbStructureModel::mimeData(const QModelIndexList& indices) const
 {
     // We store the SQL data and the names data separately
-    QByteArray sqlData, namesData;
+    QByteArray sqlData, namesData, parametersData;
 
     // For dropping SELECT queries, these variables take account of
     // whether all objects are of the same type and belong to the same table.
@@ -235,6 +237,8 @@ QMimeData* DbStructureModel::mimeData(const QModelIndexList& indices) const
             // For names, export a (qualified) (escaped) identifier of the item for statement composition in SQL editor.
             if(objectType == "field") {
                 namesData.append(getNameForDropping(item->text(ColumnSchema), item->parent()->text(ColumnName), item->text(ColumnName)).toUtf8());
+                parametersData.append(QString("?" + item->text(ColumnName) + ", ").toUtf8());
+
                 QString table = getNameForDropping(item->text(ColumnSchema), item->parent()->text(ColumnName), "");
                 if (tableSet.isEmpty() || tableSet == table) {
                     tableSet = table;
@@ -299,20 +303,39 @@ QMimeData* DbStructureModel::mimeData(const QModelIndexList& indices) const
         else if (namesData.endsWith("."))
             namesData.chop(1);
 
+        if (parametersData.endsWith(", "))
+            parametersData.chop(2);
+        else if (parametersData.endsWith("."))
+            parametersData.chop(1);
+
         if (tableSet.endsWith("."))
             tableSet.chop(1);
 
-        if (m_dropSelectQuery && !tableSet.isEmpty() && tableSet != "*" && !objectTypeSet.isEmpty()) {
-            if (objectTypeSet == "field") {
-                namesData = ("SELECT " + QString::fromUtf8(namesData) + " FROM " + tableSet + ";").toUtf8();
-            } else if (objectTypeSet == "table") {
-                namesData = ("SELECT * FROM " + tableSet + ";").toUtf8();
+        if (!tableSet.isEmpty() && tableSet != "*" && !objectTypeSet.isEmpty()) {
+            if (m_dropSelectQuery) {
+                if (objectTypeSet == "field") {
+                    namesData = ("SELECT " + QString::fromUtf8(namesData) + " FROM " + tableSet + ";\n").toUtf8();
+                } else if (objectTypeSet == "table") {
+                    namesData = ("SELECT * FROM " + tableSet + ";").toUtf8();
+                }
+            } else if (m_dropInsert) {
+                if (objectTypeSet == "field") {
+                    namesData = ("INSERT INTO " + tableSet + " (" + QString::fromUtf8(namesData) + ") VALUES (" + parametersData + ");\n").toUtf8();
+                } else if (objectTypeSet == "table") {
+                    namesData = ("INSERT INTO " + tableSet + " DEFAULT VALUES;\n").toUtf8();
+                }
             }
         }
         mime->setData("text/plain", namesData);
     } else
         mime->setData("text/plain", sqlData);
     return mime;
+}
+
+void DbStructureModel::copy(const QModelIndexList& indices) const
+{
+    QMimeData *mimeData = DbStructureModel::mimeData(indices);
+    qApp->clipboard()->setMimeData(mimeData);
 }
 
 bool DbStructureModel::dropMimeData(const QMimeData* data, Qt::DropAction action, int, int, const QModelIndex&)

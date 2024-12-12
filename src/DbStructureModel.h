@@ -27,6 +27,9 @@ public:
     QMimeData* mimeData(const QModelIndexList& indices) const override;
     bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) override;
 
+    // Copy selected items to clipboard
+    void copy(const QModelIndexList& indices) const;
+
     enum Columns
     {
         ColumnName,
@@ -41,6 +44,7 @@ public slots:
     void setDropQualifiedNames(bool value) { m_dropQualifiedNames = value; }
     void setDropEnquotedNames(bool value) { m_dropEnquotedNames = value; }
     void setDropSelectQuery(bool value) { m_dropSelectQuery = value; }
+    void setDropInsert(bool value) { m_dropInsert = value; }
 
 private:
     DBBrowserDB& m_db;
@@ -49,6 +53,7 @@ private:
     bool m_dropQualifiedNames;
     bool m_dropEnquotedNames;
     bool m_dropSelectQuery;
+    bool m_dropInsert;
 
     void buildTree(QTreeWidgetItem* parent, const std::string& schema);
     QTreeWidgetItem* addNode(const std::string& schema, const std::string& name, const std::string& object_type, const std::string& sql, QTreeWidgetItem* parent_item, const std::string& data_type = {}, const std::string& icon_suffix = {});

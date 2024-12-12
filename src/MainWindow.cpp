@@ -247,8 +247,29 @@ void MainWindow::init()
     popupSchemaDockMenu->addAction(ui->actionPopupSchemaDockDetachDatabase);
     popupSchemaDockMenu->addSeparator();
     popupSchemaDockMenu->addAction(ui->actionDropSelectQueryCheck);
+    popupSchemaDockMenu->addAction(ui->actionDropInsertCheck);
+    popupSchemaDockMenu->addAction(ui->actionDropNamesCheck);
+
+    QActionGroup* dropGroup = new QActionGroup(popupSchemaDockMenu);
+    dropGroup->addAction(ui->actionDropSelectQueryCheck);
+    dropGroup->addAction(ui->actionDropInsertCheck);
+    dropGroup->addAction(ui->actionDropNamesCheck);
+
+    popupSchemaDockMenu->addSeparator();
     popupSchemaDockMenu->addAction(ui->actionDropQualifiedCheck);
     popupSchemaDockMenu->addAction(ui->actionEnquoteNamesCheck);
+
+    popupSchemaDockMenu->addSeparator();
+    QAction* copyAction = new QAction(QIcon(":/icons/copy"), tr("Copy"), popupSchemaDockMenu);
+    copyAction->setShortcut(QKeySequence::Copy);
+    popupSchemaDockMenu->addAction(copyAction);
+    connect(copyAction, &QAction::triggered, this, [=]() {
+        dbStructureModel->copy(ui->treeSchemaDock->selectionModel()->selectedIndexes());
+    });
+    auto copyShortcut = new QShortcut(QKeySequence::Copy, ui->treeSchemaDock);
+    connect(copyShortcut, &QShortcut::activated, this, [=]() {
+        dbStructureModel->copy(ui->treeSchemaDock->selectionModel()->selectedIndexes());
+    });
 
     popupOpenDbMenu = new QMenu(this);
     popupOpenDbMenu->addAction(ui->fileOpenAction);
@@ -419,13 +440,15 @@ void MainWindow::init()
     connect(ui->dockEdit, &QDockWidget::visibilityChanged, this, &MainWindow::toggleEditDock);
     connect(remoteDock, SIGNAL(openFile(QString)), this, SLOT(fileOpen(QString)));
     connect(ui->actionDropSelectQueryCheck, &QAction::toggled, dbStructureModel, &DbStructureModel::setDropSelectQuery);
+    connect(ui->actionDropInsertCheck, &QAction::toggled, dbStructureModel, &DbStructureModel::setDropInsert);
+    connect(ui->actionDropNamesCheck, &QAction::toggled, dbStructureModel,
+            [this]() {
+              dbStructureModel->setDropSelectQuery(false);
+              dbStructureModel->setDropInsert(false);
+            });
     connect(ui->actionDropQualifiedCheck, &QAction::toggled, dbStructureModel, &DbStructureModel::setDropQualifiedNames);
     connect(ui->actionEnquoteNamesCheck, &QAction::toggled, dbStructureModel, &DbStructureModel::setDropEnquotedNames);
     connect(&db, &DBBrowserDB::databaseInUseChanged, this, &MainWindow::updateDatabaseBusyStatus);
-
-    ui->actionDropSelectQueryCheck->setChecked(Settings::getValue("SchemaDock", "dropSelectQuery").toBool());
-    ui->actionDropQualifiedCheck->setChecked(Settings::getValue("SchemaDock", "dropQualifiedNames").toBool());
-    ui->actionEnquoteNamesCheck->setChecked(Settings::getValue("SchemaDock", "dropEnquotedNames").toBool());
 
     connect(ui->actionSqlStop, &QAction::triggered, this, [this]() {
        if(execute_sql_worker && execute_sql_worker->isRunning())
@@ -770,6 +793,7 @@ void MainWindow::closeEvent( QCloseEvent* event )
 
         Settings::setValue("SQLLogDock", "Log", ui->comboLogSubmittedBy->currentText());
         Settings::setValue("SchemaDock", "dropSelectQuery", ui->actionDropSelectQueryCheck->isChecked());
+        Settings::setValue("SchemaDock", "dropInsert", ui->actionDropInsertCheck->isChecked());
         Settings::setValue("SchemaDock", "dropQualifiedNames", ui->actionDropQualifiedCheck->isChecked());
         Settings::setValue("SchemaDock", "dropEnquotedNames", ui->actionEnquoteNamesCheck->isChecked());
 
@@ -2423,7 +2447,16 @@ void MainWindow::reloadSettings()
 
     sqlb::setIdentifierQuoting(static_cast<sqlb::escapeQuoting>(Settings::getValue("editor", "identifier_quotes").toInt()));
 
-    ui->tabSqlAreas->setTabsClosable(Settings::getValue("editor", "close_button_on_tabs").toBool());
+    ui->tabSqlAreas->setTabsClosable(
+        Settings::getValue("editor", "close_button_on_tabs").toBool());
+
+    ui->actionDropSelectQueryCheck->setChecked(Settings::getValue("SchemaDock", "dropSelectQuery").toBool());
+    ui->actionDropInsertCheck->setChecked(Settings::getValue("SchemaDock", "dropInsert").toBool());
+    ui->actionDropNamesCheck->setChecked(!ui->actionDropSelectQueryCheck->isChecked() &&
+                                         !ui->actionDropInsertCheck->isChecked());
+
+    ui->actionDropQualifiedCheck->setChecked(Settings::getValue("SchemaDock", "dropQualifiedNames").toBool());
+    ui->actionEnquoteNamesCheck->setChecked(Settings::getValue("SchemaDock", "dropEnquotedNames").toBool());
 }
 
 void MainWindow::checkNewVersion(const bool automatic)
