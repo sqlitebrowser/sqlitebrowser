@@ -69,7 +69,7 @@ typedef struct CONFIG {
   unsigned char *outputBuffer;
 } CONFIG;
 
-int createObject(int type, int length, int extra, OBJECT **ptr2);
+int createObject(int type, int length, size_t extra, OBJECT **ptr2);
 int readObject(CONFIG *cfg, long offset, OBJECT **ptr2);
 
 static int indent = 2;
@@ -157,16 +157,40 @@ int readTrailer(CONFIG *cfg)
   return ERROR_NONE;
 }
   
-int createObject(int type, int length, int extra, OBJECT **ptr2)
-{
-  *ptr2 = NULL;
-  OBJECT *ptr = (OBJECT *)malloc(sizeof(OBJECT) + (size_t)extra);
-  if (ptr == NULL)
-    return ERROR_INSUFFICIENT_MEMORY;
-  ptr->type = type;
-  ptr->length = length;
-  *ptr2 = ptr;
-  return ERROR_NONE;
+int createObject(int type, int length, size_t extra, OBJECT **ptr2) {
+    OBJECT *ptr;
+    size_t totalSize;
+    
+    // Calculate proper extra size based on type
+    size_t actualExtra;
+    switch (type) {
+        case 0x06:  // UTF16 string
+            actualExtra = 2 * (length + 1);  // 2 bytes per char + null terminator
+            break;
+        case 0x05:  // Regular string
+            actualExtra = length + 1;  // bytes + null terminator
+            break;
+        case 0x0A:  // Array
+            actualExtra = length * sizeof(OBJECT*);
+            break;
+        case 0x0D:  // Dictionary
+            actualExtra = (length - 1) * sizeof(KEY);
+            break;
+        default:
+            actualExtra = extra;
+            break;
+    }
+    
+    totalSize = sizeof(OBJECT) + actualExtra;
+    
+    ptr = malloc(totalSize);
+    if (ptr == NULL)
+        return ERROR_INSUFFICIENT_MEMORY;
+    
+    ptr->type = type;
+    ptr->length = length;
+    *ptr2 = ptr;
+    return ERROR_NONE;
 }
 
 long readInteger(unsigned char *ptr, int desc)
@@ -336,14 +360,22 @@ int readObject(CONFIG *cfg, long offset, OBJECT **ptr2)
               obj->data.text[length] = '\0';
               break;
     case 0x06:               //  UTF16 string
-              err = createObject(type, length, 2 * length, &obj);
-              if (err != ERROR_NONE)
-                return err;
-              for (i=0; i < length; i++) {
-                short int d = *(ptr++);
-                obj->data.utf16[i] = (short int)((d << 8) | *(ptr++));
+              {
+                  size_t bytesNeeded = 2 * ((size_t)length + 1);
+                  err = createObject(type, length, bytesNeeded, &obj);
+                  if (err != ERROR_NONE)
+                        return err;
+                  
+                  memset(obj->data.utf16, 0, bytesNeeded);
+                  
+                  for (i = 0; i < length; i++) {
+                      unsigned char byte1 = *(ptr++);
+                      unsigned char byte2 = *(ptr++);
+                      obj->data.utf16[i] = (byte1 << 8) | byte2;
+                  }
+                  
+                  obj->data.utf16[length] = 0;
               }
-              obj->data.utf16[length] = '\0';
               break;
     case 0x08:               //  UID
               err = createObject(type, length, 0, &obj);
@@ -517,6 +549,8 @@ int displayObject(CONFIG *cfg, OBJECT *obj, int raw)
 
 int releaseObject(OBJECT *obj)
 {
+  if (!obj) return ERROR_NONE;  // Guard against NULL
+
   int i;
   switch (obj->type) {
     case 0x00:                        //  Singleton
@@ -529,16 +563,29 @@ int releaseObject(OBJECT *obj)
     case 0x08:                        //  UID
               break;
     case 0x0A:                        //  Array
-              for (i=0; i < obj->length; i++)
-                releaseObject(obj->data.objects[i]);
+              for (i=0; i < obj->length; i++) {
+                if (obj->data.objects[i]) {
+                  releaseObject(obj->data.objects[i]);
+                  obj->data.objects[i] = NULL;
+                }
+              }
               break;
     case 0x0D:                        //  Dictionary
               for (i=0; i < obj->length; i++) {
-                releaseObject(obj->data.keys[i].key);
-                releaseObject(obj->data.keys[i].value);
+                if (obj->data.keys[i].key) {
+                  releaseObject(obj->data.keys[i].key);
+                  obj->data.keys[i].key = NULL;
+                }
+                if (obj->data.keys[i].value) {
+                  releaseObject(obj->data.keys[i].value);
+                  obj->data.keys[i].value = NULL;
+                }
               }
               break;
+    default:
+              break;
   }
+  
   free(obj);
   return ERROR_NONE;
 }
@@ -767,72 +814,81 @@ void freeResult(void *ptr)
   return;
 }
 
-static void plistFunc(sqlite3_context *context, int argc, sqlite3_value **argv){
-  int resultLength;
-  int errorCode = 0;
-  char *result = NULL;
-  assert( argc==1 );
-  switch( sqlite3_value_type(argv[0]) ){
-    case SQLITE_TEXT:
-    case SQLITE_BLOB: {
-      const char *data = sqlite3_value_text(argv[0]);
-      const int dataLength = sqlite3_value_bytes(argv[0]);
-      errorCode = parsePlist(&result, data, dataLength);
-      if (errorCode == ERROR_NONE) {
-        resultLength = strlen(result);
+static void plistFunc(sqlite3_context *context, int argc, sqlite3_value **argv) {
+    int errorCode = 0;
+    char *result = NULL;
+    assert(argc==1);
+    
+    if (sqlite3_value_type(argv[0]) == SQLITE_NULL) {
+        sqlite3_result_null(context);
+        return;
+    }
+
+    const unsigned char *rawData = sqlite3_value_blob(argv[0]);
+    const int dataLength = sqlite3_value_bytes(argv[0]);
+    
+    // Check for valid plist header
+    if (!rawData || dataLength < 8 || memcmp(rawData, "bplist00", 8) != 0) {
+        // Not a plist, return original value
+        if (sqlite3_value_type(argv[0]) == SQLITE_TEXT) {
+            sqlite3_result_text(context, (const char *)rawData, dataLength, NULL);
+        } else {
+            sqlite3_result_blob(context, rawData, dataLength, NULL);
+        }
+        return;
+    }
+
+    errorCode = parsePlist(&result, (const char *)rawData, dataLength);
+    if (errorCode == ERROR_NONE) {
+        int resultLength = strlen(result);
         sqlite3_result_text(context, result, resultLength, &freeResult);
-      } else {
-        if (sqlite3_value_type(argv[0]) == SQLITE_TEXT)
-          sqlite3_result_text(context, data, dataLength, NULL);
-        else
-          sqlite3_result_blob(context, data, dataLength, NULL);
-      }
-      break;
+    } else {
+        // On error, return original value
+        if (sqlite3_value_type(argv[0]) == SQLITE_TEXT) {
+            sqlite3_result_text(context, (const char *)rawData, dataLength, NULL);
+        } else {
+            sqlite3_result_blob(context, rawData, dataLength, NULL);
+        }
     }
-    default: {
-      sqlite3_result_null(context);
-      break;
-    }
-  }
 }
 
-static void encodeBase64Func(sqlite3_context *context, int argc, sqlite3_value **argv){
-  int resultLength;
-  int errorCode = 0;
-  int dataLength;
-  const unsigned char *data;
-  char *result = NULL;
-  assert( argc==1 );
-  switch( sqlite3_value_type(argv[0]) ){
-    case SQLITE_BLOB:
-      data = sqlite3_value_blob(argv[0]);
-      dataLength = sqlite3_value_bytes(argv[0]);
-      errorCode = encodeBase64(&result, data, dataLength);
-      if (errorCode == ERROR_NONE) {
-        resultLength = strlen(result);
-        sqlite3_result_text(context, result, resultLength, &freeResult);
-      } else {
-        sqlite3_result_blob(context, data, dataLength, NULL);
-      }
-      break;
-    case SQLITE_TEXT: {
-      data = sqlite3_value_text(argv[0]);
-      dataLength = sqlite3_value_bytes(argv[0]);
-      sqlite3_result_text(context, data, dataLength, NULL);
-      errorCode = encodeBase64(&result, data, dataLength);
-      if (errorCode == ERROR_NONE) {
-        resultLength = strlen(result);
-        sqlite3_result_text(context, result, resultLength, &freeResult);
-      } else {
-        sqlite3_result_text(context, data, dataLength, NULL);
-      }
-      break;
+static void encodeBase64Func(sqlite3_context *context, int argc, sqlite3_value **argv) {
+    int resultLength;
+    int errorCode = 0;
+    int dataLength;
+    const unsigned char *rawData;
+    char *result = NULL;
+    assert(argc==1);
+    switch(sqlite3_value_type(argv[0])) {
+        case SQLITE_BLOB:
+            rawData = sqlite3_value_blob(argv[0]);
+            dataLength = sqlite3_value_bytes(argv[0]);
+            errorCode = encodeBase64(&result, rawData, dataLength);
+            if (errorCode == ERROR_NONE) {
+                resultLength = strlen(result);
+                sqlite3_result_text(context, result, resultLength, &freeResult);
+            } else {
+                sqlite3_result_blob(context, rawData, dataLength, NULL);
+            }
+            break;
+        case SQLITE_TEXT: {
+            rawData = sqlite3_value_text(argv[0]);
+            dataLength = sqlite3_value_bytes(argv[0]);
+            sqlite3_result_text(context, (const char *)rawData, dataLength, NULL);
+            errorCode = encodeBase64(&result, rawData, dataLength);
+            if (errorCode == ERROR_NONE) {
+                resultLength = strlen(result);
+                sqlite3_result_text(context, result, resultLength, &freeResult);
+            } else {
+                sqlite3_result_text(context, (const char *)rawData, dataLength, NULL);
+            }
+            break;
+        }
+        default: {
+            sqlite3_result_null(context);
+            break;
+        }
     }
-    default: {
-      sqlite3_result_null(context);
-      break;
-    }
-  }
 }
 
 
@@ -917,17 +973,17 @@ static void decodeBase64Func(sqlite3_context *context, int argc, sqlite3_value *
   switch( sqlite3_value_type(argv[0]) ){
     case SQLITE_BLOB:
     case SQLITE_TEXT: {
-      const char *data = sqlite3_value_text(argv[0]);
+      const char *data = (const char *)sqlite3_value_text(argv[0]);
       int dataLength = sqlite3_value_bytes(argv[0]);
       errorCode = decodeBase64(&result, &resultLength, data, dataLength);
       if (errorCode == ERROR_NONE) {
         if (isUTF8(result, resultLength))
-          sqlite3_result_text(context,  result, resultLength, &freeResult);
+          sqlite3_result_text(context, (const char *)result, resultLength, &freeResult);
         else
-          sqlite3_result_blob(context,  result, resultLength, &freeResult);
+          sqlite3_result_blob(context, result, resultLength, &freeResult);
       } else {
         if (sqlite3_value_type(argv[0]) == SQLITE_TEXT)
-          sqlite3_result_text(context, data, dataLength, NULL);
+          sqlite3_result_text(context, (const char *)data, dataLength, NULL);
         else
           sqlite3_result_blob(context, data, dataLength, NULL);
       }
@@ -940,16 +996,713 @@ static void decodeBase64Func(sqlite3_context *context, int argc, sqlite3_value *
   }
 }
 
+int isJsonString(const char *text) {
+    if (!text) return 0;
+    int len = strlen(text);
+    if (len < 2) return 0;
+    
+    // Check if it starts with [ or { or "
+    return (text[0] == '[' || text[0] == '{' || (text[0] == '"' && text[1] != '{'));
+}
+
+int outputJsonEscapedText(CONFIG *cfg, const char *text) {
+    int err = ERROR_NONE;
+    
+    // Check if text is a JSON string that starts with {
+    if (text && (text[0] == '{' || (text[0] == '"' && text[1] != '{'))) {
+        // Try to unescape the JSON string
+        char *unescaped = malloc(strlen(text) + 1);
+        if (!unescaped) return ERROR_INSUFFICIENT_MEMORY;
+        
+        const char *src = text;
+        char *dst = unescaped;
+        
+        while (*src) {
+            if (*src == '\\' && *(src + 1) == '"') {
+                *dst++ = '"';
+                src += 2;
+            } else {
+                *dst++ = *src++;
+            }
+        }
+        *dst = '\0';
+        
+        // Output the unescaped JSON directly
+        err = outputText(cfg, unescaped);
+        free(unescaped);
+        return err;
+    }
+    
+    // Original escaping logic for regular strings
+    while (*text && err == ERROR_NONE) {
+        switch (*text) {
+            case '"':
+                err = outputText(cfg, "\\\"");
+                break;
+            case '\\':
+                err = outputText(cfg, "\\\\");
+                break;
+            case '\b':
+                err = outputText(cfg, "\\b");
+                break;
+            case '\f':
+                err = outputText(cfg, "\\f");
+                break;
+            case '\n':
+                err = outputText(cfg, "\\n");
+                break;
+            case '\r':
+                err = outputText(cfg, "\\r");
+                break;
+            case '\t':
+                err = outputText(cfg, "\\t");
+                break;
+            default:
+                if ((unsigned char)*text < 32) {
+                    char escaped[8];
+                    sprintf(escaped, "\\u%04x", (unsigned char)*text);
+                    err = outputText(cfg, escaped);
+                } else {
+                    char c[2] = {*text, 0};
+                    err = outputText(cfg, c);
+                }
+        }
+        text++;
+    }
+    return err;
+}
+
+char* utf16_to_utf8(const short int* utf16, int length) {
+    char* utf8 = malloc(length * 3 + 1);  // Max 3 bytes per char + null terminator
+    if (!utf8) return NULL;
+    
+    int j = 0;
+    for (int i = 0; i < length; i++) {
+        unsigned short uc = utf16[i];
+        
+        if (uc < 0x80) {
+            utf8[j++] = (char)uc;
+        } else if (uc < 0x800) {
+            utf8[j++] = (char)(0xC0 | (uc >> 6));
+            utf8[j++] = (char)(0x80 | (uc & 0x3F));
+        } else {
+            utf8[j++] = (char)(0xE0 | (uc >> 12));
+            utf8[j++] = (char)(0x80 | ((uc >> 6) & 0x3F));
+            utf8[j++] = (char)(0x80 | (uc & 0x3F));
+        }
+    }
+    
+    utf8[j] = '\0';
+    return utf8;
+}
+
+// Add new display function for JSON format
+int displayObjectAsJson(CONFIG *cfg, OBJECT *obj, int raw) {
+  char text[32];
+  switch (obj->type) {
+    case 0x00:                 //  Singleton
+              if (strcmp(obj->data.text, "<True/>") == 0)
+                outputText(cfg, "true");
+              else if (strcmp(obj->data.text, "<False/>") == 0)
+                outputText(cfg, "false");
+              else if (strcmp(obj->data.text, "<Null/>") == 0)
+                outputText(cfg, "null");
+              else
+                outputText(cfg, "null");
+              break;
+    case 0x01:                 //  Integer
+              sprintf(text, "%ld", obj->data.integer);
+              outputText(cfg, text);
+              break;
+    case 0x02:                 //  Float
+              sprintf(text, "%f", obj->data.real);
+              outputText(cfg, text);
+              break;
+    case 0x03:                 //  Date
+              outputText(cfg, "\"");
+              outputText(cfg, ctime(&(obj->data.date)));
+              if (cfg->outputBuffer[cfg->outputBufferIn-1] == '\n')
+                cfg->outputBufferIn--; // Remove trailing newline
+              outputText(cfg, "\"");
+              break;
+    case 0x04:                 //  Binary data
+              outputText(cfg, "\"<binary>\"");
+              break;
+    case 0x05:                 //  String
+              if (isJsonString(obj->data.text)) {
+                  // If it's already JSON, output it directly
+                  outputText(cfg, obj->data.text);
+              } else {
+                  // Otherwise treat as regular string
+                  outputText(cfg, "\"");
+                  outputJsonEscapedText(cfg, obj->data.text);
+                  outputText(cfg, "\"");
+              }
+              break;
+    case 0x06:                 //  UTF16 string
+              {
+                  char* utf8 = utf16_to_utf8(obj->data.utf16, obj->length);
+                  if (utf8) {
+                      if (isJsonString(utf8)) {
+                          // If it's already JSON, output directly
+                          outputText(cfg, utf8);
+                      } else {
+                          // Otherwise wrap in quotes and escape
+                          outputText(cfg, "\"");
+                          outputJsonEscapedText(cfg, utf8);
+                          outputText(cfg, "\"");
+                      }
+                      free(utf8);
+                  } else {
+                      outputText(cfg, "\"<utf16 conversion failed>\"");
+                  }
+              }
+              break;
+    case 0x08:                 //  UID
+              sprintf(text, "%lu", obj->data.uid);
+              outputText(cfg, text);
+              break;
+    case 0x0A:                 //  Array
+              outputText(cfg, "[");
+              for (int i=0; i < obj->length; i++) {
+                displayObjectAsJson(cfg, obj->data.objects[i], 0);
+                if (i < obj->length - 1)
+                  outputText(cfg, ",");
+              }
+              outputText(cfg, "]");
+              break;
+    case 0x0D:                 //  Dictionary
+              outputText(cfg, "{");
+              for (int i=0; i < obj->length; i++) {
+                // Check if key is already JSON
+                if (!isJsonString(obj->data.keys[i].key->data.text)) {
+                    outputText(cfg, "\"");
+                    displayObject(cfg, obj->data.keys[i].key, 1);
+                    outputText(cfg, "\"");
+                } else {
+                    displayObject(cfg, obj->data.keys[i].key, 1);
+                }
+                outputText(cfg, ":");
+                displayObjectAsJson(cfg, obj->data.keys[i].value, 0);
+                if (i < obj->length - 1)
+                  outputText(cfg, ",");
+              }
+              outputText(cfg, "}");
+              break;
+    default:
+              sprintf(text, "\"<unknown type: %d>\"", obj->type);
+              outputText(cfg, text);
+              break;
+  }
+  return ERROR_NONE;
+}
+
+// Add new function to parse plist to JSON
+int parsePlistToJson(char **result, const char *data, int dataLength) {
+  CONFIG cfg;
+  char   *ptr;
+  OBJECT *obj;
+  int err = ERROR_NONE;
+  long length;
+
+  //  Determine the file size and save
+  cfg.buffer = (unsigned char *)data;
+  cfg.bufferLength = dataLength;
+
+  //  Preset the output buffer
+  cfg.outputBufferLength = 0;
+  cfg.outputBufferIn  = 0;
+  cfg.outputBuffer = NULL;
+
+  //  Read the header
+  err = readHeader(&cfg);
+  if (err != ERROR_NONE)
+    return err;
+
+  //  Read the trailer
+  err = readTrailer(&cfg);
+  if (err != ERROR_NONE)
+    return err;
+
+  //  Locate and read the root object
+  long offset = cfg.offsetTable[cfg.rootObjectReference];
+  err = readObject(&cfg, offset, &obj);
+
+  //  If no error display the root object and hence the whole object tree
+  if (err != ERROR_NONE)
+    return err;
+
+  displayObjectAsJson(&cfg, obj, 0);
+
+  //  Create return data
+  length = strlen((const char *)(cfg.outputBuffer));
+  ptr = malloc(length + 1);
+  *result = ptr;
+  if (ptr != NULL) {
+    for (int i=0; i < length; i++)
+      *(ptr++) = cfg.outputBuffer[i];
+    *ptr = '\0';
+  }
+  else
+    err = ERROR_INSUFFICIENT_MEMORY;
+
+  //  Release assigned memory
+  releaseObject(obj);
+  free(cfg.offsetTable);
+  free(cfg.outputBuffer);
+  return err;
+}
+
+// Add the new function to SQLite
+static void plistToJsonFunc(sqlite3_context *context, int argc, sqlite3_value **argv) {
+    int errorCode = 0;
+    char *result = NULL;
+    assert(argc==1);
+    
+    if (sqlite3_value_type(argv[0]) == SQLITE_NULL) {
+        sqlite3_result_null(context);
+        return;
+    }
+
+    const unsigned char *rawData = sqlite3_value_blob(argv[0]);
+    const int dataLength = sqlite3_value_bytes(argv[0]);
+    
+    // Check for valid plist header
+    if (!rawData || dataLength < 8 || memcmp(rawData, "bplist00", 8) != 0) {
+        // Not a plist, return original value
+        if (sqlite3_value_type(argv[0]) == SQLITE_TEXT) {
+            sqlite3_result_text(context, (const char *)rawData, dataLength, NULL);
+        } else {
+            sqlite3_result_blob(context, rawData, dataLength, NULL);
+        }
+        return;
+    }
+
+    errorCode = parsePlistToJson(&result, (const char *)rawData, dataLength);
+    if (errorCode == ERROR_NONE) {
+        int resultLength = strlen(result);
+        sqlite3_result_text(context, result, resultLength, &freeResult);
+    } else {
+        // On error, return original value
+        if (sqlite3_value_type(argv[0]) == SQLITE_TEXT) {
+            sqlite3_result_text(context, (const char *)rawData, dataLength, NULL);
+        } else {
+            sqlite3_result_blob(context, rawData, dataLength, NULL);
+        }
+    }
+}
+
+// Add these helper functions for NSKeyedArchiver deserialization
+int isNSKeyedArchiver(OBJECT *obj) {
+    if (obj->type != 0x0D) return 0;
+    
+    for (int i = 0; i < obj->length; i++) {
+        OBJECT *key = obj->data.keys[i].key;
+        if (key->type == 0x05 && strcmp(key->data.text, "$archiver") == 0) {
+            OBJECT *value = obj->data.keys[i].value;
+            if (value->type == 0x05 && strcmp(value->data.text, "NSKeyedArchiver") == 0) {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
+OBJECT* findObjectByUID(CONFIG *cfg, int uid) {
+    if (uid >= cfg->objectCount)
+        return NULL;
+    long offset = cfg->offsetTable[uid];
+    OBJECT *obj;
+    if (readObject(cfg, offset, &obj) != ERROR_NONE)
+        return NULL;
+    return obj;
+}
+
+// Add this helper function to get actual object from reference
+OBJECT* resolveReference(CONFIG *cfg, OBJECT *objects, OBJECT *ref) {
+    if (!ref || !objects) return NULL;
+    
+    if (ref->type == 0x01) {  // Direct integer reference
+        int index = ref->data.integer;
+        if (index >= 0 && index < objects->length) {
+            return objects->data.objects[index];
+        }
+    }
+    return ref;  // Return original if not a reference
+}
+
+// Add this helper function to get the actual value from an index
+OBJECT* getObjectAtIndex(OBJECT *objects, int index) {
+    if (!objects || objects->type != 0x0A || index < 0 || index >= objects->length) {
+        return NULL;
+    }
+    return objects->data.objects[index];
+}
+
+// Helper function to get object from $objects array by index
+OBJECT* getObjectByIndex(OBJECT *objects, int index) {
+    if (!objects || objects->type != 0x0A || index < 0 || index >= objects->length) {
+        return NULL;
+    }
+    return objects->data.objects[index];
+}
+
+// Helper function to get value from dictionary by key
+OBJECT* getDictValue(OBJECT *dict, const char *key) {
+    if (!dict || dict->type != 0x0D || !key) return NULL;
+    
+    for (int i = 0; i < dict->length; i++) {
+        OBJECT *k = dict->data.keys[i].key;
+        if (k && k->type == 0x05 && strcmp(k->data.text, key) == 0) {
+            return dict->data.keys[i].value;
+        }
+    }
+    return NULL;
+}
+
+// Helper function to get integer value from object
+int getIntegerValue(OBJECT *obj) {
+    if (!obj) return -1;
+    
+    switch (obj->type) {
+        case 0x01: // Integer
+            return obj->data.integer;
+        case 0x08: // UID
+            return (int)obj->data.uid;
+        default:
+            return -1;
+    }
+}
+
+OBJECT* resolveObject(OBJECT *objects, int index) {
+    if (!objects || index < 0 || index >= objects->length) {
+        return NULL;
+    }
+    
+    OBJECT *obj = getObjectByIndex(objects, index);
+    if (!obj) return NULL;
+    
+    // If it's a dictionary with NS.keys and NS.objects, resolve it
+    if (obj->type == 0x0D) {
+        OBJECT *nsKeys = getDictValue(obj, "NS.keys");
+        OBJECT *nsObjects = getDictValue(obj, "NS.objects");
+        
+        if (nsKeys && nsObjects && 
+            nsKeys->type == 0x0A && nsObjects->type == 0x0A &&
+            nsKeys->length == nsObjects->length && 
+            nsKeys->length > 0) {
+            
+            OBJECT *result;
+            int err = createObject(0x0D, nsKeys->length, (nsKeys->length - 1) * sizeof(KEY), &result);
+            if (err != ERROR_NONE || !result) {
+                return NULL;
+            }
+            
+            for (int i = 0; i < nsKeys->length; i++) {
+                int keyIndex = getIntegerValue(nsKeys->data.objects[i]);
+                int valueIndex = getIntegerValue(nsObjects->data.objects[i]);
+                
+                if (keyIndex >= 0 && keyIndex < objects->length &&
+                    valueIndex >= 0 && valueIndex < objects->length) {
+                    
+                    OBJECT *key = getObjectByIndex(objects, keyIndex);
+                    if (key) {
+                        size_t extraSize = 0;
+                        switch (key->type) {
+                            case 0x06:  // UTF16 string
+                                extraSize = key->length * 2;  // 2 bytes per character
+                                break;
+                            case 0x05:  // Regular string
+                                extraSize = key->length + 1;  // Include null terminator
+                                break;
+                            case 0x0A:  // Array
+                                extraSize = key->length * sizeof(OBJECT*);
+                                break;
+                            case 0x0D:  // Dictionary
+                                extraSize = key->length * sizeof(KEY);
+                                break;
+                            default:
+                                extraSize = key->length;
+                                break;
+                        }
+                        
+                        err = createObject(key->type, key->length, extraSize, &result->data.keys[i].key);
+                        if (err == ERROR_NONE && result->data.keys[i].key) {
+                            if (key->type == 0x06) {
+                                memcpy(result->data.keys[i].key->data.utf16, key->data.utf16, key->length * 2);
+                            } else {
+                                memcpy(&result->data.keys[i].key->data, &key->data, extraSize);
+                            }
+                        }
+                        
+                        result->data.keys[i].value = resolveObject(objects, valueIndex);
+                    }
+                }
+            }
+            return result;
+        }
+    }
+    
+    OBJECT *copy;
+    size_t extraSize = 0;
+    
+    switch (obj->type) {
+        case 0x06:  // UTF16 string
+            extraSize = obj->length * 2;  // 2 bytes per character
+            break;
+        case 0x05:  // Regular string
+            extraSize = obj->length + 1;  // Include null terminator
+            break;
+        case 0x0A:  // Array
+            extraSize = obj->length * sizeof(OBJECT*);
+            break;
+        case 0x0D:  // Dictionary
+            extraSize = obj->length * sizeof(KEY);
+            break;
+        default:
+            extraSize = obj->length;
+            break;
+    }
+    
+    int err = createObject(obj->type, obj->length, extraSize, &copy);
+    if (err == ERROR_NONE && copy) {
+        if (obj->type == 0x06) {
+            memcpy(copy->data.utf16, obj->data.utf16, obj->length * 2);
+        } else {
+            memcpy(&copy->data, &obj->data, extraSize);
+        }
+    }
+    return copy;
+}
+
+OBJECT* convertNSKeyedArchiver(OBJECT *archiver) {
+    if (!archiver || archiver->type != 0x0D) {
+        return NULL;
+    }
+    
+    // Get $objects array
+    OBJECT *objects = getDictValue(archiver, "$objects");
+    if (!objects || objects->type != 0x0A || objects->length == 0) {
+        return NULL;
+    }
+    
+    // Get root object reference from $top
+    OBJECT *top = getDictValue(archiver, "$top");
+    if (!top || top->type != 0x0D) {
+        return NULL;
+    }
+    
+    OBJECT *rootRef = getDictValue(top, "root");
+    if (!rootRef) {
+        return NULL;
+    }
+    
+    int rootIndex = getIntegerValue(rootRef);
+    if (rootIndex < 0 || rootIndex >= objects->length) {
+        return NULL;
+    }
+    
+    // Get actual root object
+    OBJECT *root = getObjectByIndex(objects, rootIndex);
+    if (!root) {
+        return NULL;
+    }
+    
+    // If root is a dictionary with NS.keys and NS.objects, create new dict
+    if (root->type == 0x0D) {
+        OBJECT *nsKeys = getDictValue(root, "NS.keys");
+        OBJECT *nsObjects = getDictValue(root, "NS.objects");
+        
+        if (nsKeys && nsObjects && 
+            nsKeys->type == 0x0A && nsObjects->type == 0x0A &&
+            nsKeys->length == nsObjects->length && 
+            nsKeys->length > 0) {
+            
+            OBJECT *result;
+            int err = createObject(0x0D, nsKeys->length, (nsKeys->length - 1) * sizeof(KEY), &result);
+            if (err != ERROR_NONE || !result) {
+                return NULL;
+            }
+            
+            for (int i = 0; i < nsKeys->length; i++) {
+                int keyIndex = getIntegerValue(nsKeys->data.objects[i]);
+                int valueIndex = getIntegerValue(nsObjects->data.objects[i]);
+                
+                if (keyIndex >= 0 && keyIndex < objects->length &&
+                    valueIndex >= 0 && valueIndex < objects->length) {
+                    
+                    OBJECT *key = getObjectByIndex(objects, keyIndex);
+                    if (key) {
+                        size_t extraSize = 0;
+                        switch (key->type) {
+                            case 0x06:  // UTF16 string
+                                extraSize = key->length * 2;  // 2 bytes per character
+                                break;
+                            case 0x05:  // Regular string
+                                extraSize = key->length + 1;  // Include null terminator
+                                break;
+                            case 0x0A:  // Array
+                                extraSize = key->length * sizeof(OBJECT*);
+                                break;
+                            case 0x0D:  // Dictionary
+                                extraSize = key->length * sizeof(KEY);
+                                break;
+                            default:
+                                extraSize = key->length;
+                                break;
+                        }
+                        
+                        err = createObject(key->type, key->length, extraSize, &result->data.keys[i].key);
+                        if (err == ERROR_NONE && result->data.keys[i].key) {
+                            if (key->type == 0x06) {
+                                memcpy(result->data.keys[i].key->data.utf16, key->data.utf16, key->length * 2);
+                            } else {
+                                memcpy(&result->data.keys[i].key->data, &key->data, extraSize);
+                            }
+                        }
+                        
+                        result->data.keys[i].value = resolveObject(objects, valueIndex);
+                    }
+                }
+            }
+            return result;
+        }
+    }
+    
+    return resolveObject(objects, rootIndex);
+}
+
+// Add new function for deserialized JSON conversion
+int parsePlistDeserializedToJson(char **result, const char *data, int dataLength) {
+    CONFIG cfg;
+    char   *ptr;
+    OBJECT *obj;
+    int err = ERROR_NONE;
+    long length;
+
+    //  Determine the file size and save
+    cfg.buffer = (unsigned char *)data;
+    cfg.bufferLength = dataLength;
+
+    //  Preset the output buffer
+    cfg.outputBufferLength = 0;
+    cfg.outputBufferIn  = 0;
+    cfg.outputBuffer = NULL;
+
+    //  Read the header
+    err = readHeader(&cfg);
+    if (err != ERROR_NONE)
+        return err;
+
+    //  Read the trailer
+    err = readTrailer(&cfg);
+    if (err != ERROR_NONE)
+        return err;
+
+    //  Locate and read the root object
+    long offset = cfg.offsetTable[cfg.rootObjectReference];
+    err = readObject(&cfg, offset, &obj);
+
+    //  If no error display the root object and hence the whole object tree
+    if (err != ERROR_NONE)
+        return err;
+
+    // Check if this is an NSKeyedArchiver plist
+    if (isNSKeyedArchiver(obj)) {
+        OBJECT *deserializedObj = convertNSKeyedArchiver(obj);
+        if (deserializedObj) {
+            // Free original object and use deserialized version
+            releaseObject(obj);
+            obj = deserializedObj;
+        }
+    }
+
+    displayObjectAsJson(&cfg, obj, 0);
+
+    //  Create return data
+    length = strlen((const char *)(cfg.outputBuffer));
+    ptr = malloc(length + 1);
+    *result = ptr;
+    if (ptr != NULL) {
+        for (int i=0; i < length; i++)
+            *(ptr++) = cfg.outputBuffer[i];
+        *ptr = '\0';
+    }
+    else
+        err = ERROR_INSUFFICIENT_MEMORY;
+
+    //  Release assigned memory
+    releaseObject(obj);
+    free(cfg.offsetTable);
+    free(cfg.outputBuffer);
+    return err;
+}
+
+// Add the new function to SQLite
+static void plistDeserializedToJsonFunc(sqlite3_context *context, int argc, sqlite3_value **argv) {
+    int errorCode = 0;
+    char *result = NULL;
+    assert(argc==1);
+    
+    if (sqlite3_value_type(argv[0]) == SQLITE_NULL) {
+        sqlite3_result_null(context);
+        return;
+    }
+
+    const unsigned char *rawData = sqlite3_value_blob(argv[0]);
+    const int dataLength = sqlite3_value_bytes(argv[0]);
+    
+    // Check for valid plist header
+    if (!rawData || dataLength < 8 || memcmp(rawData, "bplist00", 8) != 0) {
+        // Not a plist, return original value
+        if (sqlite3_value_type(argv[0]) == SQLITE_TEXT) {
+            sqlite3_result_text(context, (const char *)rawData, dataLength, NULL);
+        } else {
+            sqlite3_result_blob(context, rawData, dataLength, NULL);
+        }
+        return;
+    }
+
+    errorCode = parsePlistDeserializedToJson(&result, (const char *)rawData, dataLength);
+    if (errorCode == ERROR_NONE) {
+        int resultLength = strlen(result);
+        sqlite3_result_text(context, result, resultLength, &freeResult);
+    } else {
+        // On error, return original value
+        if (sqlite3_value_type(argv[0]) == SQLITE_TEXT) {
+            sqlite3_result_text(context, (const char *)rawData, dataLength, NULL);
+        } else {
+            sqlite3_result_blob(context, rawData, dataLength, NULL);
+        }
+    }
+}
+
+static void load_formats_builtin(sqlite3_context *context, int argc, sqlite3_value **argv) {
+    // Return format: "Display Name|internal_name|function_name"
+    const char *result = "Plist as JSON|plistjson|plistToJson\n"
+                        "Plist as JSON (Deserialized)|plistdesjson|plistDeserializedToJson\n"
+                        "Plist as XML|plistxml|plist\n"
+                        "Base64 Decode|base64|unBase64\n"
+                        "Base64 Encode|base64|toBase64";
+    sqlite3_result_text(context, result, -1, SQLITE_TRANSIENT);
+}
+
 /**  RegisterExtensionFormats
  *
  *   Register the parsing functions with sqlite
  */
 
-int RegisterExtensionFormats(sqlite3 *db)
-{
-  sqlite3_create_function(db, "plist", 1, 0, db, plistFunc, 0, 0);
-  sqlite3_create_function(db, "unBase64", 1, 0, db, decodeBase64Func, 0, 0);
-  sqlite3_create_function(db, "toBase64", 1, 0, db, encodeBase64Func, 0, 0);
+int RegisterExtensionFormats(sqlite3 *db) {
+    sqlite3_create_function(db, "plist", 1, 0, db, plistFunc, 0, 0);
+    sqlite3_create_function(db, "plistToJson", 1, 0, db, plistToJsonFunc, 0, 0);
+    sqlite3_create_function(db, "plistDeserializedToJson", 1, 0, db, plistDeserializedToJsonFunc, 0, 0);
+    sqlite3_create_function(db, "unBase64", 1, 0, db, decodeBase64Func, 0, 0);
+    sqlite3_create_function(db, "toBase64", 1, 0, db, encodeBase64Func, 0, 0);
+    
+    // Register the display format
+    sqlite3_create_function(db, "load_formats_builtin", 0, SQLITE_UTF8, NULL, load_formats_builtin, NULL, NULL);
+    
+    return ERROR_NONE;
 }
 
 #ifdef COMPILE_SQLITE_EXTENSIONS_AS_LOADABLE_MODULE
