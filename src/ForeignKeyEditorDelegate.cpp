@@ -29,6 +29,7 @@ public:
         layout->addWidget(clauseEdit);
         layout->addWidget(m_btnReset);
         layout->setSpacing(0);
+        layout->setContentsMargins(0, 0, 0, 0);
         setLayout(layout);
 
         connect(m_btnReset, &QPushButton::clicked, this, [&]
