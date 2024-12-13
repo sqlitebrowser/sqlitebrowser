@@ -10,14 +10,16 @@
 #include <QApplication>
 #include <QClipboard>
 
-DbStructureModel::DbStructureModel(DBBrowserDB& db, QObject* parent)
+DbStructureModel::DbStructureModel(DBBrowserDB& db, QObject* parent,
+                                   bool dropSelectQuery,
+                                   bool dropInsert)
     : QAbstractItemModel(parent),
       m_db(db),
       browsablesRootItem(nullptr),
       m_dropQualifiedNames(false),
       m_dropEnquotedNames(false),
-      m_dropSelectQuery(true),
-      m_dropInsert(false)
+      m_dropSelectQuery(dropSelectQuery),
+      m_dropInsert(dropInsert)
 {
     // Create root item and use its columns to store the header strings
     QStringList header;

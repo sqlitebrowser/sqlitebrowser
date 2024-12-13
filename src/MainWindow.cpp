@@ -125,7 +125,9 @@ void MainWindow::init()
     connect(&db, &DBBrowserDB::requestCollation, this, &MainWindow::requestCollation);
 
     // Set up DB structure tab
-    dbStructureModel = new DbStructureModel(db, this);
+    dbStructureModel = new DbStructureModel(db, this,
+                                            Settings::getValue("SchemaDock", "dropSelectQuery").toBool(),
+                                            Settings::getValue("SchemaDock", "dropInsert").toBool());
     connect(&db, &DBBrowserDB::structureUpdated, this, [this]() {
         std::vector<sqlb::ObjectIdentifier> old_tables;
         for(const auto& d : allTableBrowserDocks())

@@ -12,7 +12,9 @@ class DbStructureModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    explicit DbStructureModel(DBBrowserDB& db, QObject* parent = nullptr);
+  explicit DbStructureModel(DBBrowserDB& db, QObject* parent = nullptr,
+                            bool dropSelectQuery = true,
+                            bool dropInsert = false);
     ~DbStructureModel() override;
 
     QVariant data(const QModelIndex& index, int role) const override;
