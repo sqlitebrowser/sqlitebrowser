@@ -2406,27 +2406,13 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Drag &amp;&amp; Drop SELECT Query</string>
+    <string>SELECT Statement</string>
    </property>
    <property name="statusTip">
     <string>When dragging fields from the same table or a single table, drop a SELECT query into the editor</string>
    </property>
    <property name="whatsThis">
     <string>When dragging fields from the same table or a single table, drop a SELECT query into the editor</string>
-   </property>
-  </action>
-  <action name="actionDropNamesCheck">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Drag &amp;&amp; Drop Names</string>
-   </property>
-   <property name="statusTip">
-    <string>When dragging fields or tables, drop just the names into the editor</string>
-   </property>
-   <property name="whatsThis">
-    <string>When dragging fields or tables, drop just the names into the editor</string>
    </property>
   </action>
   <action name="actionDropInsertCheck">
@@ -2434,7 +2420,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Drag &amp;&amp; Drop INSERT Statement</string>
+    <string>INSERT Statement</string>
    </property>
    <property name="statusTip">
     <string>When dragging fields from the same table or a single table, drop an INSERT statement into the editor</string>
@@ -2443,12 +2429,26 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <string>When dragging fields from the same table or a single table, drop an INSERT statement into the editor</string>
    </property>
   </action>
+  <action name="actionDropNamesCheck">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Just Names</string>
+   </property>
+   <property name="statusTip">
+    <string>When dragging fields or tables, drop just the names into the editor</string>
+   </property>
+   <property name="whatsThis">
+    <string>When dragging fields or tables, drop just the names into the editor</string>
+   </property>
+  </action>
   <action name="actionDropQualifiedCheck">
    <property name="checkable">
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Drag &amp;&amp; Drop Qualified Names</string>
+    <string>Qualified Names</string>
    </property>
    <property name="statusTip">
     <string>Use qualified names (e.g. &quot;Table&quot;.&quot;Field&quot;) when dragging the objects and dropping them into the editor </string>
@@ -2462,13 +2462,31 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Drag &amp;&amp; Drop Enquoted Names</string>
+    <string>Enquoted Names</string>
    </property>
    <property name="statusTip">
     <string>Use escaped identifiers (e.g. &quot;Table1&quot;) when dragging the objects and dropping them into the editor </string>
    </property>
    <property name="whatsThis">
     <string>Use escaped identifiers (e.g. &quot;Table1&quot;) when dragging the objects and dropping them into the editor </string>
+   </property>
+  </action>
+  <action name="actionCopyInSchema">
+   <property name="text">
+    <string>Copy</string>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/copy</normaloff>:/icons/copy</iconset>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+   <property name="statusTip">
+    <string>Copies to the clipboard the selection according to the chosen Drag &amp; Drop/Clipboard options.</string>
+   </property>
+   <property name="whatsThis">
+    <string>Copies to the clipboard the selection according to the chosen Drag &amp; Drop/Clipboard options.</string>
    </property>
   </action>
   <action name="actionIntegrityCheck">

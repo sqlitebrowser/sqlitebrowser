@@ -248,24 +248,26 @@ void MainWindow::init()
     popupSchemaDockMenu->addAction(ui->actionPopupSchemaDockBrowseTable);
     popupSchemaDockMenu->addAction(ui->actionPopupSchemaDockDetachDatabase);
     popupSchemaDockMenu->addSeparator();
-    popupSchemaDockMenu->addAction(ui->actionDropSelectQueryCheck);
-    popupSchemaDockMenu->addAction(ui->actionDropInsertCheck);
-    popupSchemaDockMenu->addAction(ui->actionDropNamesCheck);
 
-    QActionGroup* dropGroup = new QActionGroup(popupSchemaDockMenu);
+    auto dropSchemaDockMenu = new QMenu(popupSchemaDockMenu);
+    popupSchemaDockMenu->addMenu(dropSchemaDockMenu);
+    dropSchemaDockMenu->setTitle(tr("Clipboard/Drop Options"));
+    dropSchemaDockMenu->setStatusTip(tr("Options for Drag && Drop and Copy to Clipboard operations."));
+    dropSchemaDockMenu->addAction(ui->actionDropSelectQueryCheck);
+    dropSchemaDockMenu->addAction(ui->actionDropInsertCheck);
+    dropSchemaDockMenu->addAction(ui->actionDropNamesCheck);
+
+    QActionGroup* dropGroup = new QActionGroup(dropSchemaDockMenu);
     dropGroup->addAction(ui->actionDropSelectQueryCheck);
     dropGroup->addAction(ui->actionDropInsertCheck);
     dropGroup->addAction(ui->actionDropNamesCheck);
 
-    popupSchemaDockMenu->addSeparator();
-    popupSchemaDockMenu->addAction(ui->actionDropQualifiedCheck);
-    popupSchemaDockMenu->addAction(ui->actionEnquoteNamesCheck);
+    dropSchemaDockMenu->addSeparator();
+    dropSchemaDockMenu->addAction(ui->actionDropQualifiedCheck);
+    dropSchemaDockMenu->addAction(ui->actionEnquoteNamesCheck);
 
-    popupSchemaDockMenu->addSeparator();
-    QAction* copyAction = new QAction(QIcon(":/icons/copy"), tr("Copy"), popupSchemaDockMenu);
-    copyAction->setShortcut(QKeySequence::Copy);
-    popupSchemaDockMenu->addAction(copyAction);
-    connect(copyAction, &QAction::triggered, this, [=]() {
+    popupSchemaDockMenu->addAction(ui->actionCopyInSchema);
+    connect(ui->actionCopyInSchema, &QAction::triggered, this, [=]() {
         dbStructureModel->copy(ui->treeSchemaDock->selectionModel()->selectedIndexes());
     });
     auto copyShortcut = new QShortcut(QKeySequence::Copy, ui->treeSchemaDock);
