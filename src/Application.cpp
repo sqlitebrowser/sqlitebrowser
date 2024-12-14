@@ -330,6 +330,7 @@ Application::~Application()
 {
     if(m_mainWindow)
         delete m_mainWindow;
+    Settings::sync();
 }
 
 bool Application::event(QEvent* event)
