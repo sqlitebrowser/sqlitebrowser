@@ -95,13 +95,6 @@ EditDialog::EditDialog(QWidget* parent)
     });
     connect(ui->actionOpenInExternal, &QAction::triggered, this, &EditDialog::openDataWithExternal);
 
-    mustIndentAndCompact = Settings::getValue("databrowser", "indent_compact").toBool();
-    ui->actionIndent->setChecked(mustIndentAndCompact);
-
-    ui->buttonAutoSwitchMode->setChecked(Settings::getValue("databrowser", "auto_switch_mode").toBool());
-    ui->actionWordWrap->setChecked(Settings::getValue("databrowser", "editor_word_wrap").toBool());
-    setWordWrapping(ui->actionWordWrap->isChecked());
-
     reloadSettings();
 }
 
@@ -1136,6 +1129,11 @@ void EditDialog::updateCellInfoAndMode(const QByteArray& bArrdata)
 
 void EditDialog::reloadSettings()
 {
+    mustIndentAndCompact = Settings::getValue("databrowser", "indent_compact").toBool();
+    ui->actionIndent->setChecked(mustIndentAndCompact);
+
+    ui->buttonAutoSwitchMode->setChecked(Settings::getValue("databrowser", "auto_switch_mode").toBool());
+
     // Set the (SQL) editor font for hex editor, since it needs a
     // Monospace font and the databrowser font would be usually of
     // variable width.
@@ -1152,6 +1150,9 @@ void EditDialog::reloadSettings()
                                             (Settings::getValue("General", "toolbarStyleEditCell").toInt()));
 
     sciEdit->reloadSettings();
+
+    ui->actionWordWrap->setChecked(Settings::getValue("databrowser", "editor_word_wrap").toBool());
+    setWordWrapping(ui->actionWordWrap->isChecked());
 }
 
 void EditDialog::setStackCurrentIndex(int editMode)
