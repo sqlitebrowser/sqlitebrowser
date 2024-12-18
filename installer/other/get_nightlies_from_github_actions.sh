@@ -36,6 +36,20 @@ if ! gh release download --dir /tmp/incoming/ -R "sqlitebrowser/sqlitebrowser" n
 fi
 echo "Successfully downloaded the nightly build"
 
+
+# Check if the downloaded files are as expected
+# This case is occuring when the nightly build is skipped
+# for macOS Binaries
+if [ $(ls -l $DOWNLOAD_DIR | grep -c "$(date +%Y%m%d)") -ne 2 ]; then
+    echo "Last nightly build is skipped"
+    exit 1
+fi
+# for Windows Binaries
+if [ $(ls -l $DOWNLOAD_DIR | grep -c "$(date +%Y-%m-%d)") -ne 4 ]; then
+    echo "Last nightly build is skipped"
+    exit 1
+fi
+
 mv -v $DOWNLOAD_DIR*win32* /nightlies/win32/
 mv -v $DOWNLOAD_DIR*win64* /nightlies/win64/
 mv -v $DOWNLOAD_DIR*dmg /nightlies/macos-universal/
