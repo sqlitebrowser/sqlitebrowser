@@ -6,24 +6,12 @@ on:
   workflow_dispatch:
 
 jobs:
-  check-skip:
-    runs-on: ubuntu-latest
-    outputs:
-      skip: ${{ steps.set-skip.outputs.skip }}
-    steps:
-      - uses: actions/checkout@v4
-
-      - id: set-skip
-        run: |
-          git fetch origin tag nightly
-          LAST_COMMIT_HASH=$(git rev-list -n 1 nightly)
-          if [ "$(git rev-parse HEAD)" = "$LAST_COMMIT_HASH" ]; then
-            echo "::notice::No new commits since last nightly build, skipping this build."
-            echo "skip=true" >> $GITHUB_OUTPUT
-          fi
-
+  build-appimage:
+    if: needs.check-skip.outputs.skip != 'true'
+    uses: ./.github/workflows/build-appimage.yml
+    with:
+      NIGHTLY: true
   build-macos:
-    needs: check-skip
     if: needs.check-skip.outputs.skip != 'true'
     uses: ./.github/workflows/build-macos.yml
     secrets: inherit
@@ -31,7 +19,6 @@ jobs:
       NIGHTLY: true
 
   build-windows:
-    needs: check-skip
     if: needs.check-skip.outputs.skip != 'true'
     uses: ./.github/workflows/build-windows.yml
     secrets: inherit

@@ -39,8 +39,8 @@ echo "Successfully downloaded the nightly build"
 
 # Check if the downloaded files are as expected
 # This case is occuring when the nightly build is skipped
-# for macOS Binaries
-if [ $(ls -l $DOWNLOAD_DIR | grep -c "$(date +%Y%m%d)") -ne 2 ]; then
+# for AppImage, macOS Binaries
+if [ $(ls -l $DOWNLOAD_DIR | grep -c "$(date +%Y%m%d)") -ne 4 ]; then
     echo "Last nightly build is skipped"
     exit 1
 fi
@@ -50,15 +50,19 @@ if [ $(ls -l $DOWNLOAD_DIR | grep -c "$(date +%Y-%m-%d)") -ne 4 ]; then
     exit 1
 fi
 
+mv -v $DOWNLOAD_DIR*AppImage /nightlies/appimage/
 mv -v $DOWNLOAD_DIR*win32* /nightlies/win32/
 mv -v $DOWNLOAD_DIR*win64* /nightlies/win64/
 mv -v $DOWNLOAD_DIR*dmg /nightlies/macos-universal/
 
+rm -v /nightlies/latest/*.AppImage
 rm -v /nightlies/latest/*.dmg
 rm -v /nightlies/latest/*.msi
 rm -v /nightlies/latest/*.zip
 
 DATE=$(date +%Y%m%d)
+ln -sv /nightlies/appimage/DB.Browser.for.SQLCipher-$DATE.AppImage /nightlies/latest/DB.Browser.for.SQLCipher.AppImage
+ln -sv /nightlies/appimage/DB.Browser.for.SQLite-$DATE.AppImage /nightlies/latest/DB.Browser.for.SQLite.AppImage
 ln -sv /nightlies/macos-universal/DB.Browser.for.SQLCipher-universal_$DATE.dmg /nightlies/latest/DB.Browser.for.SQLCipher-universal.dmg
 ln -sv /nightlies/macos-universal/DB.Browser.for.SQLite-universal_$DATE.dmg /nightlies/latest/DB.Browser.for.SQLite-universal.dmg
 DATE=$(date +%Y-%m-%d)

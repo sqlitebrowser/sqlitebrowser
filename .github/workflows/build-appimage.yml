@@ -6,6 +6,10 @@ name: Build - AppImage
 
 on:
   workflow_call:
+    inputs:
+      NIGHTLY:
+        default: false
+        type: boolean
 
 jobs:
   build:
@@ -60,7 +64,11 @@ jobs:
           wget -c -nv "https://github.com/linuxdeploy/linuxdeploy/releases/download/1-alpha-20240109-1/linuxdeploy-x86_64.AppImage"
           wget -c -nv "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/1-alpha-20240109-1/linuxdeploy-plugin-qt-x86_64.AppImage"
           chmod a+x linuxdeploy-x86_64.AppImage linuxdeploy-plugin-qt-x86_64.AppImage
-          export VERSION=$(printf "dev-`git -C . rev-parse --short HEAD`")
+          if [ "${{ inputs.NIGHTLY }}" = "true" ]; then
+            export VERSION=$(date +%Y%m%d)
+          else
+            export VERSION=$(printf "dev-`git -C . rev-parse --short HEAD`")
+          fi
           LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib" ./linuxdeploy-x86_64.AppImage --appdir=appdir --desktop-file=appdir/usr/share/applications/sqlitebrowser.desktop --plugin qt --output appimage
 
       - name: Rename a file
