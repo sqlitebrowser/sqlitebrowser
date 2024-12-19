@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+    <?include variables.wxi ?>
+
+    <?define ExtensionsName="$(var.Name) - Extensions Pack" ?>
+    <?define ExtensionsVersion="1.0.0" ?>
+ 
+    <Product Id="*" UpgradeCode="2F96AC9F-17E8-41F3-8256-81EA2E2244A5" Name="$(var.ExtensionsName)" Manufacturer="$(var.Team)" Version="$(var.ExtensionsVersion)" Language="1033">
+
+        <Package Id="*" Compressed="yes" InstallerVersion="405" InstallPrivileges="elevated" InstallScope="perMachine" />
+
+        <Media Id="1" Cabinet="Media.cab" EmbedCab="yes" CompressionLevel="high" />
+
+        <MajorUpgrade Schedule="afterInstallInitialize" AllowDowngrades="yes" />
+
+        <!-- ========================================== Install Condition ========================================== -->
+
+        <!--
+        Check if DB4S is installed using its product upgrade code. If it is found, 'DB4S_FOUND' property value will be
+        set and we can use it to get DB4S install location. 3.10.99 is the minimum version to check for since this is
+        when MSI installer was introduced.
+        -->
+        <Property Id="DB4S_FOUND">
+            <ProductSearch UpgradeCode="124623D9-35D6-4D2E-9474-2ADACC8BABBB" Minimum="3.10.99" />
+        </Property>
+
+        <!--
+        This condition will check the 'DB4S_FOUND' property, and if it's not empty it means DB4S is installed and we can
+        install the extensions pack. It will only run during installation, and not during repair or uninstallation.
+        -->
+        <Condition Message="$(var.Name) was not found. Please install it first before installing the extensions pack.&#10;&#10;Setup will now exit.">
+            NOT DB4S_FOUND = "" OR Installed
+        </Condition>
+
+        <!--
+        If DB4S is installed (DB4S_FOUND != ""), we check the Registry value "InstallLocation" inside the Registry key
+        "HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall\<GUID>" to get DB4S install location.
+        -->
+        <Property Id="DB4S_INSTALLDIR">
+            <RegistrySearch Id="DB4SInstallDir" Root="HKLM" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[DB4S_FOUND]" Name="InstallLocation" Type="raw" />
+        </Property>
+
+        <!--
+        Stop installation of 32-bit Extensions MSI over 64-bit DB4S or vice versa.
+
+        On a 32-bit Windows, we can only install 32-bit DB4S and Extensions MSIs, so there is no problem with that. On
+        a 64-bit Windows, we can install 32-bit DB4S+Extensions or 64-bit DB4S+Extensions, and there is no problem with
+        that either.
+
+        The problem starts if we installed 32-bit DB4S and tried to install 64-bit Extensions with it or if we installed
+        64-bit DB4S with 32-bit Extensions, and this is what we are trying to prevent here.
+
+        The Registry key "HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall\<GUID>" will be checked to find the
+        location of DB4S installation folder. This key is written by the DB4S MSI after it is installed, and we read it
+        by the Extensions MSI before we install it.
+
+        If we used the 32-bit DB4S installer it will write this key to the 32-bit Registry since it can't read/write to
+        the 64-bit Registry. This means, if we tried to run the 64-bit Extensions installer it will find this key empty.
+        Likewise, if we used the 64-bit DB4S installer it will write this key to the 64-bit Registery, and the 32-bit
+        Extensions installer will also find it empty.
+        
+        We can use this fact and check if this key is empty. If it is then the wrong Extensions installer is being used
+        and we should stop it.
+        -->
+        <?if $(sys.BUILDARCH)="x64"?>
+            <?define CurrentArch="64-bit" ?>
+            <?define OtherArch="32-bit" ?>
+        <?elseif $(sys.BUILDARCH)="x86"?>
+            <?define CurrentArch="32-bit" ?>
+            <?define OtherArch="64-bit" ?>
+        <?endif?>
+        <Condition Message="Cannot install $(var.CurrentArch) extensions over the $(var.OtherArch) version of $(var.Name).&#10;&#10;Setup will now exit.">
+            NOT DB4S_INSTALLDIR = "" OR Installed
+        </Condition>
+
+        <!-- =========================================== Installation UI =========================================== -->
+
+        <!-- Standard Dialog Set -->
+        <UIRef Id="WixUI_FeatureTree" />
+
+        <!-- License file -->
+        <WixVariable Id="WixUILicenseRtf" Value="license-extensions.rtf" />
+        <!-- Banner image -->
+        <WixVariable Id="WixUIBannerBmp" Value="banner.bmp" />
+        <!-- Background image -->
+        <WixVariable Id="WixUIDialogBmp" Value="background.bmp" />
+
+        <!-- Optional text, shown at the end of installation -->
+        <Property Id="WIXUI_EXITDIALOGOPTIONALTEXT">
+            Note: Installed extensions are not loaded automatically.
+            &#10;To load an extension once, select 'Tools -> Load Extension...' from the menu bar.
+            &#10;To load an extension automatically for every database, select 'Edit -> Preferences...' from the menu bar and add it to the 'Extensions' tab.
+        </Property>
+
+        <!-- ========================================= Add/Remove Programs ========================================= -->
+
+        <Icon Id="app.ico" SourceFile="$(var.AppIcon)" />
+        <Property Id="ARPPRODUCTICON" Value="app.ico" />
+        <Property Id='ARPCOMMENTS' Value="SQLite extensions for $(var.Name)" />
+        <Property Id='ARPCONTACT' Value="$(var.AppContact)" />
+        <Property Id='ARPREADME' Value="$(var.AppReadme)" />
+        <Property Id="ARPHELPLINK" Value="$(var.AppHelpLink)" />
+        <Property Id="ARPURLINFOABOUT" Value="$(var.AppSupportLink)" />
+        <Property Id="ARPURLUPDATEINFO" Value="$(var.AppUpdateInfoLink)" />
+        <SetProperty Id="ARPINSTALLLOCATION" Value="[DB4S_INSTALLDIR]" After="CostFinalize" />
+
+        <!-- ================================================ Files ================================================ -->
+
+        <Directory Id="TARGETDIR" Name="SourceDir">
+            <Directory Id="DB4S_INSTALLDIR" ComponentGuidGenerationSeed="ED461F9C-41E3-443A-8947-C67C11C2666D">
+                <!-- SpatiaLite -->
+                <Component><File Source="$(var.ExtensionsPath)\spatialite\libfreexl-1.dll" /></Component>
+                <Component><File Source="$(var.ExtensionsPath)\spatialite\libgeos_c-1.dll" /></Component>
+                <Component><File Source="$(var.ExtensionsPath)\spatialite\libgeos-3-5-0.dll" /></Component>
+                <Component><File Source="$(var.ExtensionsPath)\spatialite\libiconv-2.dll" /></Component>
+                <Component><File Source="$(var.ExtensionsPath)\spatialite\liblzma-5.dll" /></Component>
+                <Component><File Source="$(var.ExtensionsPath)\spatialite\libproj-9.dll" /></Component>
+                <Component><File Source="$(var.ExtensionsPath)\spatialite\libsqlite3-0.dll" /></Component>
+                <Component><File Source="$(var.ExtensionsPath)\spatialite\libxml2-2.dll" /></Component>
+                <Component><File Source="$(var.ExtensionsPath)\spatialite\mod_spatialite.dll" /></Component>
+                <Component><File Source="$(var.ExtensionsPath)\spatialite\zlib1.dll" /></Component>
+                <?if $(sys.BUILDARCH)="x64"?>
+                    <Component><File Source="$(var.ExtensionsPath)\spatialite\libgcc_s_seh_64-1.dll" /></Component>
+                    <Component><File Source="$(var.ExtensionsPath)\spatialite\libstdc++_64-6.dll" /></Component>
+                <?elseif $(sys.BUILDARCH)="x86"?>
+                    <Component><File Source="$(var.ExtensionsPath)\spatialite\libgcc_s_dw2-1.dll" /></Component>
+                    <Component><File Source="$(var.ExtensionsPath)\spatialite\libstdc++-6.dll" /></Component>
+                <?endif?>
+            </Directory>
+        </Directory>
+
+        <!-- ============================================== Features =============================================== -->
+
+        <Feature Id="Extensions" Title="SQLite Extensions" Description="SQLite Extensions Pack" AllowAdvertise="no" Display="expand">
+
+            <Feature Id="SpatiaLiteExtension" Title="SpatiaLite" Description="SpatiaLite is a spatial extension to SQLite, providing vector geodatabase functionality." AllowAdvertise="no">
+                <!-- SpatiaLite -->
+                <ComponentRef Id="libfreexl_1.dll" />                
+                <ComponentRef Id="libgeos_c_1.dll" />
+                <ComponentRef Id="libgeos_3_5_0.dll" />
+                <ComponentRef Id="libiconv_2.dll" />
+                <ComponentRef Id="liblzma_5.dll" />
+                <ComponentRef Id="libproj_9.dll" />
+                <ComponentRef Id="libsqlite3_0.dll" />
+                <ComponentRef Id="libxml2_2.dll" />
+                <ComponentRef Id="mod_spatialite.dll" />
+                <ComponentRef Id="zlib1.dll" />
+                <?if $(sys.BUILDARCH)="x64"?>
+                    <ComponentRef Id="libgcc_s_seh_64_1.dll" />
+                    <ComponentRef Id="libstdc___64_6.dll" />
+                <?elseif $(sys.BUILDARCH)="x86"?>
+                    <ComponentRef Id="libgcc_s_dw2_1.dll" />
+                    <ComponentRef Id="libstdc___6.dll" />
+                <?endif?>
+            </Feature>
+
+        </Feature>
+
+    </Product>
+</Wix>
