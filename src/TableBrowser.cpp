@@ -1724,11 +1724,13 @@ void TableBrowser::fetchedData()
         return;
     m_columnsResized = true;
 
-    // Set column widths according to their contents but make sure they don't exceed a certain size
-    ui->dataTable->resizeColumnsToContents();
-    for(int i = 0; i < m_model->columnCount(); i++)
-    {
-        if(ui->dataTable->columnWidth(i) > 300)
-            ui->dataTable->setColumnWidth(i, 300);
+    if (m_settings[currentlyBrowsedTableName()].columnWidths.empty()) {
+        // Set column widths according to their contents but make sure they don't exceed a certain size
+        ui->dataTable->resizeColumnsToContents();
+        for(int i = 0; i < m_model->columnCount(); i++)
+        {
+            if(ui->dataTable->columnWidth(i) > 300)
+                ui->dataTable->setColumnWidth(i, 300);
+        }
     }
 }
