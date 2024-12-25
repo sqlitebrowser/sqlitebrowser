@@ -61,8 +61,8 @@ rm -v /nightlies/latest/*.msi
 rm -v /nightlies/latest/*.zip
 
 DATE=$(date +%Y%m%d)
-ln -sv /nightlies/appimage/DB.Browser.for.SQLCipher-$DATE.AppImage /nightlies/latest/DB.Browser.for.SQLCipher.AppImage
-ln -sv /nightlies/appimage/DB.Browser.for.SQLite-$DATE.AppImage /nightlies/latest/DB.Browser.for.SQLite.AppImage
+ln -sv /nightlies/appimage/DB.Browser.for.SQLCipher-$(echo $DATE)-x86.64.AppImage /nightlies/latest/DB.Browser.for.SQLCipher.AppImage
+ln -sv /nightlies/appimage/DB.Browser.for.SQLite-$(echo $DATE)-x86.64.AppImage /nightlies/latest/DB.Browser.for.SQLite.AppImage
 ln -sv /nightlies/macos-universal/DB.Browser.for.SQLCipher-universal_$DATE.dmg /nightlies/latest/DB.Browser.for.SQLCipher-universal.dmg
 ln -sv /nightlies/macos-universal/DB.Browser.for.SQLite-universal_$DATE.dmg /nightlies/latest/DB.Browser.for.SQLite-universal.dmg
 DATE=$(date +%Y-%m-%d)
