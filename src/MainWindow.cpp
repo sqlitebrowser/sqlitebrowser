@@ -53,6 +53,7 @@
 #include <QTemporaryFile>
 #include <QToolButton>
 #include <QUrl>
+#include <QActionGroup>
 
 #ifdef Q_OS_MACX //Needed only on macOS
     #include <QOpenGLWidget>
