@@ -7,9 +7,9 @@ set MSI=DB.Browser.for.SQLite-%1
 if "%1"=="" (
     echo ERROR: You must select a build type, either "win64" or "win32"
     goto :eof
-) else if "%1"=="win32" (
+) else if "%1"=="x86" (
     set ARCH=x86
-) else if "%1"=="win64" (
+) else if "%1"=="x64" (
     set ARCH=x64    
 ) else (
     echo ERROR: Unknown build type="%1"

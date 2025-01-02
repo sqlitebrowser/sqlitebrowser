@@ -1,4 +1,4 @@
-name: Build - macOS
+name: Build (macOS)
 
 on:
   workflow_call:
@@ -6,16 +6,17 @@ on:
       NIGHTLY:
         default: false
         type: boolean
+  workflow_dispatch:
 
 jobs:
   build:
-    name: ${{ matrix.os }} - SQLCipher ${{ matrix.sqlcipher }}
+    name: ${{ matrix.os }} (${{ matrix.bundle }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
+        bundle: [SQLCipher, SQLite]
         os: [macos-14]
-        sqlcipher: ["0", "1"]
     env:
       MACOSX_DEPLOYMENT_TARGET: 10.13
     steps:
@@ -28,35 +29,38 @@ jobs:
         run: |
           sudo rm -rfv /Library/Frameworks/Mono.framework
           sudo pkgutil --forget com.xamarin.mono-MDK.pkg
-          sudo rm /etc/paths.d/mono-commands
+          sudo rm -v /etc/paths.d/mono-commands
 
       - name: Install dependencies
         run: |
-          brew update
           brew tap sqlitebrowser/tap
-          brew unlink openssl@3
-          brew install sqlb-openssl@3
           brew install sqlb-qt@5 sqlb-sqlcipher sqlb-sqlite ninja
           npm install -g appdmg
 
       - name: Configure build
         run: |
           if [ "${{ inputs.NIGHTLY }}" = "true" ]; then
-            if [ "${{ matrix.sqlcipher }}" = "1" ]; then
+            if [ "${{ matrix.bundle }}" = "SQLCipher" ]; then
                 sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLCipher Nightly"/' config/platform_apple.cmake
             else
                 sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLite Nightly"/' config/platform_apple.cmake
             fi
           else
-            if [ "${{ matrix.sqlcipher }}" = "1" ]; then
+            if [ "${{ matrix.bundle }}" = "SQLCipher" ]; then
                 sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLCipher-dev-'$(git rev-parse --short --verify HEAD)'"/' config/platform_apple.cmake
             else
                 sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLite-dev-'$(git rev-parse --short --verify HEAD)'"/' config/platform_apple.cmake
             fi
           fi
 
-          mkdir build && cd build
-          cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=14 -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DcustomTap=1 -DENABLE_TESTING=ON -Dsqlcipher=${{ matrix.sqlcipher }} ..
+          mkdir -v build && cd build
+          cmake -G Ninja \
+                -DCMAKE_BUILD_TYPE=Release \
+                -DCMAKE_CXX_STANDARD=14 \
+                -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" \
+                -DcustomTap=1 \
+                -DENABLE_TESTING=ON \
+                -Dsqlcipher=${{ matrix.bundle == 'SQLCipher' }} ..
 
       - name: Build
         working-directory: ./build
@@ -81,8 +85,8 @@ jobs:
           KEYCHAIN_PW: ${{ secrets.MACOS_CODESIGN_KEYCHAIN_PW }}
           P12: ${{ secrets.MACOS_CODESIGN_P12 }}
           P12_PW: ${{ secrets.MACOS_CODESIGN_P12_PW }}
-          NIGHTLY: ${{ inputs.NIGHTLY }}
-          SQLCIPHER: ${{ matrix.sqlcipher }}
+          NIGHTLY: ${{ inputs.NIGHTLY || false }}
+          SQLCIPHER: ${{ matrix.bundle == 'SQLCipher'}}
           TEAM_ID: ${{ secrets.MACOS_CODESIGN_TEAM_ID }}
 
       - if: steps.notarization.conclusion != 'skipped'
@@ -90,9 +94,18 @@ jobs:
         run: security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
         continue-on-error: true
 
-      - if: github.event_name != 'pull_request'
+      - if: github.event_name != 'pull_request' && github.workflow != 'Build (macOS)'
         name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: build-artifacts-${{ matrix.os }}-${{ matrix.sqlcipher }}
+          name: build-artifacts-${{ matrix.os }}-${{ matrix.bundle }}
           path: DB.Browser.for.*.dmg
+          retention-days: 1
+
+      - if: github.event_name == 'workflow_dispatch' && github.workflow == 'Build (macOS)'
+        name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: DB.Browser.for.*.dmg
+          prerelease: true
+          tag_name: ${{ github.sha }}-macos

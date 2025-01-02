@@ -84,7 +84,7 @@ mv build/*.app installer/macos
 # Create the DMG
 export DATE=$(date +%Y%m%d)
 
-if [ "$SQLCIPHER" = "1" ]; then
+if [ "$SQLCIPHER" = "true" ]; then
     if [ "$NIGHTLY" = "false" ]; then
     # Continuous with SQLCipher
     sed -i "" 's/"DB Browser for SQLCipher Nightly.app"/"DB Browser for SQLCipher-dev-'$(git rev-parse --short --verify HEAD)'.app"/' installer/macos/sqlcipher-nightly.json

@@ -13,8 +13,7 @@ DOWNLOAD_DIR="/tmp/incoming/"
 rm -rfv $DOWNLOAD_DIR
 mkdir -v $DOWNLOAD_DIR
 
-if [ $(ls -l /nightlies/macos-universal | grep -c "$(date +%Y%m%d)") ] &&
-   [ $(ls -l /nightlies/win32 /nightlies/win64 | grep -c "$(date +%Y-%m-%d)") -ne 0 ]; then
+if [ $(ls -l /nightlies/appimage /nightlies/win32 /nightlies/win64 /nightlies/macos-universal | grep -c "$(date +%Y%m%d)") ]; then
     echo "Nightly build already exists"
     exit 1
 fi
@@ -24,7 +23,7 @@ if ! gh auth login --with-token <<< "$GH_TOKEN"; then
 fi
 echo "Successfully authenticated with GitHub"
 
-IS_BUILD_SUCCESS=$(gh run list --created $(date '+%Y-%m-%d') --limit 1 --status "success" --workflow "cppcmake-nightly.yml" --repo "sqlitebrowser/sqlitebrowser" | wc -l)
+IS_BUILD_SUCCESS=$(gh run list --created $(date '+%Y-%m-%d') --limit 1 --event "schedule" --status "success" --workflow "CI" --repo "sqlitebrowser/sqlitebrowser" | wc -l)
 if [ $IS_BUILD_SUCCESS -eq 0 ]; then
     echo "No successful build found"
     exit 1
@@ -39,20 +38,14 @@ echo "Successfully downloaded the nightly build"
 
 # Check if the downloaded files are as expected
 # This case is occuring when the nightly build is skipped
-# for AppImage, macOS Binaries
-if [ $(ls -l $DOWNLOAD_DIR | grep -c "$(date +%Y%m%d)") -ne 4 ]; then
-    echo "Last nightly build is skipped"
-    exit 1
-fi
-# for Windows Binaries
-if [ $(ls -l $DOWNLOAD_DIR | grep -c "$(date +%Y-%m-%d)") -ne 4 ]; then
+if [ $(ls -l $DOWNLOAD_DIR | grep -c "$(date +%Y%m%d)") -ne 8 ]; then
     echo "Last nightly build is skipped"
     exit 1
 fi
 
 mv -v $DOWNLOAD_DIR*AppImage /nightlies/appimage/
-mv -v $DOWNLOAD_DIR*win32* /nightlies/win32/
-mv -v $DOWNLOAD_DIR*win64* /nightlies/win64/
+mv -v $DOWNLOAD_DIR*x86* /nightlies/win32/
+mv -v $DOWNLOAD_DIR*x64* /nightlies/win64/
 mv -v $DOWNLOAD_DIR*dmg /nightlies/macos-universal/
 
 rm -v /nightlies/latest/*.AppImage
@@ -65,10 +58,9 @@ ln -sv /nightlies/appimage/DB.Browser.for.SQLCipher-$(echo $DATE)-x86.64.AppImag
 ln -sv /nightlies/appimage/DB.Browser.for.SQLite-$(echo $DATE)-x86.64.AppImage /nightlies/latest/DB.Browser.for.SQLite.AppImage
 ln -sv /nightlies/macos-universal/DB.Browser.for.SQLCipher-universal_$DATE.dmg /nightlies/latest/DB.Browser.for.SQLCipher-universal.dmg
 ln -sv /nightlies/macos-universal/DB.Browser.for.SQLite-universal_$DATE.dmg /nightlies/latest/DB.Browser.for.SQLite-universal.dmg
-DATE=$(date +%Y-%m-%d)
-ln -sv /nightlies/win32/DB.Browser.for.SQLite-$DATE-win32.msi /nightlies/latest/DB.Browser.for.SQLite-win32.msi
-ln -sv /nightlies/win32/DB.Browser.for.SQLite-$DATE-win32.zip /nightlies/latest/DB.Browser.for.SQLite-win32.zip
-ln -sv /nightlies/win64/DB.Browser.for.SQLite-$DATE-win64.msi /nightlies/latest/DB.Browser.for.SQLite-win64.msi
-ln -sv /nightlies/win64/DB.Browser.for.SQLite-$DATE-win64.zip /nightlies/latest/DB.Browser.for.SQLite-win64.zip
+ln -sv /nightlies/win32/DB.Browser.for.SQLite-$DATE-x86.msi /nightlies/latest/DB.Browser.for.SQLite-x86.msi
+ln -sv /nightlies/win32/DB.Browser.for.SQLite-$DATE-x86.zip /nightlies/latest/DB.Browser.for.SQLite-x86.zip
+ln -sv /nightlies/win64/DB.Browser.for.SQLite-$DATE-x64.msi /nightlies/latest/DB.Browser.for.SQLite-x64.msi
+ln -sv /nightlies/win64/DB.Browser.for.SQLite-$DATE-x64.zip /nightlies/latest/DB.Browser.for.SQLite-x64.zip
 
 echo "[STOP]"
