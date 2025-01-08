@@ -2852,7 +2852,7 @@ x~y	Диапазон: значения между x и y
     <message>
         <location filename="../MainWindow.ui" line="1041"/>
         <source>Full FSYNC</source>
-        <translation>Full FSYNC (Только для Mac OS)</translation>
+        <translation>Full FSYNC</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1057"/>
