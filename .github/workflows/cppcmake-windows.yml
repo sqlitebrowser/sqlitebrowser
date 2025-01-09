@@ -195,3 +195,16 @@ jobs:
           files: installer/windows/DB.Browser.for.SQLite-*.msi, DB.Browser.for.SQLite-*.zip
           prerelease: true
           tag_name: ${{ github.sha }}-windows
+
+      - name: Summary
+        run: |
+          $OPENSSL_VERSION=(C:\dev\OpenSSL\bin\openssl version) -replace "OpenSSL ([\d\.]+[a-z]+) .*", '$1'
+          $QT_VERSION = & "$env:QT_ROOT_DIR\bin\qmake.exe" --version | Select-String "Using Qt version" | ForEach-Object { $_.ToString().Split()[3] }
+          $SQLCIPHER_VERSION=(Get-Item "C:\dev\SQLCipher\sqlcipher.dll").VersionInfo.FileVersion
+          Select-String -Path "C:\dev\SQLite\sqlite3.h" -Pattern '#define SQLITE_VERSION\s+"([\d\.]+)"' | ForEach-Object {
+            ($_ -match '"([\d\.]+)"') | Out-Null
+            $SQLITE_VERSION=$matches[1]
+          }
+
+          echo "## Libaries used" >> $env:GITHUB_STEP_SUMMARY
+          echo "OpenSSL: $OPENSSL_VERSION, Qt: $QT_VERSION, SQLCipher: $SQLCIPHER_VERSION, SQLite: $SQLITE_VERSION" >> $env:GITHUB_STEP_SUMMARY

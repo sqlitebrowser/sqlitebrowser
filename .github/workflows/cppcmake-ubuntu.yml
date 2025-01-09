@@ -107,3 +107,19 @@ jobs:
           files: DB.Browser.for.*.AppImage
           prerelease: true
           tag_name: ${{ github.sha }}-ubuntu
+
+      - name: Summary
+        run: |
+          QT_VERSION=$(qmake --version | awk '/Using Qt version/ {print $4}')
+          if [ "${{ matrix.bundle }}" = "SQLCipher" ]; then
+              OPENSSL_VERSION=$(openssl version | awk '{print $2}')
+              SQLCIPHER_VERSION=$(/usr/local/bin/sqlcipher ":memory:" "PRAGMA cipher_version;" | awk '{print $1}')
+              SQLITE_VERSION="Not applicable"
+          else
+              OPENSSL_VERSION="Not applicable"
+              SQLCIPHER_VERSION="Not applicable"
+              SQLITE_VERSION=$(/usr/local/bin/sqlite3 --version | awk '{print $1}')
+          fi
+
+          echo "## Libaries used" >> $GITHUB_STEP_SUMMARY
+          echo "OpenSSL: $OPENSSL_VERSION, Qt: $QT_VERSION, SQLCipher: $SQLCIPHER_VERSION, SQLite: $SQLITE_VERSION" >> $GITHUB_STEP_SUMMARY
